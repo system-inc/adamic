@@ -1,0 +1,930 @@
+=== RUN   TestNoMultiStrFires
+=== PAUSE TestNoMultiStrFires
+=== RUN   TestNoMultiStrStaysSilent
+=== PAUSE TestNoMultiStrStaysSilent
+=== RUN   TestNoMultiStrJsxExemption
+=== PAUSE TestNoMultiStrJsxExemption
+=== RUN   TestNoMultiStrDistinguishesEscapesFromContinuations
+=== PAUSE TestNoMultiStrDistinguishesEscapesFromContinuations
+=== RUN   TestNoMultiStrDeclinesOtherLiteralKinds
+=== PAUSE TestNoMultiStrDeclinesOtherLiteralKinds
+=== RUN   TestNoMultiStrReportsTheWholeLiteral
+=== PAUSE TestNoMultiStrReportsTheWholeLiteral
+=== RUN   TestNoMultiStrMessage
+=== PAUSE TestNoMultiStrMessage
+=== RUN   TestNoNonoctalDecimalEscapeFires
+=== PAUSE TestNoNonoctalDecimalEscapeFires
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent
+=== RUN   TestNoNonoctalDecimalEscapeReportsEachEscape
+=== PAUSE TestNoNonoctalDecimalEscapeReportsEachEscape
+=== RUN   TestNoNonoctalDecimalEscapeOffersBothReadings
+=== PAUSE TestNoNonoctalDecimalEscapeOffersBothReadings
+=== RUN   TestNoNonoctalDecimalEscapeProposesNoAutomaticFix
+=== PAUSE TestNoNonoctalDecimalEscapeProposesNoAutomaticFix
+=== RUN   TestNoNonoctalDecimalEscapeAvoidsCreatingAnOctalEscape
+=== PAUSE TestNoNonoctalDecimalEscapeAvoidsCreatingAnOctalEscape
+=== RUN   TestNoNonoctalDecimalEscapeTreatsOctalZeroAsOrdinary
+=== PAUSE TestNoNonoctalDecimalEscapeTreatsOctalZeroAsOrdinary
+=== RUN   TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull
+=== PAUSE TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull
+=== RUN   TestNoOctalEscapeFires
+=== PAUSE TestNoOctalEscapeFires
+=== RUN   TestNoOctalEscapeStaysSilent
+=== PAUSE TestNoOctalEscapeStaysSilent
+=== RUN   TestNoOctalEscapeProductionWidths
+=== PAUSE TestNoOctalEscapeProductionWidths
+=== RUN   TestNoOctalEscapeReportsTheWholeLiteral
+=== PAUSE TestNoOctalEscapeReportsTheWholeLiteral
+=== RUN   TestNoOctalEscapeReportsOncePerLiteral
+=== PAUSE TestNoOctalEscapeReportsOncePerLiteral
+=== RUN   TestNoOctalEscapeDeclinesOtherLiteralKinds
+=== PAUSE TestNoOctalEscapeDeclinesOtherLiteralKinds
+=== RUN   TestNoOctalEscapeMessage
+=== PAUSE TestNoOctalEscapeMessage
+=== RUN   TestNoOctalFires
+=== PAUSE TestNoOctalFires
+=== RUN   TestNoOctalStaysSilent
+=== PAUSE TestNoOctalStaysSilent
+=== RUN   TestNoOctalOnSourceOurParserAcceptsAndESLintRejects
+=== PAUSE TestNoOctalOnSourceOurParserAcceptsAndESLintRejects
+=== RUN   TestNoOctalReportsTheLiteralSpan
+=== PAUSE TestNoOctalReportsTheLiteralSpan
+=== RUN   TestNoOctalReadsRawTextRatherThanTheCookedValue
+=== PAUSE TestNoOctalReadsRawTextRatherThanTheCookedValue
+=== RUN   TestNoOctalReportsEachLiteralSeparately
+=== PAUSE TestNoOctalReportsEachLiteralSeparately
+=== CONT  TestNoMultiStrFires
+=== RUN   TestNoMultiStrFires/var_x_=_'Line_1_\__Line_2'
+=== PAUSE TestNoMultiStrFires/var_x_=_'Line_1_\__Line_2'
+=== CONT  TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull
+=== RUN   TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_a_null_escape
+=== PAUSE TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_a_null_escape
+=== RUN   TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_an_octal_one_escape
+=== PAUSE TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_an_octal_one_escape
+=== RUN   TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_an_octal_zero-one_escape
+=== PAUSE TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_an_octal_zero-one_escape
+=== RUN   TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_a_newline_escape
+=== RUN   TestNoMultiStrFires/test('Line_1_\__Line_2');
+=== PAUSE TestNoMultiStrFires/test('Line_1_\__Line_2');
+=== RUN   TestNoMultiStrFires/'foo\_bar';
+=== PAUSE TestNoMultiStrFires/'foo\_bar';
+=== RUN   TestNoMultiStrFires/'foo\_bar';#01
+=== PAUSE TestNoMultiStrFires/'foo\_bar';#01
+=== RUN   TestNoMultiStrFires/'foo\_ar';
+=== PAUSE TestNoMultiStrFires/'foo\_ar';
+=== CONT  TestNoMultiStrMessage
+=== CONT  TestNoMultiStrDistinguishesEscapesFromContinuations
+--- PASS: TestNoMultiStrMessage (0.00s)
+=== CONT  TestNoMultiStrJsxExemption
+=== CONT  TestNoMultiStrReportsTheWholeLiteral
+=== CONT  TestNoMultiStrDeclinesOtherLiteralKinds
+=== PAUSE TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_a_newline_escape
+=== RUN   TestNoMultiStrDistinguishesEscapesFromContinuations/an_escape_sequence
+=== PAUSE TestNoMultiStrDistinguishesEscapesFromContinuations/an_escape_sequence
+=== RUN   TestNoMultiStrJsxExemption/a_multiline_attribute_value
+=== PAUSE TestNoMultiStrJsxExemption/a_multiline_attribute_value
+=== RUN   TestNoMultiStrJsxExemption/a_multiline_string_in_attribute_braces
+=== PAUSE TestNoMultiStrJsxExemption/a_multiline_string_in_attribute_braces
+=== RUN   TestNoMultiStrJsxExemption/a_multiline_string_in_element_braces
+=== PAUSE TestNoMultiStrJsxExemption/a_multiline_string_in_element_braces
+=== RUN   TestNoMultiStrJsxExemption/a_multiline_string_in_a_spread_object
+=== PAUSE TestNoMultiStrJsxExemption/a_multiline_string_in_a_spread_object
+=== RUN   TestNoMultiStrJsxExemption/a_multiline_string_spread_as_attributes
+=== PAUSE TestNoMultiStrJsxExemption/a_multiline_string_spread_as_attributes
+=== RUN   TestNoMultiStrJsxExemption/a_multiline_string_outside_JSX_in_a_JSX_file
+=== PAUSE TestNoMultiStrJsxExemption/a_multiline_string_outside_JSX_in_a_JSX_file
+=== RUN   TestNoMultiStrDistinguishesEscapesFromContinuations/a_line_continuation
+=== CONT  TestNoMultiStrStaysSilent
+=== RUN   TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/with_nothing_before_it
+=== RUN   TestNoMultiStrReportsTheWholeLiteral/a_declaration
+=== RUN   TestNoMultiStrDeclinesOtherLiteralKinds/a_template_spanning_lines
+=== PAUSE TestNoMultiStrDistinguishesEscapesFromContinuations/a_line_continuation
+=== PAUSE TestNoMultiStrDeclinesOtherLiteralKinds/a_template_spanning_lines
+=== RUN   TestNoMultiStrDistinguishesEscapesFromContinuations/an_escape_and_no_break
+=== PAUSE TestNoMultiStrDistinguishesEscapesFromContinuations/an_escape_and_no_break
+=== RUN   TestNoMultiStrStaysSilent/a_string_on_one_line
+=== RUN   TestNoMultiStrDistinguishesEscapesFromContinuations/a_continuation_with_nothing_after_it
+=== PAUSE TestNoMultiStrDistinguishesEscapesFromContinuations/a_continuation_with_nothing_after_it
+=== PAUSE TestNoMultiStrStaysSilent/a_string_on_one_line
+=== RUN   TestNoMultiStrStaysSilent/a_JSX_element_whose_text_spans_lines
+=== PAUSE TestNoMultiStrStaysSilent/a_JSX_element_whose_text_spans_lines
+=== RUN   TestNoMultiStrDeclinesOtherLiteralKinds/a_tagged_template_spanning_lines
+=== PAUSE TestNoMultiStrReportsTheWholeLiteral/a_declaration
+=== PAUSE TestNoMultiStrDeclinesOtherLiteralKinds/a_tagged_template_spanning_lines
+=== PAUSE TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/with_nothing_before_it
+=== RUN   TestNoMultiStrDeclinesOtherLiteralKinds/a_regular_expression
+=== CONT  TestNoNonoctalDecimalEscapeTreatsOctalZeroAsOrdinary
+=== PAUSE TestNoMultiStrDeclinesOtherLiteralKinds/a_regular_expression
+=== RUN   TestNoMultiStrDeclinesOtherLiteralKinds/a_number
+=== PAUSE TestNoMultiStrDeclinesOtherLiteralKinds/a_number
+=== RUN   TestNoMultiStrReportsTheWholeLiteral/a_call_argument
+=== PAUSE TestNoMultiStrReportsTheWholeLiteral/a_call_argument
+--- PASS: TestNoNonoctalDecimalEscapeTreatsOctalZeroAsOrdinary (0.00s)
+=== CONT  TestNoOctalReadsRawTextRatherThanTheCookedValue
+=== CONT  TestNoOctalEscapeMessage
+--- PASS: TestNoOctalEscapeMessage (0.00s)
+=== CONT  TestNoOctalReportsTheLiteralSpan
+=== RUN   TestNoOctalReportsTheLiteralSpan/a_plain_octal
+=== PAUSE TestNoOctalReportsTheLiteralSpan/a_plain_octal
+=== RUN   TestNoOctalReportsTheLiteralSpan/a_single_digit
+=== PAUSE TestNoOctalReportsTheLiteralSpan/a_single_digit
+=== RUN   TestNoOctalReportsTheLiteralSpan/under_a_unary_minus,_the_sign_is_not_part_of_it
+=== PAUSE TestNoOctalReportsTheLiteralSpan/under_a_unary_minus,_the_sign_is_not_part_of_it
+=== RUN   TestNoOctalReportsTheLiteralSpan/in_a_subscript
+=== PAUSE TestNoOctalReportsTheLiteralSpan/in_a_subscript
+=== RUN   TestNoOctalReportsTheLiteralSpan/not_the_fractional_tail_the_parser_split_off
+=== PAUSE TestNoOctalReportsTheLiteralSpan/not_the_fractional_tail_the_parser_split_off
+=== RUN   TestNoOctalReportsTheLiteralSpan/the_raw_digits_rather_than_the_BigInt_spelling
+=== PAUSE TestNoOctalReportsTheLiteralSpan/the_raw_digits_rather_than_the_BigInt_spelling
+=== RUN   TestNoOctalReportsTheLiteralSpan/a_non-octal_decimal
+=== PAUSE TestNoOctalReportsTheLiteralSpan/a_non-octal_decimal
+=== CONT  TestNoOctalReportsEachLiteralSeparately
+--- PASS: TestNoOctalReadsRawTextRatherThanTheCookedValue (0.00s)
+=== CONT  TestNoOctalStaysSilent
+=== RUN   TestNoOctalStaysSilent/a_bare_zero
+=== PAUSE TestNoOctalStaysSilent/a_bare_zero
+=== RUN   TestNoOctalStaysSilent/a_fraction_whose_integer_part_is_zero
+=== PAUSE TestNoOctalStaysSilent/a_fraction_whose_integer_part_is_zero
+=== RUN   TestNoOctalStaysSilent/a_zero-valued_fraction
+=== PAUSE TestNoOctalStaysSilent/a_zero-valued_fraction
+=== RUN   TestNoOctalStaysSilent/a_zero-valued_exponent
+=== PAUSE TestNoOctalStaysSilent/a_zero-valued_exponent
+=== RUN   TestNoOctalStaysSilent/a_hexadecimal_literal
+=== PAUSE TestNoOctalStaysSilent/a_hexadecimal_literal
+=== RUN   TestNoOctalStaysSilent/the_modern_octal,_which_is_what_upstream_is_asking_for
+=== PAUSE TestNoOctalStaysSilent/the_modern_octal,_which_is_what_upstream_is_asking_for
+=== CONT  TestNoOctalFires
+=== RUN   TestNoOctalStaysSilent/the_modern_octal_with_a_capital_prefix
+=== PAUSE TestNoOctalStaysSilent/the_modern_octal_with_a_capital_prefix
+=== CONT  TestNoNonoctalDecimalEscapeAvoidsCreatingAnOctalEscape
+=== RUN   TestNoOctalStaysSilent/a_binary_literal
+=== PAUSE TestNoOctalStaysSilent/a_binary_literal
+=== RUN   TestNoOctalStaysSilent/an_exponent_with_no_leading_zero
+=== PAUSE TestNoOctalStaysSilent/an_exponent_with_no_leading_zero
+=== RUN   TestNoOctalStaysSilent/a_fraction_with_no_leading_zero
+=== PAUSE TestNoOctalStaysSilent/a_fraction_with_no_leading_zero
+=== RUN   TestNoOctalStaysSilent/the_digits_inside_a_string
+=== PAUSE TestNoOctalStaysSilent/the_digits_inside_a_string
+=== RUN   TestNoOctalStaysSilent/the_digits_inside_a_single-quoted_string
+=== PAUSE TestNoOctalStaysSilent/the_digits_inside_a_single-quoted_string
+=== RUN   TestNoOctalStaysSilent/the_digits_inside_a_template_literal
+=== PAUSE TestNoOctalStaysSilent/the_digits_inside_a_template_literal
+=== RUN   TestNoOctalStaysSilent/the_digits_inside_a_line_comment
+=== CONT  TestNoNonoctalDecimalEscapeReportsEachEscape
+--- PASS: TestNoOctalReportsEachLiteralSeparately (0.00s)
+--- PASS: TestNoNonoctalDecimalEscapeAvoidsCreatingAnOctalEscape (0.00s)
+=== RUN   TestNoOctalFires/the_canonical_file_mode
+=== RUN   TestNoNonoctalDecimalEscapeReportsEachEscape/the_same_digit_twice
+=== PAUSE TestNoOctalFires/the_canonical_file_mode
+=== RUN   TestNoOctalFires/a_single_octal_digit
+=== PAUSE TestNoNonoctalDecimalEscapeReportsEachEscape/the_same_digit_twice
+=== RUN   TestNoNonoctalDecimalEscapeReportsEachEscape/both_digits
+=== PAUSE TestNoOctalStaysSilent/the_digits_inside_a_line_comment
+=== PAUSE TestNoNonoctalDecimalEscapeReportsEachEscape/both_digits
+=== RUN   TestNoOctalStaysSilent/the_digits_inside_a_block_comment
+=== PAUSE TestNoOctalStaysSilent/the_digits_inside_a_block_comment
+=== RUN   TestNoOctalStaysSilent/the_digits_inside_an_identifier
+=== PAUSE TestNoOctalStaysSilent/the_digits_inside_an_identifier
+=== RUN   TestNoOctalStaysSilent/a_leading_zero_followed_by_a_numeric_separator
+=== PAUSE TestNoOctalStaysSilent/a_leading_zero_followed_by_a_numeric_separator
+=== PAUSE TestNoOctalFires/a_single_octal_digit
+=== RUN   TestNoOctalFires/all_zeroes,_which_is_still_the_legacy_form
+=== PAUSE TestNoOctalFires/all_zeroes,_which_is_still_the_legacy_form
+=== RUN   TestNoOctalFires/a_digit_eight,_a_legal_decimal_upstream_still_reports
+=== PAUSE TestNoOctalFires/a_digit_eight,_a_legal_decimal_upstream_still_reports
+=== RUN   TestNoOctalFires/a_digit_nine,_likewise
+=== PAUSE TestNoOctalFires/a_digit_nine,_likewise
+=== RUN   TestNoOctalFires/a_two-digit_non-octal_decimal
+=== PAUSE TestNoOctalFires/a_two-digit_non-octal_decimal
+=== RUN   TestNoOctalFires/a_longer_non-octal_decimal
+=== PAUSE TestNoOctalFires/a_longer_non-octal_decimal
+=== RUN   TestNoOctalFires/an_octal_in_a_subscript_rather_than_an_initializer
+=== PAUSE TestNoOctalFires/an_octal_in_a_subscript_rather_than_an_initializer
+=== RUN   TestNoOctalFires/an_octal_under_a_unary_minus,_which_reports_on_the_literal
+=== PAUSE TestNoOctalFires/an_octal_under_a_unary_minus,_which_reports_on_the_literal
+=== CONT  TestNoNonoctalDecimalEscapeOffersBothReadings
+--- PASS: TestNoNonoctalDecimalEscapeOffersBothReadings (0.00s)
+=== CONT  TestNoOctalEscapeDeclinesOtherLiteralKinds
+=== RUN   TestNoOctalEscapeDeclinesOtherLiteralKinds/a_regular_expression_backreference
+=== PAUSE TestNoOctalEscapeDeclinesOtherLiteralKinds/a_regular_expression_backreference
+=== RUN   TestNoOctalEscapeDeclinesOtherLiteralKinds/a_regular_expression_octal-looking_escape
+=== PAUSE TestNoOctalEscapeDeclinesOtherLiteralKinds/a_regular_expression_octal-looking_escape
+=== RUN   TestNoOctalEscapeDeclinesOtherLiteralKinds/a_number
+=== PAUSE TestNoOctalEscapeDeclinesOtherLiteralKinds/a_number
+=== RUN   TestNoNonoctalDecimalEscapeReportsEachEscape/separated_by_an_escaped_backslash
+=== PAUSE TestNoNonoctalDecimalEscapeReportsEachEscape/separated_by_an_escaped_backslash
+=== CONT  TestNoOctalEscapeReportsTheWholeLiteral
+=== RUN   TestNoOctalEscapeReportsTheWholeLiteral/'\01'
+=== PAUSE TestNoOctalEscapeReportsTheWholeLiteral/'\01'
+=== RUN   TestNoOctalEscapeReportsTheWholeLiteral/var_foo_=_"foo_\01_bar";
+=== PAUSE TestNoOctalEscapeReportsTheWholeLiteral/var_foo_=_"foo_\01_bar";
+=== RUN   TestNoOctalEscapeReportsTheWholeLiteral/foo('\251');
+=== PAUSE TestNoOctalEscapeReportsTheWholeLiteral/foo('\251');
+=== CONT  TestNoOctalEscapeReportsOncePerLiteral
+=== RUN   TestNoOctalEscapeReportsOncePerLiteral/three_escapes_in_one_literal
+=== PAUSE TestNoOctalEscapeReportsOncePerLiteral/three_escapes_in_one_literal
+=== RUN   TestNoOctalEscapeReportsOncePerLiteral/two_literals,_two_findings
+=== PAUSE TestNoOctalEscapeReportsOncePerLiteral/two_literals,_two_findings
+=== RUN   TestNoOctalEscapeReportsOncePerLiteral/one_reporting_literal_beside_a_clean_one
+=== PAUSE TestNoOctalEscapeReportsOncePerLiteral/one_reporting_literal_beside_a_clean_one
+=== CONT  TestNoOctalOnSourceOurParserAcceptsAndESLintRejects
+=== RUN   TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_legacy_octal_with_a_fractional_part
+=== PAUSE TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_legacy_octal_with_a_fractional_part
+=== RUN   TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_longer_legacy_octal_with_a_fractional_part
+=== PAUSE TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_longer_legacy_octal_with_a_fractional_part
+=== RUN   TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_legacy_octal_carrying_a_BigInt_suffix
+=== PAUSE TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_legacy_octal_carrying_a_BigInt_suffix
+=== CONT  TestNoOctalEscapeStaysSilent
+=== RUN   TestNoOctalEscapeStaysSilent/var_foo_=_"\x51";
+=== PAUSE TestNoOctalEscapeStaysSilent/var_foo_=_"\x51";
+=== RUN   TestNoOctalEscapeStaysSilent/var_foo_=_"foo_\\251_bar";
+=== PAUSE TestNoOctalEscapeStaysSilent/var_foo_=_"foo_\\251_bar";
+=== RUN   TestNoOctalEscapeStaysSilent/var_foo_=_/([abc])_\1/g;
+=== PAUSE TestNoOctalEscapeStaysSilent/var_foo_=_/([abc])_\1/g;
+=== RUN   TestNoOctalEscapeStaysSilent/var_foo_=_'\0';
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/a_plain_digit
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/a_plain_digit
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/the_nine_digit
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/the_nine_digit
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/a_digit_after_text
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/a_digit_after_text
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/an_empty_string
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/an_empty_string
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/no_escapes_at_all
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/no_escapes_at_all
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_then_a_digit
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_then_a_digit
+=== PAUSE TestNoOctalEscapeStaysSilent/var_foo_=_'\0';
+=== CONT  TestNoNonoctalDecimalEscapeProposesNoAutomaticFix
+=== RUN   TestNoOctalEscapeStaysSilent/'\0'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\0'
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_then_nine
+=== RUN   TestNoOctalEscapeStaysSilent/'\8'
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_then_nine
+=== PAUSE TestNoOctalEscapeStaysSilent/'\8'
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/two_escaped_backslashes_then_a_digit
+=== CONT  TestNoNonoctalDecimalEscapeFires
+=== RUN   TestNoOctalEscapeStaysSilent/'\9'
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/two_escaped_backslashes_then_a_digit
+--- PASS: TestNoNonoctalDecimalEscapeProposesNoAutomaticFix (0.00s)
+=== PAUSE TestNoOctalEscapeStaysSilent/'\9'
+=== RUN   TestNoNonoctalDecimalEscapeFires/a_bare_escape
+=== PAUSE TestNoNonoctalDecimalEscapeFires/a_bare_escape
+=== RUN   TestNoOctalEscapeStaysSilent/'\0_'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\0_'
+=== RUN   TestNoOctalEscapeStaysSilent/'_\0'
+=== PAUSE TestNoOctalEscapeStaysSilent/'_\0'
+=== RUN   TestNoOctalEscapeStaysSilent/'a\0'
+=== PAUSE TestNoOctalEscapeStaysSilent/'a\0'
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape
+=== RUN   TestNoOctalEscapeStaysSilent/'\0a'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\0a'
+=== RUN   TestNoOctalEscapeStaysSilent/'a\8a'
+=== RUN   TestNoNonoctalDecimalEscapeFires/the_nine_form
+=== PAUSE TestNoOctalEscapeStaysSilent/'a\8a'
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape
+=== PAUSE TestNoNonoctalDecimalEscapeFires/the_nine_form
+=== CONT  TestNoOctalEscapeProductionWidths
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/a_seven_escape
+=== RUN   TestNoNonoctalDecimalEscapeFires/in_a_double_quoted_string
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/a_seven_escape
+=== PAUSE TestNoNonoctalDecimalEscapeFires/in_a_double_quoted_string
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/a_null_escape
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/a_null_escape
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape_followed_by_eight
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape_followed_by_eight
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape_followed_by_nine
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape_followed_by_nine
+=== CONT  TestNoOctalEscapeFires
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\01_bar";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\01_bar";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\000_bar";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\000_bar";
+=== RUN   TestNoNonoctalDecimalEscapeFires/after_one_character
+=== PAUSE TestNoNonoctalDecimalEscapeFires/after_one_character
+=== RUN   TestNoNonoctalDecimalEscapeFires/after_several_characters
+=== PAUSE TestNoNonoctalDecimalEscapeFires/after_several_characters
+=== RUN   TestNoNonoctalDecimalEscapeFires/with_text_on_both_sides
+=== RUN   TestNoOctalEscapeStaysSilent/'\0\8'
+=== PAUSE TestNoNonoctalDecimalEscapeFires/with_text_on_both_sides
+=== PAUSE TestNoOctalEscapeStaysSilent/'\0\8'
+=== RUN   TestNoNonoctalDecimalEscapeFires/after_an_escaped_backslash
+=== PAUSE TestNoNonoctalDecimalEscapeFires/after_an_escaped_backslash
+=== RUN   TestNoNonoctalDecimalEscapeFires/after_two_escaped_backslashes
+=== PAUSE TestNoNonoctalDecimalEscapeFires/after_two_escaped_backslashes
+=== RUN   TestNoNonoctalDecimalEscapeFires/after_an_octal_escape
+=== PAUSE TestNoNonoctalDecimalEscapeFires/after_an_octal_escape
+=== RUN   TestNoNonoctalDecimalEscapeFires/after_a_newline_escape
+=== PAUSE TestNoNonoctalDecimalEscapeFires/after_a_newline_escape
+=== RUN   TestNoNonoctalDecimalEscapeFires/before_an_escaped_backslash
+=== PAUSE TestNoNonoctalDecimalEscapeFires/before_an_escaped_backslash
+=== RUN   TestNoOctalEscapeStaysSilent/'\8\0'
+=== CONT  TestNoMultiStrFires/var_x_=_'Line_1_\__Line_2'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\8\0'
+=== RUN   TestNoOctalEscapeStaysSilent/'\80'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\80'
+=== RUN   TestNoOctalEscapeStaysSilent/'\81'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\81'
+=== RUN   TestNoOctalEscapeStaysSilent/'\\'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\\'
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/a_newline_escape_then_a_digit
+=== RUN   TestNoOctalEscapeStaysSilent/'\\0'
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/a_newline_escape_then_a_digit
+=== PAUSE TestNoOctalEscapeStaysSilent/'\\0'
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/a_hex_escape
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/a_hex_escape
+=== RUN   TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_before_a_hex_escape
+=== PAUSE TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_before_a_hex_escape
+=== CONT  TestNoMultiStrFires/'foo\_bar';#01
+=== CONT  TestNoMultiStrFires/'foo\_bar';
+=== CONT  TestNoMultiStrFires/test('Line_1_\__Line_2');
+=== CONT  TestNoMultiStrJsxExemption/a_multiline_attribute_value
+=== RUN   TestNoOctalEscapeStaysSilent/'\\08'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\\08'
+=== CONT  TestNoMultiStrFires/'foo\_ar';
+=== RUN   TestNoOctalEscapeStaysSilent/'\\1'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\\1'
+=== RUN   TestNoOctalEscapeStaysSilent/'\\01'
+=== CONT  TestNoMultiStrJsxExemption/a_multiline_string_outside_JSX_in_a_JSX_file
+=== PAUSE TestNoOctalEscapeStaysSilent/'\\01'
+=== RUN   TestNoOctalEscapeStaysSilent/'\\12'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\\12'
+=== RUN   TestNoOctalEscapeStaysSilent/'\\\0'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\\\0'
+=== RUN   TestNoOctalEscapeStaysSilent/'\\\8'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\\\8'
+=== RUN   TestNoOctalEscapeStaysSilent/'\0\\'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\0\\'
+--- PASS: TestNoMultiStrFires (0.00s)
+    --- PASS: TestNoMultiStrFires/var_x_=_'Line_1_\__Line_2' (0.00s)
+    --- PASS: TestNoMultiStrFires/'foo\_bar';#01 (0.00s)
+    --- PASS: TestNoMultiStrFires/'foo\_bar'; (0.00s)
+    --- PASS: TestNoMultiStrFires/test('Line_1_\__Line_2'); (0.00s)
+    --- PASS: TestNoMultiStrFires/'foo\_ar'; (0.00s)
+=== RUN   TestNoOctalEscapeProductionWidths/'\0000'
+=== PAUSE TestNoOctalEscapeProductionWidths/'\0000'
+=== RUN   TestNoOctalEscapeProductionWidths/'\1234'
+=== PAUSE TestNoOctalEscapeProductionWidths/'\1234'
+=== RUN   TestNoOctalEscapeProductionWidths/'\3777'
+=== PAUSE TestNoOctalEscapeProductionWidths/'\3777'
+=== RUN   TestNoOctalEscapeProductionWidths/'\7777'
+=== PAUSE TestNoOctalEscapeProductionWidths/'\7777'
+=== RUN   TestNoOctalEscapeProductionWidths/'\400'
+=== PAUSE TestNoOctalEscapeProductionWidths/'\400'
+=== RUN   TestNoOctalEscapeStaysSilent/'0'
+=== RUN   TestNoOctalEscapeProductionWidths/'\77'
+=== PAUSE TestNoOctalEscapeProductionWidths/'\77'
+=== PAUSE TestNoOctalEscapeStaysSilent/'0'
+=== RUN   TestNoOctalEscapeStaysSilent/'1'
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\377_bar";
+=== PAUSE TestNoOctalEscapeStaysSilent/'1'
+=== CONT  TestNoMultiStrJsxExemption/a_multiline_string_spread_as_attributes
+=== RUN   TestNoOctalEscapeStaysSilent/'8'
+=== PAUSE TestNoOctalEscapeStaysSilent/'8'
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\377_bar";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\378_bar";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\378_bar";
+=== CONT  TestNoMultiStrJsxExemption/a_multiline_string_in_a_spread_object
+=== CONT  TestNoMultiStrJsxExemption/a_multiline_string_in_element_braces
+=== CONT  TestNoMultiStrJsxExemption/a_multiline_string_in_attribute_braces
+=== CONT  TestNoMultiStrDistinguishesEscapesFromContinuations/an_escape_sequence
+=== CONT  TestNoMultiStrStaysSilent/a_string_on_one_line
+=== CONT  TestNoMultiStrDistinguishesEscapesFromContinuations/a_continuation_with_nothing_after_it
+=== CONT  TestNoMultiStrDistinguishesEscapesFromContinuations/an_escape_and_no_break
+=== CONT  TestNoMultiStrDistinguishesEscapesFromContinuations/a_line_continuation
+=== RUN   TestNoOctalEscapeStaysSilent/'01'
+=== PAUSE TestNoOctalEscapeStaysSilent/'01'
+=== CONT  TestNoMultiStrDeclinesOtherLiteralKinds/a_template_spanning_lines
+=== CONT  TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_a_null_escape
+=== RUN   TestNoOctalEscapeStaysSilent/'08'
+=== PAUSE TestNoOctalEscapeStaysSilent/'08'
+=== RUN   TestNoOctalEscapeStaysSilent/'80'
+=== PAUSE TestNoOctalEscapeStaysSilent/'80'
+=== RUN   TestNoOctalEscapeStaysSilent/'12'
+--- PASS: TestNoMultiStrJsxExemption (0.00s)
+    --- PASS: TestNoMultiStrJsxExemption/a_multiline_attribute_value (0.00s)
+    --- PASS: TestNoMultiStrJsxExemption/a_multiline_string_outside_JSX_in_a_JSX_file (0.00s)
+    --- PASS: TestNoMultiStrJsxExemption/a_multiline_string_spread_as_attributes (0.00s)
+    --- PASS: TestNoMultiStrJsxExemption/a_multiline_string_in_a_spread_object (0.00s)
+    --- PASS: TestNoMultiStrJsxExemption/a_multiline_string_in_element_braces (0.00s)
+    --- PASS: TestNoMultiStrJsxExemption/a_multiline_string_in_attribute_braces (0.00s)
+=== PAUSE TestNoOctalEscapeStaysSilent/'12'
+=== RUN   TestNoOctalEscapeStaysSilent/'\a'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\a'
+=== RUN   TestNoOctalEscapeStaysSilent/'\n'
+=== PAUSE TestNoOctalEscapeStaysSilent/'\n'
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\37a_bar";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\37a_bar";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\381_bar";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\381_bar";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\3a1_bar";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\3a1_bar";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\251_bar";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\251_bar";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\258_bar";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\258_bar";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\25a_bar";
+=== CONT  TestNoMultiStrDeclinesOtherLiteralKinds/a_number
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\25a_bar";
+=== CONT  TestNoMultiStrReportsTheWholeLiteral/a_declaration
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"\3s51";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"\3s51";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"\77";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"\77";
+=== CONT  TestNoMultiStrDeclinesOtherLiteralKinds/a_regular_expression
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"\78";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"\78";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"\5a";
+=== RUN   TestNoOctalEscapeProductionWidths/'\7a'
+=== CONT  TestNoMultiStrDeclinesOtherLiteralKinds/a_tagged_template_spanning_lines
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"\5a";
+=== PAUSE TestNoOctalEscapeProductionWidths/'\7a'
+=== CONT  TestNoOctalReportsTheLiteralSpan/a_plain_octal
+=== CONT  TestNoOctalReportsTheLiteralSpan/a_non-octal_decimal
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"\751";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"\751";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"foo_\400_bar";
+=== CONT  TestNoMultiStrReportsTheWholeLiteral/a_call_argument
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"foo_\400_bar";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"\t\1";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"\t\1";
+=== RUN   TestNoOctalEscapeFires/var_foo_=_"\\\751";
+=== PAUSE TestNoOctalEscapeFires/var_foo_=_"\\\751";
+--- PASS: TestNoMultiStrDistinguishesEscapesFromContinuations (0.00s)
+    --- PASS: TestNoMultiStrDistinguishesEscapesFromContinuations/an_escape_sequence (0.00s)
+    --- PASS: TestNoMultiStrDistinguishesEscapesFromContinuations/a_continuation_with_nothing_after_it (0.00s)
+    --- PASS: TestNoMultiStrDistinguishesEscapesFromContinuations/an_escape_and_no_break (0.00s)
+    --- PASS: TestNoMultiStrDistinguishesEscapesFromContinuations/a_line_continuation (0.00s)
+=== RUN   TestNoOctalEscapeFires/'\0\1'
+=== PAUSE TestNoOctalEscapeFires/'\0\1'
+=== RUN   TestNoOctalEscapeFires/'\0_\1'
+=== PAUSE TestNoOctalEscapeFires/'\0_\1'
+=== RUN   TestNoOctalEscapeFires/'\0\01'
+=== CONT  TestNoOctalReportsTheLiteralSpan/the_raw_digits_rather_than_the_BigInt_spelling
+=== PAUSE TestNoOctalEscapeFires/'\0\01'
+=== CONT  TestNoOctalReportsTheLiteralSpan/in_a_subscript
+=== RUN   TestNoOctalEscapeFires/'\0_\01'
+=== PAUSE TestNoOctalEscapeFires/'\0_\01'
+=== RUN   TestNoOctalEscapeFires/'\0a\1'
+=== CONT  TestNoOctalReportsTheLiteralSpan/under_a_unary_minus,_the_sign_is_not_part_of_it
+=== CONT  TestNoOctalReportsTheLiteralSpan/not_the_fractional_tail_the_parser_split_off
+=== CONT  TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/with_nothing_before_it
+=== CONT  TestNoOctalReportsTheLiteralSpan/a_single_digit
+=== CONT  TestNoMultiStrStaysSilent/a_JSX_element_whose_text_spans_lines
+--- PASS: TestNoMultiStrDeclinesOtherLiteralKinds (0.00s)
+    --- PASS: TestNoMultiStrDeclinesOtherLiteralKinds/a_template_spanning_lines (0.00s)
+    --- PASS: TestNoMultiStrDeclinesOtherLiteralKinds/a_regular_expression (0.00s)
+    --- PASS: TestNoMultiStrDeclinesOtherLiteralKinds/a_tagged_template_spanning_lines (0.00s)
+    --- PASS: TestNoMultiStrDeclinesOtherLiteralKinds/a_number (0.00s)
+=== CONT  TestNoOctalStaysSilent/a_bare_zero
+=== PAUSE TestNoOctalEscapeFires/'\0a\1'
+=== RUN   TestNoOctalEscapeFires/'\0a\01'
+=== CONT  TestNoOctalFires/the_canonical_file_mode
+=== PAUSE TestNoOctalEscapeFires/'\0a\01'
+--- PASS: TestNoOctalReportsTheLiteralSpan (0.00s)
+    --- PASS: TestNoOctalReportsTheLiteralSpan/a_non-octal_decimal (0.00s)
+    --- PASS: TestNoOctalReportsTheLiteralSpan/the_raw_digits_rather_than_the_BigInt_spelling (0.00s)
+    --- PASS: TestNoOctalReportsTheLiteralSpan/a_plain_octal (0.00s)
+    --- PASS: TestNoOctalReportsTheLiteralSpan/in_a_subscript (0.00s)
+    --- PASS: TestNoOctalReportsTheLiteralSpan/not_the_fractional_tail_the_parser_split_off (0.00s)
+    --- PASS: TestNoOctalReportsTheLiteralSpan/under_a_unary_minus,_the_sign_is_not_part_of_it (0.00s)
+    --- PASS: TestNoOctalReportsTheLiteralSpan/a_single_digit (0.00s)
+--- PASS: TestNoMultiStrReportsTheWholeLiteral (0.00s)
+    --- PASS: TestNoMultiStrReportsTheWholeLiteral/a_declaration (0.00s)
+    --- PASS: TestNoMultiStrReportsTheWholeLiteral/a_call_argument (0.00s)
+=== RUN   TestNoOctalEscapeFires/'\0\08'
+=== PAUSE TestNoOctalEscapeFires/'\0\08'
+=== RUN   TestNoOctalEscapeFires/'\1'
+=== PAUSE TestNoOctalEscapeFires/'\1'
+=== RUN   TestNoOctalEscapeFires/'\2'
+=== PAUSE TestNoOctalEscapeFires/'\2'
+=== RUN   TestNoOctalEscapeFires/'\7'
+=== PAUSE TestNoOctalEscapeFires/'\7'
+=== RUN   TestNoOctalEscapeFires/'\00'
+=== CONT  TestNoOctalEscapeDeclinesOtherLiteralKinds/a_regular_expression_backreference
+--- PASS: TestNoMultiStrStaysSilent (0.00s)
+    --- PASS: TestNoMultiStrStaysSilent/a_string_on_one_line (0.00s)
+    --- PASS: TestNoMultiStrStaysSilent/a_JSX_element_whose_text_spans_lines (0.00s)
+=== CONT  TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_an_octal_one_escape
+=== CONT  TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_a_newline_escape
+=== PAUSE TestNoOctalEscapeFires/'\00'
+=== CONT  TestNoOctalStaysSilent/a_leading_zero_followed_by_a_numeric_separator
+=== RUN   TestNoOctalEscapeFires/'\01'
+=== PAUSE TestNoOctalEscapeFires/'\01'
+=== CONT  TestNoOctalStaysSilent/the_digits_inside_a_line_comment
+=== RUN   TestNoOctalEscapeFires/'\02'
+=== PAUSE TestNoOctalEscapeFires/'\02'
+=== RUN   TestNoOctalEscapeFires/'\07'
+=== PAUSE TestNoOctalEscapeFires/'\07'
+=== RUN   TestNoOctalEscapeFires/'\08'
+=== CONT  TestNoOctalStaysSilent/the_digits_inside_a_block_comment
+=== PAUSE TestNoOctalEscapeFires/'\08'
+=== RUN   TestNoOctalEscapeFires/'\09'
+=== CONT  TestNoOctalStaysSilent/the_digits_inside_a_template_literal
+=== CONT  TestNoOctalStaysSilent/the_digits_inside_a_single-quoted_string
+=== CONT  TestNoOctalStaysSilent/the_digits_inside_a_string
+=== PAUSE TestNoOctalEscapeFires/'\09'
+=== CONT  TestNoOctalStaysSilent/the_digits_inside_an_identifier
+=== CONT  TestNoOctalStaysSilent/an_exponent_with_no_leading_zero
+=== CONT  TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_an_octal_zero-one_escape
+=== CONT  TestNoOctalStaysSilent/a_binary_literal
+=== CONT  TestNoOctalStaysSilent/the_modern_octal_with_a_capital_prefix
+--- PASS: TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_a_null_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/with_nothing_before_it (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_an_octal_one_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_a_newline_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeOffersTheNullShapeOnlyAfterNull/after_an_octal_zero-one_escape (0.00s)
+=== RUN   TestNoOctalEscapeFires/'\10'
+=== CONT  TestNoOctalStaysSilent/the_modern_octal,_which_is_what_upstream_is_asking_for
+=== CONT  TestNoOctalStaysSilent/a_zero-valued_exponent
+=== CONT  TestNoOctalStaysSilent/a_zero-valued_fraction
+=== CONT  TestNoOctalStaysSilent/a_hexadecimal_literal
+=== CONT  TestNoOctalStaysSilent/a_fraction_whose_integer_part_is_zero
+=== CONT  TestNoNonoctalDecimalEscapeReportsEachEscape/the_same_digit_twice
+=== CONT  TestNoOctalEscapeReportsTheWholeLiteral/'\01'
+=== CONT  TestNoOctalFires/an_octal_under_a_unary_minus,_which_reports_on_the_literal
+=== CONT  TestNoOctalFires/an_octal_in_a_subscript_rather_than_an_initializer
+=== CONT  TestNoOctalFires/a_longer_non-octal_decimal
+=== CONT  TestNoOctalFires/a_two-digit_non-octal_decimal
+=== CONT  TestNoOctalFires/a_digit_nine,_likewise
+=== CONT  TestNoOctalFires/a_digit_eight,_a_legal_decimal_upstream_still_reports
+=== CONT  TestNoOctalFires/all_zeroes,_which_is_still_the_legacy_form
+=== CONT  TestNoOctalEscapeReportsOncePerLiteral/three_escapes_in_one_literal
+=== CONT  TestNoOctalFires/a_single_octal_digit
+=== CONT  TestNoOctalEscapeDeclinesOtherLiteralKinds/a_number
+--- PASS: TestNoOctalFires (0.00s)
+    --- PASS: TestNoOctalFires/the_canonical_file_mode (0.00s)
+    --- PASS: TestNoOctalFires/an_octal_under_a_unary_minus,_which_reports_on_the_literal (0.00s)
+    --- PASS: TestNoOctalFires/an_octal_in_a_subscript_rather_than_an_initializer (0.00s)
+    --- PASS: TestNoOctalFires/a_two-digit_non-octal_decimal (0.00s)
+    --- PASS: TestNoOctalFires/a_longer_non-octal_decimal (0.00s)
+    --- PASS: TestNoOctalFires/a_digit_nine,_likewise (0.00s)
+    --- PASS: TestNoOctalFires/all_zeroes,_which_is_still_the_legacy_form (0.00s)
+    --- PASS: TestNoOctalFires/a_digit_eight,_a_legal_decimal_upstream_still_reports (0.00s)
+    --- PASS: TestNoOctalFires/a_single_octal_digit (0.00s)
+=== CONT  TestNoOctalEscapeDeclinesOtherLiteralKinds/a_regular_expression_octal-looking_escape
+=== CONT  TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_legacy_octal_with_a_fractional_part
+=== CONT  TestNoOctalEscapeReportsOncePerLiteral/one_reporting_literal_beside_a_clean_one
+=== CONT  TestNoOctalEscapeReportsOncePerLiteral/two_literals,_two_findings
+=== CONT  TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_legacy_octal_carrying_a_BigInt_suffix
+=== CONT  TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_longer_legacy_octal_with_a_fractional_part
+=== CONT  TestNoNonoctalDecimalEscapeReportsEachEscape/separated_by_an_escaped_backslash
+=== PAUSE TestNoOctalEscapeFires/'\10'
+=== CONT  TestNoOctalEscapeReportsTheWholeLiteral/foo('\251');
+=== CONT  TestNoOctalEscapeReportsTheWholeLiteral/var_foo_=_"foo_\01_bar";
+=== RUN   TestNoOctalEscapeFires/'\12'
+=== PAUSE TestNoOctalEscapeFires/'\12'
+=== RUN   TestNoOctalEscapeFires/'_\1'
+=== CONT  TestNoNonoctalDecimalEscapeFires/a_bare_escape
+=== PAUSE TestNoOctalEscapeFires/'_\1'
+=== CONT  TestNoNonoctalDecimalEscapeFires/after_an_escaped_backslash
+=== RUN   TestNoOctalEscapeFires/'\1_'
+=== PAUSE TestNoOctalEscapeFires/'\1_'
+=== RUN   TestNoOctalEscapeFires/'a\1'
+=== PAUSE TestNoOctalEscapeFires/'a\1'
+=== RUN   TestNoOctalEscapeFires/'\1a'
+=== PAUSE TestNoOctalEscapeFires/'\1a'
+=== CONT  TestNoNonoctalDecimalEscapeFires/before_an_escaped_backslash
+--- PASS: TestNoOctalEscapeDeclinesOtherLiteralKinds (0.00s)
+    --- PASS: TestNoOctalEscapeDeclinesOtherLiteralKinds/a_regular_expression_backreference (0.00s)
+    --- PASS: TestNoOctalEscapeDeclinesOtherLiteralKinds/a_number (0.00s)
+    --- PASS: TestNoOctalEscapeDeclinesOtherLiteralKinds/a_regular_expression_octal-looking_escape (0.00s)
+=== CONT  TestNoNonoctalDecimalEscapeFires/after_an_octal_escape
+=== CONT  TestNoNonoctalDecimalEscapeReportsEachEscape/both_digits
+=== CONT  TestNoNonoctalDecimalEscapeFires/after_two_escaped_backslashes
+=== CONT  TestNoNonoctalDecimalEscapeFires/after_one_character
+=== CONT  TestNoNonoctalDecimalEscapeFires/after_several_characters
+=== RUN   TestNoOctalEscapeFires/'a\1a'
+=== CONT  TestNoNonoctalDecimalEscapeFires/with_text_on_both_sides
+=== PAUSE TestNoOctalEscapeFires/'a\1a'
+=== RUN   TestNoOctalEscapeFires/'_\01'
+=== PAUSE TestNoOctalEscapeFires/'_\01'
+=== CONT  TestNoNonoctalDecimalEscapeFires/the_nine_form
+=== RUN   TestNoOctalEscapeFires/'\01_'
+=== PAUSE TestNoOctalEscapeFires/'\01_'
+=== RUN   TestNoOctalEscapeFires/'a\01'
+=== CONT  TestNoNonoctalDecimalEscapeFires/after_a_newline_escape
+=== PAUSE TestNoOctalEscapeFires/'a\01'
+=== CONT  TestNoNonoctalDecimalEscapeFires/in_a_double_quoted_string
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/a_plain_digit
+=== RUN   TestNoOctalEscapeFires/'\01a'
+=== PAUSE TestNoOctalEscapeFires/'\01a'
+=== RUN   TestNoOctalEscapeFires/'a\01a'
+=== PAUSE TestNoOctalEscapeFires/'a\01a'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_before_a_hex_escape
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/a_hex_escape
+=== RUN   TestNoOctalEscapeFires/'a\08a'
+=== PAUSE TestNoOctalEscapeFires/'a\08a'
+=== RUN   TestNoOctalEscapeFires/'\n\1'
+=== PAUSE TestNoOctalEscapeFires/'\n\1'
+=== RUN   TestNoOctalEscapeFires/'\n\01'
+=== PAUSE TestNoOctalEscapeFires/'\n\01'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/a_newline_escape_then_a_digit
+=== RUN   TestNoOctalEscapeFires/'\n\08'
+=== CONT  TestNoOctalStaysSilent/a_fraction_with_no_leading_zero
+=== PAUSE TestNoOctalEscapeFires/'\n\08'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape_followed_by_eight
+=== RUN   TestNoOctalEscapeFires/'\\\1'
+=== PAUSE TestNoOctalEscapeFires/'\\\1'
+=== RUN   TestNoOctalEscapeFires/'\\\01'
+=== PAUSE TestNoOctalEscapeFires/'\\\01'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/a_null_escape
+=== RUN   TestNoOctalEscapeFires/'\\\08'
+=== PAUSE TestNoOctalEscapeFires/'\\\08'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape
+=== RUN   TestNoOctalEscapeFires/'\_\1'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/two_escaped_backslashes_then_a_digit
+=== PAUSE TestNoOctalEscapeFires/'\_\1'
+=== RUN   TestNoOctalEscapeFires/'\01\02'
+=== PAUSE TestNoOctalEscapeFires/'\01\02'
+=== RUN   TestNoOctalEscapeFires/'\02\01'
+=== PAUSE TestNoOctalEscapeFires/'\02\01'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_then_nine
+=== RUN   TestNoOctalEscapeFires/'\01\2'
+=== PAUSE TestNoOctalEscapeFires/'\01\2'
+=== RUN   TestNoOctalEscapeFires/'\2\01'
+=== PAUSE TestNoOctalEscapeFires/'\2\01'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_then_a_digit
+=== RUN   TestNoOctalEscapeFires/'\08\1'
+=== PAUSE TestNoOctalEscapeFires/'\08\1'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/no_escapes_at_all
+=== RUN   TestNoOctalEscapeFires/'foo_\1_bar_\2'
+=== PAUSE TestNoOctalEscapeFires/'foo_\1_bar_\2'
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape_followed_by_nine
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/a_seven_escape
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/a_digit_after_text
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/the_nine_digit
+=== CONT  TestNoOctalEscapeStaysSilent/var_foo_=_"\x51";
+=== CONT  TestNoNonoctalDecimalEscapeStaysSilent/an_empty_string
+=== CONT  TestNoOctalEscapeStaysSilent/'\\0'
+=== CONT  TestNoOctalEscapeStaysSilent/'\\'
+=== CONT  TestNoOctalEscapeStaysSilent/'_\0'
+--- PASS: TestNoOctalEscapeReportsOncePerLiteral (0.00s)
+    --- PASS: TestNoOctalEscapeReportsOncePerLiteral/three_escapes_in_one_literal (0.00s)
+    --- PASS: TestNoOctalEscapeReportsOncePerLiteral/one_reporting_literal_beside_a_clean_one (0.00s)
+    --- PASS: TestNoOctalEscapeReportsOncePerLiteral/two_literals,_two_findings (0.00s)
+=== CONT  TestNoOctalEscapeStaysSilent/'\81'
+--- PASS: TestNoOctalOnSourceOurParserAcceptsAndESLintRejects (0.00s)
+    --- PASS: TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_legacy_octal_with_a_fractional_part (0.00s)
+    --- PASS: TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_legacy_octal_carrying_a_BigInt_suffix (0.00s)
+    --- PASS: TestNoOctalOnSourceOurParserAcceptsAndESLintRejects/a_longer_legacy_octal_with_a_fractional_part (0.00s)
+=== CONT  TestNoOctalEscapeStaysSilent/'\8\0'
+--- PASS: TestNoOctalEscapeReportsTheWholeLiteral (0.00s)
+    --- PASS: TestNoOctalEscapeReportsTheWholeLiteral/'\01' (0.00s)
+    --- PASS: TestNoOctalEscapeReportsTheWholeLiteral/var_foo_=_"foo_\01_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeReportsTheWholeLiteral/foo('\251'); (0.00s)
+=== CONT  TestNoOctalEscapeStaysSilent/'\0\8'
+--- PASS: TestNoNonoctalDecimalEscapeReportsEachEscape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeReportsEachEscape/the_same_digit_twice (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeReportsEachEscape/separated_by_an_escaped_backslash (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeReportsEachEscape/both_digits (0.00s)
+=== CONT  TestNoOctalEscapeStaysSilent/'\0a'
+=== CONT  TestNoOctalEscapeStaysSilent/'a\8a'
+=== CONT  TestNoOctalEscapeStaysSilent/'\80'
+=== CONT  TestNoOctalEscapeStaysSilent/'a\0'
+=== CONT  TestNoOctalEscapeStaysSilent/'\0'
+=== CONT  TestNoOctalEscapeStaysSilent/'\0_'
+=== CONT  TestNoOctalEscapeStaysSilent/'\9'
+--- PASS: TestNoNonoctalDecimalEscapeFires (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/after_an_escaped_backslash (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/before_an_escaped_backslash (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/a_bare_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/after_an_octal_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/after_two_escaped_backslashes (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/after_one_character (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/with_text_on_both_sides (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/after_several_characters (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/the_nine_form (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/after_a_newline_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeFires/in_a_double_quoted_string (0.00s)
+=== CONT  TestNoOctalEscapeStaysSilent/var_foo_=_/([abc])_\1/g;
+=== CONT  TestNoOctalEscapeStaysSilent/'\8'
+--- PASS: TestNoOctalStaysSilent (0.00s)
+    --- PASS: TestNoOctalStaysSilent/a_bare_zero (0.00s)
+    --- PASS: TestNoOctalStaysSilent/a_leading_zero_followed_by_a_numeric_separator (0.00s)
+    --- PASS: TestNoOctalStaysSilent/the_digits_inside_a_line_comment (0.00s)
+    --- PASS: TestNoOctalStaysSilent/the_digits_inside_a_block_comment (0.00s)
+    --- PASS: TestNoOctalStaysSilent/the_digits_inside_a_template_literal (0.00s)
+    --- PASS: TestNoOctalStaysSilent/the_digits_inside_a_string (0.00s)
+    --- PASS: TestNoOctalStaysSilent/the_digits_inside_a_single-quoted_string (0.00s)
+    --- PASS: TestNoOctalStaysSilent/an_exponent_with_no_leading_zero (0.00s)
+    --- PASS: TestNoOctalStaysSilent/a_binary_literal (0.00s)
+    --- PASS: TestNoOctalStaysSilent/the_modern_octal_with_a_capital_prefix (0.00s)
+    --- PASS: TestNoOctalStaysSilent/the_modern_octal,_which_is_what_upstream_is_asking_for (0.00s)
+    --- PASS: TestNoOctalStaysSilent/the_digits_inside_an_identifier (0.00s)
+    --- PASS: TestNoOctalStaysSilent/a_zero-valued_fraction (0.00s)
+    --- PASS: TestNoOctalStaysSilent/a_zero-valued_exponent (0.00s)
+    --- PASS: TestNoOctalStaysSilent/a_fraction_whose_integer_part_is_zero (0.00s)
+    --- PASS: TestNoOctalStaysSilent/a_hexadecimal_literal (0.00s)
+    --- PASS: TestNoOctalStaysSilent/a_fraction_with_no_leading_zero (0.00s)
+=== CONT  TestNoOctalEscapeStaysSilent/var_foo_=_'\0';
+=== CONT  TestNoOctalEscapeStaysSilent/var_foo_=_"foo_\\251_bar";
+=== CONT  TestNoOctalEscapeStaysSilent/'1'
+=== CONT  TestNoOctalEscapeStaysSilent/'\n'
+=== CONT  TestNoOctalEscapeStaysSilent/'12'
+=== CONT  TestNoOctalEscapeStaysSilent/'80'
+--- PASS: TestNoNonoctalDecimalEscapeStaysSilent (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/a_plain_digit (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_before_a_hex_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/a_hex_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/a_newline_escape_then_a_digit (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape_followed_by_eight (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/a_null_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/two_escaped_backslashes_then_a_digit (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_then_nine (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/no_escapes_at_all (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/an_escaped_backslash_then_a_digit (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/a_digit_after_text (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/an_octal_escape_followed_by_nine (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/the_nine_digit (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/an_empty_string (0.00s)
+    --- PASS: TestNoNonoctalDecimalEscapeStaysSilent/a_seven_escape (0.00s)
+=== CONT  TestNoOctalEscapeStaysSilent/'01'
+=== CONT  TestNoOctalEscapeStaysSilent/'\\\0'
+=== CONT  TestNoOctalEscapeStaysSilent/'8'
+=== CONT  TestNoOctalEscapeStaysSilent/'\a'
+=== CONT  TestNoOctalEscapeStaysSilent/'0'
+=== CONT  TestNoOctalEscapeStaysSilent/'\0\\'
+=== CONT  TestNoOctalEscapeStaysSilent/'\\\8'
+=== CONT  TestNoOctalEscapeStaysSilent/'\\01'
+=== CONT  TestNoOctalEscapeStaysSilent/'\\12'
+=== CONT  TestNoOctalEscapeStaysSilent/'\\08'
+=== CONT  TestNoOctalEscapeStaysSilent/'\\1'
+=== CONT  TestNoOctalEscapeProductionWidths/'\0000'
+=== CONT  TestNoOctalEscapeProductionWidths/'\7a'
+=== CONT  TestNoOctalEscapeProductionWidths/'\77'
+=== CONT  TestNoOctalEscapeStaysSilent/'08'
+=== CONT  TestNoOctalEscapeProductionWidths/'\7777'
+=== CONT  TestNoOctalEscapeProductionWidths/'\1234'
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\01_bar";
+=== CONT  TestNoOctalEscapeFires/'\07'
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"\t\1";
+=== CONT  TestNoOctalEscapeFires/'\02'
+=== CONT  TestNoOctalEscapeFires/'\01'
+--- PASS: TestNoOctalEscapeStaysSilent (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\\0' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\\' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'_\0' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\81' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/var_foo_=_"\x51"; (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\0\8' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'a\8a' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\80' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\8\0' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'a\0' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\0a' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\9' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\0' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/var_foo_=_/([abc])_\1/g; (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\8' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'1' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/var_foo_=_"foo_\\251_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/var_foo_=_'\0'; (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\n' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'12' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'80' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\0_' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'8' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'01' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\a' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'0' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\\\8' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\0\\' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\\01' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\\12' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\\08' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\\\0' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'\\1' (0.00s)
+    --- PASS: TestNoOctalEscapeStaysSilent/'08' (0.00s)
+=== CONT  TestNoOctalEscapeProductionWidths/'\400'
+=== CONT  TestNoOctalEscapeFires/'\00'
+=== CONT  TestNoOctalEscapeProductionWidths/'\3777'
+=== CONT  TestNoOctalEscapeFires/'\7'
+=== CONT  TestNoOctalEscapeFires/'\2'
+=== CONT  TestNoOctalEscapeFires/'\1'
+=== CONT  TestNoOctalEscapeFires/'\0\08'
+=== CONT  TestNoOctalEscapeFires/'\0a\01'
+=== CONT  TestNoOctalEscapeFires/'\0a\1'
+=== CONT  TestNoOctalEscapeFires/'\0_\01'
+=== CONT  TestNoOctalEscapeFires/'\0\01'
+=== CONT  TestNoOctalEscapeFires/'\0\1'
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"\\\751";
+--- PASS: TestNoOctalEscapeProductionWidths (0.00s)
+    --- PASS: TestNoOctalEscapeProductionWidths/'\0000' (0.00s)
+    --- PASS: TestNoOctalEscapeProductionWidths/'\7a' (0.00s)
+    --- PASS: TestNoOctalEscapeProductionWidths/'\77' (0.00s)
+    --- PASS: TestNoOctalEscapeProductionWidths/'\7777' (0.00s)
+    --- PASS: TestNoOctalEscapeProductionWidths/'\1234' (0.00s)
+    --- PASS: TestNoOctalEscapeProductionWidths/'\400' (0.00s)
+    --- PASS: TestNoOctalEscapeProductionWidths/'\3777' (0.00s)
+=== CONT  TestNoOctalEscapeFires/'a\08a'
+=== CONT  TestNoOctalEscapeFires/'foo_\1_bar_\2'
+=== CONT  TestNoOctalEscapeFires/'\08\1'
+=== CONT  TestNoOctalEscapeFires/'\0_\1'
+=== CONT  TestNoOctalEscapeFires/'\2\01'
+=== CONT  TestNoOctalEscapeFires/'\01\2'
+=== CONT  TestNoOctalEscapeFires/'\01\02'
+=== CONT  TestNoOctalEscapeFires/'\_\1'
+=== CONT  TestNoOctalEscapeFires/'\\\08'
+=== CONT  TestNoOctalEscapeFires/'\02\01'
+=== CONT  TestNoOctalEscapeFires/'\\\01'
+=== CONT  TestNoOctalEscapeFires/'\\\1'
+=== CONT  TestNoOctalEscapeFires/'\n\08'
+=== CONT  TestNoOctalEscapeFires/'\n\01'
+=== CONT  TestNoOctalEscapeFires/'\n\1'
+=== CONT  TestNoOctalEscapeFires/'\1a'
+=== CONT  TestNoOctalEscapeFires/'a\01a'
+=== CONT  TestNoOctalEscapeFires/'a\01'
+=== CONT  TestNoOctalEscapeFires/'\01a'
+=== CONT  TestNoOctalEscapeFires/'\01_'
+=== CONT  TestNoOctalEscapeFires/'_\01'
+=== CONT  TestNoOctalEscapeFires/'a\1a'
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\400_bar";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\258_bar";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"\751";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"\5a";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"\78";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"\77";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"\3s51";
+=== CONT  TestNoOctalEscapeFires/'\12'
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\25a_bar";
+=== CONT  TestNoOctalEscapeFires/'a\1'
+=== CONT  TestNoOctalEscapeFires/'\1_'
+=== CONT  TestNoOctalEscapeFires/'_\1'
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\37a_bar";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\251_bar";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\3a1_bar";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\381_bar";
+=== CONT  TestNoOctalEscapeFires/'\09'
+=== CONT  TestNoOctalEscapeFires/'\10'
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\377_bar";
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\378_bar";
+=== CONT  TestNoOctalEscapeFires/'\08'
+=== CONT  TestNoOctalEscapeFires/var_foo_=_"foo_\000_bar";
+--- PASS: TestNoOctalEscapeFires (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\01_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\07' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"\t\1"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\02' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\2' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\7' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\0\08' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\0a\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\0\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\0_\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\0\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\00' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'a\08a' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"\\\751"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'foo_\1_bar_\2' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\2\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\0_\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\01\02' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\0a\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\01\2' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\\\08' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\_\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\\\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\02\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\08\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\n\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\\\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\n\08' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\n\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'a\01a' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'a\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\1a' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\01_' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'_\01' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"\751"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\01a' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\258_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'a\1a' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\400_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"\77"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"\5a"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"\78"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"\3s51"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\12' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'a\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'_\1' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\25a_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\1_' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\37a_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\251_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\3a1_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\09' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\10' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\377_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/'\08' (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\381_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\000_bar"; (0.00s)
+    --- PASS: TestNoOctalEscapeFires/var_foo_=_"foo_\378_bar"; (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.014s

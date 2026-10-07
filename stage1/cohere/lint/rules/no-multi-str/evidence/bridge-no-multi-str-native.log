@@ -1,0 +1,3 @@
+case 0
+finding 8 20 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var x = 'foo\u005c\u2029bar';\u000a

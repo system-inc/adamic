@@ -1,0 +1,71 @@
+case 0
+fixed	/* 0755 */ var a = 1;
+case 1
+finding 2 6 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	a[0755];
+case 2
+fixed	var a = "0755";
+case 3
+fixed	var a = '0755';
+case 4
+finding 9 13 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = -0755;
+case 5
+fixed	var a = .5;
+case 6
+fixed	var a = 0.0;
+case 7
+fixed	var a = 0.5;
+case 8
+finding 8 11 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 000;
+case 9
+finding 8 12 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 0195;
+case 10
+finding 8 11 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 019;
+case 11
+finding 8 12 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+finding 29 31 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+finding 44 46 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 0755, b = 0o755, c = 07, d = 0, e = 08;
+case 12
+finding 8 12 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 0755;
+case 13
+finding 8 10 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 07;
+case 14
+finding 8 10 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 08;
+case 15
+finding 8 10 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 09;
+case 16
+fixed	var a = 0;
+case 17
+fixed	var a = 0O755;
+case 18
+fixed	var a = 0_7_5_5;
+case 19
+fixed	var a = 0b11;
+case 20
+fixed	var a = 0e5;
+case 21
+fixed	var a = 0o755;
+case 22
+fixed	var a = 0x1F;
+case 23
+fixed	var a = 1; // 0755
+case 24
+fixed	var a = 1e3;
+case 25
+fixed	var a = 7;
+case 26
+fixed	var a = `0755`;
+case 27
+fixed	var a0755 = 1;
+case 28
+finding 8 10 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 09;\u000a

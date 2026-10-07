@@ -1,0 +1,18 @@
+JSX/recovered-syntax exclusions: 9
+Captured original asserted tests: {"no-multi-str": 15, "no-nonoctal-decimal-escape": 27, "no-octal": 28}
+Nine excluded inputs explicitly refused on all three backends; Go succeeds.
+fixtures: Go/Node/emitted JavaScript/sanitized native identical, 26425 bytes
+Corpus: 235 files, 705 file/rule pairs
+corpus: Go/Node/emitted JavaScript/sanitized native identical, 37166890 bytes
+no-multi-str mutant caught on Node: successful compile and exit, differing output only
+no-multi-str mutant caught on JavaScript: successful compile and exit, differing output only
+no-multi-str mutant caught on native: successful compile and exit, differing output only
+no-nonoctal-decimal-escape mutant caught on Node: successful compile and exit, differing output only
+no-nonoctal-decimal-escape mutant caught on JavaScript: successful compile and exit, differing output only
+no-nonoctal-decimal-escape mutant caught on native: successful compile and exit, differing output only
+no-octal mutant caught on Node: successful compile and exit, differing output only
+no-octal mutant caught on JavaScript: successful compile and exit, differing output only
+no-octal mutant caught on native: successful compile and exit, differing output only
+no-multi-str: 78 files, 1000 findings, best of 3 Go 6058.03 findings/s (0.165070s), native 930.98 findings/s (1.074141s), Node 1252.80 findings/s (0.798212s)
+no-nonoctal-decimal-escape: 78 files, 1000 findings, best of 3 Go 5758.54 findings/s (0.173655s), native 953.40 findings/s (1.048872s), Node 1186.46 findings/s (0.842844s)
+no-octal: 78 files, 1000 findings, best of 3 Go 5648.09 findings/s (0.177051s), native 883.50 findings/s (1.131863s), Node 1259.61 findings/s (0.793898s)

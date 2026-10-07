@@ -60,7 +60,7 @@ three semantic witnesses and a Unicode/multiple-escape probe bring the fixture
 manifest to 74. The final fixture output is 26,425 identical bytes on all four
 sides. Original capture records and the full Go log are retained.
 
-The corpus is TypeScript v6.0.3, commit 050880cefa386c99b729be9e2c97b24b02de6de2:
+The corpus is TypeScript v6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8:
 77 src/compiler files and 158 current stage1 .ts/.a files, 235 files total,
 705 file/rule pairs and 37,166,890 identical output bytes. Output hashes for all
 sides and gzipped Go corpus output are committed in evidence/. No stderr is

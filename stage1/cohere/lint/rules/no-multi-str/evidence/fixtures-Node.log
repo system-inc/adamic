@@ -1,0 +1,271 @@
+case 0
+finding 0 10 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	'foo\u005c\u000dbar';
+case 1
+finding 0 12 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	'foo\u005c\u2028bar';
+case 2
+finding 0 11 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	'foo\u005c\u2029ar';
+case 3
+finding 5 23 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	test('Line 1 \u005c\u000a Line 2');
+case 4
+fixed	var a = 'Line 1 Line 2';
+case 5
+finding 8 26 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var a = 'Line 1 \u005c\u000a Line 2';
+case 6
+fixed	var a = 'Line 1 \u005cn Line 2';
+case 7
+finding 8 13 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var a = 'a\u005c\u000a';
+case 8
+fixed	var a = 'a\u005cnb\u005cnc';
+case 9
+fixed	var a = /foo/;
+case 10
+fixed	var a = 12;
+case 11
+fixed	var a = `Line 1\u000aLine 2`;
+case 12
+fixed	var a = tag`Line 1\u000aLine 2`;
+case 13
+finding 8 26 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var x = 'Line 1 \u005c\u000a Line 2'
+case 14
+finding 8 26 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var a = 'Line 1 \u005c\u000a Line 2';
+case 15
+finding 18 20 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 18 20	8
+applied	export const A = "8";\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 18 20	\u005c\u005c8
+applied	export const A = "\u005c\u005c8";\u000a
+fixed	export const A = "\u005c8";\u000a
+case 16
+fixed	export const A = '';\u000a
+case 17
+fixed	export const A = '8';\u000a
+case 18
+fixed	export const A = '9';\u000a
+case 19
+fixed	export const A = '\u005c0';\u000a
+case 20
+fixed	export const A = '\u005c08';\u000a
+case 21
+fixed	export const A = '\u005c1';\u000a
+case 22
+fixed	export const A = '\u005c19';\u000a
+case 23
+finding 20 22 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 20 22	9
+applied	export const A = '\u005c19';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 20 22	\u005c\u005c9
+applied	export const A = '\u005c1\u005c\u005c9';\u000a
+fixed	export const A = '\u005c1\u005c9';\u000a
+case 24
+fixed	export const A = '\u005c7';\u000a
+case 25
+finding 18 20 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 18 20	8
+applied	export const A = '8';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 18 20	\u005c\u005c8
+applied	export const A = '\u005c\u005c8';\u000a
+fixed	export const A = '\u005c8';\u000a
+case 26
+finding 18 20 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 18 20	8
+applied	export const A = '8\u005c\u005c9';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 18 20	\u005c\u005c8
+applied	export const A = '\u005c\u005c8\u005c\u005c9';\u000a
+fixed	export const A = '\u005c8\u005c\u005c9';\u000a
+case 27
+finding 18 20 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 18 20	9
+applied	export const A = '9';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 18 20	\u005c\u005c9
+applied	export const A = '\u005c\u005c9';\u000a
+fixed	export const A = '\u005c9';\u000a
+case 28
+fixed	export const A = '\u005c\u005c8';\u000a
+case 29
+fixed	export const A = '\u005c\u005c9';\u000a
+case 30
+finding 20 22 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 20 22	8
+applied	export const A = '\u005c\u005c8';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 20 22	\u005c\u005c8
+applied	export const A = '\u005c\u005c\u005c\u005c8';\u000a
+fixed	export const A = '\u005c\u005c\u005c8';\u000a
+case 31
+fixed	export const A = '\u005c\u005c\u005c\u005c9';\u000a
+case 32
+finding 22 24 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 22 24	9
+applied	export const A = '\u005c\u005c\u005c\u005c9';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 22 24	\u005c\u005c9
+applied	export const A = '\u005c\u005c\u005c\u005c\u005c\u005c9';\u000a
+fixed	export const A = '\u005c\u005c\u005c\u005c\u005c9';\u000a
+case 33
+fixed	export const A = '\u005c\u005c\u005cx38';\u000a
+case 34
+finding 20 22 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 20 22	8
+applied	export const A = '\u005cn8';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 20 22	\u005c\u005c8
+applied	export const A = '\u005cn\u005c\u005c8';\u000a
+fixed	export const A = '\u005cn\u005c8';\u000a
+case 35
+fixed	export const A = '\u005ct9';\u000a
+case 36
+fixed	export const A = '\u005cx99';\u000a
+case 37
+finding 19 21 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 19 21	9
+applied	export const A = 'f9';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 19 21	\u005c\u005c9
+applied	export const A = 'f\u005c\u005c9';\u000a
+fixed	export const A = 'f\u005c9';\u000a
+case 38
+fixed	export const A = 'foo';\u000a
+case 39
+fixed	export const A = 'foo8';\u000a
+case 40
+finding 21 23 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 21 23	8
+applied	export const A = 'foo8bar';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 21 23	\u005c\u005c8
+applied	export const A = 'foo\u005c\u005c8bar';\u000a
+fixed	export const A = 'foo\u005c8bar';\u000a
+case 41
+finding 21 23 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 21 23	9
+applied	export const A = 'foo9';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 21 23	\u005c\u005c9
+applied	export const A = 'foo\u005c\u005c9';\u000a
+fixed	export const A = 'foo\u005c9';\u000a
+case 42
+fixed	/* 0755 */ var a = 1;
+case 43
+finding 2 6 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	a[0755];
+case 44
+fixed	var a = "0755";
+case 45
+fixed	var a = '0755';
+case 46
+finding 9 13 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = -0755;
+case 47
+fixed	var a = .5;
+case 48
+fixed	var a = 0.0;
+case 49
+fixed	var a = 0.5;
+case 50
+finding 8 11 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 000;
+case 51
+finding 8 12 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 0195;
+case 52
+finding 8 11 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 019;
+case 53
+finding 8 12 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+finding 29 31 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+finding 44 46 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 0755, b = 0o755, c = 07, d = 0, e = 08;
+case 54
+finding 8 12 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 0755;
+case 55
+finding 8 10 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 07;
+case 56
+finding 8 10 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 08;
+case 57
+finding 8 10 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 09;
+case 58
+fixed	var a = 0;
+case 59
+fixed	var a = 0O755;
+case 60
+fixed	var a = 0_7_5_5;
+case 61
+fixed	var a = 0b11;
+case 62
+fixed	var a = 0e5;
+case 63
+fixed	var a = 0o755;
+case 64
+fixed	var a = 0x1F;
+case 65
+fixed	var a = 1; // 0755
+case 66
+fixed	var a = 1e3;
+case 67
+fixed	var a = 7;
+case 68
+fixed	var a = `0755`;
+case 69
+fixed	var a0755 = 1;
+case 70
+finding 24 26 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c8` with `\u005cu00008`, which matches the same characters without turning the repair into a legacy octal escape.
+edit 22 26	\u005cu00008
+applied	// \ud83d\udc8e\u000aconst text = '\u005cu00008\u005c9';
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005cu0038`, keeping the digit and leaving the null escape before it alone.
+edit 24 26	\u005cu0038
+applied	// \ud83d\udc8e\u000aconst text = '\u005c0\u005cu0038\u005c9';
+suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 24 26	\u005c\u005c8
+applied	// \ud83d\udc8e\u000aconst text = '\u005c0\u005c\u005c8\u005c9';
+finding 26 28 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 26 28	9
+applied	// \ud83d\udc8e\u000aconst text = '\u005c0\u005c89';
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 26 28	\u005c\u005c9
+applied	// \ud83d\udc8e\u000aconst text = '\u005c0\u005c8\u005c\u005c9';
+fixed	// \ud83d\udc8e\u000aconst text = '\u005c0\u005c8\u005c9';
+case 71
+finding 8 20 multilineString	This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+fixed	var x = 'foo\u005c\u2029bar';\u000a
+case 72
+finding 20 22 nonoctalDecimalEscape	This is a `\u005c8` or `\u005c9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `9` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+edit 20 22	9
+applied	export const A = '\u005c19';\u000a
+suggestion nonoctalDecimalEscape	Replace `\u005c9` with `\u005c\u005c9` if a literal backslash before the digit is what was meant. This one does change the string.
+edit 20 22	\u005c\u005c9
+applied	export const A = '\u005c1\u005c\u005c9';\u000a
+fixed	export const A = '\u005c1\u005c9';\u000a
+case 73
+finding 8 10 noOctal	This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+fixed	var a = 09;\u000a
