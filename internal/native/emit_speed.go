@@ -116,3 +116,16 @@ func (e *emitter) coldFieldFailure(name string) string {
 	body += "\tadamic_unreachable();"
 	return e.coldHelper("field", name, "const adamic_object *object", body)
 }
+
+// programHasExpression is conservative across calls and aliases: every lowered
+// function body participates, even when no call from main has been proved.
+// Runtime-created layouts must be included whenever their producing API occurs.
+func programHasExpression(program *ir.Program, matches func(ir.Expression) bool) bool {
+	found := false
+	walkExpressions(program, func(expression ir.Expression) {
+		if !found && matches(expression) {
+			found = true
+		}
+	})
+	return found
+}

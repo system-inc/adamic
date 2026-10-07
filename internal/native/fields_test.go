@@ -63,6 +63,8 @@ show(full);
 function absent(): Position | undefined { return undefined; }
 const missing = absent();
 console.log((missing?.steady ?? -3).toString());
+const scannerLike = { text: 'local text', pos: 0, start: 0, fullStart: 0, kind: 'local kind' };
+console.log(scannerLike.text + ':' + scannerLike.kind);
 `
 	directory := t.TempDir()
 	path := filepath.Join(directory, "fields.ts")
@@ -82,7 +84,7 @@ console.log((missing?.steady ?? -3).toString());
 	lookup := func(name string) bool {
 		return regexp.MustCompile(`adamic_object_field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
 	}
-	if lookup("steady") || lookup("label") {
+	if lookup("steady") || lookup("label") || lookup("text") || lookup("kind") {
 		t.Fatal("uniform fields still use shape lookup")
 	}
 	if !lookup("left") || !lookup("emptyLeft") {
@@ -106,7 +108,7 @@ func TestRuntimeFieldLayoutsAreIncluded(t *testing.T) {
 	namesPattern := regexp.MustCompile(`static const char \*const (\w+)\[\] = \{([^}]*)\};`)
 	shapePattern := regexp.MustCompile(`static const adamic_shape \w+(?:\[\])? = \{([^;]*)\};`)
 	fieldPattern := regexp.MustCompile(`"([^"]*)"`)
-	offsets := uniformFieldOffsets(&ir.Program{})
+	offsets := uniformFieldOffsets(&ir.Program{Main: []ir.Statement{ir.Evaluate{Value: ir.ReadTextFile{Path: ir.StringConstant{Index: 0}}}}})
 	files, err := runtime.ReadDir("runtime")
 	if err != nil {
 		t.Fatal(err)
@@ -192,6 +194,72 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 		}
 		if got := runWithInput(t, "", binary); got != want {
 			t.Fatalf("sanitize %v: native %q; Node %q", sanitize, got, want)
+		}
+	}
+}
+
+func TestInputLayoutReachability(t *testing.T) {
+	t.Parallel()
+	literal := ir.ObjectLiteral{Fields: []ir.Field{{Name: "text"}, {Name: "pos"}, {Name: "start"}, {Name: "fullStart"}, {Name: "kind"}}}
+	program := &ir.Program{Main: []ir.Statement{ir.Evaluate{Value: literal}}}
+	offsets := uniformFieldOffsets(program)
+	if offsets["text"] != 0 || offsets["kind"] != 4 {
+		t.Fatalf("unused input API conflicts with layout: %v", offsets)
+	}
+	for _, call := range []ir.Expression{
+		ir.ReadTextFile{Path: ir.StringConstant{}}, ir.WriteTextFile{Path: ir.StringConstant{}, Text: ir.StringConstant{}},
+		ir.ReadDirectory{Path: ir.StringConstant{}}, ir.FileStatus{Path: ir.StringConstant{}},
+	} {
+		// All bodies count, including a call inside an otherwise unused callback.
+		program.Functions = []ir.Function{{Body: []ir.Statement{ir.If{Condition: ir.BooleanConstant{Value: true}, Then: []ir.Statement{ir.Evaluate{Value: call}}}}}}
+		offsets = uniformFieldOffsets(program)
+		if offsets["text"] != -1 || offsets["kind"] != -1 {
+			t.Fatalf("%T omitted input layout: %v", call, offsets)
+		}
+	}
+}
+
+// The file API's kind/text slots conflict with this scanner-like class. A missing
+// runtime layout must fail by actual execution, not just by an emission assertion.
+func TestInputAPIFieldLayouts(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	payload := filepath.Join(directory, "payload.txt")
+	if err := os.WriteFile(payload, []byte("disk text"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	source := `import { readTextFile, panic } from 'adamic';
+class ScannerLike {
+    text = 'local text';
+    pos = 0;
+    start = 0;
+    fullStart = 0;
+    kind = 'local kind';
+}
+const local = new ScannerLike();
+const result = readTextFile(` + strconv.Quote(payload) + `);
+if (result.kind === 'Error') { panic(result.message); }
+console.log(local.text + ':' + local.kind + '|' + result.kind + ':' + result.text);
+`
+	path := filepath.Join(directory, "input-layout.a")
+	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, sanitize := range []bool{false, true} {
+		binary := filepath.Join(directory, "input-layout")
+		if err := Build(C(program), binary, Options{Sanitize: sanitize}); err != nil {
+			t.Fatal(err)
+		}
+		if got := runWithInput(t, "", binary); got != "local text:local kind|Ok:disk text\n" {
+			t.Fatalf("sanitize %v: runtime input fields differ: %q", sanitize, got)
 		}
 	}
 }
