@@ -45,3 +45,14 @@ are claimed here before implementation:
 - @typescript-eslint/no-extra-non-null-assertion
 - @typescript-eslint/no-misused-new
 - @typescript-eslint/no-unnecessary-parameter-property-assignment
+
+### Third-batch outcome
+
+No-misused-new is implemented in owned .a modules and passed complete upstream
+fixtures, compiler/stage1 corpus parity, all-rule dispatch and a compiling semantic
+mutant on Node source, emitted JavaScript and sanitized native against Go cohere.
+No-extra-non-null-assertion and no-unnecessary-parameter-property-assignment remain
+claimed but blocked on the shared serializer and independent repair-range contract.
+Valid one-finding Go probes exit 2 with unexpected fix shape and unexpected
+suggestion shape respectively. Reproduction and measured throughput are in
+../rules/typescript-eslint-no-misused-new/REPORT.md.

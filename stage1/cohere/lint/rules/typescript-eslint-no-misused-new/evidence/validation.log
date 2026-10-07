@@ -1,0 +1,83 @@
+=== RUN   TestWave14ThirdRules
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:327: cohere cases: 388 unique source/rule/options combinations
+=== RUN   TestWave14ThirdRules/typescript-eslint-no-misused-new
+    wave1_14_next_test.go:35: captured upstream cases: 45
+    wave1_14_next_test.go:39: findings: 16
+    wave1_14_next_test.go:41: Go, Node, native identical: 8902 bytes
+    wave1_14_next_test.go:41: emitted JavaScript identical: 8902 bytes
+--- PASS: TestWave14ThirdRules (38.57s)
+    --- PASS: TestWave14ThirdRules/typescript-eslint-no-misused-new (0.92s)
+=== RUN   TestWave14ThirdCorpus
+=== RUN   TestWave14ThirdCorpus/typescript-eslint-no-misused-new
+    wave1_14_next_test.go:20: /tmp/lint-wave1-14-typescript-pinned/src/compiler corpus files: 77
+    wave1_14_next_test.go:20: ../../../stage1 corpus files: 141
+    wave1_14_next_test.go:51: Go, Node, native identical: 12345503 bytes
+    wave1_14_next_test.go:51: emitted JavaScript identical: 12345503 bytes
+--- PASS: TestWave14ThirdCorpus (36.33s)
+    --- PASS: TestWave14ThirdCorpus/typescript-eslint-no-misused-new (17.44s)
+=== RUN   TestWave14ThirdMutants
+=== RUN   TestWave14ThirdMutants/typescript-eslint-no-misused-new
+    wave1_14_next_test.go:72: getter named new silently skipped: Node source caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:2:15", Go "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:1:32"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:1:32
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 31 34 classNew 		
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:2:15
+    wave1_14_next_test.go:72: getter named new silently skipped: sanitized native caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:2:15", Go "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:1:32"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:1:32
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 31 34 classNew 		
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:2:15
+    wave1_14_next_test.go:72: getter named new silently skipped: emitted JavaScript caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:2:15", Go "/tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:1:32"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:1:32
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 31 34 classNew 		
+        /tmp/adamic-gate/TestWave14ThirdMutantstypescript-eslint-no-misused-new1461357745/002/typescript-eslint-no-misused-new-0.ts:2:15
+--- PASS: TestWave14ThirdMutants (16.43s)
+    --- PASS: TestWave14ThirdMutants/typescript-eslint-no-misused-new (14.00s)
+=== RUN   TestWave14ThirdThroughput
+=== RUN   TestWave14ThirdThroughput/typescript-eslint-no-misused-new
+    wave1_14_next_test.go:20: /tmp/lint-wave1-14-typescript-pinned/src/compiler corpus files: 77
+    wave1_14_next_test.go:20: ../../../stage1 corpus files: 141
+    wave1_14_next_test.go:85: natural findings: 0
+    wave1_14_next_test.go:90: added 500 witness copies for positive throughput; this is a synthetic supplement
+    wave1_14_next_test.go:99: round 1 Go 240.032718ms count=1500
+    wave1_14_next_test.go:99: round 1 native 1.390267012s count=1500
+    wave1_14_next_test.go:99: round 1 Node 905.665033ms count=1500
+    wave1_14_next_test.go:99: round 2 Go 226.438832ms count=1500
+    wave1_14_next_test.go:99: round 2 native 1.403677077s count=1500
+    wave1_14_next_test.go:99: round 2 Node 1.032033738s count=1500
+    wave1_14_next_test.go:99: round 3 Go 240.637103ms count=1500
+    wave1_14_next_test.go:99: round 3 native 1.361262598s count=1500
+    wave1_14_next_test.go:99: round 3 Node 927.159169ms count=1500
+    wave1_14_next_test.go:99: round 4 Go 241.674653ms count=1500
+    wave1_14_next_test.go:99: round 4 native 1.462387273s count=1500
+    wave1_14_next_test.go:99: round 4 Node 923.09188ms count=1500
+    wave1_14_next_test.go:99: round 5 Go 249.457878ms count=1500
+    wave1_14_next_test.go:99: round 5 native 1.330574205s count=1500
+    wave1_14_next_test.go:99: round 5 Node 929.229541ms count=1500
+    wave1_14_next_test.go:103: native 1.330574s 1127.33 findings/s count=1500 files=219
+    wave1_14_next_test.go:103: Node 0.905665s 1656.24 findings/s count=1500 files=219
+    wave1_14_next_test.go:103: Go 0.226439s 6624.31 findings/s count=1500 files=219
+--- PASS: TestWave14ThirdThroughput (18.86s)
+    --- PASS: TestWave14ThirdThroughput/typescript-eslint-no-misused-new (13.14s)
+=== RUN   TestWave14ThirdRepairBlockers
+=== RUN   TestWave14ThirdRepairBlockers/NoExtraNonNullAssertion
+    wave1_14_next_test.go:140: "const r = foo!!;": upstream counts 1 finding; independent serializer exits 2: panic: unexpected fix shape
+=== RUN   TestWave14ThirdRepairBlockers/NoUnnecessaryParameterPropertyAssignment
+    wave1_14_next_test.go:140: "class C { constructor(public foo: string) { this.foo = foo; } }": upstream counts 1 finding; independent serializer exits 2: panic: unexpected suggestion shape
+--- PASS: TestWave14ThirdRepairBlockers (9.84s)
+    --- PASS: TestWave14ThirdRepairBlockers/NoExtraNonNullAssertion (5.05s)
+    --- PASS: TestWave14ThirdRepairBlockers/NoUnnecessaryParameterPropertyAssignment (4.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	120.036s

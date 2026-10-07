@@ -1,0 +1,13 @@
+=== RUN   TestWave14ThirdRules
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:327: cohere cases: 388 unique source/rule/options combinations
+=== RUN   TestWave14ThirdRules/typescript-eslint-no-misused-new
+    wave1_14_next_test.go:36: captured upstream cases: 45
+    wave1_14_next_test.go:40: findings: 19
+    wave1_14_next_test.go:42: Go, Node, native identical: 10409 bytes
+    wave1_14_next_test.go:42: emitted JavaScript identical: 10409 bytes
+--- PASS: TestWave14ThirdRules (22.26s)
+    --- PASS: TestWave14ThirdRules/typescript-eslint-no-misused-new (0.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	22.270s
