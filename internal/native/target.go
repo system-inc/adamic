@@ -60,7 +60,7 @@ func WASILinkFlags(options Options) []string {
 	}
 	flags = append(flags, "-mexec-model=reactor", "-Wl,--export-memory")
 	for _, name := range []string{"adamic_request", "adamic_response_bytes", "adamic_response_length", "malloc", "free", "adamic_release"} {
-		flags = append(flags, "-Wl,--export="+name)
+		flags = append(flags, "-Wl,--export-if-defined="+name)
 	}
 	if options.Count {
 		flags = append(flags, "-Wl,--export=adamic_live", "-Wl,--export=adamic_regions")
