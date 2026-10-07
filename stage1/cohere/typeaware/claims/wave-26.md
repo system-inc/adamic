@@ -171,3 +171,19 @@ and mutants, raw HIR, source Node, bridge and filtered Node regressions passed
 again. landing_validation preserves this run; SOURCE_REPORT.md has updated
 native/Go timings. Checker-linked JavaScript emission and shared registration
 remain the documented integration gaps. No additional rules claimed.
+
+## Next batch after landing, October 7
+
+Previous eighteen ports pushed as fe21e4234b39cfb98a0fab643e45c42f02b5e9bf,
+rebased onto origin/main f8013f0baac41ddc340d76f83bddde38536a8f07 and
+re-greened against their independent production Go oracles.
+
+Claim the first three available by combined volume and lexical tie order:
+
+- `react/button-has-type` (0 compiler, 0 repository)
+- `react/checked-requires-onchange-or-readonly` (0 compiler, 0 repository)
+- `react/display-name` (0 compiler, 0 repository)
+
+Fresh origin audit: 417 refs, 25 ranked rules ported on main or the bridge
+baseline, 148 claimed names, 24 available. Full ref and claim evidence is
+wave-26-next-refresh.json. Claim pushed before implementation.
