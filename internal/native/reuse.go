@@ -411,7 +411,7 @@ func spreadsOf(node any) []ir.ObjectLiteral {
 	var literals []ir.ObjectLiteral
 	walk(node, func(expression ir.Expression) {
 		if literal, ok := expression.(ir.ObjectLiteral); ok {
-			if _, isRead := variableRead(literal.Spread); isRead {
+			if _, isRead := variableRead(literal.Spread); isRead && !literal.NoReuse {
 				literals = append(literals, literal)
 			}
 		}

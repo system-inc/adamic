@@ -1,0 +1,14 @@
+==129472== Callgrind, a call-graph generating cache profiler
+==129472== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==129472== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==129472== Command: /workspace/scratch/lint-perf/1-scalar-comments/profiled --manifest /workspace/scratch/lint-perf/1-scalar-comments/compiler.txt --count
+==129472== 
+==129472== For interactive control, run 'callgrind_control -h'.
+==129472== brk segment overflow in thread #1: can't grow to 0x484c000
+==129472== (see section Limitations in user manual)
+==129472== NOTE: further instances of this message will not be shown
+==129472== 
+==129472== Events    : Ir
+==129472== Collected : 30937912937
+==129472== 
+==129472== I   refs:      30,937,912,937

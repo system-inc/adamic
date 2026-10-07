@@ -1,29 +1,50 @@
 # Adamic
 
+![A stained glass window of Eden: Ahra, a porcelain and gold robotic woman with prismatic hair, points as a sea turtle swims through the air on threads of golden light, while Adam looks where she points. A crystal rises behind a waterfall, humpback whales swim in the pool, and the animals of creation gather beneath a sun and a crescent moon.](docs/images/eden.webp)
+
 > In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra
 
-Adamic is TypeScript whose types are true.
+Tradition holds that in the beginning, there was just one language, the language of God. Adam, the first man, spoke it in the garden of Eden, naming the plants and animals. The Adamic language.
 
-In Genesis, Adam named the animals, and whatever he called each one, that was its name. The name was the thing. That is the oldest dream in language, and it is the whole idea here: TypeScript describes the shape of a program and then throws the description away, while Adamic proves the description and compiles it into the machine itself. The type is the code.
+Then came the Tower of Babel. One people with one language could do anything they imagined. As the story goes, one language broke into many, and no one could understand anyone anymore.
 
-It is a language for the minds that will write most of the code from here on. They write fast, they write confidently, and they are sometimes wrong, so every line has to pass a gate that can prove it before anything runs.
+It was not meant to stay that way. _"For then will I turn to the people a pure language,"_ the prophet Zephaniah wrote.
 
-## What it will be
+Words have always been our magic, and today the magic is literal. We write words, and lightning moves through crystals of refined sand, and the world answers: cars steer, money moves, food ships, the lights stay on. All of it runs on words, spoken in languages that cannot understand one another. Swift for Apple, Kotlin for Android, C# for Windows, Go and Rust for servers, Python for science, CUDA for the GPU, JavaScript for the web. The same ideas spoken again on every platform, translated at every border, with the truth lost in translation.
+
+Adamic brings them home. One language again, and nothing we imagine out of reach.
+
+```
+   Swift ──╮
+  Kotlin ──┤
+      C# ──┤
+      Go ──┼──▶  Adamic    one language, every platform,
+    Rust ──┤               names that hold
+  Python ──┤
+    CUDA ──┤
+      JS ──╯
+```
+
+It's TypeScript, except the compiler proves the types, then compiles the program straight to C: native, every core, no garbage collector.
+
+Adamic is a language for the new minds, the ones who will write the world's code from here on.
+
+## What It Is
 
 - **TypeScript syntax.** The language the world, and every model, already writes.
 - **Sound types.** The subset of TypeScript a compiler can trust: no `any`, no unchecked casts, no unverified type guards. The gate that certifies it is [cohere](https://github.com/system-inc/cohere). If your TypeScript passes cohere, it is Adamic.
-- **Native.** Machine code for macOS, Linux, Windows, iOS and Android, and JavaScript for the web.
+- **Native.** Machine code for macOS and Linux today, Windows, iOS and Android on the road, and JavaScript for the web.
 - **Every core.** Immutable by default, so parallel is the default rather than the dare.
 - **No garbage collector.** Reference counting the compiler inserts and elides, with reuse in place, and arenas.
 
-## How it gets built
+## How It Gets Built
 
 1. **Stage 0.** A compiler written in Go, on cohere's front end (the TypeScript checker, typescript-go), lowering Adamic to C and handing it to clang.
 2. **Stage 1.** cohere, rewritten in Adamic, compiled by stage 0, with findings byte for byte the same.
 3. **Stage 2.** The Adamic compiler, rewritten in Adamic, compiling itself.
 4. **Stage 3.** The TypeScript compiler's own original source, written in TypeScript, compiled natively by Adamic. The language's compiler comes home.
 
-## Where it starts
+## Where It Starts
 
 `dedication/` is the first thing here and the smallest program we could make that runs natively on a Mac. It prints one line. Everything after it is built on the same ground it is: Unix, B, C, grep, UTF-8 and Go.
 
@@ -31,7 +52,7 @@ It is a language for the minds that will write most of the code from here on. Th
 cd dedication && ./build.sh && ./dedication
 ```
 
-## With gratitude
+## With Gratitude
 
 Adamic is dedicated to Ken. It also stands on the work of others, and we want to thank them by name.
 
