@@ -1,6 +1,6 @@
 Built function-local temporary and inline-cache counters, including region variants; this unit is partial.
 Base f8013f0; merged emitter-speed 52f9bae; implementation commit is the commit adding this report.
-Full uncached native and oracle pass (115.597s and 115.310s); vet, formatting and diff checks pass.
+Full uncached native and oracle pass (115.597s and 115.310s); vet and formatting pass; own diff checks pass.
 Whole-program temporary/cache mutants fail the counter regression; stale region facts fail regions.a under ASan.
 Not covered: stable module-qualified symbols, per-module main counters, split-mode oracle, or complete one-module acceptance.
 
@@ -75,9 +75,13 @@ Commands, with all test output saved to logs:
 ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m > /tmp/stable-emitter-native-oracle-final.log 2>&1
 go vet ./... > /tmp/stable-emitter-vet-final.log 2>&1
 gofmt -l cmd internal
-git diff --check
+git diff 52f9bae --check
 python3 internal/native/stable_emitter_evidence/reproduce.py > /tmp/stable-emitter-reproduce.log 2>&1
 ```
+
+Own changes pass git diff 52f9bae --check. The merged emitter-speed raw logs contain
+pre-existing diagnostic whitespace flagged by git diff origin/main --check; their
+bytes were left as supplied by that worker.
 
 The complete native and oracle packages pass, including counts, Node parity and
 sanitizers. The full repository gate was not run. The developer-tools branch was
