@@ -106,3 +106,12 @@ Rebased cleanly onto current origin/main b8fb957aa. Main inherited-static-field 
 ## Current area d65a8f931 refresh
 
 Explicit wildcard fetch discovered a newer area because the default origin refspec updates main only. Rebased cleanly onto d65a8f931, preserving runtime-profile changes; dedup ledger and shared oracle unchanged. Repeated the same owned and shared commands above: assertion PASS 93.913s; Tailwind PASS 107.013s; all nine compiling semantic/sidecar mutants caught on all three backends. Shared gate FAIL 108.453s with the same allowLoop strict-decoder routing failure and unknown-class zero-finding witness. No new claims or shared edits. Setup ready lines 0s, warm and total 115s, nproc 5. Logs: d65-owned.log, d65-shared.log and d65-setup.log. This remains scoped green, not complete landing readiness.
+
+## Required correctness input check
+
+After explicit wildcard fetch, main remains 39638d9e2 and area remains d65a8f931; both own branches are already rebased and pushed. Supplied the actual TypeScript v6.0.3 checkout at commit 050880ce59e30b356b686bd3144efe24f875ebc8. Reproducer from this branch and repository root:
+
+    source /workspace/adamic-tools/env.sh
+    ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-typescript go test ./stage1/cohere/lint -run '^TestCompilerAndStage1Agree$' -count=1 -timeout 15m -v > /tmp/wave1-required-lint-corpus.log 2>&1
+
+FAIL 25.772s, no skip. The test enumerates 368 compiler/stage1 files, then source Node exits 70 with `adamic: panic: NotYet: live Tailwind design-system and program adapter`. The stack identifies shared comparison invocation at lint_test.go:467; the refusal itself is our explicit unknown-class rule missing its live resolver. Retained log: required-input-corpus.log. This confirms a real missing adapter and does not establish native/emitted-JavaScript full corpus agreement. No correctness test deleted, weakened or skipped. Other newly mandatory TypeScript/postcss/graphql external checks were not run by this unit, and no full repository gate is claimed. No new helper claimed; current scoped parity and prior mutants remain the previously recorded checks, not fresh runs in this subsection.
