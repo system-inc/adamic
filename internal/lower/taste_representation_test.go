@@ -1,0 +1,29 @@
+package lower
+
+import (
+	"errors"
+	"strings"
+	"testing"
+)
+
+func TestTasteRepresentationLimitsStayExplicit(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, reason string }{
+		{"optional boolean insertion", `const box: {value?: boolean} = {}; box.value = true;`, "writing a possibly absent optional own field"},
+		{"union scalar field", `const box: {value: number | string} = {value: 1}; box.value = 3; console.log(String(box.value));`, "a narrowed scalar in a boxed union field"},
+		{"union array search", `const values: (number | string)[] = [1, "x"]; console.log(String(values.includes(1)));`, "searching boxed union array elements"},
+		{"evolving different objects", `let value; value = {a: 1}; value = {b: "b"};`, "a value of type any"},
+		{"explicit any", `let value: any; value = {a: 1};`, "a value of type any"},
+		{"computed enum", `function next(): number { return 1; } enum Code {Value = next()}`, "an enum member with a computed initializer"},
+		{"enum prototype", `enum Code {__proto__ = 1}`, "an enum member that changes its prototype"},
+		{"merged enum", `enum Code {First = 1} enum Code {Second = 2}`, "a merged enum"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			_, err := lowerSource(t, probe.source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
+				t.Fatalf("want NotYet %q, got %v", probe.reason, err)
+			}
+		})
+	}
+}

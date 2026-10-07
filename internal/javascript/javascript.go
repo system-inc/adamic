@@ -316,7 +316,7 @@ func (e *emitter) declare(local int, value string) {
 
 func (e *emitter) statement(at *ir.Statement) {
 	switch (*at).(type) {
-	case ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try:
+	case ir.Labeled, ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try:
 		// Marked inside, where their parts run, or not at all: a block, a break and a continue run
 		// nothing of their own.
 	default:
@@ -378,6 +378,10 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.nested(statement.Else)
 		}
 		e.line("}")
+	case ir.Labeled:
+		e.line("source_%s: {", statement.Name)
+		e.nested(statement.Body)
+		e.line("}")
 	case ir.Block:
 		e.line("{")
 		e.nested(statement.Body)
@@ -416,9 +420,17 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.indent--
 		e.line("} while (false);")
 	case ir.Break:
-		e.line("break;")
+		if statement.Label != "" {
+			e.line("break source_%s;", statement.Label)
+		} else {
+			e.line("break;")
+		}
 	case ir.Continue:
-		e.line("break %s;", e.continues[len(e.continues)-1])
+		if statement.Label != "" {
+			e.line("break source_continue_%s;", statement.Label)
+		} else {
+			e.line("break %s;", e.continues[len(e.continues)-1])
+		}
 	case ir.Throw:
 		e.line("throw %s;", e.value(statement.Value))
 	case ir.Try:
@@ -461,11 +473,19 @@ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
 	if !statement.CheckAfter {
 		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
 	}
+	for _, name := range statement.Labels {
+		e.line("source_continue_%s: {", name)
+		e.indent++
+	}
 	e.continues = append(e.continues, label)
 	e.line("%s: {", label)
 	e.nested(statement.Body)
 	e.line("}")
 	e.continues = e.continues[:len(e.continues)-1]
+	for range statement.Labels {
+		e.indent--
+		e.line("}")
+	}
 	for _, local := range statement.PerIteration {
 		if e.program.Locals[local].Captured {
 			e.line("%s = { value: %s.value };", e.cellName(local), e.cellName(local))
@@ -498,6 +518,10 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 		e.line("\tconst %s = %s[%s_index];", index, held, index)
 	}
 	e.indent++
+	for _, name := range statement.Labels {
+		e.line("source_continue_%s: {", name)
+		e.indent++
+	}
 	e.continues = append(e.continues, label)
 	e.line("%s: {", label)
 	e.indent++
@@ -513,6 +537,10 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 	e.indent--
 	e.line("}")
 	e.continues = e.continues[:len(e.continues)-1]
+	for range statement.Labels {
+		e.indent--
+		e.line("}")
+	}
 	e.indent--
 	e.line("}")
 	e.indent--
@@ -570,6 +598,22 @@ func (e *emitter) value(expression ir.Expression) string {
 			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
 		}
 		return e.variable(expression.Local)
+	case ir.Truthy:
+		return "!!(" + e.value(expression.Value) + ")"
+	case ir.Void:
+		return "(void " + e.value(expression.Value) + ")"
+	case ir.Comma:
+		return "(" + e.value(expression.Left) + ", " + e.value(expression.Right) + ")"
+	case ir.Effects:
+		return e.effects(expression)
+	case ir.LogicalAssignment:
+		return e.logicalAssignment(expression)
+	case ir.Logical:
+		operator := "&&"
+		if expression.KeepTruthy {
+			operator = "||"
+		}
+		return "(" + e.value(expression.Left) + " " + operator + " " + e.value(expression.Right) + ")"
 	case ir.Unary:
 		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!", ir.BitNot: "~"}[expression.Operator]
 		return "(" + operator + e.value(expression.Operand) + ")"

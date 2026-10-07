@@ -177,6 +177,9 @@ type Local struct {
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
 
+	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
+	ExpressionAssigned bool
+
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
@@ -1054,6 +1057,7 @@ type (
 	// the body, or after it when CheckAfter is set), and Update runs after each pass, continue
 	// included.
 	Loop struct {
+		Labels     []string
 		Condition  Expression
 		Body       []Statement
 		Update     []Statement
@@ -1071,6 +1075,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		Labels   []string
 		Iterable Expression
 		Element  Type
 		Local    int
@@ -1098,8 +1103,8 @@ type (
 		Default []Statement
 	}
 
-	Break    struct{}
-	Continue struct{}
+	Break    struct{ Label string }
+	Continue struct{ Label string }
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
