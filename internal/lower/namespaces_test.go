@@ -24,7 +24,9 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		{"early call", "function early():number{return N.x;} const x=early(); namespace N {export const x=1;}", "call before all runtime namespaces"},
 		{"early read", "const x=N.read; namespace N {export function read():number{return 1;}}", "namespace read before"},
 		{"initializer call", "function get():number{return 1;} namespace N {export const x=get();}", "call before all runtime namespaces"},
-		{"executable body", "namespace N {console.log('effect');}", "call before all runtime namespaces"},
+		{"unknown body call", "function effect():void{} namespace N {effect();}", "call before all runtime namespaces"},
+		{"block var", "namespace N {if(true){var x=1;}}", "var inside namespace control flow"},
+		{"nested early read", "namespace N {const x=Inner.read; export namespace Inner {export function read():number{return 1;}}}", "namespace read before"},
 		{"explicit receiver", "namespace N {export const x=1; export function read(this:{readonly x:number}):number{return 1;}}", "explicit namespace-function"},
 		{"ambient", "declare namespace N {export interface T {readonly x:number;}}", "ambient namespace"},
 	} {

@@ -1,0 +1,15 @@
+console.log('module-before');
+namespace Parser {
+ var steps = 0;
+ steps += 1;
+ console.log(`parser-start:${steps}`);
+ export namespace JSDocParser {
+  const start = 2;
+  console.log(`jsdoc:${start}`);
+  export const complete = true;
+ }
+ steps += 4;
+ if (JSDocParser.complete) {console.log(`parser-end:${steps}`);}
+ export function read(): number {return steps;}
+}
+console.log(`module-after:${Parser.read()}`);
