@@ -8,7 +8,7 @@ export class Token {
     readonly start: number;
     readonly end: number;
     readonly inline: boolean;
-    constructor(kind: string, value: string, start: number, end: number = -1, inline: boolean = false) {
+    constructor(kind: string, value: string, start: number, end = -1, inline = false) {
         this.kind = kind;
         this.value = value;
         this.start = start;
@@ -32,7 +32,7 @@ export class Tokenizer {
     readonly buffer: Token[] = [];
     readonly returned: Token[] = [];
     lastBadParen = -1;
-    constructor(input: Input, scss: boolean = false) {
+    constructor(input: Input, scss = false) {
         this.input = input;
         this.scss = scss;
     }
@@ -41,9 +41,9 @@ export class Tokenizer {
     }
     indexOf(text: string, from: number): number {
         // The prelude only has indexOf(search). Search a suffix and add its origin.
-        from = Math.max(from, 0);
-        const found = this.input.css.slice(from).indexOf(text);
-        return found < 0 ? -1 : from + found;
+        const searchStart = Math.max(from, 0);
+        const found = this.input.css.slice(searchStart).indexOf(text);
+        return found < 0 ? -1 : searchStart + found;
     }
     back(token: Token): void {
         this.returned.push(token);
@@ -51,7 +51,8 @@ export class Tokenizer {
     endOfFile(): boolean {
         return this.returned.length === 0 && this.pos >= this.input.css.length;
     }
-    interpolation(next: number): number {
+    interpolation(interpolationStart: number): number {
+        let next = interpolationStart;
         let deep = 1;
         let stringQuote = 0;
         let escaped = false;
@@ -89,9 +90,9 @@ export class Tokenizer {
         if(this.returned.length > 0) {
             return this.returned.pop() ?? panic('missing returned token');
         }
-        const length = this.input.css.length;
+
         const pos = this.pos;
-        if(pos >= length) {
+        if(pos >= this.input.css.length) {
             return undefined;
         }
         let code = this.code(pos);
@@ -124,11 +125,11 @@ export class Tokenizer {
         }
         else if(code === 40) {
             const previous = this.buffer.length > 0 ? (this.buffer.pop() ?? panic('missing buffered token')).value : '';
-            const n = this.code(pos + 1);
-            if(this.scss && previous === 'url' && n !== 39 && n !== 34) {
+            const nextCode = this.code(pos + 1);
+            if(this.scss && previous === 'url' && nextCode !== 39 && nextCode !== 34) {
                 let brackets = 1;
                 next = pos + 1;
-                while(next < length) {
+                while(next < this.input.css.length) {
                     const character = this.code(next);
                     if(character === 40) {
                         brackets++;
@@ -144,7 +145,7 @@ export class Tokenizer {
                 kind = 'brackets';
                 end = next;
             }
-            else if(!this.scss && previous === 'url' && n !== 39 && n !== 34 && !space(n)) {
+            else if(!this.scss && previous === 'url' && nextCode !== 39 && nextCode !== 34 && !space(nextCode)) {
                 do {
                     next = this.indexOf(')', next + 1);
                     if(next < 0) {
@@ -169,7 +170,7 @@ export class Tokenizer {
             else {
                 next = this.indexOf(')', pos + 1);
                 if(next < 0 || /.[\r\n"'(/\\]/.test(this.input.slice(pos, next + 1))) {
-                    this.lastBadParen = next < 0 ? length : next;
+                    this.lastBadParen = next < 0 ? this.input.css.length : next;
                     kind = '(';
                     next = pos;
                 }
@@ -183,9 +184,9 @@ export class Tokenizer {
             if(this.scss) {
                 const quoteCode = code;
                 let escaped = false;
-                while(next < length) {
+                while(next < this.input.css.length) {
                     next++;
-                    if(next === length) {
+                    if(next === this.input.css.length) {
                         throw new Error(this.input.error('Unclosed string', pos));
                     }
                     const character = this.code(next);
@@ -228,7 +229,7 @@ export class Tokenizer {
         }
         else if(code === 64) {
             next = pos + 1;
-            while(next < length && !/[\t\n\f\r "#'()/;[\\\]{}]/.test(this.input.slice(next, next + 1))) {
+            while(next < this.input.css.length && !/[\t\n\f\r "#'()/;[\\\]{}]/.test(this.input.slice(next, next + 1))) {
                 next++;
             }
             next--;
@@ -261,7 +262,12 @@ export class Tokenizer {
         }
         else if(this.scss && code === 47 && this.code(pos + 1) === 47) {
             next = pos + 1;
-            while(next < length && this.code(next) !== 10 && this.code(next) !== 12 && this.code(next) !== 13) {
+            while(
+                next < this.input.css.length &&
+                this.code(next) !== 10 &&
+                this.code(next) !== 12 &&
+                this.code(next) !== 13
+            ) {
                 next++;
             }
             next--;
@@ -280,7 +286,7 @@ export class Tokenizer {
         else {
             next = pos + 1;
             while(
-                next < length &&
+                next < this.input.css.length &&
                 !(this.scss && this.code(next) === 44) &&
                 !/[\t\n\f\r !"#'():;@[\\\]{}]/.test(this.input.slice(next, next + 1)) &&
                 !(this.code(next) === 47 && this.code(next + 1) === 42)
