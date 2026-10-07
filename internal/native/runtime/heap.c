@@ -9,6 +9,7 @@
 #undef adamic_release
 void adamic_release(void *value) { adamic_release_inline(value); }
 #endif
+#include "async.h"
 #include "count.h"
 
 #include <stdint.h>
@@ -321,6 +322,11 @@ static void let_go(void *value) {
 static void free_one(void *value) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
+	case adamic_kind_async_frame:
+	case adamic_kind_async_promise:
+	case adamic_kind_async_reaction:
+		adamic_async_free_children(value, let_go);
+		break;
 	case adamic_kind_string:
 		adamic_string_free_index(value);
 		// A shared slice lets go of the string whose bytes it reads.

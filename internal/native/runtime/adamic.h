@@ -31,6 +31,9 @@ enum adamic_kind {
 	adamic_kind_number,
 	adamic_kind_boolean,
 	adamic_kind_weak,
+	adamic_kind_async_frame,
+	adamic_kind_async_promise,
+	adamic_kind_async_reaction,
 };
 
 typedef struct adamic_heap {

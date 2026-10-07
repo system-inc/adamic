@@ -1,0 +1,13 @@
+async function empty(): Promise<void> {
+    await Promise.resolve();
+    console.log("empty");
+}
+async function forwarding(): Promise<void> {
+    return await empty();
+}
+const number = await 7;
+const truth = await true;
+const text = await `word${number}`;
+console.log(`${number} ${truth} ${text.toUpperCase()}`);
+await forwarding();
+console.log("finished");

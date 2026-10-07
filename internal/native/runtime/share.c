@@ -71,6 +71,8 @@ void adamic_share(void *value) {
 			heap->slab |= ADAMIC_SHARED_HEADER;
 		}
 		switch (heap->kind) {
+		case adamic_kind_async_frame: case adamic_kind_async_promise: case adamic_kind_async_reaction:
+			adamic_panic("async values cannot cross worker threads", 39);
 		case adamic_kind_string: append(&pending, ((adamic_string *)heap)->owner); break;
 		case adamic_kind_object: {
 			adamic_object *object = (adamic_object *)heap;
