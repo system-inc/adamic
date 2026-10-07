@@ -1,0 +1,35 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { bareValuePredicate } from './bare_value_predicate.a';
+import { bareValueTransform } from './bare_value_transform.a';
+import { isValidOpacityValue } from './is_valid_opacity_value.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse(); if (root < 0) { panic(json.error); }
+function text(index: number, name: string): string { return json.node(json.field(index, name)).text; }
+function truth(index: number, name: string): boolean { return text(index, name) === 'true'; }
+const mode = text(root, 'mode');
+for (const row of json.node(json.field(root, 'rows')).children) {
+    const value = text(row, 'value'); const kind = text(row, 'kind');
+    if (mode === 'transform') { console.log(bareValueTransform(kind, value)); }
+    else if (mode === 'opacity') {
+        console.log(`${isValidOpacityValue(value, (argument: string, divisor: number): boolean => {
+            if (argument !== value) { return panic('unexpected dependency argument'); }
+            if (divisor === 0.25) { return truth(row, 'quarter'); }
+            if (divisor === 0.5) { return truth(row, 'half'); }
+            if (divisor === 1) { return truth(row, 'whole'); }
+            return panic('unexpected dependency divisor');
+        })}`);
+    } else {
+        let selected = '';
+        const predicate = bareValuePredicate(kind, {
+            positive: (argument: string): boolean => { selected = 'positive'; if (argument !== value) { return panic('argument'); } return truth(row, 'positive'); },
+            opacity: (argument: string): boolean => { selected = 'opacity'; if (argument !== value) { return panic('argument'); } return truth(row, 'opacity'); },
+            strict: (argument: string): boolean => { selected = 'strict'; if (argument !== value) { return panic('argument'); } return truth(row, 'strict'); },
+            spacing: (argument: string): boolean => { selected = 'spacing'; if (argument !== value) { return panic('argument'); } return truth(row, 'spacing'); },
+            fontStretch: (argument: string): boolean => { selected = 'fontStretch'; if (argument !== value) { return panic('argument'); } return truth(row, 'fontStretch'); }
+        });
+        if (!predicate.present) { console.log('none'); }
+        else { const result = predicate.predicate(value); console.log(`${selected}|${result}`); }
+    }
+}

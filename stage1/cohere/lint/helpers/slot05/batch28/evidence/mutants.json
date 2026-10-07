@@ -1,0 +1,20 @@
+{
+  "count": 14,
+  "credit": "each native variant compiled, exited zero with empty stderr, then disagreed with unchanged Go output",
+  "witnesses": [
+    "helper_test.go:116: bare_value_predicate.a mutant \"case 'StrictPositiveInteger':\" -> \"\" caught at output line 4: mutant \"none\", Go \"strict|false\"",
+    "helper_test.go:116: bare_value_predicate.a mutant \"case 'GridRepeat':\" -> \"\" caught at output line 7: mutant \"none\", Go \"strict|false\"",
+    "helper_test.go:116: bare_value_predicate.a mutant \"case 'PositiveInteger': return {present: true, predicate: predicates.positive};\" -> \"case 'PositiveInteger': return {present: true, predicate: predicates.opacity};\" caught at output line 2: mutant \"opacity|false\", Go \"positive|false\"",
+    "helper_test.go:116: bare_value_predicate.a mutant \"case 'Opacity': return {present: true, predicate: predicates.opacity};\" -> \"case 'Opacity': return {present: true, predicate: predicates.spacing};\" caught at output line 3: mutant \"spacing|false\", Go \"opacity|false\"",
+    "helper_test.go:116: bare_value_predicate.a mutant \"return {present: true, predicate: predicates.strict};\" -> \"return {present: true, predicate: predicates.positive};\" caught at output line 4: mutant \"positive|false\", Go \"strict|false\"",
+    "helper_test.go:116: bare_value_predicate.a mutant \"return {present: true, predicate: predicates.spacing};\" -> \"return {present: true, predicate: predicates.opacity};\" caught at output line 5: mutant \"opacity|false\", Go \"spacing|false\"",
+    "helper_test.go:116: bare_value_predicate.a mutant \"return {present: true, predicate: predicates.fontStretch};\" -> \"return {present: true, predicate: predicates.positive};\" caught at output line 6: mutant \"positive|false\", Go \"fontStretch|false\"",
+    "helper_test.go:116: bare_value_predicate.a mutant \"case 'Fraction': return {present: false, predicate: predicates.positive};\" -> \"case 'Fraction': return {present: true, predicate: predicates.spacing};\" caught at output line 8: mutant \"spacing|false\", Go \"none\"",
+    "helper_test.go:116: bare_value_predicate.a mutant \"default: return {present: false, predicate: predicates.positive};\" -> \"default: return {present: true, predicate: predicates.positive};\" caught at output line 1: mutant \"positive|false\", Go \"none\"",
+    "helper_test.go:116: bare_value_transform.a mutant \"'--spacing(' + value + ')'\" -> \"'--spacing(' + value\" caught at output line 5: mutant \"--spacing(\", Go \"--spacing()\"",
+    "helper_test.go:116: bare_value_transform.a mutant \"', minmax(0, 1fr))'\" -> \"', minmax(0, 2fr))'\" caught at output line 7: mutant \"repeat(, minmax(0, 2fr))\", Go \"repeat(, minmax(0, 1fr))\"",
+    "helper_test.go:116: bare_value_transform.a mutant \"default: return value;\" -> \"default: return '';\" caught at output line 13: mutant \"\", Go \"\\x00\"",
+    "helper_test.go:116: is_valid_opacity_value.a mutant \"multipleOf(value, 0.25)\" -> \"multipleOf(value, 0.5)\" caught at output line 93: mutant \"false\", Go \"true\"",
+    "helper_test.go:116: is_valid_opacity_value.a mutant \"multipleOf(value, 0.25)\" -> \"multipleOf(value, 1)\" caught at output line 93: mutant \"false\", Go \"true\""
+  ]
+}

@@ -1,0 +1,7 @@
+export function bareValueTransform(kind: string, value: string): string {
+    switch (kind) {
+        case 'SpacingMultiplier': return '--spacing(' + value + ')';
+        case 'GridRepeat': return 'repeat(' + value + ', minmax(0, 1fr))';
+        default: return value;
+    }
+}

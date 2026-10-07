@@ -1,0 +1,29 @@
+{
+  "boundary": "all captured strings and candidate projections; ASCII bytes, Unicode/NUL/newline, quarter increments -2..202, every named kind and unknown kinds; real Go dependency answers",
+  "captured_strings": 406,
+  "consumers": {
+    "better-tailwindcss/enforce-consistent-class-order": 376,
+    "better-tailwindcss/enforce-shorthand-classes": 133,
+    "better-tailwindcss/no-unknown-classes": 244
+  },
+  "files": {
+    "better-tailwindcss/enforce-consistent-class-order": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_options_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ],
+    "better-tailwindcss/enforce-shorthand-classes": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ],
+    "better-tailwindcss/no-unknown-classes": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ]
+  },
+  "rows": 1503,
+  "sources": 1503
+}

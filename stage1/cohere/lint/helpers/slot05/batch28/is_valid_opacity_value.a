@@ -1,0 +1,4 @@
+// Numeric parsing, modulo and canonical printing belong to the shared dependency.
+export function isValidOpacityValue(value: string, multipleOf: (value: string, divisor: number) => boolean): boolean {
+    return multipleOf(value, 0.25);
+}

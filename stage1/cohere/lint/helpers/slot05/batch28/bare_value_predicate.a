@@ -1,0 +1,22 @@
+export type BarePredicate = (value: string) => boolean;
+export interface BarePredicates {
+    positive: BarePredicate;
+    opacity: BarePredicate;
+    strict: BarePredicate;
+    spacing: BarePredicate;
+    fontStretch: BarePredicate;
+}
+export interface SelectedPredicate { present: boolean; predicate: BarePredicate; }
+// The predicates remain dependencies; this helper selects their actual functions.
+export function bareValuePredicate(kind: string, predicates: BarePredicates): SelectedPredicate {
+    switch (kind) {
+        case 'PositiveInteger': return {present: true, predicate: predicates.positive};
+        case 'Opacity': return {present: true, predicate: predicates.opacity};
+        case 'StrictPositiveInteger':
+        case 'GridRepeat': return {present: true, predicate: predicates.strict};
+        case 'SpacingMultiplier': return {present: true, predicate: predicates.spacing};
+        case 'FontStretchPercentage': return {present: true, predicate: predicates.fontStretch};
+        case 'Fraction': return {present: false, predicate: predicates.positive};
+        default: return {present: false, predicate: predicates.positive};
+    }
+}
