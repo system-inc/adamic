@@ -164,3 +164,19 @@ func TestDebugNamespaceObservationBoundary(t *testing.T) {
 		t.Fatalf("Debug container boundary lost: %v", err)
 	}
 }
+
+func TestDebugUnknownAssertionBoundaries(t *testing.T) {
+	t.Parallel()
+	for _, test := range []struct{ name, source, reason string }{
+		{"unknown condition", "namespace Debug {export function assert(expression:unknown):asserts expression {if(!expression){throw new Error('False expression.');}}} Debug.assert(true);", "asserts cond needs a boolean parameter"},
+		{"empty generic assertion", "namespace Debug {export function type<T>(value:unknown):asserts value is T {}} function use(value:unknown):number {Debug.type<number>(value);return value+1;} console.log(`${use('wrong')}`);", "normal return has not narrowed"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			_, err := lowerSource(t, test.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), test.reason) {
+				t.Fatalf("Debug assertion boundary lost: %v", err)
+			}
+		})
+	}
+}

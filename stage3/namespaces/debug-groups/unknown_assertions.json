@@ -1,0 +1,6 @@
+{
+ "sites":["debug.ts:213:28","debug.ts:365:29"],
+ "mutations":[["asserts value is T {}","asserts value is T {if(typeof value!=='number'){throw new Error('unproven type');}}"]],
+ "boundary":"asserts cond needs a boolean parameter",
+ "judgment":"Debug.assert needs a tagged unknown representation and JavaScript truthiness before its postcondition can be proved; the current boolean-only assertion rule is explicit. Debug.type<T> has an empty body and an unproved assertion, so accepting it would be unsound: Node returns wrong1 from a function typed number. No representation alone fixes the second site. Narrow acceptance requires a proved concrete runtime narrowing or changing the assertion to a non-narrowing function."
+}

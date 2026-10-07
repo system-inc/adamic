@@ -1,0 +1,43 @@
+{
+  "group": "unknown_assertions",
+  "sites": [
+    "debug.ts:213:28",
+    "debug.ts:365:29"
+  ],
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/stage3/namespaces/debug-groups/unknown_assertions.a"
+    ],
+    "stdout": "wrong1\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "mutant": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/debug-groups/unknown_assertions/mutant.a"
+    ],
+    "stdout": "",
+    "stderr": "adamic: panic: Error: unproven type\n",
+    "exit": 70
+  },
+  "build": {
+    "command": [
+      "/tmp/namespaces-graph-matrix-delivery/adamic",
+      "build",
+      "/workspace/adamic/stage3/namespaces/debug-groups/unknown_assertions.a",
+      "-o",
+      "/tmp/debug-groups/unknown_assertions/native",
+      "--sanitize"
+    ],
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/debug-groups/unknown_assertions.a:3:45: Adamic 0.1 refuses a type predicate whose return is not proven (asserts cond needs a boolean parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+    "exit": 1
+  },
+  "judgment": "Debug.assert needs a tagged unknown representation and JavaScript truthiness before its postcondition can be proved; the current boolean-only assertion rule is explicit. Debug.type<T> has an empty body and an unproved assertion, so accepting it would be unsound: Node returns wrong1 from a function typed number. No representation alone fixes the second site. Narrow acceptance requires a proved concrete runtime narrowing or changing the assertion to a non-narrowing function."
+}

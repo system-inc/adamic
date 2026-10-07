@@ -1,0 +1,10 @@
+// Debug.assert and Debug.type retain their assertion signatures.
+namespace Debug {
+ export function assert(expression:unknown):asserts expression {
+  if(!expression){throw new Error('False expression.');}
+ }
+ export function type<T>(value:unknown):asserts value is T {}
+}
+function use(value:unknown):number {Debug.type<number>(value);return value+1;}
+Debug.assert(true);
+console.log(`${use('wrong')}`);
