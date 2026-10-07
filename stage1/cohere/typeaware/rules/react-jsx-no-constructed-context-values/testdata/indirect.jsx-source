@@ -17,3 +17,10 @@ function Chain() { const a = {}; const v = a;
 function Bare0() { const Provider = (createContext(null)); return <Provider value={{}}/>; }
 function Bare1() { const Provider = ((React.createContext)(null)); return <Provider value={{}}/>; }
 function Bare2() { const Provider = (otherFactory(null)); return <Provider value={{}}/>; }
+class ClassMethod extends React.Component { render() { return <X.Provider value={{}}/>; } }
+class BareBase extends PureComponent { other() { return <X.Provider value={{}}/>; } }
+class lowercase extends React.PureComponent { get x() { return <X.Provider value={{}}/>; } }
+class Field extends React.Component { f = () => <X.Provider value={{}}/>; }
+const Expression = class extends Component { other() { return <X.Provider value={{}}/>; } };
+class Plain { Render() { return <X.Provider value={{}}/>; } }
+class Foreign extends Foo.Component { Render() { return <X.Provider value={{}}/>; } }

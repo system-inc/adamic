@@ -21,7 +21,7 @@ def run(command, label, cwd=None):
 run(['go','build','-overlay',str(out/'overlay.json'),'-o',str(out/'oracle'),str(virtual)], 'oracle-build', repository/'cohere')
 truth, elapsed = run([str(out/'oracle'),str(out/'tsconfig.json'),str(out/'manifest')], 'oracle')
 expected = b''.join(sorted(line for line in truth.splitlines(keepends=True) if len(line.split(b'\t')) >= 7 and line.split(b'\t')[2] == b'react/jsx-no-constructed-context-values'))
-assert len(expected.splitlines()) == 14, truth.decode()
+assert len(expected.splitlines()) == 19, truth.decode()
 (out/'expected.stdout').write_bytes(expected)
 print('Go source/checker/all rules ns', elapsed, flush=True)
 for sanitize in [False, True]:
@@ -44,6 +44,7 @@ print('SatisfiesExpression Go panic exit 2; native explicit refusal exit 70 (not
 mutations = [
     ('branch-order', 'return left === undefined ? constructionOf(values, node.second, depth + 1) : left;', 'return constructionOf(values, node.second, depth + 1);'),
     ('provider-factory', "callee.name === 'createContext'", "callee.name === 'unrelatedContext'"),
+    ('class-owner', 'if(![263, 231].includes(owner.kind))', 'if(![231].includes(owner.kind))'),
     ('function-kind', 'new Construction(262, last)', 'new Construction(210, last)'),
 ]
 original = (rule/'numeric_constructions.a').read_text()

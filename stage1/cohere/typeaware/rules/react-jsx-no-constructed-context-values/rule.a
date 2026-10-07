@@ -1,6 +1,6 @@
 import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
-import { Value, constructionOf, resolvesToCreateContext } from './numeric_constructions.a';
+import { Value, constructionOf, resolvesToCreateContext, isComponentClass } from './numeric_constructions.a';
 
 export class Input {
     kind = 0;
@@ -17,10 +17,18 @@ export class Input {
     values: Value[] = [];
     valueIndex = -1;
     tagIndex = -1;
+    nearestFunctionParentKind = 0;
+    classFactsReady = false;
+    classIndex = -1;
 }
 export class Rule {
     component(node: Input): boolean {
         if(node.nearestFunctionKind === 0) { return false; }
+        if([174, 177, 178, 176, 172].includes(node.nearestFunctionKind) ||
+            ([218, 219].includes(node.nearestFunctionKind) && node.nearestFunctionParentKind === 172)) {
+            if(!node.classFactsReady) { panic('jsx-no-constructed-context-values requires shared numeric class ancestry'); }
+            return isComponentClass(node.values, node.classIndex);
+        }
         if(![262, 218, 219].includes(node.nearestFunctionKind)) {
             panic('jsx-no-constructed-context-values requires shared numeric class ancestry');
         }

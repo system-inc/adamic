@@ -13,6 +13,7 @@ export class Value {
     operatorKind = 0;
     nearestFunction = -1;
     declarations: number[] = [];
+    children: number[] = [];
     declarationFactsReady = false;
 }
 export class Construction {
@@ -100,6 +101,28 @@ export function resolvesToCreateContext(values: readonly Value[], tagIndex: numb
         if(receiverIndex < 0) { continue; }
         const receiver = values[receiverIndex] ?? panic('missing provider receiver');
         if(receiver.kind === 79 && receiver.name === 'React') { return true; }
+    }
+    return false;
+}
+
+export function isComponentClass(values: readonly Value[], classIndex: number): boolean {
+    if(classIndex < 0) { return false; }
+    const owner = values[classIndex] ?? panic('component class outside raw tree');
+    if(![263, 231].includes(owner.kind)) { return false; }
+    for(const clauseIndex of owner.children) {
+        const clause = values[clauseIndex] ?? panic('component heritage outside raw tree');
+        if(clause.kind !== 298) { continue; }
+        for(const typeIndex of clause.children) {
+            const type = values[typeIndex] ?? panic('component heritage type outside raw tree');
+            if(type.kind !== 233 || type.first < 0) { continue; }
+            const expression = values[type.first] ?? panic('component base outside raw tree');
+            if(expression.kind === 79 && ['Component', 'PureComponent'].includes(expression.name)) { return true; }
+            if(expression.kind !== 211 || !['Component', 'PureComponent'].includes(expression.name)) { continue; }
+            const receiverIndex = unparenthesized(values, expression.first);
+            if(receiverIndex < 0) { continue; }
+            const receiver = values[receiverIndex] ?? panic('component base receiver outside raw tree');
+            if(receiver.kind === 79 && receiver.name === 'React') { return true; }
+        }
     }
     return false;
 }
