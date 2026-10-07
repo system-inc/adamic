@@ -1,9 +1,13 @@
 # Stage 3 optional-widening sites
 
-Historical unreduced inventory: 415 distinct AST locations in 42 files; 79 implementation files scanned.
-The 143 rows whose selected relation constituent printed never have been removed from this table: they are not optional widenings. The raw JSON remains historical evidence, not the current classification.
+The adapted 391-site inventory from coverage commit `90ca91c` was re-measured after merging main `48c05d09`. The production reduced-source rule leaves 247 widenings in 79 files. Exactly 144 of the pinned 391 locations are no longer widenings; the reduced-source rule no longer reports a missing optional property at those locations. This includes impossible nested components and does not classify the source expression as unreachable.
 
-The coverage worker measured 42 executing sites among its 47 selected impossible-component reports. Neither those 42 nor the five unobserved sites prove an unreachable outer expression. Only the source expression itself having type never can trigger the general never trap. A fresh normalized census and the remaining-refusals count for the adapted 391 sites are pending the shared checked-view dependency.
+Target-schema admission reports **101 Refused, 134 NotYet and 12 ContractReady**. Thus 235 still hit a contract boundary. ContractReady is not an end-to-end compile count: alias admission and unrelated whole-file lowering boundaries are not waived. All 391 dispositions, exact locations, type strings, diagnostics and input hashes are retained in [the checked census](evidence/checked-stage3-391.json). The exact command and result are in [its log](evidence/checked-stage3-admission.log).
+
+The coverage worker's 42 executing impossible-component sites are removed from the widening bucket rather than assigned an unreachable exception. Its five unobserved sites are not an outer-expression unreachability proof either. Only the type of the source expression itself triggers the general never trap. None of the 144 removed locations is counted under the never erasure case.
+
+The table below is the older reduced inventory before adaptation 75; it is historical, not the current 391-site partition. Historical unreduced inventory: 415 locations in 42 files. Its 143 selected-never rows were removed from this table; the original JSON remains evidence.
+
 Full expression text and type strings are in [stage3-sites.jsonl](stage3-sites.jsonl).
 
 | File:line:column | AST kind | Missing property | Source S | Target T |

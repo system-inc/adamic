@@ -72,10 +72,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a checked view with callable field toString; prove the callable body rather than asserting its signature"}
   },
   {
     "file": "06_watch_close.a",
@@ -175,10 +172,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/14_comment_pending.a:10:19: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
-    }
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/objects/14_comment_pending.a:20:13: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"}
   },
   {
     "file": "15_accessor_absence.a",

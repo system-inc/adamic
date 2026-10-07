@@ -57,8 +57,7 @@ func (l *lowering) neverExpression(node *ast.Node) (ir.Expression, error) {
 			case ir.Call:
 				operands = append(operands, call.Arguments...)
 			case ir.CallClosure:
-				operands = append(operands, call.Closure)
-				operands = append(operands, call.Arguments...)
+				operands = append(operands, ir.ClosureOperands(call)...)
 			default:
 				return nil, l.notYet(node, "a never expression without a callable representation")
 			}

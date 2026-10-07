@@ -11,7 +11,7 @@ import (
 // The proof contains checker types only, so refusals precede representation lowering of unknown
 // operands. Concrete generic instantiations are proved again when they are lowered.
 type castProof struct {
-	view bool
+	view    bool
 	field   string
 	allowed []*checker.Type
 	classes []*checker.Type
@@ -175,7 +175,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			if l.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
 				return castProof{}, l.notYet(node, "a writable-slot checked view requiring source contract certification")
 			}
-			if _, err := l.viewSchema(node, target); err != nil { return castProof{}, err }
+			if _, err := l.viewSchema(node, target); err != nil {
+				return castProof{}, err
+			}
 			for _, property := range l.checker.GetPropertiesOfType(source) {
 				if literal := l.fieldLiteral(target, property.Name); literal != nil {
 					return castProof{view: true, field: property.Name, allowed: []*checker.Type{literal}}, nil

@@ -21,3 +21,8 @@ All test output went to files. The complete final gate was `ADAMIC_GATE_UNCACHED
 The read-marker mutant changes the shared CheckedFields registration to false: all six developer programs then exit 0, caught by the exit-code assertions. The null-tag mutant erases the distinct null tag: the null probe incorrectly continues, caught by exit code. The literal mutant skips finite-literal validation: the value 1 is accepted as 2, caught by exit code. All generated C is valid. Sources are restored in finally, and the focused oracle passes afterward. The runner for shared read erasure is evidence/read-mutants.py; additional mutant logs identify the exact changes.
 
 Setup completed successfully with `/workspace/adamic-tools/env.sh`: Go 0.040s, Node 0.034s, submodules 0.134s, clang 0.395s, Markdown 1.310s, build 48.362s, warm 48.591s, done 48.638s. No module-fetch workaround was needed. The scoped vet and whitespace checks pass. The full repository gate is not claimed.
+
+
+## Write checkpoint supersedes the read-only status
+
+Checked writes and the final stage 3 measurement are now recorded in [WRITES.md](WRITES.md). This document's opening five lines describe the earlier read push `d3226902`; writes are no longer left pending. The final supported write path checks declared slot contracts at the write and retains conservative proof erasure.

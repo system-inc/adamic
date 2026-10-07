@@ -64,3 +64,23 @@ func TestOptionalWriteErasure(t *testing.T) {
 		})
 	}
 }
+
+// A terminal base implementation does not make a virtual call unreachable.
+// Its override can return an object whose slot still needs the checked write.
+func TestOptionalVirtualReceiverIsNotUnreachable(t *testing.T) {
+	program := &ir.Program{
+		Functions: []ir.Function{
+			{Returns: ir.Object, Body: []ir.Statement{ir.Panic{Message: ir.StringConstant{}}}},
+			{Returns: ir.Object, Body: []ir.Statement{ir.Return{Value: ir.ObjectLiteral{}}}},
+		},
+		MethodTargets: map[int][]int{0: {0, 1}},
+	}
+	call := ir.Call{Function: 0, Virtual: 1, Returns: ir.Object}
+	if trappedViewReceiver(program, call) {
+		t.Fatal("a returning override was treated as unreachable")
+	}
+	program.MethodTargets[0] = []int{0}
+	if !trappedViewReceiver(program, call) {
+		t.Fatal("terminal targets lost their unreachable proof")
+	}
+}

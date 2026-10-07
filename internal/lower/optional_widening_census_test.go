@@ -15,17 +15,12 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
-	"github.com/microsoft/TypeScript/tsc/shim/vfs"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
-
-type optionalCensusHost struct{ directory string }
-
-func (h optionalCensusHost) FS() vfs.FS                  { return osvfs.FS() }
-func (h optionalCensusHost) GetCurrentDirectory() string { return h.directory }
 
 // The census is a type-relation inventory, not lowering or permission to compile unchecked code.
 // It uses the production rule with upstream's project options and reports every site, even when
@@ -40,12 +35,12 @@ func TestOptionalWideningCensus(t *testing.T) {
 		t.Fatal(err)
 	}
 	directory := filepath.Dir(configPath)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(configPath, nil, nil, optionalCensusHost{directory}, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(configPath), nil, nil, osvfs.FS(), nil)
 	if config == nil || len(diagnostics) != 0 || len(config.Errors) != 0 {
 		t.Fatalf("config diagnostics: %v %v", diagnostics, config)
 	}
 	fs := cachedvfs.From(bundled.WrapFS(osvfs.FS()))
-	host := compiler.NewCachedFSCompilerHost(directory, fs, bundled.LibPath(), nil, nil, nil)
+	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host})
 	if program == nil {
 		t.Fatal("no checker program")
@@ -71,7 +66,7 @@ func TestOptionalWideningCensus(t *testing.T) {
 	disposition := map[string]int{}
 	sites, files := 0, 0
 	for _, file := range program.GetSourceFiles() {
-		if file.IsDeclarationFile || !strings.HasPrefix(file.FileName(), directory+"/") {
+		if file.IsDeclarationFile || !strings.HasPrefix(string(file.FileName()), directory+"/") {
 			continue
 		}
 		files++
@@ -92,7 +87,7 @@ func TestOptionalWideningCensus(t *testing.T) {
 					Kind, Property, Source, Target, Text string
 					Disposition, Diagnostic              string
 				}{
-					strings.TrimPrefix(file.FileName(), directory+"/"), line + 1, column + 1, node.Kind.String(), found.property, checker.TypeToString(found.source), checker.TypeToString(found.target), file.Text()[position:end], "", "",
+					strings.TrimPrefix(string(file.FileName()), directory+"/"), line + 1, column + 1, node.Kind.String(), found.property, checker.TypeToString(found.source), checker.TypeToString(found.target), file.Text()[position:end], "", "",
 				}
 				if admission {
 					audit := &lowering{checker: checker, program: formatter, result: &ir.Program{}}

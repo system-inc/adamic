@@ -504,7 +504,16 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
-	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)})
+	write := ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
+	if l.result.OptionalViewFields[name] {
+		write.WriteContract = l.slotContract(node, l.concrete(l.checker.GetTypeAtLocation(node)))
+		if write.WriteContract == 0 {
+			return nil, l.notYet(target, "a checked compound write without a reifiable source-slot type certificate")
+		}
+		write.TargetContract = l.slotContract(target, l.concrete(l.checker.GetTypeOfSymbol(field)))
+		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
+	}
+	statements = append(statements, write)
 	if len(statements) == 1 {
 		return statements, nil
 	}

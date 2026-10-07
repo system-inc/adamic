@@ -8,6 +8,10 @@ import (
 
 func TestOptionalCheckedWrites(t *testing.T) {
 	for _, probe := range []struct{ name, node, failure string }{
+		{"increment", "3\n", ""},
+		{"compound-literal", "3\n", "record { x: number; y: 2; }"},
+		{"enum-slot", "4\n", ""},
+		{"enum-read", "3\n", ""},
 		{"uninitialized-slot", "3\n", ""},
 		{"dictionary-own-slot", "3\n", ""},
 		{"second-optional", "after\n", ""},
@@ -35,7 +39,10 @@ func TestOptionalCheckedWrites(t *testing.T) {
 		{"string", "after\n", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path := filepath.Join(repository, "internal/lower/testdata/optional_widening/checked_writes", probe.name+".a")
+			path, err := filepath.Abs(filepath.Join(repository, "internal/lower/testdata/optional_widening/checked_writes", probe.name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
 			observation, err := os.ReadFile(filepath.Join(repository, "internal/lower/testdata/optional_widening/checked_writes", probe.name+".expected"))
 			if err != nil {
 				t.Fatal(err)
@@ -91,7 +98,7 @@ func TestOptionalNeverWrite(t *testing.T) {
 }
 
 func init() {
-	for _, name := range []string{"uninitialized-slot", "dictionary-own-slot", "second-optional", "boolean-write", "fresh-undefined", "fresh-boolean", "undefined-write", "object", "nominal-subclass-slot", "tag", "reduced-never", "unreachable", "fresh", "class", "record", "optional", "string"} {
+	for _, name := range []string{"increment", "enum-slot", "enum-read", "uninitialized-slot", "dictionary-own-slot", "second-optional", "boolean-write", "fresh-undefined", "fresh-boolean", "undefined-write", "object", "nominal-subclass-slot", "tag", "reduced-never", "unreachable", "fresh", "class", "record", "optional", "string"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool

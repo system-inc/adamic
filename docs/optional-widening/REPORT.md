@@ -344,3 +344,10 @@ Reduction commit: 6b3f285e. Final restored command `ADAMIC_GATE_UNCACHED=1 go te
 ## Shared views published and checked reads built
 
 Lane 1 published 609ed39 and was merged at 3ececcf13a077a1760303d527a001bc293bb1855. This supersedes the preceding dependency-blocked status. Supported widenings now use checked reads; writes remain conservatively fenced at this read checkpoint. See [CHECKED.md](CHECKED.md) for the current behavior, observations, mutants, limitations and validation. The earlier refusal reports remain historical evidence.
+
+
+## Checked writes and reduced 391-site measurement
+
+The checked-write ruling is implemented for supported scalar and object contracts on Lane 1's shared views. Writes validate the actual immutable class/record slot contract before mutation; fresh unaliased literals, terminal receivers and dominating nominal tags can erase the check. The class proof still assumes closed-world whole-program compilation, including transitive subclasses and class expressions. Separate compilation must revisit it. Required object writes outside this certificate path retain their existing fence.
+
+See [WRITES.md](WRITES.md) for the five-line report, final commands, all twelve valid semantic/proof mutants, exact runtime messages and limitations. The final uncached Linux gate passes: IR 1.664s, lower 40.482s, all stage3 fixtures 29.438s, whole Node oracle 289.362s. Native and fresh packages passed separately in the broader gate. The 391-site audit reports 144 no longer widenings, 101 Refused, 134 NotYet and 12 supported target schemas; schema admission is not a complete-file compile claim. The three former optional-refusal fixture sites still have zero Compiles outcomes. Function-typed developer programs remain skipped for the other worker.

@@ -83,6 +83,9 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 						found = l.notYet(part, "a nullable checked field requiring a distinct null runtime tag")
 					}
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+					if of == ir.Object && ast.IsAssignmentTarget(part) && !l.result.OptionalViewFields[l.fieldName(part.Name())] {
+						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
+					}
 
 					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Object) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
@@ -290,7 +293,9 @@ func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Ty
 // A finite literal contract is checked as well as its primitive representation.
 func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
 	// A whole numeric enum admits numbers outside its declared members.
-	if l.openNumericEnumType(declared) { return nil }
+	if l.openNumericEnumType(declared) {
+		return nil
+	}
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {

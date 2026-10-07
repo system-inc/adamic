@@ -108,7 +108,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 
 func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
 	// A whole numeric enum admits numbers outside its declared members.
-	if l.openNumericEnumType(target) { return nil }
+	if l.openNumericEnumType(target) {
+		return nil
+	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.ViewLiteral
 		for _, member := range target.Types() {

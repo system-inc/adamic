@@ -118,16 +118,19 @@ func trappedViewReceiver(program *ir.Program, expression ir.Expression) bool {
 	case ir.Defined:
 		return trappedViewReceiver(program, value.Value)
 	case ir.Call:
-		function := program.Functions[value.Function]
-		if len(function.Body) == 0 {
-			return false
-		}
-		if _, ok := function.Body[len(function.Body)-1].(ir.Panic); !ok {
-			return false
-		}
-		for _, statement := range function.Body[:len(function.Body)-1] {
-			if _, ok := statement.(ir.Evaluate); !ok {
+		// A virtual base body is not a proof about its overrides.
+		for _, target := range program.CallTargets(value) {
+			function := program.Functions[target]
+			if len(function.Body) == 0 {
 				return false
+			}
+			if _, ok := function.Body[len(function.Body)-1].(ir.Panic); !ok {
+				return false
+			}
+			for _, statement := range function.Body[:len(function.Body)-1] {
+				if _, ok := statement.(ir.Evaluate); !ok {
+					return false
+				}
 			}
 		}
 		return true
