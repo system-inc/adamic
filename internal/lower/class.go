@@ -383,6 +383,8 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		if err := l.useOfThis(receiver); err != nil {
 			return nil, err
 		}
+		// super.method() reads this as this.method() does, and inside an arrow that's a capture.
+		l.touch(l.this)
 		object = ir.Read{Local: l.this, Of: ir.Object}
 	} else {
 		object, err = l.expression(receiver)
