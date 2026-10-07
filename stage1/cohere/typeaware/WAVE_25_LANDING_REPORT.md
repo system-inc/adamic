@@ -486,3 +486,50 @@ gate was not run. During validation the area advanced to d65a8f93 with a
 runtime-profile landing; that later area change is not included or covered
 by these results. Final fetch confirms current main remains the included
 39638d9e base. The landing cap against current main is satisfied.
+
+## Current area runtime rebase, October 7
+
+Rebased cleanly onto the requested current origin/area/stage1-lint at
+d65a8f931c98655936ae04c6899f38f14862b73e. Tested head:
+ae2b9f3a251b9e3ee832d161e91d7c623dc317f2. This includes current main
+39638d9e and the named finding model. Final fetch confirms both bases remained
+current. No shared change was reverted, no rule source changed during this
+landing unit, and no new rules were claimed.
+
+All five wave suites and refusal checks passed in 407.445s. The inherited
+ten-rule dependency passed in 519.169s, including its compiler corpus of
+16,589 findings and 7,120,613 identical serialized bytes under both normal and
+sanitizer builds. Bridge packages passed. All 24 rule mutants compiled, exited
+0 and were caught only by Go bytes. Released-handle and registry mutants also
+passed. The dropped ClassDeclaration routing mutant was rebuilt on this base:
+build 0, native exit 0, empty native stderr, Go bytes catch byte 1,211.
+
+The initial filtered Node command failed before any program execution because
+the disk filled while its runtime cache was being created. Its exact
+no-space-left-on-device log is retained. Only explicitly named obsolete
+binaries and archives from my first /workspace/wave-25-landing scratch run
+were deleted; their checked-in evidence and source were retained. The fresh
+uncached retry passed in 10.489s, zero cache hits, 28 native misses and 19 Node
+misses. It includes TestRuntimeLastIndexOfMatchesNode: Node, emitted JavaScript,
+release native and sanitizers match on 758 bytes. go vet ./... then exited 0
+with empty output.
+
+Shared suggestion serialization and automatic-fix coexistence checks passed
+in 74.701s on Go, source Node, emitted JavaScript and sanitized native.
+The altered second suggestion edit was caught on all three runtime sides;
+the clean-running emitted-JavaScript mismatch mutant was caught by the normal
+comparison. Required registry generation passed; ignored outputs were not
+committed. Exact commands, intact logs, source hashes and benchmarks are
+preserved in validation-wave-25-area-next.
+
+Three interleaved whole-process measurements of the rebuilt fifth suite with
+nil boolean options matched Go output each time. Compiler medians: native
+4.290138364s, Go 0.420701637s, ratio 10.198. Repository medians: native
+0.627150873s, Go 0.170788902s, ratio 3.672. These are total adapter measurements,
+not equivalent per-listener timings, and no causal speedup claim is made.
+
+The full repository gate and emitted-JavaScript certification for the
+standalone checker-bridge wave suite remain unrun. Boolean-prop-naming's
+options, imported props, typed wrappers, placeholder regex and remaining
+dispatch migrations are still partial; this is not an IR/SSA/capture parking
+classification. No main or area ref was pushed.

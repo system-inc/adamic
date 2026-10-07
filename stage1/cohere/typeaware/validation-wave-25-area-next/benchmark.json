@@ -1,0 +1,46 @@
+[
+  {
+    "population": "compiler",
+    "samples_ns": [
+      {
+        "go": 420701637,
+        "native": 3876214416
+      },
+      {
+        "go": 391327196,
+        "native": 4290138364
+      },
+      {
+        "go": 433673557,
+        "native": 4290349227
+      }
+    ],
+    "go_median_ns": 420701637,
+    "native_median_ns": 4290138364,
+    "stdout_bytes": 5010,
+    "stdout_sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+    "native_over_go": 10.197579440367141
+  },
+  {
+    "population": "repository",
+    "samples_ns": [
+      {
+        "go": 170788902,
+        "native": 627150873
+      },
+      {
+        "go": 171021250,
+        "native": 654665192
+      },
+      {
+        "go": 161068401,
+        "native": 595203309
+      }
+    ],
+    "go_median_ns": 170788902,
+    "native_median_ns": 627150873,
+    "stdout_bytes": 18485,
+    "stdout_sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "native_over_go": 3.6720821180757985
+  }
+]

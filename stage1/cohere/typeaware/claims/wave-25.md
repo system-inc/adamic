@@ -147,3 +147,11 @@ mutants, sanitizers, handles, bridge, filtered uncached Node and vet pass.
 Shared finding-model serialization and emitted-JavaScript mutant checks also
 pass. Evidence: validation-wave-25-area. No new claims; existing partial paths
 remain reserved. Area/main integration refs were not pushed.
+
+## Current area runtime rebase, October 7
+
+Rebased onto current area d65a8f93, containing current main 39638d9e.
+All owned suites, dependency, mutants, sanitizers, handles, bridge, uncached
+Node including lastIndexOf, shared finding model and vet pass. Evidence:
+validation-wave-25-area-next. Existing partial paths remain reserved and no
+new claims were made. Only the wave-25 branch is pushed.
