@@ -1,5 +1,25 @@
 # Scanner blockers
 
+## October 7: adaptation 56 closes the assertion predicate
+
+Census reason: type predicates. Compiler feature: proven-predicates, admission
+seam pending (remote still b4366a7). Eleven reached Debug.assert call sites
+become direct Boolean guards with the same failure messages; only the now
+unreached slice member is removed. No full-tree predicate contract is erased.
+The required resultingToken narrowing and side-effectful regex escape test are
+preserved. Exact next refusal on the earlier integrated compiler:
+scanner.ts:291:12, non-null assertion !, in optional languageVersion comparison.
+
+Node still matches 509,014 tokens. A real failing reScanQuestionToken call has
+the same message; disabling its guard is caught by diff exit 1. Combined 55-57
+upstream validation: 106,367 pass, zero failures/pending/baseline differences,
+336.493 seconds, two workers. Evidence: native56-57-baseline-{report.json,tests.log},
+native56-{next-blocker,assert-failure,assert-mutant}.log.
+
+The initial overlapping baseline attempt lost a worker without diagnostics;
+it is not a pass. The container reported an OOM kill, but attribution was not
+proven. The isolated two-worker retry above completed the full suite.
+
 ## October 7: adaptation 55 closes function widening
 
 Fetched first: no function-widening branch. Per compiler update none lands
