@@ -58,6 +58,12 @@ type Options struct {
 	// slabs, for tests, keeps the size-class allocator on in a sanitized build (heap.c), where every
 	// value otherwise comes from malloc, to show a use after a free is still caught with it on.
 	slabs bool
+
+	// FusedRuntime, for tests only, compiles the runtime with multiply-adds contracted within an
+	// expression (-ffp-contract=on, clang's default) and the program without, to reproduce a Node whose V8 was compiled that
+	// way while JavaScript's own arithmetic stays unfused, as V8's always is (fused_test.go). Never for
+	// a program anyone runs.
+	FusedRuntime bool
 }
 
 // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
@@ -69,7 +75,9 @@ func Flags(options Options) []string {
 	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
-	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
+	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. Not every Node agrees: macOS arm64's V8
+	// is compiled with contraction, and differs in the last bit (fused_test.go). Adamic gives one answer
+	// on every platform, the unfused one, which is Node's on x86-64.
 	flags = append(flags, "-ffp-contract=off")
 	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
 	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
