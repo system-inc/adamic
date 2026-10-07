@@ -75,3 +75,14 @@ removal has a distinct suggestion range, as-const annotations have two fix edits
 and enum initializers have three ordered suggestions. No partial port is registered.
 The complete original Go tests pass. Reproduction and exact limits are recorded
 in wave1-14-fourth-report.md and wave1-14-fourth-evidence/.
+
+## Complete repair follow-up
+
+The six previously blocked claims now have owned .a implementations with complete
+repair data and four-way fixture/corpus comparisons. No-confusing-non-null-assertion,
+no-extra-non-null-assertion and no-unnecessary-parameter-property-assignment join
+the three fourth-batch rules. Shared integration is still explicitly refused until
+the .a registry and Finding repair contract land. One modified-destructuring parser
+fixture is excluded; split-UTF-8 repairs are explicitly refused. Full evidence,
+all semantic mutants and native/Node/Go findings rates are recorded in
+../rules/typescript-eslint-prefer-as-const/COMPLETE_REPORT.md.
