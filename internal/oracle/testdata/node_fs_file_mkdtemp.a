@@ -1,0 +1,17 @@
+import { programArguments } from 'adamic';
+import { mkdtempSync, statSync, existsSync, rmSync } from 'node:fs';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    const errno: NodeJS.ErrnoException = error;
+    console.log(`${errno.code ?? ''}: ${error.message.replace(root, '<root>')}`);
+}
+const prefix = root + '/scratch-';
+const first = mkdtempSync(prefix);
+const second = mkdtempSync(prefix, 'utf8');
+console.log(`prefix=${first.startsWith(prefix)} suffix=${first.length - prefix.length} unique=${first !== second}`);
+console.log(`directories=${statSync(first).isDirectory() && statSync(second).isDirectory()}`);
+rmSync(first, { recursive: true }); rmSync(second, { recursive: true });
+console.log(`removed=${!existsSync(first) && !existsSync(second)}`);
+for (const prefix of [root + '/missing/scratch-', root + '/file/scratch-', root + '/locked/scratch-', root + '/bad\0']) {
+    try { mkdtempSync(prefix); } catch (error) { if (error instanceof Error) { failure(error); } }
+}

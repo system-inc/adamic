@@ -76,5 +76,14 @@ func IsNodeLibrary(file *ast.SourceFile) bool {
 // Preserve the existing console lowerer's declaration identity while letting
 // the pinned Node global Console interface merge. The package itself is untouched.
 func nodePrelude() string {
-	return strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
+	result := strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
+	// Official Node globals replace the dependency's legacy global process subset.
+	start := strings.Index(result, "declare const process: {")
+	if start >= 0 {
+		end := strings.Index(result[start:], "\n};")
+		if end >= 0 {
+			result = result[:start] + result[start+end+3:]
+		}
+	}
+	return result
 }

@@ -9,6 +9,7 @@ import (
 // The merged Buffer unit implements these members. Register them with the shared
 // declaration guard so byte reads can be consumed by sys.ts's actual BOM decoder.
 func init() {
+	RegisterNodeLibraryMembers("node:fs.native", "node:path.join", "node:path.resolve", "node:path.dirname", "node:path.relative", "node:path.PlatformPath.join", "node:path.PlatformPath.resolve", "node:path.PlatformPath.dirname", "node:path.PlatformPath.relative", "node:fs.readdirSync", "node:fs.realpathSync", "node:fs.realpathSync.native", "node:fs.Dirent.isFile", "node:fs.Dirent.isDirectory", "node:fs.Dirent.isSymbolicLink", "node:fs.Dirent.name")
 	RegisterNodeLibraryMembers("node:buffer.Buffer", "node:buffer.BufferConstructor.from", "node:buffer.Buffer.toString",
 		"node:crypto.createHash", "node:crypto.Hash.update", "node:crypto.Hash.digest")
 }
