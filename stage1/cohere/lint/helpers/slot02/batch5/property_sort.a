@@ -1,0 +1,16 @@
+export interface Sort {
+    readonly order: number[];
+    readonly count: number;
+}
+
+export interface PropertySortResult {
+    readonly sort: Sort;
+    readonly visited: readonly string[];
+}
+
+// The caller owns node projection and the separately ported propertySort traversal.
+export function propertySort(nodes: readonly number[],
+    compute: (nodes: readonly number[]) => PropertySortResult): Sort {
+    const result = compute(nodes);
+    return { order: result.sort.order, count: result.sort.count };
+}

@@ -1,0 +1,78 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { hasUtility } from './design_system_has_utility.a';
+import { findRoots } from './find_roots.a';
+import { propertySort } from './property_sort.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus path'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function texts(field: string): string[] {
+    const result: string[] = [];
+    for (const index of json.node(json.field(root, field)).children) { result.push(json.node(index).text); }
+    return result;
+}
+function pairs(index: number): Map<string, boolean> {
+    const result = new Map<string, boolean>();
+    for (const row of json.node(index).children) {
+        result.set(json.node(json.field(row, 'Key')).text, json.node(json.field(row, 'Value')).text === 'true');
+    }
+    return result;
+}
+const staticRoots = pairs(json.field(root, 'Static'));
+const functionalRoots = pairs(json.field(root, 'Functional'));
+const values = texts('Texts');
+const kinds = texts('Kinds');
+for (const store of json.node(json.field(root, 'Stores')).children) {
+    const repository = new Map<string, Map<string, boolean>>();
+    for (const row of json.node(json.field(store, 'Roots')).children) {
+        repository.set(json.node(json.field(row, 'Root')).text, pairs(json.field(row, 'Kinds')));
+    }
+    const system = { repository, frameworkStatic: staticRoots, frameworkFunctional: functionalRoots };
+    for (const text of values) {
+        for (const kind of kinds) { console.log(`utility:${hasUtility(system, text, kind)}`); }
+    }
+}
+const rootSet = new Map<string, boolean>();
+for (const text of texts('RootSet')) { rootSet.set(text, true); }
+for (const text of values) {
+    for (let mode = 0; mode < 4; mode++) {
+        const calls: string[] = [];
+        const candidates = findRoots(text, (candidate: string): boolean => {
+            calls.push(candidate);
+            if (mode === 0) { return rootSet.get(candidate) ?? false; }
+            if (mode === 1) { return true; }
+            if (mode === 2) { return calls.length % 2 === 1; }
+            return false;
+        });
+        console.log(`roots:${candidates.length}`);
+        for (const candidate of candidates) { console.log(`root:${candidate.root}:${candidate.hasValue}:${candidate.value}`); }
+        console.log(`calls:${calls.length}`);
+        for (const call of calls) { console.log(`call:${call}`); }
+    }
+}
+function numbers(parent: number, field: string): number[] {
+    const result: number[] = [];
+    for (const index of json.node(json.field(parent, field)).children) { result.push(Number(json.node(index).text)); }
+    return result;
+}
+for (const row of json.node(json.field(root, 'Sorts')).children) {
+    const nodes = numbers(row, 'Nodes');
+    const computed = { order: numbers(row, 'Order'), count: Number(json.node(json.field(row, 'Count')).text) };
+    const visited: string[] = [];
+    for (const index of json.node(json.field(row, 'Visited')).children) { visited.push(json.node(index).text); }
+    let calls = 0;
+    let matches = false;
+    const result = propertySort(nodes, (received: readonly number[]) => {
+        calls++;
+        matches = received.length === nodes.length && (received.length === 0 || received === nodes);
+        return { sort: computed, visited };
+    });
+    console.log(`sort:${result.count}:[${result.order.join(' ')}]`);
+    console.log(`trace:${calls}:${matches}`);
+    computed.count += 1000;
+    if (computed.order.length > 0) { computed.order[0] = (computed.order[0] ?? panic('order')) + 1000; }
+    console.log(`alias:${result.count}:[${result.order.join(' ')}]`);
+}

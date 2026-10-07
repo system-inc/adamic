@@ -1,0 +1,17 @@
+import { panic } from 'adamic';
+
+export interface UtilityRootMaps {
+    readonly repository: Map<string, Map<string, boolean>>;
+    readonly frameworkStatic: Map<string, boolean>;
+    readonly frameworkFunctional: Map<string, boolean>;
+}
+
+export function hasUtility(system: UtilityRootMaps, root: string, kind: string): boolean {
+    if (system.repository.has(root)) {
+        const declared = system.repository.get(root) ?? panic('missing repository kind map');
+        return declared.get(kind) ?? false;
+    }
+    if (kind === 'static') { return system.frameworkStatic.has(root); }
+    if (kind === 'functional') { return system.frameworkFunctional.get(root) ?? false; }
+    return false;
+}

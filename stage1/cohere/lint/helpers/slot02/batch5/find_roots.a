@@ -1,0 +1,25 @@
+export interface RootCandidate {
+    readonly root: string;
+    readonly value: string;
+    readonly hasValue: boolean;
+}
+
+export function findRoots(input: string, exists: (root: string) => boolean): RootCandidate[] {
+    const roots: RootCandidate[] = [];
+    if (exists(input)) { roots.push({ root: input, value: '', hasValue: false }); }
+    let index = input.lastIndexOf('-');
+    while (index > 0) {
+        const root = input.slice(0, index);
+        if (exists(root)) {
+            const value = input.slice(index + 1);
+            if (value === '') { break; }
+            if (root === '@' && exists('@') && input.charCodeAt(index) === 45) { break; }
+            roots.push({ root, value, hasValue: true });
+        }
+        index = input.slice(0, index).lastIndexOf('-');
+    }
+    if (input.length > 0 && input.charCodeAt(0) === 64 && exists('@')) {
+        roots.push({ root: '@', value: input.slice(1), hasValue: true });
+    }
+    return roots;
+}
