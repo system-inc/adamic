@@ -1,0 +1,5 @@
+// Expected refusal: JSX surface extraction is not available in the shared stage1 parser.
+import { Parser } from '../../../../typescript/parser/parser.ts';
+const parser = new Parser('const view = <div className="w-4 h-4" />;', 'tailwind-gap.tsx');
+parser.file();
+console.log('unexpected JSX support');

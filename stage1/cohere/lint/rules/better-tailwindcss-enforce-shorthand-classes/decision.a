@@ -1,0 +1,130 @@
+// Decision kernel only: caller must supply class literals and design-system membership.
+class PatternRule {
+    readonly longhands: readonly string[];
+    readonly shorthands: readonly string[];
+    constructor(longhands: readonly string[], shorthands: readonly string[]) { this.longhands = longhands; this.shorthands = shorthands; }
+}
+class Parts {
+    readonly name: string;
+    readonly variants: string;
+    readonly base: string;
+    readonly negative: boolean;
+    readonly important: boolean;
+    readonly markerEnd: boolean;
+    constructor(name: string) {
+        this.name = name;
+        let depth = 0;
+        let colon = -1;
+        for (let i = 0; i < name.length; i++) {
+            const c = name[i];
+            if (c === '[' || c === '(') depth++;
+            else if (c === ']' || c === ')') depth--;
+            else if (c === ':' && depth === 0) colon = i;
+        }
+        const hasVariants = colon > 0 && colon < name.length - 1;
+        this.variants = hasVariants ? name.slice(0, colon) : '';
+        let utility = hasVariants ? name.slice(colon + 1) : name;
+        this.negative = utility.startsWith('-');
+        if (this.negative) utility = utility.slice(1);
+        const leading = utility.startsWith('!');
+        if (leading) utility = utility.slice(1);
+        this.markerEnd = utility.endsWith('!');
+        if (this.markerEnd) utility = utility.slice(0, -1);
+        this.important = leading || this.markerEnd;
+        this.base = utility;
+    }
+}
+const families: readonly (readonly PatternRule[])[] = [
+    [new PatternRule(["w-(.*)", "h-(.*)"],["size-$1"])],
+    [new PatternRule(["ml-(.*)", "mr-(.*)", "mt-(.*)", "mb-(.*)"],["m-$1"]),new PatternRule(["mx-(.*)", "my-(.*)"],["m-$1"]),new PatternRule(["ms-(.*)", "me-(.*)"],["mx-$1"]),new PatternRule(["ml-(.*)", "mr-(.*)"],["mx-$1"]),new PatternRule(["mt-(.*)", "mb-(.*)"],["my-$1"])],
+    [new PatternRule(["pl-(.*)", "pr-(.*)", "pt-(.*)", "pb-(.*)"],["p-$1"]),new PatternRule(["px-(.*)", "py-(.*)"],["p-$1"]),new PatternRule(["ps-(.*)", "pe-(.*)"],["px-$1"]),new PatternRule(["pl-(.*)", "pr-(.*)"],["px-$1"]),new PatternRule(["pt-(.*)", "pb-(.*)"],["py-$1"])],
+    [new PatternRule(["border-t-(.*)", "border-b-(.*)", "border-l-(.*)", "border-r-(.*)"],["border-$1"]),new PatternRule(["border-x-(.*)", "border-y-(.*)"],["border-$1"]),new PatternRule(["border-s-(.*)", "border-e-(.*)"],["border-x-$1"]),new PatternRule(["border-l-(.*)", "border-r-(.*)"],["border-x-$1"]),new PatternRule(["border-t-(.*)", "border-b-(.*)"],["border-y-$1"])],
+    [new PatternRule(["border-spacing-x-(.*)", "border-spacing-y-(.*)"],["border-spacing-$1"])],
+    [new PatternRule(["rounded-tl-(.*)", "rounded-tr-(.*)", "rounded-bl-(.*)", "rounded-br-(.*)"],["rounded-$1"]),new PatternRule(["rounded-t-(.*)", "rounded-b-(.*)"],["rounded-$1"]),new PatternRule(["rounded-l-(.*)", "rounded-r-(.*)"],["rounded-$1"]),new PatternRule(["rounded-tl-(.*)", "rounded-tr-(.*)"],["rounded-t-$1"]),new PatternRule(["rounded-bl-(.*)", "rounded-br-(.*)"],["rounded-b-$1"]),new PatternRule(["rounded-tl-(.*)", "rounded-bl-(.*)"],["rounded-l-$1"]),new PatternRule(["rounded-tr-(.*)", "rounded-br-(.*)"],["rounded-r-$1"])],
+    [new PatternRule(["scroll-mt-(.*)", "scroll-mb-(.*)", "scroll-ml-(.*)", "scroll-mr-(.*)"],["scroll-m-$1"]),new PatternRule(["scroll-mx-(.*)", "scroll-my-(.*)"],["scroll-m-$1"]),new PatternRule(["scroll-ms-(.*)", "scroll-me-(.*)"],["scroll-mx-$1"]),new PatternRule(["scroll-ml-(.*)", "scroll-mr-(.*)"],["scroll-mx-$1"]),new PatternRule(["scroll-mt-(.*)", "scroll-mb-(.*)"],["scroll-my-$1"])],
+    [new PatternRule(["scroll-pt-(.*)", "scroll-pb-(.*)", "scroll-pl-(.*)", "scroll-pr-(.*)"],["scroll-p-$1"]),new PatternRule(["scroll-px-(.*)", "scroll-py-(.*)"],["scroll-p-$1"]),new PatternRule(["scroll-pl-(.*)", "scroll-pr-(.*)"],["scroll-px-$1"]),new PatternRule(["scroll-ps-(.*)", "scroll-pe-(.*)"],["scroll-px-$1"]),new PatternRule(["scroll-pt-(.*)", "scroll-pb-(.*)"],["scroll-py-$1"])],
+    [new PatternRule(["top-(.*)", "right-(.*)", "bottom-(.*)", "left-(.*)"],["inset-$1"]),new PatternRule(["inset-x-(.*)", "inset-y-(.*)"],["inset-$1"])],
+    [new PatternRule(["divide-x-(.*)", "divide-y-(.*)"],["divide-$1"])],
+    [new PatternRule(["space-x-(.*)", "space-y-(.*)"],["space-$1"])],
+    [new PatternRule(["gap-x-(.*)", "gap-y-(.*)"],["gap-$1"])],
+    [new PatternRule(["translate-x-(.*)", "translate-y-(.*)"],["translate-$1"])],
+    [new PatternRule(["rotate-x-(.*)", "rotate-y-(.*)"],["rotate-$1"])],
+    [new PatternRule(["skew-x-(.*)", "skew-y-(.*)"],["skew-$1"])],
+    [new PatternRule(["scale-x-(.*)", "scale-y-(.*)", "scale-z-(.*)"],["scale-$1", "scale-3d"]),new PatternRule(["scale-x-(.*)", "scale-y-(.*)"],["scale-$1"])],
+    [new PatternRule(["content-(.*)", "justify-content-(.*)"],["place-content-$1"]),new PatternRule(["items-(.*)", "justify-items-(.*)"],["place-items-$1"]),new PatternRule(["self-(.*)", "justify-self-(.*)"],["place-self-$1"])],
+    [new PatternRule(["overflow-hidden", "text-ellipsis", "whitespace-nowrap"],["truncate"])],
+ ];
+export class Collapse {
+    readonly longhands: readonly string[];
+    readonly shorthands: readonly string[];
+    constructor(longhands: readonly string[], shorthands: readonly string[]) { this.longhands = longhands; this.shorthands = shorthands; }
+}
+export function collapses(names: readonly string[]): readonly Collapse[] {
+    const classes: Parts[] = [];
+    const variants: string[] = [];
+    for (const name of names) {
+        const part = new Parts(name);
+        classes.push(part);
+        if (!variants.includes(part.variants)) variants.push(part.variants);
+    }
+    const result: Collapse[] = [];
+    for (const family of families) {
+        let found = false;
+        for (const rule of family) {
+            for (const variant of variants) {
+                const matched: Parts[] = [];
+                let captured = '';
+                let capturing = false;
+                let first = true;
+                for (const pattern of rule.longhands) {
+                    const captures = pattern.endsWith('(.*)');
+                    const prefix = captures ? pattern.slice(0, -4) : pattern;
+                    for (const part of classes) {
+                        if (part.variants !== variant) continue;
+                        if (captures ? !part.base.startsWith(prefix) : part.base !== prefix) continue;
+                        const value = captures ? part.base.slice(prefix.length) : '';
+                        if (first) { captured = value; capturing = captures; first = false; }
+                        else if (value !== captured || capturing !== captures) continue;
+                        matched.push(part);
+                        break;
+                    }
+                }
+                if (matched.length !== rule.longhands.length) continue;
+                let markerEnd = false;
+                let important = false;
+                let negative = false;
+                for (const part of matched) {
+                    markerEnd = markerEnd || part.markerEnd;
+                    important = important || part.important;
+                    negative = negative || part.negative;
+                }
+                let agrees = true;
+                for (const part of matched) {
+                    if (part.important !== important || part.negative !== negative) agrees = false;
+                }
+                if (!agrees) continue;
+                const longhands: string[] = [];
+                for (const part of matched) longhands.push(part.name);
+                const shorthands: string[] = [];
+                let allPresent = true;
+                for (const substitute of rule.shorthands) {
+                    let name = capturing ? substitute.split('$1').join(captured) : substitute;
+                    if (negative) name = '-' + name;
+                    if (important) name = markerEnd ? name + '!' : '!' + name;
+                    if (variant !== '') name = variant + ':' + name;
+                    shorthands.push(name);
+                    if (!names.includes(name)) allPresent = false;
+                }
+                if (allPresent) continue;
+                result.push(new Collapse(longhands, shorthands));
+                found = true;
+                break;
+            }
+            if (found) break;
+        }
+    }
+    return result;
+}
+export function message(longhands: string, shorthands: string): string {
+    return '"' + longhands + '" is the longhand spelling of "' + shorthands + '", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as "' + shorthands + '".';
+}
