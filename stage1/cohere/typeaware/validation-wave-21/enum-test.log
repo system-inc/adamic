@@ -1,0 +1,13 @@
+=== RUN   TestWave21Enums
+    wave_21_test.go:57: controls: 4163 identical finding bytes; findings 9
+    wave_21_test.go:63: controls-asan: 4163 identical finding bytes; findings 9
+    wave_21_test.go:89: enum mutant: exit 0, byte oracle catches byte 47
+    wave_21_test.go:98: released enum query: panic 70, invalid or released checker handle
+    wave_21_test.go:103: released registry mutant: exit 0 caught by required panic 70
+    wave_21_test.go:110: compiler: 5087 identical finding bytes; findings 0
+    wave_21_test.go:111: compiler-asan: 5087 identical finding bytes; findings 0
+    wave_21_test.go:110: repository: 18485 identical finding bytes; findings 0
+    wave_21_test.go:111: repository-asan: 18485 identical finding bytes; findings 0
+--- PASS: TestWave21Enums (43.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	43.024s
