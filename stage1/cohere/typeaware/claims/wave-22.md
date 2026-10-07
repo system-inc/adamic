@@ -89,3 +89,12 @@ names in every origin Markdown claim, the first available rules are:
 These zero-volume rules are reserved for this branch. This claim is pushed
 before implementation. The fetched refs and inventory are recorded in
 validation-wave-22-fifth/selection.json.
+
+## Fifth batch status
+
+The fifth claim was pushed as ba8ac629 before implementation. All three React
+rules remain pending: the native parser rejects a production JSX shape with
+exit 70, and the native React HIR/SSA prerequisites are absent on this branch.
+No shared parser or harness files were edited. See WAVE_22_FIFTH_REPORT.md and
+validation-wave-22-fifth for the reproduction and production Go test results.
+The twelve earlier rules remain complete and pushed; no more rules are claimed.
