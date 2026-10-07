@@ -31,7 +31,7 @@ func C(program *ir.Program) string {
 			continue
 		}
 		// Longer than a C string literal may be under -pedantic: its bytes as an array instead.
-		fmt.Fprintf(&builder, "static const char adamic_bytes_%d[%d] = {%s};\n", index, len(value), cBytes(value))
+		fmt.Fprintf(&builder, "static const unsigned char adamic_bytes_%d[%d] = {%s};\n", index, len(value), cBytes(value))
 		fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING_BYTES(adamic_bytes_%d, %d);\n", index, index, len(value))
 	}
 	if len(program.Strings) > 0 {
@@ -47,7 +47,7 @@ func C(program *ir.Program) string {
 			continue
 		}
 		globals = true
-		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zero(local.Type))
+		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zeroInitializer(local.Type))
 		fmt.Fprintf(&builder, "static bool %s = false;\n", readyName(index))
 		if local.Uninitialized {
 			fmt.Fprintf(&builder, "static bool %s_declared = false;\n", readyName(index))

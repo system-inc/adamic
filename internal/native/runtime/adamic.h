@@ -129,8 +129,10 @@ extern char adamic_literal_mark;
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
 #define ADAMIC_STRING(text) {{0, adamic_kind_string, 0}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
 
-// ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
-#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
+// ADAMIC_STRING_BYTES holds an unsigned byte array too long for a C string literal.
+// Character pointers may read any object representation; the cast preserves the bytes
+// for the runtime, whose numeric byte readers use unsigned char.
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, (const char *)(array), 0, ADAMIC_LITERAL_INDEX, NULL, 0}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 //
