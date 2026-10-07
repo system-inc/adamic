@@ -1,6 +1,6 @@
 // Speculation saves and restores scanner state without building a tree.
 import type { Scanner } from '../scanner/scanner.ts';
-import { precedence, reservedKinds } from './grammar.ts';
+import { modifierKinds, precedence, reservedKinds } from './grammar.ts';
 
 export interface ParserStateInterface {
     readonly pos: number;
@@ -11,6 +11,8 @@ export interface ParserStateInterface {
     readonly flags: number;
     readonly errors: number;
     readonly nodes: number;
+    readonly roots: number;
+    readonly diagnostics: number;
 }
 
 function kind(scanner: Scanner): string {
@@ -96,6 +98,9 @@ function optionalParameterAhead(scanner: Scanner): boolean {
 }
 
 export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
+    if(kind(scanner) === 'EqualsGreaterThanToken') {
+        return true;
+    }
     const state = new Speculation(scanner);
     let result = false;
     if(kind(scanner) === 'AsyncKeyword') {
@@ -114,7 +119,8 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             return result;
         }
     }
-    if(kind(scanner) === 'LessThanToken') {
+    const generic = kind(scanner) === 'LessThanToken';
+    if(generic) {
         let depth = 0;
         while(kind(scanner) !== 'EndOfFile') {
             if(kind(scanner) === 'LessThanToken') {
@@ -130,6 +136,26 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
         }
     }
     if(kind(scanner) === 'OpenParenToken') {
+        const parameterState = new Speculation(scanner);
+        parameterState.next();
+        const first = kind(scanner);
+        parameterState.next();
+        const second = kind(scanner);
+        parameterState.restore();
+        if(
+            !generic &&
+            modifierKinds.includes(first) &&
+            first !== 'AsyncKeyword' &&
+            second !== 'AsKeyword' &&
+            (second === 'Identifier' || (second.endsWith('Keyword') && !reservedKinds.includes(second)))
+        ) {
+            state.restore();
+            return true;
+        }
+        const parameterHead =
+            first === 'Identifier' ||
+            first === 'ThisKeyword' ||
+            (first.endsWith('Keyword') && !reservedKinds.includes(first));
         let depth = 0;
         let typed = false;
         let head = 0;
@@ -143,10 +169,11 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             if(depth === 1 && kind(scanner) !== 'OpenParenToken') {
                 head++;
                 if(
-                    (head === 2 &&
+                    (parameterHead &&
+                        head === 2 &&
                         (kind(scanner) === 'ColonToken' ||
                             (kind(scanner) === 'QuestionToken' && optionalParameterAhead(scanner)))) ||
-                    (head === 1 && kind(scanner) === 'DotDotDotToken')
+                    (head === 1 && first === 'DotDotDotToken')
                 ) {
                     typed = true;
                 }
@@ -155,6 +182,13 @@ export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
             if(depth === 0) {
                 break;
             }
+        }
+        if(
+            !generic &&
+            (typed || (head === 0 && (kind(scanner) === 'ColonToken' || kind(scanner) === 'OpenBraceToken')))
+        ) {
+            state.restore();
+            return true;
         }
         if(kind(scanner) === 'EqualsGreaterThanToken' && (scanner.flags & 1) === 0) {
             result = true;
@@ -302,6 +336,319 @@ export function typeArgumentsAhead(scanner: Scanner): boolean {
                     after === 'ColonToken' ||
                     after === 'CloseBraceToken' ||
                     after === 'EqualsToken')));
+    state.restore();
+    return result;
+}
+
+// A modifier is a declaration start only when its following tokens commit to
+// a declaration. Source-list recovery skips a stranded export token.
+export function declarationAhead(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    let result = false;
+    while(kind(scanner) !== 'EndOfFile') {
+        const current = kind(scanner);
+        if(
+            ['VarKeyword', 'LetKeyword', 'ConstKeyword', 'FunctionKeyword', 'ClassKeyword', 'EnumKeyword'].includes(
+                current,
+            )
+        ) {
+            result = true;
+            break;
+        }
+        if(['InterfaceKeyword', 'TypeKeyword', 'DeferKeyword', 'ModuleKeyword', 'NamespaceKeyword'].includes(current)) {
+            state.next();
+            result =
+                (scanner.flags & 1) === 0 &&
+                (kind(scanner) === 'Identifier' ||
+                    (kind(scanner).endsWith('Keyword') && !reservedKinds.includes(kind(scanner))) ||
+                    ((current === 'ModuleKeyword' || current === 'NamespaceKeyword') &&
+                        kind(scanner) === 'StringLiteral'));
+            break;
+        }
+        if(current === 'ExportKeyword') {
+            state.next();
+            if(
+                ['EqualsToken', 'AsteriskToken', 'OpenBraceToken', 'DefaultKeyword', 'AsKeyword', 'AtToken'].includes(
+                    kind(scanner),
+                )
+            ) {
+                result = true;
+                break;
+            }
+            if(kind(scanner) === 'TypeKeyword') {
+                state.next();
+                result =
+                    kind(scanner) === 'AsteriskToken' ||
+                    kind(scanner) === 'OpenBraceToken' ||
+                    ((kind(scanner) === 'Identifier' ||
+                        (kind(scanner).endsWith('Keyword') && !reservedKinds.includes(kind(scanner)))) &&
+                        (scanner.flags & 1) === 0);
+                break;
+            }
+            continue;
+        }
+        if(current === 'ImportKeyword') {
+            state.next();
+            result =
+                ['StringLiteral', 'AsteriskToken', 'OpenBraceToken', 'Identifier'].includes(kind(scanner)) ||
+                kind(scanner).endsWith('Keyword');
+            break;
+        }
+        if(current === 'GlobalKeyword') {
+            state.next();
+            result = ['OpenBraceToken', 'Identifier', 'ExportKeyword'].includes(kind(scanner));
+            break;
+        }
+        if(
+            [
+                'AbstractKeyword',
+                'AccessorKeyword',
+                'AsyncKeyword',
+                'DeclareKeyword',
+                'PrivateKeyword',
+                'ProtectedKeyword',
+                'PublicKeyword',
+                'ReadonlyKeyword',
+                'StaticKeyword',
+            ].includes(current)
+        ) {
+            state.next();
+            if(current !== 'StaticKeyword' && (scanner.flags & 1) !== 0) {
+                break;
+            }
+            if(current === 'DeclareKeyword' && kind(scanner) === 'TypeKeyword') {
+                result = true;
+                break;
+            }
+            continue;
+        }
+        break;
+    }
+    state.restore();
+    return result;
+}
+
+export function statementAhead(scanner: Scanner): boolean {
+    const current = kind(scanner);
+    if(current === 'ExportKeyword' || current === 'ConstKeyword') {
+        return declarationAhead(scanner);
+    }
+    if(current === 'ImportKeyword') {
+        const state = new Speculation(scanner);
+        state.next();
+        const expression = ['OpenParenToken', 'LessThanToken', 'DotToken'].includes(kind(scanner));
+        state.restore();
+        return expression || declarationAhead(scanner);
+    }
+    if(
+        [
+            'AccessorKeyword',
+            'PublicKeyword',
+            'PrivateKeyword',
+            'ProtectedKeyword',
+            'StaticKeyword',
+            'ReadonlyKeyword',
+        ].includes(current)
+    ) {
+        if(declarationAhead(scanner)) {
+            return true;
+        }
+        const state = new Speculation(scanner);
+        state.next();
+        const identifier =
+            (kind(scanner) === 'Identifier' || kind(scanner).endsWith('Keyword')) && (scanner.flags & 1) === 0;
+        state.restore();
+        return !identifier;
+    }
+    return (
+        [
+            'AtToken',
+            'SemicolonToken',
+            'OpenBraceToken',
+            'VarKeyword',
+            'LetKeyword',
+            'UsingKeyword',
+            'FunctionKeyword',
+            'ClassKeyword',
+            'EnumKeyword',
+            'IfKeyword',
+            'DoKeyword',
+            'WhileKeyword',
+            'ForKeyword',
+            'ContinueKeyword',
+            'BreakKeyword',
+            'ReturnKeyword',
+            'WithKeyword',
+            'SwitchKeyword',
+            'ThrowKeyword',
+            'TryKeyword',
+            'DebuggerKeyword',
+            'CatchKeyword',
+            'FinallyKeyword',
+            'ThisKeyword',
+            'SuperKeyword',
+            'NullKeyword',
+            'TrueKeyword',
+            'FalseKeyword',
+            'NumericLiteral',
+            'BigIntLiteral',
+            'StringLiteral',
+            'NoSubstitutionTemplateLiteral',
+            'TemplateHead',
+            'OpenParenToken',
+            'OpenBracketToken',
+            'NewKeyword',
+            'SlashToken',
+            'SlashEqualsToken',
+            'PlusToken',
+            'MinusToken',
+            'TildeToken',
+            'ExclamationToken',
+            'DeleteKeyword',
+            'TypeOfKeyword',
+            'VoidKeyword',
+            'PlusPlusToken',
+            'MinusMinusToken',
+            'LessThanToken',
+            'AwaitKeyword',
+            'YieldKeyword',
+            'PrivateIdentifier',
+        ].includes(current) ||
+        precedence(current) >= 0 ||
+        current === 'Identifier' ||
+        (current.endsWith('Keyword') && !reservedKinds.includes(current))
+    );
+}
+
+export function typeMemberAhead(scanner: Scanner): boolean {
+    if(['OpenParenToken', 'LessThanToken', 'GetKeyword', 'SetKeyword'].includes(kind(scanner))) {
+        return true;
+    }
+    const state = new Speculation(scanner);
+    let identifier = false;
+    while(modifierKinds.includes(kind(scanner))) {
+        identifier = true;
+        state.next();
+    }
+    if(kind(scanner) === 'OpenBracketToken') {
+        state.restore();
+        return true;
+    }
+    if(
+        kind(scanner) === 'Identifier' ||
+        kind(scanner).endsWith('Keyword') ||
+        ['StringLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(kind(scanner))
+    ) {
+        identifier = true;
+        state.next();
+    }
+    const result =
+        identifier &&
+        ([
+            'OpenParenToken',
+            'LessThanToken',
+            'QuestionToken',
+            'ColonToken',
+            'CommaToken',
+            'SemicolonToken',
+            'CloseBraceToken',
+            'EndOfFile',
+        ].includes(kind(scanner)) ||
+            (scanner.flags & 1) !== 0);
+    state.restore();
+    return result;
+}
+
+// First tokens shared by normal type parsing and parameter recovery.
+export function typeTokenStart(tokenKind: string): boolean {
+    return (
+        tokenKind === 'Identifier' ||
+        (tokenKind.endsWith('Keyword') && !reservedKinds.includes(tokenKind)) ||
+        [
+            'AnyKeyword',
+            'UnknownKeyword',
+            'StringKeyword',
+            'NumberKeyword',
+            'BigIntKeyword',
+            'BooleanKeyword',
+            'ReadonlyKeyword',
+            'SymbolKeyword',
+            'UniqueKeyword',
+            'VoidKeyword',
+            'UndefinedKeyword',
+            'NullKeyword',
+            'ThisKeyword',
+            'TypeOfKeyword',
+            'NeverKeyword',
+            'OpenBraceToken',
+            'OpenBracketToken',
+            'LessThanToken',
+            'BarToken',
+            'AmpersandToken',
+            'NewKeyword',
+            'StringLiteral',
+            'NumericLiteral',
+            'BigIntLiteral',
+            'TrueKeyword',
+            'FalseKeyword',
+            'ObjectKeyword',
+            'AsteriskToken',
+            'QuestionToken',
+            'ExclamationToken',
+            'DotDotDotToken',
+            'InferKeyword',
+            'ImportKeyword',
+            'AssertsKeyword',
+            'NoSubstitutionTemplateLiteral',
+            'TemplateHead',
+            'FunctionKeyword',
+        ].includes(tokenKind)
+    );
+}
+
+export function modifierAhead(scanner: Scanner, permitConst: boolean): boolean {
+    const current = kind(scanner);
+    if(!modifierKinds.includes(current)) {
+        return false;
+    }
+    const state = new Speculation(scanner);
+    state.next();
+    let result: boolean;
+    if(current === 'DefaultKeyword' || (current === 'ExportKeyword' && kind(scanner) === 'DefaultKeyword')) {
+        if(current === 'ExportKeyword') {
+            state.next();
+        }
+        result = ['ClassKeyword', 'FunctionKeyword', 'InterfaceKeyword', 'AtToken'].includes(kind(scanner));
+        if(kind(scanner) === 'AbstractKeyword' || kind(scanner) === 'AsyncKeyword') {
+            const next = kind(scanner) === 'AbstractKeyword' ? 'ClassKeyword' : 'FunctionKeyword';
+            state.next();
+            result = kind(scanner) === next && (scanner.flags & 1) === 0;
+        }
+    }
+    else {
+        if(current === 'ExportKeyword' && kind(scanner) === 'TypeKeyword') {
+            state.next();
+        }
+        const follow =
+            kind(scanner) === 'Identifier' ||
+            kind(scanner).endsWith('Keyword') ||
+            [
+                'OpenBracketToken',
+                'OpenBraceToken',
+                'AsteriskToken',
+                'DotDotDotToken',
+                'StringLiteral',
+                'NumericLiteral',
+                'BigIntLiteral',
+            ].includes(kind(scanner));
+        result =
+            current === 'ExportKeyword'
+                ? kind(scanner) === 'AtToken' ||
+                  (!['AsteriskToken', 'AsKeyword', 'OpenBraceToken'].includes(kind(scanner)) && follow)
+                : current === 'ConstKeyword' && !permitConst
+                  ? kind(scanner) === 'EnumKeyword'
+                  : follow && (current === 'StaticKeyword' || (scanner.flags & 1) === 0);
+    }
     state.restore();
     return result;
 }

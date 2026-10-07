@@ -1,0 +1,13 @@
+=== RUN   TestMethodRecoveryAgrees
+    recovery_test.go:90: Node /tmp/adamic-parser-recovery/method-0.ts: exit status 70 (input and output saved)
+    recovery_test.go:90: native /tmp/adamic-parser-recovery/method-0.ts: exit status 70 (input and output saved)
+    recovery_test.go:90: Node /tmp/adamic-parser-recovery/method-1.ts: timeout after 2s: context deadline exceeded (input and output saved)
+    recovery_test.go:90: native /tmp/adamic-parser-recovery/method-1.ts: timeout after 2s: context deadline exceeded (input and output saved)
+    recovery_test.go:90: Node /tmp/adamic-parser-recovery/method-2.ts: exit status 70 (input and output saved)
+    recovery_test.go:90: native /tmp/adamic-parser-recovery/method-2.ts: exit status 70 (input and output saved)
+    recovery_test.go:90: Node /tmp/adamic-parser-recovery/method-3.ts: exit status 70 (input and output saved)
+    recovery_test.go:90: native /tmp/adamic-parser-recovery/method-3.ts: exit status 70 (input and output saved)
+--- FAIL: TestMethodRecoveryAgrees (18.56s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	18.563s
+FAIL

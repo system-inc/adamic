@@ -2,6 +2,8 @@
 
 Historical expression-slice report. The whole-file continuation is recorded in
 [WHOLE_REPORT.md](WHOLE_REPORT.md).
+The signature recovery follow-up and its still-failing broader comparison
+are recorded in [RECOVERY_REPORT.md](RECOVERY_REPORT.md).
 
 Built on the existing scanner, in Adamic's subset, compiled through stage 0.
 No compiler, runtime, scanner or other worker's files changed. The branch is

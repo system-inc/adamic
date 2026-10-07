@@ -1,8 +1,8 @@
 import { panic, programArguments, readTextFile, utf8Length } from 'adamic';
 import { Parser } from './parser.ts';
-import { countTree, printTree } from './nodes.ts';
+import { countTree, printTree, written } from './nodes.ts';
 
-function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {
+function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean, recovery: boolean): number {
     const source = readTextFile(path);
     if(source.kind === 'Error') {
         panic(source.message);
@@ -10,6 +10,9 @@ function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean
     const parser = new Parser(source.text, path);
     const types: number[] = docTypes ? parser.docTypes() : [];
     const file = docTypes ? -1 : parser.file();
+    if(!recovery && parser.diagnostics.length > 0) {
+        panic('source has parse diagnostics; use --recovery to inspect the recovered tree');
+    }
     const offsets: number[] = [0];
     if(!countOnly) {
         let bytes = 0;
@@ -24,6 +27,13 @@ function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean
         }
         if(bytes !== utf8Length(source.text)) {
             panic('source byte mapping differs');
+        }
+    }
+    if(recovery && !countOnly) {
+        for(const diagnostic of parser.diagnostics) {
+            const start = offsets[diagnostic.start] ?? panic('diagnostic start outside source');
+            const end = offsets[diagnostic.start + diagnostic.length] ?? panic('diagnostic end outside source');
+            console.log(`diagnostic ${diagnostic.code} ${start} ${end - start} 1\t${written(diagnostic.message)}`);
         }
     }
     let count = 0;
@@ -54,7 +64,13 @@ if(first === '--manifest') {
         if(!countOnly) {
             console.log(`case ${caseNumber}`);
         }
-        count += run(path, countOnly, args.includes('--whole'), args.includes('--doc-types'));
+        count += run(
+            path,
+            countOnly,
+            args.includes('--whole'),
+            args.includes('--doc-types'),
+            args.includes('--recovery'),
+        );
         caseNumber++;
     }
     if(countOnly) {
@@ -62,5 +78,5 @@ if(first === '--manifest') {
     }
 }
 else {
-    run(first, false, args.includes('--whole'), args.includes('--doc-types'));
+    run(first, false, args.includes('--whole'), args.includes('--doc-types'), args.includes('--recovery'));
 }

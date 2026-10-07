@@ -1,0 +1,8 @@
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/eof-loop
+    recovery_test.go:157: Node: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+    recovery_test.go:157: native: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+--- PASS: TestRecoveryMutants (27.90s)
+    --- PASS: TestRecoveryMutants/eof-loop (26.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	27.906s

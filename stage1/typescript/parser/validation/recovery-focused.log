@@ -1,0 +1,55 @@
+=== RUN   TestMethodRecoveryAgrees
+--- PASS: TestMethodRecoveryAgrees (12.66s)
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/diagnostic-code
+    recovery_test.go:158: Node:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:158: native:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/generic-child
+    recovery_test.go:158: Node:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+    recovery_test.go:158: native:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+=== RUN   TestRecoveryMutants/eof-loop
+    recovery_test.go:150: Node: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+    recovery_test.go:150: native: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+--- PASS: TestRecoveryMutants (39.42s)
+    --- PASS: TestRecoveryMutants/diagnostic-code (11.90s)
+    --- PASS: TestRecoveryMutants/generic-child (11.33s)
+    --- PASS: TestRecoveryMutants/eof-loop (15.63s)
+=== RUN   TestRecoveredLintCasesAgree
+    recovery_test.go:230: all eight original source/style combinations match real cohere findings and proposed repairs
+--- PASS: TestRecoveredLintCasesAgree (18.82s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	70.908s

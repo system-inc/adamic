@@ -1,7 +1,10 @@
 // Statement and declaration descent follows typescript-go's parser.
 import { panic } from 'adamic';
-import type { Scanner } from '../scanner/scanner.ts';
+import { Scanner } from '../scanner/scanner.ts';
 import type { ParseNode } from './nodes.ts';
+import { reservedKinds } from './grammar.ts';
+import { keywordSuggestion } from './spelling.ts';
+import { declarationAhead } from './lookahead.ts';
 
 export interface StatementContextInterface {
     readonly scanner: Scanner;
@@ -9,11 +12,18 @@ export interface StatementContextInterface {
     readonly roots: number[];
     readonly kind: () => string;
     readonly next: () => void;
-    readonly expect: (kind: string) => void;
+    readonly expect: (kind: string) => boolean;
+    readonly beginList: (context: string) => void;
+    readonly endList: (context: string) => void;
+    readonly listElement: (context: string) => boolean;
+    readonly listTerminator: (context: string) => boolean;
+    readonly recoverList: (context: string) => boolean;
+    readonly errorAt: (code: number, start: number, end: number, message: string) => void;
     readonly node: (index: number) => ParseNode;
     readonly make: (kind: string, pos: number, children: number[]) => number;
     readonly entityName: () => number;
     readonly identifier: () => number;
+    readonly bindingIdentifier: () => number;
     readonly token: () => number;
     readonly type: (minimum: number, conditional: boolean) => number;
     readonly typeArguments: () => number[];
@@ -57,13 +67,26 @@ export class Statements {
     type(minimum = 0, conditional = true): number {
         return this.parser.type(minimum, conditional);
     }
+    statementList(context: string): number[] {
+        this.parser.beginList(context);
+        const children: number[] = [];
+        while(!this.parser.listTerminator(context)) {
+            if(this.parser.listElement(context)) {
+                children.push(this.statement());
+            }
+            else if(this.parser.recoverList(context)) {
+                break;
+            }
+        }
+        this.parser.endList(context);
+        return children;
+    }
     block(): number {
         const pos = this.parser.scanner.fullStart;
-        this.parser.expect('OpenBraceToken');
-        const children: number[] = [];
-        while(this.parser.kind() !== 'CloseBraceToken') {
-            children.push(this.statement());
+        if(!this.parser.expect('OpenBraceToken')) {
+            return this.make('Block', pos);
         }
+        const children = this.statementList('block');
         this.parser.expect('CloseBraceToken');
         return this.make('Block', pos, children);
     }
@@ -76,8 +99,98 @@ export class Statements {
             this.parser.kind() !== 'EndOfFile' &&
             (this.parser.scanner.flags & 1) === 0
         ) {
-            panic(`parser slice expected semicolon at ${this.parser.scanner.start} in ${this.parser.path}`);
+            this.parser.expect('SemicolonToken');
         }
+    }
+    expressionSemicolon(expression: number, tokenStart: number): void {
+        const node = this.parser.node(expression);
+        if(
+            node.kind === 'TaggedTemplateExpression' &&
+            !['SemicolonToken', 'CloseBraceToken', 'EndOfFile'].includes(this.parser.kind()) &&
+            (this.parser.scanner.flags & 1) === 0
+        ) {
+            const template = this.parser.node(
+                node.children[node.children.length - 1] ?? panic('missing tagged template'),
+            );
+            const scanner = new Scanner(this.parser.scanner.text);
+            scanner.pos = template.pos;
+            scanner.scan();
+            this.parser.errorAt(
+                1443,
+                scanner.start,
+                template.end,
+                `Module declaration names may only use ' or " quoted strings.`,
+            );
+            return;
+        }
+        if(
+            node.kind === 'Identifier' &&
+            node.text !== '' &&
+            this.parser.kind() !== 'SemicolonToken' &&
+            this.parser.kind() !== 'CloseBraceToken' &&
+            this.parser.kind() !== 'EndOfFile' &&
+            (this.parser.scanner.flags & 1) === 0
+        ) {
+            if(this.keywordStatementError(node.text, tokenStart, node.end)) {
+                return;
+            }
+            const suggestion = keywordSuggestion(node.text);
+            if(suggestion !== '') {
+                this.parser.errorAt(
+                    1435,
+                    tokenStart,
+                    node.end,
+                    `Unknown keyword or identifier. Did you mean '${suggestion}'?`,
+                );
+            }
+            else if(this.parser.kind() !== 'Unknown') {
+                this.parser.errorAt(1434, tokenStart, node.end, 'Unexpected keyword or identifier.');
+            }
+        }
+        else {
+            this.semicolon();
+        }
+    }
+    keywordStatementError(text: string, start: number, end: number): boolean {
+        if(text === 'declare') {
+            return true;
+        }
+        if(['const', 'let', 'var'].includes(text)) {
+            this.parser.errorAt(1440, start, end, 'Variable declaration not allowed at this location.');
+            return true;
+        }
+        if(text === 'is') {
+            this.parser.errorAt(
+                1228,
+                start,
+                this.parser.scanner.start,
+                'A type predicate is only allowed in return type position for functions and methods.',
+            );
+            return true;
+        }
+        if(['interface', 'module', 'namespace', 'type'].includes(text)) {
+            const label = text === 'interface' ? 'Interface' : text === 'type' ? 'Type alias' : 'Namespace';
+            const empty = this.parser.kind() === (text === 'type' ? 'EqualsToken' : 'OpenBraceToken');
+            const code = empty
+                ? text === 'interface'
+                    ? 1438
+                    : text === 'type'
+                      ? 1439
+                      : 1437
+                : text === 'interface'
+                  ? 2427
+                  : text === 'type'
+                    ? 2457
+                    : 2819;
+            this.parser.errorAt(
+                code,
+                this.parser.scanner.start,
+                this.parser.scanner.pos,
+                empty ? `${label} must be given a name.` : `${label} name cannot be '${this.parser.scanner.value}'.`,
+            );
+            return true;
+        }
+        return false;
     }
     variableList(): number {
         const pos = this.parser.scanner.fullStart;
@@ -96,29 +209,48 @@ export class Statements {
         }
         this.parser.next();
         const declarations: number[] = [];
+        this.parser.beginList('variables');
         while(true) {
-            const start = this.parser.scanner.fullStart;
-            const children = [this.parser.bindingName()];
-            if(this.parser.kind() === 'ExclamationToken') {
-                children.push(this.parser.token());
+            if(this.parser.listElement('variables')) {
+                const start = this.parser.scanner.fullStart;
+                declarations.push(this.variableDeclaration());
+                if(this.parser.kind() === 'CommaToken') {
+                    this.parser.next();
+                    continue;
+                }
+                if(this.parser.listTerminator('variables')) {
+                    break;
+                }
+                this.parser.expect('CommaToken');
+                if(start === this.parser.scanner.fullStart) {
+                    this.parser.next();
+                }
+                continue;
             }
-            if(this.parser.kind() === 'ColonToken') {
-                this.parser.next();
-                children.push(this.type());
-            }
-            if(this.parser.kind() === 'EqualsToken') {
-                this.parser.next();
-                children.push(this.parser.rootAssignment());
-            }
-            declarations.push(this.make('VariableDeclaration', start, children));
-            if(this.parser.kind() !== 'CommaToken') {
+            if(this.parser.listTerminator('variables') || this.parser.recoverList('variables')) {
                 break;
             }
-            this.parser.next();
         }
+        this.parser.endList('variables');
         const id = this.make('VariableDeclarationList', pos, declarations);
         this.parser.node(id).semantic = `${flags}`;
         return id;
+    }
+    variableDeclaration(): number {
+        const start = this.parser.scanner.fullStart;
+        const children = [this.parser.bindingName()];
+        if(this.parser.kind() === 'ExclamationToken') {
+            children.push(this.parser.token());
+        }
+        if(this.parser.kind() === 'ColonToken') {
+            this.parser.next();
+            children.push(this.type());
+        }
+        if(this.parser.kind() === 'EqualsToken') {
+            this.parser.next();
+            children.push(this.parser.rootAssignment());
+        }
+        return this.make('VariableDeclaration', start, children);
     }
     lookahead(offset: number): string {
         const saved = {
@@ -131,7 +263,7 @@ export class Statements {
             errors: this.parser.scanner.errors.length,
         };
         for(let index = 0; index < offset; index++) {
-            this.parser.next();
+            this.parser.scanner.scan();
         }
         const result = this.parser.kind();
         this.parser.scanner.pos = saved.pos;
@@ -155,9 +287,18 @@ export class Statements {
     }
     specifiers(importing: boolean): number {
         const pos = this.parser.scanner.fullStart;
-        this.parser.expect('OpenBraceToken');
         const members: number[] = [];
-        while(this.parser.kind() !== 'CloseBraceToken') {
+        if(!this.parser.expect('OpenBraceToken')) {
+            return this.make(importing ? 'NamedImports' : 'NamedExports', pos, members);
+        }
+        this.parser.beginList('specifiers');
+        while(true) {
+            if(!this.parser.listElement('specifiers')) {
+                if(this.parser.listTerminator('specifiers') || this.parser.recoverList('specifiers')) {
+                    break;
+                }
+                continue;
+            }
             const start = this.parser.scanner.fullStart;
             let name = this.parser.propertyName();
             let property = -1;
@@ -207,11 +348,19 @@ export class Statements {
             const member = this.make(importing ? 'ImportSpecifier' : 'ExportSpecifier', start, children);
             this.parser.node(member).semantic = typeOnly ? '1' : '0';
             members.push(member);
-            if(this.parser.kind() !== 'CommaToken') {
+            if(this.parser.kind() === 'CommaToken') {
+                this.parser.next();
+                continue;
+            }
+            if(this.parser.listTerminator('specifiers')) {
                 break;
             }
-            this.parser.next();
+            this.parser.expect('CommaToken');
+            if(start === this.parser.scanner.fullStart) {
+                this.parser.next();
+            }
         }
+        this.parser.endList('specifiers');
         this.parser.expect('CloseBraceToken');
         return this.make(importing ? 'NamedImports' : 'NamedExports', pos, members);
     }
@@ -226,7 +375,7 @@ export class Statements {
         const multiLine = (this.parser.scanner.flags & 1) !== 0;
         const children: number[] = [];
         let trailing = false;
-        while(this.parser.kind() !== 'CloseBraceToken') {
+        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
             const start = this.parser.scanner.fullStart;
             const name = this.parser.propertyName();
             this.parser.expect('ColonToken');
@@ -247,6 +396,9 @@ export class Statements {
         node.multiLine = multiLine;
         return id;
     }
+    moduleSpecifier(): number {
+        return this.parser.kind() === 'StringLiteral' ? this.parser.propertyName() : this.parser.rootExpression();
+    }
     importDeclaration(pos: number, prefix: readonly number[]): number {
         const children = prefix.slice();
         this.parser.expect('ImportKeyword');
@@ -254,9 +406,8 @@ export class Statements {
         let name = -1;
         let phase = 'Unknown';
         if(
-            this.parser.kind() !== 'StringLiteral' &&
-            this.parser.kind() !== 'AsteriskToken' &&
-            this.parser.kind() !== 'OpenBraceToken'
+            this.parser.kind() === 'Identifier' ||
+            (this.parser.kind().endsWith('Keyword') && !reservedKinds.includes(this.parser.kind()))
         ) {
             name = this.parser.identifier();
         }
@@ -331,7 +482,7 @@ export class Statements {
             children.push(clause);
             this.parser.expect('FromKeyword');
         }
-        children.push(this.parser.propertyName());
+        children.push(this.moduleSpecifier());
         if(this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {
             children.push(this.attributes());
         }
@@ -374,13 +525,13 @@ export class Statements {
                 children.push(this.make('NamespaceExport', start, [name]));
             }
             this.parser.expect('FromKeyword');
-            children.push(this.parser.propertyName());
+            children.push(this.moduleSpecifier());
         }
         else {
             children.push(this.specifiers(false));
             if(this.parser.kind() === 'FromKeyword') {
                 this.parser.next();
-                children.push(this.parser.propertyName());
+                children.push(this.moduleSpecifier());
             }
         }
         if(this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {
@@ -409,15 +560,19 @@ export class Statements {
         else if(this.parser.kind() === 'OpenBraceToken') {
             const start = this.parser.scanner.fullStart;
             this.parser.next();
-            const body: number[] = [];
-            while(this.parser.kind() !== 'CloseBraceToken') {
-                body.push(this.statement());
-            }
+            const body = this.statementList('block');
             this.parser.expect('CloseBraceToken');
             children.push(this.make('ModuleBlock', start, body));
         }
-        else {
+        else if(
+            keyword === 'GlobalKeyword' ||
+            this.parser.node(children[prefix.length] ?? panic('missing module name')).kind === 'StringLiteral'
+        ) {
             this.semicolon();
+        }
+        else {
+            this.parser.expect('OpenBraceToken');
+            children.push(this.make('ModuleBlock', this.parser.scanner.fullStart));
         }
         const id = this.make('ModuleDeclaration', pos, children);
         this.parser.node(id).operator = keyword;
@@ -452,8 +607,18 @@ export class Statements {
         if(generator) {
             children.push(this.parser.token());
         }
-        if(this.parser.kind() !== 'OpenParenToken' && this.parser.kind() !== 'LessThanToken') {
-            children.push(this.parser.identifier());
+        let defaulted = false;
+        for(const modifier of prefix) {
+            if(this.parser.node(modifier).kind === 'DefaultKeyword') {
+                defaulted = true;
+            }
+        }
+        if(
+            !defaulted ||
+            this.parser.kind() === 'Identifier' ||
+            (this.parser.kind().endsWith('Keyword') && !reservedKinds.includes(this.parser.kind()))
+        ) {
+            children.push(this.parser.bindingIdentifier());
         }
         const oldAwait = this.parser.getAwait();
         const oldYield = this.parser.getYield();
@@ -474,8 +639,17 @@ export class Statements {
         if(this.parser.kind() === 'OpenBraceToken') {
             children.push(this.block());
         }
-        else {
+        else if(
+            this.parser.kind() === 'SemicolonToken' ||
+            this.parser.kind() === 'CloseBraceToken' ||
+            this.parser.kind() === 'EndOfFile' ||
+            (this.parser.scanner.flags & 1) !== 0
+        ) {
             this.semicolon();
+        }
+        else {
+            this.parser.errorAt(1144, this.parser.scanner.start, this.parser.scanner.pos, "'{' or ';' expected.");
+            children.push(this.make('Block', this.parser.scanner.fullStart));
         }
         this.parser.setIn(oldIn);
         this.parser.setAwait(oldAwait);
@@ -532,7 +706,7 @@ export class Statements {
             children.push(heritage);
         }
         this.parser.expect('OpenBraceToken');
-        while(this.parser.kind() !== 'CloseBraceToken') {
+        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
             const start = this.parser.scanner.fullStart;
             if(this.parser.kind() === 'SemicolonToken') {
                 this.parser.next();
@@ -694,7 +868,14 @@ export class Statements {
         const start = this.parser.scanner.fullStart;
         this.parser.expect('OpenBraceToken');
         const clauses: number[] = [];
-        while(this.parser.kind() !== 'CloseBraceToken') {
+        this.parser.beginList('switch');
+        while(!this.parser.listTerminator('switch')) {
+            if(!this.parser.listElement('switch')) {
+                if(this.parser.recoverList('switch')) {
+                    break;
+                }
+                continue;
+            }
             const clausePos = this.parser.scanner.fullStart;
             const isCase = this.parser.kind() === 'CaseKeyword';
             this.parser.next();
@@ -703,15 +884,12 @@ export class Statements {
                 statements.push(this.parser.rootExpression());
             }
             this.parser.expect('ColonToken');
-            while(
-                this.parser.kind() !== 'CaseKeyword' &&
-                this.parser.kind() !== 'DefaultKeyword' &&
-                this.parser.kind() !== 'CloseBraceToken'
-            ) {
-                statements.push(this.statement());
+            for(const statement of this.statementList('switchStatements')) {
+                statements.push(statement);
             }
             clauses.push(this.make(isCase ? 'CaseClause' : 'DefaultClause', clausePos, statements));
         }
+        this.parser.endList('switch');
         this.parser.expect('CloseBraceToken');
         const block = this.make('CaseBlock', start, clauses);
         return this.make('SwitchStatement', pos, [expression, block]);
@@ -738,11 +916,82 @@ export class Statements {
             clause.push(this.block());
             children.push(this.make('CatchClause', start, clause));
         }
-        if(this.parser.kind() === 'FinallyKeyword') {
-            this.parser.next();
+        if(children.length === 1 || this.parser.kind() === 'FinallyKeyword') {
+            if(this.parser.kind() === 'FinallyKeyword') {
+                this.parser.next();
+            }
+            else {
+                this.parser.errorAt(
+                    1472,
+                    this.parser.scanner.start,
+                    this.parser.scanner.pos,
+                    "'catch' or 'finally' expected.",
+                );
+            }
             children.push(this.block());
         }
         return this.make('TryStatement', pos, children);
+    }
+    enumDeclaration(pos: number, prefix: readonly number[]): number {
+        this.parser.next();
+        const children = prefix.slice();
+        children.push(this.parser.bindingIdentifier());
+        if(!this.parser.expect('OpenBraceToken')) {
+            return this.make('EnumDeclaration', pos, children);
+        }
+        const oldAwait = this.parser.getAwait();
+        const oldYield = this.parser.getYield();
+        const oldIn = this.parser.getIn();
+        this.parser.setAwait(false);
+        this.parser.setYield(false);
+        this.parser.setIn(false);
+        this.parser.beginList('enum');
+        while(true) {
+            if(!this.parser.listElement('enum')) {
+                if(this.parser.listTerminator('enum') || this.parser.recoverList('enum')) {
+                    break;
+                }
+                continue;
+            }
+            const start = this.parser.scanner.fullStart;
+            const member = [this.parser.propertyName()];
+            if(this.parser.kind() === 'EqualsToken') {
+                this.parser.next();
+                member.push(this.parser.rootAssignment());
+            }
+            children.push(this.make('EnumMember', start, member));
+            if(this.parser.kind() === 'CommaToken') {
+                this.parser.next();
+                continue;
+            }
+            if(this.parser.listTerminator('enum')) {
+                break;
+            }
+            this.parser.errorAt(
+                1357,
+                this.parser.scanner.start,
+                this.parser.scanner.pos,
+                `An enum member name must be followed by a ',', '=', or '}'.`,
+            );
+            if(start === this.parser.scanner.fullStart) {
+                this.parser.next();
+            }
+        }
+        this.parser.endList('enum');
+        this.parser.setAwait(oldAwait);
+        this.parser.setYield(oldYield);
+        this.parser.setIn(oldIn);
+        this.parser.expect('CloseBraceToken');
+        return this.make('EnumDeclaration', pos, children);
+    }
+    letDeclaration(): boolean {
+        const next = this.parser.peek();
+        return (
+            next === 'Identifier' ||
+            (next.endsWith('Keyword') && !reservedKinds.includes(next)) ||
+            next === 'OpenBraceToken' ||
+            next === 'OpenBracketToken'
+        );
     }
     statement(): number {
         const pos = this.parser.scanner.fullStart;
@@ -767,7 +1016,16 @@ export class Statements {
             const returning = this.parser.kind() === 'ReturnKeyword';
             this.parser.next();
             const children: number[] = [];
-            if(
+            const tokenStart = this.parser.scanner.start;
+            if(!returning) {
+                const expression =
+                    (this.parser.scanner.flags & 1) !== 0
+                        ? this.make('Identifier', this.parser.scanner.fullStart)
+                        : this.parser.rootExpression();
+                children.push(expression);
+                this.expressionSemicolon(expression, tokenStart);
+            }
+            else if(
                 this.parser.kind() !== 'CloseBraceToken' &&
                 this.parser.kind() !== 'SemicolonToken' &&
                 this.parser.kind() !== 'EndOfFile' &&
@@ -775,12 +1033,14 @@ export class Statements {
             ) {
                 children.push(this.parser.rootExpression());
             }
-            this.semicolon();
+            if(returning) {
+                this.semicolon();
+            }
             return this.make(returning ? 'ReturnStatement' : 'ThrowStatement', pos, children);
         }
         if(
             (this.parser.kind() === 'ConstKeyword' && this.parser.peek() !== 'EnumKeyword') ||
-            this.parser.kind() === 'LetKeyword' ||
+            (this.parser.kind() === 'LetKeyword' && this.letDeclaration()) ||
             this.parser.kind() === 'VarKeyword' ||
             (this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine()) ||
             (this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword')
@@ -839,28 +1099,24 @@ export class Statements {
             const children: number[] = [];
             if(
                 kind !== 'DebuggerStatement' &&
-                this.parser.kind() === 'Identifier' &&
+                this.parser.kind() !== 'SemicolonToken' &&
+                this.parser.kind() !== 'CloseBraceToken' &&
+                this.parser.kind() !== 'EndOfFile' &&
                 (this.parser.scanner.flags & 1) === 0
             ) {
-                children.push(this.parser.identifier());
+                children.push(this.parser.bindingIdentifier());
             }
             this.semicolon();
             return this.make(kind, pos, children);
-        }
-        if(this.parser.kind() === 'Identifier' && this.parser.peek() === 'ColonToken') {
-            const name = this.parser.identifier();
-            this.parser.next();
-            const body = this.statement();
-            return this.make('LabeledStatement', pos, [name, body]);
         }
         const modifiers: number[] = [];
         let async = false;
         while(
             this.parser.kind() === 'AtToken' ||
-            this.parser.kind() === 'ExportKeyword' ||
+            (this.parser.kind() === 'ExportKeyword' && !this.exportedClauseAhead()) ||
             this.parser.kind() === 'DefaultKeyword' ||
-            this.parser.kind() === 'DeclareKeyword' ||
-            this.parser.kind() === 'AbstractKeyword' ||
+            ((this.parser.kind() === 'DeclareKeyword' || this.parser.kind() === 'AbstractKeyword') &&
+                declarationAhead(this.parser.scanner)) ||
             (this.parser.kind() === 'AsyncKeyword' && this.parser.peek() === 'FunctionKeyword') ||
             (this.parser.kind() === 'ConstKeyword' && this.parser.peek() === 'EnumKeyword')
         ) {
@@ -868,6 +1124,9 @@ export class Statements {
                 async = true;
             }
             modifiers.push(this.parser.kind() === 'AtToken' ? this.decorator() : this.parser.token());
+        }
+        if(this.parser.kind() === 'ExportKeyword' && this.exportedClauseAhead()) {
+            return this.exportDeclaration(pos, modifiers);
         }
         if(this.parser.kind() === 'FunctionKeyword') {
             return this.functionDeclaration(pos, modifiers, async);
@@ -877,7 +1136,7 @@ export class Statements {
         }
         if(
             this.parser.kind() === 'ConstKeyword' ||
-            this.parser.kind() === 'LetKeyword' ||
+            (this.parser.kind() === 'LetKeyword' && (modifiers.length > 0 || this.letDeclaration())) ||
             this.parser.kind() === 'VarKeyword' ||
             (this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine()) ||
             (this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword')
@@ -936,24 +1195,7 @@ export class Statements {
             return this.make(interface_ ? 'InterfaceDeclaration' : 'TypeAliasDeclaration', pos, modifiers);
         }
         if(this.parser.kind() === 'EnumKeyword') {
-            this.parser.next();
-            modifiers.push(this.parser.identifier());
-            this.parser.expect('OpenBraceToken');
-            while(this.parser.kind() !== 'CloseBraceToken') {
-                const start = this.parser.scanner.fullStart;
-                const member = [this.parser.propertyName()];
-                if(this.parser.kind() === 'EqualsToken') {
-                    this.parser.next();
-                    member.push(this.parser.rootAssignment());
-                }
-                modifiers.push(this.make('EnumMember', start, member));
-                if(this.parser.kind() !== 'CommaToken') {
-                    break;
-                }
-                this.parser.next();
-            }
-            this.parser.expect('CloseBraceToken');
-            return this.make('EnumDeclaration', pos, modifiers);
+            return this.enumDeclaration(pos, modifiers);
         }
         if(
             ((this.parser.kind() === 'NamespaceKeyword' || this.parser.kind() === 'ModuleKeyword') &&
@@ -973,8 +1215,17 @@ export class Statements {
         ) {
             return this.importDeclaration(pos, modifiers);
         }
+        const tokenStart = this.parser.scanner.start;
         const expression = this.parser.rootExpression();
-        this.semicolon();
+        if(this.parser.node(expression).kind === 'Identifier' && this.parser.kind() === 'ColonToken') {
+            if(this.parser.depth() === 0) {
+                this.parser.roots.pop();
+            }
+            this.parser.next();
+            return this.make('LabeledStatement', pos, [expression, this.statement()]);
+        }
+
+        this.expressionSemicolon(expression, tokenStart);
         return this.make('ExpressionStatement', pos, [expression]);
     }
 }

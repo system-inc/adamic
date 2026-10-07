@@ -1,0 +1,64 @@
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/diagnostic-code
+    recovery_test.go:160: Node:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:160: native:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/stranded-export
+    recovery_test.go:160: Node:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+    recovery_test.go:160: native:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/generic-child
+    recovery_test.go:160: Node:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+    recovery_test.go:160: native:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+=== RUN   TestRecoveryMutants/eof-loop
+    recovery_test.go:152: Node: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+    recovery_test.go:152: native: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+--- PASS: TestRecoveryMutants (54.69s)
+    --- PASS: TestRecoveryMutants/diagnostic-code (12.75s)
+    --- PASS: TestRecoveryMutants/stranded-export (12.68s)
+    --- PASS: TestRecoveryMutants/generic-child (12.35s)
+    --- PASS: TestRecoveryMutants/eof-loop (16.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	54.694s

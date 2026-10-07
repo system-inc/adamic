@@ -1,4 +1,5 @@
 // Operator precedence and reserved words follow typescript-go.
+import { panic } from 'adamic';
 export function precedence(kind: string): number {
     switch(kind) {
         case 'QuestionQuestionToken':
@@ -83,3 +84,131 @@ export const reservedKinds: readonly string[] = [
     'WhileKeyword',
     'WithKeyword',
 ];
+
+// Spellings used by parseExpected, following Go's scanner.TokenToString.
+export function tokenSpelling(kind: string): string {
+    if(kind.endsWith('Keyword')) {
+        return kind.slice(0, -7).toLowerCase();
+    }
+    switch(kind) {
+        case 'OpenBraceToken':
+            return '{';
+        case 'CloseBraceToken':
+            return '}';
+        case 'OpenBracketToken':
+            return '[';
+        case 'CloseBracketToken':
+            return ']';
+        case 'OpenParenToken':
+            return '(';
+        case 'CloseParenToken':
+            return ')';
+        case 'LessThanToken':
+            return '<';
+        case 'GreaterThanToken':
+            return '>';
+        case 'ColonToken':
+            return ':';
+        case 'SemicolonToken':
+            return ';';
+        case 'CommaToken':
+            return ',';
+        case 'QuestionToken':
+            return '?';
+        case 'EqualsToken':
+            return '=';
+        case 'EqualsGreaterThanToken':
+            return '=>';
+        case 'AtToken':
+            return '@';
+        default:
+            return panic('missing expected-token spelling');
+    }
+}
+
+export const modifierKinds: readonly string[] = [
+    'AbstractKeyword',
+    'AccessorKeyword',
+    'AsyncKeyword',
+    'ConstKeyword',
+    'DeclareKeyword',
+    'DefaultKeyword',
+    'ExportKeyword',
+    'InKeyword',
+    'PrivateKeyword',
+    'ProtectedKeyword',
+    'PublicKeyword',
+    'ReadonlyKeyword',
+    'OutKeyword',
+    'OverrideKeyword',
+    'StaticKeyword',
+];
+
+export const expressionKinds: readonly string[] = [
+    'ThisKeyword',
+    'SuperKeyword',
+    'NullKeyword',
+    'TrueKeyword',
+    'FalseKeyword',
+    'NumericLiteral',
+    'BigIntLiteral',
+    'StringLiteral',
+    'NoSubstitutionTemplateLiteral',
+    'TemplateHead',
+    'OpenParenToken',
+    'OpenBracketToken',
+    'OpenBraceToken',
+    'FunctionKeyword',
+    'ClassKeyword',
+    'NewKeyword',
+    'SlashToken',
+    'SlashEqualsToken',
+    'PlusToken',
+    'MinusToken',
+    'TildeToken',
+    'ExclamationToken',
+    'DeleteKeyword',
+    'TypeOfKeyword',
+    'VoidKeyword',
+    'PlusPlusToken',
+    'MinusMinusToken',
+    'LessThanToken',
+    'AwaitKeyword',
+    'YieldKeyword',
+    'PrivateIdentifier',
+    'AtToken',
+];
+
+// Property-name and parameter token inventories are shared by list recovery.
+export function propertyNameStart(kind: string): boolean {
+    return (
+        kind === 'Identifier' ||
+        kind.endsWith('Keyword') ||
+        ['StringLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(kind)
+    );
+}
+
+const parameterKinds: readonly string[] = [
+    'DotDotDotToken',
+    'OpenBraceToken',
+    'OpenBracketToken',
+    'PrivateIdentifier',
+    'ThisKeyword',
+    'AtToken',
+];
+
+export function bindingStart(kind: string): boolean {
+    return kind === 'Identifier' || (kind.endsWith('Keyword') && !reservedKinds.includes(kind));
+}
+
+export function expressionTokenStart(kind: string, disallowIn: boolean): boolean {
+    return (
+        bindingStart(kind) ||
+        (precedence(kind) >= 0 && !(kind === 'InKeyword' && disallowIn)) ||
+        expressionKinds.includes(kind)
+    );
+}
+
+export function parameterTokenStart(kind: string): boolean {
+    return modifierKinds.includes(kind) || parameterKinds.includes(kind);
+}
