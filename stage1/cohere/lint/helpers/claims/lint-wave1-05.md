@@ -20,3 +20,7 @@ Withdrawn: FindEntryPoint. The all-origin refresh revealed an earlier claim on c
 3. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.CompareBreakpoints
    File: collapse_compare_breakpoints.a. Six remaining consumers, zero final blockers alone.
    Both prior helpers are tested and pushed (c3b9b8af, e998e268). All origin refs refreshed and all helper claim blobs checked again. This comparator remains unclaimed at the highest count, six. Preserve equality, byte-string bucket ordering, raw-string fallback, ascending/descending and Go signed-int subtraction overflow. Already-owned breakpointBucket is an explicit callback dependency; validation obtains its facts from the actual Go helper. Compare every consumer fixture and pair controls on source Node, emitted JavaScript and sanitized native, with a compiling direction mutant. Claim pushed before code.
+
+4. github.com/system-inc/cohere/internal/lint/rules/tailwind.DesignSystemForProgram
+   Intended file: tailwind_design_system_for_program.a. Six remaining consumers.
+   Third helper is tested and pushed in 3f8a48dc; entire helper package PASS in 72.676s. Refetched all 418 origin refs and inspected 17 distinct claim blobs. This program-keyed cache is unclaimed and ties the highest count at six. Claim precedes implementation or a concrete blocker report. Must preserve nil-program errors, identity rather than path keys, failed-result caching and synchronization across parallel callers; the full Program/filesystem/load-result contracts are prerequisites, not placeholders.
