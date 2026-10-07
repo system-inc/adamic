@@ -196,3 +196,19 @@ three rule mutants, both question mutants, released-handle mutants and the full
 bridge gate passed. Shared emitted-JavaScript checker linking and registration
 remain integration gaps. Full evidence and timing observations are in
 ../wave_26_react_attributes/README.md. No further rules claimed.
+
+## No further unclaimed rules, October 7
+
+The tested twenty-one-rule tip eff34e791ef1ff25ea4ea32a1533a79d3bfd3f77
+is pushed to this branch and contains current origin/main c01907a7. The
+existing current-main oracle, sanitizer, released-handle and mutant evidence
+is recorded in ../wave_26_react_attributes/README.md. Main has not advanced
+since that validation. No implementation or test harness changed in this audit.
+
+The checkout fetch configuration updates only main. Explicitly fetched
+`+refs/heads/*:refs/remotes/origin/*` before scanning all 541 origin refs.
+The original 197-rule by-volume population has 25 baseline/main ports and
+172 names in origin Markdown claims; their union contains all 197 rules.
+There are zero unclaimed candidates. No additional rules were claimed.
+The complete ref SHAs, claim blobs, names and ranking are preserved in
+wave-26-exhausted-audit.json.gz. Work stops at the requested exhaustion gate.
