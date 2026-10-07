@@ -140,3 +140,15 @@ executor fixture remains an explicitly proven shared-parser recovery gap;
 case-declaration suggestions retain both edits and registered execution refuses
 the installed serializer's unsupported shape. Raw evidence and observed
 findings/s are in ../rules/no-async-promise-executor/REPORT.md.
+
+## Landing-first cap
+
+No new rule or helper is reserved. Helper branch
+codex/lint-helpers-from-codex-lint-wave1-03 is rebased onto main e8ba3d5d, freshly
+oracle-green and pushed at 3ffbf7a3. The rule branch cannot rebase within its owned
+territory: registration foundation commit 29175443 conflicts in shared README.md,
+lint.ts, lint_test.go and testdata/oracle.go. Rebase aborted; existing twelve
+implementations remain intact and pushed. This branch is not landing-ready, so
+no further claims are permitted. Raw conflict hunks, exact commands and fresh
+helper mutant results are in
+../rules/typescript-no-unnecessary-type-constraint/LANDING.md.
