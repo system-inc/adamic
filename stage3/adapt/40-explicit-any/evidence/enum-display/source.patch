@@ -1,0 +1,144 @@
+--- before/src/compiler/debug.ts
++++ after/src/compiler/debug.ts
+@@ -386,7 +386,7 @@
+     /**
+      * Formats an enum value as a string for debugging and debug assertions.
+      */
+-    export function formatEnum(value = 0, enumObject: any, isFlags?: boolean): string {
++    export function formatEnum(value = 0, enumObject: Record<string, string | number>, isFlags?: boolean): string {
+         const members = getEnumMembers(enumObject);
+         if (value === 0) {
+             return members.length > 0 && members[0][0] === 0 ? members[0][1] : "0";
+@@ -417,9 +417,9 @@
+         return value.toString();
+     }
+ 
+-    const enumMemberCache = new Map<any, SortedReadonlyArray<[number, string]>>();
+-
+-    function getEnumMembers(enumObject: any) {
++    const enumMemberCache = new Map<Record<string, string | number>, SortedReadonlyArray<[number, string]>>();
++
++    function getEnumMembers(enumObject: Record<string, string | number>) {
+         // Assuming enum objects do not change at runtime, we can cache the enum members list
+         // to reuse later. This saves us from reconstructing this each and every time we call
+         // a formatting function (which can be expensive for large enums like SyntaxKind).
+@@ -442,71 +442,71 @@
+     }
+ 
+     export function formatSyntaxKind(kind: SyntaxKind | undefined): string {
+-        return formatEnum(kind, (ts as any).SyntaxKind, /*isFlags*/ false);
++        return formatEnum(kind, (ts as Record<"SyntaxKind", Record<string, string | number>>).SyntaxKind, /*isFlags*/ false);
+     }
+ 
+     export function formatSnippetKind(kind: SnippetKind | undefined): string {
+-        return formatEnum(kind, (ts as any).SnippetKind, /*isFlags*/ false);
++        return formatEnum(kind, (ts as Record<"SnippetKind", Record<string, string | number>>).SnippetKind, /*isFlags*/ false);
+     }
+ 
+     export function formatScriptKind(kind: ScriptKind | undefined): string {
+-        return formatEnum(kind, (ts as any).ScriptKind, /*isFlags*/ false);
++        return formatEnum(kind, (ts as Record<"ScriptKind", Record<string, string | number>>).ScriptKind, /*isFlags*/ false);
+     }
+ 
+     export function formatNodeFlags(flags: NodeFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).NodeFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"NodeFlags", Record<string, string | number>>).NodeFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatNodeCheckFlags(flags: NodeCheckFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).NodeCheckFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"NodeCheckFlags", Record<string, string | number>>).NodeCheckFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatModifierFlags(flags: ModifierFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).ModifierFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"ModifierFlags", Record<string, string | number>>).ModifierFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatTransformFlags(flags: TransformFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).TransformFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"TransformFlags", Record<string, string | number>>).TransformFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatEmitFlags(flags: EmitFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).EmitFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"EmitFlags", Record<string, string | number>>).EmitFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatSymbolFlags(flags: SymbolFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).SymbolFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"SymbolFlags", Record<string, string | number>>).SymbolFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatTypeFlags(flags: TypeFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).TypeFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"TypeFlags", Record<string, string | number>>).TypeFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatSignatureFlags(flags: SignatureFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).SignatureFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"SignatureFlags", Record<string, string | number>>).SignatureFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatObjectFlags(flags: ObjectFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).ObjectFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"ObjectFlags", Record<string, string | number>>).ObjectFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatFlowFlags(flags: FlowFlags | undefined): string {
+-        return formatEnum(flags, (ts as any).FlowFlags, /*isFlags*/ true);
++        return formatEnum(flags, (ts as Record<"FlowFlags", Record<string, string | number>>).FlowFlags, /*isFlags*/ true);
+     }
+ 
+     export function formatRelationComparisonResult(result: RelationComparisonResult | undefined): string {
+-        return formatEnum(result, (ts as any).RelationComparisonResult, /*isFlags*/ true);
++        return formatEnum(result, (ts as Record<"RelationComparisonResult", Record<string, string | number>>).RelationComparisonResult, /*isFlags*/ true);
+     }
+ 
+     export function formatCheckMode(mode: CheckMode | undefined): string {
+-        return formatEnum(mode, (ts as any).CheckMode, /*isFlags*/ true);
++        return formatEnum(mode, (ts as Record<"CheckMode", Record<string, string | number>>).CheckMode, /*isFlags*/ true);
+     }
+ 
+     export function formatSignatureCheckMode(mode: SignatureCheckMode | undefined): string {
+-        return formatEnum(mode, (ts as any).SignatureCheckMode, /*isFlags*/ true);
++        return formatEnum(mode, (ts as Record<"SignatureCheckMode", Record<string, string | number>>).SignatureCheckMode, /*isFlags*/ true);
+     }
+ 
+     export function formatTypeFacts(facts: TypeFacts | undefined): string {
+-        return formatEnum(facts, (ts as any).TypeFacts, /*isFlags*/ true);
++        return formatEnum(facts, (ts as Record<"TypeFacts", Record<string, string | number>>).TypeFacts, /*isFlags*/ true);
+     }
+ 
+     let isDebugInfoEnabled = false;
+@@ -537,7 +537,7 @@
+                 },
+                 __debugFlowFlags: {
+                     get(this: FlowNode) {
+-                        return formatEnum(this.flags, (ts as any).FlowFlags, /*isFlags*/ true);
++                        return formatEnum(this.flags, (ts as Record<"FlowFlags", Record<string, string | number>>).FlowFlags, /*isFlags*/ true);
+                     },
+                 },
+                 __debugToString: {
+--- before/src/compiler/emitter.ts
++++ after/src/compiler/emitter.ts
+@@ -5787,7 +5787,7 @@
+                 );
+         }
+ 
+-        return Debug.fail(`Unsupported GeneratedIdentifierKind: ${Debug.formatEnum(autoGenerate.flags & GeneratedIdentifierFlags.KindMask, (ts as any).GeneratedIdentifierFlags, /*isFlags*/ true)}.`);
++        return Debug.fail(`Unsupported GeneratedIdentifierKind: ${Debug.formatEnum(autoGenerate.flags & GeneratedIdentifierFlags.KindMask, (ts as Record<"GeneratedIdentifierFlags", Record<string, string | number>>).GeneratedIdentifierFlags, /*isFlags*/ true)}.`);
+     }
+ 
+     // Comments
+--- before/src/compiler/program.ts
++++ after/src/compiler/program.ts
+@@ -3523,7 +3523,7 @@
+         tracing?.push(tracing.Phase.Program, "findSourceFile", {
+             fileName,
+             isDefaultLib: isDefaultLib || undefined,
+-            fileIncludeKind: (FileIncludeKind as any)[reason.kind],
++            fileIncludeKind: (FileIncludeKind as Record<number, string>)[reason.kind],
+         });
+         const result = findSourceFileWorker(fileName, isDefaultLib, reason, packageId);
+         tracing?.pop();

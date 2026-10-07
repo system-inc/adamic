@@ -1,0 +1,13 @@
+let count: number | undefined = 1;
+function drop(): void {
+	count = undefined;
+}
+function show(value: number | undefined): string {
+	return value === undefined ? 'none' : `${value}`;
+}
+if (count !== undefined) {
+	console.log(show(count));
+	drop();
+	console.log(show(count));
+	console.log(`${count ?? -1}`);
+}

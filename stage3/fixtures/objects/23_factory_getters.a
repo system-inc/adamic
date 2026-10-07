@@ -1,0 +1,30 @@
+// From TypeScript 6.0.3, src/compiler/factory/nodeFactory.ts:1022
+// From TypeScript 6.0.3, src/compiler/factory/nodeFactory.ts:1028
+// Census reason: a getter
+const SyntaxKind = {CommaToken: 28, BarBarToken: 57, AmpersandAmpersandToken: 56};
+// Dependency stub keeps memoizeOne's identity contract for these numeric keys.
+const binaryFactories = new Map<number, (left: string, right: string) => string>();
+function getBinaryCreateFunction(kind: number): (left: string, right: string) => string {
+    const cached = binaryFactories.get(kind);
+    if (cached !== undefined) return cached;
+    const created = (left: string, right: string) => `${kind}:${left}:${right}`;
+    binaryFactories.set(kind, created);
+    return created;
+}
+function createNodeFactory() {
+    return {
+        get createComma() {
+            return getBinaryCreateFunction(SyntaxKind.CommaToken);
+        },
+        get createLogicalOr() {
+            return getBinaryCreateFunction(SyntaxKind.BarBarToken);
+        },
+        get createLogicalAnd() {
+            return getBinaryCreateFunction(SyntaxKind.AmpersandAmpersandToken);
+        },
+    };
+}
+const factory = createNodeFactory();
+console.log(factory.createComma("a", "b"));
+console.log(factory.createLogicalOr("x", "y"));
+console.log(`${factory.createLogicalOr === factory.createLogicalOr}`);

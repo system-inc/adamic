@@ -1,0 +1,22 @@
+{
+  "command": [
+    "go",
+    "run",
+    "./cmd/adamic",
+    "build",
+    "stage3/fixtures/assertions/15_mutable_view.a",
+    "-o",
+    "/tmp/adamic-gate/assertions-observe-18fowr2x/program"
+  ],
+  "build": {
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/assertions/15_mutable_view.a:9:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\nexit status 1\n",
+    "exit": 1
+  },
+  "node": {
+    "stdout": "4\n4\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "native": null
+}

@@ -1,0 +1,87 @@
+
+> typescript@6.0.3 build
+> npm run build:compiler && npm run build:tests
+
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /workspace/explicit-any-pristine/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-tsc in 10ms
+Finished shim-compile-cache-tsserver in 10ms
+Finished shim-compile-cache-typings-installer in 10ms
+Finished generate-types-map in 11ms
+Finished bundle-watch-guard in 13ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished lib in 71ms
+Finished generate-diagnostics in 76ms
+Starting localize
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished localize in 1ms
+Finished copy-built-local-diagnostic-messages in 7ms
+Finished bundle-tsserver in 92ms
+Finished bundle-typings-installer in 185ms
+Finished bundle-tsc in 840ms
+Finished bundle-services in 948ms
+src/compiler/commandLineParser.ts(1716,130): error TS2345: Argument of type 'CommandLineOption' is not assignable to parameter of type 'MapLike<unknown>'.
+  Type 'CommandLineOptionOfStringType' is not assignable to type 'MapLike<unknown>'.
+    Index signature for type 'string' is missing in type 'CommandLineOptionOfStringType'.
+src/compiler/core.ts(1354,29): error TS2345: Argument of type 'T' is not assignable to parameter of type 'MapLike<unknown>'.
+  Type 'object' is not assignable to type 'MapLike<unknown>'.
+    Index signature for type 'string' is missing in type '{}'.
+src/compiler/debug.ts(372,30): error TS2345: Argument of type 'AnyFunction' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'AnyFunction'.
+src/compiler/factory/nodeFactory.ts(6138,54): error TS2345: Argument of type 'SourceFile' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'SourceFile'.
+src/compiler/factory/nodeFactory.ts(6400,29): error TS2345: Argument of type 'T' is not assignable to parameter of type 'MapLike<unknown>'.
+  Type 'Node' is not assignable to type 'MapLike<unknown>'.
+    Index signature for type 'string' is missing in type 'Node'.
+src/compiler/factory/nodeFactory.ts(6400,57): error TS2345: Argument of type 'T' is not assignable to parameter of type 'MapLike<unknown>'.
+  Type 'Node' is not assignable to type 'MapLike<unknown>'.
+    Index signature for type 'string' is missing in type 'Node'.
+src/compiler/moduleNameResolver.ts(362,22): error TS2345: Argument of type 'PackageJson' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'PackageJson'.
+src/compiler/moduleNameResolver.ts(953,25): error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type '{}'.
+src/compiler/moduleNameResolver.ts(2711,95): error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type '{}'.
+src/compiler/moduleNameResolver.ts(3103,26): error TS2345: Argument of type 'never[] | PackageJsonPathFields' is not assignable to parameter of type 'MapLike<unknown>'.
+  Type 'never[]' is not assignable to type 'MapLike<unknown>'.
+    Index signature for type 'string' is missing in type 'never[]'.
+src/compiler/utilitiesPublic.ts(1488,24): error TS2345: Argument of type 'readonly T[]' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'readonly T[]'.
+src/compiler/utilitiesPublic.ts(1488,53): error TS2345: Argument of type 'readonly T[]' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'readonly T[]'.
+src/services/formatting/rules.ts(474,54): error TS2345: Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'FormatCodeSettings'.
+src/services/formatting/rules.ts(478,54): error TS2345: Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'FormatCodeSettings'.
+src/services/formatting/rules.ts(482,56): error TS2345: Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'FormatCodeSettings'.
+src/services/formatting/rules.ts(486,56): error TS2345: Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'FormatCodeSettings'.
+src/services/formatting/rules.ts(490,56): error TS2345: Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type 'FormatCodeSettings'.
+src/services/stringCompletions.ts(1394,33): error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.
+  Index signature for type 'string' is missing in type '{}'.
+Error in build-watch-guard in 16s
+Error: Process exited with code: 2
+Completed local with errors in 16s
+Failed tasks: build-services, build-tsc, build-tsserver, build-typings-installer, build-watch-guard
