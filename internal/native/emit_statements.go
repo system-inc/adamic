@@ -62,6 +62,14 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.AllocateEnvironment:
 		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
+		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
+			local := e.program.Locals[statement.Local]
+			if local.Captured && !local.EnvironmentCell {
+				e.makeCell(statement.Local, zero(local.Type), true)
+				e.line("%s->ready = false;", e.cellReference(statement.Local))
+			}
+			return
+		}
 		if statement.Uninitialized && e.program.Locals[statement.Local].EnvironmentCell {
 			e.line("%s->ready = false;", e.cellReference(statement.Local))
 			return
