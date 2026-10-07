@@ -192,3 +192,53 @@ tools ready 0s, submodules 1s, cache warm and done 206s; nproc 5, quota four CPU
 No full go test ./... or macOS execution is claimed. The 33 individual mutants and
 their Node-only comparisons remain recorded in the earlier sections.
 All 25 current audited host fixtures are observed separately after the integration push.
+
+All 25 audited host fixtures after integration push ff8e32b
+
+python3 internal/oracle/node_fs_file_host_check.py --all --compiler
+/tmp/fs-scratch-area-adamic --logs /tmp/fs-scratch-all-host --report
+internal/oracle/node_fs_file_all_host_status.json:
+ /tmp/fs_scratch_all_host.log, exit 1 for the 24 noncompiling fixtures.
+All 25 source runs match recorded Node stdout/stderr/exit exactly. All 25
+native/JavaScript stages agree. The compiling 11_setModifiedTime fixture also
+matches Node byte for byte on both backends. Exact diagnostics and observations
+are retained in node_fs_file_all_host_status.json.
+
+go test ./stage3/fixtures -run '^TestFixtures/host$' -count=1 -timeout 30m -parallel 4 -v:
+ /tmp/fs_scratch_stage3_host_runner.log, exit 1 in 7.052s solely for the 19 changed
+stage0 records, since the audited area status.json is intentionally unchanged.
+All 25 recorded Node checks pass. The compiling fixture 11 passes the runner's
+native/sanitizer/leak hook. Six checker records remain exact matches.
+
+| Fixture | Native and JavaScript stage | First blocker |
+| --- | --- | --- |
+| 01_readFile_utf8.a | Checker | TS2322 unchecked Buffer indexes |
+| 02_readFile_utf16le.a | Checker | TS2322 unchecked Buffer indexes |
+| 03_readFile_utf16be.a | Checker | TS2322 unchecked Buffer indexes |
+| 04_readFile_missing.a | Checker | TS2322 unchecked Buffer indexes |
+| 05_writeFile.a | Refused | a boolean \| undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0 |
+| 06_fileExists.a | NotYet | node:fs.symlinkSync |
+| 07_directoryExists.a | NotYet | node:fs.symlinkSync |
+| 08_getDirectories.a | NotYet | node:fs.symlinkSync |
+| 09_realpath.a | NotYet | node:fs.symlinkSync |
+| 10_getModifiedTime.a | NotYet | node:fs.symlinkSync |
+| 11_setModifiedTime.a | Compiles | Node agrees; shared native sanitizer/leak hook passes |
+| 12_deleteFile.a | NotYet | node:fs.symlinkSync |
+| 13_createDirectory.a | Checker | TS18046 unknown catch variable |
+| 14_getCurrentDirectory.a | Refused | the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case |
+| 15_getExecutingFilePath.a | NotYet | node:path.basename |
+| 16_getEnvironmentVariable.a | NotYet | a BinaryExpression with a string and a string |
+| 17_write.a | NotYet | a literal method call with an unrepresented result |
+| 18_exit_0.a | NotYet | a value of type undefined |
+| 19_exit_1.a | NotYet | a value of type undefined |
+| 20_exit_2.a | NotYet | a value of type undefined |
+| 21_createHash.a | Refused | the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case |
+| 22_createHash_fallback.a | NotYet | a value of type undefined |
+| 23_newLine.a | NotYet | reading _os |
+| 24_useCaseSensitiveFileNames.a | NotYet | statSync: fs options other than a fixed literal or its plain const binding |
+| 25_readDirectory.a | Checker | TS2322/2345/2532/2775/7030 as recorded |
+
+Totals: 1 Compiles, 6 Checker, 3 Refused, 15 NotYet. The mkdtempSync driver barrier
+is removed from all nineteen checker-accepted fixtures. No remaining blocker is
+claimed fixed by this integration. The earlier adapted fixture observations are
+separate from this run of the area's audited, unchanged originals.
