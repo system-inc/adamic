@@ -1,8 +1,8 @@
-Follow-up on codex/stage1-estree, baseline 80f1ded.
-The frozen source census has 15,647 matches and zero output mismatches.
-Acceptance disagreements fall from 984 to 5; this remains incomplete.
-UTF-8 loss and parser stalls have separate pushed commits and proving programs.
-No shared parser, compiler or runtime files were edited.
+Follow-up on codex/stage1-estree: all 92 output mismatches are fixed.
+Acceptance disagreements fall from 984 to five proved raw-input refusals.
+15,647 files, 549,618,641 bytes per build, match Go on all three port builds.
+All 11,717 Go refusals reject on native; the full gate and 22 driver mutants pass.
+UTF-8 loss and parser stalls have separate pushed commits; shared code is unedited.
 
 Baseline: 27,369 frozen files, 14,699 identical, 861 refused Go answers, 123
 accepted Go refusals, 92 output mismatches and 11,594 both refused. Refusal
@@ -314,7 +314,119 @@ native. The original computed-member, logical-rebalance and merged-JSDoc mutants
 also finish normally and differ at lines 3810, 3543 and 4661 on both builds.
 Cohere passes with 34/34 Adamic-ready sources.
 
-The complete matching-corpus check and complete native refusal check are running
-for final validation. These frozen-corpus counts are not a new inventory of the
+The complete matching-corpus check and complete native refusal check passed
+in final validation. These frozen-corpus counts are not a new inventory of the
 implementation added in this thread. Deep-source agreement does not claim that
 every arbitrary nesting shape is free from all recursive parser limits.
+
+### Frozen corpus matrix
+
+| Disposition | Baseline | Final source audit |
+| --- | ---: | ---: |
+| Identical Go answer | 14,699 | 15,647 |
+| Port refuses Go answer | 861 | 5 |
+| Port accepts Go refusal | 123 | 0 |
+| Different output | 92 | 0 |
+| Both refuse | 11,594 | 11,717 |
+| Total | 27,369 | 27,369 |
+
+This is 948 newly matching files: 856 formerly refused and 92 formerly different.
+All 123 former incorrect acceptances now refuse. Acceptance disagreements shrink
+by 979, from 984 to five. The remaining frozen files are parseReplacementCharacter.js
+and .ts, regexInvalidUtf8WithUnicodeFlag.js and .ts, and the selector unit's nodes.ts.
+Their full paths and dispositions are in deep-corpus.jsonl.gz. Some contain valid
+literal U+FFFD, intentionally covered by the conservative input guard.
+
+The complete corpus matrix passes on the promoted code. TestRepositoryAgreement
+checks all 15,647 source-Node-identical Go answers, 549,618,641 canonical bytes per
+build, on source Node, sanitized native and emitted JS (616.08s). All 11,717 frozen
+Go refusals explicitly refuse with empty stdout on sanitized native, before the
+per-file two-second deadline (227.99s). Compiler-bug panics, sanitizer failures,
+timeouts and successful acceptance would fail the native refusal check.
+Source Node independently audits all 27,369 records. Emitted-JS refusals are checked
+on the focused/generated cases; the complete negative corpus is checked on native
+and source Node, not by spawning 11,717 emitted-JS processes.
+
+### Pushed implementation commits
+
+- `fe07100524fe56da82b15d8d8ff50358ff85c92d`: Port JSX parsing and conversion at the Go source boundary.
+- `068218be92c9caa19e9ce981f178abf599371632`: Preserve decorated export modifiers and wrapper ranges.
+- `040fafcb7bf544bdc62fc3bf27c2f2c4ab39d512`: Bound ESTree parser stalls in the actual driver.
+- `94db1f81d68e535486292375412c879652a1e3db`: Match Go cooked WTF-8 and prove the lossy input boundary.
+- `e1f095831b5f0e703c1e8e3a92d79bd07befccd0`: Parse decorated expressions and match await lookahead.
+- `4a8deeb87dad865bac1c6c378cff51438e0e92c3`: Match Go recovered syntax and generic list boundaries.
+- `8e88b7bdddc10a72a803adc92a8d1070c8e149b7`: Match Go acceptance for modifiers and recovered expressions.
+- `cc1ba3bc7f8dfb2085dc3e4fa79f3e4489e5ef8a`: Complete Go grammar and acceptance recovery.
+- `5623b0657b261c1b904729656d25e24e1fcb7c9b`: Handle deep binary trees without traversal recursion.
+
+The first deep-checkpoint push failed on GitHub while writing/renaming a temporary
+pack file. Retrying the same fast-forward push succeeded. No force push was used.
+The complete final package gate and its timing are recorded below.
+Throughput figures in README remain historical; no new speed claim is made here.
+Coverage does not include every arbitrary source nesting shape or the complete
+JavaScript printer. The raw-input boundary is unresolved, with a proving program;
+compiler/runtime files and the shared TypeScript parser remain unedited.
+
+### Final green gate
+
+`source /workspace/adamic-tools/env.sh` followed by
+`ADAMIC_ESTREE_LIBRARY=/workspace/scratch/estree-library
+ADAMIC_ESTREE_CORPUS=/tmp/estree-final go test -timeout 30m -count=1 -v
+./stage1/cohere/estree > /tmp/estree-final-gate.log 2>&1`
+passes in 1783.266s. No correctness check is skipped. TestThroughput is intentionally
+skipped because this follow-up is correctness work; earlier measurements are
+historical. The whole repository's go test ./... was not run. The touched package
+ran completely, including full positive corpus, full native refusals, all focused
+library comparisons and gap programs.
+
+`go test -count=1 -v ./internal/oracle -run '^TestTheOracleCatchesOneByte$'
+> /tmp/estree-final-oracle.log 2>&1` passes in 0.101s (native/Node cache hits).
+`go vet ./stage1/cohere/estree > /tmp/estree-final-vet.log 2>&1` exits zero,
+with empty output. Final `cohere --no-cache stage1/cohere/estree/*.ts` plus the
+three new minimal gap files passes: 40 checked, 34/34 Adamic-ready. `git diff
+--check` passes. The deepBinary proving program prints 788941 on source Node.
+These outputs are retained under validation/followup/final-*.log.
+
+The final package gate runs 22 driver mutants on source Node and sanitized native:
+17 successful wrong-byte outputs, four successful incorrect acceptances and one
+500ms liveness timeout. They are:
+
+| Mutant | What catches it |
+| --- | --- |
+| Computed member flag reversed | Canonical byte comparison |
+| Logical rebalance disabled | Canonical byte comparison |
+| Merged JSDoc separator changed | Canonical byte comparison |
+| JSX selfClosing cleared | Canonical byte comparison |
+| Decorated export range includes prefix | Canonical byte comparison |
+| Await/yield line-break rule removed | Canonical byte comparison |
+| First accessibility forced public | Canonical byte comparison |
+| Empty generic end decremented | Canonical byte comparison |
+| External-module await reparse removed | Canonical byte comparison |
+| Catch initializer treated as annotation | Canonical byte comparison |
+| Class implements name suppressed | Canonical byte comparison |
+| Mapped constraint removed | Canonical byte comparison |
+| Binary operator forced minus | Canonical byte comparison |
+| Postorder child alias ignored | Canonical byte comparison |
+| Canonical own-property traversal reversed | Canonical byte comparison |
+| Cooked unpaired surrogate gets one replacement | Canonical byte comparison |
+| Raw-input guard disabled | Canonical byte comparison |
+| Syntax validation disabled | Go refusal versus accepted Program |
+| Unattached-decorator guard disabled | Go refusal versus accepted Program |
+| Erasure precedence check disabled | Go refusal versus accepted Program |
+| Reference-pragma check disabled | Go refusal versus accepted Program |
+| Class-member progress guard disabled | 500ms deadline on both builds |
+
+Every byte/acceptance mutant finishes normally; crashes and refusals are not
+credited as wrong-output byte mutants. The earlier scan-progress-disabled control
+is also recorded in its own checkpoint. The default-free interface-method control
+is separate compiler-gap evidence: all three builds print 1 when the concrete
+defaults are removed. Two initially inert/nonunique mutation attempts are described
+above and are not credited.
+
+UTF-8 commit 94db1f81 repairs cooked WTF-8 and proves raw-input information loss.
+Stall commit 040fafcb places the guard in the actual driver. Later recovery makes
+Go-accepted stall programs byte-identical and leaves Go-refused programs explicit.
+Five raw-input refusals remain: the current text API cannot represent both original
+byte sequences faithfully. No compiler/runtime changes were made to bypass that
+boundary. The original library's narrower grammar and normalization differences
+remain observed pin-specific gaps, not assertions about the TypeScript spec.

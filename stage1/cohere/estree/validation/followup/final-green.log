@@ -1,0 +1,269 @@
+=== RUN   TestAcceptanceGrammar
+    acceptance_test.go:25: 11 acceptance grammar cases, 8800 identical canonical bytes
+--- PASS: TestAcceptanceGrammar (23.89s)
+=== RUN   TestAcceptanceMutants
+=== RUN   TestAcceptanceMutants/catch-initializer
+    acceptance_test.go:41: native: line 182: Go "3 Identifier 13 14 0 0 0 13 14 0", port "3 Identifier 13 16 0 0 0 13 16 0"
+    acceptance_test.go:41: Node: line 182: Go "3 Identifier 13 14 0 0 0 13 14 0", port "3 Identifier 13 16 0 0 0 13 16 0"
+=== RUN   TestAcceptanceMutants/class-keyword-name
+    acceptance_test.go:41: native: line 151: Go "1 .id node", port "1 .id null"
+    acceptance_test.go:41: Node: line 151: Go "1 .id node", port "1 .id null"
+--- PASS: TestAcceptanceMutants (47.69s)
+    --- PASS: TestAcceptanceMutants/catch-initializer (23.44s)
+    --- PASS: TestAcceptanceMutants/class-keyword-name (23.63s)
+=== RUN   TestAcceptanceDiagnostics
+    acceptance_test.go:65: 8 Go refusals explicitly refused before deadline on all builds
+--- PASS: TestAcceptanceDiagnostics (25.04s)
+=== RUN   TestAcceptanceDiagnosticControl
+    acceptance_test.go:79: Node: disabled syntax validation accepts Go-refused update operand; acceptance check catches it
+    acceptance_test.go:79: native: disabled syntax validation accepts Go-refused update operand; acceptance check catches it
+--- PASS: TestAcceptanceDiagnosticControl (24.27s)
+=== RUN   TestRepositoryAgreement
+    corpus_test.go:78: 15647 Go-accepted/source-Node-identical repository snapshot files, 549618641 bytes checked on uninstrumented source Node, sanitized native and emitted JS; refusals and mismatches remain excluded and separately reported
+--- PASS: TestRepositoryAgreement (616.08s)
+=== RUN   TestCorpusNativeRefusals
+    corpus_test.go:135: all 11717 frozen Go refusals explicitly refused with empty stdout on sanitized native before the per-file 2s deadline
+--- PASS: TestCorpusNativeRefusals (227.99s)
+=== RUN   TestDeepGrammar
+    deep_test.go:39: three 4096-operand cases, 2551820 identical bytes in all builds
+--- PASS: TestDeepGrammar (27.53s)
+=== RUN   TestDeepMutants
+=== RUN   TestDeepMutants/binary-operator
+    deep_test.go:56: Node: line 25: Go "2 .operator string +", port "2 .operator string -"
+    deep_test.go:56: native: line 25: Go "2 .operator string +", port "2 .operator string -"
+=== RUN   TestDeepMutants/postorder-alias
+    deep_test.go:56: Node: line 89: Go "3 LogicalExpression 40 45 0 0 0 40 45 0", port "3 Identifier 40 41 0 0 0 40 41 0"
+    deep_test.go:56: native: line 89: Go "3 LogicalExpression 40 45 0 0 0 40 45 0", port "3 Identifier 40 41 0 0 0 40 41 0"
+=== RUN   TestDeepMutants/dump-property-order
+    deep_test.go:56: native: line 2: Go "0 .body list 4", port "0 .directives null"
+    deep_test.go:56: Node: line 2: Go "0 .body list 4", port "0 .directives null"
+--- PASS: TestDeepMutants (71.70s)
+    --- PASS: TestDeepMutants/binary-operator (23.43s)
+    --- PASS: TestDeepMutants/postorder-alias (23.72s)
+    --- PASS: TestDeepMutants/dump-property-order (23.90s)
+=== RUN   TestGeneratedAgreement
+    estree_test.go:193: 78 generated files: 120355 identical bytes on Go, source Node, sanitized native, emitted JS
+--- PASS: TestGeneratedAgreement (24.70s)
+=== RUN   TestThreePortMutants
+=== RUN   TestThreePortMutants/member-computed
+    estree_test.go:237: source Node finished; byte comparison caught line 3810: Go "3 .computed bool 0", port "3 .computed bool 1"
+    estree_test.go:244: sanitized native finished; byte comparison caught line 3810: Go "3 .computed bool 0", port "3 .computed bool 1"
+=== RUN   TestThreePortMutants/logical-rebalance
+    estree_test.go:237: source Node finished; byte comparison caught line 3543: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+    estree_test.go:244: sanitized native finished; byte comparison caught line 3543: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+=== RUN   TestThreePortMutants/merged-jsdoc-value
+    estree_test.go:237: source Node finished; byte comparison caught line 4661: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+    estree_test.go:244: sanitized native finished; byte comparison caught line 4661: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+--- PASS: TestThreePortMutants (71.69s)
+    --- PASS: TestThreePortMutants/member-computed (23.82s)
+    --- PASS: TestThreePortMutants/logical-rebalance (23.46s)
+    --- PASS: TestThreePortMutants/merged-jsdoc-value (23.77s)
+=== RUN   TestOriginalLibraries
+    estree_test.go:315: raw: 78 files, 78 identical, 0 differing
+    estree_test.go:312: proved postprocessed case 38 known gap for "x\u00a0;"
+    estree_test.go:312: proved postprocessed case 39 known gap for "x\u2028;"
+    estree_test.go:312: proved postprocessed case 40 known gap for "x\r\n;"
+    estree_test.go:315: postprocessed: 78 files, 75 identical, 3 differing
+--- PASS: TestOriginalLibraries (1.30s)
+=== RUN   TestDecoratedExports
+    exports_test.go:21: 6 decorated exports, 5151 bytes match Go
+--- PASS: TestDecoratedExports (24.69s)
+=== RUN   TestDecoratedExportMutant
+    exports_test.go:32: Node: line 3: Go "1 ExportNamedDeclaration 3 20 0 0 0 0 20 0", port "1 ExportNamedDeclaration 0 20 0 0 0 0 20 0"
+    exports_test.go:32: native: line 3: Go "1 ExportNamedDeclaration 3 20 0 0 0 0 20 0", port "1 ExportNamedDeclaration 0 20 0 0 0 0 20 0"
+--- PASS: TestDecoratedExportMutant (23.96s)
+=== RUN   TestDecoratedExportLibraries
+    estree_test.go:315: raw: 6 files, 6 identical, 0 differing
+    estree_test.go:315: postprocessed: 6 files, 6 identical, 0 differing
+--- PASS: TestDecoratedExportLibraries (1.13s)
+=== RUN   TestRecoveredExpressions
+    expressions_test.go:23: 7 decorated class / await / yield cases, 8717 bytes match Go
+--- PASS: TestRecoveredExpressions (24.23s)
+=== RUN   TestRecoveredExpressionMutant
+    expressions_test.go:34: native: line 302: Go "0 .body list 4", port "0 .body list 3"
+    expressions_test.go:34: Node: line 302: Go "0 .body list 4", port "0 .body list 3"
+--- PASS: TestRecoveredExpressionMutant (24.30s)
+=== RUN   TestUnattachedDecorator
+--- PASS: TestUnattachedDecorator (23.56s)
+=== RUN   TestUnattachedDecoratorControl
+    expressions_test.go:63: native: disabled orphan guard accepts both Go-refused files; acceptance check catches it
+    expressions_test.go:63: Node: disabled orphan guard accepts both Go-refused files; acceptance check catches it
+--- PASS: TestUnattachedDecoratorControl (24.48s)
+=== RUN   TestPostfixValueGap
+    gaps_test.go:33: Node 7, 1; lowering: /workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:3:23: stage 0 can't lower a PostfixUnaryExpression yet
+--- PASS: TestPostfixValueGap (0.11s)
+=== RUN   TestMethodReplacementGap
+    gaps_test.go:52: Node replacement/original; Adamic: /workspace/adamic/stage1/cohere/estree/gaps/methodReplacement.ts:11:1: Adamic 0.1 refuses a method read as a value (next would lose its object, and this with it); call it in an arrow that keeps the object: () => first.next() (unbound-method)
+--- PASS: TestMethodReplacementGap (0.12s)
+=== RUN   TestRawInputGap
+    gaps_test.go:86: Equal size, readTextFile text and utf8Length on Node/native/emitted JS: "8:8://�\nx;\n"; Go distinguishes: line 17: Go "0 .value string \\ufffd\\ufffd\\ufffd", port "0 .value string \\ufffd"
+--- PASS: TestRawInputGap (1.18s)
+=== RUN   TestParserRecoveryGap
+    gaps_test.go:110: node: unported parser recovery does not terminate within 1s
+    gaps_test.go:110: /tmp/adamic-gate/TestParserRecoveryGap1081184253/001/port: unported parser recovery does not terminate within 1s
+--- PASS: TestParserRecoveryGap (12.71s)
+=== RUN   TestInterfaceDefaultGap
+    gaps_test.go:135: Sanitized native: exit status 1
+        =================================================================
+        ==97858==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7bb2ae700068 at pc 0x563de4b21d86 bp 0x7ffea118e970 sp 0x7ffea118e968
+        READ of size 8 at 0x7bb2ae700068 thread T0
+            #0 0x563de4b21d85 in adamic_method_2 /tmp/adamic-gate/adamic-build-483500730/main.c:17:134
+            #1 0x563de4b21b15 in adamic_function_0_run /tmp/adamic-gate/adamic-build-483500730/main.c:31
+            #2 0x563de4b21b15 in main /tmp/adamic-gate/adamic-build-483500730/main.c:82:31
+            #3 0x7fb2b078cca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #4 0x7fb2b078cd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #5 0x563de4a3b430 in _start (/tmp/adamic-gate/TestInterfaceDefaultGap1628445550/002/port+0x49430)
+        
+        Address 0x7bb2ae700068 is located in stack of thread T0 at offset 104 in frame
+            #0 0x563de4b218f7 in main /tmp/adamic-gate/adamic-build-483500730/main.c:79
+        
+          This frame has 4 object(s):
+            [32, 40) 'adamic_temporary_1.i' (line 29)
+            [64, 72) '.compoundliteral.i' (line 28)
+            [96, 104) '.compoundliteral13.i' (line 28) <== Memory access at offset 104 overflows this variable
+            [128, 136) '.compoundliteral'
+        HINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork
+              (longjmp and C++ exceptions *are* supported)
+        SUMMARY: AddressSanitizer: stack-buffer-overflow /tmp/adamic-gate/adamic-build-483500730/main.c:17:134 in adamic_method_2
+        Shadow bytes around the buggy address:
+          0x7bb2ae6ffd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bb2ae6ffe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bb2ae6ffe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bb2ae6fff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bb2ae6fff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+        =>0x7bb2ae700000: f1 f1 f1 f1 00 f2 f2 f2 00 f2 f2 f2 00[f2]f2 f2
+          0x7bb2ae700080: 00 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bb2ae700100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bb2ae700180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bb2ae700200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bb2ae700280: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+        Shadow byte legend (one shadow byte represents 8 application bytes):
+          Addressable:           00
+          Partially addressable: 01 02 03 04 05 06 07 
+          Heap left redzone:       fa
+          Freed heap region:       fd
+          Stack left redzone:      f1
+          Stack mid redzone:       f2
+          Stack right redzone:     f3
+          Stack after return:      f5
+          Stack use after scope:   f8
+          Global redzone:          f9
+          Global init order:       f6
+          Poisoned by user:        f7
+          Container overflow:      fc
+          Array cookie:            ac
+          Intra object redzone:    bb
+          ASan internal:           fe
+          Left alloca redzone:     ca
+          Right alloca redzone:    cb
+        ==97858==ABORTING
+    gaps_test.go:139: Node and emitted JS: 5; sanitized native reads past interface argument storage; release output 4 was separately observed and is undefined behavior
+--- PASS: TestInterfaceDefaultGap (0.34s)
+=== RUN   TestInterfaceTypeMethodGap
+    interface_type_test.go:32: Node and emitted JS print 1; sanitized native explicitly panics on the interface call with both arguments supplied
+    interface_type_test.go:45: removing concrete default parameters yields 1 in all builds; the expected-panic check catches that control
+--- PASS: TestInterfaceTypeMethodGap (0.62s)
+=== RUN   TestJSXAgreement
+    jsx_test.go:50: 9 JSX cases, 11077 bytes match Go on source Node, native and emitted JS
+--- PASS: TestJSXAgreement (24.05s)
+=== RUN   TestJSXOriginalLibraries
+    jsx_test.go:87: raw: original rejects empty JSX type arguments; Go accepts
+    jsx_test.go:87: postprocessed: original rejects empty JSX type arguments; Go accepts
+    jsx_test.go:107: postprocessed case 4: only ampersand spelling differs
+    jsx_test.go:107: postprocessed case 6: only ampersand spelling differs
+    jsx_test.go:115: postprocessed CRLF: library exactly matches Go on LF-normalized input
+--- PASS: TestJSXOriginalLibraries (1.12s)
+=== RUN   TestJSXMutant
+    jsx_test.go:132: native: line 23: Go "4 .selfClosing bool 1", port "4 .selfClosing bool 0"
+    jsx_test.go:132: Node: line 23: Go "4 .selfClosing bool 1", port "4 .selfClosing bool 0"
+--- PASS: TestJSXMutant (24.33s)
+=== RUN   TestRecoveredGrammar
+    recovery_test.go:39: 16 recovered grammar cases, 23734 identical bytes in all three port builds
+--- PASS: TestRecoveredGrammar (24.45s)
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/first-accessibility
+    recovery_test.go:56: Node: line 96: Go "3 .accessibility string private", port "3 .accessibility string public"
+    recovery_test.go:56: native: line 96: Go "3 .accessibility string private", port "3 .accessibility string public"
+=== RUN   TestRecoveryMutants/empty-type-list-range
+    recovery_test.go:56: Node: line 419: Go "3 TSTypeParameterInstantiation 1 3 0 0 0 1 3 0", port "3 TSTypeParameterInstantiation 1 2 0 0 0 1 2 0"
+    recovery_test.go:56: native: line 419: Go "3 TSTypeParameterInstantiation 1 3 0 0 0 1 3 0", port "3 TSTypeParameterInstantiation 1 2 0 0 0 1 2 0"
+=== RUN   TestRecoveryMutants/module-await
+    recovery_test.go:56: Node: line 627: Go "2 AwaitExpression 11 19 0 0 0 11 19 0", port "2 CallExpression 11 19 0 0 0 11 19 0"
+    recovery_test.go:56: native: line 627: Go "2 AwaitExpression 11 19 0 0 0 11 19 0", port "2 CallExpression 11 19 0 0 0 11 19 0"
+--- PASS: TestRecoveryMutants (71.41s)
+    --- PASS: TestRecoveryMutants/first-accessibility (23.93s)
+    --- PASS: TestRecoveryMutants/empty-type-list-range (23.39s)
+    --- PASS: TestRecoveryMutants/module-await (23.44s)
+=== RUN   TestRecoveryLibraryGaps
+    recovery_test.go:74: Go accepts "f<>();", pinned typescript-estree refuses
+    recovery_test.go:74: Go accepts "class C<> {}", pinned typescript-estree refuses
+    estree_test.go:315: raw: 4 files, 4 identical, 0 differing
+    estree_test.go:315: postprocessed: 4 files, 4 identical, 0 differing
+--- PASS: TestRecoveryLibraryGaps (3.11s)
+=== RUN   TestScalarEdges
+    scalars_test.go:37: 8 scalar edge files, 5969 bytes identical on Go, source Node, sanitized native and emitted JS
+--- PASS: TestScalarEdges (24.23s)
+=== RUN   TestScalarOriginalLibraries
+    estree_test.go:315: raw: 5 files, 5 identical, 0 differing
+    estree_test.go:315: postprocessed: 5 files, 5 identical, 0 differing
+--- PASS: TestScalarOriginalLibraries (1.09s)
+=== RUN   TestPinnedNumericGaps
+    scalars_test.go:62: Go values NaN/NaN; pinned original converter: "Infinity\n18446744073709552000\n"
+--- PASS: TestPinnedNumericGaps (0.96s)
+=== RUN   TestBoundedPortParser
+    stalls_test.go:74: all 13 recorded stalls terminate: Go-accepted inputs match and Go-refused inputs explicitly refuse in all three port builds
+    stalls_test.go:75: three EOF recovery cases explicitly refuse with parser diagnostics before 2s on Node, sanitized native and emitted JS
+--- PASS: TestBoundedPortParser (40.21s)
+=== RUN   TestPortStallControl
+    stalls_test.go:95: node guard-disabled control caught by 500ms deadline
+    stalls_test.go:95: /tmp/adamic-gate/TestPortStallControl2660850908/002/port guard-disabled control caught by 500ms deadline
+--- PASS: TestPortStallControl (24.57s)
+=== RUN   TestSyntaxGrammar
+    syntax_test.go:33: 9 syntax cases, 15547 identical canonical bytes
+--- PASS: TestSyntaxGrammar (24.41s)
+=== RUN   TestSyntaxMutants
+=== RUN   TestSyntaxMutants/mapped-constraint
+    syntax_test.go:45: Node: line 324: Go "2 .constraint node", port "2 .constraint null"
+    syntax_test.go:45: native: line 324: Go "2 .constraint node", port "2 .constraint null"
+=== RUN   TestSyntaxMutants/erasure-precedence
+    syntax_test.go:65: Node: disabled check accepts Go-refused input; acceptance oracle catches it
+    syntax_test.go:65: native: disabled check accepts Go-refused input; acceptance oracle catches it
+=== RUN   TestSyntaxMutants/reference-pragma
+    syntax_test.go:65: native: disabled check accepts Go-refused input; acceptance oracle catches it
+    syntax_test.go:65: Node: disabled check accepts Go-refused input; acceptance oracle catches it
+--- PASS: TestSyntaxMutants (71.76s)
+    --- PASS: TestSyntaxMutants/mapped-constraint (23.78s)
+    --- PASS: TestSyntaxMutants/erasure-precedence (23.91s)
+    --- PASS: TestSyntaxMutants/reference-pragma (24.07s)
+=== RUN   TestSyntaxRefusals
+    syntax_test.go:88: three Go refusals explicitly refused with empty stdout on all builds
+--- PASS: TestSyntaxRefusals (24.68s)
+=== RUN   TestSyntaxLibraries
+    estree_test.go:315: raw: 4 files, 4 identical, 0 differing
+    estree_test.go:315: postprocessed: 4 files, 4 identical, 0 differing
+--- PASS: TestSyntaxLibraries (1.13s)
+=== RUN   TestTypeMemberLibraryGap
+    syntax_test.go:109: Go accepts an interface property initializer, pinned typescript-estree refuses it; the port follows Go
+--- PASS: TestTypeMemberLibraryGap (0.96s)
+=== RUN   TestThroughput
+    throughput_test.go:16: set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput
+--- SKIP: TestThroughput (0.00s)
+=== RUN   TestCookedSurrogates
+    utf8_test.go:23: 8 cooked-surrogate files, 3606 bytes match Go
+--- PASS: TestCookedSurrogates (24.02s)
+=== RUN   TestCookedSurrogateMutant
+    utf8_test.go:34: Node: line 8: Go "2 .value string \\ufffd\\ufffd\\ufffda\\ufffd\\ufffd\\ufffd", port "2 .value string \\ufffda\\ufffd"
+    utf8_test.go:34: native: line 8: Go "2 .value string \\ufffd\\ufffd\\ufffda\\ufffd\\ufffd\\ufffd", port "2 .value string \\ufffda\\ufffd"
+--- PASS: TestCookedSurrogateMutant (24.29s)
+=== RUN   TestCookedSurrogateLibraryGap
+    utf8_test.go:53: Go serializes each unpaired WTF-8 surrogate as three U+FFFD; original keeps UTF-16 surrogates
+--- PASS: TestCookedSurrogateLibraryGap (1.00s)
+=== RUN   TestLossyInputRefusal
+    utf8_test.go:65: equal-size malformed and valid replacement inputs both explicitly refuse; raw-byte API remains required
+--- PASS: TestLossyInputRefusal (23.81s)
+=== RUN   TestLossyInputControl
+    utf8_test.go:78: Node: line 17: Go "0 .value string \\ufffd\\ufffd\\ufffd", port "0 .value string \\ufffd"
+    utf8_test.go:78: native: line 17: Go "0 .value string \\ufffd\\ufffd\\ufffd", port "0 .value string \\ufffd"
+--- PASS: TestLossyInputControl (24.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	1783.266s

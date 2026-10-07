@@ -60,5 +60,8 @@ The follow-up source audit has 15,647 identical frozen files, zero output
 mismatches and 5 acceptance disagreements. The local parser adapts the main
 parser and origin/codex/parser-recovery b85afdd inside the ESTree territory; only
 scanner and node-model dependencies remain shared. No shared parser/compiler/
-runtime files are edited. The claim remains incomplete. Follow-up evidence lives
+runtime files are edited. All 549,618,641 matching bytes pass on source Node, sanitized native and emitted
+JS; all 11,717 Go refusals explicitly refuse on native. The complete package gate
+and 22 driver mutants pass. The claim remains incomplete at the raw-input
+boundary. Follow-up evidence lives
 in stage1/cohere/estree/FOLLOWUP.md.

@@ -1,8 +1,8 @@
-An incomplete non-JSON ESTree converter, postprocessor and canonical tree driver.
-The follow-up source audit has 15,647 matching frozen files and zero output mismatches.
-Acceptance disagreements fall from 984 to 5; raw UTF-8 loss remains proved.
-The earlier throughput measurement is historical: native 5,709, Node 4,601, Go 11,345 texts/s.
-Current checkpoint evidence, commands, mutants and limits are in FOLLOWUP.md.
+Go output mismatches fall from 92 to zero on 27,369 frozen files.
+Acceptance disagreements fall from 984 to five, all proved raw-input refusals.
+15,647 files match 549,618,641 bytes on Node, sanitized native and emitted JS.
+All 11,717 Go refusals reject on native; the full gate and 22 driver mutants pass.
+Pushed checkpoints, commands, outputs and gap programs are recorded in FOLLOWUP.md.
 
 
 # Non-JSON ESTree slice
