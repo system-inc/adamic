@@ -35,3 +35,11 @@ implementations. The following are the first three eligible names:
 No matching native implementation or claim for these three was found on the
 specified origin branches. This update is pushed before implementation. New
 sources use .a; shared registration generator and test harness remain untouched.
+
+Continuation status: blocked before implementation. The first rule needs the
+exact resolved call-signature declaration, which existing checker questions do
+not expose. A new question requires the shared Program.Inspect dispatcher to
+register it; Ahra's correction prohibits shared-file changes and says to stop
+on another blocker. No shared files changed in this continuation, and none of
+the three new rules is represented as complete. See
+../wave07_continuation/BLOCKED.md. No additional rules are claimed.
