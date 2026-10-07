@@ -107,3 +107,13 @@ Status: parked, per Ahra's updated instruction on 2026-10-07.
 - react-hooks/static-components: parked on native high-level IR, phi/instruction taint propagation, capture/compilation gates and JSX support.
 
 Shared cohere analysis modules are being ported on #dnv6f2c; JSX support is landing on area/stage1-lint. Existing code and evidence are pushed at b2468fd978eeb82bfe17742c6c6556db7cc9f0e5, based on current main f8013f0b and green against its declared oracles. These parked claims count as finished for the landing-first cap, not as completed native rule ports. No rule verdicts, full byte agreement, mutants or timings are claimed for these three.
+
+## Sixth reservation
+
+Parked-status update was pushed at c102c217a before this reservation. Fetched 529 origin refs; 33 distinct claim documents mention 154 ranked checker-dependent rules. Excluding the 25 checker-dependent ports among the base branch's 26 implemented rules, existing ports on main and claims on every origin branch, the first three remaining by combined volume and lexical ties are:
+
+- react/jsx-fragments (combined volume 0)
+- react/jsx-no-constructed-context-values (combined volume 0)
+- react/jsx-no-undef (combined volume 0)
+
+None needs native high-level IR or single-assignment capture analysis. Existing origin stage1 implementation paths were inspected for all three and none was found. Reserved before any code. New rules will use owned rule directories, .a sources, rule.json kinds and supplied-node visitation. Shared JSX/parser, driver and finding-model integration may remain separate blockers and will be reported explicitly.
