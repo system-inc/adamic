@@ -57,9 +57,6 @@ func TSGoC(program *ir.Program) (string, error) {
 			}
 			runtimeName := map[string]string{"tsgoProgram": "program", "tsgoQuery": "query", "tsgoRelease": "release", "tsgoTypeParts": "type_parts", "tsgoInspect": "inspect"}[name]
 			if inRegion {
-				if name != "tsgoQuery" {
-					return "", fmt.Errorf("native: unexpected region version of %s", name)
-				}
 				runtimeName += "_in"
 			}
 			body := "\tADAMIC_CHECK_STACK();\n\t"
@@ -77,6 +74,9 @@ func TSGoC(program *ir.Program) (string, error) {
 // The public ABI header is embedded beside the archive's source, never copied
 // from cgo's generated implementation header.
 func BuildTSGo(source, output, archive string, options Options) error {
+	if options.Target == "wasm32-wasi" {
+		return fmt.Errorf("native: tsgo is not supported for wasm32-wasi")
+	}
 	archive, err := filepath.Abs(archive)
 	if err != nil {
 		return err

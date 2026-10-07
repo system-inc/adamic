@@ -23,22 +23,27 @@ its explicit byte length, decoded as UTF-8; a buffer without text requires an
 Adamic-owned, platform-independent message. Error messages are data, not thrown
 Node errors or platform-dependent libc messages.
 
-This error shape is explicit in the task brief. The successful alternatives
-and any design-specific naming are pending access to checker-handle-design.md
-section 5. That attachment is absent from this checkout and available task
-connectors; the owner has been asked to provide it. This file claims the error
-contract early and does not claim that implementation or validation is done.
+Section 5 was supplied verbatim by the task owner and confirms this contract.
+`TSGoResult<T> = { readonly kind: 'Ok'; readonly value: T } | TSGoError` is
+exported beside `TSGoError`. Program creation uses `T = number`; query uses the
+existing `{ nodeKind, symbolName, type }` payload; inspection and type-parts use
+`T = string`. Release has no payload: `{ readonly kind: 'Ok' } | TSGoError`.
+The harness owns `Answer`, refusal handling and the refusal wire format.
+
+Assumption: the brief leaves the success payload's field name open. This unit
+uses the standard `value` field consistently, and omits it for release.
 
 ## Observed starting state and remaining work
 
 The C ABI already returns status/error buffers for all five operations. Go
-checker panics are recovered into these buffers. Native `checked()` discards
-that recoverability by panicking; argument/path validation also panics.
-JavaScript bridge calls are currently refused at compile time. A supported,
-honest JavaScript execution path is needed for the requested two-backend
-failure fixture; this claim does not invent a JavaScript checker.
+checker panics are recovered into these buffers. The starting native `checked()` discarded
+that recoverability by panicking; argument/path validation also panicked.
+The starting JavaScript backend refused checker calls at compile time. This
+unit adds an explicit Node-API adapter to the real archive for the two-backend
+proof; it does not invent a JavaScript checker.
 
 WASI cannot link the Go checker. Preserve a named target refusal and keep the
 ordinary runtime archive buildable without the bridge.
 
-No implementation, mutants, counts, or gate results are claimed yet.
+Validation evidence is recorded separately; this file defines the public
+contract claimed for dependent work.

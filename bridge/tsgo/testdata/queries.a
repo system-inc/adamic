@@ -1,21 +1,25 @@
 import { panic, programArguments, readTextFile, tsgoProgram, tsgoQuery, tsgoRelease, utf8Length } from 'adamic';
 
-const argumentsGiven = programArguments();
-const config = argumentsGiven[0] ?? panic('missing config');
-const manifestPath = argumentsGiven[1] ?? panic('missing query manifest');
-const manifest = readTextFile(manifestPath);
-if (manifest.kind === 'Error') {
-	panic(manifest.message);
+function run(): void {
+    const argumentsGiven = programArguments();
+    const config = argumentsGiven[0] ?? panic('missing config');
+    const manifestPath = argumentsGiven[1] ?? panic('missing query manifest');
+    const manifest = readTextFile(manifestPath);
+    if (manifest.kind === 'Error') { console.error(manifest.message); return; }
+    const opened = tsgoProgram(config, argumentsGiven.slice(2));
+    if (opened.kind === 'Error') { console.error(opened.message); return; }
+    const program = opened.value;
+    for (const line of manifest.text.split('\n')) {
+        if (line.length === 0) continue;
+        const fields = line.split('\t');
+        const file = fields[0] ?? panic('missing file');
+        const position = parseInt(fields[1] ?? panic('missing position'), 10);
+        const queried = tsgoQuery(program, file, position);
+        if (queried.kind === 'Error') { console.error(queried.message); tsgoRelease(program); return; }
+        const answer = queried.value;
+        console.log(`${answer.nodeKind} ${utf8Length(answer.symbolName)} ${utf8Length(answer.type)}\n${answer.symbolName}${answer.type}`);
+    }
+    const released = tsgoRelease(program);
+    if (released.kind === 'Error') console.error(released.message);
 }
-const program = tsgoProgram(config, argumentsGiven.slice(2));
-for (const line of manifest.text.split('\n')) {
-	if (line.length === 0) {
-		continue;
-	}
-	const fields = line.split('\t');
-	const file = fields[0] ?? panic('missing file');
-	const position = parseInt(fields[1] ?? panic('missing position'), 10);
-	const answer = tsgoQuery(program, file, position);
-	console.log(`${answer.nodeKind} ${utf8Length(answer.symbolName)} ${utf8Length(answer.type)}\n${answer.symbolName}${answer.type}`);
-}
-tsgoRelease(program);
+run();

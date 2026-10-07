@@ -12,6 +12,9 @@ import (
 // BuildSplitTSGo is an explicit prototype entrypoint for TSGoC output. BuildTSGo is unchanged;
 // its owner can decide whether to dispatch here when Options.Split is requested.
 func BuildSplitTSGo(source, output, archive string, options Options) error {
+	if options.Target == "wasm32-wasi" {
+		return fmt.Errorf("native: tsgo is not supported for wasm32-wasi")
+	}
 	archive, err := filepath.Abs(archive)
 	if err != nil {
 		return err

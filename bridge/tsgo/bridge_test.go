@@ -81,13 +81,13 @@ func TestBridge(t *testing.T) {
 	mustRun("stage0-build", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
 	mustRun("oracle-build", exec.Command("go", "build", "-o", oracle, "./bridge/tsgo/oracle"))
 	fixture := filepath.Join(repository, "bridge/tsgo/testdata/queries.a")
-	for _, arguments := range [][]string{{"build", fixture, "-o", filepath.Join(scratch, "unlinked")}, {"c", fixture}, {"js", fixture}} {
+	for _, arguments := range [][]string{{"build", fixture, "-o", filepath.Join(scratch, "unlinked")}, {"c", fixture}} {
 		output, err = run("refusal-"+arguments[0], exec.Command(stage0, arguments...))
 		if err == nil || !bytes.Contains(output, []byte("unlinked typescript-go library call")) {
 			t.Fatalf("unlinked %s was not refused: %v\n%s", arguments[0], err, output)
 		}
 	}
-	t.Log("build, C and JavaScript commands refuse unlinked checker calls")
+	t.Log("build and C commands refuse unlinked checker calls")
 	nativeBinary := filepath.Join(scratch, "native-asan")
 	mustRun("native-build", exec.Command(stage0, "build", fixture, "-o", nativeBinary, "--tsgo", sanitized, "--sanitize"))
 	optimized := filepath.Join(scratch, "native")
@@ -267,11 +267,11 @@ func TestBridge(t *testing.T) {
 	var regionReport bytes.Buffer
 	command.Stderr = &regionReport
 	regionAnswer, err := command.Output()
-	if err != nil || string(regionAnswer) != expected || !strings.HasSuffix(regionReport.String(), " regions 1\n") {
-		t.Fatalf("region probe did not use one region and agree with Go: %v stdout=%q stderr=%s", err, regionAnswer, regionReport.String())
+	if err != nil || string(regionAnswer) != expected || !strings.HasSuffix(regionReport.String(), " regions 2\n") {
+		t.Fatalf("region probe did not allocate its wrapper and payload in one region and agree with Go: %v stdout=%q stderr=%s", err, regionAnswer, regionReport.String())
 	}
 	t.Logf("region probe: Go and native answer %s; %s", strings.TrimSpace(expected), strings.TrimSpace(regionReport.String()))
-	regionOverlay := overlay("region-ownership", "internal/native/runtime/tsgo.c", "adamic_object_new_in(region, &shape)", "adamic_object_new(&shape)")
+	regionOverlay := overlay("region-ownership", "internal/native/runtime/tsgo.c", "adamic_object_new_in(region, reference ? &value_shape : &number_shape)", "adamic_object_new(reference ? &value_shape : &number_shape)")
 	regionCompiler := filepath.Join(scratch, "region-adamic")
 	mustRun("region-compiler-build", exec.Command("go", "build", "-overlay", regionOverlay, "-o", regionCompiler, "./cmd/adamic"))
 	regionBinary := filepath.Join(scratch, "region-native")

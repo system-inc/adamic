@@ -58,13 +58,9 @@ func run(arguments []string) int {
 		fmt.Print(native.C(lowered))
 		return 0
 	case len(arguments) == 2 && arguments[0] == "js":
-		lowered, code := compile(arguments[1])
+		lowered, code := compileLibrary(arguments[1], true)
 		if lowered == nil {
 			return code
-		}
-		if native.UsesTSGo(lowered) {
-			fmt.Fprintln(os.Stderr, "adamic: tsgo is an external native checker library; JavaScript is not supported")
-			return 1
 		}
 		fmt.Print(javascript.JavaScript(lowered))
 		return 0

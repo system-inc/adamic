@@ -1,13 +1,18 @@
-import { panic, programArguments, tsgoProgram, tsgoQuery, tsgoRelease } from 'adamic';
+import { panic, programArguments, tsgoProgram, tsgoQuery, tsgoRelease, type TSGoResult, type TSGoQuery } from 'adamic';
 
-// String length is pure, so the query result can live in the statement's region.
-function measure(answer: { readonly nodeKind: number; readonly symbolName: string; readonly type: string }): number {
-	return answer.symbolName.length + answer.type.length;
+// Both the result wrapper and its payload live in the statement's region.
+function measure(answer: TSGoResult<TSGoQuery>): number {
+    if (answer.kind === 'Error') return -1;
+    return answer.value.symbolName.length + answer.value.type.length;
 }
-
-const argumentsGiven = programArguments();
-const config = argumentsGiven[0] ?? panic('missing config');
-const file = argumentsGiven[1] ?? panic('missing file');
-const program = tsgoProgram(config, [file]);
-console.log(`${measure(tsgoQuery(program, file, 14))}`);
-tsgoRelease(program);
+function run(): void {
+    const argumentsGiven = programArguments();
+    const config = argumentsGiven[0] ?? panic('missing config');
+    const file = argumentsGiven[1] ?? panic('missing file');
+    const opened = tsgoProgram(config, [file]);
+    if (opened.kind === 'Error') { console.error(opened.message); return; }
+    console.log(`${measure(tsgoQuery(opened.value, file, 14))}`);
+    const released = tsgoRelease(opened.value);
+    if (released.kind === 'Error') console.error(released.message);
+}
+run();

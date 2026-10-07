@@ -2,6 +2,7 @@
 //
 // A panic writes one line to stderr and exits 70 without running catch or finally. Blocking stdio
 // makes preceding writes reach their descriptors before process.exit, including pipes on macOS.
+import { createRequire } from 'node:module';
 import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 
 // A second failure while the first is being reported (stderr closed under it, say) ends the program
@@ -132,3 +133,25 @@ export function fileStatus(path) {
 export function programArguments() {
 	return process.argv.slice(2);
 }
+
+// Explicitly selected Node-API adapter linked to the pinned checker archive.
+// A missing adapter is a refusal value; no fabricated checker answers.
+let tsgoAdapter;
+function checkerCall(name, args) {
+    if (!process.env.ADAMIC_TSGO_NODE) {
+        return { kind: 'Error', message: 'tsgo: checker library unavailable in JavaScript' };
+    }
+    if (!tsgoAdapter) {
+        try {
+            tsgoAdapter = createRequire(import.meta.url)(process.env.ADAMIC_TSGO_NODE);
+        } catch {
+            return { kind: 'Error', message: 'tsgo: cannot load JavaScript checker adapter' };
+        }
+    }
+    return tsgoAdapter[name](...args);
+}
+export const tsgoProgram = (...args) => checkerCall('tsgoProgram', args);
+export const tsgoQuery = (...args) => checkerCall('tsgoQuery', args);
+export const tsgoInspect = (...args) => checkerCall('tsgoInspect', args);
+export const tsgoTypeParts = (...args) => checkerCall('tsgoTypeParts', args);
+export const tsgoRelease = (...args) => checkerCall('tsgoRelease', args);

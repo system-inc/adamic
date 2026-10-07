@@ -7,15 +7,19 @@ declare const console: {
 };
 
 declare module 'adamic' {
-	// External checker library. Native build requires --tsgo <archive>; JavaScript is refused.
+	// External checker library. Native build requires --tsgo <archive>.
+	// JavaScript uses an explicitly linked Node-API adapter; WASI is refused.
 	// Paths and positions follow bridge/tsgo/tsgo.h. Release each handle exactly once.
-	export function tsgoProgram(tsconfig: string, files: readonly string[]): number;
-	export function tsgoQuery(program: number, file: string, bytePosition: number): { readonly nodeKind: number; readonly symbolName: string; readonly type: string };
+	export type TSGoError = { readonly kind: 'Error'; readonly message: string };
+	export type TSGoResult<T> = { readonly kind: 'Ok'; readonly value: T } | TSGoError;
+	export type TSGoQuery = { readonly nodeKind: number; readonly symbolName: string; readonly type: string };
+	export function tsgoProgram(tsconfig: string, files: readonly string[]): TSGoResult<number>;
+	export function tsgoQuery(program: number, file: string, bytePosition: number): TSGoResult<TSGoQuery>;
 	// Constrained union parts, framed as documented in tsgo.h. Exact byte span and kind.
-	export function tsgoTypeParts(program: number, file: string, byteStart: number, byteEnd: number, nodeKind: string): string;
+	export function tsgoTypeParts(program: number, file: string, byteStart: number, byteEnd: number, nodeKind: string): TSGoResult<string>;
 	// Length-framed checker facts. Questions and schema: bridge/tsgo/facts.md.
-	export function tsgoInspect(program: number, file: string, byteStart: number, byteEnd: number, nodeKind: string, question: string): string;
-	export function tsgoRelease(program: number): void;
+	export function tsgoInspect(program: number, file: string, byteStart: number, byteEnd: number, nodeKind: string, question: string): TSGoResult<string>;
+	export function tsgoRelease(program: number): { readonly kind: 'Ok' } | TSGoError;
 
 	export function panic(message: string): never;
 

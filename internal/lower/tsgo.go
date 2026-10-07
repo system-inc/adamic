@@ -36,14 +36,14 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
 		arguments = append(arguments, value)
 	}
 	types := []ir.Type{ir.Number}
-	returns := ir.Type(0)
+	returns := ir.Object
 	switch name {
 	case "tsgoProgram":
-		types, returns = []ir.Type{ir.String, ir.Array}, ir.Number
+		types, returns = []ir.Type{ir.String, ir.Array}, ir.Object
 	case "tsgoInspect":
-		types, returns = []ir.Type{ir.Number, ir.String, ir.Number, ir.Number, ir.String, ir.String}, ir.String
+		types, returns = []ir.Type{ir.Number, ir.String, ir.Number, ir.Number, ir.String, ir.String}, ir.Object
 	case "tsgoTypeParts":
-		types, returns = []ir.Type{ir.Number, ir.String, ir.Number, ir.Number, ir.String}, ir.String
+		types, returns = []ir.Type{ir.Number, ir.String, ir.Number, ir.Number, ir.String}, ir.Object
 	case "tsgoQuery":
 		types, returns = []ir.Type{ir.Number, ir.String, ir.Number}, ir.Object
 	}
@@ -70,26 +70,15 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
 			l.result.Locals = append(l.result.Locals, ir.Local{Name: fmt.Sprintf("argument%d", index), Type: of, Function: function, Borrowed: of.IsReference()})
 			declared.Parameters = append(declared.Parameters, local)
 		}
-		switch name {
-		case "tsgoProgram":
-			declared.Body = []ir.Statement{ir.Return{Value: ir.NumberConstant{Value: 0}}}
-		case "tsgoTypeParts", "tsgoInspect":
-			empty := len(l.result.Strings)
-			l.result.Strings = append(l.result.Strings, "")
-			declared.Body = []ir.Statement{ir.Return{Value: ir.StringConstant{Index: empty}}}
-		case "tsgoQuery":
-			empty := len(l.result.Strings)
-			l.result.Strings = append(l.result.Strings, "")
-			declared.Body = []ir.Statement{ir.Return{Value: ir.ObjectLiteral{Fields: []ir.Field{
-				{Name: "nodeKind", Value: ir.NumberConstant{Value: 0}},
-				{Name: "symbolName", Value: ir.StringConstant{Index: empty}},
-				{Name: "type", Value: ir.StringConstant{Index: empty}},
-			}}}}
-		}
-		// Also fail loudly if an opted-in IR is sent to an ordinary backend.
-		message := len(l.result.Strings)
-		l.result.Strings = append(l.result.Strings, "tsgo requires the native checker library renderer")
-		declared.Body = append([]ir.Statement{ir.Panic{Message: ir.StringConstant{Index: message}}}, declared.Body...)
+		// A fresh result describes ownership to the analyses. Backend adapters
+		// replace this body; ordinary rendering returns an honest refusal.
+		kind := len(l.result.Strings)
+		l.result.Strings = append(l.result.Strings, "Error", "tsgo: checker library renderer unavailable")
+		declared.Body = []ir.Statement{ir.Return{Value: ir.ObjectLiteral{Fields: []ir.Field{
+			{Name: "kind", Value: ir.StringConstant{Index: kind}},
+			{Name: "message", Value: ir.StringConstant{Index: kind + 1}},
+		}}}}
+
 		l.result.Functions = append(l.result.Functions, declared)
 	}
 	return ir.Call{Function: function, Arguments: arguments, Returns: returns}, true, nil

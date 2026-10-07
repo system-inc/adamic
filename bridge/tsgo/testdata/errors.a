@@ -1,0 +1,48 @@
+import { programArguments, tsgoProgram, tsgoQuery, tsgoInspect, tsgoTypeParts, tsgoRelease, type TSGoError } from 'adamic';
+
+// The caller refuses and continues, rather than catching a process panic.
+function refuse(name: string, answer: { readonly kind: 'Ok' } | TSGoError): void {
+    if (answer.kind === 'Error') {
+        console.log(`refused ${name}: ${answer.message}`);
+    } else {
+        console.log(`unexpected Ok ${name}`);
+    }
+}
+function run(): void {
+    const args = programArguments();
+    const config = args[0] ?? '';
+    const file = args[1] ?? '';
+    refuse('open NUL', tsgoProgram('bad\0config', []));
+    refuse('open root NUL', tsgoProgram(config, ['bad\0root']));
+    refuse('query negative', tsgoQuery(-1, file, 0));
+    refuse('inspect fractional', tsgoInspect(0, file, 0.5, 1, 'Identifier', 'type'));
+    refuse('parts NaN', tsgoTypeParts(NaN, file, 0, 1, 'Identifier'));
+    refuse('release infinity', tsgoRelease(Infinity));
+    refuse('query NUL', tsgoQuery(0, 'bad\0file', 0));
+    refuse('inspect question NUL', tsgoInspect(0, file, 0, 1, 'Identifier', 'bad\0question'));
+    refuse('parts kind NUL', tsgoTypeParts(0, file, 0, 1, 'bad\0kind'));
+    refuse('open missing', tsgoProgram(config, ['absent-root.ts']));
+    const opened = tsgoProgram(config, [file]);
+    if (opened.kind === 'Error') { console.log(`unexpected open error: ${opened.message}`); return; }
+    const program = opened.value;
+    const queried = tsgoQuery(program, file, 14);
+    if (queried.kind === 'Error') { console.log(`unexpected query error: ${queried.message}`); return; }
+    console.log(`query ${queried.value.symbolName}: ${queried.value.type}`);
+    const inspected = tsgoInspect(program, file, 12, 18, 'Identifier', 'type');
+    const parts = tsgoTypeParts(program, file, 12, 18, 'Identifier');
+    if (inspected.kind === 'Error') { console.log(`unexpected inspect error: ${inspected.message}`); return; }
+    if (parts.kind === 'Error') { console.log(`unexpected parts error: ${parts.message}`); return; }
+    refuse('bad inspect span', tsgoInspect(program, file, 0, 9999, 'Identifier', 'type'));
+    refuse('bad parts span', tsgoTypeParts(program, file, 0, 9999, 'Identifier'));
+    refuse('query EOF', tsgoQuery(program, file, 9999));
+    const released = tsgoRelease(program);
+    if (released.kind === 'Error') { console.log(`unexpected release error: ${released.message}`); return; }
+    console.log(`released ${released.kind}`);
+    console.log(`retained ${queried.value.symbolName} ${inspected.value.length} ${parts.value.length}`);
+    refuse('stale query', tsgoQuery(program, file, 14));
+    refuse('stale inspect', tsgoInspect(program, file, 12, 18, 'Identifier', 'type'));
+    refuse('stale parts', tsgoTypeParts(program, file, 12, 18, 'Identifier'));
+    refuse('double release', tsgoRelease(program));
+    console.log('caller continued');
+}
+run();

@@ -17,38 +17,82 @@ An Adamic program imports these declarations from `adamic`:
 ```ts
 import { tsgoProgram, tsgoQuery, tsgoRelease } from 'adamic';
 
-const program = tsgoProgram('/path/tsconfig.json', ['/path/source.ts']);
-const answer = tsgoQuery(program, '/path/source.ts', 42);
-console.log(`${answer.nodeKind} ${answer.symbolName}: ${answer.type}`);
-tsgoRelease(program);
+function run(): void {
+    const opened = tsgoProgram('/path/tsconfig.json', ['/path/source.ts']);
+    if (opened.kind === 'Error') { console.error(opened.message); return; }
+    const answer = tsgoQuery(opened.value, '/path/source.ts', 42);
+    if (answer.kind === 'Error') { console.error(answer.message); }
+    else console.log(`${answer.value.nodeKind} ${answer.value.symbolName}: ${answer.value.type}`);
+    const released = tsgoRelease(opened.value);
+    if (released.kind === 'Error') console.error(released.message);
+}
+run();
 ```
 
-`tsgoQuery` returns an ordinary owned Adamic object with `nodeKind: number`,
-`symbolName: string`, and `type: string`. The strings are copied into Adamic's
-counted storage. Keeping the answer after releasing its checker is safe. The
-runtime also supports the region entry stage 0 uses when a query feeds a
-non-escaping parameter directly. The region owns that answer and its strings.
+All five bridge calls return a discriminated result. These declarations are
+exported from `adamic`:
 
-Build requires `--tsgo <archive>` when the checked program uses a bridge call.
-Ordinary programs continue to use the ordinary native build. Unlinked calls are
-refused during lowering. JavaScript and the ordinary C command cannot compile
-bridge calls. The library calls are direct calls; taking them as function values
-is not implemented. A checker failure panics with its reason and exit 70.
+```typescript
+export type TSGoError = { readonly kind: 'Error'; readonly message: string };
+export type TSGoResult<T> = { readonly kind: 'Ok'; readonly value: T } | TSGoError;
+```
 
-`internal/native/tsgo.go` supplies linking and replaces the bodies of the four
-reserved compiler-generated functions, including the query's region version.
-Their signatures, calls, argument snapshots and cleanup come from the existing
-emitter. Body boundaries and borrowed parameters are checked before replacement.
-The placeholder bodies panic if an opted-in IR is accidentally sent to an
-ordinary backend. This keeps the unit out of the four compiler files owned by
-other workers. A future general external-library IR can replace this isolated
-renderer.
+`tsgoProgram` returns `TSGoResult<number>`, `tsgoQuery` returns
+`TSGoResult<{ readonly nodeKind: number; readonly symbolName: string; readonly type: string }>`,
+and `tsgoInspect` and `tsgoTypeParts` return `TSGoResult<string>`.
+`tsgoRelease` returns `{ readonly kind: 'Ok' } | TSGoError`.
+This is a breaking change from the scalar/void declarations: callers must narrow
+`kind` and unwrap `value`. There are no implicit unwraps or error-to-panic helpers.
+The harness owns its Answer/refusal type and its refusal wire format.
+
+A checker failure returns `Error` with the C error buffer's text decoded from
+its explicit UTF-8 byte length. Strings are copied into Adamic's counted storage
+before C buffers are freed. Returned values remain valid after releasing their
+checker handle. Both the result wrapper and any object payload support statement
+regions. Invalid numeric arguments and NUL-bearing strings return errors in
+Adamic's own words, identical in native and the Node adapter. A failed boundary
+call without an error buffer returns `tsgo: invalid argument or out of memory`.
+Optional timing clock failure does not panic or change the checker result.
+
+Native build requires `--tsgo <archive>`; unlinked native calls and the ordinary
+C command are refused. The dedicated native renderer replaces five reserved
+compiler-generated bodies and their region variants. Ordinary rendering of
+opted-in IR produces an explicit `Error` result if the renderer is unavailable.
+Library calls are direct; taking them as function values remains unsupported.
+The bridge is target-refused for wasm32-wasi, and runtime sources compile without
+its unavailable Go/POSIX dependencies on that target.
+
+JavaScript uses an explicitly selected Node-API adapter linked to the same C
+archive. It does not reimplement the checker or replay calls in subprocesses.
+On Linux:
+
+```sh
+clang -std=c11 -Wall -Wextra -Werror -pedantic -fPIC -shared -Ibridge/tsgo \
+  bridge/tsgo/node/node.c /tmp/tsgo.a -lpthread -ldl -lm -o /tmp/tsgo.node
+/tmp/adamic js bridge/tsgo/testdata/errors.a > /tmp/errors.mjs
+ADAMIC_TSGO_NODE=/tmp/tsgo.node node --disable-warning=ExperimentalWarning \
+  oracle/node.mjs /tmp/errors.mjs /absolute/tsconfig.json /absolute/source.ts
+```
+
+On macOS, replace `-ldl` with `-undefined dynamic_lookup`. Only Linux is gated
+here. Without `ADAMIC_TSGO_NODE`, a JavaScript call returns
+`Error` with `tsgo: checker library unavailable in JavaScript`; an adapter-load
+failure returns `tsgo: cannot load JavaScript checker adapter`.
+The small stable Node-API declaration subset is copied from Node v24.19.0;
+its upstream MIT license is retained beside it.
+
+No bridge error calls `adamic_panic`. Global Adamic allocation/stack exhaustion
+can still panic while allocating a result or input buffer: those failures cannot
+allocate an error value with the current allocator. Fatal Go runtime failures
+(such as Go heap exhaustion) are outside the recoverable checker panic contract.
+Recoverable Go checker panics already become C error buffers, which now become
+`TSGoError` values. This unit does not change the C ABI or checker decisions.
 
 For the first type-aware rule, `tsgoTypeParts(program, file, byteStart,
 byteEnd, nodeKind)` selects an exact node by its trivia-inclusive byte span and
-kind name, including identifier tokens. It returns the constrained type's union
-parts as flags and TypeToString frames, documented in `tsgo.h`. Adamic decides
-the rule predicate. See [the type-aware lint driver](../../stage1/cohere/typeaware/README.md).
+kind name, including identifier tokens. Its successful value contains constrained
+type union parts as flags and TypeToString frames documented in `tsgo.h`.
+Adamic decides the rule predicate. See [the type-aware lint driver](../../stage1/cohere/typeaware/README.md).
 
 ## C contract
 
@@ -105,8 +149,8 @@ its program and calls the shim directly. It imports no bridge implementation.
 Both runners write kind, symbol byte length, type byte length, symbol and type;
 the complete output is compared byte for byte. The native query loop is compiled
 from `testdata/queries.a` by stage 0, not handwritten C. A separate
-`testdata/region.a` probe reads only string lengths, proves its result was made
-in one region with `--count`, and compares those lengths with the Go oracle.
+`testdata/region.a` probe reads only string lengths, proves its wrapper and payload were made
+in one statement region with `--count`, and compares those lengths with the Go oracle.
 
 The tests build both an ordinary archive and one with an instrumented C boundary:
 
@@ -149,3 +193,18 @@ ownership, and [the six-rule report](../../stage1/cohere/typeaware/SIX_RULE_REPO
 for complete finding agreement and separate load/query/run measurements.
 `run_ns` now measures wall time between successful create and the start of release;
 existing `query_ns` continues to measure accumulated native adapter intervals.
+
+## Errors-as-values proof
+
+`TestErrorsAsValues` builds the real Node adapter, runs `testdata/errors.a` as
+source on Node and as emitted JavaScript, and compares both with sanitized native
+output. The caller refuses malformed inputs, a missing root, invalid spans,
+query EOF, released handles and double release, then continues. Successful
+creation, query, inspection, type-parts and release are exercised too; their
+values survive release. Native error buffers are freed on every path.
+
+Two production overlays must compile and run before being caught by comparison
+with the unmodified source on Node: a C error path that panics, and a failure
+reported as an `Ok` carrying the error text. Native target entrypoints also refuse
+WASI before resolving or linking an archive; the ordinary WASI runtime archive
+remains buildable.
