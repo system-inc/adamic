@@ -1,5 +1,5 @@
 Built InferDataType, matchesDataType and isFamilyName in separate .a files: twelve dependency edges across four rules.
-Commits: claim 252cb85a pushed before source; base c01907a; implementation SHA recorded after publication.
+Commits: claim 252cb85a pushed before source; base c01907a; implementation 5d98b8c54badf017251ad68e448236aed1d3d290 published only to codex/lint-helpers-03.
 Commands: focused gate PASS 48.698s, 34,896 verdict/trace lines; complete owned gate PASS 393.189s, 3,026,152 comparison lines; shared helpers PASS 70.058s; vet/format clean; six uncached probes PASS 1.549s.
 Mutants: twenty-nine new compiling variants caught; all one hundred eleven owned variants, four inherited variants and missing-consumer mutant caught.
 Not covered: full repository gate, separate matcher/segment dependency wiring, whole-rule findings/fixes/suggestions or unavailable live Tailwind/corpora.
