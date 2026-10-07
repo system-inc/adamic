@@ -1,0 +1,17 @@
+=== RUN   TestFragmentsAgreement
+    fragments_test.go:80: captured 39 JSX-containing literals, retained 38 Go syntax-valid controls
+    fragments_test.go:99: controls: 7454 bytes, findings 23, native 67.103083ms Go 78.824303ms
+    fragments_test.go:106: 39 control inputs
+    fragments_test.go:99: element: 3253 bytes, findings 5, native 79.317946ms Go 73.277062ms
+    fragments_test.go:138: pragma-name mutant exits zero, empty stderr; Go bytes catch byte 118
+    fragments_test.go:99: controls-asan: 7454 bytes, findings 23, native 134.70457ms Go 126.620016ms
+    fragments_test.go:99: element-asan: 3253 bytes, findings 5, native 95.231867ms Go 91.500273ms
+    fragments_test.go:165: released: required panic 70, no sanitizer findings
+    fragments_test.go:165: released-asan: required panic 70, no sanitizer findings
+    fragments_test.go:99: repository: 18485 bytes, findings 0, native 379.193054ms Go 187.039239ms
+    fragments_test.go:99: repository-asan: 18485 bytes, findings 0, native 1.569780352s Go 184.44504ms
+    fragments_test.go:99: compiler: 5010 bytes, findings 0, native 2.161301679s Go 420.853714ms
+    fragments_test.go:99: compiler-asan: 5010 bytes, findings 0, native 8.625052159s Go 420.990323ms
+--- PASS: TestFragmentsAgreement (75.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	75.082s

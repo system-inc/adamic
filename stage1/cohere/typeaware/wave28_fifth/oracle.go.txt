@@ -23,6 +23,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/cohere/internal/lint/registry"
 	"github.com/system-inc/cohere/internal/lint/rule"
+	"github.com/system-inc/cohere/internal/lint/rules/react"
 )
 
 func written(text string) string {
@@ -103,6 +104,12 @@ func main() {
 		return
 	}
 	countOnly := len(args) > 2 && args[2] == "--count"
+	if slices.Contains(args, "--only-undef") {
+		coverageNames = map[string]bool{"react/jsx-no-undef": true}
+	}
+	if slices.Contains(args, "--fragments") {
+		coverageNames = map[string]bool{"react/jsx-fragments": true}
+	}
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 	findings := 0
@@ -143,7 +150,14 @@ func main() {
 		callbacks := map[ast.Kind][]func(*ast.Node){}
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {
-			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, nil)
+			var options any
+			if subject.Name == "react/jsx-fragments" && slices.Contains(args, "--element") {
+				options = react.JsxFragmentsOptions{Mode: react.JsxFragmentsElement}
+			}
+			if subject.Name == "react/jsx-no-undef" && slices.Contains(args, "--allow-globals") {
+				options = react.JsxNoUndefOptions{AllowGlobals: true}
+			}
+			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, options)
 			for kind, callback := range listeners {
 				callbacks[kind] = append(callbacks[kind], callback)
 			}

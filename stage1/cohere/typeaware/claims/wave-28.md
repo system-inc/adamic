@@ -71,3 +71,7 @@ Fifth-batch status: claimed, blocked and unported. Named rule.json kinds agree w
 ## Area integration refresh
 
 Explicitly rebased onto origin/area/stage1-lint at 7481e0324e34a2537aafa9db7eeacda50405611b, including current main 39638d9e and harness 41eb6eab2 through merge 50a5f105. All nine completed-rule full gates are green again. Shared JSX parsing now accepts all six claimed JSX controls. The fourth-batch analysis claims remain parked for native HIR/SSA/capture analysis. The fifth-batch claims are **awaiting implementation, unported**; their earlier parser blocker is closed. No sixth batch is claimed.
+
+## Fifth-batch native progress
+
+react/jsx-no-undef and react/jsx-fragments are now implemented and green in the owned native type-aware harness: Go byte parity on findings/fixes/suggestions for positive controls and both frozen corpora, normally executing comparison mutants, sanitizers and released handles. Both take supplied nodes through named-kind dispatch. The third claim, react/jsx-no-constructed-context-values, remains unported; no next batch is claimed. Shared syntax-driver checker integration remains outside this worker's territory. See wave28_fifth/REPORT.md for the precise private-harness scope.

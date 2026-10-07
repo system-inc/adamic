@@ -1,0 +1,18 @@
+=== RUN   TestUndefAgreement
+    undef_test.go:95: controls: 10470 bytes, findings 24, native 118.825025ms Go 123.549689ms
+    undef_test.go:102: 45 control inputs
+    undef_test.go:95: globals: 9444 bytes, findings 21, native 61.310596ms Go 86.554728ms
+    undef_test.go:131: intrinsic-classification mutant exits zero, empty stderr; Go bytes catch byte 50
+    undef_test.go:95: controls-asan: 10470 bytes, findings 24, native 128.203967ms Go 124.060113ms
+    undef_test.go:95: globals-asan: 9444 bytes, findings 21, native 154.13096ms Go 87.415439ms
+    undef_test.go:86: repository-go: exit status 2
+        
+        panic: invalid tsconfig: [Cannot read file '/workspace/adamic/stage1/cohere/typeaware/tsconfig.json'.]
+        
+        goroutine 1 [running]:
+        main.main()
+        	/workspace/adamic/cohere/adamic_wave28_fifth.go:70 +0x2067
+--- FAIL: TestUndefAgreement (59.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	59.205s
+FAIL

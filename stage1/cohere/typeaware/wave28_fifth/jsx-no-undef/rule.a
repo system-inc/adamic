@@ -1,0 +1,64 @@
+import { panic, tsgoInspect } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../rules.ts';
+import { Frames, header } from '../../frames.ts';
+import { Diagnostic } from '../../diagnostic.ts';
+
+const message = "This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.";
+
+// Structural tag-name inspection is separate from relevance: the driver only hands us JSX openings.
+export class Rule {
+    readonly context: Rules;
+    readonly allowGlobals: boolean;
+    constructor(context: Rules, allowGlobals = false) {
+        this.context = context;
+        this.allowGlobals = allowGlobals;
+    }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        let reference = node.children[0] ?? panic('JSX opening without tag');
+        let tag = context.parser.node(reference);
+        if(tag.kind === 'Identifier') {
+            const first = tag.text.charCodeAt(0);
+            if(tag.text === '' || tag.text.includes('-') || first >= 97 && first <= 122) {
+                return;
+            }
+        }
+        else if(tag.kind === 'PropertyAccessExpression') {
+            while(tag.kind === 'PropertyAccessExpression') {
+                reference = tag.children[0] ?? panic('JSX member without receiver');
+                tag = context.parser.node(reference);
+            }
+            if(tag.kind !== 'Identifier') {
+                return;
+            }
+        }
+        else {
+            return;
+        }
+        const frames = new Frames(tsgoInspect(context.program, context.path, context.byte(tag.pos), context.byte(tag.end), tag.kind, 'reference-symbol'));
+        header(frames, 'reference-symbol');
+        const symbol = frames.natural();
+        const count = frames.natural();
+        let inFile = false;
+        for(let at = 0; at < count; at++) {
+            const path = frames.field();
+            frames.yes();
+            frames.field();
+            frames.natural();
+            frames.natural();
+            if(path === context.path) {
+                inFile = true;
+            }
+        }
+        frames.end();
+        if(symbol !== 0 && (inFile || this.allowGlobals || context.path.endsWith('.cjs'))) {
+            return;
+        }
+        context.findings.push(new Diagnostic('react/jsx-no-undef', 'jsxIdentifierNotDefined', message, context.byte(context.start(tag)), context.byte(tag.end), ''));
+    }
+}
+
+export function create(context: Rules): Rule {
+    return new Rule(context);
+}

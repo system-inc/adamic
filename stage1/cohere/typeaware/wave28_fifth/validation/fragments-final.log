@@ -1,0 +1,38 @@
+=== RUN   TestFragmentsAgreement
+    fragments_test.go:87: controls-native: exit status 70
+        file	/workspace/wave28-fragments-final/control-000.tsx
+        file	/workspace/wave28-fragments-final/control-001.tsx
+        11	51	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-002.tsx
+        11	29	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-003.tsx
+        74	88	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-004.tsx
+        54	68	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-005.tsx
+        56	84	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-006.tsx
+        67	95	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-007.tsx
+        file	/workspace/wave28-fragments-final/control-008.tsx
+        file	/workspace/wave28-fragments-final/control-009.tsx
+        74	79	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-010.tsx
+        69	97	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-011.tsx
+        11	54	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-012.tsx
+        11	32	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-013.tsx
+        11	51	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-014.tsx
+        21	61	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-015.tsx
+        21	39	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        file	/workspace/wave28-fragments-final/control-016.tsx
+        
+        adamic: panic: parser slice expected semicolon at 18 in /workspace/wave28-fragments-final/control-017.tsx
+--- FAIL: TestFragmentsAgreement (23.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	23.667s
+FAIL

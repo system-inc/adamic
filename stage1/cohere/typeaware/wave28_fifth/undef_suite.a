@@ -1,0 +1,56 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Rules } from '../rules.ts';
+import { Rule } from './jsx-no-undef/rule.a';
+import { Rule as Fragments } from './jsx-fragments/rule.a';
+const args = programArguments();
+const config = args[0] ?? panic('missing config');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') { panic(manifest.message); }
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(config, paths);
+let count = 0;
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') { panic(source.message); }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const offsets = byteOffsets(source.text);
+    const context = new Rules(program, path, parser, scanner, offsets, new UnaryMinus(program, path, parser, scanner, offsets));
+    const root = parser.file();
+    for(let index = 0; index < parser.nodes.length; index++) { context.parents.push(-1); }
+    context.links(root, -1);
+    const rule = new Rule(context, args.includes('--allow-globals'));
+    const fragments = new Fragments(context, args.includes('--element'));
+    const fragmentMode = args.includes('--fragments');
+    // One kind-indexed driver; every supplied node is fetched once before dispatch.
+    for(let index = 0; index < parser.nodes.length; index++) {
+        const node = parser.nodes[index] ?? panic('missing parsed node');
+        switch(node.kind) {
+            case 'JsxOpeningElement':
+                if(!fragmentMode) { rule.visit(node, index); }
+                break;
+            case 'JsxSelfClosingElement':
+                if(fragmentMode) { fragments.visit(node, index); } else { rule.visit(node, index); }
+                break;
+            case 'JsxElement':
+            case 'JsxFragment':
+                if(fragmentMode) { fragments.visit(node, index); }
+                break;
+            default:
+                break;
+        }
+    }
+    for(const finding of context.findings) { finding.sortKey = finding.written(); }
+    context.findings.sort((left, right) => left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0);
+    count += context.findings.length;
+    if(!args.includes('--count')) {
+        console.log(`file\t${written(path)}`);
+        for(const finding of context.findings) { console.log(finding.written()); }
+    }
+}
+console.log(`findings ${count}`);
+tsgoRelease(program);
