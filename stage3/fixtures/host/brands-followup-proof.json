@@ -401,5 +401,21 @@
     "actual re-extractor rejects unreviewed isArray string input before writes"
   ],
   "idempotent": true,
-  "stockAcceptedFixtures": 25
+  "stockAcceptedFixtures": 25,
+  "finalIntegrationCommit": "ccc0adbfe1656d4eb70b98e1d358a765048c275b",
+  "concurrentRemoteMerge": {
+    "remoteCommit": "0555bc274d8d4e4871db9c9e8c525dcd327d5856",
+    "preservedFixture": "14_getCurrentDirectory.a",
+    "change": "provenance header and manifest pin only; function bodies unchanged"
+  },
+  "finalCompilerSourceIdentity": {
+    "files": 79,
+    "identical": true,
+    "reason": "concurrent adaptation 48 makes no compiler source edit"
+  },
+  "finalSourceAudit": {
+    "copiedDeclarations": 164,
+    "functionAndMethodSpans": 126,
+    "exit": 0
+  }
 }

@@ -344,3 +344,14 @@ Part 1 ran the full default TypeScript oracle and landing lane. This fixture
 refresh did not rerun either suite, the full Adamic gate, all-25 host execution,
 Windows, or native host-library integration. Only fixture 14's Node program
 was rerun; the source audit covers the whole bucket.
+
+The first push was rejected because the remote had advanced to 0555bc27.
+Merged that remote tip without rebasing, retaining its fixture 14 provenance
+refresh and both reports, at ccc0adbfe1656d4eb70b98e1d358a765048c275b.
+No fixture 14 body change was introduced. Generated a new final composed tree
+including its declined adaptation 48: all compiler TypeScript source files
+remain byte-identical to the earlier brand tree. Re-ran all 25 Node comparisons
+on the final fixtures and the full source audit: all unchanged, 164 declarations
+and 126 function/method spans pass. Final extraction is again idempotent.
+The stage 0 ledger remains byte-identical to 7218520a's record. Final logs are
+in brands-followup-evidence and the integration pin is in the proof JSON.
