@@ -63,3 +63,20 @@ Source environment: `source /workspace/adamic-tools/env.sh`. Run the owned `vali
 | `2f7caea6` | Port @typescript-eslint/no-non-null-assertion |
 | `cc7e091a` | Port @typescript-eslint/no-this-alias |
 | `ec7b05fa` | Port @eslint-community/eslint-comments/require-description |
+
+## Every semantic mutant
+
+| Rule | Mutant | What caught it |
+|---|---|---|
+| @typescript-eslint/no-non-null-asserted-optional-chain | optional chain report suppressed | Go comparison on Node, emitted JavaScript, sanitized native |
+| @typescript-eslint/no-non-null-assertion | assertion report suppressed | Go comparison on Node, emitted JavaScript, sanitized native |
+| @typescript-eslint/no-this-alias | this alias exemption inverted | Go comparison on Node, emitted JavaScript, sanitized native |
+| @typescript-eslint/no-dupe-class-members | duplicate reports suppressed | Go comparison on Node, emitted JavaScript, sanitized native |
+| @typescript-eslint/no-empty-object-type | empty interfaces permitted by default | Go comparison on Node only; native/JS build blocked |
+| @typescript-eslint/no-import-type-side-effects | inline type imports suppressed | Go comparison on Node, emitted JavaScript, sanitized native |
+| @eslint-community/eslint-comments/require-description | undescribed directives ignored | Go comparison on Node, emitted JavaScript, sanitized native |
+| react/no-invalid-html-attribute | react-no-invalid-html-attribute listener suppressed | Go comparison on Node, emitted JavaScript, sanitized native |
+| react/jsx-no-useless-fragment | react-jsx-no-useless-fragment listener suppressed | Go comparison on Node, emitted JavaScript, sanitized native |
+| react/no-unescaped-entities | react-no-unescaped-entities listener suppressed | Go comparison on Node, emitted JavaScript, sanitized native |
+
+All credited mutants exited zero with empty stderr before comparison failed. Earlier compiler or oracle-adapter failures are not credited.
