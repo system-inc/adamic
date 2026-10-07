@@ -14,3 +14,12 @@
     slabs_test.go:119: mutant insertion points changed
 --- FAIL: TestSlabLaneCatchesRecycledRelease (0.26s)
 
+== github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.077s
+
+== github.com/system-inc/adamic/stage1/cohere/markdownblocks (failed outside a test)
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	3600.085s
+
+== github.com/system-inc/adamic/stage1/cohere/typeaware (failed outside a test)
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	3600.028s
+
