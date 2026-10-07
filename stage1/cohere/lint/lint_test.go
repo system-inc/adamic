@@ -792,9 +792,13 @@ func TestMutants(t *testing.T) {
 				change.File = descriptor.Module
 			}
 			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
-			mutantBuilds <- struct{}{}
-			binary := buildPort(t, directory, true)
-			<-mutantBuilds
+			// The slot is released by defer: buildPort fails with t.Fatal, which ends this goroutine, and a
+			// slot held by a failed build would leave every other subtest waiting until the package timed out.
+			binary := func() string {
+				mutantBuilds <- struct{}{}
+				defer func() { <-mutantBuilds }()
+				return buildPort(t, directory, true)
+			}()
 			for _, side := range []struct {
 				name string
 				run  execution
