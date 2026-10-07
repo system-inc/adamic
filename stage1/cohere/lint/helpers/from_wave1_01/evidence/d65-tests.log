@@ -1,0 +1,109 @@
+=== RUN   TestDisconnectedEntryMatchesGo
+    enter_disconnected_test.go:49: array-callback-return: 5 actual Go calls, 50 bytes per backend
+    enter_disconnected_test.go:49: consistent-return: 5 actual Go calls, 50 bytes per backend
+    enter_disconnected_test.go:49: no-unreachable-loop: 610 actual Go calls, 6100 bytes per backend
+    enter_disconnected_test.go:49: react-hooks_rules-of-hooks: 6 actual Go calls, 60 bytes per backend
+    enter_disconnected_test.go:49: controls: 180 actual Go calls, 1800 bytes per backend
+    enter_disconnected_test.go:87: ignore current reachability compiles and runs; comparison alone catches side 0
+    enter_disconnected_test.go:87: ignore current reachability compiles and runs; comparison alone catches side 1
+    enter_disconnected_test.go:87: ignore current reachability compiles and runs; comparison alone catches side 2
+    enter_disconnected_test.go:87: discard incoming edges compiles and runs; comparison alone catches side 0
+    enter_disconnected_test.go:87: discard incoming edges compiles and runs; comparison alone catches side 1
+    enter_disconnected_test.go:87: discard incoming edges compiles and runs; comparison alone catches side 2
+--- PASS: TestDisconnectedEntryMatchesGo (11.44s)
+=== RUN   TestEnterMatchesGo
+    enter_test.go:104: array-callback-return: 79 actual Go calls, 632 bytes per backend
+    enter_test.go:104: consistent-return: 123 actual Go calls, 984 bytes per backend
+    enter_test.go:104: no-unreachable-loop: 8861 actual Go calls, 70936 bytes per backend
+    enter_test.go:104: react-hooks_rules-of-hooks: 495 actual Go calls, 4309 bytes per backend
+    enter_test.go:104: controls: 120 actual Go calls, 960 bytes per backend
+    enter_test.go:135: retain prior reachability compiles and runs; comparison alone catches side 0
+    enter_test.go:135: retain prior reachability compiles and runs; comparison alone catches side 1
+    enter_test.go:135: retain prior reachability compiles and runs; comparison alone catches side 2
+    enter_test.go:135: retain prior current block compiles and runs; comparison alone catches side 0
+    enter_test.go:135: retain prior current block compiles and runs; comparison alone catches side 1
+    enter_test.go:135: retain prior current block compiles and runs; comparison alone catches side 2
+--- PASS: TestEnterMatchesGo (11.45s)
+=== RUN   TestThrowableIdentifierMatchesGo
+    is_throwable_identifier_test.go:49: array-callback-return: 52 actual Go calls, 104 bytes per backend
+    is_throwable_identifier_test.go:49: consistent-return: 58 actual Go calls, 116 bytes per backend
+    is_throwable_identifier_test.go:49: no-unreachable-loop: 5260 actual Go calls, 10520 bytes per backend
+    is_throwable_identifier_test.go:49: react-hooks_rules-of-hooks: 605 actual Go calls, 1210 bytes per backend
+    is_throwable_identifier_test.go:49: controls: 90 actual Go calls, 180 bytes per backend
+    is_throwable_identifier_test.go:81: declaration name polarity reversed compiles and runs; comparison alone catches side 0
+    is_throwable_identifier_test.go:81: declaration name polarity reversed compiles and runs; comparison alone catches side 1
+    is_throwable_identifier_test.go:81: declaration name polarity reversed compiles and runs; comparison alone catches side 2
+    is_throwable_identifier_test.go:81: binding rest exclusion removed compiles and runs; comparison alone catches side 0
+    is_throwable_identifier_test.go:81: binding rest exclusion removed compiles and runs; comparison alone catches side 1
+    is_throwable_identifier_test.go:81: binding rest exclusion removed compiles and runs; comparison alone catches side 2
+    is_throwable_identifier_test.go:81: JSX tag identity inverted compiles and runs; comparison alone catches side 0
+    is_throwable_identifier_test.go:81: JSX tag identity inverted compiles and runs; comparison alone catches side 1
+    is_throwable_identifier_test.go:81: JSX tag identity inverted compiles and runs; comparison alone catches side 2
+--- PASS: TestThrowableIdentifierMatchesGo (11.06s)
+=== RUN   TestStatementHandoffMatchesGo
+    reached_statement_test.go:49: array-callback-return: 337 actual Go calls, 6066 bytes per backend
+    reached_statement_test.go:49: consistent-return: 201 actual Go calls, 3618 bytes per backend
+    reached_statement_test.go:49: no-unreachable-loop: 7597 actual Go calls, 135085 bytes per backend
+    reached_statement_test.go:49: react-hooks_rules-of-hooks: 596 actual Go calls, 10728 bytes per backend
+    reached_statement_test.go:49: controls: 72 actual Go calls, 1284 bytes per backend
+    reached_statement_test.go:91: statement hook called twice compiles and runs; comparison alone catches side 0
+    reached_statement_test.go:91: statement hook called twice compiles and runs; comparison alone catches side 1
+    reached_statement_test.go:91: statement hook called twice compiles and runs; comparison alone catches side 2
+    reached_statement_test.go:91: handed node discarded compiles and runs; comparison alone catches side 0
+    reached_statement_test.go:91: handed node discarded compiles and runs; comparison alone catches side 1
+    reached_statement_test.go:91: handed node discarded compiles and runs; comparison alone catches side 2
+--- PASS: TestStatementHandoffMatchesGo (11.45s)
+=== RUN   TestReturnFrameMatchesGo
+    return_frame_test.go:49: array-callback-return returnFrame: 90 actual Go calls, 270 bytes per backend
+    return_frame_test.go:49: consistent-return returnFrame: 70 actual Go calls, 208 bytes per backend
+    return_frame_test.go:49: no-unreachable-loop returnFrame: 426 actual Go calls, 1278 bytes per backend
+    return_frame_test.go:49: react-hooks_rules-of-hooks returnFrame: 45 actual Go calls, 135 bytes per backend
+    return_frame_test.go:49: controls returnFrame: 1022 actual Go calls, 2062 bytes per backend
+    return_frame_test.go:84: outermost finally chosen compiles and runs; comparison alone catches side 0
+    return_frame_test.go:84: outermost finally chosen compiles and runs; comparison alone catches side 1
+    return_frame_test.go:84: outermost finally chosen compiles and runs; comparison alone catches side 2
+    return_frame_test.go:84: first frame excluded compiles and runs; comparison alone catches side 0
+    return_frame_test.go:84: first frame excluded compiles and runs; comparison alone catches side 1
+    return_frame_test.go:84: first frame excluded compiles and runs; comparison alone catches side 2
+--- PASS: TestReturnFrameMatchesGo (10.00s)
+=== RUN   TestThrowFrameMatchesGo
+    throw_frame_test.go:49: array-callback-return throwFrame: 74 actual Go calls, 206 bytes per backend
+    throw_frame_test.go:49: consistent-return throwFrame: 62 actual Go calls, 178 bytes per backend
+    throw_frame_test.go:49: no-unreachable-loop throwFrame: 5443 actual Go calls, 16217 bytes per backend
+    throw_frame_test.go:49: react-hooks_rules-of-hooks throwFrame: 722 actual Go calls, 2136 bytes per backend
+    throw_frame_test.go:49: controls throwFrame: 2067 actual Go calls, 4764 bytes per backend
+    throw_frame_test.go:84: outermost handler chosen compiles and runs; comparison alone catches side 0
+    throw_frame_test.go:84: outermost handler chosen compiles and runs; comparison alone catches side 1
+    throw_frame_test.go:84: outermost handler chosen compiles and runs; comparison alone catches side 2
+    throw_frame_test.go:84: catch finally condition reversed compiles and runs; comparison alone catches side 0
+    throw_frame_test.go:84: catch finally condition reversed compiles and runs; comparison alone catches side 1
+    throw_frame_test.go:84: catch finally condition reversed compiles and runs; comparison alone catches side 2
+--- PASS: TestThrowFrameMatchesGo (10.33s)
+=== RUN   TestThrowTargetMatchesGo
+    throw_target_test.go:49: array-callback-return throwTarget: 8 actual Go calls, 48 bytes per backend
+    throw_target_test.go:49: consistent-return throwTarget: 4 actual Go calls, 24 bytes per backend
+    throw_target_test.go:49: no-unreachable-loop throwTarget: 56 actual Go calls, 336 bytes per backend
+    throw_target_test.go:49: react-hooks_rules-of-hooks throwTarget: 12 actual Go calls, 72 bytes per backend
+    throw_target_test.go:49: controls throwTarget: 4096 actual Go calls, 25597 bytes per backend
+    throw_target_test.go:91: catch chosen outside try compiles and runs; comparison alone catches side 0
+    throw_target_test.go:91: catch chosen outside try compiles and runs; comparison alone catches side 1
+    throw_target_test.go:91: catch chosen outside try compiles and runs; comparison alone catches side 2
+    throw_target_test.go:91: finally chosen instead of catch compiles and runs; comparison alone catches side 0
+    throw_target_test.go:91: finally chosen instead of catch compiles and runs; comparison alone catches side 1
+    throw_target_test.go:91: finally chosen instead of catch compiles and runs; comparison alone catches side 2
+--- PASS: TestThrowTargetMatchesGo (10.02s)
+=== RUN   TestTypeArgumentsMatchesGo
+    type_arguments_test.go:49: array-callback-return: 24 actual Go calls, 148 bytes per backend
+    type_arguments_test.go:49: consistent-return: 12 actual Go calls, 136 bytes per backend
+    type_arguments_test.go:49: no-unreachable-loop: 602 actual Go calls, 726 bytes per backend
+    type_arguments_test.go:49: react-hooks_rules-of-hooks: 189 actual Go calls, 313 bytes per backend
+    type_arguments_test.go:49: controls: 122 actual Go calls, 6818 bytes per backend
+    type_arguments_test.go:91: first type argument skipped compiles and runs; comparison alone catches side 0
+    type_arguments_test.go:91: first type argument skipped compiles and runs; comparison alone catches side 1
+    type_arguments_test.go:91: first type argument skipped compiles and runs; comparison alone catches side 2
+    type_arguments_test.go:91: type argument order reversed compiles and runs; comparison alone catches side 0
+    type_arguments_test.go:91: type argument order reversed compiles and runs; comparison alone catches side 1
+    type_arguments_test.go:91: type argument order reversed compiles and runs; comparison alone catches side 2
+--- PASS: TestTypeArgumentsMatchesGo (10.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	85.926s

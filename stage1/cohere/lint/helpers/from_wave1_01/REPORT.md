@@ -113,3 +113,7 @@ Both new helpers remove four prerequisite entries each from array-callback-retur
 ## Landed harness refresh
 
 Rebased onto area 7481e0324, preserving current main and shared harness changes. Repeated the full helper package, vet and uncached TestInputAgreesWithNode commands above; logs are evidence/landed-tests.log, landed-vet.log and landed-input.log. The eight helper contracts and all seventeen mutants remain green. No new helper claimed: the separate rule branch still needs deduplication and landed-harness verification. No complete rule unblocking or throughput inferred.
+
+## Current area d65a8f931 refresh
+
+Rebased onto current area d65a8f931 after an explicit wildcard fetch; the default fetch refspec only updates main. Current main remains 39638d9e2. Preserved all runtime-profile changes; zero shared lint harness edits. Full eight-helper package PASS 85.926s: all 40,498 Go observations and 316,464 bytes/backend identical, all seventeen compiling mutants caught only by comparison on source Node, emitted JavaScript and ASan/UBSan native. Vet PASS; uncached TestInputAgreesWithNode PASS 6.866s, six probe misses. Same final gate commands as above, retained in evidence/d65-tests.log, d65-vet.log and d65-input.log. Setup ready 0s, warm and total 115s, nproc 5. Rule branch refreshed and pushed at 3861e9da9, with the unchanged allowLoop option-routing and live Tailwind witness blockers. No new claims, no complete rule unblocking, no full corpus or repository gate.
