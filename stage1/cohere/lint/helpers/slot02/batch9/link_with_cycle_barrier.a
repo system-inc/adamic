@@ -1,0 +1,18 @@
+import { panic } from 'adamic';
+import type { CfgState } from './state.a';
+export interface LinkDependencies {
+    appendSuccessor: (from: number, to: number) => void;
+    setCycleBarrier: (from: number, index: number, barrier: boolean) => void;
+}
+export function linkWithCycleBarrier(state: CfgState, from: number, to: number, barrier: boolean, dependencies: LinkDependencies): number {
+    if (from === -1 || to === -1) { return -1; }
+    const source = state.blocks[from] ?? panic('source arena index');
+    const index = source.successors.length;
+    dependencies.appendSuccessor(from, to);
+    dependencies.setCycleBarrier(from, index, barrier);
+    if (source.reachable) {
+        const target = state.blocks[to] ?? panic('target arena index');
+        target.incoming = true;
+    }
+    return index;
+}

@@ -1,0 +1,60 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { CfgState } from './state.a';
+import { setCycleBarrier } from './set_cycle_barrier.a';
+import { linkWithCycleBarrier } from './link_with_cycle_barrier.a';
+import { link } from './link.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus path'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function number(index: number, name: string): number { return json.node(json.field(index,name)).number; }
+function flag(index: number, name: string): boolean { return json.node(json.field(index,name)).text === 'true'; }
+let state: CfgState = {blocks: []};
+let trace = '';
+function append(from: number, to: number): void {
+    trace += `append:${from}:${to};`;
+    const block = state.blocks[from] ?? panic('source block');
+    block.successors.push(to);
+}
+function barrier(from: number, index: number, value: boolean): void {
+    trace += `barrier:${from}:${index}:${value};`;
+    setCycleBarrier(state,from,index,value);
+}
+function connect(from: number, to: number, value: boolean): number {
+    trace += `with:${from}:${to}:${value};`;
+    return linkWithCycleBarrier(state,from,to,value,{
+        appendSuccessor: (a,b) => append(a,b),
+        setCycleBarrier: (a,i,v) => barrier(a,i,v)
+    });
+}
+for (const row of json.node(json.field(root,'Cases')).children) {
+    state = {blocks: []};
+    for (const id of json.node(json.field(row,'Blocks')).children) {
+        const successors: number[] = [];
+        const barriers: boolean[] = [];
+        for (const n of json.node(json.field(id,'Successors')).children) { successors.push(json.node(n).number); }
+        for (const n of json.node(json.field(id,'Barriers')).children) { barriers.push(json.node(n).text === 'true'); }
+        state.blocks.push({successors,barriers,reachable:flag(id,'Reachable'),incoming:flag(id,'Incoming'),barriersPresent:flag(id,'BarriersPresent')});
+    }
+    trace = '';
+    const from = number(row,'From');
+    const to = number(row,'To');
+    const index = number(row,'Index');
+    const value = flag(row,'Barrier');
+    const op = json.node(json.field(row,'Op')).text;
+    let answer = -2;
+    if (op === 'set') { barrier(from,index,value); }
+    else if (op === 'with') { answer = connect(from,to,value); }
+    else { link(from,to,(a,b,v) => connect(a,b,v)); }
+    console.log(`result:${answer}:${trace}`);
+    for (const block of state.blocks) {
+        let edges = '';
+        let bits = '';
+        for (const n of block.successors) { edges += `${n},`; }
+        for (const n of block.barriers) { bits += `${n},`; }
+        console.log(`block:${block.reachable}:${block.incoming}:${block.barriersPresent}:${edges}:${bits}`);
+    }
+}

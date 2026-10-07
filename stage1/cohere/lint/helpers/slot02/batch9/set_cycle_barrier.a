@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+import type { CfgState } from './state.a';
+
+export function setCycleBarrier(state: CfgState, from: number, index: number, barrier: boolean): void {
+    if (from === -1 || index < 0) { return; }
+    const block = state.blocks[from] ?? panic('block arena index');
+    if (!block.barriersPresent) {
+        if (!barrier) { return; }
+        block.barriersPresent = true;
+        for (let i = 0; i < block.successors.length; i++) { block.barriers.push(false); }
+    } else {
+        while (block.barriers.length < block.successors.length) { block.barriers.push(false); }
+    }
+    if (index >= block.barriers.length) { panic('Go barrier index out of range'); }
+    block.barriers[index] = barrier;
+}

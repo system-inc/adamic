@@ -1,0 +1,3 @@
+export function link(from: number, to: number, linkWithCycleBarrier: (from: number, to: number, barrier: boolean) => number): void {
+    linkWithCycleBarrier(from, to, false);
+}

@@ -1,0 +1,9 @@
+// Numeric block identities keep the graph arena acyclic; -1 represents Go nil.
+export interface CfgBlock {
+    successors: number[];
+    reachable: boolean;
+    incoming: boolean;
+    barriersPresent: boolean;
+    barriers: boolean[];
+}
+export interface CfgState { blocks: CfgBlock[]; }
