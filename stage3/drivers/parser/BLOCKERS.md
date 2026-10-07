@@ -1,3 +1,36 @@
+# Native rerun with module initialization, brands and require: red
+
+Before the error-recovery reference, the unpushed scratch merge adds module-init-order
+28e366f, phantom-brands d2d3c77 and require-builtins-2 6439f4c to the prior four-feature,
+records/runtime and developer-tools merge. Scratch HEAD 422be912; no scratch merge pushed.
+The stage0 executable builds. Native parser build exits 1 at slice core.ts:28:37:
+`Adamic 0.1 refuses the non-null assertion !`. This is forEach's array[i]! from
+permanent adaptation 30, not temporary 64's addRange read. Module-init-order has
+moved the attempt beyond the enum-map stop. Minimal native-nonnull.a checker-passes
+then is refused at !; the same source prints 1 on Node.
+
+Extended 81-file Node output was rerun three times, all cmp 0: 36,429,231 bytes,
+SHA256 686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Best Node user time 5.974716 seconds. No C generated, clang unreached, no native
+binary or native comparison or native output mutant possible. Unsplit, split and
+split repeat all stop at the same refusal; no warm cache. nproc 5.
+
+Lowering conflicts: phantom cast/dispatch/refusals, then require cast/representation/
+dispatch/refusals/statements/exceptions/invariance. Both features and records/enum
+checks retained; phantom and performance projection enter castProof before casting.
+Typed SDK paths preserved in loader; five new string API calls get explicit string
+conversions, SDK modules remain external scratch replacements. No compiler edit is
+on the proof branch. Exact scratch diff and merge logs: evidence/front7.
+Focused tests initially fail the performance projection and enum-name representation;
+after projection resolution, test reruns report [build failed] without a detailed
+compiler diagnostic. These are not green checks; logs retained, no full gate claimed.
+
+Native status: syntax tree and parse diagnostics identical on Node, JSDoc unverified,
+error recovery unverified. Continuing with the requested error-recovery reference
+only after recording this native attempt. Evidence: evidence/front7/report.json.
+
+---
+
 # Error recovery blind spot: first checkpoint
 
 Existing extended driver on Node alone, pinned TypeScript parser cases.
