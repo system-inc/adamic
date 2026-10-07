@@ -95,6 +95,9 @@ if ! git -C "$worktree" merge -q --no-ff -m "Merge $branch at ${sha:0:8} into ar
 	git -C "$worktree" merge --abort
 	exit 3
 fi
+# The merge can move a submodule pin (a cohere bump), so the checkout has to follow it before
+# anything builds.
+git -C "$worktree" submodule update -q --init --recursive --depth 1
 
 logs=$(mktemp -d)
 changed=$(git -C "$worktree" diff --name-only "$areaTip" HEAD)
