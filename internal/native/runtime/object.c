@@ -169,8 +169,8 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		const adamic_heap *boxed = slot->reference;
 		if (wanted == 1 && boxed->kind == adamic_kind_number) { return (adamic_value){.number = ((const adamic_number_box *)boxed)->number}; }
 		if (wanted == 2 && boxed->kind == adamic_kind_boolean) { return (adamic_value){.boolean = ((const adamic_boolean_box *)boxed)->boolean}; }
-		if (wanted >= 3 && wanted <= 6) {
-			enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : adamic_kind_map;
+		if ((wanted >= 3 && wanted <= 6) || wanted == 8) {
+			enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : wanted == 8 ? adamic_kind_closure : adamic_kind_map;
 			if (boxed->kind == kind) { return *slot; }
 		}
 	}
@@ -178,10 +178,10 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		adamic_maybe_number unpacked = adamic_maybe_number_unpack(slot->number);
 		if (unpacked.present) { return (adamic_value){.number = unpacked.number}; }
 	}
-	if (actual == wanted && wanted >= 1 && wanted <= 6) {
+	if (actual == wanted && ((wanted >= 1 && wanted <= 6) || wanted == 8)) {
 		if (wanted <= 2) { return *slot; }
 		const adamic_heap *reference = slot->reference;
-		enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : adamic_kind_map;
+		enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : wanted == 8 ? adamic_kind_closure : adamic_kind_map;
 		if (reference != NULL && reference->kind == kind) { return *slot; }
 	}
 	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : actual == 4 ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : "unsupported representation";

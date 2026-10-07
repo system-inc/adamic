@@ -39,13 +39,6 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	if l.callableViewContract(target) {
 		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
 	}
-	// Diagnose unreifiable contracts before temporary backend limitations.
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		declared := l.checker.GetTypeOfSymbol(property)
-		if l.callableViewContract(declared) {
-			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
-		}
-	}
 	fields := map[string]bool{}
 	if err := l.viewObjectFields(node, target, fields, map[*checker.Type]bool{}, false); err != nil {
 		return nil, err
@@ -75,7 +68,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				if name != nil && fields[name.Text()] {
 					declared := l.checker.GetTypeAtLocation(binding.Name())
 					of, known := l.representation(declared)
-					if !known || of < ir.Number || of > ir.Object || !viewDataType(declared) {
+					if !known || of < ir.Number || of > ir.Array || !viewDataType(declared) {
 						found = l.notYet(binding, "a checked destructured alias requiring a representation conversion")
 					}
 				}
@@ -87,10 +80,10 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				field := l.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if of == ir.Object && ast.IsAssignmentTarget(part) {
+					if (of == ir.Object || of == ir.Array) && ast.IsAssignmentTarget(part) {
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
-					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.Object || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
+					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.Array || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 					}
 				}

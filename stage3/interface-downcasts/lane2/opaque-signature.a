@@ -1,5 +1,5 @@
 interface Base { readonly kind: 'runner' | 'other'; }
 interface Runner extends Base { readonly kind: 'runner'; readonly run: (value: number) => number; }
 function call(node: Base): number { return (node as Runner).run(7); }
-const raw = {kind: 'runner' as const, run: (value: string): string => value};
+const raw = {kind: 'runner' as const, run: (value: string): string => 'wrong'};
 console.log(`${call(raw)}`);
