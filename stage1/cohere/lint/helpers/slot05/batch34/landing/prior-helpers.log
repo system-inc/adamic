@@ -1,0 +1,12 @@
+=== RUN   TestComponent
+    helper_test.go:60: Go pin drift
+--- FAIL: TestComponent (0.00s)
+=== RUN   TestType
+    helper_test.go:60: Go pin drift
+--- FAIL: TestType (0.00s)
+=== RUN   TestNetwork
+    helper_test.go:60: Go pin drift
+--- FAIL: TestNetwork (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch33	0.013s
+FAIL

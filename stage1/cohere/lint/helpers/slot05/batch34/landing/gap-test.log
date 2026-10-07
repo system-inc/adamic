@@ -1,0 +1,7 @@
+=== RUN   TestDynamicCompilationBoundary
+    gap_test.go:46: go: true
+    gap_test.go:46: node: true
+    gap_test.go:57: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch34/dynamic_pattern.a:3:27: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- PASS: TestDynamicCompilationBoundary (1.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch34	1.157s
