@@ -211,6 +211,36 @@ fi
 "$warmTests" || step "test binaries deferred (use --warm-tests)"
 step "build cache warm"
 
+# Go commands in workspace mode (downloads, builds) add sums to go.work.sum. A gate tests the commit
+# exactly, and the shard runner refuses a dirty submodule, so setup leaves every go.work.sum as the
+# commit has it: a tracked one is written back from HEAD, an untracked one setup created is removed.
+# It fails closed: a file is removed only when git lists it as untracked and not ignored, a tracked
+# one is replaced only by a complete copy of HEAD's, and any git failure stops setup. Go adds
+# missing sums again as it needs them.
+restoreWorkSums() {
+	local directory=$1 tracked untracked
+	tracked=$(timeout 30 git -C "$directory" ls-files -- go.work.sum)
+	if [ "$tracked" = go.work.sum ]; then
+		if ! timeout 30 git -C "$directory" diff --quiet -- go.work.sum; then
+			timeout 30 git -C "$directory" show HEAD:go.work.sum > "$directory/go.work.sum.setup"
+			mv "$directory/go.work.sum.setup" "$directory/go.work.sum"
+		fi
+		return 0
+	fi
+	untracked=$(timeout 30 git -C "$directory" ls-files --others --exclude-standard -- go.work.sum)
+	if [ "$untracked" = go.work.sum ]; then
+		rm -f "${directory:?}/go.work.sum"
+	fi
+}
+submodules=$(timeout 60 git -C "$repository" submodule --quiet foreach --recursive 'echo "$displaypath"')
+restoreWorkSums "$repository"
+while IFS= read -r submodule; do
+	if [ -n "$submodule" ]; then
+		restoreWorkSums "$repository/$submodule"
+	fi
+done <<< "$submodules"
+step "workspace sums restored to the commit"
+
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
 echo "setup: build-flags commit=$(git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(go version) clang=$(clang --version | head -n 1) node=$(node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests load-before=$loadBefore load-after=$(cat /proc/loadavg)"
