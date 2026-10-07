@@ -1,5 +1,5 @@
 Added live handed-node native adapters for symbol-description and structure/react-hook-no-any-type, plus require-await reporting.
-The branch remains based on origin/main c01907a7; no new rules are claimed.
+The branch is rebased and oracle-green on origin/main b8fb957a; no new rules are claimed.
 The two live rules pass full Go-byte controls/corpora, sanitizers, released-handle checks and native mutants; source lint reports 0.
 Require-await body filters and 32 reporting controls pass their narrower Go authorities; the incomplete full listener still refuses candidates.
 Full require-await contextual/generic/heritage contract decisions and shared-registry integration remain unimplemented.
@@ -161,9 +161,10 @@ This checks listener metadata and generated dispatch, not full Discover or modul
 compilation. Evidence preserves the probe and its output. The existing native
 sources are unchanged; no new runtime, sanitizer or corpus run is claimed.
 
-## Live adapters and reporting continuation
+## Live adapters and reporting continuation on c01907a7
 
-Fetch confirms main remains c01907a7. Runtime changes are confined to the owned
+The initial fetch confirmed main remained c01907a7; the final fetch advanced it
+to b8fb957a, requiring the landing rerun below. Runtime changes are confined to the owned
 leaf modules. No shared harness/generator/bridge registration or protected
 compiler file is edited. The earlier six completed rules' runtime sources are
 unchanged from their recorded green landing. Environment/setup is unchanged:
@@ -259,3 +260,67 @@ port, full upstream matrix, emitted-JavaScript comparison or full repository gat
 is claimed. The shared harness's RuleContext at ab70f38d4 has no checker/program
 attachment; integration must connect this owned live context to it. No numeric
 API is expected and no new rule is claimed.
+
+## Current landing on b8fb957a
+
+The final pre-push fetch advanced main to b8fb957aa839a9e8cb0b54279dd9864fa317bd30.
+Rebase is clean and preserves main's inherited-static-field fix in
+internal/native/emit_objects.go. No developer-tool allocator-check changes occur
+in this two-commit advance; none is reverted. CLAUDE is unchanged. A fresh stage-0
+compiler is built at /workspace/wave-10-b8-stage0 from rebased source tip 465969a5.
+The process/blocking landing artifact's adamic is replaced with that fresh binary.
+The reused process checker archives have unchanged Go bridge sources on this base.
+
+Re-green the original six ports with the frozen compiler/repository manifests:
+
+```sh
+source /workspace/adamic-tools/env.sh
+export ADAMIC_WAVE10_REPOSITORY_MANIFEST=/workspace/wave-10-repository.manifest
+export ADAMIC_WAVE10_COMPILER_MANIFEST=/workspace/wave-10-compiler.manifest
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-10-typescript
+ADAMIC_WAVE10_ARTIFACTS=/workspace/wave-10-f801-original \
+  go test ./stage1/cohere/typeaware -run '^TestWave10AgreementAndMutants$' \
+  -count=1 -timeout=10m -v > /tmp/wave-10-b8-original.log 2>&1
+ADAMIC_WAVE10_NEXT_VALIDATE=1 ADAMIC_WAVE10_NEXT_ARTIFACTS=/workspace/wave-10-f801-timeout \
+  go test ./stage1/cohere/typeaware/wave_10_next -run '^TestTimeoutAgreementAndMutants$' \
+  -count=1 -timeout=10m -v > /tmp/wave-10-b8-timeout.log 2>&1
+ADAMIC_WAVE10_LANDING_ARTIFACTS=/workspace/wave-10-f801-process \
+ADAMIC_WAVE10_LANDING_FIXTURES=/workspace/wave-10-process-validation \
+  go test ./stage1/cohere/typeaware/wave_10_next -run '^TestLandingNativeRulesAndMutants$' \
+  -count=1 -timeout=10m -v > /tmp/wave-10-b8-landing.log 2>&1
+```
+
+All pass: original 109.558s, timeout 81.747s, process/blocking 188.397s.
+Finding/fix/suggestion comparisons, native sanitizer controls/corpora, all six
+native mutants, two retaining-registry mutants and released queries remain green.
+The three owned leaf scripts above rerun with --stage0 /workspace/wave-10-b8-stage0
+and explicit --checker/--checker-asan paths under /workspace/wave-10-f801-process.
+All exit 0 with the same comparison lengths and mutant byte positions as above;
+32-case reporting and all release checks pass again.
+
+An uncached focused external oracle also passes:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle \
+  -run '^(TestNativeAgreesWithNode|TestTheOracleCatchesOneByte)$/internal/oracle/testdata/regexp(_exec|_unicode)?[.]a$' \
+  -count=1 -timeout=10m -v > /tmp/wave-10-b8-node-regexp.log 2>&1
+```
+
+PASS 1.516s: regexp.a, regexp_exec.a and regexp_unicode.a agree across source
+Node, emitted JavaScript, native release and sanitized builds; the oracle's
+one-byte mutation is caught. Cache counters show native misses=10 and node
+misses=7, with zero hits. This is not an emitted-JavaScript comparison of the
+new live lint runner and not a full repository gate.
+
+Fresh alternating live-rule process timings on b8fb957a follow. These observations
+run alongside the landing work; uncontrolled load prevents a performance-change
+claim. Raw logs, stdout/stderr and timing samples are in evidence/landing-b8.
+
+| Rule and corpus | Native seconds | Go seconds | Native / Go |
+| --- | ---: | ---: | ---: |
+| symbol-controls | 0.033264 | 0.026076 | 1.276x |
+| symbol-compiler | 1.390334 | 0.331947 | 4.188x |
+| symbol-repository | 0.250274 | 0.142555 | 1.756x |
+| hook-controls | 0.020389 | 0.034592 | 0.589x |
+| hook-compiler | 1.514863 | 0.355884 | 4.257x |
+| hook-repository | 0.250067 | 0.148570 | 1.683x |

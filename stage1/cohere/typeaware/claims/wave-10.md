@@ -129,3 +129,12 @@ not yet expose resolved-signature target/type-parameter facts for declared-deman
 replay. Shared-registry/context integration also remains pending. No further
 reservation is made. Exact final gates and timing observations are in
 ../wave_10_leaf/README.md and evidence/live-continuation.
+
+
+Current landing base is b8fb957a, after main advanced during final validation.
+Rebase is clean; all six completed-rule oracle gates and all new isolated/live/
+reporting gates pass again with the current compiler. A focused uncached RegExp
+Node/native/emitted-JavaScript oracle passes too. The two new live native rules
+have full corpus-byte validation; require-await remains IN PROGRESS for its
+unimplemented contextual/generic/heritage decision and bridge facts. No further
+claim is taken. See the current landing section in wave_10_leaf/README.md.
