@@ -22,6 +22,9 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	// that ends between the halves ends with the high one, each a lone surrogate, which isn't in the
 	// string's bytes, so that slice is built.
 	size_t first = (size_t)from, last = (size_t)to;
+	if (string->units == string->length + 1) {
+		return adamic_string_share(string, first, last - first);
+	}
 	bool low;
 	size_t offset = adamic_string_locate(string, first, &low);
 	if (low) {
@@ -31,7 +34,9 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	size_t stop = last < (size_t)length ? adamic_string_locate(string, last, &ends_low) : string->length;
 	size_t middle = stop > offset ? stop - offset : 0;
 	if (!low && !ends_low) {
-		return adamic_string_share(string, offset, middle);
+		adamic_string *slice = adamic_string_share(string, offset, middle);
+		slice->units = last - first + 1;
+		return slice;
 	}
 	builder build = {NULL, 0, 0};
 	if (low) {
@@ -43,7 +48,9 @@ adamic_string *adamic_string_slice(const adamic_string *string, double start, do
 	if (ends_low) {
 		builder_unit(&build, unit_at(string, stop, false));
 	}
-	return builder_finish(&build);
+	adamic_string *slice = builder_finish(&build);
+	slice->units = last - first + 1;
+	return slice;
 }
 
 adamic_string *adamic_string_at(const adamic_string *string, double index) {
@@ -52,6 +59,9 @@ adamic_string *adamic_string_at(const adamic_string *string, double index) {
 	// supplementary character is a lone surrogate, as slice makes it.
 	if (!(index >= 0) || index != trunc(index) || index >= adamic_string_length(string)) {
 		return NULL;
+	}
+	if (string->units == string->length + 1) {
+		return adamic_string_share(string, (size_t)index, 1);
 	}
 	return adamic_string_slice(string, index, index + 1, true);
 }

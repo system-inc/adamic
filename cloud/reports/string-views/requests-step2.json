@@ -5,15 +5,15 @@
   "inputSha256": "cba64bd86fdd84d7086973a145a4e8419dd31937470728efe8bf8db156a75c39",
   "checksum": 7394547,
   "warmNative": {
-    "milliseconds": 10103.993654999998,
-    "wholeMilliseconds": 22957.40408,
+    "milliseconds": 10680.566291999996,
+    "wholeMilliseconds": 26704.196442,
     "stderr": "serve:start\nserve:stop\n"
   },
   "rounds": [
     {
       "round": 1,
       "before": {
-        "load1": 4.67,
+        "load1": 2.47,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       },
@@ -22,16 +22,16 @@
         "node"
       ],
       "rates": {
-        "native": 9257.686564322905,
-        "node": 31062.580397510137
+        "native": 9549.448440488444,
+        "node": 36254.50085035621
       },
       "milliseconds": {
-        "native": 10801.834703,
-        "node": 3219.307563000002
+        "native": 10471.808986999997,
+        "node": 2758.2782179999995
       },
-      "nativeWholeMilliseconds": 24417.888667,
+      "nativeWholeMilliseconds": 24750.227101999997,
       "after": {
-        "load1": 3.69,
+        "load1": 1.96,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       }
@@ -39,7 +39,7 @@
     {
       "round": 2,
       "before": {
-        "load1": 3.69,
+        "load1": 1.96,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       },
@@ -48,16 +48,16 @@
         "native"
       ],
       "rates": {
-        "node": 36049.468301759676,
-        "native": 7705.766572347932
+        "node": 35584.57558985888,
+        "native": 8335.47109131601
       },
       "milliseconds": {
-        "node": 2773.966016999999,
-        "native": 12977.294219999996
+        "node": 2810.206342000005,
+        "native": 11996.922418000002
       },
-      "nativeWholeMilliseconds": 26776.590810999995,
+      "nativeWholeMilliseconds": 25279.029049999997,
       "after": {
-        "load1": 2.93,
+        "load1": 1.58,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       }
@@ -65,7 +65,7 @@
     {
       "round": 3,
       "before": {
-        "load1": 2.93,
+        "load1": 1.58,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       },
@@ -74,16 +74,16 @@
         "node"
       ],
       "rates": {
-        "native": 6644.894458665206,
-        "node": 30699.576226795158
+        "native": 9657.634465052075,
+        "node": 27969.746759482296
       },
       "milliseconds": {
-        "native": 15049.147977,
-        "node": 3257.373953999995
+        "native": 10354.50247800001,
+        "node": 3575.2915769999963
       },
-      "nativeWholeMilliseconds": 33320.349483,
+      "nativeWholeMilliseconds": 23342.16279999999,
       "after": {
-        "load1": 2.44,
+        "load1": 1.38,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       }
@@ -91,7 +91,7 @@
     {
       "round": 4,
       "before": {
-        "load1": 2.44,
+        "load1": 1.38,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       },
@@ -100,16 +100,16 @@
         "native"
       ],
       "rates": {
-        "node": 32006.27001293266,
-        "native": 6478.872922391603
+        "node": 24968.06230908382,
+        "native": 9647.360660570503
       },
       "milliseconds": {
-        "node": 3124.387813999987,
-        "native": 15434.783364000003
+        "node": 4005.1165670000046,
+        "native": 10365.529341999994
       },
-      "nativeWholeMilliseconds": 37376.335601,
+      "nativeWholeMilliseconds": 23011.93086799998,
       "after": {
-        "load1": 2.1,
+        "load1": 1.23,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       }
@@ -117,7 +117,7 @@
     {
       "round": 5,
       "before": {
-        "load1": 2.1,
+        "load1": 1.23,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       },
@@ -126,25 +126,25 @@
         "node"
       ],
       "rates": {
-        "native": 8652.706148579196,
-        "node": 24655.659047254332
+        "native": 10083.682396923288,
+        "node": 29416.901182345737
       },
       "milliseconds": {
-        "native": 11557.078015000006,
-        "node": 4055.864002999995
+        "native": 9917.012065999996,
+        "node": 3399.4063270000042
       },
-      "nativeWholeMilliseconds": 25577.628385999997,
+      "nativeWholeMilliseconds": 22712.259066999977,
       "after": {
-        "load1": 1.8,
+        "load1": 1.15,
         "nproc": 5,
         "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
       }
     }
   ],
   "best": {
-    "native": 9257.686564322905,
-    "node": 36049.468301759676
+    "native": 10083.682396923288,
+    "node": 36254.50085035621
   },
   "node": "v24.19.0",
-  "runtimeStage": "before"
+  "runtimeStage": "step2"
 }

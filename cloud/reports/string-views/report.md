@@ -62,3 +62,21 @@ VALGRIND_LIB=/workspace/scratch/string-views/valgrind/usr/libexec/valgrind /work
 ```
 
 The preserved brk segment overflow warning is nonfatal; Callgrind finishes and reports 6,503,630,226 Ir. Raw profile and reconciled named self costs are beside this report. Native sampling reused a4e0902 diagnostic.c through LD_PRELOAD, enabled only between serve markers. Profiles do not supply unprofiled timing components.
+
+## Step 2: direct ASCII paths
+
+Flagged ASCII slice and at bypass locate, and indexOf compares bytes without walking either string as UTF-16 or asking for byte-to-unit translation. An ASCII needle skips the surrogate-edge walk in other affix/search operations too. charCodeAt already had the direct inline path and was not changed. Slices propagate last - first UTF-16 units even for copied surrogate boundaries, avoiding a later recount. No input.c change.
+
+Five serial request rounds: native best **10,083.68 requests/s**, Node best **36,254.50**. All checksum checks passed. Whole-process parse: **6,479,991,960 Ir**, down **23,638,266 (0.3635%)**. Same generated C and corpus, same release flags. The rate comparison is unpaired and noisy; before clean-round best is 8,652.71 and overall best is 9,257.69. Baseline native verify compared all 100,000 response lines byte for byte with Node, plus final checksum. Allocation sites are unchanged in this step; character indexing still mints short strings under the old sharing policy.
+
+Validation commands, with stdout/stderr to the named logs:
+
+```sh
+ADAMIC_STRING_OPERATIONS=100000 ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -run 'TestStringsMatchJavaScript|TestStringIndexMatchesNode|TestStringBuildingMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringViewAfterAppendMatchesNode|TestNativeAgreesWithNode/.*/(10_unicode|shared_slices|regexp_split|regexp_unicode|lone_surrogates|library_string_indices)' -count=1 -v -timeout 30m > /tmp/string-views-step2-tests.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(shared_slices|regexp_split|regexp_unicode|lone_surrogates|library_string_indices)' -count=1 -v -timeout 30m > /tmp/string-views-step2-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/10_unicode' -count=1 -v -timeout 30m > /tmp/string-views-step2-unicode.log 2>&1
+```
+
+The first combined filter selected native sweeps but no oracle fixtures. The two corrected oracle invocations above passed: six string/regex fixtures plus program 10, with source Node, backend Node, release native, ASan/UBSan and LeakSanitizer. Native passed **11,460 answers, zero mismatches** (the current sweep extends the historical 11,080), **100,000 stateful operations**, cache states, indexed BMP/supplementary/lone-surrogate sweeps and reads after append. Native 24.613s, focused oracle 10.846s, program 10 0.563s.
+
+Mutant: only the new ASCII slice path returns one fewer byte. It compiles, then TestStringsMatchJavaScript fails with **890 of 11,460 Node answers differing**, exit 1. It was restored before further work; no warning/refusal kill is counted. The compressed mutant and validation logs are beside this report.
