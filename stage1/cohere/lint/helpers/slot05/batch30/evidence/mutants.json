@@ -1,0 +1,29 @@
+{
+  "native_semantic_mutants": [
+    "helper_test.go:128: color_arm.a mutant \"inferTypesPresent: false\" -> \"inferTypesPresent: true\" caught at output line 1: mutant \"false|0||true|||false|true||false\", Go \"false|0||true|||false|false||false\"",
+    "helper_test.go:128: color_arm.a mutant \"percentagePassesThrough: false\" -> \"percentagePassesThrough: true\" caught at output line 1: mutant \"false|0||true|||false|false||true\", Go \"false|0||true|||false|false||false\"",
+    "helper_test.go:128: color_arm.a mutant \"themeKeys: keys,\" -> \"themeKeys: keys.slice(),\" caught at output line 6: mutant \"|\", Go \"__alias_probe__|__alias_probe__\"",
+    "helper_test.go:128: color_arm.a mutant \"themeKeysPresent: keysPresent\" -> \"themeKeysPresent: false\" caught at output line 3: mutant \"false|0||true|||false|false||false\", Go \"true|0||true|||false|false||false\"",
+    "helper_test.go:128: color_arm.a mutant \"isColor: true\" -> \"isColor: false\" caught at output line 1: mutant \"false|0||false|||false|false||false\", Go \"false|0||true|||false|false||false\"",
+    "helper_test.go:128: color_arm.a mutant \"bareValue: ''\" -> \"bareValue: 'PositiveInteger'\" caught at output line 1: mutant \"false|0||true|PositiveInteger||false|false||false\", Go \"false|0||true|||false|false||false\"",
+    "helper_test.go:128: color_arm.a mutant \"bareValueSuffix: ''\" -> \"bareValueSuffix: 'px'\" caught at output line 1: mutant \"false|0||true||px|false|false||false\", Go \"false|0||true|||false|false||false\"",
+    "helper_test.go:128: color_arm.a mutant \"refusesModifier: false\" -> \"refusesModifier: true\" caught at output line 1: mutant \"false|0||true|||true|false||false\", Go \"false|0||true|||false|false||false\"",
+    "helper_test.go:128: theme_arm.a mutant \"inferTypesPresent: false\" -> \"inferTypesPresent: true\" caught at output line 1: mutant \"true|1||false|||false|true||false\", Go \"true|1||false|||false|false||false\"",
+    "helper_test.go:128: theme_arm.a mutant \"percentagePassesThrough: false\" -> \"percentagePassesThrough: true\" caught at output line 1: mutant \"true|1||false|||false|false||true\", Go \"true|1||false|||false|false||false\"",
+    "helper_test.go:128: theme_arm.a mutant \"themeKeys: [key]\" -> \"themeKeys: []\" caught at output line 1: mutant \"true|0||false|||false|false||false\", Go \"true|1||false|||false|false||false\"",
+    "helper_test.go:128: theme_arm.a mutant \"themeKeysPresent: true\" -> \"themeKeysPresent: false\" caught at output line 1: mutant \"false|1||false|||false|false||false\", Go \"true|1||false|||false|false||false\"",
+    "helper_test.go:128: theme_arm.a mutant \"isColor: false\" -> \"isColor: true\" caught at output line 1: mutant \"true|1||true|||false|false||false\", Go \"true|1||false|||false|false||false\"",
+    "helper_test.go:128: theme_arm.a mutant \"bareValue: ''\" -> \"bareValue: 'PositiveInteger'\" caught at output line 1: mutant \"true|1||false|PositiveInteger||false|false||false\", Go \"true|1||false|||false|false||false\"",
+    "helper_test.go:128: theme_arm.a mutant \"bareValueSuffix: ''\" -> \"bareValueSuffix: 'px'\" caught at output line 1: mutant \"true|1||false||px|false|false||false\", Go \"true|1||false|||false|false||false\"",
+    "helper_test.go:128: theme_arm.a mutant \"refusesModifier: false\" -> \"refusesModifier: true\" caught at output line 1: mutant \"true|1||false|||true|false||false\", Go \"true|1||false|||false|false||false\"",
+    "helper_test.go:128: width_arm.a mutant \"inferTypesPresent: false\" -> \"inferTypesPresent: true\" caught at output line 1: mutant \"true|1||false|PositiveInteger||true|true||false\", Go \"true|1||false|PositiveInteger||true|false||false\"",
+    "helper_test.go:128: width_arm.a mutant \"percentagePassesThrough: false\" -> \"percentagePassesThrough: true\" caught at output line 1: mutant \"true|1||false|PositiveInteger||true|false||true\", Go \"true|1||false|PositiveInteger||true|false||false\"",
+    "helper_test.go:128: width_arm.a mutant \"themeKeys: [key]\" -> \"themeKeys: []\" caught at output line 1: mutant \"true|0||false|PositiveInteger||true|false||false\", Go \"true|1||false|PositiveInteger||true|false||false\"",
+    "helper_test.go:128: width_arm.a mutant \"themeKeysPresent: true\" -> \"themeKeysPresent: false\" caught at output line 1: mutant \"false|1||false|PositiveInteger||true|false||false\", Go \"true|1||false|PositiveInteger||true|false||false\"",
+    "helper_test.go:128: width_arm.a mutant \"isColor: false\" -> \"isColor: true\" caught at output line 1: mutant \"true|1||true|PositiveInteger||true|false||false\", Go \"true|1||false|PositiveInteger||true|false||false\"",
+    "helper_test.go:128: width_arm.a mutant \"bareValue: 'PositiveInteger'\" -> \"bareValue: ''\" caught at output line 1: mutant \"true|1||false|||true|false||false\", Go \"true|1||false|PositiveInteger||true|false||false\"",
+    "helper_test.go:128: width_arm.a mutant \"bareValueSuffix: suffix\" -> \"bareValueSuffix: ''\" caught at output line 3: mutant \"true|1||false|PositiveInteger||false|false||false\", Go \"true|1||false|PositiveInteger|px|false|false||false\"",
+    "helper_test.go:128: width_arm.a mutant \"refusesModifier: refusesModifier\" -> \"refusesModifier: false\" caught at output line 1: mutant \"true|1||false|PositiveInteger||false|false||false\", Go \"true|1||false|PositiveInteger||true|false||false\""
+  ],
+  "successful_build_and_exit_zero_empty_stderr_required": true
+}

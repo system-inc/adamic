@@ -1,0 +1,11 @@
+export type UtilityArm = {
+    themeKeys: string[];
+    themeKeysPresent: boolean;
+    isColor: boolean;
+    bareValue: string;
+    bareValueSuffix: string;
+    refusesModifier: boolean;
+    inferTypes: string[];
+    inferTypesPresent: boolean;
+    percentagePassesThrough: boolean;
+};

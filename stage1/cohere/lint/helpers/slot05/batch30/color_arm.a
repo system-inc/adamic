@@ -1,0 +1,4 @@
+import type { UtilityArm } from './model.a';
+export function colorArm(keys: string[], keysPresent: boolean): UtilityArm {
+    return {themeKeys: keys, themeKeysPresent: keysPresent, isColor: true, bareValue: '', bareValueSuffix: '', refusesModifier: false, inferTypes: [], inferTypesPresent: false, percentagePassesThrough: false};
+}

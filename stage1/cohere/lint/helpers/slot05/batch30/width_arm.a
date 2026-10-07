@@ -1,0 +1,4 @@
+import type { UtilityArm } from './model.a';
+export function widthArm(key: string, suffix: string, refusesModifier: boolean): UtilityArm {
+    return {themeKeys: [key], themeKeysPresent: true, isColor: false, bareValue: 'PositiveInteger', bareValueSuffix: suffix, refusesModifier: refusesModifier, inferTypes: [], inferTypesPresent: false, percentagePassesThrough: false};
+}

@@ -1,0 +1,20 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { colorArm } from './color_arm.a';
+import { themeArm } from './theme_arm.a';
+import { widthArm } from './width_arm.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse(); if (root < 0) { panic(json.error); }
+function text(index: number, name: string): string { return json.node(json.field(index, name)).text; }
+function truth(index: number, name: string): boolean { return text(index, name) === 'true'; }
+function texts(index: number, name: string): string[] { const values: string[] = []; for (const v of json.node(json.field(index, name)).children) { values.push(json.node(v).text); } return values; }
+const mode = text(root, 'mode');
+for (const row of json.node(json.field(root, 'rows')).children) {
+    const keys = texts(row, 'keys'); const present = truth(row, 'present'); const key = text(row, 'key'); const suffix = text(row, 'suffix'); const guard = truth(row, 'guard');
+    const first = mode === 'color' ? colorArm(keys, present) : mode === 'theme' ? themeArm(key) : widthArm(key, suffix, guard);
+    const second = mode === 'color' ? colorArm(keys, present) : mode === 'theme' ? themeArm(key) : widthArm(key, suffix, guard);
+    console.log(`${first.themeKeysPresent}|${first.themeKeys.length}|${first.themeKeys.join('~')}|${first.isColor}|${first.bareValue}|${first.bareValueSuffix}|${first.refusesModifier}|${first.inferTypesPresent}|${first.inferTypes.join('~')}|${first.percentagePassesThrough}`);
+    if (first.themeKeys.length > 0) { first.themeKeys[0] = '__alias_probe__'; }
+    console.log(`${second.themeKeys[0] ?? 'none'}|${keys[0] ?? 'none'}`);
+}
