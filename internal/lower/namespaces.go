@@ -215,18 +215,28 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 // edge keeps namespace reads checked at runtime; it is never proof of no effects.
 func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 	initialized := map[*ast.Node]bool{}
-	var visit func(*ast.Node, map[*ast.Node]bool, bool) error
-	visit = func(node *ast.Node, active map[*ast.Node]bool, execute bool) error {
-		if node == nil || ast.IsTypeNode(node) || active[node] || ast.IsFunctionLike(node) && !execute {
+	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+	checkCall := func(target *ast.Node) error {
+		for declaration, read := range graph.reach(target) {
+			if !initialized[declaration] {
+				if declaration.Kind == ast.KindEnumDeclaration {
+					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
+				}
+				return l.notYet(read, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+			}
+		}
+		return nil
+	}
+	var visit func(*ast.Node) error
+	visit = func(node *ast.Node) error {
+		if node == nil || ast.IsTypeNode(node) || ast.IsFunctionLike(node) {
 			return nil
 		}
-		active[node] = true
-		defer delete(active, node)
 		if ast.IsClassLike(node) {
 			for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
 				if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
 					for _, element := range clause.AsHeritageClause().Types.Nodes {
-						if err := visit(element.AsExpressionWithTypeArguments().Expression, active, false); err != nil {
+						if err := visit(element.AsExpressionWithTypeArguments().Expression); err != nil {
 							return err
 						}
 					}
@@ -236,7 +246,7 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 			// declaration. Unknown construction keeps the checks in those bodies.
 			for _, member := range node.AsClassDeclaration().Members.Nodes {
 				if ast.HasStaticModifier(member) || member.Kind == ast.KindClassStaticBlockDeclaration {
-					if err := visit(member, active, false); err != nil {
+					if err := visit(member); err != nil {
 						return err
 					}
 				}
@@ -245,7 +255,7 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 		}
 		if node.Kind == ast.KindModuleDeclaration {
 			for _, statement := range namespaceStatements(node) {
-				if err := visit(statement, active, false); err != nil {
+				if err := visit(statement); err != nil {
 					return err
 				}
 			}
@@ -253,13 +263,16 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 			return nil
 		}
 		if l.namespaceValueNode(node) {
+			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
+				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
+			}
 			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] {
 				return l.notYet(node, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
 			}
 		}
 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {
 			if target := l.namespaceCallable(node.Expression()); target != nil {
-				if err := visit(target, active, true); err != nil {
+				if err := checkCall(target); err != nil {
 					return err
 				}
 			}
@@ -267,19 +280,22 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 			// the same graph; unknown values retain checks in their eventual bodies.
 			for _, argument := range node.Arguments() {
 				if target := l.namespaceCallable(argument); target != nil {
-					if err := visit(target, active, true); err != nil {
+					if err := checkCall(target); err != nil {
 						return err
 					}
 				}
 			}
 		}
 		var found error
-		node.ForEachChild(func(child *ast.Node) bool { found = visit(child, active, false); return found != nil })
+		node.ForEachChild(func(child *ast.Node) bool { found = visit(child); return found != nil })
+		if node.Kind == ast.KindEnumDeclaration {
+			initialized[node] = true
+		}
 		return found
 	}
 	for _, module := range modules {
 		for _, statement := range module.Statements.Nodes {
-			if err := visit(statement, map[*ast.Node]bool{}, false); err != nil {
+			if err := visit(statement); err != nil {
 				return err
 			}
 		}
