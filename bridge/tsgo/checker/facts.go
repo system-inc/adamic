@@ -203,6 +203,9 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "node-symbol-origin": return p.nodeSymbolOrigin(out, c, node, question)
+	case "isolated-declarations": return p.isolatedDeclarations(out, node, question)
+	case "index-signature-access": return p.indexSignatureAccess(out, c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {
 			return "", err

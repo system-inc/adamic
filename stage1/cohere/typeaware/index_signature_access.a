@@ -1,0 +1,23 @@
+import type { Rules } from './rules.ts';
+import { stringLike } from './flags.ts';
+import { Frames, header } from './frames.ts';
+export function indexSignatureOption(rules: Rules, root: number): boolean {
+    const frames = new Frames(rules.ask(root, 'index-signature-access'));
+    header(frames, 'index-signature-access');
+    const enabled = frames.yes();
+    frames.end();
+    return enabled;
+}
+export function stringIndexWithoutProperty(rules: Rules, index: number): boolean {
+    const frames = new Frames(rules.ask(index, 'index-signature-access'));
+    header(frames, 'index-signature-access');
+    frames.yes();
+    const property = frames.yes();
+    const count = frames.natural();
+    let stringIndex = false;
+    for(let at = 0; at < count; at++) {
+        if((frames.natural() & stringLike) !== 0) { stringIndex = true; }
+    }
+    frames.end();
+    return !property && stringIndex;
+}

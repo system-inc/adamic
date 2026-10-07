@@ -1,0 +1,28 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class NodeSymbolOrigin {
+    readonly present: boolean;
+    readonly count: number;
+    readonly firstDeclarationFile: boolean;
+    readonly allDefaultLibraries: boolean;
+    constructor(present: boolean, count: number, firstDeclarationFile: boolean, allDefaultLibraries: boolean) {
+        this.present = present; this.count = count;
+        this.firstDeclarationFile = firstDeclarationFile; this.allDefaultLibraries = allDefaultLibraries;
+    }
+}
+export function nodeSymbolOrigin(rules: Rules, index: number): NodeSymbolOrigin {
+    const frames = new Frames(rules.ask(index, 'node-symbol-origin'));
+    header(frames, 'node-symbol-origin');
+    const present = frames.yes();
+    let count = 0; let firstDeclarationFile = false; let allDefaultLibraries = true;
+    if(present) {
+        frames.field(); count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            frames.field(); const declaration = frames.yes(); const library = frames.yes();
+            if(at === 0) { firstDeclarationFile = declaration; }
+            if(!library) { allDefaultLibraries = false; }
+        }
+    }
+    frames.end();
+    return new NodeSymbolOrigin(present, count, firstDeclarationFile, allDefaultLibraries);
+}

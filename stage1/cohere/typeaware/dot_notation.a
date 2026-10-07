@@ -1,0 +1,89 @@
+import type { Rules } from './rules.ts';
+import { indexSignatureOption, stringIndexWithoutProperty } from './index_signature_access.a';
+
+export class DotNotation {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    identifier(text: string, first = true): boolean {
+        if(text.length === 0) { return false; }
+        for(let at = 0; at < text.length; at++) {
+            const code = text.charCodeAt(at);
+            if(!((code >= 65 && code <= 90) || (code >= 97 && code <= 122) || code === 95 || code === 36 ||
+                ((!first || at > 0) && code >= 48 && code <= 57))) { return false; }
+        }
+        return true;
+    }
+    decimal(text: string): boolean {
+        if(text === '0') { return true; }
+        if(text.startsWith('0')) {
+            let nonOctal = false;
+            for(let at = 1; at < text.length; at++) {
+                const code = text.charCodeAt(at);
+                if(code < 48 || code > 57) { return false; }
+                if(code === 56 || code === 57) { nonOctal = true; }
+            }
+            return nonOctal;
+        }
+        if(text.charCodeAt(0) < 49 || text.charCodeAt(0) > 57) { return false; }
+        for(let at = 1; at < text.length; at++) {
+            if(text.slice(at, at + 1) === '_') { at++; }
+            const code = text.charCodeAt(at);
+            if(!Number.isFinite(code) || code < 48 || code > 57) { return false; }
+        }
+        return true;
+    }
+    comments(start: number, end: number): boolean {
+        // Scan tokens so comment markers inside a string are never trivia.
+        const scanner = this.rules.scanner;
+        scanner.pos = start;
+        while(scanner.pos < end) {
+            const before = scanner.pos;
+            scanner.scan();
+            const trivia = scanner.text.slice(before, Math.min(scanner.start, end));
+            if(trivia.includes('/*') || trivia.includes('//')) { return true; }
+            if(scanner.pos <= before) { break; }
+        }
+        return false;
+    }
+    visit(index: number, allowIndex: boolean): void {
+        const parser = this.rules.parser;
+        const node = parser.node(index);
+        const object = parser.node(node.children[0] ?? -1);
+        const keyIndex = this.rules.skip(node.children[node.children.length - 1] ?? -1);
+        const keyNode = parser.node(keyIndex);
+        let key = ''; let formatted = '';
+        if(keyNode.kind === 'StringLiteral' || keyNode.kind === 'NoSubstitutionTemplateLiteral') {
+            key = keyNode.text;
+            formatted = keyNode.kind === 'StringLiteral' ? `"${key}"` : `\`${key}\``;
+        }
+        else if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(keyNode.kind)) {
+            key = keyNode.kind === 'TrueKeyword' ? 'true' : keyNode.kind === 'FalseKeyword' ? 'false' : 'null';
+            formatted = key;
+        }
+        else { return; }
+        if(!this.identifier(key) || (allowIndex && stringIndexWithoutProperty(this.rules, index))) { return; }
+        const finding = this.rules.add('dot-notation', 'useDot',
+            `[${formatted}] is better written in dot notation. Bracket notation is for keys computed at runtime; with a literal inside, it is the same access written the long way, and it reads as though the key were dynamic when it is not. Editors also stop offering completion and rename through a bracketed key, so the property quietly drops out of every refactor that touches it.`, keyIndex);
+        const source = this.rules.scanner.text;
+        const relative = source.slice(object.end, node.end).indexOf('[');
+        if(relative < 0) { return; }
+        const open = object.end + relative;
+        const close = node.end - 1;
+        if(close <= open || source.slice(close, close + 1) !== ']' || this.comments(open, close)) { return; }
+        const optional = source.slice(object.end, open).includes('?.');
+        const prefix = optional ? '' : this.decimal(source.slice(object.pos, object.end).trim()) ? ' .' : '.';
+        const after = source.slice(close + 1, close + 2);
+        finding.fixStart = this.rules.byte(open);
+        finding.fixEnd = this.rules.byte(close + 1);
+        finding.replacement = `${prefix}${key}${this.identifier(after, false) ? ' ' : ''}`;
+    }
+    run(): void {
+        const root = this.rules.parser.nodes.findIndex((node) => node.kind === 'SourceFile');
+        const allowIndex = indexSignatureOption(this.rules, root);
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) >= 0 && this.rules.parser.node(index).kind === 'ElementAccessExpression') {
+                this.visit(index, allowIndex);
+            }
+        }
+    }
+}

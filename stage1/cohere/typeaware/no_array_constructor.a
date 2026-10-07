@@ -1,0 +1,37 @@
+import type { Rules } from './rules.ts';
+import { nodeSymbolOrigin } from './node_symbol_origin.a';
+import { Repair } from './repair.ts';
+import { Suggestion } from './suggestion.ts';
+
+export class NoArrayConstructor {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    global(index: number): boolean {
+        const origin = nodeSymbolOrigin(this.rules, index);
+        return origin.present && origin.count > 0 && origin.firstDeclarationFile;
+    }
+
+    visit(index: number): void {
+        const parser = this.rules.parser;
+        const node = parser.node(index);
+        const calleeIndex = node.children[0] ?? -1;
+        const callee = parser.node(calleeIndex);
+        const count = Math.max(0, node.list);
+        if(callee.kind !== 'Identifier' || callee.text !== 'Array' || node.optional ||
+            node.children.length !== count + 1) { return; }
+        const first = node.children[node.children.length - count] ?? -1;
+        if(count === 1 && parser.node(first).kind !== 'SpreadElement') { return; }
+        if(!this.global(calleeIndex)) { return; }
+        const finding = this.rules.add('no-array-constructor', 'noArrayConstructor',
+            'This builds an array with the `Array` constructor, whose argument list means two different things depending on how many arguments it gets: `Array(3)` is an empty array of length three, while `Array(3, 4)` holds those two values. A refactor that changes the count silently changes the kind of array produced. Use a literal, `[3, 4]`, which reads the same at every length.', index);
+        const replacement = count === 0 ? '[]' : `[${this.rules.scanner.text.slice(parser.node(first).pos, node.end - 1)}]`;
+        finding.suggestions.push(new Suggestion('useAnArrayLiteral', 'Replace the `Array` call with an array literal.',
+            [new Repair(finding.start, finding.end, replacement)]));
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) >= 0 &&
+                ['CallExpression', 'NewExpression'].includes(this.rules.parser.node(index).kind)) { this.visit(index); }
+        }
+    }
+}

@@ -1,0 +1,97 @@
+import type { Rules } from './rules.ts';
+import { isolatedDeclarations } from './isolated_declarations.a';
+import { nodeSymbolOrigin } from './node_symbol_origin.a';
+import { Repair } from './repair.ts';
+
+export class ConsistentGenericConstructors {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    exempt(index: number): boolean {
+        const name = this.rules.parser.node(index).text;
+        if(!['Float32Array', 'Float64Array', 'Int16Array', 'Int32Array', 'Int8Array', 'Uint16Array',
+            'Uint32Array', 'Uint8Array', 'Uint8ClampedArray'].includes(name)) { return false; }
+        const origin = nodeSymbolOrigin(this.rules, index);
+        return !origin.present || origin.allDefaultLibraries;
+    }
+
+    visit(index: number): void {
+        const parser = this.rules.parser;
+        const node = parser.node(index);
+        if(node.kind === 'Parameter') {
+            const parent = parser.node(this.rules.parents[index] ?? -1);
+            if(!['FunctionDeclaration', 'FunctionExpression', 'MethodDeclaration', 'Constructor', 'GetAccessor',
+                'SetAccessor'].includes(parent.kind)) { return; }
+        }
+        // The initializer is last; the annotation precedes it. Name and modifiers
+        // cannot be mistaken for an annotation with generic arguments.
+        const initializerIndex = node.children[node.children.length - 1] ?? -1;
+        const initializer = parser.node(initializerIndex);
+        if(initializer.kind !== 'NewExpression') { return; }
+        const calleeIndex = initializer.children[0] ?? -1;
+        const callee = parser.node(calleeIndex);
+        if(callee.kind !== 'Identifier' || initializer.children.length !== Math.max(0, initializer.list) + 1) { return; }
+        const annotationIndex = node.children[node.children.length - 2] ?? -1;
+        const annotation = parser.node(annotationIndex);
+        const unwrapped = parser.node(this.rules.skip(annotationIndex, 'ParenthesizedType'));
+        if(unwrapped.kind !== 'TypeReference' || unwrapped.children.length < 2) { return; }
+        const nameIndex = unwrapped.children[0] ?? -1;
+        const name = parser.node(nameIndex);
+        if(name.kind !== 'Identifier' || name.text !== callee.text || this.exempt(nameIndex)) { return; }
+        const source = this.rules.scanner.text;
+        let start = this.rules.start(annotation);
+        while(start > 0 && source.slice(start - 1, start) !== ':') { start--; }
+        if(start > 0) { start--; }
+        const first = parser.node(unwrapped.children[1] ?? -1);
+        const last = parser.node(unwrapped.children[unwrapped.children.length - 1] ?? -1);
+        let argumentStart = first.pos;
+        while(argumentStart > 0 && source.slice(argumentStart - 1, argumentStart) !== '<') { argumentStart--; }
+        if(argumentStart > 0) { argumentStart--; }
+        let argumentEnd = last.end;
+        while(argumentEnd < source.length && source.slice(argumentEnd, argumentEnd + 1) !== '>') { argumentEnd++; }
+        if(argumentEnd < source.length) { argumentEnd++; }
+        let comments = '';
+        const scanner = this.rules.scanner;
+        scanner.pos = start;
+        while(scanner.pos < annotation.end) {
+            const before = scanner.pos;
+            scanner.scan();
+            const triviaEnd = Math.min(scanner.start, annotation.end);
+            let at = before;
+            while(at < triviaEnd) {
+                const pair = source.slice(at, at + 2);
+                if(pair === '/*' || pair === '//') {
+                    let end = source.length;
+                    if(pair === '/*') {
+                        const close = source.indexOf('*/', at + 2);
+                        if(close >= 0) { end = close + 2; }
+                    }
+                    else {
+                        end = at + 2;
+                        while(end < source.length && ![10, 13, 8232, 8233].includes(source.charCodeAt(end))) { end++; }
+                    }
+                    if(at >= start && end <= annotation.end && !(at >= argumentStart && end <= argumentEnd)) {
+                        comments += source.slice(at, end);
+                    }
+                    at = end;
+                }
+                else { at++; }
+            }
+            if(scanner.pos <= before) { break; }
+        }
+        const finding = this.rules.add('consistent-generic-constructors', 'preferConstructor',
+            'The generic type arguments should be specified as part of the constructor type arguments.', index);
+        finding.repairs.push(new Repair(this.rules.byte(start), this.rules.byte(annotation.end), ''));
+        finding.repairs.push(new Repair(this.rules.byte(callee.end), this.rules.byte(callee.end),
+            `${comments}${source.slice(argumentStart, argumentEnd)}${initializer.list < 0 ? '()' : ''}`));
+    }
+    run(): void {
+        const root = this.rules.parser.nodes.findIndex((node) => node.kind === 'SourceFile');
+        if(isolatedDeclarations(this.rules, root)) { return; }
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) >= 0 &&
+                ['VariableDeclaration', 'PropertyDeclaration', 'Parameter'].includes(this.rules.parser.node(index).kind)) {
+                this.visit(index);
+            }
+        }
+    }
+}

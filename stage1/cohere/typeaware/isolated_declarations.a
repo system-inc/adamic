@@ -1,0 +1,9 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export function isolatedDeclarations(rules: Rules, root: number): boolean {
+    const frames = new Frames(rules.ask(root, 'isolated-declarations'));
+    header(frames, 'isolated-declarations');
+    const result = frames.yes();
+    frames.end();
+    return result;
+}
