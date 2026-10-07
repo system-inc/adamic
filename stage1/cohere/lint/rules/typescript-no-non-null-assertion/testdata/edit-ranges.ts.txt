@@ -1,0 +1,7 @@
+const emoji = '😀';
+const é = receiver;
+const result = é!.value;
+const comment = receiver! /* . remains in the comment */ .value;
+const nested = receiver?.value!!;
+const assigned = ({ k: receiver!.value } = other);
+(receiver!.value as number)++;
