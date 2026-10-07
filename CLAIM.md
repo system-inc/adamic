@@ -56,8 +56,8 @@ the implemented boundary without claiming complete JavaScript formatting.
 
 ## Current checkpoint status
 
-The follow-up source audit has 15,644 identical frozen files, zero output
-mismatches and 8 acceptance disagreements. The local parser adapts the main
+The follow-up source audit has 15,647 identical frozen files, zero output
+mismatches and 5 acceptance disagreements. The local parser adapts the main
 parser and origin/codex/parser-recovery b85afdd inside the ESTree territory; only
 scanner and node-model dependencies remain shared. No shared parser/compiler/
 runtime files are edited. The claim remains incomplete. Follow-up evidence lives

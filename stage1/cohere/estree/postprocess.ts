@@ -111,41 +111,82 @@ export class Postprocessor {
             ),
         );
     }
-    visit(id: number): number {
-        if(id < 0) {
-            return id;
+    visit(root: number): number {
+        if(root < 0) {
+            return root;
         }
-        const node = this.arena.node(id);
-        this.contentEnd(id);
-        if(node.type === 'TemplateElement') {
-            node.start = locStart(this.arena, id) + 1;
-            node.end = locEnd(this.arena, id) - (node.bool('tail') ? 1 : 2);
-        }
-        else if(node.type === 'TSParenthesizedType') {
-            return this.visit(node.child('typeAnnotation'));
-        }
-        else if(
-            (node.type === 'TSUnionType' || node.type === 'TSIntersectionType') &&
-            node.list('types').length === 1
-        ) {
-            return this.visit(node.list('types')[0] ?? -1);
-        }
-        const keys: readonly string[] = visitorKeys.get(node.type) ?? [];
-        for(const key of keys) {
-            const value = node.get(key);
-            if(value.kind === 'node') {
-                node.set(key, childValue(this.visit(value.node)));
+        const ids = [root];
+        const phases = [0];
+        const completed = new Map<number, number>();
+        while(ids.length > 0) {
+            const id = ids.pop() ?? panic('missing traversal node');
+            const phase = phases.pop() ?? panic('missing traversal phase');
+            if(id < 0) {
+                continue;
             }
-            else if(value.kind === 'list') {
-                for(let index = 0; index < value.list.length; index++) {
-                    value.list[index] = this.visit(value.list[index] ?? -1);
+            const node = this.arena.node(id);
+            const unwrap =
+                node.type === 'TSParenthesizedType'
+                    ? node.child('typeAnnotation')
+                    : (node.type === 'TSUnionType' || node.type === 'TSIntersectionType') &&
+                        node.list('types').length === 1
+                      ? (node.list('types')[0] ?? -1)
+                      : -2;
+            if(phase === 0) {
+                this.contentEnd(id);
+                if(node.type === 'TemplateElement') {
+                    node.start = locStart(this.arena, id) + 1;
+                    node.end = locEnd(this.arena, id) - (node.bool('tail') ? 1 : 2);
+                }
+                ids.push(id);
+                phases.push(1);
+                if(unwrap !== -2) {
+                    ids.push(unwrap);
+                    phases.push(0);
+                    continue;
+                }
+                const keys: readonly string[] = visitorKeys.get(node.type) ?? [];
+                const children: number[] = [];
+                for(const key of keys) {
+                    const value = node.get(key);
+                    if(value.kind === 'node') {
+                        children.push(value.node);
+                    }
+                    else if(value.kind === 'list') {
+                        for(const child of value.list) {
+                            children.push(child);
+                        }
+                    }
+                    else if(!node.has(key)) {
+                        node.set(key, absent());
+                    }
+                }
+                for(let index = children.length - 1; index >= 0; index--) {
+                    ids.push(children[index] ?? -1);
+                    phases.push(0);
                 }
             }
-            else if(!node.has(key)) {
-                node.set(key, absent());
+            else if(unwrap !== -2) {
+                completed.set(id, completed.get(unwrap) ?? unwrap);
+            }
+            else {
+                const keys: readonly string[] = visitorKeys.get(node.type) ?? [];
+                for(const key of keys) {
+                    const value = node.get(key);
+                    if(value.kind === 'node') {
+                        node.set(key, childValue(completed.get(value.node) ?? value.node));
+                    }
+                    else if(value.kind === 'list') {
+                        for(let index = 0; index < value.list.length; index++) {
+                            const child = value.list[index] ?? -1;
+                            value.list[index] = completed.get(child) ?? child;
+                        }
+                    }
+                }
+                completed.set(id, this.rebalance(id));
             }
         }
-        return this.rebalance(id);
+        return completed.get(root) ?? root;
     }
     program(id: number): number {
         const node = this.arena.node(id);

@@ -23,24 +23,52 @@ export function written(text: string): string {
     }
     return result;
 }
-export function dump(arena: Arena, id: number, depth = 0): string {
-    if(id < 0) {
-        return `${depth} null\n`;
+class DumpFrame {
+    readonly id: number;
+    readonly depth: number;
+    readonly property: number;
+    constructor(id: number, depth: number, property: number) {
+        this.id = id;
+        this.depth = depth;
+        this.property = property;
     }
-    const node = arena.node(id);
-    const parts: string[] = [
-        `${depth} ${node.type} ${node.start} ${node.end} ${node.parenthesized ? 1 : 0} ${node.hasContentEnd ? 1 : 0} ${node.contentEnd} ${locStart(arena, id)} ${locEnd(arena, id)} ${ignoredSemicolon(arena, id) ? 1 : 0}\n`,
-    ];
-    for(const property of node.properties) {
-        parts.push(`${depth} .${property.key} ${property.value.kind}`);
+}
+export function dump(arena: Arena, root: number, depth = 0): string {
+    const parts: string[] = [];
+    const stack = [new DumpFrame(root, depth, -1)];
+    while(stack.length > 0) {
+        const frame = stack.pop();
+        if(frame === undefined) {
+            break;
+        }
+        const level = frame.depth;
+        if(frame.id < 0) {
+            parts.push(`${level} null\n`);
+            continue;
+        }
+        const node = arena.node(frame.id);
+        if(frame.property < 0) {
+            parts.push(
+                `${level} ${node.type} ${node.start} ${node.end} ${node.parenthesized ? 1 : 0} ${node.hasContentEnd ? 1 : 0} ${node.contentEnd} ${locStart(arena, frame.id)} ${locEnd(arena, frame.id)} ${ignoredSemicolon(arena, frame.id) ? 1 : 0}\n`,
+            );
+            for(let index = node.properties.length - 1; index >= 0; index--) {
+                stack.push(new DumpFrame(frame.id, level, index));
+            }
+            continue;
+        }
+        const property = node.properties[frame.property];
+        if(property === undefined) {
+            continue;
+        }
+        parts.push(`${level} .${property.key} ${property.value.kind}`);
         if(property.value.kind === 'node') {
             parts.push('\n');
-            parts.push(dump(arena, property.value.node, depth + 1));
+            stack.push(new DumpFrame(property.value.node, level + 1, -1));
         }
         else if(property.value.kind === 'list') {
             parts.push(` ${property.value.list.length}\n`);
-            for(const child of property.value.list) {
-                parts.push(dump(arena, child, depth + 1));
+            for(let index = property.value.list.length - 1; index >= 0; index--) {
+                stack.push(new DumpFrame(property.value.list[index] ?? -1, level + 1, -1));
             }
         }
         else {

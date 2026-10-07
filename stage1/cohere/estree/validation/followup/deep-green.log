@@ -1,0 +1,33 @@
+=== RUN   TestDeepGrammar
+    deep_test.go:39: three 4096-operand cases, 2551820 identical bytes in all builds
+--- PASS: TestDeepGrammar (27.24s)
+=== RUN   TestDeepMutants
+=== RUN   TestDeepMutants/binary-operator
+    deep_test.go:56: native: line 25: Go "2 .operator string +", port "2 .operator string -"
+    deep_test.go:56: Node: line 25: Go "2 .operator string +", port "2 .operator string -"
+=== RUN   TestDeepMutants/postorder-alias
+    deep_test.go:56: native: line 89: Go "3 LogicalExpression 40 45 0 0 0 40 45 0", port "3 Identifier 40 41 0 0 0 40 41 0"
+    deep_test.go:56: Node: line 89: Go "3 LogicalExpression 40 45 0 0 0 40 45 0", port "3 Identifier 40 41 0 0 0 40 41 0"
+=== RUN   TestDeepMutants/dump-property-order
+    deep_test.go:56: Node: line 2: Go "0 .body list 4", port "0 .directives null"
+    deep_test.go:56: native: line 2: Go "0 .body list 4", port "0 .directives null"
+--- PASS: TestDeepMutants (69.62s)
+    --- PASS: TestDeepMutants/binary-operator (23.15s)
+    --- PASS: TestDeepMutants/postorder-alias (23.07s)
+    --- PASS: TestDeepMutants/dump-property-order (22.76s)
+=== RUN   TestThreePortMutants
+=== RUN   TestThreePortMutants/member-computed
+    estree_test.go:237: source Node finished; byte comparison caught line 3810: Go "3 .computed bool 0", port "3 .computed bool 1"
+    estree_test.go:244: sanitized native finished; byte comparison caught line 3810: Go "3 .computed bool 0", port "3 .computed bool 1"
+=== RUN   TestThreePortMutants/logical-rebalance
+    estree_test.go:237: source Node finished; byte comparison caught line 3543: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+    estree_test.go:244: sanitized native finished; byte comparison caught line 3543: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+=== RUN   TestThreePortMutants/merged-jsdoc-value
+    estree_test.go:237: source Node finished; byte comparison caught line 4661: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+    estree_test.go:244: sanitized native finished; byte comparison caught line 4661: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+--- PASS: TestThreePortMutants (71.66s)
+    --- PASS: TestThreePortMutants/member-computed (23.26s)
+    --- PASS: TestThreePortMutants/logical-rebalance (23.42s)
+    --- PASS: TestThreePortMutants/merged-jsdoc-value (24.35s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	168.531s

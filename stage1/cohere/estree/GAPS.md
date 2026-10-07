@@ -71,8 +71,8 @@ one second on source Node and sanitized native. That observation concerns the
 shared dependency, not the local driver. The original modifier, cooked surrogate
 and JSX refusals are repaired and held to Go on all three builds. The baseline
 92 output mismatches are also resolved. Current frozen-corpus acceptance still
-differs on 8 files, including missing parser diagnostics, unrepresented
-recovery and raw input loss. Every disposition is retained; whole-checkout
+differs on five files, all refused because the text input boundary loses raw
+UTF-8 information. Every disposition is retained; whole-checkout
 success is not claimed. See FOLLOWUP.md for checkpoint commands and counts.
 
 ## Compiler gap: interface call and concrete default argument
@@ -160,3 +160,14 @@ without changing either supplied argument, yields 1 on all three builds. This is
 an observation; the compiler cause has not been diagnosed. TestInterfaceTypeMethodGap
 requires both outcomes. The port uses direct calls and pure helpers instead.
 This differs from the earlier fewer-arguments interfaceDefault sanitizer gap.
+
+## Deep binary expressions in the frozen corpus
+
+The three binderBinaryExpressionStress files formerly exceeded Node's call stack.
+Conversion now walks ordinary left binary spines explicitly, postprocessing uses
+preorder/postorder work lists, and the canonical serializer uses explicit frames.
+All three files match Go on source Node, sanitized native and emitted JS, including
+5,333,598 canonical bytes. TestDeepGrammar checks numeric, quoted and logical
+4096-operand chains on all builds. gaps/deepBinary.ts calls the actual driver.
+This does not claim unbounded stack safety for every possible source nesting shape;
+other recursive grammar paths remain. No compiler or runtime files were edited.

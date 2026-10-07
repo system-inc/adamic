@@ -1,3 +1,4 @@
+import { ordinaryBinary } from './binaryConvert.ts';
 import { modifierKinds } from './sourceGrammar.ts';
 import { accessibility, dataChildren, emptyIdentifier } from './modifiers.ts';
 import { typeList } from './typeLists.ts';
@@ -1336,6 +1337,11 @@ export class Converter {
                 const result = this.create(id, 'SequenceExpression');
                 this.set(result, 'expressions', listValue(expressions));
                 return result;
+            }
+            if(!assignment) {
+                return ordinaryBinary(this.arena, this.parser.nodes, this.text, this.offsets, id, (child, owner) =>
+                    this.convert(child, false, owner),
+                );
             }
             const result = this.create(
                 id,

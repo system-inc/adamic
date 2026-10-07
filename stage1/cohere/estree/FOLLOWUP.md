@@ -1,6 +1,6 @@
 Follow-up on codex/stage1-estree, baseline 80f1ded.
-The frozen source census has 15,644 matches and zero output mismatches.
-Acceptance disagreements fall from 984 to 8; this remains incomplete.
+The frozen source census has 15,647 matches and zero output mismatches.
+Acceptance disagreements fall from 984 to 5; this remains incomplete.
 UTF-8 loss and parser stalls have separate pushed commits and proving programs.
 No shared parser, compiler or runtime files were edited.
 
@@ -288,3 +288,33 @@ panics. Removing concrete defaults is the control: all builds print 1. Compiler
 files remain unedited. TestTypeMemberLibraryGap separately passes in 0.954s and
 proves the original library refuses an interface initializer accepted by Go.
 Cohere passes, 33/33 Adamic-ready sources. Logs and the frozen census are retained.
+
+### Deep traversal checkpoint
+
+Grammar checkpoint cc1ba3b was pushed. The actual source audit now has 15,647
+identical / five refused Go answers / zero accepted Go refusals / zero different /
+11,717 both refused on all 27,369 frozen records. All 92 original output mismatches
+and 979 of 984 original acceptance disagreements are resolved. No old matching
+record regresses. The five remaining records hit the documented raw-input guard.
+
+The remaining three stack-limited files are binderBinaryExpressionStress variants.
+An explicit ordinary-binary left spine avoids recursive conversion; preorder and
+postorder work lists avoid recursive postprocessing; canonical dump frames preserve
+all original own-field and child order. The helper receives a direct callback,
+without an interface call to a defaulted method. Shared code remains untouched.
+
+The scratch native trial checked all three recovered frozen files, 5,333,598 bytes,
+in all three port builds (28.796s). The promoted driver passes three generated
+4096-operand numeric/string/logical cases, another 2,551,820 canonical bytes.
+`go test -count=1 -v ./stage1/cohere/estree -run
+'^TestDeep|^TestThreePortMutants$' > /tmp/estree-deep-green.log 2>&1`
+passes in 168.531s. New binary-operator, postorder-alias and dump-field-order mutants
+finish normally and differ at lines 25, 89 and 2 on source Node and sanitized
+native. The original computed-member, logical-rebalance and merged-JSDoc mutants
+also finish normally and differ at lines 3810, 3543 and 4661 on both builds.
+Cohere passes with 34/34 Adamic-ready sources.
+
+The complete matching-corpus check and complete native refusal check are running
+for final validation. These frozen-corpus counts are not a new inventory of the
+implementation added in this thread. Deep-source agreement does not claim that
+every arbitrary nesting shape is free from all recursive parser limits.
