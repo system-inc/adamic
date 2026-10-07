@@ -14,7 +14,7 @@
         "--no-fund"
       ],
       "exit": 0,
-      "seconds": 3.428
+      "seconds": 4.456
     },
     "build": {
       "command": [
@@ -23,7 +23,7 @@
         "build"
       ],
       "exit": 0,
-      "seconds": 7.557
+      "seconds": 15.181
     },
     "tests": {
       "command": [
@@ -35,7 +35,7 @@
         "--no-colors"
       ],
       "exit": 0,
-      "seconds": 330.41
+      "seconds": 413.644
     }
   },
   "status": "pass",
@@ -45,5 +45,5 @@
     "pending": 0
   },
   "baseline_diffs": [],
-  "wall_seconds": 341.459
+  "wall_seconds": 433.359
 }

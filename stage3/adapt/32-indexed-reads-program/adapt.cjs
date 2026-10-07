@@ -3,7 +3,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const sites = require("./sites.json");
-const files = ["program.ts", "commandLineParser.ts", "binder.ts", "semver.ts", "programDiagnostics.ts", "tracing.ts", "symbolWalker.ts", "performance.ts"];
+const files = ["expressionToTypeNode.ts", "executeCommandLine.ts", "builder.ts", "builderPublic.ts", "builderState.ts", "builderStatePublic.ts", "watch.ts", "watchPublic.ts", "watchUtilities.ts", "resolutionCache.ts", "tsbuild.ts", "tsbuildPublic.ts", "moduleNameResolver.ts", "moduleSpecifiers.ts", "sys.ts", "program.ts", "commandLineParser.ts", "binder.ts", "semver.ts", "programDiagnostics.ts", "tracing.ts", "symbolWalker.ts", "performance.ts"];
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
 // Survey line/column fields are documentation, never edit offsets.
@@ -21,9 +21,12 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
         ts.forEachChild(node, visit);
     }
     visit(source);
+    const fileSites = sites.filter(site => site.file === file);
+    const indexedCount = [...groups.values()].reduce((count, group) => count + group.length, 0);
+    if (indexedCount !== fileSites.length) throw new Error(`indexed inventory drift: ${file}: ${indexedCount} != ${fileSites.length}`);
     const edits = [];
     let assertions = 0, zeros = 0, declined = 0;
-    for (const site of sites.filter(site => site.file === file)) {
+    for (const site of fileSites) {
         const group = groups.get(site.expression);
         if (!group || group.length !== site.total) throw new Error(`site drift: ${file}:${site.line} ${site.expression}`);
         const node = group[site.occurrence - 1];

@@ -1,31 +1,6 @@
 # Required indexed reads in the program partition
 
-## Current coverage after wave 6
-
-This wave reviews all eight indexed expressions in expressionToTypeNode.ts
-and executeCommandLine.ts. It adds four required-read assertions for a guarded
-JSDoc constructor parameter and three guarded first-command-line-argument reads.
-The cumulative ledger has 300 entries: 95 assertions and 205 declines across
-23 reviewed files; fourteen source files change. No U-zero site is selected.
-Complete inventory counts and occurrence shapes are validated before any write,
-using stock TypeScript 6.0.3 ASTs, with CRLF preserved. An unexpected read added
-to the last planned file fails with exit 1 and leaves all 23 files byte-identical
-to their mutant inputs; proof.json records this planning mutant.
-
-| File | TS2345 before/after | TS18048 before/after | TS2532 before/after | TS2322 before/after | TS2538 before/after | Five-code before/after | Full checker before/after |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| expressionToTypeNode.ts | 1 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 1 / 0 | 9 / 8 |
-| executeCommandLine.ts | 0 / 0 | 1 / 1 | 3 / 0 | 0 / 0 | 0 / 0 | 4 / 1 | 11 / 8 |
-
-This wave five-code census is 5 to 1; cumulative census is 217 to 63, and incremental cumulative census is 67 to 63. All 78 roots and the Adamic checker options remain unchanged. Every remaining finding has its full diagnostic chain and reason in declined-findings.json or other-findings.json.
-
-**New full-checker zero files: none.** expressionToTypeNode.ts reaches zero for the five requested codes, but still has eight other findings. executeCommandLine.ts retains one iterator-callback finding and seven other findings. The previously-zero reviewed files remain builderPublic.ts, builderStatePublic.ts, symbolWalker.ts and performance.ts.
-
-Stock emitted JavaScript is byte-identical for all 23 files. The second adapter CLI run makes zero edits, with identical CRLF counts. The fn.parameters[0]! to ?? 0 mutant is caught by the independent stock emitter and site contract, both exiting 1; wave6-mutant-proof.json records both failures. Final default oracle: **106,367 passing, zero failing, zero pending**, with an empty baseline diff. Install 3.428s, build 7.557s, tests 330.41s, total 341.459s. Only adaptations 00, 10, 30 and 32 are applied; adaptation 20 is excluded. Logs are /tmp/adapt32-wave6-*.log and /tmp/adapt32-wave6-oracle/. Earlier proof snapshots are archived under wave1/ through wave5/.
-
-Partition 32 remains partial for the catch-all remainder: ownership of corePublic.ts, performanceCore.ts, sourcemap.ts, transformer.ts, types.ts and visitorPublic.ts was requested and is not yet confirmed. Those files remain untouched to avoid crossing another worker territory. checker.ts, emitter.ts, transformers/, and all adaptation-30-owned files remain untouched.
-
-## Historical coverage after wave 5
+## Current coverage after wave 5
 
 This wave reviews all 70 indexed expressions in the ten builder, watch,
 resolution-cache and tsbuild files. It adds 23 required-read assertions,
@@ -324,12 +299,12 @@ oracle phase logs are under `/tmp/adapt32-wave1-oracle/` and
 
 ## Remaining partition work
 
-Waves 4 through 6 now cover the explicitly assigned module resolution, system,
-builder, watch, resolution-cache, tsbuild, expression and command-line files.
-The catch-all remainder awaits the ownership clarification listed above.
-No unchecked invariant or blanket assertion is inferred for those files.
-This unit does not establish the critical-path target of 40 complete compiler
-files past the checker. The whole Adamic
+Module resolution and specifiers, sys,
+builders, watchers, resolutionCache, tsbuild files, expressionToTypeNode,
+executeCommandLine, and other owned compiler files are not covered by the first three waves.
+Their source-local invariants have not yet been reviewed and no required-read
+assertions are inferred for them. These waves do not establish the critical
+path target of 40 complete compiler files past the checker. The whole Adamic
 repository gate, native tsc build, browser integration, and ESLint-rule tests
 are not run for this source-adaptation-only wave.
 
@@ -645,16 +620,3 @@ are not run for this source-adaptation-only wave.
 | tsbuildPublic.ts:737:37 | `buildOrder[buildOrder.length - 1]` | U-endpoint | decline | The existing debug equality assertion handles absence by checking the requested final project. |
 | tsbuildPublic.ts:1213:25 | `buildOrder[projectIndex]` | U-loop | assert | The build-order cursor is bounded by the dense buildOrder array length before reading the project. |
 | tsbuildPublic.ts:1905:29 | `buildOrder[index]` | U-loop | assert | The build-order cursor is bounded by the dense buildOrder array length before reading the project. |
-
-## Wave 6 site ledger
-
-| File:line:column | Expression | Class | Decision | Invariant / reason |
-| --- | --- | --- | --- | --- |
-| expressionToTypeNode.ts:354:35 | `node.typeArguments[0]` | U-position | decline | The existing visitNode overload accepts an absent type argument; no required indexed-value contract exists. |
-| expressionToTypeNode.ts:356:31 | `node.typeArguments[1]` | U-position | decline | The existing visitNode overload accepts an absent type argument; no required indexed-value contract exists. |
-| expressionToTypeNode.ts:1272:95 | `fn.parameters[0]` | U-endpoint | assert | isJSDocConstructSignature returns true only when a populated first parameter has the identifier name new. |
-| executeCommandLine.ts:408:30 | `inverted[value]` | U-table | decline | The existing ||= initializes an absent synonyms array before push; its indexed target is a compound store with explicit absence handling. |
-| executeCommandLine.ts:439:9 | `lines[lines.length - 2]` | U-endpoint | decline | The newline comparison accepts absence when no option output populated the preceding line. |
-| executeCommandLine.ts:746:39 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
-| executeCommandLine.ts:747:29 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
-| executeCommandLine.ts:747:54 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
