@@ -1,0 +1,37 @@
+import { readTextFile, panic } from 'adamic';
+
+// Length framing makes ["ab", "c"] different from ["a", "bc"].
+// Both hashes consume every UTF-16 unit, including each half of a surrogate pair.
+export class ResponseChecksum {
+	first: number = 2166136261;
+	second: number = 333555777;
+	requests: number = 0;
+	units: number = 0;
+	mix(code: number): void {
+		this.first = Math.imul(this.first ^ code, 16777619) >>> 0;
+		this.second = Math.imul(this.second ^ code, 2246822519) >>> 0;
+	}
+	add(response: string): void {
+		this.mix(response.length);
+		for (let index = 0; index < response.length; index++) {
+			this.mix(response.charCodeAt(index));
+		}
+		this.requests++;
+		this.units += response.length;
+	}
+	text(): string {
+		return `${this.requests}:${this.units}:${this.first}:${this.second}`;
+	}
+}
+
+export function readCorpus(filename: string): string[] {
+	const file = readTextFile(filename);
+	if (file.kind !== 'Ok') { panic(file.message); }
+	const requests = file.text.split('\n');
+	if (requests[requests.length - 1] === '') { requests.pop(); }
+	for (let index = 0; index < requests.length; index++) {
+		const request = requests[index] ?? '';
+		if (request.endsWith('\r')) { requests[index] = request.slice(0, -1); }
+	}
+	return requests;
+}

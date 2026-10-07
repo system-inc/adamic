@@ -1,0 +1,2 @@
+import { decodeJson } from 'adamic';
+decodeJson<{ readonly n?: number | undefined }>('{}');
