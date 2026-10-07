@@ -26,3 +26,9 @@ Rebased cleanly onto f8013f0baac41ddc340d76f83bddde38536a8f07. The uncached owne
 Current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06: clean rebase, uncached helper oracle PASS 58.059s, all 21,019 cases and six output-only mutants on all three paths. Rule branch c74d385b6 is explicitly parked unrebased for #zmh9v36.
 
 Main b8fb957aa839a9e8cb0b54279dd9864fa317bd30: clean rebase; uncached owned helper package and all six comparison-only mutants passed on all three Adamic paths, canonical hashes unchanged; go vet passed. Strong CFG self-edge remains refused with adamic/cycle-capable. No additional helper claim. Rule branch remains explicitly parked for #zmh9v36; ab70f38d4 is not an ancestor of main or area/stage1-lint. Full gate not run. Raw main-b8fb957a logs preserve exact timings and refusal.
+
+## Harness landed, rule ledger applied
+
+Rule branch b0f179e6a is rebased onto area/stage1-lint 7481e0324 and pushed. Six losing rule copies removed. Shared owned witnesses pass 57,889 identical bytes and all six own mutants pass Node, emitted JavaScript and sanitized native. Full TestRulesAgree remains red on the decorated async executor recovery fixture (AtToken at 12); raw evidence is on that branch under rules/no-async-promise-executor/evidence/landing. No shared harness changed.
+
+This helper branch is cleanly rebased onto current main 39638d9e278d38bb5aeae887f46d55a70e47aaad. Uncached owned helper tests PASS 56.386s, 21,019 cases, all six mutants caught solely by comparison on all three paths, canonical hashes unchanged. go vet passed with empty output. The strong CFG successor primitive still refuses adamic/cycle-capable. No further helper claimed, zero additional rules unblocked; full repository gate and new throughput measurements not run.
