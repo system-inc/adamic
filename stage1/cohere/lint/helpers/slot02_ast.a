@@ -4,7 +4,5 @@ export interface HelperNode {
     readonly kind: string;
     readonly text: string;
     readonly expression: number;
-    readonly tagName: number;
-    readonly attributes: number;
     readonly name: number;
 }

@@ -3,11 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	goast "go/ast"
-	"go/parser"
-	"go/token"
 	"os"
-	"strconv"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -19,49 +15,42 @@ import (
 )
 
 type Node struct {
-	Kind, Text                            string
-	Expression, TagName, Attributes, Name int
+	Kind, Text       string
+	Expression, Name int
 }
 type Query struct {
 	Node   int
 	Helper string
-	Accept int
 }
 type Corpus struct {
-	Nodes          []Node
-	Queries        []Query
-	Want           string
-	Files, Sources int
+	Nodes                    []Node
+	Queries                  []Query
+	Want                     string
+	Files, Sources, Captured int
+}
+
+type Source struct{ Rule, File, Source string }
+type Config struct {
+	Paths  []string
+	Inputs []Source
 }
 
 func main() {
-	var paths []string
+	var config Config
 	input, err := os.Open(os.Args[1])
 	if err != nil {
 		panic(err)
 	}
 	defer input.Close()
-	if err := json.NewDecoder(input).Decode(&paths); err != nil {
+	if err := json.NewDecoder(input).Decode(&config); err != nil {
 		panic(err)
 	}
 	sources := []string{"React", "(React)", "(((React)))", "document", "(document)", "react", "React.useState", "React['useState']", "React as unknown", "React!", "'React'", "null", "", "<div children />", "<Thing></Thing>", "<svg xlink:href='x' />", "const \\u0052eact = 1;", "const 世界 = 1;", "const o = { foo: 1, '': 2, 0x10: 3, 1e1: 4, [foo]: 5, [('foo')]: 6, [`bar`]: 7, [(x)]: 8 }; class C { #foo; [this.#foo] = 1; }"}
-	for _, path := range paths {
-		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
-		if err != nil {
-			panic(err)
-		}
-		goast.Inspect(file, func(n goast.Node) bool {
-			if lit, ok := n.(*goast.BasicLit); ok && lit.Kind == token.STRING {
-				value, err := strconv.Unquote(lit.Value)
-				if err != nil {
-					panic(err)
-				}
-				sources = append(sources, value)
-			}
-			return true
-		})
+	inputs := append([]Source{}, config.Inputs...)
+	for _, source := range sources {
+		inputs = append(inputs, Source{File: "/control.tsx", Source: source})
 	}
-	corpus := Corpus{Files: len(paths)}
+	corpus := Corpus{Files: len(config.Paths), Captured: len(config.Inputs)}
 	pointers := []*ast.Node{}
 	ids := map[*ast.Node]int{}
 	var add func(*ast.Node) int
@@ -75,8 +64,8 @@ func main() {
 		id := len(corpus.Nodes)
 		ids[n] = id
 		pointers = append(pointers, n)
-		corpus.Nodes = append(corpus.Nodes, Node{Kind: "Other", Expression: -1, TagName: -1, Attributes: -1, Name: -1})
-		v := Node{Kind: "Other", Expression: -1, TagName: -1, Attributes: -1, Name: -1}
+		corpus.Nodes = append(corpus.Nodes, Node{Kind: "Other", Expression: -1, Name: -1})
+		v := Node{Kind: "Other", Expression: -1, Name: -1}
 		switch n.Kind {
 		case ast.KindIdentifier:
 			v.Kind = "Identifier"
@@ -107,13 +96,23 @@ func main() {
 		return id
 	}
 	seen := map[string]bool{}
-	for _, source := range sources {
-		if seen[source] {
+	for _, input := range inputs {
+		identity := input.File + "\x00" + input.Source
+		if seen[identity] {
 			continue
 		}
-		seen[source] = true
+		seen[identity] = true
 		corpus.Sources++
-		file := tsparser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/source.tsx", Path: tspath.Path("/source.tsx")}, source, core.ScriptKindTSX)
+		kind := core.ScriptKindTS
+		switch {
+		case strings.HasSuffix(input.File, ".tsx"):
+			kind = core.ScriptKindTSX
+		case strings.HasSuffix(input.File, ".jsx"):
+			kind = core.ScriptKindJSX
+		case strings.HasSuffix(input.File, ".js"):
+			kind = core.ScriptKindJS
+		}
+		file := tsparser.ParseSourceFile(ast.SourceFileParseOptions{FileName: input.File, Path: tspath.Path(input.File)}, input.Source, kind)
 		var walk func(*ast.Node) bool
 		walk = func(n *ast.Node) bool {
 			if n == nil {
@@ -125,6 +124,9 @@ func main() {
 		}
 		walk(file.AsNode())
 	}
+	factory := ast.NewNodeFactory(ast.NodeFactoryHooks{})
+	add(factory.NewJsxAttribute(nil, nil))
+	add(factory.NewJsxAttribute(factory.NewIdentifier(""), nil))
 	var want strings.Builder
 	for id := -1; id < len(pointers); id++ {
 		var n *ast.Node

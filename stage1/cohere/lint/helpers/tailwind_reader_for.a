@@ -1,0 +1,31 @@
+// ClassLiteralReaderFor's externally owned prerequisites are function arguments.
+// Cached must be the FileCache adapter for the current file, with Go rule.Cached
+// semantics, including fresh computation for nil/zero caches and type collisions.
+export interface CompiledClassReader<Pattern> {
+    readonly attributeNames: ReadonlyMap<string, boolean>;
+    readonly calleeNames: ReadonlyMap<string, boolean>;
+    readonly variablePatterns: readonly Pattern[];
+}
+export interface BoundClassReader<Pattern, Value> {
+    readonly attributeNames: ReadonlyMap<string, boolean>;
+    readonly calleeNames: ReadonlyMap<string, boolean>;
+    readonly variablePatterns: readonly Pattern[];
+    readonly values: Map<number, Value>;
+}
+
+// The adapter invokes compiledReader and bind only on a cache miss. Explicit
+// factory arguments avoid an escaping closure that owns callable captures.
+export function classLiteralReaderFor<Settings, Pattern, Value>(
+    settings: Settings,
+    settingsKey: (settings: Settings) => string,
+    compiledReader: (key: string, settings: Settings) => CompiledClassReader<Pattern>,
+    cached: (cacheKey: string, compiledKey: string, settings: Settings,
+        compile: (key: string, settings: Settings) => CompiledClassReader<Pattern>,
+        bind: (compiled: CompiledClassReader<Pattern>) => BoundClassReader<Pattern, Value>) => BoundClassReader<Pattern, Value>,
+): BoundClassReader<Pattern, Value> {
+    const key = settingsKey(settings);
+    return cached('tailwind.classValues:' + key, key, settings, compiledReader, (compiled) => {
+        return { attributeNames: compiled.attributeNames, calleeNames: compiled.calleeNames,
+            variablePatterns: compiled.variablePatterns, values: new Map<number, Value>() };
+    });
+}

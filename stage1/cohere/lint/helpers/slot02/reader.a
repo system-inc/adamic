@@ -1,0 +1,79 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { classLiteralReaderFor, type CompiledClassReader, type BoundClassReader } from '../tailwind_reader_for.a';
+type Reader = BoundClassReader<string, number>;
+interface Settings { readonly key: string; readonly compiled: CompiledClassReader<string>; }
+const args = programArguments();
+const raw = readTextFile(args[0] ?? panic('reader corpus'));
+if (raw.kind === 'Error') { panic(raw.message); }
+const json = new OptionsJson(raw.text);
+const root = json.parse();
+if (root < 0) { panic(json.error); }
+function strings(index: number, field: string): string[] {
+    const result: string[] = [];
+    for (const child of json.node(json.field(index, field)).children) { result.push(json.node(child).text); }
+    return result;
+}
+const settings: Settings[] = [];
+const compiledByKey = new Map<string, CompiledClassReader<string>>();
+for (const index of json.node(json.field(root, 'Definitions')).children) {
+    const attributes = new Map<string, boolean>();
+    const callees = new Map<string, boolean>();
+    for (const name of strings(index, 'Attributes')) { attributes.set(name, true); }
+    for (const name of strings(index, 'Callees')) { callees.set(name, true); }
+    const key = json.node(json.field(index, 'Key')).text;
+    let compiled = compiledByKey.get(key);
+    if (compiled === undefined) {
+        compiled = { attributeNames: attributes, calleeNames: callees, variablePatterns: strings(index, 'Patterns') };
+        compiledByKey.set(key, compiled);
+    }
+    settings.push({ key, compiled });
+}
+function keyOf(settings: Settings): string { return settings.key; }
+function compiledReader(key: string, settings: Settings): CompiledClassReader<string> {
+    if (key !== settings.key) { panic('incorrect compiled-reader key'); }
+    return settings.compiled;
+}
+// These are test doubles for the externally owned rule.Cached adapter. The Go
+// oracle exercises real initialized, nil, zero and heterogeneous FileCaches.
+type Compile = (key: string, settings: Settings) => CompiledClassReader<string>;
+type Bind = (compiled: CompiledClassReader<string>) => Reader;
+type Cached = (key: string, compiledKey: string, settings: Settings, compile: Compile, bind: Bind) => Reader;
+function freshCached(key: string, compiledKey: string, settings: Settings, compile: Compile, bind: Bind): Reader {
+    return bind(compile(compiledKey, settings));
+}
+function fileCached(entries: Map<string, Reader>, fills: Map<string, number>): Cached {
+    return (key, compiledKey, settings, compile, bind) => {
+        const existing = entries.get(key);
+        if (existing !== undefined) { return existing; }
+        const reader = bind(compile(compiledKey, settings));
+        entries.set(key, reader);
+        fills.set(key, (fills.get(key) ?? 0) + 1);
+        return reader;
+    };
+}
+for (let index = 0; index < settings.length; index++) {
+    const setting = settings[index] ?? panic('setting');
+    const entries = new Map<string, Reader>();
+    const fills = new Map<string, number>();
+    const cached = fileCached(entries, fills);
+    const first = classLiteralReaderFor(setting, keyOf, compiledReader, cached);
+    first.values.set(0, 1);
+    const second = classLiteralReaderFor(setting, keyOf, compiledReader, cached);
+    const other = classLiteralReaderFor(setting, keyOf, compiledReader, fileCached(new Map<string, Reader>(), new Map<string, number>()));
+    const nilA = classLiteralReaderFor(setting, keyOf, compiledReader, freshCached);
+    const nilB = classLiteralReaderFor(setting, keyOf, compiledReader, freshCached);
+    const zeroA = classLiteralReaderFor(setting, keyOf, compiledReader, freshCached);
+    const zeroB = classLiteralReaderFor(setting, keyOf, compiledReader, freshCached);
+    const collisionA = classLiteralReaderFor(setting, keyOf, compiledReader, freshCached);
+    const collisionB = classLiteralReaderFor(setting, keyOf, compiledReader, freshCached);
+    console.log(`${index}:${first === second}:${second.values.size}:${first === other}:${other.values.size}:${nilA === nilB}:${zeroA === zeroB}:${collisionA === collisionB}:${first.attributeNames === other.attributeNames}:${first.calleeNames === other.calleeNames}:${first.attributeNames.size}:${first.calleeNames.size}:${first.variablePatterns.length}`);
+    console.log(`fills:${fills.get('tailwind.classValues:' + setting.key) ?? 0}:${fills.size}:${first.variablePatterns === other.variablePatterns}`);
+}
+const entries = new Map<string, Reader>();
+const cached = fileCached(entries, new Map<string, number>());
+const readers: Reader[] = [];
+for (const setting of settings) { readers.push(classLiteralReaderFor(setting, keyOf, compiledReader, cached)); }
+for (let i = 0; i < readers.length; i++) {
+    for (let j = 0; j < readers.length; j++) { console.log(`identity:${i}:${j}:${readers[i] === readers[j]}`); }
+}
