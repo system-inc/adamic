@@ -1,0 +1,830 @@
+[
+  {
+    "name": "stage0",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/wave01-b84-next/adamic",
+      "./cmd/adamic"
+    ],
+    "code": 0,
+    "wall_ns": 17817783907,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "checker-archive",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave01-b84-next/checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "code": 0,
+    "wall_ns": 8553483056,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "native-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_01_next/suite.a",
+      "-o",
+      "/workspace/wave01-b84-next/native",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker.a"
+    ],
+    "code": 0,
+    "wall_ns": 9068549995,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "oracle-build",
+    "command": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave01-b84-next/oracle-overlay.json",
+      "-o",
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/adamic/cohere/adamic_wave01next.go"
+    ],
+    "code": 0,
+    "wall_ns": 5221402810,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "controls-go",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/controls.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 166217939,
+    "bytes": 49111,
+    "sha256": "437f964b8f6b4cdd64a978e84584816527a436e1ac0e4d2f9a21bafe7d249d95",
+    "stderr": "cohere: load_ns=77720766 rule_ns=29999232 run_ns=72284125\n"
+  },
+  {
+    "name": "controls-native",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/controls.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 315490568,
+    "bytes": 49111,
+    "sha256": "437f964b8f6b4cdd64a978e84584816527a436e1ac0e4d2f9a21bafe7d249d95",
+    "stderr": ""
+  },
+  {
+    "name": "relaxed-go",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/wave01-b84-next/relaxed.json",
+      "/workspace/wave01-b84-next/controls.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 207700878,
+    "bytes": 49111,
+    "sha256": "437f964b8f6b4cdd64a978e84584816527a436e1ac0e4d2f9a21bafe7d249d95",
+    "stderr": "cohere: load_ns=89108505 rule_ns=44031326 run_ns=95590098\n"
+  },
+  {
+    "name": "relaxed-native",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/wave01-b84-next/relaxed.json",
+      "/workspace/wave01-b84-next/controls.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 308675173,
+    "bytes": 49111,
+    "sha256": "437f964b8f6b4cdd64a978e84584816527a436e1ac0e4d2f9a21bafe7d249d95",
+    "stderr": ""
+  },
+  {
+    "name": "checker-asan-archive",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave01-b84-next/checker-asan.a",
+      "./bridge/tsgo/archive"
+    ],
+    "code": 0,
+    "wall_ns": 2497801679,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "native-asan-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_01_next/suite.a",
+      "-o",
+      "/workspace/wave01-b84-next/native-asan",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker-asan.a",
+      "--sanitize"
+    ],
+    "code": 0,
+    "wall_ns": 21492917496,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "controls-asan-go",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/controls.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 137388117,
+    "bytes": 49111,
+    "sha256": "437f964b8f6b4cdd64a978e84584816527a436e1ac0e4d2f9a21bafe7d249d95",
+    "stderr": "cohere: load_ns=76471771 rule_ns=18932498 run_ns=48769431\n"
+  },
+  {
+    "name": "controls-asan-native",
+    "command": [
+      "/workspace/wave01-b84-next/native-asan",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/controls.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 589290856,
+    "bytes": 49111,
+    "sha256": "437f964b8f6b4cdd64a978e84584816527a436e1ac0e4d2f9a21bafe7d249d95",
+    "stderr": ""
+  },
+  {
+    "name": "mutant-child-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/mutant-child-source/suite.a",
+      "-o",
+      "/workspace/wave01-b84-next/mutant-child",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker.a"
+    ],
+    "code": 0,
+    "wall_ns": 8709822676,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "child-mutant-run",
+    "command": [
+      "/workspace/wave01-b84-next/mutant-child",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/controls.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 218534806,
+    "bytes": 51921,
+    "sha256": "07c70913915dd59ebe4c506e092c3e64bdbd645c9ec8fe3c9bce88b686d942c6",
+    "stderr": ""
+  },
+  {
+    "name": "mutant-response-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/mutant-response-source/suite.a",
+      "-o",
+      "/workspace/wave01-b84-next/mutant-response",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker.a"
+    ],
+    "code": 0,
+    "wall_ns": 8170005404,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "response-mutant-run",
+    "command": [
+      "/workspace/wave01-b84-next/mutant-response",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/controls.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 199759711,
+    "bytes": 48227,
+    "sha256": "d546ce154cd36d16e31988a2830a44e56a27829472d3c66d3c26a4debb4fcc85",
+    "stderr": ""
+  },
+  {
+    "name": "mutant-independent-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/mutant-independent-source/suite.a",
+      "-o",
+      "/workspace/wave01-b84-next/mutant-independent",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker.a"
+    ],
+    "code": 0,
+    "wall_ns": 8270616150,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "independent-mutant-run",
+    "command": [
+      "/workspace/wave01-b84-next/mutant-independent",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/controls.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 190564740,
+    "bytes": 49113,
+    "sha256": "95d0505882bd84dd730e9a6d0a3f824c7ec718bb3ab767fe5c6631ef45b4d9b5",
+    "stderr": ""
+  },
+  {
+    "name": "compiler-pin",
+    "command": [
+      "git",
+      "-C",
+      "/workspace/wave-01-typescript",
+      "rev-parse",
+      "HEAD"
+    ],
+    "code": 0,
+    "wall_ns": 2491909,
+    "bytes": 41,
+    "sha256": "7cb2242d5cf864397302e7b7ae000bad28f457f9b02a0d6e543e5231ca436035",
+    "stderr": ""
+  },
+  {
+    "name": "compiler-go",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 1504045580,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": "cohere: load_ns=249347565 rule_ns=1176573417 run_ns=1233243067\n"
+  },
+  {
+    "name": "compiler-native",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 3916173243,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": ""
+  },
+  {
+    "name": "compiler-asan-go",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 1679104330,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": "cohere: load_ns=277468507 rule_ns=1308061461 run_ns=1372717539\n"
+  },
+  {
+    "name": "compiler-asan-native",
+    "command": [
+      "/workspace/wave01-b84-next/native-asan",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 12233032553,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": ""
+  },
+  {
+    "name": "compiler-timed-go-0",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 1599977959,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": "cohere: load_ns=278501297 rule_ns=1240402322 run_ns=1297743672\n"
+  },
+  {
+    "name": "compiler-timed-native-0",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 4016632442,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": "tsgo: load_ns=272469092 query_ns=1757945548 queries=50529 first_query_ns=5985115 run_ns=3714438089\n"
+  },
+  {
+    "name": "compiler-timed-go-1",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 1414204916,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": "cohere: load_ns=233065369 rule_ns=1106493600 run_ns=1158709997\n"
+  },
+  {
+    "name": "compiler-timed-native-1",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 3993559379,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": "tsgo: load_ns=247593240 query_ns=1788213323 queries=50529 first_query_ns=6088468 run_ns=3721226093\n"
+  },
+  {
+    "name": "compiler-timed-go-2",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 1606894849,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": "cohere: load_ns=280278370 rule_ns=1243547325 run_ns=1302573791\n"
+  },
+  {
+    "name": "compiler-timed-native-2",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/wave-01-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave01-b84-next/compiler.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 4299983562,
+    "bytes": 5318,
+    "sha256": "5e50e29b42170a7ae47ac1ecf55f9574e6c3ec2a6945d0da1090ed4842d0109d",
+    "stderr": "tsgo: load_ns=282006135 query_ns=1905704126 queries=50529 first_query_ns=7849948 run_ns=3957273881\n"
+  },
+  {
+    "name": "repository-go",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 338351337,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": "cohere: load_ns=115346005 rule_ns=130389429 run_ns=200358045\n"
+  },
+  {
+    "name": "repository-native",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 746250506,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": ""
+  },
+  {
+    "name": "repository-asan-go",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 291309869,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": "cohere: load_ns=107478120 rule_ns=103493897 run_ns=165237214\n"
+  },
+  {
+    "name": "repository-asan-native",
+    "command": [
+      "/workspace/wave01-b84-next/native-asan",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 1578829241,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": ""
+  },
+  {
+    "name": "repository-timed-go-0",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 227098918,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": "cohere: load_ns=72388400 rule_ns=90539308 run_ns=142284330\n"
+  },
+  {
+    "name": "repository-timed-native-0",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 521396076,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": "tsgo: load_ns=78928809 query_ns=161806276 queries=8459 first_query_ns=641807 run_ns=436155764\n"
+  },
+  {
+    "name": "repository-timed-go-1",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 258688446,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": "cohere: load_ns=88293369 rule_ns=96669098 run_ns=152071538\n"
+  },
+  {
+    "name": "repository-timed-native-1",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 533540453,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": "tsgo: load_ns=108406775 query_ns=158967003 queries=8459 first_query_ns=787823 run_ns=415336651\n"
+  },
+  {
+    "name": "repository-timed-go-2",
+    "command": [
+      "/workspace/wave01-b84-next/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 229679683,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": "cohere: load_ns=85263927 rule_ns=86949614 run_ns=130951156\n"
+  },
+  {
+    "name": "repository-timed-native-2",
+    "command": [
+      "/workspace/wave01-b84-next/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave01-b84-next/repository.manifest"
+    ],
+    "code": 0,
+    "wall_ns": 523286741,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr": "tsgo: load_ns=101569211 query_ns=156576734 queries=8459 first_query_ns=686223 run_ns=411764026\n"
+  },
+  {
+    "name": "checker-retained-archive",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave01-b84-next/checker-retained.a",
+      "-overlay",
+      "/workspace/wave01-b84-next/released-overlay.json",
+      "./bridge/tsgo/archive"
+    ],
+    "code": 0,
+    "wall_ns": 6863442451,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-0-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/released.a",
+      "-o",
+      "/workspace/wave01-b84-next/released-0",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker.a"
+    ],
+    "code": 0,
+    "wall_ns": 2920472636,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-run-0",
+    "command": [
+      "/workspace/wave01-b84-next/released-0",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/probe-input.a"
+    ],
+    "code": 70,
+    "wall_ns": 49644958,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "adamic: panic: invalid or released checker handle\n"
+  },
+  {
+    "name": "released-mutant-0-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/released.a",
+      "-o",
+      "/workspace/wave01-b84-next/released-mutant-0",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker-retained.a"
+    ],
+    "code": 0,
+    "wall_ns": 2754721473,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-mutant-run-0",
+    "command": [
+      "/workspace/wave01-b84-next/released-mutant-0",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/probe-input.a"
+    ],
+    "code": 0,
+    "wall_ns": 48972221,
+    "bytes": 35,
+    "sha256": "acb0f5644121bbe790b18f570cc1612e646ada3c7297ba9f9fbd5d422df13272",
+    "stderr": ""
+  },
+  {
+    "name": "released-1-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/released.a",
+      "-o",
+      "/workspace/wave01-b84-next/released-1",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker.a"
+    ],
+    "code": 0,
+    "wall_ns": 2723501602,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-run-1",
+    "command": [
+      "/workspace/wave01-b84-next/released-1",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/probe-input.a"
+    ],
+    "code": 70,
+    "wall_ns": 49941987,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "adamic: panic: invalid or released checker handle\n"
+  },
+  {
+    "name": "released-mutant-1-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/released.a",
+      "-o",
+      "/workspace/wave01-b84-next/released-mutant-1",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker-retained.a"
+    ],
+    "code": 0,
+    "wall_ns": 2737555847,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-mutant-run-1",
+    "command": [
+      "/workspace/wave01-b84-next/released-mutant-1",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/probe-input.a"
+    ],
+    "code": 0,
+    "wall_ns": 52870085,
+    "bytes": 63,
+    "sha256": "d12be92a8596a85c42693578c6529750dee082b270a18f2d3387b31ff51e8fac",
+    "stderr": ""
+  },
+  {
+    "name": "released-2-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/released.a",
+      "-o",
+      "/workspace/wave01-b84-next/released-2",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker.a"
+    ],
+    "code": 0,
+    "wall_ns": 2689634251,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-run-2",
+    "command": [
+      "/workspace/wave01-b84-next/released-2",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/probe-input.a"
+    ],
+    "code": 70,
+    "wall_ns": 52521198,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "adamic: panic: invalid or released checker handle\n"
+  },
+  {
+    "name": "released-mutant-2-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/released.a",
+      "-o",
+      "/workspace/wave01-b84-next/released-mutant-2",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker-retained.a"
+    ],
+    "code": 0,
+    "wall_ns": 2730553979,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-mutant-run-2",
+    "command": [
+      "/workspace/wave01-b84-next/released-mutant-2",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/probe-input.a"
+    ],
+    "code": 0,
+    "wall_ns": 45206973,
+    "bytes": 32,
+    "sha256": "75fa7eac980d0120c513534cf47f464445d74173355191efaae39b685a46eb46",
+    "stderr": ""
+  },
+  {
+    "name": "released-3-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/released.a",
+      "-o",
+      "/workspace/wave01-b84-next/released-3",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker.a"
+    ],
+    "code": 0,
+    "wall_ns": 2767814926,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-run-3",
+    "command": [
+      "/workspace/wave01-b84-next/released-3",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/probe-input.a"
+    ],
+    "code": 70,
+    "wall_ns": 48750711,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "adamic: panic: invalid or released checker handle\n"
+  },
+  {
+    "name": "released-mutant-3-build",
+    "command": [
+      "/workspace/wave01-b84-next/adamic",
+      "build",
+      "/workspace/wave01-b84-next/released.a",
+      "-o",
+      "/workspace/wave01-b84-next/released-mutant-3",
+      "--tsgo",
+      "/workspace/wave01-b84-next/checker-retained.a"
+    ],
+    "code": 0,
+    "wall_ns": 2664279930,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": ""
+  },
+  {
+    "name": "released-mutant-run-3",
+    "command": [
+      "/workspace/wave01-b84-next/released-mutant-3",
+      "/workspace/wave01-b84-next/tsconfig.json",
+      "/workspace/wave01-b84-next/probe-input.a"
+    ],
+    "code": 0,
+    "wall_ns": 47291969,
+    "bytes": 27,
+    "sha256": "e825d5151dead029b2e5843112ff7e58b8ad88d9af3bb5f2b4d59beb35d7567a",
+    "stderr": ""
+  },
+  {
+    "name": "checker-tests",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker/...",
+      "-count=1"
+    ],
+    "code": 0,
+    "wall_ns": 1449421242,
+    "bytes": 149,
+    "sha256": "f34760209c4e855e59625c00f9e520842a74c5b6c7e7889753a6fe479625748a",
+    "stderr": ""
+  },
+  {
+    "name": "bridge-tests",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-count=1"
+    ],
+    "code": 0,
+    "wall_ns": 74701694427,
+    "bytes": 54,
+    "sha256": "7f8bb0d4abce08e0e521a34a6cc3c954741b2d28e22c74709374d605b364d0a7",
+    "stderr": ""
+  }
+]

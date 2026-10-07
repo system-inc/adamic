@@ -530,3 +530,40 @@ rule integration for all three latest claims remains incomplete. No full-rule
 throughput, new released-bridge-handle checks, full stage-1 gate or the 17
 external correctness comparisons are claimed. No check was weakened or skipped
 and called green. Existing completed-rule gates were unchanged and not repeated.
+
+## Landing refresh after integration resolved main conflicts
+
+Area advanced to b84a9d9314b65d3d0261ee017e233287b4f071da and contains
+current main c7991b900362796aefd111474e65eb5398e91953. Rebased onto that
+area tip without conflicts or shared-file edits. Tested rebased code at
+6b2e392fc37eedf449602c7171347eee635fa643. This resolves the previously
+reported landing blocker by taking the integration branch's merge.
+
+Original TestWave01AgreementAndMutants passed in 153.802 seconds, including
+691 compiler findings / 276439 identical bytes, repository agreement, controls,
+sanitation, three logic mutants, released handles and retained-registry mutants.
+Continuation verify.py passed all three completed rules, every corpus/sanitizer
+comparison, logic mutants, four released questions/retention mutants and
+checker/bridge package tests. Symbol captured-syntax checks passed all corpora,
+sanitation, argument mutant and released question.
+
+Both original kernels passed production-Go comparison with sanitizer-clean
+refresh-deletion and await-mask mutants caught by bytes. All nine current
+partial-rule verification scripts passed: atomic solver, deferrals, syntax,
+escape guard/cache and reporting; await reporting, repair, head/joined rendering
+and real-checker demand. Their corresponding one-sweep, lost-floor, member-object,
+parameter-arm, property-ID, suggestion-ID, identifier-boundary, property-parent
+and mixed-return mutants compiled and exited cleanly under sanitizers before
+Go bytes caught them. Nine named-kind comparisons and wrong-kind mutants passed.
+
+Exact commands, logs, captures and streams are in validation/landing-b84. Commands
+use the recorded Go gate, continuation verify.py and all current owned verify
+scripts after sourcing /workspace/adamic-tools/env.sh. Existing compiler corpus
+/workspace/wave-01-typescript was supplied; no controls-only shortcut was used.
+No new claims were taken. Only codex/typeaware-wave-01 is pushed.
+
+Full native integration of the three latest claims remains unfinished, including
+await generic/heritage demand and native fact delivery, atomic CFG/event/capture
+integration, and symbol shared-driver integration. Full stage-1 gate and the 17
+external correctness checks were not run or claimed. No check was weakened or
+skipped and called green. No new full-rule throughput measurements were made.
