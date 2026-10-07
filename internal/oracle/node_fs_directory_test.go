@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"syscall"
 	"testing"
@@ -25,7 +26,6 @@ func init() {
 		"internal/oracle/testdata/node_path_basename.a",
 		"internal/oracle/testdata/node_path_relative.a",
 		"internal/oracle/testdata/node_fs_directory_entries.a",
-		"internal/oracle/testdata/node_fs_directory_layout.a",
 		"internal/oracle/testdata/node_fs_directory_realpath.a",
 		"internal/oracle/testdata/node_fs_directory_system.a",
 		"internal/oracle/testdata/node_fs_directory_stat_options.a",
@@ -133,7 +133,12 @@ func TestNodeFSDirectoryMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			how := inputRun{directory: filepath.Dir(path)}
-			got := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+			var environment []string
+			if runtime.GOOS == "linux" {
+				environment = []string{"ASAN_OPTIONS=detect_leaks=1"}
+			}
+			got := executeInput(t, how, environment, binary)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}

@@ -19,6 +19,8 @@ static bool high(uint16_t c) { return c >= 0xd800 && c <= 0xdbff; }
 static bool low(uint16_t c) { return c >= 0xdc00 && c <= 0xdfff; }
 static bool regex_read(const uint16_t *input, size_t length, ptrdiff_t at, int direction,
 					   bool unicode, uint32_t *point, ptrdiff_t *next) {
+	if (unicode && at > 0 && (size_t)at < length && high(input[at - 1]) && low(input[at]))
+		return false;
 	if (direction > 0) {
 		if ((size_t)at >= length)
 			return false;
@@ -472,12 +474,15 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 	ADAMIC_CHECK_STACK();
 	bool stateful = (p->flags & 24) != 0 || force_sticky;
 	size_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;
+	size_t requested = start;
+	// V8 rewinds an initial pair interior, then permits assertion-only paths
+	// at that UTF-16 position if the rewound attempt failed. ECMA-262
+	// 22.2.2.2/22.2.7.2 instead describe a code-point Input with no interior.
+	if ((p->flags & 4) && start > 0 && start < length && high(input[start - 1]) && low(input[start]))
+		start--;
 	ptrdiff_t *captures = regex_memory(2 * (p->captures + 1) * sizeof *captures);
 	while (start <= length) {
 		ptrdiff_t at = (ptrdiff_t)start;
-		if ((p->flags & 4) && at > 0 && (size_t)at < length && high(input[at - 1]) &&
-			low(input[at]))
-			at--;
 		if (p->anchored && at != 0)
 			break;
 		for (size_t k = 0; k < 2 * (p->captures + 1); k++)
@@ -522,13 +527,12 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 			regex_workspace_destroy(&workspace);
 			return captures;
 		}
-		if (p->anchored || (p->flags & 16) || force_sticky)
+		if (p->anchored || (((p->flags & 16) || force_sticky) && start >= requested))
 			break;
-		uint32_t c;
-		ptrdiff_t next;
-		if (!regex_read(input, length, at, 1, p->flags & 4, &c, &next))
-			break;
-		start = (size_t)next;
+		// Irregexp can accept \B or (?!\W) inside a pair. Unlike the
+		// code-point walk in 22.2.7.3 AdvanceStringIndex, try each code unit;
+		// regex_read still rejects consuming a half of a Unicode pair.
+		start = (size_t)at + 1;
 	}
 	if (stateful)
 		regex->slots[1].number = 0;
@@ -776,7 +780,7 @@ double adamic_regex_search(adamic_string *input, adamic_object *regex) {
 	regex->slots[1].number = previous;
 	return result;
 }
-adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit_value) {
+adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit_value, bool default_limit) {
 	adamic_array *result = adamic_array_new(0, true);
 	uint32_t limit = (uint32_t)adamic_shift_right_unsigned(limit_value, 0);
 	if (limit == 0)
@@ -798,7 +802,11 @@ adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, dou
 		copy->slots[1].number = (double)at;
 		ptrdiff_t *spans = regex_execute(copy, units, length, true, &steps);
 		if (spans == NULL) {
-			at = regex_advance(units, length, at, p->flags & 4);
+			// V8's split fast path scans UTF-16 candidates, unlike ECMA-262
+			// 22.2.6.14's AdvanceStringIndex. A HeapNumber limit uses its generic
+			// path under u; v retains code-unit candidate scanning there too.
+			at = default_limit || (p->flags & 64) ? at + 1
+				: regex_advance(units, length, at, p->flags & 4);
 			continue;
 		}
 		size_t end = (size_t)spans[1];

@@ -88,6 +88,12 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 // ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
 	expression = ast.SkipParentheses(expression)
+	if value, known, err := l.nodeProcessEnvironmentMutation(expression); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}
@@ -147,7 +153,7 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if expression == nil {
 		return []ir.Statement{ir.Return{}}, nil
 	}
-	if l.isPanicCall(expression) {
+	if l.isPanicCall(expression) || l.isProcessExit(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
 	}

@@ -1,0 +1,4 @@
+import 'node:process';
+const handle = (process.stdout as { readonly _handle?: { setBlocking(blocking: boolean): void } | undefined })._handle;
+if (handle !== undefined) { handle.setBlocking(true); }
+process.stdout.write('x'.repeat(200000));

@@ -3,6 +3,8 @@
 #define _DEFAULT_SOURCE
 #define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
+// macOS hides d_type's DT_* constants once _POSIX_C_SOURCE is set, unless Darwin's
+// own extensions are asked for too. glibc ignores this macro.
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <dirent.h>

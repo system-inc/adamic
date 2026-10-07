@@ -9,6 +9,13 @@ func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
 	switch expression := expression.(type) {
 	case ir.NodeBufferCall:
 		return a.nodeBufferCall(expression), true
+	case ir.ProcessCall:
+		// Process state holds only a number. Environment results are copied immutable strings;
+		// evaluate operand effects, but no operation captures or writes a mutable heap slot.
+		for _, argument := range expression.Arguments {
+			a.value(argument)
+		}
+		return value{}, true
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 		return a.call(a.operands(expression), expression.Type()), true
 	}

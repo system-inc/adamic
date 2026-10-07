@@ -66,7 +66,7 @@ func TestNodeFSDirectorySymlinkMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			how := prepare("mutant-input")
-			got := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, how.arguments...)
+			got := executeInput(t, how, nodeFSDirectorySanitizerEnvironment(), binary, how.arguments...)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}

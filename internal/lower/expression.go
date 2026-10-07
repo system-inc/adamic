@@ -382,6 +382,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		return value, err
 	}
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -1061,7 +1064,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		arguments = append(arguments, lowered)
 	}
 	var returns ir.Type
-	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
+	if result := l.checker.GetTypeAtLocation(node); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))

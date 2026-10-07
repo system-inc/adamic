@@ -228,7 +228,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if len(arguments) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
-	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	call := fmt.Sprintf("adamic_node_performance_invoke(%s, %s, %d, %t)", closure, packed, len(arguments), expression.Returns == 0)
 	if receiver != "" {
 		if closure == "" {
 			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)

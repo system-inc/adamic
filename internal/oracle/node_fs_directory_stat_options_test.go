@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -35,7 +36,7 @@ func TestNodeFSDirectoryStatConstOptionsMutant(t *testing.T) {
 	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	got := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	got := executeInput(t, how, nodeFSDirectorySanitizerEnvironment(), binary)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
 		t.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
 	}
@@ -43,4 +44,12 @@ func TestNodeFSDirectoryStatConstOptionsMutant(t *testing.T) {
 		t.Fatalf("mutant caught by %q", difference)
 	}
 	t.Log("false option forced true; caught only by Node stdout; sanitizers and leaks clean")
+}
+
+func nodeFSDirectorySanitizerEnvironment() []string {
+	environment := []string{"UBSAN_OPTIONS=halt_on_error=1"}
+	if runtime.GOOS == "linux" {
+		environment = append(environment, "ASAN_OPTIONS=detect_leaks=1")
+	}
+	return environment
 }

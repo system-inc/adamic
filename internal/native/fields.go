@@ -40,14 +40,18 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		"names": 1, "type": 1, "size": 2, "symbolicLink": 3,
 	}
 	for _, names := range [][]string{
+		{"name", "message", "code"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
 		// The Node directory host and the existing realPath result are created in C.
 		{"kind", "path"}, {"name", "message", "code"}, {"name", "type"},
-		{"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
 		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
 		{"bytes", "finalized"},
+		// Process host layouts are part of the same whole-program proof.
+		{"name", "message", "code"}, {"heapUsed"},
+		{"name", "entryType", "startTime", "duration"}, {"setBlocking"},
+		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
 	} {
 		for index, name := range names {
 			if before, found := offsets[name]; found && before != index {

@@ -1,6 +1,7 @@
 // Directory members of getNodeSystem. Supply the compiler's own matchFiles and cwd provider.
-import { readdirSync, realpathSync, statSync } from 'node:fs';
+import { readdirSync, realpathSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { fileStatus } from 'adamic';
 
 export interface FileSystemEntries {
     readonly files: readonly string[];
@@ -31,14 +32,11 @@ function compareNames(left: string, right: string): number {
     return left < right ? -1 : left > right ? 1 : 0;
 }
 
-// Use the fs_file unit's statSync and follow symlinks exactly as sys.ts does.
+// REPLACE with the fs_file unit's statSync(path, { throwIfNoEntry: false }).
+// fileStatus already follows symlinks; this private bridge does not define a second statSync.
 function statusType(path: string): string {
-    try {
-        const status = statSync(path, { throwIfNoEntry: false });
-        if (status === undefined) { return ''; }
-        return status.isFile() ? 'file' : status.isDirectory() ? 'directory' : 'other';
-    }
-    catch { return ''; }
+    const status = fileStatus(path);
+    return status.kind === 'Ok' ? status.type : '';
 }
 
 export function directoryExists(path: string): boolean {

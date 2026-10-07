@@ -1,0 +1,18 @@
+Standing landing rule: push only codex/regex-v8-divergences-land. Never push main or force-push; only @system_adamic_integration moves main. Original codex/regex-v8-divergences remains ab512274afa10166a38caef54ad55a7fd1f75700.
+Rebased its five unit commits (d91e8f9, a8cc903, a6db98f, fbad407, ab51227) onto origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965. Dropped the old main merge through ordinary rebase. Counts were the only rebase conflicts; preserved both fixture sets and regenerated the complete table on Linux.
+Includes the split witness and every matcher entry point: exec, test, match, matchAll, replace, replaceAll, search, split. Both assertions under u and v, named captures, global variants, and numeric limit controls agree with Node. Sensitive u limits with unproved V8 hidden numeric representation remain loud explicit refusals.
+Flow's accepted-program inventory now excludes exactly the two surrogate .a fixtures registered as NotYet in the oracle. No flow analysis behavior changed; the oracle still tests both refusals. No matcher-seat commits replayed, no new library feature built.
+Node v24.19.0, Linux x64. Existing configured toolchain reused. stdout/stderr directed to logs.
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower ./internal/regexp ./internal/native ./internal/flow -timeout 30m -count=1 > packages.txt 2>&1
+PASS: lower 54.099s, regexp 26.531s, native full package 218.079s, flow full package 148.562s.
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(regexp|sweeps/regexp)' -timeout 30m -count=1 -v > oracle.txt 2>&1
+PASS 16.863s: sanitized/release native, JavaScript and Node, including the V8 refusals and surrogate paths.
+go test ./internal/oracle -run TestCountsAreRecorded -timeout 30m -count=1 -args -update-counts > counts.txt 2>&1
+PASS 60.717s: complete Linux regeneration. Surrogate row 732 / 732 / 542 / 650 / 21 / 0.
+go vet ./internal/lower ./internal/regexp ./internal/native ./internal/flow > vet.txt 2>&1
+Exit 0.
+go build -o /tmp/regex-placement-adamic ./cmd/adamic > build.txt 2>&1
+python3 cloud/reports/regex-v8-divergences/split-placement/mutant.py > split-mutant.txt 2>&1
+Normal native equals Node. Mutant always advances failed split candidates by code points, exits 0 with empty sanitizer stderr, and fails solely on Node stdout comparison. The paired outputs remain identical to the recorded split-placement artifacts and were freshly regenerated here.
+Full uncached repository gate and official runner survey not repeated for landing. Complete touched packages and all regex oracle fixtures were run; old feature mutation and survey logs remain historical evidence.

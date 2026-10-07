@@ -16,6 +16,8 @@ double adamic_fs_file_write_fd(double, const adamic_string *, const adamic_strin
 bool adamic_fs_file_exists(const adamic_string *);
 adamic_object *adamic_fs_file_stat(const adamic_string *, bool);
 adamic_string *adamic_fs_file_mkdir(const adamic_string *, bool, double);
+adamic_string *adamic_fs_file_mkdtemp(const adamic_string *);
+double adamic_fs_file_rm(const adamic_string *, bool, bool);
 double adamic_fs_file_unlink(const adamic_string *);
 double adamic_fs_file_utimes(const adamic_string *, double, double);
 double adamic_fs_file_utimes_dates(const adamic_string *, const adamic_object *, const adamic_object *);

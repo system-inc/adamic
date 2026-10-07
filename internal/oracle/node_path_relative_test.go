@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -9,8 +10,8 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// This runtime/emitter mutant isolates relative semantics. The normal input
-// harness also compiles this source through the pinned Node declarations.
+// This runtime/emitter check does not substitute for compiling the upstream
+// acceptance fixture. It can run while fs_file's declaration hook is pending.
 func TestNodePathRelativeRuntime(t *testing.T) {
 	t.Parallel()
 	paths := []string{"", ".", "..", "/", "/a", "/a/b", "/aa", "/a/b/", "a/../b", "é/中", "\x00", "a//b"}
@@ -53,7 +54,12 @@ func TestNodePathRelativeRuntime(t *testing.T) {
 	if err := native.Build(source, mutant, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	result := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1"}, mutant)
+	// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=1"}
+	}
+	result := executeInput(t, how, environment, mutant)
 	if result.exitCode != 0 || len(result.stderr) != 0 {
 		t.Fatalf("mutant failed outside comparison: exit %d stderr %s", result.exitCode, result.stderr)
 	}

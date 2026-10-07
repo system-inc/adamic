@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"syscall"
 	"testing"
@@ -12,7 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer"}
+var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer", "mkdtemp", "rm"}
 
 func fsFilePrepare(t *testing.T, shared, name string) inputRun {
 	t.Helper()
@@ -147,6 +148,9 @@ func TestNodeFSFileAgreesWithNode(t *testing.T) {
 func TestNodeFSFileMutants(t *testing.T) {
 	t.Parallel()
 	cases := []struct{ name, fixture, operation, helper string }{
+		{"mkdtempSync suffix", "mkdtemp", "mkdtemp", `static adamic_string *fs_file_mutant(const adamic_string *prefix) {static adamic_string suffix=ADAMIC_STRING("!");adamic_string *changed=adamic_string_concat(2,(adamic_string *const[]){(adamic_string *)prefix,&suffix});adamic_string *result=adamic_fs_file_mkdtemp(changed);adamic_release(changed);return result;}`},
+		{"rmSync force", "rm", "rm", `static double fs_file_mutant(const adamic_string *path,bool recursive,bool force) {(void)force;return adamic_fs_file_rm(path,recursive,true);}`},
+
 		{"writeFileSync Buffer bytes", "write_buffer", "write_buffer", `static double fs_file_mutant(const adamic_string *path,const adamic_array *data,const adamic_string *flag,double mode,bool flush) {static adamic_string truncate=ADAMIC_STRING("w");if(flag->length==1&&flag->bytes[0]=='a')flag=&truncate;return adamic_fs_file_write_buffer(path,data,flag,mode,flush);}`},
 		{"writeFileSync Buffer fd", "write_buffer", "write_buffer_fd", `static double fs_file_mutant(double fd,const adamic_array *data,const adamic_string *flag,double mode,bool flush) {(void)fd;(void)data;(void)flag;(void)mode;(void)flush;return 0;}`},
 		{"readSync byte count", "read_sync", "read_sync", `static double fs_file_mutant(double fd,adamic_array *buffer,double offset,double length,double position) {return adamic_fs_file_read_sync(fd,buffer,offset,length,position)+1;}`},
@@ -204,7 +208,12 @@ func TestNodeFSFileMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			how := fsFilePrepare(t, shared, "mutant-input")
-			got := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, how.arguments...)
+			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+			environment := []string{"UBSAN_OPTIONS=halt_on_error=1"}
+			if runtime.GOOS == "linux" {
+				environment = append(environment, "ASAN_OPTIONS=detect_leaks=1")
+			}
+			got := executeInput(t, how, environment, binary, how.arguments...)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("mutant failed outside Node comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}

@@ -4,7 +4,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/load"
+	"strings"
 )
 
 func init() {
@@ -23,7 +23,11 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 	}
 	for _, declaration := range symbol.Declarations {
 		source := ast.GetSourceFileOfNode(declaration)
-		if !load.IsNodeLibrary(source) {
+		if source == nil {
+			continue
+		}
+		filename := strings.ReplaceAll(source.FileName(), "\\", "/")
+		if !strings.HasSuffix(filename, "/node/fs.d.ts") && !strings.HasSuffix(filename, "/node/path.d.ts") {
 			continue
 		}
 		owner := ""
@@ -53,6 +57,9 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 			}
 			if module == "" {
 				continue
+			}
+			if owner == "StatsBase" {
+				return "", ""
 			}
 			member := symbol.Name
 			if module == "node:fs" {
@@ -210,7 +217,7 @@ func (l *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, bool, er
 		return nil, false, nil
 	}
 	if module != "node:fs" || (member != "realpathSync" && member != "native") {
-		return nil, false, nil
+		return nil, true, l.notYet(node, module+"."+member+" as a value")
 	}
 	index := len(l.result.Functions)
 	parameter := len(l.result.Locals)

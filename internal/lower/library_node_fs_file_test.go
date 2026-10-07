@@ -63,8 +63,15 @@ func TestNodeFSFileNamespaceImport(t *testing.T) {
 }
 
 func TestNodeFSFileQualifiedErrorType(t *testing.T) {
-	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=new Error('plain'); const failure:NodeJS.ErrnoException=error; const code=failure.code; console.log(code??'missing');`); err != nil {
+	// The area proves optional-field views. A compatible qualified type lowers;
+	// adding unproven errno fields to a plain Error remains a named refusal.
+	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const make = (): NodeJS.ErrnoException => ({ name: 'E', message: 'm' }); const error = make() as NodeJS.ErrnoException; console.log(error.code ?? 'missing');`); err != nil {
 		t.Fatal(err)
+	}
+	_, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=new Error('plain'); const code=(error as NodeJS.ErrnoException).code; console.log(code??'missing');`)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "unproven relation from Error to ErrnoException") {
+		t.Fatalf("want optional-field relation refusal, got %v", err)
 	}
 }
 
@@ -79,5 +86,30 @@ func TestNodeFSFileKeepsDetachedMethodRefusal(t *testing.T) {
 func TestNodeFSFileBufferBorrow(t *testing.T) {
 	if _, err := lowerSource(t, `import {readSync,writeFileSync} from 'node:fs'; import {Buffer} from 'node:buffer'; const bytes=Buffer.from('x'); readSync(0,bytes,0,1,null); writeFileSync('x',bytes);`); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestNodeFSFileScratchOptionsBorrow(t *testing.T) {
+	for _, source := range []string{
+		`import {rmSync} from 'node:fs'; const options={recursive:true,force:true}; rmSync('missing',options);`,
+		`import {mkdtempSync} from 'node:fs'; mkdtempSync('prefix',{encoding:'utf8'});`,
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
+func TestNodeFSFileScratchOverloadsAreNamed(t *testing.T) {
+	for _, one := range []struct{ source, member string }{
+		{`import {mkdtempSync} from 'node:fs'; mkdtempSync('prefix','buffer');`, "mkdtempSync"},
+		{`import {rmSync} from 'node:fs'; const options={maxRetries:2}; rmSync('missing',options);`, "rmSync"},
+		{`import {rmSync} from 'node:fs'; function flag():boolean {console.log('effect');return true;} rmSync('missing',{force:flag()});`, "rmSync"},
+	} {
+		_, err := lowerSource(t, one.source)
+		var missing *NotYet
+		if !errors.As(err, &missing) || !strings.Contains(err.Error(), one.member) {
+			t.Fatalf("%s: want named NotYet, got %v", one.member, err)
+		}
 	}
 }
