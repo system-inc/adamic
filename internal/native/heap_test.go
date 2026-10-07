@@ -43,7 +43,7 @@ int main(int count, char **arguments) {
 		{"slabs", true, "use-after-poison"},
 	} {
 		binary := filepath.Join(t.TempDir(), "harness-"+build.name)
-		if err := Build(harness, binary, Options{Sanitize: true, slabs: build.slabs}); err != nil {
+		if err := Build(harness, binary, Options{Sanitize: true, Slabs: build.slabs}); err != nil {
 			t.Fatal(err)
 		}
 		for _, use := range []string{"retain", "length", "none"} {

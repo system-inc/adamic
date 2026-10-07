@@ -1,0 +1,113 @@
+{
+  "rounds_seconds": {
+    "CSS baseline": [
+      2.646463445002155,
+      2.627671903999726,
+      2.640024919001007,
+      2.5074429099986446,
+      2.531451864000701,
+      2.5419131540002127,
+      2.4750535269995453
+    ],
+    "CSS final": [
+      2.4679833720001625,
+      2.811044777998177,
+      2.536802388000069,
+      2.380332818996976,
+      2.427136074998998,
+      2.4544262919989706,
+      2.426057321998087
+    ],
+    "CSS Node": [
+      2.696456345001934,
+      2.3103740630031098,
+      1.9898991219997697,
+      2.042944782999257,
+      2.0100403760006884,
+      1.9780400449999433,
+      1.9402221309974266
+    ],
+    "scanner baseline": [
+      0.3996736890003376,
+      0.42036104499857174,
+      0.2900312860001577,
+      0.291162980000081,
+      0.29169866000302136,
+      0.28475783899921225,
+      0.28791979200104834
+    ],
+    "scanner final": [
+      0.29010355299760704,
+      0.32787678800013964,
+      0.28129416099909577,
+      0.28426171699902625,
+      0.28087943499849644,
+      0.2866428029992676,
+      0.2841856819977693
+    ],
+    "scanner Node": [
+      0.32165432299734675,
+      0.3579268619978393,
+      0.31344348899801844,
+      0.3187562880011683,
+      0.3128256159980083,
+      0.31491212699984317,
+      0.31614148800144903
+    ]
+  },
+  "answers": {
+    "CSS": "4952 of 4952 stylesheets formatted, 510298 units\n",
+    "scanner": "434790\n"
+  },
+  "median_per_second": {
+    "CSS baseline": 1948.138941020479,
+    "CSS final": 2017.57943033071,
+    "CSS Node": 2463.6321036758636,
+    "scanner baseline": 1493287.3677823981,
+    "scanner final": 1529541.172797072,
+    "scanner Node": 1375301.934423764
+  },
+  "commands": {
+    "CSS baseline": [
+      "/workspace/scratch/css-runtime/baseline/css",
+      "/workspace/scratch/css-perf/final/shared.txt",
+      "count"
+    ],
+    "CSS final": [
+      "/workspace/scratch/css-runtime/final/css",
+      "/workspace/scratch/css-perf/final/shared.txt",
+      "count"
+    ],
+    "CSS Node": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/scratch/css-perf/final/source/css/print_main.ts",
+      "/workspace/scratch/css-perf/final/shared.txt",
+      "count"
+    ],
+    "scanner baseline": [
+      "/workspace/scratch/css-runtime/baseline/scanner/scanner",
+      "--manifest",
+      "/workspace/scratch/css-runtime/baseline/scanner/compiler.txt",
+      "--count"
+    ],
+    "scanner final": [
+      "/workspace/scratch/css-runtime/final/scanner/scanner",
+      "--manifest",
+      "/workspace/scratch/css-runtime/final/scanner/compiler.txt",
+      "--count"
+    ],
+    "scanner Node": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/scratch/css-runtime/final/scanner/main.ts",
+      "--manifest",
+      "/workspace/scratch/css-runtime/final/scanner/compiler.txt",
+      "--count"
+    ]
+  },
+  "loadavg_after": "1.93 9.45 8.70 1/209 115126",
+  "cpu_count": 5
+}

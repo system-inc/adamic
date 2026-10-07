@@ -13,6 +13,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -182,7 +183,7 @@ func TestInputAgreesWithNode(t *testing.T) {
 					t.Errorf("want every input fixture to finish on Node, got exit %d, stderr %q", oracle.exitCode, oracle.stderr)
 					return
 				}
-				if leaked := inputLeaks(t, prepared(), program, binary); leaked != "" {
+				if leaked := inputLeaks(t, prepared, program, binary); leaked != "" {
 					t.Errorf("leaks:\n%s", leaked)
 				}
 
@@ -316,31 +317,30 @@ func inputNatively(t *testing.T, how inputRun, program *ir.Program, shared strin
 }
 
 // inputLeaks is leaks for an input fixture: the same check, run where and as whom the fixture runs.
-func inputLeaks(t *testing.T, how inputRun, program *ir.Program, sanitized string) string {
-	leak := inputLeaksUncached(t, how, program, sanitized)
+// prepared gives each run its own place to write.
+func inputLeaks(t *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
+	leak := inputLeaksUncached(t, prepared, program, sanitized)
 	rememberLeak(t, leak)
 	return leak
 }
-func inputLeaksUncached(t *testing.T, how inputRun, program *ir.Program, sanitized string) string {
+func inputLeaksUncached(t *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
 	t.Helper()
-	switch runtime.GOOS {
-	case "darwin":
-		binary := filepath.Join(sharedDirectory(t), "program")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
-		}
-		report := executeInput(t, how, nil, "leaks", append([]string{"--atExit", "--", binary}, how.arguments...)...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return string(report.stdout)
-	case "linux":
-		report := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, how.arguments...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+	// Each run gets its own place to write, and runs where and as whom the fixture runs.
+	var how inputRun
+	report, err := leakcheck.Check(leakcheck.Program{
+		C:         native.C(program),
+		Sanitized: sanitized,
+		Counted:   filepath.Join(sharedDirectory(t), "counted"),
+		Arguments: func() []string {
+			how = prepared()
+			return how.arguments
+		},
+		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
+			return leakRun(executeInput(t, how, environment, name, arguments...))
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
-	return ""
+	return report
 }

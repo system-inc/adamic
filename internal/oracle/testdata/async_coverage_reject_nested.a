@@ -1,0 +1,15 @@
+async function fail(message: string): Promise<string> {
+    await Promise.resolve();
+    throw new Error(message);
+}
+async function relay(message: string): Promise<string> {
+    const held = `${message}!`;
+    return await fail(held);
+}
+async function outer(message: string): Promise<void> {
+    const held = `${message}?`;
+    const result = await relay(held);
+    console.log(result);
+}
+console.log('before');
+await outer(`nested${5}`);

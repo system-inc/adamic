@@ -43,17 +43,30 @@ def stopped(command, sig, ignored=False, cpu=False):
     child = subprocess.Popen(command, env=environment, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE, preexec_fn=setup)
     try:
-        if not cpu:
+        prefix = b''
+        if os.path.basename(command[0]) == 'node':
+            # Observe Node's startup line rather than assuming module loading completes in
+            # 750 ms while the full gate is compiling other fixtures. Keep consumed bytes.
+            deadline = time.monotonic() + 15
+            while not prefix.endswith(b'\n'):
+                remaining = deadline - time.monotonic()
+                assert remaining > 0 and select.select([child.stdout], [], [], remaining)[0], 'Node startup timed out'
+                part = os.read(child.stdout.fileno(), 4096)
+                assert part, ('Node ended before startup line', child.poll())
+                prefix += part
+        elif not cpu:
+            # Native intentionally buffers this line until stopped; keep its existing delay.
             time.sleep(0.75)
+        if not cpu:
             assert child.poll() is None, ('child ended before signal', child.returncode)
             child.send_signal(sig)
         try:
-            output, errors = child.communicate(timeout=3)
+            output, errors = child.communicate(timeout=10)
         except subprocess.TimeoutExpired:
             child.kill()
             output, errors = child.communicate()
-            return subprocess.CompletedProcess(command, 124, output, errors)
-        return subprocess.CompletedProcess(command, child.returncode, output, errors)
+            return subprocess.CompletedProcess(command, 124, prefix + output, errors)
+        return subprocess.CompletedProcess(command, child.returncode, prefix + output, errors)
     finally:
         if child.poll() is None:
             child.kill()

@@ -1,0 +1,3 @@
+const f = async (): Promise<void> => {};
+const kind = typeof f;
+console.log(kind);
