@@ -1,0 +1,22 @@
+Captured original asserted tests: {"@typescript-eslint/no-unnecessary-type-constraint": 37, "@typescript-eslint/prefer-as-const": 69, "@typescript-eslint/prefer-enum-initializers": 21, "nexus/import-require-node-namespace": 15, "structure/network-no-invalidate-cache-literal-key": 16, "structure/network-no-string-literal-query": 23}
+fixtures: Go/Node/emitted JavaScript/sanitized native identical, 83165 bytes
+Corpus: 348 files, 2088 file/rule pairs
+corpus: Go/Node/emitted JavaScript/sanitized native identical, 79646442 bytes
+typescript-no-unnecessary-type-constraint mutant caught on Node: successful compile and exit, differing output only
+typescript-no-unnecessary-type-constraint mutant caught on JavaScript: successful compile and exit, differing output only
+typescript-no-unnecessary-type-constraint mutant caught on native: successful compile and exit, differing output only
+typescript-prefer-as-const mutant caught on Node: successful compile and exit, differing output only
+typescript-prefer-as-const mutant caught on JavaScript: successful compile and exit, differing output only
+typescript-prefer-as-const mutant caught on native: successful compile and exit, differing output only
+typescript-prefer-enum-initializers mutant caught on Node: successful compile and exit, differing output only
+typescript-prefer-enum-initializers mutant caught on JavaScript: successful compile and exit, differing output only
+typescript-prefer-enum-initializers mutant caught on native: successful compile and exit, differing output only
+nexus-import-require-node-namespace mutant caught on Node: successful compile and exit, differing output only
+nexus-import-require-node-namespace mutant caught on JavaScript: successful compile and exit, differing output only
+nexus-import-require-node-namespace mutant caught on native: successful compile and exit, differing output only
+structure-network-no-invalidate-cache-literal-key mutant caught on Node: successful compile and exit, differing output only
+structure-network-no-invalidate-cache-literal-key mutant caught on JavaScript: successful compile and exit, differing output only
+structure-network-no-invalidate-cache-literal-key mutant caught on native: successful compile and exit, differing output only
+structure-network-no-string-literal-query mutant caught on Node: successful compile and exit, differing output only
+structure-network-no-string-literal-query mutant caught on JavaScript: successful compile and exit, differing output only
+structure-network-no-string-literal-query mutant caught on native: successful compile and exit, differing output only
