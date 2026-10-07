@@ -71,3 +71,17 @@ Markdown documents across all origin heads. The first three are:
 Each has compiler 0 and repository 0. Searches of both integration heads found
 only inventory and count mentions, with no implementation. This claim is pushed
 before any implementation of these rules.
+
+## Fifth set
+
+The prior twelve ports and validation are pushed at 363fde32. A fresh all-head
+fetch found 46 remaining candidates among 197 ranked rules, after excluding
+integration-head ports and 126 names in 33 origin claim documents. The next
+three, each with compiler 0 and repository 0, are:
+
+- no-throw-literal
+- no-useless-backreference
+- prefer-arrow-callback
+
+Whole stage1/cohere searches on main and the bridge found inventory/count
+mentions only. This claim is pushed before implementation.
