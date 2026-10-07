@@ -1,0 +1,48 @@
+{
+  "control": {
+    "diagnostics": [
+      "/tmp/parser-temporary-driver-slice/src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+    ],
+    "entry": "/tmp/parser-temporary-driver-slice/parser-host-control.a",
+    "outcome": "Checker"
+  },
+  "mutants": [
+    {
+      "adaptation": "60-temporary-factory-local-symbol",
+      "removed_view_diagnostics": [
+        "/tmp/parser-temporary-driver-slice/src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
+        "/tmp/parser-temporary-driver-slice/src/compiler/factory/nodeFactory.ts:757:9: error TS2412: Type 'undefined' is not assignable to type 'T[\"localSymbol\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'undefined' is assignable to the constraint of type 'T[\"localSymbol\"]', but 'T[\"localSymbol\"]' could be instantiated with a different subtype of constraint 'Symbol | undefined'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+      ],
+      "runtime_mutant_exit": 1,
+      "caught_by": "adapter emitted-JavaScript equality assertion"
+    },
+    {
+      "adaptation": "61-temporary-factory-type-expression",
+      "removed_view_diagnostics": [
+        "/tmp/parser-temporary-driver-slice/src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
+        "/tmp/parser-temporary-driver-slice/src/compiler/factory/nodeFactory.ts:5037:9: error TS2412: Type 'JSDocTypeExpression | undefined' is not assignable to type 'T[\"typeExpression\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'JSDocTypeExpression | undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n    Type 'undefined' is not assignable to type 'T[\"typeExpression\"]'.\n      'undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n        Type 'undefined' is not assignable to type 'JSDocTypeExpression'."
+      ],
+      "runtime_mutant_exit": 1,
+      "caught_by": "adapter emitted-JavaScript equality assertion"
+    },
+    {
+      "adaptation": "62-temporary-tracing-write",
+      "removed_view_diagnostics": [
+        "/tmp/parser-temporary-driver-slice/src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
+        "/tmp/parser-temporary-driver-slice/src/compiler/tracing.ts:321:35: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n      Type 'undefined' is not assignable to type 'string'."
+      ],
+      "runtime_mutant_exit": 1,
+      "caught_by": "adapter emitted-JavaScript equality assertion"
+    },
+    {
+      "adaptation": "63-temporary-tracing-legend",
+      "removed_view_diagnostics": [
+        "/tmp/parser-temporary-driver-slice/src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
+        "/tmp/parser-temporary-driver-slice/src/compiler/tracing.ts:340:38: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | ArrayBufferView<ArrayBufferLike>'.\n  Type 'undefined' is not assignable to type 'string | ArrayBufferView<ArrayBufferLike>'."
+      ],
+      "runtime_mutant_exit": 1,
+      "caught_by": "adapter emitted-JavaScript equality assertion"
+    }
+  ],
+  "restored": true
+}

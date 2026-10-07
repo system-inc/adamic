@@ -29,4 +29,5 @@ registerHooks({
 const program = process.argv[2];
 process.argv.splice(1, 1);
 await import(runtime);
+if(process.env.PARSER_TRACE_ERRORS === '1') process.removeAllListeners('uncaughtException');
 await import(pathToFileURL(program).href);

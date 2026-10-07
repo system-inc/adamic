@@ -1,0 +1,22 @@
+{
+  "typescript": "6.0.3",
+  "tree": "/tmp/parser-area-adapted",
+  "entries": [
+    "src/compiler/parser.ts:createSourceFile",
+    "src/compiler/parser.ts:forEachChild",
+    "src/compiler/program.ts:flattenDiagnosticMessageText",
+    "src/compiler/utilitiesPublic.ts:unescapeLeadingUnderscores",
+    "src/compiler/types.ts:ScriptKind",
+    "src/compiler/types.ts:ScriptTarget",
+    "src/compiler/types.ts:SyntaxKind"
+  ],
+  "declarations": 5103,
+  "copied_spans": 5125,
+  "namespace_wrapper_spans": 22,
+  "value_declarations": 3958,
+  "type_declarations": 1145,
+  "files": 79,
+  "declaration_lines": 190844,
+  "declaration_bytes": 9772085,
+  "rewritten_import_lines": 967
+}
