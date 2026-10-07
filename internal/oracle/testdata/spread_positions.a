@@ -1,0 +1,28 @@
+// Each source is closed, while snapshots preserve subsequent mutation and ownership.
+const source = { a: 1, text: "before".repeat(2), items: ["item".repeat(2)], child: { label: "child".repeat(2) } };
+function change(): number {
+    source.a = 7;
+    source.text = "after".repeat(2);
+    return 2;
+}
+const value = { first: 0, ...source, b: change(), ...{ a: 9, last: 3 } };
+console.log(`${value.a}:${value.b}:${value.text}:${value.items[0] ?? "missing"}:${value.child.label}:${source.a}:${source.text}`);
+for (const key in value) console.log(key);
+const keys = { ...{ z: 1 }, ...{ "10": 10, "2": 2, a: 3 }, b: 4, ...{ a: 5, "1": 1, z: 6 } };
+for (const key in keys) console.log(key);
+console.log(`${keys.z}:${keys.a}`);
+const different = { ...{ a: 1 }, marker: 0, ...{ a: "changed".repeat(2) } };
+console.log(different.a);
+const nested = { first: 0, ...{ ...{ a: 1 }, ...{ a: 2, b: 3 } }, last: 4 };
+for (const key in nested) console.log(key);
+console.log(`${nested.a}:${nested.b}`);
+const leading = { first: 0, ...{ ...{ a: 1 }, b: 2 } };
+console.log(`${leading.a}:${leading.b}`);
+// Overwritten owned values must still be evaluated and then released.
+const owned = { first: 0,
+    ...{ text: "old".repeat(2), items: ["old item".repeat(2)], child: { label: "old child".repeat(2) } },
+    ...{ text: "new".repeat(2), items: ["new item".repeat(2)], child: { label: "new child".repeat(2) } },
+    last: 1 };
+console.log(`${owned.text}:${owned.items[0] ?? "missing"}:${owned.child.label}`);
+const leadingChanged = { ...{ a: 1 }, a: "leading".repeat(2) };
+console.log(leadingChanged.a);
