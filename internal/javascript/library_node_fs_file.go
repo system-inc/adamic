@@ -18,15 +18,19 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		return "(" + args[0] + ").isDirectory()"
 	case "is_symbolic_link":
 		return "(" + args[0] + ").isSymbolicLink()"
+	case "read_buffer", "read_buffer_fd":
+		return "adamicNodeFSFile.readFileSync(" + args[0] + ", {flag:" + args[1] + "})"
 	case "read_file", "read_fd":
 		return "adamicNodeFSFile.readFileSync(" + args[0] + ", {encoding:'utf8', flag:" + args[1] + "})"
 	case "open":
 		return "adamicNodeFSFile.openSync(" + args[0] + ", " + args[1] + ", " + args[2] + ")"
+	case "read_sync":
+		return "adamicNodeFSFile.readSync(" + args[0] + ", " + args[1] + ", " + args[2] + ", " + args[3] + ", " + args[4] + ")"
 	case "write":
 		return "adamicNodeFSFile.writeSync(" + args[0] + ", " + args[1] + ", " + args[2] + ", 'utf8')"
 	case "close":
 		return "adamicNodeFSFile.closeSync(" + args[0] + ")"
-	case "write_file", "write_fd":
+	case "write_file", "write_fd", "write_buffer", "write_buffer_fd":
 		return "adamicNodeFSFile.writeFileSync(" + args[0] + ", " + args[1] + ", {flag:" + args[2] + ", mode:" + args[3] + ", flush:" + args[4] + ", encoding:'utf8'})"
 	case "exists":
 		return "adamicNodeFSFile.existsSync(" + args[0] + ")"

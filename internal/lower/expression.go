@@ -163,10 +163,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) {
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
 				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
 			}
-			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferReadArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")

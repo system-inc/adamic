@@ -10,7 +10,11 @@ func (a *analysis) nodeFSFile(expression ir.NodeFSFile) value {
 		a.value(argument)
 	}
 	if expression.Operation == "stat" {
-		return a.fresh("mtime", a.fresh(anyField, value{}))
+		mtime := a.fresh(anyField, value{})
+		atime := a.fresh(anyField, value{})
+		result := a.fresh("mtime", mtime)
+		a.state.store(newestOf(result), "atime", atime)
+		return result
 	}
 	if mutable(expression.Type()) {
 		return a.fresh(anyField, value{})

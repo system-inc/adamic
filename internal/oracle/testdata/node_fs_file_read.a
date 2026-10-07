@@ -1,7 +1,8 @@
 import { programArguments } from 'adamic';
 const root = programArguments()[0] ?? '';
 function failure(error: Error): void {
-    console.log(`${error.code ?? ''}: ${error.message.replace(root, '<root>')}`);
+    const errno: NodeJS.ErrnoException = error;
+    console.log(`${errno.code ?? ''}: ${error.message.replace(root, '<root>')}`);
 }
 import { readFileSync, openSync, closeSync } from 'node:fs';
 console.log(readFileSync(root + '/utf8', 'utf8'));

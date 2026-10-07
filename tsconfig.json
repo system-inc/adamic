@@ -17,6 +17,6 @@
 		"types": []
 	},
 	"sourceExtensions": [".a"],
-	"files": ["internal/load/prelude.d.ts", "internal/load/node_fs_file.d.ts"],
+	"files": ["internal/load/prelude.d.ts"],
 	"include": ["dedication", "internal/load/testdata", "internal/oracle/testdata", "stage1", "bench"]
 }
