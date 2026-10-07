@@ -1,0 +1,9 @@
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestTheOracleCatchesOneByte
+--- PASS: TestTheOracleCatchesOneByte (0.64s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.644s

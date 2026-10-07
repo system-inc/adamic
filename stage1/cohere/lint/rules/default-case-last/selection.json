@@ -1,0 +1,1191 @@
+{
+  "refs": {
+    "origin": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+    "origin/claude/adamic-file-input-args-r5tzc1": "15743ee0ac6e88759fb4f85c8165dc89dbff7a91",
+    "origin/claude/cycle-finder-fresh-writes-ssz3oh": "a71a615e02eb19cdf42346e4383ce0b61b472d05",
+    "origin/claude/port-cohere-second-slice-050g6a": "658e0c9ca0a2b8d898eab6d848c0db02359445b6",
+    "origin/claude/port-gitignore-adamic-1bstfd": "b2100572b253d4e368ef18a59484dd1c8a81fd3c",
+    "origin/claude/release-globals-at-exit-uqmaf6": "fc2677673e779f522b93104064bcedcc91da996c",
+    "origin/claude/review-afternoon-merges-8la3q9": "9f6336f1ae5b1f2bbca721fd25c3f9aa8357b9b8",
+    "origin/claude/stage1-language-gaps-o3lbxx": "fcdce8c30e46e66d14e089912cd70bcd100063b6",
+    "origin/claude/task-k9saws": "9b3725d2596892ad601c7e099c69db1c71e332d5",
+    "origin/cloud/036s1yh": "b15bb2e8e176d7789b81d7a6c0de786d5872644b",
+    "origin/cloud/0aja3b1": "601dd3d0cebbf692841eb2c529708e671f8cf1f9",
+    "origin/cloud/0aja3b1-tokenizer": "6418d436526597db61748b9ec05e58667b2ffd40",
+    "origin/cloud/1t32deq": "4f5a7c082bcd706639aae780308c1ddf0994dc96",
+    "origin/cloud/20d7ptt": "b2100572b253d4e368ef18a59484dd1c8a81fd3c",
+    "origin/cloud/8abq3fp": "4b8657c2b179872ab71cc7064e7bd4ffb014b457",
+    "origin/cloud/8abq3fp-write": "d4489b22669412878d8fb942fa209805f33ee9a0",
+    "origin/cloud/b2-notyets": "dce65cd435a23c66a972661b9b1419ef60833577",
+    "origin/cloud/base-5d4c801": "5d4c8012a0877094134e6c6bac367ff68f9313e8",
+    "origin/cloud/codex-bitwise": "7ed47a349b5af7bf0787ef7bd6c7ef5cc25f413a",
+    "origin/cloud/codex-distance-meter": "3af0b67287685f277c5ee0eb13895f2c57d03de2",
+    "origin/cloud/codex-generic-gaps": "61452ed79dc7647d19d21e2c3bc0af38467045c8",
+    "origin/cloud/codex-generics-values": "433c4d88fc80ca3c79fa5a7b35a142b1595352cc",
+    "origin/cloud/codex-regex-parser": "061f720da7ec7d434f49cae7a0839605449aa014",
+    "origin/cloud/collections-fs": "d67e4c5b28d348d7dc107315f20c54a77681eec8",
+    "origin/cloud/counts-and-gaps": "b4444d9b4f7693816f7cbdeec1b7f7b98c72206a",
+    "origin/cloud/exceptions-closures": "9eac37a32dd90feda82091dd0bdbe494a1e8ce9b",
+    "origin/cloud/grok-class-features-coverage": "1c583c423108ebfd61c767fdd65e9ee760468679",
+    "origin/cloud/grok-coverage-release-fast-path": "c0cc4d757b20d05613e4c173fd498f3d95d741c2",
+    "origin/cloud/grok-coverage-slab-checks": "ac48654e80b8c8e176e88794a246804497e285c2",
+    "origin/cloud/grok-coverage-stdout-edges": "c515c1931f73a8851787c6d7018766b958a636fe",
+    "origin/cloud/grok-date-coverage": "39fb2e753b5db2ca5b25e0dbe3a2249ee00c2aec",
+    "origin/cloud/grok-enums-coverage": "744befd868473d3417b61ac338e60dd8ec7f8d06",
+    "origin/cloud/grok-fnexpr-coverage": "9ad63cf3b095f1e4519c55d7af9e320c30c08a3e",
+    "origin/cloud/grok-generator-oct6": "90b6b26a08f13db6cb9e56acdd1a9a19a5d4a5b5",
+    "origin/cloud/grok-hasown-panic": "0a6c655ab06272e0a5a283e898ade36c7895408e",
+    "origin/cloud/grok-json-stringify-coverage": "c93bd38e2335d2174ee814637ba3d791798950a4",
+    "origin/cloud/grok-map-set-coverage": "7a0e9b15ad96fad20752b2b4287ef9da39de6e4d",
+    "origin/cloud/grok-object-coverage": "180069ad317ad93836a59515d4bdd040a2550097",
+    "origin/cloud/grok-ownership": "0bb235f4fe40d3c330851ad49f04aaa031a26c32",
+    "origin/cloud/grok-parallel": "bbf9defb2e5932f9ec8ddf6af8518f78585b9bba",
+    "origin/cloud/grok-params-namespaces-coverage": "0cee90f7e9091661f89e286565784b8d35c114ba",
+    "origin/cloud/grok-regex-canonicalize": "cabb26df606705d7b1a6b05f4c90dd841ad93b47",
+    "origin/cloud/grok-regex-cycle-coverage": "4f6546cc25c047ff2a5b5b4084c2e958481325af",
+    "origin/cloud/grok-regex-native-coverage": "707358afc263e1f9630f7749dde8e005d8886cba",
+    "origin/cloud/grok-regions": "425efed709d60885977a2e3ef21b4bd85b7c63ef",
+    "origin/cloud/grok-shared-slices": "748ed0789245a1ead0f88ed64c3a9e1db8dfce5f",
+    "origin/cloud/grok-test262-adapt": "b3cb87c1af9a8ebb2fe2bb7dba0289721073f927",
+    "origin/cloud/grok-test262-runner": "bb766d42ba415def680c8223bc7825e228141a9a",
+    "origin/cloud/grok-unicode-properties": "c33e28051e7c7c447312a848dcc661ed943af0c0",
+    "origin/cloud/hx74vgw": "ea6aa547963d24861d8887f1af88d288931110db",
+    "origin/cloud/hx74vgw-alloc": "3e98c995f83d310ff9c1c61185ad0acba0db9c6a",
+    "origin/cloud/hx74vgw-cohere": "dc254b4fb8f613bc0dd77af02091e8f2170f6b5b",
+    "origin/cloud/hx74vgw-index": "a93acb9f75d1b6b3c633df18330d0bb373226235",
+    "origin/cloud/hx74vgw-loops": "952898d126cb266db0f77259d59e831504b1b7ae",
+    "origin/cloud/hx74vgw-loops2": "fd017563f26e794962d48477b8a2d59e8d1abb83",
+    "origin/cloud/hx74vgw-reads": "e8e3a8c0f45ace6d7c3488a4fa6dc772bf6a8486",
+    "origin/cloud/integrate-1": "956cbee975386a7bdf4bab3b355f227d0b8c262a",
+    "origin/cloud/integrate-10": "5160d2b22d29d2590eeb10e0eccf1fdf0252f1c4",
+    "origin/cloud/integrate-11": "7d9fb1b32de2e5360ba4f51f4c1dac83cb443626",
+    "origin/cloud/integrate-12": "df651d52d74c234616758239d0f98c52b51728d0",
+    "origin/cloud/integrate-13": "d799ede40af1d947efe8c4a897efbb90c2ef2264",
+    "origin/cloud/integrate-14": "1a4e29984b0b1727b063e76fe01c2aa11dfa56c7",
+    "origin/cloud/integrate-15": "4c538f2599118f052b0d5a9e8bd11030dd2abc2f",
+    "origin/cloud/integrate-15-final": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+    "origin/cloud/integrate-16": "167cd089738533755f5dde05b740e55415a0cd20",
+    "origin/cloud/integrate-2": "f1511de89cfbac3e162470a6c6a85667de561944",
+    "origin/cloud/integrate-3": "663b42d53343bd8dc903d3bb71fbb5ee8226b135",
+    "origin/cloud/integrate-4": "2385966df8ed0fba8c119f27b0ec8abbf3b11bf5",
+    "origin/cloud/integrate-5": "7cefedaafc7471b4958f75fe0e564de5807836ad",
+    "origin/cloud/integrate-6": "f23a017d29a24935eafb57a93d345fbeb02c59e2",
+    "origin/cloud/integrate-7": "9984394dfdda75486c20d90e634b144a07b56811",
+    "origin/cloud/integrate-7-flow": "4ff4657af091f95078966fcb9f6a2b2695455f77",
+    "origin/cloud/integrate-7-reuse-fixtures": "2a9090f31f44da36f0d88c3b996f7362737a5190",
+    "origin/cloud/integrate-8": "1e8ec6bbed8ecfa07b7c9cf665f26e1260e868a5",
+    "origin/cloud/integrate-9": "d25e85b3b412d80cdcde4a2a5037e032db93a0c5",
+    "origin/cloud/integrate-fixes": "50045bd797650a34aa40b55ad751b6a667a6ab31",
+    "origin/cloud/integrate-fixes-2": "d4848e0dee6c52ed5903064f895402eb79d3e231",
+    "origin/cloud/integrate-s2-1": "cdeadaf6e014cddf21665189f115f02eab7500ee",
+    "origin/cloud/k9saws-shortest": "11eb74a4152b3f46364c014ed88ea161e5b48fa7",
+    "origin/cloud/probes-10": "15743ee0ac6e88759fb4f85c8165dc89dbff7a91",
+    "origin/cloud/review-fixes": "b196a5f24cdb4c429a89f1432f90e8143650beea",
+    "origin/cloud/rskcbts": "610caf57733962909808fafa41fc1a92390e660a",
+    "origin/cloud/s2n8gc6": "d41e72088a2c062b7ab09c4faf9332cce177ff47",
+    "origin/cloud/s2n8gc6-flow": "094e845022abc03b50d168379b5057eb94025123",
+    "origin/cloud/set": "e8ecad43ab5193fd4ee8ce4ece68985d52f8df67",
+    "origin/cloud/vvwg423": "ddf71868c974887196ca70639524b1d29eeeb5e2",
+    "origin/codex/accessors": "a85451ac41d2639eb59bd92ad96ec15dc5436424",
+    "origin/codex/accessors-2": "f21b86681efc84cf4eeca8f03c03dac9b9735903",
+    "origin/codex/apple-step-1": "10520b5bd01d8f36bccc5ee4c6c260af779b7282",
+    "origin/codex/arenas-iteration": "1f70454791dcb024288fa0d81d60a103fdc3e785",
+    "origin/codex/bench-strings-maps": "66cf63386e776ce932a9019783588a6518a53aed",
+    "origin/codex/borrowed-element-reads": "658dbc4f32ad85388a8adcc18bd56317965bd695",
+    "origin/codex/borrowed-loop-bindings": "6c6417a8aab1485dab0b6f7ea7a7db9a79e5dd66",
+    "origin/codex/call-targets": "280fc491fa8cfb5fb67cd664444e24e7107ad3a0",
+    "origin/codex/call-targets-maythrow": "ff01a33cfc2379fb20d3dca158839ce1fe1c25d9",
+    "origin/codex/checked-downcasts": "e816797f07a70952e214be079a1da54db80fbd7c",
+    "origin/codex/class-features": "816be8782bba71607c11180cd6d3be9ddc2c405a",
+    "origin/codex/class-inheritance": "7b30af65edd4a8af9ba5ac96c9ebc320220a68b6",
+    "origin/codex/class-instance-key": "a787333b4b56a5848f25ccc57194fe2a63dd1b0c",
+    "origin/codex/cohere-bump": "71bad787c59b80bfe24640f1146f0e948d5ee7ad",
+    "origin/codex/cohere-dry-guard": "9045cdb400029506c02b34804802f837bf176e04",
+    "origin/codex/concurrency": "ced5530e68357ca9880f4366870d1f596f453d1a",
+    "origin/codex/concurrency-async": "55d2c89b5de849ac3789eb7810200184530eff05",
+    "origin/codex/concurrency-compiler": "2e284e18525172726984ced77090ee70d9659a97",
+    "origin/codex/concurrency-moves": "8aa7b628f97e306986a689e34a68bc9f387440b5",
+    "origin/codex/concurrency-scaling": "0f672843d211fd40b7ba84d3207d8eac0772ac02",
+    "origin/codex/coverage-oct6": "8f167c40b0573e29fde04388cd6ac18f870ab2ef",
+    "origin/codex/cycle-iterator-slots": "2349605511a6a83c877bd6def0e8d20d482a6f2b",
+    "origin/codex/diagnostics-audit": "d4369cfc419dd498762621b2d9c20e22f3938a74",
+    "origin/codex/dot-a": "ec71e2867781e3175f4535409f58fef7647a061a",
+    "origin/codex/enums": "7127080756a1904cc8d65ed766b66bbfaa767771",
+    "origin/codex/error-classes": "d0b644303a201ec319d85bc59a360a16daa6e929",
+    "origin/codex/error-classes-counts": "4627ced8bfb40135800f1280bd409a98c47bb783",
+    "origin/codex/escape-hatches": "0f30b52061374de90ceeac8d19b221cb51ae84f9",
+    "origin/codex/fast-gate-4core": "51f0b59ff0a3d5741f432c307afde4d07bc1f18a",
+    "origin/codex/flag-enums": "f7d62772fa8e52fcfae754e047ceb66dba88b782",
+    "origin/codex/flow-stale-comments": "cc3fd4096e65f8d962b77ec78b5fe89381887a21",
+    "origin/codex/fresh-clobbered-loads": "dddb655b20986f6806b37c45cb232473ef98ae39",
+    "origin/codex/function-expressions-for-in": "fd88edfc13304eab7d87d535be9d0e9cfb5bd858",
+    "origin/codex/fuzz-moves": "441bfce9a1699cf13eccf6abe3556652e8ed7735",
+    "origin/codex/generic-maybe-undefined": "5da447eda701c56ba2cc01f575ea4778be65e032",
+    "origin/codex/grok-date-coverage-flow": "06fc42477162914bd1940eb3525faeb6441a1a9e",
+    "origin/codex/integer-fast-paths": "a183e50cb4dec94e4afb79a36b3c3746acac1e6c",
+    "origin/codex/library-array": "34da3d84c7f3b1860405a8b0bfd545e7ba9b2a43",
+    "origin/codex/library-array-2": "bcf803d5ee42377c3f6b87c76d42384dde12fac1",
+    "origin/codex/library-array-3": "2f70bac2882a9b3bfdf3b705e3e7873595c94d63",
+    "origin/codex/library-date": "f7cbc8c1bc4bc0b120a1b85e9104cc24ba78cb01",
+    "origin/codex/library-date-3": "ae7ac72f57a195c03c107960d642f5b7f9c1acd0",
+    "origin/codex/library-date-refusals": "4ec07a3ffc94eb5f06413b7bba0b1c300e9d105e",
+    "origin/codex/library-function": "afd87f6b2aa16ed756f4f4e9b72ae282cc23d827",
+    "origin/codex/library-iterator": "5149773954faa160db7e56913fc9032abafa77b7",
+    "origin/codex/library-json-number": "735a7026ab98778ffa9b97cf85861ac1a593f3b7",
+    "origin/codex/library-json-stringify": "ac6832dad93abefdee132c7974f1659da8732bd8",
+    "origin/codex/library-map-set": "82b211dd83d4f59e9de3d86202631a939c06d7c8",
+    "origin/codex/library-map-set-2": "8280e521b73fe66fe9fb6c78e01bc448fcd46e00",
+    "origin/codex/library-map-set-iterators": "e19114920b5fe4c6ec2bb841a7de3aa84cbaf4e8",
+    "origin/codex/library-math-number": "a14a7fed573dce118e14426c7e9797c4fd4835f8",
+    "origin/codex/library-number-math": "7b2da46f7c9e412973eab82fc8384131c2c04e97",
+    "origin/codex/library-object": "cdf632b47fefa315aefdeaeda468c13abed4d551",
+    "origin/codex/library-object-3": "b89a7d84f5e5388280eb623c1711d0b80a03450d",
+    "origin/codex/library-object-prototype": "55302e5a87cf189f0f77df5031684155cc355572",
+    "origin/codex/library-string": "5048a6a47a82f69659d7e2c134eda45386e147c4",
+    "origin/codex/library-string-2": "e911e46fb0154e997b8a6fcb96fb581b5f442b87",
+    "origin/codex/library-string-3": "f298cee5db18029dc82b8606ffdf347c6264636a",
+    "origin/codex/lint-harness-dot-a": "2650ad595b82220c368631ea13139fad4b306ed6",
+    "origin/codex/lint-helpers": "6769b88e876e3797293b34a29dfd02cbd8507256",
+    "origin/codex/lint-helpers-01": "b3923a0ddfe39f7a7b91ea25533b48329503f164",
+    "origin/codex/lint-helpers-02": "597a5eef8e1d2044b243fe3de124d8ef2559b955",
+    "origin/codex/lint-helpers-03": "c5841459a3027faf112ab9a74ae92fc0b315ff33",
+    "origin/codex/lint-helpers-04": "502d072ee2266b034ed7f16c640ae932de6f3b29",
+    "origin/codex/lint-helpers-05": "bf0778658516f8c04a361ebaaebcd20f2a8a2641",
+    "origin/codex/lint-inventory": "73ac2eb0963e1a4166eaa0fbd160203f11dcdbdf",
+    "origin/codex/lint-registration": "48ecd9302bf3954a4ddbbd14c28ba09148c1c1a8",
+    "origin/codex/lint-wave-check": "1c46513e01d0993242948c58b7825480d3fdd645",
+    "origin/codex/lint-wave1-01": "928829df00e0c5bdc699d51df87bf754b7955401",
+    "origin/codex/lint-wave1-02": "c6ef8e93cdf0132b67994bcfce16658d806bd428",
+    "origin/codex/lint-wave1-03": "b3a01d98d02af0d8f826654867efc907470c1e66",
+    "origin/codex/lint-wave1-04": "e373f8e06d73f5dcf02c9d15b0977e2c968d70d0",
+    "origin/codex/lint-wave1-05": "878da5f87208e68a0ea44a74275e36221f613583",
+    "origin/codex/lint-wave1-06": "b1c0dac2a25b901813b4f5a78c1eb51595a0ee4f",
+    "origin/codex/lint-wave1-07": "e4e9b247a4d71ffa0f3a7de5002e89760dcfbc4e",
+    "origin/codex/lint-wave1-08": "86546bbf95126f0f7c2e16bb3d124b1740d1f036",
+    "origin/codex/lint-wave1-09": "7da651d1d797ebcd64deeda22234d150bd52109b",
+    "origin/codex/lint-wave1-10": "86dc232fb008be7da5d025225a35b7dec16b9c66",
+    "origin/codex/lint-wave1-11": "7a48558075ac520a6ddf10e69e1e2e776978f5ec",
+    "origin/codex/lint-wave1-12": "e5fef3b1f3416147f9286f857cb085a27eb830f5",
+    "origin/codex/lint-wave1-13": "df9f0451530c29f3a266f9001e08aad78def3cb1",
+    "origin/codex/lint-wave1-14": "f1055c53eadecccf61d76da9cfdf5084a283bc30",
+    "origin/codex/lint-wave1-15": "a39da6168e031543681f0404dc1aaabf74a2adfc",
+    "origin/codex/literal-optional-absent": "8a60125b81b7c7b7b784c4d6e67044883fb71963",
+    "origin/codex/literal-undefined-field": "962f412b6f6d397ff801414cce014a3daf8bde61",
+    "origin/codex/loop-array-hold": "2b63ccbae9befd644aef5692a043955648243eb6",
+    "origin/codex/map-foreach-keys": "9fcb092e3bfbb10dda72e270643f9700f992934e",
+    "origin/codex/map-hash-probe": "fe1337d52224db67d7e773367d2781bcc9670a4d",
+    "origin/codex/map-number-hash": "e7ea1a493754c9ec03c09854a70082498563629c",
+    "origin/codex/memory-worked-examples": "bca0d5aaa22acd3c8ed5444b6c77efedcc028c1f",
+    "origin/codex/method-values": "3fb24bcc0406b41bbbf69350cffbff844b2af8de",
+    "origin/codex/narrowed-elements-and-flow": "f65fc052411d83c01d5ecf83e45f2d8753901b56",
+    "origin/codex/narrowed-number-field": "675770b782b3512f423b4b9e271e377588a2eef9",
+    "origin/codex/narrowed-union-member": "98e4747e9a944ace9f4f86850a2c212d11edfb46",
+    "origin/codex/nbody-speed": "ed6bad6abd6332be24b578c9246336a1d73fefe4",
+    "origin/codex/nested-functions": "b2034215240ebaf36b6ca86d2c288da82638bc7f",
+    "origin/codex/no-optional-widening": "0a6a155ea05866ee323b463dfa8e398d9ff7e4fa",
+    "origin/codex/no-shared-lists": "7f958deaa7cca476747591607cc3c991a1ad91e6",
+    "origin/codex/non-null-check": "289d6870cdd624085cfd7aacc493a02aae6d2cb8",
+    "origin/codex/normalize-long": "b1fec32e4fc84811a4e12e7dac0f345d576295ca",
+    "origin/codex/nullable-references": "98ad7e10097898b22d97a0663ef27464433ec9a9",
+    "origin/codex/object-prototype-methods": "0edc8f3e03a7d2d2e50849bb326dc65937bc7b15",
+    "origin/codex/organization-sweep": "6b42696a00ebf94d9f2e912cf7c6738ba7f099b2",
+    "origin/codex/override-representation": "e1b84baf80a29b4180671c0852a9a97216a2ec07",
+    "origin/codex/parameter-properties-namespaces": "adc45ca417482834336c08510be0db5b91974680",
+    "origin/codex/parser-recovery": "cf9f33c3b02319e865bf09fc5a0cc914d8600d4b",
+    "origin/codex/perf-css-runtime": "ccfd64f76b3b0ec94611199029c9de528c2ca467",
+    "origin/codex/perf-field-access": "f0e32e3892c8d934126b424048d92d998dce157f",
+    "origin/codex/perf-utf16-cache": "16656c688288d92fc2f80cfd08fbc50a452cebfc",
+    "origin/codex/process-exit-and-tty": "dd4b67e7bdedd27f31d2e3900e7caf1fd5575374",
+    "origin/codex/proven-relations": "c9f9d39f75ae820779183d3015abfb50ade1d7b4",
+    "origin/codex/proven-type-guards": "b95861fae6a2070b391f4bdcec22a842e760a7a8",
+    "origin/codex/race-checks-reliable": "debb1aec82d784fdc8ed38e40b486f9d482dc094",
+    "origin/codex/realpath-node-walk": "035999ea5a55bafd69f88e9445cf488fdbfc92c8",
+    "origin/codex/refuse-definite-assignment": "84e6752a9e0c9c4d5a7c33dff3e915408ec2bf0f",
+    "origin/codex/refuse-suppression-directives": "921afc46fd7872cc0d0953147c3021bbec66c679",
+    "origin/codex/refuse-ts-nocheck": "955cfcdc925416ebd27eaf980a705f61b2c2a739",
+    "origin/codex/regex-cohere-patterns": "c6487b485443a71f91f01b7a2568a44a9cee1ddc",
+    "origin/codex/regex-cycle-proof": "5859a59368b0f1ddf9399bee34c02b14238ad37e",
+    "origin/codex/regex-matcher": "50a1dc8217f6d715fc27038e6ce12ab429416a30",
+    "origin/codex/regex-native-fixes": "c962ce239e578a1c7a20ca862bebcda843131567",
+    "origin/codex/regex-protocol": "ffb3ae0b1c25797d29d7b8c30edbceafafbe4508",
+    "origin/codex/regex-remaining": "31862c1e9ee6caf76eb426d3a0edbae18153fbe8",
+    "origin/codex/regex-split-surrogate": "e1c910a2fd4b9030574edbc447ffd3844f4b8199",
+    "origin/codex/regex-v8-divergences": "a8cc9037638ca1bfb0c074f310df9973aa6b875e",
+    "origin/codex/region-end": "2984b85d7e740a37fee8e3fd27d8639fcbf748d6",
+    "origin/codex/rename-documentation": "ffd667756ceddeb4ef7b4e6c7f67741f7dbda54a",
+    "origin/codex/split-hot-files": "5d4c8012a0877094134e6c6bac367ff68f9313e8",
+    "origin/codex/stage1-command": "2573b3bbf8edc74303b53c76432aaa97b76c20ac",
+    "origin/codex/stage1-config": "7ccbcd17e97d0bd74af28149aee8f23539d44b8f",
+    "origin/codex/stage1-css": "e8e03a8df4179c90b44e1bf93218588759769ae0",
+    "origin/codex/stage1-css-numbers": "8909b74701a228da61d73c98bd39c1ac414c4698",
+    "origin/codex/stage1-css-printer": "6476d7acdb7d27833eedfd24c371f587dbb022ed",
+    "origin/codex/stage1-css-selector": "c717c5d2b7a426757e04b724b4bc4bb5ca1c400e",
+    "origin/codex/stage1-estree": "4a8deeb87dad865bac1c6c378cff51438e0e92c3",
+    "origin/codex/stage1-formatter-slice": "f69f6a5d85a1391e3160566ada263505479ddeb7",
+    "origin/codex/stage1-graphql-printer": "0ffda5efaeaf4b707e94ca8bb6b0077afa3b9fa5",
+    "origin/codex/stage1-json-format": "67796a5a8419d5052e1cb7532d6b39bb5777da6c",
+    "origin/codex/stage1-jsx-lint": "a8a62d62ca49db7415e14c3887dd305022b17309",
+    "origin/codex/stage1-lint-batch2": "6700c572ee3810524e356af7f92973e38ee5265f",
+    "origin/codex/stage1-lint-batch3": "fa9781c2c0911c52312002ba97ffd4b560d178ae",
+    "origin/codex/stage1-lint-batch4": "d486b03a15f3202acc317dc81c40cc21818e21f7",
+    "origin/codex/stage1-lint-batch4-typescript": "63782c53678711717f9fd4f12762ce3d103b9a3d",
+    "origin/codex/stage1-lint-batch5": "dcef3eebfddcb297464bdce398d850775852587d",
+    "origin/codex/stage1-lint-batch6": "c5d128ab4158197a3b3a9f6452b9224e946ac462",
+    "origin/codex/stage1-lint-batch6-perf": "595caf11c7824c9d8c2aaff1f5a3b7287396a629",
+    "origin/codex/stage1-lint-batch8": "4189abd3490757e8abe13722ceb365c451293e92",
+    "origin/codex/stage1-lint-output": "e88d7a22681a4f8471a341898f4ca3e060490788",
+    "origin/codex/stage1-markdown-blocks": "6115b1c614d0de31fc883568d93591ee327262fe",
+    "origin/codex/stage1-markdown-escape": "f65e4e0e48615d94dffaadb23a5a6c3cd40de3d1",
+    "origin/codex/stage1-nextjs-lint": "1bfb7ef1335d6527abeb7b00cdbc927ae5ec2f0f",
+    "origin/codex/stage1-progress": "7ed6d30c3f2d407a183c971ec2ed2577c0e5f615",
+    "origin/codex/stage1-ts-printer": "5d67de464596833cec286a236a7cf14866f37bd3",
+    "origin/codex/stage1-yaml": "2400d9f19ec7164cacb8293c1760e2388bb08315",
+    "origin/codex/static-methods": "b30ad136ac32698be913ee6ad4e8e53640c23576",
+    "origin/codex/stdout-edges": "cb806061de5e1fb53f46303c821f092af568ce6f",
+    "origin/codex/structural-library-view": "e92cc4dd8b1880fe9848ef42cbd52b4446626a79",
+    "origin/codex/super-early-this": "0cf467cdef1fba747a5b0019bf6f2f1b7651d30c",
+    "origin/codex/switch-empty-cases": "38f75fd265b8f614446f6cea0ac5f1f7af8c4463",
+    "origin/codex/test262-ts-validity": "af128990588aab7ee52ea3ab8527d638009c4979",
+    "origin/codex/tsc-census": "429c1177f0130f785c19cf590d1860513b2ddbfc",
+    "origin/codex/tsc-strictness-survey": "0806299dc539814b6d6dce5bac77fd253df8ce53",
+    "origin/codex/tsgo-c-library": "5afbdb83da2ed7ad9815657cd3f6ececd5294bf6",
+    "origin/codex/tuple-length-views": "496c2964da695a21c025dffca30c184b5fa81e86",
+    "origin/codex/typeaware-wave-01": "2bfc6381caf0d4252944e89ea9a629854c42516e",
+    "origin/codex/typeaware-wave-02": "958c5c2fa02758920b4c949a48f0f5f325dd7b09",
+    "origin/codex/typeaware-wave-03": "83bfce4ba54e65f57ddbaf2a9b7bc16b990421b6",
+    "origin/codex/typeaware-wave-04": "940df4213f0da3b3a51bbde22bbb005a8c29dd12",
+    "origin/codex/typeaware-wave-05": "d8b312d99108c3f3411e358e785e3cf765160117",
+    "origin/codex/typeaware-wave-06": "b57fbb83e08820d1a0bdff11e0603b446f7af534",
+    "origin/codex/typeaware-wave-07": "fd86b9e2fb357c8c590ca858958bf26bdc85518c",
+    "origin/codex/typeaware-wave-08": "126c03580e777bce4687996b79605da20e1c9b35",
+    "origin/codex/typeaware-wave-09": "24667c8562a916ccdd46f0c14849ffeb2852a339",
+    "origin/codex/typeaware-wave-10": "0ac7b51b2b670c1d2a0e6f9ea3c606eefcf92251",
+    "origin/codex/typeaware-wave-11": "617850b4565c754f0e39e65c4c378e22849cbd0c",
+    "origin/codex/typeaware-wave-12": "047ec3559c02c953cef648efa9f8495eeded0b7c",
+    "origin/codex/typeaware-wave-13": "30798c6495896dbd9e1ecbca2bf1913c8b662c5d",
+    "origin/codex/typeaware-wave-14": "5bd31ee5b4bb399f94c7003f0ef9179ef3fd0bc2",
+    "origin/codex/typeaware-wave-15": "edf39f73efc67d2b1cddb36b57b116ec8b6203f5",
+    "origin/codex/typeaware-wave-16": "be3ab457a8bd51254ef3557f92f640c64ff08ec6",
+    "origin/codex/typeaware-wave-17": "1330dbc287e8fff382b458815101c7b032ad4e33",
+    "origin/codex/typeaware-wave-18": "1a7f2a3ad9ee6361821186300e977ae4e88012bd",
+    "origin/codex/typeaware-wave-19": "aec393d77598758f5dc28cfa573d28c6d8544da0",
+    "origin/codex/typeaware-wave-20": "f3f30a65ada500dffb53bc01cf0b7ed167131dff",
+    "origin/codex/typeaware-wave-21": "dbc183749e96d19352fd774065c1e8bf444a9f88",
+    "origin/codex/typeaware-wave-22": "6066e31c849b616af885787e7d542f658a55dd94",
+    "origin/codex/typeaware-wave-23": "6b1e4e2f3d245cc28e282176709d3858da42efea",
+    "origin/codex/typeaware-wave-24": "1d3d2b3f8d374e90080a714c4cf11fc6ffca62bd",
+    "origin/codex/typeaware-wave-25": "b22f88584fe16ec88eb8f0decb1fe5b03bc7c571",
+    "origin/codex/typeaware-wave-26": "a21c17fb61c86711db67df4a4a4ada575a7b1747",
+    "origin/codex/typeaware-wave-27": "d095b4f795a8057c500f2ac62d76321307823669",
+    "origin/codex/typeaware-wave-28": "d45c4d672a5904f9162e29bea5849e2ff22518ee",
+    "origin/codex/typeaware-wave-29": "0ab906149506228d3516f779c94ca86ae1316374",
+    "origin/codex/typeaware-wave-30": "952a900ca176c5f8ed09eed1ef1c4fe7be900a5b",
+    "origin/codex/typeof-null": "2b4d9d29090c2f17d6213bf8944e6935cf97120a",
+    "origin/codex/typescript-scanner": "0090256e607c3f2de7d5b67cef680ec010f95c1d",
+    "origin/codex/user-iterators": "b5fbec4872ca4721029f34fff1ba751ba2d6f4d2",
+    "origin/codex/utf16-views": "f057af758f94c2a5c0d8b4685897aed2fcb3264d",
+    "origin/codex/wasm32-driver": "446b3009174192dbf2a478c203352fb1f0e09be9",
+    "origin/codex/wasm32-runtime": "52959fcceee9d3dd6c8287c798f1136e1ad53ecc",
+    "origin/codex/weak-narrowed-callback": "5da0cd9b2005ea2c673d3e9f778a6e70c00990fb",
+    "origin/codex/weak-union-narrowed": "b4ec5753646ccf5bf7c0deb97488c3ae4b82dec0",
+    "origin/codex/weak-view-methods": "e017d262dc83871e818d34579a3a9d1e6a6b4e67",
+    "origin/compiler/inherited-not-yet": "bc90fd00abc78249a59d3e934eee2cb148906203",
+    "origin/compiler/input-spread": "85328b26aa5c0c614ea21c6e0455ece8185e6afe",
+    "origin/compiler/liveness-throw": "2dbee114877dc0ab4cac2e96adfbb9791f966f47",
+    "origin/compiler/private-generic": "b8d60d1f1432c2e171cf2e882d2a8216f836c5ca",
+    "origin/compiler/super-closure": "20610643cd2fc90d763201640a380d76ee314ba8",
+    "origin/coverage/accessors": "d6b96752106e14df8bdf7bb7cd6149210ee62d0d",
+    "origin/coverage/enums": "403762509c9c134a8e71381d5366b9700db1fe57",
+    "origin/coverage/error-classes": "849de8e16b30ec318e266d1732d5dbaf1369e5f8",
+    "origin/coverage/error-names": "69d3c87b25e439866e14ec0a1ecc9fcdf22bb6d5",
+    "origin/coverage/input-spread": "0adab35d2533bcdc5f59824c5e76c24572c69b00",
+    "origin/coverage/integer-fast-paths": "97d3929a7c2f1db558f3f99c5dabdd0bd193267f",
+    "origin/coverage/library-array": "392fbae204fb7843a936ef3fab2558653aebbd16",
+    "origin/coverage/library-object": "efa031da4ac3aa8c81f0e4dff188c940a1d7e741",
+    "origin/coverage/method-values": "61d684eb3cdc852c0fb37458102614d95a87f982",
+    "origin/coverage/non-null-check": "f7ea71ac9d6bce6a1847051cfe3181cf026da6ec",
+    "origin/coverage/normalize-long": "96932f63326671d7dece937caac5b99e2872c091",
+    "origin/coverage/nullable-references": "49213658e9a3d96dcc12fd0a07f766ff1edf4920",
+    "origin/coverage/parameter-properties-namespaces": "9b459361b5210793cd1cc57d3ad508594db38900",
+    "origin/coverage/regex": "437fbf16340f92e6e80f338e5e20e547e3764b3d",
+    "origin/gate/node-pin": "3ee1af9470b6cfe0e492caa9f8c20b18bb8e21da",
+    "origin/library/mac-leak-checks": "476b725f2f91f59436d95ad5a1bef5f8100a8245",
+    "origin/library/unfused-everywhere": "8b908191ff44cd5ce635463f3fc041e493d88983",
+    "origin/main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+    "origin/runtime/aside-throw": "3756e2fe1ff334a2620d78dbd672163ada12fd65",
+    "origin/runtime/borrowed-array-move": "9579408671f8481e2a196822c21caab6f94c5366",
+    "origin/runtime/defined-lent": "fe62d30ab994d6bfcc92cae575d3b31537bac97d",
+    "origin/runtime/error-spread": "e73fd72ca9161c5d4dd8414d7b9e728846732323",
+    "origin/runtime/fresh-probes": "2403dd3975093bc21bcaccd2812583a2efa7c7f0",
+    "origin/runtime/handover-throw": "be68139958d64aa1ec5e4e57d79cbc1960bfeb54",
+    "origin/runtime/integrate6-fixtures": "6b6d1321617eb3f30194ea6bec8b0c623aba9638",
+    "origin/runtime/length-check-fixtures": "5be82b7478ebc6f915ab23313ec172fdd4240159",
+    "origin/runtime/long-names": "54aad7d2cd32132b6e373f57e204d7452e89d8c3",
+    "origin/runtime/memory-guard-fixtures": "0e3881f843cf94c67565d66e5573d295f7ab4a0c",
+    "origin/runtime/region-ctor-capture": "d84813c594c17931991dd36a3f2486bbfdfd2316",
+    "origin/runtime/release-fast-path": "b9f22f0945a7162d5019920639dc7bb0188692bb",
+    "origin/runtime/shared-slice-append": "d4da1e18c36dd4f3b42a695c65fbb87993883dd6",
+    "origin/runtime/slab-checks": "220a915e30c57e930bac52e1f3a958fdee7e6e6d",
+    "origin/runtime/spread-method": "9dd2e9ab99fff391ac55712aeb170de600ef214d",
+    "origin/runtime/stack-arguments": "ccbc6251c91dc43eb1fcd365b589cfe810c3f218",
+    "origin/runtime/stdout-edges-usr1": "cd08cc094a01320bf7322009009dda55fae9b1b4",
+    "origin/runtime/uncaught-name": "bc7555864ee8dde188adc841c391d35d7aee138b"
+  },
+  "rules": [
+    {
+      "cohort": "original helper handoff",
+      "position": 1,
+      "name": "@typescript-eslint/consistent-type-assertions",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-01.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 2,
+      "name": "@typescript-eslint/consistent-type-definitions",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-01.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 3,
+      "name": "@typescript-eslint/init-declarations",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-01.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 4,
+      "name": "@typescript-eslint/no-explicit-any",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-02.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 5,
+      "name": "@typescript-eslint/no-inferrable-types",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-02.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 6,
+      "name": "@typescript-eslint/no-restricted-types",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-02.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 7,
+      "name": "@typescript-eslint/no-unused-expressions",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-03.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 8,
+      "name": "@typescript-eslint/unified-signatures",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-03.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 9,
+      "name": "class-methods-use-this",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-03.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 10,
+      "name": "consistent-this",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-04.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 11,
+      "name": "func-name-matching",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-04.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 12,
+      "name": "max-classes-per-file",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-04.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 13,
+      "name": "max-depth",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-05.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 14,
+      "name": "max-nested-callbacks",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-05.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 15,
+      "name": "no-cond-assign",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-05.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 16,
+      "name": "no-inner-declarations",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-06.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 17,
+      "name": "no-restricted-properties",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-06.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 18,
+      "name": "no-self-assign",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-06.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 19,
+      "name": "no-underscore-dangle",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-07.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 20,
+      "name": "no-unsafe-negation",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-07.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 21,
+      "name": "no-unsafe-optional-chaining",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-07.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 22,
+      "name": "no-useless-computed-key",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-08.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 23,
+      "name": "react-hooks/gating",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-08.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 24,
+      "name": "react/forbid-foreign-prop-types",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-08.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 25,
+      "name": "react/jsx-no-useless-fragment",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-09.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 26,
+      "name": "react/no-invalid-html-attribute",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-09.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 27,
+      "name": "react/no-unescaped-entities",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-09.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 28,
+      "name": "react/no-unsafe",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-10.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 29,
+      "name": "react/self-closing-comp",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-10.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 30,
+      "name": "sort-vars",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-10.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 31,
+      "name": "adamic/no-definite-assignment",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-11.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 32,
+      "name": "base/boundary-no-global-container",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-11.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 33,
+      "name": "base/consistency-no-hand-built-declared-error",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-11.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 34,
+      "name": "base/consistency-require-pagination-argument-name",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-12.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 35,
+      "name": "base/correctness-require-orm-column-declare",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-12.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 36,
+      "name": "nexus/consistency-no-boolean-outcome",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-12.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 37,
+      "name": "nexus/consistency-no-for-in",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-13.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 38,
+      "name": "nexus/consistency-no-hand-rolled-delay",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-13.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 39,
+      "name": "nexus/consistency-no-return-void",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-13.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 40,
+      "name": "nexus/consistency-no-stuttering-name",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 41,
+      "name": "nexus/consistency-no-utils-folder",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 42,
+      "name": "nexus/import-require-module-alias",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 43,
+      "name": "nexus/import-require-node-namespace",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 44,
+      "name": "structure/network-no-invalidate-cache-literal-key",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 45,
+      "name": "structure/network-no-string-literal-query",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "cohort": "original helper handoff",
+      "position": 46,
+      "name": "structure/tailwind-no-physical-direction",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-01.md",
+        "stage1/cohere/lint/claims/wave1-02.md",
+        "stage1/cohere/lint/claims/wave1-03.md",
+        "stage1/cohere/lint/claims/wave1-04.md",
+        "stage1/cohere/lint/claims/wave1-05.md",
+        "stage1/cohere/lint/claims/wave1-06.md",
+        "stage1/cohere/lint/claims/wave1-07.md",
+        "stage1/cohere/lint/claims/wave1-08.md",
+        "stage1/cohere/lint/claims/wave1-09.md",
+        "stage1/cohere/lint/claims/wave1-10.md",
+        "stage1/cohere/lint/claims/wave1-11.md",
+        "stage1/cohere/lint/claims/wave1-13.md",
+        "stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 1,
+      "name": "@next/next/no-assign-module-variable",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-03.md",
+        "stage1/cohere/lint/claims/wave1-08.md",
+        "stage1/cohere/lint/claims/wave1-13.md",
+        "stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 2,
+      "name": "@typescript-eslint/default-param-last",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-03.md",
+        "stage1/cohere/lint/claims/wave1-08.md",
+        "stage1/cohere/lint/claims/wave1-13.md",
+        "stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 3,
+      "name": "@typescript-eslint/no-confusing-non-null-assertion",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 4,
+      "name": "@typescript-eslint/no-duplicate-enum-values",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 5,
+      "name": "@typescript-eslint/no-dynamic-delete",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 6,
+      "name": "@typescript-eslint/no-extra-non-null-assertion",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 7,
+      "name": "@typescript-eslint/no-misused-new",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 8,
+      "name": "@typescript-eslint/no-unnecessary-parameter-property-assignment",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 9,
+      "name": "@typescript-eslint/no-unnecessary-type-constraint",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-03.md",
+        "stage1/cohere/lint/claims/wave1-06.md",
+        "stage1/cohere/lint/claims/wave1-08.md",
+        "stage1/cohere/lint/claims/wave1-12.md",
+        "stage1/cohere/lint/claims/wave1-13.md",
+        "stage1/cohere/lint/claims/wave1-14.md",
+        "stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 10,
+      "name": "@typescript-eslint/prefer-as-const",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-03.md",
+        "stage1/cohere/lint/claims/wave1-08.md",
+        "stage1/cohere/lint/claims/wave1-13.md",
+        "stage1/cohere/lint/claims/wave1-14.md",
+        "stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 11,
+      "name": "@typescript-eslint/prefer-enum-initializers",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-03.md",
+        "stage1/cohere/lint/claims/wave1-08.md",
+        "stage1/cohere/lint/claims/wave1-13.md",
+        "stage1/cohere/lint/claims/wave1-14.md",
+        "stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 12,
+      "name": "@typescript-eslint/prefer-namespace-keyword",
+      "on_main": false,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-05.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 13,
+      "name": "default-case-last",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 14,
+      "name": "default-param-last",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 15,
+      "name": "for-direction",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 16,
+      "name": "guard-for-in",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 17,
+      "name": "no-async-promise-executor",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 18,
+      "name": "no-await-in-loop",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 19,
+      "name": "no-case-declarations",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 20,
+      "name": "no-compare-neg-zero",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 21,
+      "name": "no-constructor-return",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 22,
+      "name": "no-continue",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 23,
+      "name": "no-debugger",
+      "on_main": true,
+      "claim_docs": [
+        "stage1/cohere/lint/claims/wave1-03.md"
+      ]
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 24,
+      "name": "no-delete-var",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 25,
+      "name": "no-div-regex",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 26,
+      "name": "no-eq-null",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 27,
+      "name": "no-lone-blocks",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 28,
+      "name": "no-lonely-if",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 29,
+      "name": "no-loss-of-precision",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 30,
+      "name": "no-multi-str",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 31,
+      "name": "no-negated-condition",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 32,
+      "name": "no-new",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 33,
+      "name": "no-nonoctal-decimal-escape",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 34,
+      "name": "no-octal",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 35,
+      "name": "no-octal-escape",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 36,
+      "name": "no-script-url",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 37,
+      "name": "no-sparse-arrays",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 38,
+      "name": "no-template-curly-in-string",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 39,
+      "name": "no-unexpected-multiline",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 40,
+      "name": "no-unsafe-finally",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 41,
+      "name": "no-unused-private-class-members",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 42,
+      "name": "no-useless-catch",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 43,
+      "name": "no-useless-concat",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 44,
+      "name": "no-useless-constructor",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 45,
+      "name": "no-var",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 46,
+      "name": "no-with",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 47,
+      "name": "prefer-template",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 48,
+      "name": "react/forward-ref-uses-ref",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 49,
+      "name": "react/jsx-no-comment-textnodes",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 50,
+      "name": "react/no-find-dom-node",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 51,
+      "name": "react/no-is-mounted",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 52,
+      "name": "react/no-redundant-should-component-update",
+      "on_main": false,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 53,
+      "name": "require-yield",
+      "on_main": true,
+      "claim_docs": []
+    },
+    {
+      "cohort": "inventory syntax ready",
+      "position": 54,
+      "name": "vars-on-top",
+      "on_main": true,
+      "claim_docs": []
+    }
+  ],
+  "selected": [
+    "default-case-last",
+    "default-param-last",
+    "for-direction"
+  ]
+}
