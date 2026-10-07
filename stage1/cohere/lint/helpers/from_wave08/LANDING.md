@@ -32,3 +32,7 @@ Setup PASS: Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s, bui
 Main has newer static rule dispatch and oracle behavior; the registration foundation cannot be applied as an automatic patch over those files. Ahra's standing territory instruction says to keep changes in owned rule directories and not edit shared registration or harness files, and to state blockers and stop. These are shared foundation conflicts, so no out-of-territory resolution was made. The rebase was aborted, leaving all old commits and the pushed branch intact. Its pre-rebase tests remain historical evidence; it has not been re-certified against current main and is not landing-ready. The shared foundation owner must reconcile these files before this rule branch can pass the landing cap.
 
 The rule blocker keeps the cap closed. No new claim, helper implementation or pull request was opened.
+
+## Refreshed main e8ba3d5d
+
+Rebased the helper branch again onto current origin/main e8ba3d5d. Fresh uncached owned-package comparison PASS in 19.450s, all four baselines and all four semantic mutants on Node, emitted JavaScript and sanitized native. Whole-repository vet exit zero; filtered uncached external oracle PASS in 0.465s. Commands match those above; refresh logs are in evidence/landing_refresh_*.log. No helper source change or new claim. The rule rebase still conflicts in the same four shared foundation files on the first registration commit and was aborted again; its tip remains 6a66e2d3. Main and area branches were never pushed.
