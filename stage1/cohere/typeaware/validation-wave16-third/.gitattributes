@@ -1,0 +1,3 @@
+# Preserve exact failure logs and the deliberate CRLF span control.
+*.log -whitespace
+*.a whitespace=cr-at-eol
