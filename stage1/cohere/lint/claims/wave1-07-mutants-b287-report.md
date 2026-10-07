@@ -1,0 +1,17 @@
+Fixed both surviving mutants with dedicated option-bearing witnesses; all four owned rules now declare node:true and take the handed ParseNode.
+Both branches include current area b28757f33 and current main 71d7e491; final pushed shas reported together.
+Fresh four-rule TestMutants PASS 116.228s; final witnesses, rule parity, required compiler corpus and link guard PASS 203.748s.
+All four mutations are caught on source Node, emitted JavaScript and sanitized native by independent Go comparison.
+Full repository gate and full mutant registry not run; explicit inherited parser-recovery exclusions remain outside parity coverage.
+
+Reproduced both reported failures on current area: constructor-property-name-ignored and ordering-relations-ignored survived on Node. The failing run is preserved, not counted as green. Both mutation anchors match exactly once and still reach active code. The problem was missing option-bearing owned witnesses: TestMutants now uses ownedWitnessRows instead of the standalone option-rich profile corpus. Defaults disable both changed branches.
+
+The original !key in object witness remains. Added ordering.ts.txt plus ordering.options.json enabling enforceForOrderingRelations, exercising <, <=, >, >=. The original underscore witness remains. Added constructor-property.ts.txt plus constructor-property.options.json enabling allowAfterThisConstructor: this.prototype._bar must report, this.constructor._bar must not. The unchanged mutant replaces the exact constructor property test with true and incorrectly suppresses the prototype finding. No production semantic predicate or mutation anchor was weakened. Existing typed Go adapters decode these sidecars.
+
+All four winning descriptors now set node:true. Their entries accept ParseNode and index without refetching the handed node; own standalone profile callers fetch once and pass that same node. No shared harness, compiler, registry generator or oracle file was edited. Changes stay in the four owned rule directories plus own evidence. Losing copies remain absent and the unchanged ledger remains applied.
+
+Commands sourced /workspace/adamic-tools/env.sh, with output directly to committed logs:
+go test ./stage1/cohere/lint -run '^TestMutants$/^(constructor-property-name-ignored|ordering-relations-ignored|and-left-undefined-ignored|parenthesized alias lost)$' -count=1 -v -timeout 15m
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/wave07-typescript go test ./stage1/cohere/lint -run '^(TestOwnedWitnesses|TestRulesAgree|TestCompilerAndStage1Agree|TestNodeTableIsLinkOnly)$' -count=1 -v -timeout 15m
+
+Mutants-after: parenthesized alias lost, constructor-property-name-ignored, ordering-relations-ignored, and-left-undefined-ignored all execute successfully and differ from Go on all three runtimes. Final RulesAgree: 13,141,729 identical bytes, 59.00s. Required corpus: 403 files, 20,624,321 identical bytes, 90.35s. Link guard: 2,489 rows, 13,158,874 identical bytes, 25.49s. Positive witnesses: 127,189 identical bytes, 28.90s. No missing-input skip taken, no correctness check relaxed. Other required-input packages, standalone profile reruns, fresh throughput and setup not run. Reserved consistent-return and constructor-super remain unfinished; no new helper claimed. Wave1-06 independently passed all seven fresh mutants and subsequent parity, recorded on its own landing branch. Push only the two own branches, never main or area.

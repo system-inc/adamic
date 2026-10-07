@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { panic } from 'adamic';
 import { RuleContext } from '../../context.ts';
 export class Rule {
@@ -39,8 +40,7 @@ export class Rule {
             for(const element of node.children) { this.bindings(this.bindingName(element), declaration, node.kind); }
         }
     }
-    visit(index: number): void {
-        const node = this.context.node(index);
+    visit(node: ParseNode, index: number): void {
         if(node.kind === 'VariableDeclaration') { this.bindings(node.children[0] ?? -1,index,''); return; }
         if(node.kind === 'PropertyAccessExpression') {
             const name = node.children[node.children.length - 1] ?? panic('member name');

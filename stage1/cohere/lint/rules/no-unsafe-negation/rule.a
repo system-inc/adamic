@@ -1,11 +1,11 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { panic } from 'adamic';
 import { RuleContext } from '../../context.ts';
 import { Suggestion, SuggestionEdit } from '../../suggestions.a';
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) { this.context = context; }
-    visit(index: number): void {
-        const node = this.context.node(index);
+    visit(node: ParseNode, index: number): void {
         const left = node.children[0] ?? panic('binary left');
         const operator = this.context.node(node.children[1] ?? panic('binary operator')).kind;
         const right = node.children[2] ?? panic('binary right');

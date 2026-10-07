@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { panic } from 'adamic';
 import { RuleContext } from '../../context.ts';
 const unsafe = 'This optional chain can evaluate to `undefined`, and the code around it then reaches into that `undefined` rather than short-circuiting with it. The `?.` protects only the links inside its own chain: once the chain ends, the result is an ordinary value and the next access, call, spread, or destructuring throws a TypeError. Either extend the chain so the whole expression short-circuits, or supply a fallback with `??`.';
@@ -26,8 +27,7 @@ export class Rule {
         }
         this.context.report(index, 'no-unsafe-optional-chaining', arithmetic ? 'unsafeArithmetic' : 'unsafeOptionalChain', arithmetic ? arithmeticMessage : unsafe, '', '', '');
     }
-    visit(index: number): void {
-        const node = this.context.node(index);
+    visit(node: ParseNode, index: number): void {
         const first = node.children[0] ?? -1;
         const arithmetic = this.context.settings.read('disallowarithmeticoperators', 'false') === 'true';
         if(['PropertyAccessExpression','ElementAccessExpression','CallExpression'].includes(node.kind)) {

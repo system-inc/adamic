@@ -1,0 +1,156 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/parenthesized_alias_lost
+    lint_test.go:781: parenthesized alias lost caught on Node: case 145 line 2742: port "fixed\tconst self = this;\\u000a(self) = this;\\u000a", Go "/tmp/adamic-gate/TestMutantsparenthesized_alias_lost2715555091/016/typescript-no-this-alias-0.ts:2:2"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsparenthesized_alias_lost2715555091/016/typescript-no-this-alias-0.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment 			6 10
+        /tmp/adamic-gate/TestMutantsparenthesized_alias_lost2715555091/016/typescript-no-this-alias-0.ts:2:2
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 20 24 thisAssignment 			20 24
+        fixed	const self = this;\u000a(self) = this;\u000a
+    lint_test.go:781: parenthesized alias lost caught on emitted JavaScript: case 145 line 2742: port "fixed\tconst self = this;\\u000a(self) = this;\\u000a", Go "/tmp/adamic-gate/TestMutantsparenthesized_alias_lost2715555091/016/typescript-no-this-alias-0.ts:2:2"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsparenthesized_alias_lost2715555091/016/typescript-no-this-alias-0.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment 			6 10
+        /tmp/adamic-gate/TestMutantsparenthesized_alias_lost2715555091/016/typescript-no-this-alias-0.ts:2:2
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 20 24 thisAssignment 			20 24
+        fixed	const self = this;\u000a(self) = this;\u000a
+    lint_test.go:781: parenthesized alias lost caught on native: case 145 line 2742: port "fixed\tconst self = this;\\u000a(self) = this;\\u000a", Go "/tmp/adamic-gate/TestMutantsparenthesized_alias_lost2715555091/016/typescript-no-this-alias-0.ts:2:2"
+        Go context:
+        case 145
+        /tmp/adamic-gate/TestMutantsparenthesized_alias_lost2715555091/016/typescript-no-this-alias-0.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment 			6 10
+        /tmp/adamic-gate/TestMutantsparenthesized_alias_lost2715555091/016/typescript-no-this-alias-0.ts:2:2
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 20 24 thisAssignment 			20 24
+        fixed	const self = this;\u000a(self) = this;\u000a
+=== RUN   TestMutants/constructor-property-name-ignored
+    lint_test.go:781: constructor-property-name-ignored caught on Node: case 145 line 2738: port "fixed\tthis.prototype._bar;\\u000athis.constructor._bar;\\u000a", Go "/tmp/adamic-gate/TestMutantsconstructor-property-name-ignored2116113467/016/no-underscore-dangle-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsconstructor-property-name-ignored2116113467/016/no-underscore-dangle-0.ts:1:1
+          no-underscore-dangle  Unexpected dangling '_' in '_bar'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.
+        
+        range 0 19 unexpectedUnderscore 			0 19
+        fixed	this.prototype._bar;\u000athis.constructor._bar;\u000a
+    lint_test.go:781: constructor-property-name-ignored caught on emitted JavaScript: case 145 line 2738: port "fixed\tthis.prototype._bar;\\u000athis.constructor._bar;\\u000a", Go "/tmp/adamic-gate/TestMutantsconstructor-property-name-ignored2116113467/016/no-underscore-dangle-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsconstructor-property-name-ignored2116113467/016/no-underscore-dangle-0.ts:1:1
+          no-underscore-dangle  Unexpected dangling '_' in '_bar'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.
+        
+        range 0 19 unexpectedUnderscore 			0 19
+        fixed	this.prototype._bar;\u000athis.constructor._bar;\u000a
+    lint_test.go:781: constructor-property-name-ignored caught on native: case 145 line 2738: port "fixed\tthis.prototype._bar;\\u000athis.constructor._bar;\\u000a", Go "/tmp/adamic-gate/TestMutantsconstructor-property-name-ignored2116113467/016/no-underscore-dangle-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsconstructor-property-name-ignored2116113467/016/no-underscore-dangle-0.ts:1:1
+          no-underscore-dangle  Unexpected dangling '_' in '_bar'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.
+        
+        range 0 19 unexpectedUnderscore 			0 19
+        fixed	this.prototype._bar;\u000athis.constructor._bar;\u000a
+=== RUN   TestMutants/ordering-relations-ignored
+    lint_test.go:781: ordering-relations-ignored caught on Node: case 145 line 2738: port "fixed\t!value < limit;\\u000a!value <= limit;\\u000a!value > limit;\\u000a!value >= limit;\\u000a", Go "/tmp/adamic-gate/TestMutantsordering-relations-ignored607767302/016/no-unsafe-negation-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsordering-relations-ignored607767302/016/no-unsafe-negation-0.ts:1:1
+          no-unsafe-negation  The `!` binds tighter than the `<` after it, so this negates the left operand and then compares the resulting boolean, rather than negating the comparison. `!key < object` runs the `!` first and hands `<` a `true` or a `false`, which is almost never the question being asked, and it is a valid expression either way so nothing else reports it.
+        
+        range 0 6 unexpected suggestions			0 6
+        suggestion	negateTheComparison	Negate the whole `<` comparison, which is what the parentheses in `!(a < b)` say and is almost certainly the intent. This changes what the code does.	1
+    lint_test.go:781: ordering-relations-ignored caught on emitted JavaScript: case 145 line 2738: port "fixed\t!value < limit;\\u000a!value <= limit;\\u000a!value > limit;\\u000a!value >= limit;\\u000a", Go "/tmp/adamic-gate/TestMutantsordering-relations-ignored607767302/016/no-unsafe-negation-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsordering-relations-ignored607767302/016/no-unsafe-negation-0.ts:1:1
+          no-unsafe-negation  The `!` binds tighter than the `<` after it, so this negates the left operand and then compares the resulting boolean, rather than negating the comparison. `!key < object` runs the `!` first and hands `<` a `true` or a `false`, which is almost never the question being asked, and it is a valid expression either way so nothing else reports it.
+        
+        range 0 6 unexpected suggestions			0 6
+        suggestion	negateTheComparison	Negate the whole `<` comparison, which is what the parentheses in `!(a < b)` say and is almost certainly the intent. This changes what the code does.	1
+    lint_test.go:781: ordering-relations-ignored caught on native: case 145 line 2738: port "fixed\t!value < limit;\\u000a!value <= limit;\\u000a!value > limit;\\u000a!value >= limit;\\u000a", Go "/tmp/adamic-gate/TestMutantsordering-relations-ignored607767302/016/no-unsafe-negation-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsordering-relations-ignored607767302/016/no-unsafe-negation-0.ts:1:1
+          no-unsafe-negation  The `!` binds tighter than the `<` after it, so this negates the left operand and then compares the resulting boolean, rather than negating the comparison. `!key < object` runs the `!` first and hands `<` a `true` or a `false`, which is almost never the question being asked, and it is a valid expression either way so nothing else reports it.
+        
+        range 0 6 unexpected suggestions			0 6
+        suggestion	negateTheComparison	Negate the whole `<` comparison, which is what the parentheses in `!(a < b)` say and is almost certainly the intent. This changes what the code does.	1
+=== RUN   TestMutants/and-left-undefined-ignored
+    lint_test.go:781: and-left-undefined-ignored caught on Node: case 145 line 2738: port "/tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:14", Go "/tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:2"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:2
+          no-unsafe-optional-chaining  This optional chain can evaluate to `undefined`, and the code around it then reaches into that `undefined` rather than short-circuiting with it. The `?.` protects only the links inside its own chain: once the chain ends, the result is an ordinary value and the next access, call, spread, or destructuring throws a TypeError. Either extend the chain so the whole expression short-circuits, or supply a fallback with `??`.
+        
+        range 1 9 unsafeOptionalChain 			1 9
+        /tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:14
+    lint_test.go:781: and-left-undefined-ignored caught on emitted JavaScript: case 145 line 2738: port "/tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:14", Go "/tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:2"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:2
+          no-unsafe-optional-chaining  This optional chain can evaluate to `undefined`, and the code around it then reaches into that `undefined` rather than short-circuiting with it. The `?.` protects only the links inside its own chain: once the chain ends, the result is an ordinary value and the next access, call, spread, or destructuring throws a TypeError. Either extend the chain so the whole expression short-circuits, or supply a fallback with `??`.
+        
+        range 1 9 unsafeOptionalChain 			1 9
+        /tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:14
+    lint_test.go:781: and-left-undefined-ignored caught on native: case 145 line 2738: port "/tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:14", Go "/tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:2"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:2
+          no-unsafe-optional-chaining  This optional chain can evaluate to `undefined`, and the code around it then reaches into that `undefined` rather than short-circuiting with it. The `?.` protects only the links inside its own chain: once the chain ends, the result is an ordinary value and the next access, call, spread, or destructuring throws a TypeError. Either extend the chain so the whole expression short-circuits, or supply a fallback with `??`.
+        
+        range 1 9 unsafeOptionalChain 			1 9
+        /tmp/adamic-gate/TestMutantsand-left-undefined-ignored3216733726/016/no-unsafe-optional-chaining-0.ts:1:14
+--- PASS: TestMutants (116.20s)
+    --- PASS: TestMutants/parenthesized_alias_lost (28.19s)
+    --- PASS: TestMutants/constructor-property-name-ignored (28.74s)
+    --- PASS: TestMutants/ordering-relations-ignored (27.27s)
+    --- PASS: TestMutants/and-left-undefined-ignored (29.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	116.228s

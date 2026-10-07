@@ -10,8 +10,9 @@ function ancestry(context: RuleContext, parents: number[], index: number, parent
     for(const child of context.node(index).children) { ancestry(context, parents, child, index); }
 }
 function visit(context: RuleContext, rule: Rule, index: number): void {
-    if(['VariableDeclaration', 'BinaryExpression'].includes(context.node(index).kind)) { rule.visit(index); }
-    for(const child of context.node(index).children) { visit(context, rule, child); }
+    const node = context.node(index);
+    if(['VariableDeclaration', 'BinaryExpression'].includes(node.kind)) { rule.visit(node, index); }
+    for(const child of node.children) { visit(context, rule, child); }
 }
 function run(path: string, countOnly: boolean): number {
     const read = readTextFile(path);
