@@ -1,0 +1,1 @@
+export const description = "This declares a namespace with the `module` keyword, which TypeScript has deprecated and plans to make a parse error. It means the same thing as `namespace` and reads as an ECMAScript module, which it is not. Write `namespace` instead.";

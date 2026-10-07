@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/prefer-namespace-keyword",
+  "kinds": [
+    "ModuleDeclaration"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oraclePreferNamespaceKeyword",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestPreferNamespaceKeyword"
+}
