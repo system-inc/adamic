@@ -1,6 +1,20 @@
 # Latent census
 
-The latest rerun is in [REPORT.md](REPORT.md) and [REPORT.json](REPORT.json).
+The newest meter uses pinned `origin/area/stage3` with its own adaptations
+10, 20, 30–33, 40, 45 and 46, plus the latest cumulative-2 feature tips.
+[REPORT.md](REPORT.md) and [REPORT.json](REPORT.json) contain the score out of 78,
+the complete zero-diagnostic list, every file with 1–10 diagnostics and all its
+codes/lines/causes, totals by code, and the latent lowering and variance ledgers.
+All counts are measured on a checker-rejected program.
+
+Recount/render with `meter3.py OUTPUT_DIRECTORY ADAPTED`; verify using
+`audit_meter3.py ADAPTED`. `write_report.py` dispatches to the matching renderer.
+The previous rerun report is preserved in `data/rerun2-REPORT.md` and
+`data/rerun2-REPORT.json.gz`. Current observations, pinned scratch integration,
+adaptation hashes and audit logs are in `data/meter3/`. Source hashes identify
+the exact adapted input; use a fresh output path for `apply.sh`.
+
+The earlier rerun is archived in `data/rerun2-REPORT.md` and `data/rerun2-REPORT.json.gz`.
 Both new configurations have **26/78 checker-clean files (33.33%)**, measured on
 a checker-rejected program. The earlier six-configuration report is archived in
 `data/previous-REPORT.md` and `data/previous-REPORT.json.gz`; its raw files remain
