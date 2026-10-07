@@ -162,3 +162,7 @@ The latest user instruction replaces numeric listener metadata with upstream ast
 ## Landing on b8fb957aa
 
 Preserving merge history resolved the earlier rebase conflict without shared edits. Current main and named harness 41eb6eab2 are adopted, and all six completed-rule and partial-kernel oracles are green again. See [LANDING_B8.md](LANDING_B8.md). JSX source claims remain unfinished; no new claims.
+
+## Integration area landing
+
+Rebased onto fetched area/stage1-lint 7481e0324, containing 50a5f105 and current main 39638d9e2. Six completed-rule and partial helper/listener oracles are green again. See [LANDING_AREA.md](LANDING_AREA.md) for exact tested base, timings and limits. No new claims; JSX source rules remain unfinished.
