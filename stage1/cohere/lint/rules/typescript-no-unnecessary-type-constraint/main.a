@@ -1,0 +1,120 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { Settings } from '../../settings.ts';
+import { Linter } from '../../lint.ts';
+
+import { clearRepairs, readRepairs } from './repairs.a';
+import type { Edit } from './repairs.a';
+
+function apply(source: string, edits: readonly Edit[]): string {
+    const ordered = edits.slice().sort((left, right) => left.start - right.start);
+    let result = '';
+    let previous = 0;
+    for(const edit of ordered) {
+        if(edit.start < previous || edit.end < edit.start || edit.end > source.length) { panic('invalid or overlapping edits'); }
+        result += source.slice(previous, edit.start) + edit.text;
+        previous = edit.end;
+    }
+    return result + source.slice(previous);
+}
+function run(row: string, countOnly: boolean): number {
+    const fields = row.split('\t');
+    const path = fields[0] ?? panic('missing path');
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const settings = new Settings();
+    settings.load(fields[5] ?? '');
+    const mode = settings.read('mode', fields[2] ?? '');
+    const nullPolicy = settings.read('null', fields[3] ?? '');
+    const allowCatch = settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true';
+    clearRepairs();
+    const linter = new Linter(source.text, parser, scanner, fields[1] ?? 'all', mode, nullPolicy, allowCatch, settings);
+    linter.run();
+    if(countOnly) {
+        return linter.findings.length;
+    }
+    const offsets: number[] = [0];
+    let bytes = 0;
+    for(let index = 0; index < source.text.length; index++) {
+        const code = source.text.codePointAt(index) ?? 0;
+        if(code > 65535) {
+            offsets.push(bytes);
+            index++;
+        }
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        offsets.push(bytes);
+    }
+    const fixes: Edit[] = [];
+    for(const finding of linter.findings) {
+        const start = offsets[finding.start] ?? panic('finding outside source');
+        const end = offsets[finding.end] ?? panic('finding end outside source');
+        const prefix = source.text.slice(0, finding.start);
+        const line = prefix.split('\n').length;
+        const previous = prefix.lastIndexOf('\n');
+        const column = start - (offsets[previous + 1] ?? 0) + 1;
+        console.log(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
+        console.log(
+            `range ${start} ${end} ${finding.id} ${finding.repair}\t${written(finding.replacement)}\t${written(finding.suggestion)}`,
+        );
+        const detail = readRepairs(finding);
+        if(detail !== undefined) {
+            for(const edit of detail.fixes) {
+                console.log(`fix ${offsets[edit.start] ?? panic('fix start outside source')} ${offsets[edit.end] ?? panic('fix end outside source')} ${written(edit.text)}`);
+                fixes.push(edit);
+            }
+            for(const suggestion of detail.suggestions) {
+                console.log(`suggestion ${suggestion.id} ${written(suggestion.message)}`);
+                for(const edit of suggestion.edits) {
+                    console.log(`edit ${offsets[edit.start] ?? panic('suggestion start outside source')} ${offsets[edit.end] ?? panic('suggestion end outside source')} ${written(edit.text)}`);
+                }
+                if(fields[7] !== 'compact') {
+                    console.log(`applied\t${written(apply(source.text, suggestion.edits))}`);
+                }
+            }
+        }
+        else if(finding.repair === 'fix') {
+            fixes.push({ start: finding.start, end: finding.end, text: finding.replacement });
+        }
+    }
+    const fixed = apply(source.text, fixes);
+    if(fixed !== source.text) {
+        const checked = new Parser(fixed, path);
+        checked.file();
+    }
+    console.log(`fixed\t${written(fixed)}`);
+    return linter.findings.length;
+}
+
+const args = programArguments();
+const first = args[0] ?? panic('usage: main.ts <file> or --manifest <file> [--count]');
+if(first === '--manifest') {
+    const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+    if(manifest.kind === 'Error') {
+        panic(manifest.message);
+    }
+    const countOnly = args.includes('--count');
+    let count = 0;
+    let caseNumber = 0;
+    for(const row of manifest.text.split('\n')) {
+        if(row === '') {
+            continue;
+        }
+        if(!countOnly) {
+            console.log(`case ${caseNumber}`);
+        }
+        count += run(row, countOnly);
+        caseNumber++;
+    }
+    if(countOnly) {
+        console.log(`${count}`);
+    }
+}
+else {
+    run(first, false);
+}

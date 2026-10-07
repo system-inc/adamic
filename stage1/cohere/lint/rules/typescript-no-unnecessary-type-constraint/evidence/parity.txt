@@ -1,0 +1,13 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:379: set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3
+--- SKIP: TestCompilerAndStage1Agree (0.00s)
+=== RUN   TestThirdUpstream
+    lint_test.go:324: cohere cases: 535 unique source/rule/options combinations
+    wave08_third_test.go:25: assigned upstream cases: map[@typescript-eslint/no-unnecessary-type-constraint:43 @typescript-eslint/prefer-as-const:69 @typescript-eslint/prefer-enum-initializers:21]
+    wave08_third_test.go:33: Go, Node, emitted JavaScript, native identical: 48589 bytes
+--- PASS: TestThirdUpstream (37.32s)
+=== RUN   TestThirdShapes
+    wave08_third_test.go:63: Go, Node, emitted JavaScript, native identical: 13282 bytes
+--- PASS: TestThirdShapes (28.58s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	65.923s

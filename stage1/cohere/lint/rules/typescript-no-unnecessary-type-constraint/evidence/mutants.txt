@@ -1,0 +1,106 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/constraint_suggestion_wrong
+    lint_test.go:491: constraint_suggestion_wrong caught on Node: case 24 line 526: port "suggestion removeOtherConstraint Remove the constraint that does nothing.", Go "suggestion removeTheConstraint Remove the constraint that does nothing."
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsconstraint_suggestion_wrong3152668185/007/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint 		
+        suggestion removeTheConstraint Remove the constraint that does nothing.
+        edit 12 24 
+        applied	function f<T>() {}\u000a
+        fixed	function f<T extends any>() {}\u000a
+    lint_test.go:491: constraint_suggestion_wrong caught on emitted JavaScript: case 24 line 526: port "suggestion removeOtherConstraint Remove the constraint that does nothing.", Go "suggestion removeTheConstraint Remove the constraint that does nothing."
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsconstraint_suggestion_wrong3152668185/007/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint 		
+        suggestion removeTheConstraint Remove the constraint that does nothing.
+        edit 12 24 
+        applied	function f<T>() {}\u000a
+        fixed	function f<T extends any>() {}\u000a
+    lint_test.go:491: constraint_suggestion_wrong caught on native: case 24 line 526: port "suggestion removeOtherConstraint Remove the constraint that does nothing.", Go "suggestion removeTheConstraint Remove the constraint that does nothing."
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsconstraint_suggestion_wrong3152668185/007/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint 		
+        suggestion removeTheConstraint Remove the constraint that does nothing.
+        edit 12 24 
+        applied	function f<T>() {}\u000a
+        fixed	function f<T extends any>() {}\u000a
+=== RUN   TestMutants/const_append_wrong
+    lint_test.go:491: const_append_wrong caught on Node: case 24 line 527: port "fix 28 28  as unknown", Go "fix 28 28  as const"
+        Go context:
+        /tmp/adamic-gate/TestMutantsconst_append_wrong4024861178/007/typescript-prefer-as-const-0.ts:1:12
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 11 18 preferAsConst 		
+        fix 9 18 
+        fix 28 28  as const
+        fixed	let value = 'hello' as const;\u000a
+    lint_test.go:491: const_append_wrong caught on emitted JavaScript: case 24 line 527: port "fix 28 28  as unknown", Go "fix 28 28  as const"
+        Go context:
+        /tmp/adamic-gate/TestMutantsconst_append_wrong4024861178/007/typescript-prefer-as-const-0.ts:1:12
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 11 18 preferAsConst 		
+        fix 9 18 
+        fix 28 28  as const
+        fixed	let value = 'hello' as const;\u000a
+    lint_test.go:491: const_append_wrong caught on native: case 24 line 527: port "fix 28 28  as unknown", Go "fix 28 28  as const"
+        Go context:
+        /tmp/adamic-gate/TestMutantsconst_append_wrong4024861178/007/typescript-prefer-as-const-0.ts:1:12
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 11 18 preferAsConst 		
+        fix 9 18 
+        fix 28 28  as const
+        fixed	let value = 'hello' as const;\u000a
+=== RUN   TestMutants/enum_second_suggestion_wrong
+    lint_test.go:491: enum_second_suggestion_wrong caught on Node: case 24 line 529: port "suggestion defineInitializerSuggestion Can be fixed to B = 3", Go "suggestion defineInitializerSuggestion Can be fixed to B = 2"
+        Go context:
+        
+        range 17 18 defineInitializer 		
+        suggestion defineInitializerSuggestion Can be fixed to B = 1
+        edit 17 18 B = 1
+        applied	enum D { A = 10, B = 1, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 2
+        edit 17 18 B = 2
+        applied	enum D { A = 10, B = 2, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 'B'
+        edit 17 18 B = 'B'
+    lint_test.go:491: enum_second_suggestion_wrong caught on emitted JavaScript: case 24 line 529: port "suggestion defineInitializerSuggestion Can be fixed to B = 3", Go "suggestion defineInitializerSuggestion Can be fixed to B = 2"
+        Go context:
+        
+        range 17 18 defineInitializer 		
+        suggestion defineInitializerSuggestion Can be fixed to B = 1
+        edit 17 18 B = 1
+        applied	enum D { A = 10, B = 1, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 2
+        edit 17 18 B = 2
+        applied	enum D { A = 10, B = 2, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 'B'
+        edit 17 18 B = 'B'
+    lint_test.go:491: enum_second_suggestion_wrong caught on native: case 24 line 529: port "suggestion defineInitializerSuggestion Can be fixed to B = 3", Go "suggestion defineInitializerSuggestion Can be fixed to B = 2"
+        Go context:
+        
+        range 17 18 defineInitializer 		
+        suggestion defineInitializerSuggestion Can be fixed to B = 1
+        edit 17 18 B = 1
+        applied	enum D { A = 10, B = 1, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 2
+        edit 17 18 B = 2
+        applied	enum D { A = 10, B = 2, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 'B'
+        edit 17 18 B = 'B'
+--- PASS: TestMutants (78.28s)
+    --- PASS: TestMutants/constraint_suggestion_wrong (22.68s)
+    --- PASS: TestMutants/const_append_wrong (25.29s)
+    --- PASS: TestMutants/enum_second_suggestion_wrong (26.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	78.306s

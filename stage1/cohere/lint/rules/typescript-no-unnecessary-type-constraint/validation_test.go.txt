@@ -1,0 +1,141 @@
+package lint
+
+import (
+	"bytes"
+	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+)
+
+// Not parallel: compilation regenerates the shared ignored directory registry.
+func TestThirdUpstream(t *testing.T) {
+	var rows []string
+	counts := map[string]int{}
+	for _, row := range upstream(t) {
+		fields := strings.Split(row, "\t")
+		switch fields[1] {
+		case "@typescript-eslint/no-unnecessary-type-constraint", "@typescript-eslint/prefer-as-const", "@typescript-eslint/prefer-enum-initializers":
+			rows = append(rows, row)
+			counts[fields[1]]++
+		}
+	}
+	t.Logf("assigned upstream cases: %v", counts)
+	if len(counts) != 3 {
+		t.Fatal("missing rule cases")
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+// Not parallel: compilation regenerates the shared ignored directory registry.
+func TestThirdShapes(t *testing.T) {
+	cases := []struct{ suffix, rule, source string }{
+		{".ts", "@typescript-eslint/no-unnecessary-type-constraint", "type X<T extends any = string, U extends unknown> = T;"},
+		{".tsx", "@typescript-eslint/no-unnecessary-type-constraint", "const f = <T extends any /* , */>() => {};"},
+		{".mts", "@typescript-eslint/no-unnecessary-type-constraint", "const f = <T extends unknown>() => {};"},
+		{".cts", "@typescript-eslint/no-unnecessary-type-constraint", "const f = <T extends any,>() => {};"},
+		{".a", "@typescript-eslint/no-unnecessary-type-constraint", "const f = <T extends unknown>() => {};"},
+		{".ts", "@typescript-eslint/no-unnecessary-type-constraint", "type X<T> = T extends infer U extends any ? U : never;"},
+		{".ts", "@typescript-eslint/no-unnecessary-type-constraint", "function f<in T extends unknown>(){} function g<T = any>(){}"},
+		{".ts", "@typescript-eslint/prefer-as-const", "let v: 0x10 = 16; let w: 'a' = \"a\"; const x = { k: 2 as 2 };"},
+		{".ts", "@typescript-eslint/prefer-as-const", "let v /*c*/ : '😀' /*c*/ = '😀' /*t*/; class C { ['key']: 'x' = 'x'; }"},
+		{".ts", "@typescript-eslint/prefer-as-const", "let v: true = true; let x: -2 = -2; let y: ('x') = 'x'; let {}: 'x' = 'x';"},
+		{".ts", "@typescript-eslint/prefer-as-const", "class C { v?: 'x' = 'x'; w!: 'x' = 'x'; }"},
+		{".ts", "@typescript-eslint/prefer-enum-initializers", "enum D { A = 10, B, C = f(), D } enum E { 'quoted', ['computed'], End }"},
+		{".a", "@typescript-eslint/prefer-enum-initializers", "enum D { A = 10, B, '字' }"},
+	}
+	var rows []string
+	for i, c := range cases {
+		path := filepath.Join(t.TempDir(), fmt.Sprintf("shape-%d%s", i, c.suffix))
+		if err := os.WriteFile(path, []byte(c.source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		rows = append(rows, path+"\t"+c.rule)
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+// Not parallel: compilation regenerates the shared ignored directory registry.
+func TestThirdThroughput(t *testing.T) {
+	root := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if root == "" {
+		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
+	}
+	var corpus []string
+	err := filepath.WalkDir(filepath.Join(root, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
+		if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+			corpus = append(corpus, path)
+		}
+		return err
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	for _, c := range []struct{ rule, source string }{
+		{"@typescript-eslint/no-unnecessary-type-constraint", "function f%d<T extends any>() {}\n"},
+		{"@typescript-eslint/prefer-as-const", "let v%d: 'bar' = 'bar';\n"},
+		{"@typescript-eslint/prefer-enum-initializers", "enum D%d { A, B = 10, C }\n"},
+	} {
+		path := filepath.Join(t.TempDir(), "positive.ts")
+		var source strings.Builder
+		for i := 0; i < 1000; i++ {
+			fmt.Fprintf(&source, c.source, i)
+		}
+		if err := os.WriteFile(path, []byte(source.String()), 0644); err != nil {
+			t.Fatal(err)
+		}
+		var rows []string
+		for _, file := range append(append([]string{}, corpus...), path) {
+			rows = append(rows, file+"\t"+c.rule)
+		}
+		manifestPath := manifest(t, rows)
+		best := map[string]time.Duration{}
+		var want []byte
+		for round := 0; round < 5; round++ {
+			names := []string{"native", "Node", "Go"}
+			for offset := 0; offset < 3; offset++ {
+				name := names[(round+offset)%3]
+				var result execution
+				switch name {
+				case "native":
+					result = execute(t, "", binary, "--manifest", manifestPath, "--count")
+				case "Node":
+					result = node(t, directory, manifestPath, true)
+				case "Go":
+					result = execute(t, "", oracle, "--manifest", manifestPath, "--count")
+				}
+				if want == nil {
+					want = result.output
+				} else if !bytes.Equal(want, result.output) {
+					t.Fatalf("%s count mismatch", name)
+				}
+				if best[name] == 0 || result.duration < best[name] {
+					best[name] = result.duration
+				}
+				t.Logf("%s round=%d %s seconds=%.6f findings=%s", c.rule, round+1, name, result.duration.Seconds(), strings.TrimSpace(string(result.output)))
+			}
+		}
+		var count int
+		if _, err := fmt.Sscan(string(want), &count); err != nil {
+			t.Fatal(err)
+		}
+		for _, name := range []string{"native", "Node", "Go"} {
+			t.Logf("%s %s: %.2f findings/s seconds=%.6f files=%d findings=%d", c.rule, name, float64(count)/best[name].Seconds(), best[name].Seconds(), len(rows), count)
+		}
+	}
+}

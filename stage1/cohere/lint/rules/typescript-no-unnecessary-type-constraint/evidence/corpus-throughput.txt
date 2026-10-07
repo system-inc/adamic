@@ -1,0 +1,5 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 222 files
+    lint_test.go:409: /tmp/adamic-gate/TestCompilerAndStage1Agree3579926604/004/scanner [--manifest /tmp/adamic-gate/TestCompilerAndStage1Agree3579926604/005/manifest.txt]: signal: terminated
+--- FAIL: TestCompilerAndStage1Agree (160.05s)
+=== RUN   TestThirdThroughput

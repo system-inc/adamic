@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/no-unnecessary-type-constraint",
+  "kinds": [
+    "TypeParameter"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleUnnecessaryConstraint",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoUnnecessaryTypeConstraint"
+}

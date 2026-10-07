@@ -1,0 +1,25 @@
+import type { Finding } from '../../finding.ts';
+export interface Edit {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+}
+export interface Suggestion {
+    readonly id: string;
+    readonly message: string;
+    readonly edits: readonly Edit[];
+}
+export interface Repairs {
+    readonly fixes: readonly Edit[];
+    readonly suggestions: readonly Suggestion[];
+}
+// Comparison transport scoped to one synchronous parsed file. The old finding
+// destination has no edit-list field; this retains every proposed edit.
+const details = new Map<string, Repairs>();
+export function clearRepairs(): void { details.clear(); }
+export function saveRepairs(rule: string, start: number, repairs: Repairs): void {
+    details.set(rule + ':' + String(start), repairs);
+}
+export function readRepairs(finding: Finding): Repairs | undefined {
+    return details.get(finding.rule + ':' + String(finding.start));
+}

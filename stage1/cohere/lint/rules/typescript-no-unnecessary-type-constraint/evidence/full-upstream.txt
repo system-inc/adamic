@@ -1,0 +1,8 @@
+=== RUN   TestRulesAgree
+    lint_test.go:324: cohere cases: 535 unique source/rule/options combinations
+    lint_test.go:374: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestRulesAgree263249589/015/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestRulesAgree263249589/010/case-521.tsx
+--- FAIL: TestRulesAgree (37.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	37.670s
+FAIL

@@ -1,0 +1,49 @@
+import type { RuleContext } from '../../context.ts';
+import { saveRepairs } from './repairs.a';
+import { description } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        let name = -1;
+        let constraint = -1;
+        let defaulted = false;
+        let previous = this.context.start(index);
+        for(const child of this.context.node(index).children) {
+            const start = this.context.start(child);
+            this.context.scanner.pos = previous;
+            let extendsToken = false;
+            while(this.context.scanner.scan() !== 'EndOfFile' && this.context.scanner.start < start) {
+                if(this.context.scanner.kind === 'ExtendsKeyword') { extendsToken = true; }
+                if(this.context.scanner.kind === 'EqualsToken') { defaulted = true; }
+            }
+            if(this.context.node(child).kind === 'Identifier' && name < 0) { name = child; }
+            if(extendsToken) { constraint = child; }
+            previous = this.context.node(child).end;
+        }
+        if(name < 0 || constraint < 0) { return; }
+        const kind = this.context.node(constraint).kind;
+        if(kind !== 'AnyKeyword' && kind !== 'UnknownKeyword') { return; }
+        let replacement = '';
+        const parent = this.context.parents[index] ?? -1;
+        const path = this.context.parser.path;
+        if(parent >= 0 && this.context.node(parent).kind === 'ArrowFunction' && !defaulted &&
+            (path.endsWith('.tsx') || path.endsWith('.mts') || path.endsWith('.cts'))) {
+            let count = 0;
+            for(const child of this.context.node(parent).children) {
+                if(this.context.node(child).kind === 'TypeParameter') { count++; }
+            }
+            this.context.scanner.pos = this.context.node(index).end;
+            this.context.scanner.scan();
+            if(count === 1 && this.context.scanner.kind !== 'CommaToken') { replacement = ','; }
+        }
+        const rule = '@typescript-eslint/no-unnecessary-type-constraint';
+        this.context.report(name, rule, 'noUnnecessaryTypeConstraint', description, '', '', '');
+        saveRepairs(rule, this.context.start(name), { fixes: [], suggestions: [{
+            id: 'removeTheConstraint', message: 'Remove the constraint that does nothing.', edits: [{
+                start: this.context.node(name).end, end: this.context.node(constraint).end, text: replacement,
+            }],
+        }] });
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
