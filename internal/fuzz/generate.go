@@ -99,6 +99,10 @@ type generator struct {
 	// inClosure counts the closures being generated around this point: one pushed to pending must
 	// never run pending, or it would call itself.
 	inClosure int
+	// silent is set while the counter's methods are generated. Every function, closure and comparator
+	// can call them, so a print there runs once per call, and the calls multiply: seed 90's bump printed
+	// 17315 lines, 2.5 megabytes, which made the program unfit.
+	silent bool
 }
 
 // function is a callable the generator made: a name, its parameter types, and what it returns.
@@ -578,7 +582,9 @@ func (g *generator) mutation() *Statement {
 			}
 			return statement("table.set(@e, @e);", g.key(), g.expression(Number, 2))
 		case 8:
-			return statement("console.log(@e);", g.expression(String, 2))
+			if !g.silent {
+				return statement("console.log(@e);", g.expression(String, 2))
+			}
 		}
 	}
 	return statement("holder.value += @e;", g.expression(Number, 2))
@@ -1091,6 +1097,7 @@ func (g *generator) counterMethod(child bool) *Block {
 		g.declare("this.extra", Number, true)
 		g.declare("carried", Number, false)
 	}
+	g.silent = true
 	method := &Block{}
 	if child {
 		method.Statements = append(method.Statements, statement("const carried = super.bump(amount);"))
@@ -1103,6 +1110,7 @@ func (g *generator) counterMethod(child bool) *Block {
 	} else {
 		method.Statements = append(method.Statements, statement("return this.count + amount;"))
 	}
+	g.silent = false
 	g.returns = ""
 	g.pop()
 	return method
