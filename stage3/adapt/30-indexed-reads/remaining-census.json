@@ -1,0 +1,39 @@
+{
+  "integration": "e39a299323cad76aea44ec71ca7b740130323d4c",
+  "roots": 79,
+  "code_filter": null,
+  "files": [
+    {
+      "file": "factory/emitNode.ts",
+      "original_before": 2,
+      "current": 2,
+      "diagnostics": [
+        "src/compiler/factory/emitNode.ts:205:108: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '{ kind: SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia; pos: -1; end: -1; hasTrailingNewLine: boolean | undefined; text: string; }' is not assignable to parameter of type 'SynthesizedComment' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'hasTrailingNewLine' are incompatible.\n        Type 'boolean | undefined' is not assignable to type 'boolean'.\n          Type 'undefined' is not assignable to type 'boolean'.",
+        "src/compiler/factory/emitNode.ts:218:110: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '{ kind: SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia; pos: -1; end: -1; hasTrailingNewLine: boolean | undefined; text: string; }' is not assignable to parameter of type 'SynthesizedComment' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'hasTrailingNewLine' are incompatible.\n        Type 'boolean | undefined' is not assignable to type 'boolean'.\n          Type 'undefined' is not assignable to type 'boolean'."
+      ],
+      "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd"
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "original_before": 4,
+      "current": 4,
+      "diagnostics": [
+        "src/compiler/factory/nodeFactory.ts:1216:9: error TS2412: Type 'undefined' is not assignable to type 'T[\"localSymbol\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'undefined' is assignable to the constraint of type 'T[\"localSymbol\"]', but 'T[\"localSymbol\"]' could be instantiated with a different subtype of constraint 'Symbol | undefined'.\n    Type 'undefined' is not assignable to type 'Symbol'.",
+        "src/compiler/factory/nodeFactory.ts:1315:41: error TS2379: Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+        "src/compiler/factory/nodeFactory.ts:1403:41: error TS2379: Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+        "src/compiler/factory/nodeFactory.ts:5496:9: error TS2412: Type 'JSDocTypeExpression | undefined' is not assignable to type 'T[\"typeExpression\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'JSDocTypeExpression | undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n    Type 'undefined' is not assignable to type 'T[\"typeExpression\"]'.\n      'undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n        Type 'undefined' is not assignable to type 'JSDocTypeExpression'."
+      ],
+      "sha256": "75bed603e4a3986d038cce3a20aad29d593e79f32be7769cc750e05eadf02670"
+    },
+    {
+      "file": "core.ts",
+      "original_before": 7,
+      "current": 2,
+      "diagnostics": [
+        "src/compiler/core.ts:1637:11: error TS2740: Type '{ has(element: TElement): boolean; add(element: TElement): Set<TElement>; delete(element: TElement): boolean; clear(): void; ... 6 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<TElement>': union, intersection, difference, symmetricDifference, and 3 more.",
+        "src/compiler/core.ts:992:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+      ],
+      "sha256": "044218a7a93299cd701a0d32ed5b15e59c5ac8f3af6fdc2632248d92bc45098e"
+    }
+  ]
+}

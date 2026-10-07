@@ -13,7 +13,13 @@ func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
 	}
 	var code string
 	if call.Module == "node:path" {
-		if call.Member == "relative" {
+		if call.Member == "basename" {
+			suffix := "NULL"
+			if len(arguments) > 1 {
+				suffix = arguments[1]
+			}
+			code = "adamic_node_path_basename(" + arguments[0] + ", " + suffix + ")"
+		} else if call.Member == "relative" {
 			code = "adamic_node_path_relative(" + arguments[0] + ", " + arguments[1] + ")"
 		} else if call.Member == "dirname" {
 			code = "adamic_node_path_dirname(" + arguments[0] + ")"
@@ -26,6 +32,8 @@ func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
 		}
 	} else {
 		switch call.Member {
+		case "symlinkSync":
+			code = fmt.Sprintf("adamic_node_fs_symlink(%s, %s)", arguments[0], arguments[1])
 		case "readdirSync":
 			options := "NULL"
 			if len(arguments) > 1 {

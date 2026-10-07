@@ -46,7 +46,7 @@ for (const path of ['walking/link-to-inner', 'walking/dangling', '', 'walking/da
 			t.Fatalf("%s: %s; want stdout %q, exit %d, stderr %q; got stdout %q, exit %d, stderr %q", side.name, difference, want.stdout, want.exitCode, want.stderr, side.got.stdout, side.got.exitCode, side.got.stderr)
 		}
 	}
-	if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+	if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
 		t.Fatal(leaked)
 	}
 	t.Logf("fs.realpathSync reference: %s", want.stdout)
@@ -169,7 +169,7 @@ for (const path of ` + list + `) {
 			t.Fatalf("%s: %s; want stdout %q, exit %d, stderr %q; got stdout %q, exit %d, stderr %q", side.name, difference, want.stdout, want.exitCode, want.stderr, side.got.stdout, side.got.exitCode, side.got.stderr)
 		}
 	}
-	if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+	if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
 		t.Fatal(leaked)
 	}
 	t.Logf("fs.realpathSync reference: %s", want.stdout)

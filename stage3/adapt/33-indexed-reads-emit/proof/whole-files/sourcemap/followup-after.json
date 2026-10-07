@@ -1,0 +1,17 @@
+{
+  "roots": 78,
+  "file": "sourcemap.ts",
+  "code_filter": null,
+  "counts": {
+    "TS2345": 1
+  },
+  "total": 1,
+  "diagnostics": [
+    {
+      "code": "TS2345",
+      "line": 216,
+      "column": 58,
+      "diagnostic": "src/compiler/sourcemap.ts:216:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.\n  Type 'undefined' is not assignable to type 'string | null'."
+    }
+  ]
+}

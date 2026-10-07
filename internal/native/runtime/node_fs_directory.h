@@ -5,3 +5,5 @@ adamic_string *adamic_node_fs_realpath(const adamic_string *path, bool native);
 void adamic_node_fs_raise(const adamic_string *path, int error,
 						  const char *operation);
 adamic_object *adamic_real_path_node(const adamic_string *path);
+
+double adamic_node_fs_symlink(const adamic_string *target, const adamic_string *path);

@@ -1,0 +1,94 @@
+=== RUN   TestLintWaveCheck
+=== PAUSE TestLintWaveCheck
+=== CONT  TestLintWaveCheck
+    lint_wave_test.go:33: worker check CLI tests passed:
+        test_absent_three_way_parity (__main__.WaveCheckTests.test_absent_three_way_parity) ... ok
+        test_changed_log (__main__.WaveCheckTests.test_changed_log) ... ok
+        test_claim_owner (__main__.WaveCheckTests.test_claim_owner) ... ok
+        test_command_failure_even_with_pass_events (__main__.WaveCheckTests.test_command_failure_even_with_pass_events) ... ok
+        test_committed_generated_registry (__main__.WaveCheckTests.test_committed_generated_registry) ... ok
+        test_competing_a_port (__main__.WaveCheckTests.test_competing_a_port) ... ok
+        test_competing_claim_fetched_despite_main_only_config (__main__.WaveCheckTests.test_competing_claim_fetched_despite_main_only_config) ... ok
+        test_competing_directory_port_with_different_slug (__main__.WaveCheckTests.test_competing_directory_port_with_different_slug) ... ok
+        test_competing_legacy_batch_reservation (__main__.WaveCheckTests.test_competing_legacy_batch_reservation) ... ok
+        test_competing_legacy_port (__main__.WaveCheckTests.test_competing_legacy_port) ... ok
+        test_competing_legacy_selection_without_implementation (__main__.WaveCheckTests.test_competing_legacy_selection_without_implementation) ... ok
+        test_competing_markdown_claim_without_implementation (__main__.WaveCheckTests.test_competing_markdown_claim_without_implementation) ... ok
+        test_dirty_tree (__main__.WaveCheckTests.test_dirty_tree) ... ok
+        test_duplicate_claimed_rule (__main__.WaveCheckTests.test_duplicate_claimed_rule) ... ok
+        test_empty_parity_corpus (__main__.WaveCheckTests.test_empty_parity_corpus) ... ok
+        test_explicit_markdown_claim_and_owned_evidence (__main__.WaveCheckTests.test_explicit_markdown_claim_and_owned_evidence) ... ok
+        test_fixture_mentions_are_not_ports (__main__.WaveCheckTests.test_fixture_mentions_are_not_ports) ... ok
+        test_foreign_claim_evidence_json_is_not_a_claim (__main__.WaveCheckTests.test_foreign_claim_evidence_json_is_not_a_claim) ... ok
+        test_foreign_markdown_unreadable_assignments_fail_closed (__main__.WaveCheckTests.test_foreign_markdown_unreadable_assignments_fail_closed) ... ok
+        test_markdown_claim_discovered_with_skips_and_appended_report (__main__.WaveCheckTests.test_markdown_claim_discovered_with_skips_and_appended_report) ... ok
+        test_markdown_duplicate_assignment (__main__.WaveCheckTests.test_markdown_duplicate_assignment) ... ok
+        test_markdown_not_skipped_is_still_reserved (__main__.WaveCheckTests.test_markdown_not_skipped_is_still_reserved) ... ok
+        test_markdown_wrong_owner (__main__.WaveCheckTests.test_markdown_wrong_owner) ... ok
+        test_missing_claim (__main__.WaveCheckTests.test_missing_claim) ... ok
+        test_missing_descriptor (__main__.WaveCheckTests.test_missing_descriptor) ... ok
+        test_missing_mutant_suite (__main__.WaveCheckTests.test_missing_mutant_suite) ... ok
+        test_missing_owned_mutant (__main__.WaveCheckTests.test_missing_owned_mutant) ... ok
+        test_missing_parity (__main__.WaveCheckTests.test_missing_parity) ... ok
+        test_mutant_not_caught_on_native (__main__.WaveCheckTests.test_mutant_not_caught_on_native) ... ok
+        test_no_receipt (__main__.WaveCheckTests.test_no_receipt) ... ok
+        test_origin_changes_after_receipt (__main__.WaveCheckTests.test_origin_changes_after_receipt) ... ok
+        test_origin_fetch_failure (__main__.WaveCheckTests.test_origin_fetch_failure) ... ok
+        test_own_published_branch_is_allowed (__main__.WaveCheckTests.test_own_published_branch_is_allowed) ... ok
+        test_owned_mutant_not_run (__main__.WaveCheckTests.test_owned_mutant_not_run) ... ok
+        test_positive_run_and_commit_bound_verify (__main__.WaveCheckTests.test_positive_run_and_commit_bound_verify) ... ok
+        test_pruned_claim_does_not_linger (__main__.WaveCheckTests.test_pruned_claim_does_not_linger) ... ok
+        test_shared_file_renamed_into_owned_directory (__main__.WaveCheckTests.test_shared_file_renamed_into_owned_directory) ... ok
+        test_shared_ordinal (__main__.WaveCheckTests.test_shared_ordinal) ... ok
+        test_shared_registration_lines (__main__.WaveCheckTests.test_shared_registration_lines) ... ok
+        test_skipped_compiler_parity (__main__.WaveCheckTests.test_skipped_compiler_parity) ... ok
+        test_stale_commit_receipt (__main__.WaveCheckTests.test_stale_commit_receipt) ... ok
+        test_unclaimed_rule_directory (__main__.WaveCheckTests.test_unclaimed_rule_directory) ... ok
+        test_uncommitted_go_overlay (__main__.WaveCheckTests.test_uncommitted_go_overlay) ... ok
+
+        ----------------------------------------------------------------------
+        Ran 43 tests in 11.227s
+
+        OK
+        mutant caught: lint-wave-check: FAIL parity: TestOwnedWitnesses: missing nonempty three-way comparison
+        mutant caught: lint-wave-check: FAIL evidence: test log missing or changed
+        mutant caught: lint-wave-check: FAIL claim: stage1/cohere/lint/claims/codex/wave-example.json: path must mirror branch
+        mutant caught: lint-wave-check: FAIL evidence: parity/mutant command failed; read /tmp/adamic-gate/lint-wave-tests-kjnwonnt/worker/.git/lint-wave-check/tmptdb7_0_z.jsonl and /tmp/adamic-gate/lint-wave-tests-kjnwonnt/worker/.git/lint-wave-check/tmptdb7_0_z.stderr.txt
+        mutant caught: lint-wave-check: FAIL registration: shared or unclaimed lint change: stage1/cohere/lint/.generated/registry.ts
+        mutant caught: lint-wave-check: FAIL origin: wave-example referenced by legacy port origin/codex/a-port:stage1/cohere/lint/older-rule.a
+        mutant caught: lint-wave-check: FAIL origin: wave-example claimed in origin/codex/other:stage1/cohere/lint/claims/codex/other.json
+        mutant caught: lint-wave-check: FAIL origin: wave-example ported in origin/codex/ported:stage1/cohere/lint/rules/different-slug/rule.json
+        mutant caught: lint-wave-check: FAIL origin: wave-example mentioned by legacy batch reservation origin/codex/batch:stage1/cohere/lint/BATCH9.md
+        mutant caught: lint-wave-check: FAIL origin: wave-example referenced by legacy port origin/codex/legacy:stage1/cohere/lint/lint.ts
+        mutant caught: lint-wave-check: FAIL origin: wave-example reserved by legacy selection origin/codex/selected:stage1/cohere/lint/batch9-selection.json
+        mutant caught: lint-wave-check: FAIL origin: wave-example claimed in origin/codex/wave-other:stage1/cohere/lint/claims/wave-other.md
+        mutant caught: lint-wave-check: FAIL evidence: commit changes and remove untracked files first:
+        mutant caught: lint-wave-check: FAIL claim: stage1/cohere/lint/claims/codex/wave-example.json: duplicate claimed rules
+        mutant caught: lint-wave-check: FAIL parity: upstream corpus is empty or unreported
+        mutant caught: lint-wave-check: FAIL claim: stage1/cohere/lint/claims/unreadable.md: no readable assignment list before the report section
+        mutant caught: lint-wave-check: FAIL claim: stage1/cohere/lint/claims/wave-test.md: duplicate or invalid assignment wave-example
+        mutant caught: lint-wave-check: FAIL claim: stage1/cohere/lint/claims/wave-test.md belongs to codex/foreign
+        mutant caught: lint-wave-check: FAIL claim: missing committed stage1/cohere/lint/claims/codex/wave-example.json
+        mutant caught: lint-wave-check: FAIL registration: claimed rule wave-example has no directory descriptor
+        mutant caught: lint-wave-check: FAIL mutants: TestMutants did not run and pass
+        mutant caught: lint-wave-check: FAIL mutants: wave-example has no owned mutant.json
+        mutant caught: lint-wave-check: FAIL parity: TestRulesAgree did not run and pass
+        mutant caught: lint-wave-check: FAIL mutants: wave-example: no successful execution and caught comparison on native
+        mutant caught: lint-wave-check: FAIL evidence: no receipt; run this script without --verify first
+        mutant caught: lint-wave-check: FAIL origin: wave-example claimed in origin/codex/late-claim:stage1/cohere/lint/claims/codex/late-claim.json
+        mutant caught: lint-wave-check: FAIL git: fatal: '/tmp/adamic-gate/lint-wave-tests-g0dah1v4/absent.git' does not appear to be a git repository
+        mutant caught: lint-wave-check: FAIL mutants: wave-example: owned mutant did not run and pass
+        mutant caught: lint-wave-check: FAIL origin: wave-example claimed in origin/codex/deleted:stage1/cohere/lint/claims/codex/deleted.json
+        mutant caught: lint-wave-check: FAIL registration: shared or unclaimed lint change: stage1/cohere/lint/lint.ts
+        mutant caught: lint-wave-check: FAIL registration: new rule wave-example must omit order
+        mutant caught: lint-wave-check: FAIL registration: shared or unclaimed lint change: stage1/cohere/lint/lint.ts
+        mutant caught: lint-wave-check: FAIL registration: shared or unclaimed lint change: stage1/cohere/lint/testdata/oracle.go
+        mutant caught: lint-wave-check: FAIL registration: shared or unclaimed lint change: stage1/cohere/lint/lint_test.go
+        mutant caught: lint-wave-check: FAIL registration: shared or unclaimed lint change: cmd/lint-registry/main.go
+        mutant caught: lint-wave-check: FAIL evidence: test TestCompilerAndStage1Agree skip
+        mutant caught: lint-wave-check: FAIL evidence: receipt is stale for this commit, claim or mutant set
+        mutant caught: lint-wave-check: FAIL registration: shared or unclaimed lint change: stage1/cohere/lint/rules/another/rule.json
+        mutant caught: lint-wave-check: FAIL evidence: remove GOFLAGS -overlay; an unapplied compatibility patch is not the committed candidate
+--- PASS: TestLintWaveCheck (11.34s)
+PASS
+ok  	github.com/system-inc/adamic/cloud	11.343s
