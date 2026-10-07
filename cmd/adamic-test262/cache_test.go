@@ -10,8 +10,6 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestNodeCacheProgram(t *testing.T) {
@@ -41,7 +39,7 @@ func TestNativeCacheGeneratedC(t *testing.T) {
 		code := fmt.Sprintf("#include <stdio.h>\nint main(void) { puts(%q); return 0; }\n", word)
 		key := nativeResultKey(code, "runtime", binary, "context")
 		result := cache.reuse(key, func() (execution, bool) {
-			if err := native.Build(code, binary, native.Options{}); err != nil {
+			if err := boundedNativeBuild(code, binary); err != nil {
 				t.Fatal(err)
 			}
 			return runCommand(15*time.Second, nil, binary), true
@@ -299,7 +297,7 @@ func TestCompilerCacheProgram(t *testing.T) {
 			return value, true
 		})
 		binary := filepath.Join(t.TempDir(), "program")
-		if err := native.Build(compiled.Stdout, binary, native.Options{}); err != nil {
+		if err := boundedNativeBuild(compiled.Stdout, binary); err != nil {
 			t.Fatal(err)
 		}
 		result := runCommand(15*time.Second, nil, binary)
