@@ -1,5 +1,21 @@
 # Scanner blockers
 
+## October 7: adaptation 85 guards function-body lexical locals
+
+23 function-body var keywords become let, preserving declaration positions and
+initializers. No nested-block or repeated var bindings; AST guard enforces it.
+Creation state is declared before setText and scanner construction; regex state
+before parsing calls. Full 84-86 baseline 106,367 pass, zero differences.
+Census reason var; no branch for general var lowering found. A minimal var
+function is Refused; its let control runs natively and matches Node output 1.
+The nested-block mutant is rejected by the adaptation guard.
+
+This is a proven known lowering limitation, not the first full-slice diagnostic:
+full-slice syntax checking first reports scanner:2034:75 numeric regexp keys;
+after closing that, module lowering stops at Debug's Error value before reaching
+scanner locals. Do not read preemptive local-var handling as a completed lowering
+or ownership traversal. Evidence native85-{scope-mutant,var-refusal,let-control}.
+
 ## October 7: adaptation 84 names the zero reset
 
 The lone raw tokenFlags = 0 becomes TokenFlags.None. Both are numeric zero.
