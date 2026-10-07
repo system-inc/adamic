@@ -15,7 +15,16 @@ for (const [name, functions] of targets) {
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     const edits = [];
     function visit(node, active) {
-        if (ts.isFunctionDeclaration(node)) active = functions.get(node.name?.text);
+        if (ts.isFunctionDeclaration(node)) {
+            active = functions.get(node.name?.text);
+            if (name === 'core.ts' && node.name?.text === 'forEach') {
+                const original = node.getText(source);
+                const revised = original.replace('for (let i = 0; i < array.length; i++)', 'for (const [i, element] of array.entries())')
+                    .replace('callback(array[i], i)', 'callback(element, i)');
+                if (revised !== original) edits.push({start:node.getStart(source),end:node.end,text:revised});
+                return;
+            }
+        }
         if (active && ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.BarEqualsToken
             && ts.isElementAccessExpression(node.left) && active.has(node.left.expression.getText(source))) {
             const left = node.left.getText(source), right = node.right.getText(source);

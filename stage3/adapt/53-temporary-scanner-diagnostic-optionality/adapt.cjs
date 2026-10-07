@@ -3,13 +3,16 @@ const path = require('node:path');
 const ts = require(process.env.SLICE_TYPESCRIPT || 'typescript');
 const tree = path.resolve(process.argv[2]);
 if (!fs.existsSync(path.join(tree, 'slice.json'))) throw new Error('adaptation 53 requires a declaration slice');
-const file = path.join(tree, 'src/compiler/types.ts');
+const file = path.join(tree, 'src/compiler/diagnosticInformationMap.generated.ts');
 let text = fs.readFileSync(file, 'utf8');
 const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
-const declaration = source.statements.find(n => ts.isInterfaceDeclaration(n) && n.name.text === 'DiagnosticMessage');
-if (!declaration) throw new Error('DiagnosticMessage missing');
-const names = new Set(['reportsUnnecessary','reportsDeprecated','elidedInCompatabilityPyramid']);
-const edits = declaration.members.filter(n => names.has(n.name?.getText(source)) && n.questionToken && !n.type.getText(source).includes('undefined')).map(n => n.type.end);
-for (const end of edits.sort((a,b) => b-a)) text = text.slice(0,end)+' | undefined'+text.slice(end);
-if (edits.length) fs.writeFileSync(file,text);
-console.log(JSON.stringify({optionalUnions: edits.length}));
+const declaration = source.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === 'diag');
+if (!declaration) throw new Error('diag missing');
+let changed = 0;
+if (declaration.type) {
+    if (declaration.type.getText(source) !== 'DiagnosticMessage') throw new Error('unexpected diag return type');
+    const start = text.lastIndexOf(':', declaration.type.getStart(source));
+    text = text.slice(0,start)+text.slice(declaration.type.end);
+    fs.writeFileSync(file,text); changed = 1;
+}
+console.log(JSON.stringify({inferredPrivateReturn: changed}));

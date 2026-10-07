@@ -1,5 +1,21 @@
 # Scanner blockers
 
+## October 7: comparison-preserving languageVersion guard, next non-null site
+
+In the untracked probe, replace the two `languageVersion! >= ES2015`
+comparisons with `languageVersion !== undefined && languageVersion >= ES2015`.
+Undefined still selects the older Unicode map. Next exact refusal:
+`scanner.ts:433:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case`.
+This is shebangTriviaRegex.exec(text)![0]. Census reason: non-null assertions.
+No demonstrated closing feature branch. This probe has not been tracked as
+an adaptation or presented as a native token proof.
+
+Count correction: the raw slice has 89 declarations (39 function declarations,
+22 variable statements, 12 enums, nine interfaces, seven type aliases) and
+**two** namespace-wrapper spans, not four. Total remains 91 copied spans,
+7,127 lines and eight files. Original counts of 87 plus four were a reporting
+error. The final manifest and independent byte verifier use the correct counts.
+
 ## October 7: full baseline rejects the first checker adaptations
 
 Full unfiltered baseline: 106,312 passing, 55 failing, zero pending, seven
@@ -91,7 +107,7 @@ at isUnicodeIdentifierStart during scanIdentifier; the unmutated control exits
 ## October 7: namespace member slice is green on Node
 
 Commit `c4e011f` gathers namespace members independently. Eight source files,
-87 declarations and four original namespace-wrapper spans, 7,127 copied-span
+89 declarations and two original namespace-wrapper spans, 7,127 copied-span
 lines. All spans match source bytes. Node prints exactly 509,014 tokens, with
 empty diff against the full-tree oracle and SHA-256
 `c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f`.
