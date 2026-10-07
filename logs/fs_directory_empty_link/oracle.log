@@ -1,0 +1,34 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNodeFSDirectorySymlinkMutants
+=== PAUSE TestNodeFSDirectorySymlinkMutants
+=== CONT  TestInputAgreesWithNode
+=== CONT  TestNodeFSDirectorySymlinkMutants
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== RUN   TestNodeFSDirectorySymlinkMutants/target
+=== PAUSE TestNodeFSDirectorySymlinkMutants/target
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== RUN   TestNodeFSDirectorySymlinkMutants/code
+=== PAUSE TestNodeFSDirectorySymlinkMutants/code
+=== RUN   TestNodeFSDirectorySymlinkMutants/message
+=== PAUSE TestNodeFSDirectorySymlinkMutants/message
+=== CONT  TestNodeFSDirectorySymlinkMutants/target
+=== CONT  TestNodeFSDirectorySymlinkMutants/message
+    node_fs_directory_symlink_test.go:76: caught only by Node stdout comparison; sanitizers and leaks clean
+=== CONT  TestNodeFSDirectorySymlinkMutants/code
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a (1.51s)
+=== NAME  TestNodeFSDirectorySymlinkMutants/target
+    node_fs_directory_symlink_test.go:76: caught only by Node stdout comparison; sanitizers and leaks clean
+=== NAME  TestNodeFSDirectorySymlinkMutants/code
+    node_fs_directory_symlink_test.go:76: caught only by Node stdout comparison; sanitizers and leaks clean
+--- PASS: TestNodeFSDirectorySymlinkMutants (0.00s)
+    --- PASS: TestNodeFSDirectorySymlinkMutants/message (1.48s)
+    --- PASS: TestNodeFSDirectorySymlinkMutants/target (1.91s)
+    --- PASS: TestNodeFSDirectorySymlinkMutants/code (0.93s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=1
+ok  	github.com/system-inc/adamic/internal/oracle	2.434s

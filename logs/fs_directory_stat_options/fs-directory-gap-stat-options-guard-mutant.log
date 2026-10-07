@@ -1,0 +1,5 @@
+--- FAIL: TestNodeFSDirectoryStatConstOptions (3.68s)
+    library_node_fs_directory_options_test.go:27: want named NotYet, got /tmp/adamic-gate/TestNodeFSDirectoryStatConstOptions493260269/006/main.a:1:35: stage 0 can't lower console.log with a non-string argument yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	3.703s
+FAIL
