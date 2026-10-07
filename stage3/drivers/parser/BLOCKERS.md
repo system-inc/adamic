@@ -1,3 +1,46 @@
+# Final six-input retry: same enum-initialization NotYet, both compile modes
+
+Unpushed fresh scratch starts at front-2 860a0d5 (779ff9d ancestor verified),
+then area/stage3 4ad53a4, library 8280fd0, records-lowering 70fb62b, runtime-records
+754e666 (already included), and developer-tools 2adf65c. Compiler builds.
+
+**First failure:** core.ts:11:52, new Map<never, never>():
+`stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet`.
+C emission and actual unsplit, split and repeated-split CLI builds all fail
+there, before generating C. C bytes/lines, clang wall times, parser binary
+size, native parser runtime/diff/mutant are **unreached**, not zero. Split cache
+contains zero files; the second split attempt is not a warm-cache measurement.
+Attempt wall times 0.767176 / 0.770804 / 0.846200 seconds are not clang timings.
+nproc=5; split jobs=5. No source workaround or compiler check suppression.
+
+Type-only MapLike<T> *is admitted on this merge's record integration*: the
+minimal native-type-only-map-like.a builds, native and Node print type-only,
+exit 0, empty stderr; cmp 0. One-byte change to that actual native output gives
+cmp 1. This is not a parser-output mutant and not a claim about all runtime
+record forms. native-enum-map.a reproduces the parser's first NotYet.
+
+Final same-input Node comparison: all three dumps match 35,456,964 bytes,
+SHA256 2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5;
+best user time 5.465565 seconds. perf is absent. Entry remains 1,990 code
+declarations, with one extra diagnostic-driver declaration. Import gathering
+and five validated temporary adaptations are unchanged.
+
+Lowering conflicts: library cast.go keeps checked tag/class casts and carries
+the qualified-const guard into cast_proof.go. Records expression.go keeps enum
+and record dispatch; refusals.go keeps Node/enum/predicate/cast checks plus
+all record checks. Record filename predicates need typed-path string conversion.
+Developer-tools merge is source-conflict-free; only restoring scratch go.mod
+paths conflicts afterward. Detailed resolutions and exact pins in front5/front6
+README and compressed patches. Focused loader/lower Node/Cast/ImportCycle/Record
+tests and native split literal/shared-state/header provenance tests pass.
+Oracle counts keep front rows; no full count gate or full compiler gate claimed.
+
+Evidence and scripts are committed only on codex/stage3-parser-proof. Scratch
+merges and compiler resolutions are never pushed. Earlier measured stopping
+points below are historical and superseded by this section.
+
+---
+
 # Four-input native retry: checker clean, lowering NotYet at emptyMap
 
 Newest fetched area/stage3 4ad53a4, front-2 80fb9b7, explicit cycles 779ff9d,
