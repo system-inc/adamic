@@ -83,3 +83,26 @@
     wasi_test.go:132: fixture does not lower
 --- FAIL: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.04s)
 
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission
+=== RUN   TestWASIEmission
+--- FAIL: TestWASIEmission (304.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestReleaseBuildConfigurationAgrees
+=== RUN   TestReleaseBuildConfigurationAgrees
+=== PAUSE TestReleaseBuildConfigurationAgrees
+=== CONT  TestReleaseBuildConfigurationAgrees
+    release_guard_test.go:119: internal/oracle.released must carry its release configuration into cachedNative: got cachedNative(t, program, releaseBuild), want argument 2 = true
+    release_guard_test.go:39: shipping: options=native.Options{Compiler:"", Release:true, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2" "-flto=thin"] runtime-key=25598b0473365e4b392a3b24cb655c069dd5eb66b066b92ae36724720ad0343e
+    release_guard_test.go:40: oracle: options=native.Options{Compiler:"", Release:false, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2"] runtime-key=791cfbc99fd42b6cb146c5765aed3a29a078177960e5673f28441354618bfb4d
+    release_guard_test.go:42: release configurations differ
+        shipping: options=native.Options{Compiler:"", Release:true, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2" "-flto=thin"] runtime-key=25598b0473365e4b392a3b24cb655c069dd5eb66b066b92ae36724720ad0343e
+        oracle: options=native.Options{Compiler:"", Release:false, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2"] runtime-key=791cfbc99fd42b6cb146c5765aed3a29a078177960e5673f28441354618bfb4d
+--- FAIL: TestReleaseBuildConfigurationAgrees (0.09s)
+
+== github.com/system-inc/adamic/internal/oracle TestSlabLaneCatchesRecycledRelease
+=== RUN   TestSlabLaneCatchesRecycledRelease
+=== PAUSE TestSlabLaneCatchesRecycledRelease
+=== CONT  TestSlabLaneCatchesRecycledRelease
+    slabs_test.go:119: mutant insertion points changed
+--- FAIL: TestSlabLaneCatchesRecycledRelease (0.24s)
+
