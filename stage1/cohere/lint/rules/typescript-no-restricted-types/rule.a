@@ -72,7 +72,7 @@ function bans(text: string): Map<string, Ban> {
 export class Rule {
     readonly context: RuleContext;
     readonly bans: Map<string, Ban>;
-    constructor(context: RuleContext) { this.context = context; this.bans = bans(context.settings.text); }
+    constructor(context: RuleContext) { this.context = context; this.bans = context.enabled(name) ? bans(context.settings.text) : new Map<string, Ban>(); }
     check(index: number, spelling: string): void {
         const context = this.context;
         const ban = this.bans.get(spelling);
