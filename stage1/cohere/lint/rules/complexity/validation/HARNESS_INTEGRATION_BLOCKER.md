@@ -21,3 +21,7 @@ This branch is not green on the named harness and is not claimed landing-ready o
 Read the ledger before merging the named harness onto main b8fb957a. Removed this branch's losing `typescript-no-this-alias` (winner wave1-07) and `next-google-font-display` (winner wave1-01) directories. Retained its winning non-null assertion, optional-chain assertion, require-description and physical-direction copies. The ledger lists batch-only source branches but does not assign a batch-only rule specifically to wave1-05. No new rule or helper claimed.
 
 `go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -timeout=20m` still exits 1 before comparisons: `rules/boundaries-dependencies/rule.json: missing witness`. No new mutant proof. The branch remains incomplete and not green; the Program/resolver facts blocker is unchanged. Shared files changed only through the upstream harness merge.
+
+## Landed area harness refresh
+
+Rebased onto origin/area/stage1-lint `7481e0324e34a2537aafa9db7eeacda50405611b`, after confirming its ledger matches 41eb6eab2. Prior losing-copy removals remain applied. `go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -timeout=20m` exits 1 (0.006s): `rules/boundaries-dependencies/rule.json: missing witness`. The landed harness does not resolve this incomplete owned rule's Program/resolver facts dependency. No new mutant proof or new claims; the rule branch is not green or landing-ready.
