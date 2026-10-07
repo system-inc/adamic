@@ -180,3 +180,11 @@ Cross-file context integration remains blocked by the full-suite shared parser
 constructor-escape refusal at parser.ts:34:20; standalone adapter success is
 recorded separately. No new claim was added. See wave16_seventh/LANDING_B8FB.md
 and its landing-b8fb evidence for commands, mutants, timing and coverage limits.
+
+Integrated-harness landing: rebased onto area/stage1-lint 7481e0324, which
+contains current main 39638d9e2 and harness 41eb6eab2. All fifteen prior ports
+re-green (429.309s), bridge passes (74.941s), and the new 60-command gate passes.
+Full cross-file context integration still refuses at shared parser.ts:41:20,
+including a separate graph using only the integrated shared JSX parser. The
+standalone adapter succeeds. The context rule remains incomplete, not parked;
+no new claim was added. See wave16_seventh/AREA_LANDING.md and area-7481 evidence.
