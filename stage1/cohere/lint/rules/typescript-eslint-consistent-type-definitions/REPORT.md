@@ -4,6 +4,8 @@ Checks: lint-registry, gofmt and vet pass; TestOwnedWitnesses, TestRulesAgree an
 Mutant: the message mutation is defined and valid source; it is not certified caught because the oracle fails before comparisons.
 Not covered: complete findings/fixes/suggestions parity, mutant execution and sanitized runtime agreement cannot be certified on this harness.
 
+The multi-edit guard was removed upstream; the current rerun and remaining fixer mismatch are documented in MULTIEDIT_REPORT.md.
+
 ## Source and registration
 
 Base: origin/area/stage1-lint d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898.

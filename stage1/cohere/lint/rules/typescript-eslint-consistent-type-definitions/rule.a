@@ -1,23 +1,11 @@
 import { panic } from 'adamic';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
 import {
     messageConsistentTypeDefinitionsInterfaceOverType,
     messageConsistentTypeDefinitionsTypeOverInterface,
 } from './messages.a';
-
-// Keep the batch repair's separate spans locally. The current Finding wire carries one edit,
-// so compose the declaration repair without changing the shared context or the Go oracle.
-class Edit {
-    readonly start: number;
-    readonly end: number;
-    readonly text: string;
-    constructor(start: number, end: number, text: string) {
-        this.start = start;
-        this.end = end;
-        this.text = text;
-    }
-}
 
 export class Rule {
     readonly context: RuleContext;
@@ -78,7 +66,7 @@ export class Rule {
             context.report(name, '@typescript-eslint/consistent-type-definitions', id, message, '', '', '');
             return;
         }
-        const edits: Edit[] = [new Edit(keyword, keyword + keywordText.length, alias ? 'interface' : 'type')];
+        const edits: SuggestionEdit[] = [new SuggestionEdit(keyword, keyword + keywordText.length, alias ? 'interface' : 'type')];
         if(alias) {
             const bodyStart = context.start(body);
             const equals = context.source.slice(start, bodyStart).lastIndexOf('=') + start;
@@ -86,8 +74,8 @@ export class Rule {
             while(previous > start && ' \t\n\r\v\f'.includes(context.source[previous - 1] ?? '')) {
                 previous--;
             }
-            edits.push(new Edit(previous, bodyStart, ' '));
-            edits.push(new Edit(context.node(body).end, end, ''));
+            edits.push(new SuggestionEdit(previous, bodyStart, ' '));
+            edits.push(new SuggestionEdit(context.node(body).end, end, ''));
         }
         else {
             let headEnd = context.node(name).end;
@@ -97,7 +85,7 @@ export class Rule {
                 }
             }
             const brace = context.source.indexOf('{', headEnd);
-            edits.push(new Edit(headEnd, brace, ' = '));
+            edits.push(new SuggestionEdit(headEnd, brace, ' = '));
             let suffix = '';
             for(const child of node.children) {
                 if(context.node(child).kind === 'HeritageClause') {
@@ -107,25 +95,14 @@ export class Rule {
                 }
             }
             if(suffix !== '') {
-                edits.push(new Edit(end, end, suffix));
+                edits.push(new SuggestionEdit(end, end, suffix));
             }
             if(context.has(index, 'ExportKeyword') && context.has(index, 'DefaultKeyword')) {
-                edits.push(new Edit(start, keyword, ''));
-                edits.push(new Edit(end, end, `\nexport default ${context.node(name).text}`));
+                edits.push(new SuggestionEdit(start, keyword, ''));
+                edits.push(new SuggestionEdit(end, end, `\nexport default ${context.node(name).text}`));
             }
         }
-        // Applying backward preserves every untouched token between the upstream repair spans.
-        edits.sort((left, right) => left.start - right.start);
-        let replacement = context.source.slice(start, end);
-        for(let position = edits.length - 1; position >= 0; position--) {
-            const edit = edits[position] ?? panic('missing type-definition edit');
-            replacement = replacement.slice(0, edit.start - start) + edit.text + replacement.slice(edit.end - start);
-        }
-        const finding = context.report(
-            name, '@typescript-eslint/consistent-type-definitions', id, message, 'fix', replacement, '',
-        );
-        finding.editStart = start;
-        finding.editEnd = end;
+        context.reportNode(name, '@typescript-eslint/consistent-type-definitions', id, message, edits);
     }
     // Match Go's whole-word search, including its decision to count comment text.
     keyword(start: number, end: number, text: string): number {
