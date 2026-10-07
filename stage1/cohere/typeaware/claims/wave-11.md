@@ -218,3 +218,13 @@ reserved here before implementation. Its syntax-local iterator stack requires
 no high-level IR, SSA or capture analysis. The active three are therefore
 react/jsx-fragments, react/jsx-no-undef and react/no-array-index-key.
 Four other React reservations are parked, not credited as native ports.
+
+
+Seventh batch completed at production defaults in implementation 02df7420,
+rebased onto main c01907a7. The three active rules use numeric handed-node
+listeners, with normal/sanitized complete-byte agreement on 229 controls and
+both frozen corpora. All three rule mutants, the raw binding mutant and released
+registry mutant are caught. All fifteen earlier ports and metadata passed their
+landing rechecks on c01907a7; four React analysis claims remain parked, not ports.
+No additional reservations are made. Evidence, exact timings and uncovered
+options/emitted-JavaScript/CJS paths are in ../wave-11-seventh/REPORT.md.

@@ -1,0 +1,46 @@
+{
+  "base": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "implementation": "02df74202734d8befbf92a3d594b91ec94b1c35e",
+  "controls": 229,
+  "parse_clean": 229,
+  "findings": {
+    "react/jsx-fragments": 34,
+    "react/jsx-no-undef": 186,
+    "react/no-array-index-key": 85
+  },
+  "fixes": 0,
+  "suggestions": 0,
+  "repository_roots": 287,
+  "compiler_roots": 77,
+  "repository_findings": 0,
+  "compiler_findings": 0,
+  "normal_sanitized_agreement": true,
+  "new_mutants": [
+    "fragment-attributes",
+    "undefined-intrinsic",
+    "index-name",
+    "raw-foreign-binding",
+    "released-registry"
+  ],
+  "native_vs_go_process_seconds": {
+    "repository": {
+      "native": 0.73656964,
+      "go": 0.125925979
+    },
+    "compiler": {
+      "native": 5.798559247,
+      "go": 0.34139144
+    }
+  },
+  "new_suite_seconds": 90.799,
+  "parked": [
+    "react-hooks/set-state-in-effect",
+    "react-hooks/set-state-in-render",
+    "react-hooks/static-components",
+    "react/jsx-no-constructed-context-values"
+  ],
+  "native_vs_go_ratios": {
+    "repository": 5.849227028840491,
+    "compiler": 16.985075100301284
+  }
+}
