@@ -319,3 +319,19 @@ the first remaining needs_type_information=false names are claimed here:
 Owned directories are better-tailwindcss-enforce-shorthand-classes,
 better-tailwindcss-no-concatenated-classes and
 better-tailwindcss-no-conflicting-classes. This claim is pushed before new code.
+
+## Sixth batch, October 7
+
+Prior work is pushed through 4fb908d9. Fetched main remains ef3d907e.
+All 356 origin refs and 54 unique Markdown claim blobs were searched, with
+main lint .a/.ts sources and rule descriptors. All 46 helper-ready names are
+unavailable. The first remaining inventory entries with
+needs_type_information=false are claimed here:
+
+1. nexus/boundary-no-internal-import
+2. nexus/boundary-no-nexus-outside-import
+3. nexus/boundary-no-project-import
+
+Owned directories are nexus-boundary-no-internal-import,
+nexus-boundary-no-nexus-outside-import and nexus-boundary-no-project-import.
+This claim is committed and pushed before writing implementation code.
