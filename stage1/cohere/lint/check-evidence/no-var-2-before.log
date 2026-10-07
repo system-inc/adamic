@@ -1,0 +1,101 @@
+=== RUN   TestRulesAgree
+    lint_test.go:359: cohere cases: 1273 unique source/rule/options combinations
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2071554042/019/case-079/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2071554042/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-079/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-079/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2071554042/019/case-081/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2071554042/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:393: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2071554042/019/case-085/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2071554042/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-085/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-085/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2071554042/019/case-086/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2071554042/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-086/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-086/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2071554042/019/case-095/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2071554042/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-095/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-095/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2071554042/019/case-097/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree2071554042/019/case-097/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2071554042/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:393: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2071554042/019/case-099/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree2071554042/019/case-099/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2071554042/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-099/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-099/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree2071554042/019/case-100/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree2071554042/019/case-100/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree2071554042/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-100/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree2071554042/019/case-100/Thing.ts
+    lint_test.go:398: Go, Node, emitted JavaScript, native identical: 759147 bytes
+--- PASS: TestRulesAgree (65.87s)
+=== RUN   TestMutants
+=== RUN   TestMutants/var_declaration_suppressed
+    lint_test.go:690: var declaration suppressed caught on Node: case 30 line 502: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:12", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:1"
+        Go context:
+        case 28
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 29
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 30
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 			0 5
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:12
+    lint_test.go:690: var declaration suppressed caught on emitted JavaScript: case 30 line 502: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:12", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:1"
+        Go context:
+        case 28
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 29
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 30
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 			0 5
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:12
+    lint_test.go:690: var declaration suppressed caught on native: case 30 line 502: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:12", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:1"
+        Go context:
+        case 28
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 29
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 30
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 			0 5
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2822533171/004/generated-3.ts:1:12
+--- PASS: TestMutants (28.26s)
+    --- PASS: TestMutants/var_declaration_suppressed (23.86s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 5482 bytes
+--- PASS: TestOwnedWitnesses (28.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	122.555s

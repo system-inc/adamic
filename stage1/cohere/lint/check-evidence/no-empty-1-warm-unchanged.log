@@ -1,0 +1,54 @@
+=== RUN   TestRule
+    rule_check_test.go:155: Go, Node, emitted JavaScript, native identical: 443975 bytes
+    rule_check_test.go:176: empty function body reported caught on Node: case 0 line 26: port "/tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:104", Go "/tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    rule_check_test.go:176: empty function body reported caught on emitted JavaScript: case 0 line 26: port "/tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:104", Go "/tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    rule_check_test.go:176: empty function body reported caught on sanitized native: case 0 line 26: port "/tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:104", Go "/tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-lint-measure-61312-1-no-empty/adamic/lint/inputs/95f6a6a0d578d24755541b6d9da13a6a3ca813f300c090ca847965f1f0fb0626/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+rule no-empty phase timing (seconds)
+| phase | seconds |
+|---|---:|
+| validate and snapshot | 0.023 |
+| Go oracle | 0.518 |
+| upstream capture | 0.373 |
+| owned witnesses | 0.000 |
+| sanitized port build | 2.366 |
+| explicit recovery refusals | 0.000 |
+| emitted JavaScript build | 0.421 |
+| Go Node JavaScript native comparison | 0.388 |
+| owned mutant | 1.353 |
+| total | 5.442 |
+--- PASS: TestRule (5.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	5.457s

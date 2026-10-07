@@ -1,0 +1,101 @@
+=== RUN   TestRulesAgree
+    lint_test.go:359: cohere cases: 1273 unique source/rule/options combinations
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree186742872/019/case-079/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree186742872/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-079/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-079/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree186742872/019/case-081/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree186742872/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:393: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree186742872/019/case-085/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree186742872/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-085/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-085/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree186742872/019/case-086/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree186742872/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-086/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-086/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree186742872/019/case-095/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree186742872/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-095/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-095/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree186742872/019/case-097/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree186742872/019/case-097/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree186742872/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:393: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree186742872/019/case-099/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree186742872/019/case-099/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree186742872/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-099/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-099/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree186742872/019/case-100/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree186742872/019/case-100/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree186742872/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-100/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree186742872/019/case-100/Thing.ts
+    lint_test.go:398: Go, Node, emitted JavaScript, native identical: 757785 bytes
+--- PASS: TestRulesAgree (64.71s)
+=== RUN   TestMutants
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:690: empty function body reported caught on Node: case 0 line 26: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:690: empty function body reported caught on emitted JavaScript: case 0 line 26: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:690: empty function body reported caught on native: case 0 line 26: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2171802842/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+--- PASS: TestMutants (28.83s)
+    --- PASS: TestMutants/empty_function_body_reported (25.67s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 5482 bytes
+--- PASS: TestOwnedWitnesses (22.90s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	116.450s
