@@ -1,0 +1,633 @@
+[
+  {
+    "manifest": "wave16_listeners/no_import_assign/rule.json",
+    "expected": {
+      "name": "no-import-assign",
+      "module": "../../no_import_assign.a",
+      "kinds": [
+        307
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "no-import-assign",
+        "module": "../../no_import_assign.a",
+        "kinds": [
+          308
+        ]
+      },
+      "name": {
+        "name": "no-import-assign-mutant",
+        "module": "../../no_import_assign.a",
+        "kinds": [
+          307
+        ]
+      },
+      "module": {
+        "name": "no-import-assign",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          307
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "271b4ecd297c471562fc0f4ea35eac215bbb2722fd4ca2e1d6773b12ca4a14a9",
+    "go_source_sha256": "b7cd05276dc21ac6518a2a2108a3969464de9050221ab0223f3f457bc9ec17b3",
+    "adamic_source_sha256": "6c2ea60001fcf78f4a9714440c43b709418f21d4b4b0421c86bdd3893826e5f6"
+  },
+  {
+    "manifest": "wave16_listeners/prefer_exponentiation_operator/rule.json",
+    "expected": {
+      "name": "prefer-exponentiation-operator",
+      "module": "../../prefer_exponentiation_operator.a",
+      "kinds": [
+        214
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "prefer-exponentiation-operator",
+        "module": "../../prefer_exponentiation_operator.a",
+        "kinds": [
+          215
+        ]
+      },
+      "name": {
+        "name": "prefer-exponentiation-operator-mutant",
+        "module": "../../prefer_exponentiation_operator.a",
+        "kinds": [
+          214
+        ]
+      },
+      "module": {
+        "name": "prefer-exponentiation-operator",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          214
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "08a32a219e22a5ee4f3420e3654a47c709abd05989e26e8a3e4d282da89f4f5c",
+    "go_source_sha256": "7f06460a33cb9eaa39c628a22dda3fd5231fd2026a49859f3bf56593fa4e4510",
+    "adamic_source_sha256": "15595cc58e5a2adbcc481d5ed4aec1ccbfe6a9f7b260c23ba871e466ad4f0c51"
+  },
+  {
+    "manifest": "wave16_listeners/use_isnan/rule.json",
+    "expected": {
+      "name": "use-isnan",
+      "module": "../../use_isnan.a",
+      "kinds": [
+        214,
+        227,
+        256
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "use-isnan",
+        "module": "../../use_isnan.a",
+        "kinds": [
+          214,
+          227,
+          257
+        ]
+      },
+      "name": {
+        "name": "use-isnan-mutant",
+        "module": "../../use_isnan.a",
+        "kinds": [
+          214,
+          227,
+          256
+        ]
+      },
+      "module": {
+        "name": "use-isnan",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          214,
+          227,
+          256
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "814469af4c258fa9b2ac49ca6f5a69c861c37b74e174415242bb0d76d4957e47",
+    "go_source_sha256": "f57338432bcb1961cf7e608777446c717caa20dad2f2254737c500ea4e14a377",
+    "adamic_source_sha256": "f678ed629d3bcef4fee4e3d953ae17cd863291e1f550d597d6639dc3b0701359"
+  },
+  {
+    "manifest": "wave16_listeners/no_global_listener_target_assertion/rule.json",
+    "expected": {
+      "name": "nexus/correctness-no-global-listener-target-assertion",
+      "module": "../../no_global_listener_target_assertion.a",
+      "kinds": [
+        214
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "nexus/correctness-no-global-listener-target-assertion",
+        "module": "../../no_global_listener_target_assertion.a",
+        "kinds": [
+          215
+        ]
+      },
+      "name": {
+        "name": "nexus/correctness-no-global-listener-target-assertion-mutant",
+        "module": "../../no_global_listener_target_assertion.a",
+        "kinds": [
+          214
+        ]
+      },
+      "module": {
+        "name": "nexus/correctness-no-global-listener-target-assertion",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          214
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "dba513c457557d89b5bdeda90c414e36ae16074afc1b68b0ed06984addde224d",
+    "go_source_sha256": "faa11c5a807d4fbc557c707b623f0416766d4f80231ae25780d792184d678a2b",
+    "adamic_source_sha256": "627cdc54f8299019af6e236438c4c682807481d48603da0b9bd25c958dfaf97c"
+  },
+  {
+    "manifest": "wave16_listeners/no_leaked_number_render/rule.json",
+    "expected": {
+      "name": "nexus/correctness-no-leaked-number-render",
+      "module": "../../no_leaked_number_render.a",
+      "kinds": [
+        295
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "nexus/correctness-no-leaked-number-render",
+        "module": "../../no_leaked_number_render.a",
+        "kinds": [
+          296
+        ]
+      },
+      "name": {
+        "name": "nexus/correctness-no-leaked-number-render-mutant",
+        "module": "../../no_leaked_number_render.a",
+        "kinds": [
+          295
+        ]
+      },
+      "module": {
+        "name": "nexus/correctness-no-leaked-number-render",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          295
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "d84ac9f487118fb2d1b11e7c1239095e9cfac02c729e762c72facdb9246d854a",
+    "go_source_sha256": "e7b0884f4a8178e68b2bc243bd31a2cf837df48f0aa583b17606069efebf988e",
+    "adamic_source_sha256": "55a4f5ffd064085aece905fc690973471aaabec23e0ab6068cda985be1718c95"
+  },
+  {
+    "manifest": "wave16_listeners/no_mock_on_module_namespace/rule.json",
+    "expected": {
+      "name": "nexus/correctness-no-mock-on-module-namespace",
+      "module": "../../no_mock_on_module_namespace.a",
+      "kinds": [
+        214
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "nexus/correctness-no-mock-on-module-namespace",
+        "module": "../../no_mock_on_module_namespace.a",
+        "kinds": [
+          215
+        ]
+      },
+      "name": {
+        "name": "nexus/correctness-no-mock-on-module-namespace-mutant",
+        "module": "../../no_mock_on_module_namespace.a",
+        "kinds": [
+          214
+        ]
+      },
+      "module": {
+        "name": "nexus/correctness-no-mock-on-module-namespace",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          214
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "059d93977676c8aac48b8fa7a896b59373c950aedd8d3cb181168a611e89e909",
+    "go_source_sha256": "be5133f27e594a645e62f2f0da71b4fca540f662e9d67269320b806c14ece0d0",
+    "adamic_source_sha256": "2f6ba2a0d6ce3da167b09b25945589da31059a4165351bd04c619e7c47b3a3c3"
+  },
+  {
+    "manifest": "wave16_listeners/no_interpolated_shell_command/rule.json",
+    "expected": {
+      "name": "nexus/security-no-interpolated-shell-command",
+      "module": "../../no_interpolated_shell_command.a",
+      "kinds": [
+        214
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "nexus/security-no-interpolated-shell-command",
+        "module": "../../no_interpolated_shell_command.a",
+        "kinds": [
+          215
+        ]
+      },
+      "name": {
+        "name": "nexus/security-no-interpolated-shell-command-mutant",
+        "module": "../../no_interpolated_shell_command.a",
+        "kinds": [
+          214
+        ]
+      },
+      "module": {
+        "name": "nexus/security-no-interpolated-shell-command",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          214
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "da3028a2aecc83e54e4a63c4681c8a4006400a9dd609a21d12755472f1d739a4",
+    "go_source_sha256": "6c95acdf12c17f2a39ef9d64357f903a4a7907acb194d0f9d3ac8e99e00640be",
+    "adamic_source_sha256": "705d6ef534781b52cce3ff3ff35608da53f31fcdc2e7d392f6223ac2d6f66053"
+  },
+  {
+    "manifest": "wave16_listeners/no_interpolated_sql_string/rule.json",
+    "expected": {
+      "name": "nexus/security-no-interpolated-sql-string",
+      "module": "../../no_interpolated_sql_string.a",
+      "kinds": [
+        229
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "nexus/security-no-interpolated-sql-string",
+        "module": "../../no_interpolated_sql_string.a",
+        "kinds": [
+          230
+        ]
+      },
+      "name": {
+        "name": "nexus/security-no-interpolated-sql-string-mutant",
+        "module": "../../no_interpolated_sql_string.a",
+        "kinds": [
+          229
+        ]
+      },
+      "module": {
+        "name": "nexus/security-no-interpolated-sql-string",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          229
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "b19bb3fdd994a8577cc55fbeb1cae370ea322eb622b2c73e5c2e6d58440b7d8e",
+    "go_source_sha256": "a939d3d5fac76ae37a0774a3305c2b3290079d097e8bada50e473582a03d0fbd",
+    "adamic_source_sha256": "a6cbe9de5bf805950bac9c1d026aa70e68ee5cbb7acc22e526b58bc7b3ae6f2c"
+  },
+  {
+    "manifest": "wave16_listeners/no_alert/rule.json",
+    "expected": {
+      "name": "no-alert",
+      "module": "../../no_alert.a",
+      "kinds": [
+        214
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "no-alert",
+        "module": "../../no_alert.a",
+        "kinds": [
+          215
+        ]
+      },
+      "name": {
+        "name": "no-alert-mutant",
+        "module": "../../no_alert.a",
+        "kinds": [
+          214
+        ]
+      },
+      "module": {
+        "name": "no-alert",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          214
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "f0ad36ab38f514c2760a3da69ed9cc8bb869fdfd2aa93341f4b4ff04d2123250",
+    "go_source_sha256": "40e4be04f7751da0db78085bcbeb0ca343acd76abb8d72ec34dd9ecb2e1aeaa9",
+    "adamic_source_sha256": "e554e1b83f41e68d4993c95daac5b801d2a00815f0ecbc7125734d467a0199a8"
+  },
+  {
+    "manifest": "wave16_listeners/no_new_func/rule.json",
+    "expected": {
+      "name": "no-new-func",
+      "module": "../../no_new_func.a",
+      "kinds": [
+        214,
+        215
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "no-new-func",
+        "module": "../../no_new_func.a",
+        "kinds": [
+          214,
+          216
+        ]
+      },
+      "name": {
+        "name": "no-new-func-mutant",
+        "module": "../../no_new_func.a",
+        "kinds": [
+          214,
+          215
+        ]
+      },
+      "module": {
+        "name": "no-new-func",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          214,
+          215
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "2d805b7e0303fda825a3069a2255c64b8e6038580b272461fd3eb3744eb0b280",
+    "go_source_sha256": "12ca2d9e0b6749a76a0b9d91a6cf66332070f982c7855420ea7d76ad2e9b00df",
+    "adamic_source_sha256": "d928060dda9c4ef68ae518fa995262d12b316961d4ae6b18d697cac05f594d23"
+  },
+  {
+    "manifest": "wave16_listeners/no_new_native_nonconstructor/rule.json",
+    "expected": {
+      "name": "no-new-native-nonconstructor",
+      "module": "../../no_new_native_nonconstructor.a",
+      "kinds": [
+        215
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "no-new-native-nonconstructor",
+        "module": "../../no_new_native_nonconstructor.a",
+        "kinds": [
+          216
+        ]
+      },
+      "name": {
+        "name": "no-new-native-nonconstructor-mutant",
+        "module": "../../no_new_native_nonconstructor.a",
+        "kinds": [
+          215
+        ]
+      },
+      "module": {
+        "name": "no-new-native-nonconstructor",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          215
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "95e3567d27e0f76dbd1b43dbe3202e9c001c43eedf4b7bc203f33abb6a1badaa",
+    "go_source_sha256": "97d872a85c35b4dd4aac48210a4e84dd097fd064e162e26629fcd8eab8593f22",
+    "adamic_source_sha256": "19b66f77670ca8966849f38dbf556276aa2472a52b043927add921cd9298e503"
+  },
+  {
+    "manifest": "wave16_listeners/no_new_wrappers/rule.json",
+    "expected": {
+      "name": "no-new-wrappers",
+      "module": "../../no_new_wrappers.a",
+      "kinds": [
+        215
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "no-new-wrappers",
+        "module": "../../no_new_wrappers.a",
+        "kinds": [
+          216
+        ]
+      },
+      "name": {
+        "name": "no-new-wrappers-mutant",
+        "module": "../../no_new_wrappers.a",
+        "kinds": [
+          215
+        ]
+      },
+      "module": {
+        "name": "no-new-wrappers",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          215
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "88e2ea38ab4934ca20951864f2de39b4e96b37831d79b2e27dc4fe3b5ad51d66",
+    "go_source_sha256": "7983de9cb2b2236b52cd9c21237c42cde5100e8c75ddbe0a3a281f7b15fed579",
+    "adamic_source_sha256": "cfb2dc55e1cbfebabbd4945b069db16076080eaf0878dcbce222e50799c789ef"
+  },
+  {
+    "manifest": "wave16_listeners/no_throw_literal/rule.json",
+    "expected": {
+      "name": "no-throw-literal",
+      "module": "../../no_throw_literal.a",
+      "kinds": [
+        258
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "no-throw-literal",
+        "module": "../../no_throw_literal.a",
+        "kinds": [
+          259
+        ]
+      },
+      "name": {
+        "name": "no-throw-literal-mutant",
+        "module": "../../no_throw_literal.a",
+        "kinds": [
+          258
+        ]
+      },
+      "module": {
+        "name": "no-throw-literal",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          258
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "a6bc1da73a23bbec757b7215ae39b1a12edcd45ac068384343e8e063e6f27cdd",
+    "go_source_sha256": "64fdd56048b844e167c9b35a7bc69704dc332805a2b89124e0294f1f3a637ba5",
+    "adamic_source_sha256": "fd03a192ddb1590ac77ab8d168749f00d38ba4343a543a3f15e4683c384adc97"
+  },
+  {
+    "manifest": "wave16_listeners/no_useless_backreference/rule.json",
+    "expected": {
+      "name": "no-useless-backreference",
+      "module": "../../no_useless_backreference.a",
+      "kinds": [
+        13,
+        307
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "no-useless-backreference",
+        "module": "../../no_useless_backreference.a",
+        "kinds": [
+          13,
+          308
+        ]
+      },
+      "name": {
+        "name": "no-useless-backreference-mutant",
+        "module": "../../no_useless_backreference.a",
+        "kinds": [
+          13,
+          307
+        ]
+      },
+      "module": {
+        "name": "no-useless-backreference",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          13,
+          307
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "fc59303617bbe8c0764bbee27e63225d7b4b2bb0b3c67f6b491fd1cef81fbc32",
+    "go_source_sha256": "b1c4de699c3c766be003d9990625eed5e8d13d21240c71fae396e8b56f93af56",
+    "adamic_source_sha256": "df231fa403cbdeea05890f2716f88911ce9e2ffbf22e528040308c1eec12488e"
+  },
+  {
+    "manifest": "wave16_listeners/prefer_arrow_callback/rule.json",
+    "expected": {
+      "name": "prefer-arrow-callback",
+      "module": "../../prefer_arrow_callback.a",
+      "kinds": [
+        307
+      ]
+    },
+    "mutants": {
+      "kind": {
+        "name": "prefer-arrow-callback",
+        "module": "../../prefer_arrow_callback.a",
+        "kinds": [
+          308
+        ]
+      },
+      "name": {
+        "name": "prefer-arrow-callback-mutant",
+        "module": "../../prefer_arrow_callback.a",
+        "kinds": [
+          307
+        ]
+      },
+      "module": {
+        "name": "prefer-arrow-callback",
+        "module": "../../no_such_wave16_rule.a",
+        "kinds": [
+          307
+        ]
+      }
+    },
+    "mutants_caught": [
+      "kind",
+      "name",
+      "module"
+    ],
+    "manifest_sha256": "80dbfcc5e5c7fcbabdcfb544f95c6baa6698e8561ca32fec3d6d4fda57e4c47d",
+    "go_source_sha256": "98816ba3126d5fda0c6b942d5a7a332b6b542325ab801b9bb51b30c9154161c5",
+    "adamic_source_sha256": "2249725f88eca738cb146d35f228fc1cb1e7d800684761683a54cd62f19afdb7"
+  }
+]

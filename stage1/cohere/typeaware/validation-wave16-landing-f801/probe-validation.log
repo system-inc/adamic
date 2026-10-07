@@ -1,0 +1,3 @@
+probe: all numeric kinds match independent Go; stderr empty
+probe-asan: all numeric kinds match independent Go; stderr empty
+numeric-kind mutant: exit 0, empty stderr, independent comparison catches byte 254

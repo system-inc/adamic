@@ -1,0 +1,105 @@
+=== RUN   TestWave16FifthAgreementAndMutants
+    wave16_fifth_test.go:431: controls: 90323 identical finding bytes; findings 231
+    wave16_fifth_test.go:439: controls-asan: 90323 identical finding bytes; findings 231
+    wave16_fifth_test.go:456: profile allow-named normal and sanitized: findings 225
+    wave16_fifth_test.go:456: profile bound-this-only normal and sanitized: findings 243
+    wave16_fifth_test.go:456: profile named-bound normal and sanitized: findings 235
+=== RUN   TestWave16FifthAgreementAndMutants/throw-range
+    wave16_fifth_test.go:475: throw-range: exit 0, Go byte oracle catches byte 130; findings 231
+=== RUN   TestWave16FifthAgreementAndMutants/backreference-range
+    wave16_fifth_test.go:475: backreference-range: exit 0, Go byte oracle catches byte 9283; findings 231
+=== RUN   TestWave16FifthAgreementAndMutants/arrow-fix
+    wave16_fifth_test.go:475: arrow-fix: exit 0, Go byte oracle catches byte 6056; findings 231
+=== NAME  TestWave16FifthAgreementAndMutants
+    wave16_fifth_test.go:483: repository: 18485 identical finding bytes; findings 0
+    wave16_fifth_test.go:484: repository-asan: 18485 identical finding bytes; findings 0
+    wave16_fifth_test.go:491: compiler: 5780 identical finding bytes; findings 0
+    wave16_fifth_test.go:492: compiler-asan: 5780 identical finding bytes; findings 0
+    wave16_fifth_test.go:504: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_fifth_test.go:509: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16FifthAgreementAndMutants (95.36s)
+    --- PASS: TestWave16FifthAgreementAndMutants/throw-range (7.01s)
+    --- PASS: TestWave16FifthAgreementAndMutants/backreference-range (7.33s)
+    --- PASS: TestWave16FifthAgreementAndMutants/arrow-fix (6.91s)
+=== RUN   TestWave16FollowupAgreementAndMutants
+    wave16_followup_test.go:109: controls: 11549 identical finding bytes; findings 22
+    wave16_followup_test.go:117: controls-asan: 11549 identical finding bytes; findings 22
+=== RUN   TestWave16FollowupAgreementAndMutants/listener-general
+    wave16_followup_test.go:134: listener-general: exit 0, Go byte oracle catches byte 723; findings 23
+=== RUN   TestWave16FollowupAgreementAndMutants/render-number
+    wave16_followup_test.go:134: render-number: exit 0, Go byte oracle catches byte 7165; findings 14
+=== RUN   TestWave16FollowupAgreementAndMutants/mock-range
+    wave16_followup_test.go:134: mock-range: exit 0, Go byte oracle catches byte 3576; findings 22
+=== NAME  TestWave16FollowupAgreementAndMutants
+    wave16_followup_test.go:142: repository: 18485 identical finding bytes; findings 0
+    wave16_followup_test.go:143: repository-asan: 18485 identical finding bytes; findings 0
+    wave16_followup_test.go:150: compiler: 5780 identical finding bytes; findings 0
+    wave16_followup_test.go:151: compiler-asan: 5780 identical finding bytes; findings 0
+    wave16_followup_test.go:163: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_followup_test.go:168: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16FollowupAgreementAndMutants (97.96s)
+    --- PASS: TestWave16FollowupAgreementAndMutants/listener-general (9.26s)
+    --- PASS: TestWave16FollowupAgreementAndMutants/render-number (9.39s)
+    --- PASS: TestWave16FollowupAgreementAndMutants/mock-range (9.89s)
+=== RUN   TestWave16FourthAgreementAndMutants
+    wave16_fourth_test.go:97: controls: 13019 identical finding bytes; findings 33
+    wave16_fourth_test.go:105: controls-asan: 13019 identical finding bytes; findings 33
+=== RUN   TestWave16FourthAgreementAndMutants/function-range
+    wave16_fourth_test.go:122: function-range: exit 0, Go byte oracle catches byte 132; findings 33
+=== RUN   TestWave16FourthAgreementAndMutants/native-range
+    wave16_fourth_test.go:122: native-range: exit 0, Go byte oracle catches byte 4598; findings 33
+=== RUN   TestWave16FourthAgreementAndMutants/wrapper-range
+    wave16_fourth_test.go:122: wrapper-range: exit 0, Go byte oracle catches byte 5183; findings 33
+=== NAME  TestWave16FourthAgreementAndMutants
+    wave16_fourth_test.go:130: repository: 18485 identical finding bytes; findings 0
+    wave16_fourth_test.go:131: repository-asan: 18485 identical finding bytes; findings 0
+    wave16_fourth_test.go:138: compiler: 5780 identical finding bytes; findings 0
+    wave16_fourth_test.go:139: compiler-asan: 5780 identical finding bytes; findings 0
+    wave16_fourth_test.go:151: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_fourth_test.go:156: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16FourthAgreementAndMutants (66.65s)
+    --- PASS: TestWave16FourthAgreementAndMutants/function-range (5.91s)
+    --- PASS: TestWave16FourthAgreementAndMutants/native-range (5.64s)
+    --- PASS: TestWave16FourthAgreementAndMutants/wrapper-range (5.67s)
+=== RUN   TestWave16AgreementAndMutants
+    wave16_test.go:99: controls: 29741 identical finding bytes; findings 65
+    wave16_test.go:107: controls-asan: 29741 identical finding bytes; findings 65
+=== RUN   TestWave16AgreementAndMutants/import-write
+    wave16_test.go:124: import-write: exit 0, Go byte oracle catches byte 66; findings 59
+=== RUN   TestWave16AgreementAndMutants/exponent-base
+    wave16_test.go:124: exponent-base: exit 0, Go byte oracle catches byte 15678; findings 65
+=== RUN   TestWave16AgreementAndMutants/nan-comma
+    wave16_test.go:124: nan-comma: exit 0, Go byte oracle catches byte 12079; findings 63
+=== NAME  TestWave16AgreementAndMutants
+    wave16_test.go:132: repository: 19351 identical finding bytes; findings 2
+    wave16_test.go:133: repository-asan: 19351 identical finding bytes; findings 2
+    wave16_test.go:140: compiler: 6379 identical finding bytes; findings 1
+    wave16_test.go:141: compiler-asan: 6379 identical finding bytes; findings 1
+    wave16_test.go:153: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_test.go:158: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16AgreementAndMutants (80.13s)
+    --- PASS: TestWave16AgreementAndMutants/import-write (6.35s)
+    --- PASS: TestWave16AgreementAndMutants/exponent-base (6.53s)
+    --- PASS: TestWave16AgreementAndMutants/nan-comma (6.57s)
+=== RUN   TestWave16ThirdAgreementAndMutants
+    wave16_third_test.go:106: controls: 28754 identical finding bytes; findings 50
+    wave16_third_test.go:114: controls-asan: 28754 identical finding bytes; findings 50
+=== RUN   TestWave16ThirdAgreementAndMutants/shell-heredoc
+    wave16_third_test.go:131: shell-heredoc: exit 0, Go byte oracle catches byte 8299; findings 53
+=== RUN   TestWave16ThirdAgreementAndMutants/sql-string
+    wave16_third_test.go:131: sql-string: exit 0, Go byte oracle catches byte 11784; findings 31
+=== RUN   TestWave16ThirdAgreementAndMutants/alert-range
+    wave16_third_test.go:131: alert-range: exit 0, Go byte oracle catches byte 130; findings 50
+=== NAME  TestWave16ThirdAgreementAndMutants
+    wave16_third_test.go:139: repository: 18485 identical finding bytes; findings 0
+    wave16_third_test.go:140: repository-asan: 18485 identical finding bytes; findings 0
+    wave16_third_test.go:147: compiler: 5780 identical finding bytes; findings 0
+    wave16_third_test.go:148: compiler-asan: 5780 identical finding bytes; findings 0
+    wave16_third_test.go:160: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_third_test.go:165: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16ThirdAgreementAndMutants (85.56s)
+    --- PASS: TestWave16ThirdAgreementAndMutants/shell-heredoc (7.53s)
+    --- PASS: TestWave16ThirdAgreementAndMutants/sql-string (6.73s)
+    --- PASS: TestWave16ThirdAgreementAndMutants/alert-range (6.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	425.666s

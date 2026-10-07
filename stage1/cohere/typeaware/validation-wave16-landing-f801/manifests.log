@@ -1,0 +1,62 @@
+PASS no_import_assign: [307]; numeric-kind mutant caught: Go kinds [307], Adamic kinds [308]
+PASS prefer_exponentiation_operator: [214]; numeric-kind mutant caught: Go kinds [214], Adamic kinds [215]
+PASS use_isnan: [214, 227, 256]; numeric-kind mutant caught: Go kinds [214, 227, 256], Adamic kinds [214, 227, 257]
+PASS no_global_listener_target_assertion: [214]; numeric-kind mutant caught: Go kinds [214], Adamic kinds [215]
+PASS no_leaked_number_render: [295]; numeric-kind mutant caught: Go kinds [295], Adamic kinds [296]
+PASS no_mock_on_module_namespace: [214]; numeric-kind mutant caught: Go kinds [214], Adamic kinds [215]
+PASS no_interpolated_shell_command: [214]; numeric-kind mutant caught: Go kinds [214], Adamic kinds [215]
+PASS no_interpolated_sql_string: [229]; numeric-kind mutant caught: Go kinds [229], Adamic kinds [230]
+PASS no_alert: [214]; numeric-kind mutant caught: Go kinds [214], Adamic kinds [215]
+PASS no_new_func: [214, 215]; numeric-kind mutant caught: Go kinds [214, 215], Adamic kinds [214, 216]
+PASS no_new_native_nonconstructor: [215]; numeric-kind mutant caught: Go kinds [215], Adamic kinds [216]
+PASS no_new_wrappers: [215]; numeric-kind mutant caught: Go kinds [215], Adamic kinds [216]
+PASS no_throw_literal: [258]; numeric-kind mutant caught: Go kinds [258], Adamic kinds [259]
+PASS no_useless_backreference: [13, 307]; numeric-kind mutant caught: Go kinds [13, 307], Adamic kinds [13, 308]
+PASS prefer_arrow_callback: [307]; numeric-kind mutant caught: Go kinds [307], Adamic kinds [308]
+PASS 15 declarations and 15 static numeric-kind mutants
+PASS no-import-assign: kind JSON mutant caught by independent metadata comparison
+PASS no-import-assign: name JSON mutant caught by independent metadata comparison
+PASS no-import-assign: module JSON mutant caught by independent metadata comparison
+PASS prefer-exponentiation-operator: kind JSON mutant caught by independent metadata comparison
+PASS prefer-exponentiation-operator: name JSON mutant caught by independent metadata comparison
+PASS prefer-exponentiation-operator: module JSON mutant caught by independent metadata comparison
+PASS use-isnan: kind JSON mutant caught by independent metadata comparison
+PASS use-isnan: name JSON mutant caught by independent metadata comparison
+PASS use-isnan: module JSON mutant caught by independent metadata comparison
+PASS nexus/correctness-no-global-listener-target-assertion: kind JSON mutant caught by independent metadata comparison
+PASS nexus/correctness-no-global-listener-target-assertion: name JSON mutant caught by independent metadata comparison
+PASS nexus/correctness-no-global-listener-target-assertion: module JSON mutant caught by independent metadata comparison
+PASS nexus/correctness-no-leaked-number-render: kind JSON mutant caught by independent metadata comparison
+PASS nexus/correctness-no-leaked-number-render: name JSON mutant caught by independent metadata comparison
+PASS nexus/correctness-no-leaked-number-render: module JSON mutant caught by independent metadata comparison
+PASS nexus/correctness-no-mock-on-module-namespace: kind JSON mutant caught by independent metadata comparison
+PASS nexus/correctness-no-mock-on-module-namespace: name JSON mutant caught by independent metadata comparison
+PASS nexus/correctness-no-mock-on-module-namespace: module JSON mutant caught by independent metadata comparison
+PASS nexus/security-no-interpolated-shell-command: kind JSON mutant caught by independent metadata comparison
+PASS nexus/security-no-interpolated-shell-command: name JSON mutant caught by independent metadata comparison
+PASS nexus/security-no-interpolated-shell-command: module JSON mutant caught by independent metadata comparison
+PASS nexus/security-no-interpolated-sql-string: kind JSON mutant caught by independent metadata comparison
+PASS nexus/security-no-interpolated-sql-string: name JSON mutant caught by independent metadata comparison
+PASS nexus/security-no-interpolated-sql-string: module JSON mutant caught by independent metadata comparison
+PASS no-alert: kind JSON mutant caught by independent metadata comparison
+PASS no-alert: name JSON mutant caught by independent metadata comparison
+PASS no-alert: module JSON mutant caught by independent metadata comparison
+PASS no-new-func: kind JSON mutant caught by independent metadata comparison
+PASS no-new-func: name JSON mutant caught by independent metadata comparison
+PASS no-new-func: module JSON mutant caught by independent metadata comparison
+PASS no-new-native-nonconstructor: kind JSON mutant caught by independent metadata comparison
+PASS no-new-native-nonconstructor: name JSON mutant caught by independent metadata comparison
+PASS no-new-native-nonconstructor: module JSON mutant caught by independent metadata comparison
+PASS no-new-wrappers: kind JSON mutant caught by independent metadata comparison
+PASS no-new-wrappers: name JSON mutant caught by independent metadata comparison
+PASS no-new-wrappers: module JSON mutant caught by independent metadata comparison
+PASS no-throw-literal: kind JSON mutant caught by independent metadata comparison
+PASS no-throw-literal: name JSON mutant caught by independent metadata comparison
+PASS no-throw-literal: module JSON mutant caught by independent metadata comparison
+PASS no-useless-backreference: kind JSON mutant caught by independent metadata comparison
+PASS no-useless-backreference: name JSON mutant caught by independent metadata comparison
+PASS no-useless-backreference: module JSON mutant caught by independent metadata comparison
+PASS prefer-arrow-callback: kind JSON mutant caught by independent metadata comparison
+PASS prefer-arrow-callback: name JSON mutant caught by independent metadata comparison
+PASS prefer-arrow-callback: module JSON mutant caught by independent metadata comparison
+PASS 15 rule.json manifests and 45 comparison-only metadata mutants
