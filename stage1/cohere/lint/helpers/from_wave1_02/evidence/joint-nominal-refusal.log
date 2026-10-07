@@ -1,0 +1,14 @@
+adamic: /workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/joint.a:10:51: Adamic 0.1 refuses a value without nominal ancestry seen as FinalBlock; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/verify_joint.py", line 18, in <module>
+    assert all(out==wanted for out in compare('joint-baseline'))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/verify_joint.py", line 13, in compare
+    (work/'joint.mjs').write_bytes(subprocess.check_output([str(work/'adamic'),'js',str(runner)]))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/adamic-gate/wave02-joint-7zbfq0no/adamic', 'js', '/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/joint.a']' returned non-zero exit status 1.

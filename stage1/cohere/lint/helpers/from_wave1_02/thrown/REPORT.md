@@ -1,0 +1,13 @@
+Built markThrown with stable arena handles, preserving nil, reachability, thrown state, ordered append and independent final state.
+Claim b8b1c7e37 was pushed before implementation; helper branch is based on origin/main f8013f0b; final delivery SHA accompanies push.
+Verification PASS: 214 actual Go transitions, 10,074 equal bytes on source Node, emitted JavaScript and sanitized native.
+Mutants caught by all three byte comparisons: remove unreachable guard, remove already-thrown guard, write final flag instead of thrown flag; all compile and finish cleanly.
+Not covered: whole-rule Adamic findings/fixes, complete CFG construction, arbitrary pointer reflection; four dependency occurrences removed, zero final blockers.
+
+Run: python3 stage1/cohere/lint/helpers/from_wave1_02/thrown/verify.py. The final source rerun is recorded in evidence/final-delivery-verification.log. The four original consuming Go suites pass without skips: array-callback-return (1 actual helper call), consistent-return (4), no-unreachable-loop (143) and react-hooks/rules-of-hooks (2). The control suite adds 64 actual Go transitions, covering nil, each reachability/thrown/final flag, empty/populated thrown lists, populated final lists, repeated calls and changed reachability. The private method is unchanged; instrumentation exists only in a temporary Go overlay. Raw tests and pre/post trace rows are in evidence/*-go.log.
+
+ThrownBlock extends the owned FinalBlock model, so the same instance can participate in both state views without structural class casts. Both builder arena views are readonly; field flags remain mutable. Handle -1 maps Go nil and nonnegative integer handles must retain stable identity. The normal final list and flag must remain unchanged by markThrown. Go nil and empty slices are represented by empty Adamic arrays; Go reflection or arbitrary externally substituted pointers are outside this adapter. The function supplies no CFG traversal or reachability inference.
+
+The runner replays exact observed pre-states and checks the Go post-state. A third mutant writes the normal final flag, which catches accidental coupling even when the append still goes to the thrown list. The joint verifier separately uses both helpers on a common arena and checks list independence, including a clean-executing wrong-list mutant. See ../DELIVERY.md.
+
+Initial runner errors from copied identifiers were corrected and retained in evidence/initial-runner-error.log and duplicate-runner-name.log. Neither is credited as a semantic mutant. All new Adamic sources use .a. The shared finding, context, main, registry generator, Go oracle and lint_test comparison are untouched.

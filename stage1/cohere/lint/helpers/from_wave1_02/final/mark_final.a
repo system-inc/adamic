@@ -10,9 +10,9 @@ export class FinalBlock {
 }
 
 export class FinalBuilder {
-    readonly blocks: FinalBlock[];
+    readonly blocks: readonly FinalBlock[];
     readonly finals: number[];
-    constructor(blocks: FinalBlock[], finals: number[]) {
+    constructor(blocks: readonly FinalBlock[], finals: number[]) {
         this.blocks = blocks;
         this.finals = finals;
     }

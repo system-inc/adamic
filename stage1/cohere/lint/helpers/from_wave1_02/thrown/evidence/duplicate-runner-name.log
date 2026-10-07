@@ -1,0 +1,19 @@
+array-callback-return 1 actual calls
+consistent-return 4 actual calls
+no-unreachable-loop 143 actual calls
+react-hooks-rules-of-hooks 2 actual calls
+controls 64 actual calls
+adamic: panic: SyntaxError: Identifier 'thrown' has already been declared
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/thrown/verify.py", line 49, in <module>
+    assert all(out==wanted for out in compare('baseline'))
+                                      ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/thrown/verify.py", line 41, in compare
+    node=subprocess.check_output(['node','--disable-warning=ExperimentalWarning',str(root/'oracle/node.mjs'),str(runner),str(trace)])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/thrown/runner.a', '/tmp/adamic-gate/wave02-thrown-5nmqbk1b/trace.txt']' returned non-zero exit status 70.

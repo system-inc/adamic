@@ -1,0 +1,30 @@
+package control_flow_graph
+
+import (
+	"fmt"
+	"testing"
+)
+
+func TestWave02JointMarkers(t *testing.T) {
+	for _, reachable := range []bool{false, true} {
+		for _, final := range []bool{false, true} {
+			for _, thrown := range []bool{false, true} {
+				block := &Block[int]{index: 0, Reachable: reachable, final: final, thrown: thrown}
+				builder := &Builder[int]{}
+				builder.markFinal(block)
+				builder.markThrown(block)
+				block.Reachable = false
+				builder.markFinal(block)
+				builder.markThrown(block)
+				finals, throwns := "", ""
+				for _, b := range builder.finals {
+					finals += fmt.Sprint(b.index)
+				}
+				for _, b := range builder.thrown {
+					throwns += fmt.Sprint(b.index)
+				}
+				fmt.Printf("WAVE02_JOINT:%t,%t,%t,%t,%t,%s,%s\n", reachable, final, thrown, block.final, block.thrown, finals, throwns)
+			}
+		}
+	}
+}

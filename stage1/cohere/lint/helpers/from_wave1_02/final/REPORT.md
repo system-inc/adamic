@@ -1,5 +1,5 @@
 Built markFinal with stable arena handles, preserving nil, reachability, final state, append order and block identity.
-Claims: 50a839593 withdrew duplicate enter; replacement 631ea1bb9 precedes implementation; delivery SHA accompanies push.
+Claims: initial 50a839593 enter reservation was withdrawn; replacement 631ea1bb9 precedes implementation; delivery SHA accompanies push.
 Verification: python3 stage1/cohere/lint/helpers/from_wave1_02/final/verify.py PASS; 2,884 actual Go transitions, 87,942 equal bytes on Node source, emitted JavaScript and sanitized native.
 Mutants: remove unreachable guard; remove already-final guard. Both compile and run cleanly; all three backend byte comparisons catch each.
 Not covered: whole-rule Adamic findings/fixes, completed CFG builder, arbitrary arena aliasing or other helper dependencies; four dependency occurrences removed, zero final blockers.
@@ -15,3 +15,5 @@ Initial attempts are retained as evidence: non-null assertions were refused by A
 The earlier enter reservation was withdrawn after a post-push fetch revealed slot 01's earlier claim. No duplicate implementation is delivered and no credit is taken for its interrupted experiment. Historical failure output lives under ../evidence/withdrawn-enter. Rule branch codex/lint-wave1-02-land is parked at 2b4c31771 on current main f8013f0b with the named missing shared registration blocker awaiting #zmh9v36; the preserved main oracle passed in 33.891s. No shared registration bridge, option-text change, main push or area push was made.
 
 Landing refresh: clean rebase onto origin/main f8013f0b, with zero shared-file conflict hunks. The complete owned verifier passed again on that base: same 2,884 transitions and 87,942 equal bytes, both semantic mutants caught on all three backends. See evidence/rebased-verification.log. This helper branch is landing-ready for its bounded contract; no whole-rule integration claim is made. First delivery was 11626368d before rebase. The current pushed SHA accompanies the final report.
+
+Final delivery type adjustment: the arena view is readonly, and ThrownBlock extends FinalBlock. The final verifier rerun passes with unchanged counts and both guard mutants. The joint check proves both helpers share the same block identities and independent lists; see ../DELIVERY.md.

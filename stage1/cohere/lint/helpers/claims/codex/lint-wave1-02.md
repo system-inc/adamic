@@ -33,3 +33,7 @@ Claim: github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.
 File: from_wave1_02/thrown/mark_thrown.a.
 
 markFinal is rebased onto current main, re-green with both mutants, and pushed at 1a2b4e2db. Fresh audit inspected all 547 origin refs and 19 distinct claim contents. markThrown is unclaimed and ties the maximum concrete fan-out at four, same consumers as above. Preserve nil/unreachable/already-thrown guards, thrown flag, ordered thrown list and identity, independently from final state. Use stable arena handles with -1 nil. Compare actual private Go calls in each original consuming rule suite plus repeated/nil/state controls on Node source, emitted JavaScript and sanitized native, with compiling semantic mutants. Four dependency occurrences, zero final blockers alone. Push before code; no shared harness edits.
+
+## Retained delivery
+
+Retained helpers: markFinal and markThrown, each on its own .a file with shared stable arena semantics. Their final consumer reruns and joint test pass on current main f8013f0b: 3,106 transitions, 98,252 bytes and six compiling semantic mutants across Node source, emitted JavaScript and sanitized native. Eight dependency occurrences removed across the four listed rules, zero final blockers. No third helper is reserved. enter remains withdrawn. See from_wave1_02/DELIVERY.md for exact commands, counts, adapter boundaries, source corrections and parking status.

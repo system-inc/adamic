@@ -1,0 +1,20 @@
+import { FinalBuilder, markFinal } from './final/mark_final.a';
+import { ThrownBlock, ThrownBuilder, markThrown } from './thrown/mark_thrown.a';
+for (const reachable of [false, true]) {
+    for (const final of [false, true]) {
+        for (const thrown of [false, true]) {
+            const block = new ThrownBlock(reachable, thrown, final);
+            const blocks: ThrownBlock[] = [block];
+            const finals: number[] = [];
+            const thrownList: number[] = [];
+            const finalBuilder = new FinalBuilder(blocks, finals);
+            const thrownBuilder = new ThrownBuilder(blocks, thrownList, finals);
+            markFinal(finalBuilder, 0);
+            markThrown(thrownBuilder, 0);
+            block.reachable = false;
+            markFinal(finalBuilder, 0);
+            markThrown(thrownBuilder, 0);
+            console.log(String(reachable) + ',' + String(final) + ',' + String(thrown) + ',' + String(block.final) + ',' + String(block.thrown) + ',' + finals.join(':') + ',' + thrownList.join(':'));
+        }
+    }
+}
