@@ -445,11 +445,32 @@ caught by tool tests: omit the skip flag, ignore complement duplicates, omit the
 terminal check, omit skip selectors from checkpoint keys, and omit job count from resume identity.
 The last two mutate newly added cache-key components; no persistent cache was added.
 
-The production plain log/plain.tgz supplied by name is not present on this box. The exact-SHA
-source census proves the missing registration set; it does not substitute for comparing the
-new full fleet against a plain run. No long production reference or sequential eight-shard run
-was started, respecting the restart constraint. Production per-shard before/after timings and
-the final whole-gate diff must come from the new fleet at the same clean source SHA.
+The follow-up fetched `gate-logs/2e165469ec95/plain` and extracted `plain.tgz`.
+Its `gate-out/test.jsonl` has exactly 3,146 distinct terminal tests and 322 children under
+`TestNativeAgreesWithNode`. At that same source SHA, the post-init fixture set equals the plain
+child set exactly, and plain children minus the 275 initial rows equals the checked-in 47-name
+list exactly. All 47 passed; both set differences are empty. The reproducible result and plain-log
+SHA-256 are in `cmd/adamic-gate/evidence/plain-47-check.json`. This verifies the historical coverage
+hole against the actual reference, rather than inferring it from counts. It does not substitute
+for comparing the new full fleet against a plain run at the new SHA. No long production reference
+or sequential eight-shard run was started. Production per-shard before/after timings and the
+final whole-gate diff must come from the new fleet at the same clean source SHA.
+
+The planted-init CLI proof was rerun for the follow-up with the reader deliberately filtering
+`planted_init.a` out of discovery. The fixture was appended by an `init()` loop constructing its
+path. Shard 1 of the two-shard proof ran it despite having no planned children; merge printed
+`unplanned, ran anyway: coverageprobe/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/planted_init.a`.
+Merge and plain both had three distinct terminal tests, and comparison was empty. Missing
+complement invocation provenance still made merge red. The fresh raw proof and 17 passing
+race-tested tool tests are in `cmd/adamic-gate/evidence/coverage-followup.tar.gz`.
+
+At count eight, if `Plan.WASI` is present, the required WASI shard is **7**, ordinary split-parent
+complements are **6**, and WASI split-parent complements also run on **7**. Thus ordinary
+complements and the required WASI shard are separate, while WASI parents share the required
+shard. If the checkout has no source-derived WASI gates, `Plan.WASI` is absent and every complement
+uses the last shard, **7**. This branch's current source has no WASI gates; runtime integration
+activates the 6/7 arrangement automatically. `TestComplementPlacementWithRequiredWASI` checks
+both layouts and their exact run/skip selectors.
 
 ### Fleet commands for this repair
 

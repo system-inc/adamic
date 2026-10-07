@@ -114,3 +114,32 @@ func TestComplementCheckpointRequiresParentTerminal(t *testing.T) {
 		t.Fatal("complement without parent terminal accepted", err)
 	}
 }
+
+func TestComplementPlacementWithRequiredWASI(t *testing.T) {
+	p := plan{Count: 8, WASI: &wasiRequirement{Shard: 7}, Units: []unit{
+		{Package: "probe", Test: "TestNative/known", Shard: 0},
+		{Package: "probe", Test: "TestWASI/known", Shard: 7, WASI: true},
+	}}
+	p.Complements = complements(p)
+	owners := map[string]int{}
+	for _, c := range p.Complements {
+		owners[c.Parent] = c.Shard
+	}
+	if owners["TestNative"] != 6 || owners["TestWASI"] != 7 {
+		t.Fatal("wrong complement placement", owners)
+	}
+	native := selections(p, 6, "probe")
+	if len(native) != 1 || native[0].Run != "^TestNative$" || native[0].Skip != "^TestNative$/^known$" {
+		t.Fatal(native)
+	}
+	wasi := selections(p, 7, "probe")
+	if len(wasi) != 1 || wasi[0].Run != "^TestWASI$" || wasi[0].Skip != "" {
+		t.Fatal(wasi)
+	}
+	p.WASI = nil
+	for _, c := range complements(p) {
+		if c.Shard != 7 {
+			t.Fatal("ordinary complement must use last shard", c)
+		}
+	}
+}
