@@ -208,7 +208,7 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.Switch:
 		b.switchStatement(at, statement)
 	case ir.Break:
-		depth := len(b.jumps) - 1
+		depth := len(b.jumps) - 1 - statement.Depth
 		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
 	case ir.Continue:
 		for index := len(b.jumps) - 1; index >= 0; index-- {

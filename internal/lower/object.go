@@ -974,7 +974,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		return nil, err
 	}
 	lowered := ir.Switch{Value: value}
+	groups := []switchGroup{}
 	tests := []ir.Expression{}
+	defaultPending := false
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
 		for _, inner := range clause.AsCaseOrDefaultClause().Statements.Nodes {
 			if inner.Kind == ast.KindVariableStatement {
@@ -1003,17 +1005,35 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		if err != nil {
 			return nil, err
 		}
-		if len(body) == 0 && !isDefault {
-			// case 'a': case 'b': share the next body.
+		defaultPending = defaultPending || isDefault
+		if len(body) == 0 {
+			// Empty labels enter the next body, including labels on either side of default.
 			continue
 		}
-		if isDefault {
-			// Cases grouped with default run its body, which is what not matching does anyway.
+		groups = append(groups, switchGroup{tests: tests, body: body, isDefault: defaultPending})
+		if defaultPending {
 			lowered.Default = body
-		} else {
+		}
+		if len(tests) > 0 {
+			// Default is a fallback position, but its grouped tests still compete in source order.
 			lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests, Body: body})
 		}
 		tests = []ir.Expression{}
+		defaultPending = false
+	}
+	if len(tests) > 0 {
+		// A trailing empty label matches and leaves the switch without running default.
+		lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests})
+	}
+	if len(tests) > 0 || defaultPending {
+		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
+	}
+	for index, group := range groups {
+		// A default with tests must also have one body, rather than sharing statement
+		// addresses between two branches (flow instrumentation identifies those addresses).
+		if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
+			return l.fallthroughSwitch(value, groups), nil
+		}
 	}
 	return []ir.Statement{lowered}, nil
 }

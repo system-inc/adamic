@@ -59,8 +59,6 @@ func compilerOptions() *core.CompilerOptions {
 		Strict:                     core.TSTrue,
 		NoUncheckedIndexedAccess:   core.TSTrue,
 		ExactOptionalPropertyTypes: core.TSTrue,
-		NoImplicitReturns:          core.TSTrue,
-		NoFallthroughCasesInSwitch: core.TSTrue,
 		ErasableSyntaxOnly:         core.TSTrue,
 		VerbatimModuleSyntax:       core.TSTrue,
 		AllowImportingTsExtensions: core.TSTrue,
