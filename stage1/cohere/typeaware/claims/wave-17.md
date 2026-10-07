@@ -154,3 +154,11 @@ mutants. No new rules were claimed. Full evidence and historical SHA mapping
 are in [the landing report](../WAVE_17_LANDING_REPORT.md). Production JSX and
 complete configurable BooleanPropNaming remain the documented unfinished scope;
 current main explicitly refuses RegExp with a nonconstant pattern.
+
+## Refreshed landing cap status
+
+All existing work is rebased onto main f8013f0b at validated source 6ffc1aff.
+All eight selected oracles passed again in 860.616s, including sanitizer and
+mutation checks; no source repair or new claim. The 15 numeric listener
+declarations pass verification. Exact evidence and remaining limits are in
+[the refreshed landing report](../WAVE_17_LANDING2_REPORT.md).

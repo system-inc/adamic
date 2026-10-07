@@ -1,0 +1,77 @@
+{
+  "passes": [
+    [
+      "TestCoverageAgreementAndMutants",
+      "145.59"
+    ],
+    [
+      "TestWave17FifthAgreementAndMutants",
+      "149.44"
+    ],
+    [
+      "TestWave17FourthAgreementAndMutants",
+      "140.56"
+    ],
+    [
+      "TestWave17HeadJudgmentsAndParserBoundary",
+      "81.36"
+    ],
+    [
+      "TestWave17NextAgreementAndMutants",
+      "121.22"
+    ],
+    [
+      "TestWave17AgreementMutantAndJSXBoundary",
+      "65.80"
+    ],
+    [
+      "TestWave17ThirdAgreementAndMutants",
+      "154.31"
+    ],
+    [
+      "TestWave17UnicodeUpper",
+      "2.34"
+    ]
+  ],
+  "mutant_catchers": [
+    "coverage_test.go:153: before: exit 0, Go byte oracle catches byte 57; findings 52",
+    "coverage_test.go:153: cast: exit 0, Go byte oracle catches byte 1560; findings 53",
+    "coverage_test.go:153: methods: exit 0, Go byte oracle catches byte 2210; findings 46",
+    "coverage_test.go:153: coercion: exit 0, Go byte oracle catches byte 1165; findings 53",
+    "coverage_test.go:153: caller: exit 0, Go byte oracle catches byte 10262; findings 54",
+    "coverage_test.go:153: parameter: exit 0, Go byte oracle catches byte 369; findings 50",
+    "coverage_test.go:153: invariant: exit 0, Go byte oracle catches byte 12778; findings 48",
+    "coverage_test.go:153: optional: exit 0, Go byte oracle catches byte 15545; findings 53",
+    "coverage_test.go:153: alias: exit 0, Go byte oracle catches byte 16023; findings 53",
+    "coverage_test.go:153: unused: exit 0, Go byte oracle catches byte 16843; findings 56",
+    "coverage_test.go:187: released-registry mutant exits 0, caught by the required panic 70",
+    "wave_17_fifth_test.go:151: syntax mutant exits 0, empty stderr; Go byte oracle catches byte 56",
+    "wave_17_fifth_test.go:151: memo mutant exits 0, empty stderr; Go byte oracle catches byte 9309",
+    "wave_17_fifth_test.go:151: boolean mutant exits 0, empty stderr; Go byte oracle catches byte 1205",
+    "wave_17_fifth_test.go:177: released registry mutant exits 0, empty stderr; required panic 70 catches it",
+    "wave_17_fifth_test.go:190: symbol identity question rejects released handle; retained registry mutant finishes cleanly, required panic catches it",
+    "wave_17_fourth_test.go:147: throw mutant exits 0, empty stderr; Go byte oracle catches byte 17572",
+    "wave_17_fourth_test.go:147: regex mutant exits 0, empty stderr; Go byte oracle catches byte 1241",
+    "wave_17_fourth_test.go:147: arrow mutant exits 0, empty stderr; Go byte oracle catches byte 335",
+    "wave_17_fourth_test.go:147: tracker mutant exits 0, empty stderr; Go byte oracle catches byte 15080",
+    "wave_17_fourth_test.go:173: released registry mutant exits 0, empty stderr; required panic 70 catches it",
+    "wave_17_fourth_test.go:186: symbol identity question rejects released handle; retained registry mutant finishes cleanly, required panic catches it",
+    "wave_17_heads_test.go:138: duplicate mutant exits 0, empty stderr; Go bytes catch byte 55",
+    "wave_17_heads_test.go:138: script mutant exits 0, empty stderr; Go bytes catch byte 474",
+    "wave_17_next_test.go:238: collection mutant exits 0, empty stderr; Go byte oracle catches byte 3690",
+    "wave_17_next_test.go:238: outcome mutant exits 0, empty stderr; Go byte oracle catches byte 16816",
+    "wave_17_next_test.go:238: pure mutant exits 0, empty stderr; Go byte oracle catches byte 8432",
+    "wave_17_next_test.go:248: ancestry await mutant exits 0, empty stderr; Go byte oracle catches byte 15745",
+    "wave_17_next_test.go:264: released registry mutant exits 0, empty stderr; required panic 70 catches it",
+    "wave_17_test.go:115: async end+1 mutant: exit 0, empty stderr; Go byte oracle catches byte 60",
+    "wave_17_test.go:153: released handle: panic 70; registry mutant exits 0, caught by required panic",
+    "wave_17_third_test.go:162: global mutant exits 0, empty stderr; Go byte oracle catches byte 13306",
+    "wave_17_third_test.go:162: implicit mutant exits 0, empty stderr; Go byte oracle catches byte 53",
+    "wave_17_third_test.go:162: eval mutant exits 0, empty stderr; Go byte oracle catches byte 53",
+    "wave_17_third_test.go:175: source-js fact mutant exits 0, empty stderr; Go bytes catch byte 55459",
+    "wave_17_third_test.go:175: shorthand fact mutant exits 0, empty stderr; Go bytes catch byte 4747",
+    "wave_17_third_test.go:201: released registry mutant exits 0, empty stderr; required panic 70 catches it",
+    "wave_17_third_test.go:214: source metadata question rejects released handle; retained registry mutant finishes cleanly, required panic catches it",
+    "wave_17_unicode_test.go:62: uppercase boundary mutant: exit 0, empty stderr, direct Go byte oracle catches byte 1"
+  ]
+}
