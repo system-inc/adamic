@@ -1,0 +1,10 @@
+// Null must keep JavaScript's typeof through literals, variables and calls.
+console.log(`literal: ${typeof null}`);
+const value: RegExpMatchArray | null = null;
+console.log(`variable: ${typeof value}`);
+function missing(): RegExpMatchArray | null {
+	return null;
+}
+console.log(`function: ${typeof missing()}`);
+const text = 'text';
+console.log(`values: ${typeof 42} ${typeof true} ${typeof text} ${typeof undefined}`);
