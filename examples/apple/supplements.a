@@ -1,10 +1,15 @@
 // supplements.a: a native Mac app written in Adamic, SwiftUI underneath: a navigation stack over a
 // supplements list in sections, each row a class of its own, and a button whose State adds one.
-// Build it with `adamic build examples/apple/supplements.a -o supplements && ./supplements`.
+// Given a URL, it shows a progress view, fetches the list there and decodes it into true types.
+// Build it with `adamic build examples/apple/supplements.a -o supplements`, then
+// `./supplements [https://.../supplements.json]`.
 
+import { decodeJson, programArguments } from 'adamic';
+import { Url } from 'apple/foundation/url';
+import { UrlSession } from 'apple/foundation/url-session';
 import { run } from 'apple/swiftui/app';
 import { State } from 'apple/swiftui/state';
-import { button, horizontalStack, image, list, navigationStack, section, spacer, text, verticalStack, type View } from 'apple/swiftui/views';
+import { button, horizontalStack, image, list, navigationStack, progressView, section, spacer, text, verticalStack, type View } from 'apple/swiftui/views';
 
 interface Supplement {
 	readonly name: string;
@@ -13,11 +18,14 @@ interface Supplement {
 	readonly timing: 'Morning' | 'Evening';
 }
 
-const supplements = new State<Supplement[]>([
+const builtIn: readonly Supplement[] = [
 	{ name: 'Creatine', dose: '5 g', symbol: 'bolt.fill', timing: 'Morning' },
 	{ name: 'Vitamin D', dose: '2000 IU', symbol: 'sun.max.fill', timing: 'Morning' },
 	{ name: 'Magnesium', dose: '400 mg', symbol: 'moon.fill', timing: 'Evening' },
-]);
+];
+const address = programArguments()[0];
+const supplements = new State<readonly Supplement[]>(address === undefined ? builtIn : []);
+const problem = new State<string>('');
 
 class SupplementRow implements View {
 	readonly supplement: Supplement;
@@ -42,6 +50,12 @@ class SupplementsView implements View {
 	}
 
 	body(): View {
+		if (problem.value !== '') {
+			return navigationStack(text(problem.value).foregroundColor('Red').padding(20).navigationTitle('Stack'));
+		}
+		if (supplements.value.length === 0) {
+			return navigationStack(progressView().navigationTitle('Stack'));
+		}
 		return navigationStack(
 			verticalStack({ spacing: 0 }, [
 				list([section('Morning', this.rows('Morning')), section('Evening', this.rows('Evening'))]).listStyle('Inset'),
@@ -55,6 +69,24 @@ class SupplementsView implements View {
 			]).navigationTitle('Stack'),
 		);
 	}
+}
+
+if (address !== undefined) {
+	UrlSession.shared
+		.dataTask({
+			with: new Url({ string: address }),
+			completionHandler: (data, response, error) => {
+				const decoded = decodeJson<Supplement[]>(data === undefined ? '' : (data.utf8Text() ?? ''));
+				if (error !== undefined) {
+					problem.set(error.localizedDescription);
+				} else if (decoded.kind === 'Error') {
+					problem.set(decoded.message);
+				} else {
+					supplements.set(decoded.value);
+				}
+			},
+		})
+		.resume();
 }
 
 run('Supplements', () => new SupplementsView(), {});

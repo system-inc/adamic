@@ -8,14 +8,25 @@ import { Host } from 'apple/swiftui/host';
 import { renderWhenStateChanges } from 'apple/swiftui/state';
 import type { View } from 'apple/swiftui/views';
 
+// The app's host and root, kept here rather than captured: a closure holding the host would hold
+// what the host's Apple objects might reach, a cycle the compiler rightly refuses.
+let shown: Host | undefined = undefined;
+let shownRoot: (() => View) | undefined = undefined;
+
+function renderAgain(): void {
+	if (shown !== undefined && shownRoot !== undefined) {
+		shown.render(shownRoot());
+	}
+}
+
 // run shows root(), a function so each render asks it again, in a window with this title.
 export function run(title: string, root: () => View, options: { readonly width?: number; readonly height?: number }): void {
 	const application = Application.shared;
 	application.setActivationPolicy('Regular');
 	const host = new Host(root());
-	renderWhenStateChanges(() => {
-		host.render(root());
-	});
+	shown = host;
+	shownRoot = root;
+	renderWhenStateChanges(renderAgain);
 	const window = new Window({
 		contentRectangle: { x: 0, y: 0, width: options.width ?? 420, height: options.height ?? 560 },
 		styleMask: ['Titled', 'Closable', 'Miniaturizable', 'Resizable'],
