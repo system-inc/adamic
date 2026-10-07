@@ -201,3 +201,20 @@ or origin reservation was found. New native sources are .a, rule.json kinds
 are numeric, and rules consume the relevant node handed by their driver.
 No shared parser, generator or harness edits are authorized. Snapshot and
 selection reconstruction are in ../wave-11-seventh/selection/.
+
+### Seventh batch analysis exclusion and replacement
+
+react/jsx-no-constructed-context-values is PARKED, not ported. Its separate
+jsx_no_constructed_context_values_stability.go helper requires native
+function-return evaluation, alias escape checks and captured-reference
+classification for memo stability. These prerequisites were identified by
+reading the helper after the initial reservation and are tracked with #dnv6f2c.
+It counts as finished for the landing-first cap under the parking instruction.
+
+A fresh audit of 539 origin refs and 525 trees found no-adjacent-inline-elements
+already reserved elsewhere, so it was skipped without being claimed here.
+The first available non-analysis replacement is `react/no-array-index-key`,
+reserved here before implementation. Its syntax-local iterator stack requires
+no high-level IR, SSA or capture analysis. The active three are therefore
+react/jsx-fragments, react/jsx-no-undef and react/no-array-index-key.
+Four other React reservations are parked, not credited as native ports.
