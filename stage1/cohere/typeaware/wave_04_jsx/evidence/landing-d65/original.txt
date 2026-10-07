@@ -1,0 +1,8 @@
+=== RUN   TestWave04AgreementAndMutants
+    wave_04_test.go:122: controls: 17123 identical finding bytes; findings 39
+    wave_04_test.go:130: controls-asan: 17123 identical finding bytes; findings 39
+    wave_04_test.go:136: mkdir /workspace/typeaware-wave-04-landing-d65/original/casing-source: no space left on device
+--- FAIL: TestWave04AgreementAndMutants (125.48s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	125.495s
+FAIL

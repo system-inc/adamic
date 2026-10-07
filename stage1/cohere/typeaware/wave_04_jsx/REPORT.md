@@ -166,3 +166,7 @@ Preserving merge history resolved the earlier rebase conflict without shared edi
 ## Integration area landing
 
 Rebased onto fetched area/stage1-lint 7481e0324, containing 50a5f105 and current main 39638d9e2. Six completed-rule and partial helper/listener oracles are green again. See [LANDING_AREA.md](LANDING_AREA.md) for exact tested base, timings and limits. No new claims; JSX source rules remain unfinished.
+
+## Restored environment landing
+
+Rebased onto current area d65a8f931 with current main 39638d9e2. Fresh rule/sanitizer/mutant and runtime checks are green after recovering disk capacity and retrying every affected test. See [LANDING_D65.md](LANDING_D65.md). No new claims; JSX source work remains unfinished.

@@ -1,0 +1,12 @@
+oracle-build: exit 0, 0 stdout bytes, 0 stderr bytes, 10.847606s
+normal-archive: exit 0, 0 stdout bytes, 0 stderr bytes, 21.827131s
+normal-native-build: exit 0, 0 stdout bytes, 0 stderr bytes, 42.798327s
+asan-archive: exit 0, 0 stdout bytes, 0 stderr bytes, 21.332058s
+asan-native-build: exit 0, 0 stdout bytes, 0 stderr bytes, 26.819466s
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_04_next/validate.py", line 51, in <module>
+    controls=out/'controls';controls.mkdir(exist_ok=True)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+OSError: [Errno 28] No space left on device: '/workspace/typeaware-wave-04-landing-d65/next/controls'
