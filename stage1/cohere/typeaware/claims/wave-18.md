@@ -310,3 +310,15 @@ wave oracle/sanitizer/mutant evidence retained, not rerun. Four analysis
 claims remain parked; full gate and 17 external checks unrun. 580-head
 audit finds zero unclaimed ranked rules. No new claim. See
 wave_18_component_props/LANDING_WITNESS_AREA_REPORT.md and its logs.
+
+## Landing with lint edits and paths area e667e3e1d
+
+Retained main 71d7e491b and cleanly merged area e667e3e1d. Setup uses
+GOPROXY=https://proxy.golang.org|direct and passes in 26.888s. Tested
+678e5fbf: nine affected lint tests pass in 343.796s, including full rule
+agreement, link-only rows, preserved witness paths and decoded options.
+Bridge/registry and vet pass. Unchanged owned native oracle/sanitizer/mutant
+evidence retained, not rerun. Four claims remain parked; full gate and
+17 external checks unrun. 593-head audit finds zero unclaimed rules.
+No new claim. See wave_18_component_props/LANDING_EDITS_PATHS_REPORT.md
+and validation-edits-paths for complete logs.
