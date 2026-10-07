@@ -471,3 +471,66 @@ and semantic mutants. Report family pairs and reads remaining after every push.
 Working target for both families is October 13 at 17:00 MDT. Nullish encoding,
 optional presence and shared dispatch merges remain integration risks; report an
 observed blocker immediately rather than counting a component test as completion.
+
+
+## Dictionary contracts unit, October 7, 2026
+
+Branch `codex/views-dictionaries` starts at lane 4 `9ecdda53`, after `583d19b7`.
+This unit owns new `internal/lower/view_dictionaries.go` and tests,
+`internal/native/view_dictionaries.go` and tests,
+`internal/javascript/view_dictionaries.go` and tests,
+`internal/native/runtime/view_dictionaries.c/.h`,
+`internal/oracle/checked_views_dictionaries_test.go`, and
+`stage3/interface-downcasts/dictionaries/` (ranking, fixtures, logs, reports).
+The user explicitly authorizes this plan addition. Existing lane files and
+protected orchestration files remain their owners' territory.
+
+The frozen family is 409 pairs and 2,256 explicit reads. Numeric-indexed
+NodeArray types appear in this dictionary inventory; preserve their pair ids
+and demand rather than claiming they are supported or silently reassigning them.
+Array dispatch must precede dictionary dispatch. String-key objects with named
+properties (CompilerOptions) need both named field and index contracts.
+
+Reuse `runtime/record.c`: its record is an ordinary counted object wrapping the
+existing ordered Map. The current base contains that runtime and its component
+oracle, but no record IR kind or frontend record operations. Its untagged
+adamic_value slots and reference_values bit cannot distinguish number from
+boolean or prove a nested object's logical type. A target cast must never
+supply the missing source certificate.
+
+Concrete handoffs required from the shared owners before source admission:
+
+1. Reconcile lazy-admission `5002bfe0` with this base in cast.go,
+   interface_cast.go, readiness.go, view_objects.go and native/view_fields.go.
+   The attempted merge was aborted with all shared code restored. Fix the base
+   checker/submodule pin too: setup currently fails on missing RootedFilePath
+   and changed NewCachedFSCompilerHost arguments.
+2. Add ViewDictionary to the common contract kinds, with Element referring to
+   the shared recursive child registry. Add a viewDictionaryContractHook to
+   view_contracts.go after array/callable dispatch, before ordinary object
+   admission. The lane helper will use string index information, intern before
+   recursion, and preserve named fields and unsupported/deferred children.
+3. Supply the existing record lowering through shared IR and expression dispatch.
+   Dictionary field reads must preserve the record identity and element contract
+   on aliases, helper parameters, returns, callbacks, generics and stored fields.
+   An indexed read with viewed or Unknown provenance must call the dictionary
+   read hook even when no lexical cast appears in its function.
+4. Supply a source-certified normalized record slot probe: presence, initialized
+   state, logical kind, borrowed payload and child schema/contract. Reuse existing
+   readiness, null/undefined and object-view metadata. Do not infer kind from the
+   target or add another record table/bitmap. Every alias write/delete/overwrite
+   must maintain source facts; Unknown keeps the check. Existing get returns
+   untagged storage and is insufficient for a runtime type check.
+5. Wire emitViewDictionaryRead in both backend indexed/property read dispatches,
+   passing the evaluated receiver/key, element contract, expression and declared
+   type once. A missing key is undefined only when the declared read permits it;
+   a present undefined is distinct from an uninitialized slot. Preserve current
+   own-key prototype refusals until inherited semantics are implemented soundly.
+   Nested object results feed shared transitive view propagation at later reads.
+
+Whole-family working estimate: October 16, 2026 at 23:00 UTC, conditional on
+these hooks and reconciled lazy admission by October 9 at 23:00 UTC. The earlier
+October 14 estimate was provisional before inspecting the source representation.
+No unconditional completion date is defensible while shared source probing and
+record compiler lowering are absent. No pair is completed by a ranking or a
+component oracle. Each push records actual source support separately.
