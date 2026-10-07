@@ -33,3 +33,7 @@ mutants (six owned and fifteen inherited) pass their comparison checks.
 Raw outputs are under evidence/landing. The branch is pushed but not claimed
 fully oracle-green; full rule landing remains blocked by the shared parser and
 recovery comparison boundary. No new work is claimed.
+
+## Area d65a8f931 recheck
+
+Rebased cleanly onto d65a8f931c98655936ae04c6899f38f14862b73e, including its runtime performance changes. The dedup ledger and shared recovery handling are unchanged. Uncached TestOwnedWitnesses passed in 21.26s with 57,889 identical bytes; the six owned mutants passed on Node, emitted JavaScript and sanitized native. go vet passed. TestRulesAgree remains red in 46.46s on unsupported primary AtToken at offset 12 in the invalid decorated async executor. Combined package execution exits 1 in 184.895s. No full oracle-green claim, new reservation, throughput or full gate. Exact command: ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -run '^(TestRulesAgree|TestOwnedWitnesses|TestMutants)$/^(identifier_expression_ignored|parameter_difference_silenced|empty_method_silenced|async_executor_ignored|closing_brace_missing|negative_zero_ignored)$' -count=1 -v -timeout=20m.
