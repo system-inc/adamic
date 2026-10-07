@@ -1,0 +1,1206 @@
+{
+  "inputs": [
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "bytes": 111,
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/_namespaces/ts.performance.ts",
+      "bytes": 101,
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/_namespaces/ts.ts",
+      "bytes": 3288,
+      "sha256": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/binder.ts",
+      "bytes": 194463,
+      "sha256": "b2a0d4d09bfdd389297e346776d12297e4add7e0b62ba2015862e6b50dcb2aa3"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/builder.ts",
+      "bytes": 116984,
+      "sha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/builderPublic.ts",
+      "bytes": 11523,
+      "sha256": "a6a304c41be6a7b33febcae8dd98955f90313c7e2d56af02f476e6b9722b82d6"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/builderState.ts",
+      "bytes": 26090,
+      "sha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/builderStatePublic.ts",
+      "bytes": 382,
+      "sha256": "93138f0f93fd9dff071c3def9feebc5f88fbe65bcb028d4ca8871d3155b9b522"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/checker.ts",
+      "bytes": 3151774,
+      "sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/commandLineParser.ts",
+      "bytes": 183461,
+      "sha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/core.ts",
+      "bytes": 92419,
+      "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/corePublic.ts",
+      "bytes": 1318,
+      "sha256": "899b3d3421836d6345090bce67d16d6c73c944762bfb0b5483a1e2ae192c9b09"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/debug.ts",
+      "bytes": 56593,
+      "sha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/emitter.ts",
+      "bytes": 273338,
+      "sha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/executeCommandLine.ts",
+      "bytes": 54026,
+      "sha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/expressionToTypeNode.ts",
+      "bytes": 70053,
+      "sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/baseNodeFactory.ts",
+      "bytes": 2677,
+      "sha256": "86826be85abc6406cec8915574950ab349ba829167a4d3f28332c38dd8b90e0a"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/emitHelpers.ts",
+      "bytes": 69094,
+      "sha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/emitNode.ts",
+      "bytes": 12719,
+      "sha256": "d4e8f25e7c30e6c6f5fbb72d56812d140f8d15384be4a7bd4da226a47559583a"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/nodeChildren.ts",
+      "bytes": 2237,
+      "sha256": "bded8155f089e40a86d99d53e135b8f3a4cbc49f70ff2bdd0b80f0683a2e9606"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/nodeConverters.ts",
+      "bytes": 7205,
+      "sha256": "3d5979059f70d4c381bbd5998181441dd6aaa7e15f6564a8f97d446ad85b041d"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/nodeFactory.ts",
+      "bytes": 334930,
+      "sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/nodeTests.ts",
+      "bytes": 36796,
+      "sha256": "47cc22cce04a5fa143e8182bd0f6e5aea2b1b34d58539701a0785fb0b60cf14f"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/parenthesizerRules.ts",
+      "bytes": 34012,
+      "sha256": "94aa00739f9d2b7f41ca6c5d0aaa5495a1d4d4b7c8af1919361a64a7abf90764"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/utilities.ts",
+      "bytes": 76114,
+      "sha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/factory/utilitiesPublic.ts",
+      "bytes": 2101,
+      "sha256": "a91c2dcc86ec6711aeae4fb0ad512209abe7a220ef2a0e7d2f04c3adcb7a0ff1"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/moduleNameResolver.ts",
+      "bytes": 181609,
+      "sha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/moduleSpecifiers.ts",
+      "bytes": 79619,
+      "sha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/parser.ts",
+      "bytes": 539685,
+      "sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/path.ts",
+      "bytes": 44162,
+      "sha256": "4b777f1a03b9f39b4864106e60a43828b5b749a5fae00f68d6faf8f02e0c91bc"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/performance.ts",
+      "bytes": 6146,
+      "sha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/performanceCore.ts",
+      "bytes": 3255,
+      "sha256": "7f6e15fcf84111901e95303399ba69c9baacc3466a3ad5b5b21633c3d382f7b4"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/program.ts",
+      "bytes": 270697,
+      "sha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/programDiagnostics.ts",
+      "bytes": 21298,
+      "sha256": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/resolutionCache.ts",
+      "bytes": 82036,
+      "sha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/scanner.ts",
+      "bytes": 219162,
+      "sha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/semver.ts",
+      "bytes": 17933,
+      "sha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/sourcemap.ts",
+      "bytes": 32104,
+      "sha256": "036ab3c39165eb06a3fb145e1467f4f0dfebdb1f76b5faccc34a79db756473e4"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/symbolWalker.ts",
+      "bytes": 8177,
+      "sha256": "6aec8fecf7d57abd557bdbd4a9744ba2a1f3d8fcc9e9b84721158bd4f284300a"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/sys.ts",
+      "bytes": 86142,
+      "sha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/tracing.ts",
+      "bytes": 15028,
+      "sha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformer.ts",
+      "bytes": 29755,
+      "sha256": "d13096beeb8d41a78cc48add41d5028b456e23f73c9973fe175c35941257a066"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/classFields.ts",
+      "bytes": 156326,
+      "sha256": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/classThis.ts",
+      "bytes": 5504,
+      "sha256": "41c65d5bb7518697a301cce563f6f800ed3ba8856372e86998d259a3eb439a6e"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/declarations/diagnostics.ts",
+      "bytes": 46162,
+      "sha256": "dbc7849a0535ef63307656557c1037ef15006f7d6246197c095350854b71e721"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/declarations.ts",
+      "bytes": 99437,
+      "sha256": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/destructuring.ts",
+      "bytes": 30755,
+      "sha256": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/es2015.ts",
+      "bytes": 231365,
+      "sha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/es2016.ts",
+      "bytes": 4484,
+      "sha256": "3e3ba9728ee63a9c68e8aee6356e84b611ec19c4acbfc7b4b806b49903c2967e"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/es2017.ts",
+      "bytes": 49966,
+      "sha256": "b18e65782e3ff096fb09a4609db90dddcb0cbdd8a2f1e72caeea19426dbd92b5"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/es2018.ts",
+      "bytes": 69751,
+      "sha256": "846876b89a5be66536d351c7c89769acc7b8ed45577411f361107963caa09c2d"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/es2019.ts",
+      "bytes": 1533,
+      "sha256": "99d755a8cd5bdd07d23590330990828ae7c8a33dae9d55926f5b0ab07db84878"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/es2020.ts",
+      "bytes": 13066,
+      "sha256": "763fb25fb5c40acf6d2482631c79709c9eddd299303292750a57216e392ae1dd"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/es2021.ts",
+      "bytes": 4104,
+      "sha256": "29798cddd385947caa004effdf997df6bc97b9a9b1d9919413dcee3a6a8b5205"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/esDecorators.ts",
+      "bytes": 126995,
+      "sha256": "bcef2e876468210c48941dad975a492f49eab7abeb4f75ca603e76ffd5e06c7c"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/esnext.ts",
+      "bytes": 32554,
+      "sha256": "7c566610dda1adbd37eec796f52b00a0ab2c08f42f678028ecf3b9f3516f60d1"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/generators.ts",
+      "bytes": 123796,
+      "sha256": "93e6814b36032fd49fbc2f9ff7fa60695430431f3c11a3f03207827fe44c07f5"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/jsx.ts",
+      "bytes": 36065,
+      "sha256": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/legacyDecorators.ts",
+      "bytes": 36625,
+      "sha256": "8321e776d83fe3892df9331baa9c1b837736ba5e4130d379a75ef9bfe34d86e8"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/module/esnextAnd2015.ts",
+      "bytes": 18606,
+      "sha256": "6c163c8dc720431f02b335d8d5c25efe849039d5805bfa722899f8a2cc2e6945"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "bytes": 3725,
+      "sha256": "9170b66a9feaa1b340e0723e0a0b10c085385c42ff25d39e9a24dd44e2d84a45"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/module/module.ts",
+      "bytes": 111460,
+      "sha256": "69802404b3e40beec0a1707813bf556841b81728a31af29ac554e95bc87f9c36"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/module/system.ts",
+      "bytes": 85159,
+      "sha256": "89f55cac43736092d29266dbe77b6e3a94c8ff5684bb7d41306a1e544b2caef7"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/namedEvaluation.ts",
+      "bytes": 22186,
+      "sha256": "7529078853a659502ab39832a4eec7e0ee6b94df675f63960254c56cc31060e7"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/taggedTemplate.ts",
+      "bytes": 5424,
+      "sha256": "800dc3bebb7e7879e68b5f3ed684397e41dd76b73a1130764fefe6007f627ea9"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/ts.ts",
+      "bytes": 116394,
+      "sha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/typeSerializer.ts",
+      "bytes": 28796,
+      "sha256": "8219081416c67c9ea7f1f8da6125775652eb7d065e8897fd430f50d83dbac5d6"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/transformers/utilities.ts",
+      "bytes": 35618,
+      "sha256": "cbddbf83ed9af717b94398ab8b2617f0098406d26712ae816130f40d3ce9c2e5"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/tsbuild.ts",
+      "bytes": 5322,
+      "sha256": "fb3789e399c0c7e1548d3949eab83a47da545cc88fe0ba2eee356926be607b78"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/tsbuildPublic.ts",
+      "bytes": 114409,
+      "sha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/types.ts",
+      "bytes": 487846,
+      "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/utilities.ts",
+      "bytes": 512951,
+      "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/utilitiesPublic.ts",
+      "bytes": 103769,
+      "sha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/visitorPublic.ts",
+      "bytes": 88048,
+      "sha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/watch.ts",
+      "bytes": 45654,
+      "sha256": "c9d074948345a04d85e87d3c4b3e1a2c8328422c20e0b36b3ee9ae1c7a7ad24e"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/watchPublic.ts",
+      "bytes": 60845,
+      "sha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef"
+    },
+    {
+      "file": "/tmp/wave109-typescript/src/compiler/watchUtilities.ts",
+      "bytes": 34758,
+      "sha256": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/cssnumbers/main.ts",
+      "bytes": 2024,
+      "sha256": "d09f35df690c663a959c43e8ca90e3787b83492baabaf41e7e221ef423c89c75"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/cssnumbers/numbers.ts",
+      "bytes": 6870,
+      "sha256": "fabd209f1ce0913167f82b83efa145489233dad8c39d7fe45c37da0c10b63558"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/cssstrings/gaps/1_multi_push.ts",
+      "bytes": 79,
+      "sha256": "4682a1e3522ed3984c11b34d02afaf5f89dd0e6bdcd7f56d6dd9141acc977398"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/cssstrings/main.ts",
+      "bytes": 2017,
+      "sha256": "1e0c22e4c01b528c2260d4de9cbb36178a0f76b4cf70326d1b812295587f5de5"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/cssstrings/strings.ts",
+      "bytes": 2463,
+      "sha256": "488f11b34facfd5ada17d9171f5ddb9c3f6e4dc2f513b180c87a24a50dd96209"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/formatfiles/disk.ts",
+      "bytes": 4975,
+      "sha256": "c7a485006dad1618cfe6f9e224b96853d532d31360f645ed7972b3c2e2fa647d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/formatfiles/enumerate.ts",
+      "bytes": 15793,
+      "sha256": "6a71bcf1c8cc8aadb7cd83378355cfd7d25aae5ca1df53efd32747faa3cb7842"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/formatfiles/golang.ts",
+      "bytes": 3476,
+      "sha256": "51ba0f600f2355d6e37111cf7c68c3c489c6921cbfbf85f83a4c017d491f1c9a"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/formatfiles/main.ts",
+      "bytes": 8034,
+      "sha256": "3cf5925d4805d049ccee19cad6e4c57fb0d79b7dcaa44d9f2aa5993b3f59ce01"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/case.ts",
+      "bytes": 6667,
+      "sha256": "f55e09c369cb97a3796b052218a1eba26ccfd5fb51116932279267d0c14a3140"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/1_from_char_code.ts",
+      "bytes": 158,
+      "sha256": "e95ea3cb4fe46f51e627cb7ede242de580dad9ac4a6dd8a18813a5867231627b"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/2_bitwise.ts",
+      "bytes": 224,
+      "sha256": "8f6dc32dbc3d78fe6c1428de391cebe18b9a8ed8c83ea3b755efb0a5f732823d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/3_later_function.ts",
+      "bytes": 246,
+      "sha256": "c8b323a060a14e9cdc0510f7953e96afab23f1d45d438a18fed326c026632129"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/3_later_method.ts",
+      "bytes": 300,
+      "sha256": "3770f4f68399efb6d39d2380d4b29e1fef02d1ccdaedfd9ebe817bf1df09bb2a"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/4_function_value.ts",
+      "bytes": 208,
+      "sha256": "9e92056fb12ed70cc4def147757bb0885f0cc81577b21c439b8a02d1765ed1b3"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/5_array_from.ts",
+      "bytes": 131,
+      "sha256": "a602c9e073f61ecf71fa332e17e1ad0bf46cb0278dac93a21b0c8c30f9e844ce"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/6_boolean_element.ts",
+      "bytes": 231,
+      "sha256": "e6b14f700c19af917c1d3e1754f22bf2f26e43d9512bf4cce2f8f599d50a392f"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/7_maybe_number_compared.ts",
+      "bytes": 145,
+      "sha256": "c16ed322d1dbc33acf5eefa6a2e19e04d87b54dd5a6afbc1cb35fbad5b1a0520"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/8_tuple_value.ts",
+      "bytes": 239,
+      "sha256": "e3e825534ac8b30e7304764ee4afd4bf1a22dd25f25206d85292bc6309f6442d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gaps/9_return_panic.ts",
+      "bytes": 247,
+      "sha256": "b65b27344706c8ee43e0162714a0dfffaaf82003b44d8379da0840167bc0e1ad"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/gitignore.ts",
+      "bytes": 26676,
+      "sha256": "ee1eccd544031b265c1fc29b911bcd18fb11082a1f90471233dedbaa4cbb4342"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/glob.ts",
+      "bytes": 15401,
+      "sha256": "b5717b970339f30a048e3694fd3385ecab80b24d433bf5b9bd69d54a410249b9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/main.ts",
+      "bytes": 4043,
+      "sha256": "e4095fdd1ad2b535ebce40094373ab2794a15994e6e6d317d1576ce008030206"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/path.ts",
+      "bytes": 3821,
+      "sha256": "87f83c01c6618de5ad075634ed02927848f7f0e7af22197122368e8dc7623f3c"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/pathsweep.ts",
+      "bytes": 1222,
+      "sha256": "ae705d72125da914c5027e1d61108a29806e1f751cb071a50137b133195190e0"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/blockString.ts",
+      "bytes": 1760,
+      "sha256": "10de820c654a4da95f381c764c7d2a600ee009f3e349b23a2bcc1827533b0b87"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/characterClasses.ts",
+      "bytes": 1622,
+      "sha256": "a1df9ea6547b00621d5c23dd7535f3ca7b987e367750872468bd85580a5dcaa0"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/gaps/1_throwing_function_value.ts",
+      "bytes": 556,
+      "sha256": "820579606e86e3074d2923a9285bbd0b029ec17006eed6c30feac6fb527a9050"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/gaps/2_error_made_elsewhere.ts",
+      "bytes": 332,
+      "sha256": "005ff59e4d8beacaff0625684119f5cc99820afb62c480fb98e2ac60c5be1668"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/lexer.ts",
+      "bytes": 27330,
+      "sha256": "8c1f5f68bc2431fcef1b991a3a4b6201374e8ccaa944c1b1006adad7dc18a516"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/main.ts",
+      "bytes": 4442,
+      "sha256": "bc66aa20d712f1b681f510aef33c6f23a26eb5885428867d60703fc1b3a864d9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/parser.ts",
+      "bytes": 44871,
+      "sha256": "5dc6669c1581933a6e941c9f35a35e5d9b5e00af86f0818ac2915ce37a483ebe"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/token.ts",
+      "bytes": 2315,
+      "sha256": "38e3c00dca971f922b472999dcdc0e9c7c2bf9f1950eca8c01d8196f75f14980"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/doc.ts",
+      "bytes": 7920,
+      "sha256": "771c153c4fe51f73c72575df32012333ed00fe52390824d804c0a370d9e120c4"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/formatter.ts",
+      "bytes": 19388,
+      "sha256": "f064511bd2815f86908c1a5a11d2309e168691f9b0de4ed02a42ca31883f5c6c"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/gaps/emptyFallback.ts",
+      "bytes": 73,
+      "sha256": "401239ceb4ebb1fbffcfecb9501bf01abddb1c55b0888132bec39867902110f7"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/gaps/multiplePush.ts",
+      "bytes": 80,
+      "sha256": "228f2c771e9490386a1a2f7b6a4c42885b3e5d2d2fada4473739aa7a82c6cf07"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts",
+      "bytes": 203,
+      "sha256": "ad8d85f4a85d277204ab979e0fb8703f5e14f4c3c8812aba3212860051367b51"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/identifierTables.ts",
+      "bytes": 27825,
+      "sha256": "085cd402fe7371fb3f9465821b3435f96346e814374337a9b2c9ffa2d061f619"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/main.ts",
+      "bytes": 2170,
+      "sha256": "8ebd9ebf088206cdef0f014eb4caffb48e0578386ae6bde9ebfb605fc39122d4"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/parser.ts",
+      "bytes": 15642,
+      "sha256": "ef9a2b2f98f393bc02cb603ada8d933494e425ea838534b9b866ed8a0acac1fc"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/width.ts",
+      "bytes": 3626,
+      "sha256": "1df62a41aff3e7b5e8c04be8b5173ccc81808b10166f49d5c7ba7b6ed14d8df5"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/json/widthTables.ts",
+      "bytes": 54345,
+      "sha256": "bdb4ad9379bf7af903643edbc5346ae7cdc9d81872ccc8bddc1215b763ca5bd7"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/.generated/registry.ts",
+      "bytes": 8231,
+      "sha256": "2c20784015682366e04e90c037b7e8a005de3f56399112990157a3c40d02ffde"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/context.ts",
+      "bytes": 4358,
+      "sha256": "cf177b5ae665f78d165f51bd557fa17c176c219298e1346ab400836ec7678199"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/finding.ts",
+      "bytes": 720,
+      "sha256": "0852fb656720aa9d45573afbccbb5e0d543b1a09e6502d7dca6b183a1863ecc6"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts",
+      "bytes": 382,
+      "sha256": "965e077fc7f7090e120f76f8ed61c601f522c74f7561ab5b9569d365134d9271"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/lint.ts",
+      "bytes": 2828,
+      "sha256": "19c6f2422c05c6558803924bae377dd741de9ac443c7480532a62a14f30f4cab"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/main.ts",
+      "bytes": 3079,
+      "sha256": "507f4bd35fcc66fcb8c020dde3185b0fbbdff42f613a9c17637aa4c120ab0ea5"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eqeqeq/messages.ts",
+      "bytes": 680,
+      "sha256": "e87637aa00dde17400a271a40093ac489671f16231182d1a9b960fae8d635ca0"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eqeqeq/rule.ts",
+      "bytes": 2391,
+      "sha256": "de212cdda9b931136d7a76a34af7d6665462c056c27a55ad496746272ae38f1a"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/comments/all.ts",
+      "bytes": 4231,
+      "sha256": "b4c3bfe9cb49b125442b65770459c5ecae4fb9fb499ec3914baa9254962c66ca"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/comments/can_begin_at.ts",
+      "bytes": 585,
+      "sha256": "934d48985690eab92485958324b43622905af1f187ff8b74a3013c142e7630f3"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/comments/collect_list_interiors.ts",
+      "bytes": 4377,
+      "sha256": "40fcc9bb092ffd7d622ca65189d2f4afa8182b6b05cd74bfc7606a9b4555cabd"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/comments/comment.ts",
+      "bytes": 719,
+      "sha256": "c969ef6c8969ea00496265c689caaa722a1147745c5c890905f185c9f7fb3961"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/comments/for_file.ts",
+      "bytes": 976,
+      "sha256": "5bec32fbcc1d126a95bfeff93b70cfc1f8016a72486aabb051df31779a98fdc4"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/comments/sort_by_position.ts",
+      "bytes": 912,
+      "sha256": "1effc5ab9ec9fda68cfdcb5f5078cfd52202e0422ac2e83b1acbf082eec7d6cc"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/messages.ts",
+      "bytes": 361,
+      "sha256": "9c93f65537c4e348965eab3e343cf472f83d90892c6c83d152265d68aa538083"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/probe.ts",
+      "bytes": 3831,
+      "sha256": "9a3473916b33f183a2f84e0bb89bada3333537dfe7597f168bfa0df4b331108d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/eslint-comments-require-description/rule.ts",
+      "bytes": 4871,
+      "sha256": "7f06597e1c3a7798815a5e5df3d6b225016c0e56bb5c0e26a2f18618b5b1e5d9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/no-debugger/messages.ts",
+      "bytes": 374,
+      "sha256": "b11d670d6a0ac317abf99f3049cbddecc0990a759fe051b7cf431aeb8c71a1ea"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/no-debugger/rule.ts",
+      "bytes": 967,
+      "sha256": "310463664082636208c900b4071605d2a226bc5a0b38b0957b6d5611527addce"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/no-duplicate-case/messages.ts",
+      "bytes": 379,
+      "sha256": "ef5450422ac316b4163820d3db141c9906e8dac7d5eb5ed514aa1e4686ce7d2c"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+      "bytes": 1192,
+      "sha256": "f069fa0a73ea8019483c108bc12342d7b0e8c92eceb2ce28c74809914f168145"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/no-empty/messages.ts",
+      "bytes": 695,
+      "sha256": "0c3e67318f0dba632efb204ae164a9de01d7d919e95eb25ed772613be8510fea"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/no-empty/rule.ts",
+      "bytes": 1676,
+      "sha256": "ef4cde04efc0ac79da558a9a3d26c86e21718b820221e7e50e63e5ccd8b85979"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/no-var/messages.ts",
+      "bytes": 549,
+      "sha256": "1cb4bc3c676aad070d5e4b34e38df7687d9416455d31b4f7f45554b53315c38c"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/no-var/rule.ts",
+      "bytes": 1273,
+      "sha256": "4778983a533ab9f0cc53e1f40b00089c07fe01dc7e82ad5837a1ff8982162e84"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-useless-fragment/probe.ts",
+      "bytes": 4648,
+      "sha256": "73a8068ee6b41e37cdb36f19b622872601c7fe4daa2b0b2bb4cd94204e26fa28"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-useless-fragment/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-useless-fragment/rule.ts",
+      "bytes": 8804,
+      "sha256": "60706f7e87bb85cc6484ac302b7a171e2820d2db378169d13140dfc13a002195"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/react-no-invalid-html-attribute/probe.ts",
+      "bytes": 3831,
+      "sha256": "9a3473916b33f183a2f84e0bb89bada3333537dfe7597f168bfa0df4b331108d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/react-no-invalid-html-attribute/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/react-no-invalid-html-attribute/rule.ts",
+      "bytes": 13551,
+      "sha256": "9442b4a3e51516e30de138d62e794f0a08bb424bc5c8870207ced29af1425e6c"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/react-no-unescaped-entities/probe.ts",
+      "bytes": 3832,
+      "sha256": "636453d1b028fe6a50be43408dfee7d8f36dc58ca4cc08e707ae77972ef491aa"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/react-no-unescaped-entities/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/react-no-unescaped-entities/rule.ts",
+      "bytes": 5137,
+      "sha256": "2ac4d6322c6e2f9741d3793b1478afdab97ae712c48af921a9251bbfc0e4c08a"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-dupe-class-members/probe.ts",
+      "bytes": 3831,
+      "sha256": "9a3473916b33f183a2f84e0bb89bada3333537dfe7597f168bfa0df4b331108d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-dupe-class-members/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-dupe-class-members/rule.ts",
+      "bytes": 2473,
+      "sha256": "abb76c7c16a8f2cc694e96f9e40387bd123350ccaeb91cf332144906850f50d6"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-empty-object-type/messages.ts",
+      "bytes": 980,
+      "sha256": "2435dfb50c209fbaa8f204fa1877a24699f8fbcd69573f89abf1d66dd3661646"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-empty-object-type/probe.ts",
+      "bytes": 3831,
+      "sha256": "9a3473916b33f183a2f84e0bb89bada3333537dfe7597f168bfa0df4b331108d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-empty-object-type/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-empty-object-type/rule.ts",
+      "bytes": 7582,
+      "sha256": "8886e482a240afcf9c73d9f78dd3e86d285781bdfc754cc3fb179d790a8d48fd"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-import-type-side-effects/messages.ts",
+      "bytes": 337,
+      "sha256": "e392d70c8a071edff95c503a0a7fb15e506f8fce85e733f55471b85a45a5ef3d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-import-type-side-effects/probe.ts",
+      "bytes": 4391,
+      "sha256": "c0454878d45ecef2bd0811db45eac113bc7de6d5af31c6c5547b23b94e06d771"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-import-type-side-effects/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-import-type-side-effects/rule.ts",
+      "bytes": 2439,
+      "sha256": "e7367b42907df987d6ef38bc433f1b34c90fe6874c3ef81701dfa53f9152c86d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/messages.ts",
+      "bytes": 515,
+      "sha256": "985442f008d4f9884c2e31ce4ea2569f88d58b29a336e3bc3ce33658723a8a36"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/probe.ts",
+      "bytes": 3831,
+      "sha256": "9a3473916b33f183a2f84e0bb89bada3333537dfe7597f168bfa0df4b331108d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/rule.ts",
+      "bytes": 1892,
+      "sha256": "7ad665250eaa8d84771077bd3036b25af6c7b04b1866f1b864ee9ff55e8a994a"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/messages.ts",
+      "bytes": 1529,
+      "sha256": "eb9aafb6ef1ef27c257c4c2e634aba8832697dfefcc38bb1f60692dfb0aa3df3"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/probe.ts",
+      "bytes": 3831,
+      "sha256": "9a3473916b33f183a2f84e0bb89bada3333537dfe7597f168bfa0df4b331108d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/rule.ts",
+      "bytes": 3917,
+      "sha256": "9532858bc98b64be01364e0c4cb1dfefa2470b9beb1e9427a3ad7e68f8ca9445"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/messages.ts",
+      "bytes": 753,
+      "sha256": "01a93be2aa70159d314216859f7f3c8ff0bd77438413335a39bfc705e9583fb7"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/probe.ts",
+      "bytes": 3831,
+      "sha256": "9a3473916b33f183a2f84e0bb89bada3333537dfe7597f168bfa0df4b331108d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/repairs.ts",
+      "bytes": 601,
+      "sha256": "b44770ad66d51446c0905e67b1174de32eb3a4a9eadf10a7e711d579a8cdc5e9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.ts",
+      "bytes": 3672,
+      "sha256": "afc421fe6009fabbd5a00bbb3af4c4cc085d5410a2246db31552fac8e0f012b7"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/settings.ts",
+      "bytes": 3192,
+      "sha256": "1ab6859164b7e68e1ae0cd5b9ae7760b83467e73a27927e858a19d7578987f18"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/gaps/1_generic_parameter.ts",
+      "bytes": 240,
+      "sha256": "9f13ed96e3e887fd54ad4a69e4a4ae8ccf3ff43d59484f29afbe9faa539ec7d7"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/gaps/1_generic_return.ts",
+      "bytes": 162,
+      "sha256": "f4bcefd74bc9fe7e82053da28450bfde88f8dc89a167a153bbf67b5eb97147de"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/gaps/2_return_undefined.ts",
+      "bytes": 302,
+      "sha256": "34912897fb06deb4b98c36f740359d37dc08aa7dad00c7e690af791b94e0effb"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/gaps/3_optional_chaining_array.ts",
+      "bytes": 215,
+      "sha256": "260f2157797ea9c10943bb35ab26a1c4f25cb4144b620854332e5e0c0dfd540f"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/gaps/4_mutable_child_array.ts",
+      "bytes": 463,
+      "sha256": "812f7c10d580d51579bb3aefdb44609089465c4f728bd569e9bad07c55c4bb70"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/gaps/5_local_children_array.ts",
+      "bytes": 676,
+      "sha256": "5f9c0e168bcbdf48af97ead6df3a81f0dfb08a6c9a00df61fcc645deb67a96e4"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/index.ts",
+      "bytes": 2061,
+      "sha256": "16d57675d2ec24ac5e73929247eb55cc1c80fab9a6ba13b7b9b760090420ca4b"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/main.ts",
+      "bytes": 4919,
+      "sha256": "3a5db8bf3f1394bfefc8df24d016b8c59303bf915876b47a66b2436452ea7a73"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/nodes.ts",
+      "bytes": 2843,
+      "sha256": "7ef112165a3722bf38a18a7e034a52cb8476acd4346cc5758c89ffe75a3c7e25"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/parsers.ts",
+      "bytes": 16484,
+      "sha256": "8b32dfed9cdeb7cea08f71815655d702a99e0f9f75dad90c5ce2ba6639ebc511"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/whitespace.ts",
+      "bytes": 2361,
+      "sha256": "6acac820b4eb5a53f8c7f6b41f65f5f15c164b9df72a5ffb89c590be8331cf9e"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/gaps/1_multiple_push.ts",
+      "bytes": 82,
+      "sha256": "01c4249f66e2df11da2254313e8677fe489f6bcb17f77d2215adadf11f1bed65"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/gaps/2_mixed_field.ts",
+      "bytes": 243,
+      "sha256": "d6baf8b5e76b40ca75535aee57d3ab05c518bcbb0e21b8c7884f4d39f51fcdd3"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/gaps/3_optional_boolean.ts",
+      "bytes": 210,
+      "sha256": "4fbadba73a7219ef1a4d360b98e3b65c61745401e00a6b0c959baf6fa57f610d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/gaps/4_array_from_iterator.ts",
+      "bytes": 113,
+      "sha256": "2cfce949170a30c9f55b6332a2766b11376f2c282841a7d2bcef8b110c0ca58d"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/gaps/5_conditional_panic.ts",
+      "bytes": 146,
+      "sha256": "687240a2b3ec04917cd0f04122b80089d1551547c9ecbe0a1c20a3400deb7d65"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/gaps/6_undefined_case.ts",
+      "bytes": 198,
+      "sha256": "532ae632e3e13e14b500b529cd04531622175fa32a60df9bc4ac705bee36005e"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/main.ts",
+      "bytes": 2238,
+      "sha256": "844aeff6e3c55c18dc11bf389efa29c0d1c644a57c079d990914d5740ebf8d25"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/nodes.ts",
+      "bytes": 6322,
+      "sha256": "7525942057080f382bb28681bd6fdbdeff637ee1ae0d650238b243f7952fbae9"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/parser.ts",
+      "bytes": 16509,
+      "sha256": "de95fbd777c0d7dbdd0b64ace4885ab26b03ea1953fa11b5eb844c72eff48082"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/source.ts",
+      "bytes": 495,
+      "sha256": "70c25c1c8c7152ed0fdb89bd539c2461beddc50660bd1d614e2478eaa354fef2"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/selector/tokenize.ts",
+      "bytes": 5650,
+      "sha256": "9d66216f19132cf2f4b2af005b3837de0dab95574b57d6ad356ccf7651a4c585"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/suppression/directives.ts",
+      "bytes": 11113,
+      "sha256": "fd568f5ace7804234db8091f29ff7ba2841e32cb4dcd56fab9f0f9ef7d3523ab"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/suppression/gaps/1_mutual_recursion.ts",
+      "bytes": 519,
+      "sha256": "6591f0bed9736da6adb2146513b88f8e8c9f31eb13f3f222500f92ea4b0e6e95"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/suppression/gaps/2_return_undefined_array.ts",
+      "bytes": 472,
+      "sha256": "fa482d664240148134eca9f544030709055605a6948f9d1aa4ba6321638f4c64"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/suppression/main.ts",
+      "bytes": 7440,
+      "sha256": "76e0a562603e5620bffec2d5f445fdb5901ae61c678e73ab43494b56754eb717"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/suppression/scan.ts",
+      "bytes": 7160,
+      "sha256": "9153d51681302424f314ea081a640b2fda4d71180dca2624428b8c62c48116d5"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/suppression/suppression.ts",
+      "bytes": 10118,
+      "sha256": "e7c0aa9598d466873ef49c34a1b1c8cf82edd3ab701679b0b8f4c91f9e1d67e8"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/gaps/1_index_of_position.ts",
+      "bytes": 146,
+      "sha256": "6b038018af73390ca1886fd2767117faec91cfc56c8a679ea3724111485baa6a"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/gaps/2_boolean_or_undefined_field.ts",
+      "bytes": 298,
+      "sha256": "1b8754615dd504e73d67dbace20fa0a7628889feaa888fe370e3a1dcf9570d87"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/gaps/3_case_constant.ts",
+      "bytes": 283,
+      "sha256": "33a29226017bc7d4c465609940eaf39cc709d751d4a422d1a07c2ab7b4fdc43b"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/gaps/4_private_method.ts",
+      "bytes": 311,
+      "sha256": "a5519735cccc8ae990ce96ca69bcfc06d3f8ab073287a51cdc25d05e208e72d8"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/gaps/5_empty_array_default.ts",
+      "bytes": 234,
+      "sha256": "717093a85c3f470a153b6352003e1b9d4c93c9fb64168e11753a955383445083"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/main.ts",
+      "bytes": 6351,
+      "sha256": "92fe9e374bf74a9186ef17f34a38fe32865d6b2e89fe529b84a7242e40ad5df1"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/nodes.ts",
+      "bytes": 7820,
+      "sha256": "9f0e8df2b09f1380cfb6d5930a93db5fbe0d4a82bb075157e0a6186146810999"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/parser.ts",
+      "bytes": 20560,
+      "sha256": "865e40c0b50d6bce8eb8bdddd02ff5450b5598a1ef07fdf56bdba38c51221698"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/tokenize.ts",
+      "bytes": 13099,
+      "sha256": "57a1c8606f6bd4060fc37432a19736a81dae832a12f482e338ff5236af04fef1"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/values.ts",
+      "bytes": 1532,
+      "sha256": "49a4e215f14c8c047c8151b6a462bcaceb70266b9db63fd48e03ac9c25d8122f"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/gaps/1_strong_ast_parent.ts",
+      "bytes": 326,
+      "sha256": "8949a0cf454ea0c315e217a0724b55a0501da6c9d91a604f5f557882fcba5948"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/gaps/2_push_spread.ts",
+      "bytes": 132,
+      "sha256": "7835ea68d2b130453df1638aa5f18b2adaef2217466fc332e5f06822e61e8b6f"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/gaps/3_import_cycle.ts",
+      "bytes": 136,
+      "sha256": "ec388f56964a9bfe4c2cb4a6e6e328897ac631e053b47c82b1e66f610e1e6e57"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/gaps/3_import_cycle_peer.ts",
+      "bytes": 123,
+      "sha256": "bee644b61bc06c30146898f048d1a64f290e200fd46139b44b437cefd237b0f5"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/gaps/4_class_interface_method.ts",
+      "bytes": 233,
+      "sha256": "27b5162798999d37730305ded6bd25b500bb92e03ef0cce9dcf81e08988bbb65"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/gaps/5_optional_function_value.ts",
+      "bytes": 73,
+      "sha256": "a14725aecb3e3e73190336a24736ec32158ae69ad47b7381740f8be2e60e2fc2"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/gaps/6_conditional_empty_array.ts",
+      "bytes": 90,
+      "sha256": "e09efb5e3a1495a92b1f951da5d2205a709d099840a3050d74751cba61771138"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/grammar.ts",
+      "bytes": 2145,
+      "sha256": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/lookahead.ts",
+      "bytes": 9235,
+      "sha256": "f5bb68f68eee08b706d50f7fd5aabeffa5942e36d42929f057f7a0ad1ac8f6ef"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/main.ts",
+      "bytes": 2307,
+      "sha256": "4783899a25d9b15d4ec454bfaf87fdafedb49b5f4372569c04701e69a9448535"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/nodes.ts",
+      "bytes": 2002,
+      "sha256": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/parser.ts",
+      "bytes": 62379,
+      "sha256": "fff4c44f5a1e00161b8ac9e7b302e5ec90c92a78e6ec72aa8303f64b4160cc80"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/statements.ts",
+      "bytes": 41794,
+      "sha256": "97ee7d84a0602c939ddeee613ec2286f6ef1fbf780efdb43e3b6972845b43f55"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/scanner/characters.ts",
+      "bytes": 29452,
+      "sha256": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/scanner/gaps/1_push.ts",
+      "bytes": 132,
+      "sha256": "07bd8d26293ee20405e2ba8e9362e6d8d724fd4b3b7292548832207c41f1e7a5"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/scanner/gaps/2_bigint.ts",
+      "bytes": 159,
+      "sha256": "baa1d5b2000793d1c18f0e626d55eae7764aa5ae4ed31b3ce9bfd24248c22c90"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/scanner/main.ts",
+      "bytes": 4500,
+      "sha256": "f0480cae2b2638dd92b3b3f692ed5789351b9e739462ee81a5c1614b97263f8f"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/scanner/scanner.ts",
+      "bytes": 33300,
+      "sha256": "69d8f0413f5f192a6fa9e573cfc907a23535b4c33f5b5e95745fb037166144db"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/scanner/tokens.ts",
+      "bytes": 4952,
+      "sha256": "32f3e51645ebe265a1833bf19e1ddbf03e0e137b3c66cce61ea41ad48fba5ec9"
+    }
+  ],
+  "outputs": [
+    {
+      "backend": "typescript-no-dupe-class-members-corpus-Go.stdout.log",
+      "bytes": 12322020,
+      "sha256": "54f20e4113d09e879ee58c9b3ae8a08f2f80001d2a84e848389a77327777f058"
+    },
+    {
+      "backend": "typescript-no-dupe-class-members-corpus-JavaScript.stdout.log",
+      "bytes": 12322020,
+      "sha256": "54f20e4113d09e879ee58c9b3ae8a08f2f80001d2a84e848389a77327777f058"
+    },
+    {
+      "backend": "typescript-no-dupe-class-members-corpus-Node.stdout.log",
+      "bytes": 12322020,
+      "sha256": "54f20e4113d09e879ee58c9b3ae8a08f2f80001d2a84e848389a77327777f058"
+    },
+    {
+      "backend": "typescript-no-dupe-class-members-corpus-native.stdout.log",
+      "bytes": 12322020,
+      "sha256": "54f20e4113d09e879ee58c9b3ae8a08f2f80001d2a84e848389a77327777f058"
+    }
+  ]
+}

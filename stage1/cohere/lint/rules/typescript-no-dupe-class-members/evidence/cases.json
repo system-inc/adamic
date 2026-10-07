@@ -1,0 +1,157 @@
+[
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "!class A {\n  foo() {}\n  foo() {}\n};\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "abstract class A {\n  abstract foo(): void;\n  abstract foo(): void;\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  'foo'() {}\n  'foo'() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  *foo() {}\n  *bar() {}\n  *baz() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  1() {}\n  2() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  10() {}\n  1e1() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  ['foo']() {}\n  ['foo']() {}\n  bar() {}\n  bar() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  ['foo']() {}\n  ['foo']() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  ['foo']() {}\n  foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  [1]() {}\n  [1]() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  [foo]() {}\n  foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  [x]() {}\n  [x]() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo() {}\n  bar() {}\n  baz() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo() {}\n  bar() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo() {}\n  foo() {}\n  foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo() {}\n  foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo() {}\n  get foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo() {}\n}\nclass B {\n  foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo(a: string): void;\n  foo(a: number): void;\n  foo(a: unknown): void {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo: string;\n  foo: string;\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo;\n  foo = 42;\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  foo;\n  foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  get foo() {}\n  get bar() {}\n  get baz() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  get foo() {}\n  set foo(value) {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  set foo(value) {}\n  foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  static foo() {}\n  foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  static foo() {}\n  get foo() {}\n  set foo(value) {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class A {\n  static foo() {}\n  static foo() {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "class Foo {\n  foo(a: string): string;\n  foo(a: number): number;\n  foo(a: any): any {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Members.ts",
+    "options": null,
+    "sourceText": "declare class A {\n  foo(): void;\n  foo(): void;\n}\n"
+  },
+  {
+    "file": "/source.ts",
+    "options": null,
+    "sourceText": "class A { foo() {} foo() {} static foo() {} get bar() { return 1; } set bar(v) {} get bar() { return 2; } ['x']() {} x() {} m(a: string): void; m(a: any) {} }\nconst C = class { value: string; value: string; };\n"
+  }
+]
