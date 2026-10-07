@@ -116,3 +116,9 @@ HIR/SSA/capture support on #dnv6f2c. Shared production factory/dispatcher and
 checker-program integration remain pending; owned profiles do not claim shared
 registration certification. No additional rules are reserved: a fresh audit of
 592 origin refs finds every ranked rule ported or named in an existing claim.
+
+Runtime landing: rebased onto origin/area/stage1-lint at d65a8f931, including
+the native release and string runtime changes. All ten completed owned profiles
+and both parked kernels are re-green, with byte-only mutants and sanitizer/
+released-handle checks. A fresh 606-ref audit still finds no unclaimed rule.
+See ../wave08-core-next/LANDING_D65_REPORT.md for the current evidence and times.
