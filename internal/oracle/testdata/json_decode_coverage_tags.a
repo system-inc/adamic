@@ -1,0 +1,15 @@
+import { decodeJson } from 'adamic';
+type N = { readonly tag: 0; readonly value: string } | { readonly tag: 1; readonly value: number };
+for (const text of ['{"tag":0,"value":"zero"}', '{"tag":1,"value":7}', '{"tag":2}', '{"tag":"0"}', '{}', '{"tag":0}', '{"tag":1,"value":"bad"}', '[]']) {
+ const r = decodeJson<N>(text);
+ if (r.kind === 'Error') console.log(r.message);
+ else if (r.value.tag === 0) console.log(`${r.value.value.length}`);
+ else console.log(`${r.value.value + 1}`);
+}
+type B = { readonly flag: true; readonly label: string } | { readonly flag: false; readonly count: number };
+for (const text of ['{"flag":true,"label":"yes"}', '{"flag":false,"count":0}', '{"flag":null}', '{"flag":false,"count":"bad"}']) {
+ const r = decodeJson<B>(text);
+ if (r.kind === 'Error') console.log(r.message);
+ else if (r.value.flag === true) console.log(r.value.label);
+ else console.log(`${r.value.count}`);
+}

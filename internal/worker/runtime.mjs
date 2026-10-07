@@ -1,4 +1,4 @@
-// Generated Workers runtime. The UTF-8 implementation is shared with the Node oracle.
+// Generated Workers runtime. Its UTF-8 functions are the Worker's own; the Node oracle keeps an independent copy.
 export class AdamicPanic extends Error {
 	constructor(message) {
 		super(message);
@@ -15,3 +15,6 @@ export function writeTextFile() { panic('writeTextFile: not available on Workers
 export function readDirectory() { panic('readDirectory: not available on Workers'); }
 export function fileStatus() { panic('fileStatus: not available on Workers'); }
 export function programArguments() { panic('programArguments: not available on Workers'); }
+// The JavaScript backend imports decodeJson. Its Workers implementation is a separate unit, so until it
+// lands a call panics, loudly, rather than decoding with code the oracle also runs.
+export function decodeJson() { panic('decodeJson: not yet available on Workers'); }

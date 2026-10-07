@@ -1,0 +1,13 @@
+import { decodeJson } from 'adamic';
+for (let repeat = 0; repeat < 3; repeat++) {
+ const number = decodeJson<{ readonly data: number }>('{"data":2}');
+ const text = decodeJson<{ readonly data: string }>('{"data":"allocated"}');
+ const flag = decodeJson<{ readonly data: boolean }>('{"data":false}');
+ const array = decodeJson<{ readonly data: readonly string[] }>('{"data":["one","two"]}');
+ const other = decodeJson<{ readonly other: string }>('{"other":"different name"}');
+ if (number.kind === 'Ok' && text.kind === 'Ok' && flag.kind === 'Ok' && array.kind === 'Ok' && other.kind === 'Ok') {
+  console.log(`${number.value.data} ${text.value.data} ${flag.value.data} ${array.value.data.length} ${other.value.other}`);
+  const again = decodeJson<{ readonly data: number }>('{"data":2}');
+  if (again.kind === 'Ok') console.log(`${number.value === again.value}`);
+ }
+}
