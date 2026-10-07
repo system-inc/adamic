@@ -1,0 +1,40 @@
+=== RUN   TestWave21ReactCores
+    wave_21_react_cores_test.go:105: 91/100 valid production-fixture and independent controls
+    wave_21_react_cores_test.go:122: batch-00: 4233 identical finding bytes; findings 7
+    wave_21_react_cores_test.go:124: batch-00-asan: 4233 identical finding bytes; findings 7
+    wave_21_react_cores_test.go:122: batch-01: 969 identical finding bytes; findings 1
+    wave_21_react_cores_test.go:124: batch-01-asan: 969 identical finding bytes; findings 1
+    wave_21_react_cores_test.go:122: batch-02: 3054 identical finding bytes; findings 4
+    wave_21_react_cores_test.go:124: batch-02-asan: 3054 identical finding bytes; findings 4
+    wave_21_react_cores_test.go:122: batch-03: 4773 identical finding bytes; findings 6
+    wave_21_react_cores_test.go:124: batch-03-asan: 4773 identical finding bytes; findings 6
+    wave_21_react_cores_test.go:122: batch-04: 4054 identical finding bytes; findings 5
+    wave_21_react_cores_test.go:124: batch-04-asan: 4054 identical finding bytes; findings 5
+    wave_21_react_cores_test.go:122: batch-05: 1897 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:124: batch-05-asan: 1897 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:122: batch-06: 5492 identical finding bytes; findings 7
+    wave_21_react_cores_test.go:124: batch-06-asan: 5492 identical finding bytes; findings 7
+    wave_21_react_cores_test.go:122: batch-07: 3335 identical finding bytes; findings 4
+    wave_21_react_cores_test.go:124: batch-07-asan: 3335 identical finding bytes; findings 4
+    wave_21_react_cores_test.go:122: batch-08: 1897 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:124: batch-08-asan: 1897 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:122: batch-09: 3636 identical finding bytes; findings 5
+    wave_21_react_cores_test.go:124: batch-09-asan: 3636 identical finding bytes; findings 5
+    wave_21_react_cores_test.go:122: batch-10: 2090 identical finding bytes; findings 3
+    wave_21_react_cores_test.go:124: batch-10-asan: 2090 identical finding bytes; findings 3
+    wave_21_react_cores_test.go:122: batch-11: 1617 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:124: batch-11-asan: 1617 identical finding bytes; findings 2
+    wave_21_react_cores_test.go:176: render-unconditional: exit 0, empty stderr; independent complete-byte comparison catches byte 448
+    wave_21_react_cores_test.go:176: effect-setter: exit 0, empty stderr; independent complete-byte comparison catches byte 1549
+    wave_21_react_cores_test.go:176: static-creator: exit 0, empty stderr; independent complete-byte comparison catches byte 56
+    wave_21_react_cores_test.go:179: 91 controls: prepared-input native wall 0.015188s; full Go wall 0.259542s; Go fixture preparation 0.309006s. Different input pipelines, not an end-to-end native speed comparison
+    wave_21_react_cores_test.go:218: adjacency-row alias mutant: exit 0, empty stderr; byte comparison catches byte 3115
+    wave_21_react_cores_test.go:224: compiler-prepared: 5087 identical finding bytes; findings 0
+    wave_21_react_cores_test.go:226: compiler-prepared-asan: 5087 identical finding bytes; findings 0
+    wave_21_react_cores_test.go:224: repository-prepared: 18485 identical finding bytes; findings 0
+    wave_21_react_cores_test.go:226: repository-prepared-asan: 18485 identical finding bytes; findings 0
+    wave_21_react_cores_test.go:257: released handle exits 70; retained registry mutant exits 0 and is caught
+    wave_21_react_cores_test.go:263: react-type-names suffix mutant compiles; strict-request assertion catches it
+--- PASS: TestWave21ReactCores (409.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	409.393s

@@ -203,6 +203,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "react-type-names":
+		return p.reactTypeNames(out, c, node, question)
 	case "reference-node":
 		return p.referenceNode(out, c, node, question)
 	case "resolved-declaration":

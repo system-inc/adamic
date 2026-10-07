@@ -1,0 +1,14 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class ReactTypeNames {
+ readonly present:boolean;readonly alias:string;readonly symbol:string;
+ constructor(present:boolean,alias:string,symbol:string){this.present=present;this.alias=alias;this.symbol=symbol;}
+}
+export function decodeReactTypeNames(text:string):ReactTypeNames{
+ const f=new Frames(text);header(f,'react-type-names');const present=f.yes();const alias=f.field();const symbol=f.field();f.end();return new ReactTypeNames(present,alias,symbol);
+}
+export class ReactValueTypes {
+ readonly rules:Rules;readonly cache=new Map<number,ReactTypeNames>();
+ constructor(rules:Rules){this.rules=rules;}
+ fact(at:number):ReactTypeNames{let fact=this.cache.get(at);if(fact===undefined){fact=decodeReactTypeNames(this.rules.ask(at,'react-type-names'));this.cache.set(at,fact);}return fact;}
+}

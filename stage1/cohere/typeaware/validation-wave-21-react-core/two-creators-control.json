@@ -1,0 +1,9 @@
+{
+  "source": "function Example(props){let Component;if(props.cond){Component=createA();}else{Component=createB();}return <Component/>;}\n",
+  "runs": 24,
+  "distinctCanonicalOutputs": 2,
+  "frequencies": [
+    21,
+    3
+  ]
+}

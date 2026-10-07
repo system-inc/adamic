@@ -128,3 +128,14 @@ parser/sanitizer prerequisites and guard mutants are recorded in
 ../WAVE_21_REACT_REPORT.md and ../validation-wave-21-react/. No native rule
 agreement, qualifying native rule mutants or completed ports are claimed.
 Reservations are retained; no subsequent rules were claimed.
+
+
+Fifth batch native-core continuation: all three validator cores, native post-
+dominance and the isolated raw alias/symbol-name question are now implemented.
+Prepared-HIR comparisons pass on 91 controls and both frozen corpora, with
+native core mutants, released handles and sanitizers. Source-to-HIR lowering,
+compilation-unit/memo annotations and production harness integration remain
+unimplemented. A two-creator phi also produces two different byte outputs from
+unchanged Go on identical input. See ../WAVE_21_REACT_CORE_REPORT.md and
+../validation-wave-21-react-core/. This is partial core coverage, not completed
+native source ports. No further reservation was taken.
