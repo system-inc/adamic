@@ -925,7 +925,7 @@ and a generated capture cell with its retain removed, each fail under ASan.
 Disabling declaration borrowing fails the positive planner control; changing a
 recorded retain fails the counts gate.
 
-The complete 320-fixture comparison removes 513 retains and 508 releases, with no
+The current-main 321-fixture comparison removes 514 retains and 509 releases, with no
 rises or changes to allocation, free, peak or region counts. Five extra removed
 retains are absent optional string reads in `literal_optional_shapes.a`: their
 NULL values were passed on by `??` without a corresponding temporary release.
