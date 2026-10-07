@@ -124,7 +124,17 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) {
+		if node.Kind == ast.KindShorthandPropertyAssignment {
+			if symbol := l.checker.GetShorthandAssignmentValueSymbol(node); symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+				if initializer := symbol.Declarations[0].AsVariableDeclaration().Initializer; initializer != nil {
+					if _, known := l.libraryMethod(initializer, map[*ast.Symbol]bool{}); known {
+						found = l.notYet(node, "a library method value outside a const alias (an object field erases its receiver and callable ABI); use an arrow")
+						return true
+					}
+				}
+			}
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {

@@ -367,6 +367,9 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.libraryMethodValue(node); known {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
