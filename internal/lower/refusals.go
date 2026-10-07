@@ -82,19 +82,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: "a parameter property", Fix: "declare a field and assign it in the constructor"}
 			return true
 		}
-		var assertion *ast.Node
-		if node.Kind == ast.KindPropertyDeclaration {
-			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
-				assertion = token
-			}
-		}
-		if node.Kind == ast.KindVariableDeclaration {
-			assertion = node.AsVariableDeclaration().ExclamationToken
-		}
-		if assertion != nil {
-			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
-			return true
-		}
 		if node.Kind == ast.KindBinaryExpression {
 			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
