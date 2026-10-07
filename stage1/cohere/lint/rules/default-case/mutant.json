@@ -1,0 +1,6 @@
+{
+  "name": "default-comment-anchors-removed",
+  "file": "rule.a",
+  "from": "body(comment).toLowerCase() === 'no default'",
+  "to": "body(comment).toLowerCase().includes('no default')"
+}

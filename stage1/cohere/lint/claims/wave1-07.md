@@ -92,3 +92,8 @@ Corrected continuation outcome: claim ae8e7213 was pushed before code. consisten
 
 
 Dependency resume: fetched all 355 origin refs and inspected 103 distinct stage1 trees. A third graph projection exists on origin/codex/typeaware-wave-07, but it also requires an external bindings.rules.ask bridge unavailable in this lint context. The consistent-return shared judgment/graph blocker remains. No new code or additional claims; constructor-super and default-case remain reserved and unstarted. Refreshed setup and source/branch evidence are in wave1-07-next-dependency-evidence/resume-*. See the appended continuation in wave1-07-next-blocker-report.md.
+
+
+## Default-case implementation progress
+
+The reserved default-case now has a registered .a listener, Go adapter, owned four-runtime profile, witness and semantic mutant. Default options match Go over upstream source shapes and compiler/stage1 sources; the compiling anchor-removal mutant is caught on all three Adamic runtimes. Full option coverage remains blocked by nonconstant RegExp lowering and the missing Go-compatible runtime pattern compiler, with an explicit refusal and owned reproducer. See ../rules/default-case/README.md for exact evidence and limits. consistent-return remains blocked on its shared judgment/graph integration; constructor-super remains unstarted. The full trio is unfinished, so the helper-job prerequisite is not satisfied and no additional helper claim or branch is created.

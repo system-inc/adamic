@@ -1,0 +1,50 @@
+import { panic, utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { all } from '../../helpers/comments/all.ts';
+import type { Comment } from '../../helpers/comments/comment.ts';
+const message = "This `switch` has no `default` case, so a value matching none of its cases falls through silently and the statement does nothing. That is occasionally what the author meant and is far more often an unhandled case that was added to the type later and never added here. The two readings are indistinguishable from the code, which is the problem: a reader cannot tell a deliberate omission from a forgotten branch. Add a `default`, even one that throws, or write a `// no default` comment after the last case to say the omission is intended.";
+function goSpace(code: number): boolean {
+    return code >= 9 && code <= 13 || code === 32 || code === 133 || code === 160 || code === 5760 || code >= 8192 && code <= 8202 || code === 8232 || code === 8233 || code === 8239 || code === 8287 || code === 12288;
+}
+function body(comment: Comment): string {
+    let value = comment.text.slice(2);
+    if(comment.isBlock && value.endsWith('*/')) { value = value.slice(0, value.length - 2); }
+    let start = 0; let end = value.length;
+    while(start < end && goSpace(value.charCodeAt(start))) { start++; }
+    while(end > start && goSpace(value.charCodeAt(end - 1))) { end--; }
+    return value.slice(start, end);
+}
+export class Rule {
+    readonly context: RuleContext;
+    readonly switches: number[] = [];
+    constructor(context: RuleContext) {
+        this.context = context;
+        // Go compiles RE2 and falls back on invalid patterns. JavaScript regex is
+        // not interchangeable; refuse until a compatible compiler is available.
+        if(context.settings.read('commentpattern', '') !== '') {
+            panic('NotYet: default-case Go-compatible commentPattern compilation');
+        }
+    }
+    visit(index: number): void { this.switches.push(index); }
+    finish(root: number): void {
+        if(this.switches.length === 0) { return; }
+        const context = this.context;
+        const comments = all(context.parser, root);
+        for(const index of this.switches) {
+            const blockIndex = context.node(index).children[1] ?? panic('switch without case block');
+            const block = context.node(blockIndex);
+            const clauses = block.children;
+            if(clauses.length === 0 || clauses.some((clause) => context.node(clause).kind === 'DefaultClause')) { continue; }
+            const last = clauses[clauses.length - 1] ?? panic('missing last clause');
+            const start = utf8Length(context.source.slice(0, context.node(last).end));
+            const end = utf8Length(context.source.slice(0, block.end));
+            let excused = false;
+            for(const comment of comments) {
+                if(comment.start < start || comment.end > end) { continue; }
+                excused = body(comment).toLowerCase() === 'no default';
+            }
+            if(!excused) { context.report(index, 'default-case', 'missingDefaultCase', message, '', '', ''); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
