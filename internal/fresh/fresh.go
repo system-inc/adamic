@@ -1026,6 +1026,9 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return held.copy()
+	case ir.Void:
+		a.value(expression.Value)
+		return value{}
 	case ir.Comma:
 		a.value(expression.Left)
 		return a.value(expression.Right)

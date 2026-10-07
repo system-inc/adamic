@@ -600,6 +600,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.variable(expression.Local)
 	case ir.Truthy:
 		return "!!(" + e.value(expression.Value) + ")"
+	case ir.Void:
+		return "(void " + e.value(expression.Value) + ")"
 	case ir.Comma:
 		return "(" + e.value(expression.Left) + ", " + e.value(expression.Right) + ")"
 	case ir.Effects:

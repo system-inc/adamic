@@ -47,3 +47,11 @@ type Labeled struct {
 }
 
 func (Labeled) statement() {}
+
+// Void evaluates Value and yields undefined, fitted to its destination when necessary.
+type Void struct {
+	Value Expression
+	Of    Type
+}
+
+func (v Void) Type() Type { return (Undefined{Of: v.Of}).Type() }
