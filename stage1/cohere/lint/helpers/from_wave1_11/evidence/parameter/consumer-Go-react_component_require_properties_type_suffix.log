@@ -1,0 +1,86 @@
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixFires
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixFires
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStaysSilent
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStaysSilent
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixFixDerivesTheName
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixFixDerivesTheName
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixRefusesATakenName
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixRefusesATakenName
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStillFixesWhenTheNameIsFree
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStillFixesWhenTheNameIsFree
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixFires
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixFires/a_component_whose_type_is_declared_elsewhere
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixFires/a_component_whose_type_is_declared_elsewhere
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixFires/an_arrow_component
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixFires/an_arrow_component
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixFires/an_interface_declared_after_the_component
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent/the_declaration_comes_first
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent/the_declaration_comes_first
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixFires/an_interface_declared_after_the_component
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixFixDerivesTheName
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixFires/a_type_alias_declared_after_the_component
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixFires/a_type_alias_declared_after_the_component
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStaysSilent
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_correctly_suffixed_type
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_correctly_suffixed_type
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_lowercase_function_taking_a_badly_named_type
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_lowercase_function_taking_a_badly_named_type
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStaysSilent/an_inline_object_type
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStaysSilent/an_inline_object_type
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_destructured_parameter
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_destructured_parameter
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_destructured_parameter_with_a_badly_named_type
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_destructured_parameter_with_a_badly_named_type
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_component_with_no_parameters
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_component_with_no_parameters
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStaysSilent/an_unrelated_interface
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStaysSilent/an_unrelated_interface
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_component-shaped_function_in_a_ts_file
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_component-shaped_function_in_a_ts_file
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixRefusesATakenName
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStillFixesWhenTheNameIsFree
+--- PASS: TestReactComponentRequirePropertiesTypeSuffixRefusesATakenName (0.00s)
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_correctly_suffixed_type
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent/the_component_comes_first
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent/the_component_comes_first
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_destructured_parameter_with_a_badly_named_type
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_component-shaped_function_in_a_ts_file
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStaysSilent/an_unrelated_interface
+=== RUN   TestReactComponentRequirePropertiesTypeSuffixFires/a_type_with_Properties_in_the_middle
+=== PAUSE TestReactComponentRequirePropertiesTypeSuffixFires/a_type_with_Properties_in_the_middle
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_component_with_no_parameters
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent/the_component_comes_first
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStaysSilent/an_inline_object_type
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_destructured_parameter
+--- PASS: TestReactComponentRequirePropertiesTypeSuffixStillFixesWhenTheNameIsFree (0.00s)
+--- PASS: TestReactComponentRequirePropertiesTypeSuffixFixDerivesTheName (0.00s)
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_lowercase_function_taking_a_badly_named_type
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent/the_declaration_comes_first
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixFires/a_component_whose_type_is_declared_elsewhere
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixFires/a_type_alias_declared_after_the_component
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixFires/a_type_with_Properties_in_the_middle
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixFires/an_arrow_component
+--- PASS: TestReactComponentRequirePropertiesTypeSuffixStaysSilent (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_correctly_suffixed_type (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_component-shaped_function_in_a_ts_file (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixStaysSilent/an_unrelated_interface (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_destructured_parameter_with_a_badly_named_type (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_component_with_no_parameters (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_lowercase_function_taking_a_badly_named_type (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixStaysSilent/an_inline_object_type (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixStaysSilent/a_destructured_parameter (0.00s)
+=== CONT  TestReactComponentRequirePropertiesTypeSuffixFires/an_interface_declared_after_the_component
+--- PASS: TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent/the_declaration_comes_first (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixIsOrderIndependent/the_component_comes_first (0.00s)
+--- PASS: TestReactComponentRequirePropertiesTypeSuffixFires (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixFires/a_component_whose_type_is_declared_elsewhere (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixFires/a_type_alias_declared_after_the_component (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixFires/a_type_with_Properties_in_the_middle (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixFires/an_arrow_component (0.00s)
+    --- PASS: TestReactComponentRequirePropertiesTypeSuffixFires/an_interface_declared_after_the_component (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/structure	0.010s

@@ -1,0 +1,8 @@
+actual helper calls 90 distinct 5 coverage {'structure/network-require-hook-options-parameter': 14, 'structure/network-require-hook-variables-type': 19, 'structure/next-require-api-parameter-name': 13, 'structure/react-component-require-properties-type-suffix': 44} total cases 4514
+baseline Node equal
+baseline emitted equal
+baseline native equal
+parameter_kind_guard_lost Node byte-only catch
+parameter_kind_guard_lost emitted byte-only catch
+parameter_kind_guard_lost native byte-only catch
+PASS 4514 cases 88662 bytes

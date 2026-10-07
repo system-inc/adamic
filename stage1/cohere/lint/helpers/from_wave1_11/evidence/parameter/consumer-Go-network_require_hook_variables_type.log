@@ -1,0 +1,110 @@
+=== RUN   TestNetworkRequireHookVariablesTypeFires
+=== PAUSE TestNetworkRequireHookVariablesTypeFires
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent
+=== CONT  TestNetworkRequireHookVariablesTypeFires
+=== RUN   TestNetworkRequireHookVariablesTypeFires/a_variables_parameter_typed_inline
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_generated_query_variables_type_passed_through
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_generated_query_variables_type_passed_through
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_generated_mutation_variables_type_passed_through
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_generated_mutation_variables_type_passed_through
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/an_options_parameter_is_not_judged_as_variables
+=== PAUSE TestNetworkRequireHookVariablesTypeFires/a_variables_parameter_typed_inline
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/an_options_parameter_is_not_judged_as_variables
+=== RUN   TestNetworkRequireHookVariablesTypeFires/a_variables_parameter_typed_with_an_unrelated_named_type
+=== PAUSE TestNetworkRequireHookVariablesTypeFires/a_variables_parameter_typed_with_an_unrelated_named_type
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/an_options_parameter_typed_inline_is_still_not_judged_as_variables
+=== RUN   TestNetworkRequireHookVariablesTypeFires/a_parameter_named_input_typed_inline
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/an_options_parameter_typed_inline_is_still_not_judged_as_variables
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_parameter_named_queryOptions_typed_inline_is_exempt_too
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_parameter_named_queryOptions_typed_inline_is_exempt_too
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_differently_named_parameter_whose_inline_type_has_no_GraphQL_property
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_differently_named_parameter_whose_inline_type_has_no_GraphQL_property
+=== PAUSE TestNetworkRequireHookVariablesTypeFires/a_parameter_named_input_typed_inline
+=== RUN   TestNetworkRequireHookVariablesTypeFires/a_differently_named_parameter_whose_inline_type_holds_identifier
+=== PAUSE TestNetworkRequireHookVariablesTypeFires/a_differently_named_parameter_whose_inline_type_holds_identifier
+=== RUN   TestNetworkRequireHookVariablesTypeFires/a_differently_named_parameter_whose_inline_type_holds_pagination
+=== PAUSE TestNetworkRequireHookVariablesTypeFires/a_differently_named_parameter_whose_inline_type_holds_pagination
+=== RUN   TestNetworkRequireHookVariablesTypeFires/the_rebuild,_property_for_property
+=== PAUSE TestNetworkRequireHookVariablesTypeFires/the_rebuild,_property_for_property
+=== RUN   TestNetworkRequireHookVariablesTypeFires/a_single-property_rebuild
+=== PAUSE TestNetworkRequireHookVariablesTypeFires/a_single-property_rebuild
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_differently_named_parameter_with_an_unrelated_named_type
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_differently_named_parameter_with_an_unrelated_named_type
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/an_unannotated_variables_parameter
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/an_unannotated_variables_parameter
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_renaming_object_literal_is_not_a_rebuild
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_renaming_object_literal_is_not_a_rebuild
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_bare_spread_of_the_variables_parameter_is_not_a_rebuild
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_bare_spread_of_the_variables_parameter_is_not_a_rebuild
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_spread_with_an_addition_is_not_a_rebuild
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_spread_with_an_addition_is_not_a_rebuild
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_literal_that_reads_off_something_other_than_the_variables_parameter
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_literal_that_reads_off_something_other_than_the_variables_parameter
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_mutation_is_not_checked_for_a_rebuild
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_mutation_is_not_checked_for_a_rebuild
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/graphQlRequest_imposes_nothing
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/graphQlRequest_imposes_nothing
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_hook_that_never_calls_NetworkService
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_hook_that_never_calls_NetworkService
+=== RUN   TestNetworkRequireHookVariablesTypeStaysSilent/a_file_with_no_hooks
+=== PAUSE TestNetworkRequireHookVariablesTypeStaysSilent/a_file_with_no_hooks
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_generated_query_variables_type_passed_through
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_bare_spread_of_the_variables_parameter_is_not_a_rebuild
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_differently_named_parameter_whose_inline_type_has_no_GraphQL_property
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/an_options_parameter_typed_inline_is_still_not_judged_as_variables
+=== RUN   TestNetworkRequireHookVariablesTypeFires/an_inline_type_and_a_rebuild_together
+=== PAUSE TestNetworkRequireHookVariablesTypeFires/an_inline_type_and_a_rebuild_together
+=== RUN   TestNetworkRequireHookVariablesTypeFires/a_suspense_query_is_judged_like_a_query
+=== PAUSE TestNetworkRequireHookVariablesTypeFires/a_suspense_query_is_judged_like_a_query
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/an_options_parameter_is_not_judged_as_variables
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_parameter_named_queryOptions_typed_inline_is_exempt_too
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/graphQlRequest_imposes_nothing
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_generated_mutation_variables_type_passed_through
+=== CONT  TestNetworkRequireHookVariablesTypeFires/a_variables_parameter_typed_inline
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_hook_that_never_calls_NetworkService
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_file_with_no_hooks
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_renaming_object_literal_is_not_a_rebuild
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/an_unannotated_variables_parameter
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_differently_named_parameter_with_an_unrelated_named_type
+=== CONT  TestNetworkRequireHookVariablesTypeFires/the_rebuild,_property_for_property
+=== CONT  TestNetworkRequireHookVariablesTypeFires/a_suspense_query_is_judged_like_a_query
+=== CONT  TestNetworkRequireHookVariablesTypeFires/an_inline_type_and_a_rebuild_together
+=== CONT  TestNetworkRequireHookVariablesTypeFires/a_single-property_rebuild
+=== CONT  TestNetworkRequireHookVariablesTypeFires/a_differently_named_parameter_whose_inline_type_holds_identifier
+=== CONT  TestNetworkRequireHookVariablesTypeFires/a_parameter_named_input_typed_inline
+=== CONT  TestNetworkRequireHookVariablesTypeFires/a_differently_named_parameter_whose_inline_type_holds_pagination
+=== CONT  TestNetworkRequireHookVariablesTypeFires/a_variables_parameter_typed_with_an_unrelated_named_type
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_literal_that_reads_off_something_other_than_the_variables_parameter
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_mutation_is_not_checked_for_a_rebuild
+=== CONT  TestNetworkRequireHookVariablesTypeStaysSilent/a_spread_with_an_addition_is_not_a_rebuild
+--- PASS: TestNetworkRequireHookVariablesTypeFires (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeFires/a_variables_parameter_typed_inline (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeFires/a_suspense_query_is_judged_like_a_query (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeFires/an_inline_type_and_a_rebuild_together (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeFires/the_rebuild,_property_for_property (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeFires/a_parameter_named_input_typed_inline (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeFires/a_differently_named_parameter_whose_inline_type_holds_pagination (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeFires/a_variables_parameter_typed_with_an_unrelated_named_type (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeFires/a_differently_named_parameter_whose_inline_type_holds_identifier (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeFires/a_single-property_rebuild (0.00s)
+--- PASS: TestNetworkRequireHookVariablesTypeStaysSilent (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_generated_query_variables_type_passed_through (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_bare_spread_of_the_variables_parameter_is_not_a_rebuild (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/an_options_parameter_is_not_judged_as_variables (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_differently_named_parameter_whose_inline_type_has_no_GraphQL_property (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/graphQlRequest_imposes_nothing (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_generated_mutation_variables_type_passed_through (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_file_with_no_hooks (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_hook_that_never_calls_NetworkService (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/an_options_parameter_typed_inline_is_still_not_judged_as_variables (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_renaming_object_literal_is_not_a_rebuild (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_differently_named_parameter_with_an_unrelated_named_type (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/an_unannotated_variables_parameter (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_parameter_named_queryOptions_typed_inline_is_exempt_too (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_literal_that_reads_off_something_other_than_the_variables_parameter (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_mutation_is_not_checked_for_a_rebuild (0.00s)
+    --- PASS: TestNetworkRequireHookVariablesTypeStaysSilent/a_spread_with_an_addition_is_not_a_rebuild (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/structure	0.011s

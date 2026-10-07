@@ -1,0 +1,102 @@
+=== RUN   TestNetworkRequireHookOptionsParameterFires
+=== PAUSE TestNetworkRequireHookOptionsParameterFires
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent
+=== CONT  TestNetworkRequireHookOptionsParameterFires
+=== RUN   TestNetworkRequireHookOptionsParameterFires/a_query_hook_with_no_parameters_at_all
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/a_query_hook_with_no_parameters_at_all
+=== RUN   TestNetworkRequireHookOptionsParameterFires/a_query_hook_whose_only_parameter_is_variables
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/a_query_hook_whose_only_parameter_is_variables
+=== RUN   TestNetworkRequireHookOptionsParameterFires/a_mutation_hook_with_no_options_parameter
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/a_mutation_hook_with_no_options_parameter
+=== RUN   TestNetworkRequireHookOptionsParameterFires/an_arrow_hook_with_no_options_parameter
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/an_arrow_hook_with_no_options_parameter
+=== RUN   TestNetworkRequireHookOptionsParameterFires/a_query_hook_that_accepts_options_and_does_not_forward_them
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/a_query_hook_that_accepts_options_and_does_not_forward_them
+=== RUN   TestNetworkRequireHookOptionsParameterFires/a_mutation_hook_that_accepts_options_and_does_not_forward_them
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_third_with_variables_second
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/a_mutation_hook_that_accepts_options_and_does_not_forward_them
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_third_with_variables_second
+=== RUN   TestNetworkRequireHookOptionsParameterFires/options_forwarded_in_the_variables_position_of_a_three-argument_query
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_third_with_undefined_second
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/options_forwarded_in_the_variables_position_of_a_three-argument_query
+=== RUN   TestNetworkRequireHookOptionsParameterFires/an_options_parameter_typed_with_something_else
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/an_options_parameter_typed_with_something_else
+=== RUN   TestNetworkRequireHookOptionsParameterFires/an_untyped_options_parameter
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/an_untyped_options_parameter
+=== RUN   TestNetworkRequireHookOptionsParameterFires/an_options_parameter_typed_with_a_qualified_name
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_third_with_undefined_second
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_second,_with_no_variables
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/an_options_parameter_typed_with_a_qualified_name
+=== RUN   TestNetworkRequireHookOptionsParameterFires/a_wrongly_typed_options_parameter_that_is_also_not_forwarded
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/a_wrongly_typed_options_parameter_that_is_also_not_forwarded
+=== RUN   TestNetworkRequireHookOptionsParameterFires/a_hook_making_two_calls,_neither_given_options
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/a_hook_making_two_calls,_neither_given_options
+=== RUN   TestNetworkRequireHookOptionsParameterFires/a_destructured_last_parameter
+=== PAUSE TestNetworkRequireHookOptionsParameterFires/a_destructured_last_parameter
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_second,_with_no_variables
+=== CONT  TestNetworkRequireHookOptionsParameterFires/a_query_hook_with_no_parameters_at_all
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/a_mutation_forwarding_options_second
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/a_mutation_forwarding_options_second
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/options_forwarded_by_spread_into_an_object_literal
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/options_forwarded_by_spread_into_an_object_literal
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/a_differently_named_options_parameter
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/a_differently_named_options_parameter
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/an_arrow_hook_forwarding_options_correctly
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/an_arrow_hook_forwarding_options_correctly
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/a_hook_calling_graphQlRequest_with_no_options
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/a_hook_calling_graphQlRequest_with_no_options
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/a_hook_that_never_calls_NetworkService
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/a_hook_that_never_calls_NetworkService
+=== RUN   TestNetworkRequireHookOptionsParameterStaysSilent/a_file_with_no_hooks
+=== PAUSE TestNetworkRequireHookOptionsParameterStaysSilent/a_file_with_no_hooks
+=== CONT  TestNetworkRequireHookOptionsParameterFires/an_options_parameter_typed_with_a_qualified_name
+=== CONT  TestNetworkRequireHookOptionsParameterFires/a_destructured_last_parameter
+=== CONT  TestNetworkRequireHookOptionsParameterFires/an_untyped_options_parameter
+=== CONT  TestNetworkRequireHookOptionsParameterFires/a_hook_making_two_calls,_neither_given_options
+=== CONT  TestNetworkRequireHookOptionsParameterFires/a_wrongly_typed_options_parameter_that_is_also_not_forwarded
+=== CONT  TestNetworkRequireHookOptionsParameterFires/options_forwarded_in_the_variables_position_of_a_three-argument_query
+=== CONT  TestNetworkRequireHookOptionsParameterFires/an_options_parameter_typed_with_something_else
+=== CONT  TestNetworkRequireHookOptionsParameterFires/a_mutation_hook_with_no_options_parameter
+=== CONT  TestNetworkRequireHookOptionsParameterFires/a_mutation_hook_that_accepts_options_and_does_not_forward_them
+=== CONT  TestNetworkRequireHookOptionsParameterFires/a_query_hook_whose_only_parameter_is_variables
+=== CONT  TestNetworkRequireHookOptionsParameterFires/an_arrow_hook_with_no_options_parameter
+=== CONT  TestNetworkRequireHookOptionsParameterFires/a_query_hook_that_accepts_options_and_does_not_forward_them
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_third_with_variables_second
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/a_differently_named_options_parameter
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/a_file_with_no_hooks
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/a_hook_that_never_calls_NetworkService
+--- PASS: TestNetworkRequireHookOptionsParameterFires (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/a_destructured_last_parameter (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/a_query_hook_with_no_parameters_at_all (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/an_untyped_options_parameter (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/an_options_parameter_typed_with_a_qualified_name (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/options_forwarded_in_the_variables_position_of_a_three-argument_query (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/a_wrongly_typed_options_parameter_that_is_also_not_forwarded (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/a_hook_making_two_calls,_neither_given_options (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/a_mutation_hook_with_no_options_parameter (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/an_arrow_hook_with_no_options_parameter (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/a_mutation_hook_that_accepts_options_and_does_not_forward_them (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/an_options_parameter_typed_with_something_else (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/a_query_hook_whose_only_parameter_is_variables (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterFires/a_query_hook_that_accepts_options_and_does_not_forward_them (0.00s)
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/an_arrow_hook_forwarding_options_correctly
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/a_hook_calling_graphQlRequest_with_no_options
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/options_forwarded_by_spread_into_an_object_literal
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_second,_with_no_variables
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/a_mutation_forwarding_options_second
+=== CONT  TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_third_with_undefined_second
+--- PASS: TestNetworkRequireHookOptionsParameterStaysSilent (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/a_hook_that_never_calls_NetworkService (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_third_with_variables_second (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/a_file_with_no_hooks (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/a_hook_calling_graphQlRequest_with_no_options (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/an_arrow_hook_forwarding_options_correctly (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/a_mutation_forwarding_options_second (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_second,_with_no_variables (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/a_differently_named_options_parameter (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/options_forwarded_by_spread_into_an_object_literal (0.00s)
+    --- PASS: TestNetworkRequireHookOptionsParameterStaysSilent/a_query_forwarding_options_third_with_undefined_second (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/structure	0.010s

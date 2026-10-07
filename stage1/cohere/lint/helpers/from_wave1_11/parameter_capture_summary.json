@@ -1,0 +1,19 @@
+{
+  "actualCalls": 90,
+  "consumers": {
+    "structure/network-require-hook-options-parameter": 14,
+    "structure/network-require-hook-variables-type": 19,
+    "structure/next-require-api-parameter-name": 13,
+    "structure/react-component-require-properties-type-suffix": 44
+  },
+  "cases": 4514,
+  "bytes": 88662,
+  "stdoutSha256": "f0aa05b4f7198390c155eb9f917b6f8ad623ab18c59d73391d46d191a6582525",
+  "mutant": "parameter_kind_guard_lost",
+  "backends": [
+    "Node",
+    "emitted",
+    "native"
+  ],
+  "onlyByteComparison": true
+}

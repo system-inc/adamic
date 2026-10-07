@@ -1,0 +1,13 @@
+=== RUN   TestParameterTypeNodeMatchesGoWithMutant
+    parameter_test.go:33: replaying 90 actual consumer calls through 4514 metadata cases
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        parameter_kind_guard_lost Node byte-only catch
+        parameter_kind_guard_lost emitted byte-only catch
+        parameter_kind_guard_lost native byte-only catch
+        PASS 4514 cases 88662 bytes
+        
+--- PASS: TestParameterTypeNodeMatchesGoWithMutant (3.98s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_11	3.981s
