@@ -1,0 +1,754 @@
+=== RUN   TestNoClassAssignFires
+=== PAUSE TestNoClassAssignFires
+=== RUN   TestNoClassAssignStaysSilent
+=== PAUSE TestNoClassAssignStaysSilent
+=== RUN   TestNoClassAssignPointsAtTheWrite
+=== PAUSE TestNoClassAssignPointsAtTheWrite
+=== RUN   TestNoClassAssignReportsEachWriteAtItsOwnOffset
+=== PAUSE TestNoClassAssignReportsEachWriteAtItsOwnOffset
+=== RUN   TestNoClassAssignNeedsTheTypedHarness
+=== PAUSE TestNoClassAssignNeedsTheTypedHarness
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises
+=== RUN   TestNoConstAssignFires
+=== PAUSE TestNoConstAssignFires
+=== RUN   TestNoConstAssignStaysSilent
+=== PAUSE TestNoConstAssignStaysSilent
+=== RUN   TestNoConstAssignPointsAtTheWrite
+=== PAUSE TestNoConstAssignPointsAtTheWrite
+=== RUN   TestNoConstAssignReportsDistinctWrites
+=== PAUSE TestNoConstAssignReportsDistinctWrites
+=== RUN   TestNoConstAssignNeedsTheTypedHarness
+=== PAUSE TestNoConstAssignNeedsTheTypedHarness
+=== RUN   TestNoConstantBinaryExpressionFires
+=== PAUSE TestNoConstantBinaryExpressionFires
+=== RUN   TestNoConstantBinaryExpressionStaysSilent
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent
+=== RUN   TestNoConstantBinaryExpressionRelationalArm
+=== PAUSE TestNoConstantBinaryExpressionRelationalArm
+=== CONT  TestNoClassAssignFires
+=== RUN   TestNoClassAssignFires/a_plain_reassignment_after_the_declaration
+=== PAUSE TestNoClassAssignFires/a_plain_reassignment_after_the_declaration
+=== RUN   TestNoClassAssignFires/a_shorthand_destructuring_target
+=== PAUSE TestNoClassAssignFires/a_shorthand_destructuring_target
+=== RUN   TestNoClassAssignFires/a_destructuring_target_with_a_default
+=== PAUSE TestNoClassAssignFires/a_destructuring_target_with_a_default
+=== RUN   TestNoClassAssignFires/a_reassignment_hoisted_above_the_declaration
+=== PAUSE TestNoClassAssignFires/a_reassignment_hoisted_above_the_declaration
+=== CONT  TestNoClassAssignNeedsTheTypedHarness
+=== CONT  TestNoConstAssignStaysSilent
+=== RUN   TestNoClassAssignFires/a_reassignment_from_inside_a_method
+--- PASS: TestNoClassAssignNeedsTheTypedHarness (0.00s)
+=== CONT  TestNoClassAssignPointsAtTheWrite
+=== PAUSE TestNoClassAssignFires/a_reassignment_from_inside_a_method
+=== CONT  TestNoClassAssignReportsEachWriteAtItsOwnOffset
+=== RUN   TestNoClassAssignPointsAtTheWrite/a_plain_reassignment
+=== PAUSE TestNoClassAssignPointsAtTheWrite/a_plain_reassignment
+=== RUN   TestNoClassAssignPointsAtTheWrite/a_parenthesized_target
+=== RUN   TestNoConstAssignStaysSilent/a_write_to_a_block-scoped_shadow
+=== RUN   TestNoClassAssignFires/a_named_class_expression_reassigned_inside_its_own_body
+=== PAUSE TestNoClassAssignFires/a_named_class_expression_reassigned_inside_its_own_body
+=== RUN   TestNoClassAssignFires/two_reassignments_of_the_same_class
+=== PAUSE TestNoClassAssignFires/two_reassignments_of_the_same_class
+=== RUN   TestNoClassAssignFires/a_reassignment_inside_the_declaring_block
+=== CONT  TestNoClassAssignStaysSilent
+=== PAUSE TestNoClassAssignFires/a_reassignment_inside_the_declaring_block
+=== CONT  TestNoConstAssignFires
+=== RUN   TestNoConstAssignFires/a_plain_reassignment
+=== PAUSE TestNoConstAssignFires/a_plain_reassignment
+=== RUN   TestNoConstAssignFires/a_reassignment_of_a_destructured_binding
+=== PAUSE TestNoConstAssignFires/a_reassignment_of_a_destructured_binding
+=== RUN   TestNoConstAssignFires/a_shorthand_destructuring_target
+=== PAUSE TestNoConstAssignFires/a_shorthand_destructuring_target
+=== RUN   TestNoConstAssignFires/a_destructuring_target_with_a_default
+=== PAUSE TestNoConstAssignFires/a_destructuring_target_with_a_default
+=== RUN   TestNoConstAssignFires/a_compound_assignment
+=== PAUSE TestNoConstAssignFires/a_compound_assignment
+=== RUN   TestNoConstAssignFires/a_prefix_increment
+=== PAUSE TestNoConstAssignFires/a_prefix_increment
+=== RUN   TestNoConstAssignFires/an_increment_in_a_for_head
+=== RUN   TestNoClassAssignStaysSilent/a_read_of_the_class
+=== PAUSE TestNoConstAssignFires/an_increment_in_a_for_head
+=== RUN   TestNoConstAssignFires/two_reassignments_of_the_same_binding
+=== PAUSE TestNoConstAssignFires/two_reassignments_of_the_same_binding
+=== RUN   TestNoConstAssignFires/a_reassignment_from_inside_a_function
+=== PAUSE TestNoConstAssignFires/a_reassignment_from_inside_a_function
+=== PAUSE TestNoClassAssignStaysSilent/a_read_of_the_class
+=== RUN   TestNoClassAssignStaysSilent/a_read_of_a_variable_holding_a_named_class_expression
+=== PAUSE TestNoClassAssignStaysSilent/a_read_of_a_variable_holding_a_named_class_expression
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_parameter_shadowing_the_class
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_parameter_shadowing_the_class
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_local_shadowing_the_class
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_local_shadowing_the_class
+=== PAUSE TestNoConstAssignStaysSilent/a_write_to_a_block-scoped_shadow
+=== RUN   TestNoConstAssignFires/a_reassignment_from_a_function_with_a_parameter
+=== PAUSE TestNoConstAssignFires/a_reassignment_from_a_function_with_a_parameter
+=== PAUSE TestNoClassAssignPointsAtTheWrite/a_parenthesized_target
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_the_variable_from_inside_an_anonymous_class_expression
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_the_variable_from_inside_an_anonymous_class_expression
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_the_variable_from_inside_a_differently_named_class_expression
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_the_variable_from_inside_a_differently_named_class_expression
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_the_variable_holding_a_named_class_expression
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_the_variable_holding_a_named_class_expression
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_var
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_var
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_let
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_let
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_const
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_const
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_function_declaration
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_function_declaration
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_parameter
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_parameter
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_catch_parameter
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_catch_parameter
+=== RUN   TestNoClassAssignStaysSilent/a_write_binding_to_neither_of_two_sibling_classes
+=== PAUSE TestNoClassAssignStaysSilent/a_write_binding_to_neither_of_two_sibling_classes
+=== RUN   TestNoClassAssignStaysSilent/a_write_beside_a_class_expression_in_a_sequence
+=== PAUSE TestNoClassAssignStaysSilent/a_write_beside_a_class_expression_in_a_sequence
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_variable_holding_an_anonymous_class
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_variable_holding_an_anonymous_class
+=== RUN   TestNoClassAssignStaysSilent/a_write_to_a_variable_holding_a_differently_named_class
+=== PAUSE TestNoClassAssignStaysSilent/a_write_to_a_variable_holding_a_differently_named_class
+=== RUN   TestNoConstAssignStaysSilent/a_write_to_a_parameter_shadowing_the_const
+=== PAUSE TestNoConstAssignStaysSilent/a_write_to_a_parameter_shadowing_the_const
+=== RUN   TestNoConstAssignStaysSilent/a_read_of_the_const
+=== PAUSE TestNoConstAssignStaysSilent/a_read_of_the_const
+=== RUN   TestNoConstAssignStaysSilent/a_for-in_head_declaring_a_fresh_const
+=== PAUSE TestNoConstAssignStaysSilent/a_for-in_head_declaring_a_fresh_const
+=== RUN   TestNoConstAssignStaysSilent/a_for-of_head_declaring_a_fresh_const
+=== PAUSE TestNoConstAssignStaysSilent/a_for-of_head_declaring_a_fresh_const
+=== RUN   TestNoConstAssignStaysSilent/a_property_write_on_a_const_object
+=== PAUSE TestNoConstAssignStaysSilent/a_property_write_on_a_const_object
+=== RUN   TestNoConstAssignStaysSilent/a_write_to_a_var
+=== PAUSE TestNoConstAssignStaysSilent/a_write_to_a_var
+=== RUN   TestNoConstAssignStaysSilent/a_write_to_a_let
+=== PAUSE TestNoConstAssignStaysSilent/a_write_to_a_let
+=== RUN   TestNoConstAssignStaysSilent/a_write_to_a_function_declaration
+=== PAUSE TestNoConstAssignStaysSilent/a_write_to_a_function_declaration
+=== RUN   TestNoConstAssignStaysSilent/a_write_to_a_parameter
+=== PAUSE TestNoConstAssignStaysSilent/a_write_to_a_parameter
+=== RUN   TestNoConstAssignStaysSilent/a_write_to_a_class_binding
+=== PAUSE TestNoConstAssignStaysSilent/a_write_to_a_class_binding
+=== RUN   TestNoConstAssignStaysSilent/a_write_to_a_catch_parameter
+=== PAUSE TestNoConstAssignStaysSilent/a_write_to_a_catch_parameter
+=== RUN   TestNoConstAssignStaysSilent/a_compound_write_to_a_shadow_from_a_nested_block
+=== PAUSE TestNoConstAssignStaysSilent/a_compound_write_to_a_shadow_from_a_nested_block
+=== RUN   TestNoConstAssignStaysSilent/a_const_used_as_a_computed_key_on_another_binding
+=== PAUSE TestNoConstAssignStaysSilent/a_const_used_as_a_computed_key_on_another_binding
+=== RUN   TestNoConstAssignStaysSilent/a_const_used_as_a_default_value_in_a_destructuring_target
+=== PAUSE TestNoConstAssignStaysSilent/a_const_used_as_a_default_value_in_a_destructuring_target
+=== RUN   TestNoConstAssignStaysSilent/a_using_declaration_with_no_write
+=== PAUSE TestNoConstAssignStaysSilent/a_using_declaration_with_no_write
+=== RUN   TestNoConstAssignStaysSilent/an_await_using_declaration_with_no_write
+=== PAUSE TestNoConstAssignStaysSilent/an_await_using_declaration_with_no_write
+=== RUN   TestNoConstAssignStaysSilent/a_read_of_a_using_binding
+=== PAUSE TestNoConstAssignStaysSilent/a_read_of_a_using_binding
+=== RUN   TestNoConstAssignStaysSilent/a_read_of_an_await_using_binding
+=== PAUSE TestNoConstAssignStaysSilent/a_read_of_an_await_using_binding
+=== RUN   TestNoConstAssignStaysSilent/a_type_alias_with_a_rest_parameter
+=== PAUSE TestNoConstAssignStaysSilent/a_type_alias_with_a_rest_parameter
+=== RUN   TestNoConstAssignStaysSilent/a_compound_write_to_a_let
+=== PAUSE TestNoConstAssignStaysSilent/a_compound_write_to_a_let
+=== RUN   TestNoConstAssignStaysSilent/an_increment_of_a_var
+=== PAUSE TestNoConstAssignStaysSilent/an_increment_of_a_var
+=== RUN   TestNoConstAssignStaysSilent/a_const_read_on_the_right_of_an_assignment
+=== PAUSE TestNoConstAssignStaysSilent/a_const_read_on_the_right_of_an_assignment
+=== RUN   TestNoConstAssignStaysSilent/a_const_read_as_a_call_argument_in_a_nested_function
+=== PAUSE TestNoConstAssignStaysSilent/a_const_read_as_a_call_argument_in_a_nested_function
+=== RUN   TestNoConstAssignStaysSilent/a_const_read_through_a_property_access_chain
+=== PAUSE TestNoConstAssignStaysSilent/a_const_read_through_a_property_access_chain
+=== RUN   TestNoConstAssignStaysSilent/an_element_write_on_a_const_array
+=== PAUSE TestNoConstAssignStaysSilent/an_element_write_on_a_const_array
+=== RUN   TestNoConstAssignStaysSilent/a_property_key_spelled_like_the_const
+=== PAUSE TestNoConstAssignStaysSilent/a_property_key_spelled_like_the_const
+=== RUN   TestNoConstAssignStaysSilent/a_shorthand_property_in_a_plain_object_literal
+=== PAUSE TestNoConstAssignStaysSilent/a_shorthand_property_in_a_plain_object_literal
+=== RUN   TestNoConstAssignStaysSilent/a_nested_redeclaration_where_neither_binding_is_written
+=== PAUSE TestNoConstAssignStaysSilent/a_nested_redeclaration_where_neither_binding_is_written
+=== RUN   TestNoConstAssignStaysSilent/a_const_shadowed_by_a_let_in_a_nested_function,_only_the_let_written
+=== PAUSE TestNoConstAssignStaysSilent/a_const_shadowed_by_a_let_in_a_nested_function,_only_the_let_written
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_compound_assignment
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_compound_assignment
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_logical_assignment
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_logical_assignment
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_postfix_increment
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_postfix_increment
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_prefix_decrement
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_prefix_decrement
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_array_destructuring_target
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_array_destructuring_target
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_rest_element_in_an_array_pattern
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_rest_element_in_an_array_pattern
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_rest_property_in_an_object_pattern
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_rest_property_in_an_object_pattern
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_shorthand_target_carrying_a_default
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_shorthand_target_carrying_a_default
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_for-of_loop_head
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_for-of_loop_head
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_for-in_loop_head
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_for-in_loop_head
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_write_from_a_static_block
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_write_from_a_static_block
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_write_from_a_field_initializer
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_write_from_a_field_initializer
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_nested_destructuring_target
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_nested_destructuring_target
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/one_write_with_two_classes_in_the_file
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/one_write_with_two_classes_in_the_file
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_block-scoped_class_shadowing_an_outer_class_of_the_same_name
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_block-scoped_class_shadowing_an_outer_class_of_the_same_name
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_function-scoped_class_shadowing_an_outer_class_of_the_same_name
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_function-scoped_class_shadowing_an_outer_class_of_the_same_name
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_property_write_through_the_class
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_property_write_through_the_class
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_read_on_the_right_of_an_assignment
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_read_on_the_right_of_an_assignment
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_extends_clause_naming_the_class
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_extends_clause_naming_the_class
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_same-named_property_of_an_unrelated_object
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_same-named_property_of_an_unrelated_object
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_shorthand_property_in_an_object_being_built_rather_than_destructured
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_shorthand_property_in_an_object_being_built_rather_than_destructured
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_type-position_reference
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_type-position_reference
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_comparison_with_the_class_on_the_left
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_comparison_with_the_class_on_the_left
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_arithmetic_use_with_the_class_on_the_left
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_arithmetic_use_with_the_class_on_the_left
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_negation_of_the_class
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_negation_of_the_class
+=== RUN   TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_unary_minus_on_the_class
+=== PAUSE TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_unary_minus_on_the_class
+=== RUN   TestNoConstAssignFires/a_reassignment_inside_a_loop_body
+=== PAUSE TestNoConstAssignFires/a_reassignment_inside_a_loop_body
+=== CONT  TestNoConstantBinaryExpressionFires
+=== CONT  TestNoConstantBinaryExpressionRelationalArm
+=== RUN   TestNoConstantBinaryExpressionFires/an_array_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionFires/an_array_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionFires/an_object_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionFires/an_object_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionFires/a_string_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionFires/a_string_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionFires/a_template_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionFires/a_template_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstAssignFires/a_reassignment_from_a_doubly_nested_function
+=== RUN   TestNoClassAssignPointsAtTheWrite/a_hoisted_reassignment
+=== PAUSE TestNoClassAssignPointsAtTheWrite/a_hoisted_reassignment
+=== RUN   TestNoConstantBinaryExpressionFires/a_wrapper_call_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionFires/a_wrapper_call_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionFires/null_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionFires/null_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionFires/undefined_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionFires/undefined_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionFires/an_arithmetic_expression_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionFires/an_arithmetic_expression_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionFires/a_nested_nullish_chain_ending_in_a_non-nullish_value
+=== PAUSE TestNoConstantBinaryExpressionFires/a_nested_nullish_chain_ending_in_a_non-nullish_value
+=== RUN   TestNoConstantBinaryExpressionFires/a_one-element_array_strictly_compared_to_true
+=== PAUSE TestNoConstantBinaryExpressionFires/a_one-element_array_strictly_compared_to_true
+=== RUN   TestNoConstantBinaryExpressionFires/a_constant_on_the_left_of_an_and
+=== PAUSE TestNoConstantBinaryExpressionFires/a_constant_on_the_left_of_an_and
+=== RUN   TestNoConstantBinaryExpressionFires/a_constant_on_the_left_of_an_or
+=== PAUSE TestNoConstantBinaryExpressionFires/a_constant_on_the_left_of_an_or
+=== RUN   TestNoConstantBinaryExpressionFires/an_array_compared_to_null
+=== PAUSE TestNoConstantBinaryExpressionFires/an_array_compared_to_null
+=== RUN   TestNoConstantBinaryExpressionFires/an_object_compared_to_undefined
+=== PAUSE TestNoConstAssignFires/a_reassignment_from_a_doubly_nested_function
+=== RUN   TestNoConstAssignFires/a_reassignment_hoisted_above_the_declaration
+=== PAUSE TestNoConstantBinaryExpressionFires/an_object_compared_to_undefined
+=== PAUSE TestNoConstAssignFires/a_reassignment_hoisted_above_the_declaration
+=== RUN   TestNoConstAssignFires/a_reassignment_of_a_deeply_nested_rest_binding
+=== PAUSE TestNoConstAssignFires/a_reassignment_of_a_deeply_nested_rest_binding
+=== RUN   TestNoConstAssignFires/a_nested_rest_element_as_a_destructuring_target
+=== PAUSE TestNoConstAssignFires/a_nested_rest_element_as_a_destructuring_target
+=== RUN   TestNoConstAssignFires/an_object_rest_as_a_destructuring_target
+=== PAUSE TestNoConstAssignFires/an_object_rest_as_a_destructuring_target
+=== RUN   TestNoConstantBinaryExpressionFires/null_compared_to_a_function
+=== RUN   TestNoConstAssignFires/a_reassignment_of_a_using_binding
+=== PAUSE TestNoConstAssignFires/a_reassignment_of_a_using_binding
+=== RUN   TestNoConstAssignFires/a_reassignment_of_an_await_using_binding
+=== PAUSE TestNoConstAssignFires/a_reassignment_of_an_await_using_binding
+=== RUN   TestNoConstAssignFires/a_logical_assignment_to_a_using_binding
+=== PAUSE TestNoConstAssignFires/a_logical_assignment_to_a_using_binding
+=== RUN   TestNoConstAssignFires/a_logical_assignment_to_an_await_using_binding
+=== PAUSE TestNoConstAssignFires/a_logical_assignment_to_an_await_using_binding
+=== RUN   TestNoConstAssignFires/an_array_destructuring_target_on_a_using_binding
+=== PAUSE TestNoConstAssignFires/an_array_destructuring_target_on_a_using_binding
+=== RUN   TestNoConstAssignFires/an_array_destructuring_target_with_a_default_on_an_await_using_binding
+=== PAUSE TestNoConstAssignFires/an_array_destructuring_target_with_a_default_on_an_await_using_binding
+=== RUN   TestNoConstAssignFires/an_object_destructuring_target_on_a_using_binding
+=== PAUSE TestNoConstAssignFires/an_object_destructuring_target_on_a_using_binding
+=== RUN   TestNoConstAssignFires/an_object_destructuring_target_with_a_default_on_an_await_using_binding
+=== PAUSE TestNoConstAssignFires/an_object_destructuring_target_with_a_default_on_an_await_using_binding
+=== RUN   TestNoConstAssignFires/a_nested_redeclaration_written_in_its_own_block
+=== PAUSE TestNoConstAssignFires/a_nested_redeclaration_written_in_its_own_block
+=== RUN   TestNoConstAssignFires/a_nested_redeclaration_with_the_outer_binding_written
+=== PAUSE TestNoConstAssignFires/a_nested_redeclaration_with_the_outer_binding_written
+=== PAUSE TestNoConstantBinaryExpressionFires/null_compared_to_a_function
+=== RUN   TestNoClassAssignPointsAtTheWrite/a_shorthand_destructuring_target
+=== PAUSE TestNoClassAssignPointsAtTheWrite/a_shorthand_destructuring_target
+=== RUN   TestNoConstAssignFires/a_postfix_increment
+=== PAUSE TestNoConstAssignFires/a_postfix_increment
+=== RUN   TestNoClassAssignPointsAtTheWrite/two_writes_point_at_their_own_sites
+=== RUN   TestNoConstAssignFires/a_postfix_decrement
+=== PAUSE TestNoConstAssignFires/a_postfix_decrement
+=== RUN   TestNoConstAssignFires/a_prefix_decrement
+=== PAUSE TestNoConstAssignFires/a_prefix_decrement
+=== RUN   TestNoConstAssignFires/a_for-of_head_assigning_to_a_const
+=== PAUSE TestNoConstAssignFires/a_for-of_head_assigning_to_a_const
+=== RUN   TestNoConstAssignFires/a_for-in_head_assigning_to_a_const
+=== PAUSE TestNoConstAssignFires/a_for-in_head_assigning_to_a_const
+=== RUN   TestNoConstAssignFires/a_second_declarator_in_the_same_list_reassigned
+=== PAUSE TestNoConstAssignFires/a_second_declarator_in_the_same_list_reassigned
+=== RUN   TestNoConstantBinaryExpressionFires/an_array_strictly_compared_to_true
+=== RUN   TestNoConstAssignFires/both_declarators_in_one_list_reassigned
+=== PAUSE TestNoConstantBinaryExpressionFires/an_array_strictly_compared_to_true
+=== PAUSE TestNoClassAssignPointsAtTheWrite/two_writes_point_at_their_own_sites
+=== RUN   TestNoConstantBinaryExpressionFires/a_string_strictly_compared_to_false
+=== PAUSE TestNoConstAssignFires/both_declarators_in_one_list_reassigned
+=== RUN   TestNoConstAssignFires/a_reassignment_of_a_nested_object_pattern_binding
+=== PAUSE TestNoConstAssignFires/a_reassignment_of_a_nested_object_pattern_binding
+=== PAUSE TestNoConstantBinaryExpressionFires/a_string_strictly_compared_to_false
+=== RUN   TestNoConstAssignFires/a_parenthesised_assignment_target
+=== PAUSE TestNoConstAssignFires/a_parenthesised_assignment_target
+=== RUN   TestNoConstAssignFires/a_const_redeclared_in_a_nested_function_and_written_there
+=== PAUSE TestNoConstAssignFires/a_const_redeclared_in_a_nested_function_and_written_there
+=== CONT  TestNoConstAssignReportsDistinctWrites
+=== CONT  TestNoConstantBinaryExpressionStaysSilent
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_variable_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_variable_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_member_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_member_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_nested_nullish_chain_ending_in_null
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_nested_nullish_chain_ending_in_null
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_call_on_the_left_of_nullish_coalescing
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_call_on_the_left_of_nullish_coalescing
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_variable_on_the_left_of_an_and
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_variable_on_the_left_of_an_and
+=== RUN   TestNoConstantBinaryExpressionFires/true_strictly_compared_to_an_object
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_comparison_of_two_variables
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_comparison_of_two_variables
+=== PAUSE TestNoConstantBinaryExpressionFires/true_strictly_compared_to_an_object
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_variable_compared_to_null
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_variable_compared_to_null
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_variable_compared_to_true
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_variable_compared_to_true
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_one-element_array_loosely_compared_to_true
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_one-element_array_loosely_compared_to_true
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_user_constructor_compared_to_a_variable
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_user_constructor_compared_to_a_variable
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/one_fresh_object_loosely_compared_to_a_variable
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/one_fresh_object_loosely_compared_to_a_variable
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/a_constant_relational_comparison
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/a_constant_relational_comparison
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/an_in_expression
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/an_in_expression
+=== RUN   TestNoConstantBinaryExpressionStaysSilent/nothing_binary_at_all
+=== PAUSE TestNoConstantBinaryExpressionStaysSilent/nothing_binary_at_all
+=== RUN   TestNoConstantBinaryExpressionFires/an_empty_array_loosely_compared_to_true
+=== PAUSE TestNoConstantBinaryExpressionFires/an_empty_array_loosely_compared_to_true
+=== RUN   TestNoConstantBinaryExpressionFires/a_two-element_array_loosely_compared_to_true
+=== PAUSE TestNoConstantBinaryExpressionFires/a_two-element_array_loosely_compared_to_true
+=== CONT  TestNoConstAssignNeedsTheTypedHarness
+=== RUN   TestNoConstantBinaryExpressionFires/an_object_compared_to_a_variable
+=== PAUSE TestNoConstantBinaryExpressionFires/an_object_compared_to_a_variable
+=== RUN   TestNoConstantBinaryExpressionFires/an_array_compared_to_a_variable
+=== PAUSE TestNoConstantBinaryExpressionFires/an_array_compared_to_a_variable
+=== RUN   TestNoConstantBinaryExpressionFires/a_regular_expression_compared_to_a_variable
+=== PAUSE TestNoConstantBinaryExpressionFires/a_regular_expression_compared_to_a_variable
+=== RUN   TestNoConstantBinaryExpressionFires/a_boxed_number_compared_to_a_variable
+=== PAUSE TestNoConstantBinaryExpressionFires/a_boxed_number_compared_to_a_variable
+=== RUN   TestNoConstantBinaryExpressionFires/two_fresh_objects_loosely_compared
+=== PAUSE TestNoConstantBinaryExpressionFires/two_fresh_objects_loosely_compared
+=== CONT  TestNoConstAssignPointsAtTheWrite
+=== RUN   TestNoConstAssignPointsAtTheWrite/a_plain_reassignment
+=== PAUSE TestNoConstAssignPointsAtTheWrite/a_plain_reassignment
+=== RUN   TestNoConstAssignPointsAtTheWrite/a_hoisted_reassignment
+=== PAUSE TestNoConstAssignPointsAtTheWrite/a_hoisted_reassignment
+=== RUN   TestNoConstAssignPointsAtTheWrite/a_compound_assignment
+=== PAUSE TestNoConstAssignPointsAtTheWrite/a_compound_assignment
+=== RUN   TestNoConstAssignPointsAtTheWrite/a_prefix_increment
+=== PAUSE TestNoConstAssignPointsAtTheWrite/a_prefix_increment
+=== RUN   TestNoConstAssignPointsAtTheWrite/a_postfix_increment
+=== PAUSE TestNoConstAssignPointsAtTheWrite/a_postfix_increment
+=== RUN   TestNoConstAssignPointsAtTheWrite/an_increment_in_a_for_head
+=== PAUSE TestNoConstAssignPointsAtTheWrite/an_increment_in_a_for_head
+=== RUN   TestNoConstAssignPointsAtTheWrite/a_shorthand_destructuring_target
+=== PAUSE TestNoConstAssignPointsAtTheWrite/a_shorthand_destructuring_target
+=== RUN   TestNoConstAssignPointsAtTheWrite/a_destructuring_target_with_a_default
+=== PAUSE TestNoConstAssignPointsAtTheWrite/a_destructuring_target_with_a_default
+=== RUN   TestNoConstAssignPointsAtTheWrite/a_nested_rest_element_as_a_destructuring_target
+=== PAUSE TestNoConstAssignPointsAtTheWrite/a_nested_rest_element_as_a_destructuring_target
+=== RUN   TestNoConstAssignPointsAtTheWrite/an_object_rest_as_a_destructuring_target
+=== PAUSE TestNoConstAssignPointsAtTheWrite/an_object_rest_as_a_destructuring_target
+=== RUN   TestNoConstAssignPointsAtTheWrite/a_using_binding_reassigned
+=== PAUSE TestNoConstAssignPointsAtTheWrite/a_using_binding_reassigned
+=== RUN   TestNoConstAssignPointsAtTheWrite/an_await_using_binding_reassigned
+=== PAUSE TestNoConstAssignPointsAtTheWrite/an_await_using_binding_reassigned
+=== RUN   TestNoConstAssignPointsAtTheWrite/two_reassignments_of_the_same_binding
+=== PAUSE TestNoConstAssignPointsAtTheWrite/two_reassignments_of_the_same_binding
+=== CONT  TestNoClassAssignFires/a_plain_reassignment_after_the_declaration
+--- PASS: TestNoConstAssignNeedsTheTypedHarness (0.01s)
+=== CONT  TestNoClassAssignFires/a_reassignment_from_inside_a_method
+--- PASS: TestNoClassAssignReportsEachWriteAtItsOwnOffset (0.01s)
+=== CONT  TestNoClassAssignFires/a_reassignment_inside_the_declaring_block
+=== CONT  TestNoClassAssignFires/two_reassignments_of_the_same_class
+=== CONT  TestNoClassAssignFires/a_named_class_expression_reassigned_inside_its_own_body
+--- PASS: TestNoConstAssignReportsDistinctWrites (0.01s)
+=== CONT  TestNoClassAssignFires/a_destructuring_target_with_a_default
+--- PASS: TestNoConstantBinaryExpressionRelationalArm (0.01s)
+=== CONT  TestNoClassAssignFires/a_reassignment_hoisted_above_the_declaration
+=== CONT  TestNoClassAssignFires/a_shorthand_destructuring_target
+=== CONT  TestNoClassAssignStaysSilent/a_read_of_the_class
+=== CONT  TestNoConstAssignStaysSilent/a_write_to_a_block-scoped_shadow
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_compound_assignment
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_variable_holding_a_differently_named_class
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_variable_holding_an_anonymous_class
+=== CONT  TestNoClassAssignStaysSilent/a_write_beside_a_class_expression_in_a_sequence
+=== CONT  TestNoClassAssignStaysSilent/a_write_binding_to_neither_of_two_sibling_classes
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_catch_parameter
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_parameter
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_function_declaration
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_const
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_let
+--- PASS: TestNoClassAssignFires (0.00s)
+    --- PASS: TestNoClassAssignFires/a_plain_reassignment_after_the_declaration (0.01s)
+    --- PASS: TestNoClassAssignFires/two_reassignments_of_the_same_class (0.00s)
+    --- PASS: TestNoClassAssignFires/a_reassignment_from_inside_a_method (0.00s)
+    --- PASS: TestNoClassAssignFires/a_reassignment_inside_the_declaring_block (0.00s)
+    --- PASS: TestNoClassAssignFires/a_reassignment_hoisted_above_the_declaration (0.00s)
+    --- PASS: TestNoClassAssignFires/a_destructuring_target_with_a_default (0.00s)
+    --- PASS: TestNoClassAssignFires/a_shorthand_destructuring_target (0.00s)
+    --- PASS: TestNoClassAssignFires/a_named_class_expression_reassigned_inside_its_own_body (0.01s)
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_var
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_the_variable_holding_a_named_class_expression
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_the_variable_from_inside_a_differently_named_class_expression
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_the_variable_from_inside_an_anonymous_class_expression
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_local_shadowing_the_class
+=== CONT  TestNoClassAssignStaysSilent/a_write_to_a_parameter_shadowing_the_class
+=== CONT  TestNoClassAssignStaysSilent/a_read_of_a_variable_holding_a_named_class_expression
+=== CONT  TestNoConstAssignStaysSilent/a_read_of_the_const
+=== CONT  TestNoConstAssignStaysSilent/an_await_using_declaration_with_no_write
+=== CONT  TestNoConstAssignStaysSilent/a_const_shadowed_by_a_let_in_a_nested_function,_only_the_let_written
+=== CONT  TestNoConstAssignStaysSilent/a_nested_redeclaration_where_neither_binding_is_written
+=== CONT  TestNoConstAssignStaysSilent/a_shorthand_property_in_a_plain_object_literal
+=== CONT  TestNoConstAssignStaysSilent/a_property_key_spelled_like_the_const
+=== CONT  TestNoConstAssignStaysSilent/an_element_write_on_a_const_array
+=== CONT  TestNoConstAssignStaysSilent/a_const_read_through_a_property_access_chain
+=== CONT  TestNoConstAssignStaysSilent/a_const_read_as_a_call_argument_in_a_nested_function
+=== CONT  TestNoConstAssignStaysSilent/a_const_read_on_the_right_of_an_assignment
+=== CONT  TestNoConstAssignStaysSilent/an_increment_of_a_var
+=== CONT  TestNoConstAssignStaysSilent/a_compound_write_to_a_let
+=== CONT  TestNoConstAssignStaysSilent/a_type_alias_with_a_rest_parameter
+=== CONT  TestNoConstAssignStaysSilent/a_read_of_an_await_using_binding
+=== CONT  TestNoConstAssignStaysSilent/a_read_of_a_using_binding
+--- PASS: TestNoClassAssignStaysSilent (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_read_of_the_class (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_variable_holding_an_anonymous_class (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_variable_holding_a_differently_named_class (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_beside_a_class_expression_in_a_sequence (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_binding_to_neither_of_two_sibling_classes (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_parameter (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_const (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_function_declaration (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_var (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_the_variable_holding_a_named_class_expression (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_catch_parameter (0.01s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_the_variable_from_inside_an_anonymous_class_expression (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_the_variable_from_inside_a_differently_named_class_expression (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_parameter_shadowing_the_class (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_local_shadowing_the_class (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_read_of_a_variable_holding_a_named_class_expression (0.00s)
+    --- PASS: TestNoClassAssignStaysSilent/a_write_to_a_let (0.01s)
+=== CONT  TestNoConstAssignStaysSilent/a_write_to_a_parameter
+=== CONT  TestNoConstAssignStaysSilent/a_using_declaration_with_no_write
+=== CONT  TestNoConstAssignStaysSilent/a_const_used_as_a_default_value_in_a_destructuring_target
+=== CONT  TestNoConstAssignStaysSilent/a_const_used_as_a_computed_key_on_another_binding
+=== CONT  TestNoConstAssignStaysSilent/a_compound_write_to_a_shadow_from_a_nested_block
+=== CONT  TestNoConstAssignStaysSilent/a_write_to_a_catch_parameter
+=== CONT  TestNoConstAssignStaysSilent/a_write_to_a_class_binding
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_block-scoped_class_shadowing_an_outer_class_of_the_same_name
+=== CONT  TestNoConstAssignStaysSilent/a_write_to_a_parameter_shadowing_the_const
+=== CONT  TestNoConstAssignStaysSilent/a_write_to_a_function_declaration
+=== CONT  TestNoConstAssignStaysSilent/a_write_to_a_let
+=== CONT  TestNoConstAssignStaysSilent/a_write_to_a_var
+=== CONT  TestNoConstAssignStaysSilent/a_for-of_head_declaring_a_fresh_const
+=== CONT  TestNoConstAssignStaysSilent/a_property_write_on_a_const_object
+=== CONT  TestNoConstAssignStaysSilent/a_for-in_head_declaring_a_fresh_const
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_rest_property_in_an_object_pattern
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_rest_element_in_an_array_pattern
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_array_destructuring_target
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_prefix_decrement
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_postfix_increment
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_logical_assignment
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_shorthand_target_carrying_a_default
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/one_write_with_two_classes_in_the_file
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_shorthand_property_in_an_object_being_built_rather_than_destructured
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_nested_destructuring_target
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_write_from_a_field_initializer
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_unary_minus_on_the_class
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_write_from_a_static_block
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_for-in_loop_head
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_for-of_loop_head
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_negation_of_the_class
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_comparison_with_the_class_on_the_left
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_type-position_reference
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_arithmetic_use_with_the_class_on_the_left
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_read_on_the_right_of_an_assignment
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_same-named_property_of_an_unrelated_object
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_extends_clause_naming_the_class
+--- PASS: TestNoConstAssignStaysSilent (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_write_to_a_block-scoped_shadow (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_read_of_the_const (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/an_await_using_declaration_with_no_write (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_const_shadowed_by_a_let_in_a_nested_function,_only_the_let_written (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_nested_redeclaration_where_neither_binding_is_written (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_shorthand_property_in_a_plain_object_literal (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_property_key_spelled_like_the_const (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/an_element_write_on_a_const_array (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_const_read_through_a_property_access_chain (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_const_read_on_the_right_of_an_assignment (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_const_read_as_a_call_argument_in_a_nested_function (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/an_increment_of_a_var (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_type_alias_with_a_rest_parameter (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_read_of_an_await_using_binding (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_read_of_a_using_binding (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_write_to_a_parameter (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_const_used_as_a_computed_key_on_another_binding (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_compound_write_to_a_shadow_from_a_nested_block (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_const_used_as_a_default_value_in_a_destructuring_target (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_write_to_a_catch_parameter (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_write_to_a_class_binding (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_write_to_a_parameter_shadowing_the_const (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_write_to_a_function_declaration (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_compound_write_to_a_let (0.01s)
+    --- PASS: TestNoConstAssignStaysSilent/a_write_to_a_let (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_using_declaration_with_no_write (0.01s)
+    --- PASS: TestNoConstAssignStaysSilent/a_property_write_on_a_const_object (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_write_to_a_var (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_for-in_head_declaring_a_fresh_const (0.00s)
+    --- PASS: TestNoConstAssignStaysSilent/a_for-of_head_declaring_a_fresh_const (0.01s)
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_function-scoped_class_shadowing_an_outer_class_of_the_same_name
+=== CONT  TestNoClassAssignPointsAtTheWrite/a_plain_reassignment
+=== CONT  TestNoClassAssignPointsAtTheWrite/a_shorthand_destructuring_target
+=== CONT  TestNoClassAssignPointsAtTheWrite/two_writes_point_at_their_own_sites
+=== CONT  TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_property_write_through_the_class
+=== CONT  TestNoClassAssignPointsAtTheWrite/a_parenthesized_target
+=== CONT  TestNoConstAssignFires/a_plain_reassignment
+--- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_compound_assignment (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_block-scoped_class_shadowing_an_outer_class_of_the_same_name (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_rest_property_in_an_object_pattern (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_prefix_decrement (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_rest_element_in_an_array_pattern (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_array_destructuring_target (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_postfix_increment (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_logical_assignment (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_shorthand_target_carrying_a_default (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/one_write_with_two_classes_in_the_file (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_shorthand_property_in_an_object_being_built_rather_than_destructured (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_nested_destructuring_target (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_write_from_a_static_block (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_unary_minus_on_the_class (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_write_from_a_field_initializer (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_for-in_loop_head (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_for-of_loop_head (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_negation_of_the_class (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_comparison_with_the_class_on_the_left (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_type-position_reference (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_read_on_the_right_of_an_assignment (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_arithmetic_use_with_the_class_on_the_left (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/an_extends_clause_naming_the_class (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_same-named_property_of_an_unrelated_object (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_function-scoped_class_shadowing_an_outer_class_of_the_same_name (0.00s)
+    --- PASS: TestNoClassAssignCoversWriteShapesUpstreamNeverExercises/a_property_write_through_the_class (0.00s)
+=== CONT  TestNoClassAssignPointsAtTheWrite/a_hoisted_reassignment
+=== CONT  TestNoConstAssignFires/a_const_redeclared_in_a_nested_function_and_written_there
+=== CONT  TestNoConstAssignFires/a_parenthesised_assignment_target
+=== CONT  TestNoConstAssignFires/a_logical_assignment_to_a_using_binding
+--- PASS: TestNoClassAssignPointsAtTheWrite (0.00s)
+    --- PASS: TestNoClassAssignPointsAtTheWrite/a_plain_reassignment (0.00s)
+    --- PASS: TestNoClassAssignPointsAtTheWrite/two_writes_point_at_their_own_sites (0.00s)
+    --- PASS: TestNoClassAssignPointsAtTheWrite/a_shorthand_destructuring_target (0.00s)
+    --- PASS: TestNoClassAssignPointsAtTheWrite/a_parenthesized_target (0.00s)
+    --- PASS: TestNoClassAssignPointsAtTheWrite/a_hoisted_reassignment (0.00s)
+=== CONT  TestNoConstAssignFires/a_reassignment_of_a_nested_object_pattern_binding
+=== CONT  TestNoConstAssignFires/both_declarators_in_one_list_reassigned
+=== CONT  TestNoConstAssignFires/a_second_declarator_in_the_same_list_reassigned
+=== CONT  TestNoConstAssignFires/a_for-in_head_assigning_to_a_const
+=== CONT  TestNoConstAssignFires/a_for-of_head_assigning_to_a_const
+=== CONT  TestNoConstAssignFires/a_prefix_decrement
+=== CONT  TestNoConstAssignFires/a_postfix_decrement
+=== CONT  TestNoConstAssignFires/a_postfix_increment
+=== CONT  TestNoConstAssignFires/a_nested_redeclaration_with_the_outer_binding_written
+=== CONT  TestNoConstAssignFires/a_nested_redeclaration_written_in_its_own_block
+=== CONT  TestNoConstAssignFires/an_object_destructuring_target_with_a_default_on_an_await_using_binding
+=== CONT  TestNoConstAssignFires/an_object_destructuring_target_on_a_using_binding
+=== CONT  TestNoConstAssignFires/an_array_destructuring_target_with_a_default_on_an_await_using_binding
+=== CONT  TestNoConstAssignFires/an_array_destructuring_target_on_a_using_binding
+=== CONT  TestNoConstAssignFires/a_logical_assignment_to_an_await_using_binding
+=== CONT  TestNoConstAssignFires/a_reassignment_from_a_function_with_a_parameter
+=== CONT  TestNoConstAssignFires/a_reassignment_of_an_await_using_binding
+=== CONT  TestNoConstAssignFires/a_reassignment_of_a_using_binding
+=== CONT  TestNoConstAssignFires/an_object_rest_as_a_destructuring_target
+=== CONT  TestNoConstAssignFires/a_nested_rest_element_as_a_destructuring_target
+=== CONT  TestNoConstAssignFires/a_reassignment_of_a_deeply_nested_rest_binding
+=== CONT  TestNoConstAssignFires/a_reassignment_hoisted_above_the_declaration
+=== CONT  TestNoConstAssignFires/a_reassignment_from_a_doubly_nested_function
+=== CONT  TestNoConstAssignFires/a_reassignment_inside_a_loop_body
+=== CONT  TestNoConstAssignFires/a_prefix_increment
+=== CONT  TestNoConstAssignFires/a_reassignment_from_inside_a_function
+=== CONT  TestNoConstAssignFires/two_reassignments_of_the_same_binding
+=== CONT  TestNoConstAssignFires/an_increment_in_a_for_head
+=== CONT  TestNoConstAssignFires/a_destructuring_target_with_a_default
+=== CONT  TestNoConstAssignFires/a_compound_assignment
+=== CONT  TestNoConstAssignFires/a_shorthand_destructuring_target
+=== CONT  TestNoConstAssignFires/a_reassignment_of_a_destructured_binding
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_variable_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_one-element_array_loosely_compared_to_true
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/an_in_expression
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/nothing_binary_at_all
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_constant_relational_comparison
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/one_fresh_object_loosely_compared_to_a_variable
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_user_constructor_compared_to_a_variable
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_variable_on_the_left_of_an_and
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_variable_compared_to_true
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_variable_compared_to_null
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_comparison_of_two_variables
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_nested_nullish_chain_ending_in_null
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_call_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstantBinaryExpressionStaysSilent/a_member_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstantBinaryExpressionFires/an_array_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstAssignPointsAtTheWrite/a_plain_reassignment
+=== CONT  TestNoConstantBinaryExpressionFires/two_fresh_objects_loosely_compared
+--- PASS: TestNoConstantBinaryExpressionStaysSilent (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_variable_on_the_left_of_nullish_coalescing (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_one-element_array_loosely_compared_to_true (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/an_in_expression (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/nothing_binary_at_all (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_constant_relational_comparison (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/one_fresh_object_loosely_compared_to_a_variable (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_user_constructor_compared_to_a_variable (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_variable_compared_to_true (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_variable_on_the_left_of_an_and (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_variable_compared_to_null (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_comparison_of_two_variables (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_nested_nullish_chain_ending_in_null (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_call_on_the_left_of_nullish_coalescing (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionStaysSilent/a_member_on_the_left_of_nullish_coalescing (0.00s)
+=== CONT  TestNoConstantBinaryExpressionFires/a_boxed_number_compared_to_a_variable
+=== CONT  TestNoConstantBinaryExpressionFires/a_regular_expression_compared_to_a_variable
+=== CONT  TestNoConstantBinaryExpressionFires/an_array_compared_to_a_variable
+=== CONT  TestNoConstantBinaryExpressionFires/an_object_compared_to_a_variable
+--- PASS: TestNoConstAssignFires (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_of_a_nested_object_pattern_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/both_declarators_in_one_list_reassigned (0.00s)
+    --- PASS: TestNoConstAssignFires/a_second_declarator_in_the_same_list_reassigned (0.00s)
+    --- PASS: TestNoConstAssignFires/a_for-in_head_assigning_to_a_const (0.00s)
+    --- PASS: TestNoConstAssignFires/a_for-of_head_assigning_to_a_const (0.00s)
+    --- PASS: TestNoConstAssignFires/a_plain_reassignment (0.01s)
+    --- PASS: TestNoConstAssignFires/a_prefix_decrement (0.00s)
+    --- PASS: TestNoConstAssignFires/a_const_redeclared_in_a_nested_function_and_written_there (0.01s)
+    --- PASS: TestNoConstAssignFires/a_logical_assignment_to_a_using_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/a_postfix_decrement (0.00s)
+    --- PASS: TestNoConstAssignFires/a_postfix_increment (0.00s)
+    --- PASS: TestNoConstAssignFires/an_object_destructuring_target_on_a_using_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/a_nested_redeclaration_written_in_its_own_block (0.00s)
+    --- PASS: TestNoConstAssignFires/an_object_destructuring_target_with_a_default_on_an_await_using_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/a_nested_redeclaration_with_the_outer_binding_written (0.00s)
+    --- PASS: TestNoConstAssignFires/an_array_destructuring_target_with_a_default_on_an_await_using_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/an_array_destructuring_target_on_a_using_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/a_logical_assignment_to_an_await_using_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_from_a_function_with_a_parameter (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_of_a_using_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/an_object_rest_as_a_destructuring_target (0.00s)
+    --- PASS: TestNoConstAssignFires/a_nested_rest_element_as_a_destructuring_target (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_of_a_deeply_nested_rest_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_hoisted_above_the_declaration (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_from_a_doubly_nested_function (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_of_an_await_using_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_inside_a_loop_body (0.00s)
+    --- PASS: TestNoConstAssignFires/a_prefix_increment (0.00s)
+    --- PASS: TestNoConstAssignFires/an_increment_in_a_for_head (0.00s)
+    --- PASS: TestNoConstAssignFires/two_reassignments_of_the_same_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/a_destructuring_target_with_a_default (0.00s)
+    --- PASS: TestNoConstAssignFires/a_compound_assignment (0.00s)
+    --- PASS: TestNoConstAssignFires/a_shorthand_destructuring_target (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_from_inside_a_function (0.00s)
+    --- PASS: TestNoConstAssignFires/a_reassignment_of_a_destructured_binding (0.00s)
+    --- PASS: TestNoConstAssignFires/a_parenthesised_assignment_target (0.02s)
+=== CONT  TestNoConstantBinaryExpressionFires/a_two-element_array_loosely_compared_to_true
+=== CONT  TestNoConstantBinaryExpressionFires/an_empty_array_loosely_compared_to_true
+=== CONT  TestNoConstantBinaryExpressionFires/true_strictly_compared_to_an_object
+=== CONT  TestNoConstantBinaryExpressionFires/a_string_strictly_compared_to_false
+=== CONT  TestNoConstantBinaryExpressionFires/an_array_strictly_compared_to_true
+=== CONT  TestNoConstantBinaryExpressionFires/null_compared_to_a_function
+=== CONT  TestNoConstantBinaryExpressionFires/an_object_compared_to_undefined
+=== CONT  TestNoConstantBinaryExpressionFires/an_array_compared_to_null
+=== CONT  TestNoConstantBinaryExpressionFires/a_constant_on_the_left_of_an_or
+=== CONT  TestNoConstantBinaryExpressionFires/a_constant_on_the_left_of_an_and
+=== CONT  TestNoConstantBinaryExpressionFires/a_one-element_array_strictly_compared_to_true
+=== CONT  TestNoConstantBinaryExpressionFires/a_nested_nullish_chain_ending_in_a_non-nullish_value
+=== CONT  TestNoConstantBinaryExpressionFires/undefined_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstantBinaryExpressionFires/null_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstantBinaryExpressionFires/a_wrapper_call_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstantBinaryExpressionFires/a_template_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstantBinaryExpressionFires/a_string_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstantBinaryExpressionFires/an_object_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstAssignPointsAtTheWrite/a_destructuring_target_with_a_default
+=== CONT  TestNoConstAssignPointsAtTheWrite/two_reassignments_of_the_same_binding
+=== CONT  TestNoConstAssignPointsAtTheWrite/an_await_using_binding_reassigned
+=== CONT  TestNoConstAssignPointsAtTheWrite/a_using_binding_reassigned
+=== CONT  TestNoConstAssignPointsAtTheWrite/an_object_rest_as_a_destructuring_target
+=== CONT  TestNoConstAssignPointsAtTheWrite/a_nested_rest_element_as_a_destructuring_target
+=== CONT  TestNoConstAssignPointsAtTheWrite/a_postfix_increment
+=== CONT  TestNoConstAssignPointsAtTheWrite/a_shorthand_destructuring_target
+=== CONT  TestNoConstAssignPointsAtTheWrite/an_increment_in_a_for_head
+=== CONT  TestNoConstAssignPointsAtTheWrite/a_compound_assignment
+=== CONT  TestNoConstAssignPointsAtTheWrite/a_prefix_increment
+=== CONT  TestNoConstantBinaryExpressionFires/an_arithmetic_expression_on_the_left_of_nullish_coalescing
+=== CONT  TestNoConstAssignPointsAtTheWrite/a_hoisted_reassignment
+--- PASS: TestNoConstantBinaryExpressionFires (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/an_array_on_the_left_of_nullish_coalescing (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/two_fresh_objects_loosely_compared (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_boxed_number_compared_to_a_variable (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/an_object_compared_to_a_variable (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/an_array_compared_to_a_variable (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/an_empty_array_loosely_compared_to_true (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/true_strictly_compared_to_an_object (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_string_strictly_compared_to_false (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/an_array_strictly_compared_to_true (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/null_compared_to_a_function (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/an_object_compared_to_undefined (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/an_array_compared_to_null (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_two-element_array_loosely_compared_to_true (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_regular_expression_compared_to_a_variable (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_constant_on_the_left_of_an_or (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_one-element_array_strictly_compared_to_true (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_constant_on_the_left_of_an_and (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/undefined_on_the_left_of_nullish_coalescing (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/null_on_the_left_of_nullish_coalescing (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_wrapper_call_on_the_left_of_nullish_coalescing (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_template_on_the_left_of_nullish_coalescing (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_string_on_the_left_of_nullish_coalescing (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/an_object_on_the_left_of_nullish_coalescing (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/a_nested_nullish_chain_ending_in_a_non-nullish_value (0.00s)
+    --- PASS: TestNoConstantBinaryExpressionFires/an_arithmetic_expression_on_the_left_of_nullish_coalescing (0.00s)
+--- PASS: TestNoConstAssignPointsAtTheWrite (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/a_plain_reassignment (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/a_destructuring_target_with_a_default (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/two_reassignments_of_the_same_binding (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/an_await_using_binding_reassigned (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/a_using_binding_reassigned (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/an_object_rest_as_a_destructuring_target (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/a_nested_rest_element_as_a_destructuring_target (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/a_postfix_increment (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/a_shorthand_destructuring_target (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/a_compound_assignment (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/a_prefix_increment (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/a_hoisted_reassignment (0.00s)
+    --- PASS: TestNoConstAssignPointsAtTheWrite/an_increment_in_a_for_head (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.080s

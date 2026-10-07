@@ -1,0 +1,9 @@
+=== RUN   TestWave18Format
+    wave_18_format_test.go:10: core_binding_facts.a formatted and stable
+    wave_18_format_test.go:10: no_class_assign.a formatted and stable
+    wave_18_format_test.go:10: no_const_assign.a formatted and stable
+    wave_18_format_test.go:10: no_constant_binary_expression.a formatted and stable
+    wave_18_format_test.go:10: wave_18_core_suite.a formatted and stable
+--- PASS: TestWave18Format (0.02s)
+PASS
+ok  	github.com/system-inc/cohere/internal/format/native	0.030s

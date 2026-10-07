@@ -47,3 +47,7 @@ origin/main (ef3d907e) and origin/codex/tsgo-c-library (5afbdb83). There are
 compiler and repository findings. The previously withdrawn Nexus candidates
 are now claimed by other workers and are skipped. This claim is pushed before
 implementation. No shared harness or registration generator will be edited.
+
+Continuation implementation: the three core visitors are complete in 1cba7ee7.
+WAVE_18_CORE_REPORT.md records byte agreement, enabled relational options,
+mutants, sanitizers, released handles, corpus coverage and observed timings.

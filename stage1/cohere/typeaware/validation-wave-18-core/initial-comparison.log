@@ -1,0 +1,26 @@
+=== RUN   TestWave18CoreAgreementAndMutants
+    wave_18_core_test.go:89: controls: 64321 identical finding bytes; findings 115
+    wave_18_core_test.go:97: controls-asan: 64321 identical finding bytes; findings 115
+    wave_18_core_test.go:108: class-assign mutant: exit 0, empty stderr, Go byte oracle caught byte 54
+    wave_18_core_test.go:108: const-assign mutant: exit 0, empty stderr, Go byte oracle caught byte 567
+    wave_18_core_test.go:108: constant-binary mutant: exit 0, empty stderr, Go byte oracle caught byte 42138
+    wave_18_core_test.go:121: repository: 18485 identical finding bytes; findings 0
+    wave_18_core_test.go:122: repository-asan: 18485 identical finding bytes; findings 0
+    wave_18_core_test.go:132: repository round 0 native: 0.331931s findings 0 tsgo: load_ns=89028376 query_ns=45631102 queries=3945 first_query_ns=270739 run_ns=237713868
+    wave_18_core_test.go:132: repository round 0 go: 0.132691s findings 0 cohere: load_ns=61098961 rule_ns=16184606 run_ns=58939997
+    wave_18_core_test.go:132: repository round 1 go: 0.140660s findings 0 cohere: load_ns=63204424 rule_ns=16886038 run_ns=62692611
+    wave_18_core_test.go:132: repository round 1 native: 0.277639s findings 0 tsgo: load_ns=68215520 query_ns=39173425 queries=3945 first_query_ns=148545 run_ns=201980784
+    wave_18_core_test.go:132: repository round 2 native: 0.266622s findings 0 tsgo: load_ns=63884403 query_ns=39443765 queries=3945 first_query_ns=141564 run_ns=197480598
+    wave_18_core_test.go:132: repository round 2 go: 0.120249s findings 0 cohere: load_ns=58501236 rule_ns=12550566 run_ns=49793910
+    wave_18_core_test.go:121: compiler: 5318 identical finding bytes; findings 0
+    wave_18_core_test.go:122: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_18_core_test.go:132: compiler round 0 native: 1.912171s findings 0 tsgo: load_ns=241107125 query_ns=269498472 queries=20005 first_query_ns=4418789 run_ns=1652123658
+    wave_18_core_test.go:132: compiler round 0 go: 0.395493s findings 0 cohere: load_ns=242304769 rule_ns=103492013 run_ns=138328692
+    wave_18_core_test.go:132: compiler round 1 go: 0.376605s findings 0 cohere: load_ns=226874482 rule_ns=100739916 run_ns=133799055
+    wave_18_core_test.go:132: compiler round 1 native: 1.846867s findings 0 tsgo: load_ns=232782356 query_ns=254749687 queries=20005 first_query_ns=3210262 run_ns=1596609910
+    wave_18_core_test.go:132: compiler round 2 native: 1.963692s findings 0 tsgo: load_ns=234416472 query_ns=261786922 queries=20005 first_query_ns=3195901 run_ns=1710354669
+    wave_18_core_test.go:132: compiler round 2 go: 0.374777s findings 0 cohere: load_ns=228841319 rule_ns=96305666 run_ns=129703435
+    wave_18_core_test.go:151: released registry mutant caught: expected stale handle panic, got <nil> 
+--- PASS: TestWave18CoreAgreementAndMutants (92.20s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	92.209s
