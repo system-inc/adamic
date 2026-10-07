@@ -31,3 +31,5 @@ The next three delivered helpers are documented in [SLOT01_WAVE2_README.md](SLOT
 The third batch is documented in [SLOT01_WAVE3_README.md](SLOT01_WAVE3_README.md), with its own Go/Node/native/emitted-JavaScript evidence and readiness increment.
 
 The fourth batch is documented in [SLOT01_WAVE4_README.md](SLOT01_WAVE4_README.md), with every consumer and Go/Node/native/emitted-JavaScript evidence.
+
+The fifth batch is documented in [SLOT01_WAVE5_README.md](SLOT01_WAVE5_README.md), with every consumer, Go-equivalent dependency contracts and retained differential evidence.

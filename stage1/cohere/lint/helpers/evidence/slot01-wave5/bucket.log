@@ -1,0 +1,50 @@
+=== RUN   TestSlot01Wave5NamedMatchesCohere
+    slot01_wave5_test.go:142: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1673 helper queries (named)
+    slot01_wave5_test.go:142: 1673 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:142: compiled collapse_valid_named_value.a mutant caught at output line 637: got "false", Go "true"
+--- PASS: TestSlot01Wave5NamedMatchesCohere (2.84s)
+=== RUN   TestSlot01Wave5NamedEmptyMutant
+    slot01_wave5_test.go:145: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1673 helper queries (named)
+    slot01_wave5_test.go:145: 1673 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:145: compiled collapse_valid_named_value.a mutant caught at output line 1: got "true", Go "false"
+--- PASS: TestSlot01Wave5NamedEmptyMutant (1.74s)
+=== RUN   TestSlot01Wave5BucketMatchesCohere
+    slot01_wave5_test.go:150: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1673 helper queries (bucket)
+    slot01_wave5_test.go:150: 1673 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:150: compiled collapse_breakpoint_bucket.a mutant caught at output line 3: got "70:99,111,110,115,116,32,101,61,60,100,105,118,32,104,114,101,102,61,34,34,32,72,82,69,70,61,34,38,35,59,97,98,111,117,116,34,32,123,46,46,46,112,114,111,112,115,125,32,120,108,105,110,107,58,104,114,101,102,61,34,111,116,104,101,114,34,32,47,62,59,", Go "67:99,111,110,115,116,32,101,61,60,100,105,118,32,104,114,101,102,61,34,34,32,72,82,69,70,61,34,38,35,59,97,98,111,117,116,34,32,123,112,114,111,112,115,125,32,120,108,105,110,107,58,104,114,101,102,61,34,111,116,104,101,114,34,32,47,62,59,"
+--- PASS: TestSlot01Wave5BucketMatchesCohere (1.83s)
+=== RUN   TestSlot01Wave5BucketFunctionMutant
+    slot01_wave5_test.go:153: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1673 helper queries (bucket)
+    slot01_wave5_test.go:153: 1673 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:153: compiled collapse_breakpoint_bucket.a mutant caught at output line 39: got "42:99,111,110,115,116,32,109,101,114,103,101,100,32,61,32,109,101,114,103,101,67,108,97,115,115,78,97,109,101,115,40,39,112,120,45,32,112,121,45,39,41,59,", Go "30:99,111,110,115,116,32,109,101,114,103,101,100,32,61,32,109,101,114,103,101,67,108,97,115,115,78,97,109,101,115,"
+--- PASS: TestSlot01Wave5BucketFunctionMutant (1.83s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	8.246s

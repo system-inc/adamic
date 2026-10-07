@@ -1,0 +1,26 @@
+=== RUN   TestSlot01Wave5NamedMatchesCohere
+    slot01_wave5_test.go:142: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1673 helper queries (named)
+    slot01_wave5_test.go:142: 1673 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:142: compiled collapse_valid_named_value.a mutant caught at output line 637: got "false", Go "true"
+--- PASS: TestSlot01Wave5NamedMatchesCohere (1.86s)
+=== RUN   TestSlot01Wave5NamedEmptyMutant
+    slot01_wave5_test.go:145: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 1673 helper queries (named)
+    slot01_wave5_test.go:145: 1673 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave5_test.go:145: compiled collapse_valid_named_value.a mutant caught at output line 1: got "true", Go "false"
+--- PASS: TestSlot01Wave5NamedEmptyMutant (1.74s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	3.598s
