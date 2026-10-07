@@ -195,3 +195,26 @@ console.log(typeof wider.y);
 Observed on the restored final compiler: Node prints `string`, exit 0. `adamic c` and `adamic build` accept the program. Native execution prints `adamic: panic: compiler bug: a numeric field holds a reference`, exit 70. The acceptance also existed before this rule; this unit follows the expressly ruled nominal-class exception and does not close it. This is a remaining type lie and Node/native mismatch, not a passing oracle or a claim that class views are proven safe.
 
 A fixed-field guarantee for base-class views, or a revised exception limited to sources whose dynamic field absence is proven, needs a separate ruling. The simplest class fixture requested here has no subclasses and does pass Node. The inherited-class counterexample is recorded as evidence rather than registered as a positive oracle fixture that would falsely claim agreement.
+
+
+## October 7 main compatibility repair
+
+`codex/optional-widening-refusal-2` starts at main `b6b1538` and merges the refusal at `f1c9173eeeb073743c7233ad11f0d12c47363503`, without the descendant refinement. Main's proven-relations check correctly refuses casts first. Both checks reject the same optional-field lie; the cast now pins that complete proven-relation diagnostic. Every non-cast refusal fixture pins its complete optional-widening message independently in a `.refused` file. Only absolute repository paths are normalized.
+
+The two TypeScript-derived object fixtures were never recorded as Compiles. `01_reference_spreads.a` was Refused for `adamic/single-spread`, and is now Refused for missing optional `preserve` at `7:111`. `30_host_optional_method.a` was NotYet for an optional call at `6:12`, and is now Refused for missing optional `getCompilerHost` at `8:73`. Only their `stage0` outcome and diagnostic fields changed. All bytes outside the `stage0` values, including the Node observations and TypeScript provenance, are identical. Source programs and the TypeScript NOTICE are unchanged.
+
+Linux verification:
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./stage3/fixtures ./internal/oracle -count=1 -timeout 30m > /tmp/optional-widening-refusal-2-gate.log 2>&1
+go vet ./internal/lower ./stage3/fixtures ./internal/oracle > /tmp/optional-widening-refusal-2-vet.log 2>&1
+gofmt -l internal/lower/optional_widening_test.go > /tmp/optional-widening-refusal-2-format.log
+git diff --check
+```
+
+Exit 0: lower 40.585s, stage3/fixtures 28.874s, complete uncached oracle 155.118s. Vet and format logs are empty; whitespace check is clean. Setup: Go, clang, Node and submodules ready 0s, cache warm and done 48s; `nproc` 5, cgroup quota 4 CPUs. Tool environment: `/workspace/adamic-tools/env.sh`.
+
+Mutants actually run and restored: append `MUTANT` to the production non-cast diagnostic, caught by the assignment exact-message pin; use a stale cast diagnostic record, caught by the cast exact-message pin. Both tests exit 1 through the intended diagnostic assertions. Scratch copies with both original stage0 records also exit 1 through precisely two stage0 comparisons while both Node comparisons pass. No compiler errors or clang warnings kill these checks.
+
+The repair gate and mutant logs are preserved under `evidence/refusal-2-*.log`. The inherited-class hole remains unchanged on this prerequisite branch and belongs to the refinement branch. No full repository gate, census, or Function worker work is claimed by this repair.

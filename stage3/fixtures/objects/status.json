@@ -12,7 +12,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/01_reference_spreads.a:7:111: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
+      "what": "stage3/fixtures/objects/01_reference_spreads.a:7:111: Adamic 0.1 refuses optional property preserve in FileReference absent from structural source { resolutionMode: number; }, which can hide fields; declare preserve on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
     }
   },
   {
@@ -410,8 +410,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/30_host_optional_method.a:6:12: stage 0 can't lower a call through ?. (an optional call) yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/30_host_optional_method.a:8:73: Adamic 0.1 refuses optional property getCompilerHost in ResolutionCacheHost absent from structural source { name: string; }, which can hide fields; declare getCompilerHost on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
     }
   }
 ]
