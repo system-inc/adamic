@@ -1,0 +1,177 @@
+{
+  "claim": "b3f1eb20",
+  "base_main": "c7991b900362796aefd111474e65eb5398e91953",
+  "base_area": "b46914832d70e00847d82d5d221ab7bb24040c53",
+  "owned_helpers": 57,
+  "new_comparison_lines": 8354,
+  "new_mutants": 27,
+  "observations": {
+    "control_calls": 296,
+    "live": {
+      "array-callback-return": {
+        "expression": 828,
+        "pattern": 80,
+        "switch": 5
+      },
+      "consistent-return": {
+        "expression": 296,
+        "pattern": 5
+      },
+      "no-unreachable-loop": {
+        "expression": 4905,
+        "pattern": 696,
+        "switch": 168
+      },
+      "react-hooks/rules-of-hooks": {
+        "expression": 1006,
+        "pattern": 67,
+        "switch": 2
+      }
+    },
+    "live_calls": 8058,
+    "total_calls": 8354
+  },
+  "shared_helper_seconds": 90.073,
+  "uncached_input_seconds": 1.845,
+  "prior_green_comparisons": 3046326,
+  "prior_green_owned_mutants": 203,
+  "mutant_replacements": [
+    {
+      "name": "expression.a",
+      "old": "if (!view.present)",
+      "new": "if (false)"
+    },
+    {
+      "name": "expression.a#01",
+      "old": "if (view.hookPresent)",
+      "new": "if (false)"
+    },
+    {
+      "name": "expression.a#02",
+      "old": "if (view.hookPresent)",
+      "new": "if (true)"
+    },
+    {
+      "name": "expression.a#03",
+      "old": "dependencies.read(view.node);",
+      "new": ""
+    },
+    {
+      "name": "expression.a#04",
+      "old": "if (dependencies.throwable(view.node))",
+      "new": "if (false)"
+    },
+    {
+      "name": "expression.a#05",
+      "old": "dependencies.binaryExpression(view.node);",
+      "new": "dependencies.expr(view.node);"
+    },
+    {
+      "name": "expression.a#06",
+      "old": "if (view.update)",
+      "new": "if (false)"
+    },
+    {
+      "name": "expression.a#07",
+      "old": "dependencies.expr(view.operand); dependencies.makeYield();",
+      "new": "dependencies.makeYield(); dependencies.expr(view.operand);"
+    },
+    {
+      "name": "expression.a#08",
+      "old": "if (dependencies.isRoot(view.node))",
+      "new": "if (false)"
+    },
+    {
+      "name": "expression.a#09",
+      "old": "dependencies.visitUnknown(child);",
+      "new": "dependencies.visitUnknown(view.node);"
+    },
+    {
+      "name": "pattern_bind.a",
+      "old": "if (!view.present)",
+      "new": "if (false)"
+    },
+    {
+      "name": "pattern_bind.a#01",
+      "old": "dependencies.write(view.node);",
+      "new": ""
+    },
+    {
+      "name": "pattern_bind.a#02",
+      "old": "if (!view.elementsPresent)",
+      "new": "if (false)"
+    },
+    {
+      "name": "pattern_bind.a#03",
+      "old": "if (!element.present)",
+      "new": "if (false)"
+    },
+    {
+      "name": "pattern_bind.a#04",
+      "old": "if (element.computed)",
+      "new": "if (false)"
+    },
+    {
+      "name": "pattern_bind.a#05",
+      "old": "dependencies.bindWithDefault(element.target, element.fallback);",
+      "new": "dependencies.bindWithDefault(element.fallback, element.target);"
+    },
+    {
+      "name": "pattern_bind.a#06",
+      "old": "dependencies.patternBind(property.target); break;\n          case 'shorthand':",
+      "new": "dependencies.patternBind(property.fallback); break;\n          case 'shorthand':"
+    },
+    {
+      "name": "pattern_bind.a#07",
+      "old": "if (view.equals)",
+      "new": "if (false)"
+    },
+    {
+      "name": "switch_statement.a",
+      "old": "dependencies.expr(view.expression);",
+      "new": ""
+    },
+    {
+      "name": "switch_statement.a#01",
+      "old": "if (clause.isDefault) { defaultIndex = i; continue; }",
+      "new": "if (false) { defaultIndex = i; continue; }"
+    },
+    {
+      "name": "switch_statement.a#02",
+      "old": "dependencies.linkWithCycleBarrier(testCur, bodies[defaultIndex] ?? -1, false)",
+      "new": "dependencies.linkWithCycleBarrier(testCur, after, false)"
+    },
+    {
+      "name": "switch_statement.a#03",
+      "old": "const barrier = hadSwitchBreak || beforeFirstCase;",
+      "new": "const barrier = false;"
+    },
+    {
+      "name": "switch_statement.a#04",
+      "old": "hadSwitchBreak = state.jumps[switchJump] ?? false;",
+      "new": "hadSwitchBreak = false;"
+    },
+    {
+      "name": "switch_statement.a#05",
+      "old": "dependencies.statements(clause.statements);",
+      "new": ""
+    },
+    {
+      "name": "switch_statement.a#06",
+      "old": "dependencies.popJump();",
+      "new": ""
+    },
+    {
+      "name": "switch_statement.a#07",
+      "old": "dependencies.enter(after); return;",
+      "new": "return;"
+    },
+    {
+      "name": "switch_statement.a#08",
+      "old": "dependencies.linkWithCycleBarrier(fallthroughFrom, bodies[i] ?? -1, barrier);",
+      "new": "dependencies.linkWithCycleBarrier(-1, bodies[i] ?? -1, barrier);"
+    }
+  ],
+  "selected_gate_seconds": 436.923,
+  "new_mutants_caught": 27
+}

@@ -1,0 +1,25 @@
+export type ExpressionView = {node: number; present: boolean; hookPresent: boolean; category: string; operand: number; update: boolean};
+export type ExpressionDependencies = {hook: (node: number) => void; read: (node: number) => void; throwable: (node: number) => boolean; firstThrowableFork: () => void; expr: (node: number) => void; binaryExpression: (node: number) => void; conditionalExpression: (node: number) => void; updateExpression: (node: number) => void; accessOrCall: (node: number) => void; makeYield: () => void; classLike: (node: number) => void; isRoot: (node: number) => boolean; nestedFunction: (node: number) => void; children: number[]; visitUnknown: (node: number) => void};
+export function expression(view: ExpressionView, dependencies: ExpressionDependencies): void {
+  if (!view.present) { return; }
+  if (view.hookPresent) { dependencies.hook(view.node); }
+  switch (view.category) {
+    case 'identifier':
+      dependencies.read(view.node);
+      if (dependencies.throwable(view.node)) { dependencies.firstThrowableFork(); }
+      return;
+    case 'parenthesized': dependencies.expr(view.operand); return;
+    case 'binary': dependencies.binaryExpression(view.node); return;
+    case 'conditional': dependencies.conditionalExpression(view.node); return;
+    case 'prefix':
+      if (view.update) { dependencies.updateExpression(view.operand); return; }
+      dependencies.expr(view.operand); return;
+    case 'postfix': dependencies.updateExpression(view.operand); return;
+    case 'access': dependencies.accessOrCall(view.node); return;
+    case 'yield': dependencies.expr(view.operand); dependencies.makeYield(); return;
+    case 'class': dependencies.classLike(view.node); return;
+    default:
+      if (dependencies.isRoot(view.node)) { dependencies.nestedFunction(view.node); return; }
+      for (const child of dependencies.children) { dependencies.visitUnknown(child); }
+  }
+}

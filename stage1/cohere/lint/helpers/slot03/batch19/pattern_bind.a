@@ -1,0 +1,43 @@
+export type BindingElementView = {present: boolean; computed: boolean; key: number; target: number; fallback: number};
+export type PropertyView = {category: string; computed: boolean; key: number; target: number; fallback: number};
+export type PatternView = {node: number; present: boolean; category: string; operand: number; elementsPresent: boolean; elements: BindingElementView[]; properties: PropertyView[]; array: number[]; equals: boolean; left: number; right: number};
+export type PatternDependencies = {read: (node: number) => void; throwable: (node: number) => boolean; firstThrowableFork: () => void; write: (node: number) => void; patternBind: (node: number) => void; expr: (node: number) => void; bindWithDefault: (target: number, fallback: number) => void};
+export function patternBind(view: PatternView, dependencies: PatternDependencies): void {
+  if (!view.present) { return; }
+  switch (view.category) {
+    case 'identifier':
+      dependencies.read(view.node);
+      if (dependencies.throwable(view.node)) { dependencies.firstThrowableFork(); }
+      dependencies.write(view.node); return;
+    case 'omitted': return;
+    case 'wrapped': dependencies.patternBind(view.operand); return;
+    case 'binding':
+      if (!view.elementsPresent) { return; }
+      for (const element of view.elements) {
+        if (!element.present) { continue; }
+        if (element.computed) { dependencies.expr(element.key); }
+        dependencies.bindWithDefault(element.target, element.fallback);
+      }
+      return;
+    case 'object':
+      for (const property of view.properties) {
+        switch (property.category) {
+          case 'assignment':
+            if (property.computed) { dependencies.expr(property.key); }
+            dependencies.patternBind(property.target); break;
+          case 'shorthand': dependencies.bindWithDefault(property.target, property.fallback); break;
+          case 'spread': dependencies.patternBind(property.target); break;
+          default: break;
+        }
+      }
+      return;
+    case 'array':
+      for (const element of view.array) { dependencies.patternBind(element); }
+      return;
+    case 'spread': dependencies.patternBind(view.operand); return;
+    case 'binary':
+      if (view.equals) { dependencies.bindWithDefault(view.left, view.right); return; }
+      dependencies.expr(view.node); return;
+    default: dependencies.expr(view.node);
+  }
+}

@@ -1,0 +1,81 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {expression, type ExpressionView, type ExpressionDependencies} from './expression.a';
+import {patternBind, type PatternView, type PatternDependencies, type BindingElementView, type PropertyView} from './pattern_bind.a';
+import {switchStatement, type SwitchView, type SwitchClause, type SwitchDependencies} from './switch_statement.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if (file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text); const root = json.parse();
+if (root < 0) { panic(json.error); }
+function num(row: number, key: string): number { return Number(json.node(json.field(row, key)).text); }
+function bool(row: number, key: string): boolean { return json.node(json.field(row, key)).text === 'true'; }
+function numbers(row: number, key: string): number[] {
+  const values: number[] = [];
+  for (const node of json.node(json.field(row, key)).children) { values.push(Number(json.node(node).text)); }
+  return values;
+}
+function booleans(row: number, key: string): boolean[] {const values: boolean[] = [];for(const node of json.node(json.field(row,key)).children){values.push(json.node(node).text === 'true');}return values;}
+const initialJumps: boolean[] = [];
+const state = {cur: 0, jumps: initialJumps};
+const initialEvents: readonly number[] = [];
+const replay = {events: initialEvents, index: 0, trace: ''};
+function event(kind: string, a: number, b: number, c: number): number {
+  const before = state.cur; const item = replay.events[replay.index]; replay.index++; let value = -1;
+  if (item !== undefined) { state.cur = num(item, 'cur'); state.jumps = booleans(item,'jumps'); value = num(item, 'value'); }
+  replay.trace += `${kind}:${a}:${b}:${c}:${before}>${state.cur}:${value};`; return value;
+}
+const expressionDependencies: ExpressionDependencies = {
+ hook: node => { event('hook',node,-1,-1); },
+ read: node => { event('read',node,-1,-1); },
+ throwable: node => event('throwable',node,-1,-1) === 1,
+ firstThrowableFork: () => { event('fork',-1,-1,-1); },
+ expr: node => { event('expr',node,-1,-1); },
+ binaryExpression: node => { event('binary',node,-1,-1); },
+ conditionalExpression: node => { event('conditional',node,-1,-1); },
+ updateExpression: node => { event('update',node,-1,-1); },
+ accessOrCall: node => { event('access',node,-1,-1); },
+ makeYield: () => { event('yield',-1,-1,-1); },
+ classLike: node => { event('class',node,-1,-1); },
+ isRoot: node => event('root',node,-1,-1) === 1,
+ nestedFunction: node => { event('nested',node,-1,-1); },
+ visitUnknown: node => { event('visit',node,-1,-1); },
+ children: [],
+};
+const patternDependencies: PatternDependencies = {
+ read: node => { event('read',node,-1,-1); },
+ throwable: node => event('throwable',node,-1,-1) === 1,
+ firstThrowableFork: () => { event('fork',-1,-1,-1); },
+ write: node => { event('write',node,-1,-1); },
+ patternBind: node => { event('bind',node,-1,-1); },
+ expr: node => { event('expr',node,-1,-1); },
+ bindWithDefault: (target,fallback) => { event('default',target,fallback,-1); },
+};
+const switchDependencies: SwitchDependencies = {
+ expr: node => { event('expr',node,-1,-1); },
+ newBlock: () => event('new',-1,-1,-1),
+ link: (from,to) => { event('link',from,to,-1); },
+ enter: block => { event('enter',block,-1,-1); },
+ linkWithCycleBarrier: (from,to,barrier) => event('barrierLink',from,to,barrier ? 1 : 0),
+ setCycleBarrier: (from,edge,barrier) => { event('setBarrier',from,edge,barrier ? 1 : 0); },
+ pushJump: (node,breakTo) => { event('push',node,breakTo,-1); },
+ popJump: () => { event('pop',-1,-1,-1); },
+ statements: list => { event('statements',list,-1,-1); },
+};
+for(const row of json.node(root).children) {
+ state.cur=num(row,'cur');state.jumps=booleans(row,'jumps');replay.events=json.node(json.field(row,'events')).children;replay.index=0;replay.trace='';
+ const op=json.node(json.field(row,'op')).text;
+ if(op === 'expression') {
+ const node=json.field(row,'expression');const view: ExpressionView={node:num(node,'node'),present:bool(node,'present'),hookPresent:bool(node,'hookPresent'),category:json.node(json.field(node,'category')).text,operand:num(node,'operand'),update:bool(node,'update')};
+ expressionDependencies.children=numbers(node,'children');expression(view,expressionDependencies);
+ } else if(op === 'pattern') {
+ const node=json.field(row,'pattern');const elements: BindingElementView[]=[];const properties: PropertyView[]=[];
+ for(const element of json.node(json.field(node,'elements')).children) {elements.push({present:bool(element,'present'),computed:bool(element,'computed'),key:num(element,'key'),target:num(element,'target'),fallback:num(element,'fallback')});}
+ for(const property of json.node(json.field(node,'properties')).children) {properties.push({category:json.node(json.field(property,'category')).text,computed:bool(property,'computed'),key:num(property,'key'),target:num(property,'target'),fallback:num(property,'fallback')});}
+ const view: PatternView={node:num(node,'node'),present:bool(node,'present'),category:json.node(json.field(node,'category')).text,operand:num(node,'operand'),elementsPresent:bool(node,'elementsPresent'),elements,properties,array:numbers(node,'array'),equals:bool(node,'equals'),left:num(node,'left'),right:num(node,'right')};patternBind(view,patternDependencies);
+ } else {
+ const node=json.field(row,'switch');const clauses: SwitchClause[]=[];
+ for(const clause of json.node(json.field(node,'clauses')).children){clauses.push({isDefault:bool(clause,'isDefault'),expression:num(clause,'expression'),statements:num(clause,'statements')});}
+ const view: SwitchView={node:num(node,'node'),expression:num(node,'expression'),clauses};switchStatement(state,view,switchDependencies);
+ }
+ console.log(`${state.cur}/${replay.trace}`);
+}

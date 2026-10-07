@@ -1,0 +1,40 @@
+export type SwitchClause = {isDefault: boolean; expression: number; statements: number};
+export type SwitchView = {node: number; expression: number; clauses: SwitchClause[]};
+export type SwitchState = {cur: number; jumps: boolean[]};
+export type SwitchDependencies = {expr: (node: number) => void; newBlock: () => number; link: (from: number, to: number) => void; enter: (block: number) => void; linkWithCycleBarrier: (from: number, to: number, barrier: boolean) => number; setCycleBarrier: (from: number, edge: number, barrier: boolean) => void; pushJump: (node: number, breakTo: number) => void; popJump: () => void; statements: (list: number) => void};
+export function switchStatement(state: SwitchState, view: SwitchView, dependencies: SwitchDependencies): void {
+  dependencies.expr(view.expression);
+  const after = dependencies.newBlock();
+  if (view.clauses.length === 0) { dependencies.link(state.cur, after); dependencies.enter(after); return; }
+  const bodies: number[] = []; const dispatchFrom: number[] = []; const dispatchEdge: number[] = [];
+  for (const clause of view.clauses) { bodies.push(dependencies.newBlock()); dispatchFrom.push(-1); dispatchEdge.push(-1); }
+  let defaultIndex = -1; let firstCaseIndex = -1; let testCur = state.cur;
+  for (let i = 0; i < view.clauses.length; i++) {
+    const clause = view.clauses[i]; if (clause === undefined) { continue; }
+    if (clause.isDefault) { defaultIndex = i; continue; }
+    if (firstCaseIndex === -1) { firstCaseIndex = i; }
+    state.cur = testCur;
+    dependencies.expr(clause.expression);
+    dispatchFrom[i] = state.cur;
+    dispatchEdge[i] = dependencies.linkWithCycleBarrier(state.cur, bodies[i] ?? -1, false);
+    const nextTest = dependencies.newBlock(); dependencies.link(state.cur, nextTest); dependencies.enter(nextTest); testCur = state.cur;
+  }
+  if (defaultIndex >= 0) {
+    dispatchFrom[defaultIndex] = testCur;
+    dispatchEdge[defaultIndex] = dependencies.linkWithCycleBarrier(testCur, bodies[defaultIndex] ?? -1, false);
+  } else { dependencies.link(testCur, after); }
+  dependencies.pushJump(view.node, after);
+  const switchJump = state.jumps.length - 1;
+  let hadSwitchBreak = false; let fallthroughFrom = -1;
+  for (let i = 0; i < view.clauses.length; i++) {
+    const clause = view.clauses[i]; if (clause === undefined) { continue; }
+    const beforeFirstCase = firstCaseIndex === -1 || (clause.isDefault && i < firstCaseIndex);
+    const barrier = hadSwitchBreak || beforeFirstCase;
+    const from = dispatchFrom[i] ?? -1; const edge = dispatchEdge[i] ?? -1;
+    if (from >= 0 && edge >= 0) { dependencies.setCycleBarrier(from, edge, barrier); }
+    dependencies.linkWithCycleBarrier(fallthroughFrom, bodies[i] ?? -1, barrier);
+    dependencies.enter(bodies[i] ?? -1); dependencies.statements(clause.statements); fallthroughFrom = state.cur;
+    if (i >= firstCaseIndex && firstCaseIndex !== -1) { hadSwitchBreak = state.jumps[switchJump] ?? false; }
+  }
+  dependencies.link(fallthroughFrom, after); dependencies.popJump(); dependencies.enter(after);
+}
