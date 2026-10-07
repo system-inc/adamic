@@ -1,0 +1,13 @@
+{
+  "control": {
+    "stdout": "23\n",
+    "stderr": "",
+    "exit": "0\n"
+  },
+  "mutant": {
+    "stdout": "",
+    "stderr": "adamic: panic: non-null assertion failed: from[0]! is null or undefined\n",
+    "exit": "70\n"
+  },
+  "worker": "origin/codex/non-null-check a02613eff851e07f567ab9934adfc8a2dc98eeca"
+}

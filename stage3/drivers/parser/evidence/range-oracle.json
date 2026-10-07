@@ -1,0 +1,49 @@
+{
+  "tree": "/tmp/parser-temporary-oracle-tree",
+  "nproc": 5,
+  "workers": 4,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.701
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 7.409
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=4",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 0,
+      "seconds": 255.543
+    }
+  },
+  "status": "pass",
+  "counts": {
+    "passing": 106367,
+    "failing": 0,
+    "pending": 0
+  },
+  "baseline_diffs": [],
+  "wall_seconds": 265.696
+}

@@ -1,3 +1,53 @@
+# Current result after temporary 64: zero checker diagnostics, lowering reached
+
+Push of 8411276 succeeded. The adaptation 64 list was separately pushed as
+8dd6805 before the checked-read implementation. See its README for all 13
+retained callers, ordinary-array producer evidence and the explicit boundary
+excluding arbitrary client getters/proxies/prototype mutation.
+
+Strict slice checker findings: **5 -> 4 -> 3 -> 2 -> 1 -> 0**. Removing the
+second-read assertion restores exactly the former core TS2345. Native assertion
+worker control exits 0 with 23; its invalid-second-read mutant exits 70 loudly.
+The complete checked-model upstream suite passes 106,367 tests with only the
+sanctioned API lines; parser and scanner remain byte-identical on Node.
+Corpus second-read observations are zero; directed TS/JS/JSDoc cases make five.
+Source provenance establishes the scoped invariant; corpus coverage alone does
+not. Getter/push-getter counterexamples remain real for arbitrary public inputs.
+
+## Ordered measured lowering list
+
+| Order | Checker | Outcome | Exact location and message |
+| --- | --- | --- | --- |
+| 1 | Zero diagnostics, load.Load accepts | Refused | src/compiler/core.ts:1:1: an import cycle |
+
+The unchanged real probe invokes lower.Lower only after load.Load succeeds.
+Evidence: range-checker-lowering.json. No fake checker bypass or manual cycle
+suppression was used. No second lowering result is established.
+
+## Attempt to move the cycle blocker
+
+Scratch only, never pushed: merge origin/codex/import-cycles
+779ff9d337ed3e1f3b27d71dd3152dcb1ca8614b into the six-feature probe worktree,
+resolve conflicts retaining its existing feature semantics, commit d361a72.
+The old SDK first lacked cohere/rule_runner. Retry with the worker's exact pins
+(cohere 7945d102, TypeScript d92d9bfee) instead exposes loader API integration
+errors: sourceFS.AppendFile(string,string) does not satisfy the new typed-path
+FS, ComparePathsOptions and UseCaseSensitiveFileNames no longer exist, and
+NewCachedFSCompilerHost/NewParsedCommandLine have changed signatures. This is
+an integration build failure, **not** an invented second parser lowering blocker.
+Compressed build evidence records the failure. I stopped before changing more
+compiler implementation or claiming the cycle was cleared.
+
+Native range-check.a is independently tested on origin/codex/non-null-check
+a02613eff851e07f567ab9934adfc8a2dc98eeca. That proves a loud absence check, not
+successful integration of all features or a native parser proof. Full native
+parser compilation and further ordered lowering blockers remain unmeasured.
+
+The older stopping descriptions below are historical and superseded by this
+section and the user-authorized scoped checked invariant.
+
+---
+
 # Checked addRange invariant: updated plan before implementation
 
 The user now permits a loud checked read on states TypeScript's own parser

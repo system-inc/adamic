@@ -1,0 +1,28 @@
+{
+  "controls": 48,
+  "mutants": [
+    {
+      "name": "indexed getter",
+      "original": {
+        "reads": 2,
+        "length": 1,
+        "own": true,
+        "value": "undefined"
+      },
+      "checked": "throws: parser addRange second read missing",
+      "removed_check": "accepts own undefined again"
+    },
+    {
+      "name": "push getter",
+      "original": {
+        "reads": 0,
+        "length": 1,
+        "own": true,
+        "value": "undefined"
+      },
+      "checked": "throws: parser addRange second read missing",
+      "removed_check": "accepts own undefined again"
+    }
+  ],
+  "model": "Only the asserted second read is wrapped; to.push is looked up before reading from[i], exactly as in source."
+}
