@@ -8,7 +8,7 @@ def run(name,cmd,expect=0):
  with (S/(name+'.stdout')).open('wb') as out,(S/(name+'.stderr')).open('wb') as err:r=subprocess.run([str(x) for x in cmd],cwd=ROOT,stdout=out,stderr=err)
  runs.append(dict(name=name,command=[str(x) for x in cmd],exit=r.returncode,seconds=time.monotonic()-t));(S/'runs.json').write_text(json.dumps(runs,indent=2)+'\n')
  assert r.returncode==expect,(name,r.returncode,(S/(name+'.stderr')).read_text());return (S/(name+'.stdout')).read_bytes()
-K={name:int(value) for name,value in re.findall(r'export const (\w+) = (\d+);',(OWN/'kinds.a').read_text())}
+K={name:value for name,value in re.findall(r"export const (\w+) = '([^']+)';",(OWN/'kinds.a').read_text())}
 q=lambda x:json.dumps(x,ensure_ascii=True)
 # Raw fixture facts are constructed independently from source; Go findings are never inputs.
 cases=[]
@@ -27,7 +27,7 @@ for binding,decl in [("import {Fragment as F} from 'react';","d.kind=K.ImportSpe
 for name,declared,external in [('Missing',False,False),('Known',True,False),('div',False,False),('Foo-bar',False,False),('_foo',False,False),('$foo',False,False),('테스트',False,False),('Map',True,True),('app.Foo',False,False),('app.Foo.Bar',False,False),('this.foo',False,False)]:
  source=('declare const Known:any;' if name=='Known' else '')+'const value=<'+name+' />;'
  root=name.split('.')[0];start,end=span(source,root)
- tag='const t=new TagInput();'+f't.kind=K.{"PropertyAccessExpression" if "." in name else "Identifier"};t.text={q(name)};t.receiverKind={0 if root=="this" else K["Identifier"]};t.receiverText={q(root)};t.start={start};t.end={end};'
+ tag='const t=new TagInput();'+f't.kind=K.{"PropertyAccessExpression" if "." in name else "Identifier"};t.text={q(name)};t.receiverKind={q("") if root=="this" else "Identifier"};t.receiverText={q(root)};t.start={start};t.end={end};'
  case(source,tag+f'emit(new JsxNoUndef().visit(t,true,{str(declared).lower()},DECLFILES,FILE));'.replace('DECLFILES', '[FILE]' if declared and not external else "['external.d.ts']" if external else '[]'))
 inline=['a','b','big','i','small','tt','abbr','acronym','cite','code','dfn','em','kbd','strong','samp','time','var','bdo','br','img','map','object','q','script','span','sub','sup','button','input','label','select','textarea']
 for name in inline:
@@ -75,4 +75,4 @@ original=OWN/'no_adjacent_inline_elements/index.a';text=original.read_text();ass
 text=re.sub(r"(['\"])([^'\"]+\.(?:a|ts))\1",lambda m:q(str((original.parent/m.group(2)).resolve())),text)
 mutant=S/'edge-whitespace-mutant.a';mutant.write_text(text.replace(r'\u0085',''));entry=S/'edge-whitespace-probe.a';entry.write_text(source.replace(str(original),str(mutant)));exe=S/'edge-whitespace-mutant';run('edge-whitespace-mutant-build',[stage0,'build',entry,'-o',exe]);assert run('edge-whitespace-mutant',[exe])!=truth;assert (S/'edge-whitespace-mutant.stderr').read_bytes()==b''
 print('edge whitespace regex mutant exits zero; Go bytes catch missing U+0085',flush=True)
-print('PARTIAL PASS: prepared nodes only; source JSX/numeric/checker adapter missing',flush=True)
+print('PASS prepared kernels; real source/checker coverage is validated separately',flush=True)

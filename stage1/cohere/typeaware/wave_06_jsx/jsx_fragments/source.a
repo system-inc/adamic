@@ -1,0 +1,26 @@
+import {panic,utf8Length} from 'adamic';
+import {Scanner} from '../../../../typescript/scanner/scanner.ts';
+import {Diagnostic} from '../../diagnostic.ts';
+import type {SourceNodeInterface} from '../no_adjacent_inline_elements/source.a';
+import {ElementInput} from '../inputs.a';
+import {jsxBindings} from '../jsx_bindings.a';
+import {JsxFragments} from './index.a';
+export class SourceFragments {
+ readonly core=new JsxFragments();
+ child(nodes:readonly SourceNodeInterface[],index:number):SourceNodeInterface{return nodes[index]??panic('missing fragment child');}
+ input(node:SourceNodeInterface,source:string):ElementInput{
+  const result=new ElementInput();const scanner=new Scanner(source);scanner.pos=node.pos;scanner.scan();result.start=utf8Length(source.slice(0,scanner.start));result.end=utf8Length(source.slice(0,node.end));return result;
+ }
+ named(node:SourceNodeInterface,opening:SourceNodeInterface,nodes:readonly SourceNodeInterface[],source:string,file:string,program:number,elementMode=false):Diagnostic[]{
+  const result=this.input(node,source);const name=this.child(nodes,opening.children[0]??-1);const attributes=this.child(nodes,opening.children[opening.children.length-1]??-1);result.attributes=attributes.children.length;result.tag.kind=name.kind;result.tag.text=name.text;
+  let receiver=name;
+  while(receiver.kind==='PropertyAccessExpression'){
+   const property=this.child(nodes,receiver.children[receiver.children.length-1]??-1);if(result.tag.depth===0){result.tag.text=property.text;}
+   result.tag.depth++;receiver=this.child(nodes,receiver.children[0]??-1);
+  }
+  result.tag.receiverKind=receiver.kind;result.tag.receiverText=receiver.text;
+  if(name.kind==='Identifier'&&!elementMode&&result.attributes===0){const facts=jsxBindings(program,file,source,name);for(const declaration of facts.declarations){result.declarations.push(declaration);}}
+  return this.core.named(result,elementMode);
+ }
+ fragment(node:SourceNodeInterface,source:string,elementMode=false):Diagnostic[]{return this.core.fragment(this.input(node,source),elementMode);}
+}

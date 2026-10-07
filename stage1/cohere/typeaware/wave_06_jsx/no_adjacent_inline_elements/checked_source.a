@@ -1,0 +1,17 @@
+import type {SourceNodeInterface} from './source.a';
+import {SourceAdjacent} from './source.a';
+import {jsxBindings} from '../jsx_bindings.a';
+import {Diagnostic} from '../../diagnostic.ts';
+// The handed call is retained. Only its callee is inspected for binding facts.
+export class CheckedSourceAdjacent {
+ readonly source=new SourceAdjacent();
+ call(node:SourceNodeInterface,nodes:readonly SourceNodeInterface[],text:string,file:string,program:number):Diagnostic[]{
+  const callee=this.source.unwrap(this.source.child(nodes,node.children[0]??-1),nodes);
+  if(callee.kind==='Identifier'&&callee.text==='createElement'){
+   const bindings=jsxBindings(program,file,text,callee);
+   return this.source.call(node,nodes,text,bindings.declarations);
+  }
+  return this.source.call(node,nodes,text);
+ }
+ jsx(node:SourceNodeInterface,nodes:readonly SourceNodeInterface[],text:string):Diagnostic[]{return this.source.jsx(node,nodes,text);}
+}

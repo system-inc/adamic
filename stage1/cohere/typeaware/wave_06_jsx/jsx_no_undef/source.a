@@ -1,0 +1,36 @@
+import {panic,tsgoInspect,utf8Length} from 'adamic';
+import {Scanner} from '../../../../typescript/scanner/scanner.ts';
+import {Frames,header} from '../../frames.ts';
+import {Diagnostic} from '../../diagnostic.ts';
+import type {SourceNodeInterface} from '../no_adjacent_inline_elements/source.a';
+import {TagInput} from '../inputs.a';
+import {JsxNoUndef} from './index.a';
+
+export class SymbolOrigins {
+ id=0;readonly files:string[]=[];
+}
+// Reuse the existing raw declaration question. No lint verdict crosses the bridge.
+export function symbolOrigins(program:number,file:string,source:string,node:SourceNodeInterface):SymbolOrigins {
+ const start=utf8Length(source.slice(0,node.pos));const end=utf8Length(source.slice(0,node.end));
+ const frames=new Frames(tsgoInspect(program,file,start,end,node.kind,'wave06-declarations\nsymbol'));
+ header(frames,'wave06-declarations');const result=new SymbolOrigins();result.id=frames.natural();const count=frames.natural();
+ for(let at=0;at<count;at++){
+  frames.field();frames.field();result.files.push(frames.field());frames.natural();frames.natural();frames.yes();frames.yes();const parents=frames.natural();
+  for(let parent=0;parent<parents;parent++){frames.field();frames.field();frames.natural();frames.yes();}
+  frames.field();
+ }
+ frames.end();return result;
+}
+
+export class SourceNoUndef {
+ readonly core=new JsxNoUndef();
+ child(nodes:readonly SourceNodeInterface[],index:number):SourceNodeInterface{return nodes[index]??panic('missing tag child');}
+ visit(node:SourceNodeInterface,nodes:readonly SourceNodeInterface[],source:string,file:string,program:number,allowGlobals=false):Diagnostic[]{
+  const name=this.child(nodes,node.children[0]??-1);let reference=name;const tag=new TagInput();tag.kind=name.kind;tag.text=name.text;
+  while(reference.kind==='PropertyAccessExpression'){reference=this.child(nodes,reference.children[0]??-1);}
+  tag.receiverKind=reference.kind;tag.receiverText=reference.text;
+  if(!this.core.reference(tag)){return [];}
+  const scanner=new Scanner(source);scanner.pos=reference.pos;scanner.scan();tag.start=utf8Length(source.slice(0,scanner.start));tag.end=utf8Length(source.slice(0,reference.end));
+  const facts=symbolOrigins(program,file,source,reference);return this.core.visit(tag,true,facts.id!==0,facts.files,file,allowGlobals);
+ }
+}

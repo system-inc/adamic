@@ -1,0 +1,59 @@
+import {panic,utf8Length} from 'adamic';
+// Structural boundary permits the parser dependency to be supplied by integration.
+export interface SourceNodeInterface {
+ readonly kind:string;readonly text:string;readonly pos:number;readonly end:number;readonly list:number;readonly children:readonly number[];
+}
+import {Scanner} from '../../../../typescript/scanner/scanner.ts';
+import {Diagnostic} from '../../diagnostic.ts';
+import {ContainerInput,ChildInput,DeclarationInput} from '../inputs.a';
+import {NoAdjacentInlineElements} from './index.a';
+
+// Listener dispatch belongs to the driver. These handlers receive the root once.
+export class SourceAdjacent {
+ readonly core=new NoAdjacentInlineElements();
+ child(nodes:readonly SourceNodeInterface[],index:number):SourceNodeInterface{return nodes[index]??panic('missing source child');}
+ unwrap(node:SourceNodeInterface,nodes:readonly SourceNodeInterface[]):SourceNodeInterface{
+  let current=node;
+  while(current.kind==='ParenthesizedExpression'){current=this.child(nodes,current.children[0]??-1);}
+  return current;
+ }
+ container(node:SourceNodeInterface,source:string):ContainerInput{
+  const result=new ContainerInput();const scanner=new Scanner(source);scanner.pos=node.pos;scanner.scan();
+  result.start=utf8Length(source.slice(0,scanner.start));result.end=utf8Length(source.slice(0,node.end));return result;
+ }
+ jsx(node:SourceNodeInterface,nodes:readonly SourceNodeInterface[],source:string):Diagnostic[]{
+  const result=this.container(node,source);
+  // Opening and closing tags are not JSX children. The parser's list is flat.
+  for(let at=1;at<node.children.length-1;at++){
+   const child=this.child(nodes,node.children[at]??-1);const item=new ChildInput();item.kind=child.kind;
+   let opening:SourceNodeInterface|undefined=undefined;
+   // Child shape classification implements the predicate, not listener relevance.
+   if(child.kind==='JsxElement'){opening=this.child(nodes,child.children[0]??-1);}
+   else if(child.kind==='JsxSelfClosingElement'){opening=child;}
+   if(opening!==undefined){const tag=this.child(nodes,opening.children[0]??-1);item.tagKind=tag.kind;item.tagText=tag.text;}
+   result.children.push(item);
+  }
+  return this.core.jsx(result);
+ }
+ call(node:SourceNodeInterface,nodes:readonly SourceNodeInterface[],source:string,declarations:readonly DeclarationInput[]|undefined=undefined):Diagnostic[]{
+  const result=this.container(node,source);result.argumentsCount=node.list<0?0:node.list;
+  if(result.argumentsCount<3){return [];}
+  const third=this.child(nodes,node.children[node.children.length-result.argumentsCount+2]??-1);result.thirdKind=third.kind;
+  if(third.kind!=='ArrayLiteralExpression'){return [];}
+  const callee=this.unwrap(this.child(nodes,node.children[0]??-1),nodes);result.callee.kind=callee.kind;result.callee.text=callee.text;
+  if(callee.kind==='PropertyAccessExpression'){
+   const receiver=this.child(nodes,callee.children[0]??-1);const name=this.child(nodes,callee.children[callee.children.length-1]??-1);
+   result.callee.receiverKind=receiver.kind;result.callee.receiverText=receiver.text;result.callee.text=name.text;
+  }
+  if(callee.kind==='Identifier'&&callee.text==='createElement'){
+   if(declarations===undefined){panic('NotYet: bare createElement needs raw resolved declaration facts');}
+   for(const declaration of declarations){result.declarations.push(declaration);}
+  }
+  for(const index of third.children){
+   const child=this.child(nodes,index);const item=new ChildInput();item.kind=child.kind;item.text=child.text;
+   if(child.kind==='CallExpression'&&child.list>0){const first=this.child(nodes,child.children[child.children.length-child.list]??-1);item.firstKind=first.kind;item.firstText=first.text;}
+   result.children.push(item);
+  }
+  return this.core.call(result);
+ }
+}

@@ -88,6 +88,9 @@ func (p *Program) wave06Declarations(out *fields, c *checker.Checker, node *ast.
 
 // wave06Question preserves the previous unsupported-mode error for other modes.
 func (p *Program) wave06Question(out *fields, c *checker.Checker, node *ast.Node, question string) (string, error) {
+	if question == "wave06-jsx-bindings" {
+		return p.wave06JSXBindings(out, c, node)
+	}
 	if strings.Split(question, "\n")[0] != "wave06-declarations" {
 		return "", fmt.Errorf("unsupported checker question: %s", question)
 	}

@@ -7,7 +7,7 @@ const inlineNames=["a", "b", "big", "i", "small", "tt", "abbr", "acronym", "cite
 function inlineName(name:string):boolean{for(const candidate of inlineNames){if(name===candidate){return true;}}return false;}
 // Translate Go unicode.IsSpace once; JS \s differs on U+0085 and BOM.
 const edgeWhitespace=/^[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]|[\u0009-\u000d\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]$/u;
-function literal(kind:number):boolean{return kind===StringLiteral||kind===NumericLiteral||kind===BigIntLiteral||kind===TrueKeyword||kind===FalseKeyword||kind===NullKeyword||kind===RegularExpressionLiteral;}
+function literal(kind:string):boolean{return kind===StringLiteral||kind===NumericLiteral||kind===BigIntLiteral||kind===TrueKeyword||kind===FalseKeyword||kind===NullKeyword||kind===RegularExpressionLiteral;}
 export class NoAdjacentInlineElements {
  child(child:ChildInput,jsx:boolean):boolean{
   if(jsx){return (child.kind===JsxElement||child.kind===JsxSelfClosingElement)&&child.tagKind===Identifier&&inlineName(child.tagText);}
@@ -26,5 +26,5 @@ export class NoAdjacentInlineElements {
   const accepted=callee.kind===PropertyAccessExpression?callee.receiverKind===Identifier&&callee.receiverText==='React'&&callee.text==='createElement':callee.kind===Identifier&&callee.text==='createElement'&&bindsPragma(node.declarations);
   return accepted?this.validate(node,false):[];
  }
- analyze():void{panic('NotYet: react/no-adjacent-inline-elements needs the shared numeric JSX parser, handed-node driver and raw pragma declaration adapter');}
+ analyze():void{panic('NotYet: react/no-adjacent-inline-elements needs the shared source driver integration; CheckedSourceAdjacent supplies parser and raw checker analysis');}
 }

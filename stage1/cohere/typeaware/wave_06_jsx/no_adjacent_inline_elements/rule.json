@@ -1,7 +1,7 @@
 {
   "name": "react/no-adjacent-inline-elements",
   "kinds": [
-    285,
-    214
+    "JsxElement",
+    "CallExpression"
   ]
 }
