@@ -1,0 +1,2 @@
+console.log('x');try{try{throw 1;}finally{process.exit(1);}}catch{}
+export {};

@@ -1,0 +1,2 @@
+declare const flag:boolean;while(flag){console.log('x');break;}process.exit(1);
+export {};

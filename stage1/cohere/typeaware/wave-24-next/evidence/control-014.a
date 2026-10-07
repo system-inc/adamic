@@ -1,0 +1,2 @@
+declare const flag:boolean;if(flag)console.log('x');else process.exit(1);process.exit(2);
+export {};

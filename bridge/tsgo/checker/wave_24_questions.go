@@ -14,6 +14,10 @@ func (p *Program) inspectWave24(out *fields, c *checker.Checker, node *ast.Node,
 		"class-this-types":         p.classThisTypes,
 		"then-callback-signatures": p.thenCallbackSignatures,
 		"handler-parameter-types":  p.handlerParameterTypes,
+		"program-module-edges":     p.programModuleEdges,
+		"resolved-call-origin":     p.resolvedCallOrigin,
+		"symbol-provenance":        p.symbolProvenance,
+		"symbol-provenance-alias":  p.symbolProvenance,
 	}
 	ask := questions[strings.Split(question, "\n")[0]]
 	if ask == nil {
@@ -29,7 +33,7 @@ func (p *Program) inspectWave24(out *fields, c *checker.Checker, node *ast.Node,
 // and its refusal mutation anchors unchanged. The C ABI registers this once.
 func (p *Program) InspectWave24(file string, start, end uint64, kind, question string) (string, error) {
 	mode := strings.Split(question, "\n")[0]
-	if mode != "class-this-types" && mode != "then-callback-signatures" && mode != "handler-parameter-types" {
+	if mode != "class-this-types" && mode != "then-callback-signatures" && mode != "handler-parameter-types" && mode != "symbol-provenance" && mode != "symbol-provenance-alias" && mode != "resolved-call-origin" && mode != "program-module-edges" {
 		return p.Inspect(file, start, end, kind, question)
 	}
 	source, node, err := p.exact(file, start, end, kind)

@@ -1,0 +1,2 @@
+declare const flag:boolean;switch(flag){case true:console.log('x');break;default:break;}process.exit(0);
+export {};

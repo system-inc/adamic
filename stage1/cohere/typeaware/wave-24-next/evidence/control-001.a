@@ -1,0 +1,2 @@
+try{while(true){break;}process.exit(1);}finally{console.log('x');}
+export {};

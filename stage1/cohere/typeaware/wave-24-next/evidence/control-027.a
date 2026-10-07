@@ -1,0 +1,2 @@
+function help():never{console.log('help');throw 1;}help();process.exit(0);
+export {};

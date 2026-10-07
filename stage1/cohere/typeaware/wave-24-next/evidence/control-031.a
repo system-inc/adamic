@@ -1,0 +1,2 @@
+const fake={exit(_code:number){}};console.log('x');fake.exit(1);
+export {};
