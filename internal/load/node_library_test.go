@@ -53,3 +53,9 @@ func TestNodeLibraryRejectsDifferentVersion(t *testing.T) {
 		t.Fatalf("want pinned version refusal, got %v", err)
 	}
 }
+
+func TestNodeLibraryKeepsOfficialConsoleSignatures(t *testing.T) {
+	if _, err := nodeSource(t, `import type {Stats} from 'node:fs'; console.log(true); console.log(undefined); console.log('a','b');`); err != nil {
+		t.Fatal(err)
+	}
+}
