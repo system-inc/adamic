@@ -1,0 +1,69 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { byteOffsets } from '../../unary_minus.ts';
+import { Context } from './context.a';
+import { create as symbolRule } from './rule.a';
+import { create as hookRule } from '../react_hook_no_any_type/rule.a';
+
+const args = programArguments();
+const config = args[0] ?? panic('missing tsconfig');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') {
+    panic(manifest.message);
+}
+const selected = args[2] ?? panic('missing selected rule');
+if(selected !== 'symbol' && selected !== 'hook') {
+    panic('unknown selected rule');
+}
+const catalog = readTextFile(args[3] ?? panic('missing raw catalog'));
+if(catalog.kind === 'Error') {
+    panic(catalog.message);
+}
+const blinded = catalog.text.split('\n').filter((name) => name !== '');
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(config, paths);
+if(args.includes('--released')) {
+    tsgoRelease(program);
+}
+let findings = 0;
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const context = new Context(program, path, parser, scanner, byteOffsets(source.text), blinded);
+    const symbol = symbolRule(context);
+    const hook = hookRule(context);
+    parser.file();
+    // Parse once; fetch each dispatch node once; selected listeners receive it.
+    for(let index = 0; index < parser.nodes.length; index++) {
+        const node = parser.node(index);
+        switch(node.kind) {
+            case 'CallExpression':
+                if(selected === 'symbol') {
+                    symbol.visit(node, index);
+                }
+                else {
+                    hook.visit(node, index);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    findings += context.findings.length;
+    for(const finding of context.findings) {
+        finding.sortKey = finding.written();
+    }
+    context.findings.sort((left, right) => (left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0));
+    console.log(`file\t${written(path)}`);
+    for(const finding of context.findings) {
+        console.log(finding.written());
+    }
+}
+console.log(`findings ${findings}`);
+tsgoRelease(program);

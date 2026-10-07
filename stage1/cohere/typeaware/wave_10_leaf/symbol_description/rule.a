@@ -1,3 +1,5 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Context } from './context.a';
 import { Diagnostic } from '../../diagnostic.ts';
 
 // Facts belong to the supplied call. The callee is parenthesis-normalized by
@@ -8,7 +10,7 @@ export interface SymbolCallFactsInterface {
     readonly hasChecker: boolean;
     readonly hasExpression: boolean;
     readonly argumentCount: number;
-    readonly calleeKind: number;
+    readonly calleeKind: string;
     readonly calleeName: string;
     readonly symbolPresent: boolean;
     readonly declarationFiles: readonly boolean[];
@@ -23,7 +25,7 @@ export function visit(node: SymbolCallFactsInterface): Diagnostic | undefined {
     if(!node.hasChecker || !node.hasExpression || node.argumentCount !== 0) {
         return undefined;
     }
-    if(node.calleeKind !== 79 || node.calleeName !== 'Symbol') {
+    if(node.calleeKind !== 'Identifier' || node.calleeName !== 'Symbol') {
         return undefined;
     }
     // Production resolvesToAGlobal reads the first declaration, not every one.
@@ -31,4 +33,38 @@ export function visit(node: SymbolCallFactsInterface): Diagnostic | undefined {
         return undefined;
     }
     return new Diagnostic('symbol-description', 'expected', message, node.start, node.end, '');
+}
+
+export class Rule {
+    readonly context: Context;
+    constructor(context: Context) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(node.list > 0 || node.children.length === 0) {
+            return;
+        }
+        const callee = this.context.unwrap(this.context.parser.node(node.children[0] ?? index));
+        if(callee.kind !== 'Identifier' || callee.text !== 'Symbol') {
+            return;
+        }
+        const origin = this.context.declarationFiles(callee);
+        const finding = visit({
+            start: this.context.start(node),
+            end: this.context.byte(node.end),
+            hasChecker: true,
+            hasExpression: true,
+            argumentCount: 0,
+            calleeKind: callee.kind,
+            calleeName: callee.text,
+            symbolPresent: origin.present,
+            declarationFiles: origin.files,
+        });
+        if(finding !== undefined) {
+            this.context.findings.push(finding);
+        }
+    }
+}
+export function create(context: Context): Rule {
+    return new Rule(context);
 }

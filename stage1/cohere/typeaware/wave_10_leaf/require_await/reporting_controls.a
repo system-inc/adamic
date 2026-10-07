@@ -1,0 +1,57 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { byteOffsets } from '../../unary_minus.ts';
+import { Context } from '../symbol_description/context.a';
+import { report } from './reporting.a';
+
+// Reporting-only controls: each input contains one async reporting candidate,
+// with no contextual contract. This is not the completed require-await rule.
+const args = programArguments();
+const manifest = readTextFile(args[0] ?? panic('missing reporting manifest'));
+if(manifest.kind === 'Error') {
+    panic(manifest.message);
+}
+let findings = 0;
+for(const path of manifest.text.split('\n').filter((name) => name !== '')) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const context = new Context(0, path, parser, scanner, byteOffsets(source.text), []);
+    parser.file();
+    const parents: number[] = [];
+    while(parents.length < parser.nodes.length) {
+        parents.push(-1);
+    }
+    for(let index = 0; index < parser.nodes.length; index++) {
+        const node = parser.node(index);
+        for(const child of node.children) {
+            parents[child] = index;
+        }
+    }
+    console.log(`file\t${written(path)}`);
+    for(let index = 0; index < parser.nodes.length; index++) {
+        const node = parser.node(index);
+        switch(node.kind) {
+            case 'FunctionDeclaration':
+            case 'FunctionExpression':
+            case 'ArrowFunction':
+            case 'MethodDeclaration':
+            case 'GetAccessor':
+            case 'SetAccessor':
+            case 'Constructor':
+                if(node.children.some((child) => parser.node(child).kind === 'AsyncKeyword')) {
+                    console.log(report(context, node, index, parents).written());
+                    findings++;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+console.log(`findings ${findings}`);

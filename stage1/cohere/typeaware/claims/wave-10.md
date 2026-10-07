@@ -116,3 +116,16 @@ new-module gate are green after the clean rebase; source tip 39310513 precedes
 this evidence commit. React claims remain PARKED. The three non-analysis claims
 remain IN PROGRESS, with no additional reservation. See wave_10_leaf's current
 landing section for commands, comparisons, mutants, timings and limits.
+
+
+Continuation after the canonical-kind and regex corrections: symbol-description
+and structure/react-hook-no-any-type now have live handed-node native adapters.
+Each passes full Go finding/fix/suggestion bytes on its positive controls and
+compiler77/repository287, normal and sanitized, with live clean-exit mutants and
+released-handle refusals. require-await has named-kind body filters and a separately
+validated 32-case native reporting module, including suggestions. Its full
+contextual/generic/heritage contract path remains unimplemented; the bridge does
+not yet expose resolved-signature target/type-parameter facts for declared-demand
+replay. Shared-registry/context integration also remains pending. No further
+reservation is made. Exact final gates and timing observations are in
+../wave_10_leaf/README.md and evidence/live-continuation.

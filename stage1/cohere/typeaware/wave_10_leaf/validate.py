@@ -7,7 +7,11 @@ from pathlib import Path
 parser = argparse.ArgumentParser()
 parser.add_argument('--stage0', required=True)
 parser.add_argument('--artifacts', required=True)
+parser.add_argument('--checker')
+parser.add_argument('--checker-asan')
 args = parser.parse_args()
+checker = args.checker or str(Path(args.stage0).resolve().parent / 'checker.a')
+checker_asan = args.checker_asan or str(Path(args.stage0).resolve().parent / 'checker-asan.a')
 owned = Path(__file__).resolve().parent
 repository = owned.parents[3]
 artifacts = Path(args.artifacts).resolve()
@@ -26,6 +30,9 @@ for source in owned.rglob('*.a'):
     target.parent.mkdir(parents=True, exist_ok=True)
     text = source.read_text().replace('/workspace/wave-10-leaf-controls', str(artifacts))
     text = text.replace("'../../diagnostic.ts'", "'" + str(repository / 'stage1/cohere/typeaware/diagnostic.ts') + "'")
+    for module in ['frames.ts', 'facts.ts', 'unary_minus.ts']:
+        text = text.replace("'../../" + module + "'", "'" + str(repository / 'stage1/cohere/typeaware' / module) + "'")
+    text = text.replace("'../../../../typescript/", "'" + str(repository / 'stage1/typescript') + "/")
     target.write_text(text)
 
 
@@ -70,6 +77,7 @@ for label, name in [('symbol', 'symbol_description'), ('hook', 'react_hook_no_an
     for sanitize in [False, True]:
         binary = artifacts / (label + ('-asan' if sanitize else '-native'))
         command = [args.stage0, 'build', str(sources / (name + '_controls.a')), '-o', str(binary)]
+        command.extend(['--tsgo', checker_asan if sanitize else checker])
         if sanitize:
             command.append('--sanitize')
         run(binary.name + '-build', command)
@@ -84,6 +92,7 @@ for label, name, before, after in [
     ('symbol', 'symbol_description', 'node.declarationFiles[0] !== true', 'node.declarationFiles[0] === true'),
     ('hook', 'react_hook_no_any_type', '(node.resultFlags & 1) === 0', '(node.resultFlags & 1) !== 0'),
     ('await', 'require_await', '(node.flags & 7) === 6', '(node.flags & 7) !== 6'),
+    ('hook-name', 'react_hook_no_any_type', '/^use[A-Z0-9]/u', '/^use[A-Z]/u'),
 ]:
     mutant = artifacts / (label + '-mutant-source')
     for source in sources.rglob('*.a'):
@@ -95,13 +104,14 @@ for label, name, before, after in [
             text = text.replace(before, after, 1)
         target.write_text(text)
     binary = artifacts / (label + '-mutant')
-    run(label + '-mutant-build', [args.stage0, 'build', str(mutant / (name + '_controls.a')), '-o', str(binary)])
+    run(label + '-mutant-build', [args.stage0, 'build', str(mutant / (name + '_controls.a')), '-o', str(binary), '--tsgo', checker])
     command = [str(binary)]
-    if label == 'hook':
+    if label.startswith('hook'):
         command.append(str(artifacts / 'catalog.txt'))
     observed = run(label + '-mutant-run', command)
-    assert observed.stderr == b'' and observed.stdout != truths[label], (label, 'mutant survived')
-    byte = next((i for i, (a, b) in enumerate(zip(observed.stdout, truths[label])) if a != b), min(len(observed.stdout), len(truths[label])))
+    expected = truths['hook' if label == 'hook-name' else label]
+    assert observed.stderr == b'' and observed.stdout != expected, (label, 'mutant survived')
+    byte = next((i for i, (a, b) in enumerate(zip(observed.stdout, expected)) if a != b), min(len(observed.stdout), len(expected)))
     print(label, 'mutant exits 0, empty stderr, comparison catches byte', byte, flush=True)
 refusal = subprocess.run([str(artifacts / 'await-native'), '--refuse'], capture_output=True)
 (artifacts / 'await-refusal.stdout').write_bytes(refusal.stdout)

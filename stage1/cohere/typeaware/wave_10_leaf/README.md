@@ -1,8 +1,8 @@
-Added isolated numeric supplied-fact verdict modules for symbol-description and structure/react-hook-no-any-type, plus require-await body filters.
-Reservation was pushed in f7df1008 before implementation; previous complete six-rule landing is 6d4e8cfc on main f8013f0b.
-Owned validate.py passes production Go controls, native sanitizers, clean-exit mutants and explicit missing-adapter refusal; production source lint finds 0.
-Symbol/hook mutants fail byte comparison at 60/64; require-await filter mutant fails its narrower Boolean comparison at 568.
-These are partial ports, not complete native rules: live supplied-node adapters, corpus comparison and require-await reporting remain unimplemented.
+Added live handed-node native adapters for symbol-description and structure/react-hook-no-any-type, plus require-await reporting.
+The branch remains based on origin/main c01907a7; no new rules are claimed.
+The two live rules pass full Go-byte controls/corpora, sanitizers, released-handle checks and native mutants; source lint reports 0.
+Require-await body filters and 32 reporting controls pass their narrower Go authorities; the incomplete full listener still refuses candidates.
+Full require-await contextual/generic/heritage contract decisions and shared-registry integration remain unimplemented.
 
 The three earlier React claims are PARKED under the user's explicit instruction.
 The first six rules remain completed; their full landing observations are in
@@ -14,13 +14,16 @@ ab70f38d4. Symbol and hook listeners declare CallExpression; require-await decla
 FunctionDeclaration, FunctionExpression, ArrowFunction, MethodDeclaration,
 GetAccessor, SetAccessor and Constructor. The generated driver hands each listener
 (node, index), with optional parent when requested. Numeric kind minting is not
-planned and is not a blocker. The isolated supplied-fact modules still use numeric
-checker AST observations internally; they are not ParseNode adapters.
+planned and is not a blocker. All new supplied-fact kind fields now use canonical names too. The symbol/hook
+Rule classes receive the handed ParseNode, and the owned live runner loads one
+checker program and parses each file once.
 
 These are partial listener declarations, not complete Discover registrations.
 The old unrecognized entry field is removed. The registry additionally requires
 named factories/classes, hooks, provenance, owned oracle adapters, mutants and
-witnesses. Those integration pieces remain unwritten. No shared registry or
+witnesses. Named create/Rule/visit entries are now present for symbol and hook;
+full Discover packaging and the shared RuleContext checker attachment remain
+unwritten. The owned live Context carries the checker handle directly. No shared registry or
 harness is changed. reportNode and reportRange are present in the referenced
 RuleContext; its source does not expose the live checker facts these rules need.
 
@@ -34,20 +37,23 @@ wording. Its blinded-rule names are supplied raw registry metadata; the test ora
 making a lint decision. The linked catalog currently names three rules. No list
 is frozen into the native rule.
 
-require-await implements its modifier/generator/body guards and numeric preorder
+require-await implements its modifier/generator/body guards and named-kind preorder
 body walk, including nested function/class barriers, concise bodies, for-await,
 and the correct await-using composite mask. Reporting candidates explicitly panic
 with NotYet and exit 70. Contextual promise demand, declared generic signature
-replay, heritage member types, function-head ranges and removeAsync suggestions
-are NOT ported. The current owned interface models only the body facts, not a
+replay and heritage member contract decisions are NOT ported. Function-head
+ranges and removeAsync suggestions now have the separate native reporting module
+and reporting-only source controls described below. The current owned interface models only the body facts, not a
 finished function adapter. This is incomplete work, not a complete rule hidden
 behind a harness exception.
 
-The remaining work is adapting the handed ParseNode and checker facts to these
-owned fact contracts and emitting results through reportNode/reportRange. The
+The remaining shared-harness work is attaching checker/program data to its
+RuleContext and mapping these diagnostics to reportNode/reportRange. The two
+owned live adapters now construct their facts directly from native parse nodes
+and the existing raw checker bridge. The
 handed-node contract is now specified on origin/lint-rules/harness, though it is
-not on this landing base. Live checker adapters are not implemented and no new
-bridge question is registered. Existing bridge modes supply many relevant raw
+not on this landing base. The symbol/hook live checker adapters use existing runtime-context origin and
+raw-shape questions; no new bridge question is registered. Existing bridge modes supply many relevant raw
 type/origin facts; absence of a lint-verdict question is not a blocker.
 No rule verdict is delegated to Go by the native modules.
 
@@ -83,7 +89,9 @@ Setup/environment is unchanged from the last landing: total 100s, nproc 5.
 
 No native compiler77/repository287 comparison for these three, live handle release
 check, full upstream matrix, emitted-JavaScript comparison or full repository gate
-is claimed. They remain in progress and do not authorize another reservation.
+is claimed. This paragraph records the earlier isolated-only validation. Current live
+symbol/hook coverage is below; require-await remains incomplete and no new
+reservation is authorized.
 Evidence contains raw stdout/stderr, parser numbers, source lint and mutant logs.
 
 ## Current landing on c01907a7
@@ -152,3 +160,102 @@ controls reject numeric kinds, an unknown name, duplicate kinds and node: false.
 This checks listener metadata and generated dispatch, not full Discover or module
 compilation. Evidence preserves the probe and its output. The existing native
 sources are unchanged; no new runtime, sanitizer or corpus run is claimed.
+
+## Live adapters and reporting continuation
+
+Fetch confirms main remains c01907a7. Runtime changes are confined to the owned
+leaf modules. No shared harness/generator/bridge registration or protected
+compiler file is edited. The earlier six completed rules' runtime sources are
+unchanged from their recorded green landing. Environment/setup is unchanged:
+last setup total 100s; nproc again reports 5. Setup was not rerun this time.
+
+The owned live driver dispatches only CallExpression to the selected rule. It
+fetches each dispatch node once and hands that node to visit(node, index).
+The listeners inspect callee/receiver syntax, not the given node's kind to decide
+relevance. Symbol uses the raw first declaration's declaration-file flag; hook
+uses the raw call-result type flags and the live catalog's raw rule names.
+No bridge verdict or Go lint predicate supplies the native findings.
+
+Hook names now use the RegExp literal /^use[A-Z0-9]/u. The regex branch's table
+has no row for these three rules: the pinned Go hook predicate is byte comparisons
+implementing that documented pattern, not a Go regexp. The new digit-removal
+RegExp mutant is killed by production-Go comparison. require-await's semicolon
+continuation predicate also uses a RegExp literal. None of these rules has a
+user-supplied regex option.
+
+Run the final owned gates after sourcing /workspace/adamic-tools/env.sh:
+
+```sh
+python3 stage1/cohere/typeaware/wave_10_leaf/validate.py \
+  --stage0 /workspace/wave-10-f801-original/adamic \
+  --artifacts /workspace/wave-10-leaf-named \
+  > /tmp/wave-10-leaf-named-final.log 2>&1
+python3 stage1/cohere/typeaware/wave_10_leaf/live_validate.py \
+  --stage0 /workspace/wave-10-f801-original/adamic \
+  --checker /workspace/wave-10-f801-original/checker.a \
+  --checker-asan /workspace/wave-10-f801-original/checker-asan.a \
+  --isolated /workspace/wave-10-leaf-named \
+  --artifacts /workspace/wave-10-leaf-live-validation \
+  --compiler-config /workspace/wave-10-typescript/src/compiler/tsconfig.json \
+  --compiler-manifest /workspace/wave-10-compiler.manifest \
+  --repository-manifest /workspace/wave-10-repository.manifest \
+  > /tmp/wave-10-leaf-live-final.log 2>&1
+python3 stage1/cohere/typeaware/wave_10_leaf/require_await/validate_reporting.py \
+  --stage0 /workspace/wave-10-f801-original/adamic \
+  --checker /workspace/wave-10-f801-original/checker.a \
+  --checker-asan /workspace/wave-10-f801-original/checker-asan.a \
+  --oracle /workspace/wave-10-leaf-named/await-oracle \
+  --artifacts /workspace/wave-10-await-report-validation \
+  > /tmp/wave-10-await-report-final.log 2>&1
+```
+
+All three exit 0. Live symbol controls: 13 files, 4 findings, 2036 bytes; hook:
+16 files, 7 findings, 5806 bytes. Each live rule matches Go on compiler77
+(5318 bytes) and frozen repository287 (18485 bytes), including complete finding,
+fix and suggestion fields. Corpus findings are zero; positive controls prevent
+vacuous corpus agreement. Normal and ASan/UBSan runs agree with empty native
+stderr. Released-handle queries reject at exit 70 under both builds, with exact
+stderr: adamic: panic: invalid or released checker handle\n.
+
+Symbol's first-declaration mutant and hook's result-type mutant each compile,
+exit 0 with empty stderr, and differ only in byte comparison at 60/64. The
+isolated await-using filter mutant is caught at 568, and the hook digit-pattern
+mutant at 807. The prior candidate refusal remains exit 70.
+
+Require-await reporting has 32 source fixtures and 20279 identical Go/native
+bytes, normal and sanitized. They cover function/property/arrow head ranges,
+export modifiers, method names including empty/computed/Unicode names, comments
+following async, and semicolon insertion versus already terminated predecessors.
+A reporting-range mutant compiles, exits 0 with empty stderr and is caught at
+byte 64. These are reporting-only candidates with no contextual contracts:
+they do NOT validate the incomplete full require-await verdict or corpus.
+
+Source lint over all ten owned .a modules reports findings 0. The first live
+release assertion expected the wrong error label; it was corrected to the actual
+checker-handle diagnostic and the entire gate rerun. Source lint initially caught
+two writes to a caller-owned scanner; scanner operations now live on Context.
+The final reporting and live gates rerun after that refactor.
+
+Three alternating complete-process observations per dataset, with identical
+stdout checked on every run, give these medians. Worker load is uncontrolled;
+these include load/parse/checker queries/serialization, not isolated fact verdicts.
+
+| Rule and corpus | Native seconds | Go seconds | Native / Go |
+| --- | ---: | ---: | ---: |
+| symbol-controls | 0.033449 | 0.025062 | 1.335x |
+| symbol-compiler | 1.381533 | 0.282475 | 4.891x |
+| symbol-repository | 0.233297 | 0.129675 | 1.799x |
+| hook-controls | 0.017214 | 0.023670 | 0.727x |
+| hook-compiler | 1.374404 | 0.284982 | 4.823x |
+| hook-repository | 0.238282 | 0.131858 | 1.807x |
+
+Remaining work is concrete: require-await must replay declared generic targets,
+substitutions and contextual steps, then evaluate promise demands and heritage
+member contracts before calling reporting.a. Existing bridge function-signatures
+exposes call signatures, but no question exposes a resolved signature's Target()
+and TypeParameters() needed for that declared-demand replay. That new raw-fact
+question and its native consumer are not implemented. No complete require-await
+port, full upstream matrix, emitted-JavaScript comparison or full repository gate
+is claimed. The shared harness's RuleContext at ab70f38d4 has no checker/program
+attachment; integration must connect this owned live context to it. No numeric
+API is expected and no new rule is claimed.

@@ -1,3 +1,5 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Context } from '../symbol_description/context.a';
 import { Diagnostic } from '../../diagnostic.ts';
 
 export interface HookCallFactsInterface {
@@ -5,22 +7,18 @@ export interface HookCallFactsInterface {
     readonly end: number;
     readonly hasChecker: boolean;
     readonly hasExpression: boolean;
-    readonly calleeKind: number;
+    readonly calleeKind: string;
     readonly calleeName: string;
-    readonly receiverKind: number;
+    readonly receiverKind: string;
     readonly receiverName: string;
-    readonly propertyKind: number;
+    readonly propertyKind: string;
     readonly propertyName: string;
     readonly resultPresent: boolean;
     readonly resultFlags: number;
     readonly blindedRules: readonly string[];
 }
 export function isHookName(name: string): boolean {
-    if(name.length < 4 || !name.startsWith('use')) {
-        return false;
-    }
-    const fourth = name.charCodeAt(3);
-    return (fourth >= 65 && fourth <= 90) || (fourth >= 48 && fourth <= 57);
+    return /^use[A-Z0-9]/u.test(name);
 }
 export function namedRules(names: readonly string[]): string {
     if(names.length === 0) {
@@ -51,14 +49,14 @@ export function visit(node: HookCallFactsInterface): Diagnostic | undefined {
         return undefined;
     }
     let hook = '';
-    if(node.calleeKind === 79 && isHookName(node.calleeName)) {
+    if(node.calleeKind === 'Identifier' && isHookName(node.calleeName)) {
         hook = node.calleeName;
     }
     if(
-        node.calleeKind === 212 &&
-        node.receiverKind === 79 &&
+        node.calleeKind === 'PropertyAccessExpression' &&
+        node.receiverKind === 'Identifier' &&
         node.receiverName === 'React' &&
-        node.propertyKind === 79 &&
+        node.propertyKind === 'Identifier' &&
         isHookName(node.propertyName)
     ) {
         hook = `React.${node.propertyName}`;
@@ -74,4 +72,60 @@ export function visit(node: HookCallFactsInterface): Diagnostic | undefined {
         node.end,
         '',
     );
+}
+
+export class Rule {
+    readonly context: Context;
+    constructor(context: Context) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(node.children.length === 0) {
+            return;
+        }
+        const callee = this.context.parser.node(node.children[0] ?? index);
+        let receiverKind = '';
+        let receiverName = '';
+        let propertyKind = '';
+        let propertyName = '';
+        let relevant = callee.kind === 'Identifier' && isHookName(callee.text);
+        if(callee.kind === 'PropertyAccessExpression') {
+            const receiver = this.context.unwrap(this.context.parser.node(callee.children[0] ?? index));
+            const property = this.context.parser.node(callee.children[callee.children.length - 1] ?? index);
+            receiverKind = receiver.kind;
+            receiverName = receiver.text;
+            propertyKind = property.kind;
+            propertyName = property.text;
+            relevant =
+                receiverKind === 'Identifier' &&
+                receiverName === 'React' &&
+                propertyKind === 'Identifier' &&
+                isHookName(propertyName);
+        }
+        if(!relevant) {
+            return;
+        }
+        const result = this.context.resultFlags(node);
+        const finding = visit({
+            start: this.context.start(node),
+            end: this.context.byte(node.end),
+            hasChecker: true,
+            hasExpression: true,
+            calleeKind: callee.kind,
+            calleeName: callee.text,
+            receiverKind,
+            receiverName,
+            propertyKind,
+            propertyName,
+            resultPresent: result.present,
+            resultFlags: result.flags,
+            blindedRules: this.context.blindedRules,
+        });
+        if(finding !== undefined) {
+            this.context.findings.push(finding);
+        }
+    }
+}
+export function create(context: Context): Rule {
+    return new Rule(context);
 }

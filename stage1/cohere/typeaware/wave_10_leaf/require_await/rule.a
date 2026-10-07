@@ -2,9 +2,9 @@ import { panic } from 'adamic';
 import type { Diagnostic } from '../../diagnostic.ts';
 
 // Preorder raw body nodes, with the body itself at depth 0. No record owns a
-// parent. Numeric kinds and flags are the pinned parser's observations.
+// parent. Canonical kinds and numeric flags are the pinned parser's observations.
 export interface BodyNodeFactsInterface {
-    readonly kind: number;
+    readonly kind: string;
     readonly depth: number;
     readonly flags: number;
     readonly awaitModifier: boolean;
@@ -13,16 +13,28 @@ export interface FunctionFactsInterface {
     readonly modifierFlags: number;
     readonly functionFlags: number;
     readonly bodyPresent: boolean;
-    readonly bodyKind: number;
+    readonly bodyKind: string;
     readonly statementCount: number;
     readonly bodyNodes: readonly BodyNodeFactsInterface[];
 }
-function boundary(kind: number): boolean {
-    return [263, 219, 220, 175, 178, 179, 177, 264, 232].includes(kind);
+function boundary(kind: string): boolean {
+    return [
+        'FunctionDeclaration',
+        'FunctionExpression',
+        'ArrowFunction',
+        'MethodDeclaration',
+        'GetAccessor',
+        'SetAccessor',
+        'Constructor',
+        'ClassDeclaration',
+        'ClassExpression',
+    ].includes(kind);
 }
 function awaits(node: BodyNodeFactsInterface): boolean {
     return (
-        node.kind === 224 || (node.kind === 251 && node.awaitModifier) || (node.kind === 262 && (node.flags & 7) === 6)
+        node.kind === 'AwaitExpression' ||
+        (node.kind === 'ForOfStatement' && node.awaitModifier) ||
+        (node.kind === 'VariableDeclarationList' && (node.flags & 7) === 6)
     );
 }
 export function containsAwait(node: FunctionFactsInterface): boolean {
@@ -44,7 +56,7 @@ export function containsAwait(node: FunctionFactsInterface): boolean {
             stopDepth = child.depth;
         }
     }
-    if(node.bodyKind !== 242) {
+    if(node.bodyKind !== 'Block') {
         const body = node.bodyNodes[0];
         return body !== undefined && awaits(body);
     }
@@ -55,7 +67,7 @@ export function mayNeedReport(node: FunctionFactsInterface): boolean {
         (node.modifierFlags & 1024) !== 0 &&
         (node.functionFlags & 1) === 0 &&
         node.bodyPresent &&
-        !(node.bodyKind === 242 && node.statementCount === 0) &&
+        !(node.bodyKind === 'Block' && node.statementCount === 0) &&
         !containsAwait(node)
     );
 }
