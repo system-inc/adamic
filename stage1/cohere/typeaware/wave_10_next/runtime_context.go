@@ -1,6 +1,5 @@
 // Package wave10next supplies raw compiler observations for the continuation.
-// It has no lint messages, control-flow decisions or fixes. Live bridge dispatch
-// registration is deliberately left to the shared-file owner.
+// It has no lint messages, control-flow decisions or fixes.
 package wave10next
 
 import (
@@ -16,7 +15,7 @@ import (
 
 type fields struct{ strings.Builder }
 
-func (f *fields) text(s string)   { fmt.Fprintf(&f.Builder, "%d:%s", len(utf16.Encode([]rune(s))), s) }
+func (f *fields) text(s string)   { fmt.Fprintf(&f.Builder, "%d\n%s", len(utf16.Encode([]rune(s))), s) }
 func (f *fields) number(n uint64) { f.text(strconv.FormatUint(n, 10)) }
 func (f *fields) yes(b bool) {
 	if b {
@@ -61,7 +60,7 @@ func (f *fields) declaration(p *compiler.Program, n *ast.Node) {
 	}
 }
 
-// Inspect accepts an AST anchor already validated by the bridge. Its three modes
+// Inspect accepts an AST anchor already validated by the bridge. Its four modes
 // return only compiler facts; all lint classification belongs in Adamic.
 func Inspect(p *compiler.Program, file *ast.SourceFile, selected *ast.Node, c *checker.Checker, question string) (string, error) {
 	pieces := strings.Split(question, "\n")
@@ -69,7 +68,7 @@ func Inspect(p *compiler.Program, file *ast.SourceFile, selected *ast.Node, c *c
 		return "", fmt.Errorf("invalid runtime context question")
 	}
 	mode := pieces[1]
-	if mode != "origin" && mode != "signature" && mode != "program" {
+	if mode != "origin" && mode != "alias-origin" && mode != "signature" && mode != "program" {
 		return "", fmt.Errorf("unknown runtime context mode")
 	}
 	if p == nil || file == nil || selected == nil || ast.GetSourceFileOfNode(selected) != file {
@@ -85,9 +84,9 @@ func Inspect(p *compiler.Program, file *ast.SourceFile, selected *ast.Node, c *c
 	out.text("runtime-context")
 	out.text(mode)
 	switch mode {
-	case "origin":
+	case "origin", "alias-origin":
 		symbol := c.GetSymbolAtLocation(selected)
-		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		if mode == "alias-origin" && symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
 			symbol = c.GetAliasedSymbol(symbol)
 		}
 		out.yes(symbol != nil)

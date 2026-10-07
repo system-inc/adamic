@@ -1,4 +1,4 @@
-package wave10next
+package wave10next_test
 
 import (
 	"context"
@@ -11,13 +11,14 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	bridge "github.com/system-inc/adamic/bridge/tsgo/checker"
+	adapter "github.com/system-inc/adamic/stage1/cohere/typeaware/wave_10_next"
 )
 
 func decode(t *testing.T, wire string) []string {
 	t.Helper()
 	var result []string
 	for wire != "" {
-		colon := strings.IndexByte(wire, ':')
+		colon := strings.IndexByte(wire, '\n')
 		if colon < 1 {
 			t.Fatal("missing frame length")
 		}
@@ -43,7 +44,7 @@ func decode(t *testing.T, wire string) []string {
 	return result
 }
 
-func TestRuntimeContextFactsAndDispatchBlocker(t *testing.T) {
+func TestRuntimeContextFactsAndLiveDispatch(t *testing.T) {
 	directory := t.TempDir()
 	config := filepath.Join(directory, "tsconfig.json")
 	file := filepath.Join(directory, "input.a")
@@ -73,7 +74,7 @@ func TestRuntimeContextFactsAndDispatchBlocker(t *testing.T) {
 	visit(loaded.AsNode())
 	for _, name := range []string{"race", "Promise", "setTimeout", "exit"} {
 		node := nodes[name]
-		wire, err := Inspect(p.Compiler, loaded, node, c, "runtime-context\norigin")
+		wire, err := adapter.Inspect(p.Compiler, loaded, node, c, "runtime-context\norigin")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -93,22 +94,22 @@ func TestRuntimeContextFactsAndDispatchBlocker(t *testing.T) {
 		if name == "setTimeout" && (len(values) < 32 || values[13] != "1" || values[18] != "ModuleBlock" || values[26] != "global" || values[30] != "1") {
 			t.Fatal("global augmentation ancestry absent")
 		}
-		if _, err := p.Inspect(file, uint64(node.Pos()), uint64(node.End()), "Identifier", "runtime-context\norigin"); err == nil || !strings.Contains(err.Error(), "unsupported") {
-			t.Fatalf("shared dispatch changed: %v", err)
+		if live, err := p.Inspect(file, uint64(node.Pos()), uint64(node.End()), "Identifier", "runtime-context\norigin"); err != nil || live != wire {
+			t.Fatalf("live dispatch differs: %v", err)
 		}
 	}
-	wire, err := Inspect(p.Compiler, loaded, loaded.AsNode(), c, "runtime-context\nprogram")
+	wire, err := adapter.Inspect(p.Compiler, loaded, loaded.AsNode(), c, "runtime-context\nprogram")
 	if err != nil {
 		t.Fatal(err)
 	}
 	if !strings.Contains(wire, "node.d.ts") {
 		t.Fatal("program declaration roots absent")
 	}
-	if _, err := Inspect(p.Compiler, loaded, nodes["race"], c, "runtime-context\norigin\nextra"); err == nil {
+	if _, err := adapter.Inspect(p.Compiler, loaded, nodes["race"], c, "runtime-context\norigin\nextra"); err == nil {
 		t.Fatal("suffix accepted")
 	}
-	if _, err := Inspect(p.Compiler, loaded, nil, c, "runtime-context\norigin"); err == nil {
+	if _, err := adapter.Inspect(p.Compiler, loaded, nil, c, "runtime-context\norigin"); err == nil {
 		t.Fatal("missing anchor accepted")
 	}
-	t.Log("raw origin/program facts pass; existing live dispatch refuses runtime-context")
+	t.Log("raw origin/program facts and live dispatch pass")
 }

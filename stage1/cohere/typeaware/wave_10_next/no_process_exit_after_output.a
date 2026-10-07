@@ -23,7 +23,7 @@ export class NoProcessExitAfterOutput {
         return this.rules.parser.node(name).kind === 'Identifier' ? name : -1;
     }
     processMember(index: number): boolean {
-        const symbol = this.context.symbol(index);
+        const symbol = this.context.symbol(index, true);
         return (
             symbol.present &&
             symbol.declarations.length > 0 &&

@@ -84,8 +84,8 @@ export class RuntimeContext {
         }
         return { file, kind, start, end, declarationFile, library, external, text, flags, functionFlags, ancestors };
     }
-    symbol(index: number): RuntimeSymbolInterface {
-        const frames = this.open(index, 'origin');
+    symbol(index: number, followAlias = false): RuntimeSymbolInterface {
+        const frames = this.open(index, followAlias ? 'alias-origin' : 'origin');
         const present = frames.yes();
         let flags = 0;
         let name = '';

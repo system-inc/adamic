@@ -10,6 +10,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	wave10next "github.com/system-inc/adamic/stage1/cohere/typeaware/wave_10_next"
 )
 
 // Each field is decimal UTF-16 length LF text. The enclosing C buffer is UTF-8.
@@ -203,6 +204,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "runtime-context":
+		return wave10next.Inspect(p.Compiler, source, node, c, question)
 	case "member-parameters":
 		return p.memberParameters(out, c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":

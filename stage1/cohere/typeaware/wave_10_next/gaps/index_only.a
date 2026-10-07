@@ -1,0 +1,9 @@
+import { RequireBlockingStandardStreamsIndex } from '../require_blocking_standard_streams.a';
+const index = new RequireBlockingStandardStreamsIndex([
+ { path: '/source/system/StandardStreams.d.ts', declarationFile: true, external: true, text: '', edges: [] },
+ { path: '/entry.a', declarationFile: false, external: true, text: "import './source/system/StandardStreams';", edges: [
+  { kind: 'import', typeOnly: false, computed: false, specifier: './source/system/StandardStreams', target: '/source/system/StandardStreams.d.ts' },
+ ] },
+]);
+console.log(index.canBlock.has('/entry.a') ? 'reaches streams' : 'does not reach streams');
+console.log(index.entry('/source/system/StandardStreams.d.ts', '') ? 'entry' : 'imported');

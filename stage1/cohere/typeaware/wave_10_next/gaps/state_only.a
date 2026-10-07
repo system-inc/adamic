@@ -1,9 +1,9 @@
 import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
-import { Parser } from '../../../typescript/parser/parser.ts';
-import { Scanner } from '../../../typescript/scanner/scanner.ts';
-import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
-import { Rules } from '../rules.ts';
-import { NoUnclearedRaceTimeout } from './no_uncleared_race_timeout.a';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../../unary_minus.ts';
+import { Rules } from '../../rules.ts';
+import { NoProcessExitAfterOutput } from '../no_process_exit_after_output.a';
 
 const args = programArguments();
 const config = args[0] ?? panic('missing config');
@@ -23,16 +23,9 @@ while(rules.parents.length < parser.nodes.length) {
     rules.parents.push(-1);
 }
 rules.links(root, -1);
-if(args.includes('--atoms')) {
-    const timer = rules.parser.nodes.findIndex(
-        (node) => node.kind === 'CallExpression' && rules.parser.node(node.children[0] ?? -1).text === 'setTimeout',
-    );
-    const executor = rules.parser.nodes.findIndex((node) => node.kind === 'ArrowFunction');
-    console.log(new NoUnclearedRaceTimeout(rules).lost(executor, timer) ? 'lost' : 'kept');
-}
-else {
-    new NoUnclearedRaceTimeout(rules).run();
-}
+const output = new NoProcessExitAfterOutput(rules);
+console.log(output.withWrite([',1,2,'], ',1,').join('|'));
+console.log(output.enterCatch([',1,', ','], 1).join('|'));
 for(const finding of rules.findings) {
     console.log(finding.written());
 }

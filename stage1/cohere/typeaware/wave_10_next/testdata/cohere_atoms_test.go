@@ -3,11 +3,13 @@
 package nexus
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -79,11 +81,16 @@ func TestWave10NextNativeAtomsAgainstProduction(t *testing.T) {
 		handle = "lost"
 	}
 	expected := fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n", correctnessNoProcessExitAfterOutputState{",1,2,"}.with(",1,").key(), correctnessNoProcessExitAfterOutputState{",1,", ","}.entering(1).key(), reach, imported, handle)
-	command := exec.Command(binary, configPath, entry, "--atoms")
-	got, err := command.CombinedOutput()
-	if err != nil {
-		t.Fatalf("native atom execution: %v: %s", err, got)
+	var output bytes.Buffer
+	for _, executable := range strings.Split(binary, ":") {
+		command := exec.Command(executable, configPath, entry, "--atoms")
+		got, err := command.CombinedOutput()
+		if err != nil {
+			t.Fatalf("native atom execution: %v: %s", err, got)
+		}
+		output.Write(got)
 	}
+	got := output.Bytes()
 	if string(got) != expected {
 		t.Fatalf("native atoms mismatch: got %q Go %q", got, expected)
 	}
