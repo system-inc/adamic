@@ -369,3 +369,9 @@ Three alternating whole-process timing samples give these medians under concurre
 | await-upstream | 0.050000 | 0.067608 | 0.740x |
 
 Evidence is preserved in evidence/require-await-complete. Full repository go test ./... and the live runner's emitted-JavaScript oracle were not run. The shared harness at 41eb6eab2 still needs its checker attachment connected to this owned Context; shared wiring is reserved for its worker. Native high-level IR/SSA/capture/JSX analysis remains unavailable for the three PARKED React claims. The full require-await rule is now native-tested; no further rule was reserved before this completion was pushed.
+
+## Post-completion availability audit
+
+Completion and all landing evidence were pushed as d304ac858 to codex/typeaware-wave-10 before this audit; ls-remote confirmed that exact tip. A fresh explicit all-head fetch inspected 605 origin refs and 33 distinct Markdown claim blobs. The frozen combined VOLUME_REPORT ranking has 197 checker-dependent rules: 25 are existing ranked base/main ports, and all 172 others are mentioned in claims. No unclaimed ranked rule remains, so no new reservation is made.
+
+The previously available final fifteen names were individually checked against claim lines: React candidates have explicit reservations on other waves; require-atomic-updates is reserved by wave-01/wave-08; valid-typeof is reserved by wave-05/wave-19/wave-24/wave-27. The audit preserves the exact main sha 39638d9e2 and port source paths in post-completion-availability.json. Shared registry wiring and the live lint runner's emitted-JavaScript comparison remain the exact integration limitations stated above.

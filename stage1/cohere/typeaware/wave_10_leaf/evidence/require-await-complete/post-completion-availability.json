@@ -1,0 +1,104 @@
+{
+  "heads": 605,
+  "distinct_claim_blobs": 33,
+  "ranked": 197,
+  "claimed": 172,
+  "ported": 25,
+  "main": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+  "remaining": [],
+  "port_evidence": {
+    "@typescript-eslint/no-unsafe-assignment": [
+      "origin/main:stage1/cohere/typeaware/assignment.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/assignment.ts"
+    ],
+    "@typescript-eslint/consistent-return": [
+      "origin/main:stage1/cohere/typeaware/returns.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/returns.ts"
+    ],
+    "@typescript-eslint/no-unsafe-argument": [
+      "origin/main:stage1/cohere/typeaware/rules.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts"
+    ],
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare": [
+      "origin/main:stage1/cohere/typeaware/rules.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts"
+    ],
+    "@typescript-eslint/no-unsafe-unary-minus": [
+      "origin/main:stage1/cohere/typeaware/rules.ts",
+      "origin/main:stage1/cohere/typeaware/unary_minus.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/unary_minus.ts"
+    ],
+    "@typescript-eslint/restrict-plus-operands": [
+      "origin/main:stage1/cohere/typeaware/rules.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts"
+    ],
+    "@typescript-eslint/no-unsafe-declaration-merging": [
+      "origin/main:stage1/cohere/typeaware/rules.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts"
+    ],
+    "@typescript-eslint/related-getter-setter-pairs": [
+      "origin/main:stage1/cohere/typeaware/rules.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/rules.ts"
+    ],
+    "@typescript-eslint/no-shadow": [
+      "origin/main:stage1/cohere/typeaware/shadow.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/shadow.ts"
+    ],
+    "@typescript-eslint/unbound-method": [
+      "origin/main:stage1/cohere/typeaware/unbound.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/unbound.ts"
+    ],
+    "@typescript-eslint/no-confusing-void-expression": [
+      "origin/main:stage1/cohere/typeaware/void.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/void.ts"
+    ],
+    "@typescript-eslint/no-unsafe-type-assertion": [
+      "origin/main:stage1/cohere/typeaware/volume.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts"
+    ],
+    "@typescript-eslint/no-unsafe-member-access": [
+      "origin/main:stage1/cohere/typeaware/volume.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts"
+    ],
+    "@typescript-eslint/prefer-nullish-coalescing": [
+      "origin/main:stage1/cohere/typeaware/volume.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts"
+    ],
+    "@typescript-eslint/no-unsafe-enum-comparison": [
+      "origin/main:stage1/cohere/typeaware/volume.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts"
+    ],
+    "@typescript-eslint/switch-exhaustiveness-check": [
+      "origin/main:stage1/cohere/typeaware/volume.ts",
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/volume.ts"
+    ],
+    "no-use-before-define": [
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/before.ts"
+    ],
+    "nexus/correctness-no-caller-data-mutation": [
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/caller.ts"
+    ],
+    "adamic/no-unchecked-cast": [
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/casts.ts"
+    ],
+    "no-implicit-coercion": [
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/coercion.ts"
+    ],
+    "adamic/invariant-mutable": [
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/flow.ts"
+    ],
+    "adamic/no-optional-widening": [
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/flow.ts"
+    ],
+    "nexus/consistency-no-property-alias": [
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/property_alias.ts"
+    ],
+    "no-param-reassign": [
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/reassign.ts"
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "origin/codex/tsgo-c-library:stage1/cohere/typeaware/unused.ts"
+    ]
+  }
+}

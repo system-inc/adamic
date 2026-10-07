@@ -141,3 +141,6 @@ claim is taken. See the current landing section in wave_10_leaf/README.md.
 
 
 Latest continuation status: all three non-analysis rules are fully ported and native-tested on origin/main 39638d9e2. require-await's contextual/generic/heritage decision and dedicated raw bridge question are implemented. All three match full Go findings, fixes and suggestions on positive controls and compiler77/repository287, normal and sanitized; require-await also matches 87 upstream source controls. Native mutants and released handles pass. All six earlier ports are re-green on this base; the three earlier React claims remain PARKED with their named blockers. Shared registry/context wiring remains with the harness worker. No additional reservation precedes the completion push. See ../wave_10_leaf/README.md latest completion section.
+
+
+After the completion push d304ac858, a fresh all-origin-head audit inspected 605 refs, 33 distinct claim blobs and the 197-rule combined ranking. The 25 ranked base/main ports and 172 claimed remaining rules exhaust the ranking. Previously available React candidates, require-atomic-updates and valid-typeof have explicit claims on other waves. Nothing unclaimed remains; no new claim is taken. Main remains 39638d9e2. All own completed rules are native-green and pushed on that base; three React claims remain PARKED.
