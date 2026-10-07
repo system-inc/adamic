@@ -1,0 +1,5 @@
+=== RUN   TestWave16QuestionFacts
+    wave16_questions_test.go:134: five independent fact modules match checker identities, declaration ancestry, origins, narrowing and bigint values; suffix and node-kind refusals pass
+--- PASS: TestWave16QuestionFacts (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.049s

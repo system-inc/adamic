@@ -80,7 +80,10 @@ func TestWave16FollowupAgreementAndMutants(t *testing.T) {
 	h := &harness{t: t, repository: repository, directory: directory}
 	stage0 := filepath.Join(directory, "adamic")
 	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
-	archive := h.archive("checker", "", false)
+	// The shared dispatch source stays untouched. The overlay tests the exact
+	// integration patch while its registration remains pending upstream.
+	registration := h.overlay("questions-registration", "bridge/tsgo/checker/facts.go", "\tout.text(mode)\n", "\tout.text(mode)\n\tif answer, handled, err := p.additionalAnswer(out, c, node, question); handled { return answer, err }\n")
+	archive := h.archive("checker", registration, false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/wave16_followup_suite.a")
 	binary := h.build(stage0, "wave16", entry, archive, false)
 	oracle := volumeOracle(h, "wave16-oracle", "oracle_wave16_followup.go")
@@ -109,7 +112,7 @@ func TestWave16FollowupAgreementAndMutants(t *testing.T) {
 			t.Fatalf("no positive control for %s", name)
 		}
 	}
-	sanitized := h.archive("checker-asan", "", true)
+	sanitized := h.archive("checker-asan", registration, true)
 	asan := h.build(stage0, "wave16-asan", entry, sanitized, true)
 	h.compare("controls-asan", oracle, asan, config, manifest)
 	// Each rule mutant changes a real judgment or report range, finishes normally,

@@ -1,0 +1,6 @@
+=== RUN   TestWave16QuestionFacts
+    wave16_questions_test.go:81: signature ancestry: ["1" "signature-ancestry" "1" "3" "MethodSignature" "methodmutant" "Identifier" "InterfaceDeclaration" "MockTrackermutant" "Identifier" "SourceFile" "mutant" ""]
+--- FAIL: TestWave16QuestionFacts (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.046s
+FAIL

@@ -1,0 +1,170 @@
+[
+  {
+    "corpus": "compiler",
+    "round": 1,
+    "implementation": "native",
+    "process_ns": 1998713555,
+    "phases": {
+      "load_ns": 227036816,
+      "query_ns": 3611189,
+      "queries": 77,
+      "first_query_ns": 22955,
+      "run_ns": 1752340654
+    },
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  {
+    "corpus": "compiler",
+    "round": 1,
+    "implementation": "go",
+    "process_ns": 305420462,
+    "phases": {
+      "load_ns": 235941851,
+      "rule_ns": 2001230,
+      "run_ns": 42436979
+    },
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  {
+    "corpus": "compiler",
+    "round": 2,
+    "implementation": "go",
+    "process_ns": 285416245,
+    "phases": {
+      "load_ns": 224974515,
+      "rule_ns": 1987927,
+      "run_ns": 41024077
+    },
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  {
+    "corpus": "compiler",
+    "round": 2,
+    "implementation": "native",
+    "process_ns": 2000379097,
+    "phases": {
+      "load_ns": 243818426,
+      "query_ns": 3330112,
+      "queries": 77,
+      "first_query_ns": 17857,
+      "run_ns": 1740387485
+    },
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  {
+    "corpus": "compiler",
+    "round": 3,
+    "implementation": "native",
+    "process_ns": 1981495620,
+    "phases": {
+      "load_ns": 235141899,
+      "query_ns": 2935958,
+      "queries": 77,
+      "first_query_ns": 16906,
+      "run_ns": 1730918119
+    },
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  {
+    "corpus": "compiler",
+    "round": 3,
+    "implementation": "go",
+    "process_ns": 294769152,
+    "phases": {
+      "load_ns": 231177766,
+      "rule_ns": 2019232,
+      "run_ns": 47906000
+    },
+    "bytes": 5780,
+    "sha256": "e25e88a7b7a27a3187321f0d7a75ff91606d235c4485b0489dc2162df3e87250"
+  },
+  {
+    "corpus": "repository",
+    "round": 1,
+    "implementation": "native",
+    "process_ns": 266727605,
+    "phases": {
+      "load_ns": 59973875,
+      "query_ns": 2554695,
+      "queries": 287,
+      "first_query_ns": 14031,
+      "run_ns": 202823451
+    },
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "corpus": "repository",
+    "round": 1,
+    "implementation": "go",
+    "process_ns": 114710710,
+    "phases": {
+      "load_ns": 59656657,
+      "rule_ns": 1075223,
+      "run_ns": 42770553
+    },
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "corpus": "repository",
+    "round": 2,
+    "implementation": "go",
+    "process_ns": 109433264,
+    "phases": {
+      "load_ns": 57853206,
+      "rule_ns": 1106921,
+      "run_ns": 41472784
+    },
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "corpus": "repository",
+    "round": 2,
+    "implementation": "native",
+    "process_ns": 288562312,
+    "phases": {
+      "load_ns": 60041497,
+      "query_ns": 2507001,
+      "queries": 287,
+      "first_query_ns": 14522,
+      "run_ns": 222063945
+    },
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "corpus": "repository",
+    "round": 3,
+    "implementation": "native",
+    "process_ns": 279018762,
+    "phases": {
+      "load_ns": 73723856,
+      "query_ns": 2463213,
+      "queries": 287,
+      "first_query_ns": 16374,
+      "run_ns": 199677278
+    },
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "corpus": "repository",
+    "round": 3,
+    "implementation": "go",
+    "process_ns": 110759511,
+    "phases": {
+      "load_ns": 55893217,
+      "rule_ns": 1211564,
+      "run_ns": 43157794
+    },
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  }
+]
