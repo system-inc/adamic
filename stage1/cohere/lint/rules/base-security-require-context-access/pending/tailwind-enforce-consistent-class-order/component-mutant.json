@@ -1,0 +1,6 @@
+{
+  "name": "class_order_descending_reversed",
+  "file": "ordering.a",
+  "from": "order === 'desc' ? compare(b, a) : compare(a, b)",
+  "to": "compare(a, b)"
+}

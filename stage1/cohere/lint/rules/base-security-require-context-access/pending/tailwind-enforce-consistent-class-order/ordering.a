@@ -1,0 +1,37 @@
+import { panic } from 'adamic';
+// JavaScript compares UTF-16 code units. Native byte ordering would get astral text wrong.
+export function compare(left: string, right: string): number {
+    for(let i = 0; i < left.length && i < right.length; i++) {
+        const a = left.charCodeAt(i); const b = right.charCodeAt(i);
+        if(a !== b) { return a < b ? -1 : 1; }
+    }
+    return left.length === right.length ? 0 : left.length < right.length ? -1 : 1;
+}
+export function lexical(classes: readonly string[], order: string): string[] {
+    if(order !== 'asc' && order !== 'desc') { panic('NotYet: Tailwind project design-system ranking'); }
+    const ordered = classes.slice();
+    ordered.sort((a, b) => order === 'desc' ? compare(b, a) : compare(a, b));
+    return ordered;
+}
+export class Slot {
+    readonly text: string; readonly start: number; readonly end: number;
+    constructor(text: string, start: number, end: number) { this.text = text; this.start = start; this.end = end; }
+}
+export class Fix {
+    readonly start: number; readonly end: number; readonly text: string;
+    constructor(start: number, end: number, text: string) { this.start = start; this.end = end; this.text = text; }
+}
+// Slots have already passed the source/value and deprecation checks in reorderFixes.
+// Separate ranges preserve all whitespace and unmoved classes.
+export function slotFixes(slots: readonly Slot[], ordered: readonly string[]): Fix[] {
+    const fixes: Fix[] = [];
+    for(let i = 0; i < slots.length; i++) {
+        const slot = slots[i] ?? panic('missing class slot');
+        const replacement = ordered[i] ?? panic('missing ordered class');
+        if(slot.text !== replacement) { fixes.push(new Fix(slot.start, slot.end, replacement)); }
+    }
+    return fixes;
+}
+export function message(ordered: string): string {
+    return `These classes are not in Tailwind's own order, which is "${ordered}". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.`;
+}
