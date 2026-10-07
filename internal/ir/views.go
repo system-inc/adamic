@@ -19,17 +19,23 @@ const (
 // Contracts describe declared logical types, independently of physical layout ids.
 // Readiness remains the shared non-null state and is never implied by a contract.
 type ViewContract struct {
-	Kind       ViewKind
-	Name       string
-	Of         Type
-	Allowed    []ViewLiteral
-	Fields     []ViewFieldContract
-	Members    []ViewContractID
-	Element    ViewContractID
-	Tuple      []ViewContractID
-	Functions  []int
-	Parameters []ViewContractID
-	Result     ViewContractID
+	// Unsupported records the member family that must fail at a demanded read.
+	Unsupported string
+
+	NominalBases []string
+	Nominal      string
+	Undefined    bool
+	Kind         ViewKind
+	Name         string
+	Of           Type
+	Allowed      []ViewLiteral
+	Fields       []ViewFieldContract
+	Members      []ViewContractID
+	Element      ViewContractID
+	Tuple        []ViewContractID
+	Functions    []int
+	Parameters   []ViewContractID
+	Result       ViewContractID
 }
 
 type ViewFieldContract struct {

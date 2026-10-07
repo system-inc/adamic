@@ -1,0 +1,31 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNodeProcessErrorNarrowingBlocker
+    node_process_errors_test.go:25: /workspace/adamic/internal/oracle/testdata/node_process_errors.a:6:67: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map
+--- PASS: TestNodeProcessErrorNarrowingBlocker (0.23s)
+=== RUN   TestNodeProcessErrorsRuntime
+=== PAUSE TestNodeProcessErrorsRuntime
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+=== CONT  TestNodeProcessErrorsRuntime
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+    input_test.go:114: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+    input_test.go:114: gate cache probe miss
+=== NAME  TestNodeProcessErrorsRuntime
+    node_process_errors_test.go:117: clean ERR_OUT_OF_RANGE mutant caught by Node stdout comparison
+    node_process_errors_test.go:119: own string code/message agree for five directory errno and exit/exitCode NaN, infinities and fractional validation
+--- PASS: TestNodeProcessErrorsRuntime (0.62s)
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a (0.98s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a (1.00s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=2
+ok  	github.com/system-inc/adamic/internal/oracle	1.244s

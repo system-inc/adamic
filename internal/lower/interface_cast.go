@@ -36,21 +36,8 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 // conservative: aliases and function boundaries cannot lose a checked read.
 // More precise view propagation and erasure can reduce that set without trusting casts.
 func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
-	if l.callableViewContract(target) {
-		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
-	}
-	// Diagnose unreifiable contracts before temporary backend limitations.
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		declared := l.checker.GetTypeOfSymbol(property)
-		if l.callableViewContract(declared) {
-			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
-		}
-	}
-	fields := map[string]bool{}
-	if err := l.viewObjectFields(node, target, fields, map[*checker.Type]bool{}, false); err != nil {
-		return nil, err
-	}
-	if _, err := l.viewContract(node, target); err != nil {
+	fields, err := l.viewSchema(node, target)
+	if err != nil {
 		return nil, err
 	}
 	modules, err := l.moduleOrder(l.program.Files()[0])
@@ -63,9 +50,6 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 		if found != nil {
 			return true
 		}
-		if part.Kind == ast.KindGetAccessor && part.Name() != nil && fields[part.Name().Text()] {
-			found = l.notYet(part, "a getter in a checked field contract")
-		}
 		if part.Kind == ast.KindObjectBindingPattern {
 			for _, binding := range part.AsBindingPattern().Elements.Nodes {
 				name := binding.Name()
@@ -75,8 +59,8 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				if name != nil && fields[name.Text()] {
 					declared := l.checker.GetTypeAtLocation(binding.Name())
 					of, known := l.representation(declared)
-					if !known || of < ir.Number || of > ir.Object || !viewDataType(declared) {
-						found = l.notYet(binding, "a checked destructured alias requiring a representation conversion")
+					if !known || of < ir.Number || of > ir.Array || !viewDataType(declared) {
+						found = l.lazyReadRefusal(binding, name.Text(), "destructuring representation conversion")
 					}
 				}
 			}
@@ -86,12 +70,23 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
+					if l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+						found = l.lazyReadRefusal(part, part.Name().Text(), "nullish")
+					}
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if of == ir.Object && ast.IsAssignmentTarget(part) {
+					if of == ir.Object && ast.IsAssignmentTarget(part) && !l.result.OptionalViewFields[l.fieldName(part.Name())] {
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
-					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.Object || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
-						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
+
+					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
+						family := "representation conversion"
+						if accessorSymbol(field) {
+							family = "accessor"
+						}
+						if of == ir.Union {
+							family = "mixed representation union"
+						}
+						found = l.lazyReadRefusal(part, part.Name().Text(), family)
 					}
 				}
 			}
@@ -113,6 +108,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	for field := range fields {
 		l.result.CheckedFields[field] = true
 	}
+	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
 	return value, nil
 }
 
@@ -125,7 +121,7 @@ func interfaceScalar(proven *checker.Type) bool {
 		}
 		return true
 	}
-	return proven.Flags()&(checker.TypeFlagsString|checker.TypeFlagsStringLiteral|checker.TypeFlagsNumber|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0 && proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsIntersection|checker.TypeFlagsTypeParameter) == 0
+	return proven.Flags()&checker.TypeFlagsUndefined != 0 || proven.Flags()&(checker.TypeFlagsString|checker.TypeFlagsStringLiteral|checker.TypeFlagsNumber|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0 && proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsIntersection|checker.TypeFlagsTypeParameter) == 0
 }
 
 func (l *lowering) interfaceScalarShape(proven *checker.Type) bool {
@@ -295,9 +291,16 @@ func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Ty
 
 // A finite literal contract is checked as well as its primitive representation.
 func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+	// A whole numeric enum admits numbers outside its declared members.
+	if l.openNumericEnumType(declared) {
+		return nil
+	}
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+				continue
+			}
 			values := l.viewLiterals(member)
 			if len(values) == 0 {
 				return nil
@@ -322,4 +325,41 @@ func (l *lowering) callableViewContract(proven *checker.Type) bool {
 		}
 	}
 	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
+}
+
+// viewSchema is the exact contract-admission portion of the shared entry point.
+// Inventories can audit it without claiming program lowering or alias admission.
+func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
+	id, err := l.viewContract(node, target)
+	if err != nil {
+		return nil, err
+	}
+	fields := map[string]bool{}
+	seen := map[ir.ViewContractID]bool{}
+	var visit func(ir.ViewContractID)
+	visit = func(id ir.ViewContractID) {
+		if id == 0 || seen[id] {
+			return
+		}
+		seen[id] = true
+		contract := l.result.ViewContracts[id-1]
+		for _, field := range contract.Fields {
+			fields[field.Name] = true
+			if field.Optional {
+				l.optionalViewWriteField(field.Name)
+			}
+			visit(field.Contract)
+		}
+		for _, member := range contract.Members {
+			visit(member)
+		}
+		visit(contract.Element)
+	}
+	visit(id)
+	if ir.HasArrayViews(l.result) {
+		if err := l.viewArrayUnsupportedUses(node); err != nil {
+			return nil, err
+		}
+	}
+	return fields, nil
 }

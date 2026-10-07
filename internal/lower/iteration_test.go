@@ -99,9 +99,8 @@ func TestLiteralMethodViewsDoNotLoseThis(t *testing.T) {
 		"const own={value:1,read():number{return this.value;}};const view:{readonly value:number;read():number}=own;console.log(`${view.read()}`);",
 	} {
 		_, err := lowerSource(t, source)
-		var gap *NotYet
-		if !errors.As(err, &gap) || !strings.Contains(gap.What, "erases its receiver") {
-			t.Fatalf("got %v, want an explicit erased literal-method refusal", err)
+		if err != nil {
+			t.Fatalf("literal-method call must preserve its receiver: %v", err)
 		}
 	}
 }
@@ -189,7 +188,7 @@ func TestGenericIteratorViewsPreserveNativeArguments(t *testing.T) {
 
 func TestIteratorMapperIndexHasNumberRepresentation(t *testing.T) {
 	t.Parallel()
-	source := `const source={[Symbol.iterator](){return{next(){return{value:1,done:true};}}}};const values=Array.from(source,(value:number,index:number|undefined):number=>value);`
+	source := `class Sequence{[Symbol.iterator]():Sequence{return this;}next():{value:number;done:boolean}{return{value:1,done:true};}}const source=new Sequence();const values=Array.from(source,(value:number,index:number|undefined):number=>value);`
 	_, err := lowerSource(t, source)
 	var gap *NotYet
 	if !errors.As(err, &gap) || !strings.Contains(gap.What, "index representation") {

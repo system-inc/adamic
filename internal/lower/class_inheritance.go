@@ -244,7 +244,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if slotless(of) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
-		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || assertionInitializer(member.AsPropertyDeclaration().Initializer)}
+		field := ir.Field{Contract: l.slotContract(member, l.concrete(l.checker.GetTypeAtLocation(member.Name()))), Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || assertionInitializer(member.AsPropertyDeclaration().Initializer)}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
 			field.Value = ir.Undefined{Of: of}
@@ -711,7 +711,11 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
-		for index, parameter := range toSignatures[0].Parameters() {
+		parameters := toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			parameters = nil
+		}
+		for index, parameter := range parameters {
 			if index >= len(fromSignatures[0].Parameters()) {
 				break
 			}

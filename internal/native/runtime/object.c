@@ -7,13 +7,15 @@
 #include <stdlib.h>
 
 adamic_object *adamic_object_new(const adamic_shape *shape) {
-	adamic_object *object = adamic_allocate(sizeof *object + shape->count * (sizeof object->slots[0] + 2), adamic_kind_object);
+	adamic_object *object = adamic_allocate(adamic_object_size(shape->count), adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->real_type = "record";
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
+	memset(adamic_object_contracts(object), 0, shape->count * sizeof(unsigned int));
 	return object;
 }
 
@@ -28,6 +30,7 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
 		if (accessor == NULL) {
 			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];
 			adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];
+			adamic_object_contracts(object)[index] = adamic_object_contracts(source)[cache.index];
 		}
 		if (shape->references[index] && accessor == NULL) {
 			adamic_retain(object->slots[index].reference);
@@ -169,8 +172,8 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		const adamic_heap *boxed = slot->reference;
 		if (wanted == 1 && boxed->kind == adamic_kind_number) { return (adamic_value){.number = ((const adamic_number_box *)boxed)->number}; }
 		if (wanted == 2 && boxed->kind == adamic_kind_boolean) { return (adamic_value){.boolean = ((const adamic_boolean_box *)boxed)->boolean}; }
-		if (wanted >= 3 && wanted <= 6) {
-			enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : adamic_kind_map;
+		if ((wanted >= 3 && wanted <= 6) || wanted == 8) {
+			enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : wanted == 8 ? adamic_kind_closure : adamic_kind_map;
 			if (boxed->kind == kind) { return *slot; }
 		}
 	}
@@ -178,13 +181,13 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		adamic_maybe_number unpacked = adamic_maybe_number_unpack(slot->number);
 		if (unpacked.present) { return (adamic_value){.number = unpacked.number}; }
 	}
-	if (actual == wanted && wanted >= 1 && wanted <= 6) {
+	if (actual == wanted && ((wanted >= 1 && wanted <= 6) || wanted == 8)) {
 		if (wanted <= 2) { return *slot; }
 		const adamic_heap *reference = slot->reference;
-		enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : adamic_kind_map;
+		enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : wanted == 8 ? adamic_kind_closure : adamic_kind_map;
 		if (reference != NULL && reference->kind == kind) { return *slot; }
 	}
-	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : actual == 4 ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : "unsupported representation";
+	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : actual == 4 ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : actual == 12 ? "null" : actual == 13 ? "nullish" : "unsupported representation";
 	if (actual >= 3 && actual <= 6 && slot->reference == NULL) { found = "nullish"; }
 	if (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) { found = "nullish"; }
 	if (actual == 10) {
@@ -220,4 +223,52 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);
+}
+
+// Optional views share the required-field validator after proving presence. An
+// absent slot or undefined payload must never be interpreted as numeric bits.
+adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional) {
+ adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+ bool missing = slot == NULL && (absent || optional);
+ if (slot != NULL && adamic_object_initialized(object)[cache->index]) {
+  unsigned char actual = adamic_object_field_types(object)[cache->index];
+  missing = actual == 13 || (actual >= 3 && actual <= 6 && slot->reference == NULL) || (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) || (actual == 10 && slot->reference == NULL);
+ }
+ if (missing) {
+  if (wanted == 7) { return (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){false, 0.0})}; }
+  return (adamic_value){.reference = NULL};
+ }
+ unsigned char base = wanted == 7 ? 1 : wanted == 9 ? 2 : wanted;
+ adamic_value result = adamic_object_view(object, name, cache, base, type, expression);
+ if (wanted == 9) { result.reference = result.boolean ? &adamic_box_true : &adamic_box_false; }
+ if (wanted == 7) { result.number = adamic_maybe_number_pack((adamic_maybe_number){true, result.number}); }
+ return result;
+}
+
+// The write is admitted only by the real shape and its declared slot contract,
+// never by the view's type or the old payload's physical representation.
+void adamic_object_checked_write(adamic_object *object, const char *name, adamic_slot_cache *cache, const unsigned int *allowed, size_t count, const char *where) {
+ adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+ if (slot != NULL) {
+  unsigned int contract = adamic_object_contracts(object)[cache->index];
+  for (size_t i = 0; i < count; i++) { if (contract != 0 && allowed[i] == contract) { return; } }
+ }
+ const char *real = object == NULL ? "undefined" : object->real_type;
+ size_t capacity = strlen(name) + strlen(real) + strlen(where) + 100;
+ char *message = malloc(capacity);
+ if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+ int length = snprintf(message, capacity, "field write failed: property '%s' on %s at %s has no compatible declared slot", name, real, where);
+ adamic_panic(message, (size_t)length);
+}
+
+adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	adamic_value *slot = adamic_object_field(object, name, cache);
+	if (object->shape->references[cache->index]) {
+		if (slot->reference != NULL) {
+			static const char message[] = "compiler bug: a boolean field holds a reference";
+			adamic_panic(message, sizeof message - 1);
+		}
+		return (adamic_maybe_boolean){false, false};
+	}
+	return adamic_maybe_boolean_unpack(slot->maybe_boolean);
 }

@@ -550,7 +550,8 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		slot := e.temporary()
 		cache := e.cache()
 		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-		e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+		e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldRepresentation(field.Value))
+		e.line("adamic_object_contracts(%s)[%s.index] = %d;", object, cache, field.Contract)
 		e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
@@ -562,6 +563,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	}
 	// A spread produces a plain object, even when its source allocation is reused.
 	e.line("%s->class = NULL;", object)
+	e.line("%s->real_type = \"record\";", object)
 	return object, true
 }
 
@@ -587,6 +589,7 @@ func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object st
 	}
 	lines := []string{}
 	for index, field := range literal.Empty {
+		lines = append(lines, fmt.Sprintf("\tadamic_object_field_types(%s)[%d] = %d;", object, index, fieldRepresentation(field.Value)))
 		if !field.Value.Type().IsReference() {
 			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))
 		}
@@ -714,7 +717,7 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 	e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
 	e.line("\t\tadamic_panic(message, sizeof message - 1);")
 	e.line("\t}")
-	e.line("\tadamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", result, callback, callback, source, index, index, source)
+	e.line("\tadamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}, 3);", result, callback, callback, source, index, index, source)
 	e.line("\tif (%s) {", unique)
 	// The callback is done with the element it was handed: the result takes its place.
 	if expression.Element.IsReference() {

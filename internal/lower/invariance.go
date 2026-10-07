@@ -44,7 +44,7 @@ type widening struct {
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
-	if from == to || visited[[2]*checker.Type{from, to}] {
+	if from.Flags()&checker.TypeFlagsNever != 0 || from == to || visited[[2]*checker.Type{from, to}] {
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
@@ -111,9 +111,20 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
 		// A function seen as another is handed the other's arguments, and its results are seen as
 		// the other's: each a view of its own.
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			if l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
+				return nil
+			}
+			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])
+			target := l.checker.GetReturnTypeOfSignature(toSignatures[0])
+			if !l.checker.IsTypeAssignableTo(source, target) {
+				return &widening{source: source, target: target}
+			}
+			return l.widened(source, target, visited)
+		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			takes, given := l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])
+			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
 			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
 				// a Dog can be seen as one taking any Animal, and handed a Cat.
@@ -234,6 +245,7 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 	}
 	var found []*checker.Type
 	for _, member := range members {
+		member = l.phantomArrayView(member)
 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
 			(l.checker.IsArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 			found = append(found, member)
@@ -391,12 +403,16 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
+	if l.nodeFSFileReadOnlyArgument(node) || l.nodeRequirePerformanceProjection(node) {
+		return nil
+	}
 	var own, contextual *checker.Type
 	var found *widening
 	switch {
 	case node.Kind == ast.KindAsExpression:
 		as := node.AsAsExpression()
-		if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+		// A qualified name (NodeJS.ErrnoException) has no Text; only the identifier const is as const.
+		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return nil
 		}
 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
@@ -603,6 +619,9 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	switch parent.Kind {
 	case ast.KindConditionalExpression:
 		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child || conditional.WhenFalse == child {
+			if target := l.readonlyArrayConsumer(parent); target != nil {
+				return target
+			}
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindBinaryExpression:

@@ -1,0 +1,15 @@
+=== RUN   TestRegExpNativeTiming
+=== RUN   TestRegExpNativeTiming/class_string_duplicates
+    regexp_native_fixes_test.go:42: gate cache node hit
+    regexp_native_fixes_test.go:55: trial 1 native=1.886334ms
+    regexp_native_fixes_test.go:55: trial 2 native=1.69688ms
+    regexp_native_fixes_test.go:55: trial 3 native=1.487926ms
+    regexp_native_fixes_test.go:55: trial 4 native=2.044983ms
+    regexp_native_fixes_test.go:55: trial 5 native=1.705331ms
+--- PASS: TestRegExpNativeTiming (14.52s)
+    --- PASS: TestRegExpNativeTiming/class_string_duplicates (14.52s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	14.531s

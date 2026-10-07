@@ -1403,6 +1403,7 @@ exited 143 on termination, and all ten remaining child processes were stopped.
 The full gate is not claimed to have passed. The completed scoped commands above
 are the regression evidence for this unit.
 
+
 The scanner controls now include the exact `let text: string = undefined!` probe from stage3-scanner-proof 71f9953. Its dominating assignment erases the read check. `var tokenValue!: string` is also admitted through the same readiness path as let definite declarations. Sibling closure reads retain the captured-cell check, including after a setter call; the successful frame matches Node and the unassigned frame panics with the variable and read expression. Removing that captured check produces exit 0 and different stdout, caught by the pinned runtime assertion. These controls use sibling arrow functions because named nested declarations belong to the nested-functions unit. Count regeneration adds fixture rows without changing existing rows.
 
 ### Literal assertion assignments deinitialize
@@ -1445,6 +1446,7 @@ are still conflated by existing reference representations; checked views that ne
 them remain NotYet until a distinct representation is implemented. Mixed scalar
 unions, optional fields, union cast targets and unsupported aliases remain gaps.
 No complete tsc target becomes eligible in the renewed object-unions audit.
+
 
 ## Checked downcasts implemented
 

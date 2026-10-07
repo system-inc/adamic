@@ -11,12 +11,18 @@ import (
 func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
 	array := e.value(expression.Array)
 	index := e.value(expression.Index)
+	if expression.View != "" {
+		return e.emitViewArrayRead(expression, array, index)
+	}
 	slot := e.temporary()
 	lookup := "adamic_array_at"
 	if expression.Relative {
 		lookup = "adamic_array_at_relative"
 	} else if read, isRead := expression.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
 		lookup, index = "adamic_array_at_integer", e.localName(read.Local)
+	}
+	if e.hasArrayHoles() {
+		lookup = "adamic_array_holes_at"
 	}
 	e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
 	return slot

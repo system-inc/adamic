@@ -1,0 +1,10 @@
+=== RUN   TestNeverBaselineCounts
+    never_baseline_counts_test.go:5: | internal/oracle/testdata/user_iterators.a | 663 | 663 | 455 | 904 | 64 | 0 |
+    never_baseline_counts_test.go:5: | internal/oracle/testdata/optional_widening_boolean_as_number_array.a | 8 | 8 | 6 | 15 | 6 | 0 |
+    never_baseline_counts_test.go:5: | internal/oracle/testdata/optional_widening_boolean_as_number_return.a | 5 | 5 | 0 | 7 | 4 | 0 |
+--- PASS: TestNeverBaselineCounts (2.98s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.021s

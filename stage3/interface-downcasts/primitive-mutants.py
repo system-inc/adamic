@@ -7,6 +7,7 @@ root = Path(__file__).resolve().parents[2]
 logs = root / 'stage3/interface-downcasts/logs'
 logs.mkdir(exist_ok=True)
 mutants = [
+ ('erase-view-admission-proof', 'internal/lower/cast.go', 'if !proof.view && len(proof.allowed) == 0 && len(proof.classes) == 0 {', 'if len(proof.allowed) == 0 && len(proof.classes) == 0 {', 'TestDefaultTaggedSourceViews/default-wrong-boolean', 'exit codes differ'),
  ('drop-view-read', 'internal/native/emit_expressions.go', '\t\tif expression.View != "" {\n\t\t\treturn e.viewField(expression)\n\t\t}\n', '', 'TestRequiredViewFieldPrimitive/wrong_type', 'exit codes differ'),
  ('drop-view-initialization', 'internal/native/runtime/object.c', 'slot == NULL || !adamic_object_initialized(object)[cache->index]', 'slot == NULL', 'TestRequiredViewFieldPrimitive/uninitialized', 'exit codes differ'),
  ('erase-view-without-proof', 'internal/lower/readiness.go', 'if !program.CheckedFields[expression.Name] || expression.Method {', 'if true {', 'TestDefaultTaggedSourceViews/default-wrong-boolean', 'exit codes differ'),

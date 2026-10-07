@@ -1,8 +1,8 @@
-Built: lane 1 transitive objects/interfaces and tagged object-union fields with readiness; the complete union family is not finished.
-Commits: plan 4dbf3b6a, main merge 00d6006a, objects df7bc5da, interfaces 94cf7156; tagged object-union subset checkpoint follows.
-Commands and outputs: final lower/IR PASS 22.076s/23.033s; broad uncached Node/view oracle PASS 87.320s; counts PASS 32.737s; scoped vet PASS, four new rows only.
-Mutants: dropped field/readiness/type, no-proof erasure, object/interface transitivity, union membership and double evaluation caught by semantic assertions with valid C.
-Not covered: null/undefined/mixed and optional unions, union cast targets, arrays/callables, erasure and timings; complete tsc sites remain 0/1,758 and 0/1,178.
+Built: per-site remaining-family sets and exclusive lane counts; merged current main while preserving checked-view admission and shared readiness.
+Commits: b4cfd1aa pushes the census and renewed lane split; the next feature-only merge includes main 48c05d09 and the non-null extraction repair.
+Commands and outputs: census PASS all 2,936 identities; setup PASS 172.330s, nproc 5; full lower/JS PASS 17.343s/0.707s; count regeneration PASS 21.813s; final uncached Node/count oracle PASS 110.458s; scoped vet PASS.
+Mutants: nine production-source view mutants caught by semantic assertions with valid C, including treating a checked-view admission proof as an erased cast.
+Not covered: nullish/optional/mixed admission, native array/callable integration, proof erasure or timings; complete sites remain 0/1,758 tagged and 0/1,178 untagged.
 
 No main or area branch was pushed or merged into. Both dependency merges were into
 `codex/interface-downcasts`; only that feature branch was pushed. The unit is still
@@ -456,3 +456,109 @@ Final restored-source count/family check PASS 25.857s. Final full touched lower/
 packages PASS 22.076s/23.033s and broad uncached ordinary source Node plus view,
 default-cast, required-field and readiness regressions PASS 87.320s. The complete
 repository adapter gate remains unrun; these are package and oracle checks.
+
+## Renewed blocking-family census and array prerequisite
+
+The pre-implementation overlapping census of all 2,936 pinned sites ranks arrays/
+tuples first (2,909), nullish members second (2,903), optional properties fourth
+(2,889). Callable contracts are third (2,890). Every family, per-site witness and
+measurement limit is published in blocking-families-sites.json and
+blocking-families-summary.json, with the table in docs/checked-views-blockers.md.
+This walks declared target contracts through nested fields, stopping at lane 2
+array/callable boundaries. It is not observed read frequency or successful lowering.
+No span/text mismatch or stock TypeScript diagnostic occurs.
+
+Largest-first action: merge lane 2 tip 2a16ce35 as f709a1c5 and provide its missing
+shared primitives. viewArrayContractHook is now registered by
+internArrayViewContract, reserving array ids before recursive element building.
+The error-only lane 2 callback captures the common element id and propagates
+errors. Primitive mixed storage descriptors retain explicit union member ids,
+not a universal pointer/scalar certificate. Unknown and tuple contracts still
+fail; no runtime admission is added in this prerequisite.
+
+Native arrays gain element_kind: 0 unknown, 1 number, 2 boolean, 7 packed maybe
+number, 10 heap pointer. Fresh plain literals write actual physical storage;
+other producers, spread/reuse and uncertified copies remain unknown. This is not
+a field-initialization representation, logical-shape proof or permission to erase
+a check. The physical byte fits padding: old/new sizes 56/56, offset 33, measured
+with a separate C layout probe. Each plain literal adds one byte store. No speed
+benchmark is claimed. All existing allocation/count rows remain unchanged.
+
+Lane 2 has no native element-read helper on its pushed tip. Its own report also
+leaves mutation/copy/iteration/callback coverage incomplete. Those reserved helper
+files now have the needed common metadata, and the plan records their handoff.
+Arrays remain NotYet until every necessary read/write path is enforced. Current
+complete sites are still zero, not an inferred increase from descriptor support.
+The lane 1 deadline is at risk until that native integration is ready. Next
+independent lane 1 family is nullish members, then optional and mixed/full unions.
+
+Setup completed in 27.591s, nproc 5, quota 4 CPUs. Timing lines: Go 0.023s, Node
+0.024s, submodules 0.066s, clang 0.186s, markdown 0.914s, Go build 27.386s,
+cache warm 27.562s. The returned env script remains /workspace/adamic-tools/env.sh.
+Current main 71d7e491 is already an ancestor; merge reports already up to date.
+No main or area branch was written and no protected orchestration file edited.
+
+Tests: full lower/JS and native packages, broad uncached source Node/view/count
+oracle, final scoped restored-source oracle, scoped vet, eight production-source
+view mutants, shared adapter recursion/unknown-contract assertions. The first
+child-error mutant attempt left an unused Go variable and is not counted; the
+corrected compiling mutant discards the error and is killed by the semantic
+unknown-element assertion. Full repository adapter gate and performance/read-share
+measurements are not claimed. Logs are array-prerequisite-*.log.
+
+## Remaining-family census and current main integration
+
+The per-site table now preserves original `blockers` and adds `remaining_families`,
+`remaining_owner`, `lane_projection`, and `other_remaining_families`. All 2,936
+source identities and counts verify against the pinned ledger. Exclusive counts:
+only lane 1 2, only lane 2 32, both 23, other unresolved 2,879, complete 0.
+The two-lane projection is only lane 1 2, only lane 2 32, both 2,901, neither 1.
+Do not confuse the projection with removal of dictionary, any, generic,
+intersection, never, empty-contract or nominal-class blockers. The two exclusively
+lane 1 sites target ResolvedModuleFull and need nullish plus optional support.
+There are 21 distinct remaining sets, grouped in the summary JSON.
+
+Census and scheduling docs were pushed first as b4cfd1aa. Lane 1 now proceeds with
+nullish plus optional, then mixed unions; lane 2 owns native array reads/mutations
+and callable contracts. Working estimate for nullish plus optional is October 8
+22:00 UTC (16:00 MDT), with null/undefined separation and alias parity still risks.
+No family was marked complete and no lowering increase is claimed in this push.
+
+Fetched main 48c05d09 and merged it into the feature branch only. The initial
+recursive fetch tried unrelated TypeScript history and stalled; its optional
+submodule fetch was terminated after the requested branch refs had arrived.
+Setup then fetched and checked out the actual required pins successfully:
+cohere 7945d102, TypeScript d92d9bfe. Setup timing lines: Go 0.020s, Node 0.023s,
+markdown 0.081s, clang 0.217s, submodules 4.070s, Go build 172.110s, cache
+172.302s, done 172.330s; nproc 5, CPU quota 4. The proxy fallback was present
+and no Go module download failure occurred.
+
+Four merge conflicts were resolved with explicit hunks. Main's cast preflight
+keeps its class, enum, duplicate-tag and union-write proofs. A separate view bit
+routes structural downcasts to complete view admission without erasing their
+checks. Module read proofs and non-null readiness both remain on IR reads. The
+definite-assignment refusal from main does not replace the merged readiness
+worker's runtime state. No protected orchestration file was manually edited.
+
+The first uncached Node/count gate found a clang error in non_null.a: a checked
+numeric extraction from main's union guard reached the non-null coalescer, which
+compared a double with NULL. Keeping the incoming type guard and recognizing its
+already checked scalar fixes that integration. This clang failure is not counted
+as a mutant catch. Regeneration changes only non_null_initialized.a: retains
+22 to 23 and releases 66 to 67; allocations/frees remain 42/42. The extra reference
+comes from preserving the guarded union helper, not a new initialization state.
+
+Nine semantic mutants pass independent kill assertions with valid C: erase view
+admission as an upcast; drop field read; drop readiness; erase without proof;
+skip transitive object; skip inherited interface; skip object-union membership;
+drop runtime type; evaluate the operand twice. The script restores all sources.
+New/nullish and optional check mutants remain pending their implementations.
+Logs are remaining-families-*.log and remaining-main-*.log.
+
+Final restored-source verification: full lower/JavaScript PASS 17.343s/0.707s;
+scoped vet PASS; broad uncached Node/view/cast/narrowing/readiness/count oracle
+PASS 110.458s. Command: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'TestNativeAgreesWithNode|TestCheckedView|TestDefaultTagged|TestRequiredViewField|TestCountsAreRecorded|TestCheckedCast|TestCast|TestNarrowedUnion|TestReadiness'
+-count=1 -timeout 30m. The full repository adapter gate and benchmarks were not
+rerun. Remaining-family and complete-site counts are unchanged after this merge.
+Only the feature branch is pushed; no main or area branch is written.

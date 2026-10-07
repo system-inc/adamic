@@ -1,0 +1,1 @@
+testdata/optional_widening/cast.a:3:15: Adamic 0.1 refuses an unproven relation from { x: number; } to { x: number; y?: number; }: optional field y has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)

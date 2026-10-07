@@ -139,7 +139,8 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			slot := e.temporary()
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldRepresentation(field.Value))
+			e.line("adamic_object_contracts(%s)[%s.index] = %d;", object, cache, field.Contract)
 			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
 				e.dropIn(object, slot+"->reference")
@@ -172,11 +173,16 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 		e.adoptGraphObject(object, literal)
 	}
+	if literal.RealType != "" {
+		e.line("%s->real_type = %s;", object, cString(literal.RealType))
+	}
 	if literal.Class != 0 {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
+		e.line("%s->real_type = %s;", object, cString(e.program.Classes[literal.Class-1].Name))
 	}
 	for index, field := range literal.Fields {
-		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldRepresentation(field.Value))
+		e.line("adamic_object_contracts(%s)[%d] = %d;", object, index, field.Contract)
 		if field.Uninitialized {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
 		}
@@ -272,12 +278,12 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 }
 
 // dispatchable reports whether a class's method can be called through an interface: each value it
-// takes and gives fits an adamic_value. One that doesn't (boolean | undefined, a union) can't be
+// takes and gives fits an adamic_value. One that doesn't (a union) can't be
 // passed to a function value either (lower's callClosure says not yet), so no call through an
 // interface reaches it with one, and it's left out of its class's table.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
-	slotless := func(valueType ir.Type) bool { return valueType == ir.MaybeBoolean || valueType == ir.Union }
+	slotless := func(valueType ir.Type) bool { return valueType == ir.Union }
 	for index, parameter := range method.Parameters {
 		if index > 0 && slotless(e.program.Locals[parameter].Type) {
 			return false
@@ -300,13 +306,13 @@ func (e *emitter) methodThunk(function int) string {
 	}
 	e.thunks[function] = true
 	method := e.program.Functions[function]
-	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments) {", name), "\t(void)arguments;"}
+	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments, size_t argument_count) {", name), "\t(void)arguments;", "\t(void)argument_count;"}
 	values := []string{}
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
 		value := "self"
 		if index > 0 {
-			value = unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index-1, member(local.Type)))
+			value = closureArgument(local.Type, index-1)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
@@ -333,4 +339,14 @@ func (e *emitter) cache() string {
 	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
 	return name
+}
+
+// Null and undefined share a null pointer physically, but an optional checked read
+// must accept only undefined. Keep that semantic distinction in the slot tag.
+func fieldRepresentation(value ir.Expression) int {
+	switch value.(type) {
+	case ir.Null:
+		return 12
+	}
+	return int(value.Type())
 }

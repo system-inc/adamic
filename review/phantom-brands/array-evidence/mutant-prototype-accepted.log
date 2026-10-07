@@ -1,0 +1,14 @@
+--- FAIL: TestPhantomArrayRefusals (0.00s)
+    --- FAIL: TestPhantomArrayRefusals/length (0.10s)
+        phantom_array_brands_test.go:20: got <nil>, want main.a:1:14: Adamic 0.1 refuses an array brand member length that exists on the array; use a member name the array does not have on its own properties or prototype chain
+    --- FAIL: TestPhantomArrayRefusals/sort (0.10s)
+        phantom_array_brands_test.go:20: got <nil>, want main.a:1:14: Adamic 0.1 refuses an array brand member sort that exists on the array; use a member name the array does not have on its own properties or prototype chain
+    --- FAIL: TestPhantomArrayRefusals/constructor (0.11s)
+        phantom_array_brands_test.go:20: got <nil>, want main.a:1:14: Adamic 0.1 refuses an array brand member constructor that exists on the array; use a member name the array does not have on its own properties or prototype chain
+    --- FAIL: TestPhantomArrayRefusals/__proto__ (0.11s)
+        phantom_array_brands_test.go:20: got <nil>, want main.a:1:14: Adamic 0.1 refuses an array brand member __proto__ that exists on the array; use a member name the array does not have on its own properties or prototype chain
+    --- FAIL: TestPhantomArrayRefusals/0 (0.11s)
+        phantom_array_brands_test.go:20: got <nil>, want main.a:1:14: Adamic 0.1 refuses an array brand member 0 that exists on the array; use a member name the array does not have on its own properties or prototype chain
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.120s
+FAIL
