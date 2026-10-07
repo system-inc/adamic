@@ -34,6 +34,8 @@ mutants = [
      '&& !strings.HasPrefix(method.Name, "init")', '', "TestPatterns"),
     ("deprecation-ignored", "internal/apple/generate/model.go",
      "deprecated = deprecated || g.deprecatedIn(text, child.Begin.File)", "_ = g.deprecatedIn", "TestPatterns"),
+    ("handed-blocks-not-followed", "internal/lower/cycles.go",
+     "\t\t\tfor _, handed := range f.l.appleHanded {\n\t\t\t\tnodes = append(nodes, cycleNode{proven: handed})\n\t\t\t}\n", "", "TestDelegateRefusals"),
     ("one-parameter-nullability-dropped", "internal/apple/generate/emit.go",
      "natives = append(natives, native)",
      'if n.Name == "takeText:" { native.tag = "string"; native.adamic = "string" }\n\t\tnatives = append(natives, native)', "TestPatterns"),

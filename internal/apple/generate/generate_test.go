@@ -367,6 +367,12 @@ func TestDelegateRefusals(t *testing.T) {
 			header + "import type { FixtureNote } from 'apple/foundation/fixture-note';\nclass Owner implements FixtureTableSource {\n\treadonly note: FixtureNote;\n\tconstructor(note: FixtureNote) {\n\t\tthis.note = note;\n\t}\n\tnumberOfRows(table: FixtureRecord): number {\n\t\treturn this.note.body.length + table.text.length;\n\t}\n}\nexport function attach(record: FixtureRecord, note: FixtureNote): void {\n\trecord.source = new Owner(note);\n}\n",
 			"refuses Owner, handed to Apple as a delegate the FixtureRecord holds",
 		},
+		// A record keeps the block it's handed (withCompletion:), so a closure handed to one that captures
+		// a record in a local may be held by the record it captures.
+		"a block captures what keeps it": {
+			header + "export function track(record: FixtureRecord): void {\n\tconst other = new FixtureRecord({ count: 1 });\n\trecord.withCompletion((text) => {\n\t\tother.text = text;\n\t});\n}\n",
+			"refuses 'other', a variable a function value captures",
+		},
 		"extends a leaf": {
 			header + "import { FixtureText } from 'apple/foundation/fixture-text';\nclass Pinned extends FixtureText {\n\trecord: FixtureRecord | undefined = undefined;\n}\nexport function pin(pinned: Pinned): void {\n\tconsole.log(pinned.text);\n}\n",
 			"a class extending Apple's FixtureText",

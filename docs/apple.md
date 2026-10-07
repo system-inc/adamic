@@ -128,6 +128,46 @@ Lowering makes an Objective-C class for the class, the first time one of its obj
 - **Cycles.** A delegate that can reach back to what holds it is a cycle neither count sees, so the cycle finder refuses one, by the rule it holds a field to (`internal/lower/cycles.go`): a `Keeper` with a `window: Window` field can't be that window's delegate. `window: Weak<Window>` can. Strong and refuse is ruled (October 7): Adamic keeps a delegate, so a forgotten one can't vanish as Swift's do.
 - **Leaves.** The finder follows Apple's declared properties, and through them nearly every Apple class reaches every other, so it doesn't walk through a leaf: a class whose instances, and every subclass's, hold strong references only to other leaves. `Url`, `String`, `Number`, `Value`, `Data` and `Date` are leaves, so a delegate may hold a URL. Collections never are. The table is derived from the headers (`internal/apple/generate/leaves.go`), never listed by hand: what an object may hold is its non-weak properties, what its initializers, factories and mutators are handed, and any escaping block, and a reference reaches only leaves when its type does. Eight facts the headers can't state (`initWithCoder:` reads its coder, a `locale:` argument is read) are cited in the table. It's generated beside the bindings, so the compiler always reads the one for its SDK, and checked in as `internal/apple/leaves-macos.txt`, which a test holds to the SDK, so a new reference path can't arrive silently. A program's class can't extend an Apple class yet, which is what keeps a leaf's own fields all it holds.
 - **What a class holds.** For an Apple class that isn't a leaf, the finder follows what the same derivation says it may hold, beside its declared properties: what its methods keep (a subclass's `stickTo:` handed a record), read from `holds.txt` beside the bindings. A class the program never loads is followed by its Objective-C name; any object (`id`) is any class's holds; a protocol is the program's classes implementing it; a block is every closure the program hands Apple. So an Apple object that isn't a leaf may reach every closure handed to Apple, and a closure handed to Apple that captures one in a local variable is refused (a label an action sets, built in a function), the fix capturing it `Weak<TextField>` or keeping it in a module-level constant.
+
+  Building UI in a function is the first thing a new app writes, so here is that case whole. The action captures a local label (`internal/apple/testdata/cycles/local-capture.a`):
+
+  ```ts
+  export function panel(): View {
+  	const content = new View({ frame: { x: 0, y: 0, width: 200, height: 100 } });
+  	const label = TextField.label({ with: 'ready' });
+  	let presses = 0;
+  	const button = new Button({
+  		title: 'Press',
+  		action: () => {
+  			presses += 1;
+  			label.stringValue = `pressed ${presses}`;
+  		},
+  	});
+  	content.addSubview(label);
+  	content.addSubview(button);
+  	return content;
+  }
+  ```
+
+  The compiler says:
+
+  ```
+  local-capture.a:12:8: Adamic 0.1 refuses 'label', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; capture it weakly, const labelHeld: Weak<TextField> = label (import type { Weak } from 'adamic'), and keep it somewhere strong, as its superview does a view; or keep it in a module-level constant, which nothing frees (adamic/cycle-capable)
+  ```
+
+  Captured weakly, it's accepted (`local-capture-weak.a`). The view that holds the label keeps it alive:
+
+  ```ts
+  const label = TextField.label({ with: 'ready' });
+  const labelHeld: Weak<TextField> = label;
+  // ...
+  	action: () => {
+  		presses += 1;
+  		if (labelHeld !== undefined) {
+  			labelHeld.stringValue = `pressed ${presses}`;
+  		}
+  	},
+  ```
 - **Threads.** Apple calls a delegate's methods on the main thread, where Adamic's counts are kept, and a method answers before Apple goes on, so it can't wait for the main thread as a block's closure does: a call anywhere else panics.
 - **Reading one back.** `window.delegate` reads the Objective-C object Apple holds, the delegate, as an Apple object, not the program's own object that it holds.
 
