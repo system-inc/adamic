@@ -1,3 +1,22 @@
+# Adaptation 65 validated; waiting for compiler implementations
+
+65-temporary-node-process-cast is implemented and checked with library's loader
+and @types/node 25.3.3. It removes the process as any cast and replaces the
+local unknown-field ambient type with NodeJS.Process plus the existing optional
+browser extension. All ten emitted JavaScript files are byte-identical, the
+newest driver slice checker has zero diagnostics, parser/scanner references
+are unchanged, and the sanctioned full stage 3 oracle passes 106,367 tests
+with no baseline differences or new API exceptions. Exact evidence and replay
+commands are in stage3/adapt/65-temporary-node-process-cast/README.md.
+
+Row 6 has a ruling: arguments.length read alone is accepted with JavaScript's
+exact value. reduceLeft remains unchanged; no adaptation is proposed for it.
+Rerun native-arguments-length.a only when the compiler SHA implementing that
+ruling arrives (the user's target is October 8 12:00). No new native build
+was requested or claimed here. Resting until the compiler SHAs arrive.
+
+---
+
 # Adaptation 65 planned before implementation
 
 65-temporary-node-process-cast removes `(process as any).browser` in
