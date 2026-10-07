@@ -3,9 +3,120 @@
 Branch `codex/stage1-lint-batch6-perf`, based on batch 6 commit
 `c5d128ab4158197a3b3a9f6452b9224e946ac462`. Production changes are confined to
 `registry.ts` and its single caller in `lint.ts`. Compiler, parser and runtime
-sources are unchanged. Native release throughput improved from 301.01 to 392.38
+sources are unchanged. Native release (`-O2`, no sanitizers, no counting build) throughput improved
+from 301.01 to 392.38
 findings/s on this worker, 30.35%. The previous unit's 294.69 findings/s was a
 separate measurement; the matched comparison below uses preserved binaries.
+
+## Build flags audit and matched rerun
+
+The original headline binaries used `adamic build` with `native.Options{}`:
+**release `-O2`, no sanitizers, no `-DADAMIC_COUNT`, no `-g` or profiling flags**.
+The original build's ephemeral temporary filename was not recorded. An audited
+rebuild captured the following actual clang command and produced exactly the
+original optimized binary, SHA-256
+`9aaa6ec5b3de380091b3a5a924a90735d676b5aba7f016ee06b0ef069e744417`:
+
+```bash
+/workspace/adamic-tools/llvm/bin/clang -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -I /home/agent/.cache/adamic/runtime/bc4c6117d4c8bc77c88124c1fe31880cd08703ecd34b86045df008eca6d98f38 -o /workspace/scratch/batch6-perf/flags-rerun/adamic-release /tmp/adamic-gate/adamic-build-3783009302/main.c -Xlinker --whole-archive /home/agent/.cache/adamic/runtime/bc4c6117d4c8bc77c88124c1fe31880cd08703ecd34b86045df008eca6d98f38/runtime.a -Xlinker --no-whole-archive -lm
+```
+
+The runtime archive was also compiled with the same release flags. All archive
+compile invocations and the final link command are in
+[flags-adamic-build-commands.sh](batch6_perf_evidence/flags-adamic-build-commands.sh).
+These captured temporary paths document the invocation; C and runtime sources
+in scratch/the repository are the persistent reproduction inputs.
+
+For the requested matched rerun, the exact preserved baseline and optimized C
+were freshly compiled together with the unchanged runtime source files. The
+only flag difference between release and sanitized builds is:
+
+- Release: `-O2`.
+- Sanitized correctness: `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`.
+
+Both use all twelve common flags shown in the captured command above. Neither
+uses `-DADAMIC_COUNT`. All four expanded, exact build commands are recorded in
+[flags-build-commands.sh](batch6_perf_evidence/flags-build-commands.sh) and
+[flags-build-commands.json](batch6_perf_evidence/flags-build-commands.json).
+For example, the optimized builds are reproduced from the repository root by:
+
+```bash
+/workspace/adamic-tools/llvm/bin/clang \
+  -std=c11 -Wall -Wextra -Werror -pedantic \
+  -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function \
+  -Wno-unused-parameter -Wno-self-assign -ffp-contract=off \
+  -fno-optimize-sibling-calls -O2 -I internal/native/runtime \
+  /workspace/scratch/batch6-perf/optimized.c internal/native/runtime/*.c -lm \
+  -o /workspace/scratch/batch6-perf/flags-rerun/optimized-release
+/workspace/adamic-tools/llvm/bin/clang \
+  -std=c11 -Wall -Wextra -Werror -pedantic \
+  -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function \
+  -Wno-unused-parameter -Wno-self-assign -ffp-contract=off \
+  -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined \
+  -fno-sanitize-recover=all -I internal/native/runtime \
+  /workspace/scratch/batch6-perf/optimized.c internal/native/runtime/*.c -lm \
+  -o /workspace/scratch/batch6-perf/flags-rerun/optimized-sanitized
+```
+
+The same sorted 77-file manifest has SHA-256
+`bc54951e3474e72273433954b6fc4c801f22333dee00246ea04a1b237fed6211`.
+All fifteen rules run and produce 481 findings. Five rounds rotate the order of
+the four native binaries and Go. Timing excludes compilation. Ordinary findings
+and repairs were first compared on every binary: 11,631,597 identical bytes,
+exit zero, empty stderr. Sanitized executions use
+`ASAN_OPTIONS=detect_leaks=1:halt_on_error=1` and
+`UBSAN_OPTIONS=halt_on_error=1`, with no sanitizer or leak reports.
+
+| Implementation   | Release best / median seconds (`-O2`, no sanitizers, no counting build) | Sanitized best / median seconds (`-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`, no counting build) |
+| ---------------- | ----------------------------------------------------------------------: | -------------------------------------------------------------------------------------------------------------------: |
+| Baseline native  |                                                     1.589939 / 1.603882 |                                                                                                  6.757687 / 6.773706 |
+| Optimized native |                                                     1.205443 / 1.215393 |                                                                                                  4.655801 / 4.675865 |
+
+Go cohere, built with the unchanged ordinary `go build` oracle command, takes
+0.297717 seconds best / 0.302968 median. Release native (`-O2`, no sanitizers,
+no counting build) improves from 302.53 to 399.02 findings/s; Go is 1,615.63
+findings/s. The release improvement is 31.90%. Sanitized timing is reported only
+as the requested diagnostic comparison; performance claims use release builds.
+
+Timed invocations, full flags, five raw timing observations, binary hashes and
+manifest hash are in [flags-rerun.json](batch6_perf_evidence/flags-rerun.json).
+The exact script is [flags-rerun.py](batch6_perf_evidence/flags-rerun.py):
+
+```bash
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/lint/batch6_perf_evidence/flags-rerun.py \
+  > /workspace/scratch/batch6-perf/flags-rerun/run.log 2>&1
+# The measured optimized runner invocation:
+/workspace/scratch/batch6-perf/flags-rerun/optimized-release \
+  --manifest /workspace/scratch/batch6-perf/compiler.txt --count
+```
+
+The runner's `--count` argument selects findings-only output and skips formatting
+and fixing. It is independent of the compiler's allocation-counting build option;
+none of these measured binaries contains `-DADAMIC_COUNT`. Sanitized builds remain
+correctness artifacts. Every native timing emitted by `TestThroughput` now prints
+the complete `native.Flags(native.Options{})` list, explicitly saying no
+sanitizers and no counting build.
+
+The resumed environment lacked `/tmp/adamic-gate`, which the toolchain sets as
+`TMPDIR`; the first clang attempt failed with `unable to make temporary file:
+No such file or directory`. Recreating that directory with mode 1777 fixed it.
+No compiler/runtime or rule behavior changed in this audit.
+
+The changed benchmark harness was executed with:
+
+```bash
+ADAMIC_LINT_BENCH=1 ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/batch4-typescript \
+  go test -count=1 -timeout 5m -v -run '^TestThroughput$' ./stage1/cohere/lint \
+  > /workspace/scratch/batch6-perf/flags-rerun/throughput-test.log 2>&1
+```
+
+PASS, 20.050 seconds; release native (`-O2`, no sanitizers, no counting build)
+1.204029 seconds / 399.49 findings/s; Go 0.311466 seconds / 1,544.31 findings/s.
+This separate harness verification is not substituted for the matched table.
+The full ordinary output agrees before timing and each native timing line shows
+all flags. The prior unit's eighteen lint mutants and external oracle mutant
+remain recorded above/below; this audit changes only reporting and evidence.
 
 ## Top three costs
 
@@ -119,15 +230,16 @@ cause.
 Five fresh-process count rounds, rotating baseline/optimized/Go/Node order;
 77 files, 481 findings, ordinary output first compared byte for byte on all four
 executables: 11,631,597 identical bytes. Release builds use normal stage 0
-`-O2` flags, without profiling's debug/frame-pointer additions. Full timings
+`-O2` flags, without sanitizers, `-DADAMIC_COUNT`, or profiling's
+debug/frame-pointer additions. Full timings
 are in [benchmark.json](batch6_perf_evidence/benchmark.json).
 
-| Backend               | Best seconds | Best findings/s | Median findings/s |
-| --------------------- | -----------: | --------------: | ----------------: |
-| Native baseline       |     1.597941 |          301.01 |            299.87 |
-| Native optimized      |     1.225853 |          392.38 |            389.47 |
-| Go cohere             |     0.308521 |        1,559.05 |          1,501.88 |
-| Node optimized source |     0.781033 |          615.85 |            597.14 |
+| Backend                                                    | Best seconds | Best findings/s | Median findings/s |
+| ---------------------------------------------------------- | -----------: | --------------: | ----------------: |
+| Native baseline (`-O2`, no sanitizers, no counting build)  |     1.597941 |          301.01 |            299.87 |
+| Native optimized (`-O2`, no sanitizers, no counting build) |     1.225853 |          392.38 |            389.47 |
+| Go cohere                                                  |     0.308521 |        1,559.05 |          1,501.88 |
+| Node optimized source                                      |     0.781033 |          615.85 |            597.14 |
 
 Pinned TypeScript: `050880ce59e30b356b686bd3144efe24f875ebc8`; cohere:
 `715ba94`. Machine: Linux 6.18.44 x86_64, `nproc` 5, cgroup CPU quota 4.

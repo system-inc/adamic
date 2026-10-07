@@ -51,5 +51,22 @@
     "optimized": 389.46692136247526,
     "Go": 1501.8753083226616,
     "Node": 597.1377148393501
-  }
+  },
+  "native_build_flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O2"
+  ],
+  "native_sanitizers": false,
+  "native_counting_build": false
 }

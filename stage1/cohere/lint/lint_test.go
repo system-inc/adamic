@@ -422,6 +422,7 @@ func TestThroughput(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, false)
+	nativeLabel := "native [" + strings.Join(native.Flags(native.Options{}), " ") + "; no sanitizers; no counting build]"
 	machine := execute(t, "", "uname", "-a")
 	cpu, err := os.ReadFile("/proc/cpuinfo")
 	if err != nil {
@@ -459,7 +460,11 @@ func TestThroughput(t *testing.T) {
 			if best[name] == 0 || result.duration < best[name] {
 				best[name] = result.duration
 			}
-			t.Logf("round %d %s %s findings=%s", round+1, name, result.duration, strings.TrimSpace(string(result.output)))
+			label := name
+			if name == "native" {
+				label = nativeLabel
+			}
+			t.Logf("round %d %s %s findings=%s", round+1, label, result.duration, strings.TrimSpace(string(result.output)))
 		}
 	}
 	var count int
@@ -467,7 +472,11 @@ func TestThroughput(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, name := range []string{"Go", "native", "Node"} {
-		t.Logf("best of 5 %s: %.6fs, %.2f findings/s (%d files, %d findings)", name, best[name].Seconds(), float64(count)/best[name].Seconds(), len(rows), count)
+		label := name
+		if name == "native" {
+			label = nativeLabel
+		}
+		t.Logf("best of 5 %s: %.6fs, %.2f findings/s (%d files, %d findings)", label, best[name].Seconds(), float64(count)/best[name].Seconds(), len(rows), count)
 	}
 	loadAfter, _ := os.ReadFile("/proc/loadavg")
 	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))

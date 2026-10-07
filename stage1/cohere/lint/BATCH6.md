@@ -145,15 +145,18 @@ mutant was caught by its own output comparison.
 Five fresh-process interleaved count rounds over 77 compiler files, all fifteen
 rules, 481 findings per run. Before timing, release native, Node and Go matched
 11,631,597 bytes of complete findings and repairs. Native used clang `-O2`
-without sanitizers; correctness gates used ASan, UBSan and leak checking.
+without sanitizers or `-DADAMIC_COUNT`; correctness gates used
+`-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`, plus leak checking.
+See [BATCH6_PERF.md](BATCH6_PERF.md#build-flags-audit-and-matched-rerun) for
+the captured clang commands and a matched release/sanitized rerun.
 Startup, reads, scanning, parsing and visiting are included; formatting and
 fixing are excluded in count mode. Compilation is excluded.
 
-| Backend             | Best of five, seconds | Findings/second |
-| ------------------- | --------------------: | --------------: |
-| Go cohere oracle    |              0.311383 |        1,544.72 |
-| Adamic native       |              1.632241 |          294.69 |
-| Same source on Node |              0.919524 |          523.10 |
+| Backend                                                 | Best of five, seconds | Findings/second |
+| ------------------------------------------------------- | --------------------: | --------------: |
+| Go cohere oracle                                        |              0.311383 |        1,544.72 |
+| Adamic native (`-O2`, no sanitizers, no counting build) |              1.632241 |          294.69 |
+| Same source on Node                                     |              0.919524 |          523.10 |
 
 Load averages before: `1.04 0.86 0.46`; after: `1.26 0.92 0.49`. On this
 measurement native took 5.24 times Go's time and 1.78 times Node's. This is an
