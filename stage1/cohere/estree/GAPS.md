@@ -138,3 +138,15 @@ spelling differences: the Go Literal value is `&😀`, the Prettier value is
 spelling. Raw conversion agrees for these entities. CRLF retains the existing
 normalization difference. TestJSXOriginalLibraries asserts each exact delta and
 compares the rest of the trees; it does not blanket-allow different JSX trees.
+
+## Follow-up cooked surrogate representation
+
+The canonical driver now emits the Go-observed three replacement characters
+for each unpaired WTF-8 surrogate, rather than refusing cooked surrogate values.
+Eight generated cases and all 32 previously refused repository cases match Go
+on Node, sanitized native and emitted JS. TestCookedSurrogateLibraryGap proves
+the original library instead preserves UTF-16 surrogates. The one-replacement
+mutant finishes with wrong bytes and is caught on both runtimes. This repairs
+canonical serialization; it does not change the earlier raw-file information
+loss, which remains proved and explicitly refused. The old surrogate refusal
+above describes the initial checkpoint, not the current driver.

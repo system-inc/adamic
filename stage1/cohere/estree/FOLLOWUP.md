@@ -95,3 +95,36 @@ refuse with empty stdout before 2s on source Node, sanitized native and emitted
 JS. All 13 inputs are retained under validation/followup/stalls/ as .input files.
 `gaps/portParserRecovery.ts` is the smallest local-parser proving program.
 The older shared-parser timeout test remains a dependency-gap observation.
+
+### UTF-8 and cooked surrogate checkpoint
+
+Stall checkpoint 040fafcb7bf544bdc62fc3bf27c2f2c4ab39d512 was pushed.
+Canonical serialization now matches Go's replacement decoding of an unpaired
+cooked WTF-8 surrogate: its three bytes become three U+FFFD characters. Paired
+UTF-16 surrogates retain their existing representation. This rescues all 32
+cooked-surrogate refusals. Source census: 15,300 identical, 306 refused Go
+answers, 123 accepted Go refusals, 46 mismatches, 11,594 both refused: 429
+acceptance disagreements. No earlier match regressed or new disagreement arose.
+
+`ADAMIC_ESTREE_LIBRARY=/workspace/scratch/estree-library go test -count=1 -v
+./stage1/cohere/estree -run '^TestCooked|^TestLossyInput|^TestRawInputGap$' >
+/tmp/estree-utf8-gate.log 2>&1`: PASS 79.103s. Eight generated files, 3,606
+bytes match Go in all three port builds; the one-versus-three replacement
+mutant completes and is caught on Node/native at line 8. The original pinned
+library retains unpaired UTF-16, proved independently. `ADAMIC_ESTREE_CORPUS=
+/tmp/estree-utf8-rescued go test -count=1 -v ./stage1/cohere/estree
+-run '^TestRepositoryAgreement$' > /tmp/estree-utf8-rescued.log 2>&1`: PASS
+28.853s, all 32 repository files and 15,119,046 bytes on all three port builds.
+Cohere passes after removing the newly unused panic import.
+
+Raw input loss is not fixed: equal-size files with bytes F0 90 80 and EF BF BD
+still return the same text and size from the documented readTextFile API. Go
+has different comment values for them. TestRawInputGap proves this on source
+Node, native and emitted JS. TestLossyInputRefusal verifies both explicitly
+refuse with no output. Disabling the input guard completes on Node/native with
+wrong Go bytes at line 17, caught by comparison. This is an API information
+boundary, not a hypothetical risk or an inference that size can recover bytes.
+No raw-byte API is exposed by this toolchain; a runtime-team raw reader is
+required for original malformed-byte parity. Valid literal U+FFFD is still
+conservatively refused because it cannot be distinguished from loss. The
+minimal programs are gaps/rawInput.ts and gaps/cookedSurrogate.ts.

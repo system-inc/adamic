@@ -1,0 +1,22 @@
+=== RUN   TestRawInputGap
+    gaps_test.go:86: Equal size, readTextFile text and utf8Length on Node/native/emitted JS: "8:8://�\nx;\n"; Go distinguishes: line 17: Go "0 .value string \\ufffd\\ufffd\\ufffd", port "0 .value string \\ufffd"
+--- PASS: TestRawInputGap (1.15s)
+=== RUN   TestCookedSurrogates
+    utf8_test.go:23: 8 cooked-surrogate files, 3606 bytes match Go
+--- PASS: TestCookedSurrogates (19.96s)
+=== RUN   TestCookedSurrogateMutant
+    utf8_test.go:34: Node: line 8: Go "2 .value string \\ufffd\\ufffd\\ufffda\\ufffd\\ufffd\\ufffd", port "2 .value string \\ufffda\\ufffd"
+    utf8_test.go:34: native: line 8: Go "2 .value string \\ufffd\\ufffd\\ufffda\\ufffd\\ufffd\\ufffd", port "2 .value string \\ufffda\\ufffd"
+--- PASS: TestCookedSurrogateMutant (18.88s)
+=== RUN   TestCookedSurrogateLibraryGap
+    utf8_test.go:53: Go serializes each unpaired WTF-8 surrogate as three U+FFFD; original keeps UTF-16 surrogates
+--- PASS: TestCookedSurrogateLibraryGap (0.94s)
+=== RUN   TestLossyInputRefusal
+    utf8_test.go:65: equal-size malformed and valid replacement inputs both explicitly refuse; raw-byte API remains required
+--- PASS: TestLossyInputRefusal (18.67s)
+=== RUN   TestLossyInputControl
+    utf8_test.go:78: Node: line 17: Go "0 .value string \\ufffd\\ufffd\\ufffd", port "0 .value string \\ufffd"
+    utf8_test.go:78: native: line 17: Go "0 .value string \\ufffd\\ufffd\\ufffd", port "0 .value string \\ufffd"
+--- PASS: TestLossyInputControl (19.49s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	79.103s
