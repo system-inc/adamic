@@ -9,5 +9,17 @@
       "TS2322 at debug.ts:171:21"
     ],
     "proof": "setAssertionLevel clears populated cache slots by writing undefined at line 171; the read at line 168 is guarded by cachedFunc !== undefined before dereferencing, so the private cache's value type must represent stored undefined as well as missing keys."
+  },
+  {
+    "file": "scanner.ts",
+    "owner": "computePositionOfLineAndCharacter allowEdits branch",
+    "line": 491,
+    "class": "U-position, preserved-read narrowing",
+    "action": "hold the original first read in a const; test undefined explicitly; retain the second read with a required assertion",
+    "diagnostics": [
+      "TS2532 at scanner.ts:491:22",
+      "TS2322 at scanner.ts:491:45"
+    ],
+    "proof": "Undefined next-line starts make the original numeric comparison false. The new guard does the same for number | undefined. The first read is evaluated once where the comparison used it, with only a pure read of const res reordered; the conditional second read remains. Both production callers pass getLineStarts, whose computeLineStarts result is a dense plain array; no write occurs between the guard and second read."
   }
 ]

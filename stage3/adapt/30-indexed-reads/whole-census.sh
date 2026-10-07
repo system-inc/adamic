@@ -9,15 +9,18 @@ python3 - "$repo" "$unit" "$out" <<'PY'
 import json, re, subprocess, sys
 from pathlib import Path
 repo, unit, out = map(Path, sys.argv[1:])
-pin = '246ecc073993de6a5f1bcb64346cde7938deec43'
-feature = subprocess.check_output(['git', '-C', str(repo), 'show', pin + ':internal/load/load.go'], text=True)
+pin = '176a496'
+feature = subprocess.check_output(['git', '-C', str(repo), 'show', pin + ':stage3/census/latent/data/meter3/loader-options.go.txt'], text=True)
 original = (repo / 'internal/load/load.go').read_text()
 pattern = r'func compilerOptions\(\) \*core.CompilerOptions \{.*?\n\}'
 before = re.search(pattern, original, re.S).group()
 after = re.search(pattern, feature, re.S).group()
-# Match run 0's loader options, retaining all strictness settings and all codes.
-# This is an area/stage3 checker census, not the meter's merged scratch compiler.
-assert before.replace('ErasableSyntaxOnly:         core.TSTrue', 'ErasableSyntaxOnly:         core.TSFalse') == after
+# Match run 0's archived options exactly, including its proven syntax features.
+# No diagnostic code is filtered, and strict indexed/optional checking stays on.
+expected = before.replace('ErasableSyntaxOnly:         core.TSTrue', 'ErasableSyntaxOnly:         core.TSFalse')
+expected = expected.replace('\t\tNoImplicitReturns:          core.TSTrue,\n', '')
+expected = expected.replace('\t\tNoFallthroughCasesInSwitch: core.TSTrue,\n', '')
+assert expected == after, 'loader options drift from the pinned meter'
 (out / 'meter-load.go').write_text(original.replace(before, after))
 (out / 'overlay.json').write_text(json.dumps({'Replace': {
     str(repo / 'internal/load/load.go'): str(out / 'meter-load.go'),

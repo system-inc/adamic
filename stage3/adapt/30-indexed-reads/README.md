@@ -873,3 +873,72 @@ failed artifacts are retained as history, superseded by the ruling and this
 mechanically verified rerun. **debug.ts is now a completed whole-file closure.**
 The census provenance remains the area checker with meter loader options; no
 new global meter count or native acceptance is claimed.
+
+
+## Whole-file closure: scanner.ts at zero
+
+The before census is **2**: TS2532 on the comparison read and TS2322 on the
+conditional return read in computePositionOfLineAndCharacter, line 491.
+The after census is **0**, retaining every code across the same 78 roots.
+
+The last line legitimately has no next-line start. Its original comparison
+`res > undefined` is false. The adaptation holds **only that first read** in
+`const nextLineStart`, tests it against undefined, and compares res against it.
+For the declared number | undefined domain, this selects exactly the original
+branch, including NaN and infinities. The only reordered operation is reading
+local const res, a primitive without getters or writes. The first indexed read
+is still performed once after res is computed, before any fallback evaluation.
+The conditional **second indexed read remains in the true arm**, with `!`.
+Production callers in scanner.ts:471 and services/services.ts:1131 both pass
+getLineStarts. That cache is populated by computeLineStarts, which creates []
+and only pushes numeric line starts, including the final start, so the array is
+dense and plain. The explicit defined-value guard proves a next entry exists;
+no write intervenes before the true-arm second read. An absent first read is
+still declined. No public declaration or API snapshot line changes here.
+
+| Site | Class | Action | Invariant |
+| --- | --- | --- | --- |
+| scanner.ts:491:22, first next-start read | U-position, preserved-read narrowing | retain optional read and test undefined explicitly | Missing next-line start already makes the numeric comparison false. |
+| scanner.ts:491:45, second next-start read | U-position | required assertion | Defined first entry, dense plain constructed line map, and no intervening write establish the true-arm entry; retain the second read. |
+
+The independent stock emitter comparison allows exactly this guard/const
+restructure and compares every other emitted byte. `scanner-proof.cjs` runs
+the real source function before and after on **2,660 Node cases**: empty and
+multiline text, CRLF and Unicode separators, valid and clamped lines, negative
+and overflowing characters, absent debugText, NaN and infinities. A Proxy logs
+indexed and length reads. Volatile next-entry getters returning different values
+on successive reads additionally prove that the second read was not cached or
+skipped. Results, throws, Debug calls and read traces are identical. These exotic
+getter probes establish Node evaluation preservation; the native second-read
+presence proof is the production dense-array construction invariant above.
+All 17 file contracts and idempotence checks pass; the other 16 emitted files
+remain byte-identical to the before snapshot.
+
+The whole-file census now validates the **entire archived meter options block**
+from 176a496's data/meter3/loader-options.go.txt. The initial census tool kept
+NoImplicitReturns and NoFallthroughCasesInSwitch enabled from the area loader.
+The meter had removed those options after the corresponding native features
+were proven. This explains scanner's initial 17 diagnostics versus the work
+queue's 2. The corrected overlay removes exactly those two entries and uses
+ErasableSyntaxOnly=false, and rejects any other option drift. Strict,
+NoUncheckedIndexedAccess and ExactOptionalPropertyTypes stay enabled, and
+**no diagnostic codes are filtered**. The debug zero result is unaffected.
+This is a file census with exact meter options on the area checker; no global
+meter count or native compiler acceptance is claimed.
+
+The verified API exception remains exactly 189 adaptation 20 lines plus 28
+adaptation 40 lines; adaptation 70 is absent. The default oracle result and
+scanner mutant outcomes will be recorded below when finished.
+
+
+The scanner default oracle **passes: 106,367 passing, zero failing and pending,
+zero-byte baseline diff**. Its full report is `whole-scanner-oracle.json`.
+`whole-scanner-proof.json` records source hashes, all-code 2 -> 0, Node traces,
+API discipline and idempotence. The `!` -> `?? 0` mutant is **missed by the
+census (still 0)** but caught by the site contract (required read defaulted)
+and independent Node result/read-trace comparison, both exit 1. The separate
+cached-second-read mutant is caught by that Node comparison, exit 1. The logs
+are `whole-scanner-{mutant-contract,mutant-node,cached-mutant-node}.log`.
+The exact-options debug before/after controls are additionally retained as
+`whole-debug-{before,after}-exact.json`: debug still **1 -> 0**. Both files
+are completed closures. No native execution or global meter total is claimed.

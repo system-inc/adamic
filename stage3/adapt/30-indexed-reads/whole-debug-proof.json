@@ -21,7 +21,7 @@
     "src/compiler/utilities.ts": "0f1aa3a85c6352e7fafefbf033096346326973fd4ea0c4fc7471f49b1ebc379b",
     "src/compiler/utilitiesPublic.ts": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f"
   },
-  "census_provenance": "area/stage3 checker with the pinned enum loader options; not the meter scratch compiler",
+  "census_provenance": "area checker with the entire archived 176a496 meter loader-options block; no code filter",
   "global_meter_total_reproduced": false,
   "file": "debug.ts",
   "all_diagnostic_codes": true,
@@ -145,5 +145,7 @@
     },
     "baseline_diffs": [],
     "wall_seconds": 212.103
-  }
+  },
+  "exact_options_before_evidence": "whole-debug-before-exact.json",
+  "exact_options_after_evidence": "whole-debug-after-exact.json"
 }

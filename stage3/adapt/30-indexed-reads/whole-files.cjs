@@ -3,6 +3,24 @@ const entries = require("./whole-sites.json");
 function planWhole(ts, file, text, check = false) {
     if (!entries.some(entry => entry.file === file)) return { text, edits: 0 };
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+    if (file === "scanner.ts") {
+        const fn = source.statements.find(node => ts.isFunctionDeclaration(node) && node.name.text === "computePositionOfLineAndCharacter");
+        if (!fn || fn.parameters.map(node => node.name.getText(source)).join(",") !== "lineStarts,line,character,debugText,allowEdits") throw new Error("line clamp owner drift");
+        if (fn.parameters[0].type.getText(source) !== "readonly number[]" || fn.parameters[2].type.getText(source) !== "number" ||
+            !fn.body.statements.some(node => ts.isVariableStatement(node) && node.getText(source) === "const res = lineStarts[line]! + character;")) throw new Error("line clamp primitive res proof drift");
+        const branch = fn.body.statements.find(node => ts.isIfStatement(node) && node.expression.getText(source) === "allowEdits");
+        if (!branch || !ts.isBlock(branch.thenStatement)) throw new Error("line clamp branch drift");
+        const statements = branch.thenStatement.statements;
+        const tail = 'typeof debugText === "string" && res > debugText.length ? debugText.length : res;';
+        const original = "return res > lineStarts[line + 1] ? lineStarts[line + 1]! : " + tail;
+        const adapted = "return nextLineStart !== undefined && res > nextLineStart ? lineStarts[line + 1]! : " + tail;
+        if (statements.length === 2 && statements[0].getText(source) === "const nextLineStart = lineStarts[line + 1];" && statements[1].getText(source) === adapted) return { text, edits: 0 };
+        if (statements.length !== 1 || !ts.isReturnStatement(statements[0]) || statements[0].getText(source) !== original) throw new Error("line clamp read structure drift");
+        if (check) throw new Error("explicit next-line narrowing missing: scanner.ts:491");
+        const at = statements[0].getStart(source), end = statements[0].end;
+        const newline = text.includes("\r\n") ? "\r\n" : "\n";
+        return { text: text.slice(0, at) + "const nextLineStart = lineStarts[line + 1];" + newline + "        " + adapted + text.slice(end), edits: 1 };
+    }
     const found = [];
     function visit(node) {
         if (ts.isVariableDeclaration(node) && node.name.getText(source) === "assertionCache") found.push(node);
