@@ -37,8 +37,10 @@ data. Bare test filenames are restricted to their suite. The upstream tsc driver
 corpus is not parsed or rewritten: its documented selection prohibits relative
 imports and deliberately includes diagnostic inputs outside Adamic.
 No source import is found with a regular expression.
-On current main both JSON configurations use directory patterns already covering
-`.a`; `tsconfig.json` also already declares `sourceExtensions: [".a"]`.
+On current main the root JSON configurations already cover `.a`. The mixed
+stage 1 type-aware fixture config retains TypeScript includes, adds `.a` includes
+and source-extension metadata, and seeds stock tsc config validation with the
+unchanged prelude declaration; its callers then supply manifest roots.
 
 The files intentionally kept as TypeScript are:
 
@@ -108,24 +110,35 @@ source from scratch is committed. Applying the final binary printed
 `TOTAL files=249 references=1464 reference_files=263`; its immediate repeat printed
 `TOTAL files=0 references=0 reference_files=0` before staging.
 
-Scratch vet, load and lower passed with exit 0. The complete uncached oracle and
+Scratch build, vet, load and lower passed with exit 0. The complete uncached oracle and
 stage 3 fixtures passed without a fixture filter. The first build retry hit
 temporary storage exhaustion; obsolete scratch copies were removed and build
-was rerun. The first combined stage 1 run passed 15 test packages, but type-aware
+was rerun successfully. The first combined stage 1 run passed 15 test packages, but type-aware
 config validation failed and Markdown had regeneration/dependency failures and
 a package timeout. The mixed config retains `.ts`, includes `.a`, and seeds config
 validation with the unchanged prelude declaration before callers replace roots.
 Formatter scratch inputs remain pre-gate TypeScript `.ts`; generated outputs
 use `.a`. Type-aware and all 20 Markdown tests are being rerun, the latter in
 three disjoint groups, each with the 30-minute limit. Final results will be added
-when those runs finish. The exact commands are:
+when those runs finish. The final scratch commands are:
 
 ```sh
-go build ./... > /tmp/dot-a-release-build.log 2>&1
-go vet ./... > /tmp/dot-a-release-vet.log 2>&1
-go test -count=1 -timeout 30m ./internal/load ./internal/lower > /tmp/dot-a-release-load-lower.log 2>&1
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -p 2 ./internal/oracle ./stage3/fixtures ./stage1/... ./cmd/adamic-rename-dot-a > /tmp/dot-a-release-gate.log 2>&1
+go build ./... > /tmp/dot-a-final-proof-build-rerun.log 2>&1
+go vet ./... > /tmp/dot-a-final-proof-vet-rerun.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -p 2 ./internal/oracle ./stage3/fixtures ./internal/load ./internal/lower ./stage1/cohere/typeaware ./cmd/adamic-rename-dot-a > /tmp/dot-a-final-proof-core.log 2>&1
+go test -count=1 -timeout 30m ./stage1/cohere/typeaware > /tmp/dot-a-final-proof-typeaware-rerun.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./stage1/cohere/markdownblocks -run '^(TestMarkdown(ASTPreprocessing|ParserPrefixes|UnicodeWidths|SourceDecoding|TextSplitting)|TestMicromarkInputChunks|TestFrontMatterStage|TestOptionalStringInitializationWitness|TestParserRepresentationProbes|TestNativeBuildModesAreDistinct|TestWholeDocumentOraclePreflight)$' > /tmp/dot-a-final-proof-markdown-core-rerun.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./stage1/cohere/markdownblocks -run '^TestMarkdown(ListLayout|QuoteLayout|TableLayout|CodeBlockLayout|HTMLBlockLayout)$' > /tmp/dot-a-final-proof-markdown-layout-rerun.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./stage1/cohere/markdownblocks -run '^TestMarkdown(WhitespaceLayout|LeafComposition|RootLayout|StructureLayout)$' > /tmp/dot-a-final-proof-markdown-composition.log 2>&1
 ```
+
+The other 15 tested stage 1 packages passed in the combined scratch run, logged
+in `/tmp/dot-a-release-gate.log`; three generator packages have no test files.
+That run used `ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -p 2
+./internal/oracle ./stage3/fixtures ./stage1/... ./cmd/adamic-rename-dot-a`.
+The final config seed was added after the core command completed, so its log
+also contains the superseded type-aware failure; the dedicated rerun above is
+the validation of the final config.
 
 The standalone codemod tests and both Node loader tests passed. CSS numbers again
 ran end to end after rename: direct `--import`, the wrapper and native each exited
@@ -144,7 +157,7 @@ setup: build cache warm (118s)
 setup: done in 118s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
 ```
 
-Eleven new mutants were caught, each by a test failure with exit 1:
+Fifteen new mutants were caught, each by a test failure with exit 1:
 
 | Mutant | What caught it |
 | --- | --- |
@@ -159,6 +172,10 @@ Eleven new mutants were caught, each by a test failure with exit 1:
 | Keep generator output extensions `.ts` | `TestGeneratedAdamicNames`: parsed output names remain stale |
 | Accept overlapping edits | `TestOverlappingEditsRefuseBeforeWriting`: unsafe plan is accepted |
 | Remove the shared loader's transform mode | Stage 3 `TestFixtures`: runner guard rejects the loader |
+| Rename pre-gate formatter scratch inputs | `TestGeneratedAdamicNames`: temporary TypeScript input is changed |
+| Omit mixed-config handling | `TestMixedTypeScriptConfig`: `.a` include is absent |
+| Omit the custom `.a` source extension | Same test: source-extension metadata is absent |
+| Omit the prelude validation seed | Same test: stock tsc config has no seed input |
 
 Mutant logs are `/tmp/dot-a-refresh-mutant-*.log`. An earlier attempt that removed
 only stage 3's suffix fallback survived: that fixture's local path already
@@ -170,7 +187,7 @@ added, and superseded scratch runs were replaced by the final run.
 The full `./...` test gate, opt-in throughput/profile and external-library tests,
 cohere's upcoming reformat, non-Linux platforms and
 I/O-failure injection are outside this verification. The whole oracle and all
-ordinary stage 1 tests are included in the command above.
+ordinary stage 1 tests are included across the commands above.
 
 Pinned ordinary width-test dependencies were installed under
 `/tmp/adamic-markdown-width`: emoji-regex 10.6.0, get-east-asian-width 1.6.0
