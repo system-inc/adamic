@@ -1,8 +1,8 @@
-Built: the three retained helpers rebased cleanly onto landed area/stage1-lint 7481e032; no new claims.
+Built: the three retained helpers rebased cleanly onto landed area/stage1-lint d65a8f931; no new claims.
 Commits: this area validation follows previously pushed helper c88a20178; the owned rule rebase also completed cleanly.
 Commands: all three owned helper packages and vet PASS after the area rebase; 4,470 cases and 820,676 Go bytes match again.
 Mutants: all twelve helper semantic mutants compiled and were caught on source Node, emitted JavaScript and sanitized native.
-Not covered: full consuming-rule parity, new helper selection and full gate; the unified rule oracle is being checked before lifting the landing cap.
+Not covered: full consuming-rule parity, new helper selection and full gate; the unified rule oracle exposes top-level-await and JSX fixed-source reparsing gaps; no new claim follows.
 
 ## Landing state
 
@@ -54,3 +54,9 @@ Main advanced to b8fb957aa839a9e8cb0b54279dd9864fa317bd30 with the inherited sta
 The harness 41eb6eab2 has landed through 50a5f105 and origin/area/stage1-lint is now 7481e0324e34a2537aafa9db7eeacda50405611b, incorporating main 39638d9e278d38bb5aeae887f46d55a70e47aaad. The ledger is byte-identical to the complete version already read and applied to the rule branch. Both owned branches rebased cleanly; helper foundation commits already in the area were skipped by git, and upstream shared files were retained without edits.
 
 Fresh commands: go test ./stage1/cohere/lint/helpers/from-wave1-13/at-rule ./stage1/cohere/lint/helpers/from-wave1-13/modifier ./stage1/cohere/lint/helpers/from-wave1-13/resolver -count=1 -v -timeout=10m, and go vet over those same packages. Output is recorded directly in evidence/area-helper-tests.log and evidence/area-helper-vet.log. All three packages passed, including the twelve mutants and the existing narrower dependency contracts. The top summary supersedes historical main and rule counts above. Rule branch dedup retains eight ports and two previously documented Nexus gaps. No new helper claim is made before unified rule validation.
+
+## Latest area runtime landing
+
+Area advanced to d65a8f931c98655936ae04c6899f38f14862b73e, adding native heap, string-build and string-search changes with runtime-profile evidence. Both owned branches rebased cleanly again. All three helper packages and all twelve compiling semantic mutants passed again on the new runtime: 4,470 cases and 820,676 matching Go bytes; helper vet passed with empty output. Logs are evidence/area-latest-helper-tests.log and evidence/area-latest-helper-vet.log. The uncached TestRuntimeLastIndexOfMatchesNode also passed: Node, emitted JavaScript, release and sanitized native agree on 758 bytes, native cache hits=0 misses=3 and Node hits=0 misses=2.
+
+The actual shared rule witness gate passes its supported inputs, but TestRulesAgree still refuses the Go-valid top-level await delay. A JSX file with an automatic return-void fix loses JSX mode during fixed-source reparsing; the clean JSX callback itself agrees when no fix is applied. The owned rule AREA_REPORT.md retains exact inputs and failed evidence. A frontend blocker remains beyond the only-harness parking exception, so no helper is newly claimed. Historical compatibility-overlay counts above remain historical.
