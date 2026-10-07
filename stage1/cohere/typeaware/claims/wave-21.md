@@ -148,3 +148,19 @@ Rule JSON continuation: wave21_rules/<module>/rule.json now declares the Go list
 
 
 Current-main landing continuation: rebased onto f8013f0ba with all 24 patches unchanged. Seven owned wave-21 suites, five inherited bridge suites, expanded external Node oracle and checker/vet passed again, including all rule/listener/adjacency mutants and guards. React source ports remain partial and their reservations are retained. No new claim. See ../WAVE_21_F801_LANDING_REPORT.md and ../validation-wave-21-f801/.
+
+
+## Parked React analysis reservations
+
+Per Ahra's explicit parking instruction, these three retained reservations are
+now PARKED and count as finished for the landing-first cap:
+
+- react-hooks/set-state-in-effect: native source-to-high-level-IR lowering, single-assignment graph transforms, memo erasure/inlining and capture/context translation are missing.
+- react-hooks/set-state-in-render: native source-to-high-level-IR lowering, single-assignment graphs, capture/context translation and memo/compilation-unit annotations are missing.
+- react-hooks/static-components: native source-to-high-level-IR lowering, single-assignment phi data and compilation-unit classification are missing; JSX parsing also remains a shared dependency.
+
+Native validator cores, numeric and rule.json listener declarations, raw type-name
+questions and the completed prepared-HIR byte/mutant/sanitizer proofs are pushed
+through 3c46337e5 on main f8013f0ba. The source pipeline is not completed.
+Cohere's analysis modules are being ported to Adamic on #dnv6f2c; JSX support is
+landing on area/stage1-lint. These claims are parked, not released.
