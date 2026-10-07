@@ -1,0 +1,73 @@
+{
+  "status": "partial: core.ts 7 to 2",
+  "before": 7,
+  "after": 2,
+  "all_codes": true,
+  "repairs": "type-only; independent stock JavaScript byte-identical",
+  "idempotence": "all 17 files pass",
+  "mutants": {
+    "iterator_type_removal": {
+      "census_total": 3
+    },
+    "ambient_declaration_removal": {
+      "census_total": 6
+    }
+  },
+  "declines": [
+    "Repeated addRange indexed read lacks a presence proof across intervening property access",
+    "Custom Set lacks seven ES2024 methods; truthful complete contract not established"
+  ],
+  "oracle": {
+    "tree": "/tmp/stage3-close-final-fresh2",
+    "nproc": 5,
+    "workers": 4,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 2.58
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 1.775
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=4",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 0,
+        "seconds": 340.137
+      }
+    },
+    "status": "pass",
+    "counts": {
+      "passing": 106367,
+      "failing": 0,
+      "pending": 0
+    },
+    "baseline_diffs": [],
+    "wall_seconds": 344.554
+  },
+  "baseline_diff_bytes": 0,
+  "node_heap_mib": 1536,
+  "initial_worker_failure": "whole-core-crashed-oracle.json; not counted as pass",
+  "native_acceptance_claim": false
+}
