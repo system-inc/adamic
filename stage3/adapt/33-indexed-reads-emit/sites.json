@@ -3307,9 +3307,9 @@
     "expression": "parameters[i]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-loop",
-    "invariant": "Presence of parameters[i] in addDefaultValueAssignmentsIfNeeded has not been established; its loop-bound and populated-list invariant review remains unfinished."
+    "invariant": "The for loop visits 0 <= i < parameters.length in the populated readonly NodeArray returned by nodesVisitor; parameters[i] is read once before any callback, at its original evaluation point."
   },
   {
     "file": "visitorPublic.ts",

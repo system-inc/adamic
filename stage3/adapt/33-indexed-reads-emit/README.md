@@ -25,3 +25,35 @@ All three default oracles passed 106,367 tests with zero failures and empty base
 Follow-up review refined 20 declined occurrences to name the existing absence test or intentionally optional result. Addresses, actions, classes and source edits are unchanged; the completed wave censuses and default oracles still describe the same source tree. See [proof/refinement/review.json](proof/refinement/review.json).
 
 Integration rule: push only codex/stage3-indexed-reads-emit, never main and never with force. Merge origin/main if newer main work is needed; do not rebase this pushed branch. Send the branch SHA to the user for merging into area/stage3.
+
+## Whole-file closure after integration 634ef06
+
+The follow-up meter is `origin/codex/stage3-latent-census` at `176a496`,
+`stage3/census/latent/REPORT.json`, run 0's `cheap_wins`. The branch merged
+`origin/area/stage3` at `634ef06` before these edits. Unlike the earlier waves,
+these checks retain **every checker code**, not just the five indexed-read
+codes. `whole-file-census.py` consumes the same full `load.Load` diagnostic
+export as `census.sh`, without a code filter. Per-file before and after reports
+live in `proof/whole-files/`; a file counts as closed only when its total is zero.
+
+The default oracle includes all integrated adaptations. Adaptation 20's original
+`check-baselines.cjs` rejects the composed API because adaptation 40 already
+projects 28 reference lines. `check-integrated-api.cjs` independently reconstructs
+exactly those 28 inherited lines plus adaptation 20's 189 owner lines against a
+separately built pristine pinned compiler; it was run without `--accept-api`.
+Integration 634ef06 has no adaptation 70 directory. The user's exception rule
+names only 20 and 70, so baseline acceptance and push remain pending clarification.
+
+### visitorPublic.ts
+
+`parameters[i]` in `addDefaultValueAssignmentsIfNeeded` is a U-loop required
+read: `0 <= i < parameters.length`, the readonly NodeArray comes from the
+validated `nodesVisitor` result, and the read precedes the callback. The existing
+ledger decline becomes an assertion at precisely that read. No read is added,
+removed, moved or defaulted. All source CRLF bytes are retained. Proof results
+and reproducible commands are recorded alongside the per-file census.
+
+Visitor closure: census **1 -> 0 across all codes**; stock JavaScript and
+idempotence pass; `! -> ?? 0` mutant caught twice. Default oracle: **106366
+passing, 1 failing**, with only the 189-line API difference. The file is not
+claimed oracle-green. See [the complete proof](proof/whole-files/visitorPublic/README.md).
