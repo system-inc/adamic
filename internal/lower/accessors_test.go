@@ -16,6 +16,9 @@ func TestAccessorRefusals(t *testing.T) {
 		notYet               bool
 	}{
 		{"update value", `class A { get x(): number { return 1; } set x(value: number) {} } const a = new A(); const value = a.x++;`, "accessor-update-value", true},
+		{"prefix update value", `class A { get x(): number { return 1; } set x(value: number) {} } const a = new A(); const value = ++a.x;`, "accessor-update-value", true},
+		{"compound update value", `class A { get x(): number { return 1; } set x(value: number) {} } const a = new A(); const value = (a.x += 1);`, "accessor-update-value", true},
+		{"short circuit update value", `class A { get x(): number { return 1; } set x(value: number) {} } const a = new A(); const value = false && a.x++ > 0;`, "accessor-update-value", true},
 		{"setter value", `class A { get x(): number { return 1; } set x(value: number) {} } const a = new A(); const value = (a.x = 2);`, "accessor-update-value", true},
 		{"mutable getter result override", `interface Animal { readonly name: string } interface Dog extends Animal { readonly bark: () => string } class A { get pets(): Animal[] { return []; } } class B extends A { override get pets(): Dog[] { return []; } } const b = new B();`, "accessor-override", false},
 		{"setter-only read", `class A { set x(value: number) {} } console.log(new A().x.toString());`, "setter-only-read", false},

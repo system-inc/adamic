@@ -43,7 +43,7 @@ between a call and a stored field true.
 | A derived getter returning `super.x` or a setter assigning `super.x` | Admitted. `super.x` directly calls the base getter and `super.x = value` directly calls the base setter with the current receiver. These are non-virtual calls; ordinary accessor reads inside the base body still dispatch virtually. |
 | `a?.x` | NotYet, `adamic/optional-accessor`. A short-circuiting call must preserve optional-chain order and result representation. |
 | `a['x']`, `{ ...a }`, `const { x } = a`, or `function f({ x }: A) {}` | NotYet, `adamic/accessor-property-operation`. Existing indexed and destructured reads assume loads. Class accessors are inherited and absent from Node's own-field spread, so copying the type's accessor properties would be wrong. These operations conservatively refuse any accessor-bearing source. |
-| `const old = a.x++`, `const sum = (a.x += 1)` or `const written = (a.x = 2)` | NotYet, `adamic/accessor-update-value`. Stage 0 has statement updates but no sequence expression carrying assignment or prefix/postfix results. Updates in expression statements and for-loop update positions are admitted. |
+| `const old = a.x++`, `const sum = (a.x += 1)` or `const written = (a.x = 2)` | NotYet, `adamic/accessor-update-value`. Item 4 stopped here: returning a saved old or new value requires expression-local sequencing with ownership and exception cleanup. Hoisting statement updates would change short-circuit and sibling-operand order; flow currently assumes that only statements define locals. Statement and for-loop updates remain admitted. |
 | `abstract get x(): number`, ambient accessors, `get ['x']()` or private accessor names | NotYet, `adamic/abstract-accessor` or `adamic/accessor-name`. These descriptors need additional declaration or name handling. |
 | A field or method replacing an inherited accessor, or the converse | Refused, `adamic/accessor-member-kind` when the checker accepts the program. A virtual descriptor cannot silently turn into a storage slot or ordinary method. |
 | A derived class overriding only the getter of a base getter/setter pair | NotYet, `adamic/accessor-descriptor-override`. JavaScript replaces the whole descriptor and loses the inherited setter. The same limit applies to removing a getter or adding a missing half. Getter-only overrides and complete pair overrides are admitted. |
@@ -189,3 +189,32 @@ Validation: full `internal/lower` passed (15.917s), the uncached accessor oracle
 filter passed (1.445s), and the full counts update passed (18.729s), adding only
 the super fixture's row. Logs are `/tmp/accessors-2-super-*.log`. These getter
 reads remain direct `ir.Call` nodes, never loads.
+
+## Update-expression values remain NotYet
+
+Item 4 stops at the IR boundary. `updateAccessor` returns an `ir.Block` holding
+the receiver and getter result, and the final setter call discards its result.
+There is no expression that binds those values and returns the old value for
+postfix or the computed value for prefix and compound updates. `flow/build.go`
+explicitly assumes expressions contain no statements, and records definitions
+only from statements. Introducing an expression-local sequence needs coordinated
+flow, ownership and backend support, including releasing the held receiver and
+values when the getter, operand or setter throws. This prerequisite was not
+implemented here. Hoisting the existing block is not a sound substitute: it
+would run skipped updates or reorder a sibling operand.
+
+Observed on Node 24.19.0, `review/accessors-2/update_values.a` exits 0. Postfix
+returns 1 even though the setter leaves storage at 102. Compound assignment
+returns 105 and writes through the original receiver, while its operand selects
+a different receiver for subsequent accesses. Prefix returns 11 while storage
+becomes 111. The false short-circuit produces no receiver/getter/setter output.
+Plain assignment returns 3 while its setter stores 103. Both Adamic backends
+reject the first postfix expression with `adamic/accessor-update-value`.
+
+Prefix, compound and short-circuit diagnostic probes were added. Mutant:
+disable only the accessor-update-value guard. All three named-diagnostic tests
+fail, but lowering still returns separate generic NotYet diagnostics for the
+unsupported operators. This proves the diagnostic check can fail; admission and
+runtime behavior are masked, so it is not evidence for an implemented feature.
+The mutant was restored. The new stopping-point probe has no native sanitizer,
+leak or allocation-count result. Logs are `/tmp/accessors-2-update-*.log`.

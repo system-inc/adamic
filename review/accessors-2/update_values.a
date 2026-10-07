@@ -1,0 +1,21 @@
+class Cell {
+ stored: number;
+ constructor(value: number) { this.stored = value; }
+ get x(): number { console.log(`get ${this.stored}`); return this.stored; }
+ set x(value: number) { console.log(`set ${value}`); this.stored = value + 100; }
+}
+const first = new Cell(1);
+const second = new Cell(10);
+let active = first;
+function receiver(): Cell { console.log('receiver'); return active; }
+function operand(): number { console.log('operand'); active = second; return 3; }
+const old = receiver().x++;
+console.log(`old ${old} stored ${first.stored}`);
+const sum = (receiver().x += operand());
+console.log(`sum ${sum} first ${first.stored} second ${second.stored}`);
+const prefix = ++second.x;
+console.log(`prefix ${prefix} stored ${second.stored}`);
+const skipped = false && receiver().x++ > 0;
+console.log(`skipped ${skipped}`);
+const written = (first.x = operand());
+console.log(`written ${written} stored ${first.stored}`);
