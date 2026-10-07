@@ -141,3 +141,9 @@ this report in validation-wave-30-area. Only verified binaries/archives from
 four named completed own scratch roots were removed to free 1483875632 bytes;
 source and exact oracle streams remain, with a removal manifest preserved.
 No full repository gate or full compiler oracle matrix is claimed.
+
+Exact logs contain meaningful trailing wire tabs. Evidence copies are preserved
+as .log.gz with verified decompression and uncompressed byte lengths/SHA-256
+hashes in log-streams.json, keeping the final source diff whitespace check clean.
+Original workspace logs remain unchanged. This is evidence packaging only;
+no implementation or test input changes after the green gates.
