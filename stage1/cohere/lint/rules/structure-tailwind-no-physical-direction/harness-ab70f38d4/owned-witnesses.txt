@@ -1,0 +1,13 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: /tmp/adamic-gate/TestOwnedWitnesses2273793483/001/oracle [--manifest /tmp/adamic-gate/TestOwnedWitnesses2273793483/138/manifest.txt]: exit status 2
+        panic: unexpected fix shape
+        
+        goroutine 1 [running]:
+        main.run({0x38ce3ba78207?, 0x38ce3bd8cb80?}, 0x0, 0x38ce3bd8cb80)
+        	/tmp/adamic-wave15-harness-probe/cohere/adamic_lint_oracle.go:81 +0x1265
+        main.main()
+        	/tmp/adamic-wave15-harness-probe/cohere/adamic_lint_oracle.go:340 +0x374
+--- FAIL: TestOwnedWitnesses (94.40s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	94.410s
+FAIL
