@@ -35,3 +35,23 @@ syntax ready for AST/API adaptation cohort. Existing claims remain reserved.
 This update is pushed before writing code for the next three rules. New Adamic
 source uses .a. Shared compatibility work, if needed for verification, is applied
 only to scratch overlays, with default integration limitations reported explicitly.
+
+## Third claim, October 7
+
+After pushing f81b353a and fetching all origin heads, claim the first three
+available rules in the inventory syntax-ready cohort (positions 9, 10 and 11):
+
+1. @typescript-eslint/no-unnecessary-type-constraint
+2. @typescript-eslint/prefer-as-const
+3. @typescript-eslint/prefer-enum-initializers
+
+All 46 rules in the original helper-ready handoff linked by helpers/REPORT.md
+are claimed. Scan covered 320 origin refs and all actual claim documents under
+stage1/cohere/lint/claims, excluding evidence and reports from claim assertions.
+Main ef3d907ecdc4c771b016f7d9c52372def057a340 has none of these three rules.
+The first eight syntax-ready entries are claimed by slots 08 and 14. The list
+ordering comes from origin/codex/lint-inventory inventory.json, not a fresh
+readiness expansion. Existing reservations remain in place.
+
+This claim is committed and pushed before implementation. Rule sources use .a.
+Shared integration compatibility stays in scratch overlays and will be reported.
