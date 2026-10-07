@@ -110,3 +110,20 @@ those two mentions are not represented as worker allocations.
 The two eligible original reservations, prefer-regex-literals and prefer-rest-params,
 remain this wave's implemented allocation. The supplemental exhaustive-deps
 implementation remains released and is limited by shared JSX parsing.
+
+## Continuation 4 claim
+
+All prior allocated ports and evidence are pushed through 0ea841d4. Fetched
+417 origin references and checked 94 distinct blobs beneath remote claims.
+Compressed selection inventories are evidence, not reservations; exact-name
+checks against claim documents leave these first three eligible ranked rules:
+
+- react/button-has-type (0 compiler, 0 repository)
+- react/checked-requires-onchange-or-readonly (0 compiler, 0 repository)
+- react/display-name (0 compiler, 0 repository)
+
+Main and the bridge branch mention these only in count inventories and
+skip-types records, not native implementations. They are reserved before code.
+The snapshot and document matches are in wave_02_continuation_4/selection-audit.json.
+Known shared JSX parsing gaps will be disclosed; other behavior will be ported
+inside this rule directory without shared harness or generator changes.
