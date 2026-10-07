@@ -60,8 +60,8 @@ function groupNodes(tree: Tree, index: number, text: string, scss: boolean): num
     let comma = commaGroup(tree);
     const commas: number[] = [comma];
     const nodes = tree.at(index).list('nodes');
-    for(let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
-        const child = nodes[nodeIndex] ?? panic('missing value node');
+    for(let nodePosition = 0; nodePosition < nodes.length; nodePosition++) {
+        const child = nodes[nodePosition] ?? panic('missing value node');
         const node = tree.at(child);
         if(scss && node.type() === 'number' && node.string('unit') === '..' && node.string('value').endsWith('.')) {
             node.setString('value', node.string('value').slice(0, -1));
@@ -80,29 +80,29 @@ function groupNodes(tree: Tree, index: number, text: string, scss: boolean): num
             }
             else {
                 const groups: number[] = [];
-                for(const groupIndex of group.list('groups')) {
-                    const groupNode = tree.at(groupIndex);
+                for(const memberIndex of group.list('groups')) {
+                    const groupNode = tree.at(memberIndex);
                     if(groupNode.type() === 'comma_group') {
                         for(const groupChild of groupNode.list('groups')) {
                             groups.push(groupChild);
                         }
                     }
                     else {
-                        groups.push(groupIndex);
+                        groups.push(memberIndex);
                     }
                 }
                 let interpolation = false;
                 let hasString = false;
-                for(let groupIndex = 0; groupIndex < groups.length; groupIndex++) {
-                    const current = tree.at(groups[groupIndex] ?? panic('missing url argument'));
+                for(let groupPosition = 0; groupPosition < groups.length; groupPosition++) {
+                    const current = tree.at(groups[groupPosition] ?? panic('missing url argument'));
                     if(
                         current.type() === 'string' ||
                         (current.type() === 'func' && !current.string('value').endsWith('\\'))
                     ) {
                         hasString = true;
                     }
-                    if(groupIndex > 0 && current.type() === 'word' && current.string('value') === '{') {
-                        const previous = tree.at(groups[groupIndex - 1] ?? panic('missing url previous argument'));
+                    if(groupPosition > 0 && current.type() === 'word' && current.string('value') === '{') {
+                        const previous = tree.at(groups[groupPosition - 1] ?? panic('missing url previous argument'));
                         if(previous.type() === 'word' && previous.string('value').endsWith('#')) {
                             interpolation = true;
                         }
@@ -138,10 +138,10 @@ function groupNodes(tree: Tree, index: number, text: string, scss: boolean): num
         }
         else if(node.type() === 'comma') {
             if(
-                nodeIndex === nodes.length - 3 &&
-                tree.at(nodes[nodeIndex + 1] ?? panic('missing trailing comment')).type() === 'comment'
+                nodePosition === nodes.length - 3 &&
+                tree.at(nodes[nodePosition + 1] ?? panic('missing trailing comment')).type() === 'comment'
             ) {
-                const closing = tree.at(nodes[nodeIndex + 2] ?? panic('missing trailing paren'));
+                const closing = tree.at(nodes[nodePosition + 2] ?? panic('missing trailing paren'));
                 if(closing.type() === 'paren' && closing.string('value') === ')') {
                     continue;
                 }
