@@ -249,7 +249,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				received += ", " + strings.Join(arguments, ", ")
 			}
 			received += "}"
-			call = fmt.Sprintf("(%s != NULL ? %s->code(%s, %s->receiver ? %s : %s, %d + (%s->receiver ? 1 : 0)) : %s(%s, %s, %d))", closure, closure, closure, closure, received, packed, len(arguments), closure, method, receiver, packed, len(arguments))
+			call = fmt.Sprintf("(%s != NULL ? adamic_node_performance_invoke(%s, %s->receiver ? %s : %s, %d + (%s->receiver ? 1 : 0), %t) : %s(%s, %s, %d))", closure, closure, closure, received, packed, len(arguments), closure, expression.Returns == 0, method, receiver, packed, len(arguments))
 		}
 	}
 	if expression.Returns == 0 {

@@ -66,7 +66,10 @@ func TestCheckedViewGenericArrayCast(t *testing.T) {
 
 func TestCheckedViewSameMap(t *testing.T) {
 	program, path := interfaceFixture(t, "lane2/same-map")
-	want := onNode(t, path)
+	want := run{stdout: []byte("true:1:20:3:true\n")}
+	if difference := disagreement(want, onNode(t, path)); difference != "" {
+		t.Fatal(difference)
+	}
 	actual, _ := nativelyUncached(t, program)
 	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 		if difference := disagreement(want, got); difference != "" {
