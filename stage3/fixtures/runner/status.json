@@ -12,7 +12,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/runner/01_queue_empty.a:5:5: stage 0 can't lower a function inside a function (a closure) yet"
+      "what": "stage3/fixtures/runner/01_queue_empty.a:5:5: stage 0 can't lower a function inside a function (a closure) (use an arrow function for a closure, or move a noncapturing function to module scope) yet"
     }
   },
   {

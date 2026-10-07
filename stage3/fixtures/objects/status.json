@@ -128,7 +128,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "what": "stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0 (strict-boolean-expressions)"
     }
   },
   {
@@ -145,7 +145,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added (adamic/no-index-signature)"
     }
   },
   {
@@ -196,7 +196,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/15_accessor_absence.a:17:22: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
+      "what": "stage3/fixtures/objects/15_accessor_absence.a:17:22: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined (adamic/no-definite-assignment)"
     }
   },
   {
@@ -213,7 +213,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/16_version_defaults.a:15:13: stage 0 can't lower a destructured name that isn't plain yet"
+      "what": "stage3/fixtures/objects/16_version_defaults.a:15:13: stage 0 can't lower a destructured name that isn't plain (bind a plain name first, then destructure or apply a default in a separate statement) yet"
     }
   },
   {
@@ -229,7 +229,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/17_container_rest.a:13:19: stage 0 can't lower destructuring anything but a tuple into [names] yet"
+      "what": "stage3/fixtures/objects/17_container_rest.a:13:19: stage 0 can't lower destructuring anything but a tuple into [names] (bind the array once, then read its indexes explicitly and handle undefined) yet"
     }
   },
   {
@@ -248,7 +248,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/19_identifier_multimap.a:20:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "what": "stage3/fixtures/objects/19_identifier_multimap.a:20:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0 (strict-boolean-expressions)"
     }
   },
   {
@@ -329,7 +329,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      "what": "stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md) (adamic/no-generators)"
     }
   },
   {
@@ -345,7 +345,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/26_diagnostic_in.a:21:53: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map"
+      "what": "stage3/fixtures/objects/26_diagnostic_in.a:21:53: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map (adamic/no-in-operator)"
     }
   },
   {
@@ -361,7 +361,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added (adamic/no-index-signature)"
     }
   },
   {
@@ -378,7 +378,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it"
+      "what": "stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it (adamic/no-debugger)"
     }
   },
   {

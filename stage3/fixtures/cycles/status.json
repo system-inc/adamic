@@ -16,7 +16,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/01_call_time/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/01_call_time/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   },
   {
@@ -36,7 +36,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/02_reverse_barrel/path.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/02_reverse_barrel/path.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   },
   {
@@ -57,7 +57,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/03_extensions/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/03_extensions/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   },
   {
@@ -77,7 +77,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/04_directory_callback/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/04_directory_callback/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   },
   {
@@ -94,7 +94,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   },
   {
@@ -111,7 +111,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/06_import_order_mutant/_namespaces/ts.a:5:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/06_import_order_mutant/_namespaces/ts.a:5:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   },
   {
@@ -131,7 +131,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   },
   {
@@ -151,7 +151,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/08_named_reexports/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/08_named_reexports/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   },
   {
@@ -168,7 +168,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/09_function_value_load/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/09_function_value_load/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   },
   {
@@ -185,7 +185,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/10_hoisted_before_body/performance.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      "what": "stage3/fixtures/cycles/10_hoisted_before_body/performance.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports (adamic/import-cycle)"
     }
   }
 ]
