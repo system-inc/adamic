@@ -1,0 +1,107 @@
+case 0
+finding	18	55	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	27	32	
+fix	35	40	
+fix	24	24	 type
+fixed	const before = 1;\u000aimport type { A, B } from 'mod';\u000a
+case 1
+finding	0	39	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	13	20	
+fix	6	6	 type
+fixed	import type   {   A   }   from 'mod';
+case 2
+fixed	import 'mod';
+case 3
+fixed	import * as T from 'mod';
+case 4
+fixed	import T from 'mod';
+case 5
+fixed	import T, { type U } from 'mod';
+case 6
+fixed	import type * as T from 'mod';
+case 7
+fixed	import type T from 'mod';
+case 8
+fixed	import type { T } from 'mod';
+case 9
+fixed	import type { T, U } from 'mod';
+case 10
+fixed	import type { type A } from 'mod';
+case 11
+finding	0	40	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	10	15	
+fix	19	24	
+fix	6	6	 type
+fixed	import type {\u000a\u0009A,\u000a\u0009B,\u000a} from 'mod';
+case 12
+fixed	import { T } from 'mod';
+case 13
+fixed	import { T, type U } from 'mod';
+case 14
+finding	0	36	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	6	6	 type
+fixed	import type { 'a' as A } from 'mod';
+case 15
+finding	0	35	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	6	6	 type
+fixed	import type { A as AA } from 'mod';
+case 16
+finding	0	49	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	23	28	
+fix	6	6	 type
+fixed	import type { A as AA, B as BB } from 'mod';
+case 17
+finding	0	29	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	6	6	 type
+fixed	import type { A } from 'mod';
+case 18
+finding	0	37	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	17	22	
+fix	6	6	 type
+fixed	import type { A, B } from 'mod';
+case 19
+fixed	import { type T, U } from 'mod';
+case 20
+finding	0	36	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	6	6	 type
+fixed	import type { as as as } from 'mod';
+case 21
+finding	0	30	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	6	6	 type
+fixed	import type { as } from 'mod';
+case 22
+finding	0	40	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	6	6	 type
+fixed	import type { default as A } from 'mod';
+case 23
+finding	0	32	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	6	6	 type
+fixed	import type { type } from 'mod';
+case 24
+finding	0	27	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	8	13	
+fix	6	6	 type
+fixed	import type {A} from 'mod';
+case 25
+fixed	import {} from 'mod';
+case 26
+finding	0	43	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	14	
+fix	23	28	
+fix	6	6	 type
+finding	44	84	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	57	64	
+fix	50	50	 type
+finding	107	143	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	116	121	
+fix	113	113	 type
+fixed	import type { A as AA, B } from 'mod';\u000aimport type   {   \u00e9   }   from 'mod';\u000aimport {} from 'mod';\u000aimport type { as as as } from 'mod';\u000aimport T, { type A } from 'mod';\u000a

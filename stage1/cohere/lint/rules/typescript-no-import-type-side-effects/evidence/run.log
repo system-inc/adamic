@@ -1,0 +1,6 @@
+typescript-no-import-type-side-effects findings and full suggestions identical 27 cases 7421 bytes
+typescript-no-import-type-side-effects mutant inline type imports suppressed caught only by comparison on Node
+typescript-no-import-type-side-effects mutant inline type imports suppressed caught only by comparison on JavaScript
+typescript-no-import-type-side-effects mutant inline type imports suppressed caught only by comparison on native
+typescript-no-import-type-side-effects compiler and stage1 identical 236 files
+typescript-no-import-type-side-effects rates {'Go': {'seconds': 0.18927709000035975, 'findings': 0, 'findings_per_second': 0.0}, 'Node': {'seconds': 0.7615707340000881, 'findings': 0, 'findings_per_second': 0.0}, 'native': {'seconds': 4.315355120000277, 'findings': 0, 'findings_per_second': 0.0}}
