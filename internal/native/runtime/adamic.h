@@ -176,6 +176,12 @@ typedef struct adamic_object {
 	adamic_value slots[];
 } adamic_object;
 
+// Initialized bits follow slots in the same allocation, indexed by the actual shape.
+static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
+	return (unsigned char *)(void *)(object->slots + object->shape->count);
+}
+void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized);
+
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
 void adamic_object_free_children(adamic_object *object, void (*release)(void *));
@@ -186,6 +192,8 @@ typedef struct adamic_slot_cache {
 	const adamic_shape *shape;
 	size_t index;
 } adamic_slot_cache;
+
+adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
@@ -220,6 +228,7 @@ void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
+adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression);
 
 // adamic_object_has is object.hasOwnProperty(name).
 bool adamic_object_has(const adamic_object *object, const adamic_string *name);
@@ -250,6 +259,8 @@ bool adamic_object_has_own(const adamic_object *object, const adamic_string *key
 struct adamic_array *adamic_object_keys(const adamic_object *object);
 struct adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries);
 void adamic_object_assign(adamic_object *target, const adamic_object *source);
+struct adamic_array *adamic_object_values_checked(const adamic_object *object, bool references, bool entries, const char *expression);
+void adamic_object_assign_checked(adamic_object *target, const adamic_object *source, const char *expression);
 void adamic_object_check_write(const adamic_object *object, const char *name);
 
 // adamic_array is an array (array.c). references says whether its elements are references.

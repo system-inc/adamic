@@ -26,7 +26,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
 	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
-	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
@@ -105,19 +104,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 		if err := l.recordStorageView(node); err != nil {
 			found = err
-			return true
-		}
-		var assertion *ast.Node
-		if node.Kind == ast.KindPropertyDeclaration {
-			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
-				assertion = token
-			}
-		}
-		if node.Kind == ast.KindVariableDeclaration {
-			assertion = node.AsVariableDeclaration().ExclamationToken
-		}
-		if assertion != nil {
-			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {

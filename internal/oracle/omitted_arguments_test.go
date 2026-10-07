@@ -1,15 +1,16 @@
 package oracle
 
 import (
-	"errors"
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/lower"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
 func init() {
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/refusals/omitted_scanner_original.a", true, false})
 	for _, name := range []string{"scanner", "scanner_required", "scanner_explicit", "number", "string", "boolean", "object", "defaults", "methods", "reader", "reader_direct", "reader_override", "reader_string"} {
 		fixtures = append(fixtures, struct {
 			path    string
@@ -69,10 +70,8 @@ func TestOmittedArgumentZeroMutantIsCaught(t *testing.T) {
 	t.Logf("zero padding caught by Node: native %q, Node 11", native.stdout)
 }
 
-// Preserve the supplied source verbatim: Node confirms the expected output,
-// while this branch's language policy refuses the non-null assertion. The
-// executable normalized witness must not be mistaken for this original.
-func TestOmittedOriginalProbePolicy(t *testing.T) {
+// Preserve the supplied source verbatim and pin its independent Node observation.
+func TestOmittedOriginalProbeMatchesNode(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/omitted_scanner_original.a"))
 	if err != nil {
@@ -82,11 +81,20 @@ func TestOmittedOriginalProbePolicy(t *testing.T) {
 	if observed.exitCode != 0 || string(observed.stdout) != "11\n" || len(observed.stderr) != 0 {
 		t.Fatalf("want Node 11, got %+v", observed)
 	}
-	_, err = lowered(t, path)
-	var refused *lower.Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "non-null assertion") {
-		t.Fatalf("want the unchanged policy refusal, got %v", err)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
 	}
+	native, binary := natively(t, program)
+	for _, result := range []run{native, onJavaScriptBackend(t, program), released(t, program)} {
+		if difference := disagreement(observed, result); difference != "" {
+			t.Fatalf("%s: %+v", difference, result)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+
 }
 
 func TestOmittedReaderZeroMutantIsCaught(t *testing.T) {

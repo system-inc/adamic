@@ -37,10 +37,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/nested-functions/01_scanner_frame.a:49:12: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/nested-functions/01_scanner_frame.a:72:5: Adamic 0.1 refuses var; use const or let"}
   },
   {
     "file": "02_scanner_digits.a",
@@ -148,10 +145,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/nested-functions/09_checker_constituent_recursion.a:15:94: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "10_checker_arrow_cleanup.a",

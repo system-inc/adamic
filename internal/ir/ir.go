@@ -173,8 +173,12 @@ func (t Type) IsReference() bool {
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
-	Name string
-	Type Type
+	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
+	Uninitialized         bool
+	InitializerExpression string
+	Hoisted               bool
+	Name                  string
+	Type                  Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
@@ -225,9 +229,10 @@ type (
 	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
 	// Adamic checks it out loud.
 	Read struct {
-		Local   int
-		Of      Type
-		Checked bool
+		Local     int
+		Of        Type
+		Checked   bool
+		Readiness string
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
@@ -294,6 +299,7 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -316,10 +322,12 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
-		Object   Expression
-		Name     string
-		Of       Type
-		Optional bool
+		// Readiness is the source expression for a checked field read, empty when proven ready.
+		Readiness string
+		Object    Expression
+		Name      string
+		Of        Type
+		Optional  bool
 		// Absent is an optional own field: a shape without it reads as undefined.
 		Absent bool
 		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
@@ -783,9 +791,11 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
-	Name    string
-	Value   Expression
-	Private bool
+	// Uninitialized reserves storage without making its typed value readable.
+	Uninitialized bool
+	Name          string
+	Value         Expression
+	Private       bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
@@ -1020,7 +1030,7 @@ type (
 
 	// Declare introduces a local with its first value.
 	Declare struct {
-		// Uninitialized allocates only a captured cell, with its ready bit clear.
+		// Uninitialized reserves storage with readiness clear; a nested frame cell may already exist.
 		Uninitialized bool
 		Local         int
 		Value         Expression
@@ -1029,9 +1039,10 @@ type (
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
 	// Read: a write to a global from inside a function.
 	Assign struct {
-		Local   int
-		Value   Expression
-		Checked bool
+		Local         int
+		Value         Expression
+		Checked       bool
+		Uninitialized bool
 	}
 
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
@@ -1052,9 +1063,10 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Object Expression
-		Name   string
-		Value  Expression
+		Uninitialized bool
+		Object        Expression
+		Name          string
+		Value         Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of

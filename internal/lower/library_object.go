@@ -44,7 +44,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 			return value, true, err
 		}
 	}
-	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
+	call := ir.ObjectCall{Method: name, Returns: ir.Boolean, Readiness: sourceExpression(node)}
 	switch name {
 	case "is":
 		for _, argument := range written {
