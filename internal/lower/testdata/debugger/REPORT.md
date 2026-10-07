@@ -1,5 +1,7 @@
 # Debugger statement
 
+Implementation commit: 0fe2588fed6d52af313915e2899c0662162b5547.
+
 The unit branch is codex/debugger-statement, started from current origin/main
 ce0750f28ef3943057f1f852b3ae5d93e6c5d644. No changes from the separate
 method-presence-test branch are included.
