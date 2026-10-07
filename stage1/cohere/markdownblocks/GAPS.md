@@ -166,12 +166,11 @@ source offsets in the fixture adapter; native slices and prints source itself.
 All 4,724 accumulated source contexts match both original full-source oracles.
 Go still parses/preprocesses the AST and supplies unported children.
 
-A two-field structural range array was rejected before code generation because
-other structural subtypes can carry child arrays. The minimal witness is
-`gaps/4_structural_ranges.ts`: Node prints 1; Adamic reports Refused with the
-cycle reference-counting diagnostic. Root ignore ranges now use numeric index
-pairs; the complete root gate compiles, runs and leaks nothing. This is a
-representation workaround, not a compiler change or a reason to stop parsing.
+The structural range witness `gaps/4_structural_ranges.ts` now compiles under
+graph regions: Node, release native, sanitized native and the JavaScript backend
+print 1, and the leak check passes. Its former reference-counting cycle refusal
+is obsolete. Root ignore ranges keep numeric index pairs; the complete root gate
+compiles, runs and leaks nothing.
 
 ## Native heading, sentence and paragraph boundary
 
@@ -224,7 +223,7 @@ Markdown parser/layout remains checked by the full-source embedding-off audit.
 
 The document/container/flow dispatchers, attempt/rollback and event emission,
 resolvers/subtokenization, mdast tree construction and Markdown AST preprocessing
-remain unported. The literal closure representation is still rejected as below;
+remain unported. The first-class nested state continuation remains unsupported as below;
 these native numeric/context primitives show that a redesign can make progress.
 This is unfinished work, not evidence that a native Markdown parser is impossible.
 
@@ -304,11 +303,11 @@ with captured mutable frames. These are additional prerequisites for a direct
 Adamic port, not evidence that Markdown cannot ever be implemented in Adamic:
 
 - `gaps/1_recursive_state.ts` prints `35` twice on Node. Stage 0 returns exactly
-  `lower.NotYet("a function inside a function (a closure)")` for the nested
-  function declaration corresponding to a state with its captured frame.
-- `gaps/2_state_arrow_cycle.ts` prints `35` twice on Node. Rewriting the nested
-  declaration as a mutable arrow slot is refused by Adamic 0.1 as a closure/cell
-  reference-counting cycle. This is a `Refused`, not a `NotYet`.
+  `lower.NotYet("a first-class nested function reference from another nested function")`
+  at the recursive continuation value returned by the nested state function.
+- `gaps/2_state_arrow_cycle.ts` now compiles under graph regions. Node, release
+  native, sanitized native and the JavaScript backend print `35` twice; the
+  closure/cell graph passes the leak check. The former cycle refusal is obsolete.
 - `gaps/3_recursive_callable.ts` is closed: a noncapturing, top-level recursive
   callable state is supported. Source Node, native under ASan/UBSan, the
   JavaScript backend and LeakSanitizer agree on `1` then `0`. The recursive

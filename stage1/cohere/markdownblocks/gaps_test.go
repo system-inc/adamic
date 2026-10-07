@@ -14,10 +14,10 @@ import (
 func TestParserRepresentationProbes(t *testing.T) {
 	t.Parallel()
 	for _, gap := range []struct{ path, stdout, notYet, refused string }{
-		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n", notYet: "a function inside a function (a closure)"},
-		{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n", refused: "a cycle reference counting can't free"},
+		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n", notYet: "a first-class nested function reference from another nested function"},
+		{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n"},
 		{path: "gaps/3_recursive_callable.ts", stdout: "1\n0\n"},
-		{path: "gaps/4_structural_ranges.ts", stdout: "1\n", refused: "a cycle reference counting can't free"},
+		{path: "gaps/4_structural_ranges.ts", stdout: "1\n"},
 		{path: "gaps/5_conditional_panic.ts", stdout: "T\n", notYet: "reading panic"},
 		{path: "gaps/7_postfix_property.ts", stdout: "0\n1\n", notYet: "a PostfixUnaryExpression"},
 	} {
@@ -53,7 +53,7 @@ func TestParserRepresentationProbes(t *testing.T) {
 				t.Fatal(err)
 			}
 			native, binary := natively(t, lowered)
-			for _, side := range []run{native, onJavaScriptBackend(t, lowered)} {
+			for _, side := range []run{native, releaseRun(t, lowered), onJavaScriptBackend(t, lowered)} {
 				clean(t, "closed callable probe", side)
 				equal(t, "closed callable probe", side.stdout, source.stdout)
 			}
