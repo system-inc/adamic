@@ -1,0 +1,29 @@
+=== RUN   TestBindingState
+--- PASS: TestBindingState (0.08s)
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.01s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestScopeExportSymbols
+    scope_export_symbols_test.go:106: 4 direct-checker scope/alias controls, malformed flags and node kind rejected
+--- PASS: TestScopeExportSymbols (0.06s)
+=== RUN   TestTypeOperations
+    type_operations_test.go:60: metadata differs: ["1" "type-operations" "5" "2" "0" "1" "" "D" "32" "ClassDeclaration" "1" "ClassDeclaration" "/tmp/adamic-gate/TestTypeOperations1642797485/001/input.ts" "0" "0" "0" "1" "2" "PropertyDeclaration" "0" "Identifier" "MethodDeclaration" "1024" "Identifier" "0" "1" "type-operations" "1" "0" "0" "0" "0"]
+--- FAIL: TestTypeOperations (0.01s)
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestShapeAndNameFacts
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+--- PASS: TestShapeAndNameFacts (0.02s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.10s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.285s
+FAIL
