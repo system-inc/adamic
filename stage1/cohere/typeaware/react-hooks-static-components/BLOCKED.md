@@ -116,3 +116,9 @@ oracle evidence; this follow-up adds dependency/ownership documentation only.
 number. Independent Go production-registration comparison, native sanitizer
 execution and a compiling declaration mutant pass. This is metadata only; the
 source analysis remains unported. See `../prefer-promise-reject-errors/LISTENER_REPORT.md`.
+
+## Parked by Ahra
+
+PARKED: native HIR/SSA/capture analysis is pending on #dnv6f2c, with JSX
+landing on area/stage1-lint. This counts as finished for landing-first only;
+it does not assert a complete rule port or new oracle coverage.

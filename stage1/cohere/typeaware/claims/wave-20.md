@@ -73,3 +73,33 @@ be modified to work around a missing dependency.
 Fourth-batch status: all three claims are blocked by missing shared native JSX
 parsing, demonstrated on a valid TSX control (Go exit 0, native parser panic 70).
 See each rule directory's `BLOCKED.md`. No fourth-batch port is claimed complete.
+
+## Fourth batch parked
+
+Per Ahra's latest instruction, all three fourth-batch claims are PARKED and
+counted as finished for the landing-first cap, without claiming complete ports:
+react-hooks/set-state-in-effect, react-hooks/set-state-in-render, and
+react-hooks/static-components. Blockers: native source-to-HIR lowering, SSA,
+capture translation, memoization and control analysis. Shared analysis modules
+are being ported on #dnv6f2c; JSX is landing on area/stage1-lint. Existing partial
+metadata and blocker evidence are already pushed. Reconcile overlapping claims
+with waves 06 and 29 during integration; this worker adds no duplicate kernels.
+
+## Fifth batch
+
+All existing work is based on current main f8013f0b and oracle-green, pushed at
+d837657ab. All-heads selection inspected 529 origin refs and 33 distinct Markdown
+claim blobs. Exact rule-name boundaries prevent confusing namespaced rules with
+core names. Inventory: 197; 154 claimed; 25 baseline checker-dependent ports;
+18 unclaimed before this batch, ranked by combined findings and lexical ties.
+The first three eligible rules, each with combined volume zero, are:
+
+| Rule | Status |
+| --- | --- |
+| react/jsx-fragments | Claimed |
+| react/jsx-no-constructed-context-values | Claimed |
+| react/jsx-no-undef | Claimed |
+
+These rules use AST and checker facts, not the parked native React HIR/SSA
+pipeline. Claim update is pushed before any implementation. Shared JSX and
+numeric node handoff availability will constrain their source entry points.
