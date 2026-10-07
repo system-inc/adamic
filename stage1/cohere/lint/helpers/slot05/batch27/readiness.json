@@ -20,8 +20,8 @@
   "unique_consumers": 5,
   "newly_helper_ready_from_batch_alone": [],
   "newly_helper_ready_with_previous_slot05": [],
-  "delivery": "local format-patch; reservation and implementation not pushed due GitHub internal server errors",
-  "cumulative_slot05_local": {
+  "delivery": "published reservation 962094b5 and implementation dfc6b9ab; historical ordering violation retained in REPORT.md",
+  "cumulative_slot05_published": {
     "helpers": 77,
     "dependency_occurrences_removed": 392,
     "unique_consumers": 76,

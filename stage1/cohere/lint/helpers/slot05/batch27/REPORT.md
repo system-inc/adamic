@@ -1,8 +1,8 @@
-Built local .a ports of isPositiveInteger, isStrictPositiveInteger and trimDelimiters; nine prerequisites across five frozen blocked consumers, no new ready rule.
-Local reservation 962094b5 was not published: both pushes returned GitHub internal server errors. Implementation SHA and format-patch location follow in final response.
+Built and published .a ports of isPositiveInteger, isStrictPositiveInteger and trimDelimiters; nine prerequisites across five frozen blocked consumers, no new ready rule.
+Published reservation 962094b5 and implementation dfc6b9ab on codex/lint-helpers-05 after retrying the earlier GitHub server failures.
 Batch27 PASS 104.061s, seven uncached Node probes PASS 1.131s, vet/format clean; setup 25.530s, nproc 5.
 All ten final compiling semantic mutants caught by actual Go outputs; exact substitutions and witnesses in evidence/mutants.json.
-Not covered: publication, full repository gate, seventeen required external checks, whole-rule findings or Go integer-overflow range arithmetic.
+Not covered: full repository gate, seventeen required external checks, whole-rule findings or Go integer-overflow range arithmetic.
 
 ## Reservation ordering and delivery failure
 
@@ -38,3 +38,7 @@ gofmt -l cmd internal stage1/cohere/lint/helpers/slot05 > /tmp/lint05-batch27-fo
 ```
 
 Setup completed 25.530s, five processors with quota four cores, 17.6 GB, Go 1.27.1/clang 20.1.8/Node 24.19.0. Exact setup timing lines are retained in evidence/setup.log. Seven uncached input probes, zero hits and seven misses, passed. Static logs are empty. No skipped selected check was credited. Full repository gate and seventeen required stage1 external-input correctness checks were not run, relaxed or deleted. No shared harness, registry, compiler, regex engine, AST adapter or finding model was changed.
+
+## Delivery recovery
+
+On the subsequent delivery turn, live origin/main remained 71d7e491b3c9724f7a0e2ee754592149e7f9790b and origin/area/stage1-lint remained 7076b4ebe16a296129d17f04fe0e14029d793e92. Both are ancestors of the tested implementation. The existing reservation 962094b53ba2eb0c92364cc3bf495a7e0e4f0005 was successfully pushed first; after that success was collected, implementation dfc6b9ab543492bb748db6dc12701ff5a2651d61 was successfully pushed to codex/lint-helpers-05. This resolves publication, but does not undo or excuse the earlier source-before-reservation ordering violation recorded above. No source changed and no previous green check was relabeled as freshly rerun.
