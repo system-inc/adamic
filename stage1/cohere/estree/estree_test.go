@@ -252,7 +252,7 @@ func TestOriginalLibraries(t *testing.T) {
 func checkOriginalLibraries(t *testing.T, cases []string, postprocessedGaps int) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_ESTREE_LIBRARY to the pinned scratch npm installation")
+		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	checkOriginalManifest(t, manifest(t, cases), cases, postprocessedGaps)
 }

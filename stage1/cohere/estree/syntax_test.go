@@ -89,7 +89,7 @@ func TestSyntaxRefusals(t *testing.T) {
 }
 func TestSyntaxLibraries(t *testing.T) {
 	if os.Getenv("ADAMIC_ESTREE_LIBRARY") == "" {
-		t.Skip("pinned library required")
+		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	samples := syntaxGrammar()
 	checkOriginalLibraries(t, []string{samples[0], samples[1], samples[4], samples[6]}, 0)
@@ -97,7 +97,7 @@ func TestSyntaxLibraries(t *testing.T) {
 func TestTypeMemberLibraryGap(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
-		t.Skip("pinned library required")
+		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	source := "interface I {x:number=5;}"
 	list := manifest(t, []string{source})

@@ -7,7 +7,7 @@ Whole-checkout parity remains blocked: 92 wrong outputs, 984 acceptance disagree
 Branch `codex/stage1-estree`, from main `5d4c8012a0877094134e6c6bac367ff68f9313e8`.
 Cohere pin `715ba94f3608a6500086b1076ce5cb7e51b836db`. Dashboard read whole at
 `origin/codex/stage1-progress` commit `7ed6d30c3f2d407a183c971ec2ed2577c0e5f615`.
-The origin survey, package sizes and boundaries are in the root `CLAIM.md`.
+The origin survey, package sizes and boundaries are in this directory's `CLAIM.md`.
 All 142 visible origin refs were fetched. Existing formatter packages with active
 branches were treated as held, including unfinished composition work.
 

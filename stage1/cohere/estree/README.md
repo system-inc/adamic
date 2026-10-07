@@ -7,7 +7,7 @@ Pushed checkpoints, commands, outputs and gap programs are recorded in FOLLOWUP.
 
 # Non-JSON ESTree slice
 
-The claim and origin survey are in the repository's `CLAIM.md`. This unit uses
+The claim and origin survey are in this directory's `CLAIM.md`. This unit uses
 cohere at `715ba94f3608a6500086b1076ce5cb7e51b836db`; `parse_json.go` is excluded.
 The ESTree-local parser adapts the main and recovery branches; the shared scanner and node model remain unedited. The
 node table owns its nodes; all child links are numeric indexes, so there are
