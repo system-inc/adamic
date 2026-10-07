@@ -1,10 +1,14 @@
 {
-  "removed_dependency_entries": 6,
+  "removed_dependency_entries": 12,
+  "distinct_consumers": 6,
   "final_blockers_removed": 0,
   "rules": [
     {
       "rule": "better-tailwindcss/enforce-canonical-classes",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons"
+      ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -87,7 +91,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ValueToCss",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.Walk",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.addWhitespaceAroundMathOperators",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.breakpointBucket",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.breakpointGroupOrder",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.compareBreakpointVariants",
@@ -135,7 +138,10 @@
     },
     {
       "rule": "better-tailwindcss/enforce-consistent-class-order",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons"
+      ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassTemplateSegmentsIn",
@@ -286,7 +292,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.Walk",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.addWhitespaceAroundMathOperators",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.appendVariantAndNested",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueHandler",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValuePredicate",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueTransform",
@@ -405,7 +410,10 @@
     },
     {
       "rule": "better-tailwindcss/enforce-consistent-variant-order",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons"
+      ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -490,7 +498,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.Walk",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.addWhitespaceAroundMathOperators",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.appendVariantAndNested",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.breakpointBucket",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.breakpointGroupOrder",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.compareBreakpointVariants",
@@ -539,7 +546,10 @@
     },
     {
       "rule": "better-tailwindcss/enforce-shorthand-classes",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons"
+      ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -646,7 +656,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ValueToCss",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.Walk",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.addWhitespaceAroundMathOperators",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueHandler",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValuePredicate",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueTransform",
@@ -746,7 +755,10 @@
     },
     {
       "rule": "better-tailwindcss/no-conflicting-classes",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons"
+      ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -868,7 +880,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.absentValued",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.addWhitespaceAroundMathOperators",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.appendVisibleProperty",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.borderSideEmitter",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.breakpointBucket",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.breakpointGroupOrder",
@@ -973,7 +984,10 @@
     },
     {
       "rule": "better-tailwindcss/no-unknown-classes",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+      "removed_helpers": [
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons"
+      ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -1083,7 +1097,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ValueToCss",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.Walk",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.addWhitespaceAroundMathOperators",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.attachFrameworkVariantComparisons",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueHandler",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValuePredicate",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueTransform",

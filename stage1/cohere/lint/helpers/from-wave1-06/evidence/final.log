@@ -1,0 +1,50 @@
+=== RUN   TestAttachComparisons
+    attach_test.go:67: 157 actual captured sources from all 6 consumers
+    attach_test.go:90: 1253 consumer-derived names plus controls, 1212743 identical bytes on Go, source Node, emitted JavaScript and sanitized native
+=== RUN   TestAttachComparisons/wrong-direction
+    attach_test.go:122: wrong-direction caught only by byte comparison on backend 0 after clean execution
+    attach_test.go:122: wrong-direction caught only by byte comparison on backend 1 after clean execution
+    attach_test.go:122: wrong-direction caught only by byte comparison on backend 2 after clean execution
+=== RUN   TestAttachComparisons/live-group-reference
+    attach_test.go:122: live-group-reference caught only by byte comparison on backend 0 after clean execution
+    attach_test.go:122: live-group-reference caught only by byte comparison on backend 1 after clean execution
+    attach_test.go:122: live-group-reference caught only by byte comparison on backend 2 after clean execution
+=== RUN   TestAttachComparisons/wrong-order
+    attach_test.go:122: wrong-order caught only by byte comparison on backend 0 after clean execution
+    attach_test.go:122: wrong-order caught only by byte comparison on backend 1 after clean execution
+    attach_test.go:122: wrong-order caught only by byte comparison on backend 2 after clean execution
+=== RUN   TestAttachComparisons/copy-theme
+    attach_test.go:122: copy-theme caught only by byte comparison on backend 0 after clean execution
+    attach_test.go:122: copy-theme caught only by byte comparison on backend 1 after clean execution
+    attach_test.go:122: copy-theme caught only by byte comparison on backend 2 after clean execution
+--- PASS: TestAttachComparisons (23.01s)
+    --- PASS: TestAttachComparisons/wrong-direction (4.55s)
+    --- PASS: TestAttachComparisons/live-group-reference (4.45s)
+    --- PASS: TestAttachComparisons/wrong-order (4.46s)
+    --- PASS: TestAttachComparisons/copy-theme (4.31s)
+=== RUN   TestRepositoryStatics
+    repository_test.go:156: 157 actual captured sources from all 6 consumers
+    repository_test.go:194: 2147 cases, 893 definition bodies, 169528 identical bytes on Go, source Node, emitted JavaScript and sanitized native
+=== RUN   TestRepositoryStatics/skip-overwrite
+    repository_test.go:229: skip-overwrite caught by byte comparison on backend 0 after clean execution
+    repository_test.go:229: skip-overwrite caught by byte comparison on backend 1 after clean execution
+    repository_test.go:229: skip-overwrite caught by byte comparison on backend 2 after clean execution
+=== RUN   TestRepositoryStatics/wrong-count
+    repository_test.go:229: wrong-count caught by byte comparison on backend 0 after clean execution
+    repository_test.go:229: wrong-count caught by byte comparison on backend 1 after clean execution
+    repository_test.go:229: wrong-count caught by byte comparison on backend 2 after clean execution
+=== RUN   TestRepositoryStatics/copy-order
+    repository_test.go:229: copy-order caught by byte comparison on backend 0 after clean execution
+    repository_test.go:229: copy-order caught by byte comparison on backend 1 after clean execution
+    repository_test.go:229: copy-order caught by byte comparison on backend 2 after clean execution
+=== RUN   TestRepositoryStatics/reuse-sort-record
+    repository_test.go:229: reuse-sort-record caught by byte comparison on backend 0 after clean execution
+    repository_test.go:229: reuse-sort-record caught by byte comparison on backend 1 after clean execution
+    repository_test.go:229: reuse-sort-record caught by byte comparison on backend 2 after clean execution
+--- PASS: TestRepositoryStatics (12.65s)
+    --- PASS: TestRepositoryStatics/skip-overwrite (2.38s)
+    --- PASS: TestRepositoryStatics/wrong-count (2.56s)
+    --- PASS: TestRepositoryStatics/copy-order (2.55s)
+    --- PASS: TestRepositoryStatics/reuse-sort-record (2.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-06	35.664s

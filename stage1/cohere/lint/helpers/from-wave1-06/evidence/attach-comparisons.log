@@ -1,0 +1,26 @@
+=== RUN   TestAttachComparisons
+    attach_test.go:67: 157 actual captured sources from all 6 consumers
+    attach_test.go:90: 1253 consumer-derived names plus controls, 1212743 identical bytes on Go, source Node, emitted JavaScript and sanitized native
+=== RUN   TestAttachComparisons/wrong-direction
+    attach_test.go:122: wrong-direction caught only by byte comparison on backend 0 after clean execution
+    attach_test.go:122: wrong-direction caught only by byte comparison on backend 1 after clean execution
+    attach_test.go:122: wrong-direction caught only by byte comparison on backend 2 after clean execution
+=== RUN   TestAttachComparisons/live-group-reference
+    attach_test.go:122: live-group-reference caught only by byte comparison on backend 0 after clean execution
+    attach_test.go:122: live-group-reference caught only by byte comparison on backend 1 after clean execution
+    attach_test.go:122: live-group-reference caught only by byte comparison on backend 2 after clean execution
+=== RUN   TestAttachComparisons/wrong-order
+    attach_test.go:122: wrong-order caught only by byte comparison on backend 0 after clean execution
+    attach_test.go:122: wrong-order caught only by byte comparison on backend 1 after clean execution
+    attach_test.go:122: wrong-order caught only by byte comparison on backend 2 after clean execution
+=== RUN   TestAttachComparisons/copy-theme
+    attach_test.go:122: copy-theme caught only by byte comparison on backend 0 after clean execution
+    attach_test.go:122: copy-theme caught only by byte comparison on backend 1 after clean execution
+    attach_test.go:122: copy-theme caught only by byte comparison on backend 2 after clean execution
+--- PASS: TestAttachComparisons (25.87s)
+    --- PASS: TestAttachComparisons/wrong-direction (4.94s)
+    --- PASS: TestAttachComparisons/live-group-reference (4.70s)
+    --- PASS: TestAttachComparisons/wrong-order (4.73s)
+    --- PASS: TestAttachComparisons/copy-theme (4.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-06	25.876s

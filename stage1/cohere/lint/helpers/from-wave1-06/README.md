@@ -1,6 +1,6 @@
 # Active helper
 
-`repository_statics.a` owns collapse.*Table.addRepositoryStatics. See REPOSITORY_REPORT.md for its API, four-backend parity, consumer removals and four semantic mutants. FrameworkStaticReading and NewTheme are withdrawn duplicates; their passing results are historical evidence.
+`repository_statics.a` owns collapse.*Table.addRepositoryStatics. `attach_variant_comparisons.a` owns collapse.attachFrameworkVariantComparisons. See DELIVERY.md and REPOSITORY_REPORT.md for the APIs, four-backend parity, consumer removals and eight semantic mutants. FrameworkStaticReading and NewTheme are withdrawn duplicates; their passing results are historical evidence.
 
 # Withdrawn constructor evidence
 

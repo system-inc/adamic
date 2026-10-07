@@ -1,0 +1,37 @@
+import { readTextFile, programArguments, panic } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { attachFrameworkVariantComparisons, type ComparisonGroup } from './attach_variant_comparisons.a';
+interface ThemeIdentity { generation: number; }
+interface VariantIdentity { id: number; }
+const input = readTextFile(programArguments()[0] ?? '');
+if (input.kind !== 'Ok') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if (root < 0) { panic(json.error); }
+const answers = new Map<string, number>();
+for (const index of json.node(json.field(root, 'Answers')).children) { answers.set(json.node(json.field(index, 'Key')).text, json.node(json.field(index, 'Value')).number); }
+const pairs: number[] = [];
+for (const index of json.node(json.field(root, 'Pairs')).children) { pairs.push(json.node(index).number); }
+for (const groupList of json.node(json.field(root, 'Groups')).children) {
+  for (const generation of [0, 2]) {
+    const groups: ComparisonGroup[] = [];
+    for (const index of json.node(groupList).children) { groups.push({ Order: json.node(json.field(index, 'Order')).number, Ascending: json.node(json.field(index, 'Ascending')).text === 'true' }); }
+    let theme: ThemeIdentity = { generation };
+    const originalTheme = theme;
+    const comparisons = new Map<number, (left: VariantIdentity, right: VariantIdentity) => number>();
+    const trace: number[] = [];
+    attachFrameworkVariantComparisons(groups, theme,
+      (order: number, compare: (left: VariantIdentity, right: VariantIdentity) => number): void => { trace.push(order); comparisons.set(order, compare); },
+      (theme: ThemeIdentity, left: VariantIdentity, right: VariantIdentity, ascending: boolean): number => answers.get(`${theme.generation}:${left.id}:${right.id}:${ascending}`) ?? panic('missing real Go comparison'));
+    console.log(`trace${trace.length === 0 ? '' : ' ' + trace.join(' ')}`);
+    for (const group of groups) { group.Ascending = !group.Ascending; }
+    const keys = [...comparisons.keys()]; keys.sort((a: number, b: number): number => a - b);
+    for (let phase = 0; phase < 3; phase++) {
+      if (phase === 1 && originalTheme.generation !== 2) { originalTheme.generation = 1; }
+      if (phase === 2) { theme = { generation: 0 }; }
+      for (const order of keys) {
+        const callback = comparisons.get(order) ?? panic('missing callback');
+        for (const pair of pairs) { console.log(`${phase} ${order} ${pair} ${callback({ id: pair * 2 }, { id: pair * 2 + 1 })}`); }
+      }
+    }
+  }
+}

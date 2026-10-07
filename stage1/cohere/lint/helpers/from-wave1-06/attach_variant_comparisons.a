@@ -1,0 +1,13 @@
+export interface ComparisonGroup { Order: number; Ascending: boolean; }
+export function attachFrameworkVariantComparisons<Theme extends object, Variant>(
+  groups: readonly ComparisonGroup[],
+  theme: Theme,
+  attachComparison: (order: number, compare: (left: Variant, right: Variant) => number) => void,
+  compareBreakpoints: (theme: Theme, left: Variant, right: Variant, ascending: boolean) => number,
+): void {
+  const capturedTheme = theme;
+  for (const group of groups) {
+    const ascending = group.Ascending;
+    attachComparison(group.Order, (left: Variant, right: Variant): number => compareBreakpoints(capturedTheme, left, right, ascending));
+  }
+}
