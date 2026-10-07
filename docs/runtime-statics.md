@@ -241,6 +241,8 @@ A newly added runtime C source or header requires review even when it introduces
 - `runtime-file:region.c`
 - `runtime-file:set.c`
 - `runtime-file:share.c`
+- `runtime-file:slab_quarantine.c`
+- `runtime-file:slab_quarantine.h`
 - `runtime-file:sort.c`
 - `runtime-file:sort_undefined.c`
 - `runtime-file:spread.c`
@@ -406,3 +408,12 @@ Final full native package: `go test ./internal/native -count=1 -timeout 30m` pas
 An initial combined native/WebAssembly oracle hit its 30-minute package timeout under simultaneous compilation and exposed a timing assumption in the Node signal probe: a 750ms delay could signal Node before its first line. The probe now waits for Node's actual newline and preserves consumed bytes before signaling; native buffered output retains the existing delay. Exact stdout and signal-status assertions are unchanged. Final native and WebAssembly oracle commands run separately. The initial weak handler mutant was replaced by the repeated unsafe flush described above; only final passing runs are evidence.
 
 Final uncached WebAssembly oracle: `ADAMIC_GATE_UNCACHED=1 ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestWASI' -count=1 -v -timeout 30m` passed in 1237.955s (`/tmp/signals-area-oracle-wasi-final.log`). All Node comparisons (973.13s), byte/exit oracle and runner mutants (0.51s/0.48s), and every emission check (263.78s) passed. The gate reported zero cache hits and 463 Node misses. Final touched-package vet and staged whitespace checks passed. No full-repository `go test ./...` was run; this unit's complete native and oracle packages, opt-in target test, and complete WebAssembly oracle were run explicitly.
+
+## Slab quarantine
+
+slab_quarantine.c compiles its storage only in a sanitized build with ADAMIC_SLABS (address or thread sanitizer); a release build compiles the file to an empty object. slab_quarantine.h declares no storage. Each thread that frees a slab slot holds it in its own ring of 4096 (at most 1 MB) before heap.c gives it back, so no lock orders one thread's frees against another's. heap.c's adamic_heap_thread_end drains the calling thread's ring through give before draining its remote frees, and adamic_heap_end does the same for the caller after workers join. TestQuarantineIsPerThreadUnderTSan runs memory.c and the pool's map.c under TSan with ADAMIC_SLABS, and requires a race report from a mutant that makes the ring one shared static.
+
+| Audit key | Current line | Holds / writers and timing | Classification |
+|---|---:|---|---|
+| `slab_quarantine.c:held:1` | 49 | The thread's ring of held slots, calloc'd on its first slab free; adamic_slab_quarantine writes entries, adamic_slab_quarantine_drain gives them back and frees the ring at thread end | Thread-local; only the owning thread reads or writes it, and the slots it names are on no free list or remote list until given back |
+| `slab_quarantine.c:next:1` | 50 | Index of the oldest held slot and of the next entry; written by adamic_slab_quarantine, reset by adamic_slab_quarantine_drain | Thread-local |

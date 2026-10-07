@@ -11,6 +11,7 @@ void adamic_release(void *value) { adamic_release_inline(value); }
 #endif
 #include "async.h"
 #include "count.h"
+#include "slab_quarantine.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -260,7 +261,19 @@ static void deallocate(adamic_heap *heap) {
 		free(heap);
 		return;
 	}
+#if ADAMIC_SLAB_QUARANTINE
+	// Sanitized with slabs, a freed slot waits poisoned on this thread before it can be taken again,
+	// so a stale pointer can't read the next value made in it as its own; the slot it evicts is given
+	// back, to its chunk here or to its owner's remote list.
+	void *slot = heap;
+	uint32_t number = slab - 1;
+	if (!adamic_slab_quarantine(&slot, &number, (find_chunk(number)->class + 1) * GRANULE)) {
+		return;
+	}
+	give(slot, number);
+#else
 	give(heap, slab - 1);
+#endif
 }
 
 void *adamic_retain_slow(void *value) {
@@ -404,6 +417,10 @@ void adamic_release_slow(void *value) {
 }
 
 void adamic_heap_thread_end(void) {
+#if ADAMIC_SLAB_QUARANTINE
+	// The slots this thread holds go back before its remote frees are drained, so its own come home.
+	adamic_slab_quarantine_drain(give);
+#endif
 	for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
 	free(freeing);
 	freeing = NULL;
