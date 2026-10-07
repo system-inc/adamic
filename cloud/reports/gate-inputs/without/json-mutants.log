@@ -1,0 +1,7 @@
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants
+    audit_test.go:281: set ADAMIC_JSON_PRETTIER for the external oracle
+--- SKIP: TestExternalComparisonCatchesThreePrinterMutants (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	0.010s

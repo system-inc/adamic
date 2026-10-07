@@ -1,0 +1,15 @@
+=== RUN   TestCSSPrinterBoundaryProofs
+    print_test.go:305: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 4 inputs, 2 formatted, elapsed 333.551µs
+        --- PASS: TestAdamicPrinterCases (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.021s
+    print_test.go:316: Go and Node direct-printer proofs:
+        "a {\n  b: c;\n}\n"
+        "// x\ra {\n}\n"
+        error {"column":1,"endColumn":2,"endLine":1,"endOffset":2,"line":1,"name":"CssSyntaxError","offset":0,"reason":"Unknown word  "}
+        error "css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach"
+    print_test.go:319: set ADAMIC_CSS_PRINTER_LIBRARY
+--- SKIP: TestCSSPrinterBoundaryProofs (2.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	2.091s

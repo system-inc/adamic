@@ -1,0 +1,14 @@
+.F
+======================================================================
+FAIL: test_actual_content_modes_and_names (__main__.Inputs.test_actual_content_modes_and_names)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 35, in test_actual_content_modes_and_names
+    file.rename(root/'renamed');renamed=gate.artifact_digest(root);self.assertNotEqual(mode,renamed)
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ee0de7e65f656a543aada2677eba75dbb5b5e66c0120948bfbe8a99396a59ee2' == 'ee0de7e65f656a543aada2677eba75dbb5b5e66c0120948bfbe8a99396a59ee2'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=1)

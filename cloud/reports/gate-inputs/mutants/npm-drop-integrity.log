@@ -1,0 +1,14 @@
+.F..
+======================================================================
+FAIL: test_integrity_rejects_corruption (__main__.InstallationKey.test_integrity_rejects_corruption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_markdown_setup.py", line 63, in test_integrity_rejects_corruption
+    with self.assertRaisesRegex(ValueError, 'integrity mismatch'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=1)

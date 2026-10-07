@@ -1,0 +1,13 @@
+F.
+======================================================================
+FAIL: test_every_key_component (__main__.Inputs.test_every_key_component) (name='validation_flags')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 27, in test_every_key_component
+    self.assertNotEqual(before,gate.cache_key(**changed),name)
+AssertionError: 'fb29aaac4ef88b7454d03f1ad6e03ba95b8aa9637705c7b5ab2c331e48ecf4ac' == 'fb29aaac4ef88b7454d03f1ad6e03ba95b8aa9637705c7b5ab2c331e48ecf4ac' : validation_flags
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=1)

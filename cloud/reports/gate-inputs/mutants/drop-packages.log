@@ -1,0 +1,13 @@
+F.
+======================================================================
+FAIL: test_every_key_component (__main__.Inputs.test_every_key_component) (name='packages')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 27, in test_every_key_component
+    self.assertNotEqual(before,gate.cache_key(**changed),name)
+AssertionError: 'f23a278a5c6ba71415fb4ee89e9d978d51d66b8bff80cff88469bbc6dfd57a27' == 'f23a278a5c6ba71415fb4ee89e9d978d51d66b8bff80cff88469bbc6dfd57a27' : packages
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=1)

@@ -1,0 +1,12 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    graphql_test.go:55: seed 20261005, 3000 generated documents
+=== RUN   TestThePortParsesAsGoCohereDoes/as_graphql-js
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_graphql-js
+=== CONT  TestThePortParsesAsGoCohereDoes/as_graphql-js
+    graphql_test.go:112: set ADAMIC_GRAPHQL_LIBRARY to a directory where `npm install graphql@17.0.2` ran, to compare with the library itself
+--- SKIP: TestThePortParsesAsGoCohereDoes/as_graphql-js (0.00s)
+--- PASS: TestThePortParsesAsGoCohereDoes (17.99s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	18.000s

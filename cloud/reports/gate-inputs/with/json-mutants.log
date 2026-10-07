@@ -1,0 +1,48 @@
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.005s
+    audit_test.go:176: Prettier: 4 texts in 0.039s
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+=== RUN   TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+=== PAUSE TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser
+=== CONT  TestExternalComparisonCatchesThreePrinterMutants/missing_property_space
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.011s
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.005s
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.006s
+    audit_test.go:176: Prettier: 4 texts in 0.042s
+    audit_test.go:310: caught on package.json: Go "{\n  \"a\":1,\n  \"b\":[\n    2,\n    3\n  ]\n}\n", Prettier "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}\n"
+    audit_test.go:310: caught on package.json: Go "{\n  \"text\":\"é😀\",\n  \"escaped\":\"\\u0041\",\n  \"empty\":[]\n}\n", Prettier "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}\n"
+--- PASS: TestExternalComparisonCatchesThreePrinterMutants/missing_property_space (5.27s)
+    audit_test.go:176: Prettier: 4 texts in 0.044s
+    audit_test.go:310: caught on package.json: Go "{ \"a\": 1, \"b\": [2, 3] }\n", Prettier "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}\n"
+    audit_test.go:310: caught on package.json: Go "{ \"text\": \"é😀\", \"escaped\": \"\\u0041\", \"empty\": [] }\n", Prettier "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}\n"
+--- PASS: TestExternalComparisonCatchesThreePrinterMutants/wrong_filename_parser (5.30s)
+    audit_test.go:176: Prettier: 4 texts in 0.041s
+    audit_test.go:310: caught on package.json: Go "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}", Prettier "{\n  \"a\": 1,\n  \"b\": [\n    2,\n    3\n  ]\n}\n"
+    audit_test.go:310: caught on package.json: Go "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}", Prettier "{\n  \"text\": \"é😀\",\n  \"escaped\": \"\\u0041\",\n  \"empty\": []\n}\n"
+--- PASS: TestExternalComparisonCatchesThreePrinterMutants/missing_final_newline (5.36s)
+--- PASS: TestExternalComparisonCatchesThreePrinterMutants (1.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	6.505s

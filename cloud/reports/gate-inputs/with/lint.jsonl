@@ -1,0 +1,10 @@
+{"Time":"2026-10-07T07:25:00.387390277Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-07T07:25:00.391919246Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree"}
+{"Time":"2026-10-07T07:25:00.392009612Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"=== RUN   TestCompilerAndStage1Agree\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:25:00.395228896Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:357: compiler and stage1: 303 files\n"}
+{"Time":"2026-10-07T07:27:12.518908781Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:358: Go, Node, native identical: 20440938 bytes\n"}
+{"Time":"2026-10-07T07:27:12.525274091Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"--- PASS: TestCompilerAndStage1Agree (132.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:27:12.525290175Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Elapsed":132.13}
+{"Time":"2026-10-07T07:27:12.525312489Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:27:12.530343625Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t132.143s\n"}
+{"Time":"2026-10-07T07:27:12.530378016Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":132.143}

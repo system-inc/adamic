@@ -1,0 +1,85 @@
+....hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpgidkc6nc/inputs/typescript-jvjh98rg/checkout/.git/
+From /tmp/adamic-gate/tmpgidkc6nc/source
+ * branch            962005f1449e8236ab8a34238998de1ccebca3ed -> FETCH_HEAD
+HEAD is now at 962005f Proof
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpgidkc6nc/inputs/typescript-bnhqpf6j/checkout/.git/
+From /tmp/adamic-gate/tmpgidkc6nc/source
+ * branch            962005f1449e8236ab8a34238998de1ccebca3ed -> FETCH_HEAD
+HEAD is now at 962005f Proof
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpgidkc6nc/inputs/typescript-36hvcgdd/checkout/.git/
+From /tmp/adamic-gate/tmpgidkc6nc/source
+ * branch            3f3744343e2fb7616e8d7be82c88e38fe5832106 -> FETCH_HEAD
+HEAD is now at 3f37443 Proof
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpgidkc6nc/inputs/typescript-a_v4jplj/checkout/.git/
+From /tmp/adamic-gate/tmpgidkc6nc/source
+ * branch            962005f1449e8236ab8a34238998de1ccebca3ed -> FETCH_HEAD
+HEAD is now at 962005f Proof
+F
+======================================================================
+FAIL: test_git_checkout_integrity_and_repair (__main__.Inputs.test_git_checkout_integrity_and_repair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 70, in test_git_checkout_integrity_and_repair
+    self.assertIn('installed',gate.typescript(inputs));self.assertEqual(original,gate.artifact_digest(inputs/'typescript'))
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '77dea5d4d289cfa05d4ab6afc0083365bd780509227455150853efe44e267255' != 'b38d11002cb2fc3da7d3d485feffc98be99eb5c5535d53ade87b48b35b363846'
+- 77dea5d4d289cfa05d4ab6afc0083365bd780509227455150853efe44e267255
++ b38d11002cb2fc3da7d3d485feffc98be99eb5c5535d53ade87b48b35b363846
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 12.851s
+
+FAILED (failures=1)

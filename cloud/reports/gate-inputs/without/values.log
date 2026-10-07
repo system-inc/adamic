@@ -1,0 +1,12 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    values_test.go:52: seed 20261005, 4000 generated values
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-values-parser
+    values_test.go:102: set ADAMIC_VALUES_LIBRARY to a directory where `npm install postcss-values-parser@2.0.1` ran, to compare with the library itself
+--- SKIP: TestThePortParsesAsGoCohereDoes/as_postcss-values-parser (0.00s)
+--- PASS: TestThePortParsesAsGoCohereDoes (2.94s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/values	2.985s
