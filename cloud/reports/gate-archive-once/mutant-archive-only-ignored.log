@@ -1,0 +1,20 @@
+F
+======================================================================
+FAIL: test_darwin_selection_calls_and_exports (cloud.test_archive_modes.ArchiveModes.test_darwin_selection_calls_and_exports) (arguments=['--gate-archive'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_archive_modes.py", line 56, in test_darwin_selection_calls_and_exports
+    self.assertEqual(calls, phases)
+AssertionError: Lists differ: [] != ['archive']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'archive'
+
+- []
++ ['archive']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.021s
+
+FAILED (failures=1)

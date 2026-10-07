@@ -1,0 +1,7 @@
+leak-archive: caught by test_environment_modes
+leave-stale-variable: caught by test_environment_modes
+archive-only-ignored: caught by test_darwin_selection_calls_and_exports
+default-archive-dropped: caught by test_darwin_selection_calls_and_exports
+no-archive-builds-archive: caught by test_darwin_selection_calls_and_exports
+conflict-exits-success: caught by test_conflicting_flags_fail_before_preparation
+conflict-diagnostic-lost: caught by test_conflicting_flags_fail_before_preparation

@@ -1,0 +1,36 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.115s)
+setup: submodules ready (0.201s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/css-gate-tools/llvm/bin/clang) (0.371s)
+setup: node v24.19.0 skipped (validated version, checksum and installed bytes); step-duration=0.294s
+v24.19.0
+setup: node ready (0.455s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (0.520s)
+setup: stage3 API dependencies skipped (validated API lock and installed bytes); step-duration=0.046s
+setup: module dependencies skipped (validated manifests and downloaded module cache); step-duration=0.364s
+setup: stage3 API dependencies checked (0.622s)
+setup: module dependencies ready (0.625s)
+setup: gate input css-printer skipped (validated lock and installed bytes); step-duration=0.189s
+setup: gate input css skipped (validated lock and installed bytes); step-duration=0.012s
+setup: gate input graphql skipped (validated lock and installed bytes); step-duration=0.135s
+setup: gate input media-query skipped (validated lock and installed bytes); step-duration=0.007s
+setup: gate input selector skipped (validated lock and installed bytes); step-duration=0.013s
+setup: gate input values skipped (validated lock and installed bytes); step-duration=0.008s
+setup: gate input json-prettier skipped (validated lock and installed bytes); step-duration=0.015s
+setup: gate input shared Prettier paths shared prettier 3.9.6: CSS numbers, CSS strings and Markdown inline paths verified; step-duration=0.088s
+setup: gate npm inputs ready (1.148s)
+setup: gate input CSS fixtures skipped (validated exact commit, sparse set, counts and checkout bytes); step-duration=0.101s
+setup: gate input TypeScript source skipped (validated exact commit and checkout bytes); step-duration=5.666s
+setup: gate input 100 MiB gitignore skipped (validated deterministic 100 MiB bytes); step-duration=0.136s
+setup: gate corpora ready (6.055s)
+setup: go build ready (14.775s)
+setup: test binaries deferred (use --warm-tests) (15.076s)
+setup: build cache warm (15.081s)
+setup: workspace sums restored to the commit (15.184s)
+setup: build-flags commit=3cd1468f31de32b1ae8f1b6905dc6d5ef490ea65 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=false load-before=1.22 2.02 1.43 2/853 250488 load-after=1.57 2.05 1.45 1/855 251394
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (15.252s)
+setup: source /workspace/css-gate-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.RPv5Kz
+setup: node v24.19.0
