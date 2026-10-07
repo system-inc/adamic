@@ -4,3 +4,8 @@ first attempt: interrupted; 3328 pass, 0 fail, 8 skip; no finished whole run
 wasi-supplement: finished, exit 0; test events {"pass": 37}
 oracle-rerun: finished, exit 1; test events {"pass": 2241, "skip": 2, "fail": 2}
 stage3: apply exit 0; oracle 106366 passing, 1 failing, 0 pending; baseline_diffs ["api/typescript.d.ts"]; expected failure: unittests:: Public APIs for typescript.d.ts should be acknowledged when they change
+whole run test events: pass=5957 fail=2 skip=29; wall=4417.940055 seconds
+oracle solo rerun: pass=2241 fail=2 skip=2; wall=371.784236 seconds
+WASI supplement: pass=37 fail=0 skip=0; wall=31.685676 seconds
+signal-default diagnostic: finished, exit 0; pass=4 fail=0 skip=0; wall=8.472952 seconds
+harness error: whole run and solo oracle rerun were launched with nohup, which inherited ignored SIGHUP. Adamic preserves ignored signals. The native signal child reached its one-minute deadline and was SIGKILLed. Resetting SIGHUP to default made the targeted signal test pass. No OOM kills recorded. The whole run remains not green.
