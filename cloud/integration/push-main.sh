@@ -12,13 +12,26 @@
 # speculative stack built on this sha stays a fast-forward; the next push writes every held row
 # in its own velocity commit.
 #
-# usage: cloud/integration/push-main.sh [--defer-velocity] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
+# --meter-run <commit> also records a stage 3 meter run (stage3/meter/twice-daily.sh, run on a box
+# against main) in a commit of its own after the velocity row. Only the files that commit adds under
+# stage3/meter/runs/ are taken, and the script refuses to push if the record changes anything else.
+# A meter run is measured after a landing, so each landing carries the newest run there is.
+#
+# usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
 set -euo pipefail
 
 defer=no
-if [ "${1:-}" = "--defer-velocity" ]; then
-	defer=yes
-	shift
+meterRun=""
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+	--defer-velocity) defer=yes; shift ;;
+	--meter-run) meterRun=$2; shift 2 ;;
+	*) break ;;
+	esac
+done
+if [ "$defer" = yes ] && [ -n "$meterRun" ]; then
+	echo "refused: a meter run is recorded with the velocity row, so it can't ride a deferred push" >&2
+	exit 2
 fi
 if [ "$#" -ne 6 ]; then
 	echo "usage: $0 <full sha> <gate minutes> <pass> <fail> <skip> \"<branches landed>\"" >&2
@@ -87,8 +100,37 @@ if [ "$changed" != "$velocityFile" ]; then
 	echo "refused to push the velocity commit: it changes $changed" >&2
 	exit 1
 fi
-git push origin "${velocity}:refs/heads/main"
+record=$velocity
+meterNote=""
+if [ -n "$meterRun" ]; then
+	git fetch -q origin "$meterRun" 2>/dev/null || true
+	meterCommit=$(git rev-parse --verify "${meterRun}^{commit}")
+	# The runs this commit has that the landing doesn't, so a run main already holds is never recorded twice.
+	added=$(git diff --name-only --diff-filter=A "$velocity" "$meterCommit" -- stage3/meter/runs/)
+	if [ -z "$added" ]; then
+		echo "refused to record the meter run: ${meterCommit:0:8} has nothing under stage3/meter/runs/ that main lacks" >&2
+		exit 1
+	fi
+	index=$(mktemp)
+	GIT_INDEX_FILE=$index git read-tree "$velocity"
+	while IFS= read -r file; do
+		entry=$(git ls-tree "$meterCommit" -- "$file")
+		GIT_INDEX_FILE=$index git update-index --add --cacheinfo "$(printf '%s' "$entry" | awk '{print $1}'),$(printf '%s' "$entry" | awk '{print $3}'),${file}"
+	done <<<"$added"
+	tree=$(GIT_INDEX_FILE=$index git write-tree)
+	rm -f "${index:?}"
+	runs=$(printf '%s\n' "$added" | awk -F/ '{print $4}' | sort -u | paste -sd ' ' -)
+	meter=$(git commit-tree "$tree" -p "$velocity" -m "Record the stage 3 meter run ${runs} from ${meterCommit:0:8}")
+	outside=$(git diff --name-only "$velocity" "$meter" | grep -v '^stage3/meter/runs/' || true)
+	if [ -n "$outside" ]; then
+		echo "refused to push the meter record: it changes $outside" >&2
+		exit 1
+	fi
+	record=$meter
+	meterNote="; meter run ${runs} in ${meter:0:8}"
+fi
+git push origin "${record}:refs/heads/main"
 rm -f "${heldRows:?}"
 
-echo "Pushed main ${old:0:8}..${sha:0:8}, ${commitsLanded} commits (${branches}), gate ${pass} pass / ${fail} fail / ${skip} skip, ${gateMinutes} minutes uncached; velocity row ${velocity:0:8}; backlog ${backlog} commits."
+echo "Pushed main ${old:0:8}..${sha:0:8}, ${commitsLanded} commits (${branches}), gate ${pass} pass / ${fail} fail / ${skip} skip, ${gateMinutes} minutes uncached; velocity row ${velocity:0:8}${meterNote}; backlog ${backlog} commits."
 "$directory/merge-back.sh"
