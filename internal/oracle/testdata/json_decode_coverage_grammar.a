@@ -1,0 +1,6 @@
+import { decodeJson } from 'adamic';
+for (const text of ['falsex', 'nul', 'fals', '-.1', '0e-', '1E-', '1e++2', '"\\u"', '"\\u000"', '"\\', '{"a"', '{"a":true', '[false', '\r{"🌍":0 ?}', '{"\\u0000":1,"x":2}', '"\\uABcD"', '"\\uD800\\uD800\\uDC00"', '"\\uDC00\\uD800"']) {
+ const r = decodeJson<string>(text);
+ if (r.kind === 'Error') console.log(r.message);
+ else { console.log(`${r.value.length}`); for (let i = 0; i < r.value.length; i++) console.log(`${r.value.charCodeAt(i)}`); }
+}
