@@ -1,0 +1,57 @@
+case 0
+fixed	const before = 1;\u000aimport { type A, type B } from 'mod';\u000a
+case 1
+fixed	import   {   type   A   }   from 'mod';
+case 2
+fixed	import 'mod';
+case 3
+fixed	import * as T from 'mod';
+case 4
+fixed	import T from 'mod';
+case 5
+fixed	import T, { type U } from 'mod';
+case 6
+fixed	import type * as T from 'mod';
+case 7
+fixed	import type T from 'mod';
+case 8
+fixed	import type { T } from 'mod';
+case 9
+fixed	import type { T, U } from 'mod';
+case 10
+fixed	import type { type A } from 'mod';
+case 11
+fixed	import {\u000a\u0009type A,\u000a\u0009type B,\u000a} from 'mod';
+case 12
+finding	0	24	useTopLevelQualifier	Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+fix	9	9	
+fix	6	6	 type
+fixed	import type { T } from 'mod';
+case 13
+fixed	import { T, type U } from 'mod';
+case 14
+fixed	import { type 'a' as A } from 'mod';
+case 15
+fixed	import { type A as AA } from 'mod';
+case 16
+fixed	import { type A as AA, type B as BB } from 'mod';
+case 17
+fixed	import { type A } from 'mod';
+case 18
+fixed	import { type A, type B } from 'mod';
+case 19
+fixed	import { type T, U } from 'mod';
+case 20
+fixed	import { type as as as } from 'mod';
+case 21
+fixed	import { type as } from 'mod';
+case 22
+fixed	import { type default as A } from 'mod';
+case 23
+fixed	import { type type } from 'mod';
+case 24
+fixed	import {type A} from 'mod';
+case 25
+fixed	import {} from 'mod';
+case 26
+fixed	import { type A as AA, type B } from 'mod';\u000aimport   {   type   \u00e9   }   from 'mod';\u000aimport {} from 'mod';\u000aimport { type as as as } from 'mod';\u000aimport T, { type A } from 'mod';\u000a
