@@ -200,7 +200,9 @@ static void children(void *value, void (*visit)(void *)) {
 	}
 }
 
-static adamic_heap *joining;
+// Scratch for one adoption, deallocation or report at a time. Graph regions never cross threads
+// (share.c refuses them), but every task builds its own, so each thread has its own scratch.
+static _Thread_local adamic_heap *joining;
 static void join_owned(void *value) {
 	if (member(value) != NULL) {
 		adamic_graph_merge(joining, value);
@@ -253,9 +255,9 @@ static size_t bytes(adamic_heap *heap) {
 // The outside count remains in each member's existing header. Its high bit is
 // borrowed as a diagnostic mark only during this pass, then restored.
 #define MARK_BIT ((size_t)1 << (sizeof(size_t) * 8 - 1))
-static adamic_heap **mark_work;
-static size_t mark_count;
-static graph_region *mark_root;
+static _Thread_local adamic_heap **mark_work;
+static _Thread_local size_t mark_count;
+static _Thread_local graph_region *mark_root;
 static void mark(void *value) {
 	adamic_heap *heap = member(value);
 	if (heap == NULL) { return; }
@@ -304,9 +306,9 @@ bool adamic_graph_release_last(void *value) {
 	return root == NULL ? heap->references == 0 : --root->references == 0;
 }
 
-static void (*outside_release)(void *);
-static graph_region *freeing_root;
-static adamic_heap *freeing_lone;
+static _Thread_local void (*outside_release)(void *);
+static _Thread_local graph_region *freeing_root;
+static _Thread_local adamic_heap *freeing_lone;
 static void release_outside(void *value) {
 	adamic_heap *heap = member(value);
 	if (heap != NULL) {

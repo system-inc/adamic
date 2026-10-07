@@ -18,9 +18,12 @@ func TestAsyncGeneratedIdentityCannotBeClaimedBySource(t *testing.T) {
 			t.Fatal("a name claimed the runtime exemption")
 		}
 		source := "class " + generated.Name + " { next: " + generated.Name + " | undefined = undefined; }\nconst self = new " + generated.Name + "();\nself.next = self;\n"
-		_, err := lowerSource(t, source)
+		// The user's cycle may be refused or, with graph regions, owned by a region; either way it
+		// must not be exempt as the runtime's generated type is, which would leave it uncounted.
+		program, err := lowerSource(t, source)
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
+		claimed := err == nil && len(program.GraphTypes) == 0
+		if (err != nil && (!errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable"))) || claimed {
 			t.Fatalf("user class with exact generated name %s: %v", generated.Name, err)
 		}
 	}

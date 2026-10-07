@@ -40,7 +40,7 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 			data := file.contents
 			if mutant && (file.name == "heap.c" || file.name == "adamic.h") {
 				// Route count two through the slow path, then wrongly free its remaining owner.
-				old, changed := "return count == 1;", "return count <= 2;"
+				old, changed := "return count == 1 ? heap : NULL;", "return count <= 2 ? heap : NULL;"
 				if file.name == "adamic.h" {
 					old, changed = "if (count > 1)", "if (count > 2)"
 				}
