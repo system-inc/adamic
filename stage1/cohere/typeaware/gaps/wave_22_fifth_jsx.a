@@ -1,0 +1,6 @@
+import { Parser } from '../../../typescript/parser/parser.ts';
+
+// Pending prerequisite: a production React JSX shape must parse before these rules run.
+const parser = new Parser('function Example() { const Component = createComponent(); return <Component />; }', 'control.tsx');
+const root = parser.file();
+console.log(parser.node(root).kind);
