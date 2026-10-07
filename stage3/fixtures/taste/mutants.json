@@ -10,9 +10,9 @@
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/01_diagnostic_code.a",
+      "/tmp/taste-followup-mutants-final/01_diagnostic_code.a",
       "-o",
-      "/tmp/taste-mutants-final/01_diagnostic_code.a.bin"
+      "/tmp/taste-followup-mutants-final/01_diagnostic_code.a.bin"
     ],
     "node": {
       "stdout": "2345\n2345\n2345\n2322\n18048\n",
@@ -39,9 +39,9 @@
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/03_diagnostic_file.a",
+      "/tmp/taste-followup-mutants-final/03_diagnostic_file.a",
       "-o",
-      "/tmp/taste-mutants-final/03_diagnostic_file.a.bin"
+      "/tmp/taste-followup-mutants-final/03_diagnostic_file.a.bin"
     ],
     "node": {
       "stdout": "undefined\n\nsrc/index.ts\n",
@@ -68,9 +68,9 @@
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/04_jsx_runtime.a",
+      "/tmp/taste-followup-mutants-final/04_jsx_runtime.a",
       "-o",
-      "/tmp/taste-mutants-final/04_jsx_runtime.a.bin"
+      "/tmp/taste-followup-mutants-final/04_jsx_runtime.a.bin"
     ],
     "node": {
       "stdout": "undefined\nundefined\nundefined\nundefined\nreact/jsx-dev-runtime\nreact/jsx-runtime\n",
@@ -87,19 +87,19 @@
     "matches_node": true
   },
   {
-    "form": "masked_double_not",
+    "form": "optional_double_not",
     "file": "05_this_type.a",
     "before": "NotYet",
-    "after": "NotYet",
-    "what": "adamic: /tmp/taste-mutants-final/05_this_type.a:7:60: stage 0 can't lower a field of type boolean | undefined yet\nexit status 1\n",
+    "after": "Compiles",
+    "what": "",
     "command": [
       "go",
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/05_this_type.a",
+      "/tmp/taste-followup-mutants-final/05_this_type.a",
       "-o",
-      "/tmp/taste-mutants-final/05_this_type.a.bin"
+      "/tmp/taste-followup-mutants-final/05_this_type.a.bin"
     ],
     "node": {
       "stdout": "false\nfalse\nfalse\ntrue\nfalse\nfalse\nfalse\nfalse\nfalse\n",
@@ -107,7 +107,13 @@
       "exit": 0
     },
     "same_node": true,
-    "flips_outcome": false
+    "flips_outcome": true,
+    "native": {
+      "stdout": "false\nfalse\nfalse\ntrue\nfalse\nfalse\nfalse\nfalse\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true
   },
   {
     "form": "logical_assignment",
@@ -120,9 +126,9 @@
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/17_binder_flow.a",
+      "/tmp/taste-followup-mutants-final/17_binder_flow.a",
       "-o",
-      "/tmp/taste-mutants-final/17_binder_flow.a.bin"
+      "/tmp/taste-followup-mutants-final/17_binder_flow.a.bin"
     ],
     "node": {
       "stdout": "true\n3:1\n3:2\nfalse:99\ntrue\n6:4\n6:5\ntrue:6\ntrue\n9:7\n9:8\ntrue:99\ntrue\n12:10\n12:11\ntrue:12\n",
@@ -143,15 +149,15 @@
     "file": "16_scan_exclamation.a",
     "before": "Refused",
     "after": "NotYet",
-    "what": "adamic: /tmp/taste-mutants-final/16_scan_exclamation.a:14:46: stage 0 can't lower a BinaryExpression with a number and a number yet\nexit status 1\n",
+    "what": "adamic: /tmp/taste-followup-mutants-final/16_scan_exclamation.a:14:46: stage 0 can't lower a BinaryExpression with a number and a number yet\nexit status 1\n",
     "command": [
       "go",
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/16_scan_exclamation.a",
+      "/tmp/taste-followup-mutants-final/16_scan_exclamation.a",
       "-o",
-      "/tmp/taste-mutants-final/16_scan_exclamation.a.bin"
+      "/tmp/taste-followup-mutants-final/16_scan_exclamation.a.bin"
     ],
     "node": {
       "stdout": "54:1:54\n36:2:36\n38:3:38\n",
@@ -166,15 +172,15 @@
     "file": "13_void_callback.a",
     "before": "Refused",
     "after": "NotYet",
-    "what": "adamic: /tmp/taste-mutants-final/13_void_callback.a:6:7: stage 0 can't lower a value of type void yet\nexit status 1\n",
+    "what": "adamic: /tmp/taste-followup-mutants-final/13_void_callback.a:6:7: stage 0 can't lower a value of type void yet\nexit status 1\n",
     "command": [
       "go",
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/13_void_callback.a",
+      "/tmp/taste-followup-mutants-final/13_void_callback.a",
       "-o",
-      "/tmp/taste-mutants-final/13_void_callback.a.bin"
+      "/tmp/taste-followup-mutants-final/13_void_callback.a.bin"
     ],
     "node": {
       "stdout": "undefined\n1\nCannot find module\n",
@@ -187,17 +193,17 @@
   {
     "form": "label",
     "file": "14_relative_complement.a",
-    "before": "Checker",
-    "after": "Checker",
-    "what": "/tmp/taste-mutants-final/14_relative_complement.a:16:53: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/taste-mutants-final/14_relative_complement.a:24:57: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/taste-mutants-final/14_relative_complement.a:27:30: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\n/tmp/taste-mutants-final/14_relative_complement.a:32:33: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nexit status 1\n",
+    "before": "Refused",
+    "after": "NotYet",
+    "what": "adamic: /tmp/taste-followup-mutants-final/14_relative_complement.a:29:17: stage 0 can't lower a case that isn't a constant yet\nexit status 1\n",
     "command": [
       "go",
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/14_relative_complement.a",
+      "/tmp/taste-followup-mutants-final/14_relative_complement.a",
       "-o",
-      "/tmp/taste-mutants-final/14_relative_complement.a.bin"
+      "/tmp/taste-followup-mutants-final/14_relative_complement.a.bin"
     ],
     "node": {
       "stdout": "0,2,4\n1,2\n",
@@ -205,7 +211,7 @@
       "exit": 0
     },
     "same_node": true,
-    "flips_outcome": false
+    "flips_outcome": true
   },
   {
     "form": "double_not",
@@ -218,9 +224,9 @@
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/19_deprecated_flags.a",
+      "/tmp/taste-followup-mutants-final/19_deprecated_flags.a",
       "-o",
-      "/tmp/taste-mutants-final/19_deprecated_flags.a.bin"
+      "/tmp/taste-followup-mutants-final/19_deprecated_flags.a.bin"
     ],
     "node": {
       "stdout": "false\nfalse\ntrue\ntrue\n",
@@ -241,15 +247,15 @@
     "file": "20_jsdoc_terminate.a",
     "before": "Refused",
     "after": "NotYet",
-    "what": "adamic: /tmp/taste-mutants-final/20_jsdoc_terminate.a:18:21: stage 0 can't lower a case that isn't a constant yet\nexit status 1\n",
+    "what": "adamic: /tmp/taste-followup-mutants-final/20_jsdoc_terminate.a:18:21: stage 0 can't lower a case that isn't a constant yet\nexit status 1\n",
     "command": [
       "go",
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/20_jsdoc_terminate.a",
+      "/tmp/taste-followup-mutants-final/20_jsdoc_terminate.a",
       "-o",
-      "/tmp/taste-mutants-final/20_jsdoc_terminate.a.bin"
+      "/tmp/taste-followup-mutants-final/20_jsdoc_terminate.a.bin"
     ],
     "node": {
       "stdout": "false\n77:2\nfalse\n77:2\nfalse\n77:2\nfalse\n77:2\n",
@@ -270,9 +276,9 @@
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/18_named_export.a",
+      "/tmp/taste-followup-mutants-final/18_named_export.a",
       "-o",
-      "/tmp/taste-mutants-final/18_named_export.a.bin"
+      "/tmp/taste-followup-mutants-final/18_named_export.a.bin"
     ],
     "node": {
       "stdout": "0\n",
@@ -289,6 +295,93 @@
     "matches_node": true
   },
   {
+    "form": "assignment_once",
+    "file": "22_assignment_once.a",
+    "before": "Refused",
+    "after": "Compiles",
+    "what": "",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "/tmp/taste-followup-mutants-final/22_assignment_once.a",
+      "-o",
+      "/tmp/taste-followup-mutants-final/22_assignment_once.a.bin"
+    ],
+    "node": {
+      "stdout": "1:1:1:0:undefined:undefined\n1:1:1:2:7:7\n1:1:1:0:0:0\n1:1:1:0:0:0\n1:1:1:0:0:0\n1:1:1:0:0:0\n1:1:1:0:NaN:NaN\n1:1:1:0:NaN:NaN\n1:1:1:2:7:7\n1:1:1:0:2:2\nfalse\nfalse\nfalse\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "same_node": true,
+    "flips_outcome": true,
+    "native": {
+      "stdout": "1:1:1:0:undefined:undefined\n1:1:1:2:7:7\n1:1:1:0:0:0\n1:1:1:0:0:0\n1:1:1:0:0:0\n1:1:1:0:0:0\n1:1:1:0:NaN:NaN\n1:1:1:0:NaN:NaN\n1:1:1:2:7:7\n1:1:1:0:2:2\nfalse\nfalse\nfalse\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true
+  },
+  {
+    "form": "finally_jumps",
+    "file": "23_labels_finally.a",
+    "before": "Refused",
+    "after": "Compiles",
+    "what": "",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "/tmp/taste-followup-mutants-final/23_labels_finally.a",
+      "-o",
+      "/tmp/taste-followup-mutants-final/23_labels_finally.a.bin"
+    ],
+    "node": {
+      "stdout": "try:0:0\nfinally:0:0\ntry:0:1\nfinally:0:1\ntry:1:0\nfinally:1:0\nouter-tail:1\ntry:2:0\nfinally:2:0\ndone\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "same_node": true,
+    "flips_outcome": true,
+    "native": {
+      "stdout": "try:0:0\nfinally:0:0\ntry:0:1\nfinally:0:1\ntry:1:0\nfinally:1:0\nouter-tail:1\ntry:2:0\nfinally:2:0\ndone\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true
+  },
+  {
+    "form": "truthy_loops",
+    "file": "21_truthy_loops.a",
+    "before": "Refused",
+    "after": "Compiles",
+    "what": "",
+    "command": [
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "/tmp/taste-followup-mutants-final/21_truthy_loops.a",
+      "-o",
+      "/tmp/taste-followup-mutants-final/21_truthy_loops.a.bin"
+    ],
+    "node": {
+      "stdout": "true\ntrue\nouter\nmissing\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "same_node": true,
+    "flips_outcome": true,
+    "native": {
+      "stdout": "true\ntrue\nouter\nmissing\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true
+  },
+  {
     "form": "star_export",
     "file": "15_barrel.a",
     "before": "Refused",
@@ -299,9 +392,9 @@
       "run",
       "./cmd/adamic",
       "build",
-      "/tmp/taste-mutants-final/15_barrel.a",
+      "/tmp/taste-followup-mutants-final/15_barrel.a",
       "-o",
-      "/tmp/taste-mutants-final/15_barrel.a.bin"
+      "/tmp/taste-followup-mutants-final/15_barrel.a.bin"
     ],
     "node": {
       "stdout": "true\n",

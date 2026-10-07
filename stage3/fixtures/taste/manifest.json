@@ -140,5 +140,46 @@
       "src/compiler/parser.ts:3916"
     ],
     "reason": "a label"
+  },
+  {
+    "file": "21_truthy_loops.a",
+    "tsc": [
+      "src/compiler/utilities.ts:5255",
+      "src/compiler/binder.ts:1607",
+      "src/compiler/checker.ts:25300"
+    ],
+    "reason": "non-boolean control condition"
+  },
+  {
+    "file": "22_assignment_once.a",
+    "tsc": [
+      "src/compiler/scanner.ts:3280",
+      "src/compiler/checker.ts:2935"
+    ],
+    "reason": "&&="
+  },
+  {
+    "file": "23_labels_finally.a",
+    "tsc": [
+      "src/compiler/core.ts:874",
+      "src/compiler/core.ts:881"
+    ],
+    "reason": "a label"
+  },
+  {
+    "file": "24_proportional_conditions.a",
+    "tsc": [
+      "src/compiler/checker.ts:2427",
+      "src/compiler/checker.ts:2431",
+      "src/compiler/checker.ts:11575",
+      "src/compiler/checker.ts:11821",
+      "src/compiler/checker.ts:20650",
+      "src/compiler/checker.ts:20098",
+      "src/compiler/checker.ts:18997",
+      "src/compiler/checker.ts:5544",
+      "src/compiler/utilities.ts:6333",
+      "src/compiler/utilities.ts:6338"
+    ],
+    "reason": "non-boolean control condition"
   }
 ]

@@ -18,7 +18,7 @@ rewrites = [
     ('operand', '01_diagnostic_code.a', 'return d.canonicalHead?.code || d.code;', 'const code = d.canonicalHead?.code;\n    return code === undefined || code === 0 || Number.isNaN(code) ? d.code : code;'),
     ('object_condition', '03_diagnostic_file.a', 'diagnostic.file ?', 'diagnostic.file !== undefined ?'),
     ('string_condition', '04_jsx_runtime.a', 'return base ?', 'return base !== undefined && base.length !== 0 ?'),
-    ('masked_double_not', '05_this_type.a', 'return !!(type.flags & TypeFlags.TypeParameter && (type as TypeParameter).isThisType);', 'return (type.flags & TypeFlags.TypeParameter) !== 0 && (type as TypeParameter).isThisType === true;'),
+    ('optional_double_not', '05_this_type.a', 'return !!(type.flags & TypeFlags.TypeParameter && (type as TypeParameter).isThisType);', 'return (type.flags & TypeFlags.TypeParameter) !== 0 && (type as TypeParameter).isThisType === true;'),
     ('logical_assignment', '17_binder_flow.a', 'hasFlowEffects ||= saveHasFlowEffects;', 'if (!hasFlowEffects) hasFlowEffects = saveHasFlowEffects;'),
     ('comma', '16_scan_exclamation.a', None, None),
     ('void', '13_void_callback.a', 'diag => void diagnostics.push(diag)', 'diag => { diagnostics.push(diag); }'),
@@ -26,12 +26,30 @@ rewrites = [
     ('double_not', '19_deprecated_flags.a', '!!(getCombinedNodeFlagsCached(declaration) & NodeFlags.Deprecated)', '(getCombinedNodeFlagsCached(declaration) & NodeFlags.Deprecated) !== 0'),
     ('label_break', '20_jsdoc_terminate.a', 'terminate:', ''),
     ('named_export', '18_named_export.a', None, None),
+    ('assignment_once', '22_assignment_once.a', None, None),
+    ('finally_jumps', '23_labels_finally.a', None, None),
+    ('truthy_loops', '21_truthy_loops.a', None, None),
     ('star_export', '15_barrel.a', 'export * from "./support/core.a";', ''),
 ]
 results = []
 for form, file, before, after in rewrites:
     text = (bucket / file).read_text()
-    if form == 'named_export':
+    if form == 'assignment_once':
+        text = text.replace('receiver().value &&= right();', '{ const slot = receiver(); const value = slot.value; if (value !== undefined && value !== 0 && !Number.isNaN(value)) slot.value = right(); }')
+        text = text.replace('arrayReceiver()[index()] &&= right();', '{ const array = arrayReceiver(); const key = index(); const value = array[key]; if (value !== undefined && value !== 0 && !Number.isNaN(value)) array[key] = right(); }')
+        text = text.replace('receiver().value ??= right();', '{ const slot = receiver(); if (slot.value === undefined) slot.value = right(); }')
+        text = text.replace('arrayReceiver()[index()] ??= right();', '{ const array = arrayReceiver(); const key = index(); if (array[key] === undefined) array[key] = right(); }')
+        text = text.replace('expressionMayContainStrings &&= mayContainStrings;', 'if (expressionMayContainStrings) expressionMayContainStrings = mayContainStrings;')
+    elif form == 'truthy_loops':
+        text = text.replace('while (node)', 'while (node !== undefined)').replace('; label; label =', '; label !== undefined; label =')
+        text = text.replace('if (type.flags & TypeFlags.IndexedAccess)', 'if ((type.flags & TypeFlags.IndexedAccess) !== 0)').replace('while (type.flags & TypeFlags.IndexedAccess)', 'while ((type.flags & TypeFlags.IndexedAccess) !== 0)')
+    elif form == 'finally_jumps':
+        text = text.replace('loopB:', '').replace('loopA:', '')
+        header = 'for (let offsetB = 0; offsetB < 3; offsetB += 1) {'
+        text = text.replace(header, header + '\n        let stop = false; let nextOuter = false;')
+        text = text.replace('continue loopA;', 'continue;').replace('continue loopB;', '{ nextOuter = true; break; }').replace('break loopA;', 'break;').replace('break loopB;', 'stop = true; break;')
+        text = text.replace('        console.log("outer-tail:"', '        if (stop) break; if (nextOuter) continue;\n        console.log("outer-tail:"')
+    elif form == 'named_export':
         support = args.output / 'support/performance.a'
         support.write_text(support.read_text().replace('const performance', 'export const performance').replace('export { performance };', ''))
     elif form == 'label_break':
