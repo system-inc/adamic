@@ -398,7 +398,8 @@ static const adamic_shape date_shape = {1, date_fields, date_refs, NULL};
 
 adamic_object *adamic_fs_file_date_new(double milliseconds) {
     adamic_object *date = adamic_object_new(&date_shape);
-    date->slots[0].number = isfinite(milliseconds) && fabs(milliseconds) <= 8640000000000000. ? trunc(milliseconds) : NAN;
+    double clipped = isfinite(milliseconds) && fabs(milliseconds) <= 8640000000000000. ? trunc(milliseconds) : NAN;
+    date->slots[0].number = clipped == 0 ? 0. : clipped;
     return date;
 }
 
