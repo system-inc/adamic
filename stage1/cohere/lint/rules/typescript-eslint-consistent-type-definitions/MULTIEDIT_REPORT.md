@@ -1,6 +1,6 @@
 Built: rebased onto 59451e23e and replaced composed repairs with separate automatic edits through reportNode.
 Commit: the pushed branch SHA is reported once with completion; evidence pins the tested source contents.
-Checks: registry, gofmt, vet and TestOwnedWitnesses pass; TestRulesAgree stops at a shared non-progress fixer mismatch.
+Checks: registry, gofmt, vet, TestOwnedWitnesses and TestMutants pass; TestRulesAgree stops at a shared non-progress fixer mismatch.
 Mutant: object-alias-message-changed is caught on source Node, emitted JavaScript and sanitized native by independent Go bytes.
 Not covered: complete captured-corpus parity remains blocked; the full repository gate and timing were not run.
 
@@ -71,3 +71,6 @@ Previous evidence files describe the superseded single-edit blocker and initial
 implementation corrections. The current mutation is caught and owned witness
 parity is green; complete upstream certification is not claimed while the
 shared no-progress mismatch remains. Only the assigned port branch is pushed.
+
+Full TestMutants passed in 774.744 seconds: 41 mutant subtests passed.
+The full raw log is archived alongside the failing agreement log and passing owned-witness log.
