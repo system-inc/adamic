@@ -25,3 +25,14 @@ Compare actual pinned Go on inputs from every consuming rule plus path and callb
 controls, source Node, emitted JavaScript and sanitized native. Require a compiling
 semantic mutant per helper. One helper per .a file; only owned harness files change.
 This claim is pushed before code. Re-fetch all origin claims before the next helper.
+
+2. github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram
+   File: helpers/from_wave1_04/load_design_system_for_program.a.
+   Six consumers, the same six Tailwind rules listed above.
+   Selection: 428 origin refs and all 17 distinct helper claim blobs inspected.
+   Tied highest unclaimed named helper count: six.
+   Preserve one program filesystem acquisition, load before reads, snapshots on
+   failure, every opaque result field and Go result value semantics. The loader
+   and RecordingFS are explicit dependencies, owned separately. Compare the actual
+   Go function on six-consumer inputs and dependency controls on all three targets.
+   This claim is pushed before code; projectRootOf was pushed as 482d36bf first.
