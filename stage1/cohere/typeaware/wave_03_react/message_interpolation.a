@@ -1,0 +1,15 @@
+// Shared translation row: react/boolean_prop_naming.go:621 on codex/lint-regex.
+// Go's ASCII whitespace is explicit; indexes stay UTF-16 for string slicing.
+export function interpolateBooleanMessage(message: string, name: string, pattern: string): string {
+    const placeholders = /\{\{[ \t\n\f\r]*([A-Za-z_][A-Za-z0-9_]*)[ \t\n\f\r]*\}\}/gu;
+    let result = ''; let start = 0;
+    let match = placeholders.exec(message);
+    while(match !== null) {
+        const key = match[1] ?? '';
+        result += message.slice(start, match.index);
+        result += key === 'pattern' ? pattern : key === 'propName' || key === 'component' ? name : match[0] ?? '';
+        start = match.index + (match[0] ?? '').length;
+        match = placeholders.exec(message);
+    }
+    return result + message.slice(start);
+}

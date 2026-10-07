@@ -128,3 +128,7 @@ which is not mislabelled as an IR or capture-analysis blocker.
 ### Continuation 4 status
 
 All three native rules are implemented with numeric kind listeners and handed-node visits. The owned full oracle passed: 136 parseable controls, 100 findings and 71 suggestions; 77 compiler and 287 repository roots match byte for byte, including sanitizer runs. Each rule has a compiled message-only mutant caught by comparison. Released-handle and retained-registry mutation checks pass. Evidence and exact limitations are in wave_03_final/REPORT.md. Shared emitted-JavaScript checker execution remains blocked by the unlinked typescript-go library refusal; shared harness and generator files were not edited.
+
+### Mandatory regex migration status
+
+Under the updated no-handwritten-matcher requirement, boolean-prop-naming's option matcher now uses new RegExp(pattern, 'u') and message interpolation uses the literal from codex/lint-regex. The literal helper passes Go/native/emitted-JavaScript/sanitizer comparisons and a compiled byte-only mutant. Native runtime RegExp construction is still refused on current main c01907a70, so the full owned React driver is now blocked at boolean_pattern.a:4:23 and its oracle explicitly SKIPs with that reason. This is a regex lowering blocker, not the parked IR/SSA/capture category. Existing prior green results predate this migration. No additional rules were claimed. See wave_03_react/REGEX_MIGRATION.md. The final three rule.json files declare parser kind names in kinds as required by the shared registry.

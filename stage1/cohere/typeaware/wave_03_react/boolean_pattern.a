@@ -1,16 +1,5 @@
-import { panic } from 'adamic';
-// The configured patterns exercised by Go's complete boolean naming fixture table.
-// Other patterns fail explicitly until native general regular expressions are available.
+// Rule options use the shared codex/lint-regex constructor contract.
+// Native lowering currently refuses runtime RegExp construction.
 export function booleanPattern(name: string, pattern: string): boolean {
-    if(pattern === '') { return true; }
-    const defaultPattern = '^(is|has)[A-Z]([A-Za-z0-9]?)+';
-    const isPattern = '^is[A-Z]([A-Za-z0-9]?)+';
-    const unanchoredPattern = '(is|has)[A-Z]([A-Za-z0-9]?)+';
-    const extendedPattern = '(^(is|has|should|without)[A-Z]([A-Za-z0-9]?)+|disabled|required|checked|defaultChecked)';
-    if(![defaultPattern, isPattern, unanchoredPattern, extendedPattern, '^is[A-Z]'].includes(pattern)) { panic('boolean-prop-naming: native general regex support required for configured pattern'); }
-    if(pattern === extendedPattern && ['disabled', 'required', 'checked', 'defaultChecked'].some(value => name.includes(value))) { return true; }
-    const prefixes = pattern === extendedPattern ? ['is', 'has', 'should', 'without'] : pattern === isPattern || pattern === '^is[A-Z]' ? ['is'] : ['is', 'has'];
-    const limit = pattern === unanchoredPattern ? name.length : 0;
-    for(let start = 0; start <= limit; start++) { for(const prefix of prefixes) { if(!name.slice(start).startsWith(prefix)) { continue; } const next = name[start + prefix.length] ?? ''; if(next >= 'A' && next <= 'Z') { return true; } } }
-    return false;
+    return new RegExp(pattern, 'u').test(name);
 }

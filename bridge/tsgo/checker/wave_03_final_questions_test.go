@@ -2,6 +2,7 @@ package checker
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"os"
@@ -10,6 +11,34 @@ import (
 	"strconv"
 	"testing"
 )
+
+func TestWave03FinalListenerNames(t *testing.T) {
+	expected := map[string][]ast.Kind{
+		"require-await":          {ast.KindFunctionDeclaration, ast.KindFunctionExpression, ast.KindArrowFunction, ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor, ast.KindConstructor},
+		"react-hook-no-any-type": {ast.KindCallExpression},
+		"symbol-description":     {ast.KindCallExpression},
+	}
+	for rule, kinds := range expected {
+		data, err := os.ReadFile(filepath.Join("../../../stage1/cohere/typeaware/wave_03_final/rules", rule, "rule.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var metadata struct {
+			Kinds []string `json:"kinds"`
+		}
+		if err := json.Unmarshal(data, &metadata); err != nil {
+			t.Fatal(err)
+		}
+		if len(metadata.Kinds) != len(kinds) {
+			t.Fatalf("%s listener count differs", rule)
+		}
+		for index, kind := range kinds {
+			if metadata.Kinds[index] != kind.String()[4:] {
+				t.Fatalf("%s listener %s differs from parser %s", rule, metadata.Kinds[index], kind)
+			}
+		}
+	}
+}
 
 func TestWave03FinalNumericKinds(t *testing.T) {
 	data, err := os.ReadFile("../../../stage1/cohere/typeaware/wave_03_final/syntax_kinds.a")

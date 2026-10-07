@@ -1,0 +1,4 @@
+import { programArguments } from 'adamic';
+import { interpolateBooleanMessage } from '../message_interpolation.a';
+const args = programArguments();
+console.log(interpolateBooleanMessage(args[0] ?? '', args[1] ?? '', args[2] ?? ''));

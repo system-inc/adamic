@@ -4,6 +4,7 @@ import type { SourceSyntaxForest } from './source_syntax_forest.a';
 import { sourceTokenStart } from './source_token_start.a';
 import { Diagnostic } from '../diagnostic.ts';
 import { booleanPattern } from './boolean_pattern.a';
+import { interpolateBooleanMessage } from './message_interpolation.a';
 export class BooleanPropNaming {
     readonly tree: SourceSyntaxTree;
     readonly detection: ComponentDetection;
@@ -17,18 +18,7 @@ export class BooleanPropNaming {
     constructor(tree: SourceSyntaxTree, forest: SourceSyntaxForest, detection: ComponentDetection, pattern: string, typeNames: readonly string[], nested: boolean, message: string) { this.tree = tree; this.forest = forest; this.detection = detection; this.pattern = pattern; this.typeNames = typeNames; this.nested = nested; this.message = message; }
     key(tree: SourceSyntaxTree, index: number): string { if(tree.kind(index) === 'Identifier') { return tree.text(index); } if(tree.kind(index) === 'ComputedPropertyName') { const inner = tree.skip(tree.node(index).expression); if(tree.kind(inner) === 'Identifier') { return tree.text(inner); } } return 'undefined'; }
     named(tree: SourceSyntaxTree, index: number): boolean { return tree.kind(index) === 'Identifier' || (tree.kind(index) === 'ComputedPropertyName' && tree.kind(tree.skip(tree.node(index).expression)) === 'Identifier'); }
-    whitespace(character: string): boolean { return [' ', '\t', '\n', '\r', '\f'].includes(character); }
-    interpolate(name: string): string {
-        let result = ''; let start = 0;
-        while(start < this.message.length) {
-            if(this.message.slice(start, start + 2) !== '{{') { result += this.message[start] ?? ''; start++; continue; }
-            let cursor = start + 2; while(this.whitespace(this.message[cursor] ?? '')) { cursor++; }
-            const begin = cursor; while(cursor < this.message.length) { const character = this.message[cursor] ?? ''; if(!((character >= 'A' && character <= 'Z') || (character >= 'a' && character <= 'z') || character === '_' || (cursor > begin && character >= '0' && character <= '9'))) { break; } cursor++; }
-            const key = this.message.slice(begin, cursor); while(this.whitespace(this.message[cursor] ?? '')) { cursor++; }
-            if(key === '' || this.message.slice(cursor, cursor + 2) !== '}}') { result += this.message[start] ?? ''; start++; continue; }
-            result += key === 'pattern' ? this.pattern : key === 'propName' || key === 'component' ? name : this.message.slice(start, cursor + 2); start = cursor + 2;
-        } return result;
-    }
+    interpolate(name: string): string { return interpolateBooleanMessage(this.message, name, this.pattern); }
     report(tree: SourceSyntaxTree, index: number): void {
         const identity = `${tree.path}:${index}`;
         if(this.reported.has(identity)) { return; } const property = tree.node(index);
