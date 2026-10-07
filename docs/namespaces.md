@@ -9,7 +9,7 @@ interface or type alias of the same spelling. Type-only namespaces erase.
 
 The namespace object's identity, reflection, escape and mutation are outside
 this subset. Reopening, function/class/enum merging, mutable exports, ambient
-namespaces, `var`, uninitialized state and executable namespace bodies are
+namespaces, executable namespace bodies are
 `NotYet`, with an alternative using a file module or private state behind fixed
 exported functions. A namespace function using `this` is refused: qualified and
 detached calls have different receivers; pass state explicitly.
@@ -73,3 +73,21 @@ same-spelled constants/functions, type/value name coexistence, detached function
 identity, structural copies and module import/evaluation order.
 [Validation](parameter-properties-namespaces-validation.md) records the gate,
 counts, mutants and limits.
+
+## Stage 3: parser singleton storage
+
+Direct private namespace `var` bindings are hoisted to namespace entry. Their
+initializers run in source order; an uninitialized declaration does not overwrite
+an earlier assignment. Uninitialized private `let` is also admitted. Storage
+whose declared type includes undefined begins with undefined. Storage whose type
+excludes undefined stays unready until assigned; reads use the existing ready
+check in both backends, rather than treating native zero bits as a typed value.
+This check intentionally stops a checker-accepted type lie where Node reads
+undefined. Function-local var, destructuring namespace declarations, mutable
+exports and calls during namespace initialization remain outside this step.
+
+The parser-state fixture observes a var before its declaration, initializes a
+built string through an exported function, and resets optional token state.
+The unready fixture proves a typed number read before assignment stops with the
+same ready check in native and generated JavaScript. This is singleton storage
+support, not proof that parser.ts or all its function bodies compile.

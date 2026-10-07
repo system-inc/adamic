@@ -1,0 +1,12 @@
+namespace Parser {
+ const early = token ?? -9;
+ var token: number | undefined = 1;
+ let text: string;
+ export function initialize(input: string): void { text = input.repeat(2); token = 3; }
+ export function parse(): string { return `${early}:${text}:${token ?? -1}`; }
+ export function reset(): void { token = undefined; }
+}
+Parser.initialize('node');
+console.log(Parser.parse());
+Parser.reset();
+console.log(Parser.parse());

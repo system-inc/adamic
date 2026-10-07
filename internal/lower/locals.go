@@ -11,7 +11,7 @@ import (
 
 // variables lowers const and let declarations, each to a local of its own.
 func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
-	if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !namespaceVariable(list) {
 		return nil, &Refused{Where: l.program.Where(list), What: "var", Fix: "use const or let"}
 	}
 	statements := []ir.Statement{}
@@ -45,7 +45,16 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 				return nil, err
 			}
 		}
-		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
+		if l.result.Locals[local].NamespaceVar {
+			if value != nil {
+				statements = append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type)})
+			}
+		} else {
+			if value == nil && l.result.Locals[local].NamespaceState && l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
+				value = fit(ir.Undefined{Of: l.result.Locals[local].Type}, l.result.Locals[local].Type)
+			}
+			statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
+		}
 	}
 	return statements, nil
 }
@@ -161,7 +170,7 @@ func (l *lowering) touch(local int) {
 // checked reports whether touching a local must be checked against the temporal dead zone: a
 // global, from inside a function, which may run before the global's declaration has.
 func (l *lowering) checked(local int) bool {
-	return l.function != nil && l.result.Locals[local].Global
+	return l.result.Locals[local].NamespaceState || l.function != nil && l.result.Locals[local].Global
 }
 
 func (l *lowering) constant(value string) int {
