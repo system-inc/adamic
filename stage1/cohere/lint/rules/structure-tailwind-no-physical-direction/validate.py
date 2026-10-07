@@ -39,11 +39,11 @@ corpus=S/'upstream.json';corpus.write_text(json.dumps(list(rows.values()),ensure
 print('captured',len(rows),{n:sum(r['rule']==n for r in rows.values()) for n in names},flush=True)
 run('ast',[str(S/'oracle'),str(corpus),'--ast'])
 run('answer',[str(S/'oracle'),str(corpus)])
-run('types',['go','run','./cmd/adamic','types',str(HERE/'validation.a')])
-run('build',['go','run',str(HERE/'validation_build.go'),str(HERE/'validation.a'),str(S/'native'),str(S/'emitted.mjs')])
+run('types',['go','run','./cmd/adamic','types',str(HERE/'validation.ts')])
+run('build',['go','run',str(HERE/'validation_build.go'),str(HERE/'validation.ts'),str(S/'native'),str(S/'emitted.mjs')])
 if args.prepare_only:raise SystemExit(0)
 runner=ROOT/'oracle/node.mjs'
-for name,cmd in [('Node',['node','--disable-warning=ExperimentalWarning',str(runner),str(HERE/'validation.a'),str(S/'ast.log')]),('emitted',['node','--disable-warning=ExperimentalWarning',str(runner),str(S/'emitted.mjs'),str(S/'ast.log')]),('native',[str(S/'native'),str(S/'ast.log')])]:
+for name,cmd in [('Node',['node','--disable-warning=ExperimentalWarning',str(runner),str(HERE/'validation.ts'),str(S/'ast.log')]),('emitted',['node','--disable-warning=ExperimentalWarning',str(runner),str(S/'emitted.mjs'),str(S/'ast.log')]),('native',[str(S/'native'),str(S/'ast.log')])]:
  path=run(name,cmd)
  assert path.read_bytes()==(S/'answer.log').read_bytes(),name+' differs from Go'
  print(name,'identical bytes',path.stat().st_size,flush=True)

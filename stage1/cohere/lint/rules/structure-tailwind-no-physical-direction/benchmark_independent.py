@@ -15,7 +15,7 @@ for name in sorted({r['rule'] for r in rows}):
   raw=S/'bench-own.json';value={k:row[k] for k in ('name','source','rule','options')};raw.write_text(json.dumps([value]));count,_=run('bench-own-positive',[S/'oracle',raw,'--count'])
   if count>0:break
  assert count>0;raw.write_text(json.dumps([value]*200));record={'rule':name,'cases':200,'source':value['source'],'scope':'startup-inclusive, raw-source input and own parsing; sanitized native','samples':[]}
- driver=copy/'stage1/cohere/lint/rules'/HERE.name/'validation.a'
+ driver=copy/'stage1/cohere/lint/rules'/HERE.name/'validation.ts'
  for backend,cmd in [('Go',[S/'oracle',raw,'--count']),('Node',['node','--disable-warning=ExperimentalWarning',ROOT/'oracle/node.mjs',driver,raw,'--parse','--count']),('native',[copy/'native',raw,'--parse','--count'])]:
   times=[];counts=[]
   for index in range(3):

@@ -1,6 +1,6 @@
 {
   "name": "description_ignored",
-  "file": "rule.a",
+  "file": "rule.ts",
   "from": "hasDescription(interior)",
   "to": "false && hasDescription(interior)"
 }

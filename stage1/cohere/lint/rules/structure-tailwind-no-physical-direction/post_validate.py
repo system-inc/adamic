@@ -13,7 +13,7 @@ def run(label,cmd,cwd=ROOT,allow=False):
   if not allow:raise SystemExit(1)
  return (S/(label+'.log')).read_bytes(),seconds,r.returncode,stderr
 base=json.loads((S/'upstream.json').read_text());names=list(dict.fromkeys(r['rule'] for r in base))
-def commands(ast,source=HERE/'validation.a',native=S/'native',emitted=S/'emitted.mjs',independent=False):
+def commands(ast,source=HERE/'validation.ts',native=S/'native',emitted=S/'emitted.mjs',independent=False):
  suffix=['--parse'] if independent else []
  return [('Node',['node','--disable-warning=ExperimentalWarning',runner,source,ast,*suffix]),('emitted',['node','--disable-warning=ExperimentalWarning',runner,emitted,ast,*suffix]),('native',[native,ast,*suffix])]
 def compare(label,rows,independent=False,allow=False):
@@ -47,7 +47,7 @@ summary['mutants']=[]
 for directory in [HERE,HERE.parent/'eslint-comments-require-description',HERE.parent/'next-google-font-display']:
  change=json.loads((directory/'mutant.json').read_text());scratch=S/('mutant-'+directory.name);shutil.copytree(ROOT/'stage1',scratch/'stage1',dirs_exist_ok=True)
  owned=scratch/'stage1/cohere/lint/rules'/directory.name/change['file'];text=owned.read_text();assert text.count(change['from'])==1;owned.write_text(text.replace(change['from'],change['to'],1))
- driver=scratch/'stage1/cohere/lint/rules'/HERE.name/'validation.a';binary=scratch/'native';js=scratch/'emitted.mjs'
+ driver=scratch/'stage1/cohere/lint/rules'/HERE.name/'validation.ts';binary=scratch/'native';js=scratch/'emitted.mjs'
  run(change['name']+'-build',['go','run',HERE/'validation_build.go',driver,binary,js])
  ast=S/'ast.log';wanted=(S/'answer.log').read_bytes();observed=[]
  for backend,cmd in commands(ast,driver,binary,js):
@@ -67,7 +67,7 @@ for name in names:
  assert positives
  rows=positives*200;raw=S/'benchmark.json';raw.write_text(json.dumps(rows));run('benchmark-ast',[S/'oracle',raw,'--ast']);ast=S/'benchmark-ast.log'
  record={'rule':name,'scope':'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native','samples':[]}
- for backend,cmd in [('Go',[S/'oracle',raw,'--count']),('Node',['node','--disable-warning=ExperimentalWarning',runner,HERE/'validation.a',ast,'--count']),('native',[S/'native',ast,'--count'])]:
+ for backend,cmd in [('Go',[S/'oracle',raw,'--count']),('Node',['node','--disable-warning=ExperimentalWarning',runner,HERE/'validation.ts',ast,'--count']),('native',[S/'native',ast,'--count'])]:
   times=[];counts=[]
   for i in range(3):
    output,seconds,_,_=run('benchmark-'+backend+'-'+str(i),cmd);times.append(seconds);counts.append(int(output))

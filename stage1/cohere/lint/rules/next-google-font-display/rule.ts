@@ -1,6 +1,6 @@
 import type { RuleContext } from '../../context.ts';
-import { entities } from './entities.a';
-import { missing, notRecommended } from './messages.a';
+import { entities } from './entities.ts';
+import { missing, notRecommended } from './messages.ts';
 function decode(text: string): string {
     let result = '';
     for(let index = 0; index < text.length;) {

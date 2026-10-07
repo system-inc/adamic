@@ -2,7 +2,7 @@ import { utf8Length } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import { Finding } from '../../finding.ts';
 import { all } from '../../helpers/comments/all.ts';
-import { missingDescription } from './messages.a';
+import { missingDescription } from './messages.ts';
 function space(code: number): boolean {
     return code === 9 || code === 10 || code === 11 || code === 12 || code === 13 || code === 32 || code === 160 || code === 5760 || (code >= 8192 && code <= 8202) || code === 8232 || code === 8233 || code === 8239 || code === 8287 || code === 12288 || code === 65279;
 }

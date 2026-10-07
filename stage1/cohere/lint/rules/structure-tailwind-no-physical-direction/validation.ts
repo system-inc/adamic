@@ -5,9 +5,9 @@ import { ParseNode, written } from '../../../../typescript/parser/nodes.ts';
 import { Scanner } from '../../../../typescript/scanner/scanner.ts';
 import { Settings } from '../../settings.ts';
 import { RuleContext } from '../../context.ts';
-import { create as physical } from './rule.a';
-import { create as description } from '../eslint-comments-require-description/rule.a';
-import { create as font } from '../next-google-font-display/rule.a';
+import { create as physical } from './rule.ts';
+import { create as description } from '../eslint-comments-require-description/rule.ts';
+import { create as font } from '../next-google-font-display/rule.ts';
 import type { Finding } from '../../finding.ts';
 function read(path: string): string { const value = readTextFile(path); if(value.kind === 'Error') { panic(value.message); } return value.text; }
 // Bound native concatenation work while preserving the exact canonical escape stream.

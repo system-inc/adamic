@@ -9,7 +9,7 @@ for entry in summary['corpora']:
  corpus=entry['name'];batches=len(entry['batches'])
  for batch in range(batches):
   prefix=corpus+'-'+str(batch);wanted=(S/(prefix+'-go.log')).read_bytes();raw=S/(prefix+'.json')
-  for name,cmd in [('Node',['node','--disable-warning=ExperimentalWarning',ROOT/'oracle/node.mjs',HERE/'validation.a',raw,'--parse']),('emitted',['node','--disable-warning=ExperimentalWarning',ROOT/'oracle/node.mjs',S/'emitted.mjs',raw,'--parse']),('native',[S/'native',raw,'--parse'])]:
+  for name,cmd in [('Node',['node','--disable-warning=ExperimentalWarning',ROOT/'oracle/node.mjs',HERE/'validation.ts',raw,'--parse']),('emitted',['node','--disable-warning=ExperimentalWarning',ROOT/'oracle/node.mjs',S/'emitted.mjs',raw,'--parse']),('native',[S/'native',raw,'--parse'])]:
    label='independent-full-'+prefix+'-'+name
    with (S/(label+'.log')).open('wb') as out,(S/(label+'.stderr')).open('wb') as err:r=subprocess.run(list(map(str,cmd)),cwd=ROOT,stdout=out,stderr=err)
    got=(S/(label+'.log')).read_bytes();stderr=(S/(label+'.stderr')).read_bytes();result={'corpus':corpus,'batch':batch,'name':name,'exit':r.returncode,'stderrBytes':len(stderr),'equal':r.returncode==0 and not stderr and got==wanted};results.append(result)

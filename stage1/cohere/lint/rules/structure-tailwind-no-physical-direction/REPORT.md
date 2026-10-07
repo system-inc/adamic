@@ -1,8 +1,8 @@
-Built: three claimed .a candidate rules; directory metadata validates with a scratch .a registry overlay, but production integration remains blocked.
-Commits: claim 2048afe0 pushed before code; helper merge 295c1552; require-description 25c8936f, google-font-display 593b3356, tailwind 8d113a23.
-Commands and outputs: 179 upstream cases, 77 compiler files and 136 stage1 sources match Go on Node, emitted JavaScript and sanitized native; full corpora and 161 non-JSX upstream cases also match with Adamic parsing raw source.
-Mutants: physical_direction_exemption_lost, description_ignored and fallback_display_ignored each compiled, exited 0 with empty stderr and were caught only by byte comparison on all three backends.
-Not covered: independent native parsing of 18 JSX upstream cases, production .a registration, malformed option decoding, suppression integration, human report formatting and the full repository gate.
+Built: the same three candidates now use the authorized .ts fallback; no further rules claimed and no shared files edited.
+Commits: prior rule commits 25c8936f, 593b3356, 8d113a23; previous pushed head 87be831e; fallback and blocker evidence committed next.
+Commands and outputs: shared registry discovers all eight rules; registry tests PASS 0.027s; TestOwnedWitnesses FAIL 5.648s when its Go oracle parses the Google font JSX witness as TypeScript.
+Mutants: prior physical_direction_exemption_lost, description_ignored and fallback_display_ignored had nine byte-only catches; not rerun after the extension fallback because the shared witness gate blocks first.
+Not covered: complete ports and post-rename corpus parity; shared TSX parsing, native JSX parsing, strict options and suppression remain blocked or incomplete.
 
 ## Selection and ownership
 
@@ -147,7 +147,7 @@ was not profiled.
 
 | Command | Result |
 | --- | --- |
-| Final adamic types validation.a | PASS, empty output |
+| Final adamic types validation.ts | PASS, empty output |
 | Owned Go utility vet | PASS, empty output |
 | Go upstream TestNoPhysicalDirection, TestRequireDescription, TestGoogleFontDisplay | PASS, 54/109/16 captured unique cases |
 | Plain registry and comment-helper package tests | Registry FAIL because rule.ts is missing; comment helpers PASS |
@@ -165,3 +165,45 @@ All three semantic mutants have nine successful executions and nine byte-compari
 catches. Build logs and first differing bytes with output hashes are preserved in
 evidence/mutants.json and the named build logs. Compiler refusal, sanitizer errors and
 Go test failures earned no mutant credit.
+
+## Ahra correction and current stopping point
+
+Ahra authorized .ts rule modules until the shared .a codemod lands and required workers
+to stop at any other blocker without editing shared files. Only files inside these
+three owned rule directories changed in this follow-up. Eight Adamic modules were
+renamed from .a to .ts, their imports and mutant paths were updated, and the owned
+validation scripts now use validation.ts. The historical evidence above is from the
+pre-rename source snapshot; it must not be treated as a fresh post-rename corpus run.
+Renaming source files changes the source filenames seen by filename-sensitive rules.
+
+Fetching refs/heads/codex/lint-harness-dot-a failed with:
+
+```
+fatal: couldn't find remote ref refs/heads/codex/lint-harness-dot-a
+```
+
+The unmodified shared registration generator now discovers all eight rules and its
+ordinary package tests pass without an overlay. The three candidate descriptors are
+readable. The former .a proposal is retained only as historical material; it is not
+needed by this .ts fallback and was never applied to shared production files.
+
+The next shared gate stops before running the candidate on Node or native:
+
+```
+go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -v -timeout 10m
+panic: invalid corpus .../next-google-font-display-0.ts: ['>' expected. ',' expected. Variable declaration expected. Expression expected. Expression expected.]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint 5.648s
+```
+
+Exact cause: registration_test.go's ownedWitnesses writes every raw witness to a
+filename ending in .ts. testdata/oracle.go line 89 always calls ParseSourceFile with
+core.ScriptKindTS, then rejects any parse diagnostics. GoogleFontDisplay requires a
+JSX link element, so its positive fixture cannot pass that oracle input contract.
+This needs a shared TSX witness/parser contract; changing the witness to a string
+would remove the finding and defeat its purpose. Neither shared file was edited.
+
+Independent native JSX parsing remains unvalidated for the 18 upstream JSX cases.
+Require-description's strict Adamic option decoder and production suppression
+integration also remain incomplete. The three candidates are not declared finished.
+Work stopped at the shared witness blocker, as instructed, and no additional claim
+was made. Correction logs are committed under evidence/ahra-correction-*.log.

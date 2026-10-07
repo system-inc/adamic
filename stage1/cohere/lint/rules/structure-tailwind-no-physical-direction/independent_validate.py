@@ -7,7 +7,7 @@ p=argparse.ArgumentParser();p.add_argument('--scratch',type=Path,required=True);
 rows=json.loads((S/'ast.log').read_text());plain=[r for r in rows if not any(n['kind'].startswith('Jsx') for n in r['ast'])]
 # The Go tree classifies this probe's supported grammar. It does not supply the parsed tree or findings.
 corpus=S/'non-jsx-upstream.json';corpus.write_text(json.dumps(plain));copy=S/'independent-non-jsx';shutil.copytree(ROOT/'stage1',copy/'stage1',dirs_exist_ok=True)
-driver=copy/'stage1/cohere/lint/rules'/HERE.name/'validation.a';source=driver.read_text();guard="        if(name.endsWith('.tsx')) { panic('NotYet: stage-1 JSX parser adapter'); }\n";assert source.count(guard)==1;driver.write_text(source.replace(guard,''))
+driver=copy/'stage1/cohere/lint/rules'/HERE.name/'validation.ts';source=driver.read_text();guard="        if(name.endsWith('.tsx')) { panic('NotYet: stage-1 JSX parser adapter'); }\n";assert source.count(guard)==1;driver.write_text(source.replace(guard,''))
 def run(label,cmd,allow=False):
  with (S/(label+'.log')).open('wb') as out,(S/(label+'.stderr')).open('wb') as err:r=subprocess.run(list(map(str,cmd)),cwd=ROOT,stdout=out,stderr=err)
  result={'exit':r.returncode,'stderrBytes':(S/(label+'.stderr')).stat().st_size}

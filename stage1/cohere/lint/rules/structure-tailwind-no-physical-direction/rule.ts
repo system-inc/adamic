@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { message } from './messages.a';
+import { message } from './messages.ts';
 
 const shape = /^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\[\]/]+)?$/;
 // Go strings.Fields uses Unicode White_Space, which excludes BOM and includes NEL.
