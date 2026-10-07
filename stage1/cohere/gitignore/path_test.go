@@ -85,11 +85,11 @@ func TestPathAnswersAsGosPathPackage(t *testing.T) {
 
 	for _, mutant := range []struct{ name, from, to string }{
 		// Each takes one test out of isClean, so a path it no longer sees as unclean comes back as it is.
-		{"a run of slashes taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || (path.endsWith('/') && path !== '/')) {"},
-		{"a trailing slash taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || path.includes('//')) {"},
-		{"a trailing . taken for clean", "if (path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {", "if (path.startsWith('./') || path.includes('/./')) {"},
+		{"a run of slashes taken for clean", "if(path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if(path === '' || (path.endsWith('/') && path !== '/')) {"},
+		{"a trailing slash taken for clean", "if(path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if(path === '' || path.includes('//')) {"},
+		{"a trailing . taken for clean", "if(path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {", "if(path.startsWith('./') || path.includes('/./')) {"},
 		{"a rooted path's .. taken for clean", "return !path.includes('/../') && !path.endsWith('/..');", "return !path.includes('/../');"},
-		{"a .. after a name taken for clean", "!rest.includes('/../') && !rest.endsWith('/..') && !rest.startsWith('../');", "!rest.endsWith('/..') && !rest.startsWith('../');"},
+		{"a .. after a name taken for clean", "!rest.includes('/../') &&\n        !rest.endsWith('/..') &&", "!rest.endsWith('/..') &&"},
 		// dir cleaning from the last slash's position on, where Go cleans up to and with it.
 		{"dir keeping the last element's first unit", "return clean(path.slice(0, lastSlash));", "return clean(path.slice(0, lastSlash + 2));"},
 	} {

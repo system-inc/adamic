@@ -120,7 +120,10 @@ export class Parser {
             if(this.scss) {
                 let rewritten = '';
                 for(const token of tokens) {
-                    rewritten += token.kind === 'comment' && token.inline ? `/*${token.value.slice(2).replace(/(\*\/|\/\*)/g, '*//*')}*/` : token.value;
+                    rewritten +=
+                        token.kind === 'comment' && token.inline
+                            ? `/*${token.value.slice(2).replace(/(\*\/|\/\*)/g, '*//*')}*/`
+                            : token.value;
                 }
                 raw.raw = rewritten;
                 if(original !== rewritten) {

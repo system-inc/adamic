@@ -10,7 +10,7 @@
 //	  - "Horizontal Tab (U+0009)"
 //	  - "Space (U+0020)"
 export function isWhiteSpace(code: number): boolean {
-	return code === 0x0009 || code === 0x0020;
+    return code === 0x0009 || code === 0x0020;
 }
 
 // isDigit is the spec's Digit.
@@ -18,7 +18,7 @@ export function isWhiteSpace(code: number): boolean {
 //	Digit :: one of
 //	  - `0` `1` `2` `3` `4` `5` `6` `7` `8` `9`
 export function isDigit(code: number): boolean {
-	return code >= 0x0030 && code <= 0x0039;
+    return code >= 0x0030 && code <= 0x0039;
 }
 
 // isLetter is the spec's Letter.
@@ -29,10 +29,10 @@ export function isDigit(code: number): boolean {
 //	  - `a` `b` `c` `d` `e` `f` `g` `h` `i` `j` `k` `l` `m`
 //	  - `n` `o` `p` `q` `r` `s` `t` `u` `v` `w` `x` `y` `z`
 export function isLetter(code: number): boolean {
-	return (
-		(code >= 0x0061 && code <= 0x007a) || // a-z
-		(code >= 0x0041 && code <= 0x005a) // A-Z
-	);
+    return (
+        (code >= 0x0061 && code <= 0x007a) || // a-z
+        (code >= 0x0041 && code <= 0x005a) // A-Z
+    );
 }
 
 // isNameStart is the spec's NameStart.
@@ -41,7 +41,7 @@ export function isLetter(code: number): boolean {
 //	  - Letter
 //	  - `_`
 export function isNameStart(code: number): boolean {
-	return isLetter(code) || code === 0x005f;
+    return isLetter(code) || code === 0x005f;
 }
 
 // isNameContinue is the spec's NameContinue.
@@ -51,5 +51,5 @@ export function isNameStart(code: number): boolean {
 //	  - Digit
 //	  - `_`
 export function isNameContinue(code: number): boolean {
-	return isLetter(code) || isDigit(code) || code === 0x005f;
+    return isLetter(code) || isDigit(code) || code === 0x005f;
 }

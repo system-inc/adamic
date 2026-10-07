@@ -62,7 +62,11 @@ for(let round = 0; round < (args[2] === 'repeat' ? 10 : 1); round++) {
         const result = parse(css, modes[index] ?? false);
         if(args[1] !== 'count') {
             console.log(`case ${count}`);
-            console.log(result.kind === 'Refused' ? `error ${result.message}` : render(result.parser.nodes, 0, result.parser.input));
+            console.log(
+                result.kind === 'Refused'
+                    ? `error ${result.message}`
+                    : render(result.parser.nodes, 0, result.parser.input),
+            );
         }
         count++;
         if(result.kind === 'Parsed') {
