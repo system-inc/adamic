@@ -197,3 +197,16 @@ reads remain NotYet, including reads before a nested namespace's body finishes.
 The ordered-body fixture prints before the module namespace, at Parser entry,
 inside JSDocParser, after the nested body, and after Parser completes. Reordering
 two output statements is caught by Node stdout comparison.
+
+## Stage 3: live mutable exports
+
+Exported let and var bindings now use the same singleton storage for private
+identifier access, qualified access, and imports. Plain, compound and increment
+writes update that storage; qualified reads preserve checker narrowing and its
+runtime checks. Exported function identities still cannot be replaced. Namespace
+objects cannot be aliased to write through a structural view.
+
+The Debug-state fixture checks inside/outside numeric writes, compound updates,
+increment, optional built-string replacement and narrowing, and boolean state.
+Changing an outside write from 3 to 30 is caught by Node stdout. This admits the
+state portion of Debug; its class and callable log merge remain separate limits.

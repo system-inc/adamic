@@ -195,9 +195,6 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 				if list.Flags&ast.NodeFlagsBlockScoped == 0 {
 					// Namespace var uses hoisted module storage.
 				}
-				if ast.HasSyntacticModifier(member, ast.ModifierFlagsExport) && list.Flags&ast.NodeFlagsConst == 0 {
-					return l.notYet(member, "a mutable namespace export; use a module or export functions around private state")
-				}
 				for _, variable := range list.AsVariableDeclarationList().Declarations.Nodes {
 					if !ast.IsIdentifier(variable.Name()) {
 						return l.notYet(variable, "a namespace binding without a plain initialized name")
@@ -234,7 +231,16 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 		parent := node.Parent
 		if parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == node && ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind) {
 			if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
-				return l.notYet(node, "replacing a namespace export; keep exported functions fixed and mutate private state through them")
+				symbol := l.symbol(node)
+				mutable := false
+				for _, declaration := range symbol.Declarations {
+					if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+						mutable = true
+					}
+				}
+				if !mutable {
+					return l.notYet(node, "replacing a namespace export; exported functions and constants have fixed identity")
+				}
 			}
 		}
 	}
