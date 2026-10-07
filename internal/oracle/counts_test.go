@@ -134,7 +134,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 // Every fixture's counts are recorded, and a change to them fails until the table is updated with it.
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures))
+	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures)+len(requireFixtures))
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
@@ -168,6 +168,16 @@ func TestCountsAreRecorded(t *testing.T) {
 				lock.Unlock()
 			})
 		}
+		for index, path := range requireFixtures {
+			t.Run(path, func(t *testing.T) {
+				t.Parallel()
+				row := counted(t, path, true, nil, false, false)
+				lock.Lock()
+				rows[len(fixtures)+len(inputFixtures)+len(fsFileFixtures)+index] = row
+				lock.Unlock()
+			})
+		}
+
 	})
 	if t.Failed() {
 		return

@@ -1,0 +1,90 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+func (l *lowering) nodeRequireGlobal(node *ast.Node, name string) bool {
+	node = ast.SkipParentheses(node)
+	if !ast.IsIdentifier(node) || node.Text() != name {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return false
+	}
+	return load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+}
+
+func (l *lowering) nodeRequireCall(node *ast.Node) (string, bool) {
+	if node == nil {
+		return "", false
+	}
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindCallExpression {
+		return "", false
+	}
+	call := node.AsCallExpression()
+	if !l.nodeRequireGlobal(call.Expression, "require") {
+		return "", false
+	}
+	if len(call.Arguments.Nodes) != 1 || call.Arguments.Nodes[0].Kind != ast.KindStringLiteral {
+		return "", true
+	}
+	module, builtin := load.NodeBuiltin(call.Arguments.Nodes[0].Text())
+	if !builtin {
+		return "", true
+	}
+	return module, true
+}
+
+// Ambient host modules have no module body. Their immutable namespace bindings
+// are resolved by the checker at each use, just as namespace imports are.
+func (l *lowering) nodeRequireBinding(declaration *ast.Node) bool {
+	if declaration.Kind != ast.KindVariableDeclaration || !ast.IsIdentifier(declaration.Name()) {
+		return false
+	}
+	module, call := l.nodeRequireCall(declaration.AsVariableDeclaration().Initializer)
+	return call && module == "node:fs" && declaration.Parent.Flags&ast.NodeFlagsConst != 0
+}
+
+func (l *lowering) refuseNodeRequire(node *ast.Node) error {
+	if module, call := l.nodeRequireCall(node); call {
+		if module == "" {
+			return &Refused{Where: l.program.Where(node), What: "require() without one string literal naming a Node builtin", Fix: "use an import"}
+		}
+		if module != "node:fs" {
+			return l.notYet(node, "require("+module+"): the builtin host module")
+		}
+		outer := node
+		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+			outer = outer.Parent
+		}
+		if outer.Parent == nil || !l.nodeRequireBinding(outer.Parent) {
+			return l.notYet(node, "require("+module+") outside a plain const namespace binding; use an import")
+		}
+	}
+	if node.Kind == ast.KindElementAccessExpression {
+		access := node.AsElementAccessExpression()
+		if l.nodeRequireGlobal(access.Expression, "require") || l.nodeRequireGlobal(access.Expression, "module") {
+			return &Refused{Where: l.program.Where(node), What: "CommonJS indexed access", Fix: "use an import (and named exports for module.exports)"}
+		}
+	}
+	if node.Kind == ast.KindIdentifier && l.nodeRequireGlobal(node, "require") {
+		outer := node
+		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+			outer = outer.Parent
+		}
+		if outer.Parent == nil || outer.Parent.Kind != ast.KindCallExpression || outer.Parent.AsCallExpression().Expression != outer {
+			return &Refused{Where: l.program.Where(node), What: "require read as a value", Fix: "use an import"}
+		}
+	}
+	if node.Kind == ast.KindPropertyAccessExpression {
+		access := node.AsPropertyAccessExpression()
+		if l.nodeRequireGlobal(access.Expression, "require") || (l.nodeRequireGlobal(access.Expression, "module") && access.Name().Text() == "exports") {
+			return &Refused{Where: l.program.Where(node), What: "CommonJS " + access.Expression.Text() + "." + access.Name().Text(), Fix: "use an import (and named exports for module.exports)"}
+		}
+	}
+	return nil
+}

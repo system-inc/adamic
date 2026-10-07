@@ -64,6 +64,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if err := l.refuseNodeRequire(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.nodeLibraryRefusal(node); err != nil {
 			found = err
 			return true
