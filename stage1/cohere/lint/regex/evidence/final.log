@@ -1,0 +1,16 @@
+=== RUN   TestFixedPatterns
+    regex_test.go:89: 82 fixed patterns, 125771 match records, 2354870 identical bytes on Go, Node, emitted JS and sanitized native
+    regex_test.go:110: translation mutant caught by byte comparison on backend 0: base/consistency_require_pagination_argument_name.go:27
+    regex_test.go:110: translation mutant caught by byte comparison on backend 1: base/consistency_require_pagination_argument_name.go:27
+    regex_test.go:110: translation mutant caught by byte comparison on backend 2: base/consistency_require_pagination_argument_name.go:27
+--- PASS: TestFixedPatterns (9.44s)
+=== RUN   TestDynamicPatternGap
+    regex_test.go:128: /workspace/adamic-regex/stage1/cohere/lint/regex/testdata/dynamic_gap.a:3:27: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- PASS: TestDynamicPatternGap (0.24s)
+=== RUN   TestOptionDialectGap
+    regex_test.go:141: raw new RegExp(pattern, u) differs from accepted Go options on five of six named controls; Go="\\s\tfalse\na$\tfalse\n(?i)todo\ttrue\n\\p{Greek}\ttrue\na\\z\ttrue\n(?P<word>a)\ttrue\n" Node="\\s\ttrue\na$\tfalse\n(?i)todo\tSyntaxError\n\\p{Greek}\tSyntaxError\na\\z\tSyntaxError\n(?P<word>a)\tSyntaxError\n"
+--- PASS: TestOptionDialectGap (0.14s)
+=== RUN   TestInventoryMatchesPinnedSource
+--- PASS: TestInventoryMatchesPinnedSource (0.51s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/regex	10.352s

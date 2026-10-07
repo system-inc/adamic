@@ -1,0 +1,31 @@
+import { fixedPatterns } from '../patterns.a';
+import { inputs } from './corpus.a';
+const patterns = fixedPatterns();
+const corpus = inputs();
+for(let row = 0; row < patterns.length; row++) {
+    const regex = patterns[row];
+    if(regex === undefined) continue;
+    for(let input = 0; input < corpus.length; input++) {
+        const text = corpus[input] ?? '';
+        regex.lastIndex = 0;
+        let previousEnd = -1;
+        let match = regex.exec(text);
+        while(match !== null) {
+            const value = match[0] ?? '';
+            const start = match.index;
+            const end = start + value.length;
+            if(value.length > 0 || start !== previousEnd) {
+                let units = '';
+                for(let i = 0; i < value.length; i++) units += `${value.charCodeAt(i)},`;
+                console.log(`${row}:${input}:${start}:${end}:${units}`);
+                previousEnd = end;
+            }
+            if(value.length === 0) {
+                if(regex.lastIndex >= text.length) break;
+                const point = text.codePointAt(regex.lastIndex) ?? 0;
+                regex.lastIndex += point > 65535 ? 2 : 1;
+            }
+            match = regex.exec(text);
+        }
+    }
+}

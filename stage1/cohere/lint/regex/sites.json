@@ -1,0 +1,965 @@
+[
+  {
+    "rule": "consistency-require-pagination-argument-name",
+    "file": "base/consistency_require_pagination_argument_name.go",
+    "line": 27,
+    "call": "MustCompile",
+    "expression": "`PaginationInput$`",
+    "go_pattern": "PaginationInput$",
+    "feature": "plain"
+  },
+  {
+    "rule": "consistency-require-pagination-argument-name",
+    "file": "base/consistency_require_pagination_argument_name.go",
+    "line": 30,
+    "call": "MustCompile",
+    "expression": "`Pagination$`",
+    "go_pattern": "Pagination$",
+    "feature": "plain"
+  },
+  {
+    "rule": "default-case",
+    "file": "core/default_case.go",
+    "line": 29,
+    "call": "MustCompile",
+    "expression": "`(?i)^no default$`",
+    "go_pattern": "(?i)^no default$",
+    "feature": "(?i)"
+  },
+  {
+    "rule": "default-case",
+    "file": "core/default_case.go",
+    "line": 99,
+    "call": "Compile",
+    "expression": "resolved.CommentPattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "id-length",
+    "file": "core/id_length.go",
+    "line": 93,
+    "call": "Compile",
+    "expression": "pattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "id-match",
+    "file": "core/id_match.go",
+    "line": 111,
+    "call": "Compile",
+    "expression": "patternText",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-fallthrough",
+    "file": "core/no_fallthrough.go",
+    "line": 169,
+    "call": "Compile",
+    "expression": "\"(?i)\" + pattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-inline-comments",
+    "file": "core/no_inline_comments.go",
+    "line": 38,
+    "call": "MustCompile",
+    "expression": "`^(?:eslint[- ]|(?:globals?|exported) )`",
+    "go_pattern": "^(?:eslint[- ]|(?:globals?|exported) )",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-inline-comments",
+    "file": "core/no_inline_comments.go",
+    "line": 102,
+    "call": "Compile",
+    "expression": "resolved.IgnorePattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-param-reassign",
+    "file": "core/no_param_reassign.go",
+    "line": 553,
+    "call": "Compile",
+    "expression": "source",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-unused-vars",
+    "file": "core/no_unused_vars.go",
+    "line": 282,
+    "call": "Compile",
+    "expression": "settings.DestructuredArrayIgnorePattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-unused-vars",
+    "file": "core/no_unused_vars.go",
+    "line": 2276,
+    "call": "Compile",
+    "expression": "pattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-warning-comments",
+    "file": "core/no_warning_comments.go",
+    "line": 280,
+    "call": "MustCompile",
+    "expression": "`\\bno-warning-comments\\b`",
+    "go_pattern": "\\bno-warning-comments\\b",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-warning-comments",
+    "file": "core/no_warning_comments.go",
+    "line": 354,
+    "call": "Compile",
+    "expression": "\"(?i)\" + prefix + escaped + suffix",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "object-shorthand",
+    "file": "core/object_shorthand.go",
+    "line": 140,
+    "call": "Compile",
+    "expression": "*wire.MethodsIgnorePattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "require-description",
+    "file": "core/require_description.go",
+    "line": 214,
+    "call": "MustCompile",
+    "expression": "jsWhitespace + `-{2,}` + jsWhitespace",
+    "go_pattern": "[\\t\\n\\x0B\\f\\r \\x{00A0}\\x{1680}\\x{2000}-\\x{200A}\\x{2028}\\x{2029}\\x{202F}\\x{205F}\\x{3000}\\x{FEFF}]-{2,}[\\t\\n\\x0B\\f\\r \\x{00A0}\\x{1680}\\x{2000}-\\x{200A}\\x{2028}\\x{2029}\\x{202F}\\x{205F}\\x{3000}\\x{FEFF}]",
+    "feature": "plain"
+  },
+  {
+    "rule": "require-description",
+    "file": "core/require_description.go",
+    "line": 217,
+    "call": "MustCompile",
+    "expression": "`^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:` + jsWhitespace + `|$)`",
+    "go_pattern": "^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:[\\t\\n\\x0B\\f\\r \\x{00A0}\\x{1680}\\x{2000}-\\x{200A}\\x{2028}\\x{2029}\\x{202F}\\x{205F}\\x{3000}\\x{FEFF}]|$)",
+    "feature": "plain"
+  },
+  {
+    "rule": "require-description",
+    "file": "core/require_description.go",
+    "line": 222,
+    "call": "MustCompile",
+    "expression": "`^eslint-disable-(next-)?line$`",
+    "go_pattern": "^eslint-disable-(next-)?line$",
+    "feature": "plain"
+  },
+  {
+    "rule": "require-description",
+    "file": "core/require_description.go",
+    "line": 233,
+    "call": "MustCompile",
+    "expression": "`^(` + strings.Join(quoted, \"|\") + `)(?:` + jsWhitespace + `|$)`",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-html-link-for-pages-routes",
+    "file": "next/no_html_link_for_pages_routes.go",
+    "line": 139,
+    "call": "MustCompile",
+    "expression": "`\\.[jt]sx?$`",
+    "go_pattern": "\\.[jt]sx?$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-html-link-for-pages-routes",
+    "file": "next/no_html_link_for_pages_routes.go",
+    "line": 140,
+    "call": "MustCompile",
+    "expression": "`^index\\.[jt]sx?$`",
+    "go_pattern": "^index\\.[jt]sx?$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-html-link-for-pages-routes",
+    "file": "next/no_html_link_for_pages_routes.go",
+    "line": 141,
+    "call": "MustCompile",
+    "expression": "`^page\\.[jt]sx?$`",
+    "go_pattern": "^page\\.[jt]sx?$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-html-link-for-pages-routes",
+    "file": "next/no_html_link_for_pages_routes.go",
+    "line": 142,
+    "call": "MustCompile",
+    "expression": "`^layout\\.[jt]sx?$`",
+    "go_pattern": "^layout\\.[jt]sx?$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-html-link-for-pages-routes",
+    "file": "next/no_html_link_for_pages_routes.go",
+    "line": 251,
+    "call": "MustCompile",
+    "expression": "\"\\\\[[^\\n\\r\\u2028\\u2029]*\\\\]\"",
+    "go_pattern": "\\[[^\n\r\u2028\u2029]*\\]",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-location-assign-relative-destination",
+    "file": "next/no_location_assign_relative_destination.go",
+    "line": 26,
+    "call": "MustCompile",
+    "expression": "`(?i)^(?:[a-z][0-9+.a-z-]*:|//)`",
+    "go_pattern": "(?i)^(?:[a-z][0-9+.a-z-]*:|//)",
+    "feature": "(?i)"
+  },
+  {
+    "rule": "abbreviation-vocabulary",
+    "file": "nexus/abbreviation_vocabulary.go",
+    "line": 162,
+    "call": "MustCompile",
+    "expression": "`^` + entry.Abbreviation + `[A-Z]`",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "abbreviation-vocabulary",
+    "file": "nexus/abbreviation_vocabulary.go",
+    "line": 176,
+    "call": "MustCompile",
+    "expression": "`(^|[^a-zA-Z])` + word + `($|[A-Z0-9])`",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "abbreviation-vocabulary",
+    "file": "nexus/abbreviation_vocabulary.go",
+    "line": 177,
+    "call": "MustCompile",
+    "expression": "`[a-z0-9]` + word + `($|[A-Z0-9])`",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "abbreviation-vocabulary",
+    "file": "nexus/abbreviation_vocabulary.go",
+    "line": 178,
+    "call": "MustCompile",
+    "expression": "word + `($|[A-Z0-9])`",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "consistency-no-abbreviated-identifier",
+    "file": "nexus/consistency_no_abbreviated_identifier.go",
+    "line": 50,
+    "call": "MustCompile",
+    "expression": "`([a-z])Ms($|[A-Z])`",
+    "go_pattern": "([a-z])Ms($|[A-Z])",
+    "feature": "plain"
+  },
+  {
+    "rule": "consistency-no-ambiguous-identifier",
+    "file": "nexus/consistency_no_ambiguous_identifier.go",
+    "line": 17,
+    "call": "MustCompile",
+    "expression": "`(?i)handle|on[A-Z]|event`",
+    "go_pattern": "(?i)handle|on[A-Z]|event",
+    "feature": "(?i)"
+  },
+  {
+    "rule": "consistency-no-ambiguous-identifier",
+    "file": "nexus/consistency_no_ambiguous_identifier.go",
+    "line": 18,
+    "call": "MustCompile",
+    "expression": "`^on[A-Z]`",
+    "go_pattern": "^on[A-Z]",
+    "feature": "plain"
+  },
+  {
+    "rule": "consistency-no-ambiguous-identifier",
+    "file": "nexus/consistency_no_ambiguous_identifier.go",
+    "line": 19,
+    "call": "MustCompile",
+    "expression": "`^[a-z]$`",
+    "go_pattern": "^[a-z]$",
+    "feature": "plain"
+  },
+  {
+    "rule": "consistency-no-boolean-outcome",
+    "file": "nexus/consistency_no_boolean_outcome.go",
+    "line": 48,
+    "call": "MustCompile",
+    "expression": "`(Interface|Type|Result|Response|Properties)+$`",
+    "go_pattern": "(Interface|Type|Result|Response|Properties)+$",
+    "feature": "plain"
+  },
+  {
+    "rule": "consistency-no-return-void",
+    "file": "nexus/consistency_no_return_void.go",
+    "line": 100,
+    "call": "MustCompile",
+    "expression": "`^(function|class|let|async)\\b`",
+    "go_pattern": "^(function|class|let|async)\\b",
+    "feature": "plain"
+  },
+  {
+    "rule": "consistency-no-return-void",
+    "file": "nexus/consistency_no_return_void.go",
+    "line": 116,
+    "call": "MustCompile",
+    "expression": "`^return\\s+void\\s+` + regexp.QuoteMeta(operandText) + `\\s*;$`",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "consistency-require-constant-casing",
+    "file": "nexus/consistency_require_constant_casing.go",
+    "line": 350,
+    "call": "MustCompile",
+    "expression": "`(Creator|Factory)$`",
+    "go_pattern": "(Creator|Factory)$",
+    "feature": "plain"
+  },
+  {
+    "rule": "consistency-require-matching-return-type",
+    "file": "nexus/consistency_require_matching_return_type.go",
+    "line": 216,
+    "call": "MustCompile",
+    "expression": "`^return\\s+undefined;$`",
+    "go_pattern": "^return\\s+undefined;$",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 121,
+    "call": "MustCompile",
+    "expression": "`[0-9_]`",
+    "go_pattern": "[0-9_]",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 122,
+    "call": "MustCompile",
+    "expression": "`[AEIOUY]`",
+    "go_pattern": "[AEIOUY]",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 123,
+    "call": "MustCompile",
+    "expression": "`\\b[A-Z][A-Z0-9_]*\\b`",
+    "go_pattern": "\\b[A-Z][A-Z0-9_]*\\b",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 147,
+    "call": "MustCompile",
+    "expression": "\"(?s)```.*?```\"",
+    "go_pattern": "(?s)```.*?```",
+    "feature": "(?s)"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 153,
+    "call": "MustCompile",
+    "expression": "\"`[^`]*`\"",
+    "go_pattern": "`[^`]*`",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 160,
+    "call": "MustCompile",
+    "expression": "`\"[^\"\\n]*\"`",
+    "go_pattern": "\"[^\"\\n]*\"",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 166,
+    "call": "MustCompile",
+    "expression": "`'[A-Za-z0-9_.\\-/]+'`",
+    "go_pattern": "'[A-Za-z0-9_.\\-/]+'",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 175,
+    "call": "MustCompile",
+    "expression": "`'[A-Z0-9_][A-Z0-9_ .,:=\\-/]*[A-Z0-9_]'`",
+    "go_pattern": "'[A-Z0-9_][A-Z0-9_ .,:=\\-/]*[A-Z0-9_]'",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 177,
+    "call": "MustCompile",
+    "expression": "`[^\\n]`",
+    "go_pattern": "[^\\n]",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 178,
+    "call": "MustCompile",
+    "expression": "`^\\s*\\*?\\s?`",
+    "go_pattern": "^\\s*\\*?\\s?",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 181,
+    "call": "MustCompile",
+    "expression": "`^[ \\t]*\\*(?: |\\t|$)`",
+    "go_pattern": "^[ \\t]*\\*(?: |\\t|$)",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 182,
+    "call": "MustCompile",
+    "expression": "`^@example\\b`",
+    "go_pattern": "^@example\\b",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 183,
+    "call": "MustCompile",
+    "expression": "`^@\\w+`",
+    "go_pattern": "^@\\w+",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 184,
+    "call": "MustCompile",
+    "expression": "`^\\s*(\\$|ahra\\s|git\\s|pnpm\\s|npm\\s|sqlite3\\s|curl\\s|s\\s+c\\b)`",
+    "go_pattern": "^\\s*(\\$|ahra\\s|git\\s|pnpm\\s|npm\\s|sqlite3\\s|curl\\s|s\\s+c\\b)",
+    "feature": "plain"
+  },
+  {
+    "rule": "shouting",
+    "file": "nexus/shouting.go",
+    "line": 464,
+    "call": "MustCompile",
+    "expression": "`s\\s+c`",
+    "go_pattern": "s\\s+c",
+    "feature": "plain"
+  },
+  {
+    "rule": "boolean-prop-naming",
+    "file": "react/boolean_prop_naming.go",
+    "line": 93,
+    "call": "Compile",
+    "expression": "options.Rule",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "boolean-prop-naming",
+    "file": "react/boolean_prop_naming.go",
+    "line": 182,
+    "call": "Compile",
+    "expression": "settings.Rule",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "boolean-prop-naming",
+    "file": "react/boolean_prop_naming.go",
+    "line": 621,
+    "call": "MustCompile",
+    "expression": "`\\{\\{\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*\\}\\}`",
+    "go_pattern": "\\{\\{\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*\\}\\}",
+    "feature": "plain"
+  },
+  {
+    "rule": "classify",
+    "file": "react/conformance/classify.go",
+    "line": 95,
+    "call": "MustCompile",
+    "expression": "`(?m)(?:^|\\n)\\s*import\\b[^\\n;]*?['\"]react['\"]|require\\(\\s*['\"]react['\"]\\s*\\)`",
+    "go_pattern": "(?m)(?:^|\\n)\\s*import\\b[^\\n;]*?['\"]react['\"]|require\\(\\s*['\"]react['\"]\\s*\\)",
+    "feature": "(?m)"
+  },
+  {
+    "rule": "classify",
+    "file": "react/conformance/classify.go",
+    "line": 98,
+    "call": "MustCompile",
+    "expression": "`\\buse[A-Z]\\w*\\s*\\(`",
+    "go_pattern": "\\buse[A-Z]\\w*\\s*\\(",
+    "feature": "plain"
+  },
+  {
+    "rule": "exhaustive-deps",
+    "file": "react/exhaustive_deps.go",
+    "line": 451,
+    "call": "MustCompile",
+    "expression": "`Effect($|[^a-z])`",
+    "go_pattern": "Effect($|[^a-z])",
+    "feature": "plain"
+  },
+  {
+    "rule": "exhaustive-deps",
+    "file": "react/exhaustive_deps.go",
+    "line": 463,
+    "call": "Compile",
+    "expression": "settings.AdditionalHooks",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-unstable-nested-components",
+    "file": "react/no_unstable_nested_components.go",
+    "line": 450,
+    "call": "MustCompile",
+    "expression": "`^use[A-Z0-9].*$`",
+    "go_pattern": "^use[A-Z0-9].*$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-unstable-nested-components",
+    "file": "react/no_unstable_nested_components.go",
+    "line": 893,
+    "call": "Compile",
+    "expression": "builder.String()",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "sort-comp",
+    "file": "react/sort_comp.go",
+    "line": 119,
+    "call": "MustCompile",
+    "expression": "`/(.*)/([gimsuy]*)`",
+    "go_pattern": "/(.*)/([gimsuy]*)",
+    "feature": "plain"
+  },
+  {
+    "rule": "sort-comp",
+    "file": "react/sort_comp.go",
+    "line": 589,
+    "call": "Compile",
+    "expression": "body",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "class-existence",
+    "file": "tailwind/class_existence.go",
+    "line": 63,
+    "call": "MustCompile",
+    "expression": "`^(group|peer)(/\\S*)?$`",
+    "go_pattern": "^(group|peer)(/\\S*)?$",
+    "feature": "plain"
+  },
+  {
+    "rule": "class-existence",
+    "file": "tailwind/class_existence.go",
+    "line": 70,
+    "call": "MustCompile",
+    "expression": "`^\\[[^\\]]+:[^\\]]*\\]$`",
+    "go_pattern": "^\\[[^\\]]+:[^\\]]*\\]$",
+    "feature": "plain"
+  },
+  {
+    "rule": "class-literals",
+    "file": "tailwind/class_literals.go",
+    "line": 167,
+    "call": "Compile",
+    "expression": "pattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "class-order-strict",
+    "file": "tailwind/class_order_strict.go",
+    "line": 89,
+    "call": "MustCompile",
+    "expression": "`^(.*):`",
+    "go_pattern": "^(.*):",
+    "feature": "plain"
+  },
+  {
+    "rule": "utility-nodes",
+    "file": "tailwind/collapse/utility_nodes.go",
+    "line": 131,
+    "call": "MustCompile",
+    "expression": "`\\\\\\*`",
+    "go_pattern": "\\\\\\*",
+    "feature": "plain"
+  },
+  {
+    "rule": "utility-nodes",
+    "file": "tailwind/collapse/utility_nodes.go",
+    "line": 138,
+    "call": "MustCompile",
+    "expression": "`--(.*?)\\s--(.*?)`",
+    "go_pattern": "--(.*?)\\s--(.*?)",
+    "feature": "plain"
+  },
+  {
+    "rule": "utility-nodes",
+    "file": "tailwind/collapse/utility_nodes.go",
+    "line": 140,
+    "call": "MustCompile",
+    "expression": "`\\s+`",
+    "go_pattern": "\\s+",
+    "feature": "plain"
+  },
+  {
+    "rule": "utility-nodes",
+    "file": "tailwind/collapse/utility_nodes.go",
+    "line": 142,
+    "call": "MustCompile",
+    "expression": "`(-\\*){2,}`",
+    "go_pattern": "(-\\*){2,}",
+    "feature": "plain"
+  },
+  {
+    "rule": "enforce-canonical-classes",
+    "file": "tailwind/enforce_canonical_classes.go",
+    "line": 345,
+    "call": "Compile",
+    "expression": "pattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 65,
+    "call": "MustCompile",
+    "expression": "`^shadow$`",
+    "go_pattern": "^shadow$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 66,
+    "call": "MustCompile",
+    "expression": "`^inset-shadow$`",
+    "go_pattern": "^inset-shadow$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 67,
+    "call": "MustCompile",
+    "expression": "`^drop-shadow$`",
+    "go_pattern": "^drop-shadow$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 68,
+    "call": "MustCompile",
+    "expression": "`^blur$`",
+    "go_pattern": "^blur$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 69,
+    "call": "MustCompile",
+    "expression": "`^backdrop-blur$`",
+    "go_pattern": "^backdrop-blur$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 70,
+    "call": "MustCompile",
+    "expression": "`^rounded$`",
+    "go_pattern": "^rounded$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 74,
+    "call": "MustCompile",
+    "expression": "`^bg-opacity-(.*)$`",
+    "go_pattern": "^bg-opacity-(.*)$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 75,
+    "call": "MustCompile",
+    "expression": "`^text-opacity-(.*)$`",
+    "go_pattern": "^text-opacity-(.*)$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 76,
+    "call": "MustCompile",
+    "expression": "`^border-opacity-(.*)$`",
+    "go_pattern": "^border-opacity-(.*)$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 77,
+    "call": "MustCompile",
+    "expression": "`^divide-opacity-(.*)$`",
+    "go_pattern": "^divide-opacity-(.*)$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 78,
+    "call": "MustCompile",
+    "expression": "`^ring-opacity-(.*)$`",
+    "go_pattern": "^ring-opacity-(.*)$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 79,
+    "call": "MustCompile",
+    "expression": "`^placeholder-opacity-(.*)$`",
+    "go_pattern": "^placeholder-opacity-(.*)$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 83,
+    "call": "MustCompile",
+    "expression": "`^flex-shrink$`",
+    "go_pattern": "^flex-shrink$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 84,
+    "call": "MustCompile",
+    "expression": "`^flex-shrink-(.*)$`",
+    "go_pattern": "^flex-shrink-(.*)$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 85,
+    "call": "MustCompile",
+    "expression": "`^flex-grow$`",
+    "go_pattern": "^flex-grow$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 86,
+    "call": "MustCompile",
+    "expression": "`^flex-grow-(.*)$`",
+    "go_pattern": "^flex-grow-(.*)$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 88,
+    "call": "MustCompile",
+    "expression": "`^overflow-ellipsis$`",
+    "go_pattern": "^overflow-ellipsis$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 89,
+    "call": "MustCompile",
+    "expression": "`^decoration-slice$`",
+    "go_pattern": "^decoration-slice$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 90,
+    "call": "MustCompile",
+    "expression": "`^decoration-clone$`",
+    "go_pattern": "^decoration-clone$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 93,
+    "call": "MustCompile",
+    "expression": "`^bg-left-top$`",
+    "go_pattern": "^bg-left-top$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 94,
+    "call": "MustCompile",
+    "expression": "`^bg-left-bottom$`",
+    "go_pattern": "^bg-left-bottom$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 95,
+    "call": "MustCompile",
+    "expression": "`^bg-right-top$`",
+    "go_pattern": "^bg-right-top$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 96,
+    "call": "MustCompile",
+    "expression": "`^bg-right-bottom$`",
+    "go_pattern": "^bg-right-bottom$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 97,
+    "call": "MustCompile",
+    "expression": "`^object-left-top$`",
+    "go_pattern": "^object-left-top$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 98,
+    "call": "MustCompile",
+    "expression": "`^object-left-bottom$`",
+    "go_pattern": "^object-left-bottom$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 99,
+    "call": "MustCompile",
+    "expression": "`^object-right-top$`",
+    "go_pattern": "^object-right-top$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-deprecated-classes",
+    "file": "tailwind/no_deprecated_classes.go",
+    "line": 100,
+    "call": "MustCompile",
+    "expression": "`^object-right-bottom$`",
+    "go_pattern": "^object-right-bottom$",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-physical-direction",
+    "file": "tailwind/no_physical_direction.go",
+    "line": 284,
+    "call": "MustCompile",
+    "expression": "`^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?$`",
+    "go_pattern": "^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?$",
+    "feature": "plain"
+  },
+  {
+    "rule": "main",
+    "file": "tailwind/tools/generate_variant/main.go",
+    "line": 221,
+    "call": "MustCompile",
+    "expression": "`(?:class|className)\\s*=\\s*\"([^\"\\n{}$]+)\"`",
+    "go_pattern": "(?:class|className)\\s*=\\s*\"([^\"\\n{}$]+)\"",
+    "feature": "plain"
+  },
+  {
+    "rule": "ban-tslint-comment",
+    "file": "typescript/ban_tslint_comment.go",
+    "line": 24,
+    "call": "MustCompile",
+    "expression": "`^\\s*tslint:(enable|disable)(?:-(line|next-line))?(:|\\s|$)`",
+    "go_pattern": "^\\s*tslint:(enable|disable)(?:-(line|next-line))?(:|\\s|$)",
+    "feature": "plain"
+  },
+  {
+    "rule": "no-require-imports",
+    "file": "typescript/no_require_imports.go",
+    "line": 378,
+    "call": "Compile",
+    "expression": "pattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "no-unnecessary-template-expression",
+    "file": "typescript/no_unnecessary_template_expression.go",
+    "line": 574,
+    "call": "MustCompile",
+    "expression": "`\\$$`",
+    "go_pattern": "\\$$",
+    "feature": "plain"
+  },
+  {
+    "rule": "switch-exhaustiveness-check",
+    "file": "typescript/switch_exhaustiveness_check.go",
+    "line": 212,
+    "call": "Compile",
+    "expression": "*opts.DefaultCaseCommentPattern",
+    "go_pattern": null,
+    "feature": "dynamic"
+  },
+  {
+    "rule": "switch-exhaustiveness-check",
+    "file": "typescript/switch_exhaustiveness_check.go",
+    "line": 381,
+    "call": "MustCompile",
+    "expression": "`(?i)^no default$`",
+    "go_pattern": "(?i)^no default$",
+    "feature": "(?i)"
+  }
+]
