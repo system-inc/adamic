@@ -204,6 +204,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "require-await":
+		return p.requireAwaitFacts(out, c, node, question)
 	case "runtime-context":
 		return wave10next.Inspect(p.Compiler, source, node, c, question)
 	case "member-parameters":

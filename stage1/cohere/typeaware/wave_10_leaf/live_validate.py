@@ -46,13 +46,23 @@ for sanitize in [False, True]:
 catalog = str(isolated / 'catalog.txt')
 commands = {}
 truths = {}
-for label, name in [('symbol', 'symbol_description'), ('hook', 'react_hook_no_any_type')]:
+for label, name in [('symbol', 'symbol_description'), ('hook', 'react_hook_no_any_type'), ('await', 'require_await')]:
     oracle = isolated / (label + '-oracle')
     datasets = [
         ('controls', str(isolated / 'tsconfig.json'), str(isolated / (name + '.manifest'))),
         ('compiler', args.compiler_config, args.compiler_manifest),
         ('repository', str(repository / 'tsconfig.json'), args.repository_manifest),
     ]
+    if label == 'await':
+        rows = json.loads((owned / 'require_await/upstream_cases.json').read_text())
+        paths = []
+        for fixture_name, source in sorted(rows.items()):
+            path = isolated / fixture_name
+            path.write_text(source)
+            paths.append(str(path))
+        upstream = isolated / 'require_await_upstream.manifest'
+        upstream.write_text('\n'.join(paths) + '\n')
+        datasets.append(('upstream', str(isolated / 'tsconfig.json'), str(upstream)))
     for dataset, config, manifest in datasets:
         key = label + '-' + dataset
         go_command = [str(oracle), config, manifest]
@@ -82,6 +92,29 @@ for label, name in [('symbol', 'symbol_description'), ('hook', 'react_hook_no_an
         (artifacts / (prefix + '.stderr')).write_bytes(result.stderr)
         assert result.returncode == 70 and result.stderr == b'adamic: panic: invalid or released checker handle\n', (prefix, result.returncode, result.stderr)
     print(label, 'released handle normal/sanitized rejected at exit 70', flush=True)
+
+# Prove that checker-contract decisions, including inference blocked from the
+# judged callback, are independently observed by the full Go byte authority.
+for label, filename, before, after in [
+    ('await-union', 'require_await_facts.a', '(record.flags & unionFlag)', '(record.flags & 1048576)'),
+    ('await-self-inference', 'contracts.a', 'if(declared !== undefined) {', 'if(declared !== undefined && index < 0) {'),
+]:
+    mutant = artifacts / (label + '-source')
+    for source in (isolated / 'sources').rglob('*.a'):
+        target = mutant / source.relative_to(isolated / 'sources')
+        target.parent.mkdir(parents=True, exist_ok=True)
+        text = source.read_text()
+        if source.name == filename:
+            assert text.count(before) == 1
+            text = text.replace(before, after, 1)
+        target.write_text(text)
+    binary = artifacts / label
+    run(label + '-build', [args.stage0, 'build', str(mutant / 'symbol_description/live.a'), '-o', str(binary), '--tsgo', args.checker])
+    observed, _ = run(label + '-run', [str(binary), str(isolated / 'tsconfig.json'), str(isolated / 'require_await_upstream.manifest'), 'await', catalog])
+    truth = truths['await-upstream']
+    assert observed.stderr == b'' and observed.stdout != truth, (label, 'mutant survives')
+    byte = next((i for i, (a, b) in enumerate(zip(observed.stdout, truth)) if a != b), min(len(observed.stdout), len(truth)))
+    print(label, 'native mutant exits 0, empty stderr, comparison catches byte', byte, flush=True)
 
 observations = {}
 for key, (go_command, native_command) in commands.items():

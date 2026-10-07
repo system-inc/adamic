@@ -9,5 +9,8 @@
     "SetAccessor",
     "Constructor"
   ],
-  "node": true
+  "node": true,
+  "factory": "create",
+  "class": "Rule",
+  "visit": "visit"
 }

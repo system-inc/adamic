@@ -1,22 +1,13 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Context } from '../symbol_description/context.a';
+import { RequireAwaitFacts } from './require_await_facts.a';
+import { Contracts } from './contracts.a';
+import { report } from './reporting.a';
 import { panic } from 'adamic';
 import type { Diagnostic } from '../../diagnostic.ts';
 
-// Preorder raw body nodes, with the body itself at depth 0. No record owns a
-// parent. Canonical kinds and numeric flags are the pinned parser's observations.
-export interface BodyNodeFactsInterface {
-    readonly kind: string;
-    readonly depth: number;
-    readonly flags: number;
-    readonly awaitModifier: boolean;
-}
-export interface FunctionFactsInterface {
-    readonly modifierFlags: number;
-    readonly functionFlags: number;
-    readonly bodyPresent: boolean;
-    readonly bodyKind: string;
-    readonly statementCount: number;
-    readonly bodyNodes: readonly BodyNodeFactsInterface[];
-}
+import type { FunctionFactsInterface, BodyNodeFactsInterface } from './function_facts.a';
+
 function boundary(kind: string): boolean {
     return [
         'FunctionDeclaration',
@@ -80,4 +71,29 @@ export function visit(node: FunctionFactsInterface): Diagnostic | undefined {
     panic(
         'NotYet: require-await supplied-node adapter must provide contextual signatures, declared generic targets, heritage member types and source token spans',
     );
+}
+
+export class Rule {
+    readonly context: Context;
+    readonly facts: RequireAwaitFacts;
+    readonly contracts: Contracts;
+    constructor(context: Context, facts: RequireAwaitFacts, contracts: Contracts) {
+        this.context = context;
+        this.facts = facts;
+        this.contracts = contracts;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(!node.children.some((child) => this.facts.node(child).kind === 'AsyncKeyword')) {
+            return;
+        }
+        if(!mayNeedReport(this.facts.functionFacts(node, index)) || this.contracts.satisfies(node, index)) {
+            return;
+        }
+        this.context.findings.push(report(this.context, node, index, this.facts.parents));
+    }
+}
+export function create(context: Context): Rule {
+    const facts = new RequireAwaitFacts(context);
+    const contracts = new Contracts(facts);
+    return new Rule(context, facts, contracts);
 }

@@ -6,6 +6,7 @@ import { byteOffsets } from '../../unary_minus.ts';
 import { Context } from './context.a';
 import { create as symbolRule } from './rule.a';
 import { create as hookRule } from '../react_hook_no_any_type/rule.a';
+import { create as awaitRule } from '../require_await/rule.a';
 
 const args = programArguments();
 const config = args[0] ?? panic('missing tsconfig');
@@ -14,7 +15,7 @@ if(manifest.kind === 'Error') {
     panic(manifest.message);
 }
 const selected = args[2] ?? panic('missing selected rule');
-if(selected !== 'symbol' && selected !== 'hook') {
+if(selected !== 'symbol' && selected !== 'hook' && selected !== 'await') {
     panic('unknown selected rule');
 }
 const catalog = readTextFile(args[3] ?? panic('missing raw catalog'));
@@ -36,9 +37,10 @@ for(const path of paths) {
     const parser = new Parser(source.text, path);
     const scanner = new Scanner(source.text);
     const context = new Context(program, path, parser, scanner, byteOffsets(source.text), blinded);
+    parser.file();
     const symbol = symbolRule(context);
     const hook = hookRule(context);
-    parser.file();
+    const awaiting = selected === 'await' ? awaitRule(context) : undefined;
     // Parse once; fetch each dispatch node once; selected listeners receive it.
     for(let index = 0; index < parser.nodes.length; index++) {
         const node = parser.node(index);
@@ -47,8 +49,19 @@ for(const path of paths) {
                 if(selected === 'symbol') {
                     symbol.visit(node, index);
                 }
-                else {
+                else if(selected === 'hook') {
                     hook.visit(node, index);
+                }
+                break;
+            case 'FunctionDeclaration':
+            case 'FunctionExpression':
+            case 'ArrowFunction':
+            case 'MethodDeclaration':
+            case 'GetAccessor':
+            case 'SetAccessor':
+            case 'Constructor':
+                if(awaiting !== undefined) {
+                    awaiting.visit(node, index);
                 }
                 break;
             default:

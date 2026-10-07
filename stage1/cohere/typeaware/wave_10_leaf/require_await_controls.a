@@ -1,5 +1,5 @@
 import { mayNeedReport, visit } from './require_await/rule.a';
-import type { FunctionFactsInterface } from './require_await/rule.a';
+import type { FunctionFactsInterface } from './require_await/function_facts.a';
 import { programArguments } from 'adamic';
 const node0: FunctionFactsInterface = {
     modifierFlags: 1024,

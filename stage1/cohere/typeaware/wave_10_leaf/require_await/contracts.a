@@ -1,0 +1,387 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RequireAwaitFacts, ResolvedFactsInterface } from './require_await_facts.a';
+
+interface ContextStepInterface {
+    readonly kind: string;
+    readonly name: string;
+    readonly index: number;
+}
+interface DeclaredDemandInterface {
+    readonly types: readonly number[];
+    readonly substitutions: ReadonlyMap<number, number[]>;
+}
+
+// The checker supplies raw type/signature identities. Choosing the contextual
+// path, replaying it and deciding whether a promise is required are native.
+export class Contracts {
+    readonly facts: RequireAwaitFacts;
+    constructor(facts: RequireAwaitFacts) {
+        this.facts = facts;
+    }
+    name(index: number): string | undefined {
+        if(index < 0) {
+            return undefined;
+        }
+        const node = this.facts.node(index);
+        return [
+            'Identifier',
+            'PrivateIdentifier',
+            'StringLiteral',
+            'NoSubstitutionTemplateLiteral',
+            'NumericLiteral',
+        ].includes(node.kind)
+            ? node.text
+            : undefined;
+    }
+    expand(ids: readonly number[], substitutions: ReadonlyMap<number, number[]>): number[] {
+        const result: number[] = [];
+        for(const id of ids) {
+            for(const part of this.facts.parts(id)) {
+                const standIns = substitutions.get(part);
+                if(standIns === undefined) {
+                    result.push(part);
+                }
+                else {
+                    for(const standIn of standIns) {
+                        for(const replacement of this.facts.parts(standIn)) {
+                            result.push(replacement);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    thenable(node: ParseNode, id: number): boolean {
+        const apparent = this.facts.shape(node, `apparent-shape\n${id}`);
+        for(const part of apparent.parts(apparent.root())) {
+            const then = this.facts.value(node, part, 'property-location\nthen');
+            if(!then.present) {
+                continue;
+            }
+            for(const member of then.parts(then.root())) {
+                for(const signature of this.facts.signatures(node, member)) {
+                    const first = signature.locations[0] ?? 0;
+                    if(first === 0) {
+                        continue;
+                    }
+                    let callback = this.facts.shape(node, `apparent-shape\n${first}`);
+                    if(signature.rests[0] === true) {
+                        callback = this.facts.value(node, callback.root().id, 'index-number');
+                        if(!callback.present) {
+                            continue;
+                        }
+                    }
+                    for(const candidate of callback.parts(callback.root())) {
+                        if(this.facts.signatures(node, candidate).length > 0) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    demands(node: ParseNode, ids: readonly number[], substitutions: ReadonlyMap<number, number[]>): boolean {
+        let sawSignature = false;
+        for(const part of this.expand(ids, substitutions)) {
+            for(const signature of this.facts.signatures(node, part)) {
+                sawSignature = true;
+                for(const returned of this.expand([signature.returned], substitutions)) {
+                    if(!this.thenable(node, returned)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return sawSignature;
+    }
+    apply(node: ParseNode, ids: readonly number[], step: ContextStepInterface): number[] {
+        const result: number[] = [];
+        for(const id of ids) {
+            if(step.kind === 'property') {
+                const property = this.facts.value(node, id, `property-global\n${step.name}`);
+                if(property.present) {
+                    result.push(property.root().id);
+                    continue;
+                }
+                const indexed = this.facts.value(node, id, 'index-string');
+                if(indexed.present) {
+                    result.push(indexed.root().id);
+                }
+            }
+            else if(step.kind === 'element') {
+                const part = this.facts.type(id);
+                if(part.tuple >= 0 && !part.array) {
+                    const tuple = this.facts.shape(node, `reference-shape\n${id}`).root();
+                    if(step.index < tuple.arguments.length) {
+                        result.push(tuple.arguments[step.index] ?? panic('missing tuple element'));
+                    }
+                    continue;
+                }
+                const indexed = this.facts.value(node, id, 'index-number');
+                if(indexed.present) {
+                    result.push(indexed.root().id);
+                }
+            }
+            else {
+                for(const signature of this.facts.signatures(node, id)) {
+                    result.push(signature.returned);
+                }
+            }
+        }
+        return result;
+    }
+    parameter(node: ParseNode, signature: ResolvedFactsInterface, index: number): number {
+        if(signature.declared.rest && index >= signature.declared.parameters.length - 1) {
+            const rest = signature.declared.parameters[signature.declared.parameters.length - 1] ?? 0;
+            if(rest === 0) {
+                return 0;
+            }
+            const element = this.facts.value(node, rest, 'index-number');
+            return element.present ? element.root().id : 0;
+        }
+        return signature.declared.parameters[index] ?? 0;
+    }
+    standIns(
+        node: ParseNode,
+        signature: ResolvedFactsInterface,
+        argumentCount: number,
+        selected: number,
+    ): Map<number, number[]> {
+        const substitutions = new Map<number, number[]>();
+        for(let index = 0; index < argumentCount; index++) {
+            if(
+                index === selected ||
+                index >= signature.declared.parameters.length ||
+                index >= signature.resolved.parameters.length
+            ) {
+                continue;
+            }
+            if(signature.declared.rest && index >= signature.declared.parameters.length - 1) {
+                continue;
+            }
+            const declared = signature.declared.parameters[index] ?? 0;
+            if(signature.typeParameters.includes(declared)) {
+                const instantiated = signature.resolved.parameters[index] ?? panic('missing instantiated parameter');
+                const empty: number[] = [];
+                const previous = substitutions.get(declared) ?? empty;
+                const updated = previous.slice();
+                updated.push(instantiated);
+                substitutions.set(declared, updated);
+            }
+        }
+        if(signature.typeParameters.includes(signature.declared.returned)) {
+            const contextual = this.facts.shape(node, 'contextual-shape');
+            if(contextual.present) {
+                const empty: number[] = [];
+                const previous = substitutions.get(signature.declared.returned) ?? empty;
+                const updated = previous.slice();
+                updated.push(contextual.root().id);
+                substitutions.set(signature.declared.returned, updated);
+            }
+        }
+        return substitutions;
+    }
+    fromCall(
+        site: ParseNode,
+        callIndex: number,
+        current: number,
+        steps: readonly ContextStepInterface[],
+    ): DeclaredDemandInterface | undefined {
+        if(this.facts.list(callIndex, 'typeArguments').length > 0) {
+            return undefined;
+        }
+        const argumentsList = this.facts.list(callIndex, 'arguments');
+        let argumentIndex = -1;
+        for(let at = 0; at < argumentsList.length; at++) {
+            const candidate = argumentsList[at] ?? -1;
+            if(candidate === current) {
+                argumentIndex = at;
+                break;
+            }
+            if(this.facts.node(candidate).kind === 'SpreadElement') {
+                return undefined;
+            }
+        }
+        if(argumentIndex < 0) {
+            return undefined;
+        }
+        const call = this.facts.node(callIndex);
+        const signature = this.facts.resolved(call);
+        if(!signature.present || !signature.target || signature.typeParameters.length === 0) {
+            return undefined;
+        }
+        const parameter = this.parameter(site, signature, argumentIndex);
+        if(parameter === 0) {
+            return undefined;
+        }
+        const substitutions = this.standIns(call, signature, argumentsList.length, argumentIndex);
+        let selected = [parameter];
+        for(let at = steps.length - 1; at >= 0; at--) {
+            selected = this.apply(
+                site,
+                this.expand(selected, substitutions),
+                steps[at] ?? panic('missing contextual step'),
+            );
+        }
+        return { types: selected, substitutions };
+    }
+    returnTakesContext(index: number): boolean {
+        const node = this.facts.node(index);
+        return (
+            (node.kind === 'FunctionExpression' || node.kind === 'ArrowFunction') &&
+            this.facts.one(index, 'type') < 0 &&
+            this.facts.functionFacts(node, index).functionFlags === 0
+        );
+    }
+    containingFunction(index: number): number {
+        for(let current = this.facts.parent(index); current >= 0; current = this.facts.parent(current)) {
+            if(
+                [
+                    'FunctionDeclaration',
+                    'FunctionExpression',
+                    'ArrowFunction',
+                    'MethodDeclaration',
+                    'GetAccessor',
+                    'SetAccessor',
+                    'Constructor',
+                ].includes(this.facts.node(current).kind)
+            ) {
+                return current;
+            }
+        }
+        return -1;
+    }
+    declared(node: ParseNode, index: number): DeclaredDemandInterface | undefined {
+        const steps: ContextStepInterface[] = [];
+        let current = index;
+        if(node.kind === 'MethodDeclaration') {
+            const object = this.facts.parent(index);
+            if(object < 0 || this.facts.node(object).kind !== 'ObjectLiteralExpression') {
+                return undefined;
+            }
+            const name = this.name(this.facts.one(index, 'name'));
+            if(name === undefined) {
+                return undefined;
+            }
+            steps.push({ kind: 'property', name, index: 0 });
+            current = object;
+        }
+        while(true) {
+            let parent = this.facts.parent(current);
+            if(parent < 0) {
+                return undefined;
+            }
+            const container = this.facts.node(parent);
+            switch(container.kind) {
+                case 'ParenthesizedExpression':
+                    break;
+                case 'ConditionalExpression':
+                    if(this.facts.one(parent, 'then') !== current && this.facts.one(parent, 'else') !== current) {
+                        return undefined;
+                    }
+                    break;
+                case 'BinaryExpression': {
+                    const operator = this.facts.one(parent, 'operator');
+                    if(
+                        operator < 0 ||
+                        !['BarBarToken', 'QuestionQuestionToken'].includes(this.facts.node(operator).kind)
+                    ) {
+                        return undefined;
+                    }
+                    break;
+                }
+                case 'PropertyAssignment': {
+                    if(this.facts.one(parent, 'initializer') !== current) {
+                        return undefined;
+                    }
+                    const name = this.name(this.facts.one(parent, 'name'));
+                    if(name === undefined) {
+                        return undefined;
+                    }
+                    steps.push({ kind: 'property', name, index: 0 });
+                    parent = this.facts.parent(parent);
+                    if(parent < 0) {
+                        return undefined;
+                    }
+                    break;
+                }
+                case 'ArrayLiteralExpression': {
+                    const elements = this.facts.list(parent, 'elements');
+                    let elementIndex = -1;
+                    for(let at = 0; at < elements.length; at++) {
+                        const element = elements[at] ?? -1;
+                        if(element === current) {
+                            elementIndex = at;
+                            break;
+                        }
+                        if(this.facts.node(element).kind === 'SpreadElement') {
+                            return undefined;
+                        }
+                    }
+                    if(elementIndex < 0) {
+                        return undefined;
+                    }
+                    steps.push({ kind: 'element', name: '', index: elementIndex });
+                    break;
+                }
+                case 'ReturnStatement': {
+                    const functionIndex = this.containingFunction(parent);
+                    if(functionIndex < 0 || !this.returnTakesContext(functionIndex)) {
+                        return undefined;
+                    }
+                    steps.push({ kind: 'return', name: '', index: 0 });
+                    parent = functionIndex;
+                    break;
+                }
+                case 'ArrowFunction':
+                    if(this.facts.one(parent, 'body') !== current || !this.returnTakesContext(parent)) {
+                        return undefined;
+                    }
+                    steps.push({ kind: 'return', name: '', index: 0 });
+                    break;
+                case 'CallExpression':
+                case 'NewExpression':
+                    return this.fromCall(node, parent, current, steps);
+                default:
+                    return undefined;
+            }
+            current = parent;
+        }
+    }
+    heritage(node: ParseNode, index: number): number {
+        if(
+            node.kind !== 'MethodDeclaration' ||
+            node.children.some((child) => this.facts.node(child).kind === 'StaticKeyword')
+        ) {
+            return 0;
+        }
+        const nameIndex = this.facts.one(index, 'name');
+        if(nameIndex < 0 || this.facts.node(nameIndex).kind !== 'Identifier') {
+            return 0;
+        }
+        const classIndex = this.facts.parent(index);
+        if(classIndex < 0 || !['ClassDeclaration', 'ClassExpression'].includes(this.facts.node(classIndex).kind)) {
+            return 0;
+        }
+        const bases = this.facts.heritage(this.facts.node(classIndex));
+        for(const base of bases.roots) {
+            const member = this.facts.value(node, base, `property-location\n${this.facts.node(nameIndex).text}`);
+            if(member.present) {
+                return member.root().id;
+            }
+        }
+        return 0;
+    }
+    satisfies(node: ParseNode, index: number): boolean {
+        const declared = this.declared(node, index);
+        if(declared !== undefined) {
+            return this.demands(node, declared.types, declared.substitutions);
+        }
+        const contextual = this.facts.shape(node, 'contextual-shape');
+        const target = contextual.present ? contextual.root().id : this.heritage(node, index);
+        return target !== 0 && this.demands(node, [target], new Map<number, number[]>());
+    }
+}

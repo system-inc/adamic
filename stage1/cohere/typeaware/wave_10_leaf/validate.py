@@ -30,7 +30,7 @@ for source in owned.rglob('*.a'):
     target.parent.mkdir(parents=True, exist_ok=True)
     text = source.read_text().replace('/workspace/wave-10-leaf-controls', str(artifacts))
     text = text.replace("'../../diagnostic.ts'", "'" + str(repository / 'stage1/cohere/typeaware/diagnostic.ts') + "'")
-    for module in ['frames.ts', 'facts.ts', 'unary_minus.ts']:
+    for module in ['frames.ts', 'facts.ts', 'unary_minus.ts', 'types.ts', 'type_fact.ts', 'flags.ts', 'suggestion.ts', 'repair.ts']:
         text = text.replace("'../../" + module + "'", "'" + str(repository / 'stage1/cohere/typeaware' / module) + "'")
     text = text.replace("'../../../../typescript/", "'" + str(repository / 'stage1/typescript') + "/")
     target.write_text(text)
