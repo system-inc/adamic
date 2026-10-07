@@ -1,0 +1,34 @@
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+
+// This classifies a resolved declaration's initializer, never resolves a binding.
+// Preserve Go's exact spellings and its deliberate lack of parenthesis unwrapping.
+export function fragmentInitializer(parser: Parser, initializer: ParseNode): boolean {
+    if(initializer.kind === 'Identifier') {
+        return initializer.text === 'React';
+    }
+    if(initializer.kind === 'PropertyAccessExpression') {
+        const objectIndex = initializer.children[0];
+        const nameIndex = initializer.children[1];
+        if(objectIndex === undefined || nameIndex === undefined) {
+            return false;
+        }
+        const object = parser.node(objectIndex);
+        const name = parser.node(nameIndex);
+        return object.kind === 'Identifier' && object.text === 'React' &&
+            name.kind === 'Identifier' && name.text === 'Fragment';
+    }
+    if(initializer.kind !== 'CallExpression' || initializer.list <= 0) {
+        return false;
+    }
+    const calleeIndex = initializer.children[0];
+    const argumentIndex = initializer.children[initializer.children.length - initializer.list];
+    if(calleeIndex === undefined || argumentIndex === undefined) {
+        return false;
+    }
+    const callee = parser.node(calleeIndex);
+    const argument = parser.node(argumentIndex);
+    return callee.kind === 'Identifier' && callee.text === 'require' &&
+        (argument.kind === 'StringLiteral' || argument.kind === 'NoSubstitutionTemplateLiteral') &&
+        argument.text === 'react';
+}

@@ -27,13 +27,21 @@ fragments = ['<React.Fragment />', '<React.Fragment></React.Fragment>', '<React.
              '<A.React.Fragment />', '<React.Other />', '<></>',
              '<React.Fragment><React.Fragment /></React.Fragment>',
              '< /*before*/ React.Fragment />']
+aliases = ['React', 'React.Fragment', "require('react')", 'require(`react`)',
+           "require('react', 'ignored')", "require?.('react')", '(React.Fragment)',
+           'A.Fragment', 'React.Other', "require('preact')", "require('React')", 'require(dynamic)']
 paths=[]; modes=[]
-for mode, texts in [(1, undef), (2, fragments)]:
+for mode, texts in [(1, undef), (2, fragments), (3, aliases)]:
     for index, text in enumerate(texts):
         path=scratch/f'{mode}-{index}.tsx'
         prefix='export {};\n' if mode == 1 else 'export {}; declare const React: any; declare const A: any; declare const props: any;\n'
         # Multibyte source before a finding proves byte offsets are built from UTF-16 parser spans.
-        path.write_text(prefix+'/* 😀 Ω */ const x = '+text+';\n')
+        if mode == 3:
+            prefix += 'declare function require(...values: any[]): any; declare const dynamic: string;\n'
+            text = 'const F = '+text+'; const x = <F />'
+        else:
+            text = 'const x = '+text
+        path.write_text(prefix+'/* 😀 Ω */ '+text+';\n')
         paths.append(path); modes.append(mode)
 config=scratch/'tsconfig.json'
 config.write_text(json.dumps({'compilerOptions':{'strict':True,'target':'ES2022','jsx':'preserve','noEmit':True},'files':list(map(str,paths))}))
@@ -57,6 +65,7 @@ assert findings >= 15, findings
 # The production stream is consumed only as expected output. It supplies no native spans or verdicts.
 reference=scratch/'tag_reference.a'; reference.write_text((owned/'jsx_no_undef/tag_reference.a').read_text().replace("'../../../../typescript/parser/",repr(str(repository/'stage1/typescript/parser')+'/')[:-1]))
 selection=scratch/'tag_selection.a'; selection.write_text((owned/'jsx_fragments/tag_selection.a').read_text().replace("'../../../../typescript/parser/",repr(str(repository/'stage1/typescript/parser')+'/')[:-1]))
+initializer=scratch/'initializer_selection.a'; initializer.write_text((owned/'jsx_fragments/initializer_selection.a').read_text().replace("'../../../../typescript/parser/",repr(str(repository/'stage1/typescript/parser')+'/')[:-1]))
 imports=f'''import {{ panic, programArguments, readTextFile, utf8Length }} from 'adamic';
 import {{ Parser }} from '{repository}/stage1/typescript/parser/parser.ts';
 import {{ ParseNode, written }} from '{repository}/stage1/typescript/parser/nodes.ts';
@@ -67,6 +76,7 @@ import {{ report as undef }} from '{owned}/jsx_no_undef/messages.a';
 import {{ report as fragment }} from '{owned}/jsx_fragments/messages.a';
 import {{ tagReference }} from './tag_reference.a';
 import {{ namedSelection }} from './tag_selection.a';
+import {{ fragmentInitializer }} from './initializer_selection.a';
 '''
 entry=scratch/'selection-main.a'
 entry.write_text(imports+'''
@@ -90,6 +100,28 @@ for(let index = 0; index < args.length; index += 2) {
         listeners.set('JsxElement', 3);
         listeners.set('JsxSelfClosingElement', 2);
     }
+    // Private mode 3 fixtures have one unique top-level F declaration and no shadowing.
+    // This fixture adapter tests the initializer predicate, not general binding resolution.
+    let fixtureInitializer: ParseNode | undefined;
+    if(mode === '3') {
+        for(const statementIndex of parser.node(root).children) {
+            const statement = parser.node(statementIndex);
+            if(statement.kind !== 'VariableStatement') { continue; }
+            for(const listIndex of statement.children) {
+                const list = parser.node(listIndex);
+                if(list.kind !== 'VariableDeclarationList') { continue; }
+                for(const declarationIndex of list.children) {
+                    const declaration = parser.node(declarationIndex);
+                    const name = parser.node(declaration.children[0] ?? panic('missing declaration name'));
+                    if(name.kind === 'Identifier' && name.text === 'F') {
+                        if(fixtureInitializer !== undefined) { panic('duplicate fixture binding'); }
+                        fixtureInitializer = parser.node(declaration.children[declaration.children.length - 1] ?? panic('missing fixture initializer'));
+                    }
+                }
+            }
+        }
+        if(fixtureInitializer === undefined) { panic('missing fixture binding'); }
+    }
     const diagnostics: string[] = [];
     const pending: number[] = [root];
     while(pending.length > 0) {
@@ -103,7 +135,12 @@ for(let index = 0; index < args.length; index += 2) {
         else if(listener > 1) {
             const opening = listener === 3
                 ? parser.node(node.children[0] ?? panic('missing opening')) : node;
-            const selected = namedSelection(parser, opening);
+            let selected = namedSelection(parser, opening);
+            if(selected === 2 && mode === '3') {
+                const tag = parser.node(opening.children[0] ?? panic('missing fixture tag'));
+                if(tag.text !== 'F') { panic('unexpected fixture reference'); }
+                selected = fragmentInitializer(parser, fixtureInitializer ?? panic('missing fixture initializer')) ? 1 : 0;
+            }
             if(selected === 2) { panic('jsx-fragments needs checker declaration resolution'); }
             if(selected === 1) { finding = node; }
         }
@@ -136,7 +173,7 @@ source,err=run('source-node',['node','--disable-warning=ExperimentalWarning',rep
 emitted,_=run('emitted-build',[stage0,'js',entry]); emitted_path=scratch/'emitted.mjs'; emitted_path.write_bytes(emitted)
 got,err=run('emitted-node',['node','--disable-warning=ExperimentalWarning',repository/'oracle/node.mjs',emitted_path,*arguments]); assert not err and got == expected
 mutants=[]
-for name,file,before,after in [('undef-ascii',reference,'first >= 97','first >= 65'),('fragment-member',selection,"name.text === 'Fragment'","name.text === 'FragmentX'")]:
+for name,file,before,after in [('undef-ascii',reference,'first >= 97','first >= 65'),('fragment-member',selection,"name.text === 'Fragment'","name.text === 'FragmentX'"),('fragment-initializer',initializer,"argument.text === 'react'","argument.text === 'preact'")]:
     original=file.read_text(); assert original.count(before)==1
     file.write_text(original.replace(before,after))
     binary=scratch/name;run(name+'-build',[stage0,'build',entry,'-o',binary]); got,err=run(name+'-run',[binary,*arguments])
@@ -152,4 +189,4 @@ binary=scratch/'unresolved-bypass';run('unresolved-bypass-build',[stage0,'build'
 selection.write_text(original)
 summary=dict(source_selection_only=True,cases=len(paths),findings=findings,bytes=len(expected),backends=['native','native-asan','source-node','emitted-node'],mutants=mutants,unresolved_alias=dict(normal_exit=70,bypass_exit=0),commands=commands)
 (scratch/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
-print('SOURCE SELECTION SUBSET PASS',len(paths),'cases',findings,'findings',len(expected),'bytes; two byte-only mutants; unresolved alias refused')
+print('SOURCE SELECTION SUBSET PASS',len(paths),'cases',findings,'findings',len(expected),'bytes; three byte-only mutants; unresolved alias refused')
