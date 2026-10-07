@@ -181,7 +181,7 @@ func TestLandingExistingCandidates(t *testing.T) {
 	compare(t, oracle, buildPort(t, directory, true), directory, path)
 	mutationPath := manifest(t, mutationRows)
 	want := execute(t, "", oracle, "--manifest", mutationPath).output
-	for _, slug := range slugs {
+	for index, slug := range append(slugs, "nexus-consistency-no-boolean-outcome") {
 		t.Run(slug, func(t *testing.T) {
 			var change struct{ Name, File, From, To string }
 			data, err := os.ReadFile(filepath.Join("rules", slug, "mutant.json"))
@@ -190,6 +190,12 @@ func TestLandingExistingCandidates(t *testing.T) {
 			}
 			if err := json.Unmarshal(data, &change); err != nil {
 				t.Fatal(err)
+			}
+			if index == len(slugs) {
+				change.Name = "role-suffix regex disabled"
+				change.File = "rule.a"
+				change.From = "let suggested = name.replace(roleSuffixes, '');"
+				change.To = "let suggested = name;"
 			}
 			mutated := mutant(t, change.From, change.To, filepath.Join("rules", slug, change.File))
 			binary := buildPort(t, mutated, true)

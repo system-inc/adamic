@@ -1,0 +1,7 @@
+=== RUN   TestNamedListenerDeclarations
+    listeners_test.go:54: 17 named listener declarations, 1201 bytes, match actual Go listener keys on source Node, emitted JavaScript and ASan/UBSan native
+    listeners_test.go:74: base-correctness-require-orm-column-declare rule.json kinds differ from actual Go: got [Unknown] want [PropertyDeclaration]
+--- FAIL: TestNamedListenerDeclarations (7.55s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-boundary-no-internal-import	7.562s
+FAIL

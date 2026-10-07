@@ -13,7 +13,6 @@ import (
 	"github.com/system-inc/cohere/internal/lint/rules/tailwind"
 	"github.com/system-inc/cohere/internal/lint/rules/typescript"
 	"sort"
-	"strconv"
 	"strings"
 )
 
@@ -59,7 +58,7 @@ func main() {
 		sort.Ints(kinds)
 		var written []string
 		for _, kind := range kinds {
-			written = append(written, strconv.Itoa(kind))
+			written = append(written, strings.TrimPrefix(ast.Kind(kind).String(), "Kind"))
 		}
 		fmt.Printf("%s\t%s\n", subject.slug, strings.Join(written, ","))
 	}

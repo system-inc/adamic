@@ -5,12 +5,14 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"sort"
+	"strconv"
 	"strings"
 	"testing"
 )
 
 // Not parallel: sequential sanitized builds bound compiler memory across 17 controls.
-func TestNumericListenerDeclarations(t *testing.T) {
+func TestNamedListenerDeclarations(t *testing.T) {
 	root, err := filepath.Abs("../../../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -46,10 +48,10 @@ func TestNumericListenerDeclarations(t *testing.T) {
 	}
 	for side, got := range outputs(t, root, filepath.Join(owned, "listeners-main.a")) {
 		if !bytes.Equal(got, want) {
-			t.Fatalf("numeric listener domain differs from actual Go rule listeners on backend %d: got %s, want %s", side, got, want)
+			t.Fatalf("named listener domain differs from actual Go rule listeners on backend %d: got %s, want %s", side, got, want)
 		}
 	}
-	t.Logf("17 numeric listener declarations, %d bytes, match actual Go listener keys on source Node, emitted JavaScript and ASan/UBSan native", len(want))
+	t.Logf("17 named listener declarations, %d bytes, match actual Go listener keys on source Node, emitted JavaScript and ASan/UBSan native", len(want))
 	entry, err := os.ReadFile(filepath.Join(owned, "listeners-main.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -58,6 +60,21 @@ func TestNumericListenerDeclarations(t *testing.T) {
 		fields := strings.Split(row, "\t")
 		if len(fields) != 2 {
 			t.Fatalf("invalid Go row %q", row)
+		}
+		descriptorPath := filepath.Join(owned, "..", fields[0], "rule.json")
+		if data, err := os.ReadFile(descriptorPath); err == nil {
+			var descriptor struct{ Kinds []string }
+			if err := json.Unmarshal(data, &descriptor); err != nil {
+				t.Fatal(err)
+			}
+			actual := strings.Split(fields[1], ",")
+			sort.Strings(actual)
+			sort.Strings(descriptor.Kinds)
+			if strings.Join(actual, ",") != strings.Join(descriptor.Kinds, ",") {
+				t.Fatalf("%s rule.json kinds differ from actual Go: got %v want %v", fields[0], descriptor.Kinds, actual)
+			}
+		} else if !os.IsNotExist(err) {
+			t.Fatal(err)
 		}
 		slug := fields[0]
 		t.Run(slug, func(t *testing.T) {
@@ -74,12 +91,12 @@ func TestNumericListenerDeclarations(t *testing.T) {
 				}
 				if name == slug {
 					first := strings.Split(fields[1], ",")[0]
-					from := "= [" + first
+					from := "= [" + strconv.Quote(first)
 					if strings.Count(string(source), from) != 1 {
 						t.Fatal("listener mutant anchor changed")
 					}
-					// Unknown is a valid number and compiles; only the external domain comparison catches it.
-					source = []byte(strings.Replace(string(source), from, "= [0", 1))
+					// Unknown is a valid kind name and compiles; only the external domain comparison catches it.
+					source = []byte(strings.Replace(string(source), from, "= [\"Unknown\"", 1))
 				}
 				if err := os.WriteFile(filepath.Join(target, "listener.a"), source, 0644); err != nil {
 					t.Fatal(err)
@@ -95,7 +112,7 @@ func TestNumericListenerDeclarations(t *testing.T) {
 				if bytes.Equal(got, want) {
 					t.Fatalf("compiling listener mutant survived on backend %d", side)
 				}
-				t.Logf("numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend %d", side)
+				t.Logf("named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend %d", side)
 			}
 		})
 	}

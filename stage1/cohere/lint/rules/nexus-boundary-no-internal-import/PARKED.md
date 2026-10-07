@@ -7,7 +7,9 @@ Supported-domain Go findings/fixes match source Node, emitted JavaScript and san
 Shared landing blockers, owned by the harness unification on #zmh9v36:
 
 - Default lint test compilation fails at profile_test.go:32:23 because portFiles is now a function, while profiling ranges over the old value.
-- Shared registration still requires rule.ts and string-valued kinds. This branch's .a modules and numeric listener declarations need the published .a support integrated and the kind-indexed supplied-node API. No shared finding.ts, context.ts, main.ts, generator, oracle or comparison file is edited by this unit.
+- Shared registration still requires rule.ts. This branch's .a modules need the published .a support integrated and the supplied-node API. All 17 supplemental listener declarations now use registry kind names; all nine registered rule.json descriptors already use those names and agree with actual Go. No shared finding.ts, context.ts, main.ts, generator, oracle or comparison file is edited by this unit.
 - Eight JSX/Tailwind candidates have independent Go-checked decision kernels but await the common extraction/parser and registration handoff. Missing descriptors are deliberate for these incomplete candidates, and currently mask registry negative controls. Their full findings/fix parity is not claimed.
 
 Parking is the user's explicit work-in-progress exception, not a claim that default integration passes or that partial rules are complete. The existing supported-domain oracle evidence remains green against current main; full limitations remain visible. When the user names the shared harness landing sha, rebase and refresh these checks before claiming another unit.
+
+Kind-name correction refresh: all registered descriptor domains and 17 supplemental name declarations agree with actual Go; the boolean-outcome suffix regex now uses the shared table literal. Aggregate PASS 523.434s, 3,016 cases / 118,907,067 identical bytes, all ten compiling semantic mutants caught. Independent owned package PASS 45.219s and vet clean. See NAMES-LANDING.md and named-*.log. Main remains c01907a7; ab70f38d4 has not landed there.

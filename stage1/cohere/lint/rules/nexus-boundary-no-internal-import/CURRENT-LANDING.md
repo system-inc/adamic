@@ -1,3 +1,11 @@
+Built: converted all 17 owned supplemental listener declarations to registry kind names and replaced boolean-outcome's manual suffix matcher with the shared-table RegExp literal.
+Commits: previous rule tip 7f99254378ee9fd8b50f4cfd9aa18cebe5291b2d; refreshed helper sibling 2b917cbb24fa112ddf8537814e7790f91e4877a2; this rule refresh is committed next on codex/lint-wave1-12.
+Checks: 17 named listener domains / 1,201 bytes and nine rule.json domains agree with actual Go on Node, emitted JS and sanitized native; independent owned package PASS 45.219s; aggregate PASS 523.434s with 3,016 cases / 118,907,067 identical findings/fix bytes; vet clean.
+Mutants: 17 compiling declaration mutations to Unknown, one valid Unknown rule.json mutation, 10 compiling aggregate semantic controls including role-suffix regex disabled, and the retained resolved-path mutation are caught by their actual-Go comparisons.
+Uncovered: shared default profile/registration/supplied-node API and eight incomplete JSX/Tailwind candidates remain parked; full repository gate and broader unsupported parser domains are not claimed.
+
+Current detailed evidence: NAMES-LANDING.md and named-*.log. Earlier landing history follows.
+
 Parked: codex/lint-wave1-12 is rebased onto current origin/main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06 under the user's explicit shared-harness parking exception.
 Commits: previous pushed parking tip 565a0d45349fec52f1c7d6de73a8cd4449a81d50; rebased implementation eb09445fb902b46a2b69fee7421b1750c743bd14 before this evidence commit; helper sibling pushed b591540e030dd043bf5c6a5aa50130930cefcf79.
 Checks: independent rule packages and vet pass on current main; fresh aggregate PASS 457.911s, 118,905,738 identical Go/Node/emitted-JavaScript/sanitized-native bytes; default harness and registry retain their failures.

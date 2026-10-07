@@ -1,2 +1,2 @@
-// Numeric listener domain from pinned Go cohere. Declared for the coming shared driver.
-export const syntaxKinds: readonly number[] = [265, 266];
+// Listener kind names from pinned Go cohere, matching rule.json and the registry.
+export const syntaxKinds: readonly string[] = ["InterfaceDeclaration", "TypeAliasDeclaration"];

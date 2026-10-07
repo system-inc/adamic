@@ -1,0 +1,29 @@
+Built: converted all 17 owned supplemental listener declarations to registry kind names and replaced boolean-outcome's manual suffix matcher with the shared-table RegExp literal.
+Commits: previous rule tip 7f99254378ee9fd8b50f4cfd9aa18cebe5291b2d; refreshed helper sibling 2b917cbb24fa112ddf8537814e7790f91e4877a2; this rule refresh is committed next on codex/lint-wave1-12.
+Checks: 17 named listener domains / 1,201 bytes and nine rule.json domains agree with actual Go on Node, emitted JS and sanitized native; independent owned package PASS 45.219s; aggregate PASS 523.434s with 3,016 cases / 118,907,067 identical findings/fix bytes; vet clean.
+Mutants: 17 compiling declaration mutations to Unknown, one valid Unknown rule.json mutation, 10 compiling aggregate semantic controls including role-suffix regex disabled, and the retained resolved-path mutation are caught by their actual-Go comparisons.
+Uncovered: shared default profile/registration/supplied-node API and eight incomplete JSX/Tailwind candidates remain parked; full repository gate and broader unsupported parser domains are not claimed.
+
+The latest user correction supersedes numeric listener metadata. Existing nine registered rule.json descriptors already use the registry's names, such as ImportDeclaration, with the Kind prefix removed exactly as registry validation does. Their domains now have an explicit sorted set comparison against actual Go rule listener keys. Supplemental listener.a files for all 17 claims also use readonly string[] names, not numeric kinds; these are declarations, never rule-local kind-string relevance dispatch. Eight partial candidates still deliberately have no rule.json because their full extraction/registration is incomplete. Nothing makes their full findings parity complete merely by declaring their listeners.
+
+The Go oracle converts its actual listener ast.Kind values to the registry's names. Each named declaration has a semantic mutation to Unknown: a valid kind name that compiles and runs on all three backends, but only the actual-Go output-domain comparison catches it. Separately, changing an owned descriptor's kinds to [Unknown] leaves valid JSON and compiling programs; only the new actual-Go descriptor comparison fails. The descriptor is restored byte for byte immediately after the check. These are domain controls, not proof that the pending shared driver dispatches efficiently.
+
+The only Go regex in the registered owned rule source audit is roleSuffixes in nexus/consistency_no_boolean_outcome.go:48. Boolean-outcome now uses the shared table's literal /(Interface|Type|Result|Response|Properties)+(?![\s\S])/gu, once at module scope, and String.replace. The empty-result fallback is unchanged. No manual suffix matcher remains. Existing variant/child shape checks in the parked legacy supplied-index API are not a new relevance dispatcher. Shared context/main/registration/compare files are unchanged; adopting the new supplied-node common API awaits its landing.
+
+The actual-Go findings/fix aggregate uses the existing isolated published .a/suggestion-capable harness f4d98cab50048692781da3599131317dc569d466 only in the scratch validation checkout. Its compiler, cmd/adamic and oracle/node.mjs are restored from origin/main and verified byte-identical before replay. Only owned rule directories and the owned aggregate test artifact are synced there. Scratch compatibility changes are never committed or pushed. The source corpus is the same 314 pinned compiler/stage1 files, excluding the previously named unsupported gaps/generated cases. Native is ASan/UBSan, source and emitted JavaScript run on Node. No full gate or new throughput sample is claimed.
+
+All nine original aggregate mutations still compile/run and differ only under actual Go findings/fix comparison. The additional regex mutant preserves the declaration name instead of stripping suffixes; the literal remains initialized, and all backends compile and exit successfully before comparison fails. All 3,016 supported cases match Go byte for byte. Earlier partial-rule and unsupported parser limitations remain, rather than being silently widened by this refresh.
+
+The default package still fails before tests at profile_test.go:32:23: cannot range over portFiles (func(t *testing.T) []string). The named harness ab70f38d4 is not an ancestor of current origin/main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Parking therefore retains the user's explicit shared-harness exception; it does not claim a default harness pass. Rule branch pushes only to its own branch name. The helper branch's exact nextBuildCount bigint return-lowering probe remains blocked and undelivered.
+
+Commands with /workspace/adamic-tools/env.sh sourced:
+
+```sh
+go test ./stage1/cohere/lint/rules/nexus-boundary-no-internal-import -count=1 -v > /tmp/wave12-named-listeners.log 2>&1
+go vet ./stage1/cohere/lint/rules/nexus-boundary-no-internal-import > /tmp/wave12-named-rule-vet.log 2>&1
+go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -v -timeout=10m > /tmp/wave12-named-default.log 2>&1
+# Only in the isolated published-harness scratch checkout:
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 ADAMIC_STAGE1_SOURCE=/workspace/scratch/wave12-landing-rules/stage1 ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -run '^TestLandingExistingCandidates$' -count=1 -v -timeout=25m > /tmp/wave12-named-isolated.log 2>&1
+```
+
+The valid JSON descriptor mutant is invoked through the named-domain test and intentionally exits 1 with rule.json kinds differ from actual Go. Its log is named-descriptor-mutant.log. Setup Go/clang/Node/submodules ready at 0s, cache warm 53s, total 53s; nproc 5. Every test writes directly to a log; no shared-file changes or main/area pushes occur. No further helper is reserved before this branch's concrete oracle refresh and push.
