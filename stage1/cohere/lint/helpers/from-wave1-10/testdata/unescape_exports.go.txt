@@ -1,0 +1,2 @@
+package tailwind
+func AdamicCSSIdentifierUnescape(input string) string { return unescapeCSSIdentifier(input) }

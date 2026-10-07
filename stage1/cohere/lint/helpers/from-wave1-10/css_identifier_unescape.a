@@ -1,0 +1,33 @@
+// Valid Unicode strings preserve Go's UTF-8 rune escape boundary.
+export function unescapeCSSIdentifier(escaped: string): string {
+    if(!escaped.includes('\\')) { return escaped; }
+    let result = '';
+    for(let index = 0; index < escaped.length;) {
+        if(escaped.charAt(index) !== '\\') { result += escaped.charAt(index); index++; continue; }
+        if(index + 1 >= escaped.length) { result += '\\'; index++; continue; }
+        let digits = 0;
+        let codePoint = 0;
+        while(digits < 6 && index + 1 + digits < escaped.length) {
+            const character = escaped.charCodeAt(index + 1 + digits);
+            let value = -1;
+            if(character >= 48 && character <= 57) { value = character - 48; }
+            else if(character >= 65 && character <= 70) { value = character - 65 + 10; }
+            else if(character >= 97 && character <= 102) { value = character - 97 + 10; }
+            if(value < 0) { break; }
+            codePoint = codePoint * 16 + value;
+            digits++;
+        }
+        if(digits === 0) {
+            const scalar = escaped.codePointAt(index + 1);
+            const size = scalar !== undefined && scalar > 65535 ? 2 : 1;
+            result += escaped.slice(index + 1, index + 1 + size);
+            index += 1 + size;
+            continue;
+        }
+        index += 1 + digits;
+        if(index < escaped.length && '\t\n\f\r '.includes(escaped.charAt(index))) { index++; }
+        if(codePoint === 0 || codePoint > 0x10ffff || (codePoint >= 0xd800 && codePoint <= 0xdfff)) { result += '�'; }
+        else { result += String.fromCodePoint(codePoint); }
+    }
+    return result;
+}

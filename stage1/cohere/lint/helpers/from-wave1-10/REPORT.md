@@ -1,8 +1,8 @@
-Built: addWhitespaceAroundMathOperators in .a, preserving actual Go UTF-8-byte-to-rune expansion on the scanner path.
-Commits: claim 89afa076 pushed before implementation; delivery SHA is in the final response.
-Checks: owned differential and mutant package PASS 7.253s; 49,162 inputs, six consumers, 873,758 identical bytes on each of Node, emitted JavaScript and ASan/UBSan native; vet clean; setup 76s, nproc 5.
-Mutant: comma_spacing_disabled compiles and exits successfully with empty stderr on all three runtimes, then fails only output comparison against real Go.
-Limits: valid Unicode text, bounded controls and all six consumers' test-file string literals; no end-to-end Adamic rule findings, arbitrary invalid UTF-8, or full repository gate.
+Built: two .a helpers, addWhitespaceAroundMathOperators and unescapeCSSIdentifier; twelve dependency entries removed across six Tailwind rules, zero final blockers alone.
+Commits: claims 89afa076 and a70d3b5b pushed before code; math delivery 9a5ef4c2; final delivery SHA is in the response.
+Checks: frozen final owned-package gate PASS 31.029s, 1,165,857 inputs, 6,482,634 identical bytes per Node/emitted JavaScript/ASan+UBSan native; vet clean; setup 76s, nproc 5.
+Mutants: comma_spacing_disabled and scalar_one_replaced compile and exit successfully with empty stderr on all three runtimes, then fail only comparison against real Go.
+Limits: full upstream consumer package FAIL 3.650s on absent hard-coded Ahra corpus/Tailwind installation; valid Unicode inputs and source-derived helper controls, no end-to-end rule findings or full repository gate.
 
 The frozen readiness list assigns this helper to:
 
@@ -32,3 +32,13 @@ go vet ./stage1/cohere/lint/helpers/from-wave1-10
 ```
 
 See [final comparison](evidence/math-tests-final.log.txt), [first mismatch](evidence/math-tests-first.log.txt), [setup](evidence/setup.log.txt), [generation](evidence/generate.log.txt) and [vet](evidence/vet.log.txt).
+
+Second helper: css_identifier_unescape.a ports unescapeCSSIdentifier, claimed and pushed at a70d3b5b before code. It serves the same six rules, removing six further dependency entries and still zero final blockers. Every scalar through 0x110000, including NUL, surrogates and out-of-range replacement, is compared against unchanged Go, plus six-digit bounds, five exact CSS terminators, literal supplementary-rune escapes and final backslashes. There are 1,116,695 cases and 5,608,876 identical output bytes per runtime. The scalar_one_replaced mutant maps valid U+0001 to U+FFFD; every runtime compiles and exits successfully, then fails only comparison.
+
+The complete two-helper gate passed in 31.933s. Go vet passes for the owned package. The exhaustive scalar corpus is compressed and the test expands it only in scratch. Regenerate with testdata/generate_unescape.py, then run the same owned-package command above. See [two-helper comparison](evidence/both-tests.log.txt), [unescape generation](evidence/unescape-generate.log.txt) and [both-helper vet](evidence/both-vet.log.txt).
+
+Consumer-rule validation is blocked: the full original Go Tailwind package exits FAIL in 3.650s. TestUnknownClassFixturesActuallyRan, TestCanonicalFixturesActuallyRan, TestConflictFixturesActuallyRan and TestClassOrderFixturesActuallyRan explicitly fail because no installed tailwindcss is found from /Users/kirkouimet/Projects/ahra/app/_theme/styles. Other tests skip the absent /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css repository. TestClassOrderLiveMatchesTheEngineOverTheCorpus also fails. The bounded helper corpus uses all six real test files but cannot replace those missing repositories and installations or prove their final findings. See [full consumer package](evidence/upstream-all.log.txt). No shared file was changed to bypass this failure. Further claims stop at this validation blocker.
+
+Observed dependency removals: twelve entries across six distinct rules. Inference: rule ports can reuse these two transformations once their other shared dependencies arrive; this is not a claim that six complete rules are unblocked.
+
+Final frozen sources rerun: PASS 31.029s. See [final two-helper gate](evidence/final.log.txt). Final all-origin refresh inspected seventeen distinct claims; neither helper has a competing reservation. Prior rule branch remains pushed through e9066bff; its shared JSX, multi-edit and general runtime-regex boundaries remain documented on that branch.

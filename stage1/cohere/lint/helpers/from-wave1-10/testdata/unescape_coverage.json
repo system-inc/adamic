@@ -1,0 +1,32 @@
+[
+  {
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "file": "cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go",
+    "literals": 204
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-class-order",
+    "file": "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go",
+    "literals": 251
+  },
+  {
+    "rule": "better-tailwindcss/enforce-consistent-variant-order",
+    "file": "cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go",
+    "literals": 52
+  },
+  {
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "file": "cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go",
+    "literals": 73
+  },
+  {
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "file": "cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go",
+    "literals": 195
+  },
+  {
+    "rule": "better-tailwindcss/no-unknown-classes",
+    "file": "cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go",
+    "literals": 184
+  }
+]
