@@ -1,0 +1,24 @@
+{
+  "base": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "features": [
+    {
+      "branch": "origin/codex/taste-not-soundness",
+      "sha": "aa896b5d5ccc82210184fd01b8fe4d0ce0730a50"
+    }
+  ],
+  "conflicts": [],
+  "entryResults": {
+    "parser.ts": {
+      "exit": 0,
+      "result": "/tmp/parser-profiles/taste-parser.ts.json"
+    },
+    "scanner.ts": {
+      "exit": 0,
+      "result": "/tmp/parser-profiles/taste-scanner.ts.json"
+    }
+  },
+  "buildExit": 0,
+  "head": "aa896b5d5ccc82210184fd01b8fe4d0ce0730a50",
+  "scratchResolutionPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "cohereGitlink": "160000 commit 715ba94f3608a6500086b1076ce5cb7e51b836db\tcohere"
+}

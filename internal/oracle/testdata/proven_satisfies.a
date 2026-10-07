@@ -1,0 +1,38 @@
+interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: () => string; }
+const record = { name: 'Rex', count: 3 } satisfies { readonly name: string; readonly count?: number };
+function count(value: { readonly count: number }): number { return value.count; }
+console.log(`${record.name} ${count(record)}`);
+const enabled = { enabled: true } satisfies { readonly enabled: boolean };
+const exact: true = enabled.enabled;
+console.log(`${exact}`);
+const numbers = [1, 2, 3] satisfies number[];
+numbers.push(4);
+console.log(numbers.join(','));
+const dog: Dog = { name: 'Rex', bark: () => 'woof' };
+const dogs: Dog[] = [dog];
+const kept = dogs satisfies readonly Animal[];
+console.log(`${kept[0]?.bark() ?? 'missing'} ${kept === dogs}`);
+const view: { readonly pet: Dog } = { pet: dog };
+const checked = view satisfies { readonly pet: Animal };
+console.log(checked.pet.bark());
+type Circle = { readonly kind: 'circle'; readonly radius: number };
+type Square = { readonly kind: 'square'; readonly side: number };
+type Shape = Circle | Square;
+const circle = { kind: 'circle', radius: 2 } satisfies Shape;
+console.log(`${circle.radius}`);
+function shape(flag: boolean): Shape { return flag ? { kind: 'circle', radius: 3 } : { kind: 'square', side: 4 }; }
+function area(flag: boolean): number {
+	const value = shape(flag) satisfies Shape;
+	return value.kind === 'circle' ? value.radius * value.radius : value.side * value.side;
+}
+console.log(`${area(true)} ${area(false)}`);
+let calls = 0;
+function next(): number { calls++; return calls; }
+console.log(`${next() satisfies number} ${calls}`);
+const absent = { name: 'empty' } satisfies { readonly name: string; readonly count?: number };
+console.log(absent.name);
+const nested = { item: { name: 'nested' } } satisfies { readonly item: { readonly name: string; readonly count?: number } };
+console.log(nested.item.name);
+const records = [{ name: 'array' }] satisfies readonly { readonly name: string; readonly count?: number }[];
+console.log(records[0]?.name ?? 'missing');

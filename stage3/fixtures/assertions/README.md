@@ -243,3 +243,37 @@ source adaptations for 111 undefined unwraps, all 4,101 assertions as runnable
 fixtures, full generator emission, or the full uncached repository/upstream
 TypeScript gates. No compiler implementation, shared fixtures test, adaptation,
 other bucket, or PR was changed or created.
+
+## Discriminant immutability follow-up
+
+[DISCRIMINANT_WRITES.md](DISCRIMINANT_WRITES.md) gives the stock-checker write
+ledger, declarations, checked written-value types, purpose of outside writes,
+and the unresolved dynamic-key list. `discriminant-writes.json` retains every
+union witness and property declaration. This is a resolved-site census with a
+limited local construction analysis, not a completed whole-program escape proof.
+
+The exact **inside construction** rule is: direct initialization/spread into a
+new object literal; a reviewed fresh allocator-constructor `this`, before any
+publication; or a reviewed assignment in an ordinary function whose receiver is
+a fresh local allocation/clone on every path reaching that write, before it
+is returned to a caller, stored in externally reachable state, or passed to a
+retaining/unproved callback. Allocating helpers returning a fresh object to
+the enclosing construction function do not alone publish it. Helpers that only
+populate the fresh receiver, such as setTextRange/setParent, do not alone
+publish it. Reviewed spans are enumerated in `discriminant-report.py`.
+
+An incoming parameter, cached/global/property receiver, or mixed fresh/existing
+receiver is **outside this function's local construction**. A helper called by
+a factory can therefore fall outside this local rule even while its caller is
+still constructing the object. This local label must not be substituted for a
+proof that the object has escaped globally. Two parser modifier writes are
+marked not established; the unresolved dynamic-key copies and interprocedural
+construction/escape classification were not completed. The stock checker does
+not provide that analysis. The definite cached-status retag at
+`tsbuildPublic.ts:1921` is outside construction under either interpretation.
+
+For comparison, count source events once per written property, report creation
+initializers separately from assignment/update syntax, and distinguish `kind`,
+other finite-literal discriminants, and broader/partial stock-checker candidates.
+The report spells out how union-symbol roots are resolved and value-filtered;
+sharing a property spelling alone never makes it the same declaration.
