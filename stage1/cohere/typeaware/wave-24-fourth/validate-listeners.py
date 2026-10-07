@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Compare numeric listener declarations with the pinned Go parser enum."""
 import argparse
+import json
 from pathlib import Path
 import subprocess
 
@@ -25,6 +26,22 @@ def main():
     run('native-build',[args.stage0,'build',OWN/'listener-probe.a','-o',binary,'--tsgo',args.checker])
     got = run('native',[binary])
     assert got == truth, 'numeric listener drift'
+    names = ['prefer-return-this-type', 'return-await', 'use-unknown-in-catch-callback-variable',
+             'no-process-exit-after-output', 'no-uncleared-race-timeout', 'require-blocking-standard-streams',
+             'prefer-promise-reject-errors', 'prefer-regex-literals', 'prefer-rest-params']
+    declarations = []
+    for name in names:
+        metadata = json.loads((OWN/'listeners'/name/'rule.json').read_text())
+        assert metadata['name'] and all(type(kind) is int for kind in metadata['kinds'])
+        declarations.append(','.join(str(kind) for kind in metadata['kinds']))
+    encoded = ('\n'.join(declarations)+'\n').encode()
+    assert encoded == truth, 'rule.json numeric listener drift'
+    mutant_json = dest/'mutant-rule.json'
+    metadata = json.loads((OWN/'listeners/prefer-rest-params/rule.json').read_text())
+    metadata['kinds'] = [214]
+    mutant_json.write_text(json.dumps(metadata))
+    changed = declarations[:-1]+[','.join(str(kind) for kind in json.loads(mutant_json.read_text())['kinds'])]
+    assert ('\n'.join(changed)+'\n').encode() != truth, 'JSON listener mutant survived'
     original = OWN.parent/'wave-24-third/prefer_rest_params.a'
     source = original.read_text()
     needle = 'SyntaxKinds: number[] = [79]'
@@ -41,7 +58,7 @@ def main():
     run('mutant-build',[args.stage0,'build',probe,'-o',binary,'--tsgo',args.checker])
     got = run('mutant',[binary])
     assert got != truth, 'runnable listener mutant survived'
-    print('PASS nine declarations match pinned numeric SyntaxKind; runnable Identifier-to-CallExpression mutant caught')
+    print('PASS nine native and rule.json declarations match pinned numeric SyntaxKind; native and JSON Identifier-to-CallExpression mutants caught')
 
 if __name__ == '__main__':
     main()
