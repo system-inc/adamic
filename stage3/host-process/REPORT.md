@@ -84,7 +84,7 @@ Commands (each output redirected to its log, never piped):
 - go test -count=1 -timeout 10m ./internal/oracle -run '^TestProcessExitOutput$|^TestNodeProcess|^TestInputAgreesWithNode$/internal/oracle/testdata/node_process' -v: PASS, 5.512s; oracle.log.
 - go test -count=1 -timeout 30m ./internal/oracle -run '^TestCountsAreRecorded$' -args -update-counts: PASS, 10.100s; counts.log. Only three new rows changed; allocations equal frees.
 - go vet ./...: success, empty vet.log.
-- Post-correction go test -count=1 -timeout 10m ./internal/load ./internal/lower ./internal/native: PASS (load 1.501s, lower 14.638s, native 146.860s); post-correction-packages.log.
+- Post-correction go test -count=1 -timeout 10m ./internal/load ./internal/lower ./internal/native: PASS (load 1.501s, lower 14.638s, native 68.062s); post-correction-packages.log.
 - Post-correction go test -count=1 -timeout 5m ./internal/oracle -run '^TestNodeProcessTerminal$' -v: expected dependency failure, TS2339 for columns, _handle and write absent from baseline declarations; missing-shared-hook.log.
 - git diff --check and gofmt -l on new Go files and modified mutant harness: success, no output.
 - ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...: interrupted after the user declaration correction; all touched packages passed before interruption (native 218.772s, oracle 190.342s, lower 26.462s, load 1.967s), but this is not a final-source full-gate pass; full-gate.log. The prior gate failed only at the exit-mutant duplicate raw-write symbol; failure log retained.
