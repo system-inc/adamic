@@ -1,7 +1,7 @@
-Built: merged current main and the upstream host fixtures; added path.relative and a strict dual-backend acceptance runner.
-Commits: main merge 5fbaa4d (e011f8f), fixture merge aa987b3 (1037217), relative component 0ad74bf; all pushed.
-Checks: recorded Node output agrees for all five owned fixtures; both backend attempts stop at Checker; relative component passes on both emitters.
-Mutants: five upstream source mutants and the compiled relative-to-join mutant are caught only by stdout comparison with Node.
+Built: merged main and upstream fixtures, added path.relative, and fixed native realPath field specialization that corrupted source enumeration.
+Commits: 5fbaa4d main merge, aa987b3 fixture merge, 0ad74bf relative, 97b9f64 acceptance gate, 8f6a0b2 runtime layout fix; all pushed.
+Checks: independent loader, native package, load/lower and vet pass; all five owned fixtures match recorded Node output but stop at Checker on both backends.
+Mutants: five upstream source mutants and two compiled component mutants are caught only by Node stdout comparison; all three independent loader mutants are caught by Go cohere comparison.
 Uncovered: shared @types/node loader hook and sibling host dependencies are pending; no owned upstream acceptance fixture is green yet.
 
 ## Upstream acceptance fixtures on current main
@@ -50,7 +50,38 @@ Observed: PASS, 47.755s. Both emitters agree, sanitizer and leak checks pass, an
 
 Setup on the merged main: Go go1.27.1 ready 0s, clang 20.1.8 ready 0s, Node v24.19.0 ready 0s, submodules ready 0s, build cache warm 321s, total 321s. nproc reports 5, cgroup cpu.max is 400000 100000. The printed environment is /workspace/adamic-tools/env.sh.
 
-Further current-main package and independent-loader results are appended after completion. Earlier sections below are historical, pre-merge evidence.
+## Current-main source enumeration and field proof
+
+The initial independent run failed only for native: at line 895 it printed a project reference where Go cohere expected cohere/TypeScript/packages/typescript/test/async/api.bench.ts. Source on Node and the JavaScript backend did not report a discrepancy. The initial native package gate also failed TestRuntimeFieldLayoutsAreIncluded because directory.c's runtime path field was absent from main's uniformFieldOffsets proof.
+
+Main added uniform field specialization after base 035999e. Its proof did not know the C realPath result shape (kind at slot 0, path at slot 1). Program object literals could put path at slot 0. Omitting the runtime shape made that field appear uniformly at slot 0, so native read the runtime discriminator Ok as a resolved path, causing unrelated directories to collide in the traversal's visited map. Commit 8f6a0b2 includes that runtime shape, Error's code slot and Dirent's name/type shape in the existing proof. This is an additive proof correction, not a change to the realpath walk.
+
+The minimal node_fs_directory_layout.a fixture combines an own slot-0 path with realPath('.'). It compiles through the checker and lowering using the existing adamic declarations, and agrees on both backends. Its native mutant restores the erroneous slot-0 read, exits cleanly under sanitizers and leak checks, and fails only stdout comparison with Node. Observed TestNodeFSDirectoryRuntimeLayouts PASS, 0.815s; TestRuntimeFieldLayoutsAreIncluded PASS, 26 runtime layouts checked.
+
+The independent loader then passed over 143 settings, 130 tsconfigs and 1354 source files on native, source Node and JavaScript. Its three cleanly executing source mutants were caught by comparison with Go cohere on both native and Node:
+
+| Mutant | Observed comparison failure |
+| --- | --- |
+| strict JSON comments | A commented config was accepted where Go rejected JSON |
+| inherited rule options | Inherited option array became empty |
+| tsconfig excludes | Excluded src/b.ts entered the source list |
+
+Commands and final observations:
+
+| Command | Result |
+| --- | --- |
+| go test ./stage1/cohere/config -run TestLoadersMatchGoCohere -count=1 -timeout 30m -v | PASS, 186.757s, all three mutants caught |
+| go test ./internal/native -count=1 -timeout 30m | PASS, 125.509s |
+| go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/flow ./internal/fresh -count=1 -timeout 30m | load PASS 7.962s; lower PASS 62.624s; JavaScript has no tests; initial native proof failure fixed and retested as above; flow/fresh fail because their fixture-wide scans cannot load pending node:* declarations |
+| go test ./internal/oracle -run 'TestInputAgreesWithNode/internal/oracle/testdata/^realpath[.]a$' -count=1 -timeout 15m -v | PASS, 39.899s, original realpath fixture on both backends plus leaks |
+| go vet ./... | PASS, empty output |
+| gofmt -l cmd internal; git diff --check | Empty output |
+
+Each command's output is committed under logs/. The initial failed independent-loader log is preserved alongside the passing rerun. The earlier unanchored realpath filter also selected the declaration-blocked host fixture and failed; the exact anchored rerun above is the passing original-port evidence.
+
+The verbatim independent-loader failure on the old 035999e base has not yet been supplied. fields.go did not exist at that base. The observed merged-main failure is fixed and independently validated, but this does not establish the cause of a different old-base failure. The full repository gate and fixture counts were not rerun: declaration-dependent fixtures still fail loading. Add the relative and runtime-layout fixtures to the normal input/counts gate and regenerate the complete ledger when the shared hook lands. No temporary declaration copies or independent loader hook were reintroduced.
+
+Earlier sections below are historical, pre-merge evidence.
 
 ---
 
