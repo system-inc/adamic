@@ -1,0 +1,27 @@
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const diagnosedModule:number='bad';
+function make():Ready {return {kind:'ok',ready:true};}
+function read(node:Base):Ready {return node as Ready;}
+const good=read(make());
+function staged():Ready {return {kind:'ok',ready:undefined!};}
+function stageRead():Ready {const node:Base=staged();return node as Ready;}
+function wrong():Ready {const raw={kind:'ok' as const,ready:0};const node:Base=raw;return node as Ready;}
+function hostRead():Ready {const node:Base=JSON.parse('{}');return node as Ready;}
+function diagnosed(node:Base):Ready {const error:number='bad';return node as Ready;}
+function incoming(node:Base):Ready {return node as Ready;}
+function broken():void {const error:number='bad';incoming({kind:'ok',ready:true});}
+function callback(node:Base):Ready {return node as Ready;}
+const escapedCallback=callback;
+function forged():Ready {const raw={kind:'ok' as const,ready:0 as unknown as boolean};const node:Base=raw;return node as Ready;}
+function hostField():Ready {const raw={kind:'ok' as const,ready:JSON.parse('false') as boolean};const node:Base=raw;return node as Ready;}
+interface Unsafe extends Base {readonly kind:'ok';readonly unsafe:boolean;}
+function aliased():Unsafe {const raw={kind:'ok' as const,unsafe:true};const wide:{unsafe:boolean|number}=raw;wide.unsafe=0;const node:Base=raw;return node as Unsafe;}
+function rejectedOuter():void {
+ const error:number='bad';
+ function nestedClean():Ready {const exact:Ready={kind:'ok',ready:true};const node:Base=exact;return node as Ready;}
+}
+function rejectedCapture():void {
+ const raw:Ready={kind:'ok',ready:true};const error:number='bad';
+ function nestedCapture():Ready {const node:Base=raw;return node as Ready;}
+}

@@ -1,3 +1,5 @@
+The subsequent [latent share report](LATENT-SHARE-REPORT.md) supersedes this report's unmeasured-census status. The production implementation and validation below remain the earlier checkpoint.
+
 Built: shared allocation-flow query, declared field certificates, and a conservative scalar-record eraser; real tsc share remains unmeasured.
 Commits: lane 1 dependency merge 40ad020d; allocation flow, certificates and scalar eraser 59db5d63.
 Commands: lower 35.217s, IR 28.663s, scoped oracle 38.385s, vet and all 43 graph count assertions pass.

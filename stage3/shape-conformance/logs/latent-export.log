@@ -1,9 +1,6 @@
 {
   "measurement": "measured on a checker-rejected program",
-  "sites": 2936,
-  "before_certified_free": 0,
-  "after_certified_free": 0,
-  "after_counts": {
+  "counts": {
     "tagged": {
       "conforms and ready (free)": 0,
       "conforms but not proven ready (readiness checks only)": 0,
@@ -17,7 +14,7 @@
       "unknown": 1178
     }
   },
-  "after_unknown_reasons": {
+  "unknown_reasons": {
     "tagged": {
       "diagnosed body": 1031,
       "flow the graph can't see": 727
@@ -28,5 +25,18 @@
       "host metadata": 1
     }
   },
-  "note": "Proof coverage measured on checker-rejected program; diagnosed bodies skipped. Unknown is not proof of nonconformance."
+  "allocation_shapes": 573,
+  "typed_body_skip_sites": {
+    "tagged": 346,
+    "untagged": 175
+  },
+  "diagnosed_dependency_sites": {
+    "tagged": 685,
+    "untagged": 581
+  },
+  "host_values": {
+    "JSON.parse": 1,
+    "host.getBuildInfo": 1,
+    "host.getPackageJsonInfoCache?.()?.getPackageJsonInfo": 1
+  }
 }

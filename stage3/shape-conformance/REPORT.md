@@ -1,8 +1,13 @@
-Built: shared allocation-flow query, declared field certificates, and a conservative scalar-record eraser; real tsc share remains unmeasured.
-Commits: lane 1 dependency merge 40ad020d; allocation flow, certificates and scalar eraser 59db5d63.
-Commands: lower 35.217s, IR 28.663s, scoped oracle 38.385s, vet and all 43 graph count assertions pass.
-Mutants: ignore one nonconforming shape and ignore readiness both finish with wrong output and are caught by pinned semantic assertions.
-Uncovered: broader assignability, nested/container/callback flows, staged-after-store erasure, native host view metadata, per-cast lookup emission, and the 2,936-site real share.
+Built: per-function allocation-flow share over every original ledger site, measured on a checker-rejected program.
+Commits: production eraser 59db5d63; lane 1 609ed395 is already merged through 40ad020d; this measurement is recorded in branch history.
+Commands: exact AST mapping, corpus/control measurement, independent diagnostic-span audit and production graph/eraser regression pass.
+Mutants: ignoring field types, readiness or diagnosed bodies is caught by independent controls; forged host/body certifications are caught by the corpus audit.
+Limits: proof coverage is zero certified sites, not proof that every runtime shape fails; unsupported flows and host values retain views.
+
+Current report: [LATENT-SHARE-REPORT.md](LATENT-SHARE-REPORT.md).
+
+The following is the earlier production-eraser checkpoint, before the latent measurement.
+
 
 Current report: [FLOW-ERASER-REPORT.md](FLOW-ERASER-REPORT.md).
 
