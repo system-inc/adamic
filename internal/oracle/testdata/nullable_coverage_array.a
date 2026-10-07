@@ -1,0 +1,51 @@
+interface Shape { readonly label: string; }
+class Item { readonly label: string; constructor(label: string) { this.label = label; } name(): string { return this.label; } }
+function observe<T>(value: T): string { return `${value === null} ${value === undefined} ${typeof value}`; }
+function showNull(value: string[] | null): void {
+ console.log(observe<string[] | null>(value));
+ console.log(`${value === null} ${value === undefined} ${typeof value} ${value?.length ?? -1}`);
+ const fallback: string[] = [`built${7}`];
+ console.log(observe(value ?? fallback));
+}
+function slotsNull(first: string[] | null, second: string[] | null): void {
+ const field: { value: string[] | null } = {value: first};
+ showNull(field.value);
+ field.value = second;
+ showNull(field.value);
+ const values: (string[] | null)[] = [first];
+ values.push(second);
+ values[0] = second;
+ for (const value of values) { showNull(value); }
+ const table = new Map<string, string[] | null>();
+ table.set('first', first);
+ table.set('second', second);
+ table.set('first', second);
+ for (const value of table.values()) { showNull(value); }
+}
+slotsNull(null, [`built${7}`]);
+slotsNull([`built${7}`], null);
+function showUndefined(value: string[] | undefined): void {
+ console.log(observe<string[] | undefined>(value));
+ console.log(`${value === null} ${value === undefined} ${typeof value} ${value?.length ?? -1}`);
+ const fallback: string[] = [`built${7}`];
+ console.log(observe(value ?? fallback));
+}
+function slotsUndefined(first: string[] | undefined, second: string[] | undefined): void {
+ const field: { value: string[] | undefined } = {value: first};
+ showUndefined(field.value);
+ field.value = second;
+ showUndefined(field.value);
+ const values: (string[] | undefined)[] = [first];
+ values.push(second);
+ values[0] = second;
+ for (const value of values) { showUndefined(value); }
+ const table = new Map<string, string[] | undefined>();
+ table.set('first', first);
+ table.set('second', second);
+ table.set('first', second);
+ for (const value of table.values()) { showUndefined(value); }
+ showUndefined(table.get('missing'));
+ showUndefined(values[20]);
+}
+slotsUndefined(undefined, [`built${7}`]);
+slotsUndefined([`built${7}`], undefined);

@@ -1,0 +1,53 @@
+bash cloud/setup.sh
+source /workspace/adamic-tools/env.sh
+nproc
+
+git fetch origin main codex/nullable-references
+git fetch origin codex/nullable-references:refs/remotes/origin/codex/nullable-references
+git log --oneline origin/main..origin/codex/nullable-references
+git diff origin/main...origin/codex/nullable-references
+git switch -c coverage/nullable-references origin/codex/nullable-references
+
+# Final eight programs, uncached oracle.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/nullable_coverage_' -count=1 -timeout 10m
+
+# For each file matched by internal/oracle/testdata/nullable_coverage_*.a:
+for file in internal/oracle/testdata/nullable_coverage_*.a; do
+    name=$(basename "$file" .a)
+    go run ./cmd/adamic build "$file" -o "/tmp/nullable-coverage-builds/$name"
+    "/tmp/nullable-coverage-builds/$name"
+    node --disable-warning=ExperimentalWarning oracle/node.mjs "$file"
+    # Captured both outputs separately and compared with diff -u.
+done
+
+# Mutant: expression.go:451, typeof helper empty fallback object -> undefined.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/nullable_coverage_calls.a' -count=1 -timeout 10m
+git restore internal/lower/expression.go
+
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+gofmt -w internal/oracle/nullable_references_test.go
+gofmt -l cmd internal
+go vet ./...
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...
+go test ./internal/oracle -run 'TestCountsAreRecorded|TestNativeAgreesWithNode/internal/oracle/testdata/nullable_coverage_' -count=1 -timeout 10m
+git diff --check
+
+# Earlier exploratory oracle/build runs refused optional Map.get, optional Map.size,
+# and postfix increment inside a template. Adjusted to supported expressions.
+# An initial oracle regex omitted path segments and selected no subtests; corrected
+# to the full selector above. Initial setup overlapped checkout; rerun succeeded.
+
+# Initial selector, selected no tests:
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/.*nullable_coverage_' -count=1 -timeout 10m
+
+# Rerun the entire oracle package against the final fixture registration (rerun after seventh and eighth additions):
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle
+
+git add internal/oracle/testdata/nullable_coverage_*.a internal/oracle/nullable_references_test.go internal/oracle/counts.md notes/nullable-references
+git commit -m 'Cover nullable references in mutable slots and generic calls'
+git push -u origin coverage/nullable-references
+
+git add internal/oracle/testdata/nullable_coverage_json_arguments.a internal/oracle/nullable_references_test.go internal/oracle/counts.md notes/nullable-references/README.md notes/nullable-references/commands.txt
+git add -f notes/nullable-references/setup.log notes/nullable-references/oracle.log notes/nullable-references/mutant.log notes/nullable-references/counts.log notes/nullable-references/builds.log notes/nullable-references/final-focused.log notes/nullable-references/gofmt.log notes/nullable-references/vet.log notes/nullable-references/oracle-package.log notes/nullable-references/gate.log
+git commit -m 'Cover nullable JSON arguments and record validation results'
+git push origin coverage/nullable-references
