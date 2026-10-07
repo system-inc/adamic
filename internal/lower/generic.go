@@ -18,9 +18,9 @@ const maximumGenericDepth = 32
 // each type parameter is what this call made it.
 //
 // The checker resolves the call's signature with its type arguments substituted, but doesn't export
-// the mapping itself, so it's read back the way it was made: each declared parameter's type, and the
-// result's, against the resolved signature's, through arrays and tuples. A type parameter that can't
-// be read back that way is left unmapped, and the body says not yet wherever it needs to know it.
+// the mapping itself. Read its mapper through the existing checker bridge first, then infer any
+// remaining parameters from the resolved parameter and result types. A type parameter that neither
+// path resolves is left unmapped, and the body says not yet wherever it needs to know it.
 func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (int, error) {
 	resolved := l.checker.GetResolvedSignature(call)
 	target := l.checker.GetSignatureFromDeclaration(declaration)

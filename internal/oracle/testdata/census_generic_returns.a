@@ -17,3 +17,17 @@ interface Item { readonly text: string; }
 const objects: readonly Item[] = [{ text: 'item'.repeat(2) }];
 const emptyObjects: readonly Item[] = [];
 console.log(`${firstOrUndefined(objects)?.text ?? 'missing'} ${lastOrUndefined(emptyObjects)?.text ?? 'missing'}`);
+
+// Instantiations whose type parameter already includes undefined must keep it.
+const optionalNumbers: readonly (number | undefined)[] = [undefined, 0];
+console.log(`${firstOrUndefined(optionalNumbers)} ${lastOrUndefined(optionalNumbers)}`);
+
+// A separate result parameter exercises U | undefined through a callback.
+function project<T, U>(value: T, callback: (value: T) => U | undefined): U | undefined {
+    return callback(value);
+}
+function identity<T>(value: T): T { return value; }
+console.log(`${project<number, number>(0, value => identity(value))} ${project<number, number>(1, (value): number | undefined => undefined)}`);
+console.log(`${project<number, string>(0, value => ''.repeat(value))}|${project<number, string>(2, value => 'u'.repeat(value))}|${project<number, string>(1, (value): string | undefined => undefined)}`);
+const projected = project<number, Item>(2, value => ({ text: 'p'.repeat(value) }));
+console.log(projected?.text ?? 'missing');
