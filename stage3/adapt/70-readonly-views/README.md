@@ -1,10 +1,13 @@
 # Readonly views, adaptation 70
 
-This is a partial unit: one internal owner edit removes 22 measured refusals.
-The other 434 sites are retained and individually listed in [REMAINING.md](REMAINING.md).
+This is a partial unit. The first internal wave removed 22 measured refusals;
+the second removes four more, for 456 to 430 cumulatively.
+The other 430 sites are retained and individually listed in [REMAINING.md](REMAINING.md).
 I decline a blanket readonly conversion because the remaining mutation chains,
 generic views, inferred contracts and erased escapes have not all been proven.
-Public API declarations receive no edit.
+Public API readonly changes are now sanctioned by @system_adamic. Each public
+owner still requires the same no-write proof, plus exact API-snapshot attribution.
+The internal waves below make no public API edit.
 
 ## The edit
 
@@ -89,7 +92,8 @@ as the controlled proof.
 
 [PUBLIC_VIEWS.md](PUBLIC_VIEWS.md) lists 164 remaining sites whose wider target
 exactly matches an exported declaration or contract without `@internal`.
-They need @system_adamic's ruling. The other 270 are conservative declines,
+The user has now supplied @system_adamic's sanction; these sites remain listed
+until their own proofs and API attribution pass. The initial other 270 were conservative declines,
 not an assertion that all of their declarations are internal. Four sites have
 no explicit contextual owner resolved. Every remaining site's reason is in
 `REMAINING.md`; the complete stock-checker owner inventory is in
@@ -171,7 +175,10 @@ typescript.d.ts / should be acknowledged when they change`. The only baseline
 diff was `api/typescript.d.ts`, consisting of prerequisite adaptation 20's
 optional undefined additions. All other baseline comparisons passed.
 
-The requested empty original-baseline diff is therefore **not achieved**.
+The initial run did not achieve an empty original-baseline diff. The user has
+subsequently sanctioned exactly these mechanically proven 189 additions and
+instructed that this inherited difference counts as passing. Later waves accept
+only that proven snapshot in the disposable tree before running the oracle.
 Adaptation 20's README describes accepting a mechanically reconstructed API
 snapshot in its external tree. This unit does not change reference baselines,
 accept a snapshot to make the run green, or edit adaptation 20. The original
@@ -228,3 +235,52 @@ additional readonly owner edits, public API rulings, a reachable upstream bug,
 an empty diff against all original upstream references, the full native Adamic
 gate or native compilation of tsc. This unit changes only
 stage 3 adaptation tooling and type declarations in the disposable input tree.
+
+## Internal wave 2
+
+Seven more shallow slots are readonly: ParsedPatterns.matchableStringSet and
+patterns; Resolved.originalPath; ModuleResolutionState.reportDiagnostic; and
+ModuleSpecifierResult.kind, moduleSpecifiers and computedWithoutCache. Every
+owner's references, destructuring copies, zero writes and zero retained-view
+escapes are recorded in evidence/wave2/adapt.json. Binding patterns (including
+nullish fallback expressions ending in a binding pattern) copy slots out; they
+do not retain the receiver. Scalar assignment to a copied local cannot replace
+the original object's field. This proof concerns replacement of the shallow
+slot, not mutation inside a mutable field value.
+
+The controlled census is 434 to 430, four removed and zero added, with the
+same 2,168 checker diagnostics and no eligibility changes. The four removals
+are the reportDiagnostic callback view, a Resolved.originalPath view, the false
+computedWithoutCache view, and a ParsedPatterns set slot. All 10 emitted JS
+files are byte-identical. The second adaptation run changes zero files.
+Evidence is preserved separately under evidence/wave2.
+
+The direct-writer, structural-escape and public-owner mutants were independently
+rerun and all exited 1 before editing source. They remain the checks for an
+unselected public declaration until the public wave's explicit owner list is
+introduced. The actual-writing-view build mutant from wave 1 remains TS2540.
+
+ReusableBuilderProgramState.program is declined: observed writes at builder.ts
+326:5 and 619:5 and deletion at 2460:31 prevent readonly certification. Those
+operations are not by themselves proof of a reachable wrong-type insertion.
+SearchResult.value remains declined because of contextual any at the four
+previously listed sites. The broad field audit is preparatory evidence, not a
+claim that these alias paths or array element owners have been proven.
+
+Wave 2's default oracle passed: 106,367 passing, zero failures, zero pending,
+empty baseline diff. Before this run, adaptation 20's check-baselines.cjs
+mechanically verified exactly 189 optional additions and accepted that sanctioned
+API snapshot in the disposable checkout. Every other reference baseline remained
+byte-identical. No public readonly addition exists in this wave. The snapshot
+verification and oracle report are in evidence/wave2.
+
+Wave 2 commands (all output logged):
+
+```sh
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/adapt.cjs /tmp/adaptation70-before
+(cd /tmp/adaptation70-before && npm run build)
+LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation70-census /tmp/adaptation70-wave2-reference/src/compiler /tmp/adaptation70-wave2-before.jsonl
+LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation70-census /tmp/adaptation70-before/src/compiler /tmp/adaptation70-wave2-after.jsonl
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/20-optional-declarations/check-baselines.cjs /tmp/adaptation70-pristine /tmp/adaptation70-before /tmp/adaptation70-optional-owners.json --accept-api
+bash stage3/oracle/run.sh /tmp/adaptation70-before /tmp/adaptation70-wave2-oracle
+```

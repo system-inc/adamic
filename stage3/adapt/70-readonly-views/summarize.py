@@ -7,9 +7,9 @@ import json
 import pathlib
 import sys
 
-if len(sys.argv) != 6:
-    raise SystemExit('usage: summarize.py BEFORE_TREE BEFORE_JSONL AFTER_TREE AFTER_JSONL OUTPUT')
-before_tree, before_raw, after_tree, after_raw, out = map(pathlib.Path, sys.argv[1:])
+if len(sys.argv) not in (6, 7):
+    raise SystemExit('usage: summarize.py BEFORE_TREE BEFORE_JSONL AFTER_TREE AFTER_JSONL OUTPUT [REMAINING_PATH]')
+before_tree, before_raw, after_tree, after_raw, out = map(pathlib.Path, sys.argv[1:6])
 out.mkdir(parents=True, exist_ok=True)
 label = 'measured on a checker-rejected program'
 
@@ -71,7 +71,8 @@ text += f'{len(last)} unique sites. Every reason below is the exact latent reaso
 text += 'An entry is a retained refusal, not a claim of a reachable type violation. See README.md for declines and PUBLIC_VIEWS.md for public targets.\n\n'
 for site in sorted(last):
     text += f'- `{site[1]}`: {site[2]}\n'
-(out.parent / 'REMAINING.md').write_text(text)
+remaining_path = pathlib.Path(sys.argv[6]) if len(sys.argv) == 7 else out.parent / 'REMAINING.md'
+remaining_path.write_text(text)
 print(json.dumps({key: value for key, value in summary.items() if key in [
     'before', 'after', 'files_before', 'files_after', 'checker_diagnostics_before', 'checker_diagnostics_after',
     'checker_diagnostics_equal', 'changed_compiler_files', 'newly_eligible_units', 'no_longer_eligible_units']}, indent=2))

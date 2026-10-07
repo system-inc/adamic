@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// Only the audited internal evaluator result slot is owned by this wave.
+// Explicit owners are audited through the stock checker before any edit.
 const fs = require('node:fs');
 const path = require('node:path');
 const ts = require(process.env.CENSUS_TYPESCRIPT || 'typescript');
@@ -21,6 +21,13 @@ const program = ts.createProgram(roots, options);
 const checker = program.getTypeChecker();
 const selected = [
     { file: 'src/compiler/types.ts', declaration: 'EvaluatorResult', member: 'value' },
+    { file: 'src/compiler/utilities.ts', declaration: 'ParsedPatterns', member: 'matchableStringSet' },
+    { file: 'src/compiler/utilities.ts', declaration: 'ParsedPatterns', member: 'patterns' },
+    { file: 'src/compiler/moduleNameResolver.ts', declaration: 'Resolved', member: 'originalPath' },
+    { file: 'src/compiler/moduleNameResolver.ts', declaration: 'ModuleResolutionState', member: 'reportDiagnostic' },
+    { file: 'src/compiler/moduleSpecifiers.ts', declaration: 'ModuleSpecifierResult', member: 'kind' },
+    { file: 'src/compiler/moduleSpecifiers.ts', declaration: 'ModuleSpecifierResult', member: 'moduleSpecifiers' },
+    { file: 'src/compiler/moduleSpecifiers.ts', declaration: 'ModuleSpecifierResult', member: 'computedWithoutCache' },
 ];
 function location(node) {
     const file = node.getSourceFile();
@@ -46,7 +53,7 @@ const owners = selected.map(spec => {
     const members = literals.flatMap(node => [...node.members]).filter(node =>
         ts.isPropertySignature(node) && ts.isIdentifier(node.name) && node.name.text === spec.member);
     if (members.length !== 1 || !members[0].type) throw new Error(`unexpected slot: ${spec.declaration}.${spec.member}`);
-    return { ...spec, node: members[0], references: 0, writes: [], escapes: [] };
+    return { ...spec, node: members[0], references: 0, copies: [], writes: [], escapes: [] };
 });
 function property(type, name) { return checker.getPropertyOfType(checker.getNonNullableType(type), name); }
 function assignmentTarget(node) {
@@ -64,6 +71,22 @@ function assignmentTarget(node) {
         if (ts.isDeleteExpression(parent)) return parent;
         return undefined;
     }
+}
+function copiedReceiver(node) {
+    let current = node;
+    while (current.parent) {
+        const parent = current.parent;
+        if (ts.isParenthesizedExpression(parent) || ts.isNonNullExpression(parent) ||
+            (ts.isBinaryExpression(parent) && [ts.SyntaxKind.AmpersandAmpersandToken,
+                ts.SyntaxKind.BarBarToken, ts.SyntaxKind.QuestionQuestionToken].includes(parent.operatorToken.kind)) ||
+            (ts.isConditionalExpression(parent) && parent.condition !== current)) {
+            current = parent;
+            continue;
+        }
+        return ts.isVariableDeclaration(parent) && parent.initializer === current &&
+            (ts.isObjectBindingPattern(parent.name) || ts.isArrayBindingPattern(parent.name));
+    }
+    return false;
 }
 for (const file of program.getSourceFiles()) {
     if (!path.resolve(file.fileName).startsWith(tree + path.sep + 'src' + path.sep)) continue;
@@ -87,6 +110,14 @@ for (const file of program.getSourceFiles()) {
             const source = checker.getTypeAtLocation(node);
             for (const owner of owners) {
                 if (!ownerOf(property(source, owner.member), owner.node)) continue;
+                // Binding patterns copy values out of the receiver. They do not
+                // retain the receiver object or permit replacement of its slots.
+                // Rest bindings create a separate object too. Nested mutable
+                // values are a different owner from the selected shallow slot.
+                if (copiedReceiver(node)) {
+                    owner.copies.push(location(node));
+                    continue;
+                }
                 let target = checker.getContextualType(node);
                 if (ts.isAsExpression(node.parent) || ts.isTypeAssertionExpression(node.parent)) {
                     target = checker.getTypeFromTypeNode(node.parent.type);
