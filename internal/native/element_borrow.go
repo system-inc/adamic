@@ -17,9 +17,9 @@ import (
 //
 // It also gives the arrays they borrow from (lending). The borrow leans on the array staying alive in
 // its variable for the rest of the block, and changes can't see a move: a call to a function that
-// only reads its array still frees it when the parameter is consumed, as one an override maps in
-// place is (borrow_element_virtual_move.a, borrow_element_super_move.a). So reuse never moves an
-// array that lends (reusePlan.movable).
+// only reads its array still frees it when the parameter is consumed (borrow_element_super_move.a).
+// Virtual calls already stop borrowing because their static signatures cannot prove what runs.
+// Reuse never moves an array that lends (reusePlan.movable).
 func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
 	changing := changingFunctions(program)
 	borrows := map[*ir.Statement]bool{}
@@ -138,10 +138,11 @@ func changes(program *ir.Program, changing map[int]bool, list []ir.Statement) bo
 
 // unchanging reports whether an expression, on its own, can't take an element out of an array: a
 // pure one (borrow.go), an object literal, an array literal with no spread (reuse could take one
-// over), a push, a closure made but not called, or a call to a function that doesn't change any.
+// over), a push, an Error made without calling user code, a closure made but not called, or a call to a
+// function that doesn't change any. The walk still checks every operand, including an Error's message.
 func unchanging(changing map[int]bool, expression ir.Expression) bool {
 	switch expression := expression.(type) {
-	case ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.Defined:
+	case ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.MakeError, ir.Defined:
 		return true
 	case ir.ArrayLiteral:
 		for _, spread := range expression.Spread {
@@ -151,7 +152,9 @@ func unchanging(changing map[int]bool, expression ir.Expression) bool {
 		}
 		return true
 	case ir.Call:
-		return !changing[expression.Function]
+		// A virtual call names a static signature, not the implementation that runs.
+		// An override may remove elements even when that signature only reads.
+		return expression.Virtual == 0 && !changing[expression.Function]
 	}
 	return pureKind(expression)
 }
