@@ -1,0 +1,9 @@
+// Temporary registration facade until the shared .a harness lands.
+import type { RuleContext } from '../../context.ts';
+import { Listener } from './implementation.a';
+export class Rule {
+ readonly listener: Listener;
+ constructor(context: RuleContext) {this.listener = new Listener(context);}
+ visit(index: number, parent: number): void {this.listener.visit(index,parent);}
+}
+export function create(context: RuleContext): Rule {return new Rule(context);}

@@ -1,0 +1,4 @@
+const MyClassNames = ['!flex', flag ? '!block' : '!grid', flag && '!inline', '!hidden' || '!visible', `base ${'!contents'}`];
+mergeClassNames(('!flex'), '!block' as string, ['!grid']);
+theme.mergeClassNames('!flex'); const ignored='!flex';
+'😀'; mergeClassNames('\u0021flex');
