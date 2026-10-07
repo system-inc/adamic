@@ -36,6 +36,9 @@ func (p *predicateProof) refused(node *ast.Node, reason string) error {
 }
 
 func (l *lowering) provePredicate(node *ast.Node) error {
+	if l.censusPredicateMarkerContract(node) {
+		return nil
+	}
 	annotation := node.AsTypePredicateNode()
 	function := node.Parent
 	if !ast.IsFunctionLike(function) || function.Body() == nil || annotation.ParameterName.Kind != ast.KindIdentifier {
