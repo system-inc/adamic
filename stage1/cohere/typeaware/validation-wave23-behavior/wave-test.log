@@ -1,0 +1,23 @@
+=== RUN   TestWave23BehaviorAgreementAndMutants
+    wave_23_behavior_test.go:162: controls: 328 submitted roots; 326 Go-parse-valid roots
+    wave_23_behavior_test.go:164: controls: 75027 identical finding bytes; findings 200
+    wave_23_behavior_test.go:172: controls-asan: 75027 identical finding bytes; findings 200
+    wave_23_behavior_test.go:183: throw mutant: exit 0, empty stderr, byte oracle catches byte 56021
+    wave_23_behavior_test.go:183: backreference mutant: exit 0, empty stderr, byte oracle catches byte 3864
+    wave_23_behavior_test.go:183: arrow mutant: exit 0, empty stderr, byte oracle catches byte 334
+    wave_23_behavior_test.go:193: callback symbol origin mutant: exit 0, empty stderr, Go bytes catch byte 39245
+    wave_23_behavior_test.go:204: options--allow-named: 72223 identical finding bytes
+    wave_23_behavior_test.go:204: options--reject-unbound: 77661 identical finding bytes
+    wave_23_behavior_test.go:204: options--allow-named--reject-unbound: 74594 identical finding bytes
+    wave_23_behavior_test.go:214: repository: 18485 identical finding bytes; findings 0
+    wave_23_behavior_test.go:215: repository-asan: 18485 identical finding bytes; findings 0
+    wave_23_behavior_test.go:223: repository timing: native 284.503448ms, Go 132.085459ms; native stderr tsgo: load_ns=65528283 query_ns=8484546 queries=25 first_query_ns=754588 run_ns=214064026
+        ; Go stderr cohere: load_ns=65493822 rule_ns=6252671 run_ns=53473010
+    wave_23_behavior_test.go:214: compiler: 5318 identical finding bytes; findings 0
+    wave_23_behavior_test.go:215: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_23_behavior_test.go:223: compiler timing: native 2.279368549s, Go 377.094646ms; native stderr tsgo: load_ns=318469455 query_ns=231467546 queries=449 first_query_ns=14856830 run_ns=1924487951
+        ; Go stderr cohere: load_ns=256919955 rule_ns=68408077 run_ns=100878659
+    wave_23_behavior_test.go:243: released handle: normal exit 70; registry mutant caught by required released-handle error
+--- PASS: TestWave23BehaviorAgreementAndMutants (103.89s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	103.894s
