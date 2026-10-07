@@ -1,8 +1,8 @@
-Built: three retained helpers unchanged; both owned branches rebased onto origin/main b8fb957a; no new claims.
-Commits: rule branch pushed at 4a97dd6de; helper evidence commit follows this current-main rebase.
-Commands: owned helper tests and vet PASS again on b8fb957a; 4,470 cases and 820,676 matching Go bytes; six fresh rule witness/mutant suites and uncached inherited-field oracle also PASS.
-Mutants: twelve helper and seventeen rule semantic mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native again.
-Not covered: full gate, fresh broad rule corpus/performance on the new backend, normal harness integration and eleven frontend/capture exclusions; no new helper claim.
+Built: the three retained helpers rebased cleanly onto landed area/stage1-lint 7481e032; no new claims.
+Commits: this area validation follows previously pushed helper c88a20178; the owned rule rebase also completed cleanly.
+Commands: all three owned helper packages and vet PASS after the area rebase; 4,470 cases and 820,676 Go bytes match again.
+Mutants: all twelve helper semantic mutants compiled and were caught on source Node, emitted JavaScript and sanitized native.
+Not covered: full consuming-rule parity, new helper selection and full gate; the unified rule oracle is being checked before lifting the landing cap.
 
 ## Landing state
 
@@ -48,3 +48,9 @@ Rule descriptors use validated typescript-go ast.Kind names, not numeric kinds. 
 ## Latest current main revalidation
 
 Main advanced to b8fb957aa839a9e8cb0b54279dd9864fa317bd30 with the inherited static field read backend fix. Both owned branches rebased cleanly and retained that upstream change. All three owned helper tests passed again with -count=1 -v -timeout=10m, including all twelve compiling semantic mutants; owned helper vet passed with empty output. Logs: evidence/b8-helper-tests.log and evidence/b8-helper-vet.log. The rule branch was freshly revalidated with six raw-witness/mutant suites and overlay vet, then pushed at 4a97dd6de22d0932c9c290ccc9f36d4f141aa8e1. Its uncached inherited-field Node oracle also passed. Broad rule corpus and throughput observations above remain historical for the preceding backend. The named shared harness ab70f38d4 is not on main. No new claim follows the eleven frontend/capture exclusions, which extend beyond the only-harness parking condition on this tested main.
+
+## Landed area harness revalidation
+
+The harness 41eb6eab2 has landed through 50a5f105 and origin/area/stage1-lint is now 7481e0324e34a2537aafa9db7eeacda50405611b, incorporating main 39638d9e278d38bb5aeae887f46d55a70e47aaad. The ledger is byte-identical to the complete version already read and applied to the rule branch. Both owned branches rebased cleanly; helper foundation commits already in the area were skipped by git, and upstream shared files were retained without edits.
+
+Fresh commands: go test ./stage1/cohere/lint/helpers/from-wave1-13/at-rule ./stage1/cohere/lint/helpers/from-wave1-13/modifier ./stage1/cohere/lint/helpers/from-wave1-13/resolver -count=1 -v -timeout=10m, and go vet over those same packages. Output is recorded directly in evidence/area-helper-tests.log and evidence/area-helper-vet.log. All three packages passed, including the twelve mutants and the existing narrower dependency contracts. The top summary supersedes historical main and rule counts above. Rule branch dedup retains eight ports and two previously documented Nexus gaps. No new helper claim is made before unified rule validation.
