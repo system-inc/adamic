@@ -1,0 +1,6 @@
+{
+  "name": "omit-empty-export-fix",
+  "file": "rule.a",
+  "from": "'uselessEmptyExport', message, 'fix'",
+  "to": "'uselessEmptyExport', message, ''"
+}
