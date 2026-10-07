@@ -1,0 +1,48 @@
+// Rule-owned complete repair data until the shared Finding contract accepts arrays.
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+
+export class Edit {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    constructor(start: number, end: number, text: string) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+    }
+}
+export class Suggestion {
+    readonly id: string;
+    readonly message: string;
+    readonly edits: readonly Edit[];
+    constructor(id: string, message: string, edits: readonly Edit[]) {
+        this.id = id;
+        this.message = message;
+        this.edits = edits;
+    }
+}
+export class Diagnostic {
+    readonly start: number;
+    readonly end: number;
+    readonly id: string;
+    readonly message: string;
+    readonly fixes: readonly Edit[];
+    readonly suggestions: readonly Suggestion[];
+    constructor(start: number, end: number, id: string, message: string, fixes: readonly Edit[], suggestions: readonly Suggestion[]) {
+        this.start = start;
+        this.end = end;
+        this.id = id;
+        this.message = message;
+        this.fixes = fixes;
+        this.suggestions = suggestions;
+    }
+}
+export function report(context: RuleContext, index: number, id: string, message: string, fixes: readonly Edit[], suggestions: readonly Suggestion[]): Diagnostic {
+    return new Diagnostic(context.start(index), context.node(index).end, id, message, fixes, suggestions);
+}
+export function refuseShared(context: RuleContext, name: string): void {
+    if(context.enabled(name)) {
+        panic('NotYet: shared lint Finding must carry independent edit ranges, fix arrays and suggestion arrays; use the owned complete runner');
+    }
+}

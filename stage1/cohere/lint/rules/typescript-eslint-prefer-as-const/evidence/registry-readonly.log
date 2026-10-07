@@ -1,0 +1,3 @@
+Registry generation was not run: automatic approval review rejected its writes under shared .generated/.
+Read-only observation: registry/registry.go:95 reads each directory rule.ts; registry.go:187 generates imports ending in rule.ts.
+Current rule sources are .a. origin/codex/lint-harness-dot-a was absent on the fetched origin refs.

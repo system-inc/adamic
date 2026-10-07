@@ -1,0 +1,53 @@
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, Edit, report, refuseShared } from './repairs.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly diagnostics: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    matching(type: number, value: number): boolean {
+        const annotation = this.context.node(type);
+        if(annotation.kind !== 'LiteralType') { return false; }
+        const child = annotation.children[0];
+        if(child === undefined) { return false; }
+        const literal = this.context.node(child);
+        const initializer = this.context.node(value);
+        return (literal.kind === 'StringLiteral' || literal.kind === 'NumericLiteral') && literal.kind === initializer.kind && literal.text === initializer.text;
+    }
+    visit(index: number): void {
+        const node = this.context.node(index);
+        if(node.kind === 'AsExpression') {
+            const value = node.children[0]; const type = node.children[1];
+            if(value !== undefined && type !== undefined && this.matching(type, value)) {
+                this.diagnostics.push(report(this.context, type, 'preferAsConst', message, [new Edit(this.context.start(type), this.context.node(type).end, 'const')], []));
+            }
+            return;
+        }
+        if(node.kind !== 'VariableDeclaration' && node.kind !== 'PropertyDeclaration') { return; }
+        let first = -1;
+        for(let i = 0; i < node.children.length; i++) {
+            const child = node.children[i]; if(child === undefined) { continue; }
+            const kind = this.context.node(child).kind;
+            if(kind === 'Decorator' || kind.endsWith('Keyword')) { continue; }
+            first = i; break;
+        }
+        if(first < 0) { return; }
+        const name = node.children[first]; const type = node.children[first + 1]; const value = node.children[first + 2];
+        if(name === undefined || type === undefined || value === undefined || !this.matching(type, value)) { return; }
+        const canRepair = node.kind === 'PropertyDeclaration' || this.context.node(name).kind === 'Identifier';
+        const fixes: Edit[] = [];
+        if(canRepair) {
+            this.context.scanner.pos = this.context.node(name).end;
+            this.context.scanner.scan();
+            if(this.context.scanner.kind !== 'ColonToken') { return; }
+            fixes.push(new Edit(this.context.scanner.start, this.context.node(type).end, ''));
+            fixes.push(new Edit(this.context.node(value).end, this.context.node(value).end, ' as const'));
+        }
+        this.diagnostics.push(report(this.context, type, 'preferAsConst', message, fixes, []));
+    }
+}
+export function create(context: RuleContext): Rule {
+    refuseShared(context, '@typescript-eslint/prefer-as-const');
+    return new Rule(context);
+}
