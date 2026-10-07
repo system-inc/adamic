@@ -21,3 +21,18 @@ ports were found on fetched origin branches before this claim.
 `@typescript-eslint/no-misused-promises` and `@typescript-eslint/no-misused-spread`
 are unimplemented. Their reservations are released for reassignment.
 This wave is incomplete; see ../WAVE_21_REPORT.md.
+
+## Continuation claim
+
+After fetching all origin heads on October 7, 2026, the next three rules never
+named in any origin claim file and not ported on main (ef3d907e) or the bridge
+branch (5afbdb83) are reserved for this branch:
+
+| Original remaining position | Rule | Combined findings |
+| --- | --- | ---: |
+| 91 | nexus/correctness-no-collection-misuse | 0 |
+| 92 | nexus/correctness-no-discarded-outcome | 0 |
+| 93 | nexus/correctness-no-discarded-pure-result | 0 |
+
+Previously named rules, including explicitly released reservations, were skipped.
+This claim is pushed before implementation.
