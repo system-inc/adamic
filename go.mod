@@ -6,6 +6,13 @@ go 1.27
 // typescript-go's internals. They live in the cohere submodule: one checker for both, pinned
 // to cohere's TypeScript submodule commit (see internal/load/pin_test.go), with nothing copied.
 replace (
+	github.com/microsoft/TypeScript/tsc => ./cohere/TypeScript/tsc
+	github.com/system-inc/cohere => ./cohere
+	github.com/microsoft/TypeScript/tsc/shim/format => ./cohere/TypeScript-shim/format
+	github.com/microsoft/TypeScript/tsc/shim/incremental => ./cohere/TypeScript-shim/incremental
+	github.com/microsoft/TypeScript/tsc/shim/parser => ./cohere/TypeScript-shim/parser
+	github.com/system-inc/cohere/static_single_assignment => ./cohere/static_single_assignment
+	github.com/system-inc/cohere/mutation_aliasing => ./cohere/mutation_aliasing
 	github.com/microsoft/TypeScript/tsc/shim/ast => ./cohere/TypeScript-shim/ast
 	github.com/microsoft/TypeScript/tsc/shim/bundled => ./cohere/TypeScript-shim/bundled
 	github.com/microsoft/TypeScript/tsc/shim/checker => ./cohere/TypeScript-shim/checker
@@ -22,6 +29,7 @@ replace (
 )
 
 require (
+	github.com/system-inc/cohere v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/ast v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/bundled v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/checker v0.0.0

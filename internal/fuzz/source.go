@@ -155,7 +155,7 @@ func (t *sourceTree) parse() *parsedSource {
 	if t.parsed != nil {
 		return t.parsed
 	}
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: parseName(t.path), Path: tspath.Path(parseName(t.path))}, t.text, core.ScriptKindTS)
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(parseName(t.path)), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(parseName(t.path)))}, t.text, core.ScriptKindTS)
 	parsed := &parsedSource{clean: len(file.Diagnostics()) == 0}
 	comments := itemList{apart: true, trailingComma: -1}
 	commented := map[int]bool{}
