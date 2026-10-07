@@ -27,3 +27,44 @@ node /tmp/parser-slice-tool/stage3/slice/verify.cjs /tmp/parser-createSourceFile
 main.a now imports declaring modules directly. run.sh accepts --inputs TREE
 so parser source can come from a slice while the corpus remains the original
 81 files with the 2014ef06 full-tree dump hash.
+
+## Step 2: full tree green, raw slice fails module initialization
+
+The fully adapted parser ran on the fixed original 81-file corpus. Its output
+is byte-identical to the retained original full-tree dump: 35,456,964 bytes,
+SHA256 2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+The actual Node Identifier-end increment is still caught, exactly one line.
+
+The gathered parser slice emits zero bytes and exits 70. Its first failure is
+semver.ts Version.zero's static initialization calling Debug.assert while
+Debug is undefined. Diagnostic tracing (normal Node exit 1) retains the stack
+in evidence/slice-node-trace.stderr. No trace mode changes input declarations.
+A driver rooted in the preserved namespace facade still fails at that read.
+A semver-first driver control instead fails in binder.createFlowNode reading
+Debug.attachFlowNodeDebugInfo. Neither control is a delivered source repair.
+
+A source-level cause of the large gather is reached Debug.formatSyntaxKind
+at adapted debug.ts:444: (ts as Record<"SyntaxKind", Record<string, string | number>>).SyntaxKind.
+The shared tool's qualified-reference test only sees an Identifier's immediate
+PropertyAccessExpression/QualifiedName parent. Here ts has an AsExpression
+parent, so add(symbol, false) gathers every export of its module namespace.
+This is an inspected tool path, not proof that only that one path causes the
+complete expansion. No second tool or tool modification was made.
+
+The omission mutant removes exactly the exported createSourceFile span at
+original parser.ts:1344 (there is also a same-name namespace member at :1978).
+The unmodified byte audit passes; after omission it exits 1 at that span.
+Node then exits 1 for the missing createSourceFile export, a distinct error
+from the unmodified slice's load-time read. This proves omission detection by
+the byte audit and loader, not by comparison against a passing slice dump.
+The slice runtime equality requirement is unmet.
+
+```sh
+bash stage3/drivers/parser/run.sh /tmp/parser-area-adapted /tmp/parser-area-node-final --inputs /tmp/parser-adapted10 > /tmp/parser-area-node-final.log 2>&1
+cmp /tmp/parser-area-node-final/node.dump /tmp/parser-node10-final/node.dump > /tmp/parser-area-full-comparison.log 2>&1
+bash stage3/drivers/parser/run.sh /tmp/parser-driver-slice /tmp/parser-slice-node --inputs /tmp/parser-adapted10 > /tmp/parser-slice-node.log 2>&1
+```
+
+The driver's PrivateIdentifier text now goes through unescapeLeadingUnderscores
+so the adapted branded __String type is accepted. The full-tree oracle proves
+this leaves all emitted bytes unchanged.

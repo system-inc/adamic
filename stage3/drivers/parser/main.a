@@ -23,7 +23,7 @@ function nodeText(node: Node): string {
         case SyntaxKind.Identifier:
             return unescapeLeadingUnderscores((node as Identifier).escapedText);
         case SyntaxKind.PrivateIdentifier:
-            return (node as PrivateIdentifier).escapedText;
+            return unescapeLeadingUnderscores((node as PrivateIdentifier).escapedText);
         case SyntaxKind.NumericLiteral:
         case SyntaxKind.BigIntLiteral:
         case SyntaxKind.StringLiteral:
