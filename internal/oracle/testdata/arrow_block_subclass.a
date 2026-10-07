@@ -1,0 +1,7 @@
+class Box {
+  readonly id: number;
+  constructor(id: number) { this.id = id; }
+}
+class Child extends Box {}
+const next = (box: Box): Box => { return new Child(box.id + 1); };
+console.log(`${next(new Box(1)).id}`);
