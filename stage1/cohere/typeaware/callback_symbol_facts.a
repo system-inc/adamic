@@ -1,0 +1,25 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class CallbackSymbol {
+    id = 0;
+    declarations = 0;
+    shadowed = false;
+}
+// Raw symbol identity and declaration origins from the dedicated bridge question.
+export class CallbackSymbols {
+    readonly rules: Rules;
+    readonly cached = new Map<string, CallbackSymbol>();
+    constructor(rules: Rules) { this.rules = rules; }
+    get(index: number, read = false): CallbackSymbol {
+        const key = `${index}:${read}`;
+        const cached = this.cached.get(key);
+        if(cached !== undefined) { return cached; }
+        const result = new CallbackSymbol();
+        const question = read ? 'callback-symbol-facts\nread' : 'callback-symbol-facts';
+        const frames = new Frames(this.rules.ask(index, question));
+        header(frames, 'callback-symbol-facts');
+        result.id = frames.natural(); result.declarations = frames.natural();
+        for(let at = 0; at < result.declarations; at++) { if(!frames.yes()) { result.shadowed = true; } }
+        frames.end(); this.cached.set(key, result); return result;
+    }
+}

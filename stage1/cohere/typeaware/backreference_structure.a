@@ -1,0 +1,132 @@
+export class RegexPathNode {
+    readonly kind: string;
+    readonly negative: boolean;
+    constructor(kind: string, negative: boolean) { this.kind = kind; this.negative = negative; }
+}
+export class RegexCapture {
+    name = '';
+    number = 0;
+    start = 0;
+    end = 0;
+    readonly path: number[];
+    constructor(path: number[]) { this.path = path; }
+}
+export class BackreferenceStructure {
+    readonly pattern: string;
+    readonly flags: string;
+    readonly nodes: RegexPathNode[] = [];
+    readonly groups: RegexCapture[] = [];
+    readonly references: RegexCapture[] = [];
+    readonly stack: number[] = [];
+    readonly opened: number[] = [];
+    constructor(pattern: string, flags: string) { this.pattern = pattern; this.flags = flags; }
+    unicode(): boolean { return this.flags.includes('u') || this.flags.includes('v'); }
+    digit(index: number): boolean { const n = this.pattern.charCodeAt(index); return n >= 48 && n <= 57; }
+    hex(start: number, end: number): boolean {
+        for(let at = start; at < end; at++) { const n = this.pattern.charCodeAt(at); if(!(n >= 48 && n <= 57) && !(n >= 65 && n <= 70) && !(n >= 97 && n <= 102)) { return false; } }
+        return end <= this.pattern.length;
+    }
+    escape(index: number): number {
+        const p = this.pattern;
+        if(index + 1 >= p.length) { return -1; }
+        const next = p[index + 1] ?? '';
+        if(next === 'x' && this.hex(index + 2, index + 4)) { return index + 4; }
+        if(next === 'u' && this.hex(index + 2, index + 6)) { return index + 6; }
+        if(['u', 'p', 'P', 'q'].includes(next) && this.unicode() && p[index + 2] === '{') {
+            const close = p.indexOf('}', index + 3); if(close >= 0) { return close + 1; }
+        }
+        if(next === 'c' && index + 2 < p.length) { return index + 3; }
+        const high = p.charCodeAt(index + 1); const low = p.charCodeAt(index + 2);
+        return high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff ? index + 3 : index + 2;
+    }
+    classEnd(index: number): number {
+        let depth = 1; let at = index + 1;
+        while(at < this.pattern.length) {
+            const character = this.pattern[at];
+            if(character === '\\') { at = this.escape(at); if(at < 0) { return -1; } }
+            else if(character === '[' && this.flags.includes('v')) { depth++; at++; }
+            else if(character === ']') { depth--; at++; if(depth === 0) { return at; } }
+            else { at++; }
+        }
+        return -1;
+    }
+    push(kind: string, negative = false): void { this.nodes.push(new RegexPathNode(kind, negative)); this.stack.push(this.nodes.length - 1); }
+    pop(): void { this.stack.pop(); }
+    scan(): boolean {
+        const p = this.pattern; this.push('group'); this.push('alternative');
+        for(let at = 0; at < p.length;) {
+            if(p[at] === '\\') {
+                if(at + 1 >= p.length) { return false; }
+                let end = at + 1;
+                if(this.digit(end) && p[end] !== '0') {
+                    let value = 0;
+                    while(this.digit(end)) { value = value * 10 + p.charCodeAt(end) - 48; end++; }
+                    const reference = new RegexCapture(this.stack.slice()); reference.number = value; reference.start = at; reference.end = end; this.references.push(reference); at = end;
+                } else if(p[at + 1] === 'k' && p[at + 2] === '<' && p.indexOf('>', at + 3) >= 0) {
+                    end = p.indexOf('>', at + 3) + 1;
+                    const reference = new RegexCapture(this.stack.slice()); reference.name = p.slice(at + 3, end - 1); reference.start = at; reference.end = end; this.references.push(reference); at = end;
+                } else { at = this.escape(at); if(at < 0) { return false; } }
+            } else if(p[at] === '[') { at = this.classEnd(at); if(at < 0) { return false; } }
+            else if(p[at] === '(') {
+                let kind = 'capture'; let negative = false; let name = ''; let next = at + 1;
+                if(p[next] === '?') {
+                    const prefix = p[next + 1];
+                    if(prefix === ':') { kind = 'group'; next += 2; }
+                    else if(prefix === '=' || prefix === '!') { kind = 'ahead'; negative = prefix === '!'; next += 2; }
+                    else if(prefix === '<' && ['=', '!'].includes(p[next + 2] ?? '')) { kind = 'behind'; negative = p[next + 2] === '!'; next += 3; }
+                    else if(prefix === '<') { const close = p.indexOf('>', next + 2); if(close < 0) { kind = 'group'; next += 2; } else { name = p.slice(next + 2, close); next = close + 1; } }
+                    else { kind = 'group'; next += 2; }
+                }
+                this.push(kind, negative);
+                if(kind === 'capture') { const group = new RegexCapture(this.stack.slice()); group.name = name; group.start = at; this.groups.push(group); this.opened.push(this.groups.length - 1); }
+                else { this.opened.push(-1); }
+                this.push('alternative'); at = next;
+            } else if(p[at] === ')') {
+                if(this.opened.length === 0) { return false; }
+                this.pop(); const group = this.opened.pop() ?? -1;
+                if(group >= 0) { const value = this.groups[group]; if(value !== undefined) { value.end = at + 1; } }
+                this.pop(); at++;
+            } else if(p[at] === '|') { this.pop(); this.push('alternative'); at++; }
+            else { at++; }
+        }
+        return this.opened.length === 0;
+    }
+    valid(): boolean {
+        const named = this.groups.some((group) => group.name !== '');
+        for(const reference of this.references) {
+            if(reference.name !== '') { if((named || this.unicode()) && !this.groups.some((group) => group.name === reference.name)) { return false; } }
+            else if(this.unicode() && reference.number > this.groups.length) { return false; }
+        }
+        if(this.unicode()) {
+            for(let at = 0; at < this.pattern.length;) {
+                const character = this.pattern[at];
+                if(character === '\\') { at = this.escape(at); if(at < 0) { return false; } }
+                else if(character === '[') { at = this.classEnd(at); if(at < 0) { return false; } }
+                else if(character === '{') {
+                    let next = at + 1;
+                    while(this.digit(next)) { next++; }
+                    if(next === at + 1) { return false; }
+                    if(this.pattern[next] === ',') { next++; while(this.digit(next)) { next++; } }
+                    if(this.pattern[next] !== '}') { return false; } at++;
+                } else { at++; }
+            }
+        }
+        return true;
+    }
+    classify(reference: RegexCapture, group: RegexCapture): string {
+        if(group.start <= reference.start && reference.end <= group.end) { return 'nested'; }
+        let common = 1;
+        while(common < reference.path.length && common < group.path.length && reference.path[common] === group.path[common]) { common++; }
+        let backward = false;
+        for(let at = common - 1; at >= 0; at--) {
+            const node = this.nodes[reference.path[at] ?? -1];
+            if(node !== undefined && ['ahead', 'behind'].includes(node.kind)) { backward = node.kind === 'behind'; break; }
+        }
+        const first = this.nodes[group.path[common] ?? -1];
+        if(first !== undefined && first.kind === 'alternative') { return 'disjunctive'; }
+        if(!backward && reference.end <= group.start) { return 'forward'; }
+        if(backward && group.end <= reference.start) { return 'backward'; }
+        for(const index of group.path.slice(common)) { const node = this.nodes[index]; if(node !== undefined && node.negative && ['ahead', 'behind'].includes(node.kind)) { return 'intoNegativeLookaround'; } }
+        return '';
+    }
+}
