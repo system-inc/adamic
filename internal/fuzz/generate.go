@@ -47,6 +47,7 @@ var Features = []string{
 	"optional-chains",  // ?. and ?? through a linked list that may end anywhere
 	"number-formats",   // toExponential and toPrecision
 	"array-from",       // Array.from({ length }, callback)
+	"regions",          // statement regions: a fresh tree handed to a checker, and every near-miss that must stay on the heap
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -154,6 +155,11 @@ func (g *generator) program() *Program {
 		program.Block.Statements = append(program.Block.Statements, statement)
 	}
 	g.push()
+	// Regions opt into Weak. The import is type-only, and it has to lead the file; the trees it
+	// describes are written later, once every other declaration has taken its names.
+	if g.allowed("regions") {
+		add(statement("import type { Weak } from 'adamic';"))
+	}
 	add(statement("interface Holder {\n\tvalue: number;\n\tname: string;\n\tlist: number[];\n}"))
 	g.declare("holder.value", Number, true)
 	g.declare("holder.name", String, true)
@@ -227,6 +233,11 @@ func (g *generator) program() *Program {
 	for range 6 + g.random.IntN(14) {
 		add(g.statement())
 	}
+
+	// After the random statements, so leaving regions out keeps every earlier choice. The reads of
+	// kept values are statements of their own: a read inside the keeping statement would still see
+	// a region that ends only when that statement does.
+	g.writeRegions(add)
 
 	// Every global, printed last, so a write that went wrong shows even if nothing printed it.
 	var everything []*Expression

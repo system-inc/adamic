@@ -75,3 +75,43 @@ func TestShrinkKeepsOnlyWhatFails(t *testing.T) {
 		t.Error("shrinking changed the original program instead of a copy")
 	}
 }
+
+// Regions are on unless named in -without. Every program carries an honest statement region and the
+// near-misses that have to stay off it, and leaving the feature out drops that whole section.
+func TestRegionsFeature(t *testing.T) {
+	t.Parallel()
+	for seed := uint64(1); seed <= 12; seed++ {
+		source := Generate(seed).Source()
+		for _, piece := range []string{
+			"import type { Weak } from 'adamic';",
+			"throw new Error(",
+			"() => this.label",
+			"parent: Weak<",
+			"region-counted ",
+			"region-kept ",
+			"region-field-kept ",
+			"region-index-kept ",
+			"region-closure-kept ",
+			"region-map-kept ",
+			"region-returned ",
+			"region-paired ",
+			"region-both-kept ",
+			"region-caught ",
+			"region-weak-kept ",
+			"weak-parent ",
+			"region-box-later ",
+			"region-labels ",
+		} {
+			if !strings.Contains(source, piece) {
+				t.Errorf("seed %d: regions program missing %q", seed, piece)
+			}
+		}
+		off := GenerateWithout(seed, []string{"regions"}).Source()
+		if strings.Contains(off, "import type { Weak } from 'adamic'") || strings.Contains(off, "region-counted ") {
+			t.Errorf("seed %d: regions stayed on when the feature was left out", seed)
+		}
+		if strings.Contains(off, "() => this.label") {
+			t.Errorf("seed %d: a constructor capture remained with regions left out", seed)
+		}
+	}
+}
