@@ -1,0 +1,12 @@
+go-build 0 0.115249
+go 0 0.007706
+normal-build 0 2.469676
+normal 0 0.007613
+sanitized-build 0 6.07932
+sanitized 0 0.032102
+mutant-build 0 2.472875
+mutant 0 0.007595
+js-build 0 0.366998
+source 0 0.164651
+emitted 0 0.063949
+PASS actual source constant-expression folding, Go bytes, native, sanitizers, both Node modes and coercion mutant; binding resolution is not exercised

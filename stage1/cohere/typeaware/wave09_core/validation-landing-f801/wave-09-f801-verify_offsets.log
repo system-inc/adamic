@@ -1,0 +1,13 @@
+go-build 0 0.064181
+go 0 0.008256
+normal-build 0 0.369476
+normal 0 0.003479
+sanitized-build 0 0.669336
+sanitized 0 0.015836
+mutant-build 0 0.365962
+mutant 0 0.003566
+mutant caught at byte 0
+js-build 0 0.064496
+source 0 0.119402
+emitted 0 0.064088
+PASS cooked/raw Go byte maps, native, sanitizers, source Node, emitted JS

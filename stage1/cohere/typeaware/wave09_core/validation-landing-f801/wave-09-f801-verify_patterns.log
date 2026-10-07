@@ -1,0 +1,30 @@
+fixture rows 2616
+parser-go-build exit 0 seconds 0.046624
+parser-go exit 0 seconds 0.013877
+parser-normal-build exit 0 seconds 2.09318
+parser-normal exit 0 seconds 0.009605
+parser normal identical bytes 219914
+parser-sanitized-build exit 0 seconds 3.597849
+parser-sanitized exit 0 seconds 0.088308
+parser sanitized identical bytes 219914
+parser-mutant-build exit 0 seconds 2.176333
+parser-mutant exit 0 seconds 0.00946
+parser mutant caught at byte 2888
+parser-js-build exit 0 seconds 0.103164
+parser-js exit 0 seconds 0.110202
+parser-source-node exit 0 seconds 0.130151
+pattern-go-build exit 0 seconds 0.097673
+pattern-go exit 0 seconds 0.013853
+pattern-normal-build exit 0 seconds 2.23654
+pattern-normal exit 0 seconds 0.02356
+pattern normal identical bytes 242484
+pattern-sanitized-build exit 0 seconds 3.516664
+pattern-sanitized exit 0 seconds 0.136095
+pattern sanitized identical bytes 242484
+pattern-mutant-build exit 0 seconds 2.235986
+pattern-mutant exit 0 seconds 0.022956
+pattern mutant caught at byte 238
+pattern-js-build exit 0 seconds 0.125486
+pattern-js exit 0 seconds 0.100029
+pattern-source-node exit 0 seconds 0.122011
+PASS native parser and whole-pattern helpers, Go bytes, Node, mutants, sanitizers
