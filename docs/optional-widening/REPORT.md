@@ -326,3 +326,17 @@ git diff --check
 ```
 
 Exit 0: lower 42.590s, stage3/fixtures 29.361s, whole uncached oracle 150.221s. Vet and format logs are empty; whitespace check is clean. `evidence/class-repaired-gate.log` and `evidence/class-repaired-mutant-direct.log` preserve the merged-base results. The two repaired TypeScript-derived status records retain identical Node observations on this branch too. Function programs remain skipped for the other worker, and compound generic matching remains conservative.
+
+## Reachable never before write case (b), October 7 05:50
+
+The general trap, path audit, independent Node observations and run mutants are recorded in [NEVER.md](NEVER.md). Checked optional views and their write exceptions remain pending the shared interface-downcast entry point.
+
+## October 7 06:55 reduced-source correction
+
+The relation pass now calls the pinned checker’s getReducedType through a submodule bridge before asking which properties S declares. It discards impossible constituents, without treating the inhabited outer expression as unreachable. The exact three-line coverage reproducer is retained in lower/testdata/reduced_optional_union.a and passes the relation pass; an initialized executable neighbor matches Node in sanitized native, release native and JavaScript. The unreduced-source mutant fails the exact fixture with the former optional-id refusal.
+
+The historical 415-site census contained 144 selected constituents printed as never. Those rows are removed from the Markdown widening table; the JSON is preserved as historical evidence. The coverage worker’s 42 executing and five unobserved sites are not proofs of an unreachable source expression. No current remaining-refusals number for the adapted 391 sites is claimed before the shared checked read/write views land.
+
+The final contract is checked reads and checked writes, with proof-based erasure. Runtime writes must validate the actual class or record shape and slot contract, naming the property, real type and write location on exit 70. This remains unimplemented: origin/codex/interface-downcasts is still 6b50efe0 and has not published the required transitive-view entry point. Structural optional refusal stays active meanwhile. Function-typed developer programs remain assigned to codex/refusal-pass-rulings and are skipped.
+
+Reduction commit: 6b3f285e. Final restored command `ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./stage3/fixtures ./internal/oracle -count=1 -timeout 30m` passed: lower 49.747s, fixtures 37.896s, whole Node oracle 236.513s. Focused executable reduction probe passed 1.834s. Vet and diff checks are clean. Mutant runner and logs are retained in evidence/. Setup took 231s (Go 1s, clang 2s, Node 2s, submodules 3s, cache 231s); nproc is 5, quota 4.
