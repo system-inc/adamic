@@ -1,7 +1,8 @@
 import type { RuleContext } from '../../context.ts';
 import { message } from './messages.a';
 
-const pattern = new RegExp('^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?$');
+// Published translation: codex/lint-regex, tailwind/no_physical_direction.go:284.
+const pattern = /^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\[\]\/]+)?(?![\s\S])/gu;
 const prefixes = ['ml-', 'mr-', 'pl-', 'pr-', 'text-left', 'text-right', 'left-', 'right-', 'border-l', 'border-l-', 'border-r', 'border-r-', 'rounded-l', 'rounded-l-', 'rounded-r', 'rounded-r-', 'scroll-ml-', 'scroll-mr-', 'scroll-pl-', 'scroll-pr-'];
 const replacements = ['ms-', 'me-', 'ps-', 'pe-', 'text-start', 'text-end', 'start-', 'end-', 'border-s', 'border-s-', 'border-e', 'border-e-', 'rounded-s', 'rounded-s-', 'rounded-e', 'rounded-e-', 'scroll-ms-', 'scroll-me-', 'scroll-ps-', 'scroll-pe-'];
 
@@ -56,6 +57,7 @@ export class Rule {
         const tokens = fields(this.context.node(index).text);
         let looksLikeClasses = false;
         for(const token of tokens) {
+            pattern.lastIndex = 0;
             if(pattern.test(token)) {
                 looksLikeClasses = true;
             }

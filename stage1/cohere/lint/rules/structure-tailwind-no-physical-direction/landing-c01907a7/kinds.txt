@@ -1,0 +1,4 @@
+All 12 exported numeric listener declarations match the pinned Go parser on source Node, emitted JavaScript and sanitized native.
+NumericLiteral 8 -> 9 mutant caught on Node only by declaration output comparison; compile and exit successful.
+NumericLiteral 8 -> 9 mutant caught on JavaScript only by declaration output comparison; compile and exit successful.
+NumericLiteral 8 -> 9 mutant caught on native only by declaration output comparison; compile and exit successful.

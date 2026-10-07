@@ -1,0 +1,4 @@
+JSX/recovered-syntax exclusions: 9
+Captured original asserted tests: {"no-multi-str": 15, "no-nonoctal-decimal-escape": 27, "no-octal": 28}
+Nine excluded inputs explicitly refused on all three backends; Go succeeds.
+fixtures: Go/Node/emitted JavaScript/sanitized native identical, 26425 bytes

@@ -1,0 +1,4 @@
+One upstream JSX case excluded and independently probed below.
+Captured original asserted tests: {"@next/next/no-assign-module-variable": 13, "@typescript-eslint/default-param-last": 115, "structure/tailwind-no-physical-direction": 53}
+Go JSX finding reproduced; source Node, emitted JavaScript and sanitized native explicitly refuse it.
+fixtures: Go/Node/emitted JavaScript/sanitized native identical, 51192 bytes

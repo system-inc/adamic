@@ -1,0 +1,13 @@
+{
+  "rule": "no-physical-direction",
+  "file": "tailwind/no_physical_direction.go",
+  "line": 284,
+  "call": "MustCompile",
+  "expression": "`^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?$`",
+  "go_pattern": "^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?$",
+  "feature": "plain",
+  "id": "tailwind/no_physical_direction.go:284",
+  "js_pattern": "^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?(?![\\s\\S])",
+  "js_flags": "gu",
+  "status": "candidate, differential gate required"
+}
