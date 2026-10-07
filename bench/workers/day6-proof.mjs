@@ -49,7 +49,7 @@ try {
   const invalidStatus = path.join(directory, 'invalid-status.json');
   await writeFile(invalidStatus, JSON.stringify({ ...suite, workloads: [{ ...suite.workloads[0], expectedStatus: 201 }] }));
   await assert.rejects(() => run({ ...options, suite: invalidStatus, output: path.join(directory, 'status-refused.json') }), /unexpected status/);
-  const guard = "      if (spec.expectedStatus !== undefined && response.status !== spec.expectedStatus) {\n        throw new Error(`unexpected status for ${workload.name} request ${index}: ${response.status}, expected ${spec.expectedStatus}`);\n      }";
+  const guard = "        if (spec.expectedStatus !== undefined && response.status !== spec.expectedStatus) {\n          throw new Error(`unexpected status for ${workload.name} request ${index}: ${response.status}, expected ${spec.expectedStatus}`);\n        }";
   const status = await mutant('drop-status-check', guard, '');
   await assert.rejects(() => assert.rejects(() => status.run({ ...options, suite: invalidStatus, output: path.join(directory, 'status-mutant.json') }), /unexpected status/), /Missing expected rejection/);
   evidence.proofs.push({ name: 'drop expected status mutant', caught: 'refusal assertion fails; mutant timed the wrong status' });

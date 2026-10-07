@@ -135,7 +135,7 @@ export async function runDay6(input) {
       await writeFile(output, JSON.stringify(report, null, 2) + '\n'); return report;
     }
     const report = await run(benchOptions, {
-      onSample: s => console.log(`round ${s.round + 1}: ${s.workload}, c=${s.concurrency}, ${s.variant}: p50=${s.latencyMs.p50.toFixed(3)} ms`),
+      onSample: s => console.log(`round ${s.round + 1}: ${s.workload}, c=${s.concurrency}, ${s.variant}: ${s.valid === false ? `FAILED ${s.error}` : `p50=${s.latencyMs.p50.toFixed(3)} ms`}; retries measured/warmup=${s.measuredRetryCount}/${s.warmupRetryCount}`),
       onRound: r => console.log(`round ${r.round + 1} loads: ${r.loadBefore} -> ${r.loadAfter}`),
     });
     report.header.day6 = provenance;

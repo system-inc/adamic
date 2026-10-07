@@ -260,3 +260,13 @@ sizes and status refusal. Source mutants drop the request-count override,
 after-round load and expected-status check; each must fail its intended check.
 Run the original `prove.mjs` too to retain CPU, wrong-PID, correctness and warmup
 proofs. Nothing in the day-6 unit changes or optimizes the compiler.
+
+A reused keep-alive socket that fails with ECONNRESET or EPIPE before any response
+bytes arrive is retried once on a fresh socket. The original latency timer and
+timeout cover both attempts. JSON and the per-cell table count measured and
+warmup retries separately. Cells with more than 1% retries among measured
+requests or among all configured requests, and requests that fail twice, are
+marked failed and excluded from timing aggregates. No extra settling pause is
+added. Run `node bench/workers/retry-proof.mjs /tmp/workers-retry-proofs` with
+output redirected to a scratch log to prove counting, fresh sockets, response
+byte refusal, the original timer, the threshold and the corresponding mutants.
