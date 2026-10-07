@@ -1,0 +1,4 @@
+export function updateExpression<N>(operand: N,patternReads: (node: N) => void,patternWrites: (node: N) => void): void {
+ patternReads(operand);
+ patternWrites(operand);
+}

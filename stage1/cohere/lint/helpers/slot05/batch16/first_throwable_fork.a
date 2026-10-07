@@ -1,0 +1,17 @@
+import {panic} from 'adamic';
+export interface ThrowableFrame {thrownForked: boolean;thrownAny: boolean;}
+export interface ThrowableState<B> {cur: B;readonly frames: readonly ThrowableFrame[];}
+export function firstThrowableFork<B>(state: ThrowableState<B>,reachable: (block: B) => boolean,throwFrame: () => number,throwTarget: (frame: ThrowableFrame) => B,link: (from: B,to: B) => void,newBlock: () => B,enter: (block: B) => void): void {
+ if(!reachable(state.cur)) {return;}
+ const index=throwFrame();
+ if(index < 0) {return;}
+ const frame=state.frames[index];
+ if(frame === undefined) {panic('invalid throw frame');}
+ if(frame.thrownForked) {return;}
+ frame.thrownForked=true;
+ frame.thrownAny=true;
+ link(state.cur,throwTarget(frame));
+ const next=newBlock();
+ link(state.cur,next);
+ enter(next);
+}

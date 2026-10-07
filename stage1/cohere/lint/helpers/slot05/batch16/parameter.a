@@ -1,0 +1,7 @@
+export interface Parameter<N> {readonly type: N;readonly name: N;readonly initializer: N;}
+export function parameter<N>(node: N,asParameter: (node: N) => Parameter<N> | undefined,expr: (node: N) => void,bindWithDefault: (name: N,initializer: N) => void): void {
+ const declaration=asParameter(node);
+ if(declaration === undefined) {return;}
+ expr(declaration.type);
+ bindWithDefault(declaration.name,declaration.initializer);
+}

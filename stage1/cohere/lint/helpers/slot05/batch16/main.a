@@ -1,0 +1,34 @@
+import {panic,readTextFile,programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {updateExpression} from './update_expression.a';
+import {parameter} from './parameter.a';
+import {firstThrowableFork} from './first_throwable_fork.a';
+import type {ThrowableFrame,ThrowableState} from './first_throwable_fork.a';
+interface Node {readonly id:number;}
+interface Block {readonly id:number;reachable:boolean;incoming:boolean;}
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));if(input.kind === 'Error') {panic(input.message);}
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0){panic(json.error);}
+function field(index:number,name:string):number{return json.field(index,name);}
+function number(index:number):number{return Number(json.node(index).text);}
+function bool(index:number):boolean{return json.node(index).text === 'true';}
+const mode=json.node(field(root,'mode')).text;
+for(const row of json.node(field(root,'rows')).children){
+ let trace='';
+ if(mode !== 'fork') {
+  const arena:Node[]=[];for(let i=0;i<5;i+=1){arena.push({id:i});}
+  const node=(id:number):Node | undefined=>{if(id<0){return undefined;}return arena[id] ?? panic('bad node');};
+  const id=(n:Node | undefined):number=>n === undefined ? -1 : n.id;
+  const operand=node(number(field(row,'Node')));
+  if(mode === 'update'){updateExpression(operand,(n:Node | undefined):void=>{if(n !== operand){panic('operand identity');}trace+=`read:${id(n)};`;},(n:Node | undefined):void=>{if(n !== operand){panic('operand identity');}trace+=`write:${id(n)};`;});}
+  else {parameter(operand,(n:Node | undefined)=>{if(n !== operand){panic('parameter identity');}return {type:node(number(field(row,'Type'))),name:node(number(field(row,'Name'))),initializer:node(number(field(row,'Initializer')))};},(n:Node | undefined):void=>{trace+=`expr:${id(n)};`;},(name:Node | undefined,init:Node | undefined):void=>{trace+=`bind:${id(name)}:${id(init)};`;});}
+  console.log(trace);continue;
+ }
+ const blocks:Block[]=[];for(let i=0;i<6;i+=1){blocks.push({id:i,reachable:i === 0 && bool(field(row,'Reachable')),incoming:false});}
+ const frames:ThrowableFrame[]=[];for(const f of json.node(field(row,'Frames')).children){frames.push({thrownForked:bool(field(f,'Forked')),thrownAny:bool(field(f,'Any'))});}
+ const state:ThrowableState<Block | undefined>={cur:blocks[0] ?? panic('missing current'),frames};
+ const index=number(field(row,'Index'));const target=number(field(row,'Target'));
+ const blockID=(b:Block | undefined):number=>b === undefined ? -1 : b.id;
+ for(let repeat=0;repeat<2;repeat+=1){firstThrowableFork(state,(b:Block | undefined):boolean=>b !== undefined && b.reachable,():number=>{trace+=`frame:${index};`;return index;},(f:ThrowableFrame):Block | undefined=>{if(f !== frames[index]){panic('frame identity');}trace+=`target:${target};`;return target < 0 ? undefined : blocks[target];},(from:Block | undefined,to:Block | undefined):void=>{let flags='';for(const f of frames){flags+=`${f.thrownForked}:${f.thrownAny},`;}trace+=`link:${blockID(from)}:${blockID(to)}:${flags};`;if(from !== undefined && from.reachable && to !== undefined){to.incoming=true;}},():Block=>{const b:Block={id:blocks.length,reachable:false,incoming:false};blocks.push(b);trace+=`new:${b.id};`;return b;},(b:Block | undefined):void=>{if(b === undefined){panic('nil continuation');}trace+=`enter:${b.id};`;b.reachable=b.incoming;state.cur=b;});}
+ let flags='';for(const f of frames){flags+=`${f.thrownForked}:${f.thrownAny},`;}
+ console.log(`${blockID(state.cur)}:${state.cur !== undefined && state.cur.reachable}|${flags}|${trace}`);
+}
