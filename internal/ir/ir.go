@@ -422,7 +422,11 @@ type (
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
-	TypeOf struct{ Value Expression }
+	TypeOf struct {
+		Value Expression
+		// Null says a missing reference is null, not undefined. Their native pointer is the same.
+		Null bool
+	}
 
 	// MakeError is an Error with Message and an optional Name (nil means "Error").
 	MakeError struct{ Message, Name Expression }

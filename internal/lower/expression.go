@@ -434,7 +434,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		return ir.TypeOf{Value: operand}, nil
+		return ir.TypeOf{Value: operand, Null: l.typeOfNull(node.AsTypeOfExpression().Expression)}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {

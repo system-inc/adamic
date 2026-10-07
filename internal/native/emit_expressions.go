@@ -205,17 +205,26 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Narrow:
 		return e.narrow(expression)
 	case ir.TypeOf:
+		if _, literal := expression.Value.(ir.Null); literal {
+			return e.typeOf(expression.Value, true)
+		}
 		// Built-in identities are opaque heap headers, not class objects with slots.
 		if _, intrinsic := expression.Value.(ir.LibraryGlobal); intrinsic {
-			return e.typeOf(expression.Value)
+			return e.typeOf(expression.Value, expression.Null)
 		}
-		if expression.Value.Type() == ir.Object {
-			return fmt.Sprintf("adamic_object_typeof(%s)", e.value(expression.Value))
+		if expression.Value.Type() == ir.Object || expression.Value.Type() == ir.Union {
+			operand := e.value(expression.Value)
+			helper := "adamic_object_typeof"
+			if expression.Value.Type() == ir.Union {
+				helper = "adamic_static_union_typeof"
+			}
+			result := fmt.Sprintf("%s(%s)", helper, operand)
+			if expression.Null {
+				result = fmt.Sprintf("(%s == NULL ? &adamic_typeof_object : %s)", operand, result)
+			}
+			return result
 		}
-		if expression.Value.Type() == ir.Union {
-			return fmt.Sprintf("adamic_static_union_typeof(%s)", e.value(expression.Value))
-		}
-		return e.typeOf(expression.Value)
+		return e.typeOf(expression.Value, expression.Null)
 	case ir.UnionToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_union_to_string(%s)", e.value(expression.Value)))
 	case ir.Coalesce:
