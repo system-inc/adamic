@@ -1,0 +1,37 @@
+package main
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "strings"
+ "unicode/utf8"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+ "github.com/microsoft/TypeScript/tsc/shim/tspath"
+)
+func main() {
+ data, err := os.ReadFile(os.Args[1]); if err != nil { panic(err) }
+ var records []map[string]any
+ for _, row := range strings.Split(string(data), "\n") {
+  if row == "" { continue }
+  fields := strings.Split(row, "\t"); path := fields[0]
+  source, err := os.ReadFile(path); if err != nil { panic(err) }; text := string(source)
+  kind := core.ScriptKindTS
+  if strings.HasSuffix(path, ".tsx") { kind = core.ScriptKindTSX }; if strings.HasSuffix(path, ".jsx") { kind = core.ScriptKindJSX }; if strings.HasSuffix(path, ".js") { kind = core.ScriptKindJS }
+  file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:path, Path:tspath.Path(path)}, text, kind)
+  offsets := map[int]int{}; unit := 0
+  for pos, point := range text { offsets[pos] = unit; if point > 65535 { unit += 2 } else { unit++ }; offsets[pos+utf8.RuneLen(point)] = unit }; offsets[len(text)] = unit
+  var nodes []map[string]any
+  var visit func(*ast.Node) int
+  visit = func(node *ast.Node) int {
+   children := []int{}; node.ForEachChild(func(child *ast.Node) bool { children = append(children, visit(child)); return false })
+   value := ""
+   if node.Kind == ast.KindIdentifier || ast.IsStringLiteralLike(node) { value = node.Text() }
+   nodes = append(nodes, map[string]any{"kind":strings.TrimPrefix(node.Kind.String(),"Kind"),"pos":offsets[node.Pos()],"end":offsets[node.End()],"children":children,"text":value})
+   return len(nodes)-1
+  }
+  root := visit(file.AsNode()); records = append(records,map[string]any{"path":path,"source":text,"rule":fields[1],"nodes":nodes,"root":root})
+ }
+ if err := json.NewEncoder(os.Stdout).Encode(records); err != nil { panic(fmt.Sprint(err)) }
+}

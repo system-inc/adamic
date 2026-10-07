@@ -1,0 +1,1 @@
+export const noCssTags = "This is a manual stylesheet <link>. Next builds and versions its own CSS, so a hand-written link to a local stylesheet is not fingerprinted, not bundled, and will serve a stale file from cache after a deploy. Import the stylesheet instead and let the framework emit the tag.";
