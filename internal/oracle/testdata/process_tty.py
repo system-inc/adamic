@@ -7,6 +7,7 @@ import pty
 import subprocess
 import sys
 import tempfile
+import threading
 
 streams = []
 masters = []
@@ -24,25 +25,43 @@ for key in ["NO_COLOR", "FORCE_COLOR", "ADAMIC_PROCESS_TEST"]:
 environment.update(json.loads(sys.argv[3]))
 environment["ASAN_OPTIONS"] = "detect_leaks=0"
 child = subprocess.Popen(sys.argv[4:], stdout=streams[0], stderr=streams[1], env=environment)
+
+
+def drain(master, parts):
+    while True:
+        try:
+            part = os.read(master, 4096)
+        except OSError as error:
+            if error.errno != errno.EIO:
+                raise
+            break
+        if not part:
+            break
+        parts.append(part)
+
+
+# Each terminal is read while the child runs: macOS drops what a terminal holds once its
+# last writer closes, where Linux keeps it readable until EIO.
+readers = []
+for stream, master in zip(streams, masters):
+    parts = []
+    reading = None
+    if master is not None:
+        stream.close()
+        reading = threading.Thread(target=drain, args=(master, parts))
+        reading.start()
+    readers.append((reading, parts))
 child.wait(timeout=15)
 outputs = []
-for stream, master in zip(streams, masters):
+for stream, master, (reading, parts) in zip(streams, masters, readers):
     if master is None:
         stream.seek(0)
         output = stream.read()
     else:
-        stream.close()
-        output = b""
-        while True:
-            try:
-                part = os.read(master, 4096)
-            except OSError as error:
-                if error.errno != errno.EIO:
-                    raise
-                break
-            if not part:
-                break
-            output += part
+        reading.join(timeout=15)
+        if reading.is_alive():
+            raise RuntimeError("terminal reader did not finish")
+        output = b"".join(parts)
         os.close(master)
     stream.close()
     outputs.append(base64.b64encode(output).decode("ascii"))

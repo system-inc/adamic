@@ -204,9 +204,9 @@ func (l *lowering) touch(local int) {
 }
 
 // checked reports whether touching a local must be checked against the temporal dead zone: a
-// global, from inside a function, which may run before the global's declaration has.
+// global reached from a function or a cyclic module body may precede its declaration.
 func (l *lowering) checked(local int) bool {
-	return l.function != nil && l.result.Locals[local].Global
+	return l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)
 }
 
 func (l *lowering) constant(value string) int {

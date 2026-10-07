@@ -24,6 +24,11 @@ func (l *lowering) staticBase(declaration *ast.Node) *ast.Node {
 	return nil
 }
 func (l *lowering) needsStatics(declaration *ast.Node) bool {
+	// A class is in the temporal dead zone even when it has no static members.
+	// Cyclic graphs need the same ready storage for construction and extends.
+	if l.cyclicModules {
+		return true
+	}
 	for _, member := range declaration.Members() {
 		if member.Kind == ast.KindClassStaticBlockDeclaration || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			return true
@@ -227,7 +232,21 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 	if lowered.base != nil {
 		parent := l.staticBase(declaration)
 		slot := l.result.Classes[lowered.class-1].StaticParent - 1
-		fields[slot].Value = ir.Read{Local: l.staticGlobals[l.symbol(parent.Name())], Of: ir.Object, Checked: true}
+		// Extends reads the public binding, whose name and ready point belong to
+		// the source class, rather than the internal storage initialized earlier.
+		checked := true
+		for _, clause := range nodesOf(declaration.AsClassDeclaration().HeritageClauses) {
+			if clause.AsHeritageClause().Token != ast.KindExtendsKeyword {
+				continue
+			}
+			for _, element := range clause.AsHeritageClause().Types.Nodes {
+				expression := ast.SkipParentheses(element.AsExpressionWithTypeArguments().Expression)
+				if l.symbol(expression) == l.symbol(parent.Name()) {
+					checked = !l.provenModuleReads[expression]
+				}
+			}
+		}
+		fields[slot].Value = ir.Read{Local: l.locals[l.symbol(parent.Name())], Of: ir.Object, Checked: checked}
 	}
 	object := ir.Read{Local: l.staticGlobals[l.symbol(declaration.Name())], Of: ir.Object}
 	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{Fields: fields, Class: lowered.class}}}
@@ -505,7 +524,7 @@ func (l *lowering) staticClassRead(node *ast.Node) (ir.Expression, bool) {
 	if !exists || !insideClass(node, declaration) {
 		return nil, false
 	}
-	return ir.Read{Local: local, Of: ir.Object, Checked: true}, true
+	return ir.Read{Local: local, Of: ir.Object, Checked: !l.provenModuleReads[node]}, true
 }
 
 // Looking up the constructor precedes evaluating new's arguments. Instance allocators
@@ -516,7 +535,8 @@ func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int,
 	if !hasStorage {
 		return ir.Call{Function: constructor, Arguments: arguments, Returns: ir.Object}
 	}
-	receiver := ir.Expression(ir.Read{Local: l.locals[symbol], Of: ir.Object, Checked: true})
+	expression := ast.SkipParentheses(node.AsNewExpression().Expression)
+	receiver := ir.Expression(ir.Read{Local: l.locals[symbol], Of: ir.Object, Checked: !l.provenModuleReads[expression]})
 	if inner, handled := l.staticClassRead(ast.SkipParentheses(node.AsNewExpression().Expression)); handled {
 		receiver = inner
 	}

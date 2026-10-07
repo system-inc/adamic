@@ -1,0 +1,41 @@
+// Print UTF-16 length and a lossless run-length encoding of every code point.
+function show(label: string, text: string): void {
+	let runs = '';
+	let previous = -1;
+	let count = 0;
+	for (const character of text) {
+		const point = character.codePointAt(0) ?? -1;
+		if (point === previous) {
+			count++;
+		} else {
+			if (count > 0) runs = runs + `${previous.toString(16)}:${count},`;
+			previous = point;
+			count = 1;
+		}
+	}
+	if (count > 0) runs = runs + `${previous.toString(16)}:${count},`;
+	console.log(`${label} ${text.length} ${runs}`);
+}
+function check(label: string, text: string): void {
+	for (const form of ['NFC', 'NFD', 'NFKC', 'NFKD']) {
+		const result = text.normalize(form);
+		show(`${label} ${form}`, result);
+		show(`${label} ${form} again`, result.normalize(form));
+	}
+}
+
+// Visit all direct-mapped class/mapping slots repeatedly, including collisions and misses.
+let text = '';
+for (let pass = 0; pass < 3; pass++) {
+	for (let point = 0x300; point < 0x400; point++) text = text + 'A' + String.fromCharCode(point);
+	for (let point = 0xa0; point < 0x300; point++) text = text + String.fromCharCode(point);
+}
+check('colliding keys', text);
+// Pair-cache positive and negative entries, then revisit earlier pairs.
+for (let pass = 0; pass < 3; pass++) {
+	let pairs = '';
+	for (let base = 65; base < 123; base++) {
+		for (const mark of ['́', '̀', '̊', '̣']) pairs = pairs + String.fromCharCode(base) + mark;
+	}
+	check(`pairs ${pass}`, pairs);
+}

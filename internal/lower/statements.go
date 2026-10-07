@@ -26,7 +26,7 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
-	case ast.KindImportDeclaration:
+	case ast.KindImportDeclaration, ast.KindExportDeclaration:
 		// What an import brings in is resolved through the checker at each use, and the module it
 		// names runs first (moduleOrder).
 		return nil, nil
@@ -181,7 +181,11 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	}
 	expression := node.AsReturnStatement().Expression
 	if expression == nil {
-		return []ir.Statement{ir.Return{}}, nil
+		returned := ir.Return{}
+		if l.function.Returns != 0 {
+			returned.Value = fit(ir.Undefined{}, l.function.Returns)
+		}
+		return []ir.Statement{returned}, nil
 	}
 	if l.isPanicCall(expression) || l.isProcessExit(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.

@@ -3,39 +3,53 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
 // depth-first in the order they're written, then the module itself. The prelude's 'adamic' module
-// has no body to run. An import cycle is refused, as 0.1 says (docs/0.1.md).
+// has no body to run. A module already in progress is the cycle back edge and is skipped.
 func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
+	order, cyclic := esmModuleOrder(l.checker, entry)
+	l.cyclicModules = cyclic
+	if cyclic {
+		if err := l.loadTimeReads(order); err != nil {
+			return nil, err
+		}
+	}
+	return order, nil
+}
+
+// esmModuleOrder is shared with the source-ledger audit so it measures the
+// compiler's actual scheduling proof, rather than replaying observed Node order.
+func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool) {
 	order := []*ast.SourceFile{}
 	state := map[*ast.SourceFile]int{} // 1 while its imports are being visited, 2 once placed
-	var visit func(module *ast.SourceFile, from *ast.Node) error
-	visit = func(module *ast.SourceFile, from *ast.Node) error {
+	cyclic := false
+	var visit func(module *ast.SourceFile)
+	visit = func(module *ast.SourceFile) {
 		switch state[module] {
 		case 1:
-			return &Refused{Where: l.program.Where(from), What: "an import cycle", Fix: "move what both modules need into a third that neither imports"}
+			cyclic = true
+			return
 		case 2:
-			return nil
+			return
 		}
 		state[module] = 1
 		for _, statement := range module.Statements.Nodes {
 			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {
 				continue
 			}
-			if statement.Kind == ast.KindExportDeclaration && statement.AsExportDeclaration().IsTypeOnly {
-				// A whole type-only export is erased, including its dependency. Inline type
-				// specifiers leave a module request, so those still run in source order.
+			if !runtimeModuleStatement(statement) {
 				continue
 			}
 			specifier := statement.ModuleSpecifier()
 			if specifier == nil {
 				continue
 			}
-			target := l.checker.GetSymbolAtLocation(specifier)
+			target := typeChecker.GetSymbolAtLocation(specifier)
 			if target == nil || len(target.Declarations) == 0 || target.Declarations[0].Kind != ast.KindSourceFile {
 				// 'adamic' is an ambient module in the prelude: nothing to run.
 				continue
@@ -44,18 +58,13 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 			if load.IsPrelude(imported) || load.IsLibrary(imported) {
 				continue
 			}
-			if err := visit(imported, statement); err != nil {
-				return err
-			}
+			visit(imported)
 		}
 		state[module] = 2
 		order = append(order, module)
-		return nil
 	}
-	if err := visit(entry, entry.AsNode()); err != nil {
-		return nil, err
-	}
-	return order, nil
+	visit(entry)
+	return order, cyclic
 }
 
 // declareModule registers the module's globals and functions before anything is lowered, so a
@@ -99,17 +108,13 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				}
 			}
 		case ast.KindEnumDeclaration:
-			symbol := l.symbol(statement.Name())
-			if symbol == nil || len(symbol.Declarations) != 1 {
-				return l.notYet(statement, "a merged enum")
+			if !ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {
+				local, err := l.enumLocal(statement)
+				if err != nil {
+					return err
+				}
+				l.result.Locals[local].Global = true
 			}
-			if l.locals == nil {
-				l.locals = map[*ast.Symbol]int{}
-			}
-			local := len(l.result.Locals)
-			l.locals[symbol] = local
-			l.result.Locals = append(l.result.Locals, ir.Local{Name: statement.Name().Text(), Type: ir.Object, Global: true, Function: -1})
-			l.noteLocal(local, l.checker.GetTypeOfSymbol(symbol), statement.Name())
 		case ast.KindClassDeclaration:
 			if l.classes == nil {
 				l.classes = map[*ast.Symbol]*ast.Node{}
@@ -162,4 +167,14 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 		}
 	}
 	return nil
+}
+
+// Explicit type imports and exports have no ESM evaluation edge. With verbatimModuleSyntax,
+// even an empty named import after inline type stripping still evaluates its module.
+func runtimeModuleStatement(statement *ast.Node) bool {
+	if statement.Kind == ast.KindImportDeclaration {
+		clause := statement.AsImportDeclaration().ImportClause
+		return clause == nil || !clause.IsTypeOnly()
+	}
+	return !statement.AsExportDeclaration().IsTypeOnly
 }

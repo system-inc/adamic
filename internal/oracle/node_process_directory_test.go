@@ -14,7 +14,11 @@ import (
 // Runtime and emitter proof only: shared declaration and source-lowering integration is pending.
 func TestNodeProcessDirectoryRuntime(t *testing.T) {
 	t.Parallel()
-	scratch := t.TempDir()
+	// Canonical, so cwd() reads back what chdir was given: macOS's /tmp is a link to /private/tmp.
+	scratch, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
 	child, missing := filepath.Join(scratch, "child"), filepath.Join(scratch, "absent")
 	if err := os.Mkdir(child, 0700); err != nil {
 		t.Fatal(err)

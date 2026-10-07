@@ -228,6 +228,9 @@ func (b *builder) statement(at *ir.Statement) {
 		if depth < 0 {
 			panic("flow: unknown break target")
 		}
+		if statement.Label == "" {
+			depth -= statement.Depth
+		}
 		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
 	case ir.Continue:
 		for index := len(b.jumps) - 1; index >= 0; index-- {

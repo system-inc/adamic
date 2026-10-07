@@ -82,6 +82,21 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: "a parameter property", Fix: "declare a field and assign it in the constructor"}
 			return true
 		}
+		if err := l.enumRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		checkedCast := false
+		// A cast on a process path (process.stdout as {...}) is never lowered as a cast: processPath
+		// reads through it, and processValue lowers the complete path or refuses it.
+		if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" {
+			proof, err := l.castProof(node)
+			if err != nil {
+				found = err
+				return true
+			}
+			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
+		}
 		if node.Kind == ast.KindBinaryExpression {
 			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
@@ -151,9 +166,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			}
 		}
 		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
-		if err := l.refuseStringWidening(node); err != nil {
-			found = err
-			return true
+		// A checked cast relates only members selected by its tag, not excluded source members.
+		if !checkedCast {
+			if err := l.refuseStringWidening(node); err != nil {
+				found = err
+				return true
+			}
 		}
 		if err := l.classViewRefusal(node); err != nil {
 			found = err

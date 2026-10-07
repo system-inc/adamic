@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -43,7 +44,7 @@ func TestNodePathRelativeRuntime(t *testing.T) {
 			t.Errorf("%s: %s", name, difference)
 		}
 	}
-	if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+	if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
 		t.Fatal(leaked)
 	}
 	source := strings.ReplaceAll(native.C(program), "adamic_node_path_relative(", "mutant_relative(")
@@ -53,7 +54,12 @@ func TestNodePathRelativeRuntime(t *testing.T) {
 	if err := native.Build(source, mutant, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	result := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1"}, mutant)
+	// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=1"}
+	}
+	result := executeInput(t, how, environment, mutant)
 	if result.exitCode != 0 || len(result.stderr) != 0 {
 		t.Fatalf("mutant failed outside comparison: exit %d stderr %s", result.exitCode, result.stderr)
 	}

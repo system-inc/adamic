@@ -208,8 +208,9 @@ type (
 	StringConstant  struct{ Index int }
 
 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
-	// Checked is a read of a global from inside a function, which may run before the global's
-	// declaration has: JavaScript throws there (the temporal dead zone), and so does Adamic, out loud.
+	// Checked is a global read whose initialization is not proven, including function
+	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
+	// Adamic checks it out loud.
 	Read struct {
 		Local     int
 		Of        Type
@@ -1106,15 +1107,18 @@ type (
 	}
 
 	// Switch matches Value against each case's tests in order with ===, and runs the first match's
-	// Body, or Default's when none matches. A break inside a case leaves the switch. (0.1 has no
-	// fallthrough: the checker refuses it.)
+	// Body, or Default's when none matches. A break inside a case leaves the switch. Source
+	// fallthrough is expressed by lowering as entry dispatch followed by sequential guarded bodies.
 	Switch struct {
 		Value   Expression
 		Cases   []Case
 		Default []Statement
 	}
 
-	Break    struct{ Label string }
+	Break struct {
+		Label string
+		Depth int
+	}
 	Continue struct{ Label string }
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
