@@ -1,0 +1,206 @@
+[
+  {
+    "loop": 1,
+    "mode": "cold",
+    "seconds": 33.19620529399981,
+    "exit": 0,
+    "instrument": [
+      "python3",
+      "/workspace/adamic/internal/boundedrun/python.py",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/workspace/adamic",
+      "/workspace/adamic-tools"
+    ],
+    "flags": {
+      "commit": "664a608d38aa62f09ffb88f76bc98c381f20ad3b",
+      "nproc": "5",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cpu.max": "400000 100000",
+      "load_before": [
+        2.78564453125,
+        5.24951171875,
+        3.29345703125
+      ],
+      "cached": false,
+      "GONOPROXY": "github.com/klauspost/compress",
+      "GOMODCACHE": "/tmp/adamic-gate/setup-modules-measure/cache-1",
+      "load_after": [
+        3.287109375,
+        5.13037109375,
+        3.3154296875
+      ]
+    }
+  },
+  {
+    "loop": 1,
+    "mode": "warm",
+    "seconds": 0.38960438900176086,
+    "exit": 0,
+    "instrument": [
+      "python3",
+      "/workspace/adamic/internal/boundedrun/python.py",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/workspace/adamic",
+      "/workspace/adamic-tools"
+    ],
+    "flags": {
+      "commit": "664a608d38aa62f09ffb88f76bc98c381f20ad3b",
+      "nproc": "5",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cpu.max": "400000 100000",
+      "load_before": [
+        3.287109375,
+        5.13037109375,
+        3.3154296875
+      ],
+      "cached": true,
+      "GONOPROXY": "github.com/klauspost/compress",
+      "GOMODCACHE": "/tmp/adamic-gate/setup-modules-measure/cache-1",
+      "load_after": [
+        3.287109375,
+        5.13037109375,
+        3.3154296875
+      ]
+    }
+  },
+  {
+    "loop": 2,
+    "mode": "cold",
+    "seconds": 27.321498353001516,
+    "exit": 0,
+    "instrument": [
+      "python3",
+      "/workspace/adamic/internal/boundedrun/python.py",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/workspace/adamic",
+      "/workspace/adamic-tools"
+    ],
+    "flags": {
+      "commit": "664a608d38aa62f09ffb88f76bc98c381f20ad3b",
+      "nproc": "5",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cpu.max": "400000 100000",
+      "load_before": [
+        3.287109375,
+        5.13037109375,
+        3.3154296875
+      ],
+      "cached": false,
+      "GONOPROXY": "github.com/klauspost/compress",
+      "GOMODCACHE": "/tmp/adamic-gate/setup-modules-measure/cache-2",
+      "load_after": [
+        3.91748046875,
+        5.1025390625,
+        3.365234375
+      ]
+    }
+  },
+  {
+    "loop": 2,
+    "mode": "warm",
+    "seconds": 0.3765180459995463,
+    "exit": 0,
+    "instrument": [
+      "python3",
+      "/workspace/adamic/internal/boundedrun/python.py",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/workspace/adamic",
+      "/workspace/adamic-tools"
+    ],
+    "flags": {
+      "commit": "664a608d38aa62f09ffb88f76bc98c381f20ad3b",
+      "nproc": "5",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cpu.max": "400000 100000",
+      "load_before": [
+        3.91748046875,
+        5.1025390625,
+        3.365234375
+      ],
+      "cached": true,
+      "GONOPROXY": "github.com/klauspost/compress",
+      "GOMODCACHE": "/tmp/adamic-gate/setup-modules-measure/cache-2",
+      "load_after": [
+        3.91748046875,
+        5.1025390625,
+        3.365234375
+      ]
+    }
+  },
+  {
+    "loop": 3,
+    "mode": "cold",
+    "seconds": 33.2646020309985,
+    "exit": 0,
+    "instrument": [
+      "python3",
+      "/workspace/adamic/internal/boundedrun/python.py",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/workspace/adamic",
+      "/workspace/adamic-tools"
+    ],
+    "flags": {
+      "commit": "664a608d38aa62f09ffb88f76bc98c381f20ad3b",
+      "nproc": "5",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cpu.max": "400000 100000",
+      "load_before": [
+        3.91748046875,
+        5.1025390625,
+        3.365234375
+      ],
+      "cached": false,
+      "GONOPROXY": "github.com/klauspost/compress",
+      "GOMODCACHE": "/tmp/adamic-gate/setup-modules-measure/cache-3",
+      "load_after": [
+        4.31982421875,
+        5.06640625,
+        3.4072265625
+      ]
+    }
+  },
+  {
+    "loop": 3,
+    "mode": "warm",
+    "seconds": 0.3915350989991566,
+    "exit": 0,
+    "instrument": [
+      "python3",
+      "/workspace/adamic/internal/boundedrun/python.py",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/workspace/adamic",
+      "/workspace/adamic-tools"
+    ],
+    "flags": {
+      "commit": "664a608d38aa62f09ffb88f76bc98c381f20ad3b",
+      "nproc": "5",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cpu.max": "400000 100000",
+      "load_before": [
+        4.31982421875,
+        5.06640625,
+        3.4072265625
+      ],
+      "cached": true,
+      "GONOPROXY": "github.com/klauspost/compress",
+      "GOMODCACHE": "/tmp/adamic-gate/setup-modules-measure/cache-3",
+      "load_after": [
+        4.2138671875,
+        5.03173828125,
+        3.40478515625
+      ]
+    }
+  }
+]
