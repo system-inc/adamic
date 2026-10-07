@@ -171,3 +171,23 @@ second extends clause reaches a diagnostic helper that immediately reads kind;
 its endpoint cannot be asserted and an optional owner alone cannot prove the
 helper reads. Their source is unchanged and their prior complete census,
 counterexample and green oracle proofs remain applicable.
+
+### Followup: transformers/module/system.ts at zero
+
+Remaining all-code census **3 -> 0**; **42 of 78 files clean**. Three truthful
+context owners and 25 individually reviewed original-point reads preserve
+Node JavaScript. Twenty-three consumers are exclusive to transformation; two
+have export-name or import.meta emission proofs. Default oracle **106367
+passing**, empty baseline diff, 214.121s. Required-read, three
+owner, graph and two guard mutants are caught. JavaScript equality, idempotence
+and CRLF pass. [Complete proof](proof/whole-files/system-close/README.md).
+
+### Remaining followup work
+
+The five original remainder files are now **10 -> 5**: module.ts and system.ts
+are zero. sourcemap.ts retains 1, declarations.ts retains 1 and utilities.ts
+retains 3. No sources in those three files changed during this followup; fresh
+all-code results and exact owner handoffs are in
+[remaining review](proof/whole-files/remaining-review.json). RawSourceMap and
+AllDecorators owner changes belong to types.ts outside this partition. The
+empty heritage clause still has no truthful presence invariant.

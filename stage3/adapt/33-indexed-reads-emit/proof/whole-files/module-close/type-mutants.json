@@ -38,7 +38,7 @@
     ]
   },
   {
-    "mutation": "reference required transform helper from emission root",
+    "mutation": "invoke required transform helper from emission root",
     "check": "context protocol",
     "exit": 1,
     "reason": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: required reader reachable in emission: appendExportsOfDeclaration\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify-context.cjs:56:5)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"

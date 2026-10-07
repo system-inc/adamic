@@ -22,5 +22,38 @@
     "typeArgument": "Identifier",
     "class": "overload-contract",
     "invariant": "bindingsSet is a Set<Identifier>; every added binding comes from ExternalModuleInfo.exportedBindings, whose elements are Identifier. The explicit type argument selects the truthful iterable overload and erases on Node."
+  },
+  {
+    "file": "transformers/module/system.ts",
+    "kind": "VariableDeclaration",
+    "name": "moduleInfo",
+    "occurrence": 1,
+    "total": 1,
+    "before": "ExternalModuleInfo",
+    "after": "ExternalModuleInfo | undefined",
+    "class": "optional-owner",
+    "invariant": "Unconditional SourceFile emission receives undefined for skipped scripts; transformed modules populate all three caches under the same original file id before building the System body. Required consumer reads are reviewed separately."
+  },
+  {
+    "file": "transformers/module/system.ts",
+    "kind": "VariableDeclaration",
+    "name": "exportFunction",
+    "occurrence": 1,
+    "total": 1,
+    "before": "Identifier",
+    "after": "Identifier | undefined",
+    "class": "optional-owner",
+    "invariant": "Unconditional SourceFile emission receives undefined for skipped scripts; transformed modules populate all three caches under the same original file id before building the System body. Required consumer reads are reviewed separately."
+  },
+  {
+    "file": "transformers/module/system.ts",
+    "kind": "VariableDeclaration",
+    "name": "contextObject",
+    "occurrence": 1,
+    "total": 1,
+    "before": "Identifier",
+    "after": "Identifier | undefined",
+    "class": "optional-owner",
+    "invariant": "Unconditional SourceFile emission receives undefined for skipped scripts; transformed modules populate all three caches under the same original file id before building the System body. Required consumer reads are reviewed separately."
   }
 ]

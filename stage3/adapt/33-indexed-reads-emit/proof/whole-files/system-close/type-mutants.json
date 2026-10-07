@@ -1,0 +1,74 @@
+[
+  {
+    "site": {
+      "file": "transformers/module/system.ts",
+      "kind": "VariableDeclaration",
+      "name": "moduleInfo",
+      "occurrence": 1,
+      "total": 1,
+      "before": "ExternalModuleInfo",
+      "after": "ExternalModuleInfo | undefined",
+      "class": "optional-owner",
+      "invariant": "Unconditional SourceFile emission receives undefined for skipped scripts; transformed modules populate all three caches under the same original file id before building the System body. Required consumer reads are reviewed separately."
+    },
+    "contract_exit": 1,
+    "contract_reason": "optional owner missing: transformers/module/system.ts:moduleInfo",
+    "census_diagnostics": [
+      "/tmp/emit33-close-meter-source/src/compiler/transformers/module/system.ts:1773:13: error TS2322: Type 'ExternalModuleInfo | undefined' is not assignable to type 'ExternalModuleInfo'.\n  Type 'undefined' is not assignable to type 'ExternalModuleInfo'."
+    ]
+  },
+  {
+    "site": {
+      "file": "transformers/module/system.ts",
+      "kind": "VariableDeclaration",
+      "name": "exportFunction",
+      "occurrence": 1,
+      "total": 1,
+      "before": "Identifier",
+      "after": "Identifier | undefined",
+      "class": "optional-owner",
+      "invariant": "Unconditional SourceFile emission receives undefined for skipped scripts; transformed modules populate all three caches under the same original file id before building the System body. Required consumer reads are reviewed separately."
+    },
+    "contract_exit": 1,
+    "contract_reason": "optional owner missing: transformers/module/system.ts:exportFunction",
+    "census_diagnostics": [
+      "/tmp/emit33-close-meter-source/src/compiler/transformers/module/system.ts:1774:13: error TS2322: Type 'Identifier | undefined' is not assignable to type 'Identifier'.\n  Type 'undefined' is not assignable to type 'Identifier'."
+    ]
+  },
+  {
+    "site": {
+      "file": "transformers/module/system.ts",
+      "kind": "VariableDeclaration",
+      "name": "contextObject",
+      "occurrence": 1,
+      "total": 1,
+      "before": "Identifier",
+      "after": "Identifier | undefined",
+      "class": "optional-owner",
+      "invariant": "Unconditional SourceFile emission receives undefined for skipped scripts; transformed modules populate all three caches under the same original file id before building the System body. Required consumer reads are reviewed separately."
+    },
+    "contract_exit": 1,
+    "contract_reason": "optional owner missing: transformers/module/system.ts:contextObject",
+    "census_diagnostics": [
+      "/tmp/emit33-close-meter-source/src/compiler/transformers/module/system.ts:1776:13: error TS2322: Type 'Identifier | undefined' is not assignable to type 'Identifier'.\n  Type 'undefined' is not assignable to type 'Identifier'."
+    ]
+  },
+  {
+    "mutation": "invoke required transform helper from emission root",
+    "check": "context protocol",
+    "exit": 1,
+    "reason": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: required reader reachable in emission: appendExportsOfDeclaration\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify-system-context.cjs:57:5)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+  },
+  {
+    "mutation": "meta-guard",
+    "check": "conditional emission protocol",
+    "exit": 1,
+    "reason": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'true'\n- 'isImportMeta(node)'\n\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify-system-context.cjs:108:39)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: 'true',\n  expected: 'isImportMeta(node)',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+  },
+  {
+    "mutation": "export-guard",
+    "check": "conditional emission protocol",
+    "exit": 1,
+    "reason": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: export emission lost export-name guard\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify-system-context.cjs:101:1)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: undefined,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+  }
+]
