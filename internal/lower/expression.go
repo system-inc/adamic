@@ -915,6 +915,8 @@ func typeName(valueType ir.Type) string {
 // writable reports whether every member of a union is one a template writes: a number, a boolean, a
 // string or undefined.
 func (l *lowering) writable(proven *checker.Type) bool {
+	// Judge the members this instantiation stores, rather than the generic binder.
+	proven = l.concrete(proven)
 	members := []*checker.Type{proven}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		members = proven.Types()
