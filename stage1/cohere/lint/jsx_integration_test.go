@@ -44,9 +44,10 @@ func jsxSources(t *testing.T) []string {
 			paths = append(paths, path)
 		}
 	}
-	// Batch 8's capture held 54 JSX cases before its runner retired; a smaller count means the capture lost some.
-	if len(paths) != 54 {
-		t.Fatalf("JSX source count %d, want 54", len(paths))
+	// Batch 8's capture held 54 JSX cases before its runner retired. A smaller count means the capture lost
+	// some; a larger one is a new rule's upstream cases, which this check then covers too.
+	if len(paths) < 54 {
+		t.Fatalf("JSX source count %d, want at least 54", len(paths))
 	}
 	return paths
 }
