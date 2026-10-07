@@ -21,6 +21,11 @@ func TestPredicateBodyProof(t *testing.T) {
 		name, source, failure string
 		tagged                bool
 	}{
+		{"condition assertion", `function fail(message?: string): never { throw new Error(message ?? "failed"); } function assert(expression: unknown, message?: string): asserts expression { if (!expression) { fail(message); } }`, "", false},
+		{"returning fail", `function fail(message?: string): void { return; } function assert(expression: unknown, message?: string): asserts expression { if (!expression) { fail(message); } }`, "normal return", false},
+		{"empty condition assertion", `function assert(expression: unknown): asserts expression {}`, "normal return", false},
+		{"condition mutation", `function fail(): never { throw new Error("failed"); } function assert(expression: unknown): asserts expression { if (!expression) fail(); expression = false; }`, "mutation", false},
+		{"diagnostic work on failure", `function fail(message?: string): never { const error = new Error(message ?? "failed"); throw error; } function assert(expression: unknown, message?: string): asserts expression { if (!expression) { message = "failed"; fail(message); } }`, "", false},
 		{"typeof", `function isString(text: unknown): text is string { return typeof text === "string"; }`, "", false},
 		{"kind", `const SyntaxKind = { Identifier: 80 } as const; interface Node { readonly kind: number } interface Identifier extends Node { readonly kind: typeof SyntaxKind.Identifier; readonly escapedText: string } export function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }`, "", true},
 		{"kind helpers fixed point", `interface Node { readonly kind: number } interface Identifier extends Node { readonly kind: 80; readonly escapedText: string } interface StringLiteral extends Node { readonly kind: 11; readonly text: string } type ModuleName = Identifier | StringLiteral; function isModuleName(node: Node): node is ModuleName { return isIdentifier(node) || isStringLiteral(node); } function isIdentifier(node: Node): node is Identifier { return node.kind === 80; } function isStringLiteral(node: Node): node is StringLiteral { return node.kind === 11; }`, "", true},
@@ -75,5 +80,28 @@ func TestPredicateBodyProof(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestConditionAssertionAdmission(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "assert.a")
+	source := `function fail(message?: string): never { throw new Error(message ?? "failed"); }
+function assert(expression: unknown, message?: string): asserts expression {
+ if (!expression) { fail(message); }
+}`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := program.Files()[0]
+	checked, release := program.Checker(context.Background(), file)
+	defer release()
+	lowering := &lowering{program: program, checker: checked}
+	if err := lowering.refuse(file); err != nil {
+		t.Fatalf("condition assertion must pass the production admission seam: %v", err)
 	}
 }

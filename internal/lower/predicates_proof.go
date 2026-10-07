@@ -20,10 +20,11 @@ const (
 )
 
 type predicateVerifier struct {
-	l         *lowering
-	field     string
-	cells     []string
-	summaries map[*ast.Node][]predicateTruth
+	l          *lowering
+	field      string
+	truthiness bool
+	cells      []string
+	summaries  map[*ast.Node][]predicateTruth
 }
 
 type predicatePath struct {
@@ -49,6 +50,9 @@ func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
 	}
 	v := &predicateVerifier{l: l, summaries: map[*ast.Node][]predicateTruth{}}
 	if node.AsTypePredicateNode().Type == nil {
+		if node.AsTypePredicateNode().AssertsModifier != nil {
+			return l.proveConditionAssertion(node)
+		}
 		return proof, predicateFailure(l, node, "an assertion without a target type is not proved")
 	}
 	target := l.checker.GetTypeAtLocation(node.AsTypePredicateNode().Type)
@@ -318,6 +322,12 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 	case ast.KindFalseKeyword:
 		return predicateFalse, nil
 	case ast.KindIdentifier:
+		if v.truthiness && v.sameParameter(n, parameter) {
+			if v.cells[path.cell] == "truthy" {
+				return predicateTrue, nil
+			}
+			return predicateFalse, nil
+		}
 		if value, ok := path.locals[v.l.checker.GetSymbolAtLocation(n)]; ok {
 			return value, nil
 		}
@@ -463,6 +473,9 @@ func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol,
 						continue
 					}
 					p := copyPredicatePath(path)
+					if side.body != nil && v.neverStatement(side.body, map[*ast.Node]bool{}) {
+						continue
+					}
 					if side.body == nil {
 						next = append(next, p)
 						continue
@@ -488,6 +501,9 @@ func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol,
 				next = append(next, path)
 			case ast.KindExpressionStatement:
 				expression := n.AsExpressionStatement().Expression
+				if v.neverCall(expression, map[*ast.Node]bool{}) {
+					continue
+				}
 				if v.l.isPanicCall(expression) {
 					call := expression.AsCallExpression()
 					for _, argument := range call.Arguments.Nodes {
@@ -496,6 +512,9 @@ func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol,
 						}
 					}
 					continue
+				}
+				if v.truthiness && expression.Kind == ast.KindCallExpression {
+					return nil, predicateFailure(v.l, n, "a failure helper can return normally on this normal return path")
 				}
 				_, err := v.expression(expression, parameter, path)
 				if err != nil {
@@ -509,4 +528,126 @@ func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol,
 		paths = next
 	}
 	return paths, nil
+}
+
+// An assertion on a condition has a truthiness postcondition, not a structural
+// target. Partition all possible inputs into truthy and falsy values, rather
+// than treating unknown as a boolean or trusting the asserts annotation.
+func (l *lowering) proveConditionAssertion(node *ast.Node) (predicateProof, error) {
+	declaration := node.Parent
+	verifier := &predicateVerifier{l: l, truthiness: true, cells: []string{"truthy", "falsy"}}
+	parameter := verifier.parameter(declaration)
+	if parameter == nil || len(declaration.TypeParameters()) != 0 {
+		return predicateProof{}, predicateFailure(l, node, "a non-parameter assertion has no truthiness proof")
+	}
+	for _, argument := range declaration.Parameters() {
+		declared := argument.AsParameterDeclaration()
+		if declared.Initializer != nil || declared.DotDotDotToken != nil || !ast.IsIdentifier(argument.Name()) {
+			return predicateProof{}, predicateFailure(l, argument, "parameter initialization may change the asserted input")
+		}
+	}
+	if declaration.Body().Kind != ast.KindBlock {
+		return predicateProof{}, predicateFailure(l, node, "an assertion needs a proved normal return path")
+	}
+	for cell := range verifier.cells {
+		check := func(returned *ast.Node, _ predicateTruth) error {
+			if verifier.cells[cell] != "truthy" {
+				return predicateFailure(l, returned, "normal return does not establish the asserted condition's truthiness")
+			}
+			return nil
+		}
+		paths, err := verifier.statements(declaration.Body().AsBlock().Statements.Nodes, parameter, []predicatePath{{cell: cell, locals: map[*ast.Symbol]predicateTruth{}}}, check)
+		if err != nil {
+			return predicateProof{}, err
+		}
+		if len(paths) != 0 {
+			if err := check(declaration.Body(), predicateTrue); err != nil {
+				return predicateProof{}, err
+			}
+		}
+	}
+	return predicateProof{}, nil
+}
+
+// A never annotation alone is not evidence. Inspect a direct implementation's
+// exits; recursive or bodyless failure helpers have no termination summary.
+func (v *predicateVerifier) neverCall(node *ast.Node, visiting map[*ast.Node]bool) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindCallExpression {
+		return false
+	}
+	if v.l.isPanicCall(node) {
+		return true
+	}
+	call := node.AsCallExpression()
+	callee := ast.SkipParentheses(call.Expression)
+	if !ast.IsIdentifier(callee) && callee.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	symbol := v.l.symbol(callee)
+	if symbol == nil {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if !ast.IsFunctionLike(declaration) || declaration.Body() == nil || visiting[declaration] {
+			continue
+		}
+		signature := v.l.checker.GetSignatureFromDeclaration(declaration)
+		if signature == nil || v.l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsNever == 0 {
+			continue
+		}
+		visiting[declaration] = true
+		proved := v.neverStatement(declaration.Body(), visiting)
+		delete(visiting, declaration)
+		if proved {
+			return true
+		}
+	}
+	return false
+}
+
+func (v *predicateVerifier) neverStatement(node *ast.Node, visiting map[*ast.Node]bool) bool {
+	switch node.Kind {
+	case ast.KindThrowStatement:
+		return true
+	case ast.KindExpressionStatement:
+		return v.neverCall(node.AsExpressionStatement().Expression, visiting)
+	case ast.KindReturnStatement:
+		expression := node.AsReturnStatement().Expression
+		return expression != nil && v.neverCall(expression, visiting)
+	case ast.KindIfStatement:
+		branch := node.AsIfStatement()
+		return branch.ElseStatement != nil && v.neverStatement(branch.ThenStatement, visiting) && v.neverStatement(branch.ElseStatement, visiting)
+	case ast.KindBlock:
+		for _, statement := range node.AsBlock().Statements.Nodes {
+			if v.neverStatement(statement, visiting) {
+				return true
+			}
+			if predicateNormalExit(statement) {
+				return false
+			}
+		}
+	}
+	return false
+}
+
+// Untreated control flow may escape a block or override a pending throw.
+// Ordinary statements before a terminal throw are harmless to non-return,
+// even if they mutate state: they are never used as surviving narrowing facts.
+func predicateNormalExit(node *ast.Node) bool {
+	if ast.IsFunctionLike(node) {
+		return false
+	}
+	switch node.Kind {
+	case ast.KindReturnStatement, ast.KindBreakStatement, ast.KindContinueStatement, ast.KindTryStatement:
+		return true
+	}
+	found := false
+	node.ForEachChild(func(child *ast.Node) bool {
+		if predicateNormalExit(child) {
+			found = true
+		}
+		return found
+	})
+	return found
 }
