@@ -1,0 +1,6 @@
+typescript-no-non-null-assertion findings and full suggestions identical 37 cases 49731 bytes
+typescript-no-non-null-assertion mutant assertion report suppressed caught only by comparison on Node
+typescript-no-non-null-assertion mutant assertion report suppressed caught only by comparison on JavaScript
+typescript-no-non-null-assertion mutant assertion report suppressed caught only by comparison on native
+typescript-no-non-null-assertion compiler and stage1 identical 236 files
+typescript-no-non-null-assertion rates {'Go': {'seconds': 0.17098199199972441, 'findings': 1123, 'findings_per_second': 6567.943131705999}, 'Node': {'seconds': 0.7582863180005006, 'findings': 1123, 'findings_per_second': 1480.9709384724235}, 'native': {'seconds': 4.0910240020002675, 'findings': 1123, 'findings_per_second': 274.50340048137576}}

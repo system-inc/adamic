@@ -1,0 +1,5 @@
+{
+  "name": "assertion report suppressed",
+  "from": "if(this.context.node(index).kind === 'NonNullExpression') {",
+  "to": "if(this.context.node(index).kind === 'Identifier') {"
+}
