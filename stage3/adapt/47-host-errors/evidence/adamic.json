@@ -1,0 +1,95 @@
+{
+  "before": {
+    "entries": 81,
+    "wholeRoots": 78,
+    "kind": "checker",
+    "diagnosticsByCode": {
+      "7029": 83,
+      "7030": 252,
+      "1294": 180,
+      "2345": 95,
+      "2488": 11,
+      "2375": 21,
+      "2769": 8,
+      "2322": 48,
+      "18048": 52,
+      "2379": 14,
+      "2412": 28,
+      "2722": 1,
+      "2556": 2,
+      "2532": 20,
+      "2420": 1,
+      "18046": 8,
+      "2740": 1,
+      "2591": 54,
+      "2304": 6,
+      "7006": 1,
+      "7031": 1,
+      "2538": 3,
+      "2339": 3,
+      "2684": 2
+    },
+    "TS18046": [
+      "src/compiler/commandLineParser.ts:2301:91: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/program.ts:406:25: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/program.ts:441:25: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/sys.ts:1280:43: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/sys.ts:1553:29: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/tracing.ts:66:81: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/transformers/jsx.ts:187:172: error TS18046: 's' is of type 'unknown'.",
+      "src/compiler/transformers/jsx.ts:187:188: error TS18046: 's' is of type 'unknown'."
+    ],
+    "hostErrors": []
+  },
+  "after": {
+    "entries": 82,
+    "wholeRoots": 79,
+    "kind": "checker",
+    "diagnosticsByCode": {
+      "7029": 83,
+      "7030": 252,
+      "1294": 180,
+      "2345": 95,
+      "2488": 11,
+      "2375": 21,
+      "2769": 8,
+      "2322": 48,
+      "18048": 52,
+      "2379": 14,
+      "2412": 28,
+      "2722": 1,
+      "2556": 2,
+      "2532": 20,
+      "2420": 1,
+      "18046": 6,
+      "2740": 1,
+      "2591": 54,
+      "2304": 6,
+      "7006": 1,
+      "7031": 1,
+      "2538": 3,
+      "2339": 3,
+      "2684": 2
+    },
+    "TS18046": [
+      "src/compiler/commandLineParser.ts:2301:91: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/program.ts:406:25: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/program.ts:441:25: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/sys.ts:1281:43: error TS18046: 'e' is of type 'unknown'.",
+      "src/compiler/transformers/jsx.ts:187:172: error TS18046: 's' is of type 'unknown'.",
+      "src/compiler/transformers/jsx.ts:187:188: error TS18046: 's' is of type 'unknown'."
+    ],
+    "hostErrors": [
+      {
+        "roots": [
+          "/tmp/host-errors-after/src/compiler/hostErrors.ts"
+        ],
+        "kind": "Refused",
+        "where": "/tmp/host-errors-after/src/compiler/hostErrors.ts:3:66",
+        "reason": "in",
+        "fix": "an object's shape is known; use a discriminant, or a Map",
+        "seconds": 0.020692439
+      }
+    ]
+  }
+}
