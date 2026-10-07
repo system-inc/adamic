@@ -1,5 +1,5 @@
 Built: per-function allocation-flow share over every original ledger site, measured on a checker-rejected program.
-Commits: production eraser 59db5d63; lane 1 609ed395 is already merged through 40ad020d; this measurement is recorded in branch history.
+Commits: production eraser 59db5d63; lane 1 609ed395 is already merged through 40ad020d; measurement 2ab6be95.
 Commands: exact AST mapping, corpus/control measurement, independent diagnostic-span audit and production graph/eraser regression pass.
 Mutants: ignoring field types, readiness or diagnosed bodies is caught by independent controls; forged host/body certifications are caught by the corpus audit.
 Limits: proof coverage is zero certified sites, not proof that every runtime shape fails; unsupported flows and host values retain views.

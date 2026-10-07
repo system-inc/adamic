@@ -1,5 +1,5 @@
 Built: per-function allocation-flow share over every original ledger site, measured on a checker-rejected program.
-Commits: production eraser 59db5d63; lane 1 609ed395 is already merged through 40ad020d; this measurement is recorded in branch history.
+Commits: production eraser 59db5d63; lane 1 609ed395 is already merged through 40ad020d; measurement 2ab6be95.
 Commands: exact AST mapping, corpus/control measurement, independent diagnostic-span audit and production graph/eraser regression pass.
 Mutants: ignoring field types, readiness or diagnosed bodies is caught by independent controls; forged host/body certifications are caught by the corpus audit.
 Limits: proof coverage is zero certified sites, not proof that every runtime shape fails; unsupported flows and host values retain views.
@@ -165,8 +165,12 @@ Fetched origin/codex/interface-downcasts is 609ed395; `git merge` reports alread
 up to date because 40ad020d merged it. The production eraser is already wired to
 lane 1's contracts through certifiedCheckedCast and to shared readiness through
 eraseProvenViewChecks. The measurement ran on the 71d7e491-based production tree. A final refresh found
-origin/main had advanced to 48c05d09; integration of that larger compiler/cohere
-change follows this pinned measurement commit.
+origin/main had advanced to 48c05d09. Its merge was attempted and aborted because
+it conflicted in docs/escape-hatches.md and lane 1 cast.go, expression.go, locals.go
+and refusals.go. These files are outside this lane’s territory; no conflict
+resolution was written there. The main-merge log preserves that attempt. This
+branch is not claimed landed or re-greened on that new main; its measured program
+and passing production checks remain pinned to the 71d7e491-based tree.
 Only codex/shape-conformance is pushed; no PR is opened.
 
 Initial toolchain setup completed in 58.329s; nproc=5, CPU quota=4. The
