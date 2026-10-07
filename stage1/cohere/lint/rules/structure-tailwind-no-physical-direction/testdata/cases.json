@@ -1,0 +1,1445 @@
+[
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/*\n * eslint-disable\n */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/*\n eslint-disable\n */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* c8 ignore next */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* c8 ignore next */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* c8 ignore next -- description */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* c8 without options */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* c8x ignore */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* cohere-disable */",
+    "options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* cohere-disable */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* cohere-disable -- generated */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* cohere-enable */",
+    "options": {
+      "ignore": [
+        "eslint-enable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* cohere-enable */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* cohere-enable -- generated */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint */",
+    "options": {
+      "ignore": [
+        "eslint"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint eqeqeq: \"off\", curly: \"error\" */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint eqeqeq: \"off\", curly: \"error\" -- Here's a description about why this configuration is necessary. */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable */",
+    "options": {
+      "ignore": [
+        "eslint-disable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable */",
+    "options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable */\nfoo();\n// eslint-disable-next-line -- why\nbar();\n/* eslint-enable */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable -- \t */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable -- description */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable eqeqeq */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-line\n */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-line */",
+    "options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-line */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-line -- description */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-line eqeqeq */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-next-line\tfoo\t--\treason */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-next-line\n */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-next-line */",
+    "options": {
+      "ignore": [
+        "eslint-disable-next-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-next-line */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-next-line -- description */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-next-line eqeqeq */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-next-line eqeqeq -- */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disable-next-line, foo */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-disabled */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-enable */",
+    "options": {
+      "ignore": [
+        "eslint-disable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-enable */",
+    "options": {
+      "ignore": [
+        "eslint-enable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-enable */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-enable -- description */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-enable eqeqeq */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-env */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* eslint-env node */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* exported */",
+    "options": {
+      "ignore": [
+        "exported"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* exported */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* exported -- description */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* global */",
+    "options": {
+      "ignore": [
+        "global"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* global */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* global -- description */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* global _ */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* globals */",
+    "options": {
+      "ignore": [
+        "globals"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* globals */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* globals -- description */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* globals _ */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* istanbul ignore next */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8",
+        "istanbul"
+      ]
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* just eslint in a normal comment */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/* oxlint-enable foo */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/** eslint-disable */",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "/*eslint-disable*/",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// a note about cohere-disable",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// a note about eslint-disable",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// c8 ignore next",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// c8 ignore next",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// c8 ignore next -- covered elsewhere",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": [
+        "c8"
+      ]
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// cohere-disable-next-line foo",
+    "options": {
+      "ignore": [
+        "eslint-disable-next-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// cohere-disable-next-line foo -- ",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// cohere-disable-next-line foo--bar",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// cohere-disable-next-line no-alert",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// cohere-disable-next-line no-alert -- the kiosk build has no other channel",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// cohere-disabled",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint eqeqeq: 0",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable",
+    "options": {
+      "ignore": [
+        "eslint-disable"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable -- generated",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable eqeqeq",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-line",
+    "options": {
+      "ignore": [
+        "eslint-disable-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-line",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-line\n",
+    "options": null
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-line -- description",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-line eqeqeq",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-line eqeqeq -- description",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line",
+    "options": {
+      "ignore": [
+        "eslint-disable-next-line"
+      ],
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line -- description",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line eqeqeq",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line eqeqeq -- description",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line foo --",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line foo --\t",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line foo -- ",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line foo -- -- ",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line foo -- --bar",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line foo -- bar",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line foo ---  bar",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line foo--bar",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-disable-next-line foo\u00a0--\u00a0bar",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// eslint-enable",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// global foo",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// oxlint-disable-next-line foo",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "// verify-disable-next-line foo",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "//eslint-disable-line",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "const a = 1;\n    /* eslint-disable */\nconst b = 2;",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "const a = <div>{/* eslint-disable-line */}</div>;",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "const s = '/* eslint-disable */';",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "x;\n/* eslint-disable",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "x; // cohere-disable-line",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "x; // eslint-disable-line foo",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "file": "/repository/source/RequireDescription.tsx",
+    "source": "{/* cohere-disable-next-line */}",
+    "options": {
+      "ignore": null,
+      "additionalDirectives": null
+    }
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <Foo.link href=\"https://fonts.googleapis.com/css2?family=Krona+One\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://example.com/css?family=Krona+One\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?display=fallback&family=Krona+One\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&amp;display=block\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&amp;display=optional\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=auto\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=block\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=optional\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2?family=Krona+One&display=something\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css?family=Krona+One&display=swap\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link href={fontUrl} />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = () => <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" />;",
+    "options": null
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "file": "Component.tsx",
+    "source": "export const Test = (props) => <link {...props} />;",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/Thing.js",
+    "source": "export const c = 'flex ml-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = '';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'before:absolute before:top-1/2 before:left-1/2 before:size-full';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'border-s-2 rounded-e-md';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'fixed top-[50%] left-[50%] z-50 outline-none';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex -ml-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex -text-left';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex border-l';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex border-l-2';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex border-r';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex border-r-2';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex left-0';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex ltr:mr-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex md:hover:ml-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex md:ml-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex md:rtl:ml-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex ml-';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex ml-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex mlauto';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex mr-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex ms-4 me-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex overflow-hidden';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex pl-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex pr-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex ps-4 pe-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex right-0';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex rounded-l';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex rounded-l-md';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex rounded-r';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex rounded-r-md';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex rtl:ml-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex scroll-ml-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex scroll-mr-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex scroll-pl-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex scroll-pr-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex start-0 end-0';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex text-left';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex text-right';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'flex text-start text-end';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = 'ml-4 mr-4';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = <div className=\"flex ml-4\" />;\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = `flex ${other} ml-4`;\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = `flex ml-4 ${other}`;\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = `flex ml-4`;\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const c = mergeClassNames('flex ml-4');\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const key = 'someIdentifierName';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const link = 'See docs/text-left.md';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const message = 'Align the text to the left side';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const message = 'You have items left in your cart';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const note = 'ml-4;';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const path = '/repository/source/Thing.ts';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const theme = [\n    'flex items-center',\n    'fixed left-[50%]',\n];\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const token = '{{ml-4}}';\n",
+    "options": null
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "file": "/repository/source/components/Thing.tsx",
+    "source": "export const url = 'https://example.com/left/right';\n",
+    "options": null
+  }
+]
