@@ -14,11 +14,12 @@ repo = Path(__file__).resolve().parents[2]
 bucket = repo / 'stage3/fixtures/host'
 parser = argparse.ArgumentParser()
 parser.add_argument('--logs', required=True, type=Path)
+parser.add_argument('--all', action='store_true')
 args = parser.parse_args()
 args.logs.mkdir(parents=True, exist_ok=True)
 owned = {'02_readFile_utf16le.a', '03_readFile_utf16be.a', '21_createHash.a', '22_createHash_fallback.a'}
-rows = [row for row in json.loads((bucket / 'status.json').read_text()) if row['file'] in owned]
-assert len(rows) == 4
+rows = [row for row in json.loads((bucket / 'status.json').read_text()) if args.all or row['file'] in owned]
+assert len(rows) == (25 if args.all else 4)
 
 
 def run(command, label):

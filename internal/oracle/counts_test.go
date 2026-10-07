@@ -97,6 +97,9 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 			if writes {
 				how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
 			}
+			if strings.HasPrefix(path, "internal/oracle/testdata/node_fs_file_") {
+				how = fsFilePrepare(t, shared, "counted")
+			}
 			binary := filepath.Join(shared, "program")
 			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
 				t.Fatal(err)
@@ -112,7 +115,17 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 				t.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary)
-			result = execute(t, name, pinned...)
+			if path == "internal/oracle/testdata/process_observations.a" {
+				// Environment observations are tested across values separately; counting must use
+				// fixed inputs rather than depend on whoever runs the gate's color preferences.
+				result = executeWith(t, []string{"NO_COLOR=1", "FORCE_COLOR=0", "ADAMIC_PROCESS_TEST=value", "ADAMIC_PROCESS_TEST_MISSING=missing", "ADAMIC_PROCESS_�=surrogate"}, name, pinned...)
+			} else if path == slowRegExpFixtures[0].path {
+				// The long backtracking fixture has the same three-minute bound in
+				// its counted run as in its dedicated behavior and leak oracle.
+				result = longRegExpRun(t, nil, name, pinned...)
+			} else {
+				result = execute(t, name, pinned...)
+			}
 		}
 		return record(result)
 	}
@@ -133,7 +146,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
 	fixtures := append(slices.Clone(fixtures), slowRegExpFixtures...)
-	rows := make([]string, len(fixtures)+len(inputFixtures))
+	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures))
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
@@ -154,6 +167,16 @@ func TestCountsAreRecorded(t *testing.T) {
 				row := counted(t, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
 				lock.Lock()
 				rows[len(fixtures)+index] = row
+				lock.Unlock()
+			})
+		}
+		for index, fixture := range fsFileFixtures {
+			path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
+			t.Run(path, func(t *testing.T) {
+				t.Parallel()
+				row := counted(t, path, true, nil, false, false)
+				lock.Lock()
+				rows[len(fixtures)+len(inputFixtures)+index] = row
 				lock.Unlock()
 			})
 		}

@@ -66,11 +66,11 @@ func (l *lowering) nodeBufferRepresentation(proven *checker.Type) (ir.Type, bool
 }
 
 func (l *lowering) nodeBufferContextualView(node *ast.Node, contextual *checker.Type) (bool, error) {
-	copyArgument := l.nodeBufferReadArgument(node)
-	if !copyArgument && !l.nodeBufferView(l.present(l.checker.GetTypeAtLocation(node)), l.present(contextual)) {
+	hostArgument := l.nodeBufferReadArgument(node) || l.nodeFSFileBufferArgument(node)
+	if !hostArgument && !l.nodeBufferView(l.present(l.checker.GetTypeAtLocation(node)), l.present(contextual)) {
 		return false, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
 	}
-	return copyArgument, nil
+	return hostArgument, nil
 }
 
 // Reading a host member as a value must not fall through to ordinary object

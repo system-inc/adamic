@@ -6,7 +6,7 @@
 // that throw, where natively a panic ends the program on the spot; so from the panic on, everything
 // the program writes is dropped and the exit is 70 whatever it does, which makes what it does after
 // unseen, as it is natively (docs/memory.md, "Exceptions").
-import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { lstatSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 
 class AdamicPanic extends Error {}
 
@@ -18,7 +18,27 @@ let panicking = false;
 // panicked is a panic already reported, by panic itself, whether or not something caught its throw.
 let panicked = false;
 
+// Explicit exit stops source execution at once, but the host event loop must remain alive
+// until both streams have written everything already queued. Only generated code calls
+// this helper: raw source Node keeps its own process.exit behavior for the oracle.
+const exitSignal = Symbol('Adamic exit');
+let exiting = false;
+
+export function processExiting() { return exiting; }
+
+export function processExit(code) {
+	// Validate before committing to exit, so an invalid code remains catchable.
+	process.exitCode = code;
+	const status = panicked ? 70 : (process.exitCode ?? 0);
+	exiting = true;
+	const drained = [process.stdout, process.stderr].map((stream) =>
+		new Promise((resolve) => stream.write('', resolve)));
+	Promise.all(drained).then(() => process.exit(status));
+	throw exitSignal;
+}
+
 process.on('uncaughtException', (error) => {
+	if (error === exitSignal) { return; }
 	if (panicked) {
 		// Reported when it happened; whatever was thrown after it is unseen.
 		process.exitCode = 70;
@@ -158,4 +178,13 @@ export function fileStatus(path) {
 // program itself (node.mjs takes its own place out of argv first). A new array every call.
 export function programArguments() {
 	return process.argv.slice(2);
+}
+
+// Canonical path identity for directory visitation, following links as the host filesystem does.
+export function realPath(path) {
+	try {
+		return { kind: 'Ok', path: realpathSync(path) };
+	} catch (error) {
+		return { kind: 'Error', message: `cannot resolve path ${path}: ${failure(error.code, false)}` };
+	}
 }

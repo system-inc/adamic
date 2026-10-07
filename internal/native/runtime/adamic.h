@@ -813,6 +813,7 @@ char *adamic_path_bytes(const adamic_string *path);
 // { kind: 'Error', message } (directory.c). Both return a reference the caller owns.
 adamic_object *adamic_read_directory(const adamic_string *path);
 adamic_object *adamic_file_status(const adamic_string *path);
+adamic_object *adamic_real_path(const adamic_string *path);
 
 // adamic_write_text_file is writeTextFile(path, text) (input.c): { kind: 'Ok' } or { kind: 'Error',
 // message }, a reference the caller owns.
@@ -839,6 +840,7 @@ _Noreturn void adamic_stack_overflow(void);
 _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
+#include "node_fs_file.h"
 #include "node_buffer.h"
 #include "node_crypto.h"
 // Fixed plain literals can have public # keys; Object reflection refuses those shapes.
@@ -846,4 +848,16 @@ _Noreturn void adamic_unreachable(void);
 adamic_array *adamic_plain_object_keys(const adamic_object *object);
 void *adamic_library_identity(size_t index);
 
+adamic_maybe_number adamic_process_exit_code(void);
+void adamic_process_set_exit_code(adamic_maybe_number code);
+void adamic_process_exit(adamic_maybe_number code);
+_Noreturn void adamic_process_exit_now(int code);
+int adamic_process_status(void);
+adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream);
+adamic_string *adamic_process_environment(const adamic_string *name);
+
 #endif
+
+#include "node_path.h"
+#include "node_fs_directory.h"
+#include "node_process.h"

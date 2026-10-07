@@ -10,6 +10,12 @@ import (
 
 // assignment lowers =, and the compound assignments, to a local.
 func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
+	if value, known, err := l.processValue(node); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	binary := node.AsBinaryExpression()
 	operator, isCompound := compoundAssignments[binary.OperatorToken.Kind]
 	if binary.OperatorToken.Kind != ast.KindEqualsToken && !isCompound {

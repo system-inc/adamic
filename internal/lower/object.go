@@ -326,7 +326,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	// A library declaration proves a prototype member exists, never an own slot. Keep this
 	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
-	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
+	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message" || name == "code")) {
 		return nil, l.prototypeRead(node, name)
 	}
 	if err := l.erasedLiteralMethod(node); err != nil {
@@ -575,6 +575,12 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
+		return value, true, err
+	}
+	if value, known, err := l.nodeFSDirectoryCall(node); known {
+		return value, known, err
+	}
+	if value, known, err := l.processValue(node); known {
 		return value, true, err
 	}
 	if value, handled, err := l.userMethodCall(node); handled {
@@ -1294,6 +1300,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.nodeFSFileDate(node); found {
+		return value, err
+	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)
 	}
@@ -1447,6 +1456,9 @@ func (l *lowering) stringMethod(node *ast.Node, receiver *ast.Node, name string)
 // shorthand lowers the value of { value }. The name there is the field's, and asked for its symbol
 // the checker gives the field; the variable it reads is a separate question.
 func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeProcessValue(property.Name()); known {
+		return value, err
+	}
 	symbol := l.checker.GetShorthandAssignmentValueSymbol(property)
 	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
 		symbol = l.checker.GetAliasedSymbol(symbol)

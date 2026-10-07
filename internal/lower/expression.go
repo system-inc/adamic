@@ -149,10 +149,10 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
-	if err := l.nodeBufferUnsupportedUse(node); err != nil {
+	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
-	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
+	if err := l.nodeBufferUnsupportedUse(node); err != nil {
 		return nil, err
 	}
 	if err := l.regexUnsupportedUse(node); err != nil {
@@ -166,9 +166,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			skipKeeping, err := l.nodeBufferContextualView(node, contextual)
-			if err != nil {
-				return nil, err
+			skipKeeping, viewErr := l.nodeBufferContextualView(node, contextual)
+			if viewErr != nil {
+				return nil, viewErr
 			}
 			if own := l.checker.GetTypeAtLocation(node); !skipKeeping && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
@@ -379,7 +379,13 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeFSDirectoryValue(node); known {
+		return value, err
+	}
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -885,6 +891,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return l.callFunction(call, instance)
 	}
+	// Host units get their builtin dispatch first. Refuse the remainder by the
+	// resolved member name rather than attempting a declaration-only function.
+	if module, member := l.nodeHostMember(callee); module != "" {
+		return nil, l.notYet(node, module+"."+member)
+	}
 	function, isFunction := l.functions[l.symbol(callee)]
 	if !ast.IsIdentifier(callee) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
@@ -1054,7 +1065,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		arguments = append(arguments, lowered)
 	}
 	var returns ir.Type
-	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
+	if result := l.checker.GetTypeAtLocation(node); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
@@ -1064,10 +1075,16 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	// number | undefined is packed as one.
 	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
 		for index, parameter := range signatures[0].Parameters() {
-			if index < len(arguments) {
-				if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
-					arguments[index] = fit(arguments[index], takes)
-				}
+			takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter))
+			if !isKnown {
+				return nil, l.notYet(node, "a function value parameter without a runtime representation")
+			}
+			if index >= len(arguments) {
+				// The checker accepted an omitted optional argument. A native closure reads every
+				// declared parameter slot, so absence must be supplied as typed undefined.
+				arguments = append(arguments, fit(ir.Undefined{}, takes))
+			} else {
+				arguments[index] = fit(arguments[index], takes)
 			}
 		}
 	}

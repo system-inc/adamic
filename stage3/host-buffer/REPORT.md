@@ -1,3 +1,29 @@
+Catchable crypto finalization still needs runtime integration; owned full fixtures stop at Checker (02/03), non-null refusal (21), or undefined lowering (22).
+Merged area/library 53f44e05 with fs-file and macOS fixes, retaining both units through named Buffer hooks.
+Merge parents: a38287b and 53f44e05; codex/host-buffer-crypto-land. Merge commit, no rebase, force-push or push to main.
+Linux counts PASS 115.024s; packages including full flow PASS; whole oracle PASS 356.494s; byte-index mutant caught by Node on both backends.
+All 25 Node observations agree; 11_setModifiedTime executes and agrees on both backends. Other full fixtures remain frontend-blocked; macOS and native tsc are untested.
+
+Library area fs-file merge, October 7
+
+Resolved the shared expression dispatch against the area version, preserving processValue, nodeFSDirectoryValue, named unsupported-host refusals, never-returning closures and omitted-argument shaping. Reapplied nodeBufferRepresentation and nodeBufferContextualView as small named hooks. The Buffer contextual view now accepts the fs worker's synchronous readSync/writeFileSync Buffer arguments. Kept the area's runtime error layout, process layouts, freshness handling and Buffer tests. NOTICE and host/status.json retain the area versions unchanged.
+
+Preserved _DARWIN_C_SOURCE after _POSIX_C_SOURCE in fs-file and process runtimes, Linux-only detect_leaks settings, concurrent terminal draining and canonical directory handling. Linux was the execution platform; no macOS execution is claimed.
+
+Commands after sourcing /workspace/adamic-tools/env.sh:
+
+- `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts`: PASS, 115.024s. Full Linux table regenerated, including two changed area rows.
+- `go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/fresh ./internal/flow ./internal/ir -count=1 -timeout 30m`: PASS. Load 5.240s, lower 84.716s, native 223.145s, fresh 101.499s, flow 162.755s, IR 2.996s; JavaScript has no standalone tests.
+- `go test ./internal/oracle -count=1 -timeout 30m`: PASS, 356.494s, whole oracle under ordinary worker cache policy.
+- `go test ./internal/lower -run 'NodeBuffer|NodeFSFile|NodeLibrary' -count=1 -v`: PASS, 9.754s, final conflict resolution.
+- `python3 stage3/host-buffer/check_host_acceptance.py --all --logs /tmp/host-buffer-area53-host`: 25 source Node observations agree. Both backends record the same stages; exit 1 explicitly marks remaining blocked fixtures. The sole compiling fixture matches recorded stdout, stderr and exit on both backends. Full table and diagnostics: [area53/host-stages.md](area53/host-stages.md) and [area53/host-stages.json](area53/host-stages.json).
+- `go vet ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/fresh ./internal/flow ./internal/ir ./internal/oracle`: PASS, no output. `gofmt -l cmd internal`: no output.
+- `python3 internal/oracle/node_buffer_mutants.py buffer_index`: CAUGHT by source Node stdout comparisons on native and JavaScript; compiler and sanitizers accepted the mutant. Exact source restored. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a$' -count=1 -timeout 30m`: restored baseline PASS, 0.710s.
+
+Owned fixture blockers: 02/03 retain TS2322 on b[0]=b[1] under checked indexed access; 21 now reaches Adamic's non-null assertion refusal at _crypto!.createHash("sha256"); 22 reaches NotYet for const c: undefined=undefined. The independent owned components passed in the native package gate. The audited source fixtures were not rewritten to bypass these language checks. All earlier unit mutant evidence is retained below.
+
+The following reports are historical.
+
 Catchable Node crypto .code remains unsupported; full host fixtures retain the indexed-read and fs.mkdtempSync blockers.
 Merged area/library 2faf682 into the Buffer/crypto landing branch, keeping compiler semantics with small named host hooks and the audited host records.
 Merge parents: 2a4a229 and 2faf682; branch codex/host-buffer-crypto-land. No rebase, force-push or push to main.
