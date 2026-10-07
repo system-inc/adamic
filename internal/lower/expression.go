@@ -808,6 +808,9 @@ var comparisons = map[ast.Kind]ir.Operator{
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
+	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
+		left, right = l.concatenated(left), l.concatenated(right)
+	}
 	if operator == ast.KindPlusToken && both(ir.String) {
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}
@@ -909,6 +912,26 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	}
 
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
+}
+
+// concatenated writes the primitive operands of string addition as JavaScript does.
+// Objects retain their representation, so unsupported ToPrimitive remains NotYet.
+func (l *lowering) concatenated(value ir.Expression) ir.Expression {
+	switch value.(type) {
+	case ir.Null:
+		return ir.StringConstant{Index: l.constant("null")}
+	case ir.Undefined:
+		return ir.StringConstant{Index: l.constant("undefined")}
+	}
+	switch value.Type() {
+	case ir.Number:
+		return ir.NumberToString{Value: value}
+	case ir.Boolean:
+		return ir.BooleanToString{Value: value}
+	case ir.MaybeNumber, ir.MaybeBoolean:
+		return ir.MaybeToString{Value: value}
+	}
+	return value
 }
 
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is
