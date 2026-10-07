@@ -52,3 +52,20 @@ checker-dependent inventory rules and 25 existing checker-dependent ports.
 It leaves 40 unclaimed entries before these three claims. Compressed test
 evidence beneath claims/ was excluded from claim documents. This update is
 pushed before third-batch implementation.
+
+## Fourth batch
+
+The previous nine rules are complete and pushed through `1ef7ed97`.
+Fetched all 389 origin refs on October 7 and inspected 33 distinct
+Markdown claim documents. The first three remaining combined-volume candidates
+are:
+
+| Rule | Combined findings |
+| --- | ---: |
+| react-hooks/set-state-in-effect | 0 |
+| react-hooks/set-state-in-render | 0 |
+| react-hooks/static-components | 0 |
+
+This claim is pushed before implementation. Native JSX parsing and React
+control-flow substrate availability are being checked; shared files will not
+be modified to work around a missing dependency.
