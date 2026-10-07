@@ -1,0 +1,196 @@
+// Production default: fields. Go's static-key evaluation and raw-source repair are preserved.
+import type { Rules } from './rules.ts';
+import { BaseMemberFacts } from './base_member_facts.a';
+import { Repair } from './repair.ts';
+import { Suggestion } from './suggestion.ts';
+
+const message =
+    'This getter does nothing but return a literal, so it pays a function call on every read to express a constant. A `readonly` field says the same thing, cannot be reassigned, and lets the compiler and a reader see the value at the declaration.';
+export class ClassLiteralPropertyStyle {
+    readonly rules: Rules;
+    readonly bases: BaseMemberFacts;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bases = new BaseMemberFacts(rules);
+    }
+    modifier(index: number, kind: string): boolean {
+        return this.rules.parser.node(index).children.some((child) => this.rules.parser.node(child).kind === kind);
+    }
+    name(index: number): number {
+        for(const child of this.rules.parser.node(index).children) {
+            if(
+                ['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName'].includes(
+                    this.rules.parser.node(child).kind,
+                )
+            ) {
+                return child;
+            }
+        }
+        return -1;
+    }
+    literal(index: number): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(index);
+        if(
+            [
+                'StringLiteral',
+                'NumericLiteral',
+                'BigIntLiteral',
+                'RegularExpressionLiteral',
+                'TrueKeyword',
+                'FalseKeyword',
+                'NullKeyword',
+                'NoSubstitutionTemplateLiteral',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'TaggedTemplateExpression') {
+            const template = node.children[node.children.length - 1] ?? -1;
+            return template >= 0 && this.rules.parser.node(template).kind === 'NoSubstitutionTemplateLiteral';
+        }
+        return false;
+    }
+    value(index: number): string | undefined {
+        const node = this.rules.parser.node(index);
+        if(['StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) {
+            return node.text;
+        }
+        if(node.kind !== 'Identifier') {
+            return undefined;
+        }
+        let result: string | undefined = undefined;
+        const root = this.rules.parser.node(this.rules.parser.nodes.length - 1);
+        for(const statement of root.children) {
+            const st = this.rules.parser.node(statement);
+            if(st.kind !== 'VariableStatement') {
+                continue;
+            }
+            for(const list of st.children) {
+                const declarations = this.rules.parser.node(list);
+                if(declarations.kind !== 'VariableDeclarationList') {
+                    continue;
+                }
+                for(const declaration of declarations.children) {
+                    const d = this.rules.parser.node(declaration);
+                    const name = this.rules.parser.node(d.children[0] ?? -1);
+                    if(name.kind !== 'Identifier' || name.text !== node.text || d.children.length < 2) {
+                        continue;
+                    }
+                    const last = this.rules.parser.node(d.children[d.children.length - 1] ?? -1);
+                    // The last child must be an initializer, not a type annotation.
+                    const prefix = this.rules.scanner.text.slice(name.end, last.pos);
+                    if(
+                        prefix.includes('=') &&
+                        ['StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(last.kind)
+                    ) {
+                        result = last.text;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    key(index: number): string | undefined {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier' || node.kind === 'PrivateIdentifier') {
+            return node.text;
+        }
+        return this.value(node.kind === 'ComputedPropertyName' ? (node.children[0] ?? -1) : index);
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(this.modifier(index, 'OverrideKeyword')) {
+            return;
+        }
+        const parent = this.rules.parents[index] ?? -1;
+        if(parent < 0 || !['ClassDeclaration', 'ClassExpression'].includes(this.rules.parser.node(parent).kind)) {
+            return;
+        }
+        if(!this.modifier(index, 'StaticKeyword') && this.bases.conversionBreaks(index, true)) {
+            return;
+        }
+        const body = node.children.find((child) => this.rules.parser.node(child).kind === 'Block') ?? -1;
+        if(body < 0) {
+            return;
+        }
+        const first = this.rules.parser.node(body).children[0] ?? -1;
+        if(first < 0 || this.rules.parser.node(first).kind !== 'ReturnStatement') {
+            return;
+        }
+        const argument = this.rules.parser.node(first).children[0] ?? -1;
+        if(!this.literal(argument)) {
+            return;
+        }
+        const name = this.name(index);
+        if(name < 0) {
+            return;
+        }
+        const key = this.key(name);
+        if(key !== undefined) {
+            for(const member of this.rules.parser.node(parent).children) {
+                if(this.rules.parser.node(member).kind === 'SetAccessor') {
+                    const other = this.name(member);
+                    if(other >= 0 && this.key(other) === key) {
+                        return;
+                    }
+                }
+            }
+        }
+        const reported =
+            this.rules.parser.node(name).kind === 'ComputedPropertyName'
+                ? (this.rules.parser.node(name).children[0] ?? -1)
+                : name;
+        const finding = this.rules.add('class-literal-property-style', 'preferFieldStyle', message, reported);
+        if(this.modifier(index, 'Decorator')) {
+            return;
+        }
+        const start = this.rules.start(node);
+        const bodyStart = this.rules.start(this.rules.parser.node(body));
+        let closing = -1;
+        for(let at = bodyStart - 1; at >= start; at--) {
+            if(this.rules.scanner.text.charCodeAt(at) === 41) {
+                closing = at + 1;
+                break;
+            }
+        }
+        if(closing < 0 || closing >= bodyStart) {
+            return;
+        }
+        let prefix = '';
+        for(const child of node.children) {
+            const kind = this.rules.parser.node(child).kind;
+            if(kind === 'PublicKeyword') {
+                prefix += 'public';
+            }
+            if(kind === 'PrivateKeyword') {
+                prefix += 'private';
+            }
+            if(kind === 'ProtectedKeyword') {
+                prefix += 'protected';
+            }
+        }
+        if(this.modifier(index, 'StaticKeyword')) {
+            prefix += `${prefix === '' ? '' : ' '}static`;
+        }
+        const replacement = `${prefix === '' ? '' : `${prefix} `}readonly ${this.rules.text(this.rules.parser.node(name))}${this.rules.scanner.text.slice(closing, bodyStart)}= ${this.rules.text(this.rules.parser.node(argument))};`;
+        const repairs: Repair[] = [];
+        repairs.push(new Repair(this.rules.byte(start), this.rules.byte(node.end), replacement));
+        finding.suggestions.push(
+            new Suggestion(
+                'preferFieldStyleSuggestion',
+                'Replace the getter with a readonly field holding the same literal.',
+                repairs,
+            ),
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind === 'GetAccessor') {
+                this.visit(index);
+            }
+        }
+    }
+}

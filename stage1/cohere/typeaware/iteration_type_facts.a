@@ -1,0 +1,26 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { Frames, header } from './frames.ts';
+import { types } from './facts.ts';
+
+export class IterationTypeFacts {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    property(index: number, id: number, name: string): boolean {
+        const frames = new Frames(this.rules.ask(index, `iteration-type-facts\n${id}\n${name}`));
+        header(frames, 'iteration-type-facts');
+        const present = frames.yes();
+        frames.end();
+        return present;
+    }
+    graph(index: number, id: number, operation: string): Types {
+        const frames = new Frames(this.rules.ask(index, `iteration-type-facts\n${id}\n${operation}`));
+        header(frames, 'iteration-type-facts');
+        if(operation === 'values') {
+            frames.yes();
+        }
+        return types(`1\n120\niteration-type-facts${frames.text.slice(frames.cursor)}`, 'iteration-type-facts');
+    }
+}

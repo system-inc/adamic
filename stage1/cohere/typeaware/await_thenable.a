@@ -1,0 +1,243 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import { IterationTypeFacts } from './iteration_type_facts.a';
+import { Diagnostic } from './diagnostic.ts';
+import { Suggestion } from './suggestion.ts';
+import { Repair } from './repair.ts';
+
+export class AwaitThenable {
+    readonly rules: Rules;
+    readonly iteration: IterationTypeFacts;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.iteration = new IterationTypeFacts(rules);
+    }
+    graph(index: number, question: string): Types {
+        return types(this.rules.ask(index, question), question.split('\n')[0] ?? '');
+    }
+    callable(index: number, id: number): boolean {
+        const frames = new Frames(this.rules.ask(index, `call-count\n${id}`));
+        header(frames, 'call-count');
+        const count = frames.natural();
+        frames.end();
+        return count > 0;
+    }
+    thenable(index: number, id: number): boolean {
+        const apparent = this.graph(index, `apparent-shape\n${id}`);
+        for(const part of apparent.parts(apparent.root())) {
+            const then = this.graph(index, `property-shape\n${part}\nthen`);
+            if(!then.present) {
+                continue;
+            }
+            for(const method of then.parts(then.root())) {
+                const callbacks = this.iteration.graph(index, method, 'callbacks');
+                for(const callback of callbacks.roots) {
+                    for(const candidate of callbacks.parts(callbacks.type(callback))) {
+                        if(this.callable(index, candidate)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    never(index: number, graph: Types, type: TypeFact): boolean {
+        let subject = type;
+        if((subject.flags & 524288) !== 0) {
+            if(subject.constraint === 0) {
+                return false;
+            }
+            subject = graph.type(subject.constraint);
+        }
+        if((subject.flags & 3) !== 0) {
+            return false;
+        }
+        return !this.thenable(index, subject.id);
+    }
+    builtin(index: number, graph: Types, type: TypeFact, seen: readonly number[]): boolean {
+        if(seen.includes(type.id)) {
+            return false;
+        }
+        const visited = seen.slice();
+        visited.push(type.id);
+        if((type.flags & 268435456) !== 0) {
+            return type.parts.some((id) => this.builtin(index, graph, graph.type(id), visited));
+        }
+        if((type.flags & 134217728) !== 0) {
+            return type.parts.every((id) => this.builtin(index, graph, graph.type(id), visited));
+        }
+        if((type.flags & 524288) !== 0) {
+            return type.constraint !== 0 && this.builtin(index, graph, graph.type(type.constraint), visited);
+        }
+        const frames = new Frames(this.rules.ask(index, `type-origin\n${type.id}`));
+        header(frames, 'type-origin');
+        if(!frames.yes()) {
+            frames.end();
+            return false;
+        }
+        const name = frames.field();
+        const count = frames.natural();
+        let library = false;
+        for(let at = 0; at < count; at++) {
+            frames.field();
+            const declaration = frames.yes();
+            const defaultLib = frames.yes();
+            library = library || (declaration && defaultLib);
+        }
+        frames.end();
+        if(name === 'PromiseConstructor' && library) {
+            return true;
+        }
+        const bases = this.graph(index, `base-shapes\n${type.id}`);
+        return bases.roots.some((id) => this.builtin(index, bases, bases.type(id), visited));
+    }
+    aggregator(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.list <= 0) {
+            return;
+        }
+        const callee = this.rules.parser.node(this.rules.skip(node.children[0] ?? -1));
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) {
+            return;
+        }
+        const key = this.rules.parser.node(this.rules.skip(callee.children[callee.children.length - 1] ?? -1));
+        if(
+            callee.kind === 'PropertyAccessExpression'
+                ? key.kind !== 'Identifier'
+                : !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(key.kind)
+        ) {
+            return;
+        }
+        if(!['all', 'allSettled', 'race', 'any'].includes(key.text)) {
+            return;
+        }
+        const receiver = callee.children[0] ?? -1;
+        const receiverType = this.graph(receiver, 'type-shape');
+        if(!this.builtin(receiver, receiverType, receiverType.root(), [])) {
+            return;
+        }
+        const argument = this.rules.skip(node.children[node.children.length - node.list] ?? -1);
+        const input = this.rules.parser.node(argument);
+        if(input.kind === 'SpreadElement') {
+            return;
+        }
+        const message = 'Unexpected iterable of non-Promise (non-"Thenable") values passed to promise aggregator.';
+        if(input.kind === 'ArrayLiteralExpression') {
+            for(const child of input.children) {
+                const element = this.rules.skip(child);
+                if(this.rules.parser.node(element).kind === 'OmittedExpression') {
+                    continue;
+                }
+                const graph = this.graph(element, 'type-shape');
+                if(graph.parts(graph.root()).every((id) => this.never(element, graph, graph.type(id)))) {
+                    this.rules.add('await-thenable', 'invalidPromiseAggregatorInput', message, element);
+                }
+            }
+            return;
+        }
+        const graph = this.graph(argument, 'type-shape');
+        for(const part of graph.parts(graph.root())) {
+            if(!this.iteration.property(argument, part, 'iterator')) {
+                return;
+            }
+        }
+        for(const part of graph.parts(graph.root())) {
+            const values = this.iteration.graph(argument, part, 'values');
+            for(const value of values.roots) {
+                if(values.parts(values.type(value)).some((id) => this.never(argument, values, values.type(id)))) {
+                    this.rules.add('await-thenable', 'invalidPromiseAggregatorInput', message, argument);
+                    return;
+                }
+            }
+        }
+    }
+    suggestion(finding: Diagnostic, first: number, last: number, ordinary = false): void {
+        const repairs: Repair[] = [];
+        repairs.push(new Repair(this.rules.byte(first), this.rules.byte(last), ''));
+        finding.suggestions.push(
+            new Suggestion(
+                ordinary ? 'convertToOrdinaryFor' : 'removeAwait',
+                ordinary ? 'Convert to an ordinary `for...of` loop.' : 'Remove unnecessary `await`.',
+                repairs,
+            ),
+        );
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'AwaitExpression') {
+            const argument = node.children[0] ?? -1;
+            const graph = this.graph(argument, 'raw-shape');
+            if(this.never(argument, graph, graph.root())) {
+                const finding = this.rules.add(
+                    'await-thenable',
+                    'await',
+                    'Unexpected `await` of a non-Promise (non-"Thenable") value.',
+                    index,
+                );
+                this.suggestion(finding, this.rules.start(node), this.rules.start(node) + 5);
+            }
+        }
+        if(node.kind === 'CallExpression') {
+            this.aggregator(index);
+        }
+        if(node.kind === 'ForOfStatement' && this.rules.parser.node(node.children[0] ?? -1).kind === 'AwaitKeyword') {
+            const token = this.rules.parser.node(node.children[0] ?? -1);
+            const expression = node.children[node.children.length - 2] ?? -1;
+            const body = this.rules.parser.node(node.children[node.children.length - 1] ?? -1);
+            const graph = this.graph(expression, 'raw-shape');
+            if(
+                (graph.root().flags & 1) !== 0 ||
+                graph.parts(graph.root()).some((id) => this.iteration.property(expression, id, 'asyncIterator'))
+            ) {
+                return;
+            }
+            const finding = new Diagnostic(
+                'await-thenable',
+                'forAwaitOfNonAsyncIterable',
+                'Unexpected `for await...of` of a value that is not async iterable.',
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(body.pos),
+            );
+            this.suggestion(finding, this.rules.start(token), token.end, true);
+            this.rules.findings.push(finding);
+        }
+        if(node.kind === 'VariableDeclarationList' && node.semantic === '6') {
+            for(const declaration of node.children) {
+                const declarator = this.rules.parser.node(declaration);
+                if(declarator.children.length < 2) {
+                    continue;
+                }
+                const initializer = declarator.children[declarator.children.length - 1] ?? -1;
+                const value = this.rules.parser.node(initializer);
+                if(!this.rules.scanner.text.slice(declarator.pos, value.pos).includes('=')) {
+                    continue;
+                }
+                const graph = this.graph(initializer, 'raw-shape');
+                if(
+                    (graph.root().flags & 1) !== 0 ||
+                    graph.parts(graph.root()).some((id) => this.iteration.property(initializer, id, 'asyncDispose'))
+                ) {
+                    continue;
+                }
+                const finding = this.rules.add(
+                    'await-thenable',
+                    'awaitUsingOfNonAsyncDisposable',
+                    'Unexpected `await using` of a value that is not async disposable.',
+                    initializer,
+                );
+                if(node.children.length === 1) {
+                    this.suggestion(finding, this.rules.start(node), this.rules.start(node) + 5);
+                }
+            }
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            this.visit(index);
+        }
+    }
+}

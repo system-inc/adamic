@@ -203,6 +203,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "iteration-type-facts": if err := p.iterationTypeFacts(out, c, node, question); err != nil { return "", err }
+	case "base-member-facts": if err := p.baseMemberFacts(out, c, node, question); err != nil { return "", err }
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {
 			return "", err

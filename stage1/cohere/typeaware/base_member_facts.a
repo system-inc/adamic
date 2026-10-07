@@ -1,0 +1,42 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class BaseMemberFacts {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    conversionBreaks(index: number, becomesProperty: boolean): boolean {
+        const frames = new Frames(this.rules.ask(index, 'base-member-facts'));
+        header(frames, 'base-member-facts');
+        if(!frames.yes()) {
+            frames.end();
+            return false;
+        }
+        const privateMember = (frames.natural() & 2) !== 0;
+        const count = frames.natural();
+        let decided = false;
+        let result = false;
+        for(let at = 0; at < count; at++) {
+            const flags = frames.natural();
+            const checkFlags = frames.natural();
+            const modifiers = frames.natural();
+            const declarations = frames.natural();
+            let any = false;
+            let all = true;
+            for(let d = 0; d < declarations; d++) {
+                const qualifies = frames.yes() || (modifiers & 64) !== 0;
+                any = any || qualifies;
+                all = all && qualifies;
+            }
+            const kind = flags & (4 | 32768 | 65536);
+            const abstract = (checkFlags & 6) !== 0 ? any : all;
+            if(!decided && kind !== 0 && (modifiers & 2) === 0 && (checkFlags & 2097152) === 0 && !abstract) {
+                decided = true;
+                result = becomesProperty ? kind !== 4 : kind === 4;
+            }
+        }
+        frames.end();
+        return !privateMember && result;
+    }
+}
