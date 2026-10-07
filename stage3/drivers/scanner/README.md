@@ -146,3 +146,12 @@ Both native split modes now stop at Debug.fail's function widening,
 `debug.ts:15:58`, before C emission. The minimal probe and Function-view control
 are tracked under probes/. See BLOCKERS.md and evidence/marker-reconciliation.json
 for exact diagnostics, compiler pins, byte-identity mutants and available timing.
+
+
+With census-small-families 8d34357 and adaptations 87/88, the erased Function
+metadata probe runs natively. Both scanner split modes now stop at append's
+correlated overload-result contract in core.ts:34:1. Expanded Node tokens and
+errors remain identical; no scanner C or binary is produced. The minimal
+original-body probe is probes/append-overload-result.a. Removing its erased
+signatures is not baseline-safe: an untracked full-checker experiment reports
+18 new diagnostics. Evidence: evidence/fallback-retry.json.

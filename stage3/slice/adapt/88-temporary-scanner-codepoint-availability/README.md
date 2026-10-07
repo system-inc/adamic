@@ -12,3 +12,11 @@ proof. The typeof observation preserves both normal availability and absence;
 truthy non-callable monkey patches are outside that stated input contract.
 Prove all expanded Node tokens match and exercise callable/absent availability
 controls. Validate the full upstream baseline before claiming the adaptation.
+
+
+Implemented and validated: both expanded slice Node dumps match the full-tree
+reference (1,369,432 tokens, 466 errors). Full baseline: 106,366 passing; its
+single API mismatch is exactly reconstructed from sanctioned owners, with all
+60,930 other references unchanged. The next native stop is append's correlated
+overload results, core.ts:34:1. Detailed controls/mutants and compiler pins are
+in drivers/scanner/evidence/fallback-retry.json and BLOCKERS.md.

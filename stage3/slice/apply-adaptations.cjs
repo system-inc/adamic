@@ -8,7 +8,7 @@ function apply(root) {
     if (manifest.adaptations) throw new Error('slice adaptations already applied');
     // Parser temporaries 60–64 are full-tree edits, already present in the input.
     const scanner = manifest.summary.entries.some(e => e.endsWith(':createScanner')) && !manifest.summary.entries.some(e => e.endsWith(':createSourceFile'));
-    const numbers = scanner ? [52,53,54,55,56,57,59,80,81,82,85] : [];
+    const numbers = scanner ? [52,53,54,55,56,57,59,80,81,82,85,87,88] : [];
     if (!numbers.length) return;
     execFileSync(process.execPath, [path.join(__dirname,'verify.cjs'),root], {stdio:'inherit'});
     const files = [...new Set(manifest.declarations.map(d => d.file))];

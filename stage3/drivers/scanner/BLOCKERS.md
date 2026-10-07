@@ -1,5 +1,59 @@
 # Scanner blockers
 
+## October 7: optional function values landed; append overload results are next
+
+Merged census-small-families 8d34357 (including f69bf60) into unpushed scratch
+and resolved overlapping lowering/emission features. Final scratch: deb79ea5.
+Focused lowering checks and four uncached optional-function differential oracle
+fixtures pass after resolving duplicate old/new boolean slot converters.
+The first merged optional-boolean tests failed clang, not output comparison;
+retaining the incoming tagged representation closes that merge artifact.
+
+Adaptation 87 annotates only Debug.fail's metadata fallback `(fail as Function)`.
+Upstream AnyFunction parameters and runtime arguments are unchanged. The marker
+probe builds, prints `ok` natively and matches Node; a one-byte native output
+mutant is caught. Stock JavaScript stays byte-identical (1,302 bytes), and the
+changed-capture-argument mutant is caught.
+
+Next preflight was scanner.ts:3510:67, the two String-as-any casts around
+fromCodePoint (adamic/no-unchecked-cast). Removing them exposed 3510:66,
+unbound-method, for the availability read. Adaptation 88 removes those casts
+and uses `typeof String.fromCodePoint === "function"`, retaining both branches
+and their bodies. Callable/absent controls match the original; a flipped
+predicate mutant is caught. Its contract is the standard callable-or-absent
+intrinsic, excluding truthy non-callable monkey patches.
+
+Both split modes now stop at core.ts:34:1:
+
+```text
+Adamic 0.1 refuses overload 1 of append result T[] cannot be served by implementation result T[] | undefined; make the implementation result covariant with every overload result
+```
+
+Census reason: overload. Required feature: prove correlated overload results
+from the implementation body. Original source: core.ts:921-932. The complete
+body returns `to` when value is absent, a new array when to is absent, otherwise
+the appended array. The overload promises follow these input conditions;
+checking only implementation-result covariance loses that correlation.
+Minimal source/body probe: probes/append-overload-result.a. Node prints `[1,2]`,
+`[3]`, `undefined`; native refuses at line 3:1 with the same diagnostic.
+
+An untracked experiment removed only the three erased signatures. The upstream
+compiler checker went from zero diagnostics to 18. The experiment did not
+mutate the validated baseline tree. No adaptation 89 or widened overload
+promise was committed. See evidence/fallback-append-signature-experiment.json.
+
+87/88 were planned and pushed first in 11163169. Full baseline with both edits:
+106,366 passing, one mismatch limited to api/typescript.d.ts. The composed stock
+API proof reconstructs exactly the sanctioned changes; all 60,930 other
+references remain identical. No API reference was accepted or edited.
+Both expanded slice Node runs match the full-tree reference: 1,369,432 tokens,
+466 errors and SHA-256
+41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc.
+Both token-end mutants are caught. Both native builds and C emission exit 1 at
+append before C exists. Clang times, C sizes, scanner binary size and native
+user time are unavailable. nproc 5; perf not installed. This remains a red
+native result. Complete evidence: evidence/fallback-retry.json.
+
 ## October 7: 55 and 80 reconciled; upstream callable marker exposes function widening
 
 Adaptation 55's opaque `{}` rewrite is withdrawn. New slices retain the exact

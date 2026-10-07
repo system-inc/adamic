@@ -1,0 +1,82 @@
+{
+  "normal": [
+    {
+      "available": true,
+      "calls": 8,
+      "values": [
+        {
+          "code": 0,
+          "result": "\u0000"
+        },
+        {
+          "code": 65,
+          "result": "A"
+        },
+        {
+          "code": 55296,
+          "result": "\ud800"
+        },
+        {
+          "code": 65535,
+          "result": "￿"
+        },
+        {
+          "code": 65536,
+          "result": "𐀀"
+        },
+        {
+          "code": 128512,
+          "result": "😀"
+        },
+        {
+          "code": 1114111,
+          "result": "􏿿"
+        },
+        {
+          "code": 1.25,
+          "error": "RangeError",
+          "message": "Invalid code point 1.25"
+        }
+      ]
+    },
+    {
+      "available": false,
+      "calls": 0,
+      "values": [
+        {
+          "code": 0,
+          "result": "\u0000"
+        },
+        {
+          "code": 65,
+          "result": "A"
+        },
+        {
+          "code": 55296,
+          "result": "\ud800"
+        },
+        {
+          "code": 65535,
+          "result": "￿"
+        },
+        {
+          "code": 65536,
+          "result": "𐀀"
+        },
+        {
+          "code": 128512,
+          "result": "😀"
+        },
+        {
+          "code": 1114111,
+          "result": "􏿿"
+        },
+        {
+          "code": 1.25,
+          "result": "\u0001"
+        }
+      ]
+    }
+  ],
+  "availabilityMutantCaught": true
+}

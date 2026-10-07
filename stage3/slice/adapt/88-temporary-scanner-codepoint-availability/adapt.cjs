@@ -1,0 +1,12 @@
+const fs = require('node:fs'), path = require('node:path');
+const tree = path.resolve(process.argv[2]);
+if (!fs.existsSync(path.join(tree, 'slice.json'))) throw new Error('adaptation 88 requires a declaration slice');
+const file = path.join(tree, 'src/compiler/scanner.ts'), before = fs.readFileSync(file, 'utf8');
+const original = '(String as any).fromCodePoint', count = before.split(original).length - 1;
+let after = before.replaceAll(original, 'String.fromCodePoint');
+const test = 'String.fromCodePoint ? codePoint =>', revised = 'typeof String.fromCodePoint === "function" ? codePoint =>';
+if (!after.includes(test) && !after.includes(revised)) throw new Error('unexpected codepoint availability test');
+if (count !== 0 && count !== 2) throw new Error('unexpected String cast count');
+after = after.replace(test, revised);
+if (after !== before) fs.writeFileSync(file, after);
+console.log(JSON.stringify({stringCodepointCasts: count, availabilityObservations: after !== before ? 1 : 0}));

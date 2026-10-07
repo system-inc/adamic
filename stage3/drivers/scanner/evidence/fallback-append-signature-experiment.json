@@ -1,0 +1,113 @@
+{
+  "before": [],
+  "withoutOverloads": [
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1403,
+      "code": 18048,
+      "message": "'fileIdsList' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5412,
+      "code": 2488,
+      "message": "Type 'Symbol[] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5413,
+      "code": 2322,
+      "message": "Type 'any[] | undefined' is not assignable to type 'Symbol[]'.\n  Type 'undefined' is not assignable to type 'Symbol[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5444,
+      "code": 2322,
+      "message": "Type 'Symbol[] | undefined' is not assignable to type 'Symbol[]'.\n  Type 'undefined' is not assignable to type 'Symbol[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15292,
+      "code": 2345,
+      "message": "Argument of type 'Type[] | undefined' is not assignable to parameter of type 'readonly Type[]'.\n  Type 'undefined' is not assignable to type 'readonly Type[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18036,
+      "code": 2345,
+      "message": "Argument of type 'Type[] | undefined' is not assignable to parameter of type 'readonly Type[]'.\n  Type 'undefined' is not assignable to type 'readonly Type[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19339,
+      "code": 2345,
+      "message": "Argument of type 'Type[] | undefined' is not assignable to parameter of type 'readonly Type[]'.\n  Type 'undefined' is not assignable to type 'readonly Type[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19892,
+      "code": 2345,
+      "message": "Argument of type 'Type[] | undefined' is not assignable to parameter of type 'readonly Type[]'.\n  Type 'undefined' is not assignable to type 'readonly Type[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19993,
+      "code": 2322,
+      "message": "Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.\n  Type 'undefined' is not assignable to type 'Identifier[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46455,
+      "code": 2345,
+      "message": "Argument of type 'Type[] | undefined' is not assignable to parameter of type 'readonly Type[]'.\n  Type 'undefined' is not assignable to type 'readonly Type[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47574,
+      "code": 2322,
+      "message": "Type 'string[] | undefined' is not assignable to type 'string[]'.\n  Type 'undefined' is not assignable to type 'string[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49383,
+      "code": 2345,
+      "message": "Argument of type 'Type[] | undefined' is not assignable to parameter of type 'readonly Type[]'.\n  Type 'undefined' is not assignable to type 'readonly Type[]'."
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 507,
+      "code": 2322,
+      "message": "Type 'string[] | undefined' is not assignable to type 'readonly string[]'.\n  Type 'undefined' is not assignable to type 'readonly string[]'."
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "line": 306,
+      "code": 2345,
+      "message": "Argument of type 'Expression[] | undefined' is not assignable to parameter of type 'readonly Expression[]'.\n  Type 'undefined' is not assignable to type 'readonly Expression[]'."
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "line": 321,
+      "code": 2345,
+      "message": "Argument of type 'Expression[] | undefined' is not assignable to parameter of type 'readonly Expression[]'.\n  Type 'undefined' is not assignable to type 'readonly Expression[]'."
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 511,
+      "code": 2322,
+      "message": "Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.\n  Type 'undefined' is not assignable to type 'VariableDeclaration[]'."
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 217,
+      "code": 2322,
+      "message": "Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.\n  Type 'undefined' is not assignable to type 'VariableDeclaration[]'."
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 906,
+      "code": 18048,
+      "message": "'leadingBlockStatements' is possibly 'undefined'."
+    }
+  ]
+}
