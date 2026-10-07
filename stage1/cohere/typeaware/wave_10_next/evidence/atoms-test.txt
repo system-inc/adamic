@@ -1,0 +1,6 @@
+=== RUN   TestWave10NextNativeAtomsAgainstProduction
+    wave10_atoms_test.go:88: native atoms mismatch: got "" Go ",1,\n,\nreaches streams\nimported\nlost\n"
+--- FAIL: TestWave10NextNativeAtomsAgainstProduction (0.01s)
+FAIL
+FAIL	github.com/system-inc/cohere/internal/lint/rules/nexus	0.016s
+FAIL

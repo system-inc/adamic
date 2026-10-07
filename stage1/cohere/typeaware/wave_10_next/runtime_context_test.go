@@ -1,0 +1,114 @@
+package wave10next
+
+import (
+	"context"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"testing"
+	"unicode/utf16"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	bridge "github.com/system-inc/adamic/bridge/tsgo/checker"
+)
+
+func decode(t *testing.T, wire string) []string {
+	t.Helper()
+	var result []string
+	for wire != "" {
+		colon := strings.IndexByte(wire, ':')
+		if colon < 1 {
+			t.Fatal("missing frame length")
+		}
+		count, err := strconv.Atoi(wire[:colon])
+		if err != nil {
+			t.Fatal(err)
+		}
+		rest := wire[colon+1:]
+		bytes, units := 0, 0
+		for _, r := range rest {
+			if units == count {
+				break
+			}
+			units += len(utf16.Encode([]rune{r}))
+			bytes += len(string(r))
+		}
+		if units != count {
+			t.Fatal("invalid frame extent")
+		}
+		result = append(result, rest[:bytes])
+		wire = rest[bytes:]
+	}
+	return result
+}
+
+func TestRuntimeContextFactsAndDispatchBlocker(t *testing.T) {
+	directory := t.TempDir()
+	config := filepath.Join(directory, "tsconfig.json")
+	file := filepath.Join(directory, "input.a")
+	decl := filepath.Join(directory, "node.d.ts")
+	source := `declare const work:Promise<string>;Promise.race([work,new Promise((_r,reject)=>setTimeout(reject,10))]);process.exit(0);`
+	declarations := `export {};declare global {namespace NodeJS {interface Process {exit(code?:number):never}}var process:NodeJS.Process;function setTimeout(callback:(...args:any[])=>void,delay?:number):number;}`
+	for path, text := range map[string]string{config: `{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]},"files":["node.d.ts"]}`, file: source, decl: declarations} {
+		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	p, err := bridge.Open(config, []string{file})
+	if err != nil {
+		t.Fatal(err)
+	}
+	loaded := p.Compiler.GetSourceFile(file)
+	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), loaded)
+	defer release()
+	nodes := map[string]*ast.Node{}
+	var visit func(*ast.Node)
+	visit = func(n *ast.Node) {
+		if n.Kind == ast.KindIdentifier {
+			nodes[n.Text()] = n
+		}
+		n.ForEachChild(func(c *ast.Node) bool { visit(c); return false })
+	}
+	visit(loaded.AsNode())
+	for _, name := range []string{"race", "Promise", "setTimeout", "exit"} {
+		node := nodes[name]
+		wire, err := Inspect(p.Compiler, loaded, node, c, "runtime-context\norigin")
+		if err != nil {
+			t.Fatal(err)
+		}
+		values := decode(t, wire)
+		if len(values) < 7 || values[0] != "1" || values[1] != "runtime-context" || values[2] != "origin" || values[3] != "1" || values[5] != name {
+			t.Fatalf("missing origin %s: %q", name, values)
+		}
+		if len(values) < 24 {
+			t.Fatalf("short declaration: %q", values)
+		}
+		if name == "race" && (values[12] != "1" || values[18] != "InterfaceDeclaration" || values[19] != "PromiseConstructor") {
+			t.Fatal("library owner absent")
+		}
+		if name == "exit" && (len(values) < 39 || values[11] != "1" || values[18] != "InterfaceDeclaration" || values[19] != "Process" || values[32] != "ModuleDeclaration" || values[33] != "NodeJS" || values[38] != "Identifier") {
+			t.Fatal("namespace ancestry absent")
+		}
+		if name == "setTimeout" && (len(values) < 32 || values[13] != "1" || values[18] != "ModuleBlock" || values[26] != "global" || values[30] != "1") {
+			t.Fatal("global augmentation ancestry absent")
+		}
+		if _, err := p.Inspect(file, uint64(node.Pos()), uint64(node.End()), "Identifier", "runtime-context\norigin"); err == nil || !strings.Contains(err.Error(), "unsupported") {
+			t.Fatalf("shared dispatch changed: %v", err)
+		}
+	}
+	wire, err := Inspect(p.Compiler, loaded, loaded.AsNode(), c, "runtime-context\nprogram")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(wire, "node.d.ts") {
+		t.Fatal("program declaration roots absent")
+	}
+	if _, err := Inspect(p.Compiler, loaded, nodes["race"], c, "runtime-context\norigin\nextra"); err == nil {
+		t.Fatal("suffix accepted")
+	}
+	if _, err := Inspect(p.Compiler, loaded, nil, c, "runtime-context\norigin"); err == nil {
+		t.Fatal("missing anchor accepted")
+	}
+	t.Log("raw origin/program facts pass; existing live dispatch refuses runtime-context")
+}

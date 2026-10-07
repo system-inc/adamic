@@ -1,0 +1,135 @@
+// The fact classification and path-state algebra are ported here. Native CFG
+// construction and the live bridge registration are still required for a runner.
+import type { Rules } from '../rules.ts';
+import { RuntimeContext } from './runtime_context.a';
+
+export class NoProcessExitAfterOutput {
+    readonly discriminator = 'process-output';
+    readonly rules: Rules;
+    readonly context: RuntimeContext;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.context = new RuntimeContext(rules);
+    }
+    member(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            return index;
+        }
+        if(node.kind !== 'PropertyAccessExpression') {
+            return -1;
+        }
+        const name = node.children[node.children.length - 1] ?? -1;
+        return this.rules.parser.node(name).kind === 'Identifier' ? name : -1;
+    }
+    processMember(index: number): boolean {
+        const symbol = this.context.symbol(index);
+        return (
+            symbol.present &&
+            symbol.declarations.length > 0 &&
+            symbol.declarations.every(
+                (declaration) =>
+                    declaration.declarationFile &&
+                    ['MethodSignature', 'PropertySignature'].includes(declaration.kind) &&
+                    declaration.ancestors[0]?.kind === 'InterfaceDeclaration' &&
+                    declaration.ancestors[0]?.name === 'Process' &&
+                    declaration.ancestors[1]?.kind === 'ModuleBlock' &&
+                    declaration.ancestors[2]?.kind === 'ModuleDeclaration' &&
+                    declaration.ancestors[2]?.name === 'NodeJS' &&
+                    declaration.ancestors[2]?.nameKind === 'Identifier',
+            )
+        );
+    }
+    exit(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(node.kind !== 'CallExpression') {
+            return false;
+        }
+        const name = this.member(this.rules.skip(node.children[0] ?? -1));
+        return name >= 0 && this.rules.parser.node(name).text === 'exit' && this.processMember(name);
+    }
+    globalConsole(index: number): boolean {
+        const symbol = this.context.symbol(index);
+        if(!symbol.present || symbol.declarations.length === 0) {
+            return false;
+        }
+        for(const declaration of symbol.declarations) {
+            if(
+                !declaration.declarationFile ||
+                declaration.kind !== 'VariableDeclaration' ||
+                declaration.ancestors[0]?.kind !== 'VariableDeclarationList' ||
+                declaration.ancestors[1]?.kind !== 'VariableStatement'
+            ) {
+                return false;
+            }
+            const container = declaration.ancestors[2];
+            if(container?.kind === 'SourceFile') {
+                if(declaration.external) {
+                    return false;
+                }
+            }
+            else if(container?.kind !== 'ModuleBlock' || declaration.ancestors[3]?.global !== true) {
+                return false;
+            }
+        }
+        return true;
+    }
+    write(index: number): boolean {
+        const call = this.rules.parser.node(index);
+        if(call.kind !== 'CallExpression') {
+            return false;
+        }
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) {
+            return false;
+        }
+        const name = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+        if(
+            callee.kind === 'ElementAccessExpression' &&
+            !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(name.kind)
+        ) {
+            return false;
+        }
+        const receiverIndex = this.rules.skip(callee.children[0] ?? -1);
+        const receiver = this.rules.parser.node(receiverIndex);
+        if(
+            ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(name.text) &&
+            receiver.kind === 'Identifier' &&
+            receiver.text === 'console'
+        ) {
+            return this.globalConsole(receiverIndex);
+        }
+        if(name.text !== 'write') {
+            return false;
+        }
+        const stream = this.member(receiverIndex);
+        return (
+            stream >= 0 &&
+            ['stdout', 'stderr'].includes(this.rules.parser.node(stream).text) &&
+            this.processMember(stream)
+        );
+    }
+    chainHolds(outer: string, inner: string): boolean {
+        return inner
+            .split(',')
+            .filter((id) => id !== '')
+            .every((id) => outer.includes(`,${id},`));
+    }
+    withWrite(state: readonly string[], chain: string): string[] {
+        const next: string[] = [];
+        for(const held of state) {
+            if(this.chainHolds(chain, held)) {
+                return [...state];
+            }
+            if(!this.chainHolds(held, chain)) {
+                next.push(held);
+            }
+        }
+        next.push(chain);
+        next.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+        return next;
+    }
+    enterCatch(state: readonly string[], statement: number): string[] {
+        return state.filter((held) => !held.includes(`,${statement},`));
+    }
+}

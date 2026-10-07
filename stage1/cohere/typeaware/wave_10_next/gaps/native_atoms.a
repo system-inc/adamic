@@ -1,0 +1,64 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../../unary_minus.ts';
+import { Rules } from '../../rules.ts';
+import { NoProcessExitAfterOutput } from '../no_process_exit_after_output.a';
+import { RequireBlockingStandardStreamsIndex } from '../require_blocking_standard_streams.a';
+import { NoUnclearedRaceTimeout } from '../no_uncleared_race_timeout.a';
+
+const args = programArguments();
+const config = args[0] ?? panic('missing config');
+const path = args[1] ?? panic('missing path');
+const source = readTextFile(path);
+if(source.kind === 'Error') {
+    panic(source.message);
+}
+const program = tsgoProgram(config, [path]);
+const parser = new Parser(source.text, path);
+const scanner = new Scanner(source.text);
+const offsets = byteOffsets(source.text);
+const unary = new UnaryMinus(program, path, parser, scanner, offsets);
+const rules = new Rules(program, path, parser, scanner, offsets, unary);
+const root = parser.file();
+while(rules.parents.length < parser.nodes.length) {
+    rules.parents.push(-1);
+}
+rules.links(root, -1);
+if(args.includes('--atoms')) {
+    const output = new NoProcessExitAfterOutput(rules);
+    console.log(output.withWrite([',1,2,'], ',1,').join('|'));
+    console.log(output.enterCatch([',1,', ','], 1).join('|'));
+    const index = new RequireBlockingStandardStreamsIndex([
+        { path: '/source/system/StandardStreams.d.ts', declarationFile: true, external: true, text: '', edges: [] },
+        {
+            path: '/entry.a',
+            declarationFile: false,
+            external: true,
+            text: "import './source/system/StandardStreams';",
+            edges: [
+                {
+                    kind: 'import',
+                    typeOnly: false,
+                    computed: false,
+                    specifier: './source/system/StandardStreams',
+                    target: '/source/system/StandardStreams.d.ts',
+                },
+            ],
+        },
+    ]);
+    console.log(index.canBlock.has('/entry.a') ? 'reaches streams' : 'does not reach streams');
+    console.log(index.entry('/source/system/StandardStreams.d.ts', '') ? 'entry' : 'imported');
+    const timer = rules.parser.nodes.findIndex(
+        (node) => node.kind === 'CallExpression' && rules.parser.node(node.children[0] ?? -1).text === 'setTimeout',
+    );
+    const executor = rules.parser.nodes.findIndex((node) => node.kind === 'ArrowFunction');
+    console.log(new NoUnclearedRaceTimeout(rules).lost(executor, timer) ? 'lost' : 'kept');
+}
+else {
+    new NoUnclearedRaceTimeout(rules).run();
+}
+for(const finding of rules.findings) {
+    console.log(finding.written());
+}
+tsgoRelease(program);

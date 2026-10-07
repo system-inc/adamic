@@ -1,0 +1,5 @@
+=== RUN   TestRuntimeContextFactsAndDispatchBlocker
+    runtime_context_test.go:113: raw origin/program facts pass; existing live dispatch refuses runtime-context
+--- PASS: TestRuntimeContextFactsAndDispatchBlocker (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave_10_next	0.031s

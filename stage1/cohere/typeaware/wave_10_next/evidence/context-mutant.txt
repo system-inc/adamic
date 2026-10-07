@@ -1,0 +1,7 @@
+=== RUN   TestRuntimeContextFactsAndDispatchBlocker
+    runtime_context_test.go:88: library owner absent
+--- FAIL: TestRuntimeContextFactsAndDispatchBlocker (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave_10_next	0.017s
+FAIL
+raw fact mutant exit 1

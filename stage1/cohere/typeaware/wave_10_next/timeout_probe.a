@@ -1,0 +1,30 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Rules } from '../rules.ts';
+import { NoUnclearedRaceTimeout } from './no_uncleared_race_timeout.a';
+
+const args = programArguments();
+const config = args[0] ?? panic('missing config');
+const path = args[1] ?? panic('missing path');
+const source = readTextFile(path);
+if(source.kind === 'Error') {
+    panic(source.message);
+}
+const program = tsgoProgram(config, [path]);
+const parser = new Parser(source.text, path);
+const scanner = new Scanner(source.text);
+const offsets = byteOffsets(source.text);
+const unary = new UnaryMinus(program, path, parser, scanner, offsets);
+const rules = new Rules(program, path, parser, scanner, offsets, unary);
+const root = parser.file();
+while(rules.parents.length < parser.nodes.length) {
+    rules.parents.push(-1);
+}
+rules.links(root, -1);
+new NoUnclearedRaceTimeout(rules).run();
+for(const finding of rules.findings) {
+    console.log(finding.written());
+}
+tsgoRelease(program);

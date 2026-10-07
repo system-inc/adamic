@@ -35,3 +35,12 @@ rules; 25 base ports occur in it, 96 remaining names are mentioned in claim file
 and 76 candidates remain. These are the first three. No implementation precedes
 this claim commit and push. Shared harness and registration generator remain
 outside this continuation's edits.
+
+Continuation status: partial and blocked, not completed. The owned files in
+../wave_10_next contain a raw compiler fact adapter, timeout decision logic,
+process-output classification/path-state helpers, and the blocking-streams
+program index. Live runtime-context dispatch is absent; shared dispatcher edits
+await clarification of Ahra's ownership restriction. The combined native probe
+also stalls in internal/fresh. Complete rule byte comparisons and per-rule
+mutants have not passed. See ../wave_10_next/README.md for exact evidence and
+remaining work. These claims remain reserved; no additional rules were claimed.

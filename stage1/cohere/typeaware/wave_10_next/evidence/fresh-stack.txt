@@ -1,0 +1,224 @@
+SIGQUIT: quit
+PC=0x48e341 m=0 sigcode=0
+
+goroutine 0 gp=0x1817ae0 m=0 mp=0x1818b60 [idle]:
+runtime.futex(0x1818cb8, 0x80, 0x0, 0x0, 0x0, 0x0)
+	/workspace/adamic-tools/go/src/runtime/sys_linux_amd64.s:575 +0x21 fp=0x7ffdbadadbd8 sp=0x7ffdbadadbd0 pc=0x48e341
+runtime.futexsleep(0x1818b60?, 0xbadadc50?, 0x45dd08?)
+	/workspace/adamic-tools/go/src/runtime/os_linux.go:73 +0x30 fp=0x7ffdbadadc28 sp=0x7ffdbadadbd8 pc=0x44a390
+runtime.notesleep(0x1818cb8)
+	/workspace/adamic-tools/go/src/runtime/lock_futex.go:47 +0x87 fp=0x7ffdbadadc60 sp=0x7ffdbadadc28 pc=0x41efa7
+runtime.mPark(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:1985
+runtime.stopm()
+	/workspace/adamic-tools/go/src/runtime/proc.go:3023 +0x8c fp=0x7ffdbadadc90 sp=0x7ffdbadadc60 pc=0x454d6c
+runtime.findRunnable()
+	/workspace/adamic-tools/go/src/runtime/proc.go:3811 +0xeb7 fp=0x7ffdbadade60 sp=0x7ffdbadadc90 pc=0x4568f7
+runtime.schedule()
+	/workspace/adamic-tools/go/src/runtime/proc.go:4179 +0xb1 fp=0x7ffdbadadea0 sp=0x7ffdbadade60 pc=0x457a11
+runtime.park_m(0x3cfbf8f2f0e0)
+	/workspace/adamic-tools/go/src/runtime/proc.go:4319 +0x279 fp=0x7ffdbadadf00 sp=0x7ffdbadadea0 pc=0x457e99
+runtime.mcall()
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:463 +0x53 fp=0x7ffdbadadf18 sp=0x7ffdbadadf00 pc=0x48acb3
+
+goroutine 1 gp=0x3cfbf8bd41e0 m=nil [runnable]:
+runtime.mapIterNext(0x3cfbfa6bbcc8?)
+	/workspace/adamic-tools/go/src/runtime/map.go:168 +0x25 fp=0x3cfbfa6bbc60 sp=0x3cfbfa6bbc58 pc=0x425a85
+github.com/system-inc/adamic/internal/fresh.objects.sorted(0x3cfbfb4bd410)
+	/workspace/adamic/internal/fresh/fresh.go:214 +0xb4 fp=0x3cfbfa6bbd48 sp=0x3cfbfa6bbc60 pc=0x93b374
+github.com/system-inc/adamic/internal/fresh.(*analysis).argument(0x3cfbfa6bcdd0, {0x3cfbfcf3d7d0?, {0x3cfbf93eaa28?, 0x1?}, 0x0?}, {0x3cfbfa6bc8a8?, 0x3cfbfa6bbf78?, 0x425a31?})
+	/workspace/adamic/internal/fresh/fresh.go:1547 +0x6ba fp=0x3cfbfa6bbf20 sp=0x3cfbfa6bbd48 pc=0x946b7a
+github.com/system-inc/adamic/internal/fresh.(*analysis).made.func1({{0x3cfbfae55c40, 0x1, 0x1}, {0x3cfbfae55c48, 0x1, 0x1}, {0x3cfbfa5c0cc0, 0x2, 0x2}, {0x3cfbfa5c1280, ...}})
+	/workspace/adamic/internal/fresh/fresh.go:1456 +0x3d5 fp=0x3cfbfa6bc070 sp=0x3cfbfa6bbf20 pc=0x94ae75
+github.com/system-inc/adamic/internal/fresh.(*analysis).made(0x3cfbfa6bcdd0, 0x45, 0x3cfbf9d3e500, {0x3cfbfa6bc8a8, 0x1, 0x2})
+	/workspace/adamic/internal/fresh/fresh.go:1479 +0xb50 fp=0x3cfbfa6bc5f0 sp=0x3cfbfa6bc070 pc=0x945cb0
+github.com/system-inc/adamic/internal/fresh.(*analysis).value(0x3cfbfa6bcdd0, {0x17afce8?, 0x3cfbfa2e08a0?})
+	/workspace/adamic/internal/fresh/fresh.go:1340 +0x2ef8 fp=0x3cfbfa6bc9b8 sp=0x3cfbfa6bc5f0 pc=0x943fd8
+github.com/system-inc/adamic/internal/fresh.(*analysis).run(0x3cfbfa6bcdd0, 0xfa6bcc98?)
+	/workspace/adamic/internal/fresh/fresh.go:817 +0x21d fp=0x3cfbfa6bcb28 sp=0x3cfbfa6bc9b8 pc=0x93f89d
+github.com/system-inc/adamic/internal/fresh.(*analysis).block(0x3cfbfa6bcdd0, 0x3cfbfa1274a0, 0x3cfb00000023?)
+	/workspace/adamic/internal/fresh/fresh.go:794 +0x74 fp=0x3cfbfa6bcb70 sp=0x3cfbfa6bcb28 pc=0x93f5f4
+github.com/system-inc/adamic/internal/fresh.(*freshness).analyze(0x3cfbf9978c00, 0x66, 0x3cfbfa0f1560)
+	/workspace/adamic/internal/fresh/fresh.go:736 +0x4f1 fp=0x3cfbfa6bd2a0 sp=0x3cfbfa6bcb70 pc=0x93e951
+github.com/system-inc/adamic/internal/fresh.ProveWrites(0x3cfbf9938980)
+	/workspace/adamic/internal/fresh/fresh.go:69 +0x3c9 fp=0x3cfbfa6bd570 sp=0x3cfbfa6bd2a0 pc=0x93ab09
+github.com/system-inc/adamic/internal/lower.(*cycleFinder).unproven(0x3cfbfa6bdb20, 0x2, 0x3cfbf9c1aa80, {0x0, 0x0})
+	/workspace/adamic/internal/lower/fresh.go:39 +0x3d fp=0x3cfbfa6bd5c8 sp=0x3cfbfa6bd570 pc=0x969a3d
+github.com/system-inc/adamic/internal/lower.(*cycleFinder).slotsOf(0x3cfbfa6bdb20, 0x3cfbf9c1aa80)
+	/workspace/adamic/internal/lower/cycles.go:269 +0x11d4 fp=0x3cfbfa6bda48 sp=0x3cfbfa6bd5c8 pc=0x95e994
+github.com/system-inc/adamic/internal/lower.(*lowering).findCycles(0x3cfbf9e29080, {0x3cfbf9809d00, 0x1d, 0x3cfbf8c76388?})
+	/workspace/adamic/internal/lower/cycles.go:97 +0x1bf fp=0x3cfbfa6bdb90 sp=0x3cfbfa6bda48 pc=0x95c91f
+github.com/system-inc/adamic/internal/lower.Lower({0x17b1bf0?, 0x183a140?}, 0x3cfbf8ed00f0)
+	/workspace/adamic/internal/lower/lower.go:88 +0x668 fp=0x3cfbfa6bdc60 sp=0x3cfbfa6bdb90 pc=0x96f388
+main.compileLibrary({0x7ffdbadb034a?, 0x9520cd?}, 0x1)
+	/workspace/adamic/cmd/adamic/main.go:108 +0x65 fp=0x3cfbfa6bdcb8 sp=0x3cfbfa6bdc60 pc=0x9c5ee5
+main.build({0x7ffdbadb034a?, 0x4042000000000000?}, {0x7ffdbadb0382, 0x1f}, {0x3cfbf8cb4050?, 0x3cfbf8ca7e30?, 0x3cfbf8ca7d70?})
+	/workspace/adamic/cmd/adamic/tsgo.go:31 +0x1c5 fp=0x3cfbfa6bdd48 sp=0x3cfbfa6bdcb8 pc=0x9c6245
+main.run({0x3cfbf8cb4010?, 0x17bf418?, 0x3cfbf8bd41e0?})
+	/workspace/adamic/cmd/adamic/main.go:72 +0x308 fp=0x3cfbfa6bde90 sp=0x3cfbfa6bdd48 pc=0x9c5aa8
+main.main()
+	/workspace/adamic/cmd/adamic/main.go:33 +0x45 fp=0x3cfbfa6bdeb8 sp=0x3cfbfa6bde90 pc=0x9c5785
+runtime.main()
+	/workspace/adamic-tools/go/src/runtime/proc.go:302 +0x427 fp=0x3cfbfa6bdfe0 sp=0x3cfbfa6bdeb8 pc=0x4502e7
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbfa6bdfe8 sp=0x3cfbfa6bdfe0 pc=0x48c801
+
+goroutine 2 gp=0x3cfbf8bd4d20 m=nil [force gc (idle), 3 minutes]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c2afa8 sp=0x3cfbf8c2af88 pc=0x4864aa
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.forcegchelper()
+	/workspace/adamic-tools/go/src/runtime/proc.go:387 +0xb3 fp=0x3cfbf8c2afe0 sp=0x3cfbf8c2afa8 pc=0x4505b3
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c2afe8 sp=0x3cfbf8c2afe0 pc=0x48c801
+created by runtime.init.7 in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/proc.go:375 +0x1a
+
+goroutine 3 gp=0x3cfbf8bd52c0 m=nil [GC sweep wait]:
+runtime.gopark(0x1816c01?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c2b788 sp=0x3cfbf8c2b768 pc=0x4864aa
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.bgsweep(0x3cfbf8c54000)
+	/workspace/adamic-tools/go/src/runtime/mgcsweep.go:324 +0x151 fp=0x3cfbf8c2b7c8 sp=0x3cfbf8c2b788 pc=0x43b991
+runtime.gcenable.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:214 +0x17 fp=0x3cfbf8c2b7e0 sp=0x3cfbf8c2b7c8 pc=0x47d977
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c2b7e8 sp=0x3cfbf8c2b7e0 pc=0x48c801
+created by runtime.gcenable in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:214 +0x66
+
+goroutine 4 gp=0x3cfbf8bd54a0 m=nil [GC scavenge wait]:
+runtime.gopark(0xe1a2e4?, 0x171324f?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c2bf78 sp=0x3cfbf8c2bf58 pc=0x4864aa
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.(*scavengerState).park(0x1817540)
+	/workspace/adamic-tools/go/src/runtime/mgcscavenge.go:425 +0x49 fp=0x3cfbf8c2bfa8 sp=0x3cfbf8c2bf78 pc=0x4394a9
+runtime.bgscavenge(0x3cfbf8c54000)
+	/workspace/adamic-tools/go/src/runtime/mgcscavenge.go:658 +0x59 fp=0x3cfbf8c2bfc8 sp=0x3cfbf8c2bfa8 pc=0x439a19
+runtime.gcenable.gowrap2()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:215 +0x17 fp=0x3cfbf8c2bfe0 sp=0x3cfbf8c2bfc8 pc=0x47d937
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c2bfe8 sp=0x3cfbf8c2bfe0 pc=0x48c801
+created by runtime.gcenable in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:215 +0xa5
+
+goroutine 18 gp=0x3cfbf8c843c0 m=nil [GOMAXPROCS updater (idle), 3 minutes]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c26788 sp=0x3cfbf8c26768 pc=0x4864aa
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.updateMaxProcsGoroutine()
+	/workspace/adamic-tools/go/src/runtime/proc.go:7146 +0xe7 fp=0x3cfbf8c267e0 sp=0x3cfbf8c26788 pc=0x45d9c7
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c267e8 sp=0x3cfbf8c267e0 pc=0x48c801
+created by runtime.defaultGOMAXPROCSUpdateEnable in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/proc.go:7134 +0x37
+
+goroutine 19 gp=0x3cfbf8c84960 m=nil [finalizer wait, 3 minutes]:
+runtime.gopark(0x3cfbf8bd41e0?, 0x0?, 0x80?, 0x47?, 0x3cfbf8c80888?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c2a620 sp=0x3cfbf8c2a600 pc=0x4864aa
+runtime.runFinalizers()
+	/workspace/adamic-tools/go/src/runtime/mfinal.go:210 +0x107 fp=0x3cfbf8c2a7e0 sp=0x3cfbf8c2a620 pc=0x42cc07
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c2a7e8 sp=0x3cfbf8c2a7e0 pc=0x48c801
+created by runtime.createfing in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mfinal.go:172 +0x3d
+
+goroutine 20 gp=0x3cfbf8c84d20 m=nil [cleanup wait, 3 minutes]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c26f68 sp=0x3cfbf8c26f48 pc=0x4864aa
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.(*cleanupQueue).dequeue(0x18178c0)
+	/workspace/adamic-tools/go/src/runtime/mcleanup.go:522 +0xd3 fp=0x3cfbf8c26fa0 sp=0x3cfbf8c26f68 pc=0x429933
+runtime.runCleanups()
+	/workspace/adamic-tools/go/src/runtime/mcleanup.go:718 +0x45 fp=0x3cfbf8c26fe0 sp=0x3cfbf8c26fa0 pc=0x429fa5
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c26fe8 sp=0x3cfbf8c26fe0 pc=0x48c801
+created by runtime.(*cleanupQueue).createGs in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mcleanup.go:672 +0xa5
+
+goroutine 21 gp=0x3cfbf8f2e960 m=nil [GC worker (idle)]:
+runtime.gopark(0x38e717fa368?, 0x3?, 0xc2?, 0x15?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c27740 sp=0x3cfbf8c27720 pc=0x4864aa
+runtime.gcBgMarkWorker(0x3cfbf8c92230)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x3cfbf8c277c8 sp=0x3cfbf8c27740 pc=0x42fe4b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x3cfbf8c277e0 sp=0x3cfbf8c277c8 pc=0x47de77
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c277e8 sp=0x3cfbf8c277e0 pc=0x48c801
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 22 gp=0x3cfbf8f2eb40 m=nil [GC worker (idle)]:
+runtime.gopark(0x38e9f0da456?, 0x3?, 0x3d?, 0x2a?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c27f40 sp=0x3cfbf8c27f20 pc=0x4864aa
+runtime.gcBgMarkWorker(0x3cfbf8c92230)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x3cfbf8c27fc8 sp=0x3cfbf8c27f40 pc=0x42fe4b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x3cfbf8c27fe0 sp=0x3cfbf8c27fc8 pc=0x47de77
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c27fe8 sp=0x3cfbf8c27fe0 pc=0x48c801
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 23 gp=0x3cfbf8f2ed20 m=nil [GC worker (idle)]:
+runtime.gopark(0x38e9f0d9a74?, 0x3?, 0xe0?, 0xf7?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c28740 sp=0x3cfbf8c28720 pc=0x4864aa
+runtime.gcBgMarkWorker(0x3cfbf8c92230)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x3cfbf8c287c8 sp=0x3cfbf8c28740 pc=0x42fe4b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x3cfbf8c287e0 sp=0x3cfbf8c287c8 pc=0x47de77
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c287e8 sp=0x3cfbf8c287e0 pc=0x48c801
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 24 gp=0x3cfbf8f2ef00 m=nil [GC worker (idle)]:
+runtime.gopark(0x38e9f0dcff7?, 0x3?, 0x13?, 0xd3?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c28f40 sp=0x3cfbf8c28f20 pc=0x4864aa
+runtime.gcBgMarkWorker(0x3cfbf8c92230)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x3cfbf8c28fc8 sp=0x3cfbf8c28f40 pc=0x42fe4b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x3cfbf8c28fe0 sp=0x3cfbf8c28fc8 pc=0x47de77
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c28fe8 sp=0x3cfbf8c28fe0 pc=0x48c801
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 25 gp=0x3cfbf8f2f0e0 m=nil [GC worker (idle)]:
+runtime.gopark(0x38e9f0d9c43?, 0x3?, 0xcc?, 0xbd?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x3cfbf8c29740 sp=0x3cfbf8c29720 pc=0x4864aa
+runtime.gcBgMarkWorker(0x3cfbf8c92230)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x3cfbf8c297c8 sp=0x3cfbf8c29740 pc=0x42fe4b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x3cfbf8c297e0 sp=0x3cfbf8c297c8 pc=0x47de77
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3cfbf8c297e8 sp=0x3cfbf8c297e0 pc=0x48c801
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+rax    0xca
+rbx    0x0
+rcx    0x48e343
+rdx    0x0
+rdi    0x1818cb8
+rsi    0x80
+rbp    0x7ffdbadadc18
+rsp    0x7ffdbadadbd0
+r8     0x0
+r9     0x0
+r10    0x0
+r11    0x286
+r12    0x2
+r13    0x4
+r14    0x1817ae0
+r15    0x0
+rip    0x48e341
+rflags 0x286
+cs     0x33
+fs     0x0
+gs     0x0
