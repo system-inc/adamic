@@ -129,3 +129,9 @@ History audit: call-targets f64641f38 and MayThrow commits 2dbee1148, 5af7bfbc6 
 ## Merge 5: codex/optional-chain-after-call 611f6e093
 
 Conflicts: combined optional receiver recognition with contextual undefined observation handling in narrowed.go; retained both helpers and every existing check. Counts regenerated on Linux in 23.982s. gofmt, vet and whitespace checks passed. Lower passed 56.318s, native 230.262s, flow 195.750s and IR 11.948s; whole oracle passed (05-gate.log). No new failure and no stage3 record edit. The catchable-read mutant changed Defined.Throws to reject the TypeError prefix: both backends panicked with exit 70 instead of Node's caught TypeError and exit 0. The required-read fixture caught it; baseline restored.
+
+## Merge 6: codex/flow-ranges-callback-alias 0893c66d0
+
+Only counts conflicted; regenerated on Linux in 22.855s. The automatic infer.go merge preserves existing call-target, record and taste effects while carrying unknown reachability through property, array, pop and iteration reads. gofmt, vet and whitespace checks passed. Whole flow passed 130.412s and whole oracle passed 224.983s. No new production failure and no stage3 record edit.
+
+The reachability mutant dropped shape.element's unknown bit. Five of six alias probes failed TestEveryMutationIsInItsRange on Node-observed writes outside inferred ranges; restored baseline passed all six with 12 mutations checked (0.228s). Added a record/callback interaction program without changing compiler behavior: Node, native, release and JavaScript all print `start0` then `changed1`, exit 0, with no stderr; leak validation passed (0.452s). Its first harness attempt used a relative path and failed the cache path-normalization prerequisite; the absolute-path rerun is the valid evidence. The program lives at docs/verification/landing-batch-3/record-callback-alias.a and is checked by TestLandingRecordCallbackAlias.
