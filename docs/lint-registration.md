@@ -155,10 +155,13 @@ Keep the anchors when invoking the test directly: `-run TestRule` also matches
 
 The check validates the entire discovered registry, snapshots the selected rule
 and shared scanner, and retains the five migrated baseline registrations. Other
-registered rules do not enter the native or emitted JavaScript module graph.
+registrations do not enter the native or emitted JavaScript module graph. Their
+module files remain available when the selected rule imports a helper.
 It checks every owned witness for a Go finding, the selected rule's captured
-upstream tests, and the inherited corner-case sources and relevant options.
-Go cohere, source Node, emitted JavaScript and ASan/UBSan native must agree byte
+upstream tests, and every original inherited corner-case manifest row and option, including `all`
+selection, plus selected-rule variants.
+A private oracle uses the same restricted registration plus the unchanged Go
+baseline for `all` rows. Go cohere, source Node, emitted JavaScript and ASan/UBSan native must agree byte
 for byte. The owned mutant runs on witnesses and inherited cases, and must
 disagree with Go on each port runtime. Unsupported recovery cases keep the
 ordinary harness's explicit refusal check. A phase timing table prints at exit,

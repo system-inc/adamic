@@ -29,16 +29,13 @@ func selectedDescriptor(t *testing.T, slug string) registry.Descriptor {
 	return registry.Descriptor{}
 }
 func selectedPort(t *testing.T, d registry.Descriptor) string {
+	return selectedPortMutation(t, d, "", "", "")
+}
+func selectedPortMutation(t *testing.T, d registry.Descriptor, from, to, target string) string {
 	t.Helper()
-	directory := copyPort(t, t.TempDir(), "", "")
-	// The legacy scanner calls the five migrated registrations when the inherited
-	// corpus selects all. Every other registration is excluded from this build.
-	for _, other := range prepareRegistry(t, ".") {
-		if other.Slug != d.Slug && other.Order == 0 {
-			if err := os.RemoveAll(filepath.Join(directory, "rules", other.Slug)); err != nil {
-				t.Fatal(err)
-			}
-		}
+	directory := copyPort(t, t.TempDir(), from, to, target)
+	if err := os.WriteFile(filepath.Join(directory, ".selected-rule"), []byte(d.Slug), 0600); err != nil {
+		t.Fatal(err)
 	}
 	if *ruleByteChange {
 		path := filepath.Join(directory, "rules", d.Slug, d.Module)
@@ -84,13 +81,17 @@ func stableRows(t *testing.T, rows []string) []string {
 	return result
 }
 func ruleRows(t *testing.T, d registry.Descriptor) ([]string, []string) {
-	rows := selectedRows(append(generated(t), volumeGenerated(t)...), d.Name)
+	inherited := append(generated(t), volumeGenerated(t)...)
+	rows := append(inherited, selectedRows(inherited, d.Name)...)
 	witnesses := ownedWitnesses(t, ".", d.Slug)
 	var owned []string
 	for _, source := range witnesses {
 		owned = append(owned, source+"\t"+d.Name)
 	}
 	rows = append(rows, owned...)
+	for _, source := range witnesses {
+		rows = append(rows, source+"\tall")
+	}
 	return stableRows(t, rows), stableRows(t, owned)
 }
 
@@ -107,8 +108,8 @@ func TestRule(t *testing.T) {
 	var phases []lintPhase
 	phase := func(name string, run func()) {
 		before := time.Now()
+		defer func() { phases = append(phases, lintPhase{name, time.Since(before)}) }()
 		run()
-		phases = append(phases, lintPhase{name, time.Since(before)})
 	}
 	defer func() {
 		fmt.Printf("rule %s phase timing (seconds)\n| phase | seconds |\n|---|---:|\n", *ruleSlug)
@@ -125,7 +126,7 @@ func TestRule(t *testing.T) {
 		directory = selectedPort(t, d)
 		rows, owned = ruleRows(t, d)
 	})
-	phase("Go oracle", func() { oracle = goOracle(t) })
+	phase("Go oracle", func() { oracle = goOracleFrom(t, directory) })
 	phase("upstream capture", func() {
 		for _, row := range stableRows(t, lintCapture(t, ".", d)) {
 			if strings.HasSuffix(row, "\tunsupported-recovery") {
@@ -160,25 +161,15 @@ func TestRule(t *testing.T) {
 		if change.File == "" {
 			change.File = d.Module
 		}
-		target := filepath.Join(directory, "rules", d.Slug, change.File)
-		data := lintBytes(t, target)
-		if strings.Count(data, change.From) != 1 {
-			t.Fatal("owned mutant anchor must occur exactly once")
-		}
-		if err := os.WriteFile(target, []byte(strings.Replace(data, change.From, change.To, 1)), 0644); err != nil {
-			t.Fatal(err)
-		}
-		// Match today's mutant corpus: witnesses plus inherited corner cases.
+		mutated := selectedPortMutation(t, d, change.From, change.To, filepath.Join("rules", d.Slug, change.File))
+		// Keep today's exact mutant corpus, including all-rule inherited rows.
 		mutantPath := manifest(t, append(stableRows(t, generated(t)), owned...))
-		// Select the rule for inherited cases so another worker's registration cannot
-		// change this rule's evidence or make its mutant appear killed.
-		mutantPath = manifest(t, selectedRows(strings.Split(strings.TrimSpace(lintBytes(t, mutantPath)), "\n"), d.Name))
 		want := execute(t, "", oracle, "--manifest", mutantPath).output
-		mutantBinary := buildPort(t, directory, true)
+		mutantBinary := buildPort(t, mutated, true)
 		for _, side := range []struct {
 			Name   string
 			Result execution
-		}{{"Node", node(t, directory, mutantPath, false)}, {"emitted JavaScript", emittedNode(t, directory, mutantPath, false)}, {"sanitized native", execute(t, "", mutantBinary, "--manifest", mutantPath)}} {
+		}{{"Node", node(t, mutated, mutantPath, false)}, {"emitted JavaScript", emittedNode(t, mutated, mutantPath, false)}, {"sanitized native", execute(t, "", mutantBinary, "--manifest", mutantPath)}} {
 			if bytes.Equal(side.Result.output, want) {
 				t.Fatalf("%s survived on %s", change.Name, side.Name)
 			}
@@ -195,6 +186,7 @@ func TestSelectedRuleParity(t *testing.T) {
 		t.Run(slug, func(t *testing.T) {
 			d := selectedDescriptor(t, slug)
 			rows, _ := ruleRows(t, d)
+			rows = selectedRows(rows, d.Name)
 			rows = append(rows, stableRows(t, lintCapture(t, ".", d))...)
 			path := manifest(t, rows)
 			full, err := filepath.Abs(".")

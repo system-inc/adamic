@@ -27,7 +27,7 @@ const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
 func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
 	t.Helper()
-	descriptors, err := registry.Generate(directory)
+	descriptors, err := lintRegistry(t, directory)
 	if err != nil {
 		t.Fatal(err)
 	}

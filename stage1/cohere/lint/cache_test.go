@@ -243,7 +243,54 @@ func lintOracleKey(t *testing.T, root string) string {
 	for _, d := range prepareRegistry(t, root) {
 		parts["adapter/"+d.Slug] = lintBytes(t, filepath.Join(root, "rules", d.Slug, "oracle.go"))
 	}
+	// Every available adapter participates, including ones not registered in this
+	// private oracle. Full and restricted oracle builds share the same contract.
+	for _, d := range prepareRegistry(t, ".") {
+		parts["available-adapter/"+d.Slug] = lintBytes(t, filepath.Join("rules", d.Slug, "oracle.go"))
+	}
 	return lintKey("oracle", parts)
+}
+
+// A private snapshot validates every directory, but registers only the selected
+// rule and the migrated baseline. Keep all module files: a selected rule may
+// import an unselected rule's reusable helper without registering its listener.
+func lintRegistry(t *testing.T, root string) ([]registry.Descriptor, error) {
+	marker, err := os.ReadFile(filepath.Join(root, ".selected-rule"))
+	if os.IsNotExist(err) {
+		return registry.Generate(root)
+	}
+	if err != nil {
+		return nil, err
+	}
+	descriptors, err := registry.Discover(root)
+	if err != nil {
+		return nil, err
+	}
+	var chosen []registry.Descriptor
+	found := false
+	for _, d := range descriptors {
+		if d.Slug == string(marker) {
+			found = true
+		}
+		if d.Order > 0 || d.Slug == string(marker) {
+			chosen = append(chosen, d)
+		}
+	}
+	if !found {
+		return nil, fmt.Errorf("unknown selected registration %q", marker)
+	}
+	ts, goSource := registry.Render(chosen)
+	for _, file := range []struct {
+		Name string
+		Data []byte
+	}{{"registry.ts", ts}, {"registry.go", goSource}} {
+		path := filepath.Join(root, ".generated", file.Name)
+		if current, err := os.ReadFile(path); err == nil && string(current) == string(file.Data) {
+			continue
+		}
+		lintPublish(t, path, file.Data, 0644)
+	}
+	return chosen, nil
 }
 
 var lintOracles sync.Map
