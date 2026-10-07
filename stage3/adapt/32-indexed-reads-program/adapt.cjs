@@ -54,7 +54,7 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
             if (site.existingDefault !== undefined) {
                 if (asserted || !coalesced || parent.right.getText(source) !== site.existingDefault) throw new Error(`existing default changed: ${label}`);
             }
-            else if (asserted || coalesced) throw new Error(`declined site changed: ${label}`);
+            else if ((asserted && site.laterAssertion !== "47-host-errors") || coalesced) throw new Error(`declined site changed: ${label}`);
             declined++;
         }
         else if (site.action === "assert") {
@@ -81,7 +81,8 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
         text = text.slice(0, edit.at) + edit.text + text.slice(edit.at);
     }
     const closure = require("./closure.cjs").plan(ts, file, text, check);
-    return { ...closure, assertions, zeros, declined };
+    const handoff = require("./handoffs.cjs").plan(ts, file, closure.text, check);
+    return { ...handoff, contracts: closure.contracts + handoff.contracts, assertions, zeros, declined };
 }
 
 function main() {
@@ -90,6 +91,7 @@ function main() {
     const tree = path.resolve(process.argv[check ? 3 : 2]);
     const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
     if (ts.version !== "6.0.3") throw new Error(`want TypeScript 6.0.3, got ${ts.version}`);
+    require("./handoffs.cjs").validate(ts, tree);
     // Validate all selected files before writing any; retain original bytes and reads.
     const plans = files.map(file => {
         const name = path.join(tree, "src/compiler", file);

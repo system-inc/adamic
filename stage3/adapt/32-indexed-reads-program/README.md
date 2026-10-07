@@ -802,3 +802,17 @@ watch.ts retains two unsanctioned public-host declaration findings. See the
 [remaining-file roadmap](closure-frontier.md) and closure-frontier.json for every
 remaining owned diagnostic on the current all-code meter. The final emitted
 proof compares directly with untouched input, independent of the adapter.
+
+## Owner handoffs: parser, decorator utilities and comment emitter at zero
+
+The merged 86cc9b7 tree has parser.ts **1 -> 0**,
+transformers/utilities.ts **3 -> 0** and factory/emitNode.ts **2 -> 0**,
+with truthful types.ts owner unions. AutoGenerateInfo reduces nodeFactory **4 -> 2**.
+Fair all-code count **329 -> 321**, original whole files **50 -> 53 of 78**,
+no new findings, byte-identical JavaScript, CRLF/idempotence and a green default
+oracle. [Complete handoff proof](owner-handoffs/README.md) records the exact
+two new AmdDependency.name and CommentRange.hasTrailingNewLine API unions,
+existing sanctions, all mutants and upstream notes. RawSourceMap.sourcesContent
+is deferred: its union alone fails the stock build until partition 33 widens its
+private storage and setter parameter. Sourcemap.ts is still one TS2345;
+no zero is claimed for it or nodeFactory.ts.
