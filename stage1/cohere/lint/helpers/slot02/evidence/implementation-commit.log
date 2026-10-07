@@ -1,0 +1,11 @@
+[codex/lint-helpers-02 c85c62f] Port the Tailwind file reader cache and capture consumer fixtures
+ 13 files changed, 940 insertions(+), 45 deletions(-)
+ create mode 100644 stage1/cohere/lint/helpers/slot02/README.md
+ create mode 100644 stage1/cohere/lint/helpers/slot02/RULES.md
+ create mode 100644 stage1/cohere/lint/helpers/slot02/reader.a
+ create mode 100644 stage1/cohere/lint/helpers/tailwind_reader_for.a
+ create mode 100644 stage1/cohere/lint/helpers/testdata/slot02_capture.py
+ create mode 100644 stage1/cohere/lint/helpers/testdata/slot02_coverage.json
+ create mode 100644 stage1/cohere/lint/helpers/testdata/slot02_inputs.json.gz
+ create mode 100644 stage1/cohere/lint/helpers/testdata/slot02_reader_go.go
+ create mode 100644 stage1/cohere/lint/helpers/testdata/slot02_reader_oracle.go

@@ -1,0 +1,6 @@
+=== RUN   TestSlot02ReaderFor
+    slot02_test.go:233: 80 cache/binding observations match actual Go on Node and sanitized native
+    slot02_test.go:274: compiled cache-key mutant caught at line 2: got fills:0:1:true, Go fills:1:1:true
+--- PASS: TestSlot02ReaderFor (3.82s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	3.827s

@@ -1,0 +1,9 @@
+35 consumers; 4893 captured records; 4364 unique rule/file/source inputs
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/testdata/slot02_capture.py", line 75, in <module>
+    raise RuntimeError('no actual captured inputs for ' + ', '.join(sorted(missing)))
+RuntimeError: no actual captured inputs for @next/next/google-font-display, @next/next/google-font-preconnect, @next/next/inline-script-id, @next/next/next-script-for-ga, @next/next/no-before-interactive-script-outside-document, @next/next/no-css-tags, @next/next/no-html-link-for-pages, @next/next/no-page-custom-font, @next/next/no-styled-jsx-in-document, @next/next/no-sync-scripts, @next/next/no-unwanted-polyfillio, @typescript-eslint/no-dupe-class-members, complexity, consistent-return, grouped-accessor-pairs, nexus/localization-no-untranslated-value, no-dupe-class-members, no-empty-function, no-prototype-builtins, object-shorthand, react/forbid-dom-props, react/jsx-key, react/jsx-no-duplicate-props, react/jsx-no-script-url, react/jsx-no-target-blank, react/jsx-props-no-spread-multi, react/no-children-prop, react/no-danger, react/no-render-return-value, react/no-string-refs, react/no-unknown-property, react/void-dom-elements-no-children, structure/network-no-invalidate-cache-in-on-success, structure/network-require-hook-variables-type, yoda
+slot02_inputs.json.gz: e7c1bbac5d7a9e69dbcdb56636e16ecf0fba2a830d440a7ac328ffd83a952fc3 -> e7c1bbac5d7a9e69dbcdb56636e16ecf0fba2a830d440a7ac328ffd83a952fc3
+slot02_coverage.json: 6d2546098c4d6778d1fef7a53f6e5f051d9842601072c7996781cfb15016cc5e -> 6d2546098c4d6778d1fef7a53f6e5f051d9842601072c7996781cfb15016cc5e
+PASS: both generated artifacts reproduced byte for byte
+PASS: empty capture control refused instead of reporting zero coverage
