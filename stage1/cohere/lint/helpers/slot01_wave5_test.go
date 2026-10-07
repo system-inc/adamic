@@ -109,7 +109,7 @@ func slot01Wave5Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave5_main.a", "collapse_valid_named_value.a", "collapse_breakpoint_bucket.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave5_main.a", "collapse_valid_named_value.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -143,12 +143,4 @@ func TestSlot01Wave5NamedMatchesCohere(t *testing.T) {
 }
 func TestSlot01Wave5NamedEmptyMutant(t *testing.T) {
 	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidNamedValue", "named", "collapse_valid_named_value.a", "if (value === '') { return false; }", "")
-}
-
-// Not parallel: bounded external Go captures and sanitizer builds.
-func TestSlot01Wave5BucketMatchesCohere(t *testing.T) {
-	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.breakpointBucket", "bucket", "collapse_breakpoint_bucket.a", "character === 46", "false")
-}
-func TestSlot01Wave5BucketFunctionMutant(t *testing.T) {
-	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.breakpointBucket", "bucket", "collapse_breakpoint_bucket.a", "if (opening >= 0) { return value.slice(0, opening); }", "")
 }

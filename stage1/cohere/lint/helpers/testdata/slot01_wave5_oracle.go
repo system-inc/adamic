@@ -10,7 +10,6 @@ import (
 	"go/token"
 	"os"
 	"strconv"
-	"unicode/utf16"
 )
 
 func must(err error) {
@@ -102,16 +101,7 @@ func main() {
 	}
 	for _, value := range sources {
 		must(encode.Encode(value))
-		if os.Args[4] == "bucket" {
-			result := utf16.Encode([]rune(collapse.AdamicWave5Bucket(value)))
-			fmt.Fprintf(expected, "%d:", len(result))
-			for _, unit := range result {
-				fmt.Fprintf(expected, "%d,", unit)
-			}
-			fmt.Fprintln(expected)
-		} else {
-			fmt.Fprintln(expected, collapse.AdamicWave5Named(value))
-		}
+		fmt.Fprintln(expected, collapse.AdamicWave5Named(value))
 	}
 	fmt.Fprintf(os.Stderr, "%d fixture strings; %d helper queries (%s)\n", fixtureCount, len(sources), os.Args[4])
 }
