@@ -1,0 +1,11 @@
+=== RUN   TestUniformFieldsMatchNode
+=== PAUSE TestUniformFieldsMatchNode
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== CONT  TestUniformFieldsMatchNode
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:164: 29 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.00s)
+--- PASS: TestUniformFieldsMatchNode (7.35s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	7.352s

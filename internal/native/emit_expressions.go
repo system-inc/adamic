@@ -18,6 +18,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.nodeBufferCall(expression)
 	case ir.NodeHostCall:
 		return e.nodeHostCall(expression)
+	case ir.ProcessCall:
+		return e.processCall(expression)
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)

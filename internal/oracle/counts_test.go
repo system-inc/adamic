@@ -114,7 +114,13 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 				t.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary)
-			result = execute(t, name, pinned...)
+			if path == "internal/oracle/testdata/process_observations.a" {
+				// Environment observations are tested across values separately; counting must use
+				// fixed inputs rather than depend on whoever runs the gate's color preferences.
+				result = executeWith(t, []string{"NO_COLOR=1", "FORCE_COLOR=0", "ADAMIC_PROCESS_TEST=value", "ADAMIC_PROCESS_TEST_MISSING=missing", "ADAMIC_PROCESS_�=surrogate"}, name, pinned...)
+			} else {
+				result = execute(t, name, pinned...)
+			}
 		}
 		return record(result)
 	}
