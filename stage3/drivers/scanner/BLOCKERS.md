@@ -1,5 +1,22 @@
 # Scanner blockers
 
+## October 7: adaptation 58 removes the initialization spelling blocker
+
+Per updated instruction, text is now `var text: string;`; its first setText
+still receives textInitial. tokenValue is `var tokenValue: string;`. The lazy
+initializer feature 01a1130a will remove this adaptation. No eager value added.
+Text's first write precedes every read; the intervening-read mutant holds that.
+An early getTokenValue or speculation save can legitimately observe absence;
+the token driver calls neither. Do not claim universal assignment-before-read
+for tokenValue. Plain declarations pass checking, unlike undefined!:never.
+
+Full upstream baseline: 106,367 pass, zero failures/pending/differences,
+233.054 seconds. Node: all 509,014 tokens identical. Next actual refusal on
+this path is scanner.ts:528:33, flag-return inference at getNumericLiteralFlags
+(adamic/enum-flags); explicit TokenFlags return annotation closes it in a probe.
+The plain nested operand probe instead produced TS2454 at two legitimate
+undefined tests; adaptation 59 uses an optional type. Evidence native58-*.
+
 ## October 7: adaptation 57 validated; native still blocked
 
 Actual text initialization rewrite: upstream scanner.ts:1034 becomes
