@@ -1,0 +1,2172 @@
+{
+  "method": "TypeScript 6.0.3 compiler API plus instrumented Node ESM order and independent DFS",
+  "sourceCommit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "entry": "src/tsc/tsc.ts",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "argument": "--version",
+  "originalStatementsObserved": 57,
+  "originalReadOccurrences": 914,
+  "originalReadSites": 658,
+  "readsBeforeProviderBodyBegins": 0,
+  "readsBeforeProviderBodyEnds": 0,
+  "staticDirectReadsNotObserved": 1,
+  "statements": [
+    {
+      "statement": "src/compiler/semver.ts:46:1",
+      "bodyOrder": 4,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Debug",
+          "provider": "src/compiler/debug.ts",
+          "declaration": "src/compiler/debug.ts:113:1",
+          "providerBodyOrder": 3,
+          "providerEndEvent": 5,
+          "firstReadEvent": 7,
+          "lastReadEvent": 7,
+          "occurrences": 5,
+          "readLocations": [
+            "src/compiler/semver.ts:63:9",
+            "src/compiler/semver.ts:64:9",
+            "src/compiler/semver.ts:65:9",
+            "src/compiler/semver.ts:70:9",
+            "src/compiler/semver.ts:71:9"
+          ]
+        },
+        {
+          "binding": "isArray",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1750:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 7,
+          "lastReadEvent": 7,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/semver.ts:67:46"
+          ]
+        },
+        {
+          "binding": "emptyArray",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:17:14",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 7,
+          "lastReadEvent": 7,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/semver.ts:68:80"
+          ]
+        },
+        {
+          "binding": "every",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:140:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 7,
+          "lastReadEvent": 7,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/semver.ts:70:22",
+            "src/compiler/semver.ts:71:22"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/performanceCore.ts:89:1",
+      "bodyOrder": 5,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "isNodeLikeSystem",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:2588:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 9,
+          "lastReadEvent": 9,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/performanceCore.ts:31:9"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/performance.ts:59:1",
+      "bodyOrder": 6,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "noop",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1794:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 11,
+          "lastReadEvent": 11,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/performance.ts:59:42",
+            "src/compiler/performance.ts:59:54"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/performance.ts:62:1",
+      "bodyOrder": 6,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "timestamp",
+          "provider": "src/compiler/performanceCore.ts",
+          "declaration": "src/compiler/performanceCore.ts:102:14",
+          "providerBodyOrder": 5,
+          "providerEndEvent": 9,
+          "firstReadEvent": 11,
+          "lastReadEvent": 11,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/performance.ts:62:18"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/sys.ts:564:1",
+      "bodyOrder": 10,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "noop",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1794:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 19,
+          "lastReadEvent": 19,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/sys.ts:564:38"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/sys.ts:1462:1",
+      "bodyOrder": 10,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "isNodeLikeSystem",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:2588:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 19,
+          "lastReadEvent": 19,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/sys.ts:1956:9"
+          ]
+        },
+        {
+          "binding": "memoize",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1891:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 19,
+          "lastReadEvent": 19,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/sys.ts:1501:37"
+          ]
+        },
+        {
+          "binding": "some",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:614:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 19,
+          "lastReadEvent": 19,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/sys.ts:1594:102"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/sys.ts:1971:1",
+      "bodyOrder": 10,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Debug",
+          "provider": "src/compiler/debug.ts",
+          "declaration": "src/compiler/debug.ts:113:1",
+          "providerBodyOrder": 3,
+          "providerEndEvent": 5,
+          "firstReadEvent": 19,
+          "lastReadEvent": 19,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/sys.ts:1973:5"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/scanner.ts:300:1",
+      "bodyOrder": 13,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "LanguageFeatureMinimumTarget",
+          "provider": "src/compiler/types.ts",
+          "declaration": "src/compiler/types.ts:8488:14",
+          "providerBodyOrder": 9,
+          "providerEndEvent": 17,
+          "firstReadEvent": 25,
+          "lastReadEvent": 25,
+          "occurrences": 5,
+          "readLocations": [
+            "src/compiler/scanner.ts:301:41",
+            "src/compiler/scanner.ts:302:37",
+            "src/compiler/scanner.ts:303:38",
+            "src/compiler/scanner.ts:304:42",
+            "src/compiler/scanner.ts:305:37"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/utilities.ts:668:1",
+      "bodyOrder": 15,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "noop",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1794:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 29,
+          "lastReadEvent": 29,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/utilities.ts:703:25",
+            "src/compiler/utilities.ts:704:25"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/utilities.ts:1384:1",
+      "bodyOrder": 15,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "memoize",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1891:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 29,
+          "lastReadEvent": 29,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/utilities.ts:1384:84"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/utilities.ts:9972:1",
+      "bodyOrder": 15,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "flatten",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:375:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 29,
+          "lastReadEvent": 29,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/utilities.ts:9972:64"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/utilities.ts:9978:1",
+      "bodyOrder": 15,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "flatten",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:375:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 29,
+          "lastReadEvent": 29,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/utilities.ts:9978:64"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/utilities.ts:10312:1",
+      "bodyOrder": 15,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "emptyArray",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:17:14",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 29,
+          "lastReadEvent": 29,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/utilities.ts:10313:12",
+            "src/compiler/utilities.ts:10314:18"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/factory/parenthesizerRules.ts:675:1",
+      "bodyOrder": 17,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "identity",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1828:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 33,
+          "lastReadEvent": 33,
+          "occurrences": 17,
+          "readLocations": [
+            "src/compiler/factory/parenthesizerRules.ts:680:51",
+            "src/compiler/factory/parenthesizerRules.ts:681:51",
+            "src/compiler/factory/parenthesizerRules.ts:682:48",
+            "src/compiler/factory/parenthesizerRules.ts:683:44",
+            "src/compiler/factory/parenthesizerRules.ts:689:47",
+            "src/compiler/factory/parenthesizerRules.ts:690:50",
+            "src/compiler/factory/parenthesizerRules.ts:691:45",
+            "src/compiler/factory/parenthesizerRules.ts:692:45",
+            "src/compiler/factory/parenthesizerRules.ts:693:47",
+            "src/compiler/factory/parenthesizerRules.ts:695:45",
+            "src/compiler/factory/parenthesizerRules.ts:697:52",
+            "src/compiler/factory/parenthesizerRules.ts:698:40",
+            "src/compiler/factory/parenthesizerRules.ts:699:48",
+            "src/compiler/factory/parenthesizerRules.ts:700:44",
+            "src/compiler/factory/parenthesizerRules.ts:702:41",
+            "src/compiler/factory/parenthesizerRules.ts:703:37",
+            "src/compiler/factory/parenthesizerRules.ts:705:38"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/factory/nodeConverters.ts:183:1",
+      "bodyOrder": 18,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "notImplemented",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1886:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 35,
+          "lastReadEvent": 35,
+          "occurrences": 9,
+          "readLocations": [
+            "src/compiler/factory/nodeConverters.ts:184:29",
+            "src/compiler/factory/nodeConverters.ts:185:34",
+            "src/compiler/factory/nodeConverters.ts:186:31",
+            "src/compiler/factory/nodeConverters.ts:187:38",
+            "src/compiler/factory/nodeConverters.ts:188:39",
+            "src/compiler/factory/nodeConverters.ts:189:33",
+            "src/compiler/factory/nodeConverters.ts:190:39",
+            "src/compiler/factory/nodeConverters.ts:191:38",
+            "src/compiler/factory/nodeConverters.ts:192:39"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/factory/nodeFactory.ts:7392:1",
+      "bodyOrder": 19,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "createBaseNodeFactory",
+          "provider": "src/compiler/factory/baseNodeFactory.ts",
+          "declaration": "src/compiler/factory/baseNodeFactory.ts:26:1",
+          "providerBodyOrder": 16,
+          "providerEndEvent": 31,
+          "firstReadEvent": 37,
+          "lastReadEvent": 37,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:7392:21"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/factory/nodeFactory.ts:7407:1",
+      "bodyOrder": 19,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "memoize",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1891:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 37,
+          "lastReadEvent": 37,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:496:32",
+            "src/compiler/factory/nodeFactory.ts:497:24"
+          ]
+        },
+        {
+          "binding": "memoizeOne",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1907:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 37,
+          "lastReadEvent": 37,
+          "occurrences": 12,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:500:37",
+            "src/compiler/factory/nodeFactory.ts:501:42",
+            "src/compiler/factory/nodeFactory.ts:502:43",
+            "src/compiler/factory/nodeFactory.ts:503:47",
+            "src/compiler/factory/nodeFactory.ts:504:45",
+            "src/compiler/factory/nodeFactory.ts:505:45",
+            "src/compiler/factory/nodeFactory.ts:506:55",
+            "src/compiler/factory/nodeFactory.ts:507:55",
+            "src/compiler/factory/nodeFactory.ts:508:45",
+            "src/compiler/factory/nodeFactory.ts:509:45",
+            "src/compiler/factory/nodeFactory.ts:510:47",
+            "src/compiler/factory/nodeFactory.ts:511:47"
+          ]
+        },
+        {
+          "binding": "forEach",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:33:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 37,
+          "lastReadEvent": 37,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:1164:5"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/parser.ts:441:1",
+      "bodyOrder": 26,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "createNodeFactory",
+          "provider": "src/compiler/factory/nodeFactory.ts",
+          "declaration": "src/compiler/factory/nodeFactory.ts:492:1",
+          "providerBodyOrder": 19,
+          "providerEndEvent": 37,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/parser.ts:441:46"
+          ]
+        },
+        {
+          "binding": "memoize",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1891:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:496:32",
+            "src/compiler/factory/nodeFactory.ts:497:24"
+          ]
+        },
+        {
+          "binding": "memoizeOne",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1907:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 12,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:500:37",
+            "src/compiler/factory/nodeFactory.ts:501:42",
+            "src/compiler/factory/nodeFactory.ts:502:43",
+            "src/compiler/factory/nodeFactory.ts:503:47",
+            "src/compiler/factory/nodeFactory.ts:504:45",
+            "src/compiler/factory/nodeFactory.ts:505:45",
+            "src/compiler/factory/nodeFactory.ts:506:55",
+            "src/compiler/factory/nodeFactory.ts:507:55",
+            "src/compiler/factory/nodeFactory.ts:508:45",
+            "src/compiler/factory/nodeFactory.ts:509:45",
+            "src/compiler/factory/nodeFactory.ts:510:47",
+            "src/compiler/factory/nodeFactory.ts:511:47"
+          ]
+        },
+        {
+          "binding": "forEach",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:33:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:1164:5"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/parser.ts:1437:1",
+      "bodyOrder": 26,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "createScanner",
+          "provider": "src/compiler/scanner.ts",
+          "declaration": "src/compiler/scanner.ts:1022:1",
+          "providerBodyOrder": 13,
+          "providerEndEvent": 25,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/parser.ts:1444:19"
+          ]
+        },
+        {
+          "binding": "Debug",
+          "provider": "src/compiler/debug.ts",
+          "declaration": "src/compiler/debug.ts:113:1",
+          "providerBodyOrder": 3,
+          "providerEndEvent": 5,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/scanner.ts:4020:9",
+            "src/compiler/scanner.ts:1115:9"
+          ]
+        },
+        {
+          "binding": "createNodeFactory",
+          "provider": "src/compiler/factory/nodeFactory.ts",
+          "declaration": "src/compiler/factory/nodeFactory.ts:492:1",
+          "providerBodyOrder": 19,
+          "providerEndEvent": 37,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/parser.ts:1470:19"
+          ]
+        },
+        {
+          "binding": "identity",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1828:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:493:67"
+          ]
+        },
+        {
+          "binding": "memoize",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1891:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:496:32",
+            "src/compiler/factory/nodeFactory.ts:497:24"
+          ]
+        },
+        {
+          "binding": "memoizeOne",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1907:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 12,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:500:37",
+            "src/compiler/factory/nodeFactory.ts:501:42",
+            "src/compiler/factory/nodeFactory.ts:502:43",
+            "src/compiler/factory/nodeFactory.ts:503:47",
+            "src/compiler/factory/nodeFactory.ts:504:45",
+            "src/compiler/factory/nodeFactory.ts:505:45",
+            "src/compiler/factory/nodeFactory.ts:506:55",
+            "src/compiler/factory/nodeFactory.ts:507:55",
+            "src/compiler/factory/nodeFactory.ts:508:45",
+            "src/compiler/factory/nodeFactory.ts:509:45",
+            "src/compiler/factory/nodeFactory.ts:510:47",
+            "src/compiler/factory/nodeFactory.ts:511:47"
+          ]
+        },
+        {
+          "binding": "forEach",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:33:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/factory/nodeFactory.ts:1164:5"
+          ]
+        },
+        {
+          "binding": "textToKeywordObj",
+          "provider": "src/compiler/scanner.ts",
+          "declaration": "src/compiler/scanner.ts:135:14",
+          "providerBodyOrder": 13,
+          "providerEndEvent": 25,
+          "firstReadEvent": 51,
+          "lastReadEvent": 51,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/parser.ts:2356:50"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:141:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "mapIterator",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:332:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:141:65"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:288:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "WatchFileKind",
+          "provider": "src/compiler/types.ts",
+          "declaration": "src/compiler/types.ts:7378:1",
+          "providerBodyOrder": 9,
+          "providerEndEvent": 17,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 7,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:292:35",
+            "src/compiler/commandLineParser.ts:293:38",
+            "src/compiler/commandLineParser.ts:294:37",
+            "src/compiler/commandLineParser.ts:295:36",
+            "src/compiler/commandLineParser.ts:296:26",
+            "src/compiler/commandLineParser.ts:297:43",
+            "src/compiler/commandLineParser.ts:301:34"
+          ]
+        },
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 12,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:299:19",
+            "src/compiler/commandLineParser.ts:300:22",
+            "src/compiler/commandLineParser.ts:311:19",
+            "src/compiler/commandLineParser.ts:312:22",
+            "src/compiler/commandLineParser.ts:323:19",
+            "src/compiler/commandLineParser.ts:324:22",
+            "src/compiler/commandLineParser.ts:330:19",
+            "src/compiler/commandLineParser.ts:331:22",
+            "src/compiler/commandLineParser.ts:344:19",
+            "src/compiler/commandLineParser.ts:345:22",
+            "src/compiler/commandLineParser.ts:357:19",
+            "src/compiler/commandLineParser.ts:358:22"
+          ]
+        },
+        {
+          "binding": "WatchDirectoryKind",
+          "provider": "src/compiler/types.ts",
+          "declaration": "src/compiler/types.ts:7387:1",
+          "providerBodyOrder": 9,
+          "providerEndEvent": 17,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 5,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:306:26",
+            "src/compiler/commandLineParser.ts:307:35",
+            "src/compiler/commandLineParser.ts:308:37",
+            "src/compiler/commandLineParser.ts:309:36",
+            "src/compiler/commandLineParser.ts:313:34"
+          ]
+        },
+        {
+          "binding": "PollingWatchKind",
+          "provider": "src/compiler/types.ts",
+          "declaration": "src/compiler/types.ts:7394:1",
+          "providerBodyOrder": 9,
+          "providerEndEvent": 17,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 5,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:318:28",
+            "src/compiler/commandLineParser.ts:319:31",
+            "src/compiler/commandLineParser.ts:320:30",
+            "src/compiler/commandLineParser.ts:321:29",
+            "src/compiler/commandLineParser.ts:325:34"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:363:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 50,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:370:19",
+            "src/compiler/commandLineParser.ts:371:22",
+            "src/compiler/commandLineParser.ts:379:19",
+            "src/compiler/commandLineParser.ts:388:19",
+            "src/compiler/commandLineParser.ts:389:22",
+            "src/compiler/commandLineParser.ts:396:19",
+            "src/compiler/commandLineParser.ts:397:22",
+            "src/compiler/commandLineParser.ts:403:19",
+            "src/compiler/commandLineParser.ts:404:22",
+            "src/compiler/commandLineParser.ts:410:19",
+            "src/compiler/commandLineParser.ts:411:22",
+            "src/compiler/commandLineParser.ts:417:19",
+            "src/compiler/commandLineParser.ts:418:22",
+            "src/compiler/commandLineParser.ts:425:19",
+            "src/compiler/commandLineParser.ts:426:22",
+            "src/compiler/commandLineParser.ts:432:19",
+            "src/compiler/commandLineParser.ts:433:22",
+            "src/compiler/commandLineParser.ts:439:19",
+            "src/compiler/commandLineParser.ts:440:22",
+            "src/compiler/commandLineParser.ts:446:19",
+            "src/compiler/commandLineParser.ts:447:22",
+            "src/compiler/commandLineParser.ts:454:20",
+            "src/compiler/commandLineParser.ts:455:19",
+            "src/compiler/commandLineParser.ts:456:22",
+            "src/compiler/commandLineParser.ts:463:20",
+            "src/compiler/commandLineParser.ts:464:19",
+            "src/compiler/commandLineParser.ts:465:22",
+            "src/compiler/commandLineParser.ts:471:19",
+            "src/compiler/commandLineParser.ts:472:22",
+            "src/compiler/commandLineParser.ts:474:34",
+            "src/compiler/commandLineParser.ts:483:19",
+            "src/compiler/commandLineParser.ts:485:22",
+            "src/compiler/commandLineParser.ts:486:34",
+            "src/compiler/commandLineParser.ts:494:19",
+            "src/compiler/commandLineParser.ts:496:22",
+            "src/compiler/commandLineParser.ts:504:19",
+            "src/compiler/commandLineParser.ts:505:22",
+            "src/compiler/commandLineParser.ts:515:19",
+            "src/compiler/commandLineParser.ts:517:22",
+            "src/compiler/commandLineParser.ts:524:19",
+            "src/compiler/commandLineParser.ts:525:22",
+            "src/compiler/commandLineParser.ts:532:19",
+            "src/compiler/commandLineParser.ts:533:22",
+            "src/compiler/commandLineParser.ts:542:19",
+            "src/compiler/commandLineParser.ts:543:22",
+            "src/compiler/commandLineParser.ts:553:19",
+            "src/compiler/commandLineParser.ts:554:22",
+            "src/compiler/commandLineParser.ts:560:19",
+            "src/compiler/commandLineParser.ts:562:22",
+            "src/compiler/commandLineParser.ts:563:34"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:572:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 3,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:597:16",
+            "src/compiler/commandLineParser.ts:599:15",
+            "src/compiler/commandLineParser.ts:600:18"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:605:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "ModuleKind",
+          "provider": "src/compiler/types.ts",
+          "declaration": "src/compiler/types.ts:7593:1",
+          "providerBodyOrder": 9,
+          "providerEndEvent": 17,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 15,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:609:15",
+            "src/compiler/commandLineParser.ts:610:19",
+            "src/compiler/commandLineParser.ts:611:14",
+            "src/compiler/commandLineParser.ts:612:17",
+            "src/compiler/commandLineParser.ts:613:14",
+            "src/compiler/commandLineParser.ts:614:14",
+            "src/compiler/commandLineParser.ts:615:17",
+            "src/compiler/commandLineParser.ts:616:17",
+            "src/compiler/commandLineParser.ts:617:17",
+            "src/compiler/commandLineParser.ts:618:17",
+            "src/compiler/commandLineParser.ts:619:17",
+            "src/compiler/commandLineParser.ts:620:17",
+            "src/compiler/commandLineParser.ts:621:17",
+            "src/compiler/commandLineParser.ts:622:19",
+            "src/compiler/commandLineParser.ts:623:19"
+          ]
+        },
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 3,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:630:16",
+            "src/compiler/commandLineParser.ts:632:15",
+            "src/compiler/commandLineParser.ts:633:18"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:637:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 234,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:643:19",
+            "src/compiler/commandLineParser.ts:644:22",
+            "src/compiler/commandLineParser.ts:652:19",
+            "src/compiler/commandLineParser.ts:653:22",
+            "src/compiler/commandLineParser.ts:660:19",
+            "src/compiler/commandLineParser.ts:661:22",
+            "src/compiler/commandLineParser.ts:670:19",
+            "src/compiler/commandLineParser.ts:671:20",
+            "src/compiler/commandLineParser.ts:672:22",
+            "src/compiler/commandLineParser.ts:678:19",
+            "src/compiler/commandLineParser.ts:680:22",
+            "src/compiler/commandLineParser.ts:686:19",
+            "src/compiler/commandLineParser.ts:688:22",
+            "src/compiler/commandLineParser.ts:695:19",
+            "src/compiler/commandLineParser.ts:697:22",
+            "src/compiler/commandLineParser.ts:714:19",
+            "src/compiler/commandLineParser.ts:715:22",
+            "src/compiler/commandLineParser.ts:724:19",
+            "src/compiler/commandLineParser.ts:725:22",
+            "src/compiler/commandLineParser.ts:726:34",
+            "src/compiler/commandLineParser.ts:735:19",
+            "src/compiler/commandLineParser.ts:736:22",
+            "src/compiler/commandLineParser.ts:750:20",
+            "src/compiler/commandLineParser.ts:752:19",
+            "src/compiler/commandLineParser.ts:753:22",
+            "src/compiler/commandLineParser.ts:763:20",
+            "src/compiler/commandLineParser.ts:765:19",
+            "src/compiler/commandLineParser.ts:766:22",
+            "src/compiler/commandLineParser.ts:776:20",
+            "src/compiler/commandLineParser.ts:778:19",
+            "src/compiler/commandLineParser.ts:779:22",
+            "src/compiler/commandLineParser.ts:788:20",
+            "src/compiler/commandLineParser.ts:789:19",
+            "src/compiler/commandLineParser.ts:790:22",
+            "src/compiler/commandLineParser.ts:791:34",
+            "src/compiler/commandLineParser.ts:799:19",
+            "src/compiler/commandLineParser.ts:802:22",
+            "src/compiler/commandLineParser.ts:810:20",
+            "src/compiler/commandLineParser.ts:811:19",
+            "src/compiler/commandLineParser.ts:814:22",
+            "src/compiler/commandLineParser.ts:822:19",
+            "src/compiler/commandLineParser.ts:824:22",
+            "src/compiler/commandLineParser.ts:832:19",
+            "src/compiler/commandLineParser.ts:833:22",
+            "src/compiler/commandLineParser.ts:846:19",
+            "src/compiler/commandLineParser.ts:847:22",
+            "src/compiler/commandLineParser.ts:855:19",
+            "src/compiler/commandLineParser.ts:856:22",
+            "src/compiler/commandLineParser.ts:862:19",
+            "src/compiler/commandLineParser.ts:863:22",
+            "src/compiler/commandLineParser.ts:873:19",
+            "src/compiler/commandLineParser.ts:874:22",
+            "src/compiler/commandLineParser.ts:880:19",
+            "src/compiler/commandLineParser.ts:881:22",
+            "src/compiler/commandLineParser.ts:889:19",
+            "src/compiler/commandLineParser.ts:890:22",
+            "src/compiler/commandLineParser.ts:899:19",
+            "src/compiler/commandLineParser.ts:900:22",
+            "src/compiler/commandLineParser.ts:914:19",
+            "src/compiler/commandLineParser.ts:915:22",
+            "src/compiler/commandLineParser.ts:924:19",
+            "src/compiler/commandLineParser.ts:925:22",
+            "src/compiler/commandLineParser.ts:926:34",
+            "src/compiler/commandLineParser.ts:934:19",
+            "src/compiler/commandLineParser.ts:935:22",
+            "src/compiler/commandLineParser.ts:936:34",
+            "src/compiler/commandLineParser.ts:944:19",
+            "src/compiler/commandLineParser.ts:945:22",
+            "src/compiler/commandLineParser.ts:946:34",
+            "src/compiler/commandLineParser.ts:954:19",
+            "src/compiler/commandLineParser.ts:955:22",
+            "src/compiler/commandLineParser.ts:956:34",
+            "src/compiler/commandLineParser.ts:964:19",
+            "src/compiler/commandLineParser.ts:965:22",
+            "src/compiler/commandLineParser.ts:966:34",
+            "src/compiler/commandLineParser.ts:974:19",
+            "src/compiler/commandLineParser.ts:975:22",
+            "src/compiler/commandLineParser.ts:976:34",
+            "src/compiler/commandLineParser.ts:984:19",
+            "src/compiler/commandLineParser.ts:985:22",
+            "src/compiler/commandLineParser.ts:994:19",
+            "src/compiler/commandLineParser.ts:995:22",
+            "src/compiler/commandLineParser.ts:996:34",
+            "src/compiler/commandLineParser.ts:1004:19",
+            "src/compiler/commandLineParser.ts:1005:22",
+            "src/compiler/commandLineParser.ts:1006:34",
+            "src/compiler/commandLineParser.ts:1014:19",
+            "src/compiler/commandLineParser.ts:1015:22",
+            "src/compiler/commandLineParser.ts:1025:19",
+            "src/compiler/commandLineParser.ts:1026:22",
+            "src/compiler/commandLineParser.ts:1034:19",
+            "src/compiler/commandLineParser.ts:1035:22",
+            "src/compiler/commandLineParser.ts:1043:19",
+            "src/compiler/commandLineParser.ts:1044:22",
+            "src/compiler/commandLineParser.ts:1052:19",
+            "src/compiler/commandLineParser.ts:1053:22",
+            "src/compiler/commandLineParser.ts:1062:19",
+            "src/compiler/commandLineParser.ts:1063:22",
+            "src/compiler/commandLineParser.ts:1071:19",
+            "src/compiler/commandLineParser.ts:1072:22",
+            "src/compiler/commandLineParser.ts:1080:19",
+            "src/compiler/commandLineParser.ts:1081:22",
+            "src/compiler/commandLineParser.ts:1090:19",
+            "src/compiler/commandLineParser.ts:1091:22",
+            "src/compiler/commandLineParser.ts:1110:20",
+            "src/compiler/commandLineParser.ts:1111:19",
+            "src/compiler/commandLineParser.ts:1112:22",
+            "src/compiler/commandLineParser.ts:1113:34",
+            "src/compiler/commandLineParser.ts:1120:19",
+            "src/compiler/commandLineParser.ts:1121:22",
+            "src/compiler/commandLineParser.ts:1131:19",
+            "src/compiler/commandLineParser.ts:1132:22",
+            "src/compiler/commandLineParser.ts:1148:19",
+            "src/compiler/commandLineParser.ts:1149:22",
+            "src/compiler/commandLineParser.ts:1151:34",
+            "src/compiler/commandLineParser.ts:1163:19",
+            "src/compiler/commandLineParser.ts:1164:22",
+            "src/compiler/commandLineParser.ts:1175:19",
+            "src/compiler/commandLineParser.ts:1176:22",
+            "src/compiler/commandLineParser.ts:1184:19",
+            "src/compiler/commandLineParser.ts:1185:22",
+            "src/compiler/commandLineParser.ts:1195:19",
+            "src/compiler/commandLineParser.ts:1196:22",
+            "src/compiler/commandLineParser.ts:1202:19",
+            "src/compiler/commandLineParser.ts:1203:22",
+            "src/compiler/commandLineParser.ts:1211:19",
+            "src/compiler/commandLineParser.ts:1212:22",
+            "src/compiler/commandLineParser.ts:1224:19",
+            "src/compiler/commandLineParser.ts:1225:22",
+            "src/compiler/commandLineParser.ts:1232:19",
+            "src/compiler/commandLineParser.ts:1233:22",
+            "src/compiler/commandLineParser.ts:1242:19",
+            "src/compiler/commandLineParser.ts:1243:22",
+            "src/compiler/commandLineParser.ts:1250:19",
+            "src/compiler/commandLineParser.ts:1251:22",
+            "src/compiler/commandLineParser.ts:1252:34",
+            "src/compiler/commandLineParser.ts:1258:19",
+            "src/compiler/commandLineParser.ts:1259:22",
+            "src/compiler/commandLineParser.ts:1260:34",
+            "src/compiler/commandLineParser.ts:1270:19",
+            "src/compiler/commandLineParser.ts:1271:22",
+            "src/compiler/commandLineParser.ts:1278:19",
+            "src/compiler/commandLineParser.ts:1279:22",
+            "src/compiler/commandLineParser.ts:1289:20",
+            "src/compiler/commandLineParser.ts:1290:19",
+            "src/compiler/commandLineParser.ts:1291:22",
+            "src/compiler/commandLineParser.ts:1298:20",
+            "src/compiler/commandLineParser.ts:1299:19",
+            "src/compiler/commandLineParser.ts:1300:22",
+            "src/compiler/commandLineParser.ts:1307:19",
+            "src/compiler/commandLineParser.ts:1308:22",
+            "src/compiler/commandLineParser.ts:1319:19",
+            "src/compiler/commandLineParser.ts:1320:22",
+            "src/compiler/commandLineParser.ts:1329:19",
+            "src/compiler/commandLineParser.ts:1330:22",
+            "src/compiler/commandLineParser.ts:1338:19",
+            "src/compiler/commandLineParser.ts:1339:22",
+            "src/compiler/commandLineParser.ts:1345:19",
+            "src/compiler/commandLineParser.ts:1346:22",
+            "src/compiler/commandLineParser.ts:1357:19",
+            "src/compiler/commandLineParser.ts:1358:22",
+            "src/compiler/commandLineParser.ts:1365:19",
+            "src/compiler/commandLineParser.ts:1366:22",
+            "src/compiler/commandLineParser.ts:1373:19",
+            "src/compiler/commandLineParser.ts:1374:22",
+            "src/compiler/commandLineParser.ts:1386:19",
+            "src/compiler/commandLineParser.ts:1387:20",
+            "src/compiler/commandLineParser.ts:1389:22",
+            "src/compiler/commandLineParser.ts:1396:19",
+            "src/compiler/commandLineParser.ts:1397:22",
+            "src/compiler/commandLineParser.ts:1405:19",
+            "src/compiler/commandLineParser.ts:1406:22",
+            "src/compiler/commandLineParser.ts:1412:19",
+            "src/compiler/commandLineParser.ts:1413:22",
+            "src/compiler/commandLineParser.ts:1421:19",
+            "src/compiler/commandLineParser.ts:1422:22",
+            "src/compiler/commandLineParser.ts:1433:20",
+            "src/compiler/commandLineParser.ts:1434:19",
+            "src/compiler/commandLineParser.ts:1435:22",
+            "src/compiler/commandLineParser.ts:1443:19",
+            "src/compiler/commandLineParser.ts:1444:22",
+            "src/compiler/commandLineParser.ts:1450:19",
+            "src/compiler/commandLineParser.ts:1452:22",
+            "src/compiler/commandLineParser.ts:1462:19",
+            "src/compiler/commandLineParser.ts:1463:22",
+            "src/compiler/commandLineParser.ts:1474:19",
+            "src/compiler/commandLineParser.ts:1475:22",
+            "src/compiler/commandLineParser.ts:1482:19",
+            "src/compiler/commandLineParser.ts:1483:22",
+            "src/compiler/commandLineParser.ts:1490:19",
+            "src/compiler/commandLineParser.ts:1491:22",
+            "src/compiler/commandLineParser.ts:1498:19",
+            "src/compiler/commandLineParser.ts:1499:22",
+            "src/compiler/commandLineParser.ts:1506:19",
+            "src/compiler/commandLineParser.ts:1507:22",
+            "src/compiler/commandLineParser.ts:1515:19",
+            "src/compiler/commandLineParser.ts:1516:22",
+            "src/compiler/commandLineParser.ts:1524:19",
+            "src/compiler/commandLineParser.ts:1525:22",
+            "src/compiler/commandLineParser.ts:1533:19",
+            "src/compiler/commandLineParser.ts:1535:22",
+            "src/compiler/commandLineParser.ts:1543:19",
+            "src/compiler/commandLineParser.ts:1544:22",
+            "src/compiler/commandLineParser.ts:1554:20",
+            "src/compiler/commandLineParser.ts:1555:19",
+            "src/compiler/commandLineParser.ts:1557:22",
+            "src/compiler/commandLineParser.ts:1564:19",
+            "src/compiler/commandLineParser.ts:1565:22",
+            "src/compiler/commandLineParser.ts:1574:19",
+            "src/compiler/commandLineParser.ts:1575:22",
+            "src/compiler/commandLineParser.ts:1584:19",
+            "src/compiler/commandLineParser.ts:1585:22",
+            "src/compiler/commandLineParser.ts:1593:19",
+            "src/compiler/commandLineParser.ts:1594:22",
+            "src/compiler/commandLineParser.ts:1602:19",
+            "src/compiler/commandLineParser.ts:1603:22",
+            "src/compiler/commandLineParser.ts:1610:19",
+            "src/compiler/commandLineParser.ts:1611:22",
+            "src/compiler/commandLineParser.ts:1618:19",
+            "src/compiler/commandLineParser.ts:1619:22",
+            "src/compiler/commandLineParser.ts:1627:19",
+            "src/compiler/commandLineParser.ts:1628:22",
+            "src/compiler/commandLineParser.ts:1637:19",
+            "src/compiler/commandLineParser.ts:1638:22",
+            "src/compiler/commandLineParser.ts:1639:34",
+            "src/compiler/commandLineParser.ts:1646:19",
+            "src/compiler/commandLineParser.ts:1647:22",
+            "src/compiler/commandLineParser.ts:1654:19",
+            "src/compiler/commandLineParser.ts:1655:22",
+            "src/compiler/commandLineParser.ts:1667:22",
+            "src/compiler/commandLineParser.ts:1668:19",
+            "src/compiler/commandLineParser.ts:1679:22",
+            "src/compiler/commandLineParser.ts:1680:19",
+            "src/compiler/commandLineParser.ts:1681:34"
+          ]
+        },
+        {
+          "binding": "ModuleResolutionKind",
+          "provider": "src/compiler/types.ts",
+          "declaration": "src/compiler/types.ts:7325:1",
+          "providerBodyOrder": 9,
+          "providerEndEvent": 17,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 6,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:1100:21",
+            "src/compiler/commandLineParser.ts:1101:19",
+            "src/compiler/commandLineParser.ts:1102:22",
+            "src/compiler/commandLineParser.ts:1103:21",
+            "src/compiler/commandLineParser.ts:1104:23",
+            "src/compiler/commandLineParser.ts:1105:22"
+          ]
+        },
+        {
+          "binding": "ModuleDetectionKind",
+          "provider": "src/compiler/types.ts",
+          "declaration": "src/compiler/types.ts:7348:1",
+          "providerBodyOrder": 9,
+          "providerEndEvent": 17,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 3,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:1673:19",
+            "src/compiler/commandLineParser.ts:1674:21",
+            "src/compiler/commandLineParser.ts:1675:20"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:1716:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "hasProperty",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1266:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 129,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:1716:118"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:1727:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "isString",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1769:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 129,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:1729:13"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:1733:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:1738:15",
+            "src/compiler/commandLineParser.ts:1739:18"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:1745:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 10,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:1750:19",
+            "src/compiler/commandLineParser.ts:1751:22",
+            "src/compiler/commandLineParser.ts:1758:19",
+            "src/compiler/commandLineParser.ts:1759:22",
+            "src/compiler/commandLineParser.ts:1766:19",
+            "src/compiler/commandLineParser.ts:1767:22",
+            "src/compiler/commandLineParser.ts:1773:19",
+            "src/compiler/commandLineParser.ts:1774:22",
+            "src/compiler/commandLineParser.ts:1780:19",
+            "src/compiler/commandLineParser.ts:1781:22"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:1851:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:1852:17"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:1858:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "ModuleKind",
+          "provider": "src/compiler/types.ts",
+          "declaration": "src/compiler/types.ts:7593:1",
+          "providerBodyOrder": 9,
+          "providerEndEvent": 17,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:1859:13"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:2119:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 3,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:2123:30",
+            "src/compiler/commandLineParser.ts:2124:34",
+            "src/compiler/commandLineParser.ts:2125:35"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:2162:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:2163:17"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:2167:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 3,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:2171:30",
+            "src/compiler/commandLineParser.ts:2172:34",
+            "src/compiler/commandLineParser.ts:2173:35"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:2310:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:2312:30",
+            "src/compiler/commandLineParser.ts:2313:34"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:2320:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 3,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:2323:30",
+            "src/compiler/commandLineParser.ts:2324:34",
+            "src/compiler/commandLineParser.ts:2325:35"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:2341:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:2348:15"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:2351:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "arrayToMap",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1401:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:2307:12"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:2357:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "arrayToMap",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1401:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:2307:12"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/commandLineParser.ts:2363:1",
+      "bodyOrder": 27,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "arrayToMap",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1401:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 53,
+          "lastReadEvent": 53,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/commandLineParser.ts:2307:12"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/moduleNameResolver.ts:509:1",
+      "bodyOrder": 28,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "combinePaths",
+          "provider": "src/compiler/path.ts",
+          "declaration": "src/compiler/path.ts:579:1",
+          "providerBodyOrder": 11,
+          "providerEndEvent": 21,
+          "firstReadEvent": 55,
+          "lastReadEvent": 55,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/moduleNameResolver.ts:509:28"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/binder.ts:499:1",
+      "bodyOrder": 29,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Debug",
+          "provider": "src/compiler/debug.ts",
+          "declaration": "src/compiler/debug.ts:113:1",
+          "providerBodyOrder": 3,
+          "providerEndEvent": 5,
+          "firstReadEvent": 57,
+          "lastReadEvent": 57,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/binder.ts:496:12"
+          ]
+        },
+        {
+          "binding": "createBinaryExpressionTrampoline",
+          "provider": "src/compiler/factory/utilities.ts",
+          "declaration": "src/compiler/factory/utilities.ts:1436:1",
+          "providerBodyOrder": 24,
+          "providerEndEvent": 47,
+          "firstReadEvent": 57,
+          "lastReadEvent": 57,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/binder.ts:1920:16"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/moduleSpecifiers.ts:133:1",
+      "bodyOrder": 31,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "memoizeOne",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1907:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 61,
+          "lastReadEvent": 61,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/moduleSpecifiers.ts:133:23"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/checker.ts:1410:1",
+      "bodyOrder": 33,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "and",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:2454:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 65,
+          "lastReadEvent": 65,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/checker.ts:1410:37"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/sourcemap.ts:820:1",
+      "bodyOrder": 35,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "identity",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1828:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 69,
+          "lastReadEvent": 69,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/sourcemap.ts:821:24",
+            "src/compiler/sourcemap.ts:822:27"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/transformer.ts:117:1",
+      "bodyOrder": 62,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "emptyArray",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:17:14",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 123,
+          "lastReadEvent": 123,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/transformer.ts:117:71",
+            "src/compiler/transformer.ts:117:108"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/transformer.ts:669:1",
+      "bodyOrder": 62,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "factory",
+          "provider": "src/compiler/factory/nodeFactory.ts",
+          "declaration": "src/compiler/factory/nodeFactory.ts:7407:14",
+          "providerBodyOrder": 19,
+          "providerEndEvent": 37,
+          "firstReadEvent": 123,
+          "lastReadEvent": 123,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/transformer.ts:670:14"
+          ]
+        },
+        {
+          "binding": "notImplemented",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1886:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 123,
+          "lastReadEvent": 123,
+          "occurrences": 6,
+          "readLocations": [
+            "src/compiler/transformer.ts:672:22",
+            "src/compiler/transformer.ts:673:18",
+            "src/compiler/transformer.ts:674:27",
+            "src/compiler/transformer.ts:688:22",
+            "src/compiler/transformer.ts:691:28",
+            "src/compiler/transformer.ts:692:32"
+          ]
+        },
+        {
+          "binding": "noop",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1794:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 123,
+          "lastReadEvent": 123,
+          "occurrences": 13,
+          "readLocations": [
+            "src/compiler/transformer.ts:675:30",
+            "src/compiler/transformer.ts:676:31",
+            "src/compiler/transformer.ts:677:32",
+            "src/compiler/transformer.ts:679:33",
+            "src/compiler/transformer.ts:681:31",
+            "src/compiler/transformer.ts:682:31",
+            "src/compiler/transformer.ts:683:33",
+            "src/compiler/transformer.ts:684:22",
+            "src/compiler/transformer.ts:686:29",
+            "src/compiler/transformer.ts:687:24",
+            "src/compiler/transformer.ts:689:25",
+            "src/compiler/transformer.ts:690:29",
+            "src/compiler/transformer.ts:695:20"
+          ]
+        },
+        {
+          "binding": "returnUndefined",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1819:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 123,
+          "lastReadEvent": 123,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/transformer.ts:678:28",
+            "src/compiler/transformer.ts:685:20"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/emitter.ts:1147:1",
+      "bodyOrder": 63,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "notImplemented",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1886:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 125,
+          "lastReadEvent": 125,
+          "occurrences": 39,
+          "readLocations": [
+            "src/compiler/emitter.ts:1148:20",
+            "src/compiler/emitter.ts:1149:35",
+            "src/compiler/emitter.ts:1150:37",
+            "src/compiler/emitter.ts:1151:48",
+            "src/compiler/emitter.ts:1152:37",
+            "src/compiler/emitter.ts:1153:30",
+            "src/compiler/emitter.ts:1154:35",
+            "src/compiler/emitter.ts:1155:48",
+            "src/compiler/emitter.ts:1156:23",
+            "src/compiler/emitter.ts:1157:27",
+            "src/compiler/emitter.ts:1159:27",
+            "src/compiler/emitter.ts:1160:27",
+            "src/compiler/emitter.ts:1161:33",
+            "src/compiler/emitter.ts:1162:38",
+            "src/compiler/emitter.ts:1163:35",
+            "src/compiler/emitter.ts:1164:39",
+            "src/compiler/emitter.ts:1165:30",
+            "src/compiler/emitter.ts:1166:45",
+            "src/compiler/emitter.ts:1167:29",
+            "src/compiler/emitter.ts:1168:30",
+            "src/compiler/emitter.ts:1169:25",
+            "src/compiler/emitter.ts:1170:26",
+            "src/compiler/emitter.ts:1172:23",
+            "src/compiler/emitter.ts:1173:25",
+            "src/compiler/emitter.ts:1174:36",
+            "src/compiler/emitter.ts:1175:37",
+            "src/compiler/emitter.ts:1176:40",
+            "src/compiler/emitter.ts:1177:26",
+            "src/compiler/emitter.ts:1178:30",
+            "src/compiler/emitter.ts:1179:43",
+            "src/compiler/emitter.ts:1180:32",
+            "src/compiler/emitter.ts:1181:26",
+            "src/compiler/emitter.ts:1182:34",
+            "src/compiler/emitter.ts:1183:30",
+            "src/compiler/emitter.ts:1184:44",
+            "src/compiler/emitter.ts:1185:37",
+            "src/compiler/emitter.ts:1186:48",
+            "src/compiler/emitter.ts:1187:37",
+            "src/compiler/emitter.ts:1188:27"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/emitter.ts:1200:1",
+      "bodyOrder": 63,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "memoize",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1891:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 125,
+          "lastReadEvent": 125,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/emitter.ts:1200:73"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/emitter.ts:1203:1",
+      "bodyOrder": 63,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "memoize",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1891:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 125,
+          "lastReadEvent": 125,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/emitter.ts:1203:79"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/emitter.ts:1206:1",
+      "bodyOrder": 63,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "memoize",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1891:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 125,
+          "lastReadEvent": 125,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/emitter.ts:1206:95"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/emitter.ts:1209:1",
+      "bodyOrder": 63,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "memoize",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1891:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 125,
+          "lastReadEvent": 125,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/emitter.ts:1209:100"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/program.ts:1370:1",
+      "bodyOrder": 65,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 129,
+          "lastReadEvent": 129,
+          "occurrences": 92,
+          "readLocations": [
+            "src/compiler/program.ts:1372:5",
+            "src/compiler/program.ts:1373:5",
+            "src/compiler/program.ts:1374:5",
+            "src/compiler/program.ts:1375:5",
+            "src/compiler/program.ts:1376:5",
+            "src/compiler/program.ts:1377:5",
+            "src/compiler/program.ts:1378:5",
+            "src/compiler/program.ts:1379:5",
+            "src/compiler/program.ts:1380:5",
+            "src/compiler/program.ts:1381:5",
+            "src/compiler/program.ts:1382:5",
+            "src/compiler/program.ts:1383:5",
+            "src/compiler/program.ts:1384:5",
+            "src/compiler/program.ts:1385:5",
+            "src/compiler/program.ts:1387:5",
+            "src/compiler/program.ts:1388:5",
+            "src/compiler/program.ts:1389:5",
+            "src/compiler/program.ts:1390:5",
+            "src/compiler/program.ts:1391:5",
+            "src/compiler/program.ts:1392:5",
+            "src/compiler/program.ts:1393:5",
+            "src/compiler/program.ts:1394:5",
+            "src/compiler/program.ts:1395:5",
+            "src/compiler/program.ts:1396:5",
+            "src/compiler/program.ts:1397:5",
+            "src/compiler/program.ts:1398:5",
+            "src/compiler/program.ts:1399:5",
+            "src/compiler/program.ts:1400:5",
+            "src/compiler/program.ts:1401:5",
+            "src/compiler/program.ts:1402:5",
+            "src/compiler/program.ts:1403:5",
+            "src/compiler/program.ts:1404:5",
+            "src/compiler/program.ts:1405:5",
+            "src/compiler/program.ts:1406:5",
+            "src/compiler/program.ts:1407:5",
+            "src/compiler/program.ts:1408:5",
+            "src/compiler/program.ts:1409:5",
+            "src/compiler/program.ts:1410:5",
+            "src/compiler/program.ts:1411:5",
+            "src/compiler/program.ts:1412:5",
+            "src/compiler/program.ts:1413:5",
+            "src/compiler/program.ts:1414:5",
+            "src/compiler/program.ts:1415:5",
+            "src/compiler/program.ts:1416:5",
+            "src/compiler/program.ts:1417:5",
+            "src/compiler/program.ts:1418:5",
+            "src/compiler/program.ts:1419:5",
+            "src/compiler/program.ts:1420:5",
+            "src/compiler/program.ts:1421:5",
+            "src/compiler/program.ts:1422:5",
+            "src/compiler/program.ts:1423:5",
+            "src/compiler/program.ts:1424:5",
+            "src/compiler/program.ts:1425:5",
+            "src/compiler/program.ts:1426:5",
+            "src/compiler/program.ts:1427:5",
+            "src/compiler/program.ts:1428:5",
+            "src/compiler/program.ts:1429:5",
+            "src/compiler/program.ts:1430:5",
+            "src/compiler/program.ts:1431:5",
+            "src/compiler/program.ts:1432:5",
+            "src/compiler/program.ts:1433:5",
+            "src/compiler/program.ts:1434:5",
+            "src/compiler/program.ts:1435:5",
+            "src/compiler/program.ts:1436:5",
+            "src/compiler/program.ts:1437:5",
+            "src/compiler/program.ts:1438:5",
+            "src/compiler/program.ts:1439:5",
+            "src/compiler/program.ts:1440:5",
+            "src/compiler/program.ts:1441:5",
+            "src/compiler/program.ts:1442:5",
+            "src/compiler/program.ts:1443:5",
+            "src/compiler/program.ts:1444:5",
+            "src/compiler/program.ts:1445:5",
+            "src/compiler/program.ts:1446:5",
+            "src/compiler/program.ts:1447:5",
+            "src/compiler/program.ts:1448:5",
+            "src/compiler/program.ts:1449:5",
+            "src/compiler/program.ts:1450:5",
+            "src/compiler/program.ts:1451:5",
+            "src/compiler/program.ts:1452:5",
+            "src/compiler/program.ts:1453:5",
+            "src/compiler/program.ts:1454:5",
+            "src/compiler/program.ts:1455:5",
+            "src/compiler/program.ts:1456:5",
+            "src/compiler/program.ts:1457:5",
+            "src/compiler/program.ts:1458:5",
+            "src/compiler/program.ts:1459:5",
+            "src/compiler/program.ts:1460:5",
+            "src/compiler/program.ts:1461:5",
+            "src/compiler/program.ts:1462:5",
+            "src/compiler/program.ts:1463:5",
+            "src/compiler/program.ts:1465:5"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/program.ts:5056:1",
+      "bodyOrder": 65,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "emptyArray",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:17:14",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 129,
+          "lastReadEvent": 129,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/program.ts:5056:72"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/watch.ts:114:1",
+      "bodyOrder": 72,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "sys",
+          "provider": "src/compiler/sys.ts",
+          "declaration": "src/compiler/sys.ts:1462:12",
+          "providerBodyOrder": 10,
+          "providerEndEvent": 19,
+          "firstReadEvent": 143,
+          "lastReadEvent": 143,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/watch.ts:114:69",
+            "src/compiler/watch.ts:117:54"
+          ]
+        },
+        {
+          "binding": "createGetCanonicalFileName",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:2377:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 143,
+          "lastReadEvent": 143,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/watch.ts:117:27"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/watch.ts:161:1",
+      "bodyOrder": 72,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "Diagnostics",
+          "provider": "src/compiler/diagnosticInformationMap.generated.ts",
+          "declaration": "src/compiler/diagnosticInformationMap.generated.ts:12:14",
+          "providerBodyOrder": 12,
+          "providerEndEvent": 23,
+          "firstReadEvent": 143,
+          "lastReadEvent": 143,
+          "occurrences": 2,
+          "readLocations": [
+            "src/compiler/watch.ts:162:5",
+            "src/compiler/watch.ts:163:5"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/watch.ts:668:1",
+      "bodyOrder": 72,
+      "decision": "accept by module order",
+      "bindings": [
+        {
+          "binding": "noop",
+          "provider": "src/compiler/core.ts",
+          "declaration": "src/compiler/core.ts:1794:1",
+          "providerBodyOrder": 2,
+          "providerEndEvent": 3,
+          "firstReadEvent": 143,
+          "lastReadEvent": 143,
+          "occurrences": 1,
+          "readLocations": [
+            "src/compiler/watch.ts:668:54"
+          ]
+        }
+      ],
+      "schedulingWitness": "05_safe_load_read/main.a"
+    },
+    {
+      "statement": "src/compiler/sys.ts:1979:1",
+      "bodyOrder": 10,
+      "decision": "accept by module order; conditional read not observed",
+      "schedulingWitness": "05_safe_load_read/main.a",
+      "bindings": [
+        {
+          "binding": "Debug",
+          "provider": "src/compiler/debug.ts",
+          "declaration": "src/compiler/debug.ts:113:1",
+          "providerBodyOrder": 3,
+          "readLocations": [
+            "src/compiler/sys.ts:1980:5"
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Unexecuted branches inside functions called at load time are not certified.",
+    "Windows/macOS, development hooks, optional packages and environment-dependent paths were not run.",
+    "No cohere cycle rule was run. This is not an exhaustive all-platform hazard ledger."
+  ]
+}

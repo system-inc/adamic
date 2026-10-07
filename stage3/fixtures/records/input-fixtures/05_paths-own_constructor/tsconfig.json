@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": [],
+    "paths": {
+      "constructor": [
+        "./target"
+      ]
+    }
+  },
+  "files": [
+    "main.ts"
+  ]
+}

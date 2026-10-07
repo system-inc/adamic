@@ -1,0 +1,53 @@
+{
+  "tree": "/tmp/stage3-mutant",
+  "nproc": 5,
+  "workers": 1,
+  "runners": "compiler",
+  "tests": "unreachableJavascriptChecked",
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 6.841
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 6.074
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=1",
+        "--lint=false",
+        "--no-colors",
+        "--runners=compiler",
+        "--tests=unreachableJavascriptChecked"
+      ],
+      "exit": 1,
+      "seconds": 9.222
+    }
+  },
+  "status": "fail",
+  "counts": {
+    "passing": 5,
+    "failing": 1,
+    "pending": 0
+  },
+  "baseline_diffs": [
+    "unreachableJavascriptChecked.errors.txt"
+  ],
+  "wall_seconds": 22.144
+}
