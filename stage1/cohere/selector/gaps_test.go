@@ -21,7 +21,7 @@ var gaps = []struct{ path, notYet, badC, stdout string }{
 	{path: "gaps/1_multiple_push.ts", notYet: "push with other than one value", stdout: "ab\n"},
 	{path: "gaps/2_mixed_field.ts", notYet: "a field of type string | boolean | undefined", stdout: "true\n"},
 	{path: "gaps/3_optional_boolean.ts", notYet: "a field of type boolean | undefined", stdout: "true\n"},
-	{path: "gaps/4_array_from_iterator.ts", notYet: "Array.from with other than { length } and a callback", stdout: "a\n"},
+	{path: "gaps/4_array_from_iterator.ts", notYet: "Array.from with other than { length } and a callback (write Array.from({ length: count }, (_, index) => value))", stdout: "a\n"},
 	{path: "gaps/5_conditional_panic.ts", notYet: "reading panic", stdout: "a\n"},
 }
 

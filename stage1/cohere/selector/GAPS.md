@@ -27,7 +27,7 @@ exact `lower.NotYet.What` refusal. A gap closing therefore fails the gap test.
 | [1_multiple_push.ts](gaps/1_multiple_push.ts)             | `ab`        | `push with other than one value`                       | One push per value.                            |
 | [2_mixed_field.ts](gaps/2_mixed_field.ts)                 | `true`      | `a field of type string \| boolean \| undefined`       | Namespace string and separate true bit.        |
 | [3_optional_boolean.ts](gaps/3_optional_boolean.ts)       | `true`      | `a field of type boolean \| undefined`                 | Quoted value and presence bit.                 |
-| [4_array_from_iterator.ts](gaps/4_array_from_iterator.ts) | `a`         | `Array.from with other than { length } and a callback` | Explicit map-key collection loop.              |
+| [4_array_from_iterator.ts](gaps/4_array_from_iterator.ts) | `a`         | `Array.from with other than { length } and a callback (write Array.from({ length: count }, (_, index) => value))` | Explicit map-key collection loop.              |
 | [5_conditional_panic.ts](gaps/5_conditional_panic.ts)     | `a`         | `reading panic`                                        | Guard helper calls panic in its own statement. |
 | [6_undefined_case.ts](gaps/6_undefined_case.ts)           | `a`         | `a case that isn't a constant`                         | Narrow undefined before the switch.            |
 
