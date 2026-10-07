@@ -23,3 +23,11 @@ Uncached input oracle PASS 3.990s, six probe misses. Registry PASS 0.285s. Share
 Mutants, in order: equal precedence changed from > to >=; RTL/LTR exclusion removed; description-reason exclusion removed; display=block allowed; deprecation major-version boundary tightened; duplicate first-occurrence guard inverted; nil-system guard reversed. Each compiles and executes successfully before comparison catches the output change. The unknown-class mutant certifies only the nil-system/exemption core, not the missing live resolver.
 
 Fresh helper ownership audit read all claims on 430 origin refs (17 distinct blobs), plus the existing HELPERS.md comment bundle reservation. Unclaimed six-consumer helpers remain, including loadDesignSystemThrough. No helper claim was pushed because the landing-first prerequisite is not fulfilled by a red shared oracle. No helper implementation or rule-ready count is claimed.
+
+## Second landing refresh
+
+Rebased cleanly onto newly fetched origin/main e8ba3d5d. Tested code tip: 3675d5de0371e3c3f51e8c6c6524f283507703df. No rule source changed and no shared file was edited. Only codex/lint-wave1-01 is pushed by this unit; the backup and work branches are local. Nothing is pushed to main or area branches.
+
+Repeated the same exact commands above, with output retained as landing2 logs. Assertions PASS 90.591s; prior three-rule contracts PASS 114.941s; Tailwind cores/listeners/refusals PASS 100.493s. All seven mutants still compile/run and are caught only by comparison on source Node, emitted JavaScript and ASan/UBSan native. Input oracle PASS 3.928s with six probe misses; registry PASS 0.293s. Setup: Go/clang/Node/submodules ready 0s, warm cache and total 134s, nproc=5.
+
+Shared TestRulesAgree FAIL 88.471s, same allowLoop strict-decoder failure after capturing 1,699 cases. This does not establish landing readiness. Previous multiple-edit/live-program/regex/independent-JSX/convergence limits remain. No complete corpus or full repository gate was repeated. No new helper is claimed while the landing-first gate remains red. Helper README reread and the complete readiness JSON parsed (198 frozen cohort, 46 initial helper-ready); selection remains deferred.
