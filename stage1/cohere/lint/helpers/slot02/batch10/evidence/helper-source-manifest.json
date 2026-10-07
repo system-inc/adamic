@@ -1,0 +1,122 @@
+[
+  {
+    "file": "stage1/cohere/lint/helpers/jsx_attribute_name.a",
+    "sha256": "81ff872cc3c69cd984011e4f6a1425ab69870bf9cd4c2488b361ae70bd4de7ad"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/property_name.a",
+    "sha256": "5ce4f7edea5b3e8aa9c8fca9b5226f4c3caebd1d77dafcf0188b0e83f1f4b063"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/tailwind_reader_for.a",
+    "sha256": "2443453132c266b736a33d73b7f61f9e6cb1d285046f9386a4417f5f6c499304"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch2/class_literals_in.a",
+    "sha256": "d7f5a077828885ebadd3b3e7980fc5535017bb02896d4f114c47bb5352a934d4"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch2/namespaced_member.a",
+    "sha256": "d0b2c91b34dd3967fc0026635fa74a9a5ebc41b7d711c6517d806e54c33b0d4b"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch2/split_classes.a",
+    "sha256": "64c0905f909f3a8fad1d00563436024c039755c2e895a7881fdcd732671cc758"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch3/create_class_name.a",
+    "sha256": "7209d34e7a2394217b47fc3812f91fb7a5be033ca4f2dd9b1b4b248a10aebc37"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch3/es5_component_call.a",
+    "sha256": "0c9f64a8835ab9ec8a46dddd815758ec71195ce3c3008525ede291f712c2bec3"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch3/math_function_name.a",
+    "sha256": "e3f5f34524a6e1b00f157178f945faaea894e8f66c6362e42d721a02716bbbf5"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch4/convert_underscores_to_whitespace.a",
+    "sha256": "117c0723d2be974f4b0a9e47b3b6b34f6d93fcb3123db8ffef9c80f4590605fc"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch4/namespace_for_variant_root.a",
+    "sha256": "dc3c618e9472e62a4a3041714d26b29324e6ef739c59a0f27eed2215d5eddbd8"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch4/valid_theme_prefix.a",
+    "sha256": "94bf91662803d9896b797dd7d9f9894ef7579dd58e40660236a5af00e157b543"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch5/design_system_has_utility.a",
+    "sha256": "fa0501f1206f3b1e1e1bf4d37423c125460553cc0e18ff4995b74b1bdedae67d"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch5/find_roots.a",
+    "sha256": "7755bcb02451d0771435d0be2ea2326409922664ba56a9e4418800b4f9de5475"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch5/property_sort.a",
+    "sha256": "f7249e7d9325b928a151d283109acd0046f0eec6c90dc0c4e56cd30743144def"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch6/ingest_custom_variant.a",
+    "sha256": "61df5fb64226ad4df6894b7a0dea5a55916609624566ace6d967cfa5e2c68974"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch6/stylesheet_load_file.a",
+    "sha256": "c6d6df095e640e17d8d6100eb98abbd05a33d5aaab61f99b0f831e748401732a"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch6/stylesheet_resolve_import.a",
+    "sha256": "9d9fdba6bc52e32ff824086a9f2d4c99c19337f6bafb525df60082eef26b5645"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch7/call_expression_source.a",
+    "sha256": "f97bec5c3951dc69b3765a8c388db7e8e49bfd5272b52c4f8e951ed80f9e3043"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch7/has_attribute_named.a",
+    "sha256": "bc9589d3a8ad425659601e1b151850cafe5b49134ec9ec5b75c12d7d63013019"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch7/match_ignoring_case.a",
+    "sha256": "32fd95fe4a11d34b1f53cfe7be4ed2999d66af0f5211de905779018d12159dfa"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch8/escape_class_rune.a",
+    "sha256": "083c57272ad079f71062cae05d84fda24f664e9467f3717f645e1a44184891b8"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch8/identity_escape.a",
+    "sha256": "7dcc5cb0970186d69d22917fa25a374461943fec60bf226597db4c04ea4a5276"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch8/literal_rune.a",
+    "sha256": "d6481c5ff8e7b5468768dfdca5b24954e158c11e0ef5326d79e295c6040a954f"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch9/set_cycle_barrier.a",
+    "sha256": "456f98088fc0b4ab92fe725fa2661a4cc79a110804ad6d06dc8ec98e122c4d74"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch9/link_with_cycle_barrier.a",
+    "sha256": "27b229ab7debe3d047252ce1ee24d555a69ecb193b9ee58f0da4d74908bd68b5"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch9/link.a",
+    "sha256": "edf93b86c1d77d8ab06e53f0f7d01ebd14797f7f8d96f002d037fb2e3bec7098"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch10/read.a",
+    "sha256": "1316376c620ba81603de0234279767b6fdb149b02a934cf1c933e973b90e44e9"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch10/write.a",
+    "sha256": "3c07c765918e2c82564513ed1ecdadf19243d703ab5865d875cf2e5a8ae04283"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/slot02/batch10/loop.a",
+    "sha256": "ad4c7c357cc01615397792fc87a6d5aeaf5e774c1d02157ffa4fa4f6025b8627"
+  }
+]

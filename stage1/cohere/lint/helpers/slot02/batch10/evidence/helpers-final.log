@@ -1,0 +1,387 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (22.95s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (35.68s)
+    --- PASS: TestHelperMutants/options_json.ts (6.94s)
+    --- PASS: TestHelperMutants/option_schema.ts (7.15s)
+    --- PASS: TestHelperMutants/policy_message.ts (6.28s)
+    --- PASS: TestHelperMutants/strict_options.ts (7.60s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (8.09s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (1.81s)
+=== RUN   TestSlot02Batch10
+    slot02_batch10_test.go:78: control_flow_graph.*Builder[E].read: 4 consumers with actual runtime capture
+    slot02_batch10_test.go:78: control_flow_graph.*Builder[E].write: 4 consumers with actual runtime capture
+    slot02_batch10_test.go:78: control_flow_graph.*Builder[E].loop: 4 consumers with actual runtime capture
+    slot02_batch10_test.go:125: 2119 captures; 2077 parsed sources; 3282 graph roots; 10661 hook method entries; 15 unique call shapes; 6 representative node kinds; 456 total replay cases
+    slot02_batch10_test.go:154: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch10/read_hook_presence
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 1: got "calls:1:hook:0:0:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/read_nil_node_forwarding
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 621: got "calls:0:"; Go "calls:1:hook:0:-1:1;"
+=== RUN   TestSlot02Batch10/read_exactly_once
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 21: got "calls:2:hook:0:0:1;hook:0:0:2;"; Go "calls:1:hook:0:0:1;"
+=== RUN   TestSlot02Batch10/read_builder_identity
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 26: got "calls:1:hook:0:0:1;"; Go "calls:1:hook:1:0:1;"
+=== RUN   TestSlot02Batch10/write_hook_presence
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 41: got "calls:1:hook:0:0:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/write_nil_node_forwarding
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 1181: got "calls:0:"; Go "calls:1:hook:0:-1:1;"
+=== RUN   TestSlot02Batch10/write_exactly_once
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 61: got "calls:2:hook:0:0:1;hook:0:0:2;"; Go "calls:1:hook:0:0:1;"
+=== RUN   TestSlot02Batch10/write_node_identity
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 61: got "calls:1:hook:0:-1:1;"; Go "calls:1:hook:0:0:1;"
+=== RUN   TestSlot02Batch10/loop_hook_presence
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 161: got "calls:1:hook:0:1:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/loop_nil_node_guard
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 501: got "calls:1:hook:0:-1:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/loop_exactly_once
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 181: got "calls:2:hook:0:1:1;hook:0:1:2;"; Go "calls:1:hook:0:1:1;"
+=== RUN   TestSlot02Batch10/loop_builder_identity
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 186: got "calls:1:hook:0:1:1;"; Go "calls:1:hook:1:1:1;"
+--- PASS: TestSlot02Batch10 (13.50s)
+    --- PASS: TestSlot02Batch10/read_hook_presence (0.91s)
+    --- PASS: TestSlot02Batch10/read_nil_node_forwarding (1.03s)
+    --- PASS: TestSlot02Batch10/read_exactly_once (1.02s)
+    --- PASS: TestSlot02Batch10/read_builder_identity (1.01s)
+    --- PASS: TestSlot02Batch10/write_hook_presence (0.91s)
+    --- PASS: TestSlot02Batch10/write_nil_node_forwarding (0.91s)
+    --- PASS: TestSlot02Batch10/write_exactly_once (0.92s)
+    --- PASS: TestSlot02Batch10/write_node_identity (0.95s)
+    --- PASS: TestSlot02Batch10/loop_hook_presence (0.92s)
+    --- PASS: TestSlot02Batch10/loop_nil_node_guard (0.98s)
+    --- PASS: TestSlot02Batch10/loop_exactly_once (0.91s)
+    --- PASS: TestSlot02Batch10/loop_builder_identity (0.92s)
+=== RUN   TestSlot02Batch2
+    slot02_batch2_test.go:75: tailwind.*ClassLiteralReader.ClassLiteralsIn: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:75: tailwind.SplitClasses: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:75: react.IsNamespacedMember: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:100: 813 captured inputs; 559 distinct parsed sources; 10303 node projections; 232 split texts; 10304 literal projections; 1114112 separator candidates
+    slot02_batch2_test.go:129: Actual Go, Node source, emitted JavaScript and ASan/UBSan native agree
+=== RUN   TestSlot02Batch2/namespace_guard
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 433: got "true:1:useState"; Go "false:0:"
+=== RUN   TestSlot02Batch2/drop_partial_fields
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 30915: got "split:2"; Go "split:1"
+=== RUN   TestSlot02Batch2/Unicode_whitespace
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 30927: got "split:1"; Go "split:2"
+=== RUN   TestSlot02Batch2/shared_slice
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 31591: got "literals:1:false:0"; Go "literals:1:true:0"
+--- PASS: TestSlot02Batch2 (38.37s)
+    --- PASS: TestSlot02Batch2/namespace_guard (6.43s)
+    --- PASS: TestSlot02Batch2/drop_partial_fields (7.07s)
+    --- PASS: TestSlot02Batch2/Unicode_whitespace (7.25s)
+    --- PASS: TestSlot02Batch2/shared_slice (6.48s)
+=== RUN   TestSlot02Batch3
+    slot02_batch3_test.go:75: react.IsEs5ComponentCall: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:75: react.isCreateClassName: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:75: tailwind/collapse.isMathFunctionName: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:126: 583 captured inputs; 580 distinct parsed sources; 11627 nodes; 371 factory names; 1247 math names
+    slot02_batch3_test.go:155: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch3/standalone_factory
+    slot02_batch3_test.go:200: compiled semantic mutant caught at line 117: got "name:false"; Go "name:true"
+=== RUN   TestSlot02Batch3/bare_factory_calls
+    slot02_batch3_test.go:200: compiled semantic mutant caught at line 431: got "call:false:0:-1:"; Go "call:true:0:-1:"
+=== RUN   TestSlot02Batch3/React-only_namespace
+    slot02_batch3_test.go:200: compiled semantic mutant caught at line 385: got "call:false:0:-1:"; Go "call:false:1:14:React"
+=== RUN   TestSlot02Batch3/math_exact_membership
+    slot02_batch3_test.go:200: compiled semantic mutant caught at line 12001: got "math:true"; Go "math:false"
+=== RUN   TestSlot02Batch3/math_calc_table_entry
+    slot02_batch3_test.go:200: compiled semantic mutant caught at line 12341: got "math:true"; Go "math:false"
+--- PASS: TestSlot02Batch3 (20.96s)
+    --- PASS: TestSlot02Batch3/standalone_factory (3.30s)
+    --- PASS: TestSlot02Batch3/bare_factory_calls (3.40s)
+    --- PASS: TestSlot02Batch3/React-only_namespace (3.09s)
+    --- PASS: TestSlot02Batch3/math_exact_membership (3.51s)
+    --- PASS: TestSlot02Batch3/math_calc_table_entry (3.00s)
+=== RUN   TestSlot02Batch4
+    slot02_batch4_test.go:75: tailwind/collapse.isValidThemePrefix: 6 consumers with actual runtime capture
+    slot02_batch4_test.go:75: tailwind/collapse.namespaceForVariantRoot: 6 consumers with actual runtime capture
+    slot02_batch4_test.go:75: tailwind/collapse.convertUnderscoresToWhitespace: 6 consumers with actual runtime capture
+    slot02_batch4_test.go:101: 157 captured inputs; 1342 distinct texts; 202 parsed variants
+    slot02_batch4_test.go:130: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch4/empty_prefix
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 1: got "prefix:true"; Go "prefix:false"
+=== RUN   TestSlot02Batch4/prefix_z_boundary
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 56045: got "prefix:false"; Go "prefix:true"
+=== RUN   TestSlot02Batch4/namespace_root_position
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 28: got "namespace:--container"; Go "namespace:--breakpoint"
+=== RUN   TestSlot02Batch4/underscore_skip_flag
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 10: got " \t_"; Go "_\t_"
+=== RUN   TestSlot02Batch4/escaped_underscore
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 8: got " \t "; Go " \t_"
+--- PASS: TestSlot02Batch4 (27.42s)
+    --- PASS: TestSlot02Batch4/empty_prefix (3.80s)
+    --- PASS: TestSlot02Batch4/prefix_z_boundary (3.97s)
+    --- PASS: TestSlot02Batch4/namespace_root_position (3.92s)
+    --- PASS: TestSlot02Batch4/underscore_skip_flag (3.95s)
+    --- PASS: TestSlot02Batch4/escaped_underscore (4.28s)
+=== RUN   TestSlot02Batch5
+    slot02_batch5_test.go:75: tailwind/collapse.DesignSystem.HasUtility: 6 consumers with actual runtime capture
+    slot02_batch5_test.go:75: tailwind/collapse.findRoots: 6 consumers with actual runtime capture
+    slot02_batch5_test.go:75: tailwind/collapse.PropertySort: 6 consumers with actual runtime capture
+    slot02_batch5_test.go:118: 157 captured inputs; 2633 distinct texts; 2186 parsed candidates; 5 stores; 1410 sort trees
+    slot02_batch5_test.go:147: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch5/repository_precedence
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 13168: got "utility:false"; Go "utility:true"
+=== RUN   TestSlot02Batch5/repository_kind_truth
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 39496: got "utility:true"; Go "utility:false"
+=== RUN   TestSlot02Batch5/static_presence
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 11656: got "utility:false"; Go "utility:true"
+=== RUN   TestSlot02Batch5/functional_truth
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 11662: got "utility:true"; Go "utility:false"
+=== RUN   TestSlot02Batch5/exact_root_first
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 65827: got "calls:0"; Go "calls:1"
+=== RUN   TestSlot02Batch5/empty_value_stop
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 75978: got "roots:2"; Go "roots:0"
+=== RUN   TestSlot02Batch5/at_fallback_after_dash_stop
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 72358: got "roots:1"; Go "roots:2"
+=== RUN   TestSlot02Batch5/at_callback_short_circuit
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 65847: got "calls:3"; Go "calls:2"
+=== RUN   TestSlot02Batch5/sort_single_delegation
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 120864: got "trace:2:true"; Go "trace:1:true"
+=== RUN   TestSlot02Batch5/sort_count
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 120863: got "sort:1:[]"; Go "sort:0:[]"
+=== RUN   TestSlot02Batch5/sort_order_alias
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 120873: got "alias:2:[39]"; Go "alias:2:[1039]"
+=== RUN   TestSlot02Batch5/sort_slice_header
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 120874: got "header:0:0:[]"; Go "header:1:1:[1039]"
+=== RUN   TestSlot02Batch5/sort_count_value_semantics
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 120865: got "alias:1000:[]"; Go "alias:0:[]"
+=== RUN   TestSlot02Batch5/sort_node_identity
+    slot02_batch5_test.go:201: compiled semantic mutant caught at line 120872: got "trace:1:false"; Go "trace:1:true"
+--- PASS: TestSlot02Batch5 (59.81s)
+    --- PASS: TestSlot02Batch5/repository_precedence (3.34s)
+    --- PASS: TestSlot02Batch5/repository_kind_truth (3.62s)
+    --- PASS: TestSlot02Batch5/static_presence (3.69s)
+    --- PASS: TestSlot02Batch5/functional_truth (4.61s)
+    --- PASS: TestSlot02Batch5/exact_root_first (3.54s)
+    --- PASS: TestSlot02Batch5/empty_value_stop (5.00s)
+    --- PASS: TestSlot02Batch5/at_fallback_after_dash_stop (4.08s)
+    --- PASS: TestSlot02Batch5/at_callback_short_circuit (4.68s)
+    --- PASS: TestSlot02Batch5/sort_single_delegation (4.04s)
+    --- PASS: TestSlot02Batch5/sort_count (3.83s)
+    --- PASS: TestSlot02Batch5/sort_order_alias (3.16s)
+    --- PASS: TestSlot02Batch5/sort_slice_header (3.71s)
+    --- PASS: TestSlot02Batch5/sort_count_value_semantics (3.59s)
+    --- PASS: TestSlot02Batch5/sort_node_identity (3.71s)
+=== RUN   TestSlot02Batch6
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.loadFile: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.resolveImport: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.ingestCustomVariant: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:130: 157 captured inputs; 1625 variant params; 1633 import params; 3457 file loads
+    slot02_batch6_test.go:159: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch6/absolute_error_unwrap_cause
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 35777: got "end-error"; Go "error:getwd: no such file or directory"
+=== RUN   TestSlot02Batch6/parse_error_cleanup
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 12826: got "state:true:true:true:0"; Go "state:false:false:true:0"
+=== RUN   TestSlot02Batch6/empty_specifier_refused
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 4904: got "resolve:1::/repo/styles"; Go "resolve:0::"
+=== RUN   TestSlot02Batch6/visiting_is_a_stack
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 12743: got "state:true:true:true:1"; Go "state:false:false:true:1"
+=== RUN   TestSlot02Batch6/ingest_sees_visiting
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 12741: got "ingest-state:false:true:true"; Go "ingest-state:true:true:true"
+=== RUN   TestSlot02Batch6/stylesheet_append_precedes_ingest
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 12741: got "ingest-state:true:false:true"; Go "ingest-state:true:true:true"
+=== RUN   TestSlot02Batch6/read_error_unwrap_cause
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 12748: got "end-error"; Go "error:open /tmp/adamic-gate/slot02-b6-graphs-2701769519/sheet-0.css-missing: no such file or directory"
+=== RUN   TestSlot02Batch6/read_error_cleanup
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 12751: got "state:true:true:true:0"; Go "state:false:false:true:0"
+=== RUN   TestSlot02Batch6/cycle_guard
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 12753: got "load-call:read:/tmp/adamic-gate/slot02-b6-graphs-2701769519/sheet-0.css"; Go "error:circular @import: /tmp/adamic-gate/slot02-b6-graphs-2701769519/sheet-0.css imports itself"
+=== RUN   TestSlot02Batch6/strip_all_edge_quotes
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 4909: got "resolve:1:\"foo.css\":/repo/styles"; Go "resolve:1:foo.css:/repo/styles"
+=== RUN   TestSlot02Batch6/source_modifier_accepted
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 4909: got "resolve:0::"; Go "resolve:1:foo.css:/repo/styles"
+=== RUN   TestSlot02Batch6/unsupported_modifier_refuses
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 4915: got "resolve:1:foo.css:/repo/styles"; Go "resolve:0::"
+=== RUN   TestSlot02Batch6/resolver_error_unwrap_cause
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 4912: got "end-error"; Go "error:fixture resolver unavailable"
+=== RUN   TestSlot02Batch6/resolver_argument_order
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 4909: got "resolve:1:/repo/styles:foo.css"; Go "resolve:1:foo.css:/repo/styles"
+=== RUN   TestSlot02Batch6/go_whitespace_includes_NEL
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 4828: got "variant:2:1:\u0085dark-*\u0085:32"; Go "variant:2:1:dark-*:32"
+=== RUN   TestSlot02Batch6/go_whitespace_excludes_BOM
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 4894: got "variant:2:1:dark-*:32"; Go "variant:2:1:\ufeffdark-*:32"
+=== RUN   TestSlot02Batch6/functional_suffix
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 7: got "added:dark-*:true"; Go "added:dark:true"
+=== RUN   TestSlot02Batch6/empty_root_skipped
+    slot02_batch6_test.go:219: compiled semantic mutant caught at line 1: got "variant:2:1::32"; Go "variant:1:1::32"
+--- PASS: TestSlot02Batch6 (143.81s)
+    --- PASS: TestSlot02Batch6/absolute_error_unwrap_cause (6.76s)
+    --- PASS: TestSlot02Batch6/parse_error_cleanup (6.74s)
+    --- PASS: TestSlot02Batch6/empty_specifier_refused (6.85s)
+    --- PASS: TestSlot02Batch6/visiting_is_a_stack (7.02s)
+    --- PASS: TestSlot02Batch6/ingest_sees_visiting (7.99s)
+    --- PASS: TestSlot02Batch6/stylesheet_append_precedes_ingest (8.49s)
+    --- PASS: TestSlot02Batch6/read_error_unwrap_cause (7.16s)
+    --- PASS: TestSlot02Batch6/read_error_cleanup (7.82s)
+    --- PASS: TestSlot02Batch6/cycle_guard (6.51s)
+    --- PASS: TestSlot02Batch6/strip_all_edge_quotes (7.38s)
+    --- PASS: TestSlot02Batch6/source_modifier_accepted (8.50s)
+    --- PASS: TestSlot02Batch6/unsupported_modifier_refuses (8.22s)
+    --- PASS: TestSlot02Batch6/resolver_error_unwrap_cause (7.20s)
+    --- PASS: TestSlot02Batch6/resolver_argument_order (6.47s)
+    --- PASS: TestSlot02Batch6/go_whitespace_includes_NEL (7.56s)
+    --- PASS: TestSlot02Batch6/go_whitespace_excludes_BOM (9.88s)
+    --- PASS: TestSlot02Batch6/functional_suffix (7.22s)
+    --- PASS: TestSlot02Batch6/empty_root_skipped (7.02s)
+=== RUN   TestSlot02Batch7
+    slot02_batch7_test.go:60: all Unicode scalars verified: 17.0.0, 1512 noncanonical mappings
+    slot02_batch7_test.go:119: imports.CallExpressionSource: 5 consumers with actual runtime capture
+    slot02_batch7_test.go:119: jsx.MatchIgnoringCase: 4 consumers with actual runtime capture
+    slot02_batch7_test.go:119: jsx.HasAttributeNamed: 4 consumers with actual runtime capture
+    slot02_batch7_test.go:145: 578 captured inputs; 522 distinct parsed sources; 10571 nodes; 13880 Unicode/name pairs; 623 attribute targets; Unicode 17.0.0
+    slot02_batch7_test.go:174: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch7/require_argument_count
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 24237: got "call:true:111,110,101,"; Go "call:false:"
+=== RUN   TestSlot02Batch7/deferred_imports
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 24291: got "call:false:"; Go "call:true:100,101,102,101,114,114,101,100,"
+=== RUN   TestSlot02Batch7/template_literal_source
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 24221: got "call:false:"; Go "call:true:116,101,109,112,108,97,116,101,"
+=== RUN   TestSlot02Batch7/empty_source_present
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 24217: got "call:false:"; Go "call:true:"
+=== RUN   TestSlot02Batch7/Kelvin_fold
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 161: got "fold:false"; Go "fold:true"
+=== RUN   TestSlot02Batch7/long_s_fold
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 187: got "fold:false"; Go "fold:true"
+=== RUN   TestSlot02Batch7/supplementary_rune_fold
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 9049: got "fold:false"; Go "fold:true"
+=== RUN   TestSlot02Batch7/unequal_string_length
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 4: got "fold:true"; Go "fold:false"
+=== RUN   TestSlot02Batch7/attribute_matcher_arguments
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 24957: got "attr:false:1::key|"; Go "attr:false:1:key:|"
+=== RUN   TestSlot02Batch7/attribute_order
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 27813: got "attr:false:2:key:|x:|"; Go "attr:false:2:x:|key:|"
+=== RUN   TestSlot02Batch7/unnamed_attributes
+    slot02_batch7_test.go:225: compiled semantic mutant caught at line 24957: got "attr:true:2:key:|:|"; Go "attr:false:1:key:|"
+--- PASS: TestSlot02Batch7 (87.02s)
+    --- PASS: TestSlot02Batch7/require_argument_count (6.60s)
+    --- PASS: TestSlot02Batch7/deferred_imports (6.99s)
+    --- PASS: TestSlot02Batch7/template_literal_source (6.97s)
+    --- PASS: TestSlot02Batch7/empty_source_present (6.92s)
+    --- PASS: TestSlot02Batch7/Kelvin_fold (6.70s)
+    --- PASS: TestSlot02Batch7/long_s_fold (8.87s)
+    --- PASS: TestSlot02Batch7/supplementary_rune_fold (6.55s)
+    --- PASS: TestSlot02Batch7/unequal_string_length (6.36s)
+    --- PASS: TestSlot02Batch7/attribute_matcher_arguments (5.70s)
+    --- PASS: TestSlot02Batch7/attribute_order (6.45s)
+    --- PASS: TestSlot02Batch7/unnamed_attributes (6.40s)
+=== RUN   TestSlot02Batch8
+    slot02_batch8_test.go:78: regexp.EscapeClassRune: 4 consumers with actual runtime capture
+    slot02_batch8_test.go:78: regexp.identityEscape: 4 consumers with actual runtime capture
+    slot02_batch8_test.go:78: regexp.literalRune: 4 consumers with actual runtime capture
+    slot02_batch8_test.go:104: 641 captured source/options inputs; 272 rune values; 8 contexts; 1735 runtime option strings
+    slot02_batch8_test.go:133: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch8/class_dash_escaping
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 48: got "class:45,"; Go "class:92,45,"
+=== RUN   TestSlot02Batch8/class_open_bracket_escaping
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 94: got "class:91,"; Go "class:92,91,"
+=== RUN   TestSlot02Batch8/invalid_rune_replacement
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 1: got "class:63,"; Go "class:65533,"
+=== RUN   TestSlot02Batch8/Unicode_identity_restriction
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 6801: got "escape:0:0:-2147483648:-3:false::"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,65533,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/slash_identity_exemption
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 7095: got "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,47,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"; Go "escape:0:0:47:-3:false::"
+=== RUN   TestSlot02Batch8/dash_outside_class
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 7083: got "escape:0:0:45:-3:false::"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,45,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/identity_width
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 273: got "escape:0:0:-2147483648:-2:false::"; Go "escape:0:0:-2147483648:-3:false::"
+=== RUN   TestSlot02Batch8/identity_error_cause
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 6801: got "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,65533,:"; Go "escape:0:0:0:0:false:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,58,32,92,65533,:117,110,115,117,112,112,111,114,116,101,100,32,114,101,103,101,120,112,32,115,121,110,116,97,120,"
+=== RUN   TestSlot02Batch8/literal_lowercase_hex
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13341: got "literal:92,117,48,48,48,65,"; Go "literal:92,117,48,48,48,97,"
+=== RUN   TestSlot02Batch8/literal_minimum_hex_width
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13331: got "literal:92,117,48,48,48,"; Go "literal:92,117,48,48,48,48,"
+=== RUN   TestSlot02Batch8/literal_supplementary_boundary
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13593: got "literal:65535,"; Go "literal:92,117,102,102,102,102,"
+=== RUN   TestSlot02Batch8/literal_z_passthrough
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13453: got "literal:92,117,48,48,55,97,"; Go "literal:122,"
+=== RUN   TestSlot02Batch8/literal_negative_padding
+    slot02_batch8_test.go:186: compiled semantic mutant caught at line 13330: got "literal:92,117,45,48,48,48,49,"; Go "literal:92,117,45,48,48,49,"
+--- PASS: TestSlot02Batch8 (26.73s)
+    --- PASS: TestSlot02Batch8/class_dash_escaping (2.31s)
+    --- PASS: TestSlot02Batch8/class_open_bracket_escaping (1.83s)
+    --- PASS: TestSlot02Batch8/invalid_rune_replacement (1.95s)
+    --- PASS: TestSlot02Batch8/Unicode_identity_restriction (1.73s)
+    --- PASS: TestSlot02Batch8/slash_identity_exemption (2.98s)
+    --- PASS: TestSlot02Batch8/dash_outside_class (1.87s)
+    --- PASS: TestSlot02Batch8/identity_width (1.86s)
+    --- PASS: TestSlot02Batch8/identity_error_cause (1.70s)
+    --- PASS: TestSlot02Batch8/literal_lowercase_hex (1.84s)
+    --- PASS: TestSlot02Batch8/literal_minimum_hex_width (1.77s)
+    --- PASS: TestSlot02Batch8/literal_supplementary_boundary (1.54s)
+    --- PASS: TestSlot02Batch8/literal_z_passthrough (1.46s)
+    --- PASS: TestSlot02Batch8/literal_negative_padding (1.50s)
+=== RUN   TestSlot02Batch9
+    slot02_batch9_test.go:78: control_flow_graph.*Builder[E].setCycleBarrier: 4 consumers with actual runtime capture
+    slot02_batch9_test.go:78: control_flow_graph.*Builder[E].linkWithCycleBarrier: 4 consumers with actual runtime capture
+    slot02_batch9_test.go:78: control_flow_graph.*Builder[E].link: 4 consumers with actual runtime capture
+    slot02_batch9_test.go:128: 2119 captures; 2077 parsed sources; 3282 graph roots; 226 observed states; 6658 total cases
+    slot02_batch9_test.go:157: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch9/nil_barrier_false_stays_nil
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 2: got "block:true:true:true:1,:false,"; Go "block:true:true:false:1,:"
+=== RUN   TestSlot02Batch9/barrier_padding_false
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 2794: got "block:false:false:true:0,0,:true,false,"; Go "block:false:false:true:0,0,:false,false,"
+=== RUN   TestSlot02Batch9/barrier_value
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 325: got "block:true:true:true:1,:false,"; Go "block:true:true:true:1,:true,"
+=== RUN   TestSlot02Batch9/negative_index_guard
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 325: got "block:true:true:false:1,:"; Go "block:true:true:true:1,:true,"
+=== RUN   TestSlot02Batch9/edge_index_before_append
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 4: got "result:1:with:0:1:false;append:0:1;barrier:0:0:false;"; Go "result:0:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/reachable_propagation
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 3: got "block:false:false:false::"; Go "block:false:true:false::"
+=== RUN   TestSlot02Batch9/incoming_retains_true
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 3: got "block:false:false:false::"; Go "block:false:true:false::"
+=== RUN   TestSlot02Batch9/barrier_forwarding
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:1:false;append:0:1;barrier:0:0:true;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/plain_link_barrier_false
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:1:true;append:0:1;barrier:0:0:true;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/nil_endpoint_return
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 88: got "result:-2:with:0:-1:false;"; Go "result:-1:with:0:-1:false;"
+=== RUN   TestSlot02Batch9/plain_link_exactly_once
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;with:0:1:false;append:0:1;barrier:0:1:false;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/append_before_barrier
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:1:false;barrier:0:0:false;append:0:1;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+=== RUN   TestSlot02Batch9/plain_link_target_identity
+    slot02_batch9_test.go:210: compiled semantic mutant caught at line 1: got "result:-2:with:0:0:false;append:0:0;barrier:0:0:false;"; Go "result:-2:with:0:1:false;append:0:1;barrier:0:0:false;"
+--- PASS: TestSlot02Batch9 (67.64s)
+    --- PASS: TestSlot02Batch9/nil_barrier_false_stays_nil (4.84s)
+    --- PASS: TestSlot02Batch9/barrier_padding_false (4.75s)
+    --- PASS: TestSlot02Batch9/barrier_value (5.96s)
+    --- PASS: TestSlot02Batch9/negative_index_guard (4.68s)
+    --- PASS: TestSlot02Batch9/edge_index_before_append (4.74s)
+    --- PASS: TestSlot02Batch9/reachable_propagation (4.57s)
+    --- PASS: TestSlot02Batch9/incoming_retains_true (4.55s)
+    --- PASS: TestSlot02Batch9/barrier_forwarding (4.87s)
+    --- PASS: TestSlot02Batch9/plain_link_barrier_false (4.26s)
+    --- PASS: TestSlot02Batch9/nil_endpoint_return (4.79s)
+    --- PASS: TestSlot02Batch9/plain_link_exactly_once (4.21s)
+    --- PASS: TestSlot02Batch9/append_before_barrier (4.53s)
+    --- PASS: TestSlot02Batch9/plain_link_target_identity (4.30s)
+=== RUN   TestSlot02AttributeName
+    slot02_test.go:159: github.com/system-inc/cohere/internal/lint/ecmascript/jsx.AttributeName: 21 consumers, 21 test files, 1056 actual captured inputs, 1068 distinct parsed sources with controls, 19610 nodes, 19611 node queries
+    slot02_test.go:164: Go, Node source and sanitized native agree
+    slot02_test.go:204: compiled semantic mutant caught at line 1140: got true:, Go false:
+--- PASS: TestSlot02AttributeName (10.35s)
+=== RUN   TestSlot02PropertyName
+    slot02_test.go:159: github.com/system-inc/cohere/internal/lint/ecmascript/property.Name: 14 consumers, 15 test files, 3308 actual captured inputs, 3327 distinct parsed sources with controls, 44212 nodes, 44213 node queries
+    slot02_test.go:164: Go, Node source and sanitized native agree
+    slot02_test.go:204: compiled semantic mutant caught at line 8290: got true:foo, Go false:
+--- PASS: TestSlot02PropertyName (29.25s)
+=== RUN   TestSlot02ReaderFor
+    slot02_test.go:233: 80 cache/binding observations match actual Go on Node and sanitized native
+    slot02_test.go:274: compiled cache-key mutant caught at line 2: got fills:0:1:true, Go fills:1:1:true
+--- PASS: TestSlot02ReaderFor (5.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	598.813s

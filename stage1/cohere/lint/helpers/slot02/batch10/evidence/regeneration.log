@@ -1,0 +1,20 @@
+{
+  "symbols": [
+    "control_flow_graph.*Builder[E].read",
+    "control_flow_graph.*Builder[E].write",
+    "control_flow_graph.*Builder[E].loop"
+  ],
+  "rules": [
+    "array-callback-return",
+    "consistent-return",
+    "no-unreachable-loop",
+    "react-hooks/rules-of-hooks"
+  ],
+  "sources": 2119,
+  "packages": [
+    "./internal/lint/rules/core",
+    "./internal/lint/rules/react"
+  ],
+  "capture_gate_exit": 0,
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}

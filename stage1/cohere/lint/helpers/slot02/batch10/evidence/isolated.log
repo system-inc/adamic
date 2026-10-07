@@ -1,0 +1,45 @@
+=== RUN   TestSlot02Batch10
+    slot02_batch10_test.go:78: control_flow_graph.*Builder[E].read: 4 consumers with actual runtime capture
+    slot02_batch10_test.go:78: control_flow_graph.*Builder[E].write: 4 consumers with actual runtime capture
+    slot02_batch10_test.go:78: control_flow_graph.*Builder[E].loop: 4 consumers with actual runtime capture
+    slot02_batch10_test.go:125: 2119 captures; 2077 parsed sources; 3282 graph roots; 10661 hook method entries; 15 unique call shapes; 6 representative node kinds; 456 total replay cases
+    slot02_batch10_test.go:154: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch10/read_hook_presence
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 1: got "calls:1:hook:0:0:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/read_nil_node_forwarding
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 621: got "calls:0:"; Go "calls:1:hook:0:-1:1;"
+=== RUN   TestSlot02Batch10/read_exactly_once
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 21: got "calls:2:hook:0:0:1;hook:0:0:2;"; Go "calls:1:hook:0:0:1;"
+=== RUN   TestSlot02Batch10/read_builder_identity
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 26: got "calls:1:hook:0:0:1;"; Go "calls:1:hook:1:0:1;"
+=== RUN   TestSlot02Batch10/write_hook_presence
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 41: got "calls:1:hook:0:0:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/write_nil_node_forwarding
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 1181: got "calls:0:"; Go "calls:1:hook:0:-1:1;"
+=== RUN   TestSlot02Batch10/write_exactly_once
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 61: got "calls:2:hook:0:0:1;hook:0:0:2;"; Go "calls:1:hook:0:0:1;"
+=== RUN   TestSlot02Batch10/write_node_identity
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 61: got "calls:1:hook:0:-1:1;"; Go "calls:1:hook:0:0:1;"
+=== RUN   TestSlot02Batch10/loop_hook_presence
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 161: got "calls:1:hook:0:1:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/loop_nil_node_guard
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 501: got "calls:1:hook:0:-1:1;"; Go "calls:0:"
+=== RUN   TestSlot02Batch10/loop_exactly_once
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 181: got "calls:2:hook:0:1:1;hook:0:1:2;"; Go "calls:1:hook:0:1:1;"
+=== RUN   TestSlot02Batch10/loop_builder_identity
+    slot02_batch10_test.go:206: compiled semantic mutant caught at line 186: got "calls:1:hook:0:1:1;"; Go "calls:1:hook:1:1:1;"
+--- PASS: TestSlot02Batch10 (25.02s)
+    --- PASS: TestSlot02Batch10/read_hook_presence (1.14s)
+    --- PASS: TestSlot02Batch10/read_nil_node_forwarding (1.11s)
+    --- PASS: TestSlot02Batch10/read_exactly_once (1.07s)
+    --- PASS: TestSlot02Batch10/read_builder_identity (1.22s)
+    --- PASS: TestSlot02Batch10/write_hook_presence (1.18s)
+    --- PASS: TestSlot02Batch10/write_nil_node_forwarding (1.06s)
+    --- PASS: TestSlot02Batch10/write_exactly_once (1.24s)
+    --- PASS: TestSlot02Batch10/write_node_identity (1.17s)
+    --- PASS: TestSlot02Batch10/loop_hook_presence (1.22s)
+    --- PASS: TestSlot02Batch10/loop_nil_node_guard (1.89s)
+    --- PASS: TestSlot02Batch10/loop_exactly_once (1.36s)
+    --- PASS: TestSlot02Batch10/loop_builder_identity (1.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	25.029s
