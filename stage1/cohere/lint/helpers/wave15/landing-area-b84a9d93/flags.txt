@@ -1,0 +1,8 @@
+Consumer fixture strings: {'core/no_restricted_exports': 178, 'core/no_restricted_imports': 463, 'next/no_html_link_for_pages': 284, 'typescript/no_empty_object_type': 186}
+Node: byte-identical 173833604 bytes
+JavaScript: byte-identical 173833604 bytes
+native: byte-identical 173833604 bytes
+Duplicate-flag mutant caught on Node only by output comparison; successful compile and exit
+Duplicate-flag mutant caught on JavaScript only by output comparison; successful compile and exit
+Duplicate-flag mutant caught on native only by output comparison; successful compile and exit
+Queries 1197583; every consumer fixture string represented; upstream Go rule and regexp tests PASS
