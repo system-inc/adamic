@@ -2,7 +2,7 @@ import { Parser } from '../../../../typescript/parser/parser.ts';
 import { Scanner } from '../../../../typescript/scanner/scanner.ts';
 import { Linter } from '../../lint.ts';
 import { Settings } from '../../settings.ts';
-import { enableDetailedReporting } from '../typescript-no-non-null-assertion/suggestions.a';
+import { enableDetailedReporting } from '../id-length/retired-support/typescript-no-non-null-assertion/suggestions.a';
 enableDetailedReporting();
 const source = 'foo.every(() => {});';
 const linter = new Linter(source, new Parser(source, 'callback.ts'), new Scanner(source), 'array-callback-return', '', '', false, new Settings());

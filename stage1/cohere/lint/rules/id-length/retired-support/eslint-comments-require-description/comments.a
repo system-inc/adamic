@@ -1,4 +1,4 @@
-import type { RuleContext } from '../../context.ts';
+import type { RuleContext } from '../../../../context.ts';
 
 export class Comment {
     readonly pos: number;

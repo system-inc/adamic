@@ -1,11 +1,11 @@
 import { panic, programArguments, readTextFile } from 'adamic';
-import { written } from '../../../../typescript/parser/nodes.ts';
-import { Parser } from '../../../../typescript/parser/parser.ts';
-import { Scanner } from '../../../../typescript/scanner/scanner.ts';
-import { Settings } from '../../settings.ts';
-import { Linter } from '../../lint.ts';
+import { written } from '../../../../../../typescript/parser/nodes.ts';
+import { Parser } from '../../../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../../../typescript/scanner/scanner.ts';
+import { Settings } from '../../../../settings.ts';
+import { Linter } from '../../../../lint.ts';
 
-import { provideGraphEnds } from '../array-callback-return/graph-boundary.a';
+import { provideGraphEnds } from '../../../array-callback-return/graph-boundary.a';
 import { FixedFinding } from '../arrow-body-style/edits.a';
 import { fixed } from '../arrow-body-style/private-fixer.a';
 import { SuggestedFinding, enableDetailedReporting } from './suggestions.a';

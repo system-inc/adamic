@@ -1,0 +1,30 @@
+--- FAIL: TestDuplicateOracleAdapter (0.01s)
+    registry_test.go:145: duplicate adapter mutant survived: arrow-body-style: missing rule descriptor
+--- FAIL: TestAdamicRuleModule (0.01s)
+    registry_test.go:159: arrow-body-style: missing rule descriptor
+--- FAIL: TestDeterministicRegeneration (0.01s)
+    registry_test.go:44: arrow-body-style: missing rule descriptor
+--- FAIL: TestDescriptorRejections (0.00s)
+    --- FAIL: TestDescriptorRejections/duplicate_public_name (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+    --- FAIL: TestDescriptorRejections/no_listener (0.02s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+    --- FAIL: TestDescriptorRejections/missing_oracle_export (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+    --- FAIL: TestDescriptorRejections/unknown_field (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+    --- FAIL: TestDescriptorRejections/missing_named_export (0.02s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+    --- FAIL: TestDescriptorRejections/bad_kind (0.02s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+    --- FAIL: TestDescriptorRejections/missing_class (0.02s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+    --- FAIL: TestDescriptorRejections/missing_finish_hook (0.02s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+    --- FAIL: TestDescriptorRejections/missing_factory (0.01s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+    --- FAIL: TestDescriptorRejections/unsafe_public_name (0.02s)
+        registry_test.go:117: mutant survived or wrong failure: arrow-body-style: missing rule descriptor
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.046s
+FAIL

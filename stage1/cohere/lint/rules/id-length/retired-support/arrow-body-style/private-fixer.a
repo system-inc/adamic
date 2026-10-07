@@ -1,7 +1,7 @@
 import { panic, utf8Length } from 'adamic';
-import { Parser } from '../../../../typescript/parser/parser.ts';
-import { Scanner } from '../../../../typescript/scanner/scanner.ts';
-import { Linter } from '../../lint.ts';
+import { Parser } from '../../../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../../../typescript/scanner/scanner.ts';
+import { Linter } from '../../../../lint.ts';
 import { FixedFinding } from './edits.a';
 import { Fix } from '../typescript-no-non-null-assertion/suggestions.a';
 class Proposal {

@@ -1,7 +1,7 @@
 import { syntaxKinds as listenerKinds } from './listeners.a';
 export const syntaxKinds: readonly number[] = listenerKinds;
 import type { RuleContext } from '../../context.ts';
-import { Fix, Suggestion, SuggestedFinding, requireDetailedReporting } from '../typescript-no-non-null-assertion/suggestions.a';
+import { Fix, Suggestion, SuggestedFinding, requireDetailedReporting } from '../id-length/retired-support/typescript-no-non-null-assertion/suggestions.a';
 import { graphEnd } from './graph-boundary.a';
 import { message } from './messages.a';
 const name = 'array-callback-return';

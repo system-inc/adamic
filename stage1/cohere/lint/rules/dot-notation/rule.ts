@@ -2,9 +2,9 @@ import { syntaxKinds as listenerKinds } from './listeners.a';
 export const syntaxKinds: readonly number[] = listenerKinds;
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
-import { comments, type Comment } from '../eslint-comments-require-description/comments.a';
-import { Fix, requireDetailedReporting } from '../typescript-no-non-null-assertion/suggestions.a';
-import { FixedFinding } from '../arrow-body-style/edits.a';
+import { comments, type Comment } from '../id-length/retired-support/eslint-comments-require-description/comments.a';
+import { Fix, requireDetailedReporting } from '../id-length/retired-support/typescript-no-non-null-assertion/suggestions.a';
+import { FixedFinding } from '../id-length/retired-support/arrow-body-style/edits.a';
 const name = 'dot-notation';
 const keywords: readonly string[] = ['abstract', 'boolean', 'break', 'byte', 'case', 'catch', 'char', 'class', 'const', 'continue', 'debugger', 'default', 'delete', 'do', 'double', 'else', 'enum', 'export', 'extends', 'false', 'final', 'finally', 'float', 'for', 'function', 'goto', 'if', 'implements', 'import', 'in', 'instanceof', 'int', 'interface', 'long', 'native', 'new', 'null', 'package', 'private', 'protected', 'public', 'return', 'short', 'static', 'super', 'switch', 'synchronized', 'this', 'throw', 'throws', 'transient', 'true', 'try', 'typeof', 'var', 'void', 'volatile', 'while', 'with'];
 export class Rule {

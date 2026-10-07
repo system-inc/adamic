@@ -1,7 +1,7 @@
 import { panic } from 'adamic';
-import { Finding } from '../../finding.ts';
-import { SuggestionEdit, Suggestion as SharedSuggestion } from '../../suggestions.a';
-import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../../../finding.ts';
+import { SuggestionEdit, Suggestion as SharedSuggestion } from '../../../../suggestions.a';
+import type { RuleContext } from '../../../../context.ts';
 
 export class Fix extends SuggestionEdit {
     constructor(start: number, end: number, text: string) { super(start, end, text); }

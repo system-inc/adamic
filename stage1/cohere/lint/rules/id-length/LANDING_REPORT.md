@@ -96,3 +96,58 @@ shared gates run successfully. Shared harness files remain untouched.
 
 
 Current-main refresh: origin/main b8fb957aa839a9e8cb0b54279dd9864fa317bd30 integrated with a clean merge, retaining the named harness ancestry. Only incoming inherited-static-field compiler changes were added; no shared lint hunks changed. TestOwnedWitnesses rerun FAIL 3.168s: restricted-types default witness still has zero findings. Shared option-aware witness support remains needed. No new claim, full-rule green, semantic mutant or throughput is asserted.
+
+
+## Deduplication ledger refresh, 2026-10-07
+
+Integrated named harness 41eb6eab2b6de45ede0a40250765be295ee25fbd by clean
+merge, retaining current main b8fb957aa839a9e8cb0b54279dd9864fa317bd30.
+Read the ledger before reconciliation. The original wave1-02 winning lineage
+is retained on its landing successor, not treated as a new competing port.
+Historical original branch is not an additional integration request.
+
+Retained six registered owned ports: array-callback-return,
+base/consistency-no-bare-throw, dot-notation, grouped-accessor-pairs, id-length
+and @typescript-eslint/no-restricted-types. Retired six losing registrations,
+entry implementations, Go adapters and mutant descriptors:
+
+- require-description: winner wave1-05
+- Tailwind physical direction: winner wave1-05
+- non-null assertion and asserted optional chain: winner wave1-05
+- no-this-alias: winner wave1-07
+- arrow-body-style: winner wave1-10
+
+Private utilities needed by winning rules, archived witnesses and historical
+reports now live beneath id-length/retired-support/. Only owned relative
+imports changed to preserve those dependencies. No winning rule from another
+worker was deleted or copied over. Historical standalone validation scripts
+for retired ports are archival and are not current commands. Named rule.json
+kinds remain the registry subscriptions; historical numeric evidence is not
+an assertion about current dispatch. No shared lint file hunk changed relative
+to 41eb6eab2, including finding, context, main, registry, oracle and comparison.
+Incoming batch8 retirement and developer-tools changes were retained.
+
+Commands and observations:
+
+- go test ./stage1/cohere/lint/registry -count=1: PASS 0.067s after moving
+  archived support directories beneath an owned descriptor. The initial run
+  explicitly rejected leftover descriptorless top-level directories and is
+  preserved, not counted as green. Registry negative metadata controls ran;
+  no new rule semantic mutant is claimed.
+- go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1:
+  FAIL 6.146s, still at restricted-types' zero-finding default witness. This
+  rule bans nothing by default; shared option-aware witness support is needed.
+- go run ./cmd/adamic build stage1/cohere/lint/main.ts
+  -o /tmp/wave02-ledger-driver --sanitize: exit 0, empty compiler log.
+  This checks compilation after relocation, not runtime findings parity.
+- git diff --check: PASS.
+
+All output logs are evidence/harness-41eb6eab-*.log. No whole-owned-rule
+runtime comparison, fresh semantic mutant or throughput is asserted. The
+remaining CFG-end adapter and automatic-fix integration boundaries remain
+uncertified. The helper branch dfa823098 remains green on current main with
+its four helpers and twelve semantic mutants; it did not need a new rebase.
+No helper or batch-only rule is claimed. The ledger names source batches for
+35 batch-only rules but does not assign any specifically to wave1-02. New
+work remains behind the named landing blocker. Main and area branches were
+not pushed.

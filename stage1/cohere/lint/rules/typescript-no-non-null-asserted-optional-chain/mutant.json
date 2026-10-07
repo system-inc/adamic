@@ -1,6 +1,0 @@
-{
-  "name": "assertion removes preceding byte",
-  "file": "rule.ts",
-  "from": "new Fix(node.end - 1, node.end, '')",
-  "to": "new Fix(node.end - 2, node.end - 1, '')"
-}
