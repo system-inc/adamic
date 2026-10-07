@@ -1,0 +1,1 @@
+declare function createComponent():any;function Example(){const Component=createComponent();return <Component />;}
