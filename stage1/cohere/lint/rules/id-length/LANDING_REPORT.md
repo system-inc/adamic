@@ -1,5 +1,5 @@
 Rebased wave1-02 onto main, preserving every existing main rule; twelve entry modules temporarily use .ts.
-Commits: original pushed aba098eb; rebased history e048f593; base origin/main e8ba3d5d; final landing SHA is reported with the push.
+Commits: original pushed aba098eb; rebased history e048f593; reconciliation 4d1fbd48; base origin/main e8ba3d5d; final landing SHA is reported with the push.
 Checks: main oracle PASS 54.748s, 1,272 upstream cases, 751,320 equal bytes; registry PASS 0.043s; owned-rule gate FAIL 2.086s.
 Mutants: eleven descriptor rejection controls and the root-only import rewrite mutant were caught; no owned-rule semantic mutant was rerun successfully after rebase.
 Not covered: owned-rule integration, emitted JavaScript after rebase, full gate, regex options, CFG and JSX gaps; branch is NOT landing-ready and no new helper is claimed.

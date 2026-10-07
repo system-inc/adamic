@@ -1,0 +1,6 @@
+=== RUN   TestNestedOutsideModuleCopy
+    lint_test.go:376: mutant anchor count for ""
+--- FAIL: TestNestedOutsideModuleCopy (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.007s
+FAIL
