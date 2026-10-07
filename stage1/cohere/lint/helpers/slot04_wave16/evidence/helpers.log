@@ -1,0 +1,61 @@
+=== RUN   TestUtilityResolutionGoNodeNativeJavaScript
+=== RUN   TestUtilityResolutionGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 47880 utility resolution observations
+=== RUN   TestUtilityResolutionGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 209 utility resolution observations
+=== RUN   TestUtilityResolutionGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 4 utility resolution observations
+--- PASS: TestUtilityResolutionGoNodeNativeJavaScript (29.14s)
+    --- PASS: TestUtilityResolutionGoNodeNativeJavaScript/witnesses.json (25.77s)
+    --- PASS: TestUtilityResolutionGoNodeNativeJavaScript/consumers.json (0.33s)
+    --- PASS: TestUtilityResolutionGoNodeNativeJavaScript/calls.json (0.20s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/modifier_value.amodifier.kind_===_'arbitrary'
+    helpers_test.go:182: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/modifier_value.avalue:modifier.value
+    helpers_test.go:182: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/arbitrary_argument.adataType_===_'*'
+    helpers_test.go:182: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/arbitrary_argument.avalue.dataType_!==_dataType
+    helpers_test.go:182: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/arbitrary_argument.ainfer(value.value,dataType)_!==_''
+    helpers_test.go:182: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/variable_reference.aentry.options_&_2
+    helpers_test.go:182: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/variable_reference.aentry.value_!==_''
+    helpers_test.go:182: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/variable_reference.aescape(prefixKey(themeKey))
+    helpers_test.go:182: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:182: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (197.87s)
+    --- PASS: TestCompilingMutants/modifier_value.amodifier.kind_===_'arbitrary' (25.21s)
+    --- PASS: TestCompilingMutants/modifier_value.avalue:modifier.value (24.60s)
+    --- PASS: TestCompilingMutants/arbitrary_argument.adataType_===_'*' (23.01s)
+    --- PASS: TestCompilingMutants/arbitrary_argument.avalue.dataType_!==_dataType (25.54s)
+    --- PASS: TestCompilingMutants/arbitrary_argument.ainfer(value.value,dataType)_!==_'' (26.23s)
+    --- PASS: TestCompilingMutants/variable_reference.aentry.options_&_2 (22.24s)
+    --- PASS: TestCompilingMutants/variable_reference.aentry.value_!==_'' (26.73s)
+    --- PASS: TestCompilingMutants/variable_reference.aescape(prefixKey(themeKey)) (23.15s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:253: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:253: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:253: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:253: consumer omission caught: better-tailwindcss/no-unknown-classes
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave16	227.040s

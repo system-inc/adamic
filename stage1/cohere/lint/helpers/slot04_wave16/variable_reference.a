@@ -1,0 +1,9 @@
+export interface ThemeLookup { readonly present: boolean; readonly value: string; readonly options: number; }
+export interface VariableReference { readonly value: string; readonly ok: boolean; }
+export function variableReference(themeKey: string,lookup: (key: string) => ThemeLookup,prefixKey: (key: string) => string,escape: (key: string) => string): VariableReference {
+    const entry=lookup(themeKey);
+    if(!entry.present){return {value:'',ok:false};}
+    let reference='var('+escape(prefixKey(themeKey));
+    if((entry.options & 2) !== 0 && entry.value !== ''){reference+=', '+entry.value;}
+    return {value:reference+')',ok:true};
+}

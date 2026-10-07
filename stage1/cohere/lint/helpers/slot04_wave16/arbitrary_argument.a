@@ -1,0 +1,13 @@
+export interface ArbitraryValue { readonly value: string; readonly dataType: string; }
+export interface ArbitraryResolution<T> { readonly ok: boolean; readonly nodes: T[]; }
+// Callers supply a bracketed argument, as Go's private caller does.
+export function resolveArbitraryArgument<T>(argument: string,value: ArbitraryValue,parse: (source: string) => T[],infer: (source: string,dataType: string) => string): ArbitraryResolution<T> {
+    const dataType=argument.slice(1,-1);
+    if(dataType === '*'){return {ok:true,nodes:parse(value.value)};}
+    if(value.dataType !== ''){
+        if(value.dataType !== dataType){return {ok:false,nodes:[]};}
+        return {ok:true,nodes:parse(value.value)};
+    }
+    if(infer(value.value,dataType) !== ''){return {ok:true,nodes:parse(value.value)};}
+    return {ok:false,nodes:[]};
+}

@@ -1,0 +1,15 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { modifierAsValue } from './modifier_value.a';
+import { resolveArbitraryArgument } from './arbitrary_argument.a';
+import { variableReference } from './variable_reference.a';
+function text(c: OptionsJson,row: number,name: string): string {const n=c.node(row);const i=n.keys.indexOf(name);if(i<0){panic('field');}return c.node(n.children[i] ?? panic('value')).text;}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}
+const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+ const source=text(c,row,'Source');
+ const m=modifierAsValue({present:text(c,row,'ModifierPresent')==='true',kind:text(c,row,'ModifierKind'),value:source});
+ const a=resolveArbitraryArgument<string>(text(c,row,'Argument'),{value:source,dataType:text(c,row,'Hint')},(_source: string): string[] => [text(c,row,'Parsed')],(_source: string,_type: string): string => text(c,row,'Inferred'));
+ const v=variableReference(text(c,row,'Key'),(_key: string) => ({present:text(c,row,'EntryPresent')==='true',value:source,options:Number(text(c,row,'Options'))}),(_key: string): string => text(c,row,'Prefixed'),(_key: string): string => text(c,row,'Escaped'));
+ console.log(`${m.present}|${m.kind}|${m.value}|${m.fraction}|${m.dataType}|${a.ok}|${a.nodes.join('')}|${v.ok}|${v.value}`);
+}

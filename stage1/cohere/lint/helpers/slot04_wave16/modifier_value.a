@@ -1,0 +1,8 @@
+export interface ModifierView { readonly present: boolean; readonly kind: string; readonly value: string; }
+export interface ValueView { readonly present: boolean; readonly kind: string; readonly value: string; readonly fraction: string; readonly dataType: string; }
+export function modifierAsValue(modifier: ModifierView): ValueView {
+    if(!modifier.present){return {present:false,kind:'',value:'',fraction:'',dataType:''};}
+    let kind='named';
+    if(modifier.kind === 'arbitrary'){kind='arbitrary';}
+    return {present:true,kind,value:modifier.value,fraction:'',dataType:''};
+}
