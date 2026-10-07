@@ -1,5 +1,7 @@
 // Synthetic map-only workload shaped by the tsc 6.0.3 census, not a replay of tsc.
 #define _POSIX_C_SOURCE 200809L
+// macOS hides struct rusage's ru_maxrss under strict POSIX unless asked; Linux ignores this.
+#define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <stdio.h>
 #include <stdlib.h>

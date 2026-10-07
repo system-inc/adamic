@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -92,7 +93,12 @@ func TestMapSmallMutants(t *testing.T) {
 			if output, err := exec.Command("clang", flags...).CombinedOutput(); err != nil {
 				t.Fatalf("link: %v\n%s", err, output)
 			}
-			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+			sanitizer := "ASAN_OPTIONS=halt_on_error=1"
+			if runtime.GOOS == "linux" {
+				sanitizer = "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"
+			}
+			result := executeWith(t, []string{sanitizer, "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 			if result.exitCode != 0 || len(result.stderr) != 0 {
 				t.Fatalf("mutant must run cleanly: exit %d, stderr %s", result.exitCode, result.stderr)
 			}
