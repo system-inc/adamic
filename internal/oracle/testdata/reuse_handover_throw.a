@@ -1,0 +1,67 @@
+// A variable moved into a consumed parameter (native/reuse.go, handOver) is the statement's own until
+// every argument is evaluated. When an argument after it throws, the call is never made, so the
+// statement lets go of what it moved, on the way to the catch. Nothing reads the variable after the
+// call, which is what lets it move; the leak check is what sees a moved value nobody let go of.
+interface Counter {
+	readonly count: number;
+	readonly label: string;
+}
+
+function bump(counter: Counter, by: number): Counter {
+	return { ...counter, count: counter.count + by };
+}
+
+function amount(fail: boolean, at: number): number {
+	if (fail) {
+		throw new Error(`no amount at ${at}`);
+	}
+	return at;
+}
+
+// Moved, then the second argument throws.
+function once(fail: boolean): string {
+	const held: Counter = { count: 1, label: `held ${1}` };
+	return `${bump(held, amount(fail, 2)).count}`;
+}
+try {
+	console.log(once(true));
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.message);
+	}
+}
+console.log(once(false));
+
+// The same in a loop, caught inside it, so each pass moves a fresh value and drops it.
+function passes(): number {
+	let total = 0;
+	for (let index = 0; index < 5; index++) {
+		const held: Counter = { count: index, label: `pass ${index}` };
+		try {
+			total += bump(held, amount(index % 2 === 1, index)).count;
+		} catch (error) {
+			if (error instanceof Error) {
+				total += error.message.length;
+			}
+		}
+	}
+	return total;
+}
+console.log(`${passes()}`);
+
+// A parameter moved on, the throw caught by the caller's caller.
+function forward(counter: Counter, fail: boolean): Counter {
+	return bump(counter, amount(fail, 3));
+}
+function outer(fail: boolean): string {
+	const made: Counter = { count: 7, label: `made ${7}` };
+	return forward(made, fail).label;
+}
+try {
+	console.log(outer(true));
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.message);
+	}
+}
+console.log(outer(false));
