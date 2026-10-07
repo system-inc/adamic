@@ -1,3 +1,5 @@
+Withdrawn duplicate: slot 05 owns NewTheme under earlier claim b9d90803 (02:30:29 UTC), before b07ef13e (02:30:45 UTC). The passing observations below are historical evidence, not an additional delivered helper. Active constructor sources and tests were removed.
+
 Built collapse.NewTheme in one .a file, removing six dependency entries across six Tailwind rules, zero final blockers alone.
 Commits: b07ef13e claim pushed before implementation; implementation commit follows this report.
 Commands: helper parity PASS 9.12s with 13,272 identical bytes; vet exit zero; filtered external Node oracle passed; 157 sources captured from all six consumers.

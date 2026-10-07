@@ -1,8 +1,0 @@
-export interface ThemeValue { value: string; options: number; }
-export interface ThemeOrder { nil: boolean; values: string[]; }
-export interface Theme { Prefix: string; values: Map<string, ThemeValue>; keyOrder: ThemeOrder; deadKeys: number; }
-
-// The explicit nil bit preserves Go's nil-versus-empty slice distinction.
-export function newTheme(): Theme {
-  return { Prefix: '', values: new Map<string, ThemeValue>(), keyOrder: { nil: true, values: [] }, deadKeys: 0 };
-}
