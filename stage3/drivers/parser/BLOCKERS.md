@@ -1,3 +1,28 @@
+# Newest-tip native rerun: inputs checkpoint
+
+All ten requested fetched tips are in scratch HEAD 46854599d67d4c75bb39900f43e21c56c0538ff0,
+verified with merge-base. area/stage3 is 03ccf222, front-2 391b3e9c,
+array-holes 0140eed8, proven-predicates 746af2f2; remaining exact SHAs are in
+evidence/front9/inputs/report.json. Scratch merge is never pushed.
+Stage0 compiler rebuild succeeds. Focused predicate/non-null/checked-overload-result/
+array-hole/phantom/require tests pass (3.816s); no complete gate claimed.
+The new predicate feature changes verifier APIs: checked-overload flow helpers
+use predicateFlowProof/Path; refusal dispatch uses predicateRefusal and preserves
+actual callback body checks. These compatibility resolutions are scratch only.
+Array-hole dispatch preserves record, phantom and Node host dispatch, plus
+module Require roots and readiness behavior. Exact conflicts/diff retained.
+
+Assumption: newest sanctioned source adaptations, including existing validated
+60-64, produce the source slice; the old 81-file inputs and 10,406-case manifest
+stay fixed as the acceptance targets. stage3/apply.sh succeeds at newest area.
+The shared slicer regenerates the driver slice: 1,991 code declarations in 27
+files (79 modules including evaluation scaffolding), 41,853 copied-span lines.
+Audit: 2,080 exact source spans and 79 ordered imports PASS. No new adaptation,
+source stub or second slicer. Next checkpoint is split/off native build and both
+reference comparisons if a parser binary builds.
+
+---
+
 # Non-null and checked overload results native rerun: red
 
 Newest fetched non-null-check a02613eff851e07f567ab9934adfc8a2dc98eeca and
