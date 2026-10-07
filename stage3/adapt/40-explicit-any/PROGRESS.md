@@ -1,6 +1,8 @@
 # Type-only class applications
 
-Brands: 36 owner types changed from any to undefined, preserving marker keys
+The original brand proof below is historical. October 7 revises its 36 replacements to void under #bw3xg7c; see [BRANDS-VOID.md](BRANDS-VOID.md) for current composition, searches, build mutant and lane evidence.
+
+Historical brands: 36 owner types changed from any to undefined, preserving marker keys
 and optionality. Required markers remain required; the optional qualified-name
 marker remains optional. Branded primitives and AST construction use nominal
 assertions or staged constructors already present in upstream, rather than
@@ -152,7 +154,8 @@ lookup now uses its parsed function and variable owner, and the complete proof
 was rerun successfully. These failed exploratory attempts remain in /tmp logs
 and are not presented as passing runs.
 
-Current adaptation-40 progress is 69 removed, 141 remaining. Historical census
+The filesystem follow-up alone recorded 69 removed, 141 remaining. Together with
+the array predicate input below, current progress is 70 removed, 140 remaining. Historical census
 JSONs and the earlier verifier snapshots remain unchanged. See
 evidence/filesystem/proof.json and guards.log for the independent observations.
 
@@ -198,3 +201,12 @@ Apply exits 0. The proof exits 0, including the restored clean build. The
 additional guard probes are reproduced by filesystem-proof.cjs and independently
 recorded in evidence/filesystem/guards.log. The full logs and exploratory
 failures are under /tmp/sys-stat-*. Syntax checks and git diff --check pass.
+
+## Internal array predicate input, October 7
+
+Site 58, already classified as Generic array predicate input, now uses unknown
+in `isArray(value: unknown): value is readonly unknown[]`. The body is unchanged;
+all compiler callers are checked by the stock compiler. This follows the
+host-blockers a85a9cb1 proof and removes one more any token. Combined with the
+filesystem entry classification, 70 of 210 are removed and 140 remain. The function is @internal and contributes no public API line.
+Current commands, observations and mutants are in [BRANDS-VOID.md](BRANDS-VOID.md).
