@@ -1,0 +1,187 @@
+[
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const a: number;\ndeclare const b: number;\nexport const r = a !== b;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\n(foo!.bar as number)++;\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\n({ k: foo!.bar } = { k: 0 });\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\n--foo!.bar;\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\n[...foo!.bar!] = [0];\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\n[...foo!.bar] = [0];\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\n[foo!.bar] = [0];\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\ndeclare const k: any;\nexport const r = foo![k];\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\ndeclare const k: any;\nexport const r = foo?.[k!];\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\ndeclare const k: any;\nexport const r = foo[k!];\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\ndeclare const x: any;\nexport const r = foo(x!);\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\ndeclare const x: any;\nexport const r = foo?.(x!);\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\ndelete foo!.bar;\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = !!foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo!\n    // why\n    .bar;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo!!!;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo!!;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo!();\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo!.bar;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo!;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo!?.();\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo!?.bar;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo?.();\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport const r = foo?.bar;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nexport function get() {\n    return foo!;\n}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nfoo!.bar += 1;\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nfoo!.bar = 1;\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: any;\nfoo!.bar++;\nexport const r = foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const foo: boolean;\nexport const r = !foo;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "declare const thing: string | null;\nexport const r: NonNullable<typeof thing> = 'x';\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export class Thing {\n    value!: number;\n}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export const query = 'mutation M($input: Thing!) { m(input: $input) { id } }';\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export const r = 'hello!';\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export const r = `hello!${1}`;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export let value!: number;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export type Thing<T> = NonNullable<T>;\n"
+  },
+  {
+    "file": "/source.ts",
+    "options": null,
+    "sourceText": "foo!; foo!.bar; foo![key]; foo!(); foo!?.bar; foo!.bar = 1; foo?.[key!];\n"
+  }
+]

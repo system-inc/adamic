@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/no-non-null-assertion",
+  "kinds": [
+    "NonNullExpression"
+  ],
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "visit": "visit",
+  "oracle": "oracleNoNonNullAssertion",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoNonNullAssertion"
+}
