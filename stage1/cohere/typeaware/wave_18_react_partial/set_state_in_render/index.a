@@ -1,0 +1,31 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../../diagnostic.ts';
+
+// Reporting portion only. Source analysis explicitly refuses until native HIR exists.
+export class SetStateInRender {
+    render(start: number, end: number): Diagnostic {
+        return new Diagnostic(
+            'react-hooks/set-state-in-render',
+            'setStateInRender',
+            'This state setter is called while the component is rendering, on every render rather than in response to an event. Setting state schedules another render, and that render calls the setter again, so this loops until React gives up and throws `Too many re-renders`. To reset state when a prop changes, keep the previous prop in state and compare it during render. To derive a value from state or props, compute it during render instead of storing it.',
+            start,
+            end,
+            '',
+        );
+    }
+    memo(start: number, end: number): Diagnostic {
+        return new Diagnostic(
+            'react-hooks/set-state-in-render',
+            'setStateInUseMemo',
+            'This state setter is called inside a `useMemo` callback. That callback runs during render, so setting state there schedules another render whose `useMemo` runs again, which can loop forever. A `useMemo` is for computing a value from its dependencies and must not have side effects; move the state update into an event handler or an effect.',
+            start,
+            end,
+            '',
+        );
+    }
+    analyze(): void {
+        panic(
+            'NotYet: react-hooks/set-state-in-render needs native React HIR, SSA values, manual-memoization inlining and post-dominance',
+        );
+    }
+}

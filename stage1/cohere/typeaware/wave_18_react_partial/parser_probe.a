@@ -1,0 +1,4 @@
+import { Parser } from '../../../typescript/parser/parser.ts';
+const p = new Parser('function Component(){const Inner=()=>null;return <Inner/>;}', 'fixture.tsx');
+p.file();
+console.log(`${p.nodes.filter((n) => n.kind.startsWith('Jsx')).length}`);
