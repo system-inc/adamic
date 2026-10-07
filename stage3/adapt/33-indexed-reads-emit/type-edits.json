@@ -1,0 +1,26 @@
+[
+  {
+    "file": "transformers/module/module.ts",
+    "kind": "VariableDeclaration",
+    "name": "currentModuleInfo",
+    "occurrence": 1,
+    "total": 1,
+    "before": "ExternalModuleInfo",
+    "after": "ExternalModuleInfo | undefined",
+    "class": "optional-owner",
+    "invariant": "The emit notification receives undefined for skipped plain scripts; transformation assigns collectExternalModuleInfo before invoking any transform delegate and resets only after the delegate returns."
+  },
+  {
+    "file": "transformers/module/module.ts",
+    "kind": "CallExpression",
+    "name": "arrayFrom",
+    "arguments": [
+      "bindingsSet"
+    ],
+    "occurrence": 1,
+    "total": 1,
+    "typeArgument": "Identifier",
+    "class": "overload-contract",
+    "invariant": "bindingsSet is a Set<Identifier>; every added binding comes from ExternalModuleInfo.exportedBindings, whose elements are Identifier. The explicit type argument selects the truthful iterable overload and erases on Node."
+  }
+]

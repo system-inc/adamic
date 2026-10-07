@@ -31,15 +31,5 @@
     "class": "optional-owner",
     "owner": "src/compiler/types.ts:5828 AllDecorators.parameters",
     "invariant": "parameters is legitimately undefined for non-legacy decorators or absent parameter decorators; the object deliberately retains the property. Truth requires | undefined on AllDecorators.parameters, whose declaration is outside this partition. No assertion, omission or default can substitute for that owning declaration edit."
-  },
-  {
-    "file": "transformers/module/module.ts",
-    "line": 2481,
-    "column": 21,
-    "function": "getExports",
-    "code": "TS2322",
-    "action": "decline",
-    "class": "overload-contract",
-    "invariant": "arrayFrom(bindingsSet) is inferred as (Identifier | undefined)[] despite Set<Identifier>. This is an overload inference contract, not an absent indexed payload. A type argument may repair inference, but compatibility with the native overload resolver has not been established; no cast or payload assertion is substituted."
   }
 ]
