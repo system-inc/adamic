@@ -1,0 +1,3370 @@
+{
+  "branches": 659,
+  "ranked": 197,
+  "claim_records": 33,
+  "remaining": [],
+  "excluded": {
+    "no-use-before-define": {
+      "ports": [
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/before.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/no-unsafe-type-assertion": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/volume.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/volume.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "adamic/no-unchecked-cast": {
+      "ports": [
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/casts.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/no-unsafe-member-access": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/volume.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/volume.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/no-unsafe-argument": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/rules.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/rules.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/prefer-nullish-coalescing": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/volume.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/volume.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/no-shadow": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/shadow.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/shadow.ts"
+        ]
+      ],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-unsafe-enum-comparison": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/volume.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/volume.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "no-implicit-coercion": {
+      "ports": [
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/coercion.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "nexus/correctness-no-caller-data-mutation": {
+      "ports": [
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/caller.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "no-param-reassign": {
+      "ports": [
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/reassign.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/no-unsafe-assignment": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/assignment.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/assignment.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "adamic/invariant-mutable": {
+      "ports": [
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/flow.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/no-confusing-void-expression": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/void.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/void.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/consistent-return": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/returns.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/returns.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/switch-exhaustiveness-check": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/volume.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/volume.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "adamic/no-optional-widening": {
+      "ports": [
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/flow.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "nexus/consistency-no-property-alias": {
+      "ports": [
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/property_alias.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/unbound-method": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/unbound.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/unbound.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/no-unused-vars": {
+      "ports": [
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/unused.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "nexus/correctness-no-implicit-return": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-deprecated": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ]
+      ]
+    },
+    "no-else-return": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ]
+      ]
+    },
+    "logical-assignment-operators": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-unsafe-return": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-nullish-stripping-assertion": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-unsafe-call": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/consistent-type-imports": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-unnecessary-template-expression": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ]
+      ]
+    },
+    "nexus/consistency-require-constant-casing": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ]
+      ]
+    },
+    "nexus/consistency-require-matching-return-type": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/strict-void-return": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-unnecessary-type-parameters": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ]
+      ]
+    },
+    "no-useless-assignment": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/restrict-template-expressions": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05-report.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ]
+      ]
+    },
+    "adamic/nominal-class": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-duplicate-type-constituents": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ]
+      ]
+    },
+    "no-useless-return": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ]
+      ]
+    },
+    "no-undef-init": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/prefer-for-of": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/consistent-indexed-object-style": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ]
+      ]
+    },
+    "no-loop-func": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-import-cycle-load-time-read": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-require-imports": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ]
+      ]
+    },
+    "prefer-const": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ]
+      ]
+    },
+    "radix": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/non-nullable-type-assertion-style": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ]
+      ]
+    },
+    "no-unmodified-loop-condition": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-redundant-type-constituents": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/prefer-includes": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/prefer-regexp-exec": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-identical-branches": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-for-in-array": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-redeclare": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/rules.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/rules.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/no-unsafe-unary-minus": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/rules.ts"
+        ],
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/unary_minus.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/rules.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/unary_minus.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "nexus/correctness-no-test-on-global-regex": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-write-only-collection": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ]
+      ]
+    },
+    "no-unassigned-vars": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ]
+      ]
+    },
+    "preserve-caught-error": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/consistent-type-exports": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-array-delete": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-base-to-string": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-extraneous-class": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-useless-default-assignment": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/prefer-find": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/require-array-sort-compare": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/restrict-plus-operands": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/rules.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/rules.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "no-import-assign": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "prefer-exponentiation-operator": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ]
+      ]
+    },
+    "use-isnan": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ]
+      ]
+    },
+    "@next/next/no-async-client-component": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ]
+      ]
+    },
+    "@next/next/no-duplicate-head": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ]
+      ]
+    },
+    "@next/next/no-script-component-in-head": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ]
+      ]
+    },
+    "@next/next/no-title-in-document-head": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/await-thenable": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/class-literal-property-style": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/consistent-generic-constructors": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/dot-notation": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-array-constructor": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-floating-promises": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-implied-eval": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-meaningless-void-operator": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-misused-promises": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-misused-spread": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-mixed-enums": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-non-null-asserted-nullish-coalescing": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-unnecessary-qualifier": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/no-unsafe-declaration-merging": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/rules.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/rules.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/no-unused-private-class-members": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/only-throw-error": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/prefer-promise-reject-errors": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/prefer-reduce-type-parameter": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/prefer-return-this-type": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/related-getter-setter-pairs": {
+      "ports": [
+        [
+          "refs/remotes/origin/main",
+          "stage1/cohere/typeaware/rules.ts"
+        ],
+        [
+          "refs/remotes/origin/codex/tsgo-c-library",
+          "stage1/cohere/typeaware/rules.ts"
+        ]
+      ],
+      "claims": []
+    },
+    "@typescript-eslint/return-await": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ]
+      ]
+    },
+    "@typescript-eslint/use-unknown-in-catch-callback-variable": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ]
+      ]
+    },
+    "accessor-pairs": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ]
+      ]
+    },
+    "base/correctness-require-graphql-nullable-parity": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ]
+      ]
+    },
+    "base/correctness-require-matching-inject-type": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ]
+      ]
+    },
+    "base/correctness-require-matching-operation-context": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "base/correctness-require-matching-provider-return": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "base/correctness-require-optional-relation": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "base/correctness-require-orm-column-nullable-parity": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ]
+      ]
+    },
+    "base/correctness-require-serializable-nullable-parity": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ]
+      ]
+    },
+    "base/correctness-require-verify-array-parity": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ]
+      ]
+    },
+    "base/correctness-require-verify-optional-parity": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ]
+      ]
+    },
+    "block-scoped-var": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ]
+      ]
+    },
+    "getter-return": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ]
+      ]
+    },
+    "id-denylist": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "id-match": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "nexus/concurrency-no-check-then-write": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "nexus/concurrency-no-lost-update": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "nexus/consistency-no-iso-string-date-cut": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-callback-in-parse-try": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-collection-misuse": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-discarded-outcome": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-discarded-pure-result": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-global-listener-target-assertion": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-leaked-number-render": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-mock-on-module-namespace": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-process-exit-after-output": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "nexus/correctness-no-uncleared-race-timeout": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "nexus/correctness-require-blocking-standard-streams": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "nexus/correctness-require-child-process-error-listener": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ]
+      ]
+    },
+    "nexus/correctness-require-response-status-check": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ]
+      ]
+    },
+    "nexus/performance-no-independent-await-in-loop": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ]
+      ]
+    },
+    "nexus/security-no-interpolated-shell-command": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ]
+      ]
+    },
+    "nexus/security-no-interpolated-sql-string": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ]
+      ]
+    },
+    "no-alert": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ]
+      ]
+    },
+    "no-class-assign": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ]
+      ]
+    },
+    "no-const-assign": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ]
+      ]
+    },
+    "no-constant-binary-expression": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ]
+      ]
+    },
+    "no-eval": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "no-extend-native": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "no-func-assign": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "no-global-assign": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "no-implicit-globals": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "no-implied-eval": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "no-invalid-regexp": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ]
+      ]
+    },
+    "no-label-var": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ]
+      ]
+    },
+    "no-misleading-character-class": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ]
+      ]
+    },
+    "no-new-func": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "no-new-native-nonconstructor": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "no-new-wrappers": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "no-obj-calls": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "no-object-constructor": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "no-promise-executor-return": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "no-restricted-globals": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "no-setter-return": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "no-shadow-restricted-names": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "no-throw-literal": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ]
+      ]
+    },
+    "no-useless-backreference": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ]
+      ]
+    },
+    "prefer-arrow-callback": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ]
+      ]
+    },
+    "prefer-numeric-literals": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "prefer-object-has-own": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "prefer-object-spread": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ]
+      ]
+    },
+    "prefer-promise-reject-errors": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "prefer-regex-literals": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ]
+      ]
+    },
+    "prefer-rest-params": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ]
+      ]
+    },
+    "react-hooks/exhaustive-deps": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ]
+      ]
+    },
+    "react-hooks/globals": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "react-hooks/immutability": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ]
+      ]
+    },
+    "react-hooks/no-deriving-state-in-effects": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ]
+      ]
+    },
+    "react-hooks/preserve-manual-memoization": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "react-hooks/purity": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "react-hooks/refs": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-09",
+          "stage1/cohere/typeaware/claims/wave-09.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-13",
+          "stage1/cohere/typeaware/claims/wave-13.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-14",
+          "stage1/cohere/typeaware/claims/wave-14.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "react-hooks/set-state-in-effect": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "react-hooks/set-state-in-render": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "react-hooks/static-components": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ]
+      ]
+    },
+    "react-hooks/unsupported-syntax": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ]
+      ]
+    },
+    "react-hooks/use-memo": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ]
+      ]
+    },
+    "react/boolean-prop-naming": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-25",
+          "stage1/cohere/typeaware/claims/wave-25.md"
+        ]
+      ]
+    },
+    "react/button-has-type": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "react/checked-requires-onchange-or-readonly": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "react/display-name": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-02",
+          "stage1/cohere/typeaware/claims/wave-02.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-26",
+          "stage1/cohere/typeaware/claims/wave-26.md"
+        ]
+      ]
+    },
+    "react/forbid-elements": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ]
+      ]
+    },
+    "react/forbid-prop-types": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ]
+      ]
+    },
+    "react/iframe-missing-sandbox": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ]
+      ]
+    },
+    "react/jsx-fragments": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "react/jsx-no-constructed-context-values": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "react/jsx-no-undef": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-04",
+          "stage1/cohere/typeaware/claims/wave-04.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-12",
+          "stage1/cohere/typeaware/claims/wave-12.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-15",
+          "stage1/cohere/typeaware/claims/wave-15.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-16",
+          "stage1/cohere/typeaware/claims/wave-16.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-20",
+          "stage1/cohere/typeaware/claims/wave-20.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-23",
+          "stage1/cohere/typeaware/claims/wave-23.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-28",
+          "stage1/cohere/typeaware/claims/wave-28.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-29",
+          "stage1/cohere/typeaware/claims/wave-29.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-30",
+          "stage1/cohere/typeaware/claims/wave-30.md"
+        ]
+      ]
+    },
+    "react/no-adjacent-inline-elements": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-06",
+          "stage1/cohere/typeaware/claims/wave-06.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-07",
+          "stage1/cohere/typeaware/claims/wave-07.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "react/no-array-index-key": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ]
+      ]
+    },
+    "react/no-danger-with-children": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ]
+      ]
+    },
+    "react/no-multi-comp": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ]
+      ]
+    },
+    "react/no-namespace": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-11",
+          "stage1/cohere/typeaware/claims/wave-11.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ]
+      ]
+    },
+    "react/no-object-type-as-default-prop": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "react/no-unstable-nested-components": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "react/sort-default-props": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-22",
+          "stage1/cohere/typeaware/claims/wave-22.md"
+        ]
+      ]
+    },
+    "react/static-property-placement": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ]
+      ]
+    },
+    "react/style-prop-object": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-18",
+          "stage1/cohere/typeaware/claims/wave-18.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-21",
+          "stage1/cohere/typeaware/claims/wave-21.md"
+        ]
+      ]
+    },
+    "require-atomic-updates": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-17",
+          "stage1/cohere/typeaware/claims/wave-17.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ]
+      ]
+    },
+    "require-await": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ]
+      ]
+    },
+    "structure/react-hook-no-any-type": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ]
+      ]
+    },
+    "symbol-description": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-01",
+          "stage1/cohere/typeaware/claims/wave-01.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-03",
+          "stage1/cohere/typeaware/claims/wave-03.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-08",
+          "stage1/cohere/typeaware/claims/wave-08.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ]
+      ]
+    },
+    "valid-typeof": {
+      "ports": [],
+      "claims": [
+        [
+          "refs/remotes/origin/codex/typeaware-wave-05",
+          "stage1/cohere/typeaware/claims/wave-05.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-10",
+          "stage1/cohere/typeaware/claims/wave-10.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-19",
+          "stage1/cohere/typeaware/claims/wave-19.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-24",
+          "stage1/cohere/typeaware/claims/wave-24.md"
+        ],
+        [
+          "refs/remotes/origin/codex/typeaware-wave-27",
+          "stage1/cohere/typeaware/claims/wave-27.md"
+        ]
+      ]
+    }
+  }
+}
