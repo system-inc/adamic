@@ -1,0 +1,14 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { collapseIsValidNamedValue } from './collapse_valid_named_value.a';
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const json = new OptionsJson(line);
+    const root = json.parse();
+    if (root < 0) { panic(json.error); }
+    const value = json.node(root).text;
+    console.log(`${collapseIsValidNamedValue(value)}`);
+}
