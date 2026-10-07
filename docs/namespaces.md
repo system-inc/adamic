@@ -34,7 +34,7 @@ runtime declarations in the survey, including nested ones. An eleventh,
 | Debug | debug.ts:113 | 75 functions, mutable exported logging/debug state, private caches, a class, and nested log. Live state is covered; initializer calls, its class, overloads and runtime merging remain. |
 | Debug.log | debug.ts:137 | Four functions merged into the callable `log`; needs a callable object whose attached properties keep identity and ownership. |
 | BinaryExpressionState | factory/utilities.ts:1273 | Nine functions, seven exported, coexisting with a generic callable type alias. Its namespace structure fits the subset. |
-| Parser | parser.ts:1437 | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage and enum scopes are covered; initializer calls, non-flat destructuring and overloads remain. |
+| Parser | parser.ts:1437 | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage, enum scopes and flat factory var binding structure are covered; initializer calls, binding value types and overloads remain. |
 | Parser.JSDocParser | parser.ts:8790 | Six functions and two enums; its isolated namespace declaration structure now lowers. Surrounding parser state and function bodies remain independent obligations. |
 | IncrementalParser | parser.ts:9946 | 13 functions, an interface and an enum; its enum scope is covered; two overload signatures and function bodies remain. |
 | tracingEnabled | tracing.ts:37 | 12 functions, nine variable statements and an enum; private mutable tracing state and namespace-object escape through `tracing = tracingEnabled`. Needs a real runtime object, not just qualification. |
@@ -316,3 +316,16 @@ with its source location, so census consumers can locate it.
 The factory oracle compares both callable bindings with Node; a same-signature
 wrong-method mutant is caught by stdout. Replacing the structured diagnostic
 with an ordinary error is caught by its location regression.
+
+## Remaining original bodies after the current-main merge
+
+The fresh twelve-slice matrix remains five Compiles, five NotYet and two Refused.
+BuilderState canReuseOldState and Debug.log also need the boolean-only operator
+decision; JsxNames and ReactNames need a primitive-brand construction decision.
+Tracing still requires a canonical runtime container with alias-write semantics;
+a snapshot plus flattened calls can disagree with Node. The two original
+Refused fixtures were left unchanged. BinaryExpressionState appears overly
+strict for alpha-equivalent generic binders; IncrementalParser is required by
+the current exhaustive-switch policy, though its post-switch return is sound.
+The [exact programs, diagnostics, Node outputs and narrow acceptance judgments](../stage3/namespaces/DECISIONS.md)
+are recorded for integration review. No language decision was made here.
