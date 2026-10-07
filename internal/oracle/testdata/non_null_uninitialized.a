@@ -1,5 +1,5 @@
 function run(): void {
-    let value: number = undefined!;
+    let value!: number;
     console.log('before');
     console.log(`${value}`);
 }
