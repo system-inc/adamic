@@ -112,7 +112,7 @@ func firstLaneDifference(want, got []byte) string {
 }
 
 // The comparison uses the same C and Node runners on a real fixture with one changed byte.
-// GCC builds the changed fixture with the same nonfatal warning policy as the lane.
+// Opted-in runs use GCC; ordinary gates keep the existing clang prerequisite.
 func TestGCCLaneComparisonCatchesMutants(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "dedication/dedication.a"))
@@ -125,7 +125,10 @@ func TestGCCLaneComparisonCatchesMutants(t *testing.T) {
 	}
 	program.Strings[0] += "!"
 	binary := filepath.Join(t.TempDir(), "mutant")
-	options := native.Options{Compiler: "gcc"}
+	options := native.Options{Compiler: "clang"}
+	if os.Getenv("ADAMIC_GCC_LANE") == "1" {
+		options.Compiler = "gcc"
+	}
 	library, err := gccLaneRuntime(t, options)
 	if err != nil {
 		t.Fatal(err)
@@ -181,7 +184,7 @@ func gccLaneRecord(t *testing.T, name string, value any) {
 func gccLaneCommand(t *testing.T, name string, arguments ...string) error {
 	t.Helper()
 	output, err := exec.Command(name, arguments...).CombinedOutput()
-	gccLaneRecord(t, filepath.Base(arguments[len(arguments)-1])+".diagnostics.json", map[string]any{"command": append([]string{name}, arguments...), "output": string(output)})
+	gccLaneRecord(t, name+"-"+filepath.Base(arguments[len(arguments)-1])+".diagnostics.json", map[string]any{"command": append([]string{name}, arguments...), "output": string(output)})
 	if len(output) != 0 {
 		t.Logf("compiler diagnostics: %s", output)
 	}
