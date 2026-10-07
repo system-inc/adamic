@@ -162,3 +162,21 @@ listener kinds, and handed-node visitors. The shared model ab70f38d4 is on
 origin/lint-rules/harness and is not yet on main; shared files stay untouched.
 Go regexes will use JS RegExp literals, with the shared translation row when
 available; no hand-rolled regex matcher is authorized.
+
+## Seventh batch implementation status
+
+react/no-object-type-as-default-prop and react/sort-default-props are ported
+as numeric .a listeners. react/no-unstable-nested-components has its default
+behavior and allowAsProps ported; custom propNamePattern translation is staged
+in options.a with the required new RegExp(source, 'u') constructor. Native
+stage 0 refuses that nonconstant pattern, so configured patterns remain blocked.
+Its owned gaps/dynamic-pattern.a records the refusal. No regex matcher fallback
+is present. Source Node and Go agree on the configured-pattern controls.
+
+The shared JSX/parser integration remains pending. As with the sixth batch,
+validation uses the published native JSX parser a8a62d62c in an isolated source
+tree. The current main parser refuses constructor escape before fields are set.
+Landing checks on main b8fb957aa pass for all eighteen implemented rules:
+controls, mutants, both frozen corpora and sanitizer checks. The raw Unicode
+question and its released-handle controls also pass. The three older React
+graph claims remain parked. No further claim is made.

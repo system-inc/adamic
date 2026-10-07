@@ -1,0 +1,53 @@
+package typeaware
+
+import (
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// Not parallel: process timings and sanitizer builds share the machine.
+func TestWave22LandingCompilerCorpus(t *testing.T) {
+	repository, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := os.Getenv("ADAMIC_WAVE22_LANDING_ARTIFACTS")
+	if directory == "" {
+		directory = t.TempDir()
+	}
+	if err := os.MkdirAll(directory, 0755); err != nil {
+		t.Fatal(err)
+	}
+	h := &harness{t: t, repository: repository, directory: directory}
+	stage0 := filepath.Join(directory, "adamic")
+	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	archive := h.archive("checker", "", false)
+	sanitized := h.archive("checker-asan", "", true)
+	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if corpus == "" {
+		t.Fatal("ADAMIC_TYPESCRIPT_SOURCE must name the frozen corpus")
+	}
+	data, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/validation-coverage/compiler.manifest"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var paths []string
+	for _, p := range strings.Split(string(data), "\n") {
+		if p != "" {
+			paths = append(paths, filepath.Join(corpus, p))
+		}
+	}
+	listing := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
+	config := filepath.Join(corpus, "src/compiler/tsconfig.json")
+	for _, batch := range []struct{ name, entry, oracle string }{{"original", "wave_22_suite.a", "oracle_wave_22.go"}, {"next", "wave_22_next_suite.a", "oracle_wave_22_next.go"}, {"third", "wave_22_third_suite.a", "oracle_wave_22_third.go"}, {"fourth", "wave_22_fourth_suite.a", "oracle_wave_22_fourth.go"}} {
+		entry := filepath.Join(repository, "stage1/cohere/typeaware", batch.entry)
+		native := h.build(stage0, batch.name, entry, archive, false)
+		asan := h.build(stage0, batch.name+"-asan", entry, sanitized, true)
+		oracle := volumeOracle(h, batch.name+"-oracle", batch.oracle)
+		h.compare(batch.name+"-compiler", oracle, native, config, listing)
+		h.compare(batch.name+"-compiler-asan", oracle, asan, config, listing)
+	}
+}
