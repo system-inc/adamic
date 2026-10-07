@@ -113,7 +113,7 @@ func (l *lowering) checkedStringCall(where *ast.Node, call ir.StringCall) ir.Exp
 		// two UTF-16 units per point also bounds supplementary decompositions.
 		text, constant := call.Value.(ir.StringConstant)
 		if !constant || len(l.result.Strings[text.Index]) > 536870888/36 {
-			l.result.Functions[guarded.(ir.Call).Function].LibraryGuarded = false
+			l.result.Functions[l.result.CallTargets(guarded.(ir.Call))[0]].LibraryGuarded = false
 		}
 	}
 	return guarded

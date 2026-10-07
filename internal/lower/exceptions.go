@@ -202,13 +202,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if l.result.CallMayThrow(node) {
 				found = true
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
-			// A call through a function value, written out or made by the runtime's loop.
-			if l.result.ClosuresMayThrow {
-				found = true
-			}
-		case ir.ArraySort:
-			if (node.Callback != nil && l.result.ClosuresMayThrow) || (node.Callback == nil && l.result.Functions[node.Comparator].MayThrow) {
+		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
+			if l.result.ClosureMayThrow(node.(ir.Expression)) {
 				found = true
 			}
 		}
@@ -222,7 +217,24 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 // can't fail, or returns "".
 func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]bool) string {
 	failing := ""
-	callsClosures := false
+	visitTargets := func(targets ir.FunctionTargets) {
+		if targets.Unknown {
+			// Unknown means anything, including methods and named functions made
+			// into values. Function order keeps the diagnostic deterministic.
+			for target := range l.result.Functions {
+				targets.Functions = append(targets.Functions, target)
+			}
+		}
+		for _, target := range targets.Functions {
+			if !visited[target] && !l.result.Functions[target].LibraryGuarded {
+				visited[target] = true
+				failing = l.libraryFailure(l.result.Functions[target].Body, visited)
+				if failing != "" {
+					return
+				}
+			}
+		}
+	}
 	walk(statements, func(node any) bool {
 		switch node := node.(type) {
 		case ir.Call:
@@ -235,15 +247,8 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 					}
 				}
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
-			callsClosures = true
-		case ir.ArraySort:
-			if node.Callback != nil {
-				callsClosures = true
-			} else if !visited[node.Comparator] {
-				visited[node.Comparator] = true
-				failing = l.libraryFailure(l.result.Functions[node.Comparator].Body, visited)
-			}
+		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach, ir.ArraySort:
+			visitTargets(l.result.ClosureTargets(node.(ir.Expression)))
 		case ir.SetProperty:
 			if l.objectCanFreeze() {
 				failing = "a write to a potentially frozen object"
@@ -300,36 +305,13 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				failing = "new Array(length)"
 			}
 		case ir.ArrayFrom:
-			callsClosures = true
+			visitTargets(l.result.ClosureTargets(node))
 			if !constantWithin(node.Length, math.Inf(-1), 4294967295) {
 				failing = "Array.from({ length })"
 			}
 		}
 		return failing == ""
 	})
-	if failing == "" && callsClosures {
-		// Function values also include class methods reached through interfaces.
-		// Use the same conservative targets as exception propagation, not only
-		// closure records, or an unguarded method failure can bypass refusal.
-		targets := map[int]bool{}
-		for _, closure := range l.closureRecords {
-			targets[closure.function] = true
-		}
-		for _, instance := range l.instances {
-			for _, method := range instance.methodList() {
-				targets[method.Function] = true
-			}
-		}
-		// Function order keeps the first diagnostic deterministic.
-		for target, function := range l.result.Functions {
-			if targets[target] && !visited[target] && !function.LibraryGuarded {
-				visited[target] = true
-				if failing = l.libraryFailure(function.Body, visited); failing != "" {
-					break
-				}
-			}
-		}
-	}
 	return failing
 }
 

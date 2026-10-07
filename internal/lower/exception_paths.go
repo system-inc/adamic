@@ -154,8 +154,8 @@ func (l *lowering) refineExceptionPaths() {
 				return reflect.ValueOf(node)
 			}
 			if node, ok := value.Interface().(ir.Evaluate); ok {
-				if call, ok := node.Value.(ir.Call); ok && call.Virtual == 0 && program.Functions[call.Function].Name == "error_set_property" && facts[presenceKey(call.Arguments[0])]&1 != 0 {
-					write := program.Functions[call.Function].Body[1].(ir.SetProperty)
+				if call, ok := node.Value.(ir.Call); ok && call.Virtual == 0 && program.Functions[program.CallTargets(call)[0]].Name == "error_set_property" && facts[presenceKey(call.Arguments[0])]&1 != 0 {
+					write := program.Functions[program.CallTargets(call)[0]].Body[1].(ir.SetProperty)
 					write.Object = transform(reflect.ValueOf(call.Arguments[0]), facts).Interface().(ir.Expression)
 					write.Value = transform(reflect.ValueOf(call.Arguments[1]), facts).Interface().(ir.Expression)
 					clear(facts)
@@ -190,7 +190,7 @@ func (l *lowering) refineExceptionPaths() {
 			node := result.Interface()
 			switch typed := node.(type) {
 			case ir.Call:
-				function := program.Functions[typed.Function]
+				function := program.Functions[program.CallTargets(typed)[0]]
 				if typed.Virtual == 0 && function.Name == "error_defined" {
 					guard := function.Body[0].(ir.If)
 					bit := 1

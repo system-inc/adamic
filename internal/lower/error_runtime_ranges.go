@@ -21,15 +21,6 @@ func (l *lowering) guardRuntimeRanges() {
 	instance := l.errorInstance("RangeError")
 	l.finishClassCalls()
 	stackFailure := ir.ObjectLiteral{Class: instance.class, Methods: instance.methodList(), Fields: []ir.Field{{Name: "name", Value: ir.StringConstant{Index: l.constant("RangeError")}}, {Name: "message", Value: ir.StringConstant{Index: l.constant("Maximum call stack size exceeded")}}, {Name: "cause", Value: ir.Undefined{Of: ir.Union}}}}
-	candidates := map[int]bool{}
-	for _, closure := range l.closureRecords {
-		candidates[closure.function] = true
-	}
-	for _, instance := range l.instances {
-		for _, method := range instance.methodList() {
-			candidates[method.Function] = true
-		}
-	}
 	targets := func(body []ir.Statement) []int {
 		found := map[int]bool{}
 		walk(body, func(node any) bool {
@@ -41,24 +32,27 @@ func (l *lowering) guardRuntimeRanges() {
 			case ir.Read:
 				if node.Checked {
 					if error, ok := p.ReadyErrors[node.Local]; ok {
-						found[error.Function] = true
+						for _, target := range p.CallTargets(error) {
+							found[target] = true
+						}
 					}
 				}
 			case ir.Assign:
 				if node.Checked {
 					if error, ok := p.ReadyErrors[node.Local]; ok {
-						found[error.Function] = true
+						for _, target := range p.CallTargets(error) {
+							found[target] = true
+						}
 					}
 				}
-			case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
-				for target := range candidates {
-					found[target] = true
-				}
-			case ir.ArraySort:
-				if node.Callback == nil {
-					found[node.Comparator] = true
+			case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
+				targets := p.ClosureTargets(node.(ir.Expression))
+				if targets.Unknown {
+					for target := range p.Functions {
+						found[target] = true
+					}
 				} else {
-					for target := range candidates {
+					for _, target := range targets.Functions {
 						found[target] = true
 					}
 				}
@@ -290,21 +284,6 @@ func (l *lowering) stringLengthBounds(additional ...ir.Field) func(ir.Expression
 		used[index] = true
 		visitBody(p.Functions[index].Body)
 	}
-	visitValues := func() {
-		for index, function := range p.Functions {
-			if function.Closure {
-				visitFunction(index)
-			}
-		}
-		for _, closure := range l.closureRecords {
-			visitFunction(closure.function)
-		}
-		for _, instance := range l.instances {
-			for _, method := range instance.methodList() {
-				visitFunction(method.Function)
-			}
-		}
-	}
 	visitBody = func(body []ir.Statement) {
 		walk(body, func(node any) bool {
 			switch node := node.(type) {
@@ -312,13 +291,16 @@ func (l *lowering) stringLengthBounds(additional ...ir.Field) func(ir.Expression
 				for _, target := range p.CallTargets(node) {
 					visitFunction(target)
 				}
-			case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
-				visitValues()
-			case ir.ArraySort:
-				if node.Callback == nil {
-					visitFunction(node.Comparator)
+			case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
+				targets := p.ClosureTargets(node.(ir.Expression))
+				if targets.Unknown {
+					for target := range p.Functions {
+						visitFunction(target)
+					}
 				} else {
-					visitValues()
+					for _, target := range targets.Functions {
+						visitFunction(target)
+					}
 				}
 			}
 			return true
@@ -326,7 +308,9 @@ func (l *lowering) stringLengthBounds(additional ...ir.Field) func(ir.Expression
 	}
 	visitBody(p.Main)
 	for _, error := range p.ReadyErrors {
-		visitFunction(error.Function)
+		for _, target := range p.CallTargets(error) {
+			visitFunction(target)
+		}
 		walk(error, note)
 	}
 	walk(p.Main, note)

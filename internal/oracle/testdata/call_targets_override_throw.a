@@ -1,0 +1,20 @@
+class Base {
+	value(): number { return 7; }
+}
+class Override extends Base {
+	value(): number { throw new Error('override'); }
+}
+class Grandchild extends Override {}
+function attempt(base: Base): void {
+	try {
+		console.log('before');
+		console.log(`${base.value()}`);
+		console.log('missed catch');
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`caught ${error.message}`);
+		}
+	}
+}
+attempt(new Grandchild());
+console.log('after');

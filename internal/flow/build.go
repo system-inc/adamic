@@ -458,14 +458,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true
 				}
-			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
-				// A call through a function value, written out or made by the runtime's loop.
-				if program.ClosuresMayThrow {
-					throws = true
-				}
-			case arraySortType:
-				sort := value.Interface().(ir.ArraySort)
-				if (sort.Callback != nil && program.ClosuresMayThrow) || (sort.Callback == nil && program.Functions[sort.Comparator].MayThrow) {
+			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType, arraySortType:
+				if program.ClosureMayThrow(value.Interface().(ir.Expression)) {
 					throws = true
 				}
 			}

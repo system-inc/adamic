@@ -42,7 +42,7 @@ console.log(forward(undefined));
 		if call, ok := node.(ir.Call); ok {
 			calls++
 			if program.CallMayThrow(call) {
-				t.Errorf("call to %s cannot throw", program.Functions[call.Function].Name)
+				t.Errorf("call to %s cannot throw", program.Functions[program.CallTargets(call)[0]].Name)
 			}
 		}
 		return true

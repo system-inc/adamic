@@ -148,10 +148,10 @@ func (l *lowering) refineExceptionBounds() {
 	}
 	simplify := func(node any) any {
 		call, ok := node.(ir.Call)
-		if !ok || call.Virtual != 0 || program.Functions[call.Function].Name != "error_checked_library" {
+		if !ok || call.Virtual != 0 || program.Functions[program.CallTargets(call)[0]].Name != "error_checked_library" {
 			return node
 		}
-		function := program.Functions[call.Function]
+		function := program.Functions[program.CallTargets(call)[0]]
 		operation := function.Body[1].(ir.Return).Value
 		operation = rewriteChecks(operation, func(node any) any {
 			if read, ok := node.(ir.Read); ok {

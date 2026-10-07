@@ -13,21 +13,12 @@ import (
 func (l *lowering) preciseChecks() {
 	program := l.result
 	entries := make([]map[int]bool, len(program.Functions))
-	dynamic := map[int]bool{}
-	for _, instance := range l.instances {
-		for _, method := range instance.methodList() {
-			dynamic[method.Function] = true
-		}
-	}
-	for index, function := range program.Functions {
+	for index := range program.Functions {
 		entries[index] = map[int]bool{}
 		for local, declaration := range program.Locals {
 			if declaration.Global {
 				entries[index][local] = true
 			}
-		}
-		if function.Closure {
-			dynamic[index] = true
 		}
 	}
 	for changed := true; changed; {
@@ -48,15 +39,14 @@ func (l *lowering) preciseChecks() {
 					for _, target := range program.CallTargets(node) {
 						call(target, ready)
 					}
-				case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
-					for target := range dynamic {
-						call(target, ready)
-					}
-				case ir.ArraySort:
-					if node.Callback == nil {
-						call(node.Comparator, ready)
+				case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
+					targets := program.ClosureTargets(node.(ir.Expression))
+					if targets.Unknown {
+						for target := range program.Functions {
+							call(target, ready)
+						}
 					} else {
-						for target := range dynamic {
+						for _, target := range targets.Functions {
 							call(target, ready)
 						}
 					}
@@ -151,22 +141,22 @@ func (l *lowering) preciseChecks() {
 	}
 	simplify := func(node any) any {
 		if evaluation, ok := node.(ir.Evaluate); ok {
-			if call, ok := evaluation.Value.(ir.Call); ok && call.Virtual == 0 && program.Functions[call.Function].Name == "error_set_property" && stable(call.Arguments[0]) {
-				write := program.Functions[call.Function].Body[1].(ir.SetProperty)
+			if call, ok := evaluation.Value.(ir.Call); ok && call.Virtual == 0 && program.Functions[program.CallTargets(call)[0]].Name == "error_set_property" && stable(call.Arguments[0]) {
+				write := program.Functions[program.CallTargets(call)[0]].Body[1].(ir.SetProperty)
 				write.Object, write.Value = call.Arguments[0], call.Arguments[1]
 				return write
 			}
 		}
 
 		call, ok := node.(ir.Call)
-		if !ok || call.Virtual != 0 || program.Functions[call.Function].Name != "error_defined" {
+		if !ok || call.Virtual != 0 || program.Functions[program.CallTargets(call)[0]].Name != "error_defined" {
 			return node
 		}
 		value := call.Arguments[0]
 		if !stable(value) {
 			return node
 		}
-		guard := program.Functions[call.Function].Body[0].(ir.If)
+		guard := program.Functions[program.CallTargets(call)[0]].Body[0].(ir.If)
 		failure := guard.Then[0].(ir.Throw).Value.(ir.Call)
 		message := program.Strings[failure.Arguments[0].(ir.StringConstant).Index]
 		_, null := guard.Condition.(ir.IsNull)
