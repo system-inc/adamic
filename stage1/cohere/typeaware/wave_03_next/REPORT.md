@@ -1,5 +1,5 @@
 Built: three further claimed Nexus rules in native Adamic .a files, with five isolated raw bridge questions.
-Commits: claim 83bfce4b; implementation and validation commits recorded after the final run.
+Commits: claim 83bfce4b; implementation and evidence aee9b9d0f2480d0adf663f9fa3a4b6cdfafd50b5; this report update follows.
 Commands and outputs: comparison PASS 191.808s; all 364 frozen corpus roots and 106 control roots match; sanitizer, released-handle, checker, vet and filtered Node checks pass.
 Mutants: race/output/blocking build and exit 0 with empty stderr, caught only at bytes 15225/56/8652; retained released handle caught by panic expectation; Node one-byte mutant caught.
 Not covered: shared harness registration and emitted JavaScript comparison; the unadapted production CLI cannot reparse .a files.
