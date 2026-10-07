@@ -91,3 +91,27 @@ The script records native binary bytes and attempts `perf stat -e instructions`
 when perf is installed, retaining access failures rather than inventing counts.
 Compilation failure produces no native timing, binary size, or native-output
 mutant claim.
+
+## Split compilation
+
+The integration requires area/developer-tools. Run the scanner proof with
+`ADAMIC_NATIVE_SPLIT=0`, and separately with
+`ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=$(nproc)`. Both binaries must match
+Node byte for byte. Source emission and build timing happen only after the
+checker/lowering gates pass; failed emission has no generated-C size.
+
+To measure the emitted C without including TypeScript checking/lowering, run
+`adamic c OUTPUT/main.a > scanner.c 2> emission.log` using the integrated
+compiler. From that compiler checkout, run:
+
+```sh
+go run stage3/drivers/scanner/build-metrics.go scanner.c NEW_METRICS_DIRECTORY 5 > build-metrics.log 2>&1
+```
+
+Pass nproc instead of 5 on another box. The helper is ignored by ordinary Go
+package builds and needs the integrated native.Options Split/Jobs API. It
+records C bytes/lines, release flags, binary sizes, and wall time for unsplit,
+cold-object-cache split and warm-object-cache split builds. Runtime preparation
+is measured separately and excluded from those build times; split preprocessing,
+cache checks and linking remain included. Run and compare all three measured
+binaries on the same files.json corpus before using their timings as a proof.

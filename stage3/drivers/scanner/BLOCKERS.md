@@ -1,5 +1,36 @@
 # Scanner blockers
 
+## October 7: developer-tools split compile on and off
+
+Merged area/developer-tools 2adf65c2 without conflicts into scratch 64d47034,
+retaining the previous front-2/records/library integration. Rebuilt compiler
+successfully. nproc is **5**. Tried the unchanged scanner slice with
+ADAMIC_NATIVE_SPLIT=0 and with ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=5.
+Both stop at the same Error-as-any refusal in debug.ts:14:14. Both Node
+streams contain 509,014 tokens and match the full-tree oracle (empty diff).
+
+`adamic c` refuses at the same location before writing C (stdout 0 bytes).
+Therefore no scanner generated-C byte/line count, clang wall time (unsplit,
+split cold or warm), or binary size is available. Zero stdout is a failed
+emission, not a zero-sized generated program; clang is not reached.
+
+Added build-metrics.go, explicitly run inside the integrated compiler checkout
+(`go run stage3/drivers/scanner/build-metrics.go GENERATED_C NEW_OUTPUT 5`).
+It prewarms the release runtime, then times native.Build unsplit, split with
+cold object cache, and split with warm object cache. The new private cache
+keeps cold/warm observations separate from unrelated programs. Its wall scope
+follows CLANG_UNITS.md: splitting, preprocessing, cache checks, clang compilation
+and linking; C generation and Go startup are excluded. This includes API
+bookkeeping rather than pretending to report pure optimizer phase time.
+
+Validated the helper on the unchanged admitted MapLike probe only. All three
+binaries print `ok`, byte-identical to Node; a one-byte mutation of warm-split
+native output is caught (diff exit 1). These control measurements do not stand
+in for scanner measurements. Raw numbers and scope are in
+evidence/split-control-metrics.json. No compiler change or scratch merge was
+pushed. Evidence: split-run.json and split-*.log/.diff.
+
+
 ## October 7: records closes MapLike, next real gate is Error's any cast
 
 Scratch 06b7f7b3 contains newest area/stage3 4ad53a4, front-2 860a0d5
