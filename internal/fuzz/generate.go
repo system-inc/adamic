@@ -782,15 +782,17 @@ func (g *generator) number(depth int) *Expression {
 		if !g.allowed("array-methods") {
 			return g.leaf(Number)
 		}
+		// The test says it returns boolean: inside if (flag), a flag the checker knows is false is never,
+		// and an arrow returning it would return never, which stage 0 doesn't lower.
 		item := g.name("item")
 		g.push()
 		g.declare(item, Number, false)
 		test := g.expression(Boolean, next)
 		g.pop()
 		if g.chance(1, 2) {
-			return compose(Number, "@e.findIndex(("+item+") => @e)", g.expression(NumberArray, next), test)
+			return compose(Number, "@e.findIndex(("+item+"): boolean => @e)", g.expression(NumberArray, next), test)
 		}
-		return compose(Number, "(@e.find(("+item+") => @e) ?? @e)", g.expression(NumberArray, next), test, g.literal(Number))
+		return compose(Number, "(@e.find(("+item+"): boolean => @e) ?? @e)", g.expression(NumberArray, next), test, g.literal(Number))
 	case 19:
 		if !g.allowed("array-index") {
 			return g.leaf(Number)
@@ -928,9 +930,9 @@ func (g *generator) boolean(depth int) *Expression {
 		}
 		return compose(Boolean, "(@e "+g.pick("<", ">=", "===", "!==")+" @e)", left, right)
 	case 5:
-		return compose(Boolean, "(@e "+g.pick("&&", "||")+" @e)", g.expression(Boolean, next), g.expression(Boolean, next))
+		return compose(Boolean, "(@e "+g.pick("&&", "||")+" @e)", g.operand(next), g.operand(next))
 	case 6:
-		return compose(Boolean, "!@e", g.expression(Boolean, next))
+		return compose(Boolean, "!@e", g.operand(next))
 	case 7:
 		if !g.allowed("array-search") {
 			return g.leaf(Boolean)
@@ -969,6 +971,18 @@ func (g *generator) boolean(depth int) *Expression {
 	return g.leaf(Boolean)
 }
 
+// operand is a side of && or ||, or what ! negates, never true or false written out. The checker
+// reads those through the operators when the expression is a condition, so (false || true) as an
+// if's condition makes its else unreachable, and the statement after if (!true && flag) return too.
+// In unreachable code a narrowing does nothing: chain !== undefined leaves chain possibly undefined.
+func (g *generator) operand(depth int) *Expression {
+	operand := g.expression(Boolean, depth)
+	if isLiteral(operand) {
+		return compose(Boolean, "(holder.value "+g.pick("<", ">=")+" @e)", g.literal(Number))
+	}
+	return operand
+}
+
 // leafVariable is a variable of a type in place of a literal, or the literal parenthesized into an
 // expression the checker can't see through when there's no variable.
 func (g *generator) leafVariable(t Type, fallback *Expression) *Expression {
@@ -999,12 +1013,13 @@ func (g *generator) numberArray(depth int) *Expression {
 		if !g.allowed("array-methods") {
 			return g.leaf(NumberArray)
 		}
+		// Annotated for the reason find's test is.
 		item := g.name("item")
 		g.push()
 		g.declare(item, Number, false)
 		test := g.expression(Boolean, next)
 		g.pop()
-		return compose(NumberArray, "@e.filter(("+item+") => @e)", g.expression(NumberArray, next), test)
+		return compose(NumberArray, "@e.filter(("+item+"): boolean => @e)", g.expression(NumberArray, next), test)
 	case 4:
 		if !g.allowed("array-spread") {
 			return g.leaf(NumberArray)
@@ -1155,7 +1170,12 @@ func (g *generator) regexStatement() *Statement {
 	case 0:
 		return statement("console.log(@e);", compose(String, "@e.replace("+g.pick("/a/g", "/(a)/g", "/a/i")+", "+g.pick("'[$&]'", "'$1'", "'$$'", "'-'")+")", g.bounded(g.expression(String, 2))))
 	case 1:
-		return statement("console.log(@e);", compose(String, "@e.replaceAll(/a/g, '$&$`')", g.bounded(g.expression(String, 2))))
+		// The overrides scene's try reaches every function and closure, and stage 0 doesn't lower a try
+		// that can reach replaceAll with a regular expression, so with that scene it's top-level only.
+		if topLevel := g.returns == "" && g.inClosure == 0; topLevel || !g.allowed("overrides") {
+			return statement("console.log(@e);", compose(String, "@e.replaceAll(/a/g, '$&$`')", g.bounded(g.expression(String, 2))))
+		}
+		return statement("console.log(@e);", compose(String, "@e.replace(/a/g, '$&$`')", g.bounded(g.expression(String, 2))))
 	case 2:
 		return statement("console.log(@e);", compose(String, "@e.split("+g.pick("/a/", "/(?:)/", "/,/")+").join('|')", g.bounded(g.expression(String, 2))))
 	case 3:
