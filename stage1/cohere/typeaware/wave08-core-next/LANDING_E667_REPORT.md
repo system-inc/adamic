@@ -2,7 +2,7 @@ Built: merged current lint area e667e3e1d into wave 08, retaining current main 7
 Commits: tested combined tip a358a88d40d3a3d7f618e1e4ca363bdfd6fbf29e; this report accompanies its evidence commit.
 Checks: core 264/264 normal/sanitized and shared multi-edit, path, suggestion, witness and node-table comparisons pass.
 Mutants: all ten unchanged completed-rule mutants remain held by preceding Go-byte evidence; registry rejection mutants pass again.
-Uncovered: six other fresh owned-profile reruns, new rule mutants/timings, shared typed integration, two HIR rules and full gate.
+Uncovered: seven other fresh owned-rule reruns, new rule mutants/timings, shared typed integration, two HIR rules and full gate.
 
 Previous published tip was 9381c8ee9afb5cc2e5e88e5c763051d858d52f6f. Current
 origin/area/stage1-lint is e667e3e1dbdfd1b9125c3256961bfbc8ec31946b; current
