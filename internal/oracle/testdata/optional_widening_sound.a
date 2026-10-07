@@ -1,0 +1,22 @@
+interface Reading {
+	name: string;
+	extra?: string;
+}
+function show(value: Reading): string {
+	return `${value.name} ${value.extra ?? 'none'}`;
+}
+const declared: Reading = { name: 'declared', extra: 'yes' };
+const compatible: Reading = declared;
+console.log(show(compatible));
+const omitted: Reading = { name: 'fresh' };
+console.log(show(omitted));
+const alias = { name: 'alias' };
+const viewed: Reading = alias;
+console.log(show(viewed));
+const readonlySource: { readonly name: string; readonly extra?: 'yes' } = { name: 'readonly', extra: 'yes' };
+const readonlyView: { readonly name: string; readonly extra?: string } = readonlySource;
+console.log(`${readonlyView.name} ${readonlyView.extra ?? 'none'}`);
+const hidden: { name: string; extra: number } = { name: 'copy', extra: 1 };
+const narrow: { name: string } = hidden;
+const copy: Reading = { name: narrow.name };
+console.log(show(copy));
