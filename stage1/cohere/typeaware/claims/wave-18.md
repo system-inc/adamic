@@ -273,3 +273,16 @@ uncached Node and vet pass. No selected test skipped; full gate and external
 correctness checks not run. Four named analysis claims stay parked. Audit
 of 542 origin heads finds no unclaimed ranked rules; no new claim made. See
 wave_18_component_props/LANDING_READY_REPORT.md and validation-ready.
+
+## Corrected landing on actual main 4e0bfda50
+
+The preceding bb2ece564 section incorrectly stated that the area included
+main 4e0bfda50. Its tests covered the area-based tree. This turn rebased
+onto actual main, retained the area ancestry with a no-content merge and
+explicitly required both ancestry checks to pass. Tested 199d55a5: five
+suites pass in 513.179s, React in 606.632s; freshly rebuilt standalone groups,
+sanitizers, released handles, mutants, parked reporters, bridge, registry,
+seven shared harness tests, uncached Node and vet pass. No selected test
+skipped; full gate and external checks not run. Four analysis claims stay
+parked; 566-head audit finds no unclaimed ranked rules. No new claim. See
+wave_18_component_props/LANDING_MAIN_REPORT.md and validation-main.

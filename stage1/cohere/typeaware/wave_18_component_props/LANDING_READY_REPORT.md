@@ -4,6 +4,9 @@ Checks: five owned suites pass in 441.360s, React in 540.639s; standalone groups
 Mutants: 29 Go-byte mutations, six stale-registry checks, three removed-refusal checks, parser-count, Node one-byte, emitted-JavaScript mismatch and ignored decoded-option mutation were caught.
 Not covered: four HIR/SSA/capture claims parked; full gate and its 17 external correctness checks unrun; full shared native JSX rule integration not claimed; zero unclaimed ranked rules.
 
+
+The prior report's main ancestry statement is corrected in LANDING_MAIN_REPORT.md. Its validated tree included the lint area but did not include main 4e0bfda50; the recorded test observations remain valid for that prior tree. Actual main is now rebased and separately revalidated.
+
 Main landed the previous lint/runtime area. The latest area adds configured witness-sidecar handling and its regression data/tests. Rebased cleanly onto that area. No protected compiler, shared generator or shared harness file was edited; incoming shared changes were retained. Only this owned report, evidence and claim status were added. No push to main or any area branch was attempted.
 
 Setup: bash cloud/setup.sh succeeded. Go/clang/Node/submodules ready in 0s each, cache warm in 141s, total 141s. nproc=5, CPU quota=4, memory=17.6 GB. Go 1.27.1, clang 20.1.8, Node 24.19.0. All test shells sourced /workspace/adamic-tools/env.sh. Disk remained ample, about 18 GB free; no cache clearing or build recovery was needed this turn.
