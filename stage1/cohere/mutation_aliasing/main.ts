@@ -1,4 +1,4 @@
-/* eslint-disable max-classes-per-file, nexus/correctness-no-caller-data-mutation -- The driver holds its IR's classes, and its adapter writes the function, blocks and places a pass hands it, as GraphInterface asks. */
+/* eslint-disable max-classes-per-file -- The driver holds its IR's classes, as the single assignment slice's does. */
 /*
  * The port's driver: it reads the cases file named by its one argument, builds each function it
  * describes on an IR of its own, runs the alias graph and the ranges on it, and prints what they made,
@@ -192,6 +192,7 @@ function visitAll(visits: OracleVisitInterface[], visit: PlaceVisitorType<Oracle
 function placeholderOf(fn: OracleFunction, block: OracleBlock): OracleBlock {
     const placeholder = new OracleBlock(block.id, 0);
     placeholder.predecessors = [...block.predecessors];
+    // eslint-disable-next-line nexus/correctness-no-caller-data-mutation -- placeholder: the adapter puts the placeholder in the function's table, as GraphInterface asks.
     fn.table.set(block.id, placeholder);
     return placeholder;
 }
@@ -242,11 +243,13 @@ const oracleGraph: GraphInterface<OracleFunction, OracleBlock, OraclePlaceInterf
     block: (fn, id) => fn.table.get(id),
     blocks: (fn) => fn.blocks,
     setBlocks: function(fn, blocks) {
+        // eslint-disable-next-line nexus/correctness-no-caller-data-mutation -- setBlocks writes the function's block array, as GraphInterface asks.
         fn.blocks = blocks;
     },
     retain: function(fn, keep) {
         for(const id of [...fn.table.keys()]) {
             if(!keep(id)) {
+                // eslint-disable-next-line nexus/correctness-no-caller-data-mutation -- retain forgets the blocks keep declines, as GraphInterface asks.
                 fn.table.delete(id);
             }
         }
@@ -255,10 +258,12 @@ const oracleGraph: GraphInterface<OracleFunction, OracleBlock, OraclePlaceInterf
     id: (block) => block.id,
     predecessors: (block) => block.predecessors,
     setPredecessors: function(block, predecessors) {
+        // eslint-disable-next-line nexus/correctness-no-caller-data-mutation -- setPredecessors writes the block's predecessors, as GraphInterface asks.
         block.predecessors = predecessors;
     },
     phis: (block) => block.phis,
     setPhis: function(block, phis) {
+        // eslint-disable-next-line nexus/correctness-no-caller-data-mutation -- setPhis writes the block's phis, as GraphInterface asks.
         block.phis = phis;
     },
     eachEdge: function(block, visit) {
@@ -280,11 +285,13 @@ const oracleGraph: GraphInterface<OracleFunction, OracleBlock, OraclePlaceInterf
         // The oracle IR's terminals hold no places.
     },
     setTerminalOrder: function(block, order) {
+        // eslint-disable-next-line nexus/correctness-no-caller-data-mutation -- setTerminalOrder writes the block's terminal order, as GraphInterface asks.
         block.terminalOrder = order;
     },
     params: (fn) => fn.params,
     returns: (fn) => fn.returns,
     setReturns: function(fn, place) {
+        // eslint-disable-next-line nexus/correctness-no-caller-data-mutation -- setReturns writes the function's returns place, as GraphInterface asks.
         fn.returns = place;
     },
     declaration: (_fn, id) => id,
