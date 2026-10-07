@@ -1,0 +1,59 @@
+{
+  "main": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+  "rebased_tip": "8a6ed0ee8e9f58f20702d7dfa403d23df0e94bcd",
+  "old_remote": "26d42f053df66ee63b3c6384fc88733f40c1ddca",
+  "next": {
+    "programs": 129,
+    "equal": 129,
+    "bytes": 120897,
+    "refusals": [],
+    "timing": {
+      "compiler": {
+        "native_median_seconds": 2.8916826360000414,
+        "go_median_seconds": 0.41317518899995775,
+        "ratio": 6.998684124763206
+      },
+      "repository": {
+        "native_median_seconds": 0.6154127850004443,
+        "go_median_seconds": 0.16847904899987043,
+        "ratio": 3.652755572005381
+      }
+    }
+  },
+  "more": {
+    "programs": 433,
+    "equal": 430,
+    "bytes": 162621,
+    "refusals": [
+      "53d1c0a9ffc2fefa",
+      "aff6ced2ca61fe89",
+      "defcb4c4ce6a2921"
+    ],
+    "timing": {
+      "compiler": {
+        "native_median_seconds": 3.3928537709998636,
+        "go_median_seconds": 0.4444569089992001,
+        "ratio": 7.63370689554512
+      },
+      "repository": {
+        "native_median_seconds": 0.44168346600054065,
+        "go_median_seconds": 0.11936036100087222,
+        "ratio": 3.7004199911670264
+      }
+    }
+  },
+  "original": {
+    "timing": {
+      "compiler": {
+        "native_median_seconds": 6.885544795999522,
+        "go_median_seconds": 2.1164922090010805,
+        "ratio": 3.2532814279761926
+      },
+      "repository": {
+        "native_median_seconds": 0.3856261730015831,
+        "go_median_seconds": 0.12610605699956068,
+        "ratio": 3.05795123705221
+      }
+    }
+  }
+}

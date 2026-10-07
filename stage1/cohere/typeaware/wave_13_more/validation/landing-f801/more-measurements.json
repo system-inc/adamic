@@ -1,0 +1,112 @@
+{
+  "rounds": [
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "native": {
+        "seconds": 3.250721987000361,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=337020864 query_ns=245291704 queries=189 first_query_ns=71093 run_ns=2870245371\n"
+      },
+      "go": {
+        "seconds": 0.4759627490002458,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=347986793 rule_ns=67701573 run_ns=100525046\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "go": {
+        "seconds": 0.44441247299982933,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=344405877 rule_ns=57871770 run_ns=87496251\n"
+      },
+      "native": {
+        "seconds": 3.7153189860000566,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=376991171 query_ns=262266018 queries=189 first_query_ns=32030 run_ns=3304720350\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "native": {
+        "seconds": 3.3928537709998636,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=378485245 query_ns=255279665 queries=189 first_query_ns=23643 run_ns=2980816755\n"
+      },
+      "go": {
+        "seconds": 0.4444569089992001,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=331767718 rule_ns=55732316 run_ns=90396156\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "native": {
+        "seconds": 0.4788960349997069,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=118870666 query_ns=16949617 queries=404 first_query_ns=25474 run_ns=353091744\n"
+      },
+      "go": {
+        "seconds": 0.11936036100087222,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=97942807 rule_ns=5735533 run_ns=13471757\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "go": {
+        "seconds": 0.12564147699958994,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=101779089 rule_ns=6599428 run_ns=14633086\n"
+      },
+      "native": {
+        "seconds": 0.43926786900010484,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=95147817 query_ns=18340839 queries=404 first_query_ns=15848 run_ns=337325588\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "native": {
+        "seconds": 0.44168346600054065,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=103294646 query_ns=13301256 queries=404 first_query_ns=19946 run_ns=331199209\n"
+      },
+      "go": {
+        "seconds": 0.10680323300039163,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=86740588 rule_ns=5152531 run_ns=11413113\n"
+      }
+    }
+  ],
+  "summary": {
+    "compiler": {
+      "native_median_seconds": 3.3928537709998636,
+      "go_median_seconds": 0.4444569089992001,
+      "ratio": 7.63370689554512
+    },
+    "repository": {
+      "native_median_seconds": 0.44168346600054065,
+      "go_median_seconds": 0.11936036100087222,
+      "ratio": 3.7004199911670264
+    }
+  }
+}
