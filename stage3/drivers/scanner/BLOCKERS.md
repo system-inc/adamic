@@ -1,5 +1,16 @@
 # Scanner blockers
 
+## October 7: debugger removed, function widening is next
+
+Temporary 54 removes only debugger from the reached Debug.fail member. Next:
+`debug.ts:13:67: Adamic 0.1 refuses a function taking string | undefined seen as one taking never[] (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)`.
+This is the `stackCrawlMark || fail` value passed to V8's captureStackTrace.
+Census reason: method-signature-style. No demonstrated closing feature branch.
+Removing this failure-stack-only registration is a scratch probe, not yet a
+validated adaptation. The scanner calls Debug.assert/assertEqual without any
+stack crawl mark or verbose callback; it never calls formatEnum. Successful
+tokenization does not exercise assertion failure stack formatting.
+
 ## October 7: import cycles closed, next refusal is debugger
 
 After integrating `codex/import-cycles` at `6b17636` into the unpushed scratch
