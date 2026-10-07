@@ -1,0 +1,98 @@
+[
+  {
+    "population": "repository",
+    "implementation": "go",
+    "round": 1,
+    "seconds": 0.15811123399998905,
+    "timing": "cohere: load_ns=79976721 rule_ns=1196035 run_ns=60000612",
+    "sha256": "06d9e146b88d4eff71cd5cea84e4d18b4a71f90aef71d4990181565e3d46b2e7"
+  },
+  {
+    "population": "repository",
+    "implementation": "native",
+    "round": 1,
+    "seconds": 0.26837491200001296,
+    "timing": "",
+    "sha256": "06d9e146b88d4eff71cd5cea84e4d18b4a71f90aef71d4990181565e3d46b2e7"
+  },
+  {
+    "population": "repository",
+    "implementation": "go",
+    "round": 2,
+    "seconds": 0.13298373099996752,
+    "timing": "cohere: load_ns=71592004 rule_ns=1009347 run_ns=48407288",
+    "sha256": "06d9e146b88d4eff71cd5cea84e4d18b4a71f90aef71d4990181565e3d46b2e7"
+  },
+  {
+    "population": "repository",
+    "implementation": "native",
+    "round": 2,
+    "seconds": 0.2624122360000456,
+    "timing": "",
+    "sha256": "06d9e146b88d4eff71cd5cea84e4d18b4a71f90aef71d4990181565e3d46b2e7"
+  },
+  {
+    "population": "repository",
+    "implementation": "go",
+    "round": 3,
+    "seconds": 0.12759841700005836,
+    "timing": "cohere: load_ns=67545387 rule_ns=860553 run_ns=46531507",
+    "sha256": "06d9e146b88d4eff71cd5cea84e4d18b4a71f90aef71d4990181565e3d46b2e7"
+  },
+  {
+    "population": "repository",
+    "implementation": "native",
+    "round": 3,
+    "seconds": 0.26342428299994936,
+    "timing": "",
+    "sha256": "06d9e146b88d4eff71cd5cea84e4d18b4a71f90aef71d4990181565e3d46b2e7"
+  },
+  {
+    "population": "compiler",
+    "implementation": "go",
+    "round": 1,
+    "seconds": 0.30881475299997874,
+    "timing": "cohere: load_ns=235575413 rule_ns=10788673 run_ns=56142524",
+    "sha256": "8f2c900ecfa7eec7bb4c722c7df115795227b9f4a8f16f412eec90c90f55d399"
+  },
+  {
+    "population": "compiler",
+    "implementation": "native",
+    "round": 1,
+    "seconds": 1.879750293999905,
+    "timing": "",
+    "sha256": "8f2c900ecfa7eec7bb4c722c7df115795227b9f4a8f16f412eec90c90f55d399"
+  },
+  {
+    "population": "compiler",
+    "implementation": "go",
+    "round": 2,
+    "seconds": 0.3532668499999545,
+    "timing": "cohere: load_ns=280131280 rule_ns=11816276 run_ns=56127251",
+    "sha256": "8f2c900ecfa7eec7bb4c722c7df115795227b9f4a8f16f412eec90c90f55d399"
+  },
+  {
+    "population": "compiler",
+    "implementation": "native",
+    "round": 2,
+    "seconds": 1.9442373910000015,
+    "timing": "",
+    "sha256": "8f2c900ecfa7eec7bb4c722c7df115795227b9f4a8f16f412eec90c90f55d399"
+  },
+  {
+    "population": "compiler",
+    "implementation": "go",
+    "round": 3,
+    "seconds": 0.31978881699990325,
+    "timing": "cohere: load_ns=246754595 rule_ns=10363688 run_ns=50540669",
+    "sha256": "8f2c900ecfa7eec7bb4c722c7df115795227b9f4a8f16f412eec90c90f55d399"
+  },
+  {
+    "population": "compiler",
+    "implementation": "native",
+    "round": 3,
+    "seconds": 1.8897040619999643,
+    "timing": "",
+    "sha256": "8f2c900ecfa7eec7bb4c722c7df115795227b9f4a8f16f412eec90c90f55d399"
+  }
+]

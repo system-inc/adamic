@@ -1,0 +1,57 @@
+{
+  "outputs": {
+    "controls-go.stdout.gz": {
+      "bytes": 22350,
+      "sha256": "9526899fb3c85202bf270d515a6df4a091adda84a9bedab87c1dccdce97fc192"
+    },
+    "controls-native.stdout.gz": {
+      "bytes": 22350,
+      "sha256": "9526899fb3c85202bf270d515a6df4a091adda84a9bedab87c1dccdce97fc192"
+    },
+    "controls-asan.stdout.gz": {
+      "bytes": 22350,
+      "sha256": "9526899fb3c85202bf270d515a6df4a091adda84a9bedab87c1dccdce97fc192"
+    },
+    "repository-go.stdout.gz": {
+      "bytes": 19747,
+      "sha256": "06d9e146b88d4eff71cd5cea84e4d18b4a71f90aef71d4990181565e3d46b2e7"
+    },
+    "repository-native.stdout.gz": {
+      "bytes": 19747,
+      "sha256": "06d9e146b88d4eff71cd5cea84e4d18b4a71f90aef71d4990181565e3d46b2e7"
+    },
+    "repository-asan.stdout.gz": {
+      "bytes": 19747,
+      "sha256": "06d9e146b88d4eff71cd5cea84e4d18b4a71f90aef71d4990181565e3d46b2e7"
+    },
+    "compiler-go.stdout.gz": {
+      "bytes": 7268,
+      "sha256": "8f2c900ecfa7eec7bb4c722c7df115795227b9f4a8f16f412eec90c90f55d399"
+    },
+    "compiler-native.stdout.gz": {
+      "bytes": 7268,
+      "sha256": "8f2c900ecfa7eec7bb4c722c7df115795227b9f4a8f16f412eec90c90f55d399"
+    },
+    "compiler-asan.stdout.gz": {
+      "bytes": 7268,
+      "sha256": "8f2c900ecfa7eec7bb4c722c7df115795227b9f4a8f16f412eec90c90f55d399"
+    }
+  },
+  "counts": {
+    "controls": {
+      "@typescript-eslint/prefer-regexp-exec": 31,
+      "@typescript-eslint/no-for-in-array": 9,
+      "nexus/correctness-no-identical-branches": 13
+    },
+    "repository": {
+      "@typescript-eslint/prefer-regexp-exec": 0,
+      "@typescript-eslint/no-for-in-array": 0,
+      "nexus/correctness-no-identical-branches": 3
+    },
+    "compiler": {
+      "@typescript-eslint/prefer-regexp-exec": 3,
+      "@typescript-eslint/no-for-in-array": 2,
+      "nexus/correctness-no-identical-branches": 0
+    }
+  }
+}
