@@ -1,0 +1,6 @@
+{
+  "name": "selfclosing_fix_suppressed",
+  "file": "rule.a",
+  "from": "'fix', ' />'",
+  "to": "'', ' />'"
+}

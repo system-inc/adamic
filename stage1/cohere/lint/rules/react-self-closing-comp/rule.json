@@ -1,0 +1,12 @@
+{
+  "name": "react/self-closing-comp",
+  "kinds": [
+    "JsxElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleSelfClosing",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestSelfClosingComp"
+}

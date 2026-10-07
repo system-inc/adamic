@@ -1,0 +1,11 @@
+=== RUN   TestOriginalCorpus
+    owned_original_test.go:47: original corpus: 223 files / 669 cases
+    owned_original_test.go:48: Go, Node, emitted JavaScript, native identical: 37137620 bytes
+--- PASS: TestOriginalCorpus (71.03s)
+=== RUN   TestOriginalBlockedJsx
+    owned_original_test.go:52: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestOriginalBlockedJsx4081748054/008/main.ts --manifest /tmp/adamic-gate/TestOriginalBlockedJsx4081748054/006/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected GreaterThanToken, got Identifier at 24 in /tmp/adamic-gate/TestOriginalBlockedJsx4081748054/001/closing.tsx
+--- FAIL: TestOriginalBlockedJsx (20.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	91.123s
+FAIL

@@ -1,0 +1,6 @@
+=== RUN   TestOriginalSelfSnapshots
+    owned_original_test.go:88: /workspace/adamic/stage1/cohere/lint/rules/react-self-closing-comp/snapshot.a:10:17: stage 0 can't lower a BinaryExpression with a string and a number yet
+--- FAIL: TestOriginalSelfSnapshots (0.29s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.302s
+FAIL

@@ -1,0 +1,32 @@
+import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../finding.ts';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    kind(index: number): string { return index < 0 ? '' : this.context.node(index).kind; }
+    first(index: number): number { return index < 0 ? -1 : this.context.node(index).children[0] ?? -1; }
+    visit(index: number): void {
+        const children = this.context.node(index).children;
+        const opening = children[0] ?? -1;
+        const closing = children[children.length - 1] ?? -1;
+        if(this.kind(opening) !== 'JsxOpeningElement' || this.kind(closing) !== 'JsxClosingElement') { return; }
+        const tag = this.first(opening);
+        let left = tag;
+        while(this.kind(left) === 'PropertyAccessExpression' || this.kind(left) === 'JsxNamespacedName') { left = this.first(left); }
+        const name = this.kind(left) === 'ThisKeyword' ? 'this' : left < 0 ? '' : this.context.node(left).text;
+        const html = /^[a-z]/.test(name);
+        if(html ? this.context.settings.read('html', 'true') !== 'true' : this.kind(tag) === 'JsxNamespacedName' || this.context.settings.read('component', 'true') !== 'true') { return; }
+        if(children.length !== 2) {
+            const text = children[1] ?? -1;
+            if(children.length !== 3 || this.kind(text) !== 'JsxText') { return; }
+            const value = this.context.node(text).text;
+            // Go's explicit set includes U+0085 and U+FEFF but deliberately excludes NBSP.
+            if(!value.includes('\n') || !/^[\t\n\v\f\r \u0085\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]*$/.test(value)) { return; }
+        }
+        const finding = new Finding('react/self-closing-comp', 'notSelfClosing', 'Empty components are self-closing', this.context.start(opening), this.context.node(opening).end, 'fix', ' />', '');
+        finding.editStart = this.context.node(opening).end - 1;
+        finding.editEnd = this.context.node(closing).end;
+        this.context.findings.push(finding);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

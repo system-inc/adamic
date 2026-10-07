@@ -1,0 +1,8 @@
+=== RUN   TestOriginalSelfSnapshots
+    owned_original_test.go:91: node [/workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/rules/react-self-closing-comp/snapshot.a]: <nil>
+        (node:19599) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+        (Use `node --trace-warnings ...` to show where the warning was created)
+--- FAIL: TestOriginalSelfSnapshots (48.88s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	48.890s
+FAIL

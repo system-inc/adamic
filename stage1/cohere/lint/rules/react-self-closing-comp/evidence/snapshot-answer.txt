@@ -1,0 +1,224 @@
+case 0
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 19
+fixed	var a = <Foo />;
+case 1
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 19
+fixed	var a = <div />;
+case 2
+fixed	var a = <Foo></Foo>;
+case 3
+fixed	var a = <div></div>;
+case 4
+fixed	var HelloJohn = <Hello name="John">\u000a</Hello>;
+case 5
+fixed	var HelloJohn = <Hello name="John"> </Hello>;
+case 6
+fixed	var HelloJohn = <Hello name="John"></Hello>;
+case 7
+fixed	var HelloJohn = <Hello.Compound name="John">\u000a</Hello.Compound>;
+case 8
+fixed	var HelloJohn = <Hello.Compound name="John"> </Hello.Compound>;
+case 9
+fixed	var HelloJohn = <Hello.Compound name="John"></Hello.Compound>;
+case 10
+fixed	var a = <Foo.bar></Foo.bar>;
+case 11
+fixed	var a = <Foo></Foo>;
+case 12
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 19
+fixed	var a = <div />;
+case 13
+finding 8 21 notSelfClosing fix	 />	Empty components are self-closing
+edit 20 35
+fixed	var a = <foo.Bar.Baz />;
+case 14
+finding 8 17 notSelfClosing fix	 />	Empty components are self-closing
+edit 16 27
+fixed	var a = <foo.Bar />;
+case 15
+finding 8 18 notSelfClosing fix	 />	Empty components are self-closing
+edit 17 29
+fixed	var a = <svg:rect />;
+case 16
+finding 8 21 notSelfClosing fix	 />	Empty components are self-closing
+edit 20 35
+fixed	var a = <Foo.bar.Baz />;
+case 17
+finding 8 17 notSelfClosing fix	 />	Empty components are self-closing
+edit 16 27
+fixed	var a = <Foo.bar />;
+case 18
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 19
+fixed	var a = <Foo />;
+case 19
+fixed	var a = <div></div>;
+case 20
+fixed	var a = <foo.Bar.Baz></foo.Bar.Baz>;
+case 21
+fixed	var a = <foo.Bar></foo.Bar>;
+case 22
+fixed	var a = <svg:rect></svg:rect>;
+case 23
+fixed	\u000a        <Hello.Compound>\u000a          <Hello.Compound name="John" />\u000a        </Hello.Compound>\u000a      
+case 24
+fixed	\u000a        <Hello>\u000a          <Hello name="John" />\u000a        </Hello>\u000a      
+case 25
+fixed	\u000a        <div>\u000a          <div className="content" />\u000a        </div>\u000a      
+case 26
+finding 24 52 notSelfClosing fix	 />	Empty components are self-closing
+edit 51 69
+fixed	var CompoundHelloJohn = <Hello.Compound name="John" />;
+case 27
+fixed	var HelloJohn = <Hello name="John" />;
+case 28
+finding 16 35 notSelfClosing fix	 />	Empty components are self-closing
+edit 34 44
+fixed	var HelloJohn = <Hello name="John" />;
+case 29
+fixed	var HelloJohn = <Hello name="John">        </Hello>;
+case 30
+fixed	var HelloJohn = <Hello name="John"> </Hello>;
+case 31
+fixed	var HelloJohn = <Hello name="John">&nbsp;</Hello>;
+case 32
+finding 16 35 notSelfClosing fix	 />	Empty components are self-closing
+edit 34 43
+fixed	var HelloJohn = <Hello name="John" />;
+case 33
+fixed	var HelloJohn = <Hello.Compound name="John" />;
+case 34
+finding 16 44 notSelfClosing fix	 />	Empty components are self-closing
+edit 43 62
+fixed	var HelloJohn = <Hello.Compound name="John" />;
+case 35
+fixed	var HelloJohn = <Hello.Compound name="John">        </Hello.Compound>;
+case 36
+fixed	var HelloJohn = <Hello.Compound name="John"> </Hello.Compound>;
+case 37
+fixed	var HelloJohn = <Hello.Compound name="John">&nbsp;</Hello.Compound>;
+case 38
+finding 16 44 notSelfClosing fix	 />	Empty components are self-closing
+edit 43 61
+fixed	var HelloJohn = <Hello.Compound name="John" />;
+case 39
+fixed	var HelloJohn = <div>        </div>;
+case 40
+fixed	var HelloJohn = <div> </div>;
+case 41
+fixed	var HelloJohn = <div>&nbsp;</div>;
+case 42
+fixed	var HelloJohn = <div>{'\u00a0'}</div>;
+case 43
+fixed	var Profile = <Hello name="John"><img src="picture.png" /></Hello>;
+case 44
+fixed	var Profile = <Hello.Compound name="John"><img src="picture.png" /></Hello.Compound>;
+case 45
+fixed	var a = <></>;
+case 46
+finding 8 21 notSelfClosing fix	 />	Empty components are self-closing
+edit 20 35
+fixed	var a = <Foo.Bar.Baz />;
+case 47
+finding 8 17 notSelfClosing fix	 />	Empty components are self-closing
+edit 16 27
+fixed	var a = <Foo.Bar />;
+case 48
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 20
+fixed	var a = <Foo />;
+case 49
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 19
+fixed	var a = <Foo />;
+case 50
+fixed	var a = <SVG:rect></SVG:rect>;
+case 51
+finding 8 14 notSelfClosing fix	 />	Empty components are self-closing
+edit 13 21
+fixed	var a = <_foo />;
+case 52
+finding 8 30 notSelfClosing fix	 />	Empty components are self-closing
+edit 29 36
+fixed	var a = <div\u000a  className="x"\u000a />;
+case 53
+fixed	var a = <div />;
+case 54
+finding 8 34 notSelfClosing fix	 />	Empty components are self-closing
+edit 33 40
+fixed	var a = <div className="x" id="y" />;
+case 55
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 22
+fixed	var a = <div />;
+case 56
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 23
+fixed	var a = <div />;
+case 57
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 20
+fixed	var a = <div />;
+case 58
+fixed	var a = <div>\u000a\u00a0\u000a</div>;
+case 59
+fixed	var a = <div>   </div>;
+case 60
+fixed	var a = <div> </div>;
+case 61
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 19
+fixed	var a = <div />;
+case 62
+finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+edit 12 19
+fixed	var a = <div />;\u000a
+case 63
+finding 13 19 notSelfClosing fix	 />	Empty components are self-closing
+edit 18 26
+fixed	var a = <div><span /></div>;
+case 64
+fixed	var a = <div>text</div>;
+case 65
+fixed	var a = <div>x</div>;
+case 66
+fixed	var a = <div>{/* c */}</div>;
+case 67
+fixed	var a = <div>{a}</div>;
+case 68
+fixed	var a = <div>{a}{b}</div>;
+case 69
+fixed	var a = <div>{expression}text</div>;
+case 70
+fixed	var a = <div>\u00a0</div>;
+case 71
+finding 8 17 notSelfClosing fix	 />	Empty components are self-closing
+edit 16 27
+fixed	var a = <foo.bar />;
+case 72
+finding 8 20 notSelfClosing fix	 />	Empty components are self-closing
+edit 19 33
+fixed	var a = <my-element />;
+case 73
+finding 8 18 notSelfClosing fix	 />	Empty components are self-closing
+edit 17 29
+fixed	var a = <svg:rect />;
+case 74
+finding 8 18 notSelfClosing fix	 />	Empty components are self-closing
+edit 17 29
+fixed	var a = <this.Foo />;
+case 75
+fixed	var contentContainer = <div className="content" />;
+case 76
+finding 23 48 notSelfClosing fix	 />	Empty components are self-closing
+edit 47 55
+fixed	var contentContainer = <div className="content" />;
+case 77
+finding 23 48 notSelfClosing fix	 />	Empty components are self-closing
+edit 47 54
+fixed	var contentContainer = <div className="content" />;
+case 78
+fixed	var contentContainer = <div className="content"><img src="picture.png" /></div>;

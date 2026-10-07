@@ -1,0 +1,139 @@
+// Built by an overlay inside cohere. Go supplies AST geometry and the rule's answer.
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	rules "github.com/system-inc/cohere/internal/lint/rules/react"
+	"os"
+	"sort"
+	"strings"
+	"unicode/utf16"
+)
+
+type record struct {
+	Rule, Source, File string
+	Options            json.RawMessage
+}
+
+func quote(s string) string {
+	b, e := json.Marshal(s)
+	if e != nil {
+		panic(e)
+	}
+	return string(b)
+}
+func written(s string) string {
+	var b strings.Builder
+	for _, r := range s {
+		if r >= 32 && r <= 126 && r != '\\' {
+			b.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&b, "\\u%04x", r)
+		} else {
+			a, z := utf16.EncodeRune(r)
+			fmt.Fprintf(&b, "\\u%04x\\u%04x", a, z)
+		}
+	}
+	return b.String()
+}
+func main() {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var records map[string]record
+	if err = json.Unmarshal(data, &records); err != nil {
+		panic(err)
+	}
+	var keys []string
+	for key, r := range records {
+		if r.Rule == "react/self-closing-comp" {
+			keys = append(keys, key)
+		}
+	}
+	sort.Strings(keys)
+	var driver, answer strings.Builder
+	driver.WriteString("import { utf8Length } from 'adamic';\nimport { written } from '../../../../typescript/parser/nodes.ts';\nimport { ParseNode } from '../../../../typescript/parser/nodes.ts';\nimport { Parser } from '../../../../typescript/parser/parser.ts';\nimport { Scanner } from '../../../../typescript/scanner/scanner.ts';\nimport { RuleContext } from '../../context.ts';\nimport { Settings } from '../../settings.ts';\nimport { Rule } from './rule.a';\nfunction output(index: number, context: RuleContext): void {\n    console.log(`case ${index}`);\n    context.findings.sort((a, b) => a.start - b.start);\n    for(const finding of context.findings) {\n        console.log('finding ' + `${utf8Length(context.source.slice(0, finding.start))} ${utf8Length(context.source.slice(0, finding.end))} ${finding.id} ${finding.repair}\\t${written(finding.replacement)}\\t${finding.message}`);\n        if(finding.repair !== '') { console.log(`edit ${utf8Length(context.source.slice(0, finding.editStart))} ${utf8Length(context.source.slice(0, finding.editEnd))}`); }\n    }\n    let fixed = context.source;\n    for(const finding of context.findings.slice().reverse()) {\n        if(finding.repair === 'fix') { fixed = fixed.slice(0, finding.editStart) + finding.replacement + fixed.slice(finding.editEnd); }\n    }\n    console.log('fixed\\t' + written(fixed));\n}\n")
+	for at, key := range keys {
+		r := records[key]
+		name := fmt.Sprintf("snapshot-%d.tsx", at)
+		f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/" + name}, r.Source, core.ScriptKindTSX)
+		opts := rules.DefaultSelfClosingCompOptions()
+		if len(r.Options) > 0 && string(r.Options) != "null" {
+			if err = json.Unmarshal(r.Options, &opts); err != nil {
+				panic(err)
+			}
+		}
+		var ds []rule.Diagnostic
+		ctx := rule.Context{SourceFile: f, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { ds = append(ds, d) }}
+		listeners := rules.SelfClosingComp.Run(ctx, opts)
+		offsets := map[int]int{}
+		units := 0
+		for pos, rune_ := range r.Source {
+			offsets[pos] = units
+			if rune_ > 65535 {
+				units += 2
+			} else {
+				units++
+			}
+		}
+		offsets[len(r.Source)] = units
+		fmt.Fprintf(&driver, "{\nconst source = %s;\nconst parser = new Parser(source, %s);\nconst parents: number[] = [];\n", quote(r.Source), quote(name))
+		var visit func(*ast.Node, int) int
+		next := 0
+		visit = func(n *ast.Node, parent int) int {
+			index := next
+			next++
+			children := []int{}
+			fmt.Fprintf(&driver, "parser.nodes.push(new ParseNode(%s, %d, %d, [])); parents.push(%d);\n", quote(strings.TrimPrefix(n.Kind.String(), "Kind")), offsets[n.Pos()], offsets[n.End()], parent)
+			n.ForEachChild(func(c *ast.Node) bool { children = append(children, visit(c, index)); return false })
+			for _, child := range children {
+				fmt.Fprintf(&driver, "parser.node(%d).children.push(%d);\n", index, child)
+			}
+			if n.Kind == ast.KindJsxText {
+				fmt.Fprintf(&driver, "parser.node(%d).text = %s;\n", index, quote(n.AsJsxText().Text))
+			} else if n.Kind == ast.KindIdentifier {
+				fmt.Fprintf(&driver, "parser.node(%d).text = %s;\n", index, quote(n.Text()))
+			}
+			if listener := listeners[n.Kind]; listener != nil {
+				listener(n)
+			}
+			return index
+		}
+		visit(f.AsNode(), -1)
+		fmt.Fprintf(&driver, "const settings = new Settings(); settings.load(%s);\nconst context = new RuleContext(source, parser, new Scanner(source), 'react/self-closing-comp', '', '', false, parents, settings);\nconst rule = new Rule(context);\nfor(let index = 0; index < parser.nodes.length; index++) { if(parser.node(index).kind === 'JsxElement') { rule.visit(index); } }\noutput(%d, context);\n}\n", quote(string(r.Options)), at)
+		sort.SliceStable(ds, func(i, j int) bool { return ds[i].Range.Pos() < ds[j].Range.Pos() })
+		fmt.Fprintf(&answer, "case %d\n", at)
+		var fixes []rule.Fix
+		for _, d := range ds {
+			repair, replacement := "", ""
+			if len(d.Fixes) > 0 {
+				repair = "fix"
+				replacement = d.Fixes[0].Text
+				fixes = append(fixes, d.Fixes...)
+			}
+			fmt.Fprintf(&answer, "finding %d %d %s %s\t%s\t%s\n", d.Range.Pos(), d.Range.End(), d.Message.Id, repair, written(replacement), d.Message.Description)
+			if len(d.Fixes) > 0 {
+				fmt.Fprintf(&answer, "edit %d %d\n", d.Fixes[0].Range.Pos(), d.Fixes[0].Range.End())
+			}
+		}
+		fixed := r.Source
+		sort.SliceStable(fixes, func(i, j int) bool { return fixes[i].Range.Pos() > fixes[j].Range.Pos() })
+		for _, fix := range fixes {
+			fixed = fixed[:fix.Range.Pos()] + fix.Text + fixed[fix.Range.End():]
+		}
+		fmt.Fprintf(&answer, "fixed\t%s\n", written(fixed))
+	}
+	if err = os.WriteFile(os.Args[2], []byte(driver.String()), 0644); err != nil {
+		panic(err)
+	}
+	if err = os.WriteFile(os.Args[3], []byte(answer.String()), 0644); err != nil {
+		panic(err)
+	}
+	fmt.Printf("Go AST snapshots: %d cases\n", len(keys))
+}

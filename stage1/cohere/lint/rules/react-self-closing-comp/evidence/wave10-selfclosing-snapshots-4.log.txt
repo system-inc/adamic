@@ -1,0 +1,31 @@
+=== RUN   TestOriginalSelfSnapshots
+    owned_original_test.go:92: 79 self-closing Go AST snapshots identical on Node: 6747 bytes
+    owned_original_test.go:92: 79 self-closing Go AST snapshots identical on emitted JS: 6747 bytes
+    owned_original_test.go:92: 79 self-closing Go AST snapshots identical on native: 6747 bytes
+    owned_original_test.go:92: selfclosing_fix_suppressed caught only by output comparison on Node: case 0 line 2: port "finding 8 13 notSelfClosing \t />\tEmpty components are self-closing", Go "finding 8 13 notSelfClosing fix\t />\tEmpty components are self-closing"
+        Go context:
+        case 0
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+        edit 12 19
+        fixed	var a = <Foo />;
+        case 1
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+    owned_original_test.go:92: selfclosing_fix_suppressed caught only by output comparison on emitted JS: case 0 line 2: port "finding 8 13 notSelfClosing \t />\tEmpty components are self-closing", Go "finding 8 13 notSelfClosing fix\t />\tEmpty components are self-closing"
+        Go context:
+        case 0
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+        edit 12 19
+        fixed	var a = <Foo />;
+        case 1
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+    owned_original_test.go:92: selfclosing_fix_suppressed caught only by output comparison on native: case 0 line 2: port "finding 8 13 notSelfClosing \t />\tEmpty components are self-closing", Go "finding 8 13 notSelfClosing fix\t />\tEmpty components are self-closing"
+        Go context:
+        case 0
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+        edit 12 19
+        fixed	var a = <Foo />;
+        case 1
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+--- PASS: TestOriginalSelfSnapshots (103.35s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	103.357s
