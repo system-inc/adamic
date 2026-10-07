@@ -2,7 +2,11 @@ package helpers
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -112,14 +116,19 @@ func slot01Wave3Check(t *testing.T, symbol, mode, file, old, replacement string)
 		dependency = "github.com/system-inc/cohere/internal/lint/ecmascript/text." + symbol
 		consumers = 9
 	}
+	if mode == "component" {
+		dependency = "github.com/system-inc/cohere/internal/lint/ecmascript/react." + symbol
+		consumers = 8
+	}
 	cases, want := slot01Wave3Fixture(t, dependency, consumers, mode)
 	entry, _ := filepath.Abs("slot01_wave3_main.a")
 	runner, _ := filepath.Abs("../../../../oracle/node.mjs")
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, cases, mode), want)
 	compare(t, run(t, "", slot01Build(t, entry), cases, mode), want)
-	t.Logf("%d Go output lines match Node and sanitized native", bytes.Count(want, []byte("\n")))
+	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
+	t.Logf("%d Go output lines match Node, sanitized native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	directory := t.TempDir()
-	for _, name := range []string{"slot01_wave3_main.a", "tailwind_attribute_values.a", "tailwind_class_values_in.a", "tailwind_class_literal_from.a", "text_decode_entity.a", "text_xhtml_entities.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave3_main.a", "tailwind_attribute_values.a", "tailwind_class_values_in.a", "tailwind_class_literal_from.a", "text_decode_entity.a", "text_xhtml_entities.a", "react_likely_component_name.a", "react_unicode_upper_ranges.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -153,4 +162,39 @@ func TestSlot01Wave3EntityMatchesCohere(t *testing.T) {
 }
 func TestSlot01Wave3EntitySurrogateMutant(t *testing.T) {
 	slot01Wave3Check(t, "decodeEntity", "entity", "text_decode_entity.a", "value >= 0xd800 && value <= 0xdfff", "false")
+}
+
+// Not parallel: exhaustive Unicode corpus and bounded sanitizer compilation.
+func TestSlot01Wave3ComponentMatchesCohere(t *testing.T) {
+	slot01Wave3Check(t, "IsLikelyComponentName", "component", "react_likely_component_name.a", "return (point - first) % stride === 0;", "return point >= 65 && point <= 90;")
+}
+
+func slot01Wave3JavaScript(t *testing.T, entry string) string {
+	t.Helper()
+	program, err := load.Load([]string{entry})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ir, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "program.mjs")
+	if err := os.WriteFile(path, []byte(javascript.JavaScript(ir)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+
+// Not parallel: bound sanitizer builds and Go captures.
+func TestSlot01Wave3AttributeFalseValueMutant(t *testing.T) {
+	slot01Wave3Check(t, "*ClassLiteralReader.attributeValues", "attribute", "tailwind_attribute_values.a", "if (!(attributeNames.get(name.text) ?? false))", "if (!attributeNames.has(name.text))")
+}
+func TestSlot01Wave3EntityNamedTableMutant(t *testing.T) {
+	slot01Wave3Check(t, "decodeEntity", "entity", "text_decode_entity.a", "entities.get(item) ?? ('&' + item + ';')", "'&' + item + ';'")
+}
+
+// Not parallel: exhaustive Unicode corpus and bounded sanitizer compilation.
+func TestSlot01Wave3ComponentStrideMutant(t *testing.T) {
+	slot01Wave3Check(t, "IsLikelyComponentName", "component", "react_likely_component_name.a", "return (point - first) % stride === 0;", "return true;")
 }

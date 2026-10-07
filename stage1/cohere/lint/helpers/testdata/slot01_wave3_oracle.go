@@ -8,6 +8,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/parser"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/lint/ecmascript/react"
 	texthelpers "github.com/system-inc/cohere/internal/lint/ecmascript/text"
 	"github.com/system-inc/cohere/internal/lint/rules/tailwind"
 	goast "go/ast"
@@ -16,6 +17,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"unicode"
 	"unicode/utf16"
 )
 
@@ -101,6 +103,38 @@ func main() {
 		fixtureCount += found
 	}
 
+	if os.Args[4] == "component" {
+		names := append(sources, "Thing", "thing", "", "_Thing", "1Thing", "Émile", "Ω", "Ünnamed", "ünnamed", "ǅTitlecase", "ⅠRoman", "😀A", "𐐀Deseret", "\u0301A", "A.name", "A x")
+		for _, source := range sources {
+			file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/fixture.tsx", Path: tspath.Path("/fixture.tsx")}, source, core.ScriptKindTSX)
+			var visit func(*ast.Node) bool
+			visit = func(node *ast.Node) bool {
+				if node.Kind == ast.KindIdentifier {
+					names = append(names, node.Text())
+				}
+				node.ForEachChild(visit)
+				return false
+			}
+			visit(file.AsNode())
+		}
+		queries := 0
+		for _, name := range names {
+			must(encode.Encode(name))
+			fmt.Fprintln(expected, react.IsLikelyComponentName(name))
+			queries++
+		}
+		for point := 0; point <= 0x10ffff; point++ {
+			if point >= 0xd800 && point <= 0xdfff {
+				continue
+			}
+			name := string(rune(point)) + "suffix"
+			must(encode.Encode(name))
+			fmt.Fprintln(expected, react.IsLikelyComponentName(name))
+			queries++
+		}
+		fmt.Fprintf(os.Stderr, "%d fixture strings; %d component-name queries; Unicode %s\n", fixtureCount, queries, unicode.Version)
+		return
+	}
 	if os.Args[4] == "entity" {
 		if !texthelpers.AdamicWave3EmptyPanics() {
 			panic("Go empty entity no longer panics")

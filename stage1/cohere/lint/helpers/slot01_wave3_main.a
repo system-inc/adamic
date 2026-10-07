@@ -1,5 +1,6 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from './options_json.ts';
+import { reactLikelyComponentName } from './react_likely_component_name.a';
 import { textDecodeEntity } from './text_decode_entity.a';
 import { textXhtmlEntities } from './text_xhtml_entities.a';
 import { tailwindAttributeValues } from './tailwind_attribute_values.a';
@@ -43,6 +44,7 @@ for (const line of file.text.split('\n')) {
     const reader = new OptionsJson(line);
     const root = reader.parse();
     if (root < 0) { panic(reader.error); }
+    if (args[1] === 'component') { console.log(`${reactLikelyComponentName(reader.node(root).text)}`); continue; }
     if (args[1] === 'entity') {
         const result = textDecodeEntity(reader.node(root).text, textXhtmlEntities, character => {
             if (character >= 48 && character <= 57) { return character - 48; }
