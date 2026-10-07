@@ -1,8 +1,0 @@
-// String of a power of two, where the gap to the double below is half the gap above. ECMAScript wants
-// the fewest digits that read back; number.c's shortest_digits asks printf for the closest p-digit
-// decimal, which for these 46 powers of two (of 2,098) doesn't read back at 16 digits when a farther
-// one does, so native writes 17 where Node writes 16. Older than integrate-1 (1afaa16).
-const powers: number[] = [2 ** 976, 2 ** -1017, 2 ** -957, 2 ** -808, 2 ** -705, 2 ** -652];
-for (const power of powers) {
-	console.log(`${power} ${-power}`);
-}

@@ -1,7 +1,0 @@
-import { count } from './counter.a';
-
-export function show(label: string): string {
-	return `${label}: ${count}`;
-}
-
-console.log('format runs second');

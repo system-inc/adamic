@@ -1,8 +1,0 @@
-// Reads each path it's given: one way in through the other. The oracle passes a file it made
-// unreadable (input_test.go), since git can't keep a file's permissions.
-import { programArguments, readTextFile } from 'adamic';
-
-for (const path of programArguments()) {
-	const result = readTextFile(path);
-	console.log(result.kind === 'Ok' ? `${path}: ${result.text.length} code units` : result.message);
-}

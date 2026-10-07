@@ -1,7 +1,0 @@
-=== RUN   TestProfileSnapshotsAgree
-    profile_test.go:101: 77 compiler files, 61 stage1 files, 18236 generated inputs
-    profile_test.go:113: /workspace/scratch/scanner-perf/mutant-release release: line 32502: port "EqualsEqualsToken 1250050 1250052 0", Go "ExclamationEqualsToken 1250050 1250052 0"
---- FAIL: TestProfileSnapshotsAgree (4.91s)
-FAIL
-FAIL	github.com/system-inc/adamic/stage1/typescript/scanner	4.922s
-FAIL

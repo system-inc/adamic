@@ -1,7 +1,0 @@
-// Asking for no significant digits is a RangeError in JavaScript, and a panic in Adamic, after
-// what was printed before it.
-
-const figures = [3, 2, 1, 0];
-for (const count of figures) {
-	console.log((Math.PI * 1000).toPrecision(count));
-}

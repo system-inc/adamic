@@ -1,5 +1,0 @@
-// One unit past V8's longest string (536,870,888 UTF-16 units) is RangeError: Invalid string length
-// on Node, and a panic here, checked before any of it is built.
-console.log('before');
-const tooLong = 'ab'.repeat(2 ** 28);
-console.log(`${tooLong.length}`);

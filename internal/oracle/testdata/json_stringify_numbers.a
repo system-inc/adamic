@@ -1,7 +1,0 @@
-// The same number at the top, in an array (null for non-finite), and in an object (-0 stays 0).
-const values = [-0, 1e21, -1e21, 1e-7, -1e-7, 1e20, Number.MAX_VALUE, -Number.MAX_VALUE, Number.MIN_VALUE, -Number.MIN_VALUE, NaN, Infinity, -Infinity];
-for (const value of values) {
-	console.log(JSON.stringify(value) ?? '<undefined>');
-	console.log(JSON.stringify([value, undefined]) ?? '<undefined>');
-	console.log(JSON.stringify({ n: value, u: undefined, ok: 1 }) ?? '<undefined>');
-}

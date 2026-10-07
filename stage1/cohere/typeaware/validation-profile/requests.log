@@ -1,7 +1,0 @@
-=== RUN   TestInspectRequestRefusals
-    suite_test.go:509: released type-name query: panic 70, invalid or released checker handle
-    suite_test.go:523: wrong-kind: panic 70; guard mutant exits 0 and fails the refusal expectation
-    suite_test.go:523: unknown-question: panic 70; guard mutant exits 0 and fails the refusal expectation
---- PASS: TestInspectRequestRefusals (16.81s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	16.814s

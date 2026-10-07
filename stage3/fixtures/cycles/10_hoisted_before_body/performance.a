@@ -1,5 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/performance.ts:59
-// Census reason: an import cycle
-import { noop } from './_namespaces/ts.a';
-interface Timer { readonly enter: () => void; readonly exit: () => void; }
-export const nullTimer: Timer = { enter: noop, exit: noop };

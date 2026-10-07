@@ -1,7 +1,0 @@
-const collection = new Map<string, string>([['a'.repeat(2), 'b'.repeat(2)]]);
-const values = collection.keys();
-const copy = { ...values };
-const first = copy.next();
-const second = values.next();
-console.log(`${first.done} ${second.done}`);
-if (!second.done) { console.log(second.value); }

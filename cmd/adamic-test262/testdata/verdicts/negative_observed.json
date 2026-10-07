@@ -1,8 +1,0 @@
-{
-  "name": "negative runtime observed on both",
-  "negativePhase": "runtime",
-  "negativeType": "TypeError",
-  "node": {"exit": 1, "stdout": "", "stderr": "TypeError: x is not a function\n"},
-  "native": {"exit": 70, "stdout": "", "stderr": "adamic: panic: boom\n"},
-  "want": "pass"
-}

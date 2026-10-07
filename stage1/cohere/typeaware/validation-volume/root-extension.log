@@ -1,8 +1,0 @@
-=== RUN   TestAdamicRootKeepsConfigDeclarations
-=== PAUSE TestAdamicRootKeepsConfigDeclarations
-=== CONT  TestAdamicRootKeepsConfigDeclarations
-    roots_test.go:22: checker did not load /tmp/adamic-gate/TestAdamicRootKeepsConfigDeclarations1634293721/001/program.a
---- FAIL: TestAdamicRootKeepsConfigDeclarations (0.04s)
-FAIL
-FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.048s
-FAIL

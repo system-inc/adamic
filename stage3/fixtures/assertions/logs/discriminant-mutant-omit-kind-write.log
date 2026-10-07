@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/workspace/adamic/stage3/fixtures/assertions/discriminant-report.py", line 43, in <module>
-    assert [(w['file'],w['line']) for w in r['writes'] if w['property']=='kind' and w['form']=='=']==[('src/compiler/utilities.ts',8509),('src/compiler/utilities.ts',8523),('src/compiler/utilities.ts',8535)]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError

@@ -1,38 +1,0 @@
-Cloning into bare repository '/home/agent/.cache/adamic-stage3/typescript.git'...
-Cloning into '/tmp/parser-adapted10'...
-Note: switching to '050880ce59e30b356b686bd3144efe24f875ebc8'.
-
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by switching back to a branch.
-
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -c with the switch command. Example:
-
-  git switch -c <new-branch-name>
-
-Or undo this operation with:
-
-  git switch -
-
-Turn off this advice by setting config variable advice.detachedHead to false
-
-Updating files:  77% (63299/81500)Updating files:  78% (63570/81500)Updating files:  79% (64385/81500)Updating files:  80% (65200/81500)Updating files:  81% (66015/81500)Updating files:  82% (66830/81500)Updating files:  83% (67645/81500)Updating files:  84% (68460/81500)Updating files:  85% (69275/81500)Updating files:  86% (70090/81500)Updating files:  87% (70905/81500)Updating files:  88% (71720/81500)Updating files:  89% (72535/81500)Updating files:  90% (73350/81500)Updating files:  91% (74165/81500)Updating files:  92% (74980/81500)Updating files:  93% (75795/81500)Updating files:  94% (76610/81500)Updating files:  95% (77425/81500)Updating files:  96% (78240/81500)Updating files:  97% (79055/81500)Updating files:  98% (79870/81500)Updating files:  99% (80685/81500)Updating files: 100% (81500/81500)Updating files: 100% (81500/81500), done.
-HEAD is now at 050880ce5 Bump version to 6.0.3 and LKG
-Reading diagnostics from src/compiler/diagnosticMessages.json
-
-added 1 package in 599ms
-npm notice
-npm notice New major version of npm available! 11.9.0 -> 12.2.0
-npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
-npm notice To update run: npm install -g npm@12.2.0
-npm notice
-Reading diagnostics from src/compiler/diagnosticMessages.json
-{
-  "files": 72,
-  "imports": 3718,
-  "exports": 0,
-  "generatorImports": 1,
-  "declined": []
-}
-/tmp/parser-adapted10

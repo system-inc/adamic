@@ -1,8 +1,0 @@
---- FAIL: TestNativeAgreesWithNode (0.00s)
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a (5.26s)
-        oracle_test.go:465: stdout differs
-            node:   exit 0, stdout "0|2|10|4294967294|beta|01|-0|4294967295|alpha|1e0\n0|2|10|9|20|1|7|8|30|40\n0:0\n2:2\n10:10\n4294967294:9\nbeta:20\n01:1\n-0:7\n4294967295:8\nalpha:30\n1e0:40\nbuilt-two|built-b|built-a\n2:built-two\nb:built-b\na:built-a\ntrue|false|false\n2:true\nb:false\na:false\n\n", stderr ""
-            native: exit 0, stdout "beta|01|-0|4294967295|alpha|1e0|0|2|10|4294967294\n20|1|7|8|30|40|0|2|10|9\nbeta:20\n01:1\n-0:7\n4294967295:8\nalpha:30\n1e0:40\n0:0\n2:2\n10:10\n4294967294:9\nbuilt-b|built-a|built-two\nb:built-b\na:built-a\n2:built-two\nfalse|false|true\nb:false\na:false\n2:true\n\n", stderr ""
-FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	5.265s
-FAIL
