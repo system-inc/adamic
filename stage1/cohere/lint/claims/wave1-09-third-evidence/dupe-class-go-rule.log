@@ -1,0 +1,6 @@
+case 0
+/workspace/adamic/stage1/cohere/lint/claims/wave1-09-third-evidence/dupe-class.ts.txt:1:20
+  @typescript-eslint/no-dupe-class-members  This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+
+range 19 22 noDupeClassMembers 		
+fixed	class A { foo() {} foo() {} }\u000a
