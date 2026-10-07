@@ -1,0 +1,34 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class AncestorNode {
+    readonly kind: string; readonly start: number; readonly end: number; readonly name: string;
+    readonly childStart: number; readonly childEnd: number; readonly children: number;
+    constructor(kind: string, start: number, end: number, name: string, childStart: number, childEnd: number, children: number) {
+        this.kind = kind; this.start = start; this.end = end; this.name = name;
+        this.childStart = childStart; this.childEnd = childEnd; this.children = children;
+    }
+}
+export class TypeDeclaration {
+    readonly file: string; readonly chain: readonly AncestorNode[];
+    constructor(file: string, chain: readonly AncestorNode[]) { this.file = file; this.chain = chain; }
+}
+export function typeDeclarationAncestry(rules: Rules, index: number, awaited: boolean): readonly TypeDeclaration[] {
+    const frames = new Frames(rules.ask(index, 'type-declaration-ancestry' + (awaited ? '\nawaited' : '')));
+    header(frames, 'type-declaration-ancestry'); const result: TypeDeclaration[] = [];
+    const parts = frames.natural();
+    for(let part = 0; part < parts; part++) {
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const file = frames.field(); const length = frames.natural(); const chain: AncestorNode[] = [];
+            for(let ancestor = 0; ancestor < length; ancestor++) {
+                const kind = frames.field(); const start = frames.natural(); const end = frames.natural(); const name = frames.field();
+                let childStart = -1; let childEnd = -1;
+                if(frames.yes()) { childStart = frames.natural(); childEnd = frames.natural(); }
+                chain.push(new AncestorNode(kind, start, end, name, childStart, childEnd, frames.natural()));
+            }
+            result.push(new TypeDeclaration(file, chain));
+        }
+    }
+    frames.end(); return result;
+}

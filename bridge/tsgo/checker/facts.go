@@ -203,6 +203,10 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "type-leaf-facts":
+		return p.typeLeafFacts(out, c, node, question)
+	case "type-declaration-ancestry":
+		return p.typeDeclarationAncestry(out, c, node, question)
 	case "symbol-lineage":
 		return p.symbolLineage(out, c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":

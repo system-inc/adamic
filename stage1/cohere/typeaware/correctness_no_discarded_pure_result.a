@@ -1,0 +1,41 @@
+import type { Bindings } from './bindings.ts';
+import { SymbolLineage } from './symbol_lineage.a';
+import { typeLeaves } from './type_leaf_facts.a';
+import { Diagnostic } from './diagnostic.ts';
+
+const message = "This call computes a new value and changes nothing, and its result is thrown away, so the statement does nothing. Strings are immutable (`name.trim()` returns a trimmed copy and leaves `name` as it was), and these array methods return a new array or a value without touching the original (`list.concat(more)` does not add to `list`). Assign the result (`name = name.trim()`, `list = list.concat(more)`), use the mutating form (`list.push(...more)`), or delete the statement.";
+
+const stringMethods = ['at', 'charAt', 'charCodeAt', 'codePointAt', 'concat', 'endsWith', 'includes', 'indexOf', 'isWellFormed', 'lastIndexOf', 'match', 'matchAll', 'padEnd', 'padStart', 'replace', 'replaceAll', 'search', 'slice', 'split', 'startsWith', 'substr', 'substring', 'toLocaleLowerCase', 'toLocaleUpperCase', 'toLowerCase', 'toString', 'toUpperCase', 'toWellFormed', 'trim', 'trimEnd', 'trimLeft', 'trimRight', 'trimStart', 'valueOf'];
+const arrayMethods = ['at', 'concat', 'entries', 'flat', 'includes', 'indexOf', 'join', 'keys', 'lastIndexOf', 'slice', 'toReversed', 'toSorted', 'toSpliced', 'values', 'with'];
+export class DiscardedPureResult {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    check(statement: number): void {
+        const rules = this.bindings.rules; const callIndex = rules.skip(rules.parser.node(statement).children[0] ?? -1);
+        const call = rules.parser.node(callIndex);
+        if(call.kind !== 'CallExpression') { return; }
+        const callee = rules.parser.node(rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') { return; }
+        const nameIndex = callee.children[callee.children.length - 1] ?? -1; const name = rules.parser.node(nameIndex);
+        if(name.kind !== 'Identifier' || !stringMethods.includes(name.text) && !arrayMethods.includes(name.text)) { return; }
+        const declarations = new SymbolLineage(rules, nameIndex, false).declarations;
+        if(declarations.length === 0 || !declarations.every((declaration) => declaration.kind === 'MethodSignature' &&
+            declaration.defaultLibrary && declaration.parentKind === 'InterfaceDeclaration' &&
+            (declaration.parentName === 'String' ? stringMethods.includes(name.text) :
+                ['Array', 'ReadonlyArray'].includes(declaration.parentName) && arrayMethods.includes(name.text)))) { return; }
+        for(const argument of call.children.slice(call.children.length - call.list)) {
+            const value = rules.skip(argument); const kind = rules.parser.node(value).kind;
+            if(kind === 'ArrowFunction' || kind === 'FunctionExpression') { return; }
+            const leaves = typeLeaves(rules, value, false);
+            if(leaves.length === 0 || leaves.some((leaf) => (leaf.flags & 3) !== 0 || leaf.calls > 0)) { return; }
+        }
+        rules.findings.push(new Diagnostic('nexus/correctness-no-discarded-pure-result', 'discardedPureResult', message,
+            rules.byte(rules.start(call)), rules.byte(call.end), ''));
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            if(this.bindings.parent(index) >= 0 && rules.parser.node(index).kind === 'ExpressionStatement') { this.check(index); }
+        }
+    }
+}

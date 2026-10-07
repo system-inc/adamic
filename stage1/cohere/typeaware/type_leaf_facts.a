@@ -1,0 +1,32 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { types } from './facts.ts';
+import { unionFlag } from './flags.ts';
+
+export class TypeLeaf {
+    readonly id: number; readonly flags: number; readonly array: boolean; readonly calls: number;
+    readonly stringLiteral: boolean; readonly literal: string; readonly symbol: string; readonly library: boolean; readonly property: boolean;
+    constructor(rules: Rules, index: number, id: number, property?: string) {
+        const frames = new Frames(rules.ask(index, `type-leaf-facts\n${id}${property === undefined ? '' : '\n' + property}`));
+        header(frames, 'type-leaf-facts');
+        this.id = id; this.flags = frames.natural(); this.array = frames.yes(); this.calls = frames.natural();
+        this.stringLiteral = frames.yes(); this.literal = frames.field();
+        let symbol = ''; let library = false;
+        if(frames.yes()) {
+            symbol = frames.field(); const count = frames.natural();
+            for(let at = 0; at < count; at++) { frames.field(); frames.yes(); if(frames.yes()) { library = true; } }
+        }
+        this.symbol = symbol; this.library = library;
+        this.property = frames.yes() ? frames.yes() : false; frames.end();
+    }
+}
+export function typeLeaves(rules: Rules, index: number, constrained = true): readonly TypeLeaf[] {
+    const mode = constrained ? 'type-shape' : 'raw-shape';
+    const answer = types(rules.ask(index, mode), mode);
+    if(!answer.present || answer.roots.length === 0) { return []; }
+    const root = answer.type(answer.roots[0] ?? 0);
+    const ids = (root.flags & unionFlag) === 0 ? [root.id] : root.parts;
+    const leaves: TypeLeaf[] = [];
+    for(const id of ids) { leaves.push(new TypeLeaf(rules, index, id)); }
+    return leaves;
+}

@@ -1,0 +1,58 @@
+import type { Bindings } from './bindings.ts';
+import { typeDeclarationAncestry } from './type_declaration_ancestry.a';
+import type { TypeDeclaration } from './type_declaration_ancestry.a';
+import { Diagnostic } from './diagnostic.ts';
+
+const message = "This call returns a `{{typeName}}` and the statement throws it away, so the arm that says it failed (a write that never landed, a file that would not parse) is never read and the code runs on as if it succeeded. Keep the outcome and handle its failure arm, or return it to a caller that will. If ignoring it is the intent, say so with `void`.";
+
+const names = ['JsonParseOutcomeType', 'JsoncParseOutcomeType', 'JsonFileReadOutcomeType', 'JsonFileWriteOutcomeType', 'PackageJsonReadOutcomeType'];
+const files = ['/nexus/source/structured-text/json/Json.ts', '/nexus/source/structured-text/json/Jsonc.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/system/PackageJson.ts'];
+export class OutcomeArms {
+    readonly key: string; readonly name: string; readonly count: number; readonly seen: string[];
+    constructor(key: string, name: string, count: number) { this.key = key; this.name = name; this.count = count; this.seen = []; }
+}
+export class DiscardedOutcome {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    add(declaration: TypeDeclaration, groups: OutcomeArms[]): void {
+        const chain = declaration.chain; const arm = chain[0];
+        if(arm === undefined || arm.kind !== 'TypeLiteral') { return; }
+        let at = 1;
+        while(chain[at]?.kind === 'ParenthesizedType') { at++; }
+        const union = chain[at];
+        if(union === undefined || union.kind !== 'UnionType') { return; }
+        at++;
+        while(chain[at]?.kind === 'ParenthesizedType') { at++; }
+        const alias = chain[at]; const previous = chain[at - 1];
+        if(alias === undefined || previous === undefined || alias.kind !== 'TypeAliasDeclaration' || chain[at + 1]?.kind !== 'SourceFile' ||
+            alias.childStart !== previous.start || alias.childEnd !== previous.end) { return; }
+        const known = names.indexOf(alias.name);
+        if(known < 0 || !declaration.file.endsWith(files[known] ?? '')) { return; }
+        const key = `${declaration.file}:${union.start}:${union.end}`;
+        let group = groups.find((candidate) => candidate.key === key);
+        if(group === undefined) { group = new OutcomeArms(key, alias.name, union.children); groups.push(group); }
+        const identity = `${arm.start}:${arm.end}`;
+        if(!group.seen.includes(identity)) { group.seen.push(identity); }
+    }
+    check(statement: number): void {
+        const rules = this.bindings.rules; let call = rules.skip(rules.parser.node(statement).children[0] ?? -1); let awaited = false;
+        if(rules.parser.node(call).kind === 'AwaitExpression') { awaited = true; call = rules.skip(rules.parser.node(call).children[0] ?? -1); }
+        if(rules.parser.node(call).kind !== 'CallExpression') { return; }
+        const declarations = typeDeclarationAncestry(rules, call, awaited); const groups: OutcomeArms[] = [];
+        for(const declaration of declarations) { this.add(declaration, groups); }
+        for(const name of names) {
+            if(groups.some((group) => group.name === name && group.seen.length === group.count)) {
+                const node = rules.parser.node(statement);
+                rules.findings.push(new Diagnostic('nexus/correctness-no-discarded-outcome', 'outcomeDiscarded', message.replace('{{typeName}}', name),
+                    rules.byte(rules.start(node)), rules.byte(node.end), ''));
+                return;
+            }
+        }
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            if(this.bindings.parent(index) >= 0 && rules.parser.node(index).kind === 'ExpressionStatement') { this.check(index); }
+        }
+    }
+}

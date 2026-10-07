@@ -1,0 +1,122 @@
+import type { Bindings } from './bindings.ts';
+import { TypeLeaf, typeLeaves } from './type_leaf_facts.a';
+import { SymbolLineage } from './symbol_lineage.a';
+import { Diagnostic } from './diagnostic.ts';
+import { numberLike, booleanLike, bigintLike, nullish, stringLike } from './flags.ts';
+
+const inOnArrayMessage = "This uses `in` to look for a value in an array. `in` asks whether the array has a property or index of that name, never whether it holds that element, and this name is neither, so the test is always false. Use `.includes()` for membership.";
+const impossibleSizeComparisonMessage = "This compares a `.length` or `.size` against a value it can never be on the other side of. A length or size is never negative, so the comparison has the same answer every time: always false (`< 0`, `=== -1`) or always true (`>= 0`, `!== -1`). Compare against `0` for empty, or `> 0` for not empty.";
+const bracketAccessOnCollectionMessage = "This reads or writes a Map or Set with brackets. Brackets reach the object's own properties, not its entries, so a read finds nothing that `.set()` or `.add()` stored and a write stores nothing `.get()` or `.has()` will see. Use `.get()`, `.set()`, `.has()` or `.add()`.";
+const objectMethodOnCollectionMessage = "This hands a Map or Set to an `Object` method that lists own properties. Entries are not properties, so the result is always empty. Use the collection's own `.keys()`, `.values()` or `.entries()`, or `Array.from(...)` around one of them.";
+
+const allCollections = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet', 'WeakMap', 'WeakSet'];
+const sizedCollections = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet'];
+const typedArrays = ['Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float16Array', 'Float32Array', 'Float64Array', 'BigInt64Array', 'BigUint64Array'];
+
+export class CollectionMisuse {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    collection(index: number, names: readonly string[]): boolean {
+        const leaves = typeLeaves(this.bindings.rules, index);
+        return leaves.length > 0 && leaves.every((leaf) => names.includes(leaf.symbol) && leaf.library);
+    }
+    arrayIndex(text: string): boolean {
+        if(text.length === 0 || (text.length > 1 && text.startsWith('0'))) { return false; }
+        let value = 0;
+        for(let at = 0; at < text.length; at++) {
+            const digit = text.charCodeAt(at) - 48;
+            if(digit < 0 || digit > 9) { return false; }
+            value = value * 10 + digit;
+            if(value >= 4294967295) { return false; }
+        }
+        return true;
+    }
+    inArray(left: number, right: number): boolean {
+        const rules = this.bindings.rules; const arrays = typeLeaves(rules, right);
+        if(arrays.length === 0 || !arrays.every((array) => array.array)) { return false; }
+        const names = typeLeaves(rules, left);
+        if(names.length === 0) { return false; }
+        for(const name of names) {
+            if(!name.stringLiteral || this.arrayIndex(name.literal)) { return false; }
+            for(const array of arrays) { if(new TypeLeaf(rules, right, array.id, name.literal).property) { return false; } }
+        }
+        return true;
+    }
+    size(index: number): boolean {
+        const rules = this.bindings.rules; const node = rules.parser.node(rules.skip(index));
+        if(node.kind !== 'PropertyAccessExpression') { return false; }
+        const name = rules.parser.node(node.children[node.children.length - 1] ?? -1);
+        if(name.kind !== 'Identifier' || !['length', 'size'].includes(name.text)) { return false; }
+        const leaves = typeLeaves(rules, node.children[0] ?? -1);
+        if(leaves.length === 0) { return false; }
+        return name.text === 'size' ? leaves.every((leaf) => sizedCollections.includes(leaf.symbol) && leaf.library) :
+            leaves.every((leaf) => leaf.array || (leaf.flags & stringLike) !== 0 || (typedArrays.includes(leaf.symbol) && leaf.library));
+    }
+    mirror(operator: string): string {
+        if(operator === 'LessThanToken') { return 'GreaterThanToken'; }
+        if(operator === 'GreaterThanToken') { return 'LessThanToken'; }
+        if(operator === 'LessThanEqualsToken') { return 'GreaterThanEqualsToken'; }
+        if(operator === 'GreaterThanEqualsToken') { return 'LessThanEqualsToken'; }
+        return operator;
+    }
+    decided(operator: string, index: number): boolean {
+        const rules = this.bindings.rules; let expression = rules.skip(index); let sign = 1;
+        if(rules.parser.node(expression).kind === 'PrefixUnaryExpression') {
+            if(rules.parser.node(expression).operator !== 'MinusToken') { return false; }
+            sign = -1; expression = rules.skip(rules.parser.node(expression).children[0] ?? -1);
+        }
+        const node = rules.parser.node(expression);
+        if(node.kind !== 'NumericLiteral') { return false; }
+        const value = sign * Number.parseFloat(node.text);
+        if(Number.isNaN(value)) { return false; }
+        if(operator === 'LessThanToken' || operator === 'GreaterThanEqualsToken') { return value <= 0; }
+        return ['LessThanEqualsToken', 'GreaterThanToken', 'EqualsEqualsEqualsToken', 'EqualsEqualsToken', 'ExclamationEqualsEqualsToken', 'ExclamationEqualsToken'].includes(operator) && value < 0;
+    }
+    misses(collection: number, key: number): boolean {
+        const rules = this.bindings.rules; const keys = typeLeaves(rules, key, false);
+        if(keys.length === 0) { return false; }
+        const collections = typeLeaves(rules, collection);
+        for(const leaf of keys) {
+            if(leaf.stringLiteral) {
+                for(const part of collections) { if(new TypeLeaf(rules, collection, part.id, leaf.literal).property) { return false; } }
+            }
+            else if((leaf.flags & (numberLike | booleanLike | bigintLike | nullish)) === 0) { return false; }
+        }
+        return true;
+    }
+    objectMethod(index: number): boolean {
+        const rules = this.bindings.rules; const call = rules.parser.node(index);
+        if(call.list === 0) { return false; }
+        const callee = rules.parser.node(rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') { return false; }
+        const objectIndex = rules.skip(callee.children[0] ?? -1); const nameIndex = callee.children[callee.children.length - 1] ?? -1;
+        const object = rules.parser.node(objectIndex); const name = rules.parser.node(nameIndex);
+        if(object.kind !== 'Identifier' || object.text !== 'Object' || name.kind !== 'Identifier' || !['keys', 'values', 'entries', 'getOwnPropertyNames'].includes(name.text)) { return false; }
+        if(!new SymbolLineage(rules, objectIndex, false).declarations.some((declaration) => declaration.defaultLibrary) ||
+            !new SymbolLineage(rules, nameIndex, false).declarations.some((declaration) => declaration.defaultLibrary)) { return false; }
+        return this.collection(call.children[call.children.length - call.list] ?? -1, allCollections);
+    }
+    report(index: number, id: string, message: string): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        rules.findings.push(new Diagnostic('nexus/correctness-no-collection-misuse', id, message, rules.byte(rules.start(node)), rules.byte(node.end), ''));
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            if(this.bindings.parent(index) < 0) { continue; }
+            const node = rules.parser.node(index);
+            if(node.kind === 'BinaryExpression') {
+                const left = node.children[0] ?? -1; const right = node.children[2] ?? -1; const operator = rules.parser.node(node.children[1] ?? -1).kind;
+                if(operator === 'InKeyword') { if(this.inArray(left, right)) { this.report(index, 'inOnArray', inOnArrayMessage); } }
+                else if(this.size(left) ? this.decided(operator, right) : this.size(right) && this.decided(this.mirror(operator), left)) {
+                    this.report(index, 'impossibleSizeComparison', impossibleSizeComparisonMessage);
+                }
+            }
+            else if(node.kind === 'ElementAccessExpression') {
+                const object = node.children[0] ?? -1; const key = node.children[node.children.length - 1] ?? -1;
+                if(key >= 0 && this.collection(object, allCollections) && this.misses(object, key)) { this.report(index, 'bracketAccessOnCollection', bracketAccessOnCollectionMessage); }
+            }
+            else if(node.kind === 'CallExpression' && this.objectMethod(index)) { this.report(index, 'objectMethodOnCollection', objectMethodOnCollectionMessage); }
+        }
+    }
+}
