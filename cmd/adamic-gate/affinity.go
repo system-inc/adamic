@@ -17,9 +17,17 @@ type affinity struct {
 	Shard            int
 	Seconds          float64
 	Unknown          int
+	Split            string `json:",omitempty"`
+	SplitCount       int    `json:",omitempty"`
 }
 
-func (a affinity) key() string { return a.Package + "::@" + a.Fixture }
+func (a affinity) key() string {
+	key := a.Package + "::@" + a.Fixture
+	if a.Split != "" {
+		key += "/" + a.Split
+	}
+	return key
+}
 
 func knownAffinities() []affinity {
 	return []affinity{
@@ -59,7 +67,7 @@ func assignUnits(p *plan, weights map[string]float64) error {
 	grouped := map[int]bool{}
 	var items []packingUnit
 	p.Affinity = nil
-	for _, group := range knownAffinities() {
+	for _, group := range planningAffinities() {
 		if group.WholePackage {
 			for _, u := range p.Units {
 				if u.Package == group.Package {
@@ -126,16 +134,34 @@ func assignUnits(p *plan, weights map[string]float64) error {
 	if p.Environment != nil && ordinary > 1 {
 		ordinary--
 	}
+	// Each declared half owns a dedicated worker, so its measured cost is the
+	// shard budget rather than a component hidden among unrelated packages.
+	reserved := 0
+	for _, group := range p.Affinity {
+		if group.Split != "" {
+			reserved++
+		}
+	}
+	if reserved >= ordinary && len(items) > reserved {
+		return fmt.Errorf("declared affinity split needs %d dedicated shards plus an ordinary shard", reserved)
+	}
+	if reserved > ordinary {
+		return fmt.Errorf("declared affinity split needs %d dedicated shards", reserved)
+	}
+	nextDedicated := 0
 	loads := make([]float64, p.Count)
 	for _, item := range items {
-		best := 0
-		if item.required {
+		best := reserved
+		if item.affinity >= 0 && p.Affinity[item.affinity].Split != "" {
+			best = nextDedicated
+			nextDedicated++
+		} else if item.required {
 			best = p.Count - 1
 		} else if !item.known {
 			hash := sha256.Sum256([]byte(item.key))
-			best = int(binary.BigEndian.Uint64(hash[:8]) % uint64(ordinary))
+			best = int(binary.BigEndian.Uint64(hash[:8])%uint64(ordinary-reserved)) + reserved
 		} else {
-			for j := 1; j < ordinary; j++ {
+			for j := reserved + 1; j < ordinary; j++ {
 				if loads[j] < loads[best] {
 					best = j
 				}
@@ -153,6 +179,9 @@ func assignUnits(p *plan, weights map[string]float64) error {
 }
 
 func validateAffinity(p plan) error {
+	if err := validateDeclaredSplits(p); err != nil {
+		return err
+	}
 	for _, group := range p.Affinity {
 		for _, c := range p.Complements {
 			if c.Package != group.Package {

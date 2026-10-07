@@ -52,7 +52,7 @@ func predictions(p plan, weights map[string]float64) []prediction {
 		r := &result[group.Shard]
 		r.Seconds += group.Seconds
 		r.Unknown += group.Unknown
-		u := unit{Package: group.Package, Test: "@" + group.Fixture, Shard: group.Shard, Seconds: group.Seconds}
+		u := unit{Package: group.Package, Test: "@" + group.Fixture + splitSuffix(group), Shard: group.Shard, Seconds: group.Seconds}
 		if r.Largest.Package == "" || u.Seconds > r.Largest.Seconds || (u.Seconds == r.Largest.Seconds && u.key() < r.Largest.key()) {
 			r.Largest = u
 		}

@@ -5,8 +5,8 @@ import "testing"
 func TestKnownAffinitiesStayWhole(t *testing.T) {
 	p := plan{Count: 15}
 	weights := map[string]float64{}
-	groups := knownAffinities()
-	if len(groups) != 3 || !groups[0].WholePackage || len(groups[1].Tests) != 9 || len(groups[2].Tests) != 3 {
+	groups := planningAffinities()
+	if len(groups) != 4 || !groups[0].WholePackage || len(groups[1].Tests) != 4 || len(groups[2].Tests) != 5 || len(groups[3].Tests) != 3 {
 		t.Fatal("lost fixture inventory", groups)
 	}
 	for _, g := range groups {
@@ -23,7 +23,7 @@ func TestKnownAffinitiesStayWhole(t *testing.T) {
 	if err := assignUnits(&p, weights); err != nil {
 		t.Fatal(err)
 	}
-	if len(p.Affinity) != 3 {
+	if len(p.Affinity) != 4 {
 		t.Fatal("missing affinity in plan")
 	}
 	for _, g := range groups {
@@ -48,7 +48,7 @@ func TestKnownAffinitiesStayWhole(t *testing.T) {
 	for _, s := range predictions {
 		total += s.Seconds
 	}
-	if total != 369 {
+	if total != 492 {
 		t.Fatalf("shared fixture priced more than once: %v", total)
 	}
 	p.Units[0].Shard = (p.Units[0].Shard + 1) % p.Count

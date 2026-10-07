@@ -54,6 +54,11 @@ func TestTimingsPriceLayoutSetupOnce(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	for _, half := range planningAffinities() {
+		if half.Split != "" && weights[half.key()] != float64(10+2*len(half.Tests)) {
+			t.Fatalf("split fixture setup lost or repeated: %s %v", half.key(), weights[half.key()])
+		}
+	}
 	if weights[g.key()] != 28 {
 		t.Fatalf("fixture setup repeated: got %v want 28", weights[g.key()])
 	}

@@ -1291,3 +1291,92 @@ measurement is needed to establish headroom. Even the other shard predictions
 are above 1200 seconds, so fitting layout alone would not certify the whole
 gate under that budget. Raw readings are committed in
 `cmd/adamic-gate/evidence/layout-memory-guard.json`.
+
+### Declared two-half layout split
+
+The follow-up explicitly authorizes the split after the memory guard. Planning
+now declares `layoutOnce/half-a` and `layoutOnce/half-b`, each with
+`SplitCount=2`, its member selectors, cost, and dedicated shard. Each half runs
+one package invocation. `layoutSlots` stays at two; no stage1 test file changes.
+The group membership is partitioned at whole top-level parent boundaries:
+
+- Half A: code blocks, leaf composition, lists, whitespace (including its three
+  policy mutants).
+- Half B: HTML blocks, quotes, root, structure, tables.
+
+The planner's `-run` patterns select all subtests of those parents (`/.*`).
+Keeping parents whole preserves unguarded whitespace policy work and future
+subtests. The nine parents, all thirty existing mutant subtests, and every
+non-mutant parent check remain covered exactly once across the two halves.
+Each process builds its own fixture once, giving two builds. An incomplete,
+overlapping, co-located, or otherwise corrupted split is refused. Other tests
+cannot be packed into these two dedicated shards. Insufficient shard counts
+refuse rather than collapsing the split.
+
+Calibration produces each half's cost by subtracting each member's observed
+fixture span and adding one median fixture span for that half. It retains the
+historical whole-group estimate for audit. Before joint half measurements,
+these remain reconstructed conservative estimates, not observed joint spans.
+The estimated source-47fb plan is in
+`cmd/adamic-gate/evidence/layout-split-estimated-plan.json`:
+
+| Shard | Estimated test seconds | Actual |
+| --- | ---: | --- |
+| 0, half A | 2343.630 | pending |
+| 1, half B | 1645.334 | pending |
+| 2 | 1748.360 | not rerun |
+| 3 | 1748.360 | not rerun |
+| 4 | 1748.360 | not rerun |
+| 5 | 1748.355 | not rerun |
+| 6 | 1748.360 | not rerun |
+| 7 | 1748.360 | not rerun |
+| 8 | 1748.360 | not rerun |
+| 9 | 1748.350 | not rerun |
+| 10 | 1748.360 | not rerun |
+| 11 | 1748.360 | not rerun |
+| 12 | 1748.360 | not rerun |
+| 13 | 1748.360 | not rerun |
+| 14 | 1731.075 | not rerun |
+
+These estimates use the fifteen original shard-log build-flags lines in
+`timings.json.audit.json`, not a new timing claim. The original required-input
+shard stays separate. Dedicated layout shards leave twelve ordinary packing
+shards rather than thirteen, so other shard predictions increase. This plan
+alone does not demonstrate a sub-20-minute gate.
+
+Measurement limitation and assumption: the selected runtime provides one cloud
+machine and no cloud provisioning credentials/capability. The available
+fallback is two fresh worker containers run sequentially on that machine,
+each limited to `cpu.max=400000 100000` and 16 GiB. They are separate fresh
+cgroups, not two independent cloud machines. Setup and test use separate fresh
+containers per worker so the end-of-test `memory.peak` excludes setup and the
+outer machine's lifetime peak. Setup is measured separately per worker.
+Existing content-addressed tool/build caches remain warm; answer checks run
+with `ADAMIC_GATE_UNCACHED=1`. Each long half is measured once.
+
+An initial uninstrumented attempt and an attempt tracing Go itself were aborted
+before any mutant completed. Go tracing produced scheduling disturbance, so
+neither attempt supplies reported timings. The measured attempts use external
+`/proc` sampling with a nominal 5 ms wait between scans, identifying clang
+commands whose output basename is `mutant` and executable processes named
+`mutant`. No test source or generated executable is changed by instrumentation.
+Native build/run intervals are approximate observations, not exact function
+profiling; short processes can be missed. Go lowering and C emission inside
+`nativeMutant` are outside these external process intervals and remain in the
+residual. Overlapping native intervals will be unioned before reporting a share
+of wall time; summed durations will be reported separately.
+
+Validation: the full runner test suite, focused race regressions including
+compare provenance, and vet passed. Five split overlay mutants were caught:
+
+| Mutant | Regression that caught it |
+| --- | --- |
+| coalesce both halves onto one shard | `TestDeclaredLayoutSplitCoverageAndIsolation` |
+| lose a half's package assignment | `TestDeclaredLayoutSplitCoverageAndIsolation` |
+| pack ordinary work on a dedicated half | `TestDedicatedLayoutShardsStayReservedBeforeHeavyOrdinaryItems` |
+| charge shared fixture only once across both halves | `TestTimingsPriceLayoutSetupOnce` |
+| accept an omitted half | `TestDeclaredLayoutSplitRefusesCorruption/missing-half` |
+
+The compare-provenance implementation remains in commit `be217bbd`; its local
+matching, wrong-commit, wrong-Node, wrong-Go, and legacy-toolchain tests pass
+with the new split. No second provenance implementation is needed.

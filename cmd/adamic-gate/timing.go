@@ -174,7 +174,13 @@ func calibrateTimings(paths []string) (map[string]float64, timingCalibration, er
 		}
 		weights[key] = seconds
 	}
-	for _, g := range knownAffinities() {
+	groups := knownAffinities()
+	for _, g := range planningAffinities() {
+		if g.Split != "" {
+			groups = append(groups, g)
+		}
+	}
+	for _, g := range groups {
 		if g.WholePackage {
 			for key := range weights {
 				if strings.HasPrefix(key, g.Package+"::") {
