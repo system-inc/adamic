@@ -54,8 +54,11 @@ type Block struct {
 }
 
 // Program is a whole generated program: the order of its statements is the order it runs in.
+// Refusal, when set, is a substring the compiler's message must contain. The program is not meant
+// to compile: it breaks one shareability or purity proof, and the path in the message is the check.
 type Program struct {
-	Block Block
+	Block   Block
+	Refusal string
 }
 
 // text makes an expression of literal text alone.
@@ -166,7 +169,7 @@ func (e *Expression) String() string {
 
 // Clone copies a program deeply, so the shrinker can change a candidate without touching the original.
 func (p *Program) Clone() *Program {
-	return &Program{Block: *p.Block.clone()}
+	return &Program{Block: *p.Block.clone(), Refusal: p.Refusal}
 }
 
 func (b *Block) clone() *Block {

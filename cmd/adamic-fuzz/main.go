@@ -71,6 +71,7 @@ func run() int {
 		fmt.Fprintln(os.Stderr, err)
 		return 1
 	}
+	fmt.Printf("thread sanitizer: %s\n", checkout.TSan)
 	if *try != "" {
 		source, err := os.ReadFile(*try)
 		if err != nil {
@@ -146,7 +147,7 @@ func run() int {
 	group.Wait()
 
 	fmt.Printf("\n%d programs from seed %d in %s on %s\n", *count, *seed, time.Since(started).Round(time.Second), checkout.Root)
-	for _, verdict := range []fuzz.Verdict{fuzz.Agreed, fuzz.Finding, fuzz.Checked, fuzz.NotYet, fuzz.Invalid, fuzz.Unfit} {
+	for _, verdict := range []fuzz.Verdict{fuzz.Agreed, fuzz.Refused, fuzz.Finding, fuzz.Checked, fuzz.NotYet, fuzz.Invalid, fuzz.Unfit} {
 		fmt.Printf("  %-8s %d\n", verdict, verdicts[verdict])
 	}
 	var keys []string
