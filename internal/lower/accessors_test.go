@@ -22,6 +22,8 @@ func TestAccessorRefusals(t *testing.T) {
 		{"writable interface", `interface View { x: number } class A { get x(): number { return 1; } } const view: View = new A(); view.x = 2;`, "accessor-field-view", false},
 		{"readonly interface", `interface View { readonly x: number } class A { get x(): number { return 1; } } const view: View = new A(); console.log(view.x.toString());`, "accessor-field-view", false},
 		{"nested writable interface", `interface View { x: number } class A { get x(): number { return 1; } } const items: readonly View[] = [new A()];`, "accessor-field-view", false},
+		{"inferred mixed array", `class A { get total(): number { return 1; } } const items = [new A(), { total: 2 }]; for (const item of items) { console.log(item.total.toString()); }`, "accessor-field-view", false},
+		{"inferred mixed array reversed", `class A { get total(): number { return 1; } } const items = [{ total: 2 }, new A()]; for (const item of items) { console.log(item.total.toString()); }`, "accessor-field-view", false},
 		{"function view", `interface View { x: number } class A { get x(): number { return 1; } } function make(): A { return new A(); } const f: () => View = make;`, "accessor-field-view", false},
 		{"interface inherits accessor", `class A { get x(): number { return 1; } } interface View extends A {} const value: View = new A(); console.log(value.x.toString());`, "accessor-field-view", false},
 		{"unrelated getter interface", `class A { get x(): number { return 1; } } interface View extends A {} class B { other(): number { return 3; } get x(): number { return 2; } } const value: View = new B(); console.log(value.x.toString());`, "accessor-field-view", false},
