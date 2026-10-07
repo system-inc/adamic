@@ -1,0 +1,26 @@
+export interface ModifierDependencies {
+    decode(text: string): string;
+    validArbitrary(text: string): boolean;
+    blank(text: string): boolean;
+    validNamed(text: string): boolean;
+}
+export interface ParsedModifier { present: boolean; kind: string; value: string; }
+function absent(): ParsedModifier { return { present: false, kind: '', value: '' }; }
+// Presence models Go nil; the valid empty string remains a separate value.
+export function parseModifier(modifier: string, dependencies: ModifierDependencies): ParsedModifier {
+    if(modifier.length >= 2 && modifier.startsWith('[') && modifier.endsWith(']')) {
+        const value = dependencies.decode(modifier.slice(1, -1));
+        if(!dependencies.validArbitrary(value)) return absent();
+        if(dependencies.blank(value)) return absent();
+        return { present: true, kind: 'arbitrary', value };
+    }
+    if(modifier.length >= 2 && modifier.startsWith('(') && modifier.endsWith(')')) {
+        const inner = modifier.slice(1, -1);
+        if(!inner.startsWith('--')) return absent();
+        if(!dependencies.validArbitrary(inner)) return absent();
+        const value = dependencies.decode('var(' + inner + ')');
+        return { present: true, kind: 'arbitrary', value };
+    }
+    if(!dependencies.validNamed(modifier)) return absent();
+    return { present: true, kind: 'named', value: modifier };
+}

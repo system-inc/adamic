@@ -1,0 +1,21 @@
+=== RUN   TestParseAtRule
+    helper_test.go:37: captured 1143 Go source literals from all 6 consumer rule test families; map[enforce_canonical_classes:204 enforce_consistent_class_order:316 enforce_consistent_variant_order:52 enforce_shorthand_classes:178 no_conflicting_classes:195 no_unknown_classes:184]
+    helper_test.go:82: baseline compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 143354 Go bytes
+    helper_test.go:82: byte-offset-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 143354 Go bytes
+    helper_test.go:82: NEL-trim-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 143354 Go bytes
+    helper_test.go:82: child-copy-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 143354 Go bytes
+--- PASS: TestParseAtRule (5.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-13/at-rule	5.797s
+=== RUN   TestParseModifier
+    helper_test.go:37: captured 1148 Go source literals from all 6 consumer rule test families; map[enforce_canonical_classes:204 enforce_consistent_class_order:316 enforce_consistent_variant_order:52 enforce_shorthand_classes:178 no_conflicting_classes:195 no_unknown_classes:184]
+    helper_test.go:88: baseline compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 26559 Go bytes
+    helper_test.go:88: blank-acceptance-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 26559 Go bytes
+    helper_test.go:88: variable-prefix-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 26559 Go bytes
+    helper_test.go:88: named-kind-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 26559 Go bytes
+    helper_test.go:88: wrap-before-decode-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 26559 Go bytes
+    helper_test.go:88: arbitrary-validity-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 26559 Go bytes
+    helper_test.go:88: named-validity-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 26559 Go bytes
+--- PASS: TestParseModifier (13.57s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-13/modifier	13.573s

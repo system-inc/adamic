@@ -1,0 +1,10 @@
+=== RUN   TestParseModifier
+    helper_test.go:35: go [build -overlay=/tmp/adamic-gate/TestParseModifier1553695002/002/overlay.json -o /tmp/adamic-gate/TestParseModifier1553695002/002/go-oracle /workspace/adamic/cohere/adamic_wave13_modifier.go]: exit status 1
+        # command-line-arguments
+        ../stage1/cohere/lint/helpers/from-wave1-13/modifier/testdata/oracle.go:53:3: syntax error: unexpected newline in argument list; possibly missing comma or )
+        ../stage1/cohere/lint/helpers/from-wave1-13/modifier/testdata/oracle.go:54:36: syntax error: unexpected ] at end of statement
+        ../stage1/cohere/lint/helpers/from-wave1-13/modifier/testdata/oracle.go:68:6: syntax error: unexpected name units, expected (
+--- FAIL: TestParseModifier (1.36s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-13/modifier	1.364s
+FAIL

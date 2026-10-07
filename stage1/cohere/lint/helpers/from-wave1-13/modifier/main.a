@@ -1,0 +1,33 @@
+import { parseModifier } from './parse_modifier.a';
+import { OptionsJson } from '../../options_json.ts';
+import { panic, programArguments, readTextFile } from 'adamic';
+class GoDependencies {
+    readonly json: OptionsJson;
+    readonly row: number;
+    constructor(json: OptionsJson, row: number) { this.json = json; this.row = row; }
+    read(group: string, text: string): string {
+        const index = this.json.field(this.json.field(this.row, group), text);
+        if(index < 0) panic('uncaptured dependency call: ' + group + ':' + text);
+        return this.json.node(index).text;
+    }
+    decode(text: string): string { return this.read('decodes', text); }
+    validArbitrary(text: string): boolean { return this.read('validArbitrary', text) === 'true'; }
+    blank(text: string): boolean { return this.read('blank', text) === 'true'; }
+    validNamed(text: string): boolean { return this.read('validNamed', text) === 'true'; }
+}
+function units(text: string): string {
+    const codes: string[] = [];
+    for(let i = 0; i < text.length; i++) codes.push(text.charCodeAt(i).toString());
+    return codes.join(',');
+}
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('corpus path'));
+if(file.kind === 'Error') panic(file.message);
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0 || json.node(root).kind !== 'array') panic('invalid corpus');
+for(const row of json.node(root).children) {
+    const text = json.node(json.field(row, 'source')).text;
+    const result = parseModifier(text, new GoDependencies(json, row));
+    console.log(`${result.present}|${result.kind}|${units(result.value)}`);
+}
