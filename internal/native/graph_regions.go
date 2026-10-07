@@ -18,7 +18,7 @@ func (e *emitter) adoptGraphObject(value string, literal ir.ObjectLiteral) {
 	if literal.Class != 0 {
 		graph = graph || e.program.Classes[literal.Class-1].Graph
 	}
-	e.adoptGraph(value, fmt.Sprintf("sizeof *%s + %s->shape->count * sizeof(adamic_value)", value, value), graph)
+	e.adoptGraph(value, fmt.Sprintf("sizeof *%s + %s->shape->count * (sizeof(adamic_value) + 2)", value, value), graph)
 }
 
 // The runtime decides boundary ownership from both actual allocations. This

@@ -303,7 +303,7 @@ type (
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
 		SpreadReadiness string
-		GraphTypes []int
+		GraphTypes      []int
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
