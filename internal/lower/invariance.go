@@ -215,7 +215,7 @@ func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutabl
 	}
 	for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 		source, target := fromArguments[index], toArguments[index]
-		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
+		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source) || !l.enumMemberPromises(target, source, map[[2]*checker.Type]bool{})) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -396,7 +396,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	switch {
 	case node.Kind == ast.KindAsExpression:
 		as := node.AsAsExpression()
-		if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return nil
 		}
 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)

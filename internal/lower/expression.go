@@ -15,7 +15,7 @@ import (
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
-			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
+			if stored, known := l.representation(l.enumRemainderType(node, map[*ast.Node]bool{})); known {
 				return stored, nil
 			}
 		}
@@ -161,6 +161,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil {
+		value, err = l.enumTagView(node, value)
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -378,6 +381,15 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		value, err := l.enumNeverValue(node)
 		if err != nil {
 			return nil, err
+		}
+		contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		if contextual == nil {
+			return value, nil
+		}
+		if contextual.Flags()&checker.TypeFlagsNever == 0 {
+			if stored := l.enumRemainderType(node, map[*ast.Node]bool{}); stored != nil && l.checker.IsTypeAssignableTo(stored, contextual) && l.enumAssignable(stored, contextual) {
+				return value, nil
+			}
 		}
 		return l.enumNeverCheck(node, value, identity), nil
 	}

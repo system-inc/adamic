@@ -3,6 +3,7 @@ function describe(value: SyntaxKind): number {
     if (value === SyntaxKind.First) { return 10; }
     if (value === SyntaxKind.Last) { return 20; }
     value++;
+    console.log(`${value}`);
     return 99;
 }
 function other(): number { return 42; }

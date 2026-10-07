@@ -1,0 +1,9 @@
+enum Kind { Only = 1 }
+interface Wide { readonly kind: Kind; readonly value: string }
+interface Exact { readonly kind: Kind.Only; readonly value: string }
+function numeric(): number { return 42; }
+const wide: Wide = { kind: numeric(), value: 'text' };
+console.log('before');
+const exact: Exact = wide as Exact;
+console.log(`${exact.kind}`);
+console.log('after');

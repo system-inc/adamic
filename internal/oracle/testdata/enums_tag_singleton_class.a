@@ -1,0 +1,19 @@
+enum AKind { A }
+enum BKind { B = 1 }
+class A {
+    readonly kind: AKind;
+    readonly value: string;
+    constructor(kind: AKind) { this.kind = kind; this.value = 'text'; }
+}
+class B {
+    readonly kind: BKind = BKind.B;
+    readonly value: number = 7;
+}
+function numeric(): number { return 1; }
+function show(value: A | B): void {
+    if (value.kind === BKind.B) { console.log(`${value.value + 1}`); }
+}
+show(new B());
+console.log('before');
+show(new A(numeric()));
+console.log('after');

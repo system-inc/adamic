@@ -11,6 +11,7 @@ import (
 func TestNumericEnumsAreOpen(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
+		{"singleton_member_tags", "enum AKind { A } enum BKind { B = 1 } interface A { readonly kind: AKind.A; readonly value: string } interface B { readonly kind: BKind.B; readonly value: number } const a: A = { kind: AKind.A, value: 'text' }; function show(v: A | B): void { if (v.kind === BKind.B) console.log(`${v.value + 1}`); } show(a);"},
 		{"singleton", "enum E { A } function numeric(): number { return 42; } const e: E = numeric(); console.log(`${e}`);"},
 		{"member_tags", "enum Kind { A, B } interface A { readonly kind: Kind.A; readonly value: string } interface B { readonly kind: Kind.B; readonly value: number } const a: A = { kind: Kind.A, value: 'text' }; function show(value: A | B): void { if(value.kind === Kind.B) { console.log(`${value.value + 1}`); } } show(a);"},
 		{"coalesce", "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Pair = A | B } const map = new Map<string, Flags>(); console.log(`${map.get('high') ?? Flags.None}`);"},
@@ -79,12 +80,15 @@ func TestNumericEnumNeverProof(t *testing.T) {
 func TestNumericEnumLiteralPromises(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
+		{"singleton_member_cast", "enum Kind { A } function numeric(): number { return 42; } const exact = numeric() as Kind.A;"},
+		{"singleton_member_view", "enum Kind { A } interface Wide { readonly kind: Kind } interface Exact { readonly kind: Kind.A } const wide: Wide = { kind: Kind.A }; const exact: Exact = wide;"},
+		{"singleton_member_array", "enum Kind { A } interface Wide { readonly kind: Kind } interface Exact { readonly kind: Kind.A } const exact: Exact[] = []; const wide: Wide[] = exact;"},
+		{"singleton_member_promise", "enum Kind { A } function numeric(): number { return 42; } const a: { readonly kind: Kind.A } = { kind: numeric() };"},
 		{"member_tag", "enum Kind { A, B } interface A { readonly kind: Kind.A; readonly value: string } interface B { readonly kind: Kind.B; readonly value: number } function numeric(): number { return 1; } const a: A = { kind: numeric(), value: 'text' }; function show(value: A | B): void { if (value.kind === Kind.B) { console.log(`${value.value + 1}`); } } show(a);"},
 		{"narrowed_member", "enum E { A, B } function show(e: E): E.A { if(e === E.B) { return E.A; } return e; }"},
 		{"plain_literal", "enum E { A } function numeric(): number { return 42; } const e: E = numeric(); const zero: 0 = e;"},
 		{"indexed_subset", "enum E { A, B, C } function show(values: E[]): E.A | E.B { if(values[0] === undefined || values[0] === E.C) { return E.A; } return values[0]; }"},
 		{"subset_member", "enum E { A, B, C } function show(e: E): E.A | E.B { if(e === E.C) { return E.A; } return e; }"},
-		{"open_tag", "enum AKind { A } enum BKind { B = 1 } interface A { readonly kind: AKind; readonly value: string } interface B { readonly kind: BKind; readonly value: number } function numeric(): number { return 1; } const a: A = { kind: numeric(), value: 'text' }; function show(value: A | B): void { if (value.kind === BKind.B) { console.log(`${value.value + 1}`); } } show(a);"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
@@ -100,5 +104,40 @@ func TestNumericEnumMetadataIsNotDiscriminant(t *testing.T) {
 	_, err := lowerSource(t, "enum Flags { X = 1, Y = 2 } interface A { readonly kind: 'a'; readonly flags: Flags; readonly s: string } interface B { readonly kind: 'b'; readonly flags: Flags; readonly n: number } function show(v: A | B): void { if (v.kind === 'b') { console.log(String(v.n)); } }")
 	if err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestNumericEnumOpenTagIsChecked(t *testing.T) {
+	program, err := lowerSource(t, "enum AKind { A } enum BKind { B = 1 } interface A { readonly kind: AKind; readonly value: string } interface B { readonly kind: BKind; readonly value: number } function numeric(): number { return 1; } const a: A = { kind: numeric(), value: 'text' }; function show(value: A | B): void { if (value.kind === BKind.B) { console.log(`${value.value + 1}`); } } show(a);")
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked := false
+	for _, function := range program.Functions {
+		walk(function.Body, func(node any) bool {
+			if field, ok := node.(ir.Property); ok && field.CheckMessage != "" {
+				checked = true
+			}
+			return true
+		})
+	}
+	if !checked {
+		t.Fatal("open_tag requires a checked payload view")
+	}
+}
+
+func TestNumericEnumObjectRemainderKeepsUnion(t *testing.T) {
+	_, err := lowerSource(t, "enum AKind { A } enum BKind { B = 1 } interface A { readonly kind: AKind; readonly value: string } interface B { readonly kind: BKind; readonly value: number } function show(v: A | B): void { if (v.kind === AKind.A) return; if (v.kind === BKind.B) return; const wrong: B = v; }")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "object remainder") {
+		t.Fatalf("full remainder must refuse a member promise: %v", err)
+	}
+}
+
+func TestNumericEnumObjectRemainderWideKeepsUnion(t *testing.T) {
+	_, err := lowerSource(t, "enum Kind { First, Last } interface Wide { readonly kind: Kind; readonly value: string } interface Narrow { readonly kind: Kind.First; readonly value: number } function show(v: Wide | Narrow): void { if (v.kind === Kind.First) return; if (v.kind === Kind.Last) return; const wrong: Wide = v; }")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "object remainder") {
+		t.Fatalf("wide remainder must keep the full union: %v", err)
 	}
 }

@@ -112,11 +112,19 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
-		if taken, ok := e.take(expression); ok {
-			return taken
+		if expression.CheckMessage == "" {
+			if taken, ok := e.take(expression); ok {
+				return taken
+			}
 		}
-		lent := e.lendable && lendable(expression.Of) && !expression.Optional
+		lent := expression.CheckMessage == "" && e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
+		if expression.CheckMessage != "" {
+			e.line("if (!(%s)) {", e.checkedFieldShape(object, expression.Name, expression.Of))
+			e.line("\tstatic const char message[] = %s;", cString(expression.CheckMessage))
+			e.line("\tadamic_panic(message, sizeof message - 1);")
+			e.line("}")
+		}
 		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
 		if expression.Of == ir.MaybeNumber {
 			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())

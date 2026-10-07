@@ -382,14 +382,41 @@ func (l *lowering) enumTagDiscriminant(declared, observed *checker.Type, name st
 }
 
 func (l *lowering) enumRefusal(node *ast.Node) error {
-	if l.isExpression(node) {
+	if l.isExpression(node) && (viewSite(node) || (node.Parent != nil && node.Parent.Kind == ast.KindAsExpression)) {
+		if member := l.enumMemberSlot(node); member != nil && l.numericEnum(l.symbol(member.Parent.Name())) && l.checker.GetTypeAtLocation(member.Parent.Name()).Flags()&checker.TypeFlagsUnion == 0 {
+			source := l.checker.GetTypeAtLocation(node)
+			literal := source.Flags()&checker.TypeFlagsNumberLiteral != 0 && !l.openNumericEnumType(source) && reflect.DeepEqual(source.AsLiteralType().Value(), l.checker.GetConstantValue(member))
+			origin := l.enumMemberOrigin(node, l.symbol(member.Parent.Name()), map[*ast.Node]bool{})
+			if !literal && !origin {
+				return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to an explicit numeric enum member slot", Fix: "use the member constant or keep the whole enum type (adamic/enum-literal)"}
+			}
+		}
+	}
+
+	if l.isExpression(node) && viewSite(node) && node.Kind != ast.KindObjectLiteralExpression && node.Kind != ast.KindArrayLiteralExpression && node.Kind != ast.KindAsExpression {
+		if target := l.checker.GetContextualType(node, checker.ContextFlagsNone); target != nil && !l.enumMemberPromises(l.checker.GetTypeAtLocation(node), target, map[[2]*checker.Type]bool{}) {
+			return &Refused{Where: l.program.Where(node), What: "an unproven singleton numeric enum member field in an object view", Fix: "construct the member-tagged object or use a checked cast (adamic/enum-literal)"}
+		}
+	}
+
+	if remainder, _, _ := l.enumObjectRemainder(node); remainder != nil && viewSite(node) {
+		if target := l.checker.GetContextualType(node, checker.ContextFlagsNone); target != nil && target.Flags()&checker.TypeFlagsNever == 0 && !l.checker.IsTypeAssignableTo(remainder, target) {
+			return &Refused{Where: l.program.Where(node), What: "an open numeric enum object remainder seen as " + l.checker.TypeToString(target), Fix: "keep the full object union or check a member view before using its payload (adamic/enum-tag)"}
+		}
+	}
+
+	if remainder, _, _ := l.enumObjectRemainder(node); remainder == nil && l.isExpression(node) {
 		if symbol := l.flagValueSymbol(node); symbol != nil {
 			declared := l.checker.GetTypeOfSymbol(symbol)
 			observed := l.checker.GetTypeAtLocation(node)
 			if declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
 				for _, field := range l.checker.GetPropertiesOfType(observed) {
 					if l.enumTagDiscriminant(declared, observed, field.Name) {
-						return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
+						if isClassInstance(observed) {
+							return nil
+						}
+						_, err := l.enumTagViewFields(node, declared, observed)
+						return err
 					}
 				}
 			}
@@ -503,7 +530,7 @@ func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
 func (l *lowering) enumSwitchCovered(node *ast.Node) bool {
 	statement := node.AsSwitchStatement()
 	proven := l.checker.GetTypeAtLocation(statement.Expression)
-	if proven.Flags()&checker.TypeFlagsEnumLike == 0 {
+	if proven.Flags()&checker.TypeFlagsEnumLike == 0 || l.numericEnum(l.enumIdentity(proven)) {
 		return false
 	}
 	covered := map[any]bool{}
