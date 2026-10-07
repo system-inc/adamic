@@ -1,0 +1,733 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:79: go stderr: go: downloading github.com/dlclark/regexp2/v2 v2.5.2
+        go: downloading github.com/dlclark/regexp2 v1.11.5
+--- FAIL: TestHelpersMatchCohere (64.08s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (26.72s)
+    --- PASS: TestHelperMutants/options_json.ts (5.24s)
+    --- PASS: TestHelperMutants/option_schema.ts (5.37s)
+    --- PASS: TestHelperMutants/policy_message.ts (4.99s)
+    --- PASS: TestHelperMutants/strict_options.ts (5.48s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (5.84s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (1.69s)
+=== RUN   TestSlot01FileContextMatchesCohere
+    slot01_test.go:150: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/network_no_direct_fetch_test.go: 33 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/network_no_forbidden_import_test.go: 42 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/next_no_page_state_test.go: 36 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/next_require_api_parameter_name_test.go: 45 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/next_require_page_default_export_test.go: 58 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_const_assignment_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_destructuring_test.go: 52 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_separate_named_export_test.go: 65 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_named_export_test.go: 76 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_properties_parameter_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_properties_type_suffix_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_no_intrinsic_element_test.go: 48 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_no_intrinsic_element_test.go: 48 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_no_properties_in_dependencies_test.go: 56 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_require_effect_comment_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_require_result_naming_test.go: 43 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/storage_no_direct_local_storage_test.go: 37 string inputs
+        895 fixture strings; 1815 helper input batches (context)
+    slot01_test.go:155: 1815 Go answers matched Node and sanitized native
+    slot01_test.go:182: compiled structure_file_context.a mutant caught at output line 7: got "true false false false false false false false false", Go "true true false false false false true false false"
+--- PASS: TestSlot01FileContextMatchesCohere (6.16s)
+=== RUN   TestSlot01Es6ComponentClassMatchesCohere
+    slot01_test.go:150: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/react/no_arrow_function_lifecycle_test.go: 226 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_did_mount_set_state_test.go: 133 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_did_update_set_state_test.go: 134 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_direct_mutation_state_test.go: 133 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_string_refs_test.go: 158 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_this_in_sfc_test.go: 196 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_typos_test.go: 459 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_unused_class_component_methods_test.go: 291 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/no_will_update_set_state_test.go: 136 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/prefer_stateless_function_test.go: 152 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/require_optimization_test.go: 195 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/react/state_in_constructor_test.go: 193 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/consistency_require_matching_file_name_test.go: 172 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_display_name_test.go: 50 string inputs
+        class batch: 59 nodes, 4 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 48 nodes, 1 positive answers
+        class batch: 47 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 71 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 29 nodes, 2 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 66 nodes, 1 positive answers
+        class batch: 66 nodes, 1 positive answers
+        class batch: 66 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 48 nodes, 1 positive answers
+        class batch: 49 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 12 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 12 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 49 nodes, 1 positive answers
+        class batch: 49 nodes, 1 positive answers
+        class batch: 49 nodes, 1 positive answers
+        class batch: 57 nodes, 1 positive answers
+        class batch: 51 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 54 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 54 nodes, 1 positive answers
+        class batch: 54 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 38 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 53 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 50 nodes, 1 positive answers
+        class batch: 47 nodes, 1 positive answers
+        class batch: 50 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 47 nodes, 1 positive answers
+        class batch: 45 nodes, 1 positive answers
+        class batch: 54 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 43 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 68 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 38 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 41 nodes, 2 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 34 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 39 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 42 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 50 nodes, 1 positive answers
+        class batch: 50 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 75 nodes, 1 positive answers
+        class batch: 72 nodes, 1 positive answers
+        class batch: 65 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 19 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 29 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 35 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 14 nodes, 1 positive answers
+        class batch: 40 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 25 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 32 nodes, 2 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 55 nodes, 1 positive answers
+        class batch: 55 nodes, 1 positive answers
+        class batch: 55 nodes, 1 positive answers
+        class batch: 55 nodes, 1 positive answers
+        class batch: 51 nodes, 1 positive answers
+        class batch: 52 nodes, 1 positive answers
+        class batch: 51 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 9 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 31 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 37 nodes, 1 positive answers
+        class batch: 13 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 7 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 9 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 8 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 15 nodes, 1 positive answers
+        class batch: 21 nodes, 1 positive answers
+        class batch: 38 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 44 nodes, 1 positive answers
+        class batch: 41 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 38 nodes, 1 positive answers
+        class batch: 26 nodes, 1 positive answers
+        class batch: 36 nodes, 1 positive answers
+        class batch: 20 nodes, 1 positive answers
+        class batch: 9 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 27 nodes, 1 positive answers
+        class batch: 22 nodes, 1 positive answers
+        class batch: 33 nodes, 1 positive answers
+        class batch: 27 nodes, 2 positive answers
+        class batch: 23 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 16 nodes, 1 positive answers
+        class batch: 32 nodes, 1 positive answers
+        class batch: 30 nodes, 1 positive answers
+        class batch: 44 nodes, 2 positive answers
+        class batch: 39 nodes, 2 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 18 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 24 nodes, 1 positive answers
+        class batch: 17 nodes, 1 positive answers
+        class batch: 28 nodes, 1 positive answers
+        2628 fixture strings; 3548 helper input batches (class)
+    slot01_test.go:155: 62020 Go answers matched Node and sanitized native
+    slot01_test.go:182: compiled react_es6_component_class.a mutant caught at output line 13400: got "false", Go "true"
+--- PASS: TestSlot01Es6ComponentClassMatchesCohere (7.41s)
+=== RUN   TestSlot01TailwindDefaultsMatchCohere
+    slot01_test.go:150: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_concatenated_classes_test.go: 60 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        1016 fixture strings; 1936 helper input batches (defaults)
+    slot01_test.go:155: 5808 Go answers matched Node and sanitized native
+    slot01_test.go:182: compiled tailwind_default_class_literal_settings.a mutant caught at output line 1: got "className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$", Go "class|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$"
+    slot01_test.go:205: compiled shared attributeNames mutant caught at output line 3: got "mutated attribute|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$", Go "class|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$"
+    slot01_test.go:205: compiled shared calleeNames mutant caught at output line 3: got "class|className;mutated callee|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$", Go "class|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$"
+    slot01_test.go:205: compiled shared variablePatterns mutant caught at output line 3: got "class|className;mergeClassNames|createVariantClassNames;mutated pattern|.*[Cc]lassNames$", Go "class|className;mergeClassNames|createVariantClassNames;.*[Cc]lassName$|.*[Cc]lassNames$"
+--- PASS: TestSlot01TailwindDefaultsMatchCohere (7.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	119.037s
+FAIL
