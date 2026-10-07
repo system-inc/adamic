@@ -3,6 +3,7 @@ import type { RuleContext } from '../../context.ts';
 import { Finding } from '../../finding.ts';
 import { all } from '../../helpers/comments/all.ts';
 import { missingDescription } from './messages.ts';
+import { checked } from './options.ts';
 function space(code: number): boolean {
     return code === 9 || code === 10 || code === 11 || code === 12 || code === 13 || code === 32 || code === 160 || code === 5760 || (code >= 8192 && code <= 8202) || code === 8232 || code === 8233 || code === 8239 || code === 8287 || code === 12288 || code === 65279;
 }
@@ -56,8 +57,9 @@ export class Rule {
     constructor(context: RuleContext) { this.context = context; }
     visit(root: number): void {
         const context = this.context;
-        const ignored = context.settings.list('ignore', []);
-        const additional = context.settings.list('additionaldirectives', []);
+        const options = checked(context.settings.text);
+        const ignored = options.ignored;
+        const additional = options.additional;
         // Helpers expose UTF-8 bytes; findings expose UTF-16 units.
         const units = new Map<number, number>();
         let byte = 0;
