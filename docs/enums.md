@@ -743,3 +743,7 @@ The [final unit report](verification/enum-tag-final.md) records the negative
 control on main, the discriminant-only checkpoint, final meter evidence,
 fixtures, checks, mutants and changed files. The [initial report](verification/enum-tag-narrowing.md)
 is retained as history.
+
+The [census panic follow-up](verification/enum-census-panics.md) replaces both
+computed-key optional-relation panics with the existing named computed-field
+NotYet boundary, held by reduced source and direct lowering pins.

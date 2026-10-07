@@ -4,6 +4,9 @@ Commands/output: main negative control fails as predicted; full lower, IR, nativ
 Mutants: eleven isolated compiler overlays and two permanent runtime mutations are caught; the step-zero open_tag guard mutation was also caught before replacing that refusal with checks.
 Not covered: general structured/optional payload views, direct never-property access rejected before lowering, arbitrary dynamic layouts, or the full repository gate.
 
+Subsequent follow-up: [both census panic paths are fixed and pinned](enum-census-panics.md).
+The counts below remain the historical evidence for this implementation checkpoint.
+
 ## Step zero and the corrected record
 
 The negative control uses the requested string `kind`, identical `flags: Flags`
