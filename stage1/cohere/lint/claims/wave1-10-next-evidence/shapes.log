@@ -1,0 +1,16 @@
+=== RUN   TestWave10Shapes
+    wave10_overlay_test.go:36: Node: case 10 line 79: port "/tmp/adamic-gate/TestWave10Shapes2410110382/011/shape-10.ts:1:41", Go "fixed\to.f = (function() { return function() { this.x; }; })();"
+        Go context:
+          @typescript-eslint/no-invalid-this  This function is called rather than constructed and nothing binds `this` to it, so `this` is `undefined` here and every property read off it throws at runtime. The usual cause is a method that was moved out of a class or an object literal and left its `this.` prefixes behind. Take what it needs as a parameter, give the function a `this` parameter so TypeScript can check the call sites, or make it a method again.
+        
+        range 87 91 unexpectedThis 		
+        fixed	const o = { f: function() { this.x; }, g() { this.x; } }; const Foo = function bar() { this.x; };
+        case 10
+        fixed	o.f = (function() { return function() { this.x; }; })();
+        case 11
+        /tmp/adamic-gate/TestWave10Shapes2410110382/012/shape-11.ts:1:68
+          @typescript-eslint/no-invalid-this  This function is called rather than constructed and nothing binds `this` to it, so `this` is `undefined` here and every property read off it throws at runtime. The usual cause is a method that was moved out of a class or an object literal and left its `this.` prefixes behind. Take what it needs as a parameter, give the function a `this` parameter so TypeScript can check the call sites, or make it a method again.
+--- FAIL: TestWave10Shapes (17.64s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	17.654s
+FAIL

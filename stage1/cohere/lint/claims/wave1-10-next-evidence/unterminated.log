@@ -1,0 +1,13 @@
+=== RUN   TestWave10Unterminated
+    wave10_overlay_test.go:137: /tmp/adamic-gate/TestWave10Unterminated1060545867/005/oracle [--manifest /tmp/adamic-gate/TestWave10Unterminated1060545867/009/manifest.txt]: exit status 2
+        panic: fix failed: /tmp/adamic-gate/TestWave10Unterminated1060545867/001/unterminated-0.ts does not parse before any fix is applied (TS1010: '*/' expected.) {FileName:/tmp/adamic-gate/TestWave10Unterminated1060545867/001/unterminated-0.ts Text:/* Changed:false Passes:0 Applied:[] Rejected:[] Converged:false UnconvergedRules:[] Transformed:false TransformSkipped:false TransformSkipReason: Failed:false}
+        
+        goroutine 1 [running]:
+        main.run({0xf80b271c8c0?, 0xf80b28960c0?}, 0x0, 0xf80b28960c0)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:83 +0xa74
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:144 +0x2f7
+--- FAIL: TestWave10Unterminated (20.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	20.026s
+FAIL

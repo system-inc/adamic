@@ -1,0 +1,45 @@
+@typescript-eslint/ban-tslint-comment /repository/source/Thing.ts source="/*": case 0
+panic: invalid corpus /tmp/adamic-gate/TestWave10Upstream2571798158/011/upstream-002.ts: ['*/' expected.]
+
+goroutine 1 [running]:
+main.collect({0x14fab2b5c780, 0x41}, {0x14fab2c88968?, 0x1?}, {0x14fab29a3200, 0x6, 0x6})
+	/workspace/adamic/cohere/adamic_lint_oracle.go:92 +0xb87
+main.run({0x14fab2b5c780?, 0x14fab2c90100?}, 0x0, 0x14fab2c90100)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:144 +0x2f7
+
+@typescript-eslint/ban-tslint-comment /repository/source/Thing.ts source="/* tslint:disable": case 0
+panic: invalid corpus /tmp/adamic-gate/TestWave10Upstream2571798158/019/upstream-006.ts: ['*/' expected.]
+
+goroutine 1 [running]:
+main.collect({0x3ff12b05a700, 0x41}, {0x3ff12aecb5a8?, 0x1?}, {0x3ff12ae81200, 0x6, 0x6})
+	/workspace/adamic/cohere/adamic_lint_oracle.go:92 +0xb87
+main.run({0x3ff12b05a700?, 0x3ff12b18c0c0?}, 0x0, 0x3ff12b18c0c0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:144 +0x2f7
+
+@typescript-eslint/ban-tslint-comment /repository/source/Thing.ts source="/**": case 0
+panic: invalid corpus /tmp/adamic-gate/TestWave10Upstream2571798158/031/upstream-012.ts: ['*/' expected.]
+
+goroutine 1 [running]:
+main.collect({0x306847f62700, 0x41}, {0x30684808e848?, 0x1?}, {0x306847db31a0, 0x6, 0x6})
+	/workspace/adamic/cohere/adamic_lint_oracle.go:92 +0xb87
+main.run({0x306847f62700?, 0x3068480960c0?}, 0x0, 0x3068480960c0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:144 +0x2f7
+
+@typescript-eslint/ban-tslint-comment /repository/source/Thing.ts source="/*/": case 0
+panic: invalid corpus /tmp/adamic-gate/TestWave10Upstream2571798158/035/upstream-014.ts: ['*/' expected.]
+
+goroutine 1 [running]:
+main.collect({0x1ea6fd1bc780, 0x41}, {0x1ea6fd2e6958?, 0x1?}, {0x1ea6fcf8b200, 0x6, 0x6})
+	/workspace/adamic/cohere/adamic_lint_oracle.go:92 +0xb87
+main.run({0x1ea6fd1bc780?, 0x1ea6fd2ee100?}, 0x0, 0x1ea6fd2ee100)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:144 +0x2f7
+
+stage1 JSX parser panic: export const c = <div className="flex ml-4" />;

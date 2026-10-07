@@ -1,0 +1,14 @@
+=== RUN   TestWave10Shapes
+    wave10_overlay_test.go:39: Go, Node, emitted JavaScript, native identical: 8804 bytes
+--- PASS: TestWave10Shapes (17.14s)
+=== RUN   TestWave10Upstream
+    lint_test.go:327: cohere cases: 438 unique source/rule/options combinations
+    wave10_overlay_test.go:109: owned upstream: 216 replayed, 5 rejected by Go parse-diagnostic guard
+    wave10_overlay_test.go:110: Go, Node, emitted JavaScript, native identical: 103198 bytes
+--- PASS: TestWave10Upstream (23.00s)
+=== RUN   TestWave10Corpus
+    wave10_overlay_test.go:125: owned rules: 219 files, 657 cases
+    wave10_overlay_test.go:126: Go, Node, emitted JavaScript, native identical: 37093159 bytes
+--- PASS: TestWave10Corpus (115.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	155.790s

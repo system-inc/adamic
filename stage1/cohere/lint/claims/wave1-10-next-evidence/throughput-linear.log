@@ -1,0 +1,58 @@
+=== RUN   TestWave10Throughput
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=0 Go count=1000 elapsed=236.675901ms
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=0 Node count=1000 elapsed=965.083416ms
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=0 native count=1000 elapsed=1.262967284s
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=1 Go count=1000 elapsed=233.60649ms
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=1 Node count=1000 elapsed=966.805193ms
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=1 native count=1000 elapsed=1.196938029s
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=2 Go count=1000 elapsed=226.260866ms
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=2 Node count=1000 elapsed=843.70098ms
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=2 native count=1000 elapsed=1.122477635s
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=3 Go count=1000 elapsed=197.648066ms
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=3 Node count=1000 elapsed=774.379473ms
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=3 native count=1000 elapsed=1.090287005s
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=4 Go count=1000 elapsed=279.83604ms
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=4 Node count=1000 elapsed=1.009833644s
+    wave10_overlay_test.go:75: structure/tailwind-no-physical-direction round=4 native count=1000 elapsed=1.189160469s
+    wave10_overlay_test.go:79: structure/tailwind-no-physical-direction native 917.19 findings/s (1000 findings, 78 files, best of five)
+    wave10_overlay_test.go:79: structure/tailwind-no-physical-direction Node 1291.36 findings/s (1000 findings, 78 files, best of five)
+    wave10_overlay_test.go:79: structure/tailwind-no-physical-direction Go 5059.50 findings/s (1000 findings, 78 files, best of five)
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=0 Go count=1000 elapsed=420.089615ms
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=0 Node count=1000 elapsed=2.079502064s
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=0 native count=1000 elapsed=2.66351188s
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=1 Go count=1000 elapsed=300.731734ms
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=1 Node count=1000 elapsed=2.356217956s
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=1 native count=1000 elapsed=2.673743687s
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=2 Go count=1000 elapsed=300.495932ms
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=2 Node count=1000 elapsed=1.993161541s
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=2 native count=1000 elapsed=2.595354108s
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=3 Go count=1000 elapsed=263.748366ms
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=3 Node count=1000 elapsed=2.046199746s
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=3 native count=1000 elapsed=2.741260842s
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=4 Go count=1000 elapsed=296.859407ms
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=4 Node count=1000 elapsed=2.082257013s
+    wave10_overlay_test.go:75: @typescript-eslint/ban-tslint-comment round=4 native count=1000 elapsed=2.790980384s
+    wave10_overlay_test.go:79: @typescript-eslint/ban-tslint-comment native 385.30 findings/s (1000 findings, 78 files, best of five)
+    wave10_overlay_test.go:79: @typescript-eslint/ban-tslint-comment Node 501.72 findings/s (1000 findings, 78 files, best of five)
+    wave10_overlay_test.go:79: @typescript-eslint/ban-tslint-comment Go 3791.49 findings/s (1000 findings, 78 files, best of five)
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=0 Go count=1000 elapsed=304.400048ms
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=0 Node count=1000 elapsed=2.099101005s
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=0 native count=1000 elapsed=4.519678667s
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=1 Go count=1000 elapsed=335.200815ms
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=1 Node count=1000 elapsed=2.081233062s
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=1 native count=1000 elapsed=4.539036653s
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=2 Go count=1000 elapsed=441.698937ms
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=2 Node count=1000 elapsed=2.058396155s
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=2 native count=1000 elapsed=4.951635248s
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=3 Go count=1000 elapsed=345.511328ms
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=3 Node count=1000 elapsed=2.017452313s
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=3 native count=1000 elapsed=5.103756683s
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=4 Go count=1000 elapsed=322.370709ms
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=4 Node count=1000 elapsed=2.15666992s
+    wave10_overlay_test.go:75: @typescript-eslint/no-invalid-this round=4 native count=1000 elapsed=4.149479773s
+    wave10_overlay_test.go:79: @typescript-eslint/no-invalid-this native 240.99 findings/s (1000 findings, 78 files, best of five)
+    wave10_overlay_test.go:79: @typescript-eslint/no-invalid-this Node 495.67 findings/s (1000 findings, 78 files, best of five)
+    wave10_overlay_test.go:79: @typescript-eslint/no-invalid-this Go 3285.15 findings/s (1000 findings, 78 files, best of five)
+--- PASS: TestWave10Throughput (78.98s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	78.984s

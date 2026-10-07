@@ -1,0 +1,11 @@
+=== RUN   TestWave10Shapes
+    wave10_overlay_test.go:39: Go, Node, emitted JavaScript, native identical: 8804 bytes
+--- PASS: TestWave10Shapes (18.56s)
+=== RUN   TestWave10Upstream
+    lint_test.go:327: cohere cases: 438 unique source/rule/options combinations
+    wave10_overlay_test.go:108: owned upstream: 217 replayed, 4 rejected by Go parse-diagnostic guard
+    wave10_overlay_test.go:109: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestWave10Upstream4122531289/453/main.ts --manifest /tmp/adamic-gate/TestWave10Upstream4122531289/451/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestWave10Upstream4122531289/421/upstream-424.tsx
+--- FAIL: TestWave10Upstream (22.79s)
+=== RUN   TestWave10Corpus
+    wave10_overlay_test.go:124: owned rules: 219 files, 657 cases
