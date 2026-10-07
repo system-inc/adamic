@@ -365,7 +365,11 @@ func environmentGates(root string, required []string) (map[string][]string, erro
 
 // Compatibility view used by WASI audit tests. The source audit covers every required gate.
 func wasiGates(root string) (map[string]bool, error) {
-	found, err := environmentGates(root, requiredGateVariables)
+	variables, err := requiredGateVariables(root)
+	if err != nil {
+		return nil, err
+	}
+	found, err := environmentGates(root, variables)
 	gates := map[string]bool{}
 	for key := range found {
 		gates[key] = true
@@ -374,11 +378,15 @@ func wasiGates(root string) (map[string]bool, error) {
 }
 
 func requireWASI(p *plan) error {
-	gates, err := environmentGates(".", requiredGateVariables)
+	variablesFromCensus, err := requiredGateVariables(".")
 	if err != nil {
 		return err
 	}
-	p.RequiredVariables = append([]string{}, requiredGateVariables...)
+	gates, err := environmentGates(".", variablesFromCensus)
+	if err != nil {
+		return err
+	}
+	p.RequiredVariables = append([]string{}, variablesFromCensus...)
 	if len(gates) == 0 {
 		return nil
 	}

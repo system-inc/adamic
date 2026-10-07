@@ -971,3 +971,36 @@ on both green and red verdicts. merged.json also records ShardWallTimes with
 explicit indices, wall seconds and the original build-flags line; the older
 WallSeconds array is retained for compatibility. Input-directory order therefore
 does not obscure which shard took each time.
+
+
+## Skip census integration
+
+The gate is based on area/developer-tools 540fa7f0. Merge now calls skipcensus.Scan,
+Load and Validate before CheckLog over the concatenated shard streams, which are
+exactly the merged test.jsonl content. The checked-in table is the single authority
+for required-input, not-applicable, measurement and opt-in-lane classification.
+A stale table, unknown skip or required-input skip makes the verdict red. Required
+skip diagnostics include the named test and the table's Provides text, including
+the missing input and setup instructions.
+
+SkipCensus in merged.json contains named arrays for all four classes and unknown
+skips. The printed GATE line carries the not-applicable, measurement and opt-in-lane
+names, rather than reducing them to counts. Legacy WASI/required-environment skip
+checks remain only for trees without a landed census; landed trees use its checker.
+
+required_environment.go has no checked-in variable list. Boolean opt-in gates
+are derived from census required-input conditions of the form Getenv(key) != "1";
+package-level const keys use the existing source resolver. This yields the cohere
+and two WASI switches from the current table. Path inputs are supplied by setup
+and checked by CheckLog if a test skips. The table's Provides field is prose and
+does not encode SDK paths or a machine-readable provisioning command, so the
+minimum WASI setup command and SDK-readiness logic remain in wasi.go. No result
+cache was introduced.
+
+The regression checks a validated table, all three allowed named skip classes,
+a missing required input and an added source skip. Mutants bypassing table
+validation or discarding CheckLog's report/errors both fail. The actual shard
+proof compares the parser shard with ADAMIC_TYPESCRIPT_SOURCE absent and present,
+with other setup gate inputs supplied. Only that shard is supplied to merge: its
+census status is checked independently of the expected missing-shard errors.
+This is not a claim that a one-shard partial run is a whole green gate.

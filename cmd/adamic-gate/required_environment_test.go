@@ -31,7 +31,7 @@ func TestRequiredEnvironmentConstAudit(t *testing.T) {
 		{`if os.Getenv(computeName()) != "1" { t.Skip("dynamic") }`, false},
 	} {
 		write("probe_test.go", "package gateprobe\nimport (\"os\";\"testing\")\nfunc TestProbe(t *testing.T) {"+row.source+"}\n")
-		gates, err := environmentGates(root, requiredGateVariables)
+		gates, err := environmentGates(root, []string{"ADAMIC_GATE_COHERE"})
 		if row.valid {
 			if err != nil || strings.Join(gates["gateprobe::TestProbe"], ",") != "ADAMIC_GATE_COHERE" {
 				t.Fatalf("const gate: %v %v", gates, err)
@@ -53,21 +53,22 @@ func TestMergeRefusesConstRequiredGateSkip(t *testing.T) {
 	t.Setenv("ADAMIC_GATE_COHERE", "1")
 	temporary := os.Getenv("TMPDIR")
 	t.Cleanup(func() { os.Setenv("TMPDIR", temporary) })
-	for _, name := range []string{"cmd/adamic-gate", "internal"} {
+	for _, name := range []string{"cmd/adamic-gate", "internal", "constgateprobe"} {
 		if err := os.MkdirAll(name, 0755); err != nil {
 			t.Fatal(err)
 		}
 	}
 	for name, source := range map[string]string{
-		"go.mod":        "module constgateprobe\n\ngo 1.27\n",
-		"gate.go":       "package constgateprobe\nconst gateVariable = \"ADAMIC_GATE_COHERE\"\n",
-		"probe_test.go": "package constgateprobe\nimport (\"os\";\"testing\")\nfunc TestRequired(t *testing.T) { if os.Getenv(gateVariable) != \"1\" { t.Skip(\"required input absent\") } }\n",
-		timingPath:      "{}\n",
+		"go.mod":                       "module github.com/system-inc/adamic\n\ngo 1.27\n",
+		"constgateprobe/gate.go":       "package constgateprobe\nconst gateVariable = \"ADAMIC_GATE_COHERE\"\n",
+		"constgateprobe/probe_test.go": "package constgateprobe\nimport (\"os\";\"testing\")\nfunc TestRequired(t *testing.T) { if os.Getenv(gateVariable) != \"1\" { t.Skip(\"required input absent\") } }\n",
+		timingPath:                     "{}\n",
 	} {
 		if err := os.WriteFile(name, []byte(source), 0600); err != nil {
 			t.Fatal(err)
 		}
 	}
+	declareFixtureCensus(t, root)
 	gitFixture(t, root, "init", "-q")
 	gitFixture(t, root, "config", "user.name", "Gate fixture")
 	gitFixture(t, root, "config", "user.email", "gate@example.invalid")
@@ -108,7 +109,7 @@ func TestMergeRefusesConstRequiredGateSkip(t *testing.T) {
 	}
 	// Produce an actual skipped run with the input absent. Rebuild its complete
 	// evidence so merge's required-skip verdict is the only reason it goes red.
-	pkgDir := filepath.Join(dirs[1], "packages", shortHash("constgateprobe"))
+	pkgDir := filepath.Join(dirs[1], "packages", shortHash("github.com/system-inc/adamic/constgateprobe"))
 	var checkpoint packageEvidence
 	if err := loadJSON(filepath.Join(pkgDir, "complete.json"), &checkpoint); err != nil {
 		t.Fatal(err)
@@ -164,7 +165,7 @@ func TestMergeRefusesConstRequiredGateSkip(t *testing.T) {
 	if err := loadJSON(filepath.Join(red, "merged.json"), &m); err != nil {
 		t.Fatal(err)
 	}
-	if m.Green || len(m.Errors) != 1 || !strings.Contains(m.Errors[0], "shard 1 required environment unit constgateprobe::TestRequired skipped") {
+	if m.Green || len(m.Errors) != 1 || !strings.Contains(m.Errors[0], "required-input skip") || !strings.Contains(m.Errors[0], "TestRequired") {
 		t.Fatal("merge did not isolate and name required skip", m.Errors)
 	}
 	t.Log(m.Errors[0])
@@ -172,7 +173,11 @@ func TestMergeRefusesConstRequiredGateSkip(t *testing.T) {
 
 func TestCurrentCohereGateIsRequired(t *testing.T) {
 	t.Parallel()
-	gates, err := environmentGates("../..", requiredGateVariables)
+	variables, err := requiredGateVariables("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	gates, err := environmentGates("../..", variables)
 	if err != nil {
 		t.Fatal(err)
 	}
