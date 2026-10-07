@@ -7,3 +7,6 @@ if (Error.captureStackTrace) {
  console.log('captureStackTrace unavailable');
 }
 console.log(typeof Error.captureStackTrace);
+const capture = Error.captureStackTrace;
+console.log(`${capture === Error.captureStackTrace}`);
+capture(new Error('detached'));
