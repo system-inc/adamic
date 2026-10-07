@@ -16,3 +16,7 @@ Withdrawn: FindEntryPoint. The all-origin refresh revealed an earlier claim on c
 2. github.com/system-inc/cohere/internal/lint/rules/tailwind.findTailwindPackageRoot
    File: tailwind_find_package_root.a. Six remaining consumers, zero final blockers alone.
    All 405 origin refs and 16 distinct claim blobs checked. This upward search remains unclaimed at the highest count, six. Preserve POSIX Join/Dir, exact index.css probes including duplicate cleaned probes, first match and termination at root. Filesystem predicate is explicit. Actual Go over all six consumer fixtures and path/existence controls, source Node, emitted JavaScript and sanitized native, with a compiling semantic mutant. Claim pushed before code.
+
+3. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.CompareBreakpoints
+   File: collapse_compare_breakpoints.a. Six remaining consumers, zero final blockers alone.
+   Both prior helpers are tested and pushed (c3b9b8af, e998e268). All origin refs refreshed and all helper claim blobs checked again. This comparator remains unclaimed at the highest count, six. Preserve equality, byte-string bucket ordering, raw-string fallback, ascending/descending and Go signed-int subtraction overflow. Already-owned breakpointBucket is an explicit callback dependency; validation obtains its facts from the actual Go helper. Compare every consumer fixture and pair controls on source Node, emitted JavaScript and sanitized native, with a compiling direction mutant. Claim pushed before code.
