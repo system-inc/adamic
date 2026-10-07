@@ -71,12 +71,12 @@ passes semantic checking.
 Three interleaved rounds, optimized native Adamic with the ordinary archive
 against the direct Go oracle, after the full gate finished:
 
-| Round | Native load ms | Native 1,600 queries ms | Go load ms | Go 1,600 queries ms |
-|---|---:|---:|---:|---:|
-| 1 | 216.147 | 249.300 | 225.868 | 254.242 |
-| 2 | 240.195 | 243.897 | 217.076 | 238.116 |
-| 3 | 218.514 | 233.554 | 235.585 | 251.412 |
-| Median | 218.514 | 243.897 | 225.868 | 251.412 |
+| Round  | Native load ms | Native 1,600 queries ms | Go load ms | Go 1,600 queries ms |
+| ------ | -------------: | ----------------------: | ---------: | ------------------: |
+| 1      |        216.147 |                 249.300 |    225.868 |             254.242 |
+| 2      |        240.195 |                 243.897 |    217.076 |             238.116 |
+| 3      |        218.514 |                 233.554 |    235.585 |             251.412 |
+| Median |        218.514 |                 243.897 |    225.868 |             251.412 |
 
 These are API-call timings, excluding formatting/output and whole-process
 startup. Native includes C input copies, boundary crossings and creation of
@@ -89,15 +89,15 @@ inside the variation here. No speedup is established by these three rounds.
 Every row ran successfully through compilation and failed at its intended check.
 Production mutations use overlays, leaving the checkout unchanged.
 
-| Mutant | What caught it |
-|---|---|
-| Caller passes config length plus one over an exact-size heap buffer | ASan `heap-buffer-overflow` in the C input copy |
-| Returned type buffer advertises length plus one | ASan `heap-buffer-overflow` when its bytes are consumed |
-| Release retains the program in the live registry | Assertion that querying a released handle returns `TSGO_HANDLE` |
-| Type is queried from the source-file node instead of the selected node | Go/native byte oracle, first mismatch at byte 6 |
-| Lowering's link opt-in guard removed | `TestTSGoRequiresLink`: lowering accepted an unlinked checker call |
-| C output free omitted | LeakSanitizer `detected memory leaks` |
-| Region entry allocates its result on the heap | LeakSanitizer `detected memory leaks` in the counted region probe |
+| Mutant                                                                 | What caught it                                                     |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Caller passes config length plus one over an exact-size heap buffer    | ASan `heap-buffer-overflow` in the C input copy                    |
+| Returned type buffer advertises length plus one                        | ASan `heap-buffer-overflow` when its bytes are consumed            |
+| Release retains the program in the live registry                       | Assertion that querying a released handle returns `TSGO_HANDLE`    |
+| Type is queried from the source-file node instead of the selected node | Go/native byte oracle, first mismatch at byte 6                    |
+| Lowering's link opt-in guard removed                                   | `TestTSGoRequiresLink`: lowering accepted an unlinked checker call |
+| C output free omitted                                                  | LeakSanitizer `detected memory leaks`                              |
+| Region entry allocates its result on the heap                          | LeakSanitizer `detected memory leaks` in the counted region probe  |
 
 An earlier region mutant was masked: the corpus print helper used `utf8Length`,
 which the existing region analysis conservatively treats as escaping. That run

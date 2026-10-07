@@ -2,7 +2,7 @@ import { panic, programArguments, tsgoProgram, tsgoQuery, tsgoRelease } from 'ad
 
 // String length is pure, so the query result can live in the statement's region.
 function measure(answer: { readonly nodeKind: number; readonly symbolName: string; readonly type: string }): number {
-	return answer.symbolName.length + answer.type.length;
+    return answer.symbolName.length + answer.type.length;
 }
 
 const argumentsGiven = programArguments();
