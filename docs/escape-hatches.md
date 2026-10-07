@@ -856,3 +856,125 @@ Loops, switches, try/finally, opaque or recursive helper summaries, computed pro
 checks, default/rest parameters and `this` predicates stay refused by this verifier.
 It caps branching at 256 paths. The separate cohere predicate lint rule is unchanged.
 The historical survey and other hatch decisions above are not remeasured here.
+
+## Satisfies and proven upcasts: implementation
+
+**Observation.** Built on `codex/proven-relations`, from main
+`ef3d907ecdc4c771b016f7d9c52372def057a340`, following the ruling above at
+`0f30b52061374de90ceeac8d19b221cb51ae84f9`. Main did not yet contain this document,
+so the preceding survey is preserved from that ruling commit. Its linked survey
+artifacts remain on `codex/escape-hatches` until that unit is merged.
+
+`expr satisfies T` now proves the relation and lowers to the operand. The checker
+keeps the operand's own type, including contextual literal types and required
+fields; lowering does not replace it with T. A candidate `expr as T` upcast must
+pass the same proof before erasure. The existing checked-downcast lowering is
+unchanged.
+
+The common proof in `internal/lower/proven_relations.go` combines ordinary checker
+assignability with the existing assignment walks for mutable invariance, readonly
+covariance, contravariant function parameters, covariant results and nominal class
+ancestry. It reuses the writable-slot diagnostics, which name the source and target
+at the failing slot. A failed nominal proof names the class lacking ancestry.
+Fresh literals retain the assignment rules: their contained values are checked at
+their own sites.
+
+Optional-field compatibility also has to be proven. A structural type omitting a
+field cannot certify that the runtime field is absent or compatible. Such a view
+is refused with the field path and `adamic/no-optional-widening`. Object literals
+without spreads can prove absence, including nested literals and fresh array
+elements. Existing mutable slots require compatibility in both directions, and
+class type arguments remain invariant. For example, `Counted[] as Named[]` is
+refused when Counted has an optional numeric count that Named hides: a write
+through Named[] could replace an element with an object hiding a string count.
+Readonly views may safely forget that field.
+
+**Observation.** The new `.a` oracle fixtures are
+`internal/oracle/testdata/proven_satisfies.a` and `proven_upcasts.a`. They cover
+object and array literals, retained literal and required-field types, discriminated
+unions, readonly views, interfaces, base-class dispatch, readonly arrays, compatible
+function variance, optional literal absence, identity and single operand evaluation.
+Both match source Node, generated JavaScript, sanitized native and release native;
+finished programs pass the leak check. Their recorded allocations/frees are 28/28
+and 15/15. No previous count row changed.
+
+`TestProvenRelationsRefuse` has fifteen independently checked refusal probes.
+`TestProvenRelationsErase` compares generated C and JavaScript byte for byte with
+an operand-only control. Both operators add no generated work in that control.
+
+**Observation.** Every mutant below was applied to the compiler, run, and restored.
+The first eight runs exit 1 because their refusal test instead observes successful
+lowering, `got <nil>`. None depends on clang rejecting a mutant. The final mutant
+fails the artifact comparison for both backends.
+
+| Compiler mutant | What catches it |
+|---|---|
+| Accept every satisfies without proof | satisfies mutable-array refusal |
+| Erase an unproven upcast without proof | upcast nominal-identity refusal |
+| Skip the writable-slot proof | mutable Dog[] to Animal[] and widened function-parameter refusals |
+| Skip nominal ancestry | object literal satisfying a class refusal |
+| Skip optional-field compatibility | hidden, nested, mutable and invariant-class optional-field refusals |
+| Ignore reverse optional compatibility for mutable array elements | Counted[] to Named[] refusal |
+| Ignore reverse optional compatibility for mutable object fields | mutable pet field refusal |
+| Ignore optional compatibility in invariant class type arguments | Box<Counted> to Box<Named> refusal |
+| Wrap satisfies in an unnecessary Coalesce | C and JavaScript erasure comparisons |
+
+Mutant logs are `/tmp/proven-mutant-<name>.log`, with names `accept-satisfies`,
+`erase-unproven-upcast`, `skip-invariance`, `skip-nominal`, `skip-optional`,
+`skip-optional-array-write`, `skip-optional-field-write`,
+`skip-optional-class-invariance`, and `added-work`. The refusal mutants use early
+returns in provenRelation or disable the individually named guard. The added-work
+mutant wraps the lowered operand in `ir.Coalesce` with itself as its fallback.
+
+**Observation.** Setup selected `/workspace/adamic-tools/env.sh`. The first run
+failed cache warming while the cast call site was edited before its helper was
+written: `vet: internal/lower/cast.go:30:15: l.provenRelation undefined`.
+The completed-source retry exited 0 and printed:
+
+```text
+setup: go ready (0s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)
+setup: node ready (1s)
+setup: submodules ready (1s)
+setup: build cache warm (119s)
+setup: done in 119s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+```
+
+`nproc` printed 5. Tool versions were Go 1.27.1, clang 20.1.8 and Node v24.19.0.
+
+**Limits.** This unit does not extend runtime-checkable downcasts, non-null checks,
+predicate verification or the optional-field proofs for ordinary assignment sites.
+An open structural source with an omitted optional field is conservatively refused;
+this unit does not recover its exact origin through arbitrary aliases or callbacks.
+Existing stage 0 representation limits remain in force. No performance benchmark
+is claimed; the zero added work observation comes from emitted-artifact equality.
+
+**Observation.** Final scoped verification, with every test's output captured in a
+log file, exited 0:
+
+```sh
+source /workspace/adamic-tools/env.sh
+gofmt -l cmd internal > /tmp/proven-format-final.log
+go vet ./... > /tmp/proven-vet-final.log 2>&1
+go test ./internal/lower ./internal/load -count=1 > /tmp/proven-packages-final.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(proven_|casts[.]a|cast_fails[.]a)' -count=1 -timeout 30m -v > /tmp/proven-oracle-complete.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m > /tmp/proven-counts-check.log 2>&1
+```
+
+Formatting and vet produced empty logs. Lowering passed in 32.267s and loading in
+1.154s. The four-fixture uncached oracle passed in 1.770s, including the existing
+successful and failing checked-cast regressions, with zero cache hits. The final
+count check passed in 60.490s. These are wall times under concurrent test load,
+not compiler performance measurements.
+
+The complete worker gate was also attempted:
+
+```sh
+go test -count=1 -timeout 30m ./... > /tmp/proven-full.log 2>&1
+```
+
+It was stopped after more than nine minutes while broader bridge/native/stage 1
+work was still running, using the unit's permitted scoped fallback. Its Go process
+exited 143 on termination, and all ten remaining child processes were stopped.
+The full gate is not claimed to have passed. The completed scoped commands above
+are the regression evidence for this unit.
