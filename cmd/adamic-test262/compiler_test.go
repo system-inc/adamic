@@ -3,10 +3,12 @@ package main
 import (
 	"encoding/json"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/boundedrun"
+	"github.com/system-inc/adamic/internal/boundedrun/testfixture"
 )
 
 func TestCompilerWorkerMatchesSubprocess(t *testing.T) {
@@ -41,12 +43,10 @@ func TestCompilerHangHelper(t *testing.T) {
 
 func TestCompilerWorkerTimeout(t *testing.T) {
 	t.Parallel()
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := exec.Command(executable, "-test.run=^TestCompilerHangHelper$")
-	command.Env = append(os.Environ(), "ADAMIC_TEST262_HANG_HELPER=1")
+	child, heartbeat := testfixture.Tree(t, "fake-worker")
+	command, release := boundedrun.Command(boundedrun.Build, child)
+	defer release()
+
 	input, err := command.StdinPipe()
 	if err != nil {
 		t.Fatal(err)
@@ -58,9 +58,11 @@ func TestCompilerWorkerTimeout(t *testing.T) {
 	if err := command.Start(); err != nil {
 		t.Fatal(err)
 	}
-	worker := &compilerWorker{command: command, input: input, output: output, encoder: json.NewEncoder(input), decoder: json.NewDecoder(output), timeout: 20 * time.Millisecond}
+	worker := &compilerWorker{command: command.Cmd, input: input, output: output, encoder: json.NewEncoder(input), decoder: json.NewDecoder(output), timeout: 200 * time.Millisecond}
 	defer worker.close()
+	started := testfixture.WaitTree(t, heartbeat)
 	result := worker.compile("unused.a")
+	testfixture.AssertStopped(t, started, heartbeat, result.Stderr, child)
 	if !result.TimedOut || result.Exit != -1 || worker.command != nil || command.ProcessState == nil {
 		t.Fatalf("deadline failed to stop and reap compiler: %+v", result)
 	}

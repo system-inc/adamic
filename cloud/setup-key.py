@@ -63,7 +63,8 @@ def main():
     packages = []
     manifests = {"go.mod", "go.sum", "cloud/markdown-width/package.json",
                  "cloud/markdown-width/package-lock.json", "cloud/markdown-width/npm-bootstrap.json",
-                 "cloud/setup-markdown-width.py"}
+                 "cloud/setup-markdown-width.py", "cloud/setup-stage3-api.py",
+                 "stage3/api/package.json", "stage3/api/package-lock.json"}
     workspace = environment.get("GOWORK")
     if workspace and workspace != "off":
         manifests.update([workspace, workspace + ".sum"])

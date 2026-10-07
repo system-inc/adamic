@@ -1,0 +1,9 @@
+=== RUN   TestLogClassesAndMutants
+=== PAUSE TestLogClassesAndMutants
+=== CONT  TestLogClassesAndMutants
+    census_test.go:118: required-input skip survived: <nil> required-input	github.com/system-inc/adamic/probe	TestProbe/subtest	TestProbe:hash
+        skips=1 required-input=1 unknown=0
+--- FAIL: TestLogClassesAndMutants (0.00s)
+FAIL
+FAIL	mutant	0.002s
+FAIL

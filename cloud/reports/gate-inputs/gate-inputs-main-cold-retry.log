@@ -1,0 +1,45 @@
+v24.19.0
+go version go1.27.1 linux/amd64
+setup: node ready (0.063s)
+setup: go ready (0.068s)
+setup: submodules ready (0.117s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.006s
+setup: markdown dependencies ready (0.130s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.280s)
+setup: gate input css skipped (validated lock and installed bytes); step-duration=0.034s
+setup: gate input graphql skipped (validated lock and installed bytes); step-duration=0.356s
+setup: gate input media-query skipped (validated lock and installed bytes); step-duration=0.007s
+setup: gate input selector skipped (validated lock and installed bytes); step-duration=0.034s
+setup: gate input values skipped (validated lock and installed bytes); step-duration=0.016s
+setup: gate input json-prettier skipped (validated lock and installed bytes); step-duration=0.020s
+setup: gate input css-printer skipped (validated lock and installed bytes); step-duration=0.017s
+setup: gate npm inputs ready (0.666s)
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /workspace/adamic-tools/gate-inputs/typescript-779oxsew/checkout/.git/
+From https://github.com/microsoft/TypeScript
+ * branch                050880ce59e30b356b686bd3144efe24f875ebc8 -> FETCH_HEAD
+HEAD is now at 050880ce5 Bump version to 6.0.3 and LKG
+setup: gate input TypeScript source installed (depth-one exact commit, git object integrity checked); step-duration=18.301s
+setup: gate input 100 MiB gitignore generated (deterministic 100 MiB, SHA256 verified); step-duration=0.279s
+setup: gate corpora ready (18.692s)
+setup: gate input checker archive built (Go content-addressed inputs, archive bytes stamped); step-duration=2.399s
+setup: go build ready (44.478s)
+setup: test binaries deferred (use --warm-tests) (44.660s)
+setup: build cache warm (44.664s)
+setup: build-flags commit=39638d9e278d38bb5aeae887f46d55a70e47aaad nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true load-before=4.59 6.54 3.49 1/402 116842 load-after=6.79 6.74 3.69 1/404 117898
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (44.727s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.42v51S

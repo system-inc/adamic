@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/system-inc/adamic/internal/boundedrun"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -78,6 +79,7 @@ type compilerWorker struct {
 	encoder *json.Encoder
 	decoder *json.Decoder
 	timeout time.Duration
+	release func()
 }
 
 func (worker *compilerWorker) close() {
@@ -86,8 +88,18 @@ func (worker *compilerWorker) close() {
 	}
 	_ = worker.input.Close()
 	_ = worker.output.Close()
-	_ = worker.command.Process.Kill()
-	_ = worker.command.Wait()
+	_ = boundedrun.Kill(worker.command)
+	done := make(chan struct{})
+	command := worker.command
+	go func() { _ = command.Wait(); close(done) }()
+	select {
+	case <-done:
+	case <-time.After(2 * time.Second):
+	}
+	if worker.release != nil {
+		worker.release()
+		worker.release = nil
+	}
 	worker.command = nil
 }
 
@@ -97,7 +109,17 @@ func (worker *compilerWorker) compile(path string) execution {
 		if err != nil {
 			return execution{Exit: -1, Stderr: err.Error()}
 		}
-		command := exec.Command(executable, "--compiler-worker")
+		// A worker can serve many tests; each request retains its two-minute limit.
+		// Seventy minutes also bounds the worker while idle or between requests.
+		command, release := boundedrun.Command(boundedrun.Shard, executable, "--compiler-worker")
+		worker.release = release
+		initialized := false
+		defer func() {
+			if !initialized {
+				release()
+				worker.release = nil
+			}
+		}()
 		input, err := command.StdinPipe()
 		if err != nil {
 			return execution{Exit: -1, Stderr: err.Error()}
@@ -112,17 +134,19 @@ func (worker *compilerWorker) compile(path string) execution {
 			output.Close()
 			return execution{Exit: -1, Stderr: err.Error()}
 		}
-		worker.command, worker.input, worker.output = command, input, output
+		initialized = true
+		worker.command, worker.input, worker.output = command.Cmd, input, output
 		worker.encoder, worker.decoder = json.NewEncoder(input), json.NewDecoder(output)
 	}
 	done := make(chan execution, 1)
+	encoder, decoder := worker.encoder, worker.decoder
 	go func() {
-		if err := worker.encoder.Encode(path); err != nil {
+		if err := encoder.Encode(path); err != nil {
 			done <- execution{Exit: -1, Stderr: err.Error()}
 			return
 		}
 		var result recordedExecution
-		if err := worker.decoder.Decode(&result); err != nil {
+		if err := decoder.Decode(&result); err != nil {
 			done <- execution{Exit: -1, Stderr: err.Error()}
 			return
 		}
@@ -141,8 +165,8 @@ func (worker *compilerWorker) compile(path string) execution {
 		}
 		return result
 	case <-timer.C:
+		name := worker.command.Path
 		worker.close()
-		<-done
-		return execution{Exit: -1, TimedOut: true}
+		return execution{Exit: -1, TimedOut: true, Stderr: fmt.Sprintf("child compiler-worker (%s): deadline exceeded; process group killed\n", name)}
 	}
 }

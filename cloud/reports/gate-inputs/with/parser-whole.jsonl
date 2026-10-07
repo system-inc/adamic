@@ -1,0 +1,9 @@
+{"Time":"2026-10-07T07:26:06.081427604Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-07T07:26:06.086561118Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees"}
+{"Time":"2026-10-07T07:26:06.086630693Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Output":"=== RUN   TestWholeCompilerAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:27.624696485Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Output":"    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes\n"}
+{"Time":"2026-10-07T07:26:27.633847001Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Output":"--- PASS: TestWholeCompilerAgrees (21.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:27.633875023Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Elapsed":21.55}
+{"Time":"2026-10-07T07:26:27.633899941Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:26:27.644958349Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t21.563s\n"}
+{"Time":"2026-10-07T07:26:27.645004518Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":21.564}

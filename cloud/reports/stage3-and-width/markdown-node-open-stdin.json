@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/workspace/adamic-tools/bin/node",
+    "testdata/width_library.mjs",
+    "/tmp/markdown-empty-deps",
+    "/tmp/not-read-cases"
+  ],
+  "seconds": 0.03190085799906228,
+  "exit": 1,
+  "stdin": "writer left open, no bytes sent"
+}

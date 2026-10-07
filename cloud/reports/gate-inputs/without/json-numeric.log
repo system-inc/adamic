@@ -1,0 +1,7 @@
+=== RUN   TestUpstreamNumericSeparatorGap
+=== PAUSE TestUpstreamNumericSeparatorGap
+=== CONT  TestUpstreamNumericSeparatorGap
+    audit_test.go:40: set ADAMIC_JSON_PRETTIER for the external oracle
+--- SKIP: TestUpstreamNumericSeparatorGap (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	0.008s

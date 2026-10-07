@@ -1,0 +1,9 @@
+{"Time":"2026-10-07T07:20:14.391400884Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-07T07:20:14.402905675Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree"}
+{"Time":"2026-10-07T07:20:14.403091065Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree","Output":"=== RUN   TestCompilerExpressionsAgree\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:20:14.403236253Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree","Output":"    parser_test.go:275: set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout\n"}
+{"Time":"2026-10-07T07:20:14.403251056Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree","Output":"--- SKIP: TestCompilerExpressionsAgree (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:20:14.403254381Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree","Elapsed":0}
+{"Time":"2026-10-07T07:20:14.403266549Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T07:20:14.404097881Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.012s\n"}
+{"Time":"2026-10-07T07:20:14.40413689Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.013}

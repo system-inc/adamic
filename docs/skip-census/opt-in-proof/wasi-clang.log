@@ -1,0 +1,80 @@
+=== RUN   TestWASI
+    wasm_test.go:72: strict C11 runtime: 49 translation units compiled
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/01_hello.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/03_shapes.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/04_closures.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/05_wordcount.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/06_stack.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/07_modules/main.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/08_results.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/09_tree.ts
+=== RUN   TestWASI/internal/load/testdata/0.1/compile/10_unicode.ts
+=== RUN   TestWASI/internal/oracle/testdata/strings.a
+=== RUN   TestWASI/internal/oracle/testdata/numbers.a
+=== RUN   TestWASI/internal/oracle/testdata/bitwise_sweep.a
+=== RUN   TestWASI/internal/oracle/testdata/functions.a
+=== RUN   TestWASI/internal/oracle/testdata/regions.a
+=== RUN   TestWASI/internal/oracle/testdata/regions_throw.a
+=== RUN   TestWASI/internal/oracle/testdata/weak_parent.a
+=== RUN   TestWASI/internal/oracle/testdata/weak_narrowed.a
+=== RUN   TestWASI/internal/oracle/testdata/reuse_weak_after_reuse.a
+=== RUN   TestWASI/internal/oracle/testdata/reuse_weak_during_spread.a
+=== RUN   TestWASI/internal/oracle/testdata/normalize.a
+=== RUN   TestWASI/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestWASI/internal/oracle/testdata/stack_overflow.a
+=== RUN   TestWASI/internal/oracle/testdata/stack_forever.a
+=== RUN   TestWASI/internal/oracle/testdata/stack_tail_call.a
+=== RUN   TestWASI/internal/oracle/testdata/panic.a
+=== RUN   TestWASI/internal/oracle/testdata/json_stringify_numbers.a
+=== RUN   TestWASI/internal/oracle/testdata/regexp_cycle_collections.a
+=== RUN   TestWASI/internal/oracle/testdata/library_object_keys.a
+=== RUN   TestWASI/internal/oracle/testdata/library_array_flat.a
+=== RUN   TestWASI/internal/oracle/testdata/read_files.a
+=== RUN   TestWASI/internal/native/wasm/io.a
+=== RUN   TestWASI/internal/oracle/testdata/closures_throw.a
+=== RUN   TestWASI/internal/oracle/testdata/write_stdout_order.a
+=== RUN   TestWASI/internal/oracle/testdata/write_stderr_order.a
+=== NAME  TestWASI
+    wasm_test.go:141: WASI oracle: 35/35 equivalent
+=== RUN   TestWASI/requests
+    wasm_test.go:163: request benchmark: {"rounds":100000,"moduleBytes":272554,"compileMilliseconds":2.6634749999999983,"instantiateMilliseconds":1.2730449999999998,"memoryMinimum":393216,"memoryMaximum":393216,"live":0,"regionObjects":6300000,"wasmRequestsPerSecond":231510.68987761668,"plainRequestsPerSecond":833284.8917049621}
+--- PASS: TestWASI (26.70s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/01_hello.ts (0.34s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/02_fizzbuzz.ts (0.21s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/03_shapes.ts (0.22s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/04_closures.ts (0.22s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/05_wordcount.ts (0.21s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/06_stack.ts (0.23s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/07_modules/main.ts (0.22s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/08_results.ts (0.22s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/09_tree.ts (0.23s)
+    --- PASS: TestWASI/internal/load/testdata/0.1/compile/10_unicode.ts (0.22s)
+    --- PASS: TestWASI/internal/oracle/testdata/strings.a (0.20s)
+    --- PASS: TestWASI/internal/oracle/testdata/numbers.a (0.22s)
+    --- PASS: TestWASI/internal/oracle/testdata/bitwise_sweep.a (2.44s)
+    --- PASS: TestWASI/internal/oracle/testdata/functions.a (0.22s)
+    --- PASS: TestWASI/internal/oracle/testdata/regions.a (0.28s)
+    --- PASS: TestWASI/internal/oracle/testdata/regions_throw.a (0.23s)
+    --- PASS: TestWASI/internal/oracle/testdata/weak_parent.a (0.30s)
+    --- PASS: TestWASI/internal/oracle/testdata/weak_narrowed.a (0.25s)
+    --- PASS: TestWASI/internal/oracle/testdata/reuse_weak_after_reuse.a (0.24s)
+    --- PASS: TestWASI/internal/oracle/testdata/reuse_weak_during_spread.a (0.22s)
+    --- PASS: TestWASI/internal/oracle/testdata/normalize.a (0.23s)
+    --- PASS: TestWASI/internal/oracle/testdata/maps_and_text.a (0.26s)
+    --- PASS: TestWASI/internal/oracle/testdata/stack_overflow.a (0.22s)
+    --- PASS: TestWASI/internal/oracle/testdata/stack_forever.a (0.20s)
+    --- PASS: TestWASI/internal/oracle/testdata/stack_tail_call.a (0.21s)
+    --- PASS: TestWASI/internal/oracle/testdata/panic.a (0.19s)
+    --- PASS: TestWASI/internal/oracle/testdata/json_stringify_numbers.a (0.20s)
+    --- PASS: TestWASI/internal/oracle/testdata/regexp_cycle_collections.a (0.31s)
+    --- PASS: TestWASI/internal/oracle/testdata/library_object_keys.a (0.23s)
+    --- PASS: TestWASI/internal/oracle/testdata/library_array_flat.a (0.24s)
+    --- PASS: TestWASI/internal/oracle/testdata/read_files.a (0.23s)
+    --- PASS: TestWASI/internal/native/wasm/io.a (0.21s)
+    --- PASS: TestWASI/internal/oracle/testdata/closures_throw.a (0.43s)
+    --- PASS: TestWASI/internal/oracle/testdata/write_stdout_order.a (0.22s)
+    --- PASS: TestWASI/internal/oracle/testdata/write_stderr_order.a (0.23s)
+    --- PASS: TestWASI/requests (5.75s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	26.714s

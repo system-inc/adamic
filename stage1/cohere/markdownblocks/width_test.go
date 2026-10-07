@@ -18,6 +18,12 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 	if widthDependencies == "" {
 		t.Skip("set ADAMIC_MARKDOWNWIDTH_DEPS to an npm install of emoji-regex@10.6.0, get-east-asian-width@1.6.0 and narrow-emojis@0.0.3; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
+	// Check before corpus generation and the Go oracle build, so missing npm packages fail immediately.
+	for _, module := range []string{"emoji-regex", "get-east-asian-width", "narrow-emojis"} {
+		path := filepath.Join(widthDependencies, "node_modules", module, "index.js")
+		if _, err := os.Stat(path); err != nil {
+			t.Fatalf("missing Markdown width oracle module %s at %s: %v; run bash cloud/setup.sh and source its env.sh", module, path, err)
+		}	}
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)

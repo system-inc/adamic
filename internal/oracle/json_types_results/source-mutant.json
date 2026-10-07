@@ -1,0 +1,66 @@
+{
+  "runs": [
+    {
+      "phase": "before",
+      "exit": 0
+    },
+    {
+      "phase": "mutant",
+      "exit": 1
+    },
+    {
+      "phase": "restored",
+      "exit": 0
+    },
+    {
+      "phase": "repeated",
+      "exit": 0
+    }
+  ],
+  "builds": [
+    {
+      "phase": "before",
+      "arguments": [
+        "build",
+        "-o",
+        "/tmp/adamic-gate/adamic-json-types-3716173505/json_types",
+        "./oracle/json_types.go"
+      ],
+      "sha256": "55e770f0869c6e978e648562c1f425c23e771f61689ced9bbb0cbd10ef962806",
+      "mode": "0o700"
+    },
+    {
+      "phase": "mutant",
+      "arguments": [
+        "build",
+        "-o",
+        "/tmp/adamic-gate/adamic-json-types-267110062/json_types",
+        "./oracle/json_types.go"
+      ],
+      "sha256": "f5b6bbc5e74395b2e04cf36f38f2889766c66ea8fe8fb119f841f770bfc30612",
+      "mode": "0o700"
+    },
+    {
+      "phase": "restored",
+      "arguments": [
+        "build",
+        "-o",
+        "/tmp/adamic-gate/adamic-json-types-192399842/json_types",
+        "./oracle/json_types.go"
+      ],
+      "sha256": "55e770f0869c6e978e648562c1f425c23e771f61689ced9bbb0cbd10ef962806",
+      "mode": "0o700"
+    },
+    {
+      "phase": "repeated",
+      "arguments": [
+        "build",
+        "-o",
+        "/tmp/adamic-gate/adamic-json-types-3331843856/json_types",
+        "./oracle/json_types.go"
+      ],
+      "sha256": "55e770f0869c6e978e648562c1f425c23e771f61689ced9bbb0cbd10ef962806",
+      "mode": "0o700"
+    }
+  ]
+}

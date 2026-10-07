@@ -1,0 +1,13 @@
+F...
+======================================================================
+FAIL: test_each_component_invalidates (__main__.InstallationKey.test_each_component_invalidates) (component='helper')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_markdown_setup.py", line 31, in test_each_component_invalidates
+    self.assertNotEqual(original, helper.installation_key(**changed), component)
+AssertionError: '29e67005a5881fbcf9af0b663c041a27f0b14c74e6ca3be6e5d725fe16798ffe' == '29e67005a5881fbcf9af0b663c041a27f0b14c74e6ca3be6e5d725fe16798ffe' : helper
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=1)

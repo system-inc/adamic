@@ -1,0 +1,10 @@
+=== RUN   TestReleaseLaneSkippedFixture
+=== PAUSE TestReleaseLaneSkippedFixture
+=== CONT  TestReleaseLaneSkippedFixture
+    census_test.go:267: release scope skip: gate skipped 0 required-input tests; 1 unclassified skips
+        unknown	github.com/system-inc/adamic/internal/oracle	TestNativeReleaseFlagsAgreeWithNode/panic.a
+        skips=1 required-input=0 unknown=1
+--- FAIL: TestReleaseLaneSkippedFixture (0.00s)
+FAIL
+FAIL	mutant	0.002s
+FAIL

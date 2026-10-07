@@ -1,0 +1,28 @@
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: node ready (0.063s)
+setup: go ready (0.064s)
+setup: submodules ready (0.111s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (0.130s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.263s)
+setup: gate input css skipped (validated lock and installed bytes); step-duration=0.014s
+setup: gate input graphql skipped (validated lock and installed bytes); step-duration=0.117s
+setup: gate input media-query skipped (validated lock and installed bytes); step-duration=0.007s
+setup: gate input selector skipped (validated lock and installed bytes); step-duration=0.014s
+setup: gate input values skipped (validated lock and installed bytes); step-duration=0.009s
+setup: gate input json-prettier skipped (validated lock and installed bytes); step-duration=0.017s
+setup: gate input css-printer skipped (validated lock and installed bytes); step-duration=0.017s
+setup: gate npm inputs ready (0.381s)
+setup: gate input TypeScript source skipped (validated exact commit and checkout bytes); step-duration=5.681s
+setup: gate input 100 MiB gitignore skipped (validated deterministic 100 MiB bytes); step-duration=0.138s
+setup: gate corpora ready (5.916s)
+setup: gate input checker archive skipped (validated Go actions and archive bytes); step-duration=0.136s
+setup: go build skipped (validated warming stamp) (6.650s)
+setup: test binaries deferred (use --warm-tests) (6.655s)
+setup: build cache warm (6.660s)
+setup: build-flags commit=39638d9e278d38bb5aeae887f46d55a70e47aaad nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true load-before=0.08 2.82 3.96 1/461 141774 load-after=0.16 2.79 3.95 1/466 142237
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (6.719s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.ppVYDj

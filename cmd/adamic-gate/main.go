@@ -18,32 +18,44 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
+
+	"github.com/system-inc/adamic/internal/boundedrun"
 )
+
+var packageJobs = runtime.GOMAXPROCS(0)
 
 const timingPath = "cmd/adamic-gate/timings.json"
 
 type unit struct {
-	Package string
-	Test    string
-	Shard   int
-	Seconds float64
+	Package             string
+	Test                string
+	Shard               int
+	Seconds             float64
+	WASI                bool
+	RequiredEnvironment []string
 }
 
 func (u unit) key() string { return u.Package + "::" + u.Test }
 
 type plan struct {
-	Version int
-	Commit  string
-	Source  string
-	Count   int
-	Units   []unit
-	Digest  string
-	Shards  []prediction
+	Version           int
+	Commit            string
+	Source            string
+	Count             int
+	Units             []unit
+	Digest            string
+	Shards            []prediction
+	Complements       []complement
+	WASI              *wasiRequirement
+	RequiredVariables []string
+	Environment       *environmentRequirement
 }
 type event struct {
 	Action, Package, Test, Output string
@@ -77,7 +89,15 @@ type summary struct {
 	BuildFlags            string
 	DiskBefore, DiskAfter uint64
 	Errors                []string
+	Submodules            []submoduleRecord
+	Concurrency           concurrency
 }
+type shardWallTime struct {
+	Index       int
+	WallSeconds float64
+	BuildFlags  string
+}
+
 type merged struct {
 	Version           int
 	Plan              plan
@@ -86,9 +106,13 @@ type merged struct {
 	TestEvents        int
 	RawTerminalEvents int
 	WallSeconds       []float64
+	ShardWallTimes    []shardWallTime
 	BuildFlags        []string
 	Errors            []string
 	Green             bool
+	Unplanned         []string
+	SplitChildren     map[string][]string
+	SkipCensus        skipCensusSummary
 }
 
 func main() {
@@ -118,11 +142,18 @@ func run(args []string) error {
 		count := flags.Int("count", 8, "number of shards")
 		index := flags.Int("index", -1, "zero-based shard")
 		out := flags.String("out", "", "evidence directory")
+		jobs := flags.Int("jobs", 0, "legacy package job override; must agree with an explicit concurrency setting")
+		budget := flags.String("concurrency", defaultConcurrency, "auto or JOBSxPARALLEL, for example 4x1 or 2x2")
 		resume := flags.Bool("resume", false, "reuse complete package evidence for identical execution inputs")
 		scratch := flags.String("scratch", "/workspace/adamic-gate-scratch", "disk-backed scratch root outside the repository")
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
 		}
+		configured, err := resolveConcurrency(*budget, *jobs)
+		if err != nil {
+			return err
+		}
+		packageJobs, testParallel, concurrencySetting = configured.Jobs, configured.Parallel, configured.Setting
 		return shard(*index, *count, *out, *scratch, *resume)
 	case "merge":
 		flags := flag.NewFlagSet("merge", flag.ContinueOnError)
@@ -133,7 +164,7 @@ func run(args []string) error {
 		return merge(flags.Args(), *out)
 	case "compare":
 		if len(args) != 3 {
-			return errors.New("compare <merged directory or JSON> <unsharded JSON log>")
+			return errors.New("compare <merged directory or JSON> <unsharded JSON log or git:remote:gate-logs/sha/plain>")
 		}
 		return compare(args[1], args[2])
 	case "timings":
@@ -158,9 +189,17 @@ func run(args []string) error {
 	return fmt.Errorf("unknown command %q", args[0])
 }
 func output(name string, args ...string) (string, error) {
-	b, err := exec.Command(name, args...).CombinedOutput()
+	limit := boundedrun.Probe
+	if name == "go" && len(args) > 0 && (args[0] == "list" || args[0] == "test") {
+		limit = boundedrun.Build
+	}
+	cmd, release := boundedrun.Command(limit, name, args...)
+	defer release()
+	var stderr commandBuffer
+	cmd.Stderr = &stderr
+	b, err := cmd.Output()
 	if err != nil {
-		return "", fmt.Errorf("%s %v: %w\n%s", name, args, err, b)
+		return "", fmt.Errorf("%s %v: %w\n%s", name, args, err, string(b)+stderr.String())
 	}
 	return strings.TrimSpace(string(b)), nil
 }
@@ -257,6 +296,10 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 			if !ok {
 				return true
 			}
+			field, bound := literalRunBinding(f, r)
+			if !bound {
+				return true
+			}
 			literal, ok := r.X.(*ast.CompositeLit)
 			if !ok && len(table) == 1 {
 				if id, yes := r.X.(*ast.Ident); yes && id.Name == table[0] {
@@ -278,11 +321,16 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 			if !ok {
 				return true
 			}
-			if _, ok := literal.Type.(*ast.ArrayType); !ok {
+			array, ok := literal.Type.(*ast.ArrayType)
+			if !ok {
+				return true
+			}
+			index, ok := literalNameIndex(array, field)
+			if !ok {
 				return true
 			}
 			for _, e := range literal.Elts {
-				if label, ok := e.(*ast.BasicLit); ok && label.Kind == token.STRING {
+				if label, ok := e.(*ast.BasicLit); ok && label.Kind == token.STRING && field == "" {
 					name, err := strconv.Unquote(label.Value)
 					if err == nil {
 						names = append(names, strings.ReplaceAll(name, " ", "_"))
@@ -290,10 +338,21 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 					continue
 				}
 				row, ok := e.(*ast.CompositeLit)
-				if !ok || len(row.Elts) == 0 {
+				if !ok || len(row.Elts) == 0 || index >= len(row.Elts) {
 					continue
 				}
-				s, ok := row.Elts[0].(*ast.BasicLit)
+				expression := row.Elts[index]
+				if _, keyed := row.Elts[0].(*ast.KeyValueExpr); keyed {
+					expression = nil
+					for _, entry := range row.Elts {
+						if pair, ok := entry.(*ast.KeyValueExpr); ok {
+							if key, ok := pair.Key.(*ast.Ident); ok && key.Name == field {
+								expression = pair.Value
+							}
+						}
+					}
+				}
+				s, ok := expression.(*ast.BasicLit)
 				if !ok || s.Kind != token.STRING {
 					continue
 				}
@@ -316,10 +375,10 @@ func children(pkg, parent string) ([]string, error) {
 	}
 	if strings.HasSuffix(pkg, "/internal/oracle") {
 		switch parent {
-		case "TestNativeAgreesWithNode":
-			return fixtureRows("internal/oracle/oracle_test.go", "fixtures")
+		case "TestNativeAgreesWithNode", "TestWASIAgreesWithNode", "TestWASIEmission":
+			return registeredFixtures("internal/oracle/oracle_test.go", "fixtures")
 		case "TestInputAgreesWithNode":
-			return fixtureRows("internal/oracle/input_test.go", "inputFixtures")
+			return registeredFixtures("internal/oracle/input_test.go", "inputFixtures")
 		case "TestFreshWriteProbesStayRefused":
 			paths, err := filepath.Glob("internal/oracle/testdata/fresh_refused/*.a")
 			for i := range paths {
@@ -337,7 +396,9 @@ func children(pkg, parent string) ([]string, error) {
 	if strings.HasSuffix(pkg, "/stage1/cohere/lint") {
 		switch parent {
 		case "TestMutants":
-			return literalChildren("stage1/cohere/lint/lint_test.go", parent)
+			// Registry-driven mutant.json names are not a literal t.Run table.
+			// Run the whole parent rather than inventing children from backend loops.
+			return nil, nil
 		case "TestVolumeMutants":
 			return literalChildren("stage1/cohere/lint/volume_test.go", parent)
 		}
@@ -455,6 +516,13 @@ func makePlan(count int) (plan, error) {
 		}
 	}
 
+	if err := requireWASI(&p); err != nil {
+		return p, err
+	}
+	ordinaryCount := count
+	if p.Environment != nil && count > 1 {
+		ordinaryCount--
+	}
 	loads := make([]float64, count)
 	known := []int{}
 	seen := map[string]bool{}
@@ -472,7 +540,10 @@ func makePlan(count int) (plan, error) {
 			known = append(known, i)
 		} else {
 			hash := sha256.Sum256([]byte(u.key()))
-			u.Shard = int(binary.BigEndian.Uint64(hash[:8]) % uint64(count))
+			u.Shard = int(binary.BigEndian.Uint64(hash[:8]) % uint64(ordinaryCount))
+		}
+		if u.WASI || len(u.RequiredEnvironment) > 0 {
+			u.Shard = count - 1
 		}
 	}
 	sort.Slice(known, func(i, j int) bool {
@@ -483,8 +554,12 @@ func makePlan(count int) (plan, error) {
 		return a.Seconds > b.Seconds
 	})
 	for _, i := range known {
+		if p.Units[i].WASI || len(p.Units[i].RequiredEnvironment) > 0 {
+			loads[count-1] += p.Units[i].Seconds
+			continue
+		}
 		best := 0
-		for j := 1; j < count; j++ {
+		for j := 1; j < ordinaryCount; j++ {
 			if loads[j] < loads[best] {
 				best = j
 			}
@@ -493,52 +568,34 @@ func makePlan(count int) (plan, error) {
 		loads[best] += p.Units[i].Seconds
 	}
 	sort.Slice(p.Units, func(i, j int) bool { return p.Units[i].key() < p.Units[j].key() })
+	p.Complements = complements(p)
 	p.Shards = predictions(p, weights)
 	p.Digest = planDigest(p)
 	return p, nil
 }
 
-// Group only siblings under an identical literal prefix. Alternating whole slash-containing
-// patterns would form a Cartesian product in Go's -run parser and execute unplanned tests.
+// Top-level alternation gives Go testing a union of complete slash-separated paths.
 func patterns(units []unit) []string {
-	groups := map[string][]string{}
+	var names []string
+	sdk := false
 	for _, u := range units {
-		if u.Test == "" {
-			groups[""] = nil
+		if strings.HasSuffix(u.Package, "/internal/native") && u.Test == "TestWASI" {
+			sdk = true
 			continue
 		}
-		parts := strings.Split(u.Test, "/")
-		prefix := strings.Join(parts[:len(parts)-1], "/")
-		groups[prefix] = append(groups[prefix], parts[len(parts)-1])
+		names = append(names, exactPath(u.Test))
 	}
-	keys := []string{}
-	for k := range groups {
-		keys = append(keys, k)
+	sort.Strings(names)
+	var out []string
+	if len(names) > 0 {
+		out = append(out, strings.Join(names, "|"))
 	}
-	sort.Strings(keys)
-	var result []string
-	for _, prefix := range keys {
-		names := groups[prefix]
-		if len(names) == 0 {
-			result = append(result, "^$")
-			continue
-		}
-		sort.Strings(names)
-		for i := range names {
-			names[i] = regexp.QuoteMeta(names[i])
-		}
-		last := "^(" + strings.Join(names, "|") + ")$"
-		if prefix != "" {
-			parts := strings.Split(prefix, "/")
-			for i := range parts {
-				parts[i] = "^" + regexp.QuoteMeta(parts[i]) + "$"
-			}
-			last = strings.Join(parts, "/") + "/" + last
-		}
-		result = append(result, last)
+	if sdk {
+		out = append(out, "^TestWASI$")
 	}
-	return result
+	return out
 }
+
 func skipReason(action, text string) string {
 	if action != "skip" {
 		return ""
@@ -561,10 +618,12 @@ func readRuns(path string) ([]result, error) {
 	scanner := bufio.NewScanner(f)
 	scanner.Buffer(make([]byte, 65536), 64*1024*1024)
 	var runs []result
+	line := 0
 	for scanner.Scan() {
+		line++
 		var e event
 		if err := json.Unmarshal(scanner.Bytes(), &e); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("%s:%d: malformed JSON: %w", path, line, err)
 		}
 		if e.Action == "run" && e.Test != "" {
 			runs = append(runs, result{Package: e.Package, Test: e.Test, Action: "run"})
@@ -584,10 +643,12 @@ func readLog(path string) ([]result, []string, int, error) {
 	var results []result
 	var cache []string
 	raw := 0
+	line := 0
 	for scanner.Scan() {
+		line++
 		var e event
 		if err := json.Unmarshal(scanner.Bytes(), &e); err != nil {
-			return nil, nil, 0, fmt.Errorf("%s: malformed JSON: %w", path, err)
+			return nil, nil, 0, fmt.Errorf("%s:%d: malformed JSON: %w", path, line, err)
 		}
 		key := e.Package + "::" + e.Test
 		outputs[key] += e.Output
@@ -627,13 +688,6 @@ func free(path string) uint64 {
 	}
 	return s.Bavail * uint64(s.Bsize)
 }
-func loadAverage() string {
-	b, err := os.ReadFile("/proc/loadavg")
-	if err != nil {
-		return "unknown"
-	}
-	return strings.TrimSpace(string(b))
-}
 func buildFlags(commit, before, after string) string {
 	get := func(n string, a ...string) string {
 		s, e := output(n, a...)
@@ -642,14 +696,22 @@ func buildFlags(commit, before, after string) string {
 		}
 		return strings.Split(s, "\n")[0]
 	}
-	quota, _ := os.ReadFile("/sys/fs/cgroup/cpu.max")
-	return fmt.Sprintf("commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", commit, get("nproc"), strings.TrimSpace(string(quota)), get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
+	quota := cpuQuota()
+	c := currentConcurrency()
+	return fmt.Sprintf("concurrency=%q package_jobs=%d test_parallel=%d effective_parallel=%d budget=%d commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", c.Setting, c.Jobs, c.Parallel, c.EffectiveParallel, c.Budget, commit, processorCount(), quota, get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
 }
 func shard(index, count int, out, scratch string, resume bool) error {
 	started := time.Now()
 	beforeLoad := loadAverage()
 	if out == "" || index < 0 || index >= count {
 		return errors.New("shard requires -out and 0 <= index < count")
+	}
+	submodules, err := inspectSubmodules(".", "HEAD")
+	if err != nil {
+		return err
+	}
+	if err := requirePinnedSubmodules(submodules); err != nil {
+		return err
 	}
 	root, err := filepath.Abs(scratch)
 	if err != nil {
@@ -687,10 +749,22 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		return err
 	}
 
+	if err := environmentReady(p, index); err != nil {
+		return err
+	}
+	if p.WASI != nil && p.WASI.Shard == index {
+		if err := wasiReady(); err != nil {
+			return err
+		}
+	}
 	context, err := executionIdentity()
 	if err != nil {
 		return err
 	}
+	if packageJobs < 1 {
+		return errors.New("jobs must be positive")
+	}
+	context = schedulingIdentity(context, packageJobs, testParallel, currentConcurrency().EffectiveParallel)
 	state := resumeState{PlanDigest: p.Digest, Context: context, Index: index}
 	if _, err := os.Stat(out); err == nil {
 		if !resume {
@@ -720,7 +794,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if err := atomicJSON(filepath.Join(out, "run.json"), state); err != nil {
 		return err
 	}
-	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk}
+	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk, Submodules: submodules, Concurrency: currentConcurrency()}
 	raw, err := os.Create(filepath.Join(out, "test.jsonl"))
 	if err != nil {
 		return err
@@ -732,8 +806,12 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	}
 	var commandStderr io.Writer = stderr
 	runCommand := func(name string, args []string, tmp string, w io.Writer) int {
-		cmd := exec.Command(name, args...)
+		cmd, release := shardCommand(name, args...)
+		defer release()
 		cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
+		if name == "go" && len(args) > 0 && args[0] == "test" && p.WASI != nil && p.WASI.Shard == index && strings.HasSuffix(args[len(args)-1], "/internal/native") && args[len(args)-2] == "^TestWASI$" {
+			cmd.Env = append(cmd.Env, "PATH="+filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin")+string(os.PathListSeparator)+os.Getenv("PATH"))
+		}
 		cmd.Stdout = w
 		cmd.Stderr = commandStderr
 		t := time.Now()
@@ -790,21 +868,16 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			s.Errors = append(s.Errors, err.Error())
 		}
 	}
-	byPackage := map[string][]unit{}
-	for _, u := range p.Units {
-		if u.Shard == index {
-			byPackage[u.Package] = append(byPackage[u.Package], u)
-		}
-	}
+	byPackage := assignedPackages(p, index)
 	pkgs := []string{}
 	for pkg := range byPackage {
 		pkgs = append(pkgs, pkg)
 	}
 	sort.Strings(pkgs)
 	fmt.Printf("shard %d disk before=%d bytes scratch=%s /tmp_free=%d bytes /tmp_tmpfs=%t\n", index, beforeDisk, root, free("/tmp"), tmpfs("/tmp"))
-	for _, pkg := range pkgs {
+	runPackage := func(pkg string) error {
 		packageDir := filepath.Join(out, "packages", shortHash(pkg))
-		key := checkpointKey(state, pkg, patterns(byPackage[pkg]))
+		key := checkpointKey(state, pkg, selectorKeys(p, index, pkg))
 		if err := cleanupPackageScratch(packageDir, key, root); err != nil {
 			return err
 		}
@@ -814,15 +887,9 @@ func shard(index, count int, out, scratch string, resume bool) error {
 				return err
 			}
 			if found {
-				if err := appendFile(raw, filepath.Join(packageDir, "test.jsonl")); err != nil {
-					return err
-				}
-				if err := appendFile(stderr, filepath.Join(packageDir, "test.stderr")); err != nil {
-					return err
-				}
-				s.Invocations = append(s.Invocations, saved.Invocations...)
+				_ = saved
 				fmt.Printf("resumed %s from complete log\n", pkg)
-				continue
+				return nil
 			}
 		}
 		if err := os.MkdirAll(packageDir, 0755); err != nil {
@@ -847,12 +914,29 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if err := atomicJSON(filepath.Join(packageDir, "scratch.json"), scratchRecord{Key: key, Path: tmp}); err != nil {
 			return err
 		}
-		first := len(s.Invocations)
-		commandStderr = io.MultiWriter(stderr, packageStderr)
-		for _, pattern := range patterns(byPackage[pkg]) {
-			runCommand("go", testArgs(pkg, pattern), tmp, io.MultiWriter(raw, packageLog))
+		local := summary{}
+		var localErrors []string
+		for _, selection := range selections(p, index, pkg) {
+			args := concurrencyArgs(selectionArgs(pkg, selection), testParallel)
+			cmd, release := shardCommand("go", args...)
+			cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
+			if strings.HasSuffix(pkg, "/internal/native") && selection.Run == "^TestWASI$" {
+				cmd.Env = append(cmd.Env, "PATH="+filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin")+string(os.PathListSeparator)+os.Getenv("PATH"))
+			}
+			cmd.Stdout, cmd.Stderr = packageLog, packageStderr
+			began := time.Now()
+			code := 0
+			runErr := cmd.Run()
+			release()
+			if err := runErr; err != nil {
+				code = 1
+				if exit, ok := err.(*exec.ExitError); ok {
+					code = exit.ExitCode()
+				}
+				fmt.Fprintln(packageStderr, err)
+			}
+			local.Invocations = append(local.Invocations, invocation{pkg, args, true, code, time.Since(began).Seconds()})
 		}
-		commandStderr = stderr
 		err = errors.Join(packageLog.Sync(), packageStderr.Sync(), packageLog.Close(), packageStderr.Close())
 		if err != nil {
 			return err
@@ -863,9 +947,12 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if err := os.Rename(filepath.Join(packageDir, "test.stderr.partial"), filepath.Join(packageDir, "test.stderr")); err != nil {
 			return err
 		}
-		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: s.Invocations[first:]}
+		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: local.Invocations, TestParallel: testParallel}
+		if err := atomicJSON(filepath.Join(packageDir, "invocations.json"), checkpoint); err != nil {
+			return err
+		}
 		if err := completePackage(packageDir, checkpoint, p, index, pkg); err != nil {
-			s.Errors = append(s.Errors, err.Error())
+			localErrors = append(localErrors, err.Error())
 		} else {
 			checkpoint.LogDigest, err = fileDigest(filepath.Join(packageDir, "test.jsonl"))
 			if err != nil {
@@ -880,10 +967,55 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			}
 		}
 		if err := cleanupPackageScratch(packageDir, key, root); err != nil {
-			s.Errors = append(s.Errors, err.Error())
+			localErrors = append(localErrors, err.Error())
 		}
 		fmt.Printf("finished %s free=%d bytes\n", pkg, free(root))
+		if len(localErrors) > 0 {
+			return errors.New(strings.Join(localErrors, "; "))
+		}
+		return nil
 	}
+	jobs := make(chan string)
+	var workers sync.WaitGroup
+	var problemsMutex sync.Mutex
+	for worker := 0; worker < packageJobs; worker++ {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			for pkg := range jobs {
+				if err := runPackage(pkg); err != nil {
+					problemsMutex.Lock()
+					s.Errors = append(s.Errors, pkg+": "+err.Error())
+					problemsMutex.Unlock()
+				}
+			}
+		}()
+	}
+	for _, pkg := range pkgs {
+		jobs <- pkg
+	}
+	close(jobs)
+	workers.Wait()
+	// Aggregate only after workers finish, in stable package order. Checkpoints are durable earlier.
+	for _, pkg := range pkgs {
+		directory := filepath.Join(out, "packages", shortHash(pkg))
+		if err := appendFile(raw, filepath.Join(directory, "test.jsonl")); err != nil {
+			s.Errors = append(s.Errors, err.Error())
+		}
+		if err := appendFile(stderr, filepath.Join(directory, "test.stderr")); err != nil {
+			s.Errors = append(s.Errors, err.Error())
+		}
+		var checkpoint packageEvidence
+		if err := loadJSON(filepath.Join(directory, "complete.json"), &checkpoint); err == nil {
+			s.Invocations = append(s.Invocations, checkpoint.Invocations...)
+		} else {
+			// Preserve failed/incomplete invocation provenance independently of completion stamps.
+			if err := loadJSON(filepath.Join(directory, "invocations.json"), &checkpoint); err == nil {
+				s.Invocations = append(s.Invocations, checkpoint.Invocations...)
+			}
+		}
+	}
+
 	raw.Close()
 	stderr.Close()
 	afterSource, identityErr := sourceIdentity()
@@ -891,6 +1023,12 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	status, statusErr := output("git", "status", "--porcelain", "--untracked-files=normal")
 	if identityErr != nil || commitErr != nil || statusErr != nil || afterSource != p.Source || afterCommit != p.Commit || status != "" {
 		s.Errors = append(s.Errors, "repository changed during shard execution")
+	}
+	afterSubmodules, submoduleErr := inspectSubmodules(".", p.Commit)
+	if submoduleErr != nil {
+		s.Errors = append(s.Errors, submoduleErr.Error())
+	} else {
+		s.Errors = append(s.Errors, compareSubmodules(submodules, []summary{{Index: index, Submodules: afterSubmodules}})...)
 	}
 
 	s.Results, s.CacheLines, _, err = readLog(filepath.Join(out, "test.jsonl"))
@@ -997,6 +1135,11 @@ func validateResults(expected plan, index int, results []result, produced map[st
 		}
 		owner := -1
 		isAncestor := false
+		for _, c := range expected.Complements {
+			if c.Shard == index && c.Package == r.Package && c.Parent == r.Test {
+				isAncestor = true
+			}
+		}
 		for j, u := range expected.Units {
 			if owns(u, r) {
 				owner = j
@@ -1018,7 +1161,14 @@ func validateResults(expected plan, index int, results []result, produced map[st
 				produced[u.key()] = true
 			}
 		} else if !isAncestor {
-			problems = append(problems, "unplanned test: "+r.key())
+			if complementOwns(expected, index, r) {
+				if previous, ok := seenTest[r.key()]; ok {
+					problems = append(problems, fmt.Sprintf("test %s ran twice in shards %d and %d", r.key(), previous, index))
+				}
+				seenTest[r.key()] = index
+			} else {
+				problems = append(problems, "unplanned test: "+r.key())
+			}
 		}
 	}
 	return problems
@@ -1041,12 +1191,22 @@ func merge(dirs []string, out string) error {
 		return err
 	}
 	m := merged{Version: 1, Plan: expected}
+	submodules, err := inspectSubmodules(".", expected.Commit)
+	if err != nil {
+		return err
+	}
+	m.Errors = append(m.Errors, compareSubmodules(submodules, summaries)...)
+	_, censusStat := os.Stat(filepath.Join("internal", "skipcensus", "census.go"))
+	censusLanded := !os.IsNotExist(censusStat)
 	seenShard := map[int]bool{}
 	seenTest := map[string]int{}
 	seenRuns := map[string]int{}
 	produced := map[string]bool{}
 	var all []result
 	for i, s := range summaries {
+		if err := validateConcurrency(s.Concurrency); err != nil {
+			m.Errors = append(m.Errors, fmt.Sprintf("shard %d: %s", s.Index, err))
+		}
 		if s.Version != 1 || !samePlan(expected, s.Plan) {
 			m.Errors = append(m.Errors, fmt.Sprintf("shard %d plan differs from repository enumeration", s.Index))
 		}
@@ -1084,6 +1244,10 @@ func merge(dirs []string, out string) error {
 		if err != nil {
 			return err
 		}
+		if !censusLanded {
+			m.Errors = append(m.Errors, wasiSkips(expected, s.Index, results)...)
+			m.Errors = append(m.Errors, requiredEnvironmentSkips(expected, s.Index, results)...)
+		}
 		m.RawTerminalEvents += raw
 		for _, r := range results {
 			if r.Test != "" && r.Action == "fail" {
@@ -1096,8 +1260,8 @@ func merge(dirs []string, out string) error {
 		for _, call := range s.Invocations {
 			declared[call.Package]++
 			assigned := false
-			for _, u := range expected.Units {
-				if u.Package == call.Package && u.Shard == s.Index {
+			for pkg := range assignedPackages(expected, s.Index) {
+				if pkg == call.Package {
 					assigned = true
 				}
 			}
@@ -1155,6 +1319,7 @@ func merge(dirs []string, out string) error {
 
 		all = append(all, results...)
 		m.WallSeconds = append(m.WallSeconds, s.WallSeconds)
+		m.ShardWallTimes = append(m.ShardWallTimes, shardWallTime{s.Index, s.WallSeconds, s.BuildFlags})
 		m.BuildFlags = append(m.BuildFlags, s.BuildFlags)
 	}
 	for i := 0; i < expected.Count; i++ {
@@ -1168,8 +1333,40 @@ func merge(dirs []string, out string) error {
 		}
 	}
 	m.Results = canonical(all)
+	m.SplitChildren = map[string][]string{}
+	for _, split := range expected.Complements {
+		parent := split.Package + "::" + split.Parent
+		for _, r := range m.Results {
+			if r.Package != split.Package || !strings.HasPrefix(r.Test, split.Parent+"/") {
+				continue
+			}
+			m.SplitChildren[parent] = append(m.SplitChildren[parent], r.Test)
+			known := false
+			for _, u := range expected.Units {
+				if owns(u, r) || ancestor(u, r) {
+					known = true
+					break
+				}
+			}
+			if !known {
+				notice := "unplanned, ran anyway: " + r.key()
+				m.Unplanned = append(m.Unplanned, notice)
+				fmt.Println(notice)
+			}
+		}
+	}
+
 	m.Pass, m.Fail, m.Skip = totals(m.Results)
 	m.TestEvents = m.Pass + m.Fail + m.Skip
+	censusLogs := []string{}
+	for _, directory := range dirs {
+		censusLogs = append(censusLogs, filepath.Join(directory, "test.jsonl"))
+	}
+	m.SkipCensus, err = checkSkipCensus(".", censusLogs...)
+	if err != nil {
+		m.Errors = append(m.Errors, err.Error())
+	}
+	sort.Slice(m.ShardWallTimes, func(i, j int) bool { return m.ShardWallTimes[i].Index < m.ShardWallTimes[j].Index })
 	m.Green = len(m.Errors) == 0 && m.Fail == 0
 	if _, err := os.Stat(out); err == nil {
 		return errors.New("merged output already exists")
@@ -1203,6 +1400,10 @@ func merge(dirs []string, out string) error {
 		verdict = "GREEN"
 	}
 	fmt.Printf("%s pass=%d fail=%d skip=%d test_events=%d raw_terminal_events=%d\n", verdict, m.Pass, m.Fail, m.Skip, m.TestEvents, m.RawTerminalEvents)
+	fmt.Printf("GATE census=%s required_input=%d not_applicable=%q measurement=%q opt_in_lane=%q\n", m.SkipCensus.Status, len(m.SkipCensus.RequiredInput), strings.Join(m.SkipCensus.NotApplicable, ","), strings.Join(m.SkipCensus.Measurement, ","), strings.Join(m.SkipCensus.OptInLane, ","))
+	for _, timing := range m.ShardWallTimes {
+		fmt.Printf("shard %d wall=%.3fs\n%s\n", timing.Index, timing.WallSeconds, timing.BuildFlags)
+	}
 	for _, problem := range m.Errors {
 		fmt.Fprintln(os.Stderr, problem)
 	}
@@ -1218,6 +1419,14 @@ func compare(path, log string) error {
 	var m merged
 	if err := loadJSON(path, &m); err != nil {
 		return err
+	}
+	if strings.HasPrefix(log, "git:") {
+		local, cleanup, err := fetchPlainReference(log, m.Plan.Commit)
+		if err != nil {
+			return err
+		}
+		defer cleanup()
+		log = local
 	}
 	whole, _, raw, err := readLog(log)
 	if err != nil {
@@ -1264,4 +1473,14 @@ func compare(path, log string) error {
 	}
 	fmt.Println("diff: empty")
 	return nil
+}
+
+// Shard tests already request Go's 60m timer. The outer 70m deadline also
+// covers a stuck build or Go itself. Formatting/vet fit the measured 32.8s setup.
+func shardCommand(name string, args ...string) (*boundedrun.Cmd, func()) {
+	limit := boundedrun.Build
+	if name == "go" && len(args) > 0 && args[0] == "test" {
+		limit = boundedrun.Shard
+	}
+	return boundedrun.Command(limit, name, args...)
 }

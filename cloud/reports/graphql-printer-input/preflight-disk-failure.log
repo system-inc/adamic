@@ -1,0 +1,53 @@
+=== RUN   TestPrinterUpstreamPreflight
+=== RUN   TestPrinterUpstreamPreflight/defaults
+    printer_test.go:96: repository and submodules: 0 .graphql files
+    printer_test.go:96: Go oracle: exit status 1
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/format/estree/convert.go:14:2: open /home/agent/.cache/go-build/14/14dbe68d1580677d0b0e1689a7d6b2d788c09982aaa451549b01b2eb05b2f5c6-d: no space left on device
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/lint/optionschema/validate.go:26:2: open /home/agent/.cache/go-build/14/14038505db9e3e5f74dcb5da96ad79324cb4c74eb6c618866925d223d56adc8d-a: no space left on device
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/lint/configuration/version_pin.go:8:2: open /home/agent/.cache/go-build/14/1447504e195f0035fd4da7bfdeb4e57405a3200eb3f513bc9d355e2b25fd5071-d: no space left on device
+        FAIL	github.com/system-inc/cohere/internal/format/graphql [setup failed]
+        FAIL
+=== RUN   TestPrinterUpstreamPreflight/narrow
+    printer_test.go:96: repository and submodules: 0 .graphql files
+    printer_test.go:96: Go oracle: exit status 1
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/format/estree/convert.go:14:2: open /home/agent/.cache/go-build/14/14dbe68d1580677d0b0e1689a7d6b2d788c09982aaa451549b01b2eb05b2f5c6-d: no space left on device
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/lint/optionschema/validate.go:26:2: open /home/agent/.cache/go-build/14/14038505db9e3e5f74dcb5da96ad79324cb4c74eb6c618866925d223d56adc8d-a: no space left on device
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/lint/configuration/version_pin.go:8:2: open /home/agent/.cache/go-build/14/1447504e195f0035fd4da7bfdeb4e57405a3200eb3f513bc9d355e2b25fd5071-d: no space left on device
+        FAIL	github.com/system-inc/cohere/internal/format/graphql [setup failed]
+        FAIL
+=== RUN   TestPrinterUpstreamPreflight/tight
+    printer_test.go:96: repository and submodules: 0 .graphql files
+    printer_test.go:96: Go oracle: exit status 1
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/format/estree/convert.go:14:2: open /home/agent/.cache/go-build/14/14dbe68d1580677d0b0e1689a7d6b2d788c09982aaa451549b01b2eb05b2f5c6-d: no space left on device
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/lint/optionschema/validate.go:26:2: open /home/agent/.cache/go-build/14/14038505db9e3e5f74dcb5da96ad79324cb4c74eb6c618866925d223d56adc8d-a: no space left on device
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/lint/configuration/version_pin.go:8:2: open /home/agent/.cache/go-build/14/1447504e195f0035fd4da7bfdeb4e57405a3200eb3f513bc9d355e2b25fd5071-d: no space left on device
+        FAIL	github.com/system-inc/cohere/internal/format/graphql [setup failed]
+        FAIL
+=== RUN   TestPrinterUpstreamPreflight/tabs
+    printer_test.go:96: repository and submodules: 0 .graphql files
+    printer_test.go:96: Go oracle: exit status 1
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/format/estree/convert.go:14:2: open /home/agent/.cache/go-build/14/14dbe68d1580677d0b0e1689a7d6b2d788c09982aaa451549b01b2eb05b2f5c6-d: no space left on device
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/lint/optionschema/validate.go:26:2: open /home/agent/.cache/go-build/14/14038505db9e3e5f74dcb5da96ad79324cb4c74eb6c618866925d223d56adc8d-a: no space left on device
+        # github.com/system-inc/cohere/internal/format/graphql
+        internal/lint/configuration/version_pin.go:8:2: open /home/agent/.cache/go-build/14/1447504e195f0035fd4da7bfdeb4e57405a3200eb3f513bc9d355e2b25fd5071-d: no space left on device
+        FAIL	github.com/system-inc/cohere/internal/format/graphql [setup failed]
+        FAIL
+--- FAIL: TestPrinterUpstreamPreflight (0.16s)
+    --- FAIL: TestPrinterUpstreamPreflight/defaults (0.04s)
+    --- FAIL: TestPrinterUpstreamPreflight/narrow (0.04s)
+    --- FAIL: TestPrinterUpstreamPreflight/tight (0.04s)
+    --- FAIL: TestPrinterUpstreamPreflight/tabs (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/graphql/printer	0.162s
+FAIL

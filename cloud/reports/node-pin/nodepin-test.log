@@ -1,0 +1,8 @@
+=== RUN   TestSetupVersion
+=== PAUSE TestSetupVersion
+=== RUN   TestCheckUsesPATH
+--- PASS: TestCheckUsesPATH (0.00s)
+=== CONT  TestSetupVersion
+--- PASS: TestSetupVersion (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/nodepin	0.004s

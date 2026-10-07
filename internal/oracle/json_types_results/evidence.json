@@ -1,0 +1,39 @@
+{
+  "codeCommit": "ac03580750432a1bb3738ac681a4bef2344ba654",
+  "base": "2adf65c2514eefbbb073bfdab922d00a4e80a3d3",
+  "scratchCommit": "55dd8ba60879b0a98db8a432e4b4a54875ddbb49",
+  "jsonBranch": "ef0b803d88fc00074b84089c0a8c2b5f6695792e",
+  "integration": "Developer-tools base has no JSON source helper or decode/encode fixtures. Harness preflight skips absent source; Node fails if a JSON source needs a missing binary. Scratch integrates the fix with codex/workers-decode-json, preserving its HTTP resolver. Scratch not pushed.",
+  "fixtures": 24,
+  "byteIdentical": true,
+  "compileCounting": "Count Go run/build requests through a PATH wrapper during compiled test-binary executions, excluding package compilation to produce those binaries. Baseline 81; initial fixed full run 1; final fixed full run 1. Go may reuse compiler/linker artifacts internally; these are compiler-driver requests, not a count of every internal compiler process.",
+  "helperCaching": "No persistent custom helper cache. Each test process invokes go build once; Go owns source/dependency/toolchain/GOOS/GOARCH cache invalidation. ADAMIC_GATE_UNCACHED=1 always still builds once and bypasses oracle observation caches.",
+  "cacheKey": "Helper binary SHA256 participates in observation context. Every oracle/*.mjs is also hashed. Random helper pathname excluded; source-mutant repeated run records native hits=3 and node hits=2.",
+  "mutants": {
+    "changedSource": "Inject console.log into helper-returned source: fresh executable hash and stdout disagreement; restored and repeated runs pass.",
+    "dropDigest": "Observation key omitted helper digest: stale old helper returned, dedicated test fails.",
+    "legacyLoader": "Restore go run fallback: both missing environment and missing path tests fail their named diagnostics."
+  },
+  "permissions": "Go wrapper records mode 0700 immediately after go build; TestMain subsequently chmods executable and containing directory to 0755.",
+  "timingFinding": "Best of 3 interleaved loaded runs: before 15.950927s; after 21.096446s. All six pass. No speedup observed. See metadata and exact commands in loaded-timings.json. Initial trimpath experiment retained separately.",
+  "setup": {
+    "status": "failed at module prewarming",
+    "error": "github.com/klauspost/compress@v1.20.0 download from storage.googleapis.com returned Forbidden (HTTP 403)",
+    "lines": [
+      "setup: node ready (0.069s)",
+      "setup: go ready (0.069s)",
+      "setup: submodules ready (0.111s)",
+      "setup: markdown dependencies ready (0.142s)",
+      "setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.349s)"
+    ],
+    "nproc": 5,
+    "workaround": "Source existing /workspace/adamic-tools/env.sh; targeted oracle builds and vet use available module cache and pass."
+  },
+  "validation": "Base complete uncached internal/oracle passes, focused cache/missing-helper tests and vet pass. Scratch complete uncached internal/oracle passes before and after; final all tests pass with one startup Go request. One manual test-binary invocation failed from wrong cwd; preserved log, corrected package-cwd run passes.",
+  "notCovered": [
+    "Original Mac load-66 timeout not reproduced",
+    "Whole repository gate not run",
+    "Opt-in WASI engines not enabled",
+    "Original sixteen-fixture revision unavailable; current JSON branch has twenty-four fixtures"
+  ]
+}

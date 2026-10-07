@@ -1,0 +1,3 @@
+missing-final-check mutant caught: setup must reject post-prepare Node drift
+node v24.19.0 installed (published SHA-256 verified)
+PASS: final exact-version refusal fails only when the check is removed; restored pinned Node

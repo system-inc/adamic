@@ -1,0 +1,13 @@
+F.
+======================================================================
+FAIL: test_every_key_component (__main__.Inputs.test_every_key_component) (name='environment')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 27, in test_every_key_component
+    self.assertNotEqual(before,gate.cache_key(**changed),name)
+AssertionError: '7659c8bba50d87c3ac207b093b26867972ffd065056e7aae1286084b5bf962ee' == '7659c8bba50d87c3ac207b093b26867972ffd065056e7aae1286084b5bf962ee' : environment
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=1)

@@ -1,0 +1,14 @@
+integration logs: /tmp/adamic-gate/setup-proof-ba9tf09k
+F....
+======================================================================
+FAIL: test_reruns_and_identical_uncached_answer (__main__.SetupIntegration.test_reruns_and_identical_uncached_answer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup.py", line 191, in test_reruns_and_identical_uncached_answer
+    self.assertIn("test binaries skipped", run(setup + ["--warm-tests"]))
+AssertionError: 'test binaries skipped' not found in 'v24.19.0\ngo version go1.27.1 linux/amd64\nsetup: go ready (0.128s)\nsetup: node ready (0.120s)\nsetup: submodules ready (0.202s)\nsetup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.013s\nsetup: markdown dependencies ready (0.270s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.454s)\nsetup: go build ready (0.861s)\nsetup: test binaries warm (1.160s)\nsetup: build cache warm (1.260s)\nsetup: build-flags commit=b119aee8fd002f78598cd588e178bf8dd193bd6d nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=true gate-inputs=false load-before=7.42 7.23 3.57 4/450 115707 load-after=7.42 7.23 3.57 12/445 116113\nsetup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (1.338s)\nsetup: source /workspace/adamic-tools/env.sh\nsetup: logs /tmp/adamic-gate/setup.WosGSZ\n'
+
+----------------------------------------------------------------------
+Ran 5 tests in 92.363s
+
+FAILED (failures=1)

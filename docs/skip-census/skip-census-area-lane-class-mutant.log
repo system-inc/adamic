@@ -1,0 +1,9 @@
+=== RUN   TestLogClassesAndMutants
+=== PAUSE TestLogClassesAndMutants
+=== CONT  TestLogClassesAndMutants
+    census_test.go:124: opt-in-lane: gate skipped 0 required-input tests; 1 unclassified skips unknown	github.com/system-inc/adamic/probe	TestProbe/subtest
+        skips=1 required-input=0 unknown=1
+--- FAIL: TestLogClassesAndMutants (0.00s)
+FAIL
+FAIL	mutant	0.004s
+FAIL
