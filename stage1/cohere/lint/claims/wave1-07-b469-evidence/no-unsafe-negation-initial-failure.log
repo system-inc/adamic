@@ -1,0 +1,10 @@
+command ['go', 'build', '-overlay=/tmp/wave07-b469/no-unsafe-negation/oracle-overlay.json', '-o', '/tmp/wave07-b469/no-unsafe-negation/oracle', '/workspace/adamic/cohere/adamic_wave07_owned.go', '/workspace/adamic/cohere/adamic_wave07_adapter.go']
+exit 0, stdout 0 bytes, stderr 0 bytes
+command ['go', 'test', './stage1/cohere/lint/rules/no-unsafe-negation', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 1, stdout 312 bytes, stderr 0 bytes
+=== RUN   TestCompileProfiles
+    build_test.go:23: /workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a:28:21: error TS2554: Expected 10 arguments, but got 9.
+--- FAIL: TestCompileProfiles (0.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation	0.172s
+FAIL
