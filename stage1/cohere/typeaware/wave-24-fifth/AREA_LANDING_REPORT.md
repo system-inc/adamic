@@ -1,6 +1,6 @@
 Rebased all twelve owned checker-rule ports onto the integrated lint area without changing rule bodies or shared sources.
-Current validated base is origin/area/stage1-lint b46914832d70e00847d82d5d221ab7bb24040c53, containing main c7991b900362796aefd111474e65eb5398e91953 and harness 41eb6eab2; push only the worker branch.
-All four owned byte-oracle suites, named listeners, sanitizer and released-handle checks PASS again; original suite 151.436s; registry validates 40 entries; vet clean.
+Current validated base is origin/area/stage1-lint d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, containing main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06 and harness 41eb6eab2; push only the worker branch.
+All four owned byte-oracle suites, named listeners, sanitizer and released-handle checks PASS again; original suite 160.121s; affected Node typeof fixtures and one-byte mutant PASS 18.719s; vet clean.
 Caught 12 rule and 11 raw-question byte mutants, released-registry mutation, native listener mutation and two JSON listener mutations.
 Default options only, full repository gate and older node-only migration uncovered; React analysis claims remain parked.
 
@@ -63,3 +63,17 @@ Repeated all four complete owned byte-oracle suites with the preceding commands 
 After builds stopped, three alternating whole-process medians for the newest-three suite: repository native 273.497ms versus Go 101.286ms (2.700x slower), compiler native 1417.679ms versus Go 279.134ms (5.079x slower). Samples and logs are in evidence/area-landing/registry/. Removed only obsolete large worker scratch binaries to maintain disk space; retained source and logs.
 
 Fresh audit of 644 origin refs, 33 distinct claim blobs and 172 rule mentions leaves no unclaimed rule. Verified remote area, main and own branch before publication. React analysis claims remain parked. Default-option, older node-only migration, full-gate and seventeen mandatory-input check limitations remain unchanged; none of those unrun checks is represented as passing.
+
+## Typeof null and dispatch integration
+
+Rebased cleanly onto d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, containing current main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06. Preserved the inherited typeof lowering, slot-presence and union-runtime fixes without editing shared compiler sources. Registry generation validates 40 entries; fresh compiler is /tmp/wave24-typeof-adamic. The preceding successful setup remains the toolchain used (135s, nproc=5).
+
+Repeated all four complete owned suites using the commands above with this compiler and direct /tmp/wave24-typeof-{original,next,third,fifth}.log output. Full canonical findings/fixes/ordered suggestions agree with Go in normal and sanitizer modes on controls and both frozen corpora. All 23 compiled byte mutants, released-registry mutation, native and JSON listener mutations are caught. Released handles require exact panic 70. Every suite passes; original suite takes 160.121s. Listener comparison and vet pass. Unchanged bridge packages were not repeated; their previous successful package checks remain separate observations.
+
+Ran go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/typeof_(dispatch|null|string_literal)|TestTheOracleCatchesOneByte' -count=1 -v with direct logging. The affected typeof fixtures and one-byte mutant pass in 18.719s, including native sanitizer and emitted-JavaScript comparison with Node. Worker caching is enabled (native 7 hits/15 misses, Node 0 hits/15 misses). No skip or guard relaxation was introduced.
+
+Disk space filled while mutant binaries accumulated. Removed only explicitly named completed worker mutants after their comparison logs had been recorded, plus obsolete worker scratch binaries. All source, byte observation files and logs were retained; remaining checks passed without a disk failure. Three alternating whole-process medians after builds finished: repository native 272.634ms versus Go 102.984ms (2.647x slower), compiler native 1502.864ms versus Go 298.747ms (5.031x slower). Samples and logs are in evidence/area-landing/typeof/.
+
+Audited 659 origin refs, 33 distinct claim blobs and 172 claimed rule mentions: no unclaimed rule. Verified exact remote integration and own worker tips before publication. React analysis claims remain parked. Nondefault options, older node-only migration, full gate and seventeen mandatory external-input checks remain unverified.
+
+Final evidence-directory creation initially failed with no space left on device after tests passed. Freed completed binaries from the three named older-suite scratch directories and retried the evidence write; no check result was altered.
