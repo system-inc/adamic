@@ -1,0 +1,1143 @@
+/tmp/parser-driver-slice/src/compiler/binder.ts:1672:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/binder.ts:1688:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/binder.ts:171:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/binder.ts:1723:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/binder.ts:1970:122: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/binder.ts:2148:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/binder.ts:21:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/binder.ts:2555:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/binder.ts:2770:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/binder.ts:2778:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/binder.ts:3546:9: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/binder.ts:3611:64: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/binder.ts:935:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/binder.ts:958:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/builder.ts:112:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1171:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1183:65: error TS2488: Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1217:61: error TS2488: Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1270:64: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1272:41: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1272:97: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1418:60: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1420:26: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1421:45: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1487:64: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1495:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/builder.ts:1840:16: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/builder.ts:2198:9: error TS2375: Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[]>; ... 7 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'outSignature' are incompatible.
+    Type 'EmitSignature | undefined' is not assignable to type 'EmitSignature'.
+      Type 'undefined' is not assignable to type 'EmitSignature'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:2235:9: error TS2375: Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; referencedMap: BuilderState.ManyToManyPathMap | undefined; ... 8 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'emitSignatures' are incompatible.
+    Type 'Map<Path, EmitSignature> | undefined' is not assignable to type 'Map<Path, EmitSignature>'.
+      Type 'undefined' is not assignable to type 'Map<Path, EmitSignature>'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:2302:13: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type 'Generator<[Path | undefined, never[]], void, unknown>' is missing the following properties from type 'readonly (readonly [Path, readonly ReusableDiagnostic[]])[]': length, concat, join, slice, and 25 more.
+/tmp/parser-driver-slice/src/compiler/builder.ts:2304:45: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:320:118: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:320:85: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builder.ts:682:57: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/builder.ts:704:55: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/builder.ts:916:17: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
+  Type 'undefined' is not assignable to type 'Path'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/builderState.ts:33:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/builderState.ts:77:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:10124:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:101:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:10225:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:10261:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:10569:127: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:10588:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:10889:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:10914:30: error TS18048: 'file' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:10918:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:110:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:11396:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:12866:47: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:12870:49: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Declaration'.
+  Type 'undefined' is not assignable to type 'Declaration'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:13151:173: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:13523:66: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:13948:67: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:14025:9: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:14575:41: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:14577:22: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:14577:47: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:14580:51: error TS18048: 'prop' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:14581:42: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:14584:43: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:14586:52: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:15298:60: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:15569:70: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:15573:62: error TS2322: Type '(Symbol | undefined)[] | undefined' is not assignable to type 'Symbol[] | undefined'.
+  Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.
+    Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+      Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:16196:78: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:16304:54: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:16770:21: error TS2412: Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:16826:29: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:17542:15: error TS2322: Type '(Type | undefined)[]' is not assignable to type 'Type[]'.
+  Type 'Type | undefined' is not assignable to type 'Type'.
+    Type 'undefined' is not assignable to type 'Type'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:1780:36: error TS2488: Type '[__String, Symbol] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/parser-driver-slice/src/compiler/checker.ts:17924:25: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:1823:85: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:18384:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:18394:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:19475:32: error TS2722: Cannot invoke an object which is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:19498:50: error TS2345: Argument of type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to parameter of type 'TypeMapper'.
+  Type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo?: () => string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'debugInfo' are incompatible.
+      Type '(() => string) | undefined' is not assignable to type '() => string'.
+        Type 'undefined' is not assignable to type '() => string'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:20268:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:20314:98: error TS2379: Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'errors' are incompatible.
+    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+      Type 'undefined' is not assignable to type 'Diagnostic[]'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:20394:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:20581:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:206:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:21378:29: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+/tmp/parser-driver-slice/src/compiler/checker.ts:21378:32: error TS2488: Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/parser-driver-slice/src/compiler/checker.ts:220:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:23004:22: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:2334:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:234:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:244:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:24852:13: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:24854:9: error TS2322: Type 'Symbol[] | undefined' is not assignable to type 'Symbol[]'.
+  Type 'undefined' is not assignable to type 'Symbol[]'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:250:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:257:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:264:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:26622:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:26677:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:270:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:2730:86: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:27602:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:27638:89: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:277:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:282:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:29053:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:2910:120: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:2920:69: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:2929:229: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:292:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:30110:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:302:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:30368:183: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:30418:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:30432:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:30495:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:3072:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:30748:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:3078:114: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:30817:82: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:30847:137: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:30865:119: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:309:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:31575:125: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:315:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:31787:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:32104:100: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:33168:60: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:33326:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:33644:95: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:33705:33: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:34107:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:34170:33: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+      Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+        Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:34171:79: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:35113:63: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:3518:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:3527:73: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:3582:48: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:36597:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:36671:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:37310:64: error TS2345: Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.
+  Type 'undefined' is not assignable to type 'ElementFlags'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:37:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:38377:76: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:38391:41: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:38799:25: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:38812:25: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:39017:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:39122:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:39405:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:39433:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:39466:75: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4026:87: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:40545:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:40755:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:40963:50: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:40979:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:41216:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:41682:57: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:41729:65: error TS2345: Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.
+  Type 'undefined' is not assignable to type 'TypeParameter'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:41859:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4191:45: error TS2322: Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:42049:62: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:42325:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:42397:20: error TS2412: Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:42620:86: error TS2379: Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'value' are incompatible.
+    Type 'Type | undefined' is not assignable to type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4264:60: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:42912:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:42977:77: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4317:44: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4334:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4368:38: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4378:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4444:33: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(string | undefined)[]' is not assignable to parameter of type 'readonly string[]'.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:44980:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:44994:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:44994:208: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:45008:128: error TS2345: Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:45039:176: error TS2345: Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.
+  Type 'ErrorOutputContainer' is not assignable to type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'errors' are incompatible.
+      Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+        Type 'undefined' is not assignable to type 'Diagnostic[]'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:45126:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:45614:64: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.
+  Type 'undefined' is not assignable to type '__String'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:45616:167: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.
+  Type 'undefined' is not assignable to type '__String'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4571:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:45908:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4675:50: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:46960:46: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4706:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:47163:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:47171:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:47486:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4785:220: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:48059:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4844:13: error TS2375: Type '{ accessibility: SymbolAccessibility.NotAccessible; errorSymbolName: string; errorModuleName: string | undefined; }' is not assignable to type 'SymbolAccessibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'errorModuleName' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:48668:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:48677:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:48825:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:48831:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:48854:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:49013:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:49033:121: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:49049:118: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:49130:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:49136:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:4915:9: error TS2375: Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'aliasesToMakeVisible' are incompatible.
+    Type 'LateVisibilityPaintedStatement[] | undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.
+      Type 'undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:49164:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:49203:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:49219:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:49493:88: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:50225:59: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:50345:110: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:50410:21: error TS18048: 's' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:50412:25: error TS18048: 'merged' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:50413:41: error TS18048: 'merged' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51200:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51306:13: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51307:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51309:35: error TS2345: Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51310:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51312:13: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51313:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51315:13: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51316:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51318:14: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51319:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51321:42: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51323:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51326:39: error TS18048: 'parameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51380:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51453:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51477:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51592:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51617:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51626:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51649:29: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51660:29: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51794:71: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51800:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51852:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51859:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51963:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:51994:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:52003:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:52192:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:52260:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:52269:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:52276:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:52496:94: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:52550:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:52568:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:52574:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:5296:13: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:53103:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:53116:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:53141:5: error TS2375: Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'readFile' are incompatible.
+    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.
+      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:53209:7: error TS2420: Class 'SymbolTrackerImpl' incorrectly implements interface 'SymbolTracker'.
+  Types of property 'moduleResolverHost' are incompatible.
+    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:54:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:563:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration["kind"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.
+  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+          Types of property 'typeArguments' are incompatible.
+            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.
+              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:6138:26: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:659:9: error TS2322: Type '(call: CallLikeExpression, editingArgument: Node) => (Signature | undefined)[]' is not assignable to type '(call: CallLikeExpression, editingArgument: Node) => Signature[]'.
+  Type '(Signature | undefined)[]' is not assignable to type 'Signature[]'.
+    Type 'Signature | undefined' is not assignable to type 'Signature'.
+      Type 'undefined' is not assignable to type 'Signature'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:6717:133: error TS2379: Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'questionToken' are incompatible.
+    Type 'PunctuationToken<SyntaxKind.QuestionToken> | undefined' is not assignable to type 'QuestionToken'.
+      Type 'undefined' is not assignable to type 'PunctuationToken<SyntaxKind.QuestionToken>'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:6776:121: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:6962:62: error TS2379: Argument of type '{ reportCyclicStructureError(): void; reportInaccessibleThisError(): void; reportInaccessibleUniqueSymbolError(): void; reportLikelyUnsafeImportRequiredError(specifier: string, symbolName: string | undefined): void; ... 8 more ...; popErrorFallbackNode?: ...; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'moduleResolverHost' are incompatible.
+    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.
+        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:7144:26: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:7202:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:7252:77: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:7354:97: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:7446:17: error TS2322: Type 'Set<number | undefined>' is not assignable to type 'Set<number>'.
+  Type 'number | undefined' is not assignable to type 'number'.
+    Type 'undefined' is not assignable to type 'number'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:7649:47: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:7741:21: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:7882:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:79:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8243:17: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8471:37: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8902:63: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8902:86: error TS18048: 'm' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8906:97: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8913:67: error TS18048: 'm' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8913:79: error TS18048: 'm' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8933:53: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8941:90: error TS18048: 'n' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8942:69: error TS18048: 's' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8943:69: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8944:47: error TS18048: 's' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8944:93: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8945:122: error TS18048: 's' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8946:103: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:8950:50: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9199:83: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9200:51: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9204:76: error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+      Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+        Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9216:86: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.
+  Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9333:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9723:86: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9728:79: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9821:33: error TS2379: Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; modifiers: ... | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'modifiers' are incompatible.
+    Type 'Modifier[] | undefined' is not assignable to type 'readonly Modifier[]'.
+      Type 'undefined' is not assignable to type 'readonly Modifier[]'.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9948:22: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/checker.ts:9966:22: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:1766:96: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:1969:79: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:2193:91: error TS18046: 'e' is of type 'unknown'.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:2555:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'build' are incompatible.
+    Type 'undefined' is not assignable to type 'boolean'.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:2569:9: error TS2322: Type '{ path: string; originalPath: undefined; prepend?: boolean | undefined; circular?: boolean | undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.
+  Type '{ path: string; originalPath: undefined; prepend?: boolean | undefined; circular?: boolean | undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.
+    Type '{ path: string; originalPath: undefined; prepend?: boolean | undefined; circular?: boolean | undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'originalPath' are incompatible.
+        Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:2581:66: error TS2345: Argument of type 'Set<string | undefined>' is not assignable to parameter of type 'Set<string>'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:2653:40: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:2844:13: error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:3341:55: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:3701:4: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:3752:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:3906:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:3992:93: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:4179:9: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/commandLineParser.ts:4186:46: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/core.ts:1631:11: error TS2740: Type '{ has(element: TElement): boolean; add(element: TElement): Set<TElement>; delete(element: TElement): boolean; clear(): void; ... 6 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<TElement>': union, intersection, difference, symmetricDifference, and 3 more.
+/tmp/parser-driver-slice/src/compiler/core.ts:1915:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/core.ts:2554:118: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/core.ts:2570:118: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/core.ts:986:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+/tmp/parser-driver-slice/src/compiler/corePublic.ts:43:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/debug.ts:14:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/debug.ts:28:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/debug.ts:52:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/debug.ts:794:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/debug.ts:808:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:1102:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:1107:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:1115:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:1120:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:2269:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:2519:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:4019:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:54:4: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:587:42: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:5946:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/emitter.ts:792:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/executeCommandLine.ts:33:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/executeCommandLine.ts:994:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/expressionToTypeNode.ts:1023:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/expressionToTypeNode.ts:1146:46: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/expressionToTypeNode.ts:124:58: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/expressionToTypeNode.ts:140:66: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/expressionToTypeNode.ts:597:76: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/factory/emitHelpers.ts:14:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/factory/nodeFactory.ts:25:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/factory/nodeFactory.ts:5055:9: error TS2412: Type 'JSDocTypeExpression | undefined' is not assignable to type 'T["typeExpression"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  'JSDocTypeExpression | undefined' is assignable to the constraint of type 'T["typeExpression"]', but 'T["typeExpression"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.
+    Type 'undefined' is not assignable to type 'T["typeExpression"]'.
+      'undefined' is assignable to the constraint of type 'T["typeExpression"]', but 'T["typeExpression"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.
+        Type 'undefined' is not assignable to type 'JSDocTypeExpression'.
+/tmp/parser-driver-slice/src/compiler/factory/nodeFactory.ts:775:9: error TS2412: Type 'undefined' is not assignable to type 'T["localSymbol"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  'undefined' is assignable to the constraint of type 'T["localSymbol"]', but 'T["localSymbol"]' could be instantiated with a different subtype of constraint 'Symbol | undefined'.
+    Type 'undefined' is not assignable to type 'Symbol'.
+/tmp/parser-driver-slice/src/compiler/factory/parenthesizerRules.ts:626:89: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1110:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1209:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1212:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1215:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1252:9: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1253:9: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1254:9: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1255:9: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1256:9: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1257:9: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:1510:86: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:302:173: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:534:276: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:601:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:702:105: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:852:109: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/factory/utilities.ts:929:82: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:1471:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:1591:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:190:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.
+  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'originalPath' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:1976:132: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2207:65: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2253:68: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2349:115: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2393:189: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2612:282: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2676:21: error TS2322: Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.
+  Type '{ readonly value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.
+    Types of property 'value' are incompatible.
+      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.
+        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+          Types of property 'originalPath' are incompatible.
+            Type 'string | undefined' is not assignable to type 'string | true'.
+              Type 'undefined' is not assignable to type 'string | true'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2910:278: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2936:13: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2961:48: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:2968:274: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:3073:255: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:3146:264: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:3201:50: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:3236:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:365:94: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:36:13: error TS2375: Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'peerDependencies' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:378:36: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.
+  Type 'undefined' is not assignable to type 'MapLike<string[]>'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:383:99: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:51:59: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:531:9: error TS2375: Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'originalPath' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:539:5: error TS2375: Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: ... | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'resolutionDiagnostics' are incompatible.
+    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+      Type 'undefined' is not assignable to type 'Diagnostic[]'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:546:143: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:548:144: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:551:35: error TS2345: Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:552:5: error TS2322: Type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:566:31: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:599:33: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:700:85: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleNameResolver.ts:88:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/moduleSpecifiers.ts:1232:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleSpecifiers.ts:51:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/moduleSpecifiers.ts:637:37: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleSpecifiers.ts:766:89: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleSpecifiers.ts:784:82: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleSpecifiers.ts:813:278: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/moduleSpecifiers.ts:901:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:10167:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:1054:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:1299:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/parser.ts:22:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:2521:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/parser.ts:31:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:3408:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:3604:37: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:3712:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:4220:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/parser.ts:4226:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/parser.ts:4375:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:4541:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:5436:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/parser.ts:5469:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/parser.ts:6227:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/parser.ts:64:153: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:7109:53: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:7370:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:7383:25: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8058:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8371:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8401:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8407:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8489:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8496:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8601:25: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8812:80: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8889:25: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/parser.ts:889:199: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:8963:22: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:9063:22: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:9324:44: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/parser.ts:9563:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/parser.ts:9984:18: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/path.ts:377:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/performanceCore.ts:36:37: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/performanceCore.ts:36:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/program.ts:120:25: error TS18046: 'e' is of type 'unknown'.
+/tmp/parser-driver-slice/src/compiler/program.ts:155:25: error TS18046: 'e' is of type 'unknown'.
+/tmp/parser-driver-slice/src/compiler/program.ts:1590:11: error TS2375: Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'directoryExists' are incompatible.
+    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
+      Type 'undefined' is not assignable to type '(path: string) => boolean'.
+/tmp/parser-driver-slice/src/compiler/program.ts:2098:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/program.ts:2313:9: error TS2375: Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createHash' are incompatible.
+    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.
+      Type 'undefined' is not assignable to type '(data: string) => string'.
+/tmp/parser-driver-slice/src/compiler/program.ts:2714:22: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/program.ts:2721:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/program.ts:2817:22: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/program.ts:2863:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/program.ts:2918:25: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/program.ts:3871:64: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/program.ts:3874:69: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/program.ts:3874:95: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/program.ts:394:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/program.ts:4702:28: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/program.ts:4752:14: error TS2488: Type '[Path, false | SymlinkedDirectory] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/parser-driver-slice/src/compiler/program.ts:4821:5: error TS2375: Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: ...; ... 6 more ...; trace: ... | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'trace' are incompatible.
+    Type '((s: string) => void) | undefined' is not assignable to type '(s: string) => void'.
+      Type 'undefined' is not assignable to type '(s: string) => void'.
+/tmp/parser-driver-slice/src/compiler/program.ts:58:39: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/program.ts:650:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1223:21: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.
+  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1238:17: error TS2322: Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.
+  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1273:58: error TS2375: Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'nonRecursive' are incompatible.
+    Type 'boolean | undefined' is not assignable to type 'boolean'.
+      Type 'undefined' is not assignable to type 'boolean'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1273:58: error TS2379: Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'nonRecursive' are incompatible.
+    Type 'boolean | undefined' is not assignable to type 'boolean'.
+      Type 'undefined' is not assignable to type 'boolean'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1327:9: error TS2412: Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1449:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1557:118: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1559:39: error TS18048: 'dirPath' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1560:46: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1560:74: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:1560:99: error TS18048: 'dirPath' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:931:43: error TS2379: Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'reusedNames' are incompatible.
+    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.
+      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'.
+/tmp/parser-driver-slice/src/compiler/resolutionCache.ts:960:43: error TS2379: Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'reusedNames' are incompatible.
+    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.
+      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:1524:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:1534:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:1657:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:2104:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:2396:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:2736:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:2809:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:2878:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:3271:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:3451:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:3832:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:415:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:622:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:816:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:937:43: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:972:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/scanner.ts:985:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/sourcemap.ts:197:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.
+/tmp/parser-driver-slice/src/compiler/sourcemap.ts:370:61: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1197:43: error TS18046: 'e' is of type 'unknown'.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1387:34: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1387:42: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1388:36: error TS2591: Cannot find name 'path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1388:46: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1389:21: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1391:36: error TS2591: Cannot find name 'crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1393:23: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1398:35: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1401:25: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1402:32: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1408:56: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1415:121: error TS2304: Cannot find name '__filename'.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1415:35: error TS2304: Cannot find name '__filename'.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1415:92: error TS2304: Cannot find name '__dirname'.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1417:44: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1418:51: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1433:27: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1434:38: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1435:32: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1441:19: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1445:17: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1448:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1451:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1483:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1492:21: error TS2304: Cannot find name 'global'.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1493:21: error TS2304: Cannot find name 'global'.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1495:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1505:42: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1509:112: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1509:68: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1511:107: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1511:180: error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1511:192: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1511:26: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1511:62: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1514:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1514:69: error TS2307: Cannot find module 'source-map-support' or its corresponding type declarations.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1523:17: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1526:33: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1531:36: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1532:36: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1533:13: error TS2322: Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'.
+  Type '{ module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+    Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+      Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '{ module: undefined; modulePath?: undefined; error: { stack?: string; message?: string; }; }'.
+        Types of property 'error' are incompatible.
+          Type 'unknown' is not assignable to type '{ stack?: string; message?: string; }'.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1536:38: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1546:49: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1567:44: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1567:59: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1589:47: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1613:54: error TS7006: Parameter 'err' implicitly has an 'any' type.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1613:61: error TS7031: Binding element 'profile' implicitly has an 'any' type.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1616:120: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1645:41: error TS2304: Cannot find name '__filename'.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1663:47: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1663:73: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1705:25: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:1800:96: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/sys.ts:46:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/sys.ts:61:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/sys.ts:818:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/sys.ts:993:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/tracing.ts:119:23: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/tracing.ts:24:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/tracing.ts:27:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/tracing.ts:50:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/tracing.ts:69:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/tracing.ts:70:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/parser-driver-slice/src/compiler/transformer.ts:324:9: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformer.ts:352:9: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformer.ts:520:9: error TS2322: Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.
+  Type 'undefined' is not assignable to type 'VariableDeclaration[]'.
+/tmp/parser-driver-slice/src/compiler/transformer.ts:521:9: error TS2322: Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'.
+  Type 'undefined' is not assignable to type 'FunctionDeclaration[]'.
+/tmp/parser-driver-slice/src/compiler/transformer.ts:522:9: error TS2322: Type 'Statement[] | undefined' is not assignable to type 'Statement[]'.
+  Type 'undefined' is not assignable to type 'Statement[]'.
+/tmp/parser-driver-slice/src/compiler/transformer.ts:571:9: error TS2322: Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.
+  Type 'undefined' is not assignable to type 'Identifier[]'.
+/tmp/parser-driver-slice/src/compiler/transformer.ts:61:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformer.ts:68:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:1223:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:125:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:1627:21: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2043:45: error TS2538: Type 'undefined' cannot be used as an index type.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2044:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2045:27: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2089:52: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2168:56: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:22:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2495:91: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2537:16: error TS2375: Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'className' are incompatible.
+      Type 'undefined' is not assignable to type 'Identifier'.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2656:52: error TS2345: Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.
+  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'setterName' are incompatible.
+      Type 'undefined' is not assignable to type 'Identifier'.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2688:52: error TS2345: Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.
+  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'getterName' are incompatible.
+      Type 'undefined' is not assignable to type 'Identifier'.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:2988:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:431:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/classFields.ts:676:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/declarations.ts:1483:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.
+  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.
+/tmp/parser-driver-slice/src/compiler/transformers/declarations.ts:1588:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/declarations.ts:676:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/declarations/diagnostics.ts:181:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/destructuring.ts:29:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:172:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:21:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:2604:38: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:273:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:2754:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:2847:64: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:4238:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:4492:34: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:4494:13: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:73:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:79:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2015.ts:84:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:20:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:239:21: error TS2322: Type 'Set<__String | undefined>' is not assignable to type 'Set<__String>'.
+  Type '__String | undefined' is not assignable to type '__String'.
+    Type 'undefined' is not assignable to type '__String'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:241:17: error TS18048: 'catchClauseUnshadowedNames' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:26:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:513:86: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:678:38: error TS18048: 'outerParameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:679:25: error TS18048: 'originalParameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:679:58: error TS18048: 'originalParameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:681:76: error TS18048: 'outerParameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2017.ts:684:44: error TS18048: 'outerParameter' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/es2018.ts:21:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/es2018.ts:28:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/esDecorators.ts:1020:80: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/esDecorators.ts:179:9: error TS2322: Type '{ kind: "class"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.
+  Type '{ kind: "class"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'ClassLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'savedPendingExpressions' are incompatible.
+      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.
+        Type 'undefined' is not assignable to type 'Expression[]'.
+/tmp/parser-driver-slice/src/compiler/transformers/esDecorators.ts:226:13: error TS2322: Type '{ kind: "other"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.
+  Type '{ kind: "other"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'OtherLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'savedPendingExpressions' are incompatible.
+      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.
+        Type 'undefined' is not assignable to type 'Expression[]'.
+/tmp/parser-driver-slice/src/compiler/transformers/esDecorators.ts:969:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/esDecorators.ts:992:45: error TS2538: Type 'undefined' cannot be used as an index type.
+/tmp/parser-driver-slice/src/compiler/transformers/esDecorators.ts:993:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/esnext.ts:136:34: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/parser-driver-slice/src/compiler/transformers/esnext.ts:158:52: error TS2345: Argument of type '(ExportSpecifier | undefined)[]' is not assignable to parameter of type 'readonly ExportSpecifier[]'.
+  Type 'ExportSpecifier | undefined' is not assignable to type 'ExportSpecifier'.
+    Type 'undefined' is not assignable to type 'ExportSpecifier'.
+/tmp/parser-driver-slice/src/compiler/transformers/esnext.ts:17:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/esnext.ts:297:44: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/parser-driver-slice/src/compiler/transformers/esnext.ts:337:36: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/parser-driver-slice/src/compiler/transformers/esnext.ts:720:34: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/parser-driver-slice/src/compiler/transformers/esnext.ts:720:70: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1200:39: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1287:35: error TS18048: 'variable' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1291:70: error TS2345: Argument of type 'InitializedVariableDeclaration | undefined' is not assignable to parameter of type 'InitializedVariableDeclaration'.
+  Type 'undefined' is not assignable to type 'InitializedVariableDeclaration'.
+    Type 'undefined' is not assignable to type 'VariableDeclaration'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:139:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:156:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1601:46: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:162:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1646:55: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:171:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1783:21: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1797:25: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1798:43: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1798:50: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1804:62: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1804:69: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1806:55: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1806:85: error TS18048: 'clause' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1806:92: error TS2339: Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1828:27: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1835:27: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:1836:44: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:224:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2363:48: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2386:56: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2389:53: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2397:48: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2416:51: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2424:51: error TS2345: Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2797:63: error TS18048: 'withBlock' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2868:21: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2900:57: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/generators.ts:2901:23: error TS2322: Type 'CodeBlock | undefined' is not assignable to type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.
+/tmp/parser-driver-slice/src/compiler/transformers/jsx.ts:100:24: error TS2488: Type '[string, Map<string, ImportSpecifier>] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+/tmp/parser-driver-slice/src/compiler/transformers/jsx.ts:113:172: error TS18046: 's' is of type 'unknown'.
+/tmp/parser-driver-slice/src/compiler/transformers/jsx.ts:113:188: error TS18046: 's' is of type 'unknown'.
+/tmp/parser-driver-slice/src/compiler/transformers/jsx.ts:235:58: error TS2345: Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'.
+  Type 'undefined' is not assignable to type 'JsxChild'.
+/tmp/parser-driver-slice/src/compiler/transformers/jsx.ts:428:62: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.
+/tmp/parser-driver-slice/src/compiler/transformers/legacyDecorators.ts:705:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/module/esnextAnd2015.ts:109:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/transformers/module/esnextAnd2015.ts:115:91: error TS2345: Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'TextRange'.
+  Type 'undefined' is not assignable to type 'TextRange'.
+/tmp/parser-driver-slice/src/compiler/transformers/module/esnextAnd2015.ts:146:37: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.
+  Type 'undefined' is not assignable to type 'FileReference | Node'.
+/tmp/parser-driver-slice/src/compiler/transformers/module/esnextAnd2015.ts:148:81: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.
+  Type 'undefined' is not assignable to type 'Expression'.
+/tmp/parser-driver-slice/src/compiler/transformers/module/esnextAnd2015.ts:203:22: error TS2532: Object is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/transformers/module/esnextAnd2015.ts:52:46: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.
+  Type 'undefined' is not assignable to type 'FileReference | Node'.
+/tmp/parser-driver-slice/src/compiler/transformers/module/module.ts:2307:44: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/module/system.ts:1893:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/module/system.ts:485:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/transformers/taggedTemplate.ts:13:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/ts.ts:2063:99: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/ts.ts:27:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/ts.ts:35:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/transformers/ts.ts:939:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/ts.ts:958:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/transformers/utilities.ts:723:4: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/tsbuild.ts:7:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:1353:177: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:1672:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:1815:21: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:198:5: error TS2412: Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => Date'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:334:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:335:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:336:5: error TS2412: Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:337:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:338:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:339:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:65:6: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:681:5: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string) => boolean'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:682:5: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string) => void'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:683:5: error TS2412: Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:727:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:821:6: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:960:76: error TS18048: 'data' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:961:62: error TS18048: 'data' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/tsbuildPublic.ts:962:42: error TS18048: 'data' is possibly 'undefined'.
+/tmp/parser-driver-slice/src/compiler/types.ts:10100:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:10188:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:10276:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:1677:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:2786:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:2807:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:32:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:4142:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:4481:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:4588:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:4653:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:4684:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:4956:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5006:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5487:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5494:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5501:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5509:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5519:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5563:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5573:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5615:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5668:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5675:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5830:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:5934:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6097:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6158:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6211:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6322:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6504:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6662:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6683:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6876:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6905:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6974:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6980:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:6987:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7052:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7068:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7086:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7120:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7137:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7178:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7305:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7317:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7340:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7370:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7379:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7386:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7585:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7614:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7624:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7630:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7644:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7663:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7685:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7703:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:774:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:7833:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:8060:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:8204:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:8345:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:8353:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:8387:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:843:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:8524:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:8573:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:8625:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:897:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:909:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:924:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/types.ts:9544:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:10231:53: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:10398:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:10877:73: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:11021:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:11163:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:11626:32: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:11692:13: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:1393:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:2237:9: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:2318:36: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:2348:36: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:2405:61: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:2528:105: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:2647:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:2772:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:2805:70: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:3108:9: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:3390:72: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:3416:91: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:3441:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:3463:54: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:3803:75: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:3868:162: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:3931:84: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:4132:58: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:4217:52: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:4234:43: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:4264:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:4506:9: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:4575:64: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:4731:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:4749:9: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:5053:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:5125:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:6186:81: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:6204:85: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:7414:10: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:7513:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:7804:160: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:7861:13: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/utilities.ts:9468:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/utilitiesPublic.ts:321:56: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilitiesPublic.ts:545:95: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilitiesPublic.ts:600:84: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilitiesPublic.ts:722:46: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilitiesPublic.ts:742:53: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilitiesPublic.ts:748:51: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/utilitiesPublic.ts:957:49: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/watch.ts:155:29: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/watch.ts:709:17: error TS7029: Fallthrough case in switch.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:300:65: error TS2379: Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createProgram' are incompatible.
+    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.
+      Type 'undefined' is not assignable to type 'CreateProgram<T>'.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:312:52: error TS2379: Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createProgram' are incompatible.
+    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.
+      Type 'undefined' is not assignable to type 'CreateProgram<T>'.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:435:5: error TS2412: Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => boolean'.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:458:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:459:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:463:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:464:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:471:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:497:17: error TS2412: Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:591:9: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type '(directory: string) => void'.
+/tmp/parser-driver-slice/src/compiler/watchPublic.ts:791:14: error TS7030: Not all code paths return a value.
+/tmp/parser-driver-slice/src/compiler/watchUtilities.ts:338:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.
+/tmp/parser-driver-slice/src/compiler/watchUtilities.ts:634:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.

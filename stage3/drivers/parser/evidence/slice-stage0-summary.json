@@ -52,5 +52,11 @@
     "strict": true
   },
   "checkerOptionsChanged": false,
-  "temporaryAdaptationsMade": false
+  "temporaryAdaptationsMade": false,
+  "cli": {
+    "entry": "parser-proof-main.a using corrected private identifier text",
+    "buildExit": 1,
+    "same830DiagnosticsAsParserEntry": true,
+    "nativeBinaryProduced": false
+  }
 }

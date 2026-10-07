@@ -123,7 +123,9 @@ go build -buildvcs=false -o /tmp/parser-area-probe ./stage3/drivers/parser/probe
 ```
 
 The probe exits zero after serializing the Checker outcome; that is not an
-accepted build. SLICE.md records the gather, byte audits, full-tree equality,
+accepted build. The actual stage0 CLI build of the corrected slice driver
+was also run: exit 1, exactly the same 830 diagnostics, no native binary.
+Its full output is evidence/slice-stage0-cli.log. SLICE.md records the gather, byte audits, full-tree equality,
 load-time failures and actual declaration omission. Bash syntax checks and
 git diff --check were run on the driver/report changes. The complete Adamic
 gate and native stage3 baseline were not run for this blocked raw slice.
