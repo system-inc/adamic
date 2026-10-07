@@ -17,11 +17,8 @@ func TestNestedFunctionGapsAreLoud(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
 		{"rest", `function run(): number { function inner(...values: number[]): number { return values.length; } return inner(1); } console.log(String(run()));`, "parameter that isn't a plain name"},
-		{"self value", `function run(): () => number { function inner(): number { const self: () => number = inner; return 1; } return inner; } console.log(String(run()()));`, "first-class nested function reference"},
 		{"block", `function run(): number { if (true) { function inner(): number { return 1; } return inner(); } return 0; } console.log(String(run()));`, "block-scoped nested"},
 		{"generic", `function run(): number { function inner<T>(value: T): T { return value; } const stored = inner; return stored(1); } console.log(String(run()));`, "generic function as a value"},
-		{"sibling value", `function run(): () => number { function a(): number { return 1; } function b(): () => number { return a; } return b(); } console.log(String(run()()));`, "first-class nested function reference"},
-		{"ancestor call", `function run(): number { function a(): number { return 1; } function b(): number { function c(): number { return a(); } return c(); } return b(); } console.log(String(run()));`, "first-class nested function reference"},
 		{"dynamic this", `function run(): number { function a(this: { x: number }): number { return this.x; } return 1; } console.log(String(run()));`, "dynamic this"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

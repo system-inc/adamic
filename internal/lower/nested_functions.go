@@ -194,8 +194,8 @@ func (l *lowering) nestedSibling(node *ast.Node) int {
 	return index
 }
 
-// A declaration's canonical value lives in its enclosing frame. Capturing that
-// value from a sibling would introduce a cycle, unlike calling its code directly.
+// References use the canonical value cached weakly in the declaring frame.
+// Only its cells travel between functions, never a strong sibling closure binding.
 func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) {
 	local, ok := l.locals[l.symbol(node)]
 	if !ok || l.result.Locals[local].NestedFunction == 0 {
@@ -205,7 +205,9 @@ func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) 
 		return nil, true, l.notYet(node, "a generic function as a value")
 	}
 	if l.result.Locals[local].Function != l.functionIndex {
-		return nil, true, l.notYet(node, "a first-class nested function reference from another nested function")
+		index := l.result.Locals[local].NestedFunction - 1
+		l.nestedReferenceEnvironment(index)
+		return ir.MakeClosure{Function: index}, true, nil
 	}
 	return ir.Read{Local: local, Of: ir.Closure}, true, nil
 }
@@ -244,6 +246,10 @@ func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
 	if !function.NestedFrame {
 		return
 	}
+	function.FrameIdentity = l.result.Functions[owner].FrameIdentity
+	if function.FrameIdentity > 0 {
+		function.Body = append([]ir.Statement{ir.Declare{Local: function.FrameIdentity - 1, Value: ir.NumberConstant{}}}, function.Body...)
+	}
 	direct := map[int]bool{}
 	for _, statement := range function.Body {
 		if declaration, ok := statement.(ir.Declare); ok {
@@ -266,7 +272,7 @@ func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
 	}
 	for index := range l.result.Functions {
 		target := &l.result.Functions[index]
-		retains := target.NestedParent == owner+1 || target.ForwardedNestedParent == owner+1
+		retains := target.NestedParent == owner+1 || target.ForwardedNestedParent == owner+1 || slices.Contains(target.ReferenceParents, owner+1)
 		for _, local := range target.Environment {
 			retains = retains || slices.Contains(function.FrameEnvironment, local)
 		}
@@ -295,7 +301,7 @@ func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
 		target := &l.result.Functions[index]
 		if target.NestedParent == owner+1 {
 			target.Environment = slices.Clone(environment)
-		} else if target.ForwardedNestedParent == owner+1 {
+		} else if target.ForwardedNestedParent == owner+1 || slices.Contains(target.ReferenceParents, owner+1) {
 			for _, local := range environment {
 				if !slices.Contains(target.Environment, local) {
 					target.Environment = append(target.Environment, local)

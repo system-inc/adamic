@@ -170,7 +170,6 @@ func (l *lowering) touch(local int) {
 func (l *lowering) checked(local int) bool {
 	return (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
 
-
 }
 
 func (l *lowering) constant(value string) int {

@@ -304,6 +304,7 @@ static void free_one(void *value) {
 	}
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
+		adamic_closure_uncache(closure);
 		for (size_t index = 0; index < closure->count; index++) {
 			let_go(closure->cells[index]);
 		}

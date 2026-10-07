@@ -48,6 +48,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// A closure is its code and its cells, an instance of its own class so typeof can tell it from an
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
+	builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (!values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
@@ -852,6 +853,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		cells := []string{}
 		for _, local := range e.program.Functions[expression.Function].Environment {
 			cells = append(cells, e.cell(local))
+		}
+		target := e.program.Functions[expression.Function]
+		if target.NestedParent > 0 {
+			if identity := e.program.Functions[target.NestedParent-1].FrameIdentity; identity > 0 {
+				return fmt.Sprintf("adamicCanonical(%s, %s, [%s])", e.cell(identity-1), functionName(e.program, expression.Function), strings.Join(cells, ", "))
+			}
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s])", functionName(e.program, expression.Function), strings.Join(cells, ", "))
 	case ir.CallClosure:
