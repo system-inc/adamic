@@ -1,0 +1,47 @@
+enum AKind { A }
+enum BKind { B = 1 }
+interface A { readonly kind: AKind; readonly value: string }
+interface B { readonly kind: BKind; readonly value: number }
+type Node = A | B;
+function numeric(): number { return 42; }
+const a: A = { kind: numeric(), value: 'out-of-range' };
+function inspect(value: Node): void { console.log(`${value.kind}`); }
+function explicit(value: Node): void {
+    switch (value.kind) {
+        case AKind.A: console.log('a'); return;
+        case BKind.B: console.log('b'); return;
+        default: { const full: Node = value; inspect(full); }
+    }
+}
+function implicit(value: Node): void {
+    switch (value.kind) {
+        case AKind.A: return;
+        case BKind.B: return;
+    }
+    const full: Node = value;
+    inspect(full);
+}
+function otherwise(value: Node): void {
+    if (value.kind === AKind.A) { return; }
+    else if (value.kind === BKind.B) { return; }
+    else { const full: Node = value; inspect(full); }
+}
+function valid(value: Node): void {
+    if (value.kind === BKind.B) { console.log(`${value.value + 1}`); }
+    const checked: B = value as B;
+    console.log(`${checked.value}`);
+}
+class ExactNumber {
+    readonly kind: BKind = BKind.B;
+    readonly value: number = 7;
+    readonly extra: number = 17;
+    readonly #hidden: number = 9;
+}
+const exact = new ExactNumber();
+valid({ ...exact });
+const b: B = { kind: BKind.B, value: 7 };
+valid(b);
+explicit(a);
+implicit(a);
+otherwise(a);
+console.log('after');

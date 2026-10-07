@@ -3,6 +3,9 @@
 The current decision is [Numeric enums are open](#numeric-enums-are-open).
 It supersedes the numeric closed-domain and flag-domain decisions recorded below.
 The earlier decisions and their verification records are retained as history.
+The [literal-tag follow-up](#literal-tag-narrowing-follow-up-october-7) records
+the October 7 narrowing implementation and its remaining checked-view
+boundaries.
 
 Decision for Kirk, October 6, 2026: admit constant-valued numeric and string
 enums, const enums, and enum member types. Keep enum values a closed union of
@@ -677,21 +680,20 @@ function remaining(k: Kind): Kind.A {
 }
 ```
 
-A singleton enum remains open, so its whole type cannot prove an object's
-literal discriminant. Refinements of an object union carrying such a field are
-conservatively refused with `adamic/enum-tag`. Use member-specific tags from a
-multi-member enum, string enums, or ordinary literal tags. An adversarial probe
-used an object declared with string payload and enum tag A, stored numeric B in
-that open tag, and entered the checker's numeric-payload branch. Source Node
-printed `text1`; the unguarded native code printed `1`. This observation requires
-a soundness boundary beyond numeric-enum narrowing to never.
+A singleton whole enum remains open. It cannot prove a member-specific literal
+promise merely because the checker represents both with the same type. Written
+member annotations are recovered for construction, casts, structural object
+views and mutable containers. Construction and ordinary views require a proof;
+explicit casts insert a member-value check. An ambiguous union selected by an
+open tag receives checked payload reads. Primitive storage is checked before
+reading, followed by literal-value checks when needed; nominal class views use
+the existing class check. Incompatible structured or optional payload views
+remain `NotYet` rather than reading the wrong storage.
 
-`TestNumericEnumLiteralPromises` covers member slots, excluded-member narrowing,
-plain literals and singleton object tags. `TestNumericEnumsAreOpen` also proves
-singleton numeric assignments and genuine member-tagged object unions compile.
-Three additional mutants permit arbitrary numbers in member slots, trust an
-excluded-member narrowing, and trust open singleton object tags. Each removes
-the corresponding named refusal and fails its test without a build failure.
+`TestNumericEnumLiteralPromises` covers those promises and excluded-member
+narrowing. `TestNumericEnumsAreOpen` proves singleton numeric assignments and
+member-tagged object unions compile. The historical singleton refusal mutant
+is superseded by `TestEnumTagPayloadMutant` and pinned checked-view witnesses.
 
 Array element reads also recover their declared enum element type before flow
 narrowing. `enums_open_never_index.a` pins an out-of-domain array value at the
@@ -699,3 +701,45 @@ never binding in both backends. Removing that recovery makes
 `TestNumericEnumNeverPathsPinned/index` fail at lowering, without a Go or C build
 failure. `TestNumericEnumsAreOpen/coalesce` preserves optional enum Map values
 through nullish coalescing; absence is checked separately from numeric values.
+
+## Literal tag narrowing follow-up, October 7
+
+The ruling by @system_adamic permits numeric member tags to narrow object unions
+by value, including `===`, `!==`, switches, and marker aliases such as `FirstX`.
+An unrelated open numeric enum field in a variant is no reason to reject that
+refinement. `enums_tag_narrowing.a` holds these operations to independent Node,
+including literal construction, an exact class and an existing checked downcast.
+
+An explicit numeric enum default remains reachable after all declared values
+are excluded. It runs normally until an actual `never` read inserts the existing
+runtime check. The fixture `enums_tag_never.a` prints `default` before stopping
+with exit 70 and exactly:
+
+```text
+adamic: panic: unreachable value 42 for numeric enum SyntaxKind
+```
+
+Singleton checked views now cover primitive payloads, literal payload values,
+member-specific casts, nominal class views and property receivers. Native shape
+identity includes actual field types; a checked read verifies its layout before
+interpreting an untagged slot. JavaScript checks the value independently. Object
+remainders retain the full stored union for checker-admitted observations and
+typed aliases, including after all values of aliased members are excluded. A
+`never` assertion on that object stops with the tag value in its message.
+
+Unmatched implicit numeric switches fall through. A terminal switch in a
+function requiring a result instead has a checked missing-result site, whose
+message is `numeric enum switch fell through a function requiring a result`.
+It does not prove numeric exhaustiveness.
+
+The complete ruling still has limits: incompatible structured or optional
+payload views remain `NotYet`, and a direct remainder property read rejected by
+the source checker as a property of `never` never reaches lowering. A typed
+alias to the full union permits that read. The final census retains 90 of the
+101 discriminant sites under the explicit checked-view `NotYet` boundary; a
+zero in the old refusal row does not mean those sites all compile.
+
+The [final unit report](verification/enum-tag-final.md) records the negative
+control on main, the discriminant-only checkpoint, final meter evidence,
+fixtures, checks, mutants and changed files. The [initial report](verification/enum-tag-narrowing.md)
+is retained as history.

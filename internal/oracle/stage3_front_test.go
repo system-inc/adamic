@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-// Open enum checks guard unmatched dispatch, while a matched case may fall through default.
-// The member-origin proof can remove an unmatched edge, but cannot remove a default body reached
-// by fallthrough. Counting the scrutinee's calls also holds the merged lowering to one evaluation.
+// An explicit open-enum default handles unmatched numbers and matched fallthrough.
+// Only an actual never read asserts unreachability. Counting the scrutinee's
+// calls also holds the merged lowering to one evaluation.
 func TestStage3EnumFallthrough(t *testing.T) {
 	t.Parallel()
 	const source = `enum Kind { A, B }
@@ -41,13 +41,10 @@ console.log(` + "`${reads}`" + `);
 		name := "matched"
 		programSource := source
 		truth := run{stdout: []byte("ADB\nB\nAD\n2\n")}
-		want := truth
 		if unmatched {
 			name = "unmatched"
 			programSource += "console.log(describe(input(42)));\n"
 			truth.stdout = append(append([]byte{}, truth.stdout...), []byte("DB\n")...)
-			want.exitCode = 70
-			want.stderr = []byte("adamic: panic: unreachable value 42 for numeric enum Kind\n")
 		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -64,14 +61,12 @@ console.log(` + "`${reads}`" + `);
 			}
 			native, binary := natively(t, program)
 			for backend, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+				if difference := disagreement(truth, got); difference != "" {
 					t.Errorf("%s: %s: %+v", backend, difference, got)
 				}
 			}
-			if !unmatched {
-				if report := leaks(t, program, binary); report != "" {
-					t.Fatal(report)
-				}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
 			}
 		})
 	}

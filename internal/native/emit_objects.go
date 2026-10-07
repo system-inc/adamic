@@ -223,7 +223,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
 	}
 	fields := fieldNames
-	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	key := strings.Join(names, ",") + "|" + fmt.Sprint(fieldTypes)
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}
@@ -324,4 +324,50 @@ func (e *emitter) cache() string {
 	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
 	return name
+}
+
+// A checked view may read a field only from a generated layout that keeps its
+// actual type. Shape identity includes primitive types, not just reference bits.
+func (e *emitter) checkedFieldShape(object, name string, of ir.Type) string {
+	seen := map[string]bool{}
+	checks := []string{}
+	walkExpressions(e.program, func(expression ir.Expression) {
+		literal, ok := expression.(ir.ObjectLiteral)
+		if !ok || literal.Spread != nil {
+			return
+		}
+		for _, field := range literal.Fields {
+			if field.Name == name && field.Value.Type() == of {
+				shape := e.literalShape(literal)
+				if !seen[shape] {
+					seen[shape] = true
+					checks = append(checks, fmt.Sprintf("%s->shape == &%s", object, shape))
+				}
+			}
+		}
+	})
+	for _, class := range e.program.Classes {
+		fields := class.PublicFields
+		if !class.Literal {
+			fields = nil
+			for _, field := range class.Fields {
+				if !field.Private {
+					fields = append(fields, field)
+				}
+			}
+		}
+		for _, field := range fields {
+			if field.Name == name && field.Value.Type() == of {
+				shape := e.publicClassShape(class)
+				if !seen[shape] {
+					seen[shape] = true
+					checks = append(checks, fmt.Sprintf("%s->shape == &%s", object, shape))
+				}
+			}
+		}
+	}
+	if len(checks) == 0 {
+		return "false"
+	}
+	return object + " != NULL && (" + strings.Join(checks, " || ") + ")"
 }

@@ -1,0 +1,17 @@
+enum AKind { A }
+enum BKind { B = 1 }
+interface A { readonly kind: AKind; readonly value: string }
+interface B { readonly kind: BKind; readonly value: number }
+interface Holder { readonly node: A | B }
+function numeric(): number { return 42; }
+function matching(): number { return 1; }
+const absent: Holder = { node: { kind: numeric(), value: 'out-of-range' } };
+const present: Holder = { node: { kind: matching(), value: 'text' } };
+function show(a: Holder, b: Holder): void {
+    if (a.node.kind === AKind.A) { return; }
+    if (a.node.kind === BKind.B) { return; }
+    if (b.node.kind === BKind.B) { console.log(`${b.node.value + 1}`); }
+}
+console.log('before');
+show(absent, present);
+console.log('after');

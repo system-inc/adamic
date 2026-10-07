@@ -648,6 +648,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return object
 	case ir.Property:
+		if expression.CheckMessage != "" {
+			kind := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[expression.Of]
+			return "((v) => { if (typeof v !== " + quote(kind) + ") panic(" + quote(expression.CheckMessage) + "); return v; })(" + e.value(expression.Object) + "[" + quote(expression.Name) + "])"
+		}
 		if expression.Optional {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}

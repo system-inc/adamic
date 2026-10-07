@@ -11,13 +11,13 @@ func init() {
 			path            string
 			lowers, checked bool
 		}{
-			"internal/oracle/testdata/" + name, true, name != "enums_open.a" && name != "enums_open_members.a",
+			"internal/oracle/testdata/" + name, true, name != "enums_open.a" && name != "enums_open_members.a" && name != "enums_open_never_update.a",
 		})
 	}
 }
 
 func TestNumericEnumNeverPathsPinned(t *testing.T) {
-	for _, name := range []string{"if", "field", "update", "implicit", "return", "index"} {
+	for _, name := range []string{"if", "field", "implicit", "return", "index"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums_open_never_"+name+".a"))
@@ -32,7 +32,11 @@ func TestNumericEnumNeverPathsPinned(t *testing.T) {
 			if name == "implicit" {
 				stdout += "lookup\n"
 			}
-			want := run{stdout: []byte(stdout), stderr: []byte("adamic: panic: unreachable value 42 for numeric enum SyntaxKind\n"), exitCode: 70}
+			message := "unreachable value 42 for numeric enum SyntaxKind"
+			if name == "implicit" {
+				message = "numeric enum switch fell through a function requiring a result"
+			}
+			want := run{stdout: []byte(stdout), stderr: []byte("adamic: panic: " + message + "\n"), exitCode: 70}
 			native, _ := natively(t, program)
 			for backend, result := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
 				if difference := disagreement(want, result); difference != "" {

@@ -980,19 +980,24 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	groups := []switchGroup{}
 	prefix := []ir.Statement{}
 	identity := l.enumIdentity(l.checker.GetTypeAtLocation(statement.Expression))
-	checkedDefault := l.numericEnum(identity) && l.enumSwitchCovered(node) && !l.enumDefaultUnreachable(node)
+	// Falling off a terminal switch in a function promising a result is a
+	// checked missing-result site. Other unmatched numeric switches fall through.
+	checkedDefault := false
+	if l.numericEnum(identity) && l.function != nil && l.function.Returns != 0 && node.Parent != nil && node.Parent.Kind == ast.KindBlock {
+		statements := node.Parent.AsBlock().Statements.Nodes
+		checkedDefault = len(statements) > 0 && statements[len(statements)-1] == node && ast.IsFunctionLike(node.Parent.Parent)
+		for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
+			if clause.Kind == ast.KindDefaultClause {
+				checkedDefault = false
+			}
+		}
+	}
 	var neverCheck ir.Statement
 	if checkedDefault {
-		// The unmatched edge is never to the checker, including an implicit default. Hold the
-		// scrutinee once so the check names the original value without repeating its effects.
-		local := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "enum_switch_value", Type: value.Type(), Function: l.functionIndex})
-		prefix = append(prefix, ir.Declare{Local: local, Value: value})
-		value = ir.Read{Local: local, Of: value.Type()}
-		lowered.Value = value
-		neverCheck = ir.Evaluate{Value: l.enumNeverCheck(statement.Expression, value, identity)}
+		neverCheck = ir.Panic{Message: ir.StringConstant{Index: l.constant("numeric enum switch fell through a function requiring a result")}}
 		lowered.Default = []ir.Statement{neverCheck}
 	}
+
 	tests := []ir.Expression{}
 	defaultPending := false
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
