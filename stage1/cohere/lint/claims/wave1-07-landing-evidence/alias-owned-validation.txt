@@ -1,0 +1,69 @@
+command ['go', 'build', '-overlay=/tmp/wave07-landing/alias-owned/oracle-overlay.json', '-o', '/tmp/wave07-landing/alias-owned/oracle', '/workspace/adamic/cohere/adamic_wave07_owned.go', '/workspace/adamic/cohere/adamic_wave07_adapter.go']
+exit 0, stdout 0 bytes, stderr 0 bytes
+command ['go', 'test', './stage1/cohere/lint/rules/typescript-no-this-alias', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 166 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/oracle', '/tmp/wave07-landing/alias-owned/upstream-manifest.txt']
+exit 0, stdout 8832 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a', '/tmp/wave07-landing/alias-owned/upstream-manifest.txt']
+exit 0, stdout 8832 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-landing/alias-owned/baseline/emitted.mjs', '/tmp/wave07-landing/alias-owned/upstream-manifest.txt']
+exit 0, stdout 8832 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/baseline/native', '/tmp/wave07-landing/alias-owned/upstream-manifest.txt']
+exit 0, stdout 8832 bytes, stderr 0 bytes
+PASS upstream: 34 file rows, 8832 identical bytes
+command ['git', '-C', '/tmp/wave07-typescript', 'rev-parse', 'HEAD']
+exit 0, stdout 41 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/oracle', '/tmp/wave07-landing/alias-owned/compiler-stage1-manifest.txt']
+exit 0, stdout 13286435 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a', '/tmp/wave07-landing/alias-owned/compiler-stage1-manifest.txt']
+exit 0, stdout 13286435 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-landing/alias-owned/baseline/emitted.mjs', '/tmp/wave07-landing/alias-owned/compiler-stage1-manifest.txt']
+exit 0, stdout 13286435 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/baseline/native', '/tmp/wave07-landing/alias-owned/compiler-stage1-manifest.txt']
+exit 0, stdout 13286435 bytes, stderr 0 bytes
+PASS compiler-stage1: 354 file rows, 13286435 identical bytes
+command ['go', 'test', './stage1/cohere/lint/rules/typescript-no-this-alias', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 166 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-landing/alias-owned/mutant-source/profile.a', '/tmp/wave07-landing/alias-owned/upstream-manifest.txt']
+exit 0, stdout 6732 bytes, stderr 0 bytes
+PASS mutant parenthesized alias lost caught only by byte comparison on Node
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-landing/alias-owned/mutant/emitted.mjs', '/tmp/wave07-landing/alias-owned/upstream-manifest.txt']
+exit 0, stdout 6732 bytes, stderr 0 bytes
+PASS mutant parenthesized alias lost caught only by byte comparison on emitted JavaScript
+command ['/tmp/wave07-landing/alias-owned/mutant/native', '/tmp/wave07-landing/alias-owned/upstream-manifest.txt']
+exit 0, stdout 6732 bytes, stderr 0 bytes
+PASS mutant parenthesized alias lost caught only by byte comparison on sanitized native
+command ['/tmp/wave07-landing/alias-owned/oracle', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/oracle', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/oracle', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/oracle', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/oracle', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Go 172092.10 findings/s best of 5 including startup
+command ['/tmp/wave07-landing/alias-owned/baseline/release', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/baseline/release', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/baseline/release', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/baseline/release', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-landing/alias-owned/baseline/release', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT native 153035.23 findings/s best of 5 including startup
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a', '/tmp/wave07-landing/alias-owned/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Node 10448.11 findings/s best of 5 including startup
+PASS owned profile on the owner harness foundation
