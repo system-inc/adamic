@@ -1,0 +1,13 @@
+compiler 0 go 0.83646901
+compiler 0 native 14.941983189
+compiler 1 native 15.437443547
+compiler 1 go 0.873809307
+compiler 2 go 0.851076751
+compiler 2 native 15.302607526
+repository 0 go 0.18755324
+repository 0 native 0.844608351
+repository 1 native 0.852894438
+repository 1 go 0.187815787
+repository 2 go 0.204643182
+repository 2 native 0.809844049
+{"compiler": {"median_seconds": {"go": 0.851076751, "native": 15.302607526}, "native_over_go": 17.98029085863256}, "repository": {"median_seconds": {"go": 0.187815787, "native": 0.844608351}, "native_over_go": 4.497004029805013}}

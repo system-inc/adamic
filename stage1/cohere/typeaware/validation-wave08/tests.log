@@ -1,0 +1,26 @@
+=== RUN   TestWave08AgreementAndMutants
+    wave08_test.go:82: controls: 17426 identical finding bytes; findings 31
+    wave08_test.go:90: controls-asan: 17426 identical finding bytes; findings 31
+=== RUN   TestWave08AgreementAndMutants/loop
+    wave08_test.go:133: loop: exit 0, empty stderr, Go byte oracle catches byte 48
+=== RUN   TestWave08AgreementAndMutants/require
+    wave08_test.go:133: require: exit 0, empty stderr, Go byte oracle catches byte 7353
+=== RUN   TestWave08AgreementAndMutants/cycle
+    wave08_test.go:133: cycle: exit 0, empty stderr, Go byte oracle catches byte 12238
+=== NAME  TestWave08AgreementAndMutants
+    wave08_test.go:147: compiler: 20884 identical finding bytes; findings 28
+    wave08_test.go:148: compiler-asan: 20884 identical finding bytes; findings 28
+    wave08_test.go:147: repository: 19558 identical finding bytes; findings 2
+    wave08_test.go:148: repository-asan: 19558 identical finding bytes; findings 2
+    wave08_test.go:161: released handle panics 70; retaining-registry mutant exits 0 and fails that expectation
+--- PASS: TestWave08AgreementAndMutants (214.34s)
+    --- PASS: TestWave08AgreementAndMutants/loop (10.41s)
+    --- PASS: TestWave08AgreementAndMutants/require (10.55s)
+    --- PASS: TestWave08AgreementAndMutants/cycle (11.03s)
+=== RUN   TestWave08CheckerFactMutants
+    wave08_test.go:191: symbol-flags: compiled, direct checker comparison caught declaration differs
+    wave08_test.go:191: type-syntax: compiled, direct checker comparison caught syntax differs
+    wave08_test.go:191: module-target: compiled, direct checker comparison caught resolved module absent
+--- PASS: TestWave08CheckerFactMutants (21.94s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	236.294s

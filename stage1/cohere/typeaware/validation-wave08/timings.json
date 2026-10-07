@@ -1,0 +1,128 @@
+{
+  "records": [
+    {
+      "corpus": "compiler",
+      "round": 0,
+      "variant": "go",
+      "elapsed_ns": 836469010,
+      "bytes": 20884,
+      "sha256": "0e93bc82ad67ac042791cafcbe4f64390d0dc17663656dacf5e4fc462216c83a",
+      "stderr": "cohere: load_ns=304914231 rule_ns=241890674 run_ns=509572691\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 0,
+      "variant": "native",
+      "elapsed_ns": 14941983189,
+      "bytes": 20884,
+      "sha256": "0e93bc82ad67ac042791cafcbe4f64390d0dc17663656dacf5e4fc462216c83a",
+      "stderr": "tsgo: load_ns=315600891 query_ns=3571124574 queries=1099131 first_query_ns=421715 run_ns=14430364604\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "variant": "native",
+      "elapsed_ns": 15437443547,
+      "bytes": 20884,
+      "sha256": "0e93bc82ad67ac042791cafcbe4f64390d0dc17663656dacf5e4fc462216c83a",
+      "stderr": "tsgo: load_ns=327831350 query_ns=3670969626 queries=1099131 first_query_ns=402983 run_ns=14919025709\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "variant": "go",
+      "elapsed_ns": 873809307,
+      "bytes": 20884,
+      "sha256": "0e93bc82ad67ac042791cafcbe4f64390d0dc17663656dacf5e4fc462216c83a",
+      "stderr": "cohere: load_ns=318810952 rule_ns=256418480 run_ns=527956393\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "variant": "go",
+      "elapsed_ns": 851076751,
+      "bytes": 20884,
+      "sha256": "0e93bc82ad67ac042791cafcbe4f64390d0dc17663656dacf5e4fc462216c83a",
+      "stderr": "cohere: load_ns=334408309 rule_ns=228135965 run_ns=492653953\n"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "variant": "native",
+      "elapsed_ns": 15302607526,
+      "bytes": 20884,
+      "sha256": "0e93bc82ad67ac042791cafcbe4f64390d0dc17663656dacf5e4fc462216c83a",
+      "stderr": "tsgo: load_ns=339406242 query_ns=3741310390 queries=1099131 first_query_ns=527287 run_ns=14773932472\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 0,
+      "variant": "go",
+      "elapsed_ns": 187553240,
+      "bytes": 19558,
+      "sha256": "949781a7e2b6240243e62f31038ff80112f350e942288b3d894ccd8d3437dc67",
+      "stderr": "cohere: load_ns=84675942 rule_ns=21073420 run_ns=84047452\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 0,
+      "variant": "native",
+      "elapsed_ns": 844608351,
+      "bytes": 19558,
+      "sha256": "949781a7e2b6240243e62f31038ff80112f350e942288b3d894ccd8d3437dc67",
+      "stderr": "tsgo: load_ns=84887625 query_ns=123146957 queries=24665 first_query_ns=217255 run_ns=730393396\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "variant": "native",
+      "elapsed_ns": 852894438,
+      "bytes": 19558,
+      "sha256": "949781a7e2b6240243e62f31038ff80112f350e942288b3d894ccd8d3437dc67",
+      "stderr": "tsgo: load_ns=90826393 query_ns=129107206 queries=24665 first_query_ns=219185 run_ns=735776685\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "variant": "go",
+      "elapsed_ns": 187815787,
+      "bytes": 19558,
+      "sha256": "949781a7e2b6240243e62f31038ff80112f350e942288b3d894ccd8d3437dc67",
+      "stderr": "cohere: load_ns=92975270 rule_ns=19289206 run_ns=78717478\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "variant": "go",
+      "elapsed_ns": 204643182,
+      "bytes": 19558,
+      "sha256": "949781a7e2b6240243e62f31038ff80112f350e942288b3d894ccd8d3437dc67",
+      "stderr": "cohere: load_ns=102600229 rule_ns=20632958 run_ns=85240163\n"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "variant": "native",
+      "elapsed_ns": 809844049,
+      "bytes": 19558,
+      "sha256": "949781a7e2b6240243e62f31038ff80112f350e942288b3d894ccd8d3437dc67",
+      "stderr": "tsgo: load_ns=83419925 query_ns=116144044 queries=24665 first_query_ns=195172 run_ns=698800469\n"
+    }
+  ],
+  "summary": {
+    "compiler": {
+      "median_seconds": {
+        "go": 0.851076751,
+        "native": 15.302607526
+      },
+      "native_over_go": 17.98029085863256
+    },
+    "repository": {
+      "median_seconds": {
+        "go": 0.187815787,
+        "native": 0.844608351
+      },
+      "native_over_go": 4.497004029805013
+    }
+  }
+}
