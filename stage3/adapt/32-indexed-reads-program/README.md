@@ -3,7 +3,7 @@
 ## Whole-file closure unit (October 7)
 
 The new unit starts from integration 634ef061fc72c061e2de1606d5c8faebec4411f6.
-Only builderState.ts has been started. Its two remaining iterator-inference
+builderState.ts and executeCommandLine.ts are now at zero. Builder’s two iterator-inference
 findings are addressed by explicit erased generic arguments, not new runtime
 reads: `mapDefinedIterator<Path, string>` and `arrayFrom<Path>`.
 [closure-sites.json](closure-sites.json) records each exact call, owning function,
@@ -20,7 +20,7 @@ from this partition's original occurrence inventory rather than asserted again.
 
 The isolated 78-root census measures **builderState.ts at zero: 2 to 0**;
 whole-tree diagnostics are 382 to 380. All 78 input hashes and baseline per-file
-counts match run 0 of latent report 176a496. Only builderState.ts changes.
+counts match run 0 of latent report 176a496. Only builderState.ts changes in that first wave.
 The first auxiliary census retained main's stricter style checks; the primary
 census uses the recorded feature commit's configuration on both sides.
 Upstream's build regenerates its diagnostic map, so the primary census uses a
@@ -45,6 +45,25 @@ verified. No additional baseline is accepted. The initial default oracle had
 106,360 passes, an API mismatch for 20's lines and one 40-second timeout in
 relationComplexityError.ts while Go builds competed for CPU. The default rerun
 with only the proven API reference changes passed.
+
+The second wave closes **executeCommandLine.ts at zero: 3 to 0**, using
+`arrayFrom<[string, string | number]>` and `reduceLeftIterator<number, number>`.
+The shared iterator implementations visit only yielded values; the reduction
+starts at 0 and replaces its accumulator only with numeric sums. Whole-tree
+census is 380 to 377. The removed arrayFrom argument mutant restores both
+TS2488 destructuring errors. The first commandLineArgs[0] assertion replaced
+with `?? 0` fails both the stock emitter and the specific occurrence contract.
+All 26 emitted files remain byte-identical and the second run has zero edits.
+[Execute proof](closure-executeCommandLine/proof.json) records the default oracle:
+106,367 passing, zero failing, empty baseline diff.
+
+watch.ts remains at two TS2375 findings, both reviewed and declined in
+[closure-declined.json](closure-declined.json): the optional host methods can
+legitimately be absent, and their truthful owning declarations require further
+public API changes outside the exact sanctioned set. No source changed during
+that review; the already-green default oracle for the identical source tree
+covers it, with the reuse and fresh census documented in
+[watch proof](closure-watch/proof.json).
 
 Setup: Go 0s, clang 1s, Node 1s, submodules 1s, build cache 203s, total 203s;
 `nproc` is 5 (4 effective CPUs).

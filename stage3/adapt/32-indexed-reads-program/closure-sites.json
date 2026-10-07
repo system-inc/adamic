@@ -24,5 +24,32 @@
     "arguments": [
       "keys.keys()"
     ]
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "function": "formatDefaultValue",
+    "call": "arrayFrom",
+    "typeArguments": [
+      "[string, string | number]"
+    ],
+    "arguments": [
+      "type.entries()"
+    ],
+    "proof": "The typeof-object guard narrows type to Map<string, string | number>. entries yields stored key/value tuples; iterator completion is not an array element, so both destructuring callbacks receive a tuple."
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "function": "reportStatistics",
+    "call": "reduceLeftIterator",
+    "typeArguments": [
+      "number",
+      "number"
+    ],
+    "arguments": [
+      "lineCounts.values()",
+      "(sum, count) => sum + count",
+      "0"
+    ],
+    "proof": "countLines returns Map<string, number>. values yields stored numbers only; reduceLeftIterator initializes its accumulator to 0 and only replaces it with a numeric sum. Completion is not a callback value."
   }
 ]
