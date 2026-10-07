@@ -123,3 +123,12 @@ arrays and keep replacements separate. Four original-point assertions preserve
 stock JavaScript bytes. Idempotence passes and the endpoint mutant is caught
 twice. Default oracle **106367 passing**, empty baseline diff,
 217.481s. [Complete proof](proof/whole-files/es2018/README.md).
+
+### transformers/module/module.ts: two required reads, two declines
+
+All-code census **4 -> 2**. The callback argument and length-guarded JSON
+endpoint retain their original read points. The remaining optional emission
+cache and arrayFrom overload have exact decline reasons. JavaScript equality
+and idempotence pass; the endpoint mutant is caught twice. Default oracle
+**106367 passing**, empty baseline diff, 219.281s.
+[Full findings](proof/whole-files/module/README.md).
