@@ -120,6 +120,9 @@ func parallelMarkdownMemory(t *testing.T, weight int) {
 		}
 	}
 	t.Parallel()
+	if weight > markdownMemory.capacity {
+		t.Fatalf("%s: markdownblocks memory weight %d exceeds capacity %d (512 MiB units)", t.Name(), weight, markdownMemory.capacity)
+	}
 	markdownMemory.acquire(weight)
 	t.Cleanup(func() { markdownMemory.release(weight) })
 }
