@@ -1,0 +1,209 @@
+build-flags-before: {"commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7", "nproc": "5", "cpu_max": "400000 100000", "go": "go version go1.27.1 linux/amd64", "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)", "node": "v24.19.0", "load": "8.62 5.90 3.69 2/329 84590", "cached": "action-cache"}
++ 1791346800.064897 /workspace/adamic/cloud/setup.sh:13: set -euo pipefail
++ 1791346800.064932 /workspace/adamic/cloud/setup.sh:15: started=1791346800.064929
+++ 1791346800.065202 /workspace/adamic/cloud/setup.sh:16: cat /proc/loadavg
++ 1791346800.066020 /workspace/adamic/cloud/setup.sh:16: loadBefore='8.62 5.90 3.69 2/331 84592'
++ 1791346800.066042 /workspace/adamic/cloud/setup.sh:17: warmTests=false
++++ 1791346800.066551 /workspace/adamic/cloud/setup.sh:30: dirname /workspace/adamic/cloud/setup.sh
+++ 1791346800.067354 /workspace/adamic/cloud/setup.sh:30: cd /workspace/adamic/cloud/..
+++ 1791346800.067408 /workspace/adamic/cloud/setup.sh:30: pwd
++ 1791346800.067568 /workspace/adamic/cloud/setup.sh:30: repository=/workspace/adamic
++ 1791346800.067593 /workspace/adamic/cloud/setup.sh:31: tools=/workspace/adamic-tools
++ 1791346800.067610 /workspace/adamic/cloud/setup.sh:32: mkdir -p /workspace/adamic-tools/bin
++ 1791346800.068880 /workspace/adamic/cloud/setup.sh:33: gate=/tmp/adamic-gate
++ 1791346800.068899 /workspace/adamic/cloud/setup.sh:36: install -d -m 1777 /tmp/adamic-gate
++ 1791346800.070338 /workspace/adamic/cloud/setup.sh:38: exec
++ 1791346800.070383 /workspace/adamic/cloud/setup.sh:39: flock 9
+++ 1791346800.071443 /workspace/adamic/cloud/setup.sh:40: mktemp -d /tmp/adamic-gate/setup.XXXXXX
++ 1791346800.072229 /workspace/adamic/cloud/setup.sh:40: run=/tmp/adamic-gate/setup.lPRO3V
++ 1791346800.072251 /workspace/adamic/cloud/setup.sh:41: markdownDependencies=/workspace/adamic-tools/markdown-width
++ 1791346800.072266 /workspace/adamic/cloud/setup.sh:42: case $(realpath -m "$markdownDependencies") in
+++ 1791346800.072465 /workspace/adamic/cloud/setup.sh:42: realpath -m /workspace/adamic-tools/markdown-width
++ 1791346800.073260 /workspace/adamic/cloud/setup.sh:45: case $(uname -m) in
+++ 1791346800.073477 /workspace/adamic/cloud/setup.sh:45: uname -m
++ 1791346800.074256 /workspace/adamic/cloud/setup.sh:46: goArchitecture=amd64
++ 1791346800.074265 /workspace/adamic/cloud/setup.sh:46: nodeArchitecture=x64
++ 1791346800.074268 /workspace/adamic/cloud/setup.sh:46: llvmArchitecture=X64
++ 1791346800.074283 /workspace/adamic/cloud/setup.sh:53: export GOTOOLCHAIN=auto
++ 1791346800.074288 /workspace/adamic/cloud/setup.sh:53: GOTOOLCHAIN=auto
++ 1791346800.074579 /workspace/adamic/cloud/setup.sh:137: goProcess=84601
++ 1791346800.074639 /workspace/adamic/cloud/setup.sh:137: prepareGo
++ 1791346800.074762 /workspace/adamic/cloud/setup.sh:57: command -v go
++ 1791346800.074806 /workspace/adamic/cloud/setup.sh:57: realGo go
++ 1791346800.074834 /workspace/adamic/cloud/setup.sh:138: clangProcess=84602
++ 1791346800.074899 /workspace/adamic/cloud/setup.sh:138: prepareClang
++ 1791346800.074939 /workspace/adamic/cloud/setup.sh:139: nodeProcess=84604
++ 1791346800.074982 /workspace/adamic/cloud/setup.sh:70: probe=/tmp/adamic-gate/setup.lPRO3V
++ 1791346800.074996 /workspace/adamic/cloud/setup.sh:71: cat
++ 1791346800.074987 /workspace/adamic/cloud/setup.sh:56: go version
++ 1791346800.075031 /workspace/adamic/cloud/setup.sh:140: submoduleProcess=84606
++ 1791346800.075048 /workspace/adamic/cloud/setup.sh:141: failed=0
++ 1791346800.075061 /workspace/adamic/cloud/setup.sh:142: for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"
++ 1791346800.075067 /workspace/adamic/cloud/setup.sh:143: wait 84601
++ 1791346800.075059 /workspace/adamic/cloud/setup.sh:56: grep -q '^go version go1\.'
++ 1791346800.075156 /workspace/adamic/cloud/setup.sh:139: prepareNode
++ 1791346800.075424 /workspace/adamic/cloud/setup.sh:140: prepareSubmodules
++ 1791346800.075490 /workspace/adamic/cloud/setup.sh:128: cd /workspace/adamic
++ 1791346800.075511 /workspace/adamic/cloud/setup.sh:129: git config submodule.cohere.url https://github.com/system-inc/cohere.git
++ 1791346800.075966 /workspace/adamic/cloud/setup.sh:103: grep -q '^v24\.'
++ 1791346800.076094 /workspace/adamic/cloud/setup.sh:79: clang=
++ 1791346800.076130 /workspace/adamic/cloud/setup.sh:103: /workspace/adamic-tools/bin/node --version
+++ 1791346800.076551 /workspace/adamic/cloud/setup.sh:80: ls -d '/usr/lib/llvm-*/bin/clang'
+++ 1791346800.076801 /workspace/adamic/cloud/setup.sh:80: sort -t- -k2 -V -r
+++ 1791346800.078119 /workspace/adamic/cloud/setup.sh:80: command -v clang
++ 1791346800.078342 /workspace/adamic/cloud/setup.sh:80: for candidate in "$tools/llvm/bin/clang" $(ls -d /usr/lib/llvm-*/bin/clang 2> /dev/null | sort -t- -k2 -V -r) $(command -v clang || true)
++ 1791346800.078358 /workspace/adamic/cloud/setup.sh:81: '[' -x /workspace/adamic-tools/llvm/bin/clang ']'
++ 1791346800.078403 /workspace/adamic/cloud/setup.sh:81: saneClang /workspace/adamic-tools/llvm/bin/clang
++ 1791346800.078446 /workspace/adamic/cloud/setup.sh:76: /workspace/adamic-tools/llvm/bin/clang -fsanitize=address,undefined -g /tmp/adamic-gate/setup.lPRO3V/overflow.c -o /tmp/adamic-gate/setup.lPRO3V/overflow
++ 1791346800.078656 /workspace/adamic/cloud/setup.sh:130: git submodule update --init --recursive --depth 1 --filter=blob:none
++ 1791346800.079362 /workspace/adamic/cloud/setup.sh:61: '[' -x /workspace/adamic-tools/go/bin/go ']'
++ 1791346800.079391 /workspace/adamic/cloud/setup.sh:61: export PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791346800.079398 /workspace/adamic/cloud/setup.sh:61: PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791346800.079587 /workspace/adamic/cloud/setup.sh:62: cd /workspace/adamic
++ 1791346800.079654 /workspace/adamic/cloud/setup.sh:62: go version
++ 1791346800.081755 /workspace/adamic/cloud/setup.sh:119: /workspace/adamic-tools/bin/node --version
+go version go1.27.1 linux/amd64
++ 1791346800.082128 /workspace/adamic/cloud/setup.sh:63: step 'go ready'
++ 1791346800.082144 /workspace/adamic/cloud/setup.sh:25: local elapsed
+++ 1791346800.082435 /workspace/adamic/cloud/setup.sh:26: awk -v start=1791346800.064929 -v now=1791346800.082407 'BEGIN {printf "%.3f", now - start}'
++ 1791346800.083290 /workspace/adamic/cloud/setup.sh:26: elapsed=0.017
++ 1791346800.083313 /workspace/adamic/cloud/setup.sh:27: echo 'setup: go ready (0.017s)'
+setup: go ready (0.017s)
++ 1791346800.083565 /workspace/adamic/cloud/setup.sh:142: for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"
++ 1791346800.083580 /workspace/adamic/cloud/setup.sh:143: wait 84602
+v24.19.0
++ 1791346800.085029 /workspace/adamic/cloud/setup.sh:120: step 'node ready'
++ 1791346800.085048 /workspace/adamic/cloud/setup.sh:25: local elapsed
+++ 1791346800.085335 /workspace/adamic/cloud/setup.sh:26: awk -v start=1791346800.064929 -v now=1791346800.085312 'BEGIN {printf "%.3f", now - start}'
++ 1791346800.086311 /workspace/adamic/cloud/setup.sh:26: elapsed=0.020
++ 1791346800.086331 /workspace/adamic/cloud/setup.sh:27: echo 'setup: node ready (0.020s)'
+setup: node ready (0.020s)
++ 1791346800.086354 /workspace/adamic/cloud/setup.sh:121: python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /workspace/adamic-tools/markdown-width /workspace/adamic-tools/bin/node
++ 1791346800.123310 /workspace/adamic/cloud/setup.sh:131: step 'submodules ready'
++ 1791346800.123354 /workspace/adamic/cloud/setup.sh:25: local elapsed
+++ 1791346800.123822 /workspace/adamic/cloud/setup.sh:26: awk -v start=1791346800.064929 -v now=1791346800.123794 'BEGIN {printf "%.3f", now - start}'
++ 1791346800.124874 /workspace/adamic/cloud/setup.sh:26: elapsed=0.059
++ 1791346800.124906 /workspace/adamic/cloud/setup.sh:27: echo 'setup: submodules ready (0.059s)'
+setup: submodules ready (0.059s)
++ 1791346800.128126 /workspace/adamic/cloud/setup.sh:122: cat /tmp/adamic-gate/setup.lPRO3V/markdown.log
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.008s
++ 1791346800.129839 /workspace/adamic/cloud/setup.sh:123: step 'markdown dependencies ready'
++ 1791346800.129866 /workspace/adamic/cloud/setup.sh:25: local elapsed
+++ 1791346800.130178 /workspace/adamic/cloud/setup.sh:26: awk -v start=1791346800.064929 -v now=1791346800.130155 'BEGIN {printf "%.3f", now - start}'
++ 1791346800.131153 /workspace/adamic/cloud/setup.sh:26: elapsed=0.065
++ 1791346800.131179 /workspace/adamic/cloud/setup.sh:27: echo 'setup: markdown dependencies ready (0.065s)'
+setup: markdown dependencies ready (0.065s)
++ 1791346800.183787 /workspace/adamic/cloud/setup.sh:77: /tmp/adamic-gate/setup.lPRO3V/overflow
++ 1791346800.203801 /workspace/adamic/cloud/setup.sh:77: grep -q heap-buffer-overflow /tmp/adamic-gate/setup.lPRO3V/report
++ 1791346800.205648 /workspace/adamic/cloud/setup.sh:82: clang=/workspace/adamic-tools/llvm/bin/clang
++ 1791346800.205661 /workspace/adamic/cloud/setup.sh:83: break
++ 1791346800.205676 /workspace/adamic/cloud/setup.sh:86: '[' -z /workspace/adamic-tools/llvm/bin/clang ']'
++ 1791346800.205699 /workspace/adamic/cloud/setup.sh:94: for tool in clang clang++ llvm-symbolizer
+++ 1791346800.205960 /workspace/adamic/cloud/setup.sh:95: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346800.206786 /workspace/adamic/cloud/setup.sh:95: '[' -x /workspace/adamic-tools/llvm/bin/clang ']'
+++ 1791346800.207044 /workspace/adamic/cloud/setup.sh:95: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346800.208047 /workspace/adamic/cloud/setup.sh:95: ln -sf /workspace/adamic-tools/llvm/bin/clang /workspace/adamic-tools/bin/clang
++ 1791346800.209049 /workspace/adamic/cloud/setup.sh:94: for tool in clang clang++ llvm-symbolizer
+++ 1791346800.209314 /workspace/adamic/cloud/setup.sh:95: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346800.210126 /workspace/adamic/cloud/setup.sh:95: '[' -x /workspace/adamic-tools/llvm/bin/clang++ ']'
+++ 1791346800.210469 /workspace/adamic/cloud/setup.sh:95: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346800.211713 /workspace/adamic/cloud/setup.sh:95: ln -sf /workspace/adamic-tools/llvm/bin/clang++ /workspace/adamic-tools/bin/clang++
++ 1791346800.212596 /workspace/adamic/cloud/setup.sh:94: for tool in clang clang++ llvm-symbolizer
+++ 1791346800.212935 /workspace/adamic/cloud/setup.sh:95: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346800.214215 /workspace/adamic/cloud/setup.sh:95: '[' -x /workspace/adamic-tools/llvm/bin/llvm-symbolizer ']'
+++ 1791346800.214594 /workspace/adamic/cloud/setup.sh:95: dirname /workspace/adamic-tools/llvm/bin/clang
++ 1791346800.215624 /workspace/adamic/cloud/setup.sh:95: ln -sf /workspace/adamic-tools/llvm/bin/llvm-symbolizer /workspace/adamic-tools/bin/llvm-symbolizer
++ 1791346800.216665 /workspace/adamic/cloud/setup.sh:97: /workspace/adamic-tools/llvm/bin/clang --version
++ 1791346800.216838 /workspace/adamic/cloud/setup.sh:97: head -n 1
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
++ 1791346800.226166 /workspace/adamic/cloud/setup.sh:98: step 'clang ready (/workspace/adamic-tools/llvm/bin/clang)'
++ 1791346800.226191 /workspace/adamic/cloud/setup.sh:25: local elapsed
+++ 1791346800.226539 /workspace/adamic/cloud/setup.sh:26: awk -v start=1791346800.064929 -v now=1791346800.226516 'BEGIN {printf "%.3f", now - start}'
++ 1791346800.227477 /workspace/adamic/cloud/setup.sh:26: elapsed=0.162
++ 1791346800.227502 /workspace/adamic/cloud/setup.sh:27: echo 'setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.162s)'
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.162s)
++ 1791346800.227657 /workspace/adamic/cloud/setup.sh:142: for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"
++ 1791346800.227672 /workspace/adamic/cloud/setup.sh:143: wait 84604
++ 1791346800.227679 /workspace/adamic/cloud/setup.sh:142: for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"
++ 1791346800.227715 /workspace/adamic/cloud/setup.sh:143: wait 84606
++ 1791346800.227732 /workspace/adamic/cloud/setup.sh:145: '[' 0 = 0 ']'
++ 1791346800.227750 /workspace/adamic/cloud/setup.sh:146: '[' -x /workspace/adamic-tools/go/bin/go ']'
++ 1791346800.227767 /workspace/adamic/cloud/setup.sh:146: export PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791346800.227774 /workspace/adamic/cloud/setup.sh:146: PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ 1791346800.227788 /workspace/adamic/cloud/setup.sh:149: cat
+++ 1791346800.228323 /workspace/adamic/cloud/setup.sh:149: '[' -x /workspace/adamic-tools/go/bin/go ']'
+++ 1791346800.228367 /workspace/adamic/cloud/setup.sh:149: echo /workspace/adamic-tools/go/bin:
++ 1791346800.229530 /workspace/adamic/cloud/setup.sh:155: grep -qs /workspace/adamic-tools/env.sh /home/agent/.bashrc
++ 1791346800.230806 /workspace/adamic/cloud/setup.sh:157: source /workspace/adamic-tools/env.sh
+++ 1791346800.230853 /workspace/adamic-tools/env.sh:1: export PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
+++ 1791346800.231036 /workspace/adamic-tools/env.sh:1: PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
+++ 1791346800.231235 /workspace/adamic-tools/env.sh:2: export GOTOOLCHAIN=auto
+++ 1791346800.231239 /workspace/adamic-tools/env.sh:2: GOTOOLCHAIN=auto
+++ 1791346800.231247 /workspace/adamic-tools/env.sh:3: export TMPDIR=/tmp/adamic-gate
+++ 1791346800.231251 /workspace/adamic-tools/env.sh:3: TMPDIR=/tmp/adamic-gate
+++ 1791346800.231261 /workspace/adamic-tools/env.sh:4: export ADAMIC_MARKDOWNWIDTH_DEPS=/workspace/adamic-tools/markdown-width
+++ 1791346800.231264 /workspace/adamic-tools/env.sh:4: ADAMIC_MARKDOWNWIDTH_DEPS=/workspace/adamic-tools/markdown-width
++ 1791346800.231271 /workspace/adamic/cloud/setup.sh:158: cd /workspace/adamic
++ 1791346800.231289 /workspace/adamic/cloud/setup.sh:162: buildArguments=()
++ 1791346800.231298 /workspace/adamic/cloud/setup.sh:163: key=
+++ 1791346800.231861 /workspace/adamic/cloud/setup.sh:164: printf %s /workspace/adamic
+++ 1791346800.231977 /workspace/adamic/cloud/setup.sh:164: sha256sum
+++ 1791346800.232102 /workspace/adamic/cloud/setup.sh:164: cut '-d ' -f1
++ 1791346800.234582 /workspace/adamic/cloud/setup.sh:164: stamp=/workspace/adamic-tools/warm-62ef6a669dfa788150457d5e0c05fc10701e83cf28363be965ee0d6c91be7a4e-false
++ 1791346800.234631 /workspace/adamic/cloud/setup.sh:165: '[' 0 = 1 ']'
++ 1791346800.234637 /workspace/adamic/cloud/setup.sh:168: listArguments=()
++ 1791346800.234644 /workspace/adamic/cloud/setup.sh:169: false
++ 1791346800.234654 /workspace/adamic/cloud/setup.sh:170: go list -deps -export -json ./...
+++ 1791346800.503505 /workspace/adamic/cloud/setup.sh:171: python3 /workspace/adamic/cloud/setup-key.py /workspace/adamic /tmp/adamic-gate/setup.lPRO3V/packages.json false
++ 1791346800.622158 /workspace/adamic/cloud/setup.sh:171: key=4a042f93282611c2bbce04f3038eaa2bfa600efdd19b182cd2cc330d8b23ea68
++ 1791346800.622262 /workspace/adamic/cloud/setup.sh:173: '[' -n 4a042f93282611c2bbce04f3038eaa2bfa600efdd19b182cd2cc330d8b23ea68 ']'
+++ 1791346800.622597 /workspace/adamic/cloud/setup.sh:173: cat /workspace/adamic-tools/warm-62ef6a669dfa788150457d5e0c05fc10701e83cf28363be965ee0d6c91be7a4e-false
++ 1791346800.623936 /workspace/adamic/cloud/setup.sh:173: '[' 4a042f93282611c2bbce04f3038eaa2bfa600efdd19b182cd2cc330d8b23ea68 = 4a042f93282611c2bbce04f3038eaa2bfa600efdd19b182cd2cc330d8b23ea68 ']'
++ 1791346800.623953 /workspace/adamic/cloud/setup.sh:174: step 'go build skipped (validated warming stamp)'
++ 1791346800.623968 /workspace/adamic/cloud/setup.sh:25: local elapsed
+++ 1791346800.624252 /workspace/adamic/cloud/setup.sh:26: awk -v start=1791346800.064929 -v now=1791346800.624228 'BEGIN {printf "%.3f", now - start}'
++ 1791346800.625182 /workspace/adamic/cloud/setup.sh:26: elapsed=0.559
++ 1791346800.625199 /workspace/adamic/cloud/setup.sh:27: echo 'setup: go build skipped (validated warming stamp) (0.559s)'
+setup: go build skipped (validated warming stamp) (0.559s)
++ 1791346800.625214 /workspace/adamic/cloud/setup.sh:175: false
++ 1791346800.625263 /workspace/adamic/cloud/setup.sh:190: false
++ 1791346800.625269 /workspace/adamic/cloud/setup.sh:190: step 'test binaries deferred (use --warm-tests)'
++ 1791346800.625274 /workspace/adamic/cloud/setup.sh:25: local elapsed
+++ 1791346800.625545 /workspace/adamic/cloud/setup.sh:26: awk -v start=1791346800.064929 -v now=1791346800.625520 'BEGIN {printf "%.3f", now - start}'
++ 1791346800.626582 /workspace/adamic/cloud/setup.sh:26: elapsed=0.561
++ 1791346800.626601 /workspace/adamic/cloud/setup.sh:27: echo 'setup: test binaries deferred (use --warm-tests) (0.561s)'
+setup: test binaries deferred (use --warm-tests) (0.561s)
++ 1791346800.626619 /workspace/adamic/cloud/setup.sh:191: step 'build cache warm'
++ 1791346800.626625 /workspace/adamic/cloud/setup.sh:25: local elapsed
+++ 1791346800.626916 /workspace/adamic/cloud/setup.sh:26: awk -v start=1791346800.064929 -v now=1791346800.626892 'BEGIN {printf "%.3f", now - start}'
++ 1791346800.627804 /workspace/adamic/cloud/setup.sh:26: elapsed=0.562
++ 1791346800.627820 /workspace/adamic/cloud/setup.sh:27: echo 'setup: build cache warm (0.562s)'
+setup: build cache warm (0.562s)
+++ 1791346800.628068 /workspace/adamic/cloud/setup.sh:193: cat /sys/fs/cgroup/cpu.max
++ 1791346800.629134 /workspace/adamic/cloud/setup.sh:193: cpuQuota='400000 100000'
+++ 1791346800.629475 /workspace/adamic/cloud/setup.sh:194: awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo
++ 1791346800.630352 /workspace/adamic/cloud/setup.sh:194: memory='17.6 GB'
+++ 1791346800.630637 /workspace/adamic/cloud/setup.sh:195: git -C /workspace/adamic rev-parse HEAD
+++ 1791346800.632275 /workspace/adamic/cloud/setup.sh:195: nproc
+++ 1791346800.633357 /workspace/adamic/cloud/setup.sh:195: go version
+++ 1791346800.637676 /workspace/adamic/cloud/setup.sh:195: clang --version
+++ 1791346800.637817 /workspace/adamic/cloud/setup.sh:195: head -n 1
+++ 1791346800.647103 /workspace/adamic/cloud/setup.sh:195: node --version
+++ 1791346800.652401 /workspace/adamic/cloud/setup.sh:195: '[' 0 = 1 ']'
+++ 1791346800.652442 /workspace/adamic/cloud/setup.sh:195: echo yes
+++ 1791346800.652824 /workspace/adamic/cloud/setup.sh:195: cat /proc/loadavg
++ 1791346800.653894 /workspace/adamic/cloud/setup.sh:195: echo 'setup: build-flags commit=b13f759028c2703c5b4d54acff8627e6cf7d0be7 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=8.62 5.90 3.69 2/331 84592 load-after=8.62 5.90 3.69 3/332 84792'
+setup: build-flags commit=b13f759028c2703c5b4d54acff8627e6cf7d0be7 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=8.62 5.90 3.69 2/331 84592 load-after=8.62 5.90 3.69 3/332 84792
+++ 1791346800.654182 /workspace/adamic/cloud/setup.sh:196: nproc
++ 1791346800.655070 /workspace/adamic/cloud/setup.sh:196: step 'done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB'
++ 1791346800.655096 /workspace/adamic/cloud/setup.sh:25: local elapsed
+++ 1791346800.655387 /workspace/adamic/cloud/setup.sh:26: awk -v start=1791346800.064929 -v now=1791346800.655366 'BEGIN {printf "%.3f", now - start}'
++ 1791346800.656361 /workspace/adamic/cloud/setup.sh:26: elapsed=0.590
++ 1791346800.656388 /workspace/adamic/cloud/setup.sh:27: echo 'setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (0.590s)'
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (0.590s)
++ 1791346800.656416 /workspace/adamic/cloud/setup.sh:197: echo 'setup: source /workspace/adamic-tools/env.sh'
+setup: source /workspace/adamic-tools/env.sh
++ 1791346800.656427 /workspace/adamic/cloud/setup.sh:198: echo 'setup: logs /tmp/adamic-gate/setup.lPRO3V'
+setup: logs /tmp/adamic-gate/setup.lPRO3V
+build-flags-after: {"commit": "b13f759028c2703c5b4d54acff8627e6cf7d0be7", "nproc": "5", "cpu_max": "400000 100000", "go": "go version go1.27.1 linux/amd64", "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)", "node": "v24.19.0", "load": "8.62 5.90 3.69 3/330 84802", "cached": "action-cache"}
+wall=0.593173 exit=0
