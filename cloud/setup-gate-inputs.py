@@ -23,7 +23,7 @@ SIZE = 100 << 20
 VARIABLES = {'ADAMIC_TYPESCRIPT_SOURCE': 'typescript', 'ADAMIC_CSS_LIBRARY': 'css',
              'ADAMIC_GRAPHQL_LIBRARY': 'graphql', 'ADAMIC_MEDIA_QUERY_LIBRARY': 'media-query',
              'ADAMIC_SELECTOR_LIBRARY': 'selector', 'ADAMIC_VALUES_LIBRARY': 'values',
-             'ADAMIC_JSON_PRETTIER': 'json-prettier', 'ADAMIC_CSS_PRINTER_LIBRARY': 'css-printer',
+             'ADAMIC_GRAPHQL_PRETTIER': 'css-printer', 'ADAMIC_JSON_PRETTIER': 'json-prettier', 'ADAMIC_CSS_PRINTER_LIBRARY': 'css-printer',
              'ADAMIC_ESTREE_LIBRARY': 'css-printer', 'ADAMIC_TS_PRETTIER': 'css-printer', 'ADAMIC_YAML_LIBRARY': 'css-printer',
              'ADAMIC_GITIGNORE_LARGEST': 'gitignore/.gitignore',
              'ADAMIC_CLANG_TSGO_ARCHIVE': 'checker/tsgo.a'}

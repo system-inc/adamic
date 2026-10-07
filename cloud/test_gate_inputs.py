@@ -26,6 +26,10 @@ class Inputs(unittest.TestCase):
             with patch.object(sys, 'argv', ['setup', 'env', temporary, temporary, 'node']), contextlib.redirect_stdout(io.StringIO()) as output:
                 gate.main()
             exports = dict(shlex.split(line)[1].split('=', 1) for line in output.getvalue().splitlines())
+            self.assertIn('ADAMIC_GRAPHQL_PRETTIER', exports)
+            self.assertEqual(exports['ADAMIC_GRAPHQL_PRETTIER'], exports['ADAMIC_CSS_PRINTER_LIBRARY'])
+            self.assertNotIn('ADAMIC_GRAPHQL_PRINTER_BENCH', gate.VARIABLES)
+            self.assertNotIn('ADAMIC_MARKDOWNBLOCKS_CENSUS', gate.VARIABLES)
             self.assertIn('ADAMIC_ESTREE_LIBRARY', exports)
             self.assertEqual(exports['ADAMIC_ESTREE_LIBRARY'], exports['ADAMIC_CSS_PRINTER_LIBRARY'])
             self.assertIn('ADAMIC_YAML_LIBRARY', exports)
@@ -40,7 +44,7 @@ class Inputs(unittest.TestCase):
         directory = SOURCE / 'gate-inputs/css-printer'
         manifest = json.loads((directory / 'package.json').read_text())
         lock = json.loads((directory / 'package-lock.json').read_text())
-        for name, version in [('yaml', '2.9.0'), ('prettier', '3.9.6'), ('yaml-unist-parser', '3.2.0'), ('@typescript-eslint/typescript-estree', '8.65.0'), ('typescript', '6.0.3')]:
+        for name, version in [('yaml', '2.9.0'), ('prettier', '3.9.6'), ('yaml-unist-parser', '3.2.0'), ('@typescript-eslint/typescript-estree', '8.65.0'), ('typescript', '6.0.3'), ('graphql', '17.0.2')]:
             self.assertEqual(manifest['dependencies'][name], version)
             package = lock['packages']['node_modules/' + name]
             self.assertEqual(package['version'], version)

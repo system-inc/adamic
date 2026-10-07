@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_shared_prettier_exports_and_typescript_pin (tests.Inputs.test_shared_prettier_exports_and_typescript_pin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 29, in test_shared_prettier_exports_and_typescript_pin
+    self.assertIn('ADAMIC_GRAPHQL_PRETTIER', exports)
+AssertionError: 'ADAMIC_GRAPHQL_PRETTIER' not found in {'ADAMIC_TYPESCRIPT_SOURCE': '/tmp/tmpp0_6tsbv/typescript', 'ADAMIC_CSS_LIBRARY': '/tmp/tmpp0_6tsbv/css', 'ADAMIC_GRAPHQL_LIBRARY': '/tmp/tmpp0_6tsbv/graphql', 'ADAMIC_MEDIA_QUERY_LIBRARY': '/tmp/tmpp0_6tsbv/media-query', 'ADAMIC_SELECTOR_LIBRARY': '/tmp/tmpp0_6tsbv/selector', 'ADAMIC_VALUES_LIBRARY': '/tmp/tmpp0_6tsbv/values', 'ADAMIC_JSON_PRETTIER': '/tmp/tmpp0_6tsbv/json-prettier', 'ADAMIC_CSS_PRINTER_LIBRARY': '/tmp/tmpp0_6tsbv/css-printer', 'ADAMIC_ESTREE_LIBRARY': '/tmp/tmpp0_6tsbv/css-printer', 'ADAMIC_TS_PRETTIER': '/tmp/tmpp0_6tsbv/css-printer', 'ADAMIC_YAML_LIBRARY': '/tmp/tmpp0_6tsbv/css-printer', 'ADAMIC_GITIGNORE_LARGEST': '/tmp/tmpp0_6tsbv/gitignore/.gitignore', 'ADAMIC_CLANG_TSGO_ARCHIVE': '/tmp/tmpp0_6tsbv/checker/tsgo.a'}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
