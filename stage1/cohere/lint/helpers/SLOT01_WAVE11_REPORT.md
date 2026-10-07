@@ -205,3 +205,11 @@ The same CollapseCopyNode[] adamic/cycle-capable refusal remains. Native/emitted
 Rebased without conflicts onto origin/area/stage1-lint bb2ece564842c4b2f909b9f75c27e74c2efa4f29, containing unchanged main b6b1538b. The witness-options and recovery-row classification changes are retained. The delta changes no helper, compiler or Go fixture input; the prior full-suite evidence remains d3-oracle.log (603.249s, 76 passes and eight blocked skips).
 
 `go test ./stage1/cohere/lint/helpers -run '^TestSlot01Wave11' -count=1 -v -timeout=20m` finished in 32.014s with eight explicit ownership-blocked skips after Go/Node parity and all eight source-only mutant catches. `go vet ./stage1/cohere/lint/helpers` passed. Fresh logs: evidence/slot01-wave11/bb2-{oracle,vet}.log. The CollapseCopyNode[] adamic/cycle-capable refusal persists; native tree parity and compiled tree mutants remain unverified. No full or required-input gate is claimed green, no check or guard was relaxed, and no new claim or readiness credit is added.
+
+## Main runtime and lint landing on 4e0bfda5
+
+Rebased without conflicts onto current main 4e0bfda50a19c705a1aac0d9932e08483806d61c, which contains the lint integration and runtime/developer-tool landings. Incoming shared allocator/leak-check changes are retained; no shared source was edited. Read the updated CLAUDE.md.
+
+`go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m` passed in 612.473s with 76 top-level passes and eight explicit ownership-blocked skips. All 77 compiled semantic mutants and eight source-only tree mutants were caught; the two expected refusal checks passed. `go vet ./stage1/cohere/lint/helpers` passed. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m` passed in 6.998s with seven probe misses. Evidence: evidence/slot01-wave11/4e-{oracle,vet,input}.log.
+
+The CollapseCopyNode[] adamic/cycle-capable refusal persists. Native/emitted-JavaScript tree parity and compiled tree mutants remain unverified. The full repository and 17 required-input checks were not run in this bounded worker check; no check or adapter guard was relaxed. No fully green gate, new helper claim or tree readiness credit is asserted.
