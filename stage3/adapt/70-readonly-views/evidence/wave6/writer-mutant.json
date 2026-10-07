@@ -1,0 +1,12 @@
+{
+  "mutant": "new typed diagnostic.file = undefined writer",
+  "before_writes": [],
+  "after_writes": [
+    {
+      "where": "src/compiler/types.ts:10672:111",
+      "expression": "diagnostic.file = undefined",
+      "value": "undefined"
+    }
+  ],
+  "zero_write_check_passed": false
+}
