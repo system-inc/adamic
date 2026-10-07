@@ -1,0 +1,10 @@
+[detached HEAD 79b38089b] Record landed area rebase and remaining regex compiler gap
+ Date: Wed Oct 7 06:36:44 2026 +0000
+ 7 files changed, 380 insertions(+)
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-dupe-class-members/AREA_REPORT.md
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-dupe-class-members/evidence/area-7481/dedup-replay.log
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-dupe-class-members/evidence/area-7481/fetch.log
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-dupe-class-members/evidence/area-7481/history.log
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-dupe-class-members/evidence/area-7481/rebase.log
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-dupe-class-members/evidence/area-7481/registry.log
+ create mode 100644 stage1/cohere/lint/rules/typescript-no-dupe-class-members/evidence/area-7481/rules.log
