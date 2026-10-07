@@ -1,6 +1,7 @@
 // Speculation saves and restores scanner state without building a tree.
+import type { ParseNode } from './nodes.ts';
 import type { Scanner } from '../scanner/scanner.ts';
-import { modifierKinds, precedence, reservedKinds } from './grammar.ts';
+import { modifierKinds, precedence, reservedKinds, bindingStart } from './grammar.ts';
 
 export interface ParserStateInterface {
     readonly pos: number;
@@ -97,245 +98,69 @@ function optionalParameterAhead(scanner: Scanner): boolean {
     return after === 'ColonToken' || after === 'CommaToken' || after === 'EqualsToken' || after === 'CloseParenToken';
 }
 
-export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
+// 0 rejects an arrow, 1 commits to recovery, and 2 requires a complete speculative signature.
+export function arrowHead(scanner: Scanner): number {
     if(kind(scanner) === 'EqualsGreaterThanToken') {
-        return true;
+        return 1;
     }
     const state = new Speculation(scanner);
-    let result = false;
     if(kind(scanner) === 'AsyncKeyword') {
         state.next();
         if((scanner.flags & 1) !== 0) {
             state.restore();
-            return false;
+            return 0;
         }
         if(
             kind(scanner) === 'Identifier' ||
             (kind(scanner).endsWith('Keyword') && !reservedKinds.includes(kind(scanner)))
         ) {
             state.next();
-            result = kind(scanner) === 'EqualsGreaterThanToken' && (scanner.flags & 1) === 0;
+            const result = kind(scanner) === 'EqualsGreaterThanToken' && (scanner.flags & 1) === 0 ? 1 : 0;
             state.restore();
             return result;
         }
     }
     const generic = kind(scanner) === 'LessThanToken';
-    if(generic) {
-        let depth = 0;
-        while(kind(scanner) !== 'EndOfFile') {
-            if(kind(scanner) === 'LessThanToken') {
-                depth++;
-            }
-            if(kind(scanner) === 'GreaterThanToken') {
-                depth--;
-            }
-            state.next();
-            if(depth === 0) {
-                break;
-            }
-        }
-    }
-    if(kind(scanner) === 'OpenParenToken') {
-        const parameterState = new Speculation(scanner);
-        parameterState.next();
-        const first = kind(scanner);
-        parameterState.next();
-        const second = kind(scanner);
-        parameterState.restore();
-        if(
-            !generic &&
-            modifierKinds.includes(first) &&
-            first !== 'AsyncKeyword' &&
-            second !== 'AsKeyword' &&
-            (second === 'Identifier' || (second.endsWith('Keyword') && !reservedKinds.includes(second)))
-        ) {
-            state.restore();
-            return true;
-        }
-        const parameterHead =
-            first === 'Identifier' ||
-            first === 'ThisKeyword' ||
-            (first.endsWith('Keyword') && !reservedKinds.includes(first));
-        let depth = 0;
-        let typed = false;
-        let head = 0;
-        while(kind(scanner) !== 'EndOfFile') {
-            if(kind(scanner) === 'OpenParenToken') {
-                depth++;
-            }
-            if(kind(scanner) === 'CloseParenToken') {
-                depth--;
-            }
-            if(depth === 1 && kind(scanner) !== 'OpenParenToken') {
-                head++;
-                if(
-                    (parameterHead &&
-                        head === 2 &&
-                        (kind(scanner) === 'ColonToken' ||
-                            (kind(scanner) === 'QuestionToken' && optionalParameterAhead(scanner)))) ||
-                    (head === 1 && first === 'DotDotDotToken')
-                ) {
-                    typed = true;
-                }
-            }
-            state.next();
-            if(depth === 0) {
-                break;
-            }
-        }
-        if(
-            !generic &&
-            (typed || (head === 0 && (kind(scanner) === 'ColonToken' || kind(scanner) === 'OpenBraceToken')))
-        ) {
-            state.restore();
-            return true;
-        }
-        if(kind(scanner) === 'EqualsGreaterThanToken' && (scanner.flags & 1) === 0) {
-            result = true;
-        }
-        else if(kind(scanner) === 'ColonToken' && (allowReturn || typed)) {
-            state.next();
-            let braces = 0;
-            while(kind(scanner) !== 'EndOfFile' && kind(scanner) !== 'EqualsGreaterThanToken') {
-                if(kind(scanner) === 'SemicolonToken' && braces === 0) {
-                    break;
-                }
-                if(kind(scanner) === 'OpenBraceToken') {
-                    braces++;
-                }
-                if(kind(scanner) === 'CloseBraceToken') {
-                    if(braces === 0) {
-                        break;
-                    }
-                    braces--;
-                }
-                state.next();
-            }
-            result = kind(scanner) === 'EqualsGreaterThanToken';
-        }
-    }
-    state.restore();
-    return result;
-}
-
-// JSX generic arrows require a comma, default or a real constraint.
-export function jsxArrowAhead(scanner: Scanner): boolean {
-    const state = new Speculation(scanner);
-    if(kind(scanner) === 'AsyncKeyword') {
-        state.next();
-    }
-    if(kind(scanner) !== 'LessThanToken') {
+    if(!generic && kind(scanner) !== 'OpenParenToken') {
         state.restore();
-        return true;
+        return 0;
     }
     state.next();
-    if(kind(scanner) === 'ConstKeyword') {
+    const first = kind(scanner);
+    const identifier = first === 'Identifier' || (first.endsWith('Keyword') && !reservedKinds.includes(first));
+    if(generic) {
+        state.restore();
+        return identifier || first === 'ConstKeyword' ? 2 : 0;
+    }
+    if(first === 'CloseParenToken') {
         state.next();
+        const result = ['EqualsGreaterThanToken', 'ColonToken', 'OpenBraceToken'].includes(kind(scanner)) ? 1 : 0;
+        state.restore();
+        return result;
+    }
+    if(['OpenBracketToken', 'OpenBraceToken', 'DotDotDotToken'].includes(first)) {
+        state.restore();
+        return first === 'DotDotDotToken' ? 1 : 2;
     }
     state.next();
-    let result = kind(scanner) === 'CommaToken' || kind(scanner) === 'EqualsToken';
-    if(kind(scanner) === 'ExtendsKeyword') {
-        state.next();
-        result =
-            kind(scanner) !== 'EqualsToken' && kind(scanner) !== 'GreaterThanToken' && kind(scanner) !== 'SlashToken';
+    const second = kind(scanner);
+    let result = 0;
+    if(
+        modifierKinds.includes(first) &&
+        first !== 'AsyncKeyword' &&
+        second !== 'AsKeyword' &&
+        (second === 'Identifier' || (second.endsWith('Keyword') && !reservedKinds.includes(second)))
+    ) {
+        result = 1;
     }
-    state.restore();
-    return result;
-}
-
-export function typeArgumentsAhead(scanner: Scanner): boolean {
-    const state = new Speculation(scanner);
-    let depth = 0;
-    let braces = 0;
-    let parens = 0;
-    let brackets = 0;
-    let closed = false;
-    let conditionalType = false;
-    while(kind(scanner) !== 'EndOfFile') {
-        if(
-            (kind(scanner) === 'CloseParenToken' && parens === 0) ||
-            (kind(scanner) === 'CloseBraceToken' && braces === 0) ||
-            (kind(scanner) === 'CloseBracketToken' && brackets === 0)
-        ) {
-            break;
+    else if(identifier || first === 'ThisKeyword') {
+        if(second === 'ColonToken' || (second === 'QuestionToken' && optionalParameterAhead(scanner))) {
+            result = 1;
         }
-        if(kind(scanner) === 'ExtendsKeyword') {
-            conditionalType = true;
-        }
-        if(kind(scanner) === 'QuestionToken' && !conditionalType && braces === 0 && parens === 0 && brackets === 0) {
-            break;
-        }
-        if(kind(scanner) === 'OpenBracketToken') {
-            brackets++;
-        }
-        if(kind(scanner) === 'CloseBracketToken') {
-            brackets--;
-        }
-        if(kind(scanner) === 'SemicolonToken' && braces === 0 && parens === 0) {
-            break;
-        }
-        if(kind(scanner) === 'OpenBraceToken') {
-            braces++;
-        }
-        if(kind(scanner) === 'CloseBraceToken') {
-            braces--;
-        }
-        if(kind(scanner) === 'OpenParenToken') {
-            parens++;
-        }
-        if(kind(scanner) === 'CloseParenToken') {
-            parens--;
-        }
-        if(kind(scanner) === 'LessThanToken') {
-            depth++;
-        }
-        if(kind(scanner) === 'GreaterThanToken') {
-            if(depth === 1) {
-                scanner.rescanGreater();
-                if(kind(scanner) !== 'GreaterThanToken') {
-                    break;
-                }
-            }
-            depth--;
-        }
-        if(
-            kind(scanner) === 'PlusToken' ||
-            kind(scanner) === 'MinusToken' ||
-            kind(scanner) === 'SlashToken' ||
-            kind(scanner) === 'BarBarToken' ||
-            kind(scanner) === 'AmpersandAmpersandToken'
-        ) {
-            break;
-        }
-        state.next();
-        if(depth === 0) {
-            closed = true;
-            break;
+        else if(['CommaToken', 'EqualsToken', 'CloseParenToken'].includes(second)) {
+            result = 2;
         }
     }
-    const after = kind(scanner);
-    const result =
-        closed &&
-        (after === 'OpenParenToken' ||
-            after === 'NoSubstitutionTemplateLiteral' ||
-            after === 'TemplateHead' ||
-            (after !== 'LessThanToken' &&
-                after !== 'GreaterThanToken' &&
-                after !== 'PlusToken' &&
-                after !== 'MinusToken' &&
-                ((scanner.flags & 1) !== 0 ||
-                    precedence(after) >= 0 ||
-                    after === 'SemicolonToken' ||
-                    after === 'CloseParenToken' ||
-                    after === 'CloseBracketToken' ||
-                    after === 'CommaToken' ||
-                    after === 'EndOfFile' ||
-                    after === 'DotToken' ||
-                    after === 'QuestionDotToken' ||
-                    after === 'QuestionToken' ||
-                    after === 'ColonToken' ||
-                    after === 'CloseBraceToken' ||
-                    after === 'EqualsToken')));
     state.restore();
     return result;
 }
@@ -649,6 +474,369 @@ export function modifierAhead(scanner: Scanner, permitConst: boolean): boolean {
                   ? kind(scanner) === 'EnumKeyword'
                   : follow && (current === 'StaticKeyword' || (scanner.flags & 1) === 0);
     }
+    state.restore();
+    return result;
+}
+
+// Recognition precedes descent so invalid class tokens cannot create missing
+// properties forever. Keep the same recovery boundary as typescript-go.
+export function classMemberAhead(scanner: Scanner): boolean {
+    if(kind(scanner) === 'AtToken') {
+        return true;
+    }
+    const state = new Speculation(scanner);
+    let name = '';
+    while(modifierKinds.includes(kind(scanner))) {
+        name = kind(scanner);
+        if(
+            [
+                'PublicKeyword',
+                'PrivateKeyword',
+                'ProtectedKeyword',
+                'StaticKeyword',
+                'ReadonlyKeyword',
+                'OverrideKeyword',
+                'AccessorKeyword',
+            ].includes(name)
+        ) {
+            state.restore();
+            return true;
+        }
+        state.next();
+    }
+    if(kind(scanner) === 'AsteriskToken') {
+        state.restore();
+        return true;
+    }
+    if(
+        ['Identifier', 'PrivateIdentifier'].includes(kind(scanner)) ||
+        kind(scanner).endsWith('Keyword') ||
+        ['StringLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(kind(scanner))
+    ) {
+        name = kind(scanner);
+        state.next();
+    }
+    const result =
+        kind(scanner) === 'OpenBracketToken' ||
+        (name !== '' &&
+            (!name.endsWith('Keyword') ||
+                ['GetKeyword', 'SetKeyword'].includes(name) ||
+                [
+                    'OpenParenToken',
+                    'LessThanToken',
+                    'ExclamationToken',
+                    'ColonToken',
+                    'EqualsToken',
+                    'QuestionToken',
+                    'SemicolonToken',
+                    'CloseBraceToken',
+                    'EndOfFile',
+                ].includes(kind(scanner)) ||
+                (scanner.flags & 1) !== 0));
+    state.restore();
+    return result;
+}
+
+export function heritageElementAhead(
+    scanner: Scanner,
+    recovery: boolean,
+    awaitContext: boolean,
+    yieldContext: boolean,
+): boolean {
+    const current = kind(scanner);
+    const state = new Speculation(scanner);
+    state.next();
+    const after = kind(scanner);
+    state.next();
+    const following = kind(scanner);
+    state.restore();
+    if(current === 'OpenBraceToken') {
+        return (
+            after !== 'CloseBraceToken' ||
+            ['CommaToken', 'OpenBraceToken', 'ExtendsKeyword', 'ImplementsKeyword'].includes(following)
+        );
+    }
+    const identifier =
+        (current === 'Identifier' || (current.endsWith('Keyword') && !reservedKinds.includes(current))) &&
+        !(current === 'AwaitKeyword' && awaitContext) &&
+        !(current === 'YieldKeyword' && yieldContext);
+    const leftHandSide =
+        identifier ||
+        [
+            'ThisKeyword',
+            'SuperKeyword',
+            'NullKeyword',
+            'TrueKeyword',
+            'FalseKeyword',
+            'NumericLiteral',
+            'BigIntLiteral',
+            'StringLiteral',
+            'NoSubstitutionTemplateLiteral',
+            'TemplateHead',
+            'OpenParenToken',
+            'OpenBracketToken',
+            'FunctionKeyword',
+            'ClassKeyword',
+            'NewKeyword',
+            'SlashToken',
+            'SlashEqualsToken',
+        ].includes(current) ||
+        (current === 'ImportKeyword' && ['OpenParenToken', 'LessThanToken', 'DotToken'].includes(after));
+    const clause =
+        ['ExtendsKeyword', 'ImplementsKeyword'].includes(current) &&
+        (after === 'Identifier' ||
+            (after.endsWith('Keyword') && !reservedKinds.includes(after)) ||
+            [
+                'ThisKeyword',
+                'SuperKeyword',
+                'NullKeyword',
+                'TrueKeyword',
+                'FalseKeyword',
+                'NumericLiteral',
+                'BigIntLiteral',
+                'StringLiteral',
+                'NoSubstitutionTemplateLiteral',
+                'TemplateHead',
+                'OpenParenToken',
+                'OpenBracketToken',
+                'OpenBraceToken',
+                'FunctionKeyword',
+                'ClassKeyword',
+                'NewKeyword',
+                'SlashToken',
+                'SlashEqualsToken',
+                'PlusToken',
+                'MinusToken',
+                'TildeToken',
+                'ExclamationToken',
+                'DeleteKeyword',
+                'TypeOfKeyword',
+                'VoidKeyword',
+                'PlusPlusToken',
+                'MinusMinusToken',
+                'LessThanToken',
+                'AwaitKeyword',
+                'YieldKeyword',
+                'PrivateIdentifier',
+            ].includes(after));
+    return (recovery ? identifier : leftHandSide) && !clause;
+}
+
+// Contextual get/set require a property name, including across a line break.
+export function accessorAhead(scanner: Scanner): boolean {
+    if(!['GetKeyword', 'SetKeyword'].includes(kind(scanner))) {
+        return false;
+    }
+    const state = new Speculation(scanner);
+    state.next();
+    const result =
+        kind(scanner) === 'Identifier' ||
+        kind(scanner).endsWith('Keyword') ||
+        ['PrivateIdentifier', 'OpenBracketToken', 'StringLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(
+            kind(scanner),
+        );
+    state.restore();
+    return result;
+}
+
+// A statement after an arrow recovers as a block with a missing opening brace.
+export function arrowBlockAhead(scanner: Scanner, expressionStart: boolean): boolean {
+    const current = kind(scanner);
+    return (
+        current === 'OpenBraceToken' ||
+        (!['SemicolonToken', 'FunctionKeyword', 'ClassKeyword'].includes(current) &&
+            statementAhead(scanner) &&
+            (!expressionStart || current === 'AtToken'))
+    );
+}
+
+export interface ExpressionSpeculationInterface {
+    readonly scanner: Scanner;
+    readonly mark: () => ParserStateInterface;
+    readonly rewind: (state: ParserStateInterface) => void;
+    readonly next: () => void;
+    readonly kind: () => string;
+    readonly peek: () => string;
+    readonly typeParameters: () => number[];
+    readonly speculativeParameters: () => boolean;
+    readonly node: (index: number) => ParseNode;
+    readonly diagnosticCount: () => number;
+    readonly bindingName: () => number;
+    readonly bindingIdentifier: () => boolean;
+    readonly nextIdentifierSameLine: () => boolean;
+    readonly returnType: () => number;
+    readonly arrow: (allowReturn: boolean) => number;
+    readonly typeArgumentList: () => number[];
+    readonly expressionStart: () => boolean;
+}
+
+export function expressionTypeArguments(parser: ExpressionSpeculationInterface): number[] | undefined {
+    const state = parser.mark();
+    parser.next();
+    const types = parser.typeArgumentList();
+    parser.scanner.rescanGreater();
+    if(parser.kind() === 'GreaterThanToken') {
+        parser.next();
+        const after = parser.kind();
+        if(
+            ['OpenParenToken', 'NoSubstitutionTemplateLiteral', 'TemplateHead'].includes(after) ||
+            (!['LessThanToken', 'GreaterThanToken', 'PlusToken', 'MinusToken'].includes(after) &&
+                ((parser.scanner.flags & 1) !== 0 || precedence(after) >= 0 || !parser.expressionStart()))
+        ) {
+            return types;
+        }
+    }
+    parser.rewind(state);
+    return undefined;
+}
+
+function arrowReturnTypeValid(parser: ExpressionSpeculationInterface, index: number): boolean {
+    const node = parser.node(index);
+    if(node.kind === 'TypeReference') {
+        const name = parser.node(node.children[0] ?? -1);
+        return name.pos !== name.end;
+    }
+    if(['ParenthesizedType', 'FunctionType', 'ConstructorType'].includes(node.kind)) {
+        return arrowReturnTypeValid(parser, node.children.at(-1) ?? -1);
+    }
+    return true;
+}
+
+export function possibleArrowAhead(parser: ExpressionSpeculationInterface, allowReturn: boolean): boolean {
+    const state = parser.mark();
+    if(parser.kind() === 'AsyncKeyword') {
+        parser.next();
+        if((parser.scanner.flags & 1) !== 0) {
+            parser.rewind(state);
+            return false;
+        }
+    }
+    if(parser.kind() === 'LessThanToken') {
+        parser.typeParameters();
+    }
+    const valid = parser.kind() === 'OpenParenToken';
+    if(!valid) {
+        parser.rewind(state);
+        return false;
+    }
+    if(!parser.speculativeParameters()) {
+        parser.rewind(state);
+        return false;
+    }
+    const hasReturn = parser.kind() === 'ColonToken';
+    if(hasReturn) {
+        parser.next();
+        if(!arrowReturnTypeValid(parser, parser.returnType())) {
+            parser.rewind(state);
+            return false;
+        }
+    }
+    let result = ['EqualsGreaterThanToken', 'OpenBraceToken'].includes(parser.kind());
+    parser.rewind(state);
+    if(result && hasReturn && !allowReturn) {
+        parser.arrow(allowReturn);
+        result = parser.kind() === 'ColonToken';
+        parser.rewind(state);
+    }
+    return result;
+}
+
+// Outside their contexts, await/yield still recover before an identifier or literal on the same line.
+export function contextualExpressionAhead(scanner: Scanner, context: boolean): boolean {
+    if(context) {
+        return true;
+    }
+    const state = new Speculation(scanner);
+    state.next();
+    const after = kind(scanner);
+    const result =
+        (scanner.flags & 1) === 0 &&
+        (after === 'Identifier' ||
+            after.endsWith('Keyword') ||
+            ['NumericLiteral', 'BigIntLiteral', 'StringLiteral'].includes(after));
+    state.restore();
+    return result;
+}
+
+export function functionTypeAhead(parser: ExpressionSpeculationInterface): boolean {
+    if(parser.kind() === 'LessThanToken') {
+        return true;
+    }
+    const saved = parser.mark();
+    parser.next();
+    let result = parser.kind() === 'CloseParenToken' || parser.kind() === 'DotDotDotToken';
+    if(!result) {
+        while(
+            ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'OverrideKeyword'].includes(
+                parser.kind(),
+            ) &&
+            parser.nextIdentifierSameLine()
+        ) {
+            parser.next();
+        }
+        let parameter = false;
+        if(parser.bindingIdentifier() || parser.kind() === 'ThisKeyword') {
+            parser.next();
+            parameter = true;
+        }
+        else if(parser.kind() === 'OpenBracketToken' || parser.kind() === 'OpenBraceToken') {
+            parser.bindingName();
+            parameter = parser.diagnosticCount() === saved.diagnostics;
+        }
+        if(parameter) {
+            result = ['ColonToken', 'CommaToken', 'QuestionToken', 'EqualsToken'].includes(parser.kind());
+            if(parser.kind() === 'CloseParenToken') {
+                parser.next();
+                result = parser.kind() === 'EqualsGreaterThanToken';
+            }
+        }
+    }
+    parser.rewind(saved);
+    return result;
+}
+
+// JSX generic arrows require a comma, default or a real constraint.
+export function jsxArrowAhead(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    if(kind(scanner) === 'AsyncKeyword') {
+        state.next();
+    }
+    if(kind(scanner) !== 'LessThanToken') {
+        state.restore();
+        return true;
+    }
+    state.next();
+    if(kind(scanner) === 'ConstKeyword') {
+        state.next();
+    }
+    state.next();
+    let result = kind(scanner) === 'CommaToken' || kind(scanner) === 'EqualsToken';
+    if(kind(scanner) === 'ExtendsKeyword') {
+        state.next();
+        result =
+            kind(scanner) !== 'EqualsToken' && kind(scanner) !== 'GreaterThanToken' && kind(scanner) !== 'SlashToken';
+    }
+    state.restore();
+    return result;
+}
+
+export function tupleNameAhead(scanner: Scanner): boolean {
+    if(!bindingStart(kind(scanner))) {
+        return false;
+    }
+    const state = new Speculation(scanner);
+    state.next();
+    if(kind(scanner) === 'QuestionToken') {
+        state.next();
+    }
+    const result = kind(scanner) === 'ColonToken';
+    state.restore();
+    return result;
+}
+export function nextIdentifierSameLine(scanner: Scanner): boolean {
+    const state = new Speculation(scanner);
+    state.next();
+    const result = bindingStart(kind(scanner)) && (scanner.flags & 1) === 0;
     state.restore();
     return result;
 }

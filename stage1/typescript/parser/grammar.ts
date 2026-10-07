@@ -212,3 +212,41 @@ export function expressionTokenStart(kind: string, disallowIn: boolean): boolean
 export function parameterTokenStart(kind: string): boolean {
     return modifierKinds.includes(kind) || parameterKinds.includes(kind);
 }
+
+// The parser accepts assignments only after the grammar's left-hand-side
+// expressions, even when the recovered expression is otherwise invalid.
+export function leftHandSideKind(kind: string): boolean {
+    return [
+        'PropertyAccessExpression',
+        'ElementAccessExpression',
+        'NewExpression',
+        'CallExpression',
+        'JsxElement',
+        'JsxSelfClosingElement',
+        'JsxFragment',
+        'TaggedTemplateExpression',
+        'ArrayLiteralExpression',
+        'ParenthesizedExpression',
+        'ObjectLiteralExpression',
+        'ClassExpression',
+        'FunctionExpression',
+        'Identifier',
+        'PrivateIdentifier',
+        'RegularExpressionLiteral',
+        'NumericLiteral',
+        'BigIntLiteral',
+        'StringLiteral',
+        'NoSubstitutionTemplateLiteral',
+        'TemplateExpression',
+        'FalseKeyword',
+        'NullKeyword',
+        'ThisKeyword',
+        'TrueKeyword',
+        'SuperKeyword',
+        'NonNullExpression',
+        'ExpressionWithTypeArguments',
+        'MetaProperty',
+        'ImportKeyword',
+        'MissingDeclaration',
+    ].includes(kind);
+}

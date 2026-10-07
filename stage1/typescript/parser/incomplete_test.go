@@ -13,6 +13,10 @@ import (
 	"time"
 )
 
+// Sanitized native parsing and printing of the largest checker inputs takes
+// over seven seconds alone. Allow four concurrent workers room to finish.
+const incompleteDeadline = 30 * time.Second
+
 // Four workers each run independently bounded subprocesses. The corpus pin
 // and point selection are deterministic and no diagnostic input is filtered.
 func TestIncompleteCompilerAgrees(t *testing.T) {
@@ -79,7 +83,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		planned += count
 		t.Logf("planned %s: %d tokens, cutoff stride %d, edit stride %d, %d inputs", sourcePath, len(tokens), stride, editStride, count)
 	}
-	t.Logf("planned all %d compiler files: %d inputs; each Go/Node/native parse and print has a 10s deadline", files, planned)
+	t.Logf("planned all %d compiler files: %d inputs; each Go/Node/native parse and print has a %s deadline", files, planned, incompleteDeadline)
 	var checked atomic.Int64
 	type comparison struct {
 		position, index  int
@@ -142,7 +146,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 	var timingLock sync.Mutex
 	measure := func(label, path, command string, args ...string) ([]byte, error) {
 		started := time.Now()
-		data, err := recoveryRunLimit(t, 10*time.Second, path+"."+label, command, args...)
+		data, err := recoveryRunLimit(t, incompleteDeadline, path+"."+label, command, args...)
 		duration := time.Since(started)
 		timingLock.Lock()
 		if duration > slowest[label].duration {
