@@ -29,22 +29,10 @@
       "after_sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
       "before_CRLF": 210,
       "after_CRLF": 210
-    },
-    "binder.ts": {
-      "before_sha256": "69518c1a0c939497008cd52ef581656739c07aa749ffa2fb725f6368181f7cde",
-      "after_sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39",
-      "before_CRLF": 3916,
-      "after_CRLF": 3916
     }
   },
-  "verification": "PASS binder.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+  "verification": "PASS semver.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS programDiagnostics.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS tracing.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS symbolWalker.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performance.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
   "idempotence": [
-    {
-      "file": "binder.ts",
-      "assertions": 0,
-      "zeros": 0,
-      "declined": 11
-    },
     {
       "file": "semver.ts",
       "assertions": 0,
@@ -76,8 +64,7 @@
       "declined": 0
     }
   ],
-  "census_before": 45,
+  "census_before": 41,
   "census_after": 10,
-  "setup": "go version go1.27.1 linux/amd64\nsetup: go ready (1s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)\nv24.19.0\nsetup: node ready (1s)\nsetup: submodules ready (1s)\nsetup: build cache warm (298s)\nsetup: done in 298s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB\n",
-  "wave2_incremental_before": 14
+  "setup": "go version go1.27.1 linux/amd64\nsetup: go ready (1s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)\nv24.19.0\nsetup: node ready (1s)\nsetup: submodules ready (1s)\nsetup: build cache warm (298s)\nsetup: done in 298s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB\n"
 }

@@ -1,11 +1,11 @@
-# Required indexed reads in program support and binder
+# Required indexed reads in program support, wave 1
 
 This is a **partial partition 32**, on TypeScript 6.0.3 at
-`050880ce59e30b356b686bd3144efe24f875ebc8`. It adds **19 required-read `!`
-checks** in `binder.ts`, `semver.ts`, `programDiagnostics.ts`, and `tracing.ts`. It also
+`050880ce59e30b356b686bd3144efe24f875ebc8`. It adds **15 required-read `!`
+checks** in `semver.ts`, `programDiagnostics.ts`, and `tracing.ts`. It also
 reviews `symbolWalker.ts` and `performance.ts` without changing them. The
-ledger has one entry for each of the 37 parsed indexed expressions in these
-six files: 19 asserted and eighteen declined. No U-zero site was selected.
+ledger has one entry for each of the 22 parsed indexed expressions in these
+five files: 15 asserted and seven declined. No U-zero site was selected.
 
 **debug.ts and path.ts belong to adaptation 30 and are excluded**, following
 the user's updated ownership ruling. No checker, emitter, factory, parser,
@@ -47,7 +47,7 @@ submodules ready 1s, build cache warm 298s, total 298s. `nproc` is 5 and
 The unchanged Adamic loader options check all 78 prepared compiler roots.
 The exporter uses the same Go overlay as adaptation 30 and never invokes the
 meter's implicit optional-declaration adaptation. These tables retain exactly
-the reviewed six files and requested codes; full diagnostic chains are saved
+the reviewed five files and requested codes; full diagnostic chains are saved
 in `census-before.json` and `census-after.json`.
 
 | File | TS2345 | TS18048 | TS2532 | TS2322 | TS2538 | Total |
@@ -62,9 +62,7 @@ in `census-before.json` and `census-after.json`.
 | symbolWalker.ts after | 0 | 0 | 0 | 0 | 0 | 0 |
 | performance.ts before | 0 | 0 | 0 | 0 | 0 | 0 |
 | performance.ts after | 0 | 0 | 0 | 0 | 0 | 0 |
-| binder.ts before | 1 | 1 | 1 | 1 | 0 | 4 |
-| binder.ts after | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total before** | 19 | 19 | 3 | 4 | 0 | **45** |
+| **Total before** | 18 | 18 | 2 | 3 | 0 | **41** |
 | **Total after** | 9 | 1 | 0 | 0 | 0 | **10** |
 
 Every remaining requested-code finding is listed here and in
@@ -83,19 +81,17 @@ Every remaining requested-code finding is listed here and in
 | semver.ts:323:21 | TS2345 | rightResult.major inherits the destructured-capture type; this is a property read, not an indexed read. |
 | semver.ts:339:21 | TS2345 | rightResult.major inherits the destructured-capture type; this is a property read, not an indexed read. |
 
-Five-code findings fall from **45 to 10**. This does not mean all six files
+Five-code findings fall from **41 to 10**. This does not mean all five files
 pass the complete checker. `symbolWalker.ts` and `performance.ts` have no
 checker findings both before and after. `programDiagnostics.ts` still has
 TS2412, and `tracing.ts` still has ten findings across TS1294, TS18046, TS2379,
 TS2412, and TS2591. These are outside this required-indexed-read wave.
-`other-findings.json` lists every remaining diagnostic outside the five codes
-in the six reviewed files, with its reason for exclusion.
 
 ## Proof
 
 `verify.cjs` independently emits each file with stock 6.0.3 and requires
 byte-identical JavaScript. It also checks newline and CRLF counts, every site
-contract, and idempotence. All six files pass. A second actual adapter CLI
+contract, and idempotence. All five files pass. A second actual adapter CLI
 run reports zero assertions and zero U-zero edits for each file.
 
 The mutant changes `left[i]!` in semver's prerelease comparison to
@@ -106,28 +102,13 @@ exit 1. `mutant.cjs` reproduces both failures in a new scratch tree and
 `mutant-proof.json` records them. The mutant is absent from the final tree.
 No oracle or census mutant result is claimed.
 
-The support wave default oracle passed: 106367 passing, 0 failing, 0 pending,
-empty baseline diff. Its full evidence is under `wave1/`. The binder wave
-also passed the default oracle: **106367 passing, 0 failing, 0 pending**,
-all phase exits 0, and an empty (0-byte) `baseline.diff`. Install took 4.725s,
-build 10.853s, tests 521.665s, total 537.303s. The tree contains 00, 10, 30,
-and both waves of 32; adaptation 20 is absent. `oracle-report.json` records
+The default stage 3 oracle passed: **106367 passing, 0 failing, 0 pending**,
+all phase exits 0, and an empty (0-byte) `baseline.diff`. Install took 14.715s,
+build 12.878s, tests 698.527s, total 726.255s. The tree contains 00, 10, 30,
+and this support wave; adaptation 20 is absent. `oracle-report.json` records
 the exact commands and result.
 An earlier scratch oracle containing path.ts checks was stopped after the
 ownership correction; it exited 1 and is not used as passing evidence.
-
-## Binder wave
-
-Wave 2 adds four binder assertions after the support wave was pushed. Its
-incremental census is 14 to 10 across the six reviewed files; binder alone is
-4 to 0. Cumulative baseline counts are 45 to 10. All ten remaining requested-code
-findings are the semver findings listed above. Binder also retains eighteen
-findings outside these codes: TS1294, TS2412, TS7029, and TS7030.
-
-`binder-mutant.cjs` replaces `antecedents[0]!` with `(antecedents[0] ?? 0)`.
-Both the stock emitted-JavaScript comparison and the site check fail with exit 1.
-The original semver mutant is retained. Each wave has its own default oracle
-run; the support wave evidence is preserved under `wave1/`.
 
 ## Reproduction
 
@@ -138,28 +119,26 @@ it to a separate after tree. From the repository:
 source /workspace/adamic-tools/env.sh
 export NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules
 unit=stage3/adapt/32-indexed-reads-program
-bash "$unit/census.sh" /tmp/adapt32-before /tmp/new-cumulative-before > /tmp/new-cumulative-before.log 2>&1
-node "$unit/adapt.cjs" /tmp/adapt32-after > /tmp/new-cumulative-adapt.log 2>&1
-bash "$unit/census.sh" /tmp/adapt32-after /tmp/new-cumulative-after > /tmp/new-cumulative-after.log 2>&1
-node "$unit/verify.cjs" /tmp/adapt32-before /tmp/adapt32-after > /tmp/new-cumulative-verify.log 2>&1
-node "$unit/adapt.cjs" /tmp/adapt32-after > /tmp/new-cumulative-idempotence.log 2>&1
-node "$unit/mutant.cjs" /tmp/adapt32-before /tmp/adapt32-after /tmp/new-cumulative-mutant > /tmp/new-cumulative-mutant.log 2>&1
-node "$unit/binder-mutant.cjs" /tmp/adapt32-before /tmp/adapt32-after /tmp/new-binder-mutant > /tmp/new-binder-mutant.log 2>&1
-stage3/oracle/run.sh /tmp/adapt32-after /tmp/new-cumulative-oracle > /tmp/new-cumulative-oracle.log 2>&1
+bash "$unit/census.sh" /tmp/adapt32-before /tmp/new-wave1-before > /tmp/new-wave1-before.log 2>&1
+node "$unit/adapt.cjs" /tmp/adapt32-after > /tmp/new-wave1-adapt.log 2>&1
+bash "$unit/census.sh" /tmp/adapt32-after /tmp/new-wave1-after > /tmp/new-wave1-after.log 2>&1
+node "$unit/verify.cjs" /tmp/adapt32-before /tmp/adapt32-after > /tmp/new-wave1-verify.log 2>&1
+node "$unit/adapt.cjs" /tmp/adapt32-after > /tmp/new-wave1-idempotence.log 2>&1
+node "$unit/mutant.cjs" /tmp/adapt32-before /tmp/adapt32-after /tmp/new-wave1-mutant > /tmp/new-wave1-mutant.log 2>&1
+stage3/oracle/run.sh /tmp/adapt32-after /tmp/new-wave1-oracle > /tmp/new-wave1-oracle.log 2>&1
 ```
 
 `CENSUS_TYPESCRIPT` may select the absolute stock typescript.js path instead
-of `NODE_PATH`. Actual logs use `/tmp/adapt32-wave1-*` and `/tmp/adapt32-wave2-*`; complete
-oracle phase logs are under `/tmp/adapt32-wave1-oracle/` and
-`/tmp/adapt32-wave2-oracle/`. Support commit: `85be312`.
+of `NODE_PATH`. Actual logs use `/tmp/adapt32-wave1-*`; complete oracle phase
+logs are under `/tmp/adapt32-wave1-oracle/`.
 
 ## Remaining partition work
 
-Program, commandLineParser, module resolution and specifiers, sys,
+Binder, program, commandLineParser, module resolution and specifiers, sys,
 builders, watchers, resolutionCache, tsbuild files, expressionToTypeNode,
-executeCommandLine, and other owned compiler files are not covered by these two waves.
+executeCommandLine, and other owned compiler files are not covered by wave 1.
 Their source-local invariants have not yet been reviewed and no required-read
-assertions are inferred for them. These waves do not establish the critical
+assertions are inferred for them. This wave does not establish the critical
 path target of 40 complete compiler files past the checker. The whole Adamic
 repository gate, native tsc build, browser integration, and ESLint-rule tests
 are not run for this source-adaptation-only wave.
@@ -190,19 +169,3 @@ are not run for this source-adaptation-only wave.
 | tracing.ts:220:27 | `legend[legend.length - 1]` | U-endpoint | assert | startTracing pushes the current trace record before dumpTypes reads its path. |
 | tracing.ts:230:26 | `types[i]` | U-loop | assert | dumpTypes traverses the populated catalog built by recordType at its bounded index. |
 | tracing.ts:332:47 | `symbol?.declarations?.[0]` | U-endpoint | decline | getLocation accepts undefined for a missing symbol or first declaration. |
-
-| binder.ts:1428:20 | `antecedents[0]` | U-endpoint | assert | addAntecedent builds a populated flow list and length === 1 selects its sole flow node. |
-| binder.ts:1746:21 | `clauses[i]` | U-loop | assert | The outer loop and guarded increment keep i inside the parser-built populated switch-clause list. |
-| binder.ts:1750:22 | `clauses[i]` | U-loop | decline | bind explicitly accepts undefined and handles absence nearby; preserve this optional argument read. |
-| binder.ts:1757:28 | `clauses[i]` | U-loop | assert | The outer loop and guarded increment keep i inside the parser-built populated switch-clause list. |
-| binder.ts:1933:17 | `state.inStrictModeStack[state.stackIndex]` | U-position | decline | This is a pure store saving the mode, not an indexed read. |
-| binder.ts:1934:17 | `state.parentStack[state.stackIndex]` | U-position | decline | This is a pure store saving the parent, not an indexed read. |
-| binder.ts:2005:39 | `state.inStrictModeStack[state.stackIndex]` | U-position | decline | Stack slot zero is deliberately undefined; the following test handles missing saved modes. |
-| binder.ts:2006:33 | `state.parentStack[state.stackIndex]` | U-position | decline | Stack slot zero is deliberately undefined; the following test handles missing saved parents. |
-| binder.ts:3205:54 | `node.arguments[0]` | U-endpoint | decline | BindableObjectDefinePropertyCall already types arguments as a populated three-element tuple. |
-| binder.ts:3372:64 | `node.arguments[0]` | U-endpoint | decline | The existing PropertyAccessExpression cast covers this tuple read; no required indexed-absence finding remains. |
-| binder.ts:3399:61 | `node.arguments[0]` | U-endpoint | decline | BindableObjectDefinePropertyCall already types arguments as a populated three-element tuple. |
-| binder.ts:3401:77 | `node.arguments[0]` | U-endpoint | decline | BindableObjectDefinePropertyCall already types arguments as a populated three-element tuple. |
-| binder.ts:3490:22 | `declaration.arguments[2]` | U-endpoint | decline | The isBindableObjectDefinePropertyCall guard supplies a three-element tuple with a required descriptor at index 2. |
-| binder.ts:3501:22 | `declaration.arguments[2]` | U-endpoint | decline | The isBindableObjectDefinePropertyCall guard supplies a three-element tuple with a required descriptor at index 2. |
-| binder.ts:3636:63 | `symbolExport.declarations[0]` | U-endpoint | assert | A conflicting bound prototype export symbol has a populated declaration list whose first declaration receives the diagnostic. |

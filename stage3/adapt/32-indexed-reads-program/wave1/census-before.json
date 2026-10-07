@@ -8,13 +8,6 @@
     2538
   ],
   "counts": {
-    "binder.ts": {
-      "TS2345": 1,
-      "TS18048": 1,
-      "TS2532": 1,
-      "TS2322": 1,
-      "TS2538": 0
-    },
     "semver.ts": {
       "TS2345": 12,
       "TS18048": 3,
@@ -51,12 +44,8 @@
       "TS2538": 0
     }
   },
-  "total": 45,
+  "total": 41,
   "diagnostics": [
-    "src/compiler/binder.ts:1428:13: error TS2322: Type 'FlowNode | undefined' is not assignable to type 'FlowNode'.\n  Type 'undefined' is not assignable to type 'FlowNode'.",
-    "src/compiler/binder.ts:1746:21: error TS2532: Object is possibly 'undefined'.",
-    "src/compiler/binder.ts:1761:17: error TS18048: 'clause' is possibly 'undefined'.",
-    "src/compiler/binder.ts:3636:63: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.",
     "src/compiler/programDiagnostics.ts:193:52: error TS2345: Argument of type 'FileReference | undefined' is not assignable to parameter of type 'FileReference'.\n  Type 'undefined' is not assignable to type 'FileReference'.",
     "src/compiler/programDiagnostics.ts:253:47: error TS2322: Type 'DiagnosticMessageChain | undefined' is not assignable to type 'DiagnosticMessageChain'.\n  Type 'undefined' is not assignable to type 'DiagnosticMessageChain'.",
     "src/compiler/programDiagnostics.ts:253:94: error TS2322: Type 'DiagnosticMessageChain | undefined' is not assignable to type 'DiagnosticMessageChain'.\n  Type 'undefined' is not assignable to type 'DiagnosticMessageChain'.",
