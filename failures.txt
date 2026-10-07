@@ -475,3 +475,40 @@ package: github.com/system-inc/adamic/stage3/fixtures
 test: (package)
 FAIL
 FAIL	github.com/system-inc/adamic/stage3/fixtures	25.820s
+
+lane: rerun-0
+package: github.com/system-inc/adamic/internal/oracle
+test: TestProcessExitDrainsStderr
+=== RUN   TestProcessExitDrainsStderr
+=== PAUSE TestProcessExitDrainsStderr
+=== CONT  TestProcessExitDrainsStderr
+    process_test.go:215: node shared=false backpressure=true: stdout=0 stderr=204800 exit=37 pipe capacity=4096
+    process_test.go:217: documented raw Node stderr pipe loss changed
+--- FAIL: TestProcessExitDrainsStderr (1.35s)
+
+lane: rerun-0
+package: github.com/system-inc/adamic/internal/oracle
+test: TestProcessLargePipeExitPreservesOutput/immediate=true
+=== RUN   TestProcessLargePipeExitPreservesOutput/immediate=true
+    process_test.go:168: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:169: program shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:170: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:180: documented raw Node pipe loss changed; review Node first
+--- FAIL: TestProcessLargePipeExitPreservesOutput/immediate=true (3.46s)
+
+lane: rerun-0
+package: github.com/system-inc/adamic/internal/oracle
+test: TestProcessLargePipeExitPreservesOutput
+=== RUN   TestProcessLargePipeExitPreservesOutput
+=== PAUSE TestProcessLargePipeExitPreservesOutput
+=== CONT  TestProcessLargePipeExitPreservesOutput
+--- FAIL: TestProcessLargePipeExitPreservesOutput (7.03s)
+
+lane: rerun-0
+package: github.com/system-inc/adamic/internal/oracle
+test: (package)
+FAIL
+gate cache: native hits=0 misses=2191
+gate cache: node hits=0 misses=1818
+gate cache: probe hits=0 misses=36
+FAIL	github.com/system-inc/adamic/internal/oracle	583.052s
