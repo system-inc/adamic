@@ -45,6 +45,9 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 				return nil, err
 			}
 		}
+		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
+			l.result.Locals[local].ConstantClosure = closure.Function + 1
+		}
 		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
 	}
 	return statements, nil
