@@ -1,0 +1,29 @@
+=== RUN   TestOriginalFull
+    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
+    wave08_original_test.go:42: assigned upstream selected=map[no-useless-computed-key:122 react-hooks/gating:42 react/forbid-foreign-prop-types:60] blockedJSX=map[]
+    wave08_original_test.go:63: node [--disable-warning=ExperimentalWarning /tmp/wave08-park/oracle/node.mjs /tmp/wave08-park/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestOriginalFull3051587468/010/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected CloseBracketToken, got CloseBraceToken at 8 in /tmp/adamic-gate/TestOriginalFull3051587468/001/case-855.ts
+--- FAIL: TestOriginalFull (34.85s)
+=== RUN   TestSixthFull
+    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
+    wave08_sixth_test.go:34: assigned upstream selected=map[no-multi-str:21 no-nonoctal-decimal-escape:31 no-octal:31]; exclusions logged
+    wave08_sixth_test.go:54: node [--disable-warning=ExperimentalWarning /tmp/wave08-park/oracle/node.mjs /tmp/wave08-park/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestSixthFull3779341749/010/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 10 in /tmp/adamic-gate/TestSixthFull3779341749/004/case-810.ts
+--- FAIL: TestSixthFull (37.00s)
+=== RUN   TestSixthRecovery
+=== RUN   TestSixthRecovery/case0
+    wave08_sixth_test.go:71: node [--disable-warning=ExperimentalWarning /tmp/wave08-park/oracle/node.mjs /tmp/wave08-park/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestSixthRecoverycase01694527761/002/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 10 in /tmp/adamic-gate/TestSixthRecoverycase01694527761/001/recovery.ts
+=== RUN   TestSixthRecovery/case1
+    wave08_sixth_test.go:71: node [--disable-warning=ExperimentalWarning /tmp/wave08-park/oracle/node.mjs /tmp/wave08-park/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestSixthRecoverycase12402358098/002/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 12 in /tmp/adamic-gate/TestSixthRecoverycase12402358098/001/recovery.ts
+=== RUN   TestSixthRecovery/case2
+    wave08_sixth_test.go:71: node [--disable-warning=ExperimentalWarning /tmp/wave08-park/oracle/node.mjs /tmp/wave08-park/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestSixthRecoverycase23050063075/002/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 12 in /tmp/adamic-gate/TestSixthRecoverycase23050063075/001/recovery.ts
+--- FAIL: TestSixthRecovery (24.50s)
+    --- FAIL: TestSixthRecovery/case0 (0.21s)
+    --- FAIL: TestSixthRecovery/case1 (0.19s)
+    --- FAIL: TestSixthRecovery/case2 (0.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	96.365s
+FAIL

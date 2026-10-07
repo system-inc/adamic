@@ -1,0 +1,12 @@
+=== RUN   TestOriginalJSX
+    wave08_original_test.go:153: Go, Node, emitted JavaScript, native identical: 649 bytes
+--- PASS: TestOriginalJSX (26.77s)
+=== RUN   TestWave08Shapes
+=== RUN   TestWave08Shapes/TSX
+    wave08_second_test.go:49: Go, Node, emitted JavaScript, native identical: 481 bytes
+--- PASS: TestWave08Shapes (28.10s)
+    --- PASS: TestWave08Shapes/TSX (2.51s)
+=== RUN   TestSixthRecovery
+--- PASS: TestSixthRecovery (28.32s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	83.218s
