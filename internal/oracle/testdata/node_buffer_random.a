@@ -1,0 +1,16 @@
+import { Buffer } from 'node:buffer';
+import { createHash } from 'node:crypto';
+// Deterministic random UTF-16 strings, including unpaired surrogates, so both
+// backends receive identical random inputs and Node determines every digest.
+let state = 0x12345678;
+for (let sample = 0; sample < 512; sample += 1) {
+ let text = '';
+ for (let i = 0; i < sample; i += 1) {
+  state = (Math.imul(state, 1664525) + 1013904223) | 0;
+  text += String.fromCharCode(state & 65535);
+ }
+ console.log(createHash('sha256').update(text).digest('hex'));
+ const encoded = Buffer.from(text).toString('base64');
+ console.log(Buffer.from(encoded, 'base64').toString('hex'));
+ console.log(Buffer.from(text, 'utf16le').toString('utf16le') === text ? 'same' : 'different');
+}

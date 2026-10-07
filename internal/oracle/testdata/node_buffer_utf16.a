@@ -1,0 +1,13 @@
+import { Buffer } from 'node:buffer';
+for (const hex of ['00d8', '00dc', '00d800dc', '00dc00d8', '00d84100', '00d800d8', '00d800dc00dc', 'fffe4100ff', '410042', '41', '']) {
+ const buffer = Buffer.from(hex, 'hex');
+ const text = buffer.toString('utf16le');
+ console.log(`${buffer.length}:${text.length}`);
+ for (let i = 0; i < text.length; i += 1) { console.log(`${text.charCodeAt(i)}`); }
+ console.log(Buffer.from(text, 'ucs2').toString('hex'));
+ console.log(buffer.toString('utf16le', 1));
+}
+for (let unit = 0; unit < 65536; unit += 1) {
+ const text = Buffer.from([unit & 255, unit >>> 8]).toString('utf16le');
+ console.log(`${text.charCodeAt(0)}`);
+}
