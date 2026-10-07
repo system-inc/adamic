@@ -10,7 +10,16 @@
     "links": 56,
     "comment_parts": 36,
     "diagnostic_headers": 81,
-    "diagnostic_rows": 0
+    "diagnostic_rows": 10671,
+    "parse_diagnostic_rows": 10671,
+    "jsdoc_diagnostic_rows": 0,
+    "files_with_parse_diagnostics": 3,
+    "typescript_files_with_parse_diagnostics": 0,
+    "parse_diagnostics_by_file": {
+      "diagnosticMessages.generated.json": 2130,
+      "diagnosticMessages.json": 8535,
+      "tsconfig.json": 6
+    }
   },
   "input_corpus": "Fixed full src/compiler corpus; .ts and .json parsed as TS; directed .js as JS"
 }

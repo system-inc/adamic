@@ -112,3 +112,19 @@ runs that acceptance after the 81-file comparison passes; `--case-checkout` and
 `--full-tree` specify those inputs when they differ from its corpus directory.
 Until native passes: syntax tree and parse diagnostics identical on Node,
 JSDoc unverified, error recovery unverified.
+
+Coverage correction: the legacy `diagnostic_rows: 0` coverage field counted JSDoc
+diagnostics. Its 81-file dump contains 10,671 parse diagnostics from three JSON
+files deliberately parsed in TS mode; all 78 TypeScript files have none. The
+reference now distinguishes parse and JSDoc rows. Its bytes and SHA are unchanged.
+A broad diagnostic-dropping mutant already fails that old oracle. The narrower
+real JSX attribute-recovery mutant leaves it unchanged and is caught by two new
+case hashes; both cases lose their one diagnostic. Run the permanent proof with:
+
+```sh
+PARSER_TYPESCRIPT=/path/to/typescript/lib/typescript.js python3 stage3/drivers/parser/recovery-mutant.py /validated/slice /compiler/corpus /81/file/run /case/reference/run /new/mutant/output
+```
+
+Both mutant executions must finish with empty stderr; the old comparison must
+pass and the case reference must fail. Evidence includes both changed case hashes
+and the unsuccessful broad-mutant attempt, without storing complete dumps.

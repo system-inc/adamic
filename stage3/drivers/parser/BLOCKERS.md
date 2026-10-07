@@ -1,3 +1,34 @@
+# Recovery mutant and corrected old coverage: third checkpoint
+
+Important correction: the old reference.json coverage.diagnostic_rows 0 counted
+JSDoc rows, not parse rows. The 81-file dump has 10,671 parse diagnostic rows:
+diagnosticMessages.generated.json 2,130, diagnosticMessages.json 8,535, tsconfig.json 6.
+All three were deliberately parsed in TS mode. The 78 TypeScript inputs have zero
+parse diagnostics. The broad parseErrorAtCurrentToken no-op mutant is already
+caught by the old extended reference (including changed error flags); claiming
+otherwise would be false. The original probe report and reference coverage fields
+are corrected, with distinct parse/JSDoc counts. Dump bytes and SHA are unchanged.
+
+A real uncovered JSX recovery path is the successful narrow mutant:
+parseJsxAttributeValue skips its call to
+parseErrorAtCurrentToken(Diagnostics.or_JSX_element_expected). Same source mutation
+on the scratch slice exits 0 and leaves all 81 old inputs byte-identical (cmp 0).
+The 10,406-case reference rejects it (cmp 1): exactly two changed case hashes,
+1,996 -> 1,994 diagnostic rows, identical total 1,323,111 node count. Cases are
+conformance/jsx/jsxAttributeInitializer.ts and compiler/jsxAttributeMissingInitializer.tsx.
+Both lose their sole parse diagnostic. The committed recovery-mutant.py performs
+both comparisons and requires positive diagnostic differences. No mutated source
+or complete dumps committed. Evidence: evidence/recovery-mutant/report.json;
+broad-mutant.json records the rejected broad attempt honestly.
+
+Native remains red at core.ts:28:37's indexed-read ! before C generation, not
+module initialization. No native binary, timings, instruction counts or output
+comparison claimed. Status: syntax tree and parse diagnostics identical on Node,
+JSDoc unverified, error recovery unverified. Native green requires the extended
+81-file reference AND every case hash from cases-reference.json.
+
+---
+
 # Error recovery reference: second checkpoint
 
 10,406 pinned single-file compiler/conformance cases are identical on full-tree

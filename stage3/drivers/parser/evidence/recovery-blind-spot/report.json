@@ -9,5 +9,7 @@
   "jsdoc_diagnostic_rows": 0,
   "run_exit": 0,
   "stderr_bytes": 0,
-  "old_compiler_corpus_diagnostic_rows": 0
+  "old_compiler_corpus_diagnostic_rows": 10671,
+  "old_compiler_typescript_diagnostic_rows": 0,
+  "correction": "The original diagnostic_rows 0 field counted JSDoc rows, not parse diagnostics; the three JSON files parsed as TS yield 10671 parse diagnostic rows."
 }
