@@ -1,0 +1,78 @@
+scratch=/tmp/adamic-gate/wave14-fifth-htxq30aj
+original upstream assertions PASS 2.008s
+fixtures-no-lone-blocks: all four identical 26908 bytes; findings=47; files=78
+fixtures-no-lonely-if: all four identical 10967 bytes; findings=24; files=33
+fixtures-no-loss-of-precision: all four identical 38186 bytes; findings=57; files=152
+corpus files=236 compiler=77 stage1=159
+corpus-no-lone-blocks: all four identical 12409596 bytes; findings=0; files=236
+corpus-no-lonely-if: all four identical 12446755 bytes; findings=44; files=236
+corpus-no-loss-of-precision: all four identical 12409596 bytes; findings=0; files=236
+no-lone-blocks bound sole block exemption widened: compiling exit-0 mutant caught only by comparison on Node
+no-lone-blocks bound sole block exemption widened: compiling exit-0 mutant caught only by comparison on native
+no-lone-blocks bound sole block exemption widened: compiling exit-0 mutant caught only by comparison on emitted JavaScript
+no-lonely-if replacement carries an extra space: compiling exit-0 mutant caught only by comparison on Node
+no-lonely-if replacement carries an extra space: compiling exit-0 mutant caught only by comparison on native
+no-lonely-if replacement carries an extra space: compiling exit-0 mutant caught only by comparison on emitted JavaScript
+no-loss-of-precision normalized text hides lost precision: compiling exit-0 mutant caught only by comparison on Node
+no-loss-of-precision normalized text hides lost precision: compiling exit-0 mutant caught only by comparison on native
+no-loss-of-precision normalized text hides lost precision: compiling exit-0 mutant caught only by comparison on emitted JavaScript
+no-lone-blocks natural findings=0
+timing uses 500 witness copies as a synthetic supplement
+no-lone-blocks round=1 Go seconds=0.204630 count=1000
+no-lone-blocks round=1 native seconds=1.206655 count=1000
+no-lone-blocks round=1 Node seconds=0.865284 count=1000
+no-lone-blocks round=2 Go seconds=0.225600 count=1000
+no-lone-blocks round=2 native seconds=1.212866 count=1000
+no-lone-blocks round=2 Node seconds=0.904533 count=1000
+no-lone-blocks round=3 Go seconds=0.218797 count=1000
+no-lone-blocks round=3 native seconds=1.268312 count=1000
+no-lone-blocks round=3 Node seconds=0.875682 count=1000
+no-lone-blocks round=4 Go seconds=0.228439 count=1000
+no-lone-blocks round=4 native seconds=1.263444 count=1000
+no-lone-blocks round=4 Node seconds=0.850888 count=1000
+no-lone-blocks round=5 Go seconds=0.216550 count=1000
+no-lone-blocks round=5 native seconds=1.175580 count=1000
+no-lone-blocks round=5 Node seconds=0.837705 count=1000
+no-lone-blocks native 850.64 findings/s best=1.175580s count=1000 files=237
+no-lone-blocks Node 1193.74 findings/s best=0.837705s count=1000 files=237
+no-lone-blocks Go 4886.87 findings/s best=0.204630s count=1000 files=237
+no-lonely-if natural findings=44
+no-lonely-if round=1 Go seconds=0.191054 count=44
+no-lonely-if round=1 native seconds=1.223663 count=44
+no-lonely-if round=1 Node seconds=0.841328 count=44
+no-lonely-if round=2 Go seconds=0.216967 count=44
+no-lonely-if round=2 native seconds=1.256485 count=44
+no-lonely-if round=2 Node seconds=0.842928 count=44
+no-lonely-if round=3 Go seconds=0.202057 count=44
+no-lonely-if round=3 native seconds=1.182280 count=44
+no-lonely-if round=3 Node seconds=0.822000 count=44
+no-lonely-if round=4 Go seconds=0.211264 count=44
+no-lonely-if round=4 native seconds=1.262735 count=44
+no-lonely-if round=4 Node seconds=0.858203 count=44
+no-lonely-if round=5 Go seconds=0.198895 count=44
+no-lonely-if round=5 native seconds=1.217754 count=44
+no-lonely-if round=5 Node seconds=0.895839 count=44
+no-lonely-if native 37.22 findings/s best=1.182280s count=44 files=236
+no-lonely-if Node 53.53 findings/s best=0.822000s count=44 files=236
+no-lonely-if Go 230.30 findings/s best=0.191054s count=44 files=236
+no-loss-of-precision natural findings=0
+timing uses 500 witness copies as a synthetic supplement
+no-loss-of-precision round=1 Go seconds=0.214112 count=500
+no-loss-of-precision round=1 native seconds=1.295687 count=500
+no-loss-of-precision round=1 Node seconds=0.922974 count=500
+no-loss-of-precision round=2 Go seconds=0.218307 count=500
+no-loss-of-precision round=2 native seconds=1.245154 count=500
+no-loss-of-precision round=2 Node seconds=0.960655 count=500
+no-loss-of-precision round=3 Go seconds=0.241769 count=500
+no-loss-of-precision round=3 native seconds=1.243303 count=500
+no-loss-of-precision round=3 Node seconds=0.969456 count=500
+no-loss-of-precision round=4 Go seconds=0.249033 count=500
+no-loss-of-precision round=4 native seconds=1.309451 count=500
+no-loss-of-precision round=4 Node seconds=0.960016 count=500
+no-loss-of-precision round=5 Go seconds=0.227406 count=500
+no-loss-of-precision round=5 native seconds=1.302808 count=500
+no-loss-of-precision round=5 Node seconds=0.980236 count=500
+no-loss-of-precision native 402.15 findings/s best=1.243303s count=500 files=237
+no-loss-of-precision Node 541.73 findings/s best=0.922974s count=500 files=237
+no-loss-of-precision Go 2335.23 findings/s best=0.214112s count=500 files=237
+PASS complete owned four-way repair comparison, corpus, mutants and throughput
