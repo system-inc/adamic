@@ -1,0 +1,5 @@
+{
+  "name": "comment self directive exemption removed",
+  "from": "if(selfDirective(value))",
+  "to": "if(selfDirective(value) && value === '')"
+}

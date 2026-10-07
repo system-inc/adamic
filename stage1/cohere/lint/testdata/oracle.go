@@ -157,7 +157,7 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.VarsOnTop, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
+	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
 	registered := registeredRules()
 	for _, item := range registered {
 		found := false
@@ -211,51 +211,16 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 			}
 			options = decoded
 		}
-		if subject.Name == "eqeqeq" {
-			options = rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
-		}
-		if subject.Name == "no-labels" {
-			var decoded rules.NoLabelsOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-sequences" {
-			var decoded rules.NoSequencesOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "unicode-bom" {
-			var decoded rules.UnicodeBomOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-warning-comments" {
-			var decoded rules.NoWarningCommentsOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-empty" {
-			options = rules.NoEmptyOptions{AllowEmptyCatch: fields[4] == "true"}
-		}
 		for _, item := range registered {
 			if subject.Name == item.subject.Name {
 				options = item.options(fields)
+				// A row that selects this rule and carries options must reach an adapter that decodes them.
+				// An adapter returning nil there would run the rule on its defaults and still agree with
+				// any port that reads no options either. An "all" row's options are one bag for every
+				// rule, so a rule with none of its own ignores them there.
+				if options == nil && fields[1] == subject.Name && fields[5] != "" && fields[5] != "null" {
+					panic(fmt.Sprintf("%s: options %s reached an adapter that decodes none", subject.Name, fields[5]))
+				}
 			}
 		}
 		listeners = append(listeners, subject.Run(ctx, options))
