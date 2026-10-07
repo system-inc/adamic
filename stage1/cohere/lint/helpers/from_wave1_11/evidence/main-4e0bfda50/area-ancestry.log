@@ -1,0 +1,10 @@
+Merge made by the 'ort' strategy.
+ docs/lint-registration.md                          |  4 ++
+ stage1/cohere/lint/lint_test.go                    |  6 +--
+ stage1/cohere/lint/profile_test.go                 |  4 +-
+ stage1/cohere/lint/registration_test.go            | 43 ++++++++++++++++++++--
+ .../rules/no-bitwise/testdata/allowed.options.json |  1 +
+ .../lint/rules/no-bitwise/testdata/allowed.ts.txt  |  2 +
+ 6 files changed, 51 insertions(+), 9 deletions(-)
+ create mode 100644 stage1/cohere/lint/rules/no-bitwise/testdata/allowed.options.json
+ create mode 100644 stage1/cohere/lint/rules/no-bitwise/testdata/allowed.ts.txt
