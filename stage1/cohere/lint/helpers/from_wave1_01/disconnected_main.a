@@ -1,0 +1,19 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Block, State } from './enter.a';
+import { enterDisconnected } from './enter_disconnected.a';
+
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('missing input'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const fields = line.split('\t');
+    const node = new Block(Number(fields[0]), fields[1] === '1', fields[2] === '1');
+    const previousIndex = Number(fields[3]);
+    const previous = previousIndex === node.index ? node : new Block(previousIndex, false, fields[4] === '1');
+    const state = new State();
+    state.current = previous;
+    enterDisconnected(node, state);
+    const current = state.current ?? panic('missing resulting block');
+    console.log(`${node.incoming ? 1 : 0}\t${node.reachable ? 1 : 0}\t${current.index}\t${current === node ? 1 : 0}\t${previous.reachable ? 1 : 0}`);
+}

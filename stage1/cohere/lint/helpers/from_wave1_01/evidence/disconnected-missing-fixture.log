@@ -1,0 +1,11 @@
+=== RUN   TestDisconnectedEntryMatchesGo
+    enter_disconnected_test.go:13: python3 [/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_01/testdata/capture_disconnected.py /tmp/adamic-gate/TestDisconnectedEntryMatchesGo2787872449/001]: exit status 1
+        Traceback (most recent call last):
+          File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_01/testdata/capture_disconnected.py", line 63, in <module>
+            assert pathlib.Path(env['ADAMIC_DISCONNECTED_CAPTURE'] + '.input').exists(), label + ' had no calls'
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        AssertionError: array-callback-return had no calls
+--- FAIL: TestDisconnectedEntryMatchesGo (18.60s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	18.605s
+FAIL

@@ -1,0 +1,15 @@
+=== RUN   TestDisconnectedEntryMatchesGo
+    enter_disconnected_test.go:49: array-callback-return: 5 actual Go calls, 50 bytes per backend
+    enter_disconnected_test.go:49: consistent-return: 5 actual Go calls, 50 bytes per backend
+    enter_disconnected_test.go:49: no-unreachable-loop: 610 actual Go calls, 6100 bytes per backend
+    enter_disconnected_test.go:49: react-hooks_rules-of-hooks: 6 actual Go calls, 60 bytes per backend
+    enter_disconnected_test.go:49: controls: 180 actual Go calls, 1800 bytes per backend
+    enter_disconnected_test.go:87: ignore current reachability compiles and runs; comparison alone catches side 0
+    enter_disconnected_test.go:87: ignore current reachability compiles and runs; comparison alone catches side 1
+    enter_disconnected_test.go:87: ignore current reachability compiles and runs; comparison alone catches side 2
+    enter_disconnected_test.go:87: discard incoming edges compiles and runs; comparison alone catches side 0
+    enter_disconnected_test.go:87: discard incoming edges compiles and runs; comparison alone catches side 1
+    enter_disconnected_test.go:87: discard incoming edges compiles and runs; comparison alone catches side 2
+--- PASS: TestDisconnectedEntryMatchesGo (9.82s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	9.821s

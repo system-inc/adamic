@@ -1,0 +1,6 @@
+=== RUN   TestDisconnectedEntryMatchesGo
+    enter_disconnected_test.go:21: /workspace/adamic/stage1/cohere/lint/helpers/from_wave1_01/disconnected_main.a:17:73: stage 0 can't lower ?. to a number, which would be number | undefined yet
+--- FAIL: TestDisconnectedEntryMatchesGo (29.45s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	29.452s
+FAIL

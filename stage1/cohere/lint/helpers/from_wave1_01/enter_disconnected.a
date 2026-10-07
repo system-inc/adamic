@@ -1,0 +1,10 @@
+import { panic } from 'adamic';
+import { enter } from './enter.a';
+import type { Block, State } from './enter.a';
+
+// A disconnected entry inherits the current path before settling the handed block.
+export function enterDisconnected(node: Block, state: State): void {
+    const previous = state.current ?? panic('missing current CFG block');
+    node.incoming = node.incoming || previous.reachable;
+    enter(node, state);
+}
