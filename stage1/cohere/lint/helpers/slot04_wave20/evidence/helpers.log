@@ -1,0 +1,63 @@
+=== RUN   TestJsxSearchGoNodeNativeJavaScript
+=== RUN   TestJsxSearchGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 533 JSX/hook AST observations
+=== RUN   TestJsxSearchGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 4986 JSX/hook AST observations
+--- PASS: TestJsxSearchGoNodeNativeJavaScript (15.30s)
+    --- PASS: TestJsxSearchGoNodeNativeJavaScript/witnesses.json (1.04s)
+    --- PASS: TestJsxSearchGoNodeNativeJavaScript/consumers.json (1.37s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/descends_for_jsx_search.aif(!present)
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/descends_for_jsx_search.areturn_!isSwitchStatement
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.adepth>20
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.aif(node.jsx)
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.anode.call_&&_isHookCall(id)
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.aif(!descendsForJsxSearch(next.present,next.isSwitchStatement))
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.adepth+1
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.aif(searchForJsxOrHook(child,depth+1,nodeAt,isHookCall))_{_return_true;_}
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/has_jsx_or_react_hook_calls.asearchForJsxOrHook(id,0,
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (20.00s)
+    --- PASS: TestCompilingMutants/descends_for_jsx_search.aif(!present) (1.81s)
+    --- PASS: TestCompilingMutants/descends_for_jsx_search.areturn_!isSwitchStatement (2.02s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.adepth>20 (2.02s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(node.jsx) (1.95s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.anode.call_&&_isHookCall(id) (2.29s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(!descendsForJsxSearch(next.present,next.isSwitchStatement)) (1.89s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.adepth+1 (2.21s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(searchForJsxOrHook(child,depth+1,nodeAt,isHookCall))_{_return_true;_} (2.00s)
+    --- PASS: TestCompilingMutants/has_jsx_or_react_hook_calls.asearchForJsxOrHook(id,0, (1.70s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:254: consumer omission caught: structure/consistency-require-matching-file-name
+    helpers_test.go:254: consumer omission caught: structure/react-component-no-destructuring
+    helpers_test.go:254: consumer omission caught: structure/react-component-no-separate-named-export
+    helpers_test.go:254: consumer omission caught: structure/react-component-require-properties-parameter
+--- PASS: TestConsumerCoverage (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave20	35.377s

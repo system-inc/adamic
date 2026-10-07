@@ -1,0 +1,514 @@
+{
+  "counts": {
+    "HasJsxOrReactHookCalls": 90,
+    "searchForJsxOrHook": 890,
+    "descendsForJsxSearch": 800
+  },
+  "distinct_inputs": [
+    {
+      "Depth": 0,
+      "Helper": "HasJsxOrReactHookCalls",
+      "Kind": "KindArrowFunction"
+    },
+    {
+      "Depth": 0,
+      "Helper": "HasJsxOrReactHookCalls",
+      "Kind": "KindFunctionDeclaration"
+    },
+    {
+      "Depth": 0,
+      "Helper": "HasJsxOrReactHookCalls",
+      "Kind": "KindFunctionExpression"
+    },
+    {
+      "Depth": 0,
+      "Helper": "HasJsxOrReactHookCalls",
+      "Kind": "KindStringLiteral"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindAnyKeyword"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindArrayBindingPattern"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindAsyncKeyword"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindBinaryExpression"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindBindingElement"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindBlock"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindBooleanKeyword"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindCallExpression"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindDeclareKeyword"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindDefaultKeyword"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindDotDotDotToken"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindEqualsGreaterThanToken"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindExportKeyword"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindExpressionStatement"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindIdentifier"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindIfStatement"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindJsxElement"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindJsxSelfClosingElement"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindNullKeyword"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindNumericLiteral"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindObjectBindingPattern"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindObjectLiteralExpression"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindParameter"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindPlusToken"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindPropertyAccessExpression"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindPropertySignature"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindQualifiedName"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindQuestionToken"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindReturnStatement"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindShorthandPropertyAssignment"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindStringKeyword"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindTypeLiteral"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindTypeReference"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindUnknownKeyword"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindVariableDeclaration"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindVariableDeclarationList"
+    },
+    {
+      "Depth": 0,
+      "Helper": "descendsForJsxSearch",
+      "Kind": "KindVariableStatement"
+    },
+    {
+      "Depth": 0,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindArrowFunction"
+    },
+    {
+      "Depth": 0,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindFunctionDeclaration"
+    },
+    {
+      "Depth": 0,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindFunctionExpression"
+    },
+    {
+      "Depth": 0,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindStringLiteral"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindAsyncKeyword"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindBlock"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindDefaultKeyword"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindEqualsGreaterThanToken"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindExportKeyword"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindIdentifier"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindJsxElement"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindJsxSelfClosingElement"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindParameter"
+    },
+    {
+      "Depth": 1,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindTypeReference"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindAnyKeyword"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindBooleanKeyword"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindExpressionStatement"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindIdentifier"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindIfStatement"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindObjectBindingPattern"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindQualifiedName"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindQuestionToken"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindReturnStatement"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindTypeLiteral"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindUnknownKeyword"
+    },
+    {
+      "Depth": 2,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindVariableStatement"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindBinaryExpression"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindBindingElement"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindBlock"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindCallExpression"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindDeclareKeyword"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindIdentifier"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindJsxElement"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindJsxSelfClosingElement"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindNullKeyword"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindNumericLiteral"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindPropertyAccessExpression"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindPropertySignature"
+    },
+    {
+      "Depth": 3,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindVariableDeclarationList"
+    },
+    {
+      "Depth": 4,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindDotDotDotToken"
+    },
+    {
+      "Depth": 4,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindIdentifier"
+    },
+    {
+      "Depth": 4,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindNumericLiteral"
+    },
+    {
+      "Depth": 4,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindObjectLiteralExpression"
+    },
+    {
+      "Depth": 4,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindPlusToken"
+    },
+    {
+      "Depth": 4,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindPropertyAccessExpression"
+    },
+    {
+      "Depth": 4,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindReturnStatement"
+    },
+    {
+      "Depth": 4,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindStringKeyword"
+    },
+    {
+      "Depth": 4,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindVariableDeclaration"
+    },
+    {
+      "Depth": 5,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindArrayBindingPattern"
+    },
+    {
+      "Depth": 5,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindCallExpression"
+    },
+    {
+      "Depth": 5,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindIdentifier"
+    },
+    {
+      "Depth": 5,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindJsxSelfClosingElement"
+    },
+    {
+      "Depth": 5,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindObjectBindingPattern"
+    },
+    {
+      "Depth": 5,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindPropertyAccessExpression"
+    },
+    {
+      "Depth": 5,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindShorthandPropertyAssignment"
+    },
+    {
+      "Depth": 5,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindUnknownKeyword"
+    },
+    {
+      "Depth": 6,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindBindingElement"
+    },
+    {
+      "Depth": 6,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindIdentifier"
+    },
+    {
+      "Depth": 7,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindDotDotDotToken"
+    },
+    {
+      "Depth": 7,
+      "Helper": "searchForJsxOrHook",
+      "Kind": "KindIdentifier"
+    }
+  ]
+}

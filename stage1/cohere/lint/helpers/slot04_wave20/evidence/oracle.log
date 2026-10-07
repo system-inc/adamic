@@ -1,0 +1,10 @@
+=== RUN   TestRuntimeLastIndexOfMatchesNode
+=== PAUSE TestRuntimeLastIndexOfMatchesNode
+=== CONT  TestRuntimeLastIndexOfMatchesNode
+    runtime_last_index_test.go:28: Node, JavaScript, release and sanitizers agree on 758 output bytes
+--- PASS: TestRuntimeLastIndexOfMatchesNode (0.87s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.882s

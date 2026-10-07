@@ -1,0 +1,87 @@
+{
+  "conditional_on_common_ast_adapter_and_IsHookCall": true,
+  "symbols": [
+    "github.com/system-inc/cohere/internal/lint/rules/structure.HasJsxOrReactHookCalls",
+    "github.com/system-inc/cohere/internal/lint/rules/structure.searchForJsxOrHook",
+    "github.com/system-inc/cohere/internal/lint/rules/structure.descendsForJsxSearch"
+  ],
+  "rules": [
+    {
+      "rule": "structure/consistency-require-matching-file-name",
+      "removed": [
+        "github.com/system-inc/cohere/internal/lint/rules/structure.HasJsxOrReactHookCalls",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.searchForJsxOrHook",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.descendsForJsxSearch"
+      ],
+      "remaining": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsEs6ComponentClass",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookCall",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsLikelyComponentName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsNamespacedMember",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isComponentBase",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isComponentBaseName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isIdentifierNamed",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.IsLikelyReactComponent",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.isAnonymousWrapperCall",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.isJsxValue",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.jsxAfterParentheses",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.returnArgumentLooksLikeJsx"
+      ]
+    },
+    {
+      "rule": "structure/react-component-no-destructuring",
+      "removed": [
+        "github.com/system-inc/cohere/internal/lint/rules/structure.HasJsxOrReactHookCalls",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.searchForJsxOrHook",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.descendsForJsxSearch"
+      ],
+      "remaining": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookCall",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsLikelyComponentName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsNamespacedMember",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isIdentifierNamed",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/scope.BodyOf",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/scope.EnclosingFunctionLike",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/scope.NameOf",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/scope.borrowedName",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.parameterNodes"
+      ]
+    },
+    {
+      "rule": "structure/react-component-no-separate-named-export",
+      "removed": [
+        "github.com/system-inc/cohere/internal/lint/rules/structure.HasJsxOrReactHookCalls",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.searchForJsxOrHook",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.descendsForJsxSearch"
+      ],
+      "remaining": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookCall",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsLikelyComponentName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsNamespacedMember",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isIdentifierNamed",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor"
+      ]
+    },
+    {
+      "rule": "structure/react-component-require-properties-parameter",
+      "removed": [
+        "github.com/system-inc/cohere/internal/lint/rules/structure.HasJsxOrReactHookCalls",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.searchForJsxOrHook",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.descendsForJsxSearch"
+      ],
+      "remaining": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookCall",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsNamespacedMember",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.isIdentifierNamed",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.parameterNodes"
+      ]
+    }
+  ],
+  "additional_final_helper_ready": 0
+}

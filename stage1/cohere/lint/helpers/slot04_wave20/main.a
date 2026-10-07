@@ -1,0 +1,17 @@
+import {panic,programArguments,readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {hasJsxOrReactHookCalls} from './has_jsx_or_react_hook_calls.a';
+import {searchForJsxOrHook} from './search_for_jsx_or_hook.a';
+import type {SearchNode} from './search_for_jsx_or_hook.a';
+import {descendsForJsxSearch} from './descends_for_jsx_search.a';
+function field(c:OptionsJson,id:number,key:string):number {const n=c.node(id);const i=n.keys.indexOf(key);return n.children[i] ?? panic('field');}
+function flag(c:OptionsJson,id:number,key:string):boolean {return c.node(field(c,id,key)).text==='true';}
+function ints(c:OptionsJson,id:number,key:string):number[]{const values:number[]=[];for(const n of c.node(field(c,id,key)).children){values.push(Number(c.node(n).text));}return values;}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+ const nodes:SearchNode[]=[];const hooks:boolean[]=[];
+ for(const n of c.node(field(c,row,'Nodes')).children){nodes.push({present:flag(c,n,'Present'),jsx:flag(c,n,'Jsx'),call:flag(c,n,'Call'),isSwitchStatement:flag(c,n,'Switch'),children:ints(c,n,'Children')});hooks.push(flag(c,n,'Hook'));}
+ const nodeAt=(id:number):SearchNode=>{if(id<0){return {present:false,jsx:false,call:false,isSwitchStatement:false,children:[]};}return nodes[id] ?? panic('node');};
+ const hook=(id:number):boolean=>hooks[id] ?? false;
+ for(const id of ints(c,row,'Ids')){const n=nodeAt(id);let result=`${hasJsxOrReactHookCalls(id,nodeAt,hook)}|${descendsForJsxSearch(n.present,n.isSwitchStatement)}`;for(const depth of ints(c,row,'Depths')){result+=`|${searchForJsxOrHook(id,depth,nodeAt,hook)}`;}console.log(result);}
+}
