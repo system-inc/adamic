@@ -1,0 +1,110 @@
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+function space(code: number): boolean {
+    return (code >= 9 && code <= 13) || [32, 133, 160, 5760, 8232, 8233, 8239, 8287, 12288].includes(code) ||
+        (code >= 8192 && code <= 8202);
+}
+function fields(text: string): string[] {
+    const result: string[] = [];
+    let start = -1;
+    for(let position = 0; position <= text.length; position++) {
+        if(position === text.length || space(text.charCodeAt(position))) {
+            if(start >= 0) result.push(text.slice(start, position));
+            start = -1;
+        }
+        else if(start < 0) start = position;
+    }
+    return result;
+}
+function letters(text: string): boolean {
+    if(text.length === 0) return false;
+    for(let position = 0; position < text.length; position++) {
+        const code = text.charCodeAt(position);
+        if(code < 97 || code > 122) return false;
+    }
+    return true;
+}
+function value(text: string): boolean {
+    if(text.length === 0) return false;
+    for(let position = 0; position < text.length; position++) {
+        const code = text.charCodeAt(position);
+        if(!((code >= 97 && code <= 122) || (code >= 48 && code <= 57) || [46, 91, 93, 47].includes(code))) return false;
+    }
+    return true;
+}
+// Exact language of Go's anchored tailwindClassPattern, including its optional family prefix.
+function shape(token: string): boolean {
+    const text = token.startsWith('-') ? token.slice(1) : token;
+    const parts = text.split(':');
+    for(let position = 0; position < parts.length - 1; position++) {
+        if(!letters(parts[position] ?? '')) return false;
+    }
+    const base = parts[parts.length - 1] ?? '';
+    const dash = base.indexOf('-');
+    if(dash < 0) return letters(base);
+    if(!letters(base.slice(0, dash))) return false;
+    const rest = base.slice(dash + 1);
+    if(value(rest)) return true;
+    const second = rest.indexOf('-');
+    return second >= 0 && letters(rest.slice(0, second)) && value(rest.slice(second + 1));
+}
+
+const prefixes = ['ml-', 'mr-', 'pl-', 'pr-', 'text-left', 'text-right', 'left-', 'right-',
+    'border-l', 'border-l-', 'border-r', 'border-r-', 'rounded-l', 'rounded-l-', 'rounded-r', 'rounded-r-',
+    'scroll-ml-', 'scroll-mr-', 'scroll-pl-', 'scroll-pr-'];
+const logical = ['ms-', 'me-', 'ps-', 'pe-', 'text-start', 'text-end', 'start-', 'end-',
+    'border-s', 'border-s-', 'border-e', 'border-e-', 'rounded-s', 'rounded-s-', 'rounded-e', 'rounded-e-',
+    'scroll-ms-', 'scroll-me-', 'scroll-ps-', 'scroll-pe-'];
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    replacement(base: string): string {
+        const negative = base.startsWith('-') ? '-' : '';
+        const body = negative === '' ? base : base.slice(1);
+        for(let position = 0; position < prefixes.length; position++) {
+            const prefix = prefixes[position] ?? '';
+            const mapped = logical[position] ?? '';
+            const exact = !prefix.endsWith('-');
+            if(exact) {
+                if(negative === '' && body === prefix) return mapped;
+            }
+            else if(body.startsWith(prefix) && body.length > prefix.length) {
+                if(negative !== '' && ![0, 1, 2, 3, 6, 7].includes(position)) continue;
+                return negative + mapped + body.slice(prefix.length);
+            }
+        }
+        return '';
+    }
+    visit(index: number): void {
+        const context = this.context;
+        const path = context.parser.path;
+        if(!path.endsWith('.ts') && !path.endsWith('.tsx')) return;
+        const node = context.node(index);
+        if(['TemplateHead', 'TemplateMiddle', 'TemplateTail'].includes(node.kind)) {
+            const parent = context.parents[index] ?? -1;
+            if(parent < 0) return;
+            const owner = context.node(parent).kind === 'TemplateSpan' ? context.parents[parent] ?? -1 : parent;
+            if(owner < 0 || context.node(owner).kind !== 'TemplateExpression') return;
+        }
+        const tokens = fields(node.text);
+        let qualified = false;
+        for(const token of tokens) {
+            if(shape(token)) qualified = true;
+        }
+        if(!qualified) return;
+        for(const token of tokens) {
+            const parts = token.split(':');
+            const base = parts[parts.length - 1] ?? '';
+            const prefixes = parts.slice(0, -1);
+            if(prefixes.includes('rtl') || prefixes.includes('ltr')) continue;
+            const mapped = this.replacement(base);
+            if(mapped === '') continue;
+            const replacement = prefixes.length === 0 ? mapped : prefixes.join(':') + ':' + mapped;
+            context.report(index, 'structure/tailwind-no-physical-direction', 'useLogicalClass',
+                message(token, replacement), '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

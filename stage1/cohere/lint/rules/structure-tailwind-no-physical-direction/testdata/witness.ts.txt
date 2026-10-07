@@ -1,0 +1,8 @@
+export const classes = 'flex ml-4 rtl:mr-4 -text-left md:hover:scroll-pr-4';
+export const template = `flex ${other} ml-4`;
+export const punctuation = 'flex ml-4; -border-l-2 border-r-*';
+export const unicode = 'flex\u00a0pl-2\u2007pr-2';
+export const escaped = '\u006d\u006c-4';
+export const placeholders = 'flex ml-{{replacement}}';
+type TemplateType = `flex ${string} ml-4`;
+type LiteralType = 'text-left';
