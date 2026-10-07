@@ -1,0 +1,25 @@
+=== RUN   TestWave15AgreementAndMutants
+    wave_15_test.go:51: controls: 3569 identical finding bytes; findings 19
+    wave_15_test.go:54: controls-asan: 3569 identical finding bytes; findings 19
+=== RUN   TestWave15AgreementAndMutants/default
+    wave_15_test.go:96: default: exit 0, independent Go bytes catch byte 2053
+=== RUN   TestWave15AgreementAndMutants/find
+    wave_15_test.go:96: find: exit 0, independent Go bytes catch byte 620
+=== RUN   TestWave15AgreementAndMutants/sort
+    wave_15_test.go:96: sort: exit 0, independent Go bytes catch byte 49
+=== NAME  TestWave15AgreementAndMutants
+    wave_15_test.go:108: repository: 18704 identical finding bytes; findings 1
+    wave_15_test.go:109: repository-asan: 18704 identical finding bytes; findings 1
+    wave_15_test.go:117: repository native=266.484548ms Go=123.295629ms; tsgo: load_ns=61939862 query_ns=20894537 queries=527 first_query_ns=12428 run_ns=200080499
+         cohere: load_ns=63264461 rule_ns=4793262 run_ns=48366855
+    wave_15_test.go:108: compiler: 5629 identical finding bytes; findings 2
+    wave_15_test.go:109: compiler-asan: 5629 identical finding bytes; findings 2
+    wave_15_test.go:117: compiler native=1.946019789s Go=361.829941ms; tsgo: load_ns=243986019 query_ns=248097035 queries=1303 first_query_ns=17266 run_ns=1679748345
+         cohere: load_ns=233536441 rule_ns=62000636 run_ns=109548029
+    wave_15_test.go:129: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15AgreementAndMutants (53.85s)
+    --- PASS: TestWave15AgreementAndMutants/default (5.22s)
+    --- PASS: TestWave15AgreementAndMutants/find (5.32s)
+    --- PASS: TestWave15AgreementAndMutants/sort (5.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	53.857s
