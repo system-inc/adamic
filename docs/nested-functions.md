@@ -430,3 +430,63 @@ original-fixture run passed in 3.114s (/tmp/adamic-real-eight-final.log).
 Published code is 990eb119f44cfb1db1a4f6f2814cb7f9e91b2b29, with merge
 c08c41c0e023104a228e5795c24c59291bdd9297. The branch reports 8/11;
 the three language decisions above remain paused.
+
+
+## Feature branch prepared for integration, October 7
+
+Only codex/nested-functions is pushed. No push or merge into main or an area/
+branch was performed. Integration owns those branches and will merge this
+feature branch itself. The earlier landing instruction was clarified before
+any such write took place.
+
+Current origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965 is merged,
+without rebase or force, in ee3f647f0f971e19b3b8371e10f2b6613ae4d622.
+The earlier main e011f8f was first merged in f7ab977. Its gate passed, then
+a fresh fetch found the call-target and devirtualization integration on main.
+The second merge therefore received its own complete affected-package gate.
+Both merges were clean, with no manual compiler source edits. AllocateEnvironment
+and the eight-original-fixture behavior remain unchanged by this preparation.
+
+Setup succeeded: Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s,
+build cache warm 82s, done 82s. nproc is 5, cgroup quota 4 CPUs. Every build/test
+shell sources /workspace/adamic-tools/env.sh.
+
+### Counts after both main merges
+
+The whole table was regenerated with go test ./internal/oracle -run
+'^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts.
+The first regeneration passed in 29.349s; the final one passed in 12.721s.
+Neither changed the merged table. Compared with current origin/main, this branch
+adds exactly 25 rows, removes none, and changes no existing row:
+
+* Seventeen synthetic nested-function fixtures measure the new frame/closure
+  programs, including generated-string ownership, generic captures and returned
+  assignments. Three TDZ programs terminate exceptionally, so their rows are
+  not assertions that allocations equal frees on normal completion.
+* Eight original TypeScript fixtures measure the unchanged upstream bodies that
+  now compile and match Node. These are new observations, not performance deltas
+  against an earlier native implementation of those fixtures.
+
+Main's existing rows are preserved, including its class_as_interface.a change
+from 360/525 retains/releases to 349/514 and its borrowed-element lifetime rows.
+Those are inherited main measurements, not improvements attributed to nested
+functions. The six new call-target/devirtualization rows from main are also
+preserved. There is no additional count movement from integrating these units.
+
+### Final uncached gate
+
+ADAMIC_GATE_UNCACHED=1 go test ./internal/ir ./internal/flow ./internal/fresh
+./internal/lower ./internal/native ./internal/javascript ./internal/oracle
+-count=1 -timeout 30m passed. Results: ir 13.560s, flow 110.036s, fresh 63.580s,
+lower 40.225s, native 180.614s, complete oracle 174.385s. JavaScript has no
+standalone tests; its emitted output is checked by the complete oracle.
+This covers every code package changed by this feature branch against main,
+including the refusal and sibling-cycle mutant tests. The original fixture count
+remains 8/11; the three language-policy decisions above remain paused.
+
+go vet ./... and gofmt -l cmd internal passed with no diagnostics. Logs are
+/tmp/adamic-nested-land-targets-{counts,gate,vet,format}.log. The first gate is
+preserved in /tmp/adamic-nested-land-{counts,gate,vet,format}.log. No complete
+repository stage1 gate was run for this integration preparation. The earlier
+individual compiler overlay mutants were not rerun; the permanent oracle mutant
+and refusal checks ran in both complete oracle gates.
