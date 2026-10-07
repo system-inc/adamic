@@ -1,0 +1,42 @@
+import { panic } from 'adamic';
+export interface ConditionNode { kind: string; operator: string; a: number; b: number; c: number; children: number[]; }
+export interface ConditionBuilder { current: number; }
+export interface ConditionDependencies {
+    expression: (builder: number, node: number) => void;
+    hook: (builder: number, node: number) => void;
+    hookPresent: boolean;
+    link: (builder: number, source: number, target: number) => void;
+    newBlock: (builder: number) => number;
+    enter: (builder: number, block: number) => void;
+}
+// Node and block handles preserve identities; -1 is Go's nil pointer.
+export function condition(builder: number, node: number, whenTrue: number, whenFalse: number, nodes: ConditionNode[], builders: ConditionBuilder[], deps: ConditionDependencies): void {
+    const state = builders[builder] ?? panic('condition builder');
+    if (node === -1) { deps.link(builder,state.current,whenTrue); deps.link(builder,state.current,whenFalse); return; }
+    const view = nodes[node] ?? panic('condition node');
+    if (view.kind === 'ParenthesizedExpression') {
+        if (deps.hookPresent) { deps.hook(builder,node); }
+        condition(builder,view.a,whenTrue,whenFalse,nodes,builders,deps); return;
+    }
+    if (view.kind === 'PrefixUnaryExpression' && view.operator === 'ExclamationToken') {
+        if (deps.hookPresent) { deps.hook(builder,node); }
+        condition(builder,view.a,whenFalse,whenTrue,nodes,builders,deps); return;
+    }
+    if (view.kind === 'BinaryExpression' && (view.operator === 'AmpersandAmpersandToken' || view.operator === 'BarBarToken' || view.operator === 'QuestionQuestionToken')) {
+        if (deps.hookPresent) { deps.hook(builder,node); }
+        const right = deps.newBlock(builder);
+        if (view.operator === 'AmpersandAmpersandToken') { condition(builder,view.a,right,whenFalse,nodes,builders,deps); }
+        else if (view.operator === 'BarBarToken') { condition(builder,view.a,whenTrue,right,nodes,builders,deps); }
+        else { deps.expression(builder,view.a); deps.link(builder,state.current,whenTrue); deps.link(builder,state.current,whenFalse); deps.link(builder,state.current,right); }
+        deps.enter(builder,right);
+        condition(builder,view.b,whenTrue,whenFalse,nodes,builders,deps); return;
+    }
+    if (view.kind === 'ConditionalExpression') {
+        if (deps.hookPresent) { deps.hook(builder,node); }
+        const trueEntry = deps.newBlock(builder); const falseEntry = deps.newBlock(builder);
+        condition(builder,view.a,trueEntry,falseEntry,nodes,builders,deps);
+        deps.enter(builder,trueEntry); condition(builder,view.b,whenTrue,whenFalse,nodes,builders,deps);
+        deps.enter(builder,falseEntry); condition(builder,view.c,whenTrue,whenFalse,nodes,builders,deps); return;
+    }
+    deps.expression(builder,node); deps.link(builder,state.current,whenTrue); deps.link(builder,state.current,whenFalse);
+}

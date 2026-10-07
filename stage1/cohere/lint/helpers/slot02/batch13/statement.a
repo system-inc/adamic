@@ -1,0 +1,31 @@
+import { panic } from 'adamic';
+import type { ConditionNode } from './condition.a';
+export interface StatementDependencies { call: (operation: string, builder: number, argument: number) => void; }
+// Views are projected from actual Go AST nodes, including direct-child order and list handles.
+export function statement(builder: number, node: number, nodes: ConditionNode[], deps: StatementDependencies): void {
+    if (node === -1) { return; }
+    const view = nodes[node] ?? panic('statement node');
+    deps.call('reached',builder,node);
+    switch (view.kind) {
+        case 'Block': deps.call('statements',builder,view.a); break;
+        case 'VariableStatement': deps.call('declarations',builder,view.a); break;
+        case 'ExpressionStatement': deps.call('expr',builder,view.a); break;
+        case 'IfStatement': deps.call('if',builder,node); break;
+        case 'WhileStatement': deps.call('while',builder,node); break;
+        case 'DoStatement': deps.call('do',builder,node); break;
+        case 'ForStatement': deps.call('for',builder,node); break;
+        case 'ForInStatement': case 'ForOfStatement': deps.call('forInOf',builder,node); break;
+        case 'SwitchStatement': deps.call('switch',builder,node); break;
+        case 'TryStatement': deps.call('try',builder,node); break;
+        case 'LabeledStatement': deps.call('label',builder,node); break;
+        case 'ReturnStatement': deps.call('expr',builder,view.a); deps.call('return',builder,-1); break;
+        case 'ThrowStatement': deps.call('expr',builder,view.a); deps.call('throw',builder,-1); break;
+        case 'BreakStatement': deps.call('break',builder,view.a); break;
+        case 'ContinueStatement': deps.call('continue',builder,view.a); break;
+        case 'WithStatement': deps.call('expr',builder,view.a); statement(builder,view.b,nodes,deps); break;
+        case 'EmptyStatement': case 'DebuggerStatement': case 'ImportDeclaration': case 'ImportEqualsDeclaration': case 'FunctionDeclaration': case 'ExportDeclaration': break;
+        case 'ClassDeclaration': deps.call('class',builder,node); break;
+        case 'ExportAssignment': deps.call('expr',builder,view.a); break;
+        default: for (const child of view.children) { deps.call('unknown',builder,child); }
+    }
+}

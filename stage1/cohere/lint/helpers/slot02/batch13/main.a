@@ -1,0 +1,34 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { condition } from './condition.a';
+import type { ConditionNode, ConditionBuilder } from './condition.a';
+import { statement } from './statement.a';
+import { resolveValueFunction } from './resolve_value_function.a';
+import type { ValueArgument, ValueResult } from './resolve_value_function.a';
+const file=readTextFile(programArguments()[0] ?? panic('input'));
+if(file.kind==='Error'){panic(file.message);}
+const json=new OptionsJson(file.text);const root=json.parse();if(root===-1){panic(json.error);}
+function f(row:number,key:string):number{return json.field(row,key);}
+function text(row:number,key:string):string{return json.node(f(row,key)).text;}
+function num(row:number,key:string):number{return json.node(f(row,key)).number;}
+const nodes:ConditionNode[]=[];
+for(const row of json.node(f(root,'Nodes')).children){const children:number[]=[];for(const child of json.node(f(row,'Children')).children){children.push(json.node(child).number);}nodes.push({kind:text(row,'Kind'),operator:text(row,'Operator'),a:num(row,'A'),b:num(row,'B'),c:num(row,'C'),children});}
+let builders:ConditionBuilder[]=[];let trace='';let mode=0;let blockCount=4;
+function call(op:string,b:number,n:number):void{trace+=`${op}:${b}:${n};`;if(mode===1&&(op==='expr'||op==='hook')){(builders[b] ?? panic('builder')).current=1-b;}}
+function link(b:number,s:number,t:number):void{trace+=`link:${b}:${s}:${t};`;}
+function create(b:number):number{const id=blockCount;blockCount+=1;trace+=`new:${b}:${id};`;return id;}
+function enter(b:number,id:number):void{trace+=`enter:${b}:${id};`;(builders[b] ?? panic('builder')).current=id;}
+for(const row of json.node(f(root,'Cases')).children){builders=[{current:0},{current:1}];trace='';blockCount=4;mode=num(row,'Mode');const b=num(row,'Builder');const n=num(row,'Node');
+ if(text(row,'Op')==='condition'){condition(b,n,num(row,'True'),num(row,'False'),nodes,builders,{expression:(b,n)=>call('expr',b,n),hook:(b,n)=>call('hook',b,n),hookPresent:mode!==2,link:(b,s,t)=>link(b,s,t),newBlock:(b)=>create(b),enter:(b,id)=>enter(b,id)});}
+ else{statement(b,n,nodes,{call:(op,b,n)=>call(op,b,n)});}
+ console.log(`${trace}|${(builders[0] ?? panic('left')).current}:${(builders[1] ?? panic('right')).current}`);
+}
+for(const row of json.node(f(root,'Values')).children){const args:ValueArgument[]=[];for(const a of json.node(f(row,'Arguments')).children){args.push({kind:text(a,'Kind'),value:text(a,'Value'),nodes:num(a,'Nodes')});}
+ trace='';mode=num(row,'Mode');const state=num(row,'State');const id=num(row,'ValueID');const parseNodes=num(row,'ParseNodes');
+ const result=resolveValueFunction(state,id,{kind:text(row,'Kind'),value:text(row,'Value')},args,{
+ parse:(s)=>{trace+=`parse:${s};`;return parseNodes;},
+ theme:(st,a,v)=>{trace+=`theme:${st}:${a}:${v};`;return {value:'theme é😀',found:mode!==0};},
+ bare:(st,a,v)=>{trace+=`bare:${st}:${a}:${v===id};`;return {nodes:200,ratio:mode===2,found:mode!==0};},
+ arbitrary:(st,a,v):ValueResult=>{trace+=`arbitrary:${st}:${a}:${v===id};`;return {nodes:300,ratio:true,found:mode!==0};}
+ });console.log(`value:${trace}:${result.nodes}:${result.ratio}:${result.found}`);
+}

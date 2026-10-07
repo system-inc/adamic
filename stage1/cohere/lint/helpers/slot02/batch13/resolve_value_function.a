@@ -1,0 +1,32 @@
+export interface ValueArgument { kind: string; value: string; nodes: number; }
+export interface ParsedValueView { kind: string; value: string; }
+export interface ValueResult { nodes: number; ratio: boolean; found: boolean; }
+export interface ThemeResult { value: string; found: boolean; }
+export interface ValueDependencies {
+    parse: (value: string) => number;
+    theme: (state: number, argument: string, value: string) => ThemeResult;
+    bare: (state: number, argument: string, value: number) => ValueResult;
+    arbitrary: (state: number, argument: string, value: number) => ValueResult;
+}
+// The slice handle returned by dependencies or a --default argument is preserved exactly.
+export function resolveValueFunction(state: number, value: number, view: ParsedValueView, args: ValueArgument[], deps: ValueDependencies): ValueResult {
+    if (value === -1) {
+        for (const argument of args) { if (argument.kind === 'function' && argument.value === '--default') { return {nodes:argument.nodes,ratio:false,found:true}; } }
+        return {nodes:-1,ratio:false,found:false};
+    }
+    for (const argument of args) {
+        const word = argument.value;
+        const quote = word[0] ?? '';
+        const quoted = word.length >= 2 && (quote === "'" || quote === '"') && word[word.length-1] === quote;
+        if (view.kind === 'named' && argument.kind === 'word' && quoted && word.slice(1,-1) === view.value) { return {nodes:deps.parse(view.value),ratio:false,found:true}; }
+        if (view.kind === 'named' && argument.kind === 'word' && word.startsWith('--')) {
+            const result = deps.theme(state,word,view.value);
+            if (result.found) { return {nodes:deps.parse(result.value),ratio:false,found:true}; }
+        } else if (view.kind === 'named' && argument.kind === 'word') {
+            const result = deps.bare(state,word,value); if (result.found) { return result; }
+        } else if (view.kind === 'arbitrary' && argument.kind === 'word' && word.length >= 2 && word[0] === '[' && word[word.length-1] === ']') {
+            const result = deps.arbitrary(state,word,value); if (result.found) { return {nodes:result.nodes,ratio:false,found:true}; }
+        }
+    }
+    return {nodes:-1,ratio:false,found:false};
+}
