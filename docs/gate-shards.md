@@ -1514,8 +1514,7 @@ residuals (lowest index wins exact ties). For the measured-source 9310d552
 1096.550 s with its 69.400 s historical unit price. This is a plan prediction,
 not a new test timing.
 
-Fleet obtains a declared plan from a plan box before launching workers (or
-accepts ADAMIC_GATE_PLAN for an existing plan). `fleet.sh briefs <full SHA>
+Fleet obtains a declared plan from a plan box before launching workers. `fleet.sh briefs <full SHA>
 <plan.json>` produces reviewable briefs without launching anything. The real
 22-shard plan generated exactly one archive phase, in shard-10.md; all 22
 briefs use --gate-inputs-no-archive. A plan box publishes plan.tgz on the
@@ -1551,3 +1550,92 @@ not launch 22 boxes or remeasure cold setup costs; the setup branch's measured
 costs and proofs remain its evidence, not this worker's measurements.
 Raw plan, 22 briefs, CLI refusal, tests and mutant logs are in
 cmd/adamic-gate/evidence/archive-shard.tgz.
+
+### Freeze discovery once and feed heavy packages first
+
+Implementation measurement commit: 39862fb6f7f09a6582b9fee38d8dbc71375b1493.
+`plan` now writes a frozen identity along with coverage and package prices.
+`shard -plan PATH` and `merge -plan PATH` consume it without repository-wide
+Go discovery. Omitting -plan preserves self-planned execution. This is a
+validated run input, not a test-result cache: ADAMIC_GATE_UNCACHED=1 still runs
+all tests and all identity checks.
+
+The identity includes the source commit, individual tracked file bytes and
+modes (including nested pinned submodules), Go/Clang/Node versions and binary
+identities, Clang resource contents, relevant Go environment, and answer-bearing
+ADAMIC/Node/compiler/WASI inputs. External files/directories are hashed freshly;
+external Git HEAD and dirty worktree bytes count, Git config/pack housekeeping
+clearly does not. The checker archive identity is required on the owner and
+merge, and ignored on nonowners. A changed file is refused by name before test
+execution. Digest, coverage, affinity and price consistency are checked too.
+
+Fleet always publishes plan.tgz on the run's plan log branch before launching
+workers. Workers and merge fetch that exact artifact and validate against their
+own checkout and inputs. Plan and merge boxes provision all inputs including
+the checker archive for identity validation; among the 22 shard boxes only the
+single declared archive owner builds it. These validation boxes' setup remains
+separate cost. Local ADAMIC_GATE_PLAN bypass of plan publication was removed.
+
+Package workers now receive descending planned package seconds; ties break by
+name. Prices reuse affinity and repeated-parent accounting. Output aggregation
+retains deterministic alphabetical order independently of execution order.
+TestPackageFeedDescending catches an ascending-feed mutant. The suggested
+1,996 to 1,776 s and 834 to 677 s are estimates from the historical logs, not
+measurements here; a multi-package proving fleet remains necessary.
+
+Six valid guard/order mutants failed their intended tests: omitted named source
+check, tool identity, input bytes, Go environment, artifact digest, and descending
+feed. Full runner race tests passed (86.639 s), followed by focused tests on the
+final publication/mode changes (23.854 s), vet, Bash syntax and diff checks.
+The actual repository source mutant appends a valid comment to main.go after
+planning, leaving test names unchanged, and must refuse before a summary exists.
+
+Cold-container discovery baseline at cb4ee1c4: preparation `go build ./...`
+277.437 s; makePlan alone via `/workspace/adamic-gate-archive plan -count 512`
+260.747 s. A toolexec tracer counted 50 link steps, 46 unique targets. The
+chosen proof shard 380 runs only internal/flow; 49 links covered 45 unrelated
+targets. This is a fresh 4-CPU/16-GiB container on the existing physical box,
+not a fresh independent VM; module cache and installed tools already existed.
+The Go cache started empty and was warmed by the preparation command. This
+older-commit cold baseline is not a controlled speedup comparison.
+
+Same-commit controlled proof: three sequential interleaved pairs on this cloud
+box, nproc 5, cpu.max 400000 100000, Go 1.27.1, Clang 20.1.8 (LLVM
+87f0227cb60147a26a1eeb4fb06e3b505e9c7261), Node v24.19.0. Results are
+uncached (-count=1 and ADAMIC_GATE_UNCACHED=1); Go compile and keyed native build
+caches are warm. GOFLAGS=-toolexec=/workspace/gate-affinity-evidence/plan-once/tool-trace.py.
+GOCACHE=/workspace/gate-affinity-evidence/plan-once/fresh-go-cache. All source
+and runner inputs are at 39862fb6; no competing build ran during a pair.
+
+| Loop | Self-planned wall s | Frozen wall s | Saved s |
+| --- | ---: | ---: | ---: |
+| 1 | 128.680 | 115.447 | 13.233 |
+| 2 | 126.408 | 116.710 | 9.698 |
+| 3 | 116.477 | 68.938 | 47.539 |
+
+Best of three: 116.477 vs 68.938 s. Median walls: 126.408 vs 115.447 s; median paired savings 13.233 s. Variance is substantial, so no 15/22-shard extrapolation is claimed.
+
+Exact instrument: /workspace/adamic-gate-plan-once shard -count 512 -index 380
+-scratch /workspace/gate-affinity-evidence/plan-once/scratch -out
+/workspace/gate-affinity-evidence/plan-once/self-N; after command replaces
+self-N with frozen-N and adds -plan
+/workspace/gate-affinity-evidence/plan-once/frozen-plan.json. The 512-shard
+proof isolates a small package and is not the production 15/22-shard layout.
+The precomputed plan command took 67.456 s on this warm measurement checkout;
+it runs once. Every measured shard passed 428 tests with zero skips/failures.
+Each pair has byte-identical sorted projections of all 1,713 run, terminal,
+pause and cont events; timestamps and diagnostic output are not test answers.
+The actual changed-main.go mutant refused by filename before creating a summary.
+The environment restart interrupted self-2; that partial attempt was excluded
+and preserved under self-2-interrupted. Setup was not rerun during these pairs.
+
+| Invocation | Load before | Load after |
+| --- | --- | --- |
+| self-1 | 1.41 0.88 1.27 1/532 133516 | 2.92 1.76 1.55 1/541 137812 |
+| frozen-1 | 2.92 1.76 1.55 1/541 137812 | 1.74 1.64 1.53 1/545 141282 |
+| self-2 | 2.14 2.09 1.73 1/556 145507 | 4.05 2.79 2.03 2/551 149736 |
+| frozen-2 | 4.05 2.79 2.03 1/551 149736 | 2.24 2.57 2.04 2/555 153131 |
+| self-3 | 2.24 2.57 2.04 2/555 153131 | 2.26 2.60 2.12 1/554 157350 |
+| frozen-3 | 2.26 2.60 2.12 1/554 157350 | 4.05 2.96 2.27 2/551 160733 |
+
+Raw evidence and reproduction scripts: cmd/adamic-gate/evidence/plan-once.tgz.
