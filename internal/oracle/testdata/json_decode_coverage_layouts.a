@@ -1,0 +1,10 @@
+import { decodeJson } from 'adamic';
+interface Row { readonly before?: string; readonly count: number; readonly middle?: boolean; readonly after: string; readonly end?: readonly string[]; }
+function inspect(text: string): void {
+ const r = decodeJson<Row>(text);
+ if (r.kind === 'Error') console.log(r.message);
+ else console.log(`${Object.keys((r.value)).join(',')} ${r.value.before ?? '-'} ${r.value.count} ${r.value.after} ${r.value.end?.length ?? -1}`);
+}
+for (let repeat = 0; repeat < 3; repeat++) {
+ for (const text of ['{"count":1,"after":"a"}', '{"before":"b","count":2,"after":"c"}', '{"count":3,"middle":false,"after":"d"}', '{"count":4,"after":"e","end":["f"]}', '{"before":"g","count":5,"middle":true,"after":"h","end":[]}', '{"before":"allocated","count":"bad","after":"x"}', '{"count":1,"after":"x","end":["allocated",false]}']) inspect(text);
+}
