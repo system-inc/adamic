@@ -1,0 +1,36 @@
+class Base {
+    run(): string { return 'base'; }
+    stable(): string { return 'stable'; }
+}
+function factory(): Base { return new Later(); }
+function exercise(): void {
+    let value: Base = new Base();
+    console.log(value.run());
+    for (let index = 0; index < 2; index++) {
+        if (index === 1) { value = new Later(); }
+        console.log(`${value.stable()}/${value.run()}`);
+    }
+    const alias: Base = value;
+    const holder: { value: Base } = { value: alias };
+    console.log(holder.value.run());
+    console.log(factory().run());
+    console.log((true ? value : new Base()).run());
+    let captured: Base = new Base();
+    const saved = (): string => captured.run();
+    console.log(saved());
+    captured = new Later();
+    console.log(saved());
+    try { value = new Base(); } finally { value = new Later(); }
+    console.log(value.run());
+}
+class Later extends Base { override run(): string { return 'later'; } }
+exercise();
+function nested(kind: number): void {
+    let value: Base = new Base();
+    if (kind === 0) { while (value.run() === 'base') { value = new Later(); } }
+    else if (kind === 1) { do { value = new Later(); } while (false); }
+    else if (kind === 2) { switch (kind) { case 2: value = new Later(); break; default: break; } }
+    else { try { throw new Error('change'); } catch (error) { value = new Later(); } }
+    console.log(value.run());
+}
+for (const kind of [0, 1, 2, 3]) { nested(kind); }
