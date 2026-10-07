@@ -291,30 +291,19 @@ func (e *emitter) methodThunk(function int) string {
 	}
 	e.thunks[function] = true
 	method := e.program.Functions[function]
-	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments, size_t argument_count) {", name), "\t(void)arguments;", "\t(void)argument_count;"}
+	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments) {", name), "\t(void)arguments;"}
 	values := []string{}
-	restOwned := false
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
 		value := "self"
 		if method.RestElement != 0 && index == len(method.Parameters)-1 {
-			lines = append(lines, fmt.Sprintf("\tadamic_array *rest = adamic_array_new(0, %t);", method.RestElement.IsReference()), fmt.Sprintf("\tfor (size_t index = %d; index < argument_count; index++) {", index-1))
-			if method.RestElement.IsReference() {
-				lines = append(lines, "\t\tadamic_array_push(rest, (adamic_value){.reference = adamic_retain(arguments[index].reference)});")
-			} else {
-				lines = append(lines, "\t\tadamic_array_push(rest, arguments[index]);")
-			}
-			lines = append(lines, "\t}")
-			values = append(values, "rest")
-			restOwned = !e.reuse.consumed[parameter]
-			continue
-		}
-		if index > 0 {
+			slot := e.program.RestArgumentSlots[ir.FunctionRestArguments(method)]
+			value = fmt.Sprintf("(adamic_array *)arguments[%d].reference", slot)
+		} else if index > 0 {
 			value = unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index-1, member(local.Type)))
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
-			value = fmt.Sprintf("argument_count > %d ? %s : %s", index-1, value, missingArgument(local.Type))
 		}
 		if local.Type.IsReference() && e.reuse.consumed[parameter] {
 			value = fmt.Sprintf("adamic_retain(%s)", value)
@@ -322,21 +311,17 @@ func (e *emitter) methodThunk(function int) string {
 		values = append(values, value)
 	}
 	if method.ArgumentsCount != 0 {
-		values = append(values, "(double)argument_count")
+		count := "0"
+		if method.ReadsArguments {
+			count = fmt.Sprintf("arguments[%d].number", e.program.ArgumentCountSlot)
+		}
+		values = append(values, count)
 	}
 	call := fmt.Sprintf("%s(%s)", e.functionName(function), strings.Join(values, ", "))
 	if method.Returns == 0 {
-		lines = append(lines, "\t"+call+";")
-		if restOwned {
-			lines = append(lines, "\tadamic_release(rest);")
-		}
-		lines = append(lines, "\treturn (adamic_value){.number = 0};")
+		lines = append(lines, "\t"+call+";", "\treturn (adamic_value){.number = 0};")
 	} else {
-		lines = append(lines, fmt.Sprintf("\tadamic_value result = {.%s = %s};", member(method.Returns), slotted(method.Returns, call)))
-		if restOwned {
-			lines = append(lines, "\tadamic_release(rest);")
-		}
-		lines = append(lines, "\treturn result;")
+		lines = append(lines, fmt.Sprintf("\treturn (adamic_value){.%s = %s};", member(method.Returns), slotted(method.Returns, call)))
 	}
 	lines = append(lines, "}")
 	e.declarations = append(e.declarations, strings.Join(lines, "\n"))

@@ -185,7 +185,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 				}
 				meta.Methods[slot] = len(l.result.Functions)
 			}
-			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + methodName})
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + methodName, MethodName: methodName})
 		case ast.KindPropertyDeclaration, ast.KindConstructor, ast.KindClassStaticBlockDeclaration:
 		default:
 			return nil, l.notYet(member, describe(member)+" in a class")

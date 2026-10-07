@@ -93,39 +93,10 @@ func (p *Program) ClosureMayThrow(call Expression) bool {
 }
 
 // ClosureReadsArgumentsCount includes every function the program can make of the
-// call's function type. Missing type evidence falls back to the entire program;
-// it never silently means no target reads the count.
+// call's function type. Missing type evidence uses bounded closure targets,
+// falling back to the entire program only when those targets are unknown.
 func (p *Program) ClosureReadsArgumentsCount(call CallClosure) bool {
-	targets, resolved := p.FunctionTypeTargets[call.FunctionType]
-	if resolved {
-		for _, target := range targets {
-			if p.Functions[target].ArgumentsCount != 0 {
-				return true
-			}
-		}
-		return false
-	}
-	for _, function := range p.Functions {
-		if function.ArgumentsCount != 0 {
-			return true
-		}
-	}
-	return false
-}
-
-// ClosureNeedsArgumentSlots also needs the actual count to bind optional and rest
-// parameters without reading beyond the packed argument buffer.
-func (p *Program) ClosureNeedsArgumentSlots(call CallClosure) bool {
-	targets, resolved := p.FunctionTypeTargets[call.FunctionType]
-	if resolved {
-		for _, target := range targets {
-			if len(p.Functions[target].Parameters) > 0 {
-				return true
-			}
-		}
-		return false
-	}
-	return true
+	return p.ClosureArgumentLayout(call).Count
 }
 
 // CallExpandsArguments means source positions do not match parameter positions.

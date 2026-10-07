@@ -78,7 +78,7 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references);
 // adamic_closure is a function value: its code, and the cells it captured. Every closure is called
 // the same way, its arguments and its result as adamic_value, whatever its types.
 typedef struct adamic_closure adamic_closure;
-typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments);
 struct adamic_closure {
 	adamic_heap heap;
 	adamic_code code;
@@ -193,7 +193,7 @@ typedef struct adamic_slot_cache {
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
-typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments);
 struct adamic_methods {
 	size_t count;
 	const char *const *names;

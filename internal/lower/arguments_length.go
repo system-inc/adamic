@@ -53,6 +53,7 @@ func (l *lowering) readArgumentsCount() ir.Expression {
 	if l.function == nil {
 		panic("lower: arguments.length outside a function")
 	}
+	l.function.ReadsArguments = true
 	if l.function.ArgumentsCount == 0 {
 		local := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument_count", Type: ir.Number, Function: l.functionIndex})
@@ -126,6 +127,12 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 			if node.Kind == ast.KindCallExpression {
 				proven := l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression))
 				types[int(proven.Id())] = proven
+				for _, argument := range node.AsCallExpression().Arguments.Nodes {
+					callback := l.concrete(l.checker.GetTypeAtLocation(argument))
+					if len(l.checker.GetSignaturesOfType(callback, checker.SignatureKindCall)) > 0 {
+						types[int(callback.Id())] = callback
+					}
+				}
 			}
 			return node.ForEachChild(visit)
 		}
@@ -139,12 +146,25 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 	}
 	l.result.FunctionTypeTargets = map[int][]int{}
 	for id, proven := range types {
+		l.result.FunctionTypeTargets[id] = []int{}
 		for _, record := range l.closureRecords {
 			if l.checker.IsTypeAssignableTo(record.proven, proven) {
 				l.result.FunctionTypeTargets[id] = append(l.result.FunctionTypeTargets[id], record.function)
 			}
 		}
 	}
+	// Reader facts must remain separate from padding a virtual C signature.
+	for changed := true; changed; {
+		changed = false
+		for index := range l.result.Functions {
+			function := &l.result.Functions[index]
+			if function.ForwardsArguments != 0 && !function.ReadsArguments && l.result.Functions[function.ForwardsArguments-1].ReadsArguments {
+				function.ReadsArguments = true
+				changed = true
+			}
+		}
+	}
+	l.result.PrepareArgumentSlots()
 	// Every virtual implementation must have the same native signature, including
 	// an implementation that does not itself observe the count.
 	changed := true
@@ -182,6 +202,8 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 }
 
 func (l *lowering) fitCallArguments(function int, arguments []ir.Expression, spread []bool) {
+	// Fixed arguments are fitted by the native call boundary, after ownership
+	// planning. Fitting them here creates extra owned Weak and Union values.
 	declared := l.result.Functions[function]
 	position := 0
 	expanded := false
@@ -192,8 +214,6 @@ func (l *lowering) fitCallArguments(function int, arguments []ir.Expression, spr
 		}
 		if declared.RestElement != 0 && (expanded || position >= len(declared.Parameters)-1) {
 			arguments[index] = fit(arguments[index], declared.RestElement)
-		} else if !expanded && position < len(declared.Parameters) {
-			arguments[index] = fit(arguments[index], l.result.Locals[declared.Parameters[position]].Type)
 		}
 		position++
 	}

@@ -961,10 +961,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
-	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement}
-	count := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument_count", Type: ir.Number, Function: index})
-	forwarder.ArgumentsCount = count + 1
+	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1}
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
@@ -976,7 +973,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		forwarder.Parameters = append(forwarder.Parameters, local)
 		arguments = append(arguments, ir.Read{Local: local, Of: declared.Type})
 	}
-	call := ir.Call{Function: target, Arguments: arguments, Returns: callee.Returns, ArgumentCount: ir.Read{Local: count, Of: ir.Number}, RestPacked: true}
+	call := ir.Call{Function: target, Arguments: arguments, Returns: callee.Returns, ForwardCount: true, RestPacked: true}
 	if callee.Returns == 0 {
 		forwarder.Body = []ir.Statement{ir.Evaluate{Value: call}}
 	} else {

@@ -2,9 +2,91 @@ package native
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
+
+// closureArguments keeps the legacy two-argument ABI. Optional slots and rest
+// tails are prepared here; no count is needed to bind them in the callee.
+func (e *emitter) closureArguments(call ir.CallClosure) string {
+	if len(call.Spread) != 0 {
+		packed := e.packCallArguments(call.Arguments, call.Spread)
+		layout := e.program.ClosureArgumentLayout(call)
+		slots := []string{}
+		for index, of := range layout.Fixed {
+			value := packedParameter(of, packed+"->elements", packed+"->length", index)
+			slots = append(slots, fmt.Sprintf("{.%s = %s}", member(of), slotted(of, value)))
+		}
+		return e.closureSlots(call, slots, packed+"->elements", packed+"->length")
+	}
+	slots := []string{}
+	for _, argument := range call.Arguments {
+		slots = append(slots, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
+	}
+	return e.closureSlots(call, slots, "", fmt.Sprint(len(call.Arguments)))
+}
+
+func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, count string) string {
+	layout := e.program.ClosureArgumentLayout(call)
+	if source == "" && len(slots) > 0 {
+		source = "(adamic_value[]){" + strings.Join(slots, ", ") + "}"
+	}
+	if source == "" {
+		source = "((adamic_value *)NULL)"
+	}
+	for index := len(slots); index < len(layout.Fixed); index++ {
+		of := layout.Fixed[index]
+		slots = append(slots, fmt.Sprintf("{.%s = %s}", member(of), slotted(of, missingArgument(of))))
+	}
+	if !layout.Count && len(layout.Rest) == 0 {
+		if len(slots) == 0 {
+			return "NULL"
+		}
+		return "(adamic_value[]){" + strings.Join(slots, ", ") + "}"
+	}
+	// Extra actual arguments are evaluated, but only parameter slots are kept.
+	// The original source remains available while collecting each rest tail.
+	base := e.program.ArgumentCountSlot - len(e.program.RestArgumentSlots)
+	entries := []string{}
+	for index, slot := range slots[:min(base, len(slots))] {
+		entries = append(entries, fmt.Sprintf("[%d] = %s", index, slot))
+	}
+	for _, rest := range layout.Rest {
+		array := e.restArray(source, count, rest.Start, rest.Element)
+		entries = append(entries, fmt.Sprintf("[%d] = {.reference = %s}", e.program.RestArgumentSlots[rest], array))
+	}
+	if layout.Count {
+		entries = append(entries, fmt.Sprintf("[%d] = /* actual argument count */ {.number = (double)%s}", e.program.ArgumentCountSlot, count))
+	}
+	return "(adamic_value[]){" + strings.Join(entries, ", ") + "}"
+}
+
+func (e *emitter) callbackCall(callback string, expression ir.Expression, kind int, slots ...string) string {
+	call := ir.CallClosure{Closure: expression, FunctionType: kind}
+	packed := e.closureSlots(call, slots, "", fmt.Sprint(len(slots)))
+	return fmt.Sprintf("%s->code(%s, %s)", callback, callback, packed)
+}
+
+// The runtime's ordinary sort comparator still has main's ABI. A reader, rest
+// tail or omitted optional slot gets an adapter only at that particular sort.
+func (e *emitter) closureComparator(sort ir.ArraySort) string {
+	call := ir.CallClosure{Closure: sort.Callback, FunctionType: sort.CallbackType}
+	layout := e.program.ClosureArgumentLayout(call)
+	if !layout.Count && len(layout.Rest) == 0 && len(layout.Fixed) <= 2 {
+		return "adamic_compare_closure"
+	}
+	e.temporaries++
+	name := fmt.Sprintf("adamic_compare_%d", e.temporaries)
+	adapter := emitter{program: e.program, reuse: e.reuse, indent: 1, scopes: [][]string{{}}}
+	packed := adapter.closureSlots(call, []string{"left", "right"}, "", "2")
+	adapter.line("adamic_closure *compare = context;")
+	adapter.line("double result = compare->code(compare, %s).number;", packed)
+	adapter.releaseScopes(0)
+	adapter.line("return result < 0 ? -1 : result > 0 ? 1 : 0;")
+	e.declarations = append(e.declarations, "static int "+name+"(adamic_value left, adamic_value right, void *context) {\n"+adapter.out.String()+"}")
+	return name
+}
 
 // packCallArguments expands each spread immediately. Its snapshot owns reference
 // elements until the statement ends, including across mutations in later arguments.
@@ -50,12 +132,6 @@ func (e *emitter) copyRest(result, packed, count string, start int, element ir.T
 		e.line("\tadamic_array_push(%s, %s[%s]);", result, packed, index)
 	}
 	e.line("}")
-}
-
-func (e *emitter) restParameter(parameter int, element ir.Type, start int) {
-	name := e.localName(parameter)
-	e.line("adamic_array *%s = adamic_array_new(0, %t);", name, element.IsReference())
-	e.copyRest(name, "arguments", "argument_count", start, element)
 }
 
 func (e *emitter) spreadArguments(call ir.Call) []string {

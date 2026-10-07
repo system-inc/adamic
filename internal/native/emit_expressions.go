@@ -293,7 +293,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t}")
 		e.indent++
 		element := e.temporary()
-		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, source, index, index, source)
+		call := e.callbackCall(callback, expression.Callback, expression.CallbackType, fmt.Sprintf("%s->elements[%s]", source, index), fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+		e.line("adamic_value %s = %s;", element, call)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
 		e.line("adamic_array_push(%s, %s);", mapped, element)
@@ -393,7 +394,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does
 		// (sort.c), and the throw goes on from here.
 		if expression.Callback != nil {
-			e.line("%s(%s, adamic_compare_closure, %s);", sort, array, e.value(expression.Callback))
+			e.line("%s(%s, %s, %s);", sort, array, e.closureComparator(expression), e.value(expression.Callback))
 			e.closureThrown()
 			return array
 		}

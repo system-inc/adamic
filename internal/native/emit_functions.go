@@ -16,7 +16,7 @@ func (e *emitter) signature(function int) string {
 	if declared.Closure {
 		// Every closure's code is called the same way (adamic_code): its arguments and result as
 		// adamic_value, whatever their types.
-		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments, size_t argument_count)", e.functionName(function))
+		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments)", e.functionName(function))
 	}
 	returns := "void"
 	if declared.Returns != 0 {
@@ -55,9 +55,8 @@ func (e *emitter) functionBody(function ir.Function) {
 	if function.Closure {
 		e.line("(void)self;")
 		e.line("(void)arguments;")
-		e.line("(void)argument_count;")
 		if function.ArgumentsCount != 0 {
-			count := "(double)argument_count"
+			count := fmt.Sprintf("arguments[%d].number", e.program.ArgumentCountSlot)
 			if function.Receiver {
 				count += " - 1"
 			}
@@ -67,22 +66,19 @@ func (e *emitter) functionBody(function ir.Function) {
 		for index, parameter := range function.Parameters {
 			local := e.program.Locals[parameter]
 			if function.RestElement != 0 && index == len(function.Parameters)-1 {
-				e.restParameter(parameter, function.RestElement, index)
+				slot := e.program.RestArgumentSlots[ir.FunctionRestArguments(function)]
+				e.line("adamic_array *%s = arguments[%d].reference;", e.localName(parameter), slot)
 				continue
 			}
 			value := unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index, member(local.Type)))
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
-			value = fmt.Sprintf("argument_count > %d ? %s : %s", index, value, missingArgument(local.Type))
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
-	for position, parameter := range function.Parameters {
+	for _, parameter := range function.Parameters {
 		switch {
-		case function.Closure && function.RestElement != 0 && position == len(function.Parameters)-1:
-			// The rest array was made here and already owns its count.
-			e.hold(e.localName(parameter))
 		case e.reuse.consumed[parameter]:
 			// Its caller handed over a reference (reuse.go): it's the callee's to let go of.
 			e.hold(e.localName(parameter))
@@ -287,32 +283,13 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
 		}
 	}
-	arguments := []string{}
-	for _, argument := range expression.Arguments {
-		if len(expression.Spread) != 0 {
-			break
-		}
-		arguments = append(arguments, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
-	}
-	packed := "NULL"
-	if len(arguments) > 0 {
-		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
-	}
-	count := fmt.Sprint(len(expression.Arguments))
-	if len(expression.Spread) != 0 {
-		expanded := e.packCallArguments(expression.Arguments, expression.Spread)
-		packed = expanded + "->elements"
-		count = expanded + "->length"
-	}
-	if !e.program.ClosureReadsArgumentsCount(expression) && !e.program.ClosureNeedsArgumentSlots(expression) {
-		count = "0"
-	}
-	call := fmt.Sprintf("%s->code(%s, %s, %s)", closure, closure, packed, count)
+	packed := e.closureArguments(expression)
+	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
 	if receiver != "" {
 		if closure == "" {
-			call = fmt.Sprintf("%s(%s, %s, %s)", method, receiver, packed, count)
+			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
 		} else {
-			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s, %s))", closure, call, method, receiver, packed, count)
+			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
 		}
 	}
 	if expression.Returns == 0 {

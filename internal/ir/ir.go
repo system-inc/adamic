@@ -31,6 +31,9 @@ type Program struct {
 
 	// FunctionTypeTargets is the closed-world set for each checker function type.
 	FunctionTypeTargets map[int][]int
+	// Packed calls reserve these slots only when a candidate needs them.
+	ArgumentCountSlot int
+	RestArgumentSlots map[RestArguments]int
 
 	// Main is what the program does, in order.
 	Main []Statement
@@ -68,13 +71,15 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
-	Name string
+	Name       string
+	MethodName string
 
 	// Parameters are locals, in order.
 	Parameters []int
 
 	// ArgumentsCount is the one-based local for the hidden actual argument count.
 	ArgumentsCount int
+	ReadsArguments bool
 	// ForwardsArguments is the one-based target of an implementation-only adapter.
 	ForwardsArguments int
 	// Receiver excludes the leading implementation-only this from that count.
@@ -558,6 +563,7 @@ type (
 	// undefined and its index, in order. First is the type of the callback's first parameter, which
 	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
+		CallbackType     int
 		Length, Callback Expression
 		Element, First   Type
 	}
@@ -576,6 +582,7 @@ type (
 	// last returned (Initial the first time), the element, its index and the array, read and skipped
 	// as ArrayVisit does. Result is Initial's type, and the callback's.
 	ArrayReduce struct {
+		CallbackType             int
 		Array, Callback, Initial Expression
 		Element, Result          Type
 	}
@@ -606,10 +613,11 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Result   Type
+		CallbackType int
+		Array        Expression
+		Callback     Expression
+		Element      Type
+		Result       Type
 	}
 
 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
@@ -618,11 +626,12 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
-		Method   string
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Returns  Type
+		CallbackType int
+		Method       string
+		Array        Expression
+		Callback     Expression
+		Element      Type
+		Returns      Type
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
@@ -641,10 +650,11 @@ type (
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
 	// value (Callback, when it isn't nil). It sorts in place, stably, and is the array.
 	ArraySort struct {
-		Array      Expression
-		Comparator int
-		Callback   Expression
-		Element    Type
+		CallbackType int
+		Array        Expression
+		Comparator   int
+		Callback     Expression
+		Element      Type
 	}
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
@@ -674,6 +684,7 @@ type (
 	// set.forEach(Callback) (Set), with each element twice and the set, in insertion order and live as
 	// for...of is. Returns is what the callback returns, 0 for nothing; forEach itself is void.
 	MapForEach struct {
+		CallbackType  int
 		Map, Callback Expression
 		Key, Value    Type
 		Set           bool

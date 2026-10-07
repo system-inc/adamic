@@ -11,6 +11,7 @@ import (
 )
 
 var argumentLengthFixtures = []string{
+	"arguments_length_no_reader.a", "arguments_length_unrelated_type.a",
 	"arguments_length.a", "arguments_length_value.a", "arguments_length_value_count.a", "arguments_length_spread.a",
 	"arguments_length_extended.a", "arguments_length_static_constructor.a",
 	"arguments_length_method.a", "arguments_length_static.a", "arguments_length_reduce_left.a", "arguments_length_callbacks.a",
