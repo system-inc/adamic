@@ -1,0 +1,37 @@
+{
+  "roots": 78,
+  "file": "transformers/es2018.ts",
+  "code_filter": null,
+  "counts": {
+    "TS2532": 1,
+    "TS2322": 2,
+    "TS2345": 1
+  },
+  "total": 4,
+  "diagnostics": [
+    {
+      "code": "TS2532",
+      "line": 534,
+      "column": 35,
+      "diagnostic": "src/compiler/transformers/es2018.ts:534:35: error TS2532: Object is possibly 'undefined'."
+    },
+    {
+      "code": "TS2322",
+      "line": 537,
+      "column": 17,
+      "diagnostic": "src/compiler/transformers/es2018.ts:537:17: error TS2322: Type 'Expression | undefined' is not assignable to type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'."
+    },
+    {
+      "code": "TS2322",
+      "line": 540,
+      "column": 80,
+      "diagnostic": "src/compiler/transformers/es2018.ts:540:80: error TS2322: Type 'Expression | undefined' is not assignable to type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'."
+    },
+    {
+      "code": "TS2345",
+      "line": 636,
+      "column": 29,
+      "diagnostic": "src/compiler/transformers/es2018.ts:636:29: error TS2345: Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'."
+    }
+  ]
+}

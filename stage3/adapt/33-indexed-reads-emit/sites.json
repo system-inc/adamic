@@ -1747,9 +1747,9 @@
     "expression": "objects[0]",
     "occurrence": 1,
     "total": 2,
-    "action": "decline",
+    "action": "assert",
     "class": "U-endpoint",
-    "invariant": "Presence of objects[0] in visitObjectLiteralExpression has not been established; its nonempty-list invariant review remains unfinished."
+    "invariant": "objects.length guards this first read; chunkObjectLiteralElements populates objects only with factory-created objects or defined expressions returned by the expression-preserving visitor."
   },
   {
     "file": "transformers/es2018.ts",
@@ -1759,9 +1759,9 @@
     "expression": "objects[0]",
     "occurrence": 2,
     "total": 2,
-    "action": "decline",
+    "action": "assert",
     "class": "U-endpoint",
-    "invariant": "Presence of objects[0] in visitObjectLiteralExpression has not been established; its nonempty-list invariant review remains unfinished."
+    "invariant": "createObjectLiteralExpression derives its spread flag from its property children, so this flagged literal is nonempty; chunking a spread or an ordinary property emits at least one defined expression, and the optional leading empty-object insertion preserves nonemptiness."
   },
   {
     "file": "transformers/es2018.ts",
@@ -1771,9 +1771,9 @@
     "expression": "objects[i]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-loop",
-    "invariant": "Presence of objects[i] in visitObjectLiteralExpression has not been established; its loop-bound and populated-list invariant review remains unfinished."
+    "invariant": "The loop has 1 <= i < objects.length in the populated private chunk array; createAssignHelper receives a new two-element array, so helper callbacks cannot mutate the original chunk list."
   },
   {
     "file": "transformers/es2018.ts",
@@ -1783,9 +1783,9 @@
     "expression": "node.elements[i]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-loop",
-    "invariant": "Presence of node.elements[i] in visitCommaListExpression has not been established; its loop-bound and populated-list invariant review remains unfinished."
+    "invariant": "The loop has 0 <= i < node.elements.length on the populated comma-expression NodeArray; the read precedes visiting, and changed expressions are accumulated into a separate result array without mutating the original elements."
   },
   {
     "file": "transformers/es2018.ts",

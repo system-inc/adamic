@@ -114,3 +114,12 @@ The truthful owner edit is `AllDecorators.parameters | undefined` in `types.ts`,
 outside this partition. All three findings have individual decline entries.
 Idempotence passes; default oracle **106367 passing**, empty
 baseline diff, 218.69s. [Owner handoff](proof/whole-files/utilities/README.md).
+
+### transformers/es2018.ts at zero: 40-file target reached
+
+All-code census **4 -> 0**, clean files **39 -> 40 of 78**. Factory spread flags
+prove a nonempty populated chunk list; both loops are bounded over populated
+arrays and keep replacements separate. Four original-point assertions preserve
+stock JavaScript bytes. Idempotence passes and the endpoint mutant is caught
+twice. Default oracle **106367 passing**, empty baseline diff,
+217.481s. [Complete proof](proof/whole-files/es2018/README.md).
