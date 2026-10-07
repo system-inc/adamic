@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "prototype-accepted",
+    "exit": 1
+  },
+  {
+    "mutant": "runtime-cast",
+    "exit": 1
+  },
+  {
+    "mutant": "object-representation",
+    "exit": 1
+  },
+  {
+    "mutant": "element-proof-skipped",
+    "exit": 1
+  },
+  {
+    "mutant": "cycle-view-skipped",
+    "exit": 1
+  },
+  {
+    "mutant": "generic-elements-forgotten",
+    "exit": 1
+  }
+]

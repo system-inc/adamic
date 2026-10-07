@@ -14,6 +14,9 @@ import (
 // (adamic/no-unchecked-cast).
 func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	as := node.AsAsExpression()
+	if l.nodeRequirePerformanceProjection(node) {
+		return l.expression(as.Expression)
+	}
 	proof, err := l.castProof(node)
 	if err != nil {
 		return nil, err
@@ -21,6 +24,15 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	value, err := l.expression(as.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if proof.lowering != castLoweringNone {
+		source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
+		target := l.concrete(l.checker.GetTypeAtLocation(node))
+		checked, err := l.lowerDeferredCast(proof.lowering, node, value, source, target)
+		if checked != nil || err != nil {
+			return checked, err
+		}
+		return nil, proof.deferredError
 	}
 	if !proof.view && len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil

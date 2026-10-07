@@ -62,7 +62,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				if name != nil && fields[name.Text()] {
 					declared := l.checker.GetTypeAtLocation(binding.Name())
 					of, known := l.representation(declared)
-					if !known || of < ir.Number || of > ir.Object || !viewDataType(declared) {
+					if !known || of < ir.Number || of > ir.Array || !viewDataType(declared) {
 						found = l.notYet(binding, "a checked destructured alias requiring a representation conversion")
 					}
 				}

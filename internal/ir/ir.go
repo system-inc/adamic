@@ -10,6 +10,10 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// PredicateChecks counts overload-result directions, per emitted call site.
+	// Unobservable is included in Proven: no narrowed read consumes that region.
+	PredicateChecks struct{ Proven, Checked, Unobservable int }
+
 	// CheckedFields conservatively checks these field names at every object read.
 	OptionalViewFields map[string]bool
 	FreshViewWrites    map[int]bool
@@ -86,6 +90,9 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+
+	// Receiver marks a literal method closure whose first parameter receives the calling object.
+	Receiver bool
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -254,7 +261,7 @@ type (
 
 	// Binary is an operator whose operands are already of the types it takes (the checker and
 	// lowering saw to that): arithmetic on numbers, comparison of numbers, equality of like types,
-	// bitwise operations on numbers, and && and || on booleans, which short-circuit.
+	// bitwise operations on numbers, and && and || on booleans or maybe booleans, which short-circuit.
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
@@ -523,9 +530,15 @@ type (
 	// null reference, or a Maybe pair). Relative is array.at(index), where a negative index counts
 	// from the end and a fraction truncates.
 	ArrayIndex struct {
-		Array, Index Expression
-		Element      Type
-		Relative     bool
+		Required         bool
+		UndefinedAllowed bool
+		View, ViewType   string
+		ViewAllowed      []ViewLiteral
+		ViewContract     ViewContractID
+		ViewTypeID       int
+		Array, Index     Expression
+		Element          Type
+		Relative         bool
 	}
 
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,
@@ -582,6 +595,7 @@ type (
 	// last returned (Initial the first time), the element, its index and the array, read and skipped
 	// as ArrayVisit does. Result is Initial's type, and the callback's.
 	ArrayReduce struct {
+		ViewRead                 ArrayViewRead
 		Array, Callback, Initial Expression
 		Element, Result          Type
 	}
@@ -593,8 +607,9 @@ type (
 	// ArrayPop is array.pop(): the last element, removed, or undefined when there's none (a null
 	// reference, or a Maybe pair).
 	ArrayPop struct {
-		Array   Expression
-		Element Type
+		ViewRead ArrayViewRead
+		Array    Expression
+		Element  Type
 	}
 
 	// MakeClosure makes a closure of a function, capturing the cells of its Environment.
@@ -610,6 +625,7 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
+		ViewRead ArrayViewRead
 		Array    Expression
 		Callback Expression
 		Element  Type
@@ -622,6 +638,7 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
+		ViewRead ArrayViewRead
 		Method   string
 		Array    Expression
 		Callback Expression
@@ -645,10 +662,11 @@ type (
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
 	// value (Callback, when it isn't nil). It sorts in place, stably, and is the array.
 	ArraySort struct {
-		Array      Expression
-		Comparator int
-		Callback   Expression
-		Element    Type
+		OptionalComparator bool
+		Array              Expression
+		Comparator         int
+		Callback           Expression
+		Element            Type
 	}
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
@@ -746,6 +764,8 @@ type (
 
 	// ArrayJoin is Array.join(Separator), writing each element as String() would.
 	ArrayJoin struct {
+		Stringify bool
+		ViewRead  ArrayViewRead
 		Array     Expression
 		Separator Expression
 		Element   Type
@@ -780,6 +800,9 @@ type (
 	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
 	// { kind: 'Error', message }.
 	FileStatus struct{ Path Expression }
+
+	// RealPath is realPath(Path): canonical filesystem path, or an error value.
+	RealPath struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
@@ -928,6 +951,7 @@ func (Utf8At) Type() Type           { return Number }
 func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
+func (RealPath) Type() Type         { return Object }
 
 func (MapNew) Type() Type     { return Map }
 func (MapKeys) Type() Type    { return Array }
@@ -956,6 +980,9 @@ func (u Unary) Type() Type {
 }
 
 func (b Binary) Type() Type {
+	if (b.Operator == And || b.Operator == Or) && b.Left.Type() == MaybeBoolean && b.Right.Type() == MaybeBoolean {
+		return MaybeBoolean
+	}
 	switch b.Operator {
 	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number
@@ -1098,6 +1125,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		ViewRead ArrayViewRead
 		Iterable Expression
 		Element  Type
 		Local    int

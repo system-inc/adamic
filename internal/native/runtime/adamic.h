@@ -50,8 +50,10 @@ void *adamic_allocate(size_t size, enum adamic_kind kind);
 typedef union adamic_value {
 	double number;
 	bool boolean;
+	uint8_t maybe_boolean;
 	void *reference;
 } adamic_value;
+_Static_assert(sizeof(bool) == sizeof(uint8_t), "boolean slots require one-byte bool");
 
 // adamic_maybe_number is number | undefined: present, and the number when it is.
 typedef struct adamic_maybe_number {
@@ -79,10 +81,11 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references);
 // adamic_closure is a function value: its code, and the cells it captured. Every closure is called
 // the same way, its arguments and its result as adamic_value, whatever its types.
 typedef struct adamic_closure adamic_closure;
-typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments);
+typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments, size_t argument_count);
 struct adamic_closure {
 	adamic_heap heap;
 	adamic_code code;
+	bool receiver;
 	size_t count;
 	adamic_cell *cells[];
 };
@@ -225,7 +228,8 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
-typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments);
+typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments, size_t argument_count);
+#include "view_callables.h"
 struct adamic_methods {
 	size_t count;
 	const char *const *names;
@@ -269,6 +273,7 @@ adamic_value *adamic_static_field(const adamic_object *object, const char *name,
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 // A readonly numeric view may see a field made with the undefined-only reference representation.
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
@@ -312,8 +317,11 @@ static inline void adamic_object_check_data_write(const adamic_object *object, c
 }
 
 // adamic_array is an array (array.c). references says whether its elements are references.
+#include "view_arrays.h"
+
 typedef struct adamic_array {
 	adamic_heap heap;
+	adamic_array_view_metadata view;
 	size_t length;
 	size_t capacity;
 	bool references;
@@ -323,7 +331,14 @@ typedef struct adamic_array {
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
+	struct adamic_map *sparse;
 } adamic_array;
+
+adamic_array *adamic_array_holes(double length, bool references);
+bool adamic_array_is_range_error(const adamic_object *value);
+adamic_value *adamic_array_holes_at(const adamic_array *array, double index);
+void adamic_array_holes_set(adamic_array *array, double index, adamic_value value);
+void adamic_array_holes_set_length(adamic_array *array, double length);
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);
@@ -335,7 +350,7 @@ void adamic_accessor_set(adamic_object *object, const char *name, adamic_value v
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);
 
-// adamic_map is a Map with string or number keys (map.c).
+// adamic_map stores up to four ordered entries inline, then uses a hash table (map.c).
 typedef struct adamic_map_entry {
 	adamic_value key;
 	adamic_value value;
@@ -364,6 +379,9 @@ typedef struct adamic_map {
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
 	size_t iterating;
+	// entries points here until a fifth historical slot is needed. An open iterator
+	// can require a table even with fewer live keys; closing the last permits compaction.
+	adamic_map_entry small[4];
 } adamic_map;
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
@@ -377,6 +395,8 @@ typedef struct adamic_map_iterator {
 } adamic_map_iterator;
 
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
+// Ends an active iteration once and returns a small map to inline storage when safe.
+void adamic_map_iterator_close(adamic_map_iterator *iterator);
 adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
@@ -501,6 +521,8 @@ enum adamic_equality {
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
 double adamic_array_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero, double from, bool has_from, bool last);
+double adamic_array_holes_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool includes, double from, bool has_from, bool last);
+
 
 // adamic_array_from_length is the length Array.from({ length }) makes (array_from.c): ToLength of
 // the number, and a panic where JavaScript throws, past 2^32 - 1.
@@ -553,6 +575,8 @@ enum adamic_join {
 	adamic_join_maybe_numbers,
 };
 struct adamic_string *adamic_array_join(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind);
+adamic_string *adamic_array_holes_join(const adamic_array *array, const adamic_string *separator, enum adamic_join kind);
+
 
 struct adamic_string *adamic_array_join_nested(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind, size_t depth);
 
@@ -591,6 +615,9 @@ bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number rig
 #define ADAMIC_UNDEFINED_BITS 0x7ff8000000000001u
 double adamic_maybe_number_pack(adamic_maybe_number value);
 adamic_maybe_number adamic_maybe_number_unpack(double packed);
+// Slot encoding: false = 0, true = 1, undefined = 2.
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
@@ -700,6 +727,8 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 // point: indexOf's answer, found through the index rather than by counting from the start.
 size_t adamic_string_units_before(const adamic_string *string, size_t offset);
 void adamic_string_free_index(adamic_string *string);
+// Borrowed until the string is freed or appended to; NULL for ownerless stack pieces.
+const uint16_t *adamic_string_utf16_view(adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
@@ -725,6 +754,9 @@ adamic_heap *adamic_box_number(double number);
 
 // adamic_union_equal is === on two unions: the same member, equal as that member is compared.
 bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
+
+// ToBoolean on a boxed union; objects are truthy even when empty.
+bool adamic_census_to_boolean(const adamic_heap *value);
 
 // adamic_union_to_string is String(value) for a union of numbers, booleans, strings and undefined, a
 // string the caller owns.
@@ -882,6 +914,7 @@ char *adamic_path_bytes(const adamic_string *path);
 // { kind: 'Error', message } (directory.c). Both return a reference the caller owns.
 adamic_object *adamic_read_directory(const adamic_string *path);
 adamic_object *adamic_file_status(const adamic_string *path);
+adamic_object *adamic_real_path(const adamic_string *path);
 
 // adamic_write_text_file is writeTextFile(path, text) (input.c): { kind: 'Ok' } or { kind: 'Error',
 // message }, a reference the caller owns.
@@ -923,9 +956,24 @@ _Noreturn void adamic_stack_overflow(void);
 _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
+#include "node_fs_file.h"
+#include "node_buffer.h"
+#include "node_crypto.h"
 // Fixed plain literals can have public # keys; Object reflection refuses those shapes.
 // Keep their enumeration distinct from the Object slice, which skips private class slots.
 adamic_array *adamic_plain_object_keys(const adamic_object *object);
 void *adamic_library_identity(size_t index);
 
+adamic_maybe_number adamic_process_exit_code(void);
+void adamic_process_set_exit_code(adamic_maybe_number code);
+void adamic_process_exit(adamic_maybe_number code);
+_Noreturn void adamic_process_exit_now(int code);
+int adamic_process_status(void);
+adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream);
+adamic_string *adamic_process_environment(const adamic_string *name);
+
 #endif
+
+#include "node_path.h"
+#include "node_fs_directory.h"
+#include "node_process.h"

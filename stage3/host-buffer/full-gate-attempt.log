@@ -1,0 +1,114 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo	496.660s
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.217s
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	5.966s
+ok  	github.com/system-inc/adamic/cmd/adamic-stage1-progress	0.317s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	89.111s
+ok  	github.com/system-inc/adamic/internal/flow	137.561s
+--- FAIL: TestEveryWriteIsRecordedAndKnown (44.21s)
+    fresh_test.go:58: ../oracle/testdata/node_buffer_bom.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_bom.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_bom.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_bom.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_bom.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_bom.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_bom.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_bom.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_crypto.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_encodings.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_finalized.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_finalized.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_finalized.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_finalized.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_input.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_input.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_input.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_input.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_input.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_input.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_input.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_input.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_random.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_random.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_random.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_random.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_random.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_random.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_random.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_random.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_random.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf16.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf16.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf16.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf16.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf16.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf16.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf16.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf8.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf8.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf8.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf8.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf8.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf8.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf8.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_utf8.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_writes.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_writes.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_writes.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_writes.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_writes.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:58: ../oracle/testdata/node_buffer_writes.a: ir.NodeBufferCall is a node the cycle finder doesn't know
+    fresh_test.go:65: 1123 writes in 317 programs, 983 proven not to close a cycle
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	44.226s
+ok  	github.com/system-inc/adamic/internal/fuzz	10.701s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	2.084s
+ok  	github.com/system-inc/adamic/internal/lower	48.531s
+--- FAIL: TestRuntimeFieldLayoutsAreIncluded (0.01s)
+    fields_test.go:154: node_crypto.c: runtime field "bytes" at 0 is absent or conflicting in the layout proof
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	225.678s
+ok  	github.com/system-inc/adamic/internal/oracle	205.778s
+ok  	github.com/system-inc/adamic/internal/regexp	9.571s

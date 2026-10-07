@@ -12,12 +12,12 @@ func (e *emitter) viewField(property ir.Property) string {
 	of := property.Type()
 	object := e.value(property.Object)
 	slot := e.temporary()
-	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
+	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
 	name, supported := names[of]
 	if !supported || property.Method {
 		panic("compiler bug: incomplete checked field contract")
 	}
-	if property.ViewType != "" {
+	if property.ViewType != "" && property.Of != ir.Closure {
 		name = property.ViewType
 	}
 	if property.Absent || property.Optional || of == ir.MaybeNumber || of == ir.MaybeBoolean {

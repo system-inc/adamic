@@ -10,12 +10,14 @@
 
 adamic_array *adamic_array_new(size_t capacity, bool references) {
 	adamic_array *array = adamic_allocate(sizeof *array, adamic_kind_array);
+	array->view.storage = 0;
 	array->length = 0;
 	array->capacity = capacity;
 	array->references = references;
 	array->element_kind = 0;
 	array->elements = NULL;
 	array->properties = NULL;
+	array->sparse = NULL;
 	if (capacity > 0) {
 		array->elements = malloc(capacity * sizeof *array->elements);
 		if (array->elements == NULL) {
@@ -120,6 +122,7 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 	}
 	size_t from = (size_t)start, to = end > start ? (size_t)end : from;
 	adamic_array *sliced = adamic_array_new(to - from, array->references);
+	sliced->view = array->view;
 	for (size_t index = from; index < to; index++) {
 		adamic_value value = array->elements[index];
 		if (array->references) {
@@ -196,7 +199,7 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context) {
 	// JavaScript reads the comparator's result by its sign, and NaN as 0.
 	adamic_closure *compare = context;
-	double result = compare->code(compare, (adamic_value[]){left, right}).number;
+	double result = compare->code(compare, (adamic_value[]){left, right}, 2).number;
 	return result < 0 ? -1 : result > 0 ? 1 : 0;
 }
 
@@ -306,6 +309,7 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	// The removed elements move to the result, their references with them, or are let go.
 	if (removed != NULL) {
 		*removed = adamic_array_new(removed_count, array->references);
+		(*removed)->view = array->view;
 		for (size_t index = 0; index < removed_count; index++) {
 			adamic_array_push(*removed, array->elements[from + index]);
 		}
@@ -377,6 +381,7 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
 		length += arrays[which]->length;
 	}
 	adamic_array *joined = adamic_array_new(length, arrays[0]->references);
+	joined->view = arrays[0]->view;
 	for (size_t which = 0; which < count; which++) {
 		for (size_t index = 0; index < arrays[which]->length; index++) {
 			adamic_value value = arrays[which]->elements[index];

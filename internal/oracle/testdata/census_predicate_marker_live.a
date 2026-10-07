@@ -1,0 +1,9 @@
+type Marker = (...args: never[]) => void;
+function hold(marker: Marker): Marker { return marker; }
+function isText(value: string | undefined): value is string { return value !== undefined; }
+function describe(test: (value: string | undefined) => value is string): string { return typeof hold(test); }
+console.log(describe(isText));
+const marker: Marker = isText;
+console.log(typeof marker);
+console.log(String(isText('yes')));
+console.log(String(isText(undefined)));
