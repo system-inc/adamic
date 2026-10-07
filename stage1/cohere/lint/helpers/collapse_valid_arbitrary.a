@@ -1,0 +1,23 @@
+export function collapseIsValidArbitrary(input: string): boolean {
+    const closing: number[] = [];
+    for (let index = 0; index < input.length; index++) {
+        const character = input.charCodeAt(index);
+        if (character === 92) { index++; continue; }
+        if (character === 39 || character === 34) {
+            while (index + 1 < input.length) {
+                index++;
+                const next = input.charCodeAt(index);
+                if (next === 92) { index++; continue; }
+                if (next === character) { break; }
+            }
+            continue;
+        }
+        if (character === 40) { closing.push(41); }
+        else if (character === 91) { closing.push(93); }
+        else if (character === 93 || character === 125 || character === 41) {
+            if (closing.length === 0) { return false; }
+            if (character === closing[closing.length - 1]) { closing.pop(); }
+        } else if (character === 59 && closing.length === 0) { return false; }
+    }
+    return true;
+}

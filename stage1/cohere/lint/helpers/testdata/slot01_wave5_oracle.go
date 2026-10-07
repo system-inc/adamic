@@ -99,9 +99,14 @@ func main() {
 		character := string(rune(value))
 		sources = append(sources, character, "a"+character+"z", character+"12.5px", "x"+character+"(1)")
 	}
+	sources = append(sources, "(", "[", "{", "}", ";", "(])", "([)]", "[])", "(a;b)", "a;b", "\\;", "\\)", "\\", "'unfinished", "\";])\"", "'a\\';b'", "𝒜(;)", "\\𝒜;", "'\\𝒜;'")
 	for _, value := range sources {
 		must(encode.Encode(value))
-		fmt.Fprintln(expected, collapse.AdamicWave5Named(value))
+		if os.Args[4] == "arbitrary" {
+			fmt.Fprintln(expected, collapse.AdamicWave5Arbitrary(value))
+		} else {
+			fmt.Fprintln(expected, collapse.AdamicWave5Named(value))
+		}
 	}
 	fmt.Fprintf(os.Stderr, "%d fixture strings; %d helper queries (%s)\n", fixtureCount, len(sources), os.Args[4])
 }

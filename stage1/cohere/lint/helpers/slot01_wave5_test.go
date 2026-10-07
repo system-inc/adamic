@@ -109,7 +109,7 @@ func slot01Wave5Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave5_main.a", "collapse_valid_named_value.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave5_main.a", "collapse_valid_named_value.a", "collapse_valid_arbitrary.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -143,4 +143,15 @@ func TestSlot01Wave5NamedMatchesCohere(t *testing.T) {
 }
 func TestSlot01Wave5NamedEmptyMutant(t *testing.T) {
 	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidNamedValue", "named", "collapse_valid_named_value.a", "if (value === '') { return false; }", "")
+}
+
+// Not parallel: bounded external captures and sanitizer compilation.
+func TestSlot01Wave5ArbitraryMatchesCohere(t *testing.T) {
+	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidArbitrary", "arbitrary", "collapse_valid_arbitrary.a", "character === 59 && closing.length === 0", "false")
+}
+func TestSlot01Wave5ArbitraryFinalMutant(t *testing.T) {
+	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidArbitrary", "arbitrary", "collapse_valid_arbitrary.a", "return true;", "return closing.length === 0;")
+}
+func TestSlot01Wave5ArbitraryEscapeMutant(t *testing.T) {
+	slot01Wave5Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidArbitrary", "arbitrary", "collapse_valid_arbitrary.a", "if (character === 92) { index++; continue; }", "")
 }
