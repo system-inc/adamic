@@ -1,0 +1,17 @@
+{
+  "name": "react/jsx-no-undef",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "source": "rule.a",
+  "class": "Rule",
+  "factory": "create",
+  "nodeArgument": true,
+  "needsChecker": true,
+  "kindNumbers": [
+    287,
+    286
+  ]
+}
