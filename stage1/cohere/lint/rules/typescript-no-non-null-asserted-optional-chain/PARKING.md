@@ -1,3 +1,38 @@
+Built: all eleven owned rules rebased to current main and parked on shared registration unification #zmh9v36; production shared harness files remain untouched.
+Commits: current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06; green pushed helper branch c023b39cedf928b9867785e8fe3cb5cd21a2f52f; rebased rule work bfca5f0c9, followed by this refreshed evidence commit.
+Commands and outputs: full owned rule gate PASS 162.996s / 263.274s / 234.742s, vet PASS; 3,916 compiler/stage1 pairs and 147,374,518 identical bytes; setup PASS 40s, nproc 5.
+Mutants: all eleven rule-semantic mutants and all numeric subscription, suggestion, regexp and provider guard mutants compiled and were caught again on Node, emitted JavaScript and ASan/UBSan native.
+Not covered: production registration and numeric handed-node dispatch, independent JSX support, complete shared suggestions and native Tailwind providers; throughput and the full repository gate were not rerun.
+
+# Current parking refresh on c01907a7
+
+Main advanced before the next helper reservation. No helper was claimed. The
+helper branch rebased cleanly, re-greened all three helper comparisons and seven
+semantic mutants, and was pushed as c023b39c. This rule branch also rebased cleanly.
+The stage1 tree before and after rebase is identical:
+df5a0c458f35117630bf06c74d242e75010f1b20. Production compiler packages, stage1,
+cohere and module pins are unchanged between f8013f0 and c01907a7; the sole oracle
+change is a dormant stage3 fixture hook. Despite identical sources, all owned
+rule tests, complete corpora, independent/projection controls and mutants were
+rerun. No shared harness handoff SHA has been named, and the #zmh9v36 parking
+blocker and adapter boundaries documented below still apply.
+
+With source /workspace/adamic-tools/env.sh:
+ADAMIC_TAILWIND_PACKAGE=/tmp/wave104-tailwind/node_modules/tailwindcss
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-04-typescript go test
+./stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain
+./stage1/cohere/lint/rules/func-name-matching
+./stage1/cohere/lint/rules/tailwind-important-position -p=3 -count=1 -v
+-timeout=20m: exit zero. Package durations 162.996s, 263.274s and 234.742s.
+All 356 compiler/stage1 files compare byte for byte on every execution target.
+Go vet over those packages and the private parking fixture: exit zero, empty log.
+Current output artifacts are evidence/c019-rules-tests.log,
+evidence/c019-rules-vet.log and evidence/c019-setup.log. Named shared-file diff
+against current main remains empty. Both branches are published only to their
+own codex branch names; neither main nor any area branch is pushed.
+
+# Historical first parking on f8013f0
+
 Built: rebased all eleven owned rules onto current main, preserving Go comparisons through an owned frozen test contract; shared harness integration is parked on #zmh9v36.
 Commits: main f8013f0baac41ddc340d76f83bddde38536a8f07; helper branch beeb653309e21ed3f300d6866d870e8461ca30ed; rebased rule implementation e09c70ca3, followed by this parking evidence commit.
 Commands and outputs: setup PASS 38s, nproc 5; owned packages PASS 152.803s, 246.039s and 218.749s; vet PASS; 3,916 compiler/stage1 rule/file pairs, 147,374,518 identical bytes.
