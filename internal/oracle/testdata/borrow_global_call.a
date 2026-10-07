@@ -1,0 +1,22 @@
+interface Item { readonly label: string; }
+function make(value: number): Item { return { label: `global${value}` }; }
+let item = make(1);
+function read(value: Item, count: number): void { console.log(`${value.label} ${count}`); }
+function replace(value: Item): void {
+	item = make(2);
+	console.log(value.label);
+}
+function replaceDeep(value: Item): void { replace(value); }
+function later(): number { item = make(3); return 3; }
+read(item, 0);
+replaceDeep(item);
+read(item, later());
+console.log(item.label);
+
+class Reader { read(value: Item): void { console.log(value.label); } }
+class Replacer extends Reader {
+	read(value: Item): void { item = make(4); console.log(value.label); }
+}
+function dispatch(reader: Reader): void { reader.read(item); }
+dispatch(new Reader());
+dispatch(new Replacer());
