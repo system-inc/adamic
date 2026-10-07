@@ -2,7 +2,7 @@
   "name": "no-new-func",
   "module": "../../no_new_func.a",
   "kinds": [
-    214,
-    215
+    "CallExpression",
+    "NewExpression"
   ]
 }

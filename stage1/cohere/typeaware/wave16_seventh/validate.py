@@ -14,6 +14,18 @@ def run(name,args,cwd=repo,env=None,code=0):
     assert p.returncode==code,(name,row,(art/(name+'.stderr')).read_text()[-3000:])
     return row
 stage=art/'adamic';archive=art/'checker.a';san=art/'checker-asan.a'
+# Metadata names are checked against the pinned Go AST, with negative controls.
+run('kind-names', ['go', 'run', owned/'kind_names.go'])
+known=set(json.loads((art/'kind-names.stdout').read_text()))
+manifests=sorted((owned.parent/'wave16_listeners').glob('*/rule.json'))+sorted(owned.glob('*/rule.json'))
+def valid_kinds(kinds):
+    return bool(kinds) and all(isinstance(k, str) and k in known for k in kinds) and len(kinds)==len(set(kinds))
+for descriptor in manifests:
+    data=json.loads(descriptor.read_text());assert valid_kinds(data['kinds']),descriptor
+    assert not valid_kinds([999]), 'numeric kind mutant survived'
+    assert not valid_kinds(['WrongKind']), 'unknown kind mutant survived'
+    assert not valid_kinds([data['kinds'][0],data['kinds'][0]]), 'duplicate kind mutant survived'
+(art/'kind-manifests.json').write_text(json.dumps({'checked':len(manifests),'mutants':['numeric','unknown','duplicate'],'kinds':{str(p.relative_to(owned.parent)):json.loads(p.read_text())['kinds'] for p in manifests}},indent=2))
 # Archive dispatch and question file are added by overlays, never source edits.
 source=(repo/'bridge/tsgo/checker/facts.go').read_text();hook='\tout.text(mode)\n'
 assert source.count(hook)==1

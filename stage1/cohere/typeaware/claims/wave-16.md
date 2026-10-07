@@ -172,3 +172,11 @@ exit 0 and are caught by Go bytes. Cross-file context remains blocked in the
 full rule graph, with a separate standalone adapter success recorded. No new
 claim was added. The detailed report and compressed evidence are in
 wave16_seventh/.
+
+Landing-first continuation on main b8fb957aa: rebased, all fifteen prior ports
+re-green (394.755s), bridge green (66.583s), both complete JSX name rules and
+local context paths re-green. All 18 listener manifests now use ast.Kind names.
+Cross-file context integration remains blocked by the full-suite shared parser
+constructor-escape refusal at parser.ts:34:20; standalone adapter success is
+recorded separately. No new claim was added. See wave16_seventh/LANDING_B8FB.md
+and its landing-b8fb evidence for commands, mutants, timing and coverage limits.

@@ -2,7 +2,7 @@
   "name": "react/jsx-no-constructed-context-values",
   "module": "rule.a",
   "kinds": [
-    286,
-    287
+    "JsxSelfClosingElement",
+    "JsxOpeningElement"
   ]
 }
