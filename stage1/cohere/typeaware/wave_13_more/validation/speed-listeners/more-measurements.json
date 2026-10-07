@@ -1,0 +1,112 @@
+{
+  "rounds": [
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "native": {
+        "seconds": 3.4470814899996185,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=329857953 query_ns=339936634 queries=189 first_query_ns=38708 run_ns=3085081388\n"
+      },
+      "go": {
+        "seconds": 0.49762464499872294,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=394594472 rule_ns=52834341 run_ns=83225209\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "go": {
+        "seconds": 0.43588093900143576,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=319491304 rule_ns=67162111 run_ns=103040278\n"
+      },
+      "native": {
+        "seconds": 3.382822642000974,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=368167151 query_ns=254325750 queries=189 first_query_ns=29143 run_ns=2988007082\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "native": {
+        "seconds": 3.3200126480005565,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=348611690 query_ns=246353063 queries=189 first_query_ns=28210 run_ns=2941570263\n"
+      },
+      "go": {
+        "seconds": 0.46213496699965617,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=344245397 rule_ns=69101336 run_ns=100058995\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "native": {
+        "seconds": 0.45736723899972276,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=114948167 query_ns=16230559 queries=404 first_query_ns=22655 run_ns=334402665\n"
+      },
+      "go": {
+        "seconds": 0.1263300540013006,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=97313137 rule_ns=6089147 run_ns=15383595\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "go": {
+        "seconds": 0.15640084199912963,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=118682336 rule_ns=12233663 run_ns=26208192\n"
+      },
+      "native": {
+        "seconds": 0.7594472109994967,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=180067296 query_ns=42634610 queries=404 first_query_ns=24726 run_ns=563535503\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "native": {
+        "seconds": 0.4807233339997765,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=136223963 query_ns=18370549 queries=404 first_query_ns=27663 run_ns=335605734\n"
+      },
+      "go": {
+        "seconds": 0.12948044199947617,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=104261735 rule_ns=7101908 run_ns=15860390\n"
+      }
+    }
+  ],
+  "summary": {
+    "compiler": {
+      "native_median_seconds": 3.382822642000974,
+      "go_median_seconds": 0.46213496699965617,
+      "ratio": 7.319988495922428
+    },
+    "repository": {
+      "native_median_seconds": 0.4807233339997765,
+      "go_median_seconds": 0.12948044199947617,
+      "ratio": 3.7127100168666503
+    }
+  }
+}
