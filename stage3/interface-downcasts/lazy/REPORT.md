@@ -149,3 +149,7 @@ The broader class-inheritance exception oracle still fails on an unrelated
 boolean-array view; restoring the original Error runtime reproduces it.
 Logs: `census/nullish-pass.log`, `census/null-collapse-mutant.log`,
 `census/error-baseline.log`.
+
+The adapted-tree follow-up supersedes the stock-tree production census: see
+[ADAPTED-CENSUS.md](ADAPTED-CENSUS.md) for exact cast counts and all remaining
+checker diagnostic rows. The designated integration tip is now merged.
