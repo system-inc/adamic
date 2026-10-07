@@ -362,6 +362,18 @@ func wasiSkips(p plan, index int, results []result) []string {
 		if r.Action != "skip" || r.Test == "" {
 			continue
 		}
+		for _, c := range p.Complements {
+			if c.Package != r.Package || !strings.HasPrefix(r.Test, c.Parent+"/") {
+				continue
+			}
+			for _, u := range p.Units {
+				parent, _, _ := strings.Cut(u.Test, "/")
+				if u.Package == r.Package && u.WASI && parent == c.Parent {
+					failures = append(failures, fmt.Sprintf("shard %d required WASI unit %s skipped: %s", index, r.key(), r.Reason))
+					break
+				}
+			}
+		}
 		for _, u := range p.Units {
 			if !u.WASI || u.Package != r.Package {
 				continue

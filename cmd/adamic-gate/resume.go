@@ -324,27 +324,37 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
 	if err != nil {
 		return err
 	}
-	units := []unit{}
-	for _, u := range p.Units {
-		if u.Package == pkg && u.Shard == index {
-			units = append(units, u)
-		}
-	}
-	selectors := patterns(units)
+	units := assignedPackages(p, index)[pkg]
+	selectors := selections(p, index, pkg)
 	if len(e.Invocations) != len(selectors) {
 		return errors.New("package invocation count differs")
 	}
 	for i, call := range e.Invocations {
-		if call.Package != pkg || !call.Uncached || !reflect.DeepEqual(call.Args, testArgs(pkg, selectors[i])) {
+		if call.Package != pkg || !call.Uncached || !reflect.DeepEqual(call.Args, selectionArgs(pkg, selectors[i])) {
 			return errors.New("package invocation inputs differ")
 		}
 	}
+
 	produced := map[string]bool{}
 	problems := validateResults(p, index, results, produced, map[string]int{})
 	problems = append(problems, validateResults(p, index, runs, map[string]bool{}, map[string]int{})...)
 	for _, u := range units {
 		if !produced[u.key()] {
 			problems = append(problems, "planned unit has no terminal event: "+u.key())
+		}
+	}
+	for _, c := range p.Complements {
+		if c.Shard != index || c.Package != pkg {
+			continue
+		}
+		found := false
+		for _, r := range results {
+			if r.Package == pkg && r.Test == c.Parent {
+				found = true
+			}
+		}
+		if !found {
+			problems = append(problems, "complement parent has no terminal event: "+pkg+"::"+c.Parent)
 		}
 	}
 	starts, finishes := map[string]int{}, map[string]int{}
@@ -427,12 +437,7 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
 	if state.PlanDigest != p.Digest || state.Index != s.Index || state.Context == "" {
 		return []string{"package checkpoint state differs from plan"}
 	}
-	byPackage := map[string][]unit{}
-	for _, u := range p.Units {
-		if u.Shard == s.Index {
-			byPackage[u.Package] = append(byPackage[u.Package], u)
-		}
-	}
+	byPackage := assignedPackages(p, s.Index)
 	packages := []string{}
 	for pkg := range byPackage {
 		packages = append(packages, pkg)
@@ -443,7 +448,7 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
 	var problems []string
 	for _, pkg := range packages {
 		packageDir := filepath.Join(dir, "packages", shortHash(pkg))
-		e, found, err := loadPackage(packageDir, checkpointKey(state, pkg, patterns(byPackage[pkg])), p, s.Index, pkg)
+		e, found, err := loadPackage(packageDir, checkpointKey(state, pkg, selectorKeys(p, s.Index, pkg)), p, s.Index, pkg)
 		if err != nil || !found {
 			problems = append(problems, fmt.Sprintf("shard %d package %s has no valid complete log: %v", s.Index, pkg, err))
 			continue

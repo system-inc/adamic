@@ -5,6 +5,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"reflect"
+	"sort"
 	"strings"
 	"testing"
 )
@@ -60,6 +61,7 @@ func TestOther(t *testing.T) {}
 			leaves = append(leaves, r.Test)
 		}
 	}
+	sort.Strings(leaves)
 	want := []string{"TestParent/internal/load/testdata/0.1/compile/main.a", "TestParent/internal/oracle/testdata/a.a", "TestParent/internal/oracle/testdata/b+.a"}
 	if !reflect.DeepEqual(leaves, want) {
 		t.Fatalf("Go executed %v, want exactly %v", leaves, want)
