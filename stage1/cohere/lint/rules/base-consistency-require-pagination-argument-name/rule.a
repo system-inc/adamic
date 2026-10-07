@@ -1,0 +1,43 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { invalidName } from './messages.a';
+import { paginationType, paginationName } from './patterns.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        const call = node.children[0] ?? -1;
+        if(context.kind(call) !== 'CallExpression') { return; }
+        const callee = context.node(call).children[0] ?? -1;
+        if(context.kind(callee) !== 'Identifier' || context.node(callee).text !== 'GraphQlArgument') { return; }
+        const parent = context.parent(index);
+        if(context.kind(parent) !== 'Parameter') { return; }
+        const name = context.name(parent);
+        if(context.kind(name) !== 'Identifier') { return; }
+        const callArguments = context.arguments(call);
+        let pagination = false;
+        for(const argument of callArguments) {
+            if(context.kind(argument) === 'ArrowFunction') {
+                const children = context.node(argument).children;
+                const body = children[children.length - 1] ?? -1;
+                if(context.kind(body) === 'Identifier' && paginationType(context.node(body).text)) { pagination = true; }
+            }
+        }
+        for(const part of context.node(parent).children) {
+            if(context.kind(part) === 'TypeReference') {
+                const typeName = context.node(part).children[0] ?? -1;
+                if(context.kind(typeName) === 'Identifier' && paginationType(context.node(typeName).text)) { pagination = true; }
+            }
+        }
+        if(!pagination) { return; }
+        let reported = name;
+        const first = callArguments[0] ?? -1;
+        if(context.kind(first) === 'StringLiteral' || context.kind(first) === 'NoSubstitutionTemplateLiteral') { reported = first; }
+        const spelling = context.node(reported).text;
+        if(spelling === 'pagination' || paginationName(spelling)) { return; }
+        context.reportNode(reported, 'base/consistency-require-pagination-argument-name', 'invalidName', invalidName);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
