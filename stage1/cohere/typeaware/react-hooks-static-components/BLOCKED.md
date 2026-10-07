@@ -60,3 +60,23 @@ Common evidence is committed under
 logs, setup timings, parser probe input/config/manifest and outputs, and push
 attempt logs. The first claim push received a generic remote failure; retry
 succeeded. No shared harness, generator, parser or compiler file was changed.
+
+## Dependency recheck on October 7
+
+Fetched all 417 origin refs after the next keep-cooking request. Native JSX
+support DOES now exist on `origin/codex/stage1-jsx-lint`, implemented in
+`e715ef4a2f898230af63c40195dea6586a557899`, with evidence at tip `a8a62d62`.
+The earlier absence statement applies to this worker's checkout, not all
+origin branches. The change introduces `parser/jsx.ts` and modifies the
+shared `parser.ts`, `lookahead.ts`, and `scanner.ts`; it has not been
+integrated into this branch. Its lint work ports batch8 syntax rules, not
+these React HIR validators. The shared harness tip is now `f4d98cab`.
+
+Ahra explicitly instructed: "Keep your changes inside your own rule
+directories." Applying the JSX changes would change those shared files,
+so this worker has not cherry-picked or copied them into the checkout.
+The integration owner can land that dependency; afterward these three rules
+still require native React HIR lowering and their value/control analyses.
+No additional rules were claimed, and no new implementation or validation
+pass is asserted by this dependency inventory. Existing results above are
+historical, not reruns. The current checkout and shared files remain unchanged.
