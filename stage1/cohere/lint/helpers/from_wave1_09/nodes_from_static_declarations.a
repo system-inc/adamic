@@ -1,0 +1,31 @@
+// Go static_utility.go: preserve order and absence independently of an empty value.
+export interface StaticDeclaration {
+    property: string;
+    value: string;
+    valuePresent: boolean;
+    important: boolean;
+}
+export interface DeclarationNode {
+    kind: string;
+    selector: string;
+    name: string;
+    params: string;
+    property: string;
+    value: string;
+    valuePresent: boolean;
+    important: boolean;
+    contextPresent: boolean;
+    nodesPresent: boolean;
+}
+export function nodesFromStaticDeclarations(declarations: readonly StaticDeclaration[]): DeclarationNode[] {
+    const nodes: DeclarationNode[] = [];
+    for(const declaration of declarations) {
+        nodes.push({
+            kind: 'declaration', selector: '', name: '', params: '',
+            property: declaration.property, value: declaration.value,
+            valuePresent: declaration.valuePresent, important: declaration.important,
+            contextPresent: false, nodesPresent: false,
+        });
+    }
+    return nodes;
+}
