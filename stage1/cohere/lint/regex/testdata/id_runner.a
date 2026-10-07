@@ -1,0 +1,29 @@
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { Linter } from '../../lint.ts';
+import { Settings } from '../../settings.ts';
+import { Rule } from './id_consumer/rule.a';
+import { idFixtures } from './id_fixtures.a';
+const fixtures = idFixtures();
+for(let index = 0; index < fixtures.length; index++) {
+    const fixture = fixtures[index];
+    if(fixture === undefined) continue;
+    const parser = new Parser(fixture.source, fixture.file);
+    const scanner = new Scanner(fixture.source);
+    const settings = new Settings();
+    settings.load(fixture.options);
+    const context = new Linter(fixture.source, parser, scanner, 'id-length', '', '', false, settings);
+    context.run();
+    const subject = new Rule(context);
+    function visit(nodeIndex: number): void {
+        const node = parser.node(nodeIndex);
+        // Existing parser adapter dispatches only declared identifier listeners.
+        if(node.kind === 'Identifier' || node.kind === 'PrivateIdentifier') subject.visit(nodeIndex);
+        for(const child of node.children) visit(child);
+    }
+    visit(context.root);
+    console.log(`case ${index}`);
+    for(const finding of context.findings) console.log(`${finding.start}:${finding.end}:${finding.id}:${written(finding.message)}`);
+    console.log(`fixed ${written(context.fixed())}`);
+}

@@ -1,0 +1,47 @@
+// no-warning-comments' convertToRegExp contract. Match only through RegExp.
+import { warningSelfDirective } from './patterns.a';
+function escaped(value: string): string {
+    return value.replace(/[\\^$.*+?()[\]{}|]/gu, '\\$&');
+}
+export function warningPatternSource(term: string, location: string, decoration: readonly string[]): string {
+    const prefix = location === 'start'
+        ? `^[\\s${escaped(decoration.join(''))}]*`
+        : /^\w/u.test(term) ? '\\b' : '';
+    const suffix = /\w$/u.test(term) ? '\\b' : '';
+    return `${prefix}${escaped(term)}${suffix}`;
+}
+export class WarningCommentMatchers {
+    readonly terms: string[] = [];
+    readonly patterns: RegExp[] = [];
+    constructor(terms: readonly string[], location: string, decoration: readonly string[]) {
+        for(const term of terms) {
+            const source = warningPatternSource(term, location, decoration);
+            // Go omits a term whose generated expression does not compile.
+            try {
+                const pattern = new RegExp(source, 'iu');
+                this.terms.push(term);
+                this.patterns.push(pattern);
+            } catch { }
+        }
+    }
+    matching(value: string): string[] {
+        const found: string[] = [];
+        for(let index = 0; index < this.patterns.length; index++) {
+            const pattern = this.patterns[index];
+            if(pattern !== undefined && pattern.test(value)) found.push(this.terms[index] ?? '');
+        }
+        return found;
+    }
+}
+// Existing comment callers share a compiled configuration across comments.
+const cache = new Map<string, WarningCommentMatchers>();
+export function matches(value: string, term: string, location: string, decoration: string[]): boolean {
+    const source = warningPatternSource(term, location, decoration);
+    let matcher = cache.get(source);
+    if(matcher === undefined) {
+        matcher = new WarningCommentMatchers([term], location, decoration);
+        cache.set(source, matcher);
+    }
+    return matcher.matching(value).length > 0;
+}
+export function hasWarningRuleName(value: string): boolean { return warningSelfDirective().test(value); }

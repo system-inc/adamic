@@ -1,0 +1,12 @@
+package core
+import("testing";esregexp "github.com/system-inc/cohere/internal/lint/ecmascript/regexp")
+func TestWaveRegexControls(t *testing.T){
+ for _,pattern:=range []string{"^a$","(?<=a)b","a(?=b)","(a)\\1","\\s","^BEFORE_","send$","[x-z]",".","(?:)","(?<word>a)"}{
+  compiled,err:=esregexp.Compile(pattern,"u");if err!=nil{t.Fatal(err)}
+  for _,text:=range []string{"a","ab","aa","x","BEFORE_send","send","\u00a0","\r","🌍","","var a","TODO"}{waveRegexTest("id-length",compiled,text);waveRegexTest("no-inline-comments",compiled,text)}
+ }
+ for _,term:=range []string{"todo","K","s","!FIX","regex [litera|$]","","a.b","🌍","-"}{for _,location:=range []NoWarningCommentsLocation{NoWarningCommentsStart,NoWarningCommentsAnywhere}{for _,decoration:=range [][]string{nil,{"*"},{"a","-","z"},{"z","-","a"},{"["},{"-"}}{
+  pattern,err:=noWarningCommentsMatcherFor(term,location,decoration);if err!=nil{continue}
+  for _,text:=range []string{"TODO", "todoK", "todoſ", "\u00a0TODO", "\vTODO", "* todo", "any !FIX", "regex [litera|$]", "a.b", "aaa TODO", "🌍", ""}{waveWarningTest(pattern,text)}
+ }}}
+}

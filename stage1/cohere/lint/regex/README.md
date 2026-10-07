@@ -17,7 +17,8 @@ Helpers and tooling retain their source-unit slug instead of inventing a rule ow
 An arbitrary accepted option-pattern language is infinite. The table inventories
 all compile sites and source expressions, including each runtime option family;
 it cannot enumerate every possible user string. See [gaps.md](gaps.md) for the
-measured constructor and esregexp blockers and the incomplete rule migrations.
+measured constructor and esregexp blockers. [MIGRATIONS.md](MIGRATIONS.md) records
+the three migrations and their backend and integration limits.
 
 | Feature class | Table rows |
 | --- | ---: |

@@ -1,0 +1,20 @@
+// no-inline-comments' ignorePattern uses the inner, trimmed comment text.
+import { inlineCommentDirective } from './patterns.a';
+export class InlineCommentIgnorePattern {
+    readonly pattern: RegExp | undefined;
+    constructor(source: string) {
+        if(source === '') this.pattern = undefined;
+        else {
+            // Cohere treats a rejected pattern as absent. This is configuration
+            // rejection, never a replacement matcher.
+            try { this.pattern = new RegExp(source, 'u'); }
+            catch { this.pattern = undefined; }
+        }
+    }
+    ignores(body: string): boolean {
+        return this.pattern !== undefined && this.pattern.test(body);
+    }
+}
+export function inlineDirective(body: string, block: boolean): boolean {
+    return block ? inlineCommentDirective().test(body) : body.startsWith('eslint-');
+}

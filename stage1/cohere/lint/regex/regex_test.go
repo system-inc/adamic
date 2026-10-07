@@ -121,11 +121,29 @@ func TestDynamicPatternGap(t *testing.T) {
 	if e != nil {
 		t.Fatal(e)
 	}
-	_, e = lower.Lower(context.Background(), p)
-	if e == nil || !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
-		t.Fatalf("expected named native gap, got %v", e)
+	lowered, e := lower.Lower(context.Background(), p)
+	if e != nil {
+		if !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
+			t.Fatalf("unexpected dynamic RegExp blocker: %v", e)
+		}
+		t.Logf("PENDING emitted JS and native on codex/regex-runtime-compiler: %v", e)
+		return
 	}
-	t.Log(e)
+	directory := t.TempDir()
+	js := filepath.Join(directory, "dynamic.js")
+	binary := filepath.Join(directory, "dynamic")
+	if e := os.WriteFile(js, []byte(javascript.JavaScript(lowered)), 0644); e != nil {
+		t.Fatal(e)
+	}
+	if e := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); e != nil {
+		t.Fatal(e)
+	}
+	for _, actual := range [][]byte{run(t, ".", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), js, "TODO"), run(t, ".", binary, "TODO")} {
+		if !bytes.Equal(actual, out) {
+			t.Fatalf("dynamic constructor differs from Node: %q", actual)
+		}
+	}
+	t.Log("dynamic constructor emitted JS and sanitized native acceptance now green")
 }
 
 func optionAnswers(t *testing.T, cases string) ([]byte, []byte) {

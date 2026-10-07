@@ -65,3 +65,10 @@ go test ./stage1/cohere/lint/regex -count=1 -v -timeout=20m > /tmp/regex-final.l
 go vet ./stage1/cohere/lint/regex > /tmp/regex-final-vet.log 2>&1
 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regexp\.a$' -count=1 -v -timeout=10m > /tmp/regex-filtered-oracle.log 2>&1
 ```
+
+## Runtime migration follow-up
+
+The earlier parking status is superseded by [MIGRATIONS.md](MIGRATIONS.md).
+The complete owned gate passed in 14.089s and go vet was clean.
+Three runtime consumers and comparison-only mutants are ready for integration;
+both compiled legs remain pending the named runtime compiler branch.

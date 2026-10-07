@@ -23,7 +23,7 @@ does not establish support for runtime rule options. No matcher fallback was add
 
 This prevents id-length's `exceptionPatterns`, no-inline-comments' `ignorePattern`,
 and no-warning-comments' generated configurable terms/decorations from following
-the required RegExp path on native. Their full finding migrations were not made.
+the required RegExp path on native. Their constructor migrations and finding comparisons now exist; see MIGRATIONS.md.
 
 ## JavaScript option oracle migration, #7mztrdd
 
@@ -51,16 +51,19 @@ When this gap closes the gap test fails and tells the worker to put the case bac
 into the option agreement corpus. This is a property of the pinned esregexp package,
 not proof that the JavaScript option contract needs changing.
 
-This branch is parked pending the dynamic RegExp library work and #7mztrdd; this
-additional esregexp property mismatch must also be resolved for its covered option.
-The three full rule migrations remain waiting. Do not resume them with hand matchers.
+The runtime compiler is approved as Codex 01a114e3 on codex/regex-runtime-compiler.
+Both emitted JavaScript and sanitized native remain pending because the shared
+lowerer rejects nonconstant patterns before backend selection. Tests activate both
+legs automatically when lowering succeeds. #7mztrdd remains the Go consumer
+integration dependency; captures use an explicit esregexp overlay. The property
+mismatch remains named and no fallback was added.
 
 ## Harness integration, #zmh9v36
 
 Current main has no directory registration foundation. Its lint tests copy a fixed
-`portFiles` list, which excludes `regex/patterns.a`. Adding a table import to the
-existing `comments.ts` would break those tests. No shared harness files were edited;
-the existing no-warning-comments matcher remains intact. The table exports the
+`portFiles` list, which excludes `regex/patterns.a`. The migrated `comments.ts` now imports the owned regex modules, so that shared
+copy list needs integration. No shared harness files were edited; the production
+no-warning-comments hand matcher has been replaced. The table exports the
 fixed `warningSelfDirective` and `inlineCommentDirective` literals for integration.
 
 The parked `codex/lint-wave1-06` branch was not changed by this unit.

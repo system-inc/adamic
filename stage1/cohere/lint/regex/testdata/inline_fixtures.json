@@ -1,0 +1,745 @@
+[
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "// A solitary comment"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "// A valid comment before code\nvar a = 1;"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "foo(); /* global foo */"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "foo(); /* global foo */\n"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "foo(); /* globals foo */"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n            <div>\n            { /* comment */ }\n            <h1>Some heading</h1>\n            </div>\n        )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n            <div>\n            { // comment\n            }\n            </div>\n        )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n            <div>\n            {/* comment 1 */\n            /* comment 2 */}\n            </div>\n        )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n            <div>\n            {/*\n               multi\n               line\n               comment\n            */}\n            </div>\n        )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n            <div>\n            {/*\n              * comment 1\n              */\n             /*\n              * comment 2\n              */}\n            </div>\n        )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n            <div>\n            {/*comment*/}\n            </div>\n        )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n            <div>\n            {// comment\n            }\n            </div>\n        )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 1; /* eslint-disable-line no-debugger */"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 1; // eslint-disable-line no-debugger"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 1; // eslint-disable-line no-debugger\n"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 2;\n// A valid comment after code"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var foo; /* exported foo */"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": "(?:webpackChunkName):\\s.+"
+    },
+    "rule": "no-inline-comments",
+    "source": "import(/* webpackChunkName: \"my-chunk-name\" */ './locale/en');"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": "Note: "
+    },
+    "rule": "no-inline-comments",
+    "source": "var foo = 2; // Note: This comment is legal."
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 100,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 49
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {/*\n                  * comment\n                  */\n                    b\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 100,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 49
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {/*\n                  * comment\n                  */}</div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 101,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 88
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                    b\n                /* comment */}\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 105,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 92
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                    {\n                    /* comment */}\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 107,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 70
+      },
+      {
+        "end": 142,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 108
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                    /* overlapping\n                    */ /*\n                       lines */\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 118,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 67
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                 /*\n                  * comment\n                  */}</div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 134,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 72
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                    { /* this is an empty object literal, not braces for js code! */ }\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 137,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 88
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                    b\n                /*\n                 * comment\n                 */}\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 14,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 10
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = \n{/**/}"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 15,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "IgnorePattern": "otherthing"
+    },
+    "rule": "no-inline-comments",
+    "source": "/* something */ var a = 2;"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 20,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 7
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "foo(); // global foo\n"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 24,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 11
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 1; // exported a\n"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 28,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 11
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 1; // eslint disable\n"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 32,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 11
+      }
+    ],
+    "options": {
+      "IgnorePattern": "something"
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 3; // other line comment"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 38,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "/*A block comment inline before code*/ var a = 2;"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 39,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 11
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 3; //A comment inline with code"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 42,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 32
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>{// comment\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 45,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 32
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>{/* comment */\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 45,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 32
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>{/* comment */}</div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 48,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 11
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 1; /*A block comment inline after code*/"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 50,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 11
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 3; // someday use eslint-disable-line here"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 59,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 49
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {// comment\n                    b\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 62,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 49
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {/* comment */\n                    b\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 62,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 49
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {/* comment */b}\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 63,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 50
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {b/* comment */}\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 66,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 11
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = 4;\n/**A\n * block\n * comment\n * inline\n * between\n * code*/ var foo = a;"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 79,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 66
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                /* comment */}</div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 81,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 71
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                    b// comment\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 81,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 71
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                    {// comment\n                    }\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 83,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 70
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                    /* comment */b\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 84,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 71
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                {\n                    b/* comment */\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 88,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 50
+      },
+      {
+        "end": 142,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 89
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>\n                { /* two comments on the same line... */ /* ...are not allowed, same as with a non-JSX code */}\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 93,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 32
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>{/*\n                       * comment\n                       */\n                }\n                </div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 93,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 32
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>{/*\n                       * comment\n                       */}</div>\n            )"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 93,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 32
+      }
+    ],
+    "options": {
+      "IgnorePattern": ""
+    },
+    "rule": "no-inline-comments",
+    "source": "var a = (\n                <div>{/*\n                       * comment\n                       */}\n                </div>\n            )"
+  }
+]

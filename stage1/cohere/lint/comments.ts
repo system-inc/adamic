@@ -1,7 +1,9 @@
-// Matching uses Go's ASCII word boundaries and Unicode simple-fold equivalence.
+// Matching follows JavaScript option semantics through the shared regex module.
 // Quoting counts UTF-8 bytes, as cohere does, rather than JS code units.
 import { utf8Length } from 'adamic';
-import { foldPoint, foldedRange, printable } from './unicode.ts';
+import { printable } from './unicode.ts';
+import { hasWarningRuleName } from './regex/no_warning_comments.a';
+export { matches } from './regex/no_warning_comments.a';
 
 export function word(character: string): boolean {
     return (
@@ -29,19 +31,7 @@ export function space(character: string): boolean {
     );
 }
 export function selfDirective(value: string): boolean {
-    const name = 'no-warning-comments';
-    let position = value.indexOf(name);
-    let named = false;
-    while(position >= 0) {
-        if(!word(value[position - 1] ?? '') && !word(value[position + name.length] ?? '')) {
-            named = true;
-            break;
-        }
-        position = value.indexOf(name, position + 1);
-    }
-    if(!named) {
-        return false;
-    }
+    if(!hasWarningRuleName(value)) return false;
     let start = 0;
     while(start < value.length && space(value[start] ?? '')) {
         start++;
@@ -58,77 +48,6 @@ export function selfDirective(value: string): boolean {
     ]) {
         if(trimmed.startsWith(prefix) && ['', ' ', '\t', '\n', '\r'].includes(trimmed[prefix.length] ?? '')) {
             return true;
-        }
-    }
-    return false;
-}
-function validDecoration(decoration: string[]): boolean {
-    for(let index = 0; index < decoration.length; index++) {
-        if(index + 2 < decoration.length && decoration[index + 1] === '-') {
-            if(((decoration[index] ?? '').codePointAt(0) ?? 0) > ((decoration[index + 2] ?? '').codePointAt(0) ?? 0)) {
-                return false;
-            }
-            index += 2;
-        }
-    }
-    return true;
-}
-function decorated(character: string, decoration: string[]): boolean {
-    for(let index = 0; index < decoration.length; index++) {
-        const first = (decoration[index] ?? '').codePointAt(0) ?? 0;
-        let last = first;
-        if(index + 2 < decoration.length && decoration[index + 1] === '-') {
-            last = (decoration[index + 2] ?? '').codePointAt(0) ?? 0;
-            index += 2;
-        }
-        if(foldedRange(character, first, last)) {
-            return true;
-        }
-    }
-    return false;
-}
-export function matches(value: string, term: string, location: string, decoration: string[]): boolean {
-    // Go applies (?i) to decoration too. Unescaped '-' creates character ranges;
-    // a reversed range makes compilation fail and the matcher is omitted.
-    if(location === 'start' && !validDecoration(decoration)) {
-        return false;
-    }
-    let prefix = 0;
-    if(location === 'start') {
-        while(prefix < value.length) {
-            const point = value.codePointAt(prefix) ?? 0;
-            const character = String.fromCodePoint(point);
-            if(![' ', '\t', '\n', '\r', '\f'].includes(character) && !decorated(character, decoration)) {
-                break;
-            }
-            prefix += point > 65535 ? 2 : 1;
-        }
-    }
-    for(let index = 0; index <= (location === 'start' ? prefix : value.length); index++) {
-        // Compare folded scalars directly, without allocating candidate strings.
-        let end = index;
-        let equal = true;
-        for(let cursor = 0; cursor < term.length;) {
-            const expected = term.codePointAt(cursor) ?? 0;
-            const actual = value.codePointAt(end);
-            if(actual === undefined || foldPoint(actual) !== foldPoint(expected)) {
-                equal = false;
-                break;
-            }
-            cursor += expected > 65535 ? 2 : 1;
-            end += actual > 65535 ? 2 : 1;
-        }
-        if(
-            equal &&
-            (location === 'start' ||
-                !word(term[0] ?? '') ||
-                word(value[index - 1] ?? '') !== word(value[index] ?? '')) &&
-            (!word(term[term.length - 1] ?? '') || word(value[end - 1] ?? '') !== word(value[end] ?? ''))
-        ) {
-            return true;
-        }
-        if((value.codePointAt(index) ?? 0) > 65535) {
-            index++;
         }
     }
     return false;
