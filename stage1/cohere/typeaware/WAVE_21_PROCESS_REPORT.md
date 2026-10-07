@@ -1,5 +1,5 @@
 Built: native process-exit, uncleared-race-timeout and blocking-standard-streams rules, with raw checker facts.
-Commits: claim 19e28bf4; implementation and validation commit recorded in git history.
+Commits: claim 19e28bf4; implementation and validation 7d1f1fcc (pushed).
 Commands/output: TestWave21ProcessRules PASS 75.790s, 174 control findings, compiler 77 and repository 287 roots byte-identical; checker PASS 0.100s; Node PASS 14.748s; vet and gofmt clean.
 Mutants: timer reversed handle-loss test caught at byte 81; process-exit reversed output-state test at 6038; blocking reversed imported-entry test at 15314; retained released handles caught for all four question variants.
 Not covered: full repository gate, shared profile registration/JavaScript comparison, or every possible syntax combination; no further claims before this batch was pushed.

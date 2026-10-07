@@ -1,0 +1,22 @@
+=== RUN   TestWave21ProcessRules
+    wave_21_process_test.go:37: correctness_no_uncleared_race_timeout: 18 upstream fixture sources
+    wave_21_process_test.go:38: correctness_no_process_exit_after_output: 50 upstream fixture sources
+    wave_21_blocking_fixtures_test.go:134: blocking streams: 54 upstream programs, 151 source files
+    wave_21_process_test.go:57: controls: 117021 identical finding bytes; findings 174
+    wave_21_process_test.go:63: controls-asan: 117021 identical finding bytes; findings 174
+    wave_21_process_test.go:121: timer judgment mutant: exit 0, comparison catches byte 81
+    wave_21_process_test.go:121: process-exit judgment mutant: exit 0, comparison catches byte 6038
+    wave_21_process_test.go:121: blocking judgment mutant: exit 0, comparison catches byte 15314
+    wave_21_process_test.go:136: node-symbol-context: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_process_test.go:136: node-symbol-context/follow-alias: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_process_test.go:136: program-modules: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_process_test.go:136: resolved-declaration: released panic 70; retaining registry mutant exits 0 and is caught
+    wave_21_process_test.go:143: compiler: 5087 identical finding bytes; findings 0
+    wave_21_process_test.go:144: compiler-asan: 5087 identical finding bytes; findings 0
+    wave_21_process_test.go:150: compiler quiet timing native 2.912723s Go 0.332955s
+    wave_21_process_test.go:143: repository: 18485 identical finding bytes; findings 0
+    wave_21_process_test.go:144: repository-asan: 18485 identical finding bytes; findings 0
+    wave_21_process_test.go:150: repository quiet timing native 0.337311s Go 0.117830s
+--- PASS: TestWave21ProcessRules (75.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	75.790s
