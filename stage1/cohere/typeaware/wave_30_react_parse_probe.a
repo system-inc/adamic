@@ -1,0 +1,9 @@
+import {panic,programArguments,readTextFile} from 'adamic';
+import {Parser} from '../../typescript/parser/parser.ts';
+const args=programArguments();
+const path=args[0]??panic('missing source');
+const source=readTextFile(path);
+if(source.kind==='Error'){panic(source.message);}
+const parser=new Parser(source.text,path);
+parser.file();
+for(const node of parser.nodes){console.log(node.kind);}

@@ -79,3 +79,9 @@ rule mentions in claim files on 359 origin refs, are:
 These rules are claimed before implementation. The precise branch/blob snapshot
 is validation-wave-30-fourth/selection.json. Released mentions in other claim
 files are conservatively excluded, as requested by the any-branch claim check.
+
+Fourth batch status: retained and unported. A private native/Go probe confirms
+that the current native parser rejects valid JSX or parses it as a type assertion.
+The native React HIR/SSA and memoization pipeline are also absent. No shared files
+were edited to work around these blockers, and no later batch was claimed.
+See ../WAVE_30_FOURTH_REPORT.md for exact controls, results and missing coverage.

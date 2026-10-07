@@ -1,0 +1,102 @@
+[
+  {
+    "file": "001-stage0.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "file": "001-stage0.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "file": "002-parser-probe-build.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "file": "002-parser-probe-build.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "file": "003-react-oracle-build.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "file": "003-react-oracle-build.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "file": "004-react-controls-go.stderr",
+    "sha256": "95df00342b9b034d0019ef0fffef8fe19c778bc9caa695d7252a518a0c6b6932",
+    "bytes": 56
+  },
+  {
+    "file": "004-react-controls-go.stdout",
+    "sha256": "6bd922cdf971e3c748fed5a89707b6693fe51b3a3b5ee52b946c3bc22142269b",
+    "bytes": 1957
+  },
+  {
+    "file": "005-purity-native-parser.stderr",
+    "sha256": "d84c04d7cdda96089e6953fb88e8842cf46dd0dc2279a418a9d3de292a22ca3d",
+    "bytes": 135
+  },
+  {
+    "file": "005-purity-native-parser.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "file": "006-refs-native-parser.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "file": "006-refs-native-parser.stdout",
+    "sha256": "cdf2c92c2f365d6b33b51be919fed9107d6ab857480e1753bde80d5574884a23",
+    "bytes": 419
+  },
+  {
+    "file": "007-preserve-native-parser.stderr",
+    "sha256": "411974b4bf1854b99acb2f5e22063563b34cb0dcff92c906785d72240435f5f6",
+    "bytes": 141
+  },
+  {
+    "file": "007-preserve-native-parser.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "file": "preserve.a",
+    "sha256": "224d8e9bea862916ee152f12afed366db9cd53573c734ee6fddd2722441a2b69",
+    "bytes": 133
+  },
+  {
+    "file": "purity.a",
+    "sha256": "c69a7fd729150f28059a0d43a9e02f55c9177ab1207796c47c2e93e9dd078c72",
+    "bytes": 56
+  },
+  {
+    "file": "react-oracle-overlay.json",
+    "sha256": "85cd9189411afad412c35a67349a9fa146268049c90e48ef5c22434678024815",
+    "bytes": 140
+  },
+  {
+    "file": "react.manifest",
+    "sha256": "d4dbe34eebb238d4c64a487e05dbb7ba01c861854b034a57ba4118e682c6bf1d",
+    "bytes": 177
+  },
+  {
+    "file": "refs.a",
+    "sha256": "da9cfd63ff6b5b187b45a535ccb9a3db14e0e6152b31721070432b725821ed89",
+    "bytes": 83
+  },
+  {
+    "file": "tsconfig.json",
+    "sha256": "e96ebf0231e21b7ed34c0448bde18a647b9284821636cffa4dd75f6a551131be",
+    "bytes": 171
+  }
+]
