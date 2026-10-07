@@ -1,0 +1,5 @@
+{
+  "from": "if(node.kind !== 'JsxText')",
+  "to": "if(node.kind !== 'Identifier')",
+  "name": "react-no-unescaped-entities listener suppressed"
+}
