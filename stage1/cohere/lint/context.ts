@@ -238,6 +238,34 @@ export class RuleContext {
     kind(index: number): string {
         return index < 0 ? '' : this.node(index).kind;
     }
+    // Identifier ownership is shared by batch 3's two naming rules. Keep the
+    // root node handed by the driver, and inspect only its surrounding syntax.
+    foreignName(index: number, node: ParseNode): boolean {
+        const owner = this.parent(index);
+        if(owner < 0) { return false; }
+        const parent = this.node(owner);
+        const first = parent.children[0] ?? -1;
+        const last = parent.children[parent.children.length - 1] ?? -1;
+        switch(parent.kind) {
+            case 'PropertyAccessExpression': return last === index && this.kind(first) !== 'ThisKeyword';
+            case 'PropertyAssignment':
+            case 'PropertySignature': return this.name(owner) === index;
+            case 'BindingElement':
+                if(first !== index || parent.children.length < 2) { return false; }
+                return this.scanAt(node.end) === 'ColonToken';
+            case 'ImportSpecifier':
+            case 'ExportSpecifier':
+            case 'NamespaceImport':
+            case 'ImportClause': return true;
+            case 'QualifiedName': return last === index;
+            case 'TypeReference': return first === index;
+            case 'JsxOpeningElement':
+            case 'JsxClosingElement':
+            case 'JsxSelfClosingElement':
+            case 'JsxAttribute': return true;
+            default: return false;
+        }
+    }
     functionLike(index: number): boolean {
         return isFunctionKind(this.node(index).kind);
     }
