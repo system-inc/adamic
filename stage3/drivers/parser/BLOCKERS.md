@@ -1,3 +1,23 @@
+# Newest-tip reference checkpoint: Node green, native red
+
+The fresh full adapted tree and refreshed slice match every committed per-case
+record: 10,406 single-file cases, 1,323,111 nodes, 1,996 parse diagnostic rows
+and 34 JSDoc diagnostic rows. The 81-file extended reference is unchanged:
+36,429,231 bytes, SHA256 686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+The node-end, dropped-JSDoc-tags and JSDoc-diagnostic mutants are caught.
+The freshly rerun JSX recovery mutant changes exactly two case hashes and
+removes two diagnostic rows (1,996 to 1,994), while the 81-file hash stays unchanged.
+Evidence: evidence/front9/node/. No dumps or duplicate case manifest committed.
+
+Native remains refused at the bodyless-overload callback below; neither native
+reference acceptance nor its output-byte mutant can run without a binary.
+Claim remains: syntax tree and parse diagnostics identical on Node,
+JSDoc unverified, error recovery unverified (native).
+Assumption: reuse the pinned upstream single-file inputs and committed manifest,
+with no compiler-option matrix, as the native acceptance inputs.
+
+---
+
 # Newest-tip native build checkpoint: red at an overload callback
 
 Fresh newest-area slice and all ten requested compiler inputs: parser native
