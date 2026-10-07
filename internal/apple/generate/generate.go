@@ -27,6 +27,8 @@ type File struct {
 type Output struct {
 	Files []File
 	Check []byte
+	// Leaves is the cycle finder's leaf table, with its derivation (leaves.go).
+	Leaves []byte
 }
 
 // Generate is the loader-facing library entry. The caller owns clang's stream
@@ -57,7 +59,7 @@ func Generate(input io.Reader, configuration Configuration) (Output, error) {
 		}
 		configuration.Frameworks[i].Headers = filepath.Clean(absolute)
 	}
-	g := &generator{configuration: configuration, types: map[string]*definition{}, sources: map[string][]byte{}, modules: map[string]*module{}}
+	g := &generator{configuration: configuration, types: map[string]*definition{}, sources: map[string][]byte{}, modules: map[string]*module{}, bound: map[string]bool{}}
 	err := readAST(input, func(n *node) error {
 		if !n.Location.Valid {
 			return nil
@@ -138,11 +140,14 @@ func RunClang(ctx context.Context, clang string, arguments []string, configurati
 	return output, nil
 }
 
+// LeavesFile is where Write puts the leaf table, beside the bindings, for the cycle finder.
+const LeavesFile = "leaves.txt"
+
 // Write writes paths in canonical order. Generation, validation and clang's
 // successful exit have completed before this function can be called.
 func (o Output) Write(directory string) error {
 	files := append([]File{}, o.Files...)
-	files = append(files, File{Path: "bindings-check.m", Content: o.Check})
+	files = append(files, File{Path: "bindings-check.m", Content: o.Check}, File{Path: LeavesFile, Content: o.Leaves})
 	sort.Slice(files, func(i, j int) bool { return files[i].Path < files[j].Path })
 	for _, file := range files {
 		clean := filepath.Clean(filepath.FromSlash(file.Path))

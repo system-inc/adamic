@@ -50,7 +50,10 @@ type generator struct {
 	declarations  []naming.Declaration
 	checks        []checkCall
 	implements    []implementCheck
-	importError   error
+	// bound is every method a binding sends, -[Class selector], what leaves.go counts a program can
+	// hand an instance.
+	bound       map[string]bool
+	importError error
 }
 type nativeType struct {
 	tag, adamic, c, header string
@@ -199,13 +202,29 @@ func (g *generator) unavailableByName(macro string) bool {
 	return false
 }
 
-func (g *generator) attributes(n *node) (swift string, refined, unavailable bool, err error) {
+// attributes reads a declaration's Swift name and availability. gone says why the declaration
+// isn't bound on the platform: "unavailable on macos", or "deprecated on macos", since Apple's
+// deprecation is its "don't use" and the bindings leave those out (docs/apple.md), or "" when it is
+// bound.
+func (g *generator) attributes(n *node) (swift string, refined bool, gone string, err error) {
+	unavailable, deprecated := false, false
+	defer func() {
+		switch {
+		case unavailable:
+			gone = "unavailable on " + g.configuration.Platform
+		case deprecated:
+			gone = "deprecated on " + g.configuration.Platform
+		}
+	}()
 	for _, child := range n.Children {
 		switch child.Kind {
 		case "SwiftPrivateAttr":
 			refined = true
 		case "UnavailableAttr":
 			unavailable = true
+		case "DeprecatedAttr":
+			// __attribute__((deprecated)), DEPRECATED_ATTRIBUTE: deprecated everywhere.
+			deprecated = true
 		case "SwiftNameAttr", "AvailabilityAttr":
 			var text string
 			text, err = g.text(child.Begin)
@@ -220,7 +239,11 @@ func (g *generator) attributes(n *node) (swift string, refined, unavailable bool
 				if g.unavailableByName(regionMacro.FindString(text)) {
 					unavailable = true
 				}
+				deprecated = deprecated || g.deprecatedByName(regionMacro.FindString(text))
 				continue
+			}
+			if child.Kind == "AvailabilityAttr" {
+				deprecated = deprecated || g.deprecatedIn(text, child.Begin.File)
 			}
 			if left < 0 || right <= left {
 				err = fmt.Errorf("cannot read attribute %q", text)
@@ -332,9 +355,9 @@ func (g *generator) expandMacro(use, file string) (string, bool) {
 	return "", false
 }
 
-func (g *generator) description(n *node, kind naming.Kind, parent string) (naming.Declaration, bool, error) {
-	swift, refined, unavailable, err := g.attributes(n)
-	return naming.Declaration{Kind: kind, Name: n.Name, Parent: parent, Framework: n.Framework, SwiftName: swift, RefinedForSwift: refined}, unavailable, err
+func (g *generator) description(n *node, kind naming.Kind, parent string) (naming.Declaration, string, error) {
+	swift, refined, gone, err := g.attributes(n)
+	return naming.Declaration{Kind: kind, Name: n.Name, Parent: parent, Framework: n.Framework, SwiftName: swift, RefinedForSwift: refined}, gone, err
 }
 func (g *generator) skipped(n *node, reason string) {
 	path := "apple/" + strings.ToLower(n.Framework) + "/unsupported"
@@ -404,12 +427,12 @@ func (g *generator) inventory() error {
 		default:
 			continue
 		}
-		d, unavailable, err := g.description(n, kind, "")
+		d, gone, err := g.description(n, kind, "")
 		if err != nil {
 			return err
 		}
-		if unavailable {
-			g.skipped(n, "unavailable on "+g.configuration.Platform)
+		if gone != "" {
+			g.skipped(n, gone)
 			continue
 		}
 		key := n.Name
@@ -455,11 +478,16 @@ func (g *generator) inventory() error {
 		}
 		siblings := []naming.Enumerator{}
 		for _, child := range children(def.node, "EnumConstantDecl") {
-			swift, _, unavailable, err := g.attributes(child)
+			swift, _, gone, err := g.attributes(child)
 			if err != nil {
 				return err
 			}
-			siblings = append(siblings, naming.Enumerator{Name: child.Name, SwiftName: swift, Unavailable: unavailable, Deprecated: has(child, "DeprecatedAttr")})
+			if strings.HasPrefix(gone, "deprecated") {
+				// Listed, as every declaration left out for its deprecation is.
+				child.Framework = def.node.Framework
+				g.skipped(child, gone)
+			}
+			siblings = append(siblings, naming.Enumerator{Name: child.Name, SwiftName: swift, Unavailable: gone != "", Deprecated: has(child, "DeprecatedAttr")})
 		}
 		next := big.NewInt(0)
 		for i, child := range children(def.node, "EnumConstantDecl") {

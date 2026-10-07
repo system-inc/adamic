@@ -91,6 +91,7 @@ func (g *generator) build() (Output, error) {
 		return Output{}, err
 	}
 	output.Check = []byte(check)
+	output.Leaves = g.leaves()
 	return output, nil
 }
 
@@ -175,12 +176,12 @@ func (g *generator) emitClass(def *definition) (string, error) {
 				m.comments = append(m.comments, "// Skipped category "+category.Name+": an informal protocol on NSObject, not its own methods.")
 				continue
 			}
-			_, _, unavailable, err := g.attributes(category)
+			_, _, gone, err := g.attributes(category)
 			if err != nil {
 				return "", err
 			}
-			if unavailable {
-				m.comments = append(m.comments, "// Skipped category "+category.Name+": unavailable on "+g.configuration.Platform+".")
+			if gone != "" {
+				m.comments = append(m.comments, "// Skipped category "+category.Name+": "+gone+".")
 				continue
 			}
 			for _, member := range category.Children {
@@ -477,7 +478,7 @@ func propertySelectors(n *node) (string, string) {
 	return getter, setter
 }
 func (g *generator) emitProperty(owner *definition, n *node, protocol bool, inherited map[string][]member) (string, member, string, error) {
-	d, unavailable, err := g.description(n, naming.Property, owner.node.Name)
+	d, gone, err := g.description(n, naming.Property, owner.node.Name)
 	d.ParentSwiftName = owner.declaration.SwiftName
 	d.ClassProperty = n.ClassProperty
 	if err != nil {
@@ -487,8 +488,8 @@ func (g *generator) emitProperty(owner *definition, n *node, protocol bool, inhe
 	skip := func(reason string) {
 		m.comments = append(m.comments, "// Skipped "+owner.node.Name+"."+n.Name+": "+reason+".")
 	}
-	if unavailable {
-		skip("unavailable on " + g.configuration.Platform)
+	if gone != "" {
+		skip(gone)
 		return "", member{}, "", nil
 	}
 	if protocol {
@@ -568,13 +569,13 @@ func methodOriginal(parent, selector string, instance bool) string {
 // parentSwiftName is the owner's explicit imported name, which tells a protocol's members from
 // those of a class sharing its Objective-C name.
 func (g *generator) callable(n *node, kind naming.Kind, parent, parentSwiftName string, properties, values []string) (naming.Declaration, naming.Output, []nativeType, nativeType, string, error) {
-	d, unavailable, err := g.description(n, kind, parent)
+	d, gone, err := g.description(n, kind, parent)
 	d.ParentSwiftName = parentSwiftName
 	if err != nil {
 		return d, naming.Output{}, nil, nativeType{}, "", err
 	}
-	if unavailable {
-		return d, naming.Output{}, nil, nativeType{}, "unavailable on " + g.configuration.Platform, nil
+	if gone != "" {
+		return d, naming.Output{}, nil, nativeType{}, gone, nil
 	}
 	if kind != naming.CFunction && (n.Name == "retain" || n.Name == "release" || n.Name == "autorelease" || n.Name == "dealloc") {
 		return d, naming.Output{}, nil, nativeType{}, "manual reference-count messages bypass Adamic ownership", nil
@@ -740,6 +741,7 @@ func (g *generator) emitMethod(owner *definition, n *node, initializers map[stri
 	}
 	tag := tagKind + " " + n.Name + sources + returns
 	g.checks = append(g.checks, checkCall{owner: owner, selector: n.Name, instance: n.Instance, parameters: natives, result: result})
+	g.bound[methodOriginal(owner.node.Name, n.Name, n.Instance)] = true
 	text := doc(methodOriginal(owner.node.Name, n.Name, n.Instance), []string{tag}, "\t\t")
 	if constructor {
 		text += "\t\tconstructor(" + parameters + ");\n"

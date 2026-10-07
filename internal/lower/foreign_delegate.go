@@ -8,6 +8,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // A delegate is an object of one of the program's classes handed to Apple where it takes an object
@@ -203,4 +204,37 @@ func (l *lowering) delegateMethod(argument *ast.Node, delegate *ir.Delegate, sel
 	l.result.Functions = append(l.result.Functions, declared)
 	delegate.Methods = append(delegate.Methods, ir.DelegateMethod{Selector: implement.selector, Function: function, Parameters: natives, Returns: implement.returns})
 	return nil
+}
+
+// foreignLeaf reports whether a type is an Apple class the leaf table names (load.AppleLeaves): one
+// whose instances hold strong references only to other leaves, which the cycle finder doesn't walk
+// through.
+func (l *lowering) foreignLeaf(proven *checker.Type) bool {
+	symbol := proven.Symbol()
+	if symbol == nil || !isForeign(symbol) || len(symbol.Declarations) == 0 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
+		return false
+	}
+	tags, err := l.foreignTags(symbol.Declarations[0])
+	if err != nil {
+		return false
+	}
+	for _, tag := range tags {
+		if tag.kind != "class" {
+			continue
+		}
+		leaves, err := load.AppleLeaves()
+		return err == nil && leaves[tag.selector]
+	}
+	return false
+}
+
+// extendsApple refuses a class whose base is one of Apple's: Apple's classes are declared, not
+// lowered, and a program's class implements Apple's protocols but doesn't extend Apple's classes
+// yet. Until it can, no class of the program's can be seen as one of Apple's leaves, which is what
+// lets the cycle finder take a leaf's own fields as all it holds.
+func (l *lowering) extendsApple(where *ast.Node, base *ast.Symbol) error {
+	if !isForeign(base) {
+		return nil
+	}
+	return l.notYet(where, "a class extending Apple's "+base.Name+" (a program's class can implement an Apple protocol)")
 }

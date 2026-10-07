@@ -60,6 +60,37 @@ func appleBindingsDirectory() (string, error) {
 	return generatedBindings.directory, generatedBindings.err
 }
 
+var appleLeaves struct {
+	once    sync.Once
+	classes map[string]bool
+	err     error
+}
+
+// AppleLeaves are the Objective-C classes the cycle finder doesn't walk through, read from the leaf
+// table generated beside the bindings (internal/apple/generate, leaves.go): so the table always
+// answers for the SDK the program is compiled against.
+func AppleLeaves() (map[string]bool, error) {
+	appleLeaves.once.Do(func() {
+		directory, err := appleBindingsDirectory()
+		if err != nil {
+			appleLeaves.err = err
+			return
+		}
+		text, err := os.ReadFile(filepath.Join(directory, generate.LeavesFile))
+		if err != nil {
+			appleLeaves.err = fmt.Errorf("the leaf table beside Apple's bindings: %w", err)
+			return
+		}
+		appleLeaves.classes = map[string]bool{}
+		for _, line := range strings.Split(string(text), "\n") {
+			if class, isLeaf := strings.CutPrefix(line, "leaf "); isLeaf {
+				appleLeaves.classes[strings.TrimSpace(class)] = true
+			}
+		}
+	})
+	return appleLeaves.classes, appleLeaves.err
+}
+
 // cachedAppleBindings generates the SDK's bindings once per SDK build and generator version.
 // A directory is complete only once renamed into place, so a run cut short leaves nothing a later
 // run would trust.
