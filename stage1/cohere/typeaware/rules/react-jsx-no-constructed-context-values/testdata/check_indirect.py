@@ -21,7 +21,7 @@ def run(command, label, cwd=None):
 run(['go','build','-overlay',str(out/'overlay.json'),'-o',str(out/'oracle'),str(virtual)], 'oracle-build', repository/'cohere')
 truth, elapsed = run([str(out/'oracle'),str(out/'tsconfig.json'),str(out/'manifest')], 'oracle')
 expected = b''.join(sorted(line for line in truth.splitlines(keepends=True) if len(line.split(b'\t')) >= 7 and line.split(b'\t')[2] == b'react/jsx-no-constructed-context-values'))
-assert len(expected.splitlines()) == 19, truth.decode()
+assert len(expected.splitlines()) == 22, truth.decode()
 (out/'expected.stdout').write_bytes(expected)
 print('Go source/checker/all rules ns', elapsed, flush=True)
 for sanitize in [False, True]:

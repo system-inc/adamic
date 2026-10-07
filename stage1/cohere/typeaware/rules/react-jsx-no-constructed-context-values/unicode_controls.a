@@ -1,0 +1,7 @@
+import { Rule, Input } from './rule.a';
+const rule = new Rule();
+const node = new Input(); node.nearestFunctionKind = 262;
+for(let point = 0; point <= 1114111; point++) {
+    node.nearestFunctionName = String.fromCodePoint(point);
+    if(rule.component(node)) { console.log(`${point}`); }
+}

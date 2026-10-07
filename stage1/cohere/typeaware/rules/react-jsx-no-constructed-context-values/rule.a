@@ -1,5 +1,7 @@
 import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
+
+const componentCapital = /^\p{Lu}/u;
 import { Value, constructionOf, resolvesToCreateContext, isComponentClass } from './numeric_constructions.a';
 
 export class Input {
@@ -34,9 +36,7 @@ export class Rule {
         }
         const name = node.nearestFunctionKind === 262 ? node.nearestFunctionName : node.bindingName;
         if(name === '') { return false; }
-        const first = name.charCodeAt(0);
-        if(first >= 128) { panic('jsx-no-constructed-context-values requires Unicode IsUpper'); }
-        return first >= 65 && first <= 90;
+        return componentCapital.test(name);
     }
     construction(kind: number): string {
         const kinds = [210, 209, 218, 219, 231, 214, 13, 284, 285, 288];

@@ -24,3 +24,10 @@ class Field extends React.Component { f = () => <X.Provider value={{}}/>; }
 const Expression = class extends Component { other() { return <X.Provider value={{}}/>; } };
 class Plain { Render() { return <X.Provider value={{}}/>; } }
 class Foreign extends Foo.Component { Render() { return <X.Provider value={{}}/>; } }
+function Émile() { return <X.Provider value={{}}/>; }
+function Ωmega() { return <X.Provider value={{}}/>; }
+function 𐐀Component() { return <X.Provider value={{}}/>; }
+function émile() { return <X.Provider value={{}}/>; }
+function ωmega() { return <X.Provider value={{}}/>; }
+function 𐐨component() { return <X.Provider value={{}}/>; }
+function ǅTitlecase() { return <X.Provider value={{}}/>; }

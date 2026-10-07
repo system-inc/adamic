@@ -300,6 +300,20 @@ const class6_4 = new Value(); class6_4.kind = 79;
 class6_4.name = "Foo";
 component6.values.push(class6_4);
 const classFinding6 = rule.visit(component6); if(classFinding6 !== undefined) { lines.push(classFinding6.written()); }
+const unicode0 = new Input(); unicode0.kind = 285; unicode0.tagKind = 211; unicode0.propertyKind = 79; unicode0.propertyName = "Provider"; unicode0.nearestFunctionKind = 262; unicode0.nearestFunctionName = "Émile"; unicode0.valueKind = 210; unicode0.valueStart = 1758; unicode0.valueEnd = 1760; unicode0.valueLine = 27;
+const uf0 = rule.visit(unicode0); if(uf0 !== undefined) { lines.push(uf0.written()); }
+const unicode1 = new Input(); unicode1.kind = 285; unicode1.tagKind = 211; unicode1.propertyKind = 79; unicode1.propertyName = "Provider"; unicode1.nearestFunctionKind = 262; unicode1.nearestFunctionName = "Ωmega"; unicode1.valueKind = 210; unicode1.valueStart = 1813; unicode1.valueEnd = 1815; unicode1.valueLine = 28;
+const uf1 = rule.visit(unicode1); if(uf1 !== undefined) { lines.push(uf1.written()); }
+const unicode2 = new Input(); unicode2.kind = 285; unicode2.tagKind = 211; unicode2.propertyKind = 79; unicode2.propertyName = "Provider"; unicode2.nearestFunctionKind = 262; unicode2.nearestFunctionName = "𐐀Component"; unicode2.valueKind = 210; unicode2.valueStart = 1875; unicode2.valueEnd = 1877; unicode2.valueLine = 29;
+const uf2 = rule.visit(unicode2); if(uf2 !== undefined) { lines.push(uf2.written()); }
+const unicode3 = new Input(); unicode3.kind = 285; unicode3.tagKind = 211; unicode3.propertyKind = 79; unicode3.propertyName = "Provider"; unicode3.nearestFunctionKind = 262; unicode3.nearestFunctionName = "émile"; unicode3.valueKind = 210; unicode3.valueStart = 1930; unicode3.valueEnd = 1932; unicode3.valueLine = 30;
+const uf3 = rule.visit(unicode3); if(uf3 !== undefined) { lines.push(uf3.written()); }
+const unicode4 = new Input(); unicode4.kind = 285; unicode4.tagKind = 211; unicode4.propertyKind = 79; unicode4.propertyName = "Provider"; unicode4.nearestFunctionKind = 262; unicode4.nearestFunctionName = "ωmega"; unicode4.valueKind = 210; unicode4.valueStart = 1985; unicode4.valueEnd = 1987; unicode4.valueLine = 31;
+const uf4 = rule.visit(unicode4); if(uf4 !== undefined) { lines.push(uf4.written()); }
+const unicode5 = new Input(); unicode5.kind = 285; unicode5.tagKind = 211; unicode5.propertyKind = 79; unicode5.propertyName = "Provider"; unicode5.nearestFunctionKind = 262; unicode5.nearestFunctionName = "𐐨component"; unicode5.valueKind = 210; unicode5.valueStart = 2047; unicode5.valueEnd = 2049; unicode5.valueLine = 32;
+const uf5 = rule.visit(unicode5); if(uf5 !== undefined) { lines.push(uf5.written()); }
+const unicode6 = new Input(); unicode6.kind = 285; unicode6.tagKind = 211; unicode6.propertyKind = 79; unicode6.propertyName = "Provider"; unicode6.nearestFunctionKind = 262; unicode6.nearestFunctionName = "ǅTitlecase"; unicode6.valueKind = 210; unicode6.valueStart = 2107; unicode6.valueEnd = 2109; unicode6.valueLine = 33;
+const uf6 = rule.visit(unicode6); if(uf6 !== undefined) { lines.push(uf6.written()); }
 lines.sort((left, right) => left < right ? -1 : left > right ? 1 : 0); for(const line of lines) { console.log(line); }
 if(programArguments().includes('--satisfies')) {
     const unsupported = new Input(); unsupported.kind = 285; unsupported.tagKind = 211; unsupported.propertyKind = 79; unsupported.propertyName = 'Provider'; unsupported.nearestFunctionKind = 262; unsupported.nearestFunctionName = 'C'; unsupported.valueIndex = 0;

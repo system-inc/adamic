@@ -33,3 +33,24 @@ The expanded independent Go controls now contain 19 positive findings (6,726 can
 Exact commands remain the two Python scripts above. New logs: validation/components-check.log and validation/components-regression.log. Native supplied-fact controls took 1.369 ms; Go source/checker/all-three-rule process took 53.695 ms. These workloads differ; no corpus speed ratio is claimed. The previously prepared toolchain was reused (last setup 36s, nproc 5); no setup or full repository gate was rerun for this extension. No checker handles are owned by these controls, so no new released-handle evidence is claimed. The satisfies panic/refusal remains reproducible and outside successful byte comparisons.
 
 Remaining work: shared numeric source nodes and live declaration/type/signature facts; memo stability and escape/capture traversal; Unicode component-name classification and Go quoted-name rendering. These three JSX claims remain partial integrated ports. No new batch was claimed while those gaps remain.
+
+
+Unicode component names, 2026-10-07
+
+Fetched every origin head. Main remains b8fb957aa and wave-15 is already based on it, green and pushed at 9fe198698 before this extension. New shared harness 41eb6eab2 removes duplicated batch-8 code and adds position witnesses; it does not change RuleContext to carry the live checker facts needed here. No shared files were changed and no new claims were taken.
+
+Replaced the ASCII-only component name check and non-ASCII refusal with the JS RegExp literal /^\p{Lu}/u. Go's predicate is unicode.IsUpper, not a Go regex, so this addition has no Go-regex translation-table row to adopt. The RegExp only returns a boolean; it supplies no offsets requiring conversion. There is no hand-written pattern matcher.
+
+Owned check_unicode.py compares the actual Rule.component method against a standalone Go unicode.IsUpper oracle and a standalone Node RegExp oracle over all 1,114,112 code points, including surrogate code points. All four ordinary Go/Node/native/sanitized streams match: 1,886 uppercase points and 10,634 output bytes. Native took 0.304s, sanitized native 3.092s. The first sweep control compile exposed Adamic's string-only console.log signature; converting the code point to a template string fixed only that control. Lu-to-Ll mutant compiles and exits zero; external Go and Node bytes catch it. Canonical streams and logs are retained under validation/unicode-*. Node and Go are independent of the owned rule implementation.
+
+Expanded production-Go JSX controls add uppercase Latin, Greek and astral Deseret names, with corresponding lowercase and titlecase quiet controls. They now match 22 findings and 7,770 canonical bytes under normal and ASan/UBSan/LSan builds. Existing branch-order/provider-factory/class-owner/function-kind mutants still compile exit zero and are caught only by Go bytes. The prior three-rule controls still match 17 findings, both option variants, three byte mutants and three refusal mutants. The production satisfies panic and native explicit refusal remain outside successful byte agreement. Native 22-finding snapshot process took 1.671ms; Go source/checker process 55.997ms, different workloads with no comparable speed ratio.
+
+Commands, with /workspace/adamic-tools/env.sh sourced:
+
+    ADAMIC_WAVE15_SIXTH_COMPILER=/tmp/wave15-b8-adamic python3 stage1/cohere/typeaware/rules/react-jsx-no-constructed-context-values/testdata/check_unicode.py
+    ADAMIC_WAVE15_SIXTH_COMPILER=/tmp/wave15-b8-adamic ADAMIC_WAVE15_INDIRECT_ARTIFACTS=/tmp/wave15-41-unicode python3 stage1/cohere/typeaware/rules/react-jsx-no-constructed-context-values/testdata/check_indirect.py
+    ADAMIC_WAVE15_SIXTH_COMPILER=/tmp/wave15-b8-adamic ADAMIC_WAVE15_SIXTH_ARTIFACTS=/tmp/wave15-41-sixth python3 stage1/cohere/typeaware/rules/react-jsx-fragments/testdata/check.py
+
+All exit zero. The current-main compiler from the prior complete landing verification was reused. Last setup passed 82s, nproc 5; no setup or full nine-suite gate was rerun for this rule-local extension. No live checker handles are owned by these adapter controls, so the prior landing report remains the released-handle evidence. Private snapshot fixtures retain the legacy canonical Go byte spans; this does not demonstrate the shared source/UTF-16 finding adapter, which remains absent.
+
+This closes Unicode component-name classification, not Unicode variable-name quoting. Remaining work is shared-context factory/visitor and live checker-fact wiring, owned registry oracle/provenance/witness descriptors, memo stability and reference/capture traversal, quoted-name rendering and full native source/corpus agreement. These JSX claims remain partial integrated ports. No later rules were claimed.
