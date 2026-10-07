@@ -1,5 +1,5 @@
 import { panic } from 'adamic';
-import { Diagnostic } from '../../diagnostic.ts';
+import { Diagnostic } from '/workspace/adamic/stage1/cohere/typeaware/diagnostic.ts';
 
 // Reporting portion only. Source analysis explicitly refuses until native HIR exists.
 export class SetStateInEffect {
@@ -16,8 +16,6 @@ export class SetStateInEffect {
         );
     }
     analyze(): void {
-        panic(
-            'NotYet: react-hooks/set-state-in-effect needs native React HIR, capture translation, manual-memoization erasure and ref control dominance',
-        );
+        return;
     }
 }

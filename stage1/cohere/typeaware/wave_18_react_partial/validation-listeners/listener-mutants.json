@@ -1,0 +1,23 @@
+[
+  {
+    "rule": "set_state_in_effect",
+    "compiled": true,
+    "exit": 0,
+    "caught_by": "numeric SyntaxKind bytes",
+    "output": "308\n307\n307\n"
+  },
+  {
+    "rule": "set_state_in_render",
+    "compiled": true,
+    "exit": 0,
+    "caught_by": "numeric SyntaxKind bytes",
+    "output": "307\n308\n307\n"
+  },
+  {
+    "rule": "static_components",
+    "compiled": true,
+    "exit": 0,
+    "caught_by": "numeric SyntaxKind bytes",
+    "output": "307\n307\n308\n"
+  }
+]

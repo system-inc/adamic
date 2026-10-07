@@ -1,0 +1,3 @@
+import {SetStateInEffect} from '/workspace/adamic/stage1/cohere/typeaware/wave_18_react_partial/set_state_in_effect/index.a';console.log(new SetStateInEffect().syntaxKinds.join(','));
+import {SetStateInRender} from '/workspace/wave18-react-listeners/set_state_in_render-listener-mutant.a';console.log(new SetStateInRender().syntaxKinds.join(','));
+import {StaticComponents} from '/workspace/adamic/stage1/cohere/typeaware/wave_18_react_partial/static_components/index.a';console.log(new StaticComponents().syntaxKinds.join(','));

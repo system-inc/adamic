@@ -1,0 +1,10 @@
+import {SetStateInEffect} from '/workspace/adamic/stage1/cohere/typeaware/wave_18_react_partial/set_state_in_effect/index.a';import {SetStateInRender} from '/workspace/adamic/stage1/cohere/typeaware/wave_18_react_partial/set_state_in_render/index.a';import {StaticComponents} from '/workspace/wave18-react-listeners/static_components-mutant.a';import {written} from '/workspace/adamic/stage1/typescript/parser/nodes.ts';
+console.log("file\t/workspace/wave18-react-listeners/effect.tsx");
+console.log(new SetStateInEffect().render(249,253).written());
+console.log("file\t/workspace/wave18-react-listeners/render.tsx");
+console.log(new SetStateInRender().render(234,238).written());
+console.log("file\t/workspace/wave18-react-listeners/static.tsx");
+console.log(new StaticComponents().render("() => null",54,59).written());
+console.log("file\t/workspace/wave18-react-listeners/memo.tsx");
+console.log(new SetStateInRender().memo(247,251).written());
+console.log("findings 4");

@@ -1,5 +1,5 @@
 import { panic } from 'adamic';
-import { Diagnostic } from '../../diagnostic.ts';
+import { Diagnostic } from '/workspace/adamic/stage1/cohere/typeaware/diagnostic.ts';
 
 // Reporting portion only. Source analysis explicitly refuses until native HIR exists.
 export class SetStateInEffect {
@@ -8,7 +8,7 @@ export class SetStateInEffect {
     render(start: number, end: number): Diagnostic {
         return new Diagnostic(
             'react-hooks/set-state-in-effect',
-            'setStateInEffect',
+            'setStateInEffectMutant',
             "This effect calls a state setter synchronously in its body, so every time the effect runs React starts another render, which runs the effect's dependencies again. Effects are for synchronizing React with something outside it, such as the document title, a subscription, or a network request, and a setter called straight from the body is usually a value that could have been computed during render instead. Derive the value while rendering, pass the initial value to `useState`, or set it from the event that actually caused the change. Calling the setter from a callback the effect registers, such as a subscription or a timer, is fine and is not reported.",
             start,
             end,

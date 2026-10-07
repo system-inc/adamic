@@ -85,3 +85,44 @@ No full root gate was run for this isolated reporting portion.
 Native validator cores are now available in 76e453e7. CORE_REPORT.md records
 91 prepared-HIR controls, 48 findings, both corpora, sanitizers and four core
 mutants. Source lowering/gates remain missing; these are not end-to-end ports.
+
+## Numeric listener declaration follow-up
+
+Current main remains e8ba3d5d and is an ancestor of this branch; the fetched
+own origin branch matched afffb233 before this change. The prior full oracle
+and prepared-HIR checks remain applicable to unchanged algorithms.
+
+Each of the three active claimed entry points now exposes readonly syntaxKinds
+with numeric 307, the pinned parser's SyntaxKind.SourceFile. All three production
+Go rules register that kind. The declarations are available for the incoming
+shared driver. These entry points do not read source kind strings or refetch
+a source node. Their analyze methods still refuse rather than misreport.
+
+The shared ParseNode currently has only kind: string. Numeric source dispatch
+and native source-to-HIR Lower/Construct/SSA, unit gates and memo shadowing remain
+missing; implementing those would require shared parser/compiler work outside
+this unit. A fresh audit examined 479 origin refs; the React source-syntax
+modules found on wave 03 also expose string kinds and do not supply the missing
+React HIR adapter. Prepared HIR instruction tags are distinct from SyntaxKind.
+Older completed wave-18 source rules retain their string-based parser API;
+this increment does not claim to migrate those rules or demonstrate faster lint.
+No new claims were taken.
+
+Commands:
+
+    bash cloud/setup.sh > /tmp/wave18-listener-setup.log 2>&1
+    source /workspace/adamic-tools/env.sh
+    python3 stage1/cohere/typeaware/wave_18_react_partial/validate_partial.py --scratch /workspace/wave18-react-listeners > /tmp/wave18-react-listeners.log 2>&1
+
+Setup printed Go 0s, clang 0s, Node 0s, submodules 0s, cache warm 28s,
+done 28s; nproc 5, CPU quota 4. Partial validation exits 0: four production
+findings match 2367 bytes including fixes/suggestions, normal and ASan/UBSan.
+Three diagnostic-ID mutants compile and exit 0 but differ from Go bytes;
+three removed-refusal mutants exit 0 instead of the required 70. The base
+JSX parser still exits 70. A separate sanitized native listener probe prints
+307 three times, exits 0 and has empty stderr. Changing 307 to 308 separately
+in each rule compiles and exits 0 with empty stderr; all three mutations
+are caught only by numeric output comparison. No source-analysis or full
+gate coverage is inferred from these checks. Exact logs, generated .a probes,
+mutation results and hashes are retained in validation-listeners/. Comparable
+end-to-end native/Go timing remains unavailable as described in CORE_REPORT.md.

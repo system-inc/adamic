@@ -1,10 +1,10 @@
 import { panic } from 'adamic';
-import { Diagnostic } from '../../diagnostic.ts';
+import { Diagnostic } from '/workspace/adamic/stage1/cohere/typeaware/diagnostic.ts';
 
 // Reporting portion only. No source-analysis fallback may silently return no findings.
 export class StaticComponents {
     // Pinned parser SyntaxKind.SourceFile. The driver supplies the source node once.
-    readonly syntaxKinds: readonly number[] = [307];
+    readonly syntaxKinds: readonly number[] = [308];
     render(created: string, start: number, end: number): Diagnostic {
         const where = created !== '' ? `at \`${created}\`` : 'in this render';
         return new Diagnostic(
