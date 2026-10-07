@@ -54,3 +54,20 @@ Claim commit b22f8858 was pushed successfully before implementation.
 The three native .a ports, independent Go comparisons, mutants, sanitizer and
 released-handle checks are complete in WAVE_25_THIRD_REPORT.md. No further
 rules are claimed in this batch.
+
+## Fourth batch, October 7
+
+The preceding process/timeout ports and evidence were tested and pushed in
+0df6cc4c and 0a14418e before this selection. Fetched all 348 origin refs and
+inspected 77 distinct textual claim records. The baseline tips remain
+5afbdb83da2ed7ad9815657cd3f6ececd5294bf6 (tsgo-c-library) and
+ef3d907ecdc4c771b016f7d9c52372def057a340 (main).
+Baseline TypeScript diagnostic names are normalized to their registry prefix.
+The first three remaining checker-dependent rules by descending combined
+volume and lexical ties are reserved here:
+
+- no-throw-literal (combined volume 0)
+- no-useless-backreference (combined volume 0)
+- prefer-arrow-callback (combined volume 0)
+
+Implementation begins only after this claim commit is pushed successfully.
