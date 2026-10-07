@@ -1,8 +1,41 @@
+Built the absent-crypto selector in fixture 22, preserving condition evaluation and the existing fallback function identity.
+Landing: codex/host-buffer-crypto-land, parent 2275ca9; compiler a9083be and 40bf2c98 are scratch-only proof dependencies.
+Checks: lower/load/flow/fresh/IR, owned uncached native and JavaScript oracles, Linux counts, vet and formatting PASS; WASI evidence below.
+Mutant: allocating an equivalent fresh fallback closure compiles and exits cleanly but Node catches its changed identity on both backends.
+Not covered: 02/03 still fail at the checker; no full repository oracle or macOS run; reachable ambient SHA references remain named NotYet.
+
+Ambient crypto fallback, October 7
+
+Assumption: fixture 22's ambient createSHA256Hash is type-only. Its crypto binding is exactly undefined, so Node selects generateDjb2Hash and never evaluates the absent ambient reference. The declaration supplies no runtime implementation. The commit records this assumption.
+
+The named library hook recognizes only the census ambient string-to-string declaration and a const condition initialized with the global undefined value (literal false supplies the portable component witness before compiler integration). It preserves the condition read and its readiness checks, and emits the fallback reference on the selected path. Direct ambient calls, a present selector and a mutable selector are refused by named NotYet tests. No runtime C changes or new libc calls are introduced.
+
+Proof checkout: detached from 2275ca9, merged a9083be and 40bf2c98 with merge commits. Merge conflicts preserve compiler undefined representations, request ABI work, and existing host/regex behavior. Counts conflicts are irrelevant to this fixture-only scratch proof and chose the landing version. Compiler merge resolutions are not landed with this host patch. The oracle input-leak harness changed its API in the compiler branch; scratch-only legacy callers were wrapped to match it. GOFLAGS=-buildvcs=false avoids VCS stamping on the shared dependency symlinks.
+
+Before this hook, unmodified fixture 22 stopped at line 20 with `stage 0 can't lower a function without a body yet`. After it, the acceptance driver checks stock Node output against audited status.json and compares both backends:
+
+| Fixture | Native | JavaScript | Node comparison |
+| --- | --- | --- | --- |
+| 21_createHash | Compiles | Compiles | Agree |
+| 22_createHash_fallback | Compiles | Compiles | Agree |
+| 02_readFile_utf16le | Checker | Checker | Node recording agrees |
+| 03_readFile_utf16be | Checker | Checker | Node recording agrees |
+
+22's hashes are 5381, 193485963, 2317135974 and -997923643. The 02/03 checker diagnoses the existing number-or-undefined Buffer index assignments. The four-fixture driver therefore exits nonzero overall; this report claims only 21/22 green. Full diagnostics and execution evidence are in fallback/host-stages.json and fallback/host.txt.
+
+The added portable source oracle uses the fixture's real DJB2 function and verifies fallback identity as well as the four hashes. The fallback_identity mutant selects an equivalent newly allocated closure. Both backends compile, exit zero and produce identical hashes; only their identity observation differs from Node. The mutant is restored and the oracle rerun successfully.
+
+Commands use GOPROXY='https://proxy.golang.org|direct' and /workspace/adamic-tools/env.sh. Setup: ready stages 0s, cache warm 98s, done 98s; nproc=5, quota=4. Package gate: go test ./internal/lower ./internal/load ./internal/flow ./internal/fresh ./internal/ir -count=1 -timeout 30m, PASS (79.200s, 6.125s, 125.526s, 93.274s, 20.164s). Owned oracle: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'Test(Native|Input)AgreesWithNode/internal/oracle/testdata/node_buffer_' -count=1 -v -timeout 30m, PASS 3.824s, zero cache hits. Counts update PASS 83.007s; verification PASS 25.322s. go vet ./internal/lower ./internal/oracle, gofmt -l cmd internal and git diff --check have empty logs.
+
+WASI setup's submodule step rejects the scratch dependency symlink; installed official wasi-sdk 27 using the exact download/extract commands from cloud/setup.sh instead. For the WASI proof only, applied integration's existing guard patch 047e857 to the scratch checkout, without independently changing any host guard. Full fixture 22 uses mkdtempSync, which that patch honestly refuses on WASI; the portable fallback component is the target agreement test.
+
 Built canonical node:crypto namespace presence and typeof reads; unimplemented namespace values remain named NotYet.
 Landing branch codex/host-buffer-crypto-land advances from 77a34e2; compiler d882fbc was merged only in a detached scratch checkout.
 Checks: lowering/load/full flow/freshness/IR PASS; all owned oracle fixtures PASS uncached; full Linux counts regenerated and verified; vet/format PASS.
 Mutant: namespace object replaced with typed undefined; compiled on both backends and caught only by Node stdout comparisons, including batch-3 truthiness.
 Remaining: full 21 advances to rmSync options NotYet in the proof merge; 22's undefined declaration is language-side. No require implementation, full repository gate or macOS execution.
+
+WASI command: ADAMIC_ORACLE_WASI=1 with WASI_SYSROOT=/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot, go test ./internal/oracle -run 'TestWASIAgreesWithNode/internal/oracle/testdata/node_buffer_fallback.a$|TestWASIEmission/internal/oracle/testdata/node_buffer_fallback.a$|TestWASIRunnerCatchesMutants$' -count=1 -v -timeout 30m. PASS 19.642s, Node cache miss; full runtime archive built. Agreement, emission and the WASI runner's mutation checks all passed. See fallback/wasi.txt.
 
 Crypto namespace read, October 7
 
