@@ -1,8 +1,8 @@
 Built: attributeValues, decodeEntity and IsLikelyComponentName in three .a helper files plus two generated data files.  
-Commits: e31de1d and 1d106df pushed; 0ca32ea completed locally; all three naming claims pushed before code.  
+Commits: e31de1d, 1d106df and 0ca32ea pushed; report/evidence 3d69400 pushed; all naming claims preceded code.  
 Commands/results: complete helper package PASS, 228.362s; targeted PASS 107.976s; vet clean; filtered uncached oracle PASS 1.106s.  
 Mutants: seven new compiled semantic mutants caught by Go comparisons, plus all 18 prior/inherited mutants rerun.  
-Not covered: whole-rule findings/fixes, dynamic fixtures, cross-slot integration, invalid raw-byte strings and full repository gate; GitHub push currently lacks authentication.  
+Not covered: whole-rule findings/fixes, dynamic fixtures, cross-slot integration, invalid raw-byte strings and full repository gate; initial GitHub authentication failure resolved by the final retry.  
 
 # Slot 01 third helper batch report
 
@@ -67,9 +67,9 @@ The full package reruns all 18 previous/inherited mutants: path normalization, c
 
 - attributeValues claim ad07122 at 00:59:17 UTC preceded slot 03 5142004 and slot 04 0582ef8. Both later duplicates withdrew. Implementation e31de1d was tested and pushed before the next claim.
 - decodeEntity claim 892d365 was pushed before code. All remaining 11- and 10-consumer helpers were reserved by then; it tied UnescapeStringLiteralText at nine. Implementation 1d106df was tested and pushed before the next claim.
-- IsLikelyComponentName claim b3923a0 was pushed before code. UnescapeStringLiteralText was already reserved by slots 03/04, making this eight-consumer helper the sole highest remaining count. The later wording clarification a61db53 corrected byte/rune terminology; implementation 0ca32ea is completed locally. A final wildcard fetch confirmed no other remote claim for this helper or decodeEntity.
+- IsLikelyComponentName claim b3923a0 was pushed before code. UnescapeStringLiteralText was already reserved by slots 03/04, making this eight-consumer helper the sole highest remaining count. The later wording clarification a61db53 corrected byte/rune terminology; implementation 0ca32ea is completed and pushed. A final wildcard fetch confirmed no other remote claim for this helper or decodeEntity.
 
-GitHub publication is blocked after b3923a0: repeated git push origin codex/lint-helpers-01 attempts printed exactly `fatal: could not read Username for 'https://github.com': No such device or address`. Public wildcard fetch still succeeds. The cloud runtime status reports current observations, enforced networking, no secrets and no outbound identities. No interactive login, guessed identity, secret printing, shared configuration change or force push was attempted. The requested fallback is /workspace/lint-helpers-01-wave3.patch, covering every local commit after the last verified remote claim b3923a0. Attribute and entity implementations are already remote; component implementation, clarification and final report/evidence need the patch or restored authentication.
+GitHub publication initially failed after b3923a0: repeated git push origin codex/lint-helpers-01 attempts printed exactly `fatal: could not read Username for 'https://github.com': No such device or address`. Public wildcard fetch still succeeded. The cloud runtime status at diagnosis reported current observations, enforced networking, no secrets and no outbound identities. No interactive login, guessed identity, secret printing, shared configuration change or force push was attempted. After validation and the report commit, the final authorized retry succeeded, updating origin from b3923a0 to 3d69400. git ls-remote independently confirmed 3d69400 on codex/lint-helpers-01. All three implementations, clarification, final report and evidence are pushed; no format-patch fallback was required or created.
 
 ## Every consumer and remaining scope
 
