@@ -189,7 +189,7 @@ func lintTool(t *testing.T, name string, args ...string) string {
 func lintContext(t *testing.T) string {
 	// Runtime flags, runner code, harness code and environment can all affect an
 	// observation. The bypass control itself does not change program semantics.
-	parts := map[string]string{"GOOS": runtime.GOOS, "GOARCH": runtime.GOARCH, "go": lintTool(t, "go", "version"), "uid": fmt.Sprint(os.Geteuid())}
+	parts := map[string]string{"GOOS": runtime.GOOS, "GOARCH": runtime.GOARCH, "go": lintTool(t, "go", "version"), "uid": fmt.Sprint(os.Geteuid()), "executable": lintExecutable(t)}
 	var stack syscall.Rlimit
 	if err := syscall.Getrlimit(syscall.RLIMIT_STACK, &stack); err != nil {
 		t.Fatal(err)
@@ -297,9 +297,15 @@ func lintManifestKey(t *testing.T, path string) string {
 	}
 	return lintKey("manifest", parts)
 }
+
+// Timing samples must execute processes, never measure an observation replay.
+func lintObservationUncached() bool {
+	return os.Getenv("ADAMIC_GATE_UNCACHED") == "1" || os.Getenv("ADAMIC_LINT_BENCH") == "1"
+}
+
 func execute(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
-	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+	if lintObservationUncached() {
 		return executeUncached(t, directory, name, args...)
 	}
 	if key, ok := lintOracles.Load(name); ok && len(args) >= 2 && args[0] == "--manifest" {
@@ -381,11 +387,16 @@ func lintModules(t *testing.T, entry string) string {
 var lintExecutableIdentity sync.Once
 var lintExecutableKey string
 
+func lintExecutable(t *testing.T) string {
+	lintExecutableIdentity.Do(func() { lintExecutableKey = lintTool(t, "go", "tool", "buildid", os.Args[0]) })
+	return lintExecutableKey
+}
+
 func lintCompiler(t *testing.T) string {
 	// The executable identity prevents a long-lived worker built from old compiler
 	// sources from publishing under a newly edited compiler's source-only key.
-	lintExecutableIdentity.Do(func() { lintExecutableKey = lintTool(t, "go", "tool", "buildid", os.Args[0]) })
-	parts := map[string]string{"go.sum": lintOptionalBytes(t, filepath.Join(repository, "go.sum")), "go.mod": lintBytes(t, filepath.Join(repository, "go.mod")), "executable": lintExecutableKey, "cohere": lintCohere(t)}
+	identity := lintExecutable(t)
+	parts := map[string]string{"go.sum": lintOptionalBytes(t, filepath.Join(repository, "go.sum")), "go.mod": lintBytes(t, filepath.Join(repository, "go.mod")), "executable": identity, "cohere": lintCohere(t)}
 	err := filepath.WalkDir(filepath.Join(repository, "internal"), func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -440,7 +451,7 @@ func buildPort(t *testing.T, directory string, sanitize bool) string {
 }
 func node(t *testing.T, directory, manifest string, count bool) execution {
 	t.Helper()
-	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+	if lintObservationUncached() {
 		return nodeUncached(t, directory, manifest, count)
 	}
 	prepareRegistry(t, directory)
@@ -467,7 +478,7 @@ func emittedJavaScript(t *testing.T, directory string) string {
 }
 func runJavaScript(t *testing.T, module, manifest string, count bool) execution {
 	t.Helper()
-	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+	if lintObservationUncached() {
 		return runJavaScriptUncached(t, module, manifest, count)
 	}
 	started := time.Now()
