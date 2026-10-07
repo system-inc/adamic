@@ -1,0 +1,21 @@
+export interface DesignSystemResult<S,T,E,R> {
+    readonly system: S;
+    readonly table: T;
+    readonly error: E;
+    readonly entryPoint: string;
+    readonly reads: R;
+}
+export interface RecordingFileSystem<R> { readonly reads: () => R; }
+export interface DesignSystemProgram<R> { readonly designSystemFS: () => RecordingFileSystem<R>; }
+
+// Dependencies supply the loader and a fresh recording filesystem snapshot.
+// Return a new value, as Go returns a struct without mutating the loader's result.
+export function loadDesignSystemForProgram<S,T,E,R>(
+    program: DesignSystemProgram<R>,
+    load: (program: DesignSystemProgram<R>, filesystem: RecordingFileSystem<R>) => DesignSystemResult<S,T,E,R>
+): DesignSystemResult<S,T,E,R> {
+    const filesystem = program.designSystemFS();
+    const result = load(program, filesystem);
+    return {system: result.system, table: result.table, error: result.error,
+        entryPoint: result.entryPoint, reads: filesystem.reads()};
+}

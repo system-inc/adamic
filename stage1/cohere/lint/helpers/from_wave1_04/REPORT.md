@@ -1,5 +1,5 @@
 Built: tailwind.projectRootOf in project_root.a, preserving configured-file preference, POSIX filepath.Dir and lazy fallback reads.
-Commits: claim 398cedef was pushed before implementation; implementation commit follows this report.
+Commits: claim 398cedef was pushed before implementation; projectRootOf implementation 482d36bf; load wrapper claim 4e028e6f was pushed before code.
 Commands and outputs: owned four-way comparison and three compiling mutants PASS in 12.757s; 2,935 cases and 85,445 identical bytes.
 Mutants: accept empty configured path, omit parent cleaning, and clean fallback cwd all finish cleanly and differ from actual Go on all three execution paths.
 Not covered: Windows filepath semantics, concurrent program mutation, full program/CSS engine integration, or a full repository gate.
@@ -29,6 +29,39 @@ Commands, with source /workspace/adamic-tools/env.sh:
 * python3 stage1/cohere/lint/helpers/from_wave1_04/capture.py > .../evidence/generation.log 2>&1: original Go suite exit 0, captured 151 cases from six actual-program consumers. The machine-specific Tailwind package lookup is redirected to the existing tailwindcss@4.1.18 installation at /tmp/wave104-tailwind. No production Go helper changes. Reproduction requires that installation.
 * ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers/from_wave1_04 -count=1 -v -timeout=10m > .../evidence/tests.log 2>&1: PASS 12.757s, 2,935 cases, 85,445 bytes, all three semantic mutants caught on source Node, emitted JavaScript and sanitized native.
 * go vet ./stage1/cohere/lint/helpers/from_wave1_04 > .../evidence/vet.log 2>&1: exit zero, empty log.
-* ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=10m > .../evidence/oracle.log 2>&1: result recorded in log.
+* ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=10m > .../evidence/oracle.log 2>&1: PASS 5.960s, all six input probes.
 
 The new branch is based on origin/codex/lint-helpers at 95100eb440b47f3f18e960c6f5b49cadf0dc1d9d, pinned Go cohere 715ba94f3608a6500086b1076ce5cb7e51b836db. Before claiming, 402 origin refs and 15 distinct helper claim blobs were checked. Comment helpers are already delivered on the base; FindEntryPoint was claimed by slot 11 during the refresh and was left untouched. No previous rule code is carried onto this helper branch.
+
+loadDesignSystemForProgram
+
+The second .a helper acquires DesignSystemFS once, passes the exact program and
+filesystem to its explicit loader dependency, then takes the recording read snapshot
+on success and failure. It copies the Go result value, preserving all opaque system,
+table and error fields plus the entry point, without modifying the loader result.
+This helper does not implement RecordingFS or loadDesignSystemThrough.
+
+The owned oracle runs the actual pinned Go loadDesignSystemForProgram and its actual
+loadDesignSystemThrough, RecordingFS, CSS engine and table builder. Scratch observers
+copy the loader result before the wrapper assigns Reads and record filesystem/load
+order. No loader dependency is stubbed in Go. The 151 captured six-consumer program
+inputs are supplemented by 25 live filesystem controls: success, missing package,
+missing import and missing entry for each of six consumers, plus an empty root.
+Go observes six successful systems/tables, 170 failures and 175 nonempty snapshots
+over 176 cases. Native and both JavaScript paths replay Go-produced opaque loader
+fields and RecordingFS snapshots; filesystem/engine parity itself is outside this
+helper's claim. Read records remain exact opaque JSON so int64 modification times
+are never rounded through JavaScript numbers. The result and original loader Reads
+are both compared, with program/filesystem dependency identity checked.
+
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers/from_wave1_04
+-run '^TestLoadDesignSystemForProgram' -count=1 -v -timeout=10m
+> .../evidence/load-tests.log 2>&1: PASS 9.911s. Baseline 176 exact output lines,
+204,013 bytes. Two mutants discard the recording snapshot or take it before load.
+Both compile and finish with zero status and empty stderr on source Node, emitted
+JavaScript and ASan/UBSan native; actual Go byte comparison alone catches them.
+Both helpers each remove one prerequisite from the same six rules listed above,
+twelve rule/helper dependency removals total, zero final blockers removed.
+
+Before the second claim, all 428 origin refs and 17 distinct helper claim blobs
+were inspected; the selected helper tied the highest unclaimed named count at six.

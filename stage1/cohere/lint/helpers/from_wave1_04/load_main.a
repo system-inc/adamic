@@ -1,0 +1,29 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { loadDesignSystemForProgram } from './load_design_system_for_program.a';
+const args = programArguments();
+const data = readTextFile(args[0] ?? panic('usage: facts.json'));
+if(data.kind === 'Error') { panic(data.message); }
+const json = new OptionsJson(data.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+let ordinal = 0;
+for(const row of json.node(root).children) {
+    const system = json.node(json.field(row,'System')).text;
+    const table = json.node(json.field(row,'Table')).text;
+    const error = json.node(json.field(row,'Error')).text;
+    const entryPoint = json.node(json.field(row,'EntryPoint')).text;
+    const reads = json.node(json.field(row,'LoadedReads')).text;
+    const after = json.node(json.field(row,'Reads')).text;
+    const loaded = {system,table,error,entryPoint,reads};
+    const trace: string[] = [];
+    let snapshot = '[]';
+    const filesystem = {reads: () => snapshot};
+    const program = {designSystemFS: () => {trace.push('filesystem'); return filesystem;}};
+    const result = loadDesignSystemForProgram(program, (suppliedProgram,suppliedFilesystem) => {
+        if(suppliedProgram !== program || suppliedFilesystem !== filesystem) {panic('dependency identity changed');}
+        trace.push('load'); snapshot = after; return loaded;
+    });
+    console.log(`${ordinal}\t${written(result.system)}\t${written(result.table)}\t${written(result.error)}\t${written(result.entryPoint)}\t${written(result.reads)}\t${written(loaded.reads)}\t${trace.join(',')}`);
+    ordinal++;
+}
