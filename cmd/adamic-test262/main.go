@@ -22,8 +22,9 @@
 //
 // -jobs defaults to GOMAXPROCS. Reports and progress lines retain serial order. The runtime is
 // cached per source/toolchain/flag set, with the address and undefined-behavior sanitizers.
-// Node and native observations are cached under the user cache directory, with exact program,
-// toolchain, adaptation and command identities. ADAMIC_GATE_UNCACHED=1 bypasses both result caches.
+// Successful C generation, Node and native observations are cached under the user cache directory,
+// with exact program,
+// toolchain, adaptation and command identities. ADAMIC_GATE_UNCACHED=1 bypasses all result caches.
 package main
 
 import (

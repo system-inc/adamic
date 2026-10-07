@@ -231,11 +231,13 @@ func (e *engine) attempt(test classified) result {
 	if dependentProgram(test.Program) {
 		cache = nil
 	}
-	mode := "adamic c"
+	compilerCommand := cacheKey("adamic c", e.adamic, typescript, "2m", "16MiB")
 	if e.compiler != nil {
-		mode = "persistent load/lower/C"
+		// The worker executes this runner, not the scratch copy of adamic used for fallback.
+		// Its exact executable and protocol are already part of the runner context.
+		compilerCommand = cacheKey("runner --compiler-worker", typescript, "2m", "16MiB")
 	}
-	compilerKey := compilerResultKey(test.Program, e.compilerIdentity, cacheKey(mode, e.adamic, typescript, "2m", "16MiB"), e.context)
+	compilerKey := compilerResultKey(test.Program, e.compilerIdentity, compilerCommand, e.context)
 	lowered := cache.observe(compilerKey, func() (execution, bool) {
 		var result execution
 		if e.compiler != nil {
@@ -274,8 +276,7 @@ func (e *engine) attempt(test classified) result {
 	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
-	// graph is keyed, run both observations fresh rather than pretending they are closed tests.
-
+	// graph is keyed, all their observations run fresh.
 	nativeRun := cache.observe(key, func() (execution, bool) {
 		linked := runCommand(2*time.Minute, nil, "clang", arguments...)
 		if linked.Exit != 0 || linked.TimedOut {

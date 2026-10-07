@@ -322,3 +322,31 @@ func TestCompilerCacheProgram(t *testing.T) {
 		t.Fatal("reference dependency treated as closed")
 	}
 }
+
+func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
+	// Not parallel: explicitly enable reuse even in the uncached integration gate.
+	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	e.cache = &resultCache{directory: t.TempDir()}
+	e.compiler = &compilerWorker{}
+	defer e.compiler.close()
+	source, err := os.ReadFile("testdata/mini/test/pass/pad.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	test := classify("pass/pad.js", string(source), false)
+	if result := e.attempt(test); result.Kind != outcomePass {
+		t.Fatalf("priming C cache: %+v", result)
+	}
+	other := *e
+	other.work = t.TempDir()
+	other.adamic = filepath.Join(other.work, "not-used-by-worker")
+	other.compiler = &compilerWorker{}
+	defer other.compiler.close()
+	if result := other.attempt(test); result.Kind != outcomePass || other.compiler.command != nil {
+		t.Fatalf("worker C cache missed when only scratch compiler path changed: %+v", result)
+	}
+}
