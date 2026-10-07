@@ -6,26 +6,31 @@
       {
         "ref": "origin/codex/lint-helpers-from-codex-lint-wave1-14",
         "path": "stage1/cohere/lint/helpers/claims/codex-lint-wave1-14.md",
-        "blob": "48accd39bf17e24651a0ac458cd9b791b1896712"
+        "blob": "48accd39bf17e24651a0ac458cd9b791b1896712",
+        "active": false,
+        "reason": "Claim file explicitly withdraws this raced reservation to slot 09 4d352341; no executable duplicate retained."
       },
       {
         "ref": "origin/codex/lint-helpers-from-codex/lint-wave1-09",
         "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-09.md",
-        "blob": "edd4e863ef1645b5c8e512c4d0bc74391fd5c99c"
+        "blob": "edd4e863ef1645b5c8e512c4d0bc74391fd5c99c",
+        "active": true
       }
     ],
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort": [
       {
         "ref": "origin/codex/lint-helpers-from-codex/lint-wave1-09",
         "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-09.md",
-        "blob": "edd4e863ef1645b5c8e512c4d0bc74391fd5c99c"
+        "blob": "edd4e863ef1645b5c8e512c4d0bc74391fd5c99c",
+        "active": true
       }
     ],
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue": [
       {
         "ref": "origin/codex/lint-helpers-from-codex/lint-wave1-09",
         "path": "stage1/cohere/lint/helpers/claims/codex/lint-wave1-09.md",
-        "blob": "edd4e863ef1645b5c8e512c4d0bc74391fd5c99c"
+        "blob": "edd4e863ef1645b5c8e512c4d0bc74391fd5c99c",
+        "active": true
       }
     ]
   },
