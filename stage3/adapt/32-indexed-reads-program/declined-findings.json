@@ -1,0 +1,42 @@
+[
+  {
+    "diagnostic": "src/compiler/semver.ts:149:25: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "major is a destructured regexp capture, not an element-access expression; its mandatory capture invariant needs a separate adaptation."
+  },
+  {
+    "diagnostic": "src/compiler/semver.ts:287:48: error TS18048: 'simple' is possibly 'undefined'.",
+    "reason": "simple is a split/for-of binding, not an indexed read, under the checker regex/string model."
+  },
+  {
+    "diagnostic": "src/compiler/semver.ts:288:48: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "rangeRegExp capture 1 is optional and parseComparator handles undefined; its string parameter declaration does not represent that contract."
+  },
+  {
+    "diagnostic": "src/compiler/semver.ts:302:20: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "major is derived from a destructured regexp capture, not an indexed expression at this use."
+  },
+  {
+    "diagnostic": "src/compiler/semver.ts:302:42: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "major is derived from a destructured regexp capture, not an indexed expression at this use."
+  },
+  {
+    "diagnostic": "src/compiler/semver.ts:303:20: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "major is derived from a destructured regexp capture, not an indexed expression at this use."
+  },
+  {
+    "diagnostic": "src/compiler/semver.ts:304:20: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "major is derived from a destructured regexp capture, not an indexed expression at this use."
+  },
+  {
+    "diagnostic": "src/compiler/semver.ts:319:21: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "leftResult.major inherits the destructured-capture type; this is a property read, not an indexed read."
+  },
+  {
+    "diagnostic": "src/compiler/semver.ts:323:21: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "rightResult.major inherits the destructured-capture type; this is a property read, not an indexed read."
+  },
+  {
+    "diagnostic": "src/compiler/semver.ts:339:21: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "rightResult.major inherits the destructured-capture type; this is a property read, not an indexed read."
+  }
+]
