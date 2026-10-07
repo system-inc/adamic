@@ -1,0 +1,23 @@
+=== RUN   TestWave01AgreementAndMutants
+    wave_01_test.go:143: controls: 14749 identical finding bytes; findings 49
+    wave_01_test.go:155: relaxed: 15631 identical finding bytes; findings 51
+    wave_01_test.go:157: covered: 8141 identical finding bytes; findings 34
+    wave_01_test.go:163: controls-asan: 14749 identical finding bytes; findings 49
+    wave_01_test.go:174: implicit mutant: exit 0, empty stderr, byte oracle catches byte 1916
+    wave_01_test.go:174: deprecated mutant: exit 0, empty stderr, byte oracle catches byte 131
+    wave_01_test.go:174: else mutant: exit 0, empty stderr, byte oracle catches byte 7436
+    wave_01_test.go:196: compiler: 276439 identical finding bytes; findings 691
+    wave_01_test.go:197: compiler-asan: 276439 identical finding bytes; findings 691
+    wave_01_test.go:210: repository: 18485 identical finding bytes; findings 0
+    wave_01_test.go:211: repository-asan: 18485 identical finding bytes; findings 0
+    wave_01_test.go:222: released handle function-return-flow: panic 70
+    wave_01_test.go:228: released-registry function-return-flow: mutant exits 0, caught by required panic 70
+    wave_01_test.go:222: released handle symbol-documentation
+        node: panic 70
+    wave_01_test.go:228: released-registry symbol-documentation
+        node: mutant exits 0, caught by required panic 70
+    wave_01_test.go:222: released handle scope-symbol-declarations: panic 70
+    wave_01_test.go:228: released-registry scope-symbol-declarations: mutant exits 0, caught by required panic 70
+--- PASS: TestWave01AgreementAndMutants (140.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	140.235s

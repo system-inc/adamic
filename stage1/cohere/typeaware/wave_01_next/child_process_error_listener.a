@@ -6,6 +6,8 @@ import { Frames, header } from '../frames.ts';
 const message =
     "This child process never gets an `'error'` listener. When the program is missing (ENOENT), cannot run (EACCES), or the process table is full (EAGAIN), node emits `'error'` on the ChildProcess instead of throwing at the call, and an `'error'` event with no listener throws \"Unhandled 'error' event\" and kills this whole process. Attach `child.on('error', ...)` in the same tick as the spawn, and decide there what a failed spawn means: reject, log, or fall back.";
 export class ChildProcessErrorListener {
+    // typescript-go SyntaxKind values; the shared driver will consume this declaration.
+    readonly listenerKinds: readonly number[] = [214];
     readonly context: Context;
     readonly verdicts = new Map<number, boolean>();
     constructor(fileContext: Context) {

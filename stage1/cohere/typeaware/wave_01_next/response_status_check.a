@@ -10,6 +10,8 @@ const bodyMessage =
 const discardMessage =
     'This awaits a fetch Response and drops it. fetch does not throw on an HTTP error, so a request that fails with a 400 or 500 runs on as if it succeeded. Keep the Response and check `response.ok`, and throw or return the failure when it is false.';
 export class ResponseStatusCheck {
+    // typescript-go SyntaxKind values; the shared driver will consume this declaration.
+    readonly listenerKinds: readonly number[] = [307];
     readonly context: Context;
     readonly bindings: ResponseBinding[] = [];
     constructor(fileContext: Context) {

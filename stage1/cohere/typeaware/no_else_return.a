@@ -7,6 +7,8 @@ import { scopeNameCollision } from './scope_symbol_declarations.a';
 const message =
     'This `else` follows a branch that always returns, so it is doing nothing. The code after it only runs when the `if` did not return, which is what an `else` says, and the extra nesting costs the reader a level of indentation to learn nothing.';
 export class NoElseReturn {
+    // typescript-go SyntaxKind values; the shared driver will consume this declaration.
+    readonly listenerKinds: readonly number[] = [246];
     readonly rules: Rules;
     readonly bindings: Bindings;
     constructor(bindings: Bindings) {

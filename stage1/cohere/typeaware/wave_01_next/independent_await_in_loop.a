@@ -9,6 +9,8 @@ import { LoopPath } from './loop_path.a';
 const message =
     'This loop awaits once per item, so the items run one after another, yet nothing carries from one iteration to the next: the awaited work reads only the item, its index and values the loop never changes, no outer variable is reassigned, nothing leaves the loop on an awaited result, and nothing prints, reports progress or sleeps between iterations. Start them together with `await Promise.all(items.map(async (item) => ...))`, or through a bounded concurrency helper when the collection can be large or the far side rate-limits. If the order is deliberate, say so where it lives: `// cohere-disable-next-line nexus/performance-no-independent-await-in-loop -- <why it is sequential>`.';
 export class IndependentAwaitInLoop {
+    // typescript-go SyntaxKind values; the shared driver will consume this declaration.
+    readonly listenerKinds: readonly number[] = [251, 249];
     readonly context: Context;
     readonly foreign = new Map<string, Bindings>();
     readonly orderedBodies = new Map<string, boolean>();

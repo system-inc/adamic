@@ -108,3 +108,22 @@ Main advanced during the first gate. Rebased again onto e8ba3d5d81de4d3773c72391
 and reran both full gates on code head 76493d0bce37f2d70b4001cf5556a9e461874e2f.
 Original gate PASS 139.718s; continuation gate PASS, including package tests.
 Final logs and command records are in validation/landing.
+
+## Numeric listener declarations
+
+The six completed rules now expose readonly listenerKinds arrays of numeric
+typescript-go SyntaxKind values. The values were read from the independent
+Go enum; listener_check.py compares each array with the production Go rule
+registration and rejects an in-memory +1 kind mutant for each rule.
+The current driver does not consume these declarations.
+
+Both full gates passed again after the declarations: original 140.235s;
+continuation PASS including checker and bridge package tests. All six rule
+mutants and seven released-handle checks passed, with exact compiler/repository
+comparisons under sanitizers. Evidence is in validation/listeners.
+
+This is metadata preparation, not completion of the speed rule. ParseNode.kind
+is still a string in the shared parser, and the existing rule routines still
+use string-kind helpers and per-rule traversal. A numeric parser field and
+shared node delivery are needed to remove those paths. No speed improvement
+is claimed; the shared parser/driver remains outside this worker scope.
