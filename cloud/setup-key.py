@@ -61,7 +61,9 @@ def main():
     environment["setup-source"] = hashlib.sha256(Path("cloud/setup.sh").read_bytes()).hexdigest()
     environment["key-source"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     packages = []
-    manifests = {"go.mod", "go.sum"}
+    manifests = {"go.mod", "go.sum", "cloud/markdown-width/package.json",
+                 "cloud/markdown-width/package-lock.json", "cloud/markdown-width/npm-bootstrap.json",
+                 "cloud/setup-markdown-width.py"}
     workspace = environment.get("GOWORK")
     if workspace and workspace != "off":
         manifests.update([workspace, workspace + ".sum"])

@@ -38,6 +38,10 @@ install -d -m 1777 "$gate"
 exec 9> "$tools/setup.lock"
 flock 9
 run=$(mktemp -d "$gate/setup.XXXXXX")
+markdownDependencies="$tools/markdown-width"
+case $(realpath -m "$markdownDependencies") in
+	/root | /root/*) markdownDependencies="$gate/markdown-width-$(printf '%s' "$tools" | sha256sum | cut -d' ' -f1)" ;;
+esac
 case $(uname -m) in
 	x86_64) goArchitecture=amd64 nodeArchitecture=x64 llvmArchitecture=X64 ;;
 	aarch64 | arm64) goArchitecture=arm64 nodeArchitecture=arm64 llvmArchitecture=ARM64 ;;
@@ -114,6 +118,9 @@ if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 fi
 "$tools/bin/node" --version
 step "node ready"
+python3 "$repository/cloud/setup-markdown-width.py" "$repository/cloud/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
+cat "$run/markdown.log"
+step "markdown dependencies ready"
 }
 
 prepareSubmodules() {
@@ -143,6 +150,7 @@ cat > "$tools/env.sh" << ENV
 export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
 export GOTOOLCHAIN=auto
 export TMPDIR=$gate
+export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
 ENV
 grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
 # shellcheck disable=SC1091

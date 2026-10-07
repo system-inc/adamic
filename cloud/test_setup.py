@@ -69,8 +69,13 @@ class WarmingKey(unittest.TestCase):
             dependency = repository / "dependency"
             dependency.mkdir()
             paths = [repository / "go.mod", repository / "go.sum", repository / "go.work",
-                     repository / "go.work.sum", dependency / "go.mod", dependency / "go.sum"]
+                     repository / "go.work.sum", dependency / "go.mod", dependency / "go.sum",
+                     repository / "cloud/markdown-width/package.json",
+                     repository / "cloud/markdown-width/package-lock.json",
+                     repository / "cloud/markdown-width/npm-bootstrap.json",
+                     repository / "cloud/setup-markdown-width.py"]
             for file in paths:
+                file.parent.mkdir(parents=True, exist_ok=True)
                 file.write_text("manifest\n")
             packages = repository / "packages.json"
             packages.write_text(json.dumps({"ImportPath": "proof", "BuildID": "unchanged",
@@ -118,9 +123,10 @@ class SetupIntegration(unittest.TestCase):
         print("integration logs:", scratch, flush=True)
         repository = scratch / "repository"
         (repository / "cloud").mkdir(parents=True)
-        for name in ["setup.sh", "setup-key.py"]:
+        for name in ["setup.sh", "setup-key.py", "setup-markdown-width.py"]:
             shutil.copyfile(KEY_MODULE if name == "setup-key.py" else SOURCE / name,
                             repository / "cloud" / name)
+        shutil.copytree(SOURCE / "markdown-width", repository / "cloud/markdown-width")
         (repository / "go.mod").write_text("module setup-proof\n\ngo 1.27\n")
         (repository / "go.sum").write_text("")
         (repository / ".gitignore").write_text("setup-proof\n")
