@@ -75,3 +75,18 @@ Native implementations and evidence belong in `wave_06_callbacks/`.
 
 The third continuation is complete; its native rules and complete comparison
 evidence live in `wave_06_callbacks/REPORT.md` and `wave_06_callbacks/validation/`.
+
+## Fourth continuation claim
+
+All twelve earlier rules are complete and pushed through
+`d0dc8c2c7a88ab3ddfb3b49d4ffc1e07c8be8f5e`. A fresh all-heads fetch
+checked 389 origin refs, 33 unique claim documents, 142 claimed ranked rules
+and 25 ranked ports on main or the bridge base. The first three remaining
+entries in descending combined volume with lexical ties are reserved before code:
+
+1. `react-hooks/set-state-in-effect` (0 compiler, 0 repository)
+2. `react-hooks/set-state-in-render` (0 compiler, 0 repository)
+3. `react-hooks/static-components` (0 compiler, 0 repository)
+
+Implementations and evidence belong in `wave_06_react_state/`. No additional
+rules are reserved by this claim.
