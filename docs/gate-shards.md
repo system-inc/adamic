@@ -1068,11 +1068,11 @@ Formatter and oracle setup have no separate duration markers; their group
 estimates conservatively retain the measured work rather than invent a discount.
 These reconstructed estimates are not joint-run measurements.
 
-The calibration source is the available evidence at
-`gate-logs/47fbaf174d16/20261007T153523/shard-N`: shards 0 and 13 were not published.
-The volume estimate has thirteen of fifteen rows; the list-layout observation is
-missing. A complete merged gate or a plain/sharded equivalence certificate is
-not claimed. The `Unknown` counts in the plan remain visible.
+The calibration source is all fifteen logs at
+`gate-logs/47fbaf174d16/20261007T153523/shard-N`. Shards 0 and 13 appeared during
+this unit and were fetched before the rerun. All fifteen volume rows and all
+nine layout members are now observed. A plain/sharded equivalence certificate
+is not claimed. The `Unknown` counts in the plan remain visible.
 
 Use `plan -timings /absolute/path/timings.json` and the same option to `shard`
 when measuring an older clean source checkout with the new runner. The plan

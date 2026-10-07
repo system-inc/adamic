@@ -1,6 +1,12 @@
 {
   "Sources": [
     {
+      "Path": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+      "SHA256": "2e27113f9bdc8722d76f174617e454f12ba4fec2843ac0644e0f53eb3cef0f5d",
+      "Commit": "47fbaf174d168f14cd50dedcaabfaa09c51cdefd",
+      "BuildFlags": "concurrency=\"auto\" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=47fbaf174d168f14cd50dedcaabfaa09c51cdefd nproc=5 cpu.max=\"400000 100000\" go=\"go version go1.27.1 linux/amd64\" clang=\"clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\" node=\"v24.19.0\" load_before=\"7.38 4.87 2.12 1/143 6126\" load_after=\"1.07 3.28 3.42 1/387 20056\" uncached=1 GOFLAGS=\"\" CGO_ENABLED=\"\" GOMAXPROCS=\"\" width_deps=\"/workspace/adamic-tools/markdown-width\""
+    },
+    {
       "Path": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
       "SHA256": "0df2704ee54a3999f9e956e7b308b67d86be47980c379e2d8d20fddeb04c2561",
       "Commit": "47fbaf174d168f14cd50dedcaabfaa09c51cdefd",
@@ -23,6 +29,12 @@
       "SHA256": "cca92558ba78adc1025d4ba2b35fe5849cf021404e6a38e0b60da58116d38c60",
       "Commit": "47fbaf174d168f14cd50dedcaabfaa09c51cdefd",
       "BuildFlags": "concurrency=\"auto\" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=47fbaf174d168f14cd50dedcaabfaa09c51cdefd nproc=5 cpu.max=\"400000 100000\" go=\"go version go1.27.1 linux/amd64\" clang=\"clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\" node=\"v24.19.0\" load_before=\"5.21 4.54 2.06 1/141 5906\" load_after=\"1.00 1.95 3.07 1/152 14164\" uncached=1 GOFLAGS=\"\" CGO_ENABLED=\"\" GOMAXPROCS=\"\" width_deps=\"/workspace/adamic-markdown-width\""
+    },
+    {
+      "Path": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+      "SHA256": "d84c010cef6d1130a04cc64e0f4f8e551241c5898c75d323ac4d9d9e86910021",
+      "Commit": "47fbaf174d168f14cd50dedcaabfaa09c51cdefd",
+      "BuildFlags": "concurrency=\"auto\" package_jobs=5 test_parallel=0 effective_parallel=5 budget=25 commit=47fbaf174d168f14cd50dedcaabfaa09c51cdefd nproc=5 cpu.max=\"400000 100000\" go=\"go version go1.27.1 linux/amd64\" clang=\"clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\" node=\"v24.19.0\" load_before=\"6.20 3.43 1.41 1/143 5896\" load_after=\"1.45 4.00 4.99 1/157 23377\" uncached=1 GOFLAGS=\"\" CGO_ENABLED=\"\" GOMAXPROCS=\"\" width_deps=\"/workspace/adamic-tools/markdown-width\""
     },
     {
       "Path": "/workspace/gate-affinity-evidence/original/shard-14/gate-out/test.jsonl",
@@ -129,6 +141,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/cloud::TestLintWaveCheck": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 18.31,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/cloud::TestRepositoryPassesCohereBaseline": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-14/gate-out/test.jsonl",
@@ -221,6 +241,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 0,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic-gate::TestCurrentCohereGateIsRequired": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 3.96,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -404,6 +432,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 0.01,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic-gate::TestShardDeadlineKillsGrandchild": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.34,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -1144,6 +1180,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/cmd/adamic-test262::TestCompilerWorkerTimeout": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.33,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/cmd/adamic-test262::TestCrashPath": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -1196,6 +1240,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
         "Seconds": 33.58,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic-test262::TestNativeCacheGeneratedC": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 4.72,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -1352,6 +1404,114 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.6,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/alias": 0.13,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/default_parameter": 0.11,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/exported": 0.14,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/function_value": 0.17,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/generic": 0.14,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/literal_parameter": 0.14,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/optional_parameter": 0.16,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/private": 0.16,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/two_parameters": 0.14,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/wrong_parameter": 0.16,
+          "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/wrong_result": 0.14
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/alias": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.13,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/default_parameter": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.11,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/exported": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.14,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/function_value": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.17,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/generic": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.14,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/literal_parameter": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.14,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/optional_parameter": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.16,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/private": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.16,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/two_parameters": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.14,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/wrong_parameter": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.16,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestSelection/wrong_result": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.14,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/cmd/adamic::TestWASIRequestThrows": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-14/gate-out/test.jsonl",
@@ -1384,10 +1544,26 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/boundedrun::TestReadyDeadlineStartsAfterGrandchild": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.97,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/boundedrun::TestWaitCannotHangInOutputWriter": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
         "Seconds": 2.12,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/flow::TestEveryFunctionIsInSingleAssignment": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 65.31,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -13094,6 +13270,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/fuzz::TestPrepareBuildDeadline": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.32,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/fuzz::TestReduceKeepsClangsError": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
@@ -13106,6 +13290,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 0,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/fuzz::TestReduceKeepsTheSignature": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 18.87,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -13150,6 +13342,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/fuzz::TestUndefinedNumbersShapes": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 14.52,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/fuzz::TestVerdictsGoMostSevereFirst": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -13166,6 +13366,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/ir::TestCallTargetsIncludeEveryDescendant": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.1,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/ir::TestClosureTargetsBoundOnlyProvenValues": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -13178,6 +13386,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-9/gate-out/test.jsonl",
         "Seconds": 0.15,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/load::TestAdamicFilesImportEachOther": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.14,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -14426,6 +14642,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/lower::TestClassFeaturesAccessorCaptureCycle": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.07,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/lower::TestClassFeaturesAccessorRefusals": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-5/gate-out/test.jsonl",
@@ -14462,6 +14686,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
         "Seconds": 0.79,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/lower::TestClassFeaturesStaticDeclarationsExecute": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.15,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -14575,10 +14807,26 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/lower::TestInheritanceAllowsSoundOverrides": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.13,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/lower::TestInheritanceConditionalThisRules": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
         "Seconds": 0.48,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/lower::TestInheritanceCycleFinderIncludesInheritedFields": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.16,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -14607,9 +14855,44 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/lower::TestInheritanceGenericSoundness": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.3,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/lower::TestInheritanceGenericSoundness/generic_inherited_cycle": 0.09,
+          "github.com/system-inc/adamic/internal/lower::TestInheritanceGenericSoundness/generic_narrowing": 0.21
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/internal/lower::TestInheritanceGenericSoundness/generic_inherited_cycle": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.09,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/lower::TestInheritanceGenericSoundness/generic_narrowing": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.21,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/lower::TestInheritanceGenericViewsKeepNominalArguments": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-7/gate-out/test.jsonl",
+        "Seconds": 0.18,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/lower::TestInheritanceHasClassIdentity": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
         "Seconds": 0.18,
         "SetupSeconds": 0,
         "Children": null
@@ -18024,6 +18307,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/lower::TestLiteralMethodViewsDoNotLoseThis": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.28,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/lower::TestNullishPrototypeReadsAreRejectedByChecker": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
@@ -18247,6 +18538,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/lower::TestOverrideOptionalRefusesNativeSignature": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.19,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/lower::TestPredicateBodiesAreProven": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-6/gate-out/test.jsonl",
@@ -18267,6 +18566,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-3/gate-out/test.jsonl",
         "Seconds": 3.81,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/lower::TestProvenRelationsErase": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.28,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -19805,6 +20112,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/native::TestFreedValuesAreCaughtWithSlabs": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 18.3,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/native::TestGlobalArgumentLending": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-6/gate-out/test.jsonl",
@@ -19813,10 +20128,54 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/native::TestIeee754MatchesNodeBitForBit": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 11.43,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/native::TestInheritanceMemoryPlans": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-8/gate-out/test.jsonl",
         "Seconds": 0.12,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestLibraryMapSetIteratorResources": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 6.55,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/native::TestLibraryMapSetIteratorResources/count": 0.29,
+          "github.com/system-inc/adamic/internal/native::TestLibraryMapSetIteratorResources/peak": 0.49,
+          "github.com/system-inc/adamic/internal/native::TestLibraryMapSetIteratorResources/speed": 0.07
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestLibraryMapSetIteratorResources/count": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.29,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestLibraryMapSetIteratorResources/peak": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.49,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestLibraryMapSetIteratorResources/speed": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.07,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -19872,6 +20231,42 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/native::TestMapHashProbeCatchesMutants": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 31.87,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/native::TestMapHashProbeCatchesMutants/NaN_normalization": 6.26,
+          "github.com/system-inc/adamic/internal/native::TestMapHashProbeCatchesMutants/old_hash": 20.19,
+          "github.com/system-inc/adamic/internal/native::TestMapHashProbeCatchesMutants/zero_normalization": 5.42
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestMapHashProbeCatchesMutants/NaN_normalization": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 6.26,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestMapHashProbeCatchesMutants/old_hash": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 20.19,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestMapHashProbeCatchesMutants/zero_normalization": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 5.42,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/native::TestMathAndToFixedMatchJavaScript": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-5/gate-out/test.jsonl",
@@ -19922,12 +20317,34 @@
     ],
     "github.com/system-inc/adamic/internal/native::TestNormalizeMatchesNode": [
       {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.5,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/native::TestNormalizeMatchesNode/contexts": 19.13
+        }
+      },
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.42,
+        "SetupSeconds": 0,
+        "Children": null
+      },
+      {
         "Log": "/workspace/gate-affinity-evidence/original/shard-8/gate-out/test.jsonl",
         "Seconds": 0.46,
         "SetupSeconds": 0,
         "Children": {
           "github.com/system-inc/adamic/internal/native::TestNormalizeMatchesNode/points": 142
         }
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestNormalizeMatchesNode/contexts": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 19.13,
+        "SetupSeconds": 0,
+        "Children": null
       }
     ],
     "github.com/system-inc/adamic/internal/native::TestNormalizeMatchesNode/points": [
@@ -19974,6 +20391,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 0,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestPowersOfTwoFormatAsJavaScriptDoes": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.9,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -20407,6 +20832,22 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/native::TestRegExpBytecodeTest262": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 33.5,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestRegExpIteratorResultShape": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.35,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/native::TestRegExpLintPatternsNode": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-7/gate-out/test.jsonl",
@@ -20419,6 +20860,22 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-8/gate-out/test.jsonl",
         "Seconds": 6.83,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestRegExpSearchNode": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 8.7,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestRegexProgramsKeepCheckedFieldReads": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.12,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -20443,6 +20900,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 0.42,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestRuntimeCacheKeepsCountFlags": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 10.01,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -20511,6 +20976,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/native::TestSplitTSGoAgrees": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 69.4,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/native::TestSplitTokensDoNotRewriteLiterals": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -20545,6 +21018,14 @@
         }
       },
       {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.01,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/native::TestStringIndexMatchesNode/BMP": 7.19
+        }
+      },
+      {
         "Log": "/workspace/gate-affinity-evidence/original/shard-5/gate-out/test.jsonl",
         "Seconds": 0.02,
         "SetupSeconds": 0,
@@ -20565,6 +21046,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-7/gate-out/test.jsonl",
         "Seconds": 9.46,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestStringIndexMatchesNode/BMP": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 7.19,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -20645,6 +21134,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-5/gate-out/test.jsonl",
         "Seconds": 26.55,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/native::TestUniformFieldsMatchNode": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.53,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -25142,6 +25639,16 @@
     ],
     "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused": [
       {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.08,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/call_wrapper.a": 0.28,
+          "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/constructor_tie.a": 0.2,
+          "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/map_key.a": 0.21
+        }
+      },
+      {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
         "Seconds": 0.04,
         "SetupSeconds": 0,
@@ -25179,6 +25686,15 @@
         "Children": {
           "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/call_returns_argument.a": 0.27,
           "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/call_same.a": 0.23
+        }
+      },
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.61,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/caught.a": 0.18,
+          "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/escapes_after_return.a": 0.18
         }
       },
       {
@@ -25376,10 +25892,26 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/call_wrapper.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.28,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/captured_before.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-4/gate-out/test.jsonl",
         "Seconds": 0.31,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/caught.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.18,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -25395,6 +25927,14 @@
     "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/concat.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
+        "Seconds": 0.2,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/constructor_tie.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
         "Seconds": 0.2,
         "SetupSeconds": 0,
         "Children": null
@@ -25420,6 +25960,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 0.35,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/escapes_after_return.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.18,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -25468,6 +26016,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-4/gate-out/test.jsonl",
         "Seconds": 0.3,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestFreshWriteProbesStayRefused/map_key.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.21,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -25687,6 +26243,12 @@
         }
       },
       {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.1,
+        "SetupSeconds": 0,
+        "Children": null
+      },
+      {
         "Log": "/workspace/gate-affinity-evidence/original/shard-5/gate-out/test.jsonl",
         "Seconds": 0.19,
         "SetupSeconds": 0,
@@ -25767,10 +26329,125 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyOracleCatchesKeyOrder": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 17.54,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.1,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/array_of_objects": 0.14,
+          "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/duplicate": 0.12,
+          "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/hidden_fields": 0.06,
+          "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/parse": 0.11,
+          "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/prototype": 0.11,
+          "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/replacer_function": 0.17,
+          "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/toJSON": 0.16
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/array_of_objects": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.14,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/duplicate": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.12,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/hidden_fields": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.06,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/parse": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.11,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/prototype": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.11,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/replacer_function": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.17,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyRefusals/toJSON": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.16,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestJSONStringifyResultMayBeUndefined": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-3/gate-out/test.jsonl",
         "Seconds": 0.44,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONTypesMissingBinary": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.12,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/oracle::TestJSONTypesMissingBinary/missing": 0.06,
+          "github.com/system-inc/adamic/internal/oracle::TestJSONTypesMissingBinary/unset": 0.04
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONTypesMissingBinary/missing": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.06,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONTypesMissingBinary/unset": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.04,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestJSONTypesObservationKey": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -26135,6 +26812,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestLiteralOptionalOracleCatchesMutant": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 12.57,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestLiteralUndefinedOracleCatchesMutant": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-6/gate-out/test.jsonl",
@@ -26279,6 +26964,43 @@
       }
     ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.45,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/array_from_length.a": 1.26,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent.a": 1.36,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent_field.a": 1.27,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_throw.a": 1.3,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/classes.a": 1.68,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a": 1.15,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a": 2.33,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set.a": 2.55,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_iterators.a": 1.62,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_visit.a": 1.3,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_object_is.a": 1.05,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/long_chain.a": 2.81,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_named_more.a": 1.77,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_iteration.a": 1.33,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a": 1.24,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a": 1.22,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a": 1.74,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a": 1.44,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/route_targets_sort_values.a": 1.49,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/search_from.a": 1.19,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_keep.a": 1.61,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_keys.a": 1.22,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_named_closures.a": 1.5,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/shared_slice_append.a": 1.49,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/spread_calls.a": 0.99,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a": 1.59,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a": 1.17,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a": 1.44,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a": 1.18,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a": 1.16
+        }
+      },
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
         "Seconds": 1.95,
@@ -26431,6 +27153,42 @@
           "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a": 5.59,
           "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a": 3.2,
           "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a": 28.1
+        }
+      },
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 9.55,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a": 1.54,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_coverage_finally.a": 1.83,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_coverage_guards.a": 1.73,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_reassigned.a": 1.43,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a": 2.5,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a": 2.03,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a": 9.04,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a": 1.5,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a": 9.11,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_keys.a": 1.48,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_undefined.a": 8.68,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_values.a": 1.63,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a": 1.8,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_closures.a": 9.5,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_numbers.a": 1.68,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a": 2.16,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_writes.a": 1.64,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/normalize_coverage_cache.a": 2.54,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/normalize_long_marks.a": 1.53,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a": 2.04,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a": 1.86,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a": 1.97,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a": 2.48,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/runtime_last_index_of.a": 1.8,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/search_halves.a": 1.49,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_closures.a": 2.15,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/sorts.a": 1.97,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/spread_snapshot.a": 1.62,
+          "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": 1.66
         }
       },
       {
@@ -26911,6 +27669,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.54,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_typeof.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-9/gate-out/test.jsonl",
@@ -26947,6 +27713,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-8/gate-out/test.jsonl",
         "Seconds": 2.28,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/array_from_length.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.26,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -27039,6 +27813,22 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_coverage_finally.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.83,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_coverage_guards.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.73,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_coverage_method.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-3/gate-out/test.jsonl",
@@ -27103,6 +27893,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_reassigned.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.43,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_store.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-8/gate-out/test.jsonl",
@@ -27135,6 +27933,22 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.36,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent_field.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.27,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-8/gate-out/test.jsonl",
@@ -27147,6 +27961,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
         "Seconds": 1.61,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_throw.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.3,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -27319,6 +28141,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 2.5,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/class_features_twice.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-3/gate-out/test.jsonl",
@@ -27431,6 +28261,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/classes.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.68,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/closures.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-12/gate-out/test.jsonl",
@@ -27527,6 +28365,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 2.03,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -27591,6 +28437,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 9.04,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-9/gate-out/test.jsonl",
@@ -27623,6 +28477,22 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.15,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.5,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/fresh_calls.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-12/gate-out/test.jsonl",
@@ -27651,6 +28521,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-9/gate-out/test.jsonl",
         "Seconds": 1.29,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 9.11,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -27759,6 +28637,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_keys.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.48,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -27787,6 +28673,30 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
         "Seconds": 8.38,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_undefined.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 8.68,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_values.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.63,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 2.33,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -27959,6 +28869,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 2.55,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-9/gate-out/test.jsonl",
@@ -27999,6 +28917,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_iterators.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.62,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-7/gate-out/test.jsonl",
@@ -28023,10 +28949,26 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_visit.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.3,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_zeros.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-8/gate-out/test.jsonl",
         "Seconds": 1.94,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.8,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -28099,6 +29041,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
         "Seconds": 9.16,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/library_object_is.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.05,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -28239,6 +29189,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/long_chain.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 2.81,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-12/gate-out/test.jsonl",
@@ -28259,6 +29217,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-8/gate-out/test.jsonl",
         "Seconds": 32.18,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_closures.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 9.5,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -28303,6 +29269,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_named_more.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.77,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_named_numbers.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
@@ -28319,10 +29293,34 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_numbers.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.68,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_foreach_objects.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-12/gate-out/test.jsonl",
         "Seconds": 4.86,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_iteration.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.33,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.24,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -28375,6 +29373,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.22,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-7/gate-out/test.jsonl",
@@ -28387,6 +29393,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-8/gate-out/test.jsonl",
         "Seconds": 31.25,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 2.16,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -28435,6 +29449,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 3.22,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_writes.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.64,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -28511,6 +29533,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.74,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/nbody_write_read_order.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-4/gate-out/test.jsonl",
@@ -28523,6 +29553,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-7/gate-out/test.jsonl",
         "Seconds": 7.72,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/normalize_coverage_cache.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 2.54,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -28575,6 +29613,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/normalize_long_marks.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.53,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/number_edges.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
@@ -28619,6 +29665,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
         "Seconds": 2.18,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 2.04,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -28719,6 +29773,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.86,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
@@ -28731,6 +29793,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
         "Seconds": 12.02,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.97,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -28831,6 +29901,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 2.48,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-12/gate-out/test.jsonl",
@@ -28843,6 +29921,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
         "Seconds": 2.57,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.44,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -29039,6 +30125,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/route_targets_sort_values.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.49,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/route_targets_try_loop.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-6/gate-out/test.jsonl",
@@ -29063,10 +30157,34 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/runtime_last_index_of.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.8,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/search_from.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.19,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
         "Seconds": 1.68,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/search_halves.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.49,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -29095,10 +30213,42 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_closures.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 2.15,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_fnexpr.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
         "Seconds": 1.9,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_keep.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.61,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_keys.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.22,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_named_closures.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.5,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -29175,6 +30325,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/shared_slice_append.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.49,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/shared_slices.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
@@ -29215,6 +30373,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/sorts.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.97,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/splice_empty.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -29227,6 +30393,22 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
         "Seconds": 3.79,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/spread_calls.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.99,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/spread_snapshot.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.62,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -29251,6 +30433,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-7/gate-out/test.jsonl",
         "Seconds": 4.56,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.59,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -29327,6 +30517,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.17,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/string_limits.a": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
@@ -29355,6 +30553,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-4/gate-out/test.jsonl",
         "Seconds": 3.9,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.44,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -29451,6 +30657,22 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-6/gate-out/test.jsonl",
         "Seconds": 3.38,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_compare.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.18,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null_roll.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 1.16,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -29603,6 +30825,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-5/gate-out/test.jsonl",
         "Seconds": 4.14,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.66,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -33536,6 +34766,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
         "Seconds": 0.12,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/oracle::TestRuntimeLastIndexOfMatchesNode": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.98,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -43702,6 +44940,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/regexp::TestMatcherOct6Node": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.05,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/regexp::TestMatcherPropertyProviderStrings": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-6/gate-out/test.jsonl",
@@ -43718,10 +44964,26 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/regexp::TestMatcherRandomNode": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.24,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/regexp::TestMatcherStepLimit": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 0,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/regexp::TestMatcherTest262Executions": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 1.72,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -43790,6 +45052,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/unicodeproperties::TestCanonicalizeUnicodeNode": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 571.08,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/internal/unicodeproperties::TestEquivalentsAreClosed": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -43818,6 +45088,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-12/gate-out/test.jsonl",
         "Seconds": 21.03,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/internal/unicodeproperties::TestNodeStringProperties": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 0.18,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -43854,6 +45132,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/internal/unicodeproperties::TestVersionMatchesNode": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.05,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/stage1/cohere/css::TestCSSParserOptimizedMatchesNode": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
@@ -43863,6 +45149,12 @@
       }
     ],
     "github.com/system-inc/adamic/stage1/cohere/css::TestCSSPrinterAgreesWithGo": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 62.07,
+        "SetupSeconds": 0,
+        "Children": null
+      },
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-5/gate-out/test.jsonl",
         "Seconds": 539.08,
@@ -43950,6 +45242,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/stage1/cohere/css::TestCSSPrinterBoundaryProofs": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 62.32,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/stage1/cohere/css::TestCSSPrinterOptimizedMatchesGo": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-12/gate-out/test.jsonl",
@@ -43986,6 +45286,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 0,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/css::TestClosedParserRegexGap": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 21.95,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -44066,6 +45374,51 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-12/gate-out/test.jsonl",
         "Seconds": 1.73,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/css::TestEachGapStandsWhereGapsMdSaysItDoes": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.77,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/stage1/cohere/css::TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts": 0.2,
+          "github.com/system-inc/adamic/stage1/cohere/css::TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts": 0.2,
+          "github.com/system-inc/adamic/stage1/cohere/css::TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts": 0.19,
+          "github.com/system-inc/adamic/stage1/cohere/css::TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts": 0.18
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/css::TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.2,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/css::TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.2,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/css::TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.19,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/css::TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.18,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -44486,6 +45839,123 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
         "Seconds": 4.41,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 5.59,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_%q_in_uppercase_hexadecimal": 97.41,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_**_matching_one_segment_too_few": 68.44,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:upper:]]_one_letter_short": 35.6,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:xdigit:]]_taking_G": 59.36,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_path_never_cleaned": 59.21,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_trailing_tab_trimmed_as_a_space": 33.9,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_an_escaped_range_end_read_as_the_backslash": 47.86,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower": 53.6,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_a_linked_exclude_file_refused": 103.28,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_entering_from_below_the_root_forgetting_the_files_above": 100.32,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_precedence_read_from_the_root_down": 106.54,
+          "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere": 139.96
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_%q_in_uppercase_hexadecimal": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 97.41,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_**_matching_one_segment_too_few": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 68.44,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:upper:]]_one_letter_short": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 35.6,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:xdigit:]]_taking_G": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 59.36,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_path_never_cleaned": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 59.21,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_trailing_tab_trimmed_as_a_space": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 33.9,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_an_escaped_range_end_read_as_the_backslash": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 47.86,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 53.6,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_a_linked_exclude_file_refused": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 103.28,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_entering_from_below_the_root_forgetting_the_files_above": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 100.32,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/catches_precedence_read_from_the_root_down": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 106.54,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/gitignore::TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 139.96,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -44999,10 +46469,125 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers::TestMessageRefusalsMatchGo": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 193.52,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/stage1/cohere/lint/inventory::TestInventoryEngine": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
         "Seconds": 304.03,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestAdamicRuleModule": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.38,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/bad_kind": 0.17,
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/duplicate_public_name": 0.1,
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_class": 0.1,
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_factory": 0.28,
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_finish_hook": 0.19,
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_named_export": 0.14,
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_oracle_export": 0.11,
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/no_listener": 0.16,
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/unknown_field": 0.22,
+          "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/unsafe_public_name": 0.1
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/bad_kind": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.17,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/duplicate_public_name": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.1,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_class": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.1,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_factory": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.28,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_finish_hook": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.19,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_named_export": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.14,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/missing_oracle_export": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.11,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/no_listener": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.16,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/unknown_field": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.22,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry::TestDescriptorRejections/unsafe_public_name": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.1,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -45083,6 +46668,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
         "Seconds": 507.02,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/lint::TestFactoryHooks": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 96.94,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -45598,6 +47191,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/stage1/cohere/lint::TestSuggestionAlongsideAutomaticFix": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 228.64,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/stage1/cohere/lint::TestThroughput": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -45790,6 +47391,42 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-7/gate-out/test.jsonl",
         "Seconds": 108.93,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks::TestMarkdownListLayout": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 647.32,
+        "SetupSeconds": 422.486271144,
+        "Children": {
+          "github.com/system-inc/adamic/stage1/cohere/markdownblocks::TestMarkdownListLayout/ordered_cap": 69.47,
+          "github.com/system-inc/adamic/stage1/cohere/markdownblocks::TestMarkdownListLayout/task_box": 68.7,
+          "github.com/system-inc/adamic/stage1/cohere/markdownblocks::TestMarkdownListLayout/unordered_marker": 74.61
+        }
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks::TestMarkdownListLayout/ordered_cap": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 69.47,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks::TestMarkdownListLayout/task_box": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 68.7,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks::TestMarkdownListLayout/unordered_marker": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 74.61,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -46851,6 +48488,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/stage1/cohere/typeaware::TestInspectRequestRefusals": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 33.59,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/stage1/cohere/typeaware::TestPinnedTypeFlags": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-11/gate-out/test.jsonl",
@@ -46875,6 +48520,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/stage1/cohere/typeaware::TestSixRuleAgreementAndMutants": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 254.38,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/stage1/cohere/typeaware::TestTypeAwareAgreementAndMutants": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
@@ -46884,6 +48537,14 @@
       }
     ],
     "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeAgreementAndMutants": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 348.49,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeAgreementAndMutants/type-origin": 20.82
+        }
+      },
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
         "Seconds": 407.51,
@@ -46908,6 +48569,14 @@
         "Children": {
           "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeAgreementAndMutants/assignable-types": 22.77,
           "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeAgreementAndMutants/widened-shape": 23.51
+        }
+      },
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 127.58,
+        "SetupSeconds": 0,
+        "Children": {
+          "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeAgreementAndMutants/enum-types": 16.11
         }
       },
       {
@@ -47024,6 +48693,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeAgreementAndMutants/enum-types": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 16.11,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeAgreementAndMutants/property-info": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
@@ -47056,6 +48733,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeAgreementAndMutants/type-origin": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-0/gate-out/test.jsonl",
+        "Seconds": 20.82,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeAgreementAndMutants/type-symbol": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-2/gate-out/test.jsonl",
@@ -47076,6 +48761,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-10/gate-out/test.jsonl",
         "Seconds": 139.81,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/cohere/typeaware::TestVolumeProfileAgreementAndMutants": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 254.39,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -47587,6 +49280,14 @@
         "Children": null
       }
     ],
+    "github.com/system-inc/adamic/stage1/typescript/parser::TestTypeImportCycleGap": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.17,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
     "github.com/system-inc/adamic/stage1/typescript/parser::TestWholeCompilerAgrees": [
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-1/gate-out/test.jsonl",
@@ -47659,6 +49360,14 @@
       {
         "Log": "/workspace/gate-affinity-evidence/original/shard-9/gate-out/test.jsonl",
         "Seconds": 0.38,
+        "SetupSeconds": 0,
+        "Children": null
+      }
+    ],
+    "github.com/system-inc/adamic/stage1/typescript/scanner::TestGapStandsWhereGapsMdSays": [
+      {
+        "Log": "/workspace/gate-affinity-evidence/original/shard-13/gate-out/test.jsonl",
+        "Seconds": 0.22,
         "SetupSeconds": 0,
         "Children": null
       }
@@ -52674,7 +54383,5 @@
       }
     ]
   },
-  "Missing": [
-    "github.com/system-inc/adamic/stage1/cohere/markdownblocks::TestMarkdownListLayout"
-  ]
+  "Missing": null
 }
