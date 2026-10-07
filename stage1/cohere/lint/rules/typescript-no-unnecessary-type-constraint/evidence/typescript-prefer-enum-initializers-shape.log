@@ -1,0 +1,7 @@
+defineInitializer range=9:11 fixes=0 suggestions=3
+suggestion defineInitializerSuggestion "Can be fixed to Up = 0" fixes=1
+edit 9:11 "Up = 0"
+suggestion defineInitializerSuggestion "Can be fixed to Up = 1" fixes=1
+edit 9:11 "Up = 1"
+suggestion defineInitializerSuggestion "Can be fixed to Up = 'Up'" fixes=1
+edit 9:11 "Up = 'Up'"

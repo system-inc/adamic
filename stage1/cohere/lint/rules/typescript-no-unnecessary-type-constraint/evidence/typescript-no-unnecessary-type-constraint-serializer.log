@@ -1,0 +1,10 @@
+/workspace/adamic/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/testdata/blocked.ts.txt:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+panic: unexpected suggestion shape
+
+goroutine 1 [running]:
+main.run({0x1c85e705c820?, 0x7ffc12e20344?}, 0x0, 0x1c85e7171040)
+	/workspace/adamic/cohere/wave15_third_oracle.go:70 +0x8f8
+main.main()
+	/workspace/adamic/cohere/wave15_third_probe.go:50 +0x2bd

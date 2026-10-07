@@ -1,0 +1,3 @@
+noUnnecessaryTypeConstraint range=14:15 fixes=0 suggestions=1
+suggestion removeTheConstraint "Remove the constraint that does nothing." fixes=1
+edit 15:15 ""

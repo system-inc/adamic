@@ -1,0 +1,6 @@
+@typescript-eslint/no-unnecessary-type-constraint: shape exit=0; serializer exit=2 unexpected suggestion shape
+@typescript-eslint/prefer-as-const: shape exit=0; serializer exit=2 unexpected fix shape
+@typescript-eslint/prefer-enum-initializers: shape exit=0; serializer exit=2 unexpected suggestion shape
+@typescript-eslint/no-unnecessary-type-constraint: Go-only repair mutant compiled, exited 0, caught by shape-output comparison
+@typescript-eslint/prefer-as-const: Go-only repair mutant compiled, exited 0, caught by shape-output comparison
+@typescript-eslint/prefer-enum-initializers: Go-only repair mutant compiled, exited 0, caught by shape-output comparison

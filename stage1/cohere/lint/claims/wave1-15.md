@@ -58,3 +58,10 @@ registrations and from claim Markdown on all fetched origin branches, are:
 Claim audit JSON files enumerate rejected candidates and are not interpreted as
 claims. Rule-name mentions in actual claim Markdown, including reserved/skipped
 dispositions, were conservatively excluded. This claim is pushed before code.
+
+### Third-batch outcome
+
+All three remain claimed and blocked on the shared repair contract. The exact
+upstream diagnostics and current serializer refusals are reproduced by the
+owned Go probes; no incomplete rule is registered. See wave1-15-third-report.md
+for commands, shape evidence, Go-only probe mutants and untested backend scope.

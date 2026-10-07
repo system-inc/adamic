@@ -1,0 +1,10 @@
+/workspace/adamic/stage1/cohere/lint/rules/typescript-prefer-enum-initializers/testdata/blocked.ts.txt:1:10
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+panic: unexpected suggestion shape
+
+goroutine 1 [running]:
+main.run({0x61f9f360820?, 0x7ffc92e5634a?}, 0x0, 0x61f9f475080)
+	/workspace/adamic/cohere/wave15_third_oracle.go:70 +0x8f8
+main.main()
+	/workspace/adamic/cohere/wave15_third_probe.go:50 +0x2bd

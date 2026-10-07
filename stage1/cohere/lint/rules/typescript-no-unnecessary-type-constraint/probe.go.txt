@@ -1,0 +1,51 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
+	"os"
+)
+
+type registeredRule struct {
+	subject rule.Rule
+	options func([]string) any
+}
+
+func registeredRules() []registeredRule {
+	noOptions := func([]string) any { return nil }
+	return []registeredRule{{rules.NoUnnecessaryTypeConstraint, noOptions}, {rules.PreferAsConst, noOptions}, {rules.PreferEnumInitializers, noOptions}}
+}
+func main() {
+	if len(os.Args) == 4 && os.Args[1] == "--shape" {
+		path, name := os.Args[3], os.Args[2]
+		source, err := os.ReadFile(path)
+		if err != nil {
+			panic(err)
+		}
+		diagnostics := collect(path, string(source), []string{path, name})
+		if len(diagnostics) != 1 {
+			panic("expected exactly one upstream finding")
+		}
+		for _, d := range diagnostics {
+			fmt.Printf("%s range=%d:%d fixes=%d suggestions=%d\n", d.Message.Id, d.Range.Pos(), d.Range.End(), len(d.Fixes), len(d.Suggestions))
+			for _, f := range d.Fixes {
+				fmt.Printf("fix %d:%d %q\n", f.Range.Pos(), f.Range.End(), f.Text)
+			}
+			for _, s := range d.Suggestions {
+				fmt.Printf("suggestion %s %q fixes=%d\n", s.Message.Id, s.Message.Description, len(s.Fixes))
+				for _, f := range s.Fixes {
+					fmt.Printf("edit %d:%d %q\n", f.Range.Pos(), f.Range.End(), f.Text)
+				}
+			}
+		}
+		return
+	}
+	if len(os.Args) != 3 {
+		panic("expected rule and file")
+	}
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+	run(os.Args[2]+"\t"+os.Args[1], false, out)
+}
