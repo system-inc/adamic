@@ -1,0 +1,5 @@
+interface Tester { test(text: string): boolean; }
+function run(tester: Tester): boolean { return tester.test('xa'); }
+const test = /a/;
+const holder: { readonly test: Tester } = { test };
+console.log(`${run(holder.test)}`);

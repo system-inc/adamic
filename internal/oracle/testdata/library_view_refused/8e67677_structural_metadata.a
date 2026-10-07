@@ -1,0 +1,3 @@
+interface Metadata { readonly source: string; }
+function source(value: Metadata): string { return value.source; }
+console.log(source(/a/));
