@@ -1,0 +1,13 @@
+{
+  "name": "no-extra-label",
+  "kinds": [
+    "BreakStatement",
+    "ContinueStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoExtraLabel",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoExtraLabel"
+}

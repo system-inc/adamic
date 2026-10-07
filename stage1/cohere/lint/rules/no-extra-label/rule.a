@@ -1,0 +1,47 @@
+import type { RuleContext } from '../../context.ts';
+import type { Comment } from '../../helpers/comments/comment.ts';
+import { all } from '../../helpers/comments/all.ts';
+import { utf8Length } from 'adamic';
+import { Finding } from '../../finding.ts';
+import { messages } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    private ready = false; private comments: Comment[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    kind(index: number): string { return index < 0 ? '' : this.context.node(index).kind; }
+    parent(index: number): number { return this.context.parents[index] ?? -1; }
+    breakable(index: number): boolean { return ['WhileStatement', 'DoStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement', 'SwitchStatement'].includes(this.kind(index)); }
+    fileComments(index: number): Comment[] {
+        if(!this.ready) {
+            let root = index; while(this.parent(root) >= 0) { root = this.parent(root); }
+            this.comments = all(this.context.parser, root); this.ready = true;
+        }
+        return this.comments;
+    }
+    report(index: number, label: number): void {
+        const context = this.context;
+        const start = context.start(index) + (this.kind(index) === 'ContinueStatement' ? 8 : 5); const end = context.node(label).end;
+        let repair = start < end;
+        const from = utf8Length(context.source.slice(0, start)); const to = utf8Length(context.source.slice(0, end));
+        for(const comment of this.fileComments(index)) { if(comment.start < to && comment.end > from) { repair = false; } }
+        const finding = new Finding('no-extra-label', 'unexpected', messages[0] ?? '', context.start(label), end, repair ? 'fix' : '', '', '');
+        finding.editStart = start; finding.editEnd = end; context.findings.push(finding);
+    }
+    visit(index: number): void {
+        const context = this.context; const label = context.node(index).children[0] ?? -1;
+        if(label < 0) { return; }
+        const name = context.node(label).text;
+        for(let ancestor = this.parent(index); ancestor >= 0; ancestor = this.parent(ancestor)) {
+            if(this.breakable(ancestor)) {
+                const parent = this.parent(ancestor); const target = this.kind(parent) === 'LabeledStatement' ? context.node(parent).children[0] ?? -1 : -1;
+                if(target >= 0 && context.node(target).text === name) { this.report(index, label); }
+                return;
+            }
+            if(this.kind(ancestor) === 'LabeledStatement') {
+                const children = context.node(ancestor).children; const target = children[0] ?? -1; const statement = children[1] ?? -1;
+                if(!this.breakable(statement) && target >= 0 && context.node(target).text === name) { return; }
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
