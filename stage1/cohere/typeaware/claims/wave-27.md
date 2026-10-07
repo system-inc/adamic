@@ -33,3 +33,19 @@ All have combined count zero. Checked ports on origin/codex/tsgo-c-library and
 origin/main and Markdown claim records on all 325 fetched origin refs, including
 unqualified names for these candidates. No matches were found for these three.
 This claim update is pushed before implementing the second batch.
+
+## Third batch
+
+The first six ports were tested and pushed at
+c0cd687567bcacbce9d6be2383ee3dd17ed3ca31 before this selection.
+After fetching all origin heads without recursion, checked the 197-rule
+combined by-volume ranking against ports on origin/main and
+origin/codex/tsgo-c-library and Markdown claims on all 356 origin refs.
+The first three remaining rules, each with combined count zero, are:
+
+- prefer-regex-literals
+- prefer-rest-params
+- react-hooks/exhaustive-deps
+
+Claim matching includes full, unqualified and underscore spellings. This update
+is pushed before writing the third batch's implementation.
