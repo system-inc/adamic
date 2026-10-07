@@ -33,6 +33,9 @@ type Options struct {
 	// RuntimeImport replaces 'adamic'; empty keeps the ordinary backend contract.
 	RuntimeImport string
 
+	// ExternalFunctions replaces a definition with a call to an imported JS function.
+	ExternalFunctions map[int]string
+
 	// Mark, when set, is called for each point internal/flow's graph has an instruction for: a
 	// statement (by its address in its slice) and a part of it, as flow.Instruction.Part numbers them.
 	// The JavaScript expression it returns is evaluated each time the program reaches that point,
@@ -145,6 +148,13 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 			}
 		}
 		fmt.Fprintf(&builder, "\nfunction %s(%s) {\n", functionName(program, index), strings.Join(parameters, ", "))
+		if external, ok := options.ExternalFunctions[index]; ok {
+			if function.Closure {
+				panic("javascript: external function cannot be a closure")
+			}
+			fmt.Fprintf(&builder, "\treturn %s(%s);\n}\n", external, strings.Join(parameters, ", "))
+			continue
+		}
 		if function.Closure {
 			for position, parameter := range function.Parameters {
 				emitter.line("let %s = values[%d];", emitter.name(parameter), position)

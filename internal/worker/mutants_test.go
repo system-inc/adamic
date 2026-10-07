@@ -55,29 +55,7 @@ func TestWorkerMutants(t *testing.T) {
 			}
 			write(t, path, strings.Replace(string(original), mutant.before, mutant.after, 1))
 			report, err := mutantCheck(t, scratch, mutant.check)
-			var exit *exec.ExitError
-			if !errors.As(err, &exit) || exit.ExitCode() != 1 {
-				t.Fatalf("expected failed check, got %v\n%s", err, report)
-			}
-			decoder := json.NewDecoder(bytes.NewReader(report))
-			failed := false
-			var output strings.Builder
-			for {
-				var event struct{ Action, Test, Output string }
-				if err := decoder.Decode(&event); err == io.EOF {
-					break
-				} else if err != nil {
-					t.Fatalf("invalid test report: %v\n%s", err, report)
-				}
-				if event.Test == mutant.check {
-					failed = failed || event.Action == "fail"
-					output.WriteString(event.Output)
-				}
-			}
-			if !failed || !strings.Contains(output.String(), mutant.witness) {
-				t.Fatalf("named check did not fail with %q\n%s", mutant.witness, report)
-			}
-			t.Logf("CAUGHT by %s (%s)", mutant.check, mutant.witness)
+			assertMutantCaught(t, report, err, mutant.check, mutant.witness)
 		})
 	}
 }
@@ -132,4 +110,31 @@ func mutantCheck(t *testing.T, scratch, check string) ([]byte, error) {
 		t.Fatal(err)
 	}
 	return report, runError
+}
+
+func assertMutantCaught(t *testing.T, report []byte, err error, check, witness string) {
+	t.Helper()
+	var exit *exec.ExitError
+	if !errors.As(err, &exit) || exit.ExitCode() != 1 {
+		t.Fatalf("expected failed check, got %v\n%s", err, report)
+	}
+	decoder := json.NewDecoder(bytes.NewReader(report))
+	failed := false
+	var output strings.Builder
+	for {
+		var event struct{ Action, Test, Output string }
+		if err := decoder.Decode(&event); err == io.EOF {
+			break
+		} else if err != nil {
+			t.Fatalf("invalid test report: %v\n%s", err, report)
+		}
+		if event.Test == check {
+			failed = failed || event.Action == "fail"
+			output.WriteString(event.Output)
+		}
+	}
+	if !failed || !strings.Contains(output.String(), witness) {
+		t.Fatalf("named check did not fail with %q\n%s", witness, report)
+	}
+	t.Logf("CAUGHT by %s (%s)", check, witness)
 }

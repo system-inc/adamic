@@ -10,6 +10,10 @@ import (
 )
 
 func build(path, output string, arguments []string) int {
+	return buildWithExports(path, output, arguments, false)
+}
+
+func buildWithExports(path, output string, arguments []string, entryFunctions bool) int {
 	options := native.Options{}
 	archive := ""
 	reactor := false
@@ -72,7 +76,7 @@ func build(path, output string, arguments []string) int {
 	handler := -1
 	var exports []native.ABIExport
 	if options.Target == "wasm32-wasi" {
-		program, exports, code = compileExports(path, names)
+		program, exports, code = compileExportsWith(path, names, entryFunctions)
 		reactor = reactor || len(exports) > 0
 		options.Request = reactor
 	} else {
