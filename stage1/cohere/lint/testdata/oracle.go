@@ -71,9 +71,6 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 		fmt.Fprint(out, display[:footer])
 		repair, replacement, suggestion := "", "", ""
 		if len(d.Fixes) > 0 {
-			if len(d.Fixes) != 1 {
-				panic("unexpected fix shape")
-			}
 			repair = "fix"
 			replacement = d.Fixes[0].Text
 		}
@@ -105,6 +102,13 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 			editEnd = d.Suggestions[0].Fixes[0].Range.End()
 		}
 		fmt.Fprintf(out, "range %d %d %s %s\t%s\t%s\t%d %d\n", start, end, d.Message.Id, repair, written(replacement), written(suggestion), editStart, editEnd)
+		// A finding with several automatic edits: cohere's edit engine proposes each one on its own
+		// (edit.ProposalsFrom), so the first rides the range line and the rest follow, in order.
+		if len(d.Fixes) > 1 {
+			for _, fix := range d.Fixes[1:] {
+				fmt.Fprintf(out, "fix-edit\t%d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+			}
+		}
 		if repair == "suggestions" {
 			for _, suggestion := range d.Suggestions {
 				fmt.Fprintf(out, "suggestion\t%s\t%s\t%d\n", written(suggestion.Message.Id), written(suggestion.Message.Description), len(suggestion.Fixes))
