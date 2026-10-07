@@ -34,3 +34,17 @@ File: wave15/css_string/parse_css_string.a. Preserve raw byte offsets, escaping,
 semicolon/CRLF error details and the unusual EOF success-at-start behavior.
 All six consumer fixtures and all-byte controls against actual private Go,
 source Node, emitted JavaScript and ASan/UBSan native, with a compiling mutant.
+
+## Next helper
+
+CSS string helper is tested and pushed. Refetched 417 origin refs and
+checked 17 distinct helper claims. Reserve another unclaimed highest
+named-count tie, six consumers:
+
+- github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSDeclaration
+
+File: wave15/css_declaration/parse_css_declaration.a. Preserve Go raw-byte
+colon slicing, important search after the colon only, Unicode TrimSpace, fresh
+result records and absent-declaration states. Compare actual private Go over
+every consumer fixture and byte/Unicode/marker controls on Node, emitted
+JavaScript and sanitized native, with a compiling mutant. Claim precedes code.
