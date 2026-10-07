@@ -1,5 +1,5 @@
 Built isGenericName, hasMathFunction and LoadedDesignSystem.Utilities in separate .a files: twelve dependency edges across four rules.
-Commits: claim 413ad5a published before source; current main f8013f0; implementation SHA recorded in final publication.
+Commits: claim 413ad5a published before source; current main f8013f0; implementation 8b8d1de696776fac87ff7dd6554b514b01a67469 pushed only to codex/lint-helpers-03.
 Commands: focused gate PASS 9.291s, 1,118 comparison lines; complete owned gate PASS 358.002s, 2,989,186 lines; inherited helpers PASS 71.629s; vet/format clean; six uncached input probes PASS 1.546s.
 Mutants: seven new compiling variants caught; all seventy-one owned variants, four inherited variants and missing-consumer mutant caught.
 Not covered: full repository gate, whole-rule findings/fixes/suggestions integration, invalid Unicode adapters or unavailable external live Tailwind/corpora.
