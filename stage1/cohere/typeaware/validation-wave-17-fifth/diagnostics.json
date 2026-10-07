@@ -1,0 +1,19 @@
+{
+  "bytes": 49120,
+  "sha256": "fca073e68ed566631938083d1fd7b616e5a3fdb4d95304995582adb2fca9d06c",
+  "findings": {
+    "react-hooks/unsupported-syntax": 34,
+    "react/boolean-prop-naming": 4,
+    "react-hooks/use-memo": 61
+  },
+  "fix_edits": {
+    "react-hooks/unsupported-syntax": 0,
+    "react/boolean-prop-naming": 0,
+    "react-hooks/use-memo": 0
+  },
+  "suggestions": {
+    "react-hooks/unsupported-syntax": 0,
+    "react/boolean-prop-naming": 0,
+    "react-hooks/use-memo": 0
+  }
+}

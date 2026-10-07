@@ -131,3 +131,16 @@ Earlier entries were skipped as ported or claimed. These three are neither
 ported on origin/main or origin/codex/tsgo-c-library nor claimed on any fetched
 origin branch. The complete audit is validation-wave-17-fifth/selection.json.
 This claim is pushed before implementation on codex/typeaware-wave-17.
+
+## Fifth batch implemented and blocked status
+
+Hook decisions are implemented in 34369377, with final interpolation correction
+4f9f26dc. All hook message controls and the implemented default-pattern PropTypes
+portion match Go under sanitizers, with a mutant per rule. Ordinary native
+parsing matches 44 positive/negative controls and both frozen corpora.
+JSX decisions are additionally validated through independent raw AST fixtures.
+Production JSX still exits with parser panic 70. BooleanPropNaming is incomplete:
+its configurable native regexp matcher is blocked by stage0's RegExp constructor
+refusal, and complete component/props integration remains unwired. No complete
+BooleanPropNaming parity is claimed and no further rules are claimed. Exact
+commands, limits and timings are in [the fifth report](../WAVE_17_FIFTH_REPORT.md).

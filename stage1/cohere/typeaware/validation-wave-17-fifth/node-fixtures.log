@@ -1,0 +1,22 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures.a (6.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a (6.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a (6.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/functions.a (6.12s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	6.137s

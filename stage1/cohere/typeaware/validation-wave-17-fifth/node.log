@@ -1,0 +1,10 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+--- PASS: TestNativeAgreesWithNode (0.01s)
+--- PASS: TestTheOracleCatchesOneByte (3.44s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	3.446s
