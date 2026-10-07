@@ -1,0 +1,58 @@
+command ['go', 'build', '-overlay=/tmp/wave07-b8fb/next-google-font-display/oracle-overlay.json', '-o', '/tmp/wave07-b8fb/next-google-font-display/oracle', '/workspace/adamic/cohere/adamic_wave07_selector.go', '/workspace/adamic/cohere/adamic_wave07_selector_adapter.go']
+exit 0, stdout 0 bytes, stderr 0 bytes
+command ['go', 'test', './stage1/cohere/lint/rules/next-google-font-display', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 164 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/oracle', '/tmp/wave07-b8fb/next-google-font-display/selector-manifest.txt']
+exit 0, stdout 4228 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/next-google-font-display/selector-profile.a', '/tmp/wave07-b8fb/next-google-font-display/selector-manifest.txt']
+exit 0, stdout 4228 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/next-google-font-display/baseline/emitted.mjs', '/tmp/wave07-b8fb/next-google-font-display/selector-manifest.txt']
+exit 0, stdout 4228 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/baseline/native', '/tmp/wave07-b8fb/next-google-font-display/selector-manifest.txt']
+exit 0, stdout 4228 bytes, stderr 0 bytes
+PASS selector only: 27 rows including all 16 upstream sources; 4228 identical bytes
+command ['go', 'test', './stage1/cohere/lint/rules/next-google-font-display', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 164 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/next-google-font-display/mutant-source/selector-profile.a', '/tmp/wave07-b8fb/next-google-font-display/selector-manifest.txt']
+exit 0, stdout 2648 bytes, stderr 0 bytes
+PASS selector mutant block-display-accepted caught only by Go byte comparison on Node
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/next-google-font-display/mutant/emitted.mjs', '/tmp/wave07-b8fb/next-google-font-display/selector-manifest.txt']
+exit 0, stdout 2648 bytes, stderr 0 bytes
+PASS selector mutant block-display-accepted caught only by Go byte comparison on emitted JavaScript
+command ['/tmp/wave07-b8fb/next-google-font-display/mutant/native', '/tmp/wave07-b8fb/next-google-font-display/selector-manifest.txt']
+exit 0, stdout 2648 bytes, stderr 0 bytes
+PASS selector mutant block-display-accepted caught only by Go byte comparison on sanitized native
+command ['/tmp/wave07-b8fb/next-google-font-display/oracle', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/oracle', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/oracle', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/oracle', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/oracle', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+SELECTOR THROUGHPUT Go 78030.68 findings/s best of 5 including startup; Go parses JSX, Adamic receives attributes
+command ['/tmp/wave07-b8fb/next-google-font-display/baseline/release', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/baseline/release', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/baseline/release', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/baseline/release', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/next-google-font-display/baseline/release', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+SELECTOR THROUGHPUT native 118206.17 findings/s best of 5 including startup; Go parses JSX, Adamic receives attributes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/next-google-font-display/selector-profile.a', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/next-google-font-display/selector-profile.a', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/next-google-font-display/selector-profile.a', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/next-google-font-display/selector-profile.a', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/next-google-font-display/selector-profile.a', '/tmp/wave07-b8fb/next-google-font-display/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+SELECTOR THROUGHPUT Node 13711.82 findings/s best of 5 including startup; Go parses JSX, Adamic receives attributes
+BLOCKED full parser, ranges, corpus and whole-rule throughput: current Parser cannot construct JSX trees

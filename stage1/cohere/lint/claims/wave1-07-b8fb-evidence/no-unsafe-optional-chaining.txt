@@ -1,0 +1,69 @@
+command ['go', 'build', '-overlay=/tmp/wave07-b8fb/no-unsafe-optional-chaining/oracle-overlay.json', '-o', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/oracle', '/workspace/adamic/cohere/adamic_wave07_owned.go', '/workspace/adamic/cohere/adamic_wave07_adapter.go']
+exit 0, stdout 0 bytes, stderr 0 bytes
+command ['go', 'test', './stage1/cohere/lint/rules/no-unsafe-optional-chaining', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 169 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/oracle', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/upstream-manifest.txt']
+exit 0, stdout 45814 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/upstream-manifest.txt']
+exit 0, stdout 45814 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/baseline/emitted.mjs', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/upstream-manifest.txt']
+exit 0, stdout 45814 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/baseline/native', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/upstream-manifest.txt']
+exit 0, stdout 45814 bytes, stderr 0 bytes
+PASS upstream: 103 file rows, 45814 identical bytes
+command ['git', '-C', '/tmp/wave07-typescript', 'rev-parse', 'HEAD']
+exit 0, stdout 41 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/oracle', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/compiler-stage1-manifest.txt']
+exit 0, stdout 13286585 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/compiler-stage1-manifest.txt']
+exit 0, stdout 13286585 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/baseline/emitted.mjs', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/compiler-stage1-manifest.txt']
+exit 0, stdout 13286585 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/baseline/native', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/compiler-stage1-manifest.txt']
+exit 0, stdout 13286585 bytes, stderr 0 bytes
+PASS compiler-stage1: 354 file rows, 13286585 identical bytes
+command ['go', 'test', './stage1/cohere/lint/rules/no-unsafe-optional-chaining', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 169 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/mutant-source/profile.a', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/upstream-manifest.txt']
+exit 0, stdout 44908 bytes, stderr 0 bytes
+PASS mutant and-left-undefined-ignored caught only by byte comparison on Node
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/mutant/emitted.mjs', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/upstream-manifest.txt']
+exit 0, stdout 44908 bytes, stderr 0 bytes
+PASS mutant and-left-undefined-ignored caught only by byte comparison on emitted JavaScript
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/mutant/native', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/upstream-manifest.txt']
+exit 0, stdout 44908 bytes, stderr 0 bytes
+PASS mutant and-left-undefined-ignored caught only by byte comparison on sanitized native
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/oracle', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/oracle', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/oracle', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/oracle', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/oracle', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Go 79290.16 findings/s best of 5 including startup
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/baseline/release', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/baseline/release', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/baseline/release', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/baseline/release', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/no-unsafe-optional-chaining/baseline/release', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT native 21560.26 findings/s best of 5 including startup
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a', '/tmp/wave07-b8fb/no-unsafe-optional-chaining/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Node 2265.33 findings/s best of 5 including startup
+PASS owned profile and owner suggestion API attachment

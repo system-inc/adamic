@@ -1,0 +1,69 @@
+command ['go', 'build', '-overlay=/tmp/wave07-b8fb/typescript-no-non-null-assertion/oracle-overlay.json', '-o', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/oracle', '/workspace/adamic/cohere/adamic_wave07_owned.go', '/workspace/adamic/cohere/adamic_wave07_adapter.go']
+exit 0, stdout 0 bytes, stderr 0 bytes
+command ['go', 'test', './stage1/cohere/lint/rules/typescript-no-non-null-assertion', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 174 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/oracle', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/upstream-manifest.txt']
+exit 0, stdout 39811 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/profile.a', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/upstream-manifest.txt']
+exit 0, stdout 39811 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/baseline/emitted.mjs', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/upstream-manifest.txt']
+exit 0, stdout 39811 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/baseline/native', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/upstream-manifest.txt']
+exit 0, stdout 39811 bytes, stderr 0 bytes
+PASS upstream: 39 file rows, 39811 identical bytes
+command ['git', '-C', '/tmp/wave07-typescript', 'rev-parse', 'HEAD']
+exit 0, stdout 41 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/oracle', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/compiler-stage1-manifest.txt']
+exit 0, stdout 14796936 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/profile.a', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/compiler-stage1-manifest.txt']
+exit 0, stdout 14796936 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/baseline/emitted.mjs', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/compiler-stage1-manifest.txt']
+exit 0, stdout 14796936 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/baseline/native', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/compiler-stage1-manifest.txt']
+exit 0, stdout 14796936 bytes, stderr 0 bytes
+PASS compiler-stage1: 354 file rows, 14796936 identical bytes
+command ['go', 'test', './stage1/cohere/lint/rules/typescript-no-non-null-assertion', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 174 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/mutant-source/profile.a', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/upstream-manifest.txt']
+exit 0, stdout 40967 bytes, stderr 0 bytes
+PASS mutant index position incorrectly suggested caught only by byte comparison on Node
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/mutant/emitted.mjs', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/upstream-manifest.txt']
+exit 0, stdout 40967 bytes, stderr 0 bytes
+PASS mutant index position incorrectly suggested caught only by byte comparison on emitted JavaScript
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/mutant/native', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/upstream-manifest.txt']
+exit 0, stdout 40967 bytes, stderr 0 bytes
+PASS mutant index position incorrectly suggested caught only by byte comparison on sanitized native
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/oracle', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/oracle', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/oracle', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/oracle', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/oracle', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Go 143547.73 findings/s best of 5 including startup
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/baseline/release', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/baseline/release', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/baseline/release', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/baseline/release', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-b8fb/typescript-no-non-null-assertion/baseline/release', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT native 4597.85 findings/s best of 5 including startup
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/profile.a', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/profile.a', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/profile.a', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/profile.a', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/profile.a', '/tmp/wave07-b8fb/typescript-no-non-null-assertion/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Node 3864.21 findings/s best of 5 including startup
+PASS owned profile and owner suggestion API attachment
