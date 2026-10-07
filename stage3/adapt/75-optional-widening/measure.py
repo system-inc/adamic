@@ -25,8 +25,9 @@ for r in a:
     if source=='never': reason='Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.'
     elif source=='PackageJsonPathFields': reason='Raw parsed JSON can hold a non-string version; readPackageJsonField checks its runtime type. Adding version?: string is not truthful.'
     elif prop=='constraint': reason='General Type and its other variants are not TypeParameter shapes. Declaring constraint alone exposes the next missing TypeParameter field; target/mapper contracts require separate subtype proof.'
-    elif source=='SourceFile': reason='Compiler-only interface omits a method required by the services augmentation. A direct optional member conflicts with that merge; a heritage change would require API proof beyond the permitted optional additions.'
-    elif prop=='source': reason='TextRange/node is used as a SourceMapRange view; dynamic source-field absence/type is not yet proven for every source owner. Declined pending writer and construction proof.'
+    elif source=='SourceFile' and prop=='getPositionOfLineAndCharacter': reason='Compiler-only interface omits a method required by the services augmentation. A direct optional member conflicts with that merge; a heritage change would require API proof beyond the permitted optional additions.'
+    elif source=='SourceFile' and prop=='skipTrivia': reason='SourceFile is passed through a SourceMapSource view. A truthful universal skipTrivia writer/alias contract is not proved; declined separately from the services method augmentation.'
+    elif prop=='source': reason='TextRange/node fallback is a different shape from SourceMapRange. The scratch TextRange.source candidate enlarged the inventory from 399 to 859; a universal source declaration is not justified. Declined pending narrower owner proof.'
     elif prop=='all': reason='CompilerOptions is a distinct shape from the source options/Pick/indexed record. Adding only all would expose more target option fields; no truthful universal declaration proved.'
     else: reason='No complete construction, alias and writer proof for this source owner in this wave. Declined without changing source or weakening checker options.'
     remaining.append({**r,'reason':reason})

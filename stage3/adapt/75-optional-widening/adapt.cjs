@@ -32,7 +32,8 @@ function declaration(name) {
 }
 const specifications = [
     { owner: 'Type', target: 'InstantiableType', properties: ['resolvedBaseConstraint', 'resolvedIndexType', 'resolvedStringIndexType'] },
-    { owner: 'SymbolVisibilityResult', target: 'SymbolAccessibilityResult', properties: ['errorModuleName'] },
+    { owner: 'SymbolVisibilityResult', target: 'SymbolAccessibilityResult', properties: ['errorModuleName'], allowUndefined: true },
+    { owner: 'JsonSourceFile', target: 'TsConfigSourceFile', properties: ['extendedSourceFiles', 'configFileSpecs'], publicProperties: ['extendedSourceFiles'] },
 ];
 const edits = [];
 const records = [];
@@ -46,6 +47,8 @@ for (const spec of specifications) {
         if (!member || !ts.isPropertySignature(member) || !member.questionToken || !member.type) {
             throw new Error(`expected optional contract ${spec.target}.${name}`);
         }
+        const targetValueType = checker.getTypeFromTypeNode(member.type);
+        const allowsUndefined = checker.isTypeAssignableTo(checker.getUndefinedType(), targetValueType);
         const actual = checker.getPropertyOfType(ownerType, name);
         const expected = checker.getPropertyOfType(targetType, name);
         if (actual) {
@@ -56,15 +59,22 @@ for (const spec of specifications) {
                 !checker.isTypeAssignableTo(expectedType, actualType)) {
                 throw new Error(`incompatible existing contract ${spec.owner}.${name}`);
             }
+            const own = owner.members.find(node => node.name?.getText(source) === name);
+            if (own?.type && !spec.allowUndefined && !allowsUndefined &&
+                checker.isTypeAssignableTo(checker.getUndefinedType(), checker.getTypeFromTypeNode(own.type))) {
+                edits.push({ at: own.type.getStart(source), end: own.type.end, text: member.type.getText(source) });
+                records.push({ owner: spec.owner, property: name, type: member.type.getText(source), correction: 'match exact optional target contract' });
+            }
             continue;
         }
         let typeText = member.type.getText(source);
-        if (!checker.isTypeAssignableTo(checker.getUndefinedType(), checker.getTypeFromTypeNode(member.type))) {
+        if (spec.allowUndefined && !allowsUndefined) {
             typeText += ' | undefined';
         }
         const newline = source.text.includes('\r\n') ? '\r\n' : '\n';
-        edits.push({ at: owner.members.end, text: `${newline}    /** @internal */${newline}    ${name}?: ${typeText};` });
-        records.push({ owner: spec.owner, property: name, target: spec.target, type: typeText });
+        const isPublic = spec.publicProperties?.includes(name) || false;
+        edits.push({ at: owner.members.end, text: `${newline}${isPublic ? '' : '    /** @internal */' + newline}    ${name}?: ${typeText};` });
+        records.push({ owner: spec.owner, property: name, target: spec.target, type: typeText, public: isPublic });
     }
 }
 // These lazy caches are absent on newly constructed union/intersection types.
@@ -75,14 +85,22 @@ for (const name of specifications[0].properties) {
     const member = unionOwner.members.find(node => node.name?.getText(source) === name);
     if (!member || !ts.isPropertySignature(member) || !member.type) throw new Error(`missing union cache ${name}`);
     if (!member.questionToken) edits.push({ at: member.name.end, text: '?' });
-    if (!checker.isTypeAssignableTo(checker.getUndefinedType(), checker.getTypeFromTypeNode(member.type))) {
-        edits.push({ at: member.type.end, text: ' | undefined' });
+    const target = declaration('InstantiableType').members.find(node => node.name?.getText(source) === name);
+    if (member.type.getText(source) !== target.type.getText(source)) {
+        edits.push({ at: member.type.getStart(source), end: member.type.end, text: target.type.getText(source) });
     }
-    if (!member.questionToken || !checker.isTypeAssignableTo(checker.getUndefinedType(), checker.getTypeFromTypeNode(member.type))) {
-        records.push({ owner: 'UnionOrIntersectionType', property: name, target: 'InstantiableType', type: member.type.getText(source) + ' | undefined', correction: 'lazy cache can be absent' });
+    if (!member.questionToken || member.type.getText(source) !== target.type.getText(source)) {
+        records.push({ owner: 'UnionOrIntersectionType', property: name, type: target.type.getText(source), correction: 'lazy cache can be absent; match exact target contract' });
     }
 }
+// This result initializer explicitly stores undefined on one error path.
+// Its derived declaration must allow that same present-undefined value.
+const accessibility = declaration('SymbolAccessibilityResult').members.find(node => node.name?.getText(source) === 'errorModuleName');
+if (!checker.isTypeAssignableTo(checker.getUndefinedType(), checker.getTypeFromTypeNode(accessibility.type))) {
+    edits.push({ at: accessibility.type.end, text: ' | undefined' });
+    records.push({ owner: 'SymbolAccessibilityResult', property: 'errorModuleName', correction: 'explicit present-undefined initializer' });
+}
 let text = source.text;
-for (const edit of edits.sort((a, b) => b.at - a.at)) text = text.slice(0, edit.at) + edit.text + text.slice(edit.at);
+for (const edit of edits.sort((a, b) => b.at - a.at)) text = text.slice(0, edit.at) + edit.text + text.slice(edit.end ?? edit.at);
 if (edits.length) fs.writeFileSync(filename, text);
 console.log(JSON.stringify({ files: edits.length ? 1 : 0, additions: records }, null, 2));

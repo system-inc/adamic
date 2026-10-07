@@ -20,6 +20,8 @@ const specs = [
     ['Type', 'InstantiableType', 'resolvedIndexType'],
     ['Type', 'InstantiableType', 'resolvedStringIndexType'],
     ['SymbolVisibilityResult', 'SymbolAccessibilityResult', 'errorModuleName'],
+    ['JsonSourceFile', 'TsConfigSourceFile', 'extendedSourceFiles'],
+    ['JsonSourceFile', 'TsConfigSourceFile', 'configFileSpecs'],
 ];
 if (process.argv.includes('--candidate-text-range')) specs.push(['TextRange', 'SourceMapRange', 'source']);
 const interfaces = new Map();
@@ -67,7 +69,8 @@ for (const file of program.getSourceFiles()) {
             }
         }
         if (ts.isPropertyAssignment(n) && n.name) {
-            const context = checker.getContextualType(n.parent);
+            const contextual = checker.getContextualType(n.parent);
+            const context = contextual && checker.getNonNullableType(contextual);
             for (const owner of owners) {
                 if (n.name.getText(file) !== owner.property || !context || forbidden(context) || !checker.isTypeAssignableTo(context, owner.type)) continue;
                 const value = checker.getTypeAtLocation(n.initializer);
