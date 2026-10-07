@@ -1,0 +1,151 @@
+=== RUN   TestExtractedDecisions
+    decision_test.go:86: ten manually extracted decision cases, 1963 identical bytes, Go/source Node/emitted JS/sanitized native
+=== RUN   TestExtractedDecisions/next-google-font-preconnect
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-no-css-tags
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-inline-script-id
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-next-script-for-ga
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-no-before-interactive-script-outside-document
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+--- PASS: TestExtractedDecisions (20.43s)
+    --- PASS: TestExtractedDecisions/next-google-font-preconnect (1.79s)
+    --- PASS: TestExtractedDecisions/next-no-css-tags (1.94s)
+    --- PASS: TestExtractedDecisions/next-inline-script-id (2.08s)
+    --- PASS: TestExtractedDecisions/next-next-script-for-ga (2.40s)
+    --- PASS: TestExtractedDecisions/next-no-before-interactive-script-outside-document (1.93s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/next-google-font-preconnect	20.470s
+=== RUN   TestTailwindDecisions
+    decision_test.go:112: all decision cases agree, 121355 identical bytes, Go/Node/emitted JS/sanitized native
+=== RUN   TestTailwindDecisions/better-tailwindcss-enforce-shorthand-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+=== RUN   TestTailwindDecisions/better-tailwindcss-no-concatenated-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+=== RUN   TestTailwindDecisions/better-tailwindcss-no-conflicting-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+--- PASS: TestTailwindDecisions (51.71s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-enforce-shorthand-classes (8.74s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-no-concatenated-classes (13.79s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-no-conflicting-classes (7.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/better-tailwindcss-enforce-shorthand-classes	51.784s
+=== RUN   TestSharedNexusParserGaps
+    gaps_test.go:56: actual Go reports on all three blocked fixtures: internal-recovery outsideInternal Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in.
+        project-recovery forbiddenProjectImport A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        outside-top-level-await forbiddenOutsideImport Nexus must not import from '@project', '@structure', or '@base'. Nexus is the layer they are all built on, so a reach upward makes the foundation depend on what rests on it, and the cycle only shows up as a build failure in whichever project imports nexus first.
+    gaps_test.go:85: internal-recovery source Node exits 70: adamic: panic: parser slice unsupported primary Unknown at 87 in /repo/source/other/Thing.ts
+    gaps_test.go:85: internal-recovery emitted JavaScript exits 70: adamic: panic: parser slice unsupported primary Unknown at 87 in /repo/source/other/Thing.ts
+    gaps_test.go:85: internal-recovery sanitized native exits 70: adamic: panic: parser slice unsupported primary Unknown at 87 in /repo/source/other/Thing.ts
+    gaps_test.go:85: project-recovery source Node exits 70: adamic: panic: parser slice unsupported primary Unknown at 84 in /repo/libraries/base/source/Thing.ts
+    gaps_test.go:85: project-recovery emitted JavaScript exits 70: adamic: panic: parser slice unsupported primary Unknown at 84 in /repo/libraries/base/source/Thing.ts
+    gaps_test.go:85: project-recovery sanitized native exits 70: adamic: panic: parser slice unsupported primary Unknown at 84 in /repo/libraries/base/source/Thing.ts
+    gaps_test.go:85: outside-top-level-await source Node exits 70: adamic: panic: parser slice expected semicolon at 21 in /repository/libraries/nexus/code-quality/Thing.ts
+    gaps_test.go:85: outside-top-level-await emitted JavaScript exits 70: adamic: panic: parser slice expected semicolon at 21 in /repository/libraries/nexus/code-quality/Thing.ts
+    gaps_test.go:85: outside-top-level-await sanitized native exits 70: adamic: panic: parser slice expected semicolon at 21 in /repository/libraries/nexus/code-quality/Thing.ts
+--- PASS: TestSharedNexusParserGaps (70.32s)
+=== RUN   TestResolvedImportPaths
+    paths_test.go:88: 399 path resolutions agree across Go/Node/emitted JS/sanitized native, 6861 bytes
+    paths_test.go:108: path mutant compiles and runs cleanly; caught only by comparison side 0
+    paths_test.go:108: path mutant compiles and runs cleanly; caught only by comparison side 1
+    paths_test.go:108: path mutant compiles and runs cleanly; caught only by comparison side 2
+--- PASS: TestResolvedImportPaths (2.10s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-boundary-no-internal-import	72.436s
+=== RUN   TestDeterministicRegeneration
+=== PAUSE TestDeterministicRegeneration
+=== RUN   TestDescriptorRejections
+=== PAUSE TestDescriptorRejections
+=== RUN   TestDuplicateOracleAdapter
+=== PAUSE TestDuplicateOracleAdapter
+=== CONT  TestDeterministicRegeneration
+=== CONT  TestDuplicateOracleAdapter
+=== CONT  TestDescriptorRejections
+=== RUN   TestDescriptorRejections/duplicate_public_name
+=== PAUSE TestDescriptorRejections/duplicate_public_name
+=== RUN   TestDescriptorRejections/unknown_field
+=== PAUSE TestDescriptorRejections/unknown_field
+=== RUN   TestDescriptorRejections/missing_named_export
+=== PAUSE TestDescriptorRejections/missing_named_export
+=== RUN   TestDescriptorRejections/bad_kind
+=== PAUSE TestDescriptorRejections/bad_kind
+=== RUN   TestDescriptorRejections/missing_oracle_export
+=== PAUSE TestDescriptorRejections/missing_oracle_export
+=== RUN   TestDescriptorRejections/no_listener
+=== PAUSE TestDescriptorRejections/no_listener
+=== RUN   TestDescriptorRejections/missing_factory
+=== PAUSE TestDescriptorRejections/missing_factory
+=== RUN   TestDescriptorRejections/missing_class
+=== PAUSE TestDescriptorRejections/missing_class
+=== RUN   TestDescriptorRejections/missing_finish_hook
+=== PAUSE TestDescriptorRejections/missing_finish_hook
+=== RUN   TestDescriptorRejections/unsafe_public_name
+=== PAUSE TestDescriptorRejections/unsafe_public_name
+=== CONT  TestDescriptorRejections/duplicate_public_name
+=== CONT  TestDescriptorRejections/no_listener
+=== CONT  TestDescriptorRejections/missing_oracle_export
+=== NAME  TestDuplicateOracleAdapter
+    registry_test.go:145: duplicate adapter mutant survived: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+--- FAIL: TestDuplicateOracleAdapter (0.06s)
+=== CONT  TestDescriptorRejections/bad_kind
+=== NAME  TestDescriptorRejections/no_listener
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== CONT  TestDescriptorRejections/missing_named_export
+=== NAME  TestDescriptorRejections/duplicate_public_name
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/missing_oracle_export
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== CONT  TestDescriptorRejections/unsafe_public_name
+=== CONT  TestDescriptorRejections/unknown_field
+=== NAME  TestDescriptorRejections/missing_named_export
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDeterministicRegeneration
+    registry_test.go:44: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== CONT  TestDescriptorRejections/missing_finish_hook
+--- FAIL: TestDeterministicRegeneration (0.12s)
+=== CONT  TestDescriptorRejections/missing_class
+=== NAME  TestDescriptorRejections/bad_kind
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== CONT  TestDescriptorRejections/missing_factory
+=== NAME  TestDescriptorRejections/missing_finish_hook
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/missing_class
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/unsafe_public_name
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/unknown_field
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+=== NAME  TestDescriptorRejections/missing_factory
+    registry_test.go:117: mutant survived or wrong failure: better-tailwindcss-enforce-shorthand-classes: missing rule descriptor
+--- FAIL: TestDescriptorRejections (0.00s)
+    --- FAIL: TestDescriptorRejections/no_listener (0.07s)
+    --- FAIL: TestDescriptorRejections/duplicate_public_name (0.10s)
+    --- FAIL: TestDescriptorRejections/missing_oracle_export (0.09s)
+    --- FAIL: TestDescriptorRejections/missing_named_export (0.05s)
+    --- FAIL: TestDescriptorRejections/bad_kind (0.07s)
+    --- FAIL: TestDescriptorRejections/missing_finish_hook (0.02s)
+    --- FAIL: TestDescriptorRejections/unsafe_public_name (0.04s)
+    --- FAIL: TestDescriptorRejections/missing_class (0.04s)
+    --- FAIL: TestDescriptorRejections/unknown_field (0.05s)
+    --- FAIL: TestDescriptorRejections/missing_factory (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.243s
+FAIL
