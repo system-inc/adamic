@@ -7,6 +7,9 @@ import { ControlFlow } from './wave07_control_flow.a';
 import { ExitState } from './exit_state.a';
 import { StreamWalk } from './stream_walk.a';
 
+// Numeric SyntaxKind keys from the pinned production listener map.
+export const listenerKinds: readonly number[] = [307];
+
 export class RequireBlockingStandardStreams {
     readonly bindings: Bindings;
     readonly symbols: ProcessSymbols;

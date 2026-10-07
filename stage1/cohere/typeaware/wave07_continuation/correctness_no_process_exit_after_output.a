@@ -6,6 +6,9 @@ import { ExitState } from './exit_state.a';
 
 const emptyNumbers: number[] = [];
 
+// Numeric SyntaxKind keys from the pinned production listener map.
+export const listenerKinds: readonly number[] = [307];
+
 export class NoProcessExitAfterOutput {
     readonly symbols: ProcessSymbols;
     readonly bindings: Bindings;

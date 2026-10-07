@@ -1,5 +1,8 @@
 import type { Bindings } from '../bindings.ts';
 import { Helpers } from './helpers.a';
+// Numeric SyntaxKind keys from the pinned production listener map.
+export const listenerKinds: readonly number[] = [79];
+
 export class PreferRestParams {
     readonly helpers: Helpers;
     constructor(bindings: Bindings) {

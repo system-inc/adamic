@@ -7,6 +7,9 @@ import { Suggestion } from './suggestion.ts';
 import { TypeReferenceGraph } from './type_reference_graph.a';
 import { isSpace, isLineBreak } from '../../typescript/scanner/characters.ts';
 
+// Numeric SyntaxKind keys from the pinned production listener map.
+export const listenerKinds: readonly number[] = [188, 201, 265];
+
 export class ConsistentIndexedObjectStyle {
     readonly bindings: Bindings;
     constructor(bindings: Bindings) {

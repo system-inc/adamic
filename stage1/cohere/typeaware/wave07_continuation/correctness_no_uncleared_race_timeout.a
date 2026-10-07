@@ -4,6 +4,9 @@ import { waveNode } from '../wave_node.a';
 import { Diagnostic } from '../diagnostic.ts';
 import { SymbolContext } from './wave07_symbol_context.a';
 
+// Numeric SyntaxKind keys from the pinned production listener map.
+export const listenerKinds: readonly number[] = [214];
+
 export class NoUnclearedRaceTimeout {
     readonly bindings: Bindings;
     readonly contexts = new Map<number, SymbolContext>();

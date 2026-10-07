@@ -3,6 +3,9 @@ import { waveNode } from './wave_node.a';
 import type { Bindings } from './bindings.ts';
 import { Reassign } from './reassign.ts';
 
+// Numeric SyntaxKind keys from the pinned production listener map.
+export const listenerKinds: readonly number[] = [249];
+
 export class PreferForOf {
     readonly bindings: Bindings;
     readonly writes: Reassign;

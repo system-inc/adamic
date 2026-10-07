@@ -4,6 +4,9 @@ import type { Bindings } from './bindings.ts';
 import { WaveSymbol } from './wave_symbol.a';
 import { Repair } from './repair.ts';
 
+// Numeric SyntaxKind keys from the pinned production listener map.
+export const listenerKinds: readonly number[] = [261];
+
 export class NoUndefInit {
     readonly bindings: Bindings;
     constructor(bindings: Bindings) {

@@ -1,0 +1,19 @@
+import { listenerKinds as indexed } from '../consistent_indexed_object_style.a';
+import { listenerKinds as forOf } from '../prefer_for_of.a';
+import { listenerKinds as processExit } from '../wave07_continuation/correctness_no_process_exit_after_output.a';
+import { listenerKinds as timeout } from '../wave07_continuation/correctness_no_uncleared_race_timeout.a';
+import { listenerKinds as streams } from '../wave07_continuation/correctness_require_blocking_standard_streams.a';
+import { listenerKinds as undefinedInit } from '../no_undef_init.a';
+import { listenerKinds as promise } from '../wave07_next/prefer_promise_reject_errors.a';
+import { listenerKinds as regex } from '../wave07_next/prefer_regex_literals.a';
+import { listenerKinds as rest } from '../wave07_next/prefer_rest_params.a';
+
+console.log(`@typescript-eslint/consistent-indexed-object-style${indexed.map((kind) => `\t${kind}`).join('')}`);
+console.log(`@typescript-eslint/prefer-for-of${forOf.map((kind) => `\t${kind}`).join('')}`);
+console.log(`nexus/correctness-no-process-exit-after-output${processExit.map((kind) => `\t${kind}`).join('')}`);
+console.log(`nexus/correctness-no-uncleared-race-timeout${timeout.map((kind) => `\t${kind}`).join('')}`);
+console.log(`nexus/correctness-require-blocking-standard-streams${streams.map((kind) => `\t${kind}`).join('')}`);
+console.log(`no-undef-init${undefinedInit.map((kind) => `\t${kind}`).join('')}`);
+console.log(`prefer-promise-reject-errors${promise.map((kind) => `\t${kind}`).join('')}`);
+console.log(`prefer-regex-literals${regex.map((kind) => `\t${kind}`).join('')}`);
+console.log(`prefer-rest-params${rest.map((kind) => `\t${kind}`).join('')}`);

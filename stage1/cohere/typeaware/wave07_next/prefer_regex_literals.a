@@ -3,6 +3,9 @@ import { Helpers } from './helpers.a';
 import { RegexReferences } from './regex_references.a';
 import { RegexSuggestions } from './regex_suggestions.a';
 import { Diagnostic } from '../diagnostic.ts';
+// Numeric SyntaxKind keys from the pinned production listener map.
+export const listenerKinds: readonly number[] = [307];
+
 export class PreferRegexLiterals {
     readonly helpers: Helpers;
     readonly suggestions: RegexSuggestions;
