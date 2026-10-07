@@ -1,0 +1,26 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { parseValue } from './parse_value.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+const separators = new Set<number>();
+for(const index of json.node(json.field(root, 'separators')).children) { separators.add(json.node(index).number); }
+for(const row of json.node(json.field(root, 'cases')).children) {
+    const source = json.node(row).text;
+    for(let repeat = 0; repeat < 2; repeat++) {
+        const result = parseValue(source, separators);
+        console.log(`${result.roots.length}`);
+        const pending: number[] = [];
+        for(let index = result.roots.length - 1; index >= 0; index--) { pending.push(result.roots[index] ?? panic('missing root')); }
+        while(pending.length > 0) {
+            const index = pending.pop() ?? panic('missing visit index');
+            const node = result.arena[index] ?? panic('missing parsed node');
+            console.log(node.kind); console.log(node.value);
+            console.log(`${node.nodesPresent}`); console.log(`${node.nodes.length}`);
+            for(let child = node.nodes.length - 1; child >= 0; child--) { pending.push(node.nodes[child] ?? panic('missing child')); }
+        }
+    }
+}
