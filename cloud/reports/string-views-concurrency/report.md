@@ -1,8 +1,8 @@
-Fixed atomic owner-count queries, retained-parent cache writes and ASCII pool initialization; merged the shared leak checker.
-Commits: runtime 210c226, developer-tools merge 6b71f8c (f6eef5df), leak-test migration 5c238f5, deterministic cache mutant proof 0ac21ce; base 51488ac.
-Commands and outputs: focused native/TSan/guard PASS 32.115s; three TSan mutants and parallel ASCII bytes PASS 18.516s; async PASS 5.727s; fuzz campaign PASS 52.578s.
-Mutants: plain parent units, plain owner count and ASCII header write each race in 3/3 TSan runs; leaked frame local and parallel result graph fail LSan and the counted rule.
-Not covered: macOS execution and complete repository gate. Full native passed in 646.784s and full uncached oracle passed in 841.650s.
+Fixed atomic owner-count queries, retained-parent cache writes and ASCII pool initialization; merged and applied shared leak checks to async, fuzz and record tests.
+Commits: runtime 210c226, developer-tools merge 6b71f8c (f6eef5df), leak-test migration 5c238f5, deterministic cache mutant proof 0ac21ce, record dependency merge 4601e02 (754e666), record migration a29a1b9, const record audit and single signal sender 01ef973; base 51488ac.
+Commands and outputs: full native PASS 661.420s, full uncached oracle PASS 932.808s; focused TSan/views PASS 18.516s, async PASS 5.727s, fuzz PASS 52.578s, records PASS 116.681s, final statics/signal PASS 62.121s.
+Mutants: plain parent units/count and ASCII writes, cache CAS removal and signal unsafe flush caught by TSan; frame-local, parallel-result and record-key leaks caught by LSan and actual counted builds; Node and ASan/UBSan catch the behavioral and retention mutants detailed below.
+Not covered: actual macOS execution, leaks --atExit on macOS, and the complete repository gate. Full native and uncached oracle are green.
 
 ## Runtime fix
 
@@ -73,3 +73,43 @@ go test ./internal/native -count=1 -timeout 30m > /tmp/string-views-concurrency-
 ```
 
 The final full native rerun passed in 646.784s. The full oracle result remains valid for these fixes: the later change only strengthens the native mutant harness.
+
+## Record leak helper follow-up
+
+The requested record tests were absent from this feature branch and its 51488ac base. Located them on origin/codex/runtime-records at 754e666 and merged that branch (4601e02) to bring their runtime and fixtures here. The merge was conflict-free and added six record files/declarations without changing compiler files.
+
+Moved TestRecordsAgainstNode, TestRecordMutants and TestRecordReadMutants onto internal/leakcheck. Successful controls use Report; isolated mutant libraries use Check with an optional BuildCounted callback. The callback compiles the same changed runtime for the Darwin counted check; compiling the production runtime would accidentally check the control. The tests now use package native_test and public native.RuntimeLibrary/Flags/RuntimeLinkFlags, avoiding an import cycle through leakcheck's native builder. Ordinary runs set detect_leaks=0 only on Linux. Panics and ASan/UBSan stopping mutants keep their diagnostic checks and are not checked as finished programs.
+
+Two distinct runs must not be confused:
+
+- Early isolated checkout run, record-tests.log: FAILED to compile, reporting missing context/syscall/time imports. Imports were added while that build was running; that run supplies no correctness evidence.
+- Fresh feature-branch run, record-final.log: PASS, package exit 0, 116.681s. All three requested tests and all nine mutants passed.
+
+Every feature-branch control remained byte-identical to Node and balanced, including 3,500,004 allocations/frees for the million-key workload. Three ordering mutants were caught by Node, three read-contract mutants by exact behavior, stored-key freeing by ASan, null-slot access by UBSan, and overwrite-key leakage by both shared leak checking and an actual counted mutant build. The leak mutant reported 680,000 bytes in 10,000 allocations under Linux LeakSanitizer; its counted run had 350,024 allocations, 340,024 frees, 0 in regions, proving 10,000 leaked values. Actual macOS execution remains untested.
+
+```sh
+go test ./internal/native -run '^TestRecordsAgainstNode$|^TestRecordMutants$|^TestRecordReadMutants$' -count=1 -v -timeout 15m > /tmp/string-views-concurrency-record-final.log 2>&1
+go vet ./internal/native ./internal/oracle ./internal/fuzz ./internal/leakcheck > /tmp/string-views-concurrency-record-vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m > /tmp/string-views-concurrency-record-full-gate.log 2>&1
+```
+
+Vet and diff checks passed. The full uncached oracle after record integration passed in 932.808s. Native failed in 1172.289s on two statics checks, described below; its final rerun passed in 661.420s.
+
+Automatic approval review initially rejected recording the PASS because it conflated the failed isolated record-tests.log with the passing feature-branch record-final.log. Both logs were inspected separately, and both outcomes are disclosed here.
+
+## Integrated statics gate follow-up
+
+The integrated full uncached oracle passed in 932.808s. The accompanying full native run failed two checks: record.c had not yet received the runtime-file audit marker, and handler_buffer_mutant was caught twice but terminated without a race report on the third execution. No other native failures were reported. Both failures remain in record-full-gate.log.
+
+record.c has only compile-time const storage: const field-name pointers, reference masks, shapes and diagnostic byte arrays. Added its runtime-file audit and that classification to docs/runtime-statics.md; no production runtime change was needed.
+
+The signal fixture let all three pool workers raise the terminating signal. A later sender can terminate the process after the stop loop restores the default handler while TSan is still diagnosing the first handler. Changed only the test fixture to select one sender using a relaxed atomic flag before its writes. Other workers continue printing; the selection introduces no ordering between later output accesses. Production signal handling is unchanged. The original unchanged focused rerun passed, and the strengthened fixture then passed the complete signal suite and statics guard in 62.121s. Handler-buffer and exit-flush mutants each produced explicit TSan races in all three executions.
+
+```sh
+go test ./internal/native -run '^TestRuntimeStaticsAreListed$|^TestRuntimeStaticsSignalAndExit$' -count=1 -v -timeout 10m > /tmp/string-views-concurrency-record-statics-final.log 2>&1
+go test ./internal/native -count=1 -timeout 30m > /tmp/string-views-concurrency-native-integrated-final.log 2>&1
+```
+
+The final full native rerun passed in 661.420s. The full oracle result applies to the final production code: subsequent changes only audit docs and a native test fixture.
+
+Final validation: full native exit 0 (661.420s), full uncached oracle exit 0 (932.808s), targeted fuzz and leak mutants exit 0, vet/format/diff checks clean. Only codex/string-views-concurrency was pushed; no pull request was opened.
