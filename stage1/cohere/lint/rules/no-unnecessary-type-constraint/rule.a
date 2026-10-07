@@ -1,0 +1,40 @@
+import type { RuleContext } from '../../context.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number, parent: number): void {
+        const node = this.context.node(index);
+        let position = 0;
+        while(position < node.children.length && this.context.node(node.children[position] ?? -1).kind !== 'Identifier') {
+            position++;
+        }
+        const nameIndex = node.children[position] ?? -1;
+        const constraintIndex = node.children[position + 1] ?? -1;
+        if(nameIndex < 0 || constraintIndex < 0) { return; }
+        const name = this.context.node(nameIndex);
+        this.context.scanner.pos = name.end;
+        if(this.context.scanner.scan() !== 'ExtendsKeyword') { return; }
+        const constraint = this.context.node(constraintIndex);
+        if(constraint.kind !== 'AnyKeyword' && constraint.kind !== 'UnknownKeyword') { return; }
+        let replacement = '';
+        const path = this.context.parser.path;
+        if(parent >= 0 && this.context.node(parent).kind === 'ArrowFunction' &&
+            node.children.length === position + 2 &&
+            (path.endsWith('.tsx') || path.endsWith('.mts') || path.endsWith('.cts'))) {
+            let count = 0;
+            for(const child of this.context.node(parent).children) {
+                if(this.context.node(child).kind === 'TypeParameter') { count++; }
+            }
+            this.context.scanner.pos = node.end;
+            if(count === 1 && this.context.scanner.scan() !== 'CommaToken') { replacement = ','; }
+        }
+        const finding = this.context.report(nameIndex, '@typescript-eslint/no-unnecessary-type-constraint',
+            'noUnnecessaryTypeConstraint', message, '', '', '');
+        finding.suggestions.push(new Suggestion('removeTheConstraint', 'Remove the constraint that does nothing.',
+            [new SuggestionEdit(name.end, constraint.end, replacement)]));
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

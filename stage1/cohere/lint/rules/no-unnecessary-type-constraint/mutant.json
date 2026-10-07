@@ -1,0 +1,6 @@
+{
+  "Name": "delete-parameter-name",
+  "File": "rule.a",
+  "From": "new SuggestionEdit(name.end, constraint.end, replacement)",
+  "To": "new SuggestionEdit(this.context.start(nameIndex), constraint.end, replacement)"
+}
