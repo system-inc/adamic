@@ -74,22 +74,32 @@ func TestWave30JsxComponents(t *testing.T) {
 			t.Fatal(err)
 		}
 		var metadata struct {
-			Name         string
-			Kinds        []string
-			NumericKinds []int
-			Status       string
+			Name   string
+			Kinds  []string
+			Status string
 		}
 		if err = json.Unmarshal(descriptor, &metadata); err != nil {
 			t.Fatal(err)
 		}
-		if metadata.Name != "react/"+row.slug || metadata.Status != "partial components only" || len(metadata.NumericKinds) != len(row.kinds) || len(metadata.Kinds) != len(row.kinds) {
+		if metadata.Name != "react/"+row.slug || metadata.Status != "partial components only" || len(metadata.Kinds) != len(row.kinds) {
 			t.Fatal("invalid partial component descriptor")
 		}
-		for at, kind := range row.kinds {
-			if metadata.NumericKinds[at] != int(kind) {
-				t.Fatalf("%s numeric listener differs from pinned Go", row.slug)
-			}
+		if !wave30JsxKindsAgree(metadata.Kinds, row.kinds) {
+			t.Fatalf("%s named listener differs from pinned Go", row.slug)
 		}
+		var fields map[string]json.RawMessage
+		if err = json.Unmarshal(descriptor, &fields); err != nil {
+			t.Fatal(err)
+		}
+		if _, exists := fields["numericKinds"]; exists {
+			t.Fatal("obsolete numeric listener declaration")
+		}
+		changed := append([]string(nil), metadata.Kinds...)
+		changed[0] = "SourceFile"
+		if wave30JsxKindsAgree(changed, row.kinds) {
+			t.Fatalf("%s named listener mutant escaped Go comparison", row.slug)
+		}
+		t.Logf("%s: wrong-name descriptor mutant caught by pinned Go kind-name comparison", row.slug)
 		truth, err := os.ReadFile(filepath.Join(directory, row.mode+"-go.stdout"))
 		if err != nil {
 			t.Fatal(err)
@@ -178,4 +188,17 @@ func TestWave30JsxComponents(t *testing.T) {
 	if exit, ok := got.err.(*exec.ExitError); !ok || exit.ExitCode() != 70 || string(got.stderr) != "adamic: panic: NotYet: unpaired surrogate in construction name\n" {
 		t.Fatalf("unsupported name silently accepted: %v %s", got.err, got.stderr)
 	}
+}
+
+// Follow the registry's pinned AST spelling; numeric ordinals are not registry input.
+func wave30JsxKindsAgree(names []string, expected []ast.Kind) bool {
+	if len(names) != len(expected) {
+		return false
+	}
+	for at, kind := range expected {
+		if names[at] != strings.TrimPrefix(kind.String(), "Kind") {
+			return false
+		}
+	}
+	return true
 }
