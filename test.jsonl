@@ -66,3 +66,8 @@
 {"Time":"2026-10-07T21:47:19.696550202Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes","Output":"        ok  \tgithub.com/system-inc/cohere/internal/format/css/postcss\t24.617s\n"}
 {"Time":"2026-10-07T21:47:21.313600066Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes/Go_agreement"}
 {"Time":"2026-10-07T21:47:21.31365243Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes/Go_agreement","Output":"=== RUN   TestThePortParsesAsGoCohereDoes/Go_agreement\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:48:18.923248256Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLintCacheInvalidation/oracle","Output":"    cache_mutants_test.go:107: oracle changed real input and invalidated its observation\n"}
+{"Time":"2026-10-07T21:48:18.949036494Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLintCacheInvalidation/oracle","Output":"--- PASS: TestLintCacheInvalidation/oracle (114.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T21:48:18.949086683Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLintCacheInvalidation/oracle","Elapsed":114.45}
+{"Time":"2026-10-07T21:48:18.952551148Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLintCacheInvalidation/capture"}
+{"Time":"2026-10-07T21:48:18.95258519Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestLintCacheInvalidation/capture","Output":"=== RUN   TestLintCacheInvalidation/capture\n","OutputType":"frame"}
