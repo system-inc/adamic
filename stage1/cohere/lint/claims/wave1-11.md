@@ -53,3 +53,13 @@ A fresh fetch covers 335 origin refs and 52 claim documents; main is ef3d907ecdc
 3. `better-tailwindcss/enforce-consistent-class-order`
 
 This claim update is pushed before any implementation of these three rules. No additional rules are claimed.
+
+## Next syntax-only batch after pushed shared-gap reports
+
+Owned work is pushed at ca2a9d5a. The two Tailwind rules remain explicitly blocked by the shared project CSS provider and multiple-fix serialization; no complete-rule claim is made. The refreshed audit covers 356 origin refs and 54 claim documents. Helper-ready rules are exhausted. The next three available syntax-only inventory entries are reserved before implementation:
+
+1. `nexus/consistency-no-screaming-snake-case`
+2. `nexus/import-no-forbidden-source`
+3. `nexus/import-require-path-alias`
+
+This claim update is pushed before writing rule code.
