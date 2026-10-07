@@ -1,0 +1,56 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../../diagnostic.ts';
+
+export class Input {
+    kind = 0;
+    tagKind = 0;
+    propertyKind = 0;
+    propertyName = '';
+    nearestFunctionKind = 0;
+    nearestFunctionName = '';
+    bindingName = '';
+    valueKind = 0;
+    valueStart = 0;
+    valueEnd = 0;
+    valueLine = 1;
+}
+export class Rule {
+    component(node: Input): boolean {
+        if(node.nearestFunctionKind === 0) { return false; }
+        if(![262, 218, 219].includes(node.nearestFunctionKind)) {
+            panic('jsx-no-constructed-context-values requires shared numeric class ancestry');
+        }
+        const name = node.nearestFunctionKind === 262 ? node.nearestFunctionName : node.bindingName;
+        if(name === '') { return false; }
+        const first = name.charCodeAt(0);
+        if(first >= 128) { panic('jsx-no-constructed-context-values requires Unicode IsUpper'); }
+        return first >= 65 && first <= 90;
+    }
+    construction(kind: number): string {
+        const kinds = [210, 209, 218, 219, 231, 214, 13, 284, 285, 288];
+        const names = ['object', 'array', 'function expression', 'function expression', 'class expression',
+            'new expression', 'regular expression', 'JSX element', 'JSX element', 'JSX fragment'];
+        const at = kinds.indexOf(kind);
+        if(at >= 0) { return names[at] ?? ''; }
+        if([8, 9, 10, 14, 96, 105, 111].includes(kind) || kind === 0) { return ''; }
+        panic('jsx-no-constructed-context-values requires numeric value-tree, binding and memo stability adapters');
+    }
+    visit(node: Input): Diagnostic | undefined {
+        if(![285, 286].includes(node.kind)) { return undefined; }
+        if(node.tagKind === 79) {
+            panic('jsx-no-constructed-context-values requires resolved createContext initializer facts');
+        }
+        if(node.tagKind !== 211 || node.propertyKind !== 79 || node.propertyName !== 'Provider') {
+            return undefined;
+        }
+        const construction = this.construction(node.valueKind);
+        if(construction === '' || !this.component(node)) { return undefined; }
+        const functionKind = [218, 219].includes(node.valueKind);
+        const remedy = functionKind ? 'useCallback' : 'useMemo';
+        const id = functionKind ? 'defaultMsgFunc' : 'defaultMsg';
+        return new Diagnostic('jsx-no-constructed-context-values', id,
+            `The ${construction} passed as the value prop to the Context provider (at line ${node.valueLine}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`,
+            node.valueStart, node.valueEnd, 'react/');
+    }
+}
+export function create(): Rule { return new Rule(); }

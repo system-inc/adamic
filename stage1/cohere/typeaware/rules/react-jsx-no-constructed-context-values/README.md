@@ -1,0 +1,3 @@
+This is a numeric supplied-input judgment adapter, not an integrated source-to-rule port. `rule.json` lists pinned parser SyntaxKind numbers. `visit` receives its input directly; it does not traverse a file or refetch the entry node. Checker declaration fields are raw facts, supplied manually by positive controls while shared JSX/numeric-node and checker adapters are unavailable. Missing checker facts refuse rather than pretending to be resolved. The shared generator is not wired to this adapter API.
+
+See ../react-jsx-fragments/REPORT.md for exact scope, independent production Go controls, compiling mutants, sanitizer results, options, limits and commands.

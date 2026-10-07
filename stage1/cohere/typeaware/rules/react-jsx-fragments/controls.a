@@ -1,0 +1,31 @@
+import { programArguments } from 'adamic';
+import { Rule, Input, Declaration } from './rule.a';
+const rule = new Rule(programArguments().includes('--element')); 
+const lines: string[] = [];
+const n0 = new Input(); n0.factsReady = true;
+n0.kind = 285; n0.start = 62; n0.end = 79; n0.attributes = 0;
+n0.tagKind = 211; n0.receiverKind = 79; n0.receiverName = "React"; n0.propertyKind = 79; n0.propertyName = "Fragment";
+const f0 = rule.visit(n0);
+if(f0 !== undefined) { lines.push(f0.written()); }
+const n1 = new Input(); n1.factsReady = true;
+n1.kind = 285; n1.start = 81; n1.end = 106; n1.attributes = 1;
+n1.tagKind = 211; n1.receiverKind = 79; n1.receiverName = "React"; n1.propertyKind = 79; n1.propertyName = "Fragment";
+const f1 = rule.visit(n1);
+if(f1 !== undefined) { lines.push(f1.written()); }
+const n2 = new Input(); n2.factsReady = true;
+n2.kind = 285; n2.start = 108; n2.end = 112; n2.attributes = 0;
+n2.tagKind = 79;
+const d2 = new Declaration();
+d2.kind = 276; d2.importedKind = 79; d2.imported = "Fragment"; d2.module = "react";
+n2.declarations.push(d2);
+const f2 = rule.visit(n2);
+if(f2 !== undefined) { lines.push(f2.written()); }
+const n3 = new Input(); n3.factsReady = true;
+n3.kind = 285; n3.start = 114; n3.end = 133; n3.attributes = 0;
+n3.tagKind = 211; n3.receiverKind = 211; n3.receiverName = "React"; n3.propertyKind = 79; n3.propertyName = "Fragment";
+const f3 = rule.visit(n3);
+if(f3 !== undefined) { lines.push(f3.written()); }
+const n4 = new Input(); n4.factsReady = true; n4.kind = 288; n4.start = 135; n4.end = 140;
+const f4 = rule.visit(n4); if(f4 !== undefined) { lines.push(f4.written()); }
+if(programArguments().includes('--missing-facts')) { n2.factsReady = false; rule.visit(n2); }
+lines.sort((left, right) => left < right ? -1 : left > right ? 1 : 0); for(const line of lines) { console.log(line); }

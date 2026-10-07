@@ -1,0 +1,53 @@
+import { programArguments } from 'adamic';
+import { Rule, Input } from './rule.a';
+const rule = new Rule('/workspace/wave15-sixth/undef.tsx', programArguments().includes('--globals'));
+const lines: string[] = [];
+const n0 = new Input(); n0.factsReady = true;
+n0.kind = 285; n0.tagKind = 79; n0.rootKind = 79; n0.rootName = "Missing"; n0.start = 37; n0.end = 44;
+const f0 = rule.visit(n0);
+if(f0 !== undefined) { lines.push(f0.written()); }
+const n1 = new Input(); n1.factsReady = true;
+n1.kind = 285; n1.tagKind = 79; n1.rootKind = 79; n1.rootName = "div"; n1.start = 49; n1.end = 52;
+const f1 = rule.visit(n1);
+if(f1 !== undefined) { lines.push(f1.written()); }
+const n2 = new Input(); n2.factsReady = true;
+n2.kind = 285; n2.tagKind = 79; n2.rootKind = 79; n2.rootName = "_foo"; n2.start = 57; n2.end = 61;
+const f2 = rule.visit(n2);
+if(f2 !== undefined) { lines.push(f2.written()); }
+const n3 = new Input(); n3.factsReady = true;
+n3.kind = 285; n3.tagKind = 79; n3.rootKind = 79; n3.rootName = "$foo"; n3.start = 66; n3.end = 70;
+const f3 = rule.visit(n3);
+if(f3 !== undefined) { lines.push(f3.written()); }
+const n4 = new Input(); n4.factsReady = true;
+n4.kind = 285; n4.tagKind = 79; n4.rootKind = 79; n4.rootName = "테스트"; n4.start = 75; n4.end = 84;
+const f4 = rule.visit(n4);
+if(f4 !== undefined) { lines.push(f4.written()); }
+const n5 = new Input(); n5.factsReady = true;
+n5.kind = 285; n5.tagKind = 79; n5.rootKind = 79; n5.rootName = "Foo-bar"; n5.start = 89; n5.end = 96;
+const f5 = rule.visit(n5);
+if(f5 !== undefined) { lines.push(f5.written()); }
+const n6 = new Input(); n6.factsReady = true;
+n6.kind = 285; n6.tagKind = 295; n6.rootKind = 79; n6.rootName = "Foo:Bar"; n6.start = 101; n6.end = 108;
+const f6 = rule.visit(n6);
+if(f6 !== undefined) { lines.push(f6.written()); }
+const n7 = new Input(); n7.factsReady = true;
+n7.kind = 285; n7.tagKind = 211; n7.rootKind = 110; n7.rootName = "this"; n7.start = 113; n7.end = 117;
+const f7 = rule.visit(n7);
+if(f7 !== undefined) { lines.push(f7.written()); }
+const n8 = new Input(); n8.factsReady = true;
+n8.kind = 285; n8.tagKind = 79; n8.rootKind = 79; n8.rootName = "Local"; n8.start = 132; n8.end = 137;
+n8.hasSymbol = true;
+n8.declarationFiles.push("/workspace/wave15-sixth/undef.tsx");
+const f8 = rule.visit(n8);
+if(f8 !== undefined) { lines.push(f8.written()); }
+const n9 = new Input(); n9.factsReady = true;
+n9.kind = 285; n9.tagKind = 211; n9.rootKind = 79; n9.rootName = "app"; n9.start = 142; n9.end = 145;
+const f9 = rule.visit(n9);
+if(f9 !== undefined) { lines.push(f9.written()); }
+const n10 = new Input(); n10.factsReady = true;
+n10.kind = 285; n10.tagKind = 79; n10.rootKind = 79; n10.rootName = "Map"; n10.start = 157; n10.end = 160;
+n10.hasSymbol = true;
+const f10 = rule.visit(n10);
+if(f10 !== undefined) { lines.push(f10.written()); }
+if(programArguments().includes('--missing-facts')) { n0.factsReady = false; rule.visit(n0); }
+lines.sort((left, right) => left < right ? -1 : left > right ? 1 : 0); for(const line of lines) { console.log(line); }

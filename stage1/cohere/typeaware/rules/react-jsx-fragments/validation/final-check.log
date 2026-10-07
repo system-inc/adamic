@@ -1,0 +1,20 @@
+Go default whole process ns 56231741
+Go --element whole process ns 55845777
+Go --globals whole process ns 54666694
+react-jsx-fragments PASS 454 bytes 2 findings; process ns 1528683
+react-jsx-fragments-asan PASS 454 bytes 2 findings; process ns 10020796
+react-jsx-fragments --element PASS 202 bytes
+react-jsx-fragments mutant compiled, exit 0, independent Go bytes catch byte 228
+react-jsx-no-undef PASS 2056 bytes 6 findings; process ns 1173615
+react-jsx-no-undef-asan PASS 2056 bytes 6 findings; process ns 9663405
+react-jsx-no-undef --globals PASS 1712 bytes
+react-jsx-no-undef mutant compiled, exit 0, independent Go bytes catch byte 344
+react-jsx-no-constructed-context-values PASS 3186 bytes 9 findings; process ns 1434803
+react-jsx-no-constructed-context-values-asan PASS 3186 bytes 9 findings; process ns 9762533
+react-jsx-no-constructed-context-values mutant compiled, exit 0, independent Go bytes catch byte 2904
+react-jsx-fragments refusal PASS exit 70
+react-jsx-fragments refusal mutant compiled, exit 0, caught by required exit 70
+react-jsx-no-undef refusal PASS exit 70
+react-jsx-no-undef refusal mutant compiled, exit 0, caught by required exit 70
+react-jsx-no-constructed-context-values refusal PASS exit 70
+react-jsx-no-constructed-context-values refusal mutant compiled, exit 0, caught by required exit 70

@@ -1,0 +1,59 @@
+import { programArguments } from 'adamic';
+import { Rule, Input } from './rule.a';
+const rule = new Rule();
+const lines: string[] = [];
+const n0 = new Input();
+n0.kind = 285; n0.tagKind = 211; n0.propertyKind = 79; n0.propertyName = "Provider";
+n0.nearestFunctionKind = 262; n0.nearestFunctionName = "C0"; n0.valueKind = 210; n0.valueStart = 63; n0.valueEnd = 65; n0.valueLine = 2;
+const f0 = rule.visit(n0);
+if(f0 !== undefined) { lines.push(f0.written()); }
+const n1 = new Input();
+n1.kind = 285; n1.tagKind = 211; n1.propertyKind = 79; n1.propertyName = "Provider";
+n1.nearestFunctionKind = 262; n1.nearestFunctionName = "C1"; n1.valueKind = 209; n1.valueStart = 114; n1.valueEnd = 116; n1.valueLine = 3;
+const f1 = rule.visit(n1);
+if(f1 !== undefined) { lines.push(f1.written()); }
+const n2 = new Input();
+n2.kind = 285; n2.tagKind = 211; n2.propertyKind = 79; n2.propertyName = "Provider";
+n2.nearestFunctionKind = 262; n2.nearestFunctionName = "C2"; n2.valueKind = 219; n2.valueStart = 165; n2.valueEnd = 173; n2.valueLine = 4;
+const f2 = rule.visit(n2);
+if(f2 !== undefined) { lines.push(f2.written()); }
+const n3 = new Input();
+n3.kind = 285; n3.tagKind = 211; n3.propertyKind = 79; n3.propertyName = "Provider";
+n3.nearestFunctionKind = 262; n3.nearestFunctionName = "C3"; n3.valueKind = 218; n3.valueStart = 222; n3.valueEnd = 234; n3.valueLine = 5;
+const f3 = rule.visit(n3);
+if(f3 !== undefined) { lines.push(f3.written()); }
+const n4 = new Input();
+n4.kind = 285; n4.tagKind = 211; n4.propertyKind = 79; n4.propertyName = "Provider";
+n4.nearestFunctionKind = 262; n4.nearestFunctionName = "C4"; n4.valueKind = 231; n4.valueStart = 283; n4.valueEnd = 291; n4.valueLine = 6;
+const f4 = rule.visit(n4);
+if(f4 !== undefined) { lines.push(f4.written()); }
+const n5 = new Input();
+n5.kind = 285; n5.tagKind = 211; n5.propertyKind = 79; n5.propertyName = "Provider";
+n5.nearestFunctionKind = 262; n5.nearestFunctionName = "C5"; n5.valueKind = 214; n5.valueStart = 340; n5.valueEnd = 352; n5.valueLine = 7;
+const f5 = rule.visit(n5);
+if(f5 !== undefined) { lines.push(f5.written()); }
+const n6 = new Input();
+n6.kind = 285; n6.tagKind = 211; n6.propertyKind = 79; n6.propertyName = "Provider";
+n6.nearestFunctionKind = 262; n6.nearestFunctionName = "C6"; n6.valueKind = 13; n6.valueStart = 401; n6.valueEnd = 404; n6.valueLine = 8;
+const f6 = rule.visit(n6);
+if(f6 !== undefined) { lines.push(f6.written()); }
+const n7 = new Input();
+n7.kind = 285; n7.tagKind = 211; n7.propertyKind = 79; n7.propertyName = "Provider";
+n7.nearestFunctionKind = 262; n7.nearestFunctionName = "C7"; n7.valueKind = 285; n7.valueStart = 453; n7.valueEnd = 459; n7.valueLine = 9;
+const f7 = rule.visit(n7);
+if(f7 !== undefined) { lines.push(f7.written()); }
+const n8 = new Input();
+n8.kind = 285; n8.tagKind = 211; n8.propertyKind = 79; n8.propertyName = "Provider";
+n8.nearestFunctionKind = 262; n8.nearestFunctionName = "C8"; n8.valueKind = 288; n8.valueStart = 508; n8.valueEnd = 513; n8.valueLine = 10;
+const f8 = rule.visit(n8);
+if(f8 !== undefined) { lines.push(f8.written()); }
+const n9 = new Input();
+n9.kind = 285; n9.tagKind = 211; n9.propertyKind = 79; n9.propertyName = "Provider";
+n9.nearestFunctionKind = 262; n9.nearestFunctionName = "C9"; n9.valueKind = 8; n9.valueStart = 562; n9.valueEnd = 563; n9.valueLine = 11;
+const f9 = rule.visit(n9);
+if(f9 !== undefined) { lines.push(f9.written()); }
+lines.sort((left, right) => left < right ? -1 : left > right ? 1 : 0); for(const line of lines) { console.log(line); }
+
+if(programArguments().includes('--gap')) {
+ const gap = new Input(); gap.kind = 285; gap.tagKind = 211; gap.propertyKind = 79; gap.propertyName = 'Provider'; gap.nearestFunctionKind = 262; gap.nearestFunctionName = 'C'; gap.valueKind = 79; rule.visit(gap);
+}

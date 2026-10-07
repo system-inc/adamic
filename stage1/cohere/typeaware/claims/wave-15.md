@@ -117,3 +117,5 @@ Parked-status update was pushed at c102c217a before this reservation. Fetched 52
 - react/jsx-no-undef (combined volume 0)
 
 None needs native high-level IR or single-assignment capture analysis. Existing origin stage1 implementation paths were inspected for all three and none was found. Reserved before any code. New rules will use owned rule directories, .a sources, rule.json kinds and supplied-node visitation. Shared JSX/parser, driver and finding-model integration may remain separate blockers and will be reported explicitly.
+
+Sixth reservation status: numeric supplied-input fragment/undef judgments and direct constructed-context judgments are implemented in owned typeaware/rules directories. Seventeen adapter findings match production Go bytes under sanitizer builds; three finding mutants and three refusal mutants are caught. Full JSX source, numeric shared-node and live checker-fact integration remain blocked. Constructed-context indirect and memo-stability cases are explicitly incomplete. These three remain partial claims, not parked HIR rules or complete native ports. No further rules are reserved. See rules/react-jsx-fragments/REPORT.md.

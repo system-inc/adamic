@@ -1,0 +1,11 @@
+declare const X:any;
+function C0() { return <X.Provider value={{}}/>; }
+function C1() { return <X.Provider value={[]}/>; }
+function C2() { return <X.Provider value={() => {}}/>; }
+function C3() { return <X.Provider value={function(){}}/>; }
+function C4() { return <X.Provider value={class {}}/>; }
+function C5() { return <X.Provider value={new Object()}/>; }
+function C6() { return <X.Provider value={/x/}/>; }
+function C7() { return <X.Provider value={<div/>}/>; }
+function C8() { return <X.Provider value={<></>}/>; }
+function C9() { return <X.Provider value={1}/>; }

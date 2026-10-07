@@ -1,0 +1,73 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../../diagnostic.ts';
+
+export class Declaration {
+    kind = 0;
+    imported = '';
+    importedKind = 0;
+    module = '';
+    patternKind = 0;
+    variableKind = 0;
+    initializerKind = 0;
+    initializerName = '';
+    calleeKind = 0;
+    receiverKind = 0;
+    receiverName = '';
+    propertyKind = 0;
+    propertyName = '';
+    argumentKind = 0;
+    argumentText = '';
+}
+export class Input {
+    factsReady = false;
+    kind = 0;
+    start = 0;
+    end = 0;
+    tagKind = 0;
+    receiverKind = 0;
+    receiverName = '';
+    propertyKind = 0;
+    propertyName = '';
+    attributes = 0;
+    declarations: Declaration[] = [];
+}
+export class Rule {
+    readonly element: boolean;
+    constructor(element = false) { this.element = element; }
+    source(declaration: Declaration): boolean {
+        if(declaration.initializerKind === 79) {
+            return declaration.initializerName === 'React';
+        }
+        if(declaration.initializerKind === 211) {
+            return declaration.receiverKind === 79 && declaration.receiverName === 'React' &&
+                declaration.propertyKind === 79 && declaration.propertyName === 'Fragment';
+        }
+        return declaration.initializerKind === 213 && declaration.calleeKind === 79 && declaration.initializerName === 'require' &&
+            [10, 14].includes(declaration.argumentKind) && declaration.argumentText === 'react';
+    }
+    binding(declaration: Declaration): boolean {
+        if(declaration.kind === 276) {
+            return declaration.importedKind === 79 && declaration.imported === 'Fragment' && declaration.module === 'react';
+        }
+        if(declaration.kind === 208) {
+            return declaration.patternKind === 206 && declaration.variableKind === 260 && this.source(declaration);
+        }
+        return declaration.kind === 260 && this.source(declaration);
+    }
+    visit(node: Input): Diagnostic | undefined {
+        if(this.element) {
+            return node.kind === 288 ? new Diagnostic('jsx-fragments', 'preferPragma',
+                'Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.',
+                node.start, node.end, 'react/') : undefined;
+        }
+        if(![284, 285].includes(node.kind) || node.attributes !== 0) { return undefined; }
+        const named = node.tagKind === 211 && node.receiverKind === 79 && node.receiverName === 'React' &&
+            node.propertyKind === 79 && node.propertyName === 'Fragment';
+        if(node.tagKind === 79 && !node.factsReady) { panic('jsx-fragments requires checker declaration facts'); }
+        const bound = node.tagKind === 79 && node.declarations.some((declaration) => this.binding(declaration));
+        return named || bound ? new Diagnostic('jsx-fragments', 'preferFragment',
+            'Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.',
+            node.start, node.end, 'react/') : undefined;
+    }
+}
+export function create(element = false): Rule { return new Rule(element); }

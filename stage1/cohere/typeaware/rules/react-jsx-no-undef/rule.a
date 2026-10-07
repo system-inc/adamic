@@ -1,0 +1,41 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../../diagnostic.ts';
+
+export class Input {
+    factsReady = false;
+    kind = 0;
+    tagKind = 0;
+    rootKind = 0;
+    rootName = '';
+    start = 0;
+    end = 0;
+    hasSymbol = false;
+    declarationFiles: string[] = [];
+}
+export class Rule {
+    readonly file: string;
+    readonly allowGlobals: boolean;
+    constructor(file: string, allowGlobals = false) {
+        this.file = file;
+        this.allowGlobals = allowGlobals;
+    }
+    component(name: string): boolean {
+        if(name === '' || name.includes('-')) { return false; }
+        const first = name.charCodeAt(0);
+        return first < 97 || first > 122;
+    }
+    visit(node: Input): Diagnostic | undefined {
+        if(![285, 286].includes(node.kind) || node.rootKind !== 79) { return undefined; }
+        if(node.tagKind === 79) {
+            if(!this.component(node.rootName)) { return undefined; }
+        }
+        else if(node.tagKind !== 211) { return undefined; }
+        if(!node.factsReady) { panic('jsx-no-undef requires checker declaration-file facts'); }
+        if(node.hasSymbol && (this.allowGlobals || this.file.endsWith('.cjs') ||
+            node.declarationFiles.includes(this.file))) { return undefined; }
+        return new Diagnostic('jsx-no-undef', 'jsxIdentifierNotDefined',
+            'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.',
+            node.start, node.end, 'react/');
+    }
+}
+export function create(file: string, allowGlobals = false): Rule { return new Rule(file, allowGlobals); }

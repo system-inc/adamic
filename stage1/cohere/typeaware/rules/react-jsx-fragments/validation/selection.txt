@@ -1,0 +1,47 @@
+refs 529; distinct claims 33; claimed before sixth reservation 154; ranked 197; base checker ports 25
+remaining before reservation:
+react/jsx-fragments
+react/jsx-no-constructed-context-values
+react/jsx-no-undef
+react/no-adjacent-inline-elements
+react/no-array-index-key
+react/no-danger-with-children
+react/no-multi-comp
+react/no-namespace
+react/no-object-type-as-default-prop
+react/no-unstable-nested-components
+react/sort-default-props
+react/static-property-placement
+react/style-prop-object
+require-atomic-updates
+require-await
+structure/react-hook-no-any-type
+symbol-description
+valid-typeof
+
+Base port exclusions, from README/VOLUME_REPORT/COVERAGE_REPORT:
+@typescript-eslint/consistent-return
+@typescript-eslint/no-confusing-void-expression
+@typescript-eslint/no-shadow
+@typescript-eslint/no-unnecessary-boolean-literal-compare
+@typescript-eslint/no-unsafe-argument
+@typescript-eslint/no-unsafe-assignment
+@typescript-eslint/no-unsafe-declaration-merging
+@typescript-eslint/no-unsafe-enum-comparison
+@typescript-eslint/no-unsafe-member-access
+@typescript-eslint/no-unsafe-type-assertion
+@typescript-eslint/no-unsafe-unary-minus
+@typescript-eslint/no-unused-vars
+@typescript-eslint/prefer-nullish-coalescing
+@typescript-eslint/related-getter-setter-pairs
+@typescript-eslint/restrict-plus-operands
+@typescript-eslint/switch-exhaustiveness-check
+@typescript-eslint/unbound-method
+adamic/invariant-mutable
+adamic/no-optional-widening
+adamic/no-unchecked-cast
+nexus/consistency-no-property-alias
+nexus/correctness-no-caller-data-mutation
+no-implicit-coercion
+no-param-reassign
+no-use-before-define

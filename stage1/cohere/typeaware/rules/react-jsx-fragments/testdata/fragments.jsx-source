@@ -1,0 +1,6 @@
+declare const React:any; import {Fragment as F} from 'react';
+<React.Fragment/>;
+<React.Fragment key='a'/>;
+<F/>;
+<A.React.Fragment/>;
+<></>;
