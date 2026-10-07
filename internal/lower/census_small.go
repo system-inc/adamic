@@ -103,7 +103,7 @@ func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declar
 		arguments = append(arguments, fit(ir.Undefined{}, of))
 	}
 	arguments = append(arguments, rest)
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
 }
 
 // Boolean fields have a tagged byte; other slotless representations remain refused.
@@ -212,6 +212,9 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
 	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
 	if !l.censusRelated(produced, promised) {
+		if l.censusNullableOverloadResult(produced, promised) {
+			return nil // Each resolved call proves the result or checks its presence.
+		}
 		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced), Fix: "make the implementation result covariant with every overload result"}
 	}
 	return nil
@@ -256,6 +259,34 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 	}
 	if !overloaded || value.Type() == 0 {
 		return value, nil
+	}
+	resolved := l.checker.GetResolvedSignature(call.AsNode())
+	if resolved != nil && resolved.Declaration() != nil {
+		overload := resolved.Declaration()
+		implementation := l.censusImplementation(overload)
+		if implementation != nil && overload.Body() == nil {
+			ordinal := 0
+			for _, declaration := range symbol.Declarations {
+				if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
+					ordinal++
+					if declaration == overload {
+						break
+					}
+				}
+			}
+			if !l.censusProveOverloadResult(implementation, overload) {
+				promised := l.checker.GetReturnTypeOfSignature(resolved)
+				produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
+				if l.censusHasUndefined(produced) && !l.censusHasUndefined(promised) {
+					of, err := l.typeOf(call.AsNode())
+					if err != nil {
+						return nil, err
+					}
+					message := fmt.Sprintf("overload %d of %s result: expected %s, got undefined", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised))
+					return ir.Coalesce{Value: value, Of: of, Panic: ir.StringConstant{Index: l.constant(message)}}, nil
+				}
+			}
+		}
 	}
 	of, err := l.typeOf(call.AsNode())
 	if err != nil {
