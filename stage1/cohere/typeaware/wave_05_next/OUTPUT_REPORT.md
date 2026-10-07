@@ -55,6 +55,6 @@ Three alternating count-only rounds were measured after every other build/test j
 | Repository | 0.124803s | 0.276087s | 2.21x |
 | Compiler | 0.347531s | 2.379856s | 6.85x |
 
-Native is slower. These are aggregate process measurements, not active-finding benchmarks or individual-rule timings. The compiler native run made 32 fact queries; query time was about 13ms, while native run time was about 2.12s. The existing parser/driver dominates this measurement. Raw rounds, source hashes, oracle streams, mutants, release and sanitizer logs are in [output_evidence](output_evidence).
+Native is slower. These are aggregate process measurements, not active-finding benchmarks or individual-rule timings. The compiler native run made 32 fact queries; query time was about 13ms, while native run time was about 2.12s. Most measured time is outside checker queries; parsing and the native passes were not timed separately. Raw rounds, source hashes, oracle streams, mutants, release and sanitizer logs are in [output_evidence](output_evidence).
 
 Cloud setup was already successful for this branch: Go 1.27.1 0s, clang 20.1.8 0s, Node 24.19.0 0s, submodules 0s, warm build 82s, total 82s. `nproc` remains 5; cgroup CPU capacity is four cores. No toolchain or pinned submodule changed.

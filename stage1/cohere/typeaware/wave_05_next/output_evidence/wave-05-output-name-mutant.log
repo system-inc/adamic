@@ -1,0 +1,29 @@
+=== RUN   TestWave05OutputFacts
+=== PAUSE TestWave05OutputFacts
+=== CONT  TestWave05OutputFacts
+--- FAIL: TestWave05OutputFacts (0.01s)
+panic: Unhandled case in Node.Text: *ast.BindingPattern [recovered, repanicked]
+
+goroutine 8 [running]:
+testing.tRunner.func1.2({0x160f640, 0x32fadfd7f190})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x160f640?, 0x32fadfd7f190?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x32fadfa29368?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/bridge/tsgo/checker.(*Program).outputSymbol(0x32fadfcc4eb0, 0x32fadfb6b508, 0xd?, {0x98660f, 0xd})
+	/workspace/adamic/bridge/tsgo/checker/output_symbol.go:52 +0x725
+github.com/system-inc/adamic/bridge/tsgo/checker.(*Program).Inspect(0x32fadfcc4eb0, {0x32fadf7eb180, 0x3c}, 0x3e?, 0x0?, {0xa14a7b?, 0x0?}, {0x98660f, 0xd})
+	/workspace/adamic/bridge/tsgo/checker/facts.go:207 +0x1973
+github.com/system-inc/adamic/bridge/tsgo/checker.TestWave05OutputFacts.func2(0x32fadfa29cd8?, {0x98660f, 0xd})
+	/workspace/adamic/bridge/tsgo/checker/output_callee_test.go:54 +0xca
+github.com/system-inc/adamic/bridge/tsgo/checker.TestWave05OutputFacts(0x32fadf97eb48)
+	/workspace/adamic/bridge/tsgo/checker/output_callee_test.go:71 +0x991
+testing.tRunner(0x32fadf97eb48, 0x169df60)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.017s
+FAIL
