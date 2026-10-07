@@ -157,6 +157,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
+		case ir.PhantomMember:
+			found = !node.Optional
 		case ir.Throw:
 			found = true
 		case ir.Call:
