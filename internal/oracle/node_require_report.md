@@ -1,3 +1,94 @@
+Built: literal fs and path require use the existing library hosts and the pinned Node declarations on codex/require-builtins-2.
+Commits: d46ab6a dependency base; ff093cd cherry-pick of c880985; 36abd5f merge of the existing directory/path host.
+Checks: focused loader/lower, required Node oracles, complete counts regeneration and vet pass; the final full gate has passed load, lower, flow, freshness and native; it is still running.
+Mutants: nonliteral acceptance fails TestCommonJSRefusals with got <nil>; structural fs type fails exact checker type and member identity.
+Uncovered: perf_hooks lowering awaits the library host SHA; the actual submodule performanceCore has one separate exact-optional-property diagnostic.
+
+## Current implementation
+
+The branch was created from the rebased fs-file landing commit, without merging
+that dependency into the old require branch. The old branch was left untouched.
+The library directory/path branch at 3a090c7 was merged into the new feature
+branch to reuse its path runtime rather than add another implementation.
+Conflicts retained both fs-file and directory IR handling and runtime field
+layouts. No main or area/ branch was pushed to or merged into.
+
+Require identifiers activate the same pinned @types/node 25.3.3 loader as
+node:* imports. The declaration refinement augments Node's actual NodeJS.Require
+interface; it declares no fs/path/performance host members. Individual literal
+overloads preserve the exact imported module type and member declaration
+identity. A union overload alone loses to Node's broad any signature; the
+checker identity test detected that during integration.
+
+Both require('path') and require('node:path') now lower to the existing join
+and dirname host calls. Their IR matches namespace imports exactly. Both
+fixtures print a/b then a from their original source on Node, and both emitted
+backends agree, including ASan/UBSan and leak checks. Each new require path
+fixture counts 2 allocations, 2 frees, 0 retains, 2 releases, peak 1, no regions.
+The existing fs require row and all fs-file rows are unchanged.
+
+The shared member guard now registers the implemented directory and path
+members and names realpathSync.native correctly. The directory value handler
+leaves sibling Stats fields to the file host. Complete counts regeneration
+observes changes in four inherited directory rows after integration:
+entries 225/225/140/238/29/0; realpath 118/118/58/148/7/0;
+system 2032/2032/3400/3025/1047/0; permissions 82/82/70/105/32/0.
+These are observed allocations/frees/retains/releases/peak/regions, not a claim
+that require routing alone caused the changes.
+
+## Perf-hooks typing and pending runtime
+
+Both perf_hooks literal spellings already preserve the pinned imported module
+type. TestRequirePerformanceCoreShapeChecks checks tsc's Node-like guard,
+try/catch, destructured Partial module view, and all six requested members:
+now, timeOrigin, mark, measure, clearMarks and clearMeasures. It passes through
+the checker. Runtime lowering remains NotYet pending the library's host SHA.
+
+The actual cohere submodule source is read in place, never copied:
+cohere/TypeScript/tsc/testdata/fixtures/compiler/performanceCore.ts.
+Running adamic types over it and its actual dependencies yields no missing
+require diagnostic in that file. Its remaining diagnostic is TS2375 at line 66:
+PerformanceHooks has optional fields without explicit undefined in their types,
+but initializes them to undefined under exactOptionalPropertyTypes. The file
+is not checker-clean. The stage-3 adapted source path has been requested; no
+compiler option was weakened and no source suppression was added.
+
+## Reproduction and evidence
+
+Install the loader's exact dependency (no Node declarations were vendored):
+npm install --prefix stage3/api --no-audit --no-fund --save-exact @types/node@25.3.3.
+The local npm metadata and node_modules are workspace artifacts, not unit code.
+
+Setup initially failed because it ran during unresolved cherry-pick/merge
+conflicts. After resolution, bash cloud/setup.sh exits 0: Go ready 0s, clang
+ready 0s, Node ready 0s, submodules ready 1s, build cache warm 181s, total 181s.
+nproc is 5; cgroup cpu.max is 400000 100000. Every Go shell sources
+/workspace/adamic-tools/env.sh.
+
+All test output is saved under /tmp/require-builtins-2-*.log. Commands and
+results so far:
+- Focused load/lower require, CommonJS and Node library checks pass.
+- go test -count=1 ./internal/load -run 'TestRequire|TestNodeBuiltin': exit 0,
+  3.184s, including both perf-hooks checker shapes.
+- go test -count=1 -timeout=30m ./internal/oracle -run
+  'TestRequire|TestNodeFSFileAgreesWithNode|TestCountsAreRecorded'
+  -args -update-counts: exit 0, 18.899s, after host integration corrections.
+- go test -count=1 ./internal/oracle -run
+  'TestRequire|TestInputAgreesWithNode/internal/oracle/testdata/node_path'
+  -timeout=30m: exit 0, 23.961s.
+- The first complete load/lower/flow/fresh package run passed load and lower
+  and fresh (143.906s), but flow caught the directory dispatch/registration
+  conflicts. Those conflicts are fixed; final validation is the full gate.
+- Both mutants were rerun on this branch, each exits 1 through its intended
+  test assertions. Both source files were restored before final validation.
+- go vet ./... exits 0; gofmt and git diff --check have no output.
+- go test -count=1 -timeout=30m ./... has passed load (7.767s), lower (72.253s), flow (146.560s), fresh (76.536s), native (411.372s) and bridge (422.187s). Remaining packages are still running in the final gate log.
+
+## Historical first attempt
+
+The report below records the old branch and its old dependency. It is retained
+as history and does not describe the current declaration or path implementation.
+
 # Literal builtin require
 
 Partial implementation on `codex/require-builtins`, started from main

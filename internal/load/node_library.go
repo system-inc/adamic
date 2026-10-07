@@ -55,6 +55,23 @@ func nodeTypesIndex(directory string) (string, error) {
 
 func usesNodeModules(program *compiler.Program) bool {
 	for _, file := range program.GetSourceFiles() {
+		if file.IsDeclarationFile {
+			continue
+		}
+		found := false
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindIdentifier && (node.Text() == "require" || node.Text() == "module") {
+				found = true
+				return true
+			}
+			node.ForEachChild(visit)
+			return found
+		}
+		file.AsNode().ForEachChild(visit)
+		if found {
+			return true
+		}
 		for _, statement := range file.Statements.Nodes {
 			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {
 				continue

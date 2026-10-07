@@ -44,6 +44,9 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
 			if (parent.Kind == ast.KindClassDeclaration || parent.Kind == ast.KindInterfaceDeclaration) && parent.Name() != nil {
 				owners = append([]string{parent.Name().Text()}, owners...)
 			}
+			if parent.Kind == ast.KindModuleDeclaration && parent.Name() != nil && parent.Name().Kind == ast.KindIdentifier && parent.Name().Text() == "realpathSync" {
+				owners = append([]string{parent.Name().Text()}, owners...)
+			}
 			if parent.Kind == ast.KindModuleDeclaration && parent.Name() != nil && parent.Name().Kind == ast.KindStringLiteral {
 				module = parent.Name().Text()
 				break
@@ -61,6 +64,12 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
 }
 
 func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
+	if l.nodeRequireGlobal(node, "require") {
+		return nil
+	}
+	if _, call := l.nodeRequireCall(node); call {
+		return nil
+	}
 	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) {
 		return nil
 	}

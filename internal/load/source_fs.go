@@ -52,6 +52,9 @@ func (s *sourceFS) displayName(path string) string {
 }
 
 func (s *sourceFS) FileExists(path string) bool {
+	if path == nodeRequirePath {
+		return true
+	}
 	if path == preludePath {
 		return true
 	}
@@ -65,6 +68,9 @@ func (s *sourceFS) FileExists(path string) bool {
 }
 
 func (s *sourceFS) ReadFile(path string) (string, bool) {
+	if path == nodeRequirePath {
+		return nodeRequirePrelude, true
+	}
 	if path == preludePath {
 		if s.nodeTypes {
 			return nodePrelude(), true

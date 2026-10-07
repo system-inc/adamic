@@ -18,6 +18,8 @@ func NodeBuiltin(specifier string) (string, bool) {
 	return "", false
 }
 
+const nodeRequirePath = preludeDirectory + "/node_require.d.ts"
+
 // @types/node's NodeRequire returns any. Refine the literal overload to the
 // host's declared module type so its members carry the same declaration symbols
 // as an import. The fallback is unknown: refused calls never introduce any.

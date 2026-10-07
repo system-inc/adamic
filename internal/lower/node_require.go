@@ -14,7 +14,8 @@ func (l *lowering) nodeRequireGlobal(node *ast.Node, name string) bool {
 	if symbol == nil || len(symbol.Declarations) == 0 {
 		return false
 	}
-	return load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+	file := ast.GetSourceFileOfNode(symbol.Declarations[0])
+	return load.IsPrelude(file) || load.IsNodeLibrary(file)
 }
 
 func (l *lowering) nodeRequireCall(node *ast.Node) (string, bool) {
@@ -46,15 +47,21 @@ func (l *lowering) nodeRequireBinding(declaration *ast.Node) bool {
 		return false
 	}
 	module, call := l.nodeRequireCall(declaration.AsVariableDeclaration().Initializer)
-	return call && module == "node:fs" && declaration.Parent.Flags&ast.NodeFlagsConst != 0
+	return call && (module == "node:fs" || module == "node:path") && declaration.Parent.Flags&ast.NodeFlagsConst != 0
 }
 
 func (l *lowering) refuseNodeRequire(node *ast.Node) error {
+	if node.Kind == ast.KindCallExpression {
+		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression || callee.Kind == ast.KindElementAccessExpression {
+			return l.refuseNodeRequire(callee)
+		}
+	}
 	if module, call := l.nodeRequireCall(node); call {
 		if module == "" {
 			return &Refused{Where: l.program.Where(node), What: "require() without one string literal naming a Node builtin", Fix: "use an import"}
 		}
-		if module != "node:fs" {
+		if module != "node:fs" && module != "node:path" {
 			return l.notYet(node, "require("+module+"): the builtin host module")
 		}
 		outer := node

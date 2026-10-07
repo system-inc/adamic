@@ -66,7 +66,7 @@ func TestCommonJSRefusals(t *testing.T) {
 
 func TestRequireMissingHostsAreNotYet(t *testing.T) {
 	t.Parallel()
-	for _, source := range []string{`const path = require('path'); console.log(path.join('a', 'b')); console.log(path.dirname('a/b'));`, `const path = require('node:path'); console.log(path.dirname('a/b'));`, `require('node:crypto');`} {
+	for _, source := range []string{`require('node:crypto');`} {
 		_, err := lowerSource(t, source)
 		var notYet *NotYet
 		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "builtin host module") {
@@ -80,5 +80,23 @@ func TestLocalRequireAndModuleAreOrdinaryNames(t *testing.T) {
 	_, err := lowerSource(t, `function require(name: string): string { return name; } const module = { exports: 'local' }; console.log(require(module.exports));`)
 	if err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestRequirePathAndImportHaveTheSameIR(t *testing.T) {
+	t.Parallel()
+	body := "console.log(path.join('a','b')); console.log(path.dirname('a/b'));"
+	imported, err := lowerSource(t, "import * as path from 'node:path';"+body)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, specifier := range []string{"path", "node:path"} {
+		required, err := lowerSource(t, "const path = require('"+specifier+"');"+body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(required, imported) {
+			t.Fatalf("require(%q) IR differs from import", specifier)
+		}
 	}
 }

@@ -1,14 +1,11 @@
 package oracle
 
 import (
-	"errors"
 	"path/filepath"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/lower"
 )
 
-var requireFixtures = []string{"internal/oracle/testdata/require_fs.a"}
+var requireFixtures = []string{"internal/oracle/testdata/require_fs.a", "internal/oracle/testdata/require_path.a", "internal/oracle/testdata/require_node_path.a"}
 
 // Node's standard source runner is ESM, where require is not a global. These
 // fixtures contain no imports: execute their stripped source as CommonJS in a
@@ -51,25 +48,35 @@ func TestRequireFSAgreesWithNode(t *testing.T) {
 	t.Log("Node source: true true / true; both backends, ASan/UBSan and leaks agree")
 }
 
-func TestRequirePathHostGapHeldToNode(t *testing.T) {
+func TestRequirePathAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"require_path.a", "require_node_path.a"} {
+	for _, name := range requireFixtures[1:] {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/require_gaps", name))
+			path, err := filepath.Abs(filepath.Join(repository, name))
 			if err != nil {
 				t.Fatal(err)
 			}
-			truth := requireOnNode(t, inputRun{directory: sharedDirectory(t)}, path)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			shared := sharedDirectory(t)
+			how := inputRun{directory: shared}
+			truth := requireOnNode(t, how, path)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != "a/b\na\n" {
 				t.Fatalf("Node source: %+v", truth)
 			}
-			_, err = lowered(t, path)
-			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) {
-				t.Fatalf("want path host NotYet, got %v", err)
+			backend := inputBackend(t, how, program, shared)
+			got, binary := inputNatively(t, how, program, shared)
+			for name, observation := range map[string]run{"native": got, "javascript": backend} {
+				if difference := disagreement(truth, observation); difference != "" {
+					t.Errorf("%s: %s", name, difference)
+				}
 			}
-			t.Logf("Node source: a/b / a; host gap: %v", err)
+			if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+				t.Errorf("leaks: %s", leaked)
+			}
 		})
 	}
 }
