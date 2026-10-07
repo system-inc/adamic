@@ -220,3 +220,11 @@ The unknown-narrowing counts merge had placed weak rows at filesystem indices. C
 Checkpoint 12: uncached oracle 350.222s, lower 121.680s, native 272.100s and stage3 50.471s passed. Flow failed only because its positive-program glob included the new deliberately refused arrow_block_structural.a; that probe remains covered by TestArrowBlockStructuralViewRefused and is excluded from graph tracing. Full flow is being rerun. No production output disagreement. Logs: /tmp/landing-batch-3-checkpoint-12.log and /tmp/landing-batch-3-12-*.log.
 
 Checkpoint 12 repaired flow passed uncached in 125.565s; flow vet passed. All five required packages are green on the unchanged compiler tree. The restored counts mutant source matches its tested baseline; no record Node evidence changed.
+
+### Item 13 skipped: codex/error-classes-counts 75a30c4fb
+
+Merge attempted exactly at 75a30c4fb, then aborted. Explicit resolutions compiled all six compiler packages and syntax-checked the C union and Node runner. Linux counts failed on two interactions: stage3/fixtures/nested-functions/06_parser_token_state.a:6:17 is newly Refused as scanner capture cycle (it was Compiles); internal/oracle/testdata/coverage_error_causes.a:24:41 is NotYet for a function viewed as unknown or object (dynamic function descriptors). The latter also exercises collections whose unknown-view metadata remains unsupported. Repairing these capture and descriptor proofs exceeds a small landing change.
+
+The stage3 update also exposed an auto-merge runner error: oracle/adamic.mjs references undefined AdamicPanic, changing import-cycle Node failures from exit 70 with their recorded ReferenceError text to exit 7. This runner repair is small, but cannot make the compiler admission failures green. All partial stage3 records and attempted resolutions were discarded; the existing Node observations remain unchanged. No wrong production output with exit 0 was observed. Logs: /tmp/landing-batch-3-13-{compile,counts,stage3-update}.log. Review patch: /tmp/landing-batch-3-13-unlanded.patch.
+
+Automatic approval review rejected the broad scripted exception/ownership/emitter/null resolution for miscompilation and runtime-corruption risk. Explicit additive patches were subsequently approved and compile-checked; the merge was dropped for the actual admission failures above.
