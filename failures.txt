@@ -106,6 +106,28 @@
     slabs_test.go:119: mutant insertion points changed
 --- FAIL: TestSlabLaneCatchesRecycledRelease (0.24s)
 
+== github.com/system-inc/adamic/internal/fuzz TestLivenessAndFieldShapes
+=== RUN   TestLivenessAndFieldShapes
+=== PAUSE TestLivenessAndFieldShapes
+=== CONT  TestLivenessAndFieldShapes
+    liveness_fields_test.go:56: seed 2: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 5: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:7:3: Adamic 0.1 refuses cannot move items1[0][]: nested array ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 10: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:7:3: Adamic 0.1 refuses cannot move items1[0][]: nested array ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 12: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 15: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 16: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:698:31: Adamic 0.1 refuses parallelMap items are not shareable: Bag39.tags is a mutable string[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    liveness_fields_test.go:56: seed 17: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 19: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 22: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:7:3: Adamic 0.1 refuses cannot move items1[0].values[]: nested Map ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 23: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 27: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:678:57: Adamic 0.1 refuses task capture 'step24' is not shareable: step24 is not an immutable binding; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)
+    liveness_fields_test.go:56: seed 29: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:321:17: Adamic 0.1 refuses use after move: items1.length; items1 was moved into parallelMap; don't use it after the parallelMap
+    liveness_fields_test.go:56: seed 32: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 34: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:8:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+    liveness_fields_test.go:56: seed 35: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:8:13: Adamic 0.1 refuses cannot move items1[0].child6: nested reachable ownership is not proven; return it through the results
+    liveness_fields_test.go:56: seed 36: stage 0 didn't lower it: /workspace/q3-tmp/TestLivenessAndFieldShapes2317088976/001/program.a:9:3: Adamic 0.1 refuses cannot move items1[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+--- FAIL: TestLivenessAndFieldShapes (42.05s)
+
 == github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.142s
 
