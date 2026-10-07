@@ -52,7 +52,18 @@ import (
 // may keep them. Summaries are found to a fixed point over the call graph from "returns nothing",
 // recursion included, and fall back to "returns something outside" if that takes too long.
 func ProveWrites(program *ir.Program) []Write {
-	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program)}
+	return proveWrites(program, nil)
+}
+
+// ProveFreshHolders uses the same confinement proof for selected write sites, requiring only
+// the holder proof. Judgment substitutes an outside value, which can reach every exposed holder;
+// interpretation still stores the real value, so the heap and escape effects are unchanged.
+func ProveFreshHolders(program *ir.Program, sites map[int]bool) []Write {
+	return proveWrites(program, sites)
+}
+
+func proveWrites(program *ir.Program, holders map[int]bool) []Write {
+	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program), holders: holders}
 	functions := []int{}
 	for index := range program.Functions {
 		functions = append(functions, index)
@@ -540,6 +551,7 @@ func (s *state) recent(site int) {
 
 // freshness is the whole program's proof.
 type freshness struct {
+	holders   map[int]bool
 	program   *ir.Program
 	summaries map[int]*summary
 	origins   map[originKey]int
@@ -893,7 +905,11 @@ func (a *analysis) write(kind WriteKind, site int, name string, holder value, he
 	if a.judging {
 		write := Write{Kind: kind, Site: site, Name: name, Function: a.function, Proven: true}
 		a.proof.record(key, write)
-		a.judge(key, write, holder, held, "", a.state.exposed)
+		judged := held
+		if a.proof.holders[site] && kind == WriteField {
+			judged = outsideValue()
+		}
+		a.judge(key, write, holder, judged, "", a.state.exposed)
 	}
 	for o := range holder.strong {
 		a.state.storeInto(o, field, held)
