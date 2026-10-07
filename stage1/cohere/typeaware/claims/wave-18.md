@@ -250,3 +250,15 @@ gate and its external correctness checks were not run. Four named native
 analysis claims stay parked. Refreshed 462-head audit finds zero unclaimed
 ranked rules; no new claim made. See
 wave_18_component_props/LANDING_REGISTRY_REPORT.md and validation-registry.
+
+## Landing on the typeof/null main through lint area d3a37422c
+
+Rebased onto area d3a37422c containing fetched main b6b1538b0. All six
+owned suites have passing results on the same tree, across the initial
+run and constructor/React retries after cache-cleanup build interruptions.
+Standalone groups, sanitizers, released handles, mutants, parked reporters,
+registry, shared harness, uncached Node typeof witnesses and vet pass.
+No selected final test skipped; full gate and external checks not run.
+Four named analysis claims remain parked. Refreshed 477-head audit finds
+zero unclaimed ranked rules; no new claim made. See
+wave_18_component_props/LANDING_TYPEOF_REPORT.md and validation-typeof.
