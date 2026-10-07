@@ -1,4 +1,7 @@
 import { panic } from 'adamic';
+import { CommentRange, comments as collectComments } from './comment_ranges.a';
+import { space as commentSpace } from './comments.ts';
+import { isLineBreak, isSpace } from '../../typescript/scanner/characters.ts';
 import type { Parser } from '../../typescript/parser/parser.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
@@ -65,6 +68,47 @@ export function space(character: string): boolean {
     return character === ' ' || character === '\t' || character === '\r' || character === '\n';
 }
 
+// These hot kind tests use switches instead of allocating lookup arrays.
+function isParameterListKind(kind: string): boolean {
+    switch(kind) {
+        case 'FunctionDeclaration':
+        case 'FunctionExpression':
+        case 'ArrowFunction':
+        case 'MethodDeclaration':
+        case 'Constructor':
+        case 'GetAccessor':
+        case 'SetAccessor':
+        case 'FunctionType':
+        case 'ConstructorType':
+        case 'CallSignature':
+        case 'ConstructSignature':
+        case 'MethodSignature':
+        case 'IndexSignature':
+            return true;
+        default:
+            return false;
+    }
+}
+function isBracedListKind(kind: string): boolean {
+    switch(kind) {
+        case 'ClassDeclaration':
+        case 'ClassExpression':
+        case 'Block':
+        case 'CaseBlock':
+        case 'ModuleBlock':
+        case 'InterfaceDeclaration':
+        case 'EnumDeclaration':
+        case 'TypeLiteral':
+        case 'ObjectLiteralExpression':
+        case 'ObjectBindingPattern':
+        case 'NamedImports':
+        case 'NamedExports':
+            return true;
+        default:
+            return false;
+    }
+}
+
 export class RuleContext {
     readonly source: string;
     readonly settings: Settings;
@@ -82,6 +126,8 @@ export class RuleContext {
     // literalEndsByStart is built on the first literalEnds() a rule asks for, once per file however many
     // rules share it.
     literalEndsByStart: number[] | undefined = undefined;
+    // Comment trivia is collected once per immutable source file for file-listener rules.
+    commentRangesBySource: CommentRange[] | undefined = undefined;
     constructor(
         source: string,
         parser: Parser,
@@ -226,6 +272,138 @@ export class RuleContext {
         for(const child of node.children) {
             this.literalSpans(child, ends);
         }
+    }
+    // trim follows Go strings.TrimSpace, including NEL and excluding BOM.
+    trim(value: string): string {
+        let start = 0;
+        let end = value.length;
+        while(start < end && commentSpace(value[start] ?? '')) { start++; }
+        while(end > start && commentSpace(value[end - 1] ?? '')) { end--; }
+        return value.slice(start, end);
+    }
+    comments(node: ParseNode, index: number): readonly CommentRange[] {
+        if(this.commentRangesBySource === undefined) {
+            const anchors = new Array<boolean>(this.source.length + 1).fill(false);
+            this.commentAnchors(index, anchors, node);
+            anchors[0] = true;
+            this.commentRangesBySource = collectComments(this.source, this.literalEnds(), this.reachableComments(anchors));
+        }
+        return this.commentRangesBySource;
+    }
+    commentAnchors(index: number, anchors: boolean[], node: ParseNode): void {
+        anchors[node.pos] = true;
+        anchors[node.end] = true;
+        const parameterList = isParameterListKind(node.kind);
+        const argumentsList = node.kind === 'CallExpression' || node.kind === 'NewExpression';
+        const bracedList = isBracedListKind(node.kind);
+        const arrayList = node.kind === 'ArrayLiteralExpression' || node.kind === 'ArrayBindingPattern';
+        const caseList = node.kind === 'CaseClause' || node.kind === 'DefaultClause';
+        if(parameterList || argumentsList || bracedList || arrayList || caseList) {
+            const children = new Map<number, number>();
+            const start = this.start(index);
+            for(const child of node.children) {
+                const childStart = Math.max(start, this.node(child).pos);
+                children.set(childStart, Math.max(children.get(childStart) ?? 0, this.node(child).end));
+            }
+            let depth = 0;
+            for(let position = start; position < node.end; position++) {
+                const childEnd = children.get(position);
+                if(childEnd !== undefined && childEnd > position) {
+                    position = childEnd - 1;
+                    continue;
+                }
+                const code = this.source.charCodeAt(position);
+                if(code === 47) {
+                    const next = this.source.charCodeAt(position + 1);
+                    if(next === 47) {
+                        while(position < node.end && !isLineBreak(this.source.charCodeAt(position))) {
+                            position++;
+                        }
+                        continue;
+                    }
+                    if(next === 42) {
+                        const close = this.source.indexOf('*/', position + 2);
+                        position = close < 0 ? node.end : close + 1;
+                        continue;
+                    }
+                }
+                const opening =
+                    parameterList || argumentsList ? (node.kind === 'IndexSignature' ? 91 : 40) : arrayList ? 91 : 123;
+                const closing = opening === 40 ? 41 : opening === 91 ? 93 : 125;
+                if(code === opening) {
+                    depth++;
+                    if(depth === 1) {
+                        anchors[position + 1] = true;
+                    }
+                }
+                if(code === closing) {
+                    depth--;
+                }
+                if(code === 44 && depth === 1) {
+                    anchors[position + 1] = true;
+                }
+                if(caseList && code === 58) {
+                    anchors[position + 1] = true;
+                }
+            }
+        }
+        for(const child of node.children) {
+            this.commentAnchors(child, anchors, this.node(child));
+        }
+    }
+    reachableComments(anchors: readonly boolean[]): boolean[] {
+        const reachable = new Array<boolean>(this.source.length + 1).fill(false);
+        for(let anchor = 0; anchor < anchors.length; anchor++) {
+            if(anchors[anchor] !== true) {
+                continue;
+            }
+            let position = anchor;
+            while(
+                position < this.source.length &&
+                (this.source.charCodeAt(position) === 32 ||
+                    (this.source.charCodeAt(position) >= 9 && this.source.charCodeAt(position) <= 13))
+            ) {
+                position++;
+            }
+            if(anchor === 0 && this.source.startsWith('#!')) {
+                while(position < this.source.length && !isLineBreak(this.source.charCodeAt(position))) {
+                    position++;
+                }
+            }
+            if(this.source.charCodeAt(position) !== 47) {
+                continue;
+            }
+            for(;;) {
+                while(
+                    position < this.source.length &&
+                    (isSpace(this.source.charCodeAt(position)) ||
+                        isLineBreak(this.source.charCodeAt(position)))
+                ) {
+                    position++;
+                }
+                const opening =
+                    this.source.charCodeAt(position) === 47
+                        ? this.source.slice(position, position + 2)
+                        : '';
+                if(opening !== '//' && opening !== '/*') {
+                    break;
+                }
+                reachable[position] = true;
+                if(opening === '//') {
+                    while(
+                        position < this.source.length &&
+                        !isLineBreak(this.source.charCodeAt(position))
+                    ) {
+                        position++;
+                    }
+                }
+                else {
+                    const close = this.source.indexOf('*/', position + 2);
+                    position = close < 0 ? this.source.length : close + 2;
+                }
+            }
+        }
+        return reachable;
     }
     child(index: number, position: number): number {
         return this.node(index).children[position] ?? panic('missing child');

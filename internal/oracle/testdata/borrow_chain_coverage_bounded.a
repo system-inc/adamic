@@ -1,0 +1,8 @@
+interface Root { readonly child: { readonly text: string }; }
+function inspect(root: Root): number {
+ const text = root.child.text;
+ const read = (value: string): number => value.length;
+ const lengths = [1, 2].map((n: number): number => n + text.length);
+ return read(root.child.text) + (lengths[0] ?? 0) + (lengths[1] ?? 0);
+}
+console.log(`${inspect({ child: { text: `bounded${1}` } })}`);

@@ -1,0 +1,58 @@
+// Named Set callbacks over closures. Each element arrives twice and is called after delete.
+function make(label: string): () => string {
+	const text = `${label}`;
+	return () => text;
+}
+
+let kept: (() => string)[] = [];
+let later: () => string = () => "missing";
+
+function filled(): Set<() => string> {
+	const collection = new Set<() => string>();
+	later = make("k1");
+	collection.add(make("k0"));
+	collection.add(later);
+	collection.add(make("k2"));
+	return collection;
+}
+
+function deleteLater(item: () => string, current: () => string, owner: Set<() => string>): void {
+	if (current() === "k0") { owner.delete(later); }
+	kept.push(item);
+	kept.push(current);
+	console.log(`later ${item()} ${current()} ${item === current} ${owner.size}`);
+}
+
+function reassignFirst(item: () => string, current: () => string, owner: Set<() => string>): void {
+	owner.delete(current);
+	console.log(`first ${item()} ${current()}`);
+	const renamed = `${item()}/reassigned`;
+	item = () => renamed;
+	kept.push(current);
+	kept.push(item);
+	console.log(`reassigned ${item()} ${current()}`);
+}
+
+function throwBorrowed(item: () => string, current: () => string, owner: Set<() => string>): void {
+	owner.delete(current);
+	kept.push(current);
+	throw new Error(`deleted ${current()} ${item()}`);
+}
+
+function run(name: string, visit: (item: () => string, current: () => string, owner: Set<() => string>) => void): void {
+	kept = [];
+	const collection = filled();
+	try {
+		collection.forEach(visit);
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`${name} kept ${kept.map((item) => item()).join(",")} remaining ${collection.size}`);
+	const after: string[] = [];
+	collection.forEach((item) => { after.push(item()); });
+	console.log(`${name} after ${after.join(",")}`);
+}
+
+run("later", deleteLater);
+run("reassign", reassignFirst);
+run("throw", throwBorrowed);

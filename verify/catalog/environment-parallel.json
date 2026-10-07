@@ -1,0 +1,12 @@
+{
+  "commit_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "nproc": "5",
+  "cpu_max": "400000 100000",
+  "go_version": "go version go1.27.1 linux/amd64",
+  "clang_version": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+  "node_version": "v24.19.0",
+  "go_flags": "",
+  "oracle_cache": "ADAMIC_GATE_UNCACHED=1",
+  "before_flags": "go test -count=1; first entry control also -x for build profiling",
+  "after_flags": "go test -trimpath -count=1; jobs default nproc; one worktree per active entry"
+}
