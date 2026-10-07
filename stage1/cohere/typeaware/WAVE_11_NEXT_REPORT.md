@@ -1,7 +1,7 @@
-Built: native ports of no-collection-misuse, no-discarded-outcome and no-discarded-pure-result.  
-Commits: original wave pushed through `fca4b6e5`; continuation claim `f2f13d2d` pushed before code; implementation `5ff9e4e6`.  
-Checks: 67 control findings and both frozen corpora match Go byte for byte, normally and under ASan/UBSan/LeakSanitizer.  
-Mutants: three rule ranges, two raw-question answers and the released registry each rejected by the intended check.  
+Built: native ports of no-collection-misuse, no-discarded-outcome and no-discarded-pure-result.
+Commits: original wave pushed through `fca4b6e5`; continuation claim `f2f13d2d` pushed before code; implementation `5ff9e4e6`.
+Checks: 67 control findings and both frozen corpora match Go byte for byte, normally and under ASan/UBSan/LeakSanitizer.
+Mutants: three rule ranges, two raw-question answers and the released registry each rejected by the intended check.
 Not covered: full repository gate, exhaustive upstream fixtures/options, JSX and new-rule emitted-JavaScript comparison; pinned cohere `.a` lint support remains external work.
 
 ## Authorization, selection and scope
