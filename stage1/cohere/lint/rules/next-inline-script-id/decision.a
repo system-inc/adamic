@@ -1,0 +1,23 @@
+// Candidate decision logic. JSX extraction remains a shared parser/adapter gap.
+export function reports(
+    boundDefaultNames: readonly string[],
+    tag: string,
+    identifierTag: boolean,
+    attributeNames: readonly string[],
+    checkableSpreads: boolean,
+    hasChildren: boolean,
+): boolean {
+    return (
+        identifierTag &&
+        boundDefaultNames.includes(tag) &&
+        checkableSpreads &&
+        !attributeNames.includes('id') &&
+        (hasChildren || attributeNames.includes('dangerouslySetInnerHTML'))
+    );
+}
+export function contributesSpreadKey(propertyKind: string, keyKind: string): boolean {
+    return (
+        (propertyKind === 'PropertyAssignment' || propertyKind === 'ShorthandPropertyAssignment') &&
+        keyKind === 'Identifier'
+    );
+}

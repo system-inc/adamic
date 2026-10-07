@@ -1,0 +1,128 @@
+[
+  [
+    "GoogleFontPreconnect",
+    "google-font-preconnect",
+    "<link href=\"https://fonts.gstatic.com\" />",
+    "/pages/index.tsx",
+    [
+      "link",
+      "https://fonts.gstatic.com",
+      null
+    ]
+  ],
+  [
+    "GoogleFontPreconnect",
+    "google-font-preconnect",
+    "<link href=\"https://fonts.gstatic.com\" rel=\"preconnect\" />",
+    "/pages/index.tsx",
+    [
+      "link",
+      "https://fonts.gstatic.com",
+      "preconnect"
+    ]
+  ],
+  [
+    "NoCssTags",
+    "no-css-tags",
+    "<link rel=\"stylesheet\" href=\"/style.css\" />",
+    "/pages/index.tsx",
+    [
+      "link",
+      "/style.css",
+      "stylesheet"
+    ]
+  ],
+  [
+    "NoCssTags",
+    "no-css-tags",
+    "<link rel=\"stylesheet\" href=\"https://host/style.css\" />",
+    "/pages/index.tsx",
+    [
+      "link",
+      "https://host/style.css",
+      "stylesheet"
+    ]
+  ],
+  [
+    "InlineScriptId",
+    "inline-script-id",
+    "import Script from 'next/script'; const x = <Script>{`x()`}</Script>;",
+    "/pages/index.tsx",
+    [
+      [
+        "Script"
+      ],
+      "Script",
+      true,
+      [],
+      true,
+      true
+    ]
+  ],
+  [
+    "InlineScriptId",
+    "inline-script-id",
+    "import Script from 'next/script'; const x = <Script id=\"a\">{`x()`}</Script>;",
+    "/pages/index.tsx",
+    [
+      [
+        "Script"
+      ],
+      "Script",
+      true,
+      [
+        "id"
+      ],
+      true,
+      true
+    ]
+  ],
+  [
+    "NextScriptForGa",
+    "next-script-for-ga",
+    "<script src=\"https://www.googletagmanager.com/gtag/js\" />",
+    "/pages/index.tsx",
+    [
+      "script",
+      "https://www.googletagmanager.com/gtag/js",
+      null
+    ]
+  ],
+  [
+    "NextScriptForGa",
+    "next-script-for-ga",
+    "<script src=\"https://www.googletagmanager.com/gtm.js\" />",
+    "/pages/index.tsx",
+    [
+      "script",
+      "https://www.googletagmanager.com/gtm.js",
+      null
+    ]
+  ],
+  [
+    "NoBeforeInteractiveScriptOutsideDocument",
+    "no-before-interactive-script-outside-document",
+    "import Script from 'next/script'; const x = <Script strategy=\"beforeInteractive\" />;",
+    "/pages/index.tsx",
+    [
+      "/pages/index.tsx",
+      "Script",
+      "Script",
+      true,
+      "beforeInteractive"
+    ]
+  ],
+  [
+    "NoBeforeInteractiveScriptOutsideDocument",
+    "no-before-interactive-script-outside-document",
+    "import Script from 'next/script'; const x = <Script strategy=\"beforeInteractive\" />;",
+    "/pages/_documentation.tsx",
+    [
+      "/pages/_documentation.tsx",
+      "Script",
+      "Script",
+      true,
+      "beforeInteractive"
+    ]
+  ]
+]

@@ -1,0 +1,20 @@
+import { reports as reports0 } from '../next-google-font-preconnect/decision.a';
+import { id as id0, message as message0 } from '../next-google-font-preconnect/messages.a';
+import { reports as reports1 } from '../next-no-css-tags/decision.a';
+import { id as id1, message as message1 } from '../next-no-css-tags/messages.a';
+import { reports as reports2 } from '../next-inline-script-id/decision.a';
+import { id as id2, message as message2 } from '../next-inline-script-id/messages.a';
+import { reports as reports3 } from '../next-next-script-for-ga/decision.a';
+import { id as id3, message as message3 } from '../next-next-script-for-ga/messages.a';
+import { reports as reports4 } from '../next-no-before-interactive-script-outside-document/decision.a';
+import { id as id4, message as message4 } from '../next-no-before-interactive-script-outside-document/messages.a';
+if(reports0("link", "https://fonts.gstatic.com", undefined)) { console.log(`${id0} ${message0}`); console.log('count 1'); } else { console.log('count 0'); }
+if(reports0("link", "https://fonts.gstatic.com", "preconnect")) { console.log(`${id0} ${message0}`); console.log('count 1'); } else { console.log('count 0'); }
+if(reports1("link", "/style.css", "stylesheet")) { console.log(`${id1} ${message1}`); console.log('count 1'); } else { console.log('count 0'); }
+if(reports1("link", "https://host/style.css", "stylesheet")) { console.log(`${id1} ${message1}`); console.log('count 1'); } else { console.log('count 0'); }
+if(reports2(["Script"], "Script", true, [], true, true)) { console.log(`${id2} ${message2}`); console.log('count 1'); } else { console.log('count 0'); }
+if(reports2(["Script"], "Script", true, ["id"], true, true)) { console.log(`${id2} ${message2}`); console.log('count 1'); } else { console.log('count 0'); }
+if(reports3("script", "https://www.googletagmanager.com/gtag/js", undefined)) { console.log(`${id3} ${message3}`); console.log('count 1'); } else { console.log('count 0'); }
+if(reports3("script", "https://www.googletagmanager.com/gtm.js", undefined)) { console.log(`${id3} ${message3}`); console.log('count 1'); } else { console.log('count 0'); }
+if(reports4("/pages/index.tsx", "Script", "Script", true, "beforeInteractive")) { console.log(`${id4} ${message4}`); console.log('count 1'); } else { console.log('count 0'); }
+if(reports4("/pages/_documentation.tsx", "Script", "Script", true, "beforeInteractive")) { console.log(`${id4} ${message4}`); console.log('count 1'); } else { console.log('count 0'); }

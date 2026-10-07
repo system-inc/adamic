@@ -1,0 +1,9 @@
+// Candidate decision logic. JSX extraction remains a shared parser/adapter gap.
+export function reports(tag: string, reference: string | undefined, relationship: string | undefined): boolean {
+    return (
+        tag === 'link' &&
+        reference !== undefined &&
+        reference.startsWith('https://fonts.gstatic.com') &&
+        relationship !== 'preconnect'
+    );
+}

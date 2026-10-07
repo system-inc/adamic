@@ -1,0 +1,28 @@
+package main
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+ "github.com/microsoft/TypeScript/tsc/shim/tspath"
+ "github.com/system-inc/cohere/internal/lint/rule"
+ rules "github.com/system-inc/cohere/internal/lint/rules/next"
+)
+func main() {
+ data,err:=os.ReadFile(os.Args[1]);if err!=nil{panic(err)}
+ var rows [][]json.RawMessage;if err:=json.Unmarshal(data,&rows);err!=nil{panic(err)}
+ subjects:=map[string]rule.Rule{"GoogleFontPreconnect":rules.GoogleFontPreconnect,"NoCssTags":rules.NoCssTags,"InlineScriptId":rules.InlineScriptId,"NextScriptForGa":rules.NextScriptForGa,"NoBeforeInteractiveScriptOutsideDocument":rules.NoBeforeInteractiveScriptOutsideDocument}
+ for _,row:=range rows {
+ var name,source,path string
+ json.Unmarshal(row[0],&name);json.Unmarshal(row[2],&source);json.Unmarshal(row[3],&path)
+ file:=parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:path,Path:tspath.Path(path)},source,core.ScriptKindTSX)
+ if len(file.Diagnostics())!=0{panic("invalid decision witness")}
+ count:=0
+ ctx:=rule.Context{SourceFile:file,FileCache:rule.NewFileCache(),Report:func(d rule.Diagnostic){count++;fmt.Printf("%s %s\n",d.Message.Id,d.Message.Description)}}
+ listeners:=subjects[name].Run(ctx,nil)
+ var walk func(*ast.Node);walk=func(n *ast.Node){if visit:=listeners[n.Kind];visit!=nil{visit(n)};n.ForEachChild(func(child *ast.Node)bool{walk(child);return false})};walk(file.AsNode())
+ fmt.Printf("count %d\n",count)
+ }
+}

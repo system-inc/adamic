@@ -1,0 +1,33 @@
+// Candidate decision logic. JSX extraction remains a shared parser/adapter gap.
+export function reports(tag: string, source: string | undefined, firstRawTemplateChunk: string | undefined): boolean {
+    if(tag !== 'script') {
+        return false;
+    }
+    if(
+        source !== undefined &&
+        (source.includes('www.google-analytics.com/analytics.js') ||
+            source.includes('www.googletagmanager.com/gtag/js'))
+    ) {
+        return true;
+    }
+    return (
+        firstRawTemplateChunk !== undefined &&
+        (firstRawTemplateChunk.includes('www.google-analytics.com/analytics.js') ||
+            firstRawTemplateChunk.includes('www.googletagmanager.com/gtm.js'))
+    );
+}
+export function acceptsInlineObject(
+    expressionKind: string,
+    propertyKind: string,
+    keyKind: string,
+    key: string,
+    valueKind: string,
+): boolean {
+    return (
+        expressionKind === 'ObjectLiteralExpression' &&
+        propertyKind === 'PropertyAssignment' &&
+        keyKind === 'Identifier' &&
+        key === '__html' &&
+        (valueKind === 'NoSubstitutionTemplateLiteral' || valueKind === 'TemplateExpression')
+    );
+}

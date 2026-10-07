@@ -1,0 +1,3 @@
+export const id = 'nextScriptForGa';
+export const message =
+    'This loads Google Analytics through a plain <script> tag, which the framework cannot schedule: it has no loading strategy, so it competes with hydration for the main thread, and nothing deduplicates it across client navigations. Use the `Script` component from `next/script`, which picks a strategy and injects the tag once.';

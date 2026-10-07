@@ -1,0 +1,3 @@
+export const id = 'inlineScriptId';
+export const message =
+    'This renders a next/script component with inline content but no id attribute. The framework deduplicates inline scripts by that id, so without one the same script is re-injected on every navigation and any one-time setup it performs runs again, which shows up as doubled analytics events or global state clobbered after a client transition. Give the script a stable id attribute.';

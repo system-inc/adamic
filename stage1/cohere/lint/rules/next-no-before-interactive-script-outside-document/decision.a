@@ -1,0 +1,18 @@
+// Candidate decision logic. JSX extraction remains a shared parser/adapter gap.
+export function reports(
+    path: string,
+    firstBinding: string,
+    tag: string,
+    identifierTag: boolean,
+    strategy: string | undefined,
+): boolean {
+    if(path.includes('app/') || path.includes('app\\')) {
+        return false;
+    }
+    const last = path.lastIndexOf('pages');
+    const page = last < 0 ? path : path.slice(last + 5);
+    const document = page.startsWith('/_document') || page.startsWith('\\_document');
+    return (
+        !document && firstBinding !== '' && identifierTag && tag === firstBinding && strategy === 'beforeInteractive'
+    );
+}
