@@ -1,0 +1,72 @@
+function report(left: number, right: number): void {
+ console.log(`${left} ${right}`);
+}
+function locals(): void {
+ let value = 10;
+ report(value++, value);
+ report(++value, value);
+ report(value--, value);
+ report(--value, value);
+ console.log(`${value++ + ++value} ${value}`);
+ console.log(`${false ? ++value : value--} ${value}`);
+ let passes = 0;
+ while (++passes < 3) { console.log(`pass ${passes}`); }
+ console.log(`passes ${passes}`);
+}
+locals();
+function captured(): () => number {
+ let value = 20;
+ return () => {
+  report(value++, ++value);
+  report(value--, --value);
+  return value;
+ };
+}
+const next = captured();
+console.log(`captured ${next()} ${next()}`);
+class Counter {
+ value = 30;
+ #hidden = 40;
+ bump(): void {
+  report(this.value++, ++this.value);
+  report(this.value--, --this.value);
+  report(this.#hidden++, ++this.#hidden);
+  report(this.#hidden--, --this.#hidden);
+ }
+}
+const counter = new Counter();
+counter.bump();
+function receiver(): Counter { console.log('receiver'); return counter; }
+report(receiver().value++, ++receiver().value);
+report(receiver().value--, --receiver().value);
+console.log(`field ${counter.value}`);
+const values: number[] = [50];
+if (values[0] !== undefined) {
+ report(values[0]++, ++values[0]);
+ report(values[0]--, --values[0]);
+}
+console.log(`element ${values[0]}`);
+let global = 60;
+function globals(): void {
+ report(global++, ++global);
+ report(global--, --global);
+}
+globals();
+console.log(`global ${global}`);
+let zero = -0;
+const oldZero = zero++;
+console.log(`zero ${1 / oldZero} ${zero}`);
+let large = 9007199254740992;
+report(large++, ++large);
+let infinite = Infinity;
+report(infinite++, --infinite);
+let missing = NaN;
+report(missing++, --missing);
+class ArrayTarget {
+ get items(): number[] { console.log('array target'); return values; }
+}
+const target = new ArrayTarget();
+if (target.items[0] !== undefined) {
+ report(target.items[0]++, ++target.items[0]);
+ report(target.items[0]--, --target.items[0]);
+}

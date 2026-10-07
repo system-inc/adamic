@@ -482,6 +482,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 		return l.defined(node, read), nil
+	case ast.KindPostfixUnaryExpression:
+		return l.incrementValue(node)
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
@@ -640,6 +642,9 @@ func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	prefix := node.AsPrefixUnaryExpression()
+	if prefix.Operator == ast.KindPlusPlusToken || prefix.Operator == ast.KindMinusMinusToken {
+		return l.incrementValue(node)
+	}
 	if prefix.Operator == ast.KindPlusToken {
 		return l.libraryNumber(prefix.Operand)
 	}
