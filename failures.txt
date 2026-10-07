@@ -20,3 +20,111 @@
     suite_test.go:374: want all 77 files, got 78
 --- FAIL: TestSixRuleAgreementAndMutants (1165.57s)
 
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/error_spread.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/error_spread.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/error_spread.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/error_spread_view.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/error_spread_view.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/error_spread_view.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_construct.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_construct.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_construct.a (0.09s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_call.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_call.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_call.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_mutated.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_mutated.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_mutated.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_optional.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_optional.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_optional.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_error_view_return.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_error_view_return.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_error_view_return.a (0.03s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_literal.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_literal.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_literal.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_new.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_new.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_new.a (0.07s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_call.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_call.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_call.a (0.07s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_regexp_view.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_regexp_view.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_regexp_view.a (0.03s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_array.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_array.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_array.a (0.08s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_number.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_number.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_number.a (0.04s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_string.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_string.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_string.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_boolean.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_boolean.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_boolean.a (0.05s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/coverage_view_closure.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/coverage_view_closure.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/coverage_view_closure.a (0.06s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+    wasi_test.go:132: fixture does not lower
+--- FAIL: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.08s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission
+=== RUN   TestWASIEmission
+--- FAIL: TestWASIEmission (416.92s)
+
+== github.com/system-inc/adamic/internal/oracle TestSlabLaneCatchesRecycledRelease
+=== RUN   TestSlabLaneCatchesRecycledRelease
+=== PAUSE TestSlabLaneCatchesRecycledRelease
+=== CONT  TestSlabLaneCatchesRecycledRelease
+    slabs_test.go:119: mutant insertion points changed
+--- FAIL: TestSlabLaneCatchesRecycledRelease (0.18s)
+
+== github.com/system-inc/adamic/internal/oracle TestReleaseBuildConfigurationAgrees
+=== RUN   TestReleaseBuildConfigurationAgrees
+=== PAUSE TestReleaseBuildConfigurationAgrees
+=== CONT  TestReleaseBuildConfigurationAgrees
+    release_guard_test.go:119: internal/oracle.released must carry its release configuration into cachedNative: got cachedNative(t, program, releaseBuild), want argument 2 = true
+    release_guard_test.go:39: shipping: options=native.Options{Compiler:"", Release:true, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2" "-flto=thin"] runtime-key=25598b0473365e4b392a3b24cb655c069dd5eb66b066b92ae36724720ad0343e
+    release_guard_test.go:40: oracle: options=native.Options{Compiler:"", Release:false, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2"] runtime-key=791cfbc99fd42b6cb146c5765aed3a29a078177960e5673f28441354618bfb4d
+    release_guard_test.go:42: release configurations differ
+        shipping: options=native.Options{Compiler:"", Release:true, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2" "-flto=thin"] runtime-key=25598b0473365e4b392a3b24cb655c069dd5eb66b066b92ae36724720ad0343e
+        oracle: options=native.Options{Compiler:"", Release:false, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2"] runtime-key=791cfbc99fd42b6cb146c5765aed3a29a078177960e5673f28441354618bfb4d
+--- FAIL: TestReleaseBuildConfigurationAgrees (0.02s)
+
