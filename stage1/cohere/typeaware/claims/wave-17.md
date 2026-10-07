@@ -312,3 +312,17 @@ no full gate or the 17 required external correctness checks were run. The audit
 of 636 origin refs and 33 claim blobs still finds zero unclaimed rules. No new
 reservation is made. WAVE_17_LANDING5_REPORT.md preserves evidence and timings.
 Only codex/typeaware-wave-17 is pushed.
+
+
+## Landing after shared legacy-rule registry migration
+
+All 35 own commits rebased onto current area
+b46914832d70e00847d82d5d221ab7bb24040c53, containing main
+c7991b900362796aefd111474e65eb5398e91953. Validated source
+9513a11b4a11f1f8c7dc24ec27014ec8783b9241 passes all eight selected lint
+suites in 887.957s with complete Go bytes, sanitizers, mutants and handles.
+Checker/registry, named declarations, vet and filtered uncached Node checks pass.
+Existing parked scopes remain incomplete; the full gate and 17 required
+external correctness checks were not run. The refreshed audit of 644 refs and
+33 claim blobs finds no unclaimed rule. No new claim is made. Detailed evidence
+and timings are in WAVE_17_LANDING6_REPORT.md. Only the owned branch is pushed.
