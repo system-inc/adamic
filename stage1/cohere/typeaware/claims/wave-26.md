@@ -75,3 +75,17 @@ base/main ports and 132 ranked names mentioned in origin Markdown claims leaves
 
 Each has zero combined corpus findings. Reserved on codex/typeaware-wave-26
 before implementation.
+
+## Sixth batch, October 7
+
+All fifteen preceding claims are complete and pushed at 8180b758.
+Fetched 389 origin refs. Base is 5afbdb83; main advanced to e011f8f6.
+Excluding base/main ports and 142 ranked names mentioned in origin claims leaves
+30 available rules. The first three by combined volume and lexical ties are:
+
+- react-hooks/set-state-in-effect
+- react-hooks/set-state-in-render
+- react-hooks/static-components
+
+Each has zero combined corpus findings. Reserved on codex/typeaware-wave-26
+before implementation.
