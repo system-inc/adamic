@@ -1,0 +1,2100 @@
+{
+  "main": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "pushed_tip": "dc7f22fc97d4d2814c80fc877e54d0414c26a79c",
+  "named_harness": "ab70f38d47de1d4974082b38f84a56af2368b7af",
+  "origin_refs": 568,
+  "unique_markdown_claims": 33,
+  "remaining": [
+    "react/no-danger-with-children",
+    "react/no-multi-comp",
+    "react/no-namespace",
+    "react/no-object-type-as-default-prop",
+    "react/no-unstable-nested-components",
+    "react/sort-default-props",
+    "react/static-property-placement",
+    "react/style-prop-object"
+  ],
+  "non_react_remaining": [],
+  "audit": [
+    {
+      "rank": 1,
+      "rule": "no-use-before-define",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/cohere/typeaware/before.ts"
+        ]
+      }
+    },
+    {
+      "rank": 2,
+      "rule": "@typescript-eslint/no-unsafe-type-assertion",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 3,
+      "rule": "adamic/no-unchecked-cast",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/cohere/typeaware/casts.ts"
+        ]
+      }
+    },
+    {
+      "rank": 4,
+      "rule": "@typescript-eslint/no-unsafe-member-access",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 5,
+      "rule": "@typescript-eslint/no-unsafe-argument",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 6,
+      "rule": "@typescript-eslint/prefer-nullish-coalescing",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 7,
+      "rule": "@typescript-eslint/no-shadow",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 8,
+      "rule": "@typescript-eslint/no-unsafe-enum-comparison",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 9,
+      "rule": "no-implicit-coercion",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/cohere/typeaware/coercion.ts"
+        ]
+      }
+    },
+    {
+      "rank": 10,
+      "rule": "nexus/correctness-no-caller-data-mutation",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {
+        "origin/main": [
+          "origin/main:stage1/cohere/selector/parser.ts"
+        ],
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/cohere/typeaware/caller.ts"
+        ]
+      }
+    },
+    {
+      "rank": 11,
+      "rule": "no-param-reassign",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/cohere/typeaware/reassign.ts"
+        ]
+      }
+    },
+    {
+      "rank": 12,
+      "rule": "@typescript-eslint/no-unsafe-assignment",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 13,
+      "rule": "adamic/invariant-mutable",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/cohere/typeaware/flow.ts"
+        ]
+      }
+    },
+    {
+      "rank": 14,
+      "rule": "@typescript-eslint/no-confusing-void-expression",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 15,
+      "rule": "@typescript-eslint/consistent-return",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 16,
+      "rule": "@typescript-eslint/switch-exhaustiveness-check",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 17,
+      "rule": "adamic/no-optional-widening",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/cohere/typeaware/flow.ts"
+        ]
+      }
+    },
+    {
+      "rank": 18,
+      "rule": "nexus/consistency-no-property-alias",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/cohere/typeaware/property_alias.ts"
+        ]
+      }
+    },
+    {
+      "rank": 19,
+      "rule": "@typescript-eslint/unbound-method",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 20,
+      "rule": "@typescript-eslint/no-unused-vars",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 21,
+      "rule": "nexus/correctness-no-implicit-return",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 22,
+      "rule": "@typescript-eslint/no-deprecated",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 23,
+      "rule": "no-else-return",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 24,
+      "rule": "logical-assignment-operators",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 25,
+      "rule": "@typescript-eslint/no-unsafe-return",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 26,
+      "rule": "nexus/correctness-no-nullish-stripping-assertion",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 27,
+      "rule": "@typescript-eslint/no-unsafe-call",
+      "prior_port": false,
+      "claims": [
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 28,
+      "rule": "@typescript-eslint/consistent-type-imports",
+      "prior_port": false,
+      "claims": [
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 29,
+      "rule": "@typescript-eslint/no-unnecessary-template-expression",
+      "prior_port": false,
+      "claims": [
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 30,
+      "rule": "nexus/consistency-require-constant-casing",
+      "prior_port": false,
+      "claims": [
+        "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17",
+        "ebf44ed848e2289b3b3f0247bded926770b319e0"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 31,
+      "rule": "nexus/consistency-require-matching-return-type",
+      "prior_port": false,
+      "claims": [
+        "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17",
+        "ebf44ed848e2289b3b3f0247bded926770b319e0"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 32,
+      "rule": "@typescript-eslint/strict-void-return",
+      "prior_port": false,
+      "claims": [
+        "b410b7b4eccd3999b70c2ff820ffb92a6f1c3b17",
+        "ebf44ed848e2289b3b3f0247bded926770b319e0"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 33,
+      "rule": "@typescript-eslint/no-unnecessary-type-parameters",
+      "prior_port": false,
+      "claims": [
+        "62e9a993b8855dbd5505de93d11258b0d5733062"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 34,
+      "rule": "no-useless-assignment",
+      "prior_port": false,
+      "claims": [
+        "491184bb19878012fa9ead583bc134a026ba7b07",
+        "62e9a993b8855dbd5505de93d11258b0d5733062"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 35,
+      "rule": "@typescript-eslint/restrict-template-expressions",
+      "prior_port": false,
+      "claims": [
+        "62e9a993b8855dbd5505de93d11258b0d5733062"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 36,
+      "rule": "adamic/nominal-class",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 37,
+      "rule": "@typescript-eslint/no-duplicate-type-constituents",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 38,
+      "rule": "no-useless-return",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 39,
+      "rule": "no-undef-init",
+      "prior_port": false,
+      "claims": [
+        "0256029f96a82f916186ce3b83b875bfdb995c87"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 40,
+      "rule": "@typescript-eslint/prefer-for-of",
+      "prior_port": false,
+      "claims": [
+        "0256029f96a82f916186ce3b83b875bfdb995c87"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 41,
+      "rule": "@typescript-eslint/consistent-indexed-object-style",
+      "prior_port": false,
+      "claims": [
+        "0256029f96a82f916186ce3b83b875bfdb995c87"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 42,
+      "rule": "no-loop-func",
+      "prior_port": false,
+      "claims": [
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 43,
+      "rule": "nexus/correctness-no-import-cycle-load-time-read",
+      "prior_port": false,
+      "claims": [
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 44,
+      "rule": "@typescript-eslint/no-require-imports",
+      "prior_port": false,
+      "claims": [
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 45,
+      "rule": "prefer-const",
+      "prior_port": false,
+      "claims": [
+        "75b429aaca79ab9243c235232c8c17c5743a789e"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 46,
+      "rule": "radix",
+      "prior_port": false,
+      "claims": [
+        "75b429aaca79ab9243c235232c8c17c5743a789e"
+      ],
+      "source_hits": {
+        "origin/main": [
+          "origin/main:stage1/typescript/scanner/scanner.ts"
+        ],
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/typescript/scanner/scanner.ts"
+        ]
+      }
+    },
+    {
+      "rank": 47,
+      "rule": "@typescript-eslint/non-nullable-type-assertion-style",
+      "prior_port": false,
+      "claims": [
+        "75b429aaca79ab9243c235232c8c17c5743a789e"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 48,
+      "rule": "no-unmodified-loop-condition",
+      "prior_port": false,
+      "claims": [
+        "50003bc64335563819010a690d9cbed31403cf73"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 49,
+      "rule": "@typescript-eslint/no-redundant-type-constituents",
+      "prior_port": false,
+      "claims": [
+        "50003bc64335563819010a690d9cbed31403cf73"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 50,
+      "rule": "@typescript-eslint/prefer-includes",
+      "prior_port": false,
+      "claims": [
+        "50003bc64335563819010a690d9cbed31403cf73"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 51,
+      "rule": "@typescript-eslint/prefer-regexp-exec",
+      "prior_port": false,
+      "claims": [
+        "0df6ffaedf0580d354b47b900251a138dc894acf"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 52,
+      "rule": "nexus/correctness-no-identical-branches",
+      "prior_port": false,
+      "claims": [
+        "0df6ffaedf0580d354b47b900251a138dc894acf"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 53,
+      "rule": "@typescript-eslint/no-for-in-array",
+      "prior_port": false,
+      "claims": [
+        "0df6ffaedf0580d354b47b900251a138dc894acf"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 54,
+      "rule": "@typescript-eslint/no-redeclare",
+      "prior_port": false,
+      "claims": [
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 55,
+      "rule": "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 56,
+      "rule": "@typescript-eslint/no-unsafe-unary-minus",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {
+        "origin/main": [
+          "origin/main:stage1/cohere/typeaware/unary_minus.ts"
+        ],
+        "origin/codex/tsgo-c-library": [
+          "origin/codex/tsgo-c-library:stage1/cohere/typeaware/unary_minus.ts"
+        ]
+      }
+    },
+    {
+      "rank": 57,
+      "rule": "nexus/correctness-no-test-on-global-regex",
+      "prior_port": false,
+      "claims": [
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 58,
+      "rule": "nexus/correctness-no-write-only-collection",
+      "prior_port": false,
+      "claims": [
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 59,
+      "rule": "no-unassigned-vars",
+      "prior_port": false,
+      "claims": [
+        "1e88fc63a56c45b1ae39ab477843137e0aef9681"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 60,
+      "rule": "preserve-caught-error",
+      "prior_port": false,
+      "claims": [
+        "1e88fc63a56c45b1ae39ab477843137e0aef9681"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 61,
+      "rule": "@typescript-eslint/consistent-type-exports",
+      "prior_port": false,
+      "claims": [
+        "1e88fc63a56c45b1ae39ab477843137e0aef9681"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 62,
+      "rule": "@typescript-eslint/no-array-delete",
+      "prior_port": false,
+      "claims": [
+        "5ecf8e7318b84e33cc7c8424883d0829236bb882"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 63,
+      "rule": "@typescript-eslint/no-base-to-string",
+      "prior_port": false,
+      "claims": [
+        "5ecf8e7318b84e33cc7c8424883d0829236bb882"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 64,
+      "rule": "@typescript-eslint/no-extraneous-class",
+      "prior_port": false,
+      "claims": [
+        "5ecf8e7318b84e33cc7c8424883d0829236bb882"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 65,
+      "rule": "@typescript-eslint/no-useless-default-assignment",
+      "prior_port": false,
+      "claims": [
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 66,
+      "rule": "@typescript-eslint/prefer-find",
+      "prior_port": false,
+      "claims": [
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 67,
+      "rule": "@typescript-eslint/require-array-sort-compare",
+      "prior_port": false,
+      "claims": [
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 68,
+      "rule": "@typescript-eslint/restrict-plus-operands",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 69,
+      "rule": "no-import-assign",
+      "prior_port": false,
+      "claims": [
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 70,
+      "rule": "prefer-exponentiation-operator",
+      "prior_port": false,
+      "claims": [
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 71,
+      "rule": "use-isnan",
+      "prior_port": false,
+      "claims": [
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 72,
+      "rule": "@next/next/no-async-client-component",
+      "prior_port": false,
+      "claims": [
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 73,
+      "rule": "@next/next/no-duplicate-head",
+      "prior_port": false,
+      "claims": [
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 74,
+      "rule": "@next/next/no-script-component-in-head",
+      "prior_port": false,
+      "claims": [
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 75,
+      "rule": "@next/next/no-title-in-document-head",
+      "prior_port": false,
+      "claims": [
+        "ebc0dce32862488d1501cb69ce678d9142f22252"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 76,
+      "rule": "@typescript-eslint/await-thenable",
+      "prior_port": false,
+      "claims": [
+        "ebc0dce32862488d1501cb69ce678d9142f22252"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 77,
+      "rule": "@typescript-eslint/class-literal-property-style",
+      "prior_port": false,
+      "claims": [
+        "ebc0dce32862488d1501cb69ce678d9142f22252"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 78,
+      "rule": "@typescript-eslint/consistent-generic-constructors",
+      "prior_port": false,
+      "claims": [
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 79,
+      "rule": "@typescript-eslint/dot-notation",
+      "prior_port": false,
+      "claims": [
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 80,
+      "rule": "@typescript-eslint/no-array-constructor",
+      "prior_port": false,
+      "claims": [
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 81,
+      "rule": "@typescript-eslint/no-floating-promises",
+      "prior_port": false,
+      "claims": [
+        "7487a21a0c47117f6306490304e0844e9fe662ba"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 82,
+      "rule": "@typescript-eslint/no-implied-eval",
+      "prior_port": false,
+      "claims": [
+        "7487a21a0c47117f6306490304e0844e9fe662ba"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 83,
+      "rule": "@typescript-eslint/no-meaningless-void-operator",
+      "prior_port": false,
+      "claims": [
+        "7487a21a0c47117f6306490304e0844e9fe662ba"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 84,
+      "rule": "@typescript-eslint/no-misused-promises",
+      "prior_port": false,
+      "claims": [
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 85,
+      "rule": "@typescript-eslint/no-misused-spread",
+      "prior_port": false,
+      "claims": [
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 86,
+      "rule": "@typescript-eslint/no-mixed-enums",
+      "prior_port": false,
+      "claims": [
+        "d44b93e605628d021cd8b12b96b95a69e867766a"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 87,
+      "rule": "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+      "prior_port": false,
+      "claims": [
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 88,
+      "rule": "@typescript-eslint/no-unnecessary-qualifier",
+      "prior_port": false,
+      "claims": [
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 89,
+      "rule": "@typescript-eslint/no-unsafe-declaration-merging",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 90,
+      "rule": "@typescript-eslint/no-unused-private-class-members",
+      "prior_port": false,
+      "claims": [
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 91,
+      "rule": "@typescript-eslint/only-throw-error",
+      "prior_port": false,
+      "claims": [
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 92,
+      "rule": "@typescript-eslint/prefer-promise-reject-errors",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 93,
+      "rule": "@typescript-eslint/prefer-reduce-type-parameter",
+      "prior_port": false,
+      "claims": [
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 94,
+      "rule": "@typescript-eslint/prefer-return-this-type",
+      "prior_port": false,
+      "claims": [
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 95,
+      "rule": "@typescript-eslint/related-getter-setter-pairs",
+      "prior_port": true,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 96,
+      "rule": "@typescript-eslint/return-await",
+      "prior_port": false,
+      "claims": [
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 97,
+      "rule": "@typescript-eslint/use-unknown-in-catch-callback-variable",
+      "prior_port": false,
+      "claims": [
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 98,
+      "rule": "accessor-pairs",
+      "prior_port": false,
+      "claims": [
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 99,
+      "rule": "base/correctness-require-graphql-nullable-parity",
+      "prior_port": false,
+      "claims": [
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 100,
+      "rule": "base/correctness-require-matching-inject-type",
+      "prior_port": false,
+      "claims": [
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 101,
+      "rule": "base/correctness-require-matching-operation-context",
+      "prior_port": false,
+      "claims": [
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 102,
+      "rule": "base/correctness-require-matching-provider-return",
+      "prior_port": false,
+      "claims": [
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 103,
+      "rule": "base/correctness-require-optional-relation",
+      "prior_port": false,
+      "claims": [
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 104,
+      "rule": "base/correctness-require-orm-column-nullable-parity",
+      "prior_port": false,
+      "claims": [
+        "88e4992ba85946ea887ac73ab520085b63d1e94b"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 105,
+      "rule": "base/correctness-require-serializable-nullable-parity",
+      "prior_port": false,
+      "claims": [
+        "88e4992ba85946ea887ac73ab520085b63d1e94b"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 106,
+      "rule": "base/correctness-require-verify-array-parity",
+      "prior_port": false,
+      "claims": [
+        "88e4992ba85946ea887ac73ab520085b63d1e94b"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 107,
+      "rule": "base/correctness-require-verify-optional-parity",
+      "prior_port": false,
+      "claims": [
+        "16444a057b300da1b12c3e0dd38273486f66424e"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 108,
+      "rule": "block-scoped-var",
+      "prior_port": false,
+      "claims": [
+        "16444a057b300da1b12c3e0dd38273486f66424e"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 109,
+      "rule": "getter-return",
+      "prior_port": false,
+      "claims": [
+        "16444a057b300da1b12c3e0dd38273486f66424e"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 110,
+      "rule": "id-denylist",
+      "prior_port": false,
+      "claims": [
+        "e1ce3998715def49235584853b5cfec7e96c1e61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 111,
+      "rule": "id-match",
+      "prior_port": false,
+      "claims": [
+        "e1ce3998715def49235584853b5cfec7e96c1e61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 112,
+      "rule": "nexus/concurrency-no-check-then-write",
+      "prior_port": false,
+      "claims": [
+        "e1ce3998715def49235584853b5cfec7e96c1e61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 113,
+      "rule": "nexus/concurrency-no-lost-update",
+      "prior_port": false,
+      "claims": [
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 114,
+      "rule": "nexus/consistency-no-iso-string-date-cut",
+      "prior_port": false,
+      "claims": [
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 115,
+      "rule": "nexus/correctness-no-callback-in-parse-try",
+      "prior_port": false,
+      "claims": [
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 116,
+      "rule": "nexus/correctness-no-collection-misuse",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 117,
+      "rule": "nexus/correctness-no-discarded-outcome",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 118,
+      "rule": "nexus/correctness-no-discarded-pure-result",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 119,
+      "rule": "nexus/correctness-no-global-listener-target-assertion",
+      "prior_port": false,
+      "claims": [
+        "5ecf8e7318b84e33cc7c8424883d0829236bb882",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 120,
+      "rule": "nexus/correctness-no-leaked-number-render",
+      "prior_port": false,
+      "claims": [
+        "5ecf8e7318b84e33cc7c8424883d0829236bb882",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 121,
+      "rule": "nexus/correctness-no-mock-on-module-namespace",
+      "prior_port": false,
+      "claims": [
+        "5ecf8e7318b84e33cc7c8424883d0829236bb882",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 122,
+      "rule": "nexus/correctness-no-process-exit-after-output",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "ebf44ed848e2289b3b3f0247bded926770b319e0",
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469",
+        "75b429aaca79ab9243c235232c8c17c5743a789e",
+        "50003bc64335563819010a690d9cbed31403cf73",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b",
+        "16444a057b300da1b12c3e0dd38273486f66424e",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 123,
+      "rule": "nexus/correctness-no-uncleared-race-timeout",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "ebf44ed848e2289b3b3f0247bded926770b319e0",
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469",
+        "75b429aaca79ab9243c235232c8c17c5743a789e",
+        "50003bc64335563819010a690d9cbed31403cf73",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b",
+        "16444a057b300da1b12c3e0dd38273486f66424e",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 124,
+      "rule": "nexus/correctness-require-blocking-standard-streams",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "ebf44ed848e2289b3b3f0247bded926770b319e0",
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469",
+        "75b429aaca79ab9243c235232c8c17c5743a789e",
+        "50003bc64335563819010a690d9cbed31403cf73",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b",
+        "16444a057b300da1b12c3e0dd38273486f66424e",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 125,
+      "rule": "nexus/correctness-require-child-process-error-listener",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "d1a292d76910bbbf6f191c50f5312134a7538182"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 126,
+      "rule": "nexus/correctness-require-response-status-check",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "d1a292d76910bbbf6f191c50f5312134a7538182"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 127,
+      "rule": "nexus/performance-no-independent-await-in-loop",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "d1a292d76910bbbf6f191c50f5312134a7538182"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 128,
+      "rule": "nexus/security-no-interpolated-shell-command",
+      "prior_port": false,
+      "claims": [
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 129,
+      "rule": "nexus/security-no-interpolated-sql-string",
+      "prior_port": false,
+      "claims": [
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 130,
+      "rule": "no-alert",
+      "prior_port": false,
+      "claims": [
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 131,
+      "rule": "no-class-assign",
+      "prior_port": false,
+      "claims": [
+        "ebc0dce32862488d1501cb69ce678d9142f22252"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 132,
+      "rule": "no-const-assign",
+      "prior_port": false,
+      "claims": [
+        "ebc0dce32862488d1501cb69ce678d9142f22252"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 133,
+      "rule": "no-constant-binary-expression",
+      "prior_port": false,
+      "claims": [
+        "ebc0dce32862488d1501cb69ce678d9142f22252"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 134,
+      "rule": "no-eval",
+      "prior_port": false,
+      "claims": [
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 135,
+      "rule": "no-extend-native",
+      "prior_port": false,
+      "claims": [
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 136,
+      "rule": "no-func-assign",
+      "prior_port": false,
+      "claims": [
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 137,
+      "rule": "no-global-assign",
+      "prior_port": false,
+      "claims": [
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 138,
+      "rule": "no-implicit-globals",
+      "prior_port": false,
+      "claims": [
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 139,
+      "rule": "no-implied-eval",
+      "prior_port": false,
+      "claims": [
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 140,
+      "rule": "no-invalid-regexp",
+      "prior_port": false,
+      "claims": [
+        "75b429aaca79ab9243c235232c8c17c5743a789e",
+        "5ecf8e7318b84e33cc7c8424883d0829236bb882",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 141,
+      "rule": "no-label-var",
+      "prior_port": false,
+      "claims": [
+        "75b429aaca79ab9243c235232c8c17c5743a789e",
+        "5ecf8e7318b84e33cc7c8424883d0829236bb882",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 142,
+      "rule": "no-misleading-character-class",
+      "prior_port": false,
+      "claims": [
+        "75b429aaca79ab9243c235232c8c17c5743a789e",
+        "5ecf8e7318b84e33cc7c8424883d0829236bb882",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 143,
+      "rule": "no-new-func",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 144,
+      "rule": "no-new-native-nonconstructor",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 145,
+      "rule": "no-new-wrappers",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 146,
+      "rule": "no-obj-calls",
+      "prior_port": false,
+      "claims": [
+        "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 147,
+      "rule": "no-object-constructor",
+      "prior_port": false,
+      "claims": [
+        "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 148,
+      "rule": "no-promise-executor-return",
+      "prior_port": false,
+      "claims": [
+        "1e88fc63a56c45b1ae39ab477843137e0aef9681",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 149,
+      "rule": "no-restricted-globals",
+      "prior_port": false,
+      "claims": [
+        "e1ce3998715def49235584853b5cfec7e96c1e61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 150,
+      "rule": "no-setter-return",
+      "prior_port": false,
+      "claims": [
+        "e1ce3998715def49235584853b5cfec7e96c1e61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 151,
+      "rule": "no-shadow-restricted-names",
+      "prior_port": false,
+      "claims": [
+        "e1ce3998715def49235584853b5cfec7e96c1e61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 152,
+      "rule": "no-throw-literal",
+      "prior_port": false,
+      "claims": [
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d",
+        "16444a057b300da1b12c3e0dd38273486f66424e"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 153,
+      "rule": "no-useless-backreference",
+      "prior_port": false,
+      "claims": [
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d",
+        "16444a057b300da1b12c3e0dd38273486f66424e"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 154,
+      "rule": "prefer-arrow-callback",
+      "prior_port": false,
+      "claims": [
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d",
+        "16444a057b300da1b12c3e0dd38273486f66424e"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 155,
+      "rule": "prefer-numeric-literals",
+      "prior_port": false,
+      "claims": [
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 156,
+      "rule": "prefer-object-has-own",
+      "prior_port": false,
+      "claims": [
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 157,
+      "rule": "prefer-object-spread",
+      "prior_port": false,
+      "claims": [
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 158,
+      "rule": "prefer-promise-reject-errors",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 159,
+      "rule": "prefer-regex-literals",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 160,
+      "rule": "prefer-rest-params",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 161,
+      "rule": "react-hooks/exhaustive-deps",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 162,
+      "rule": "react-hooks/globals",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 163,
+      "rule": "react-hooks/immutability",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 164,
+      "rule": "react-hooks/no-deriving-state-in-effects",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 165,
+      "rule": "react-hooks/preserve-manual-memoization",
+      "prior_port": false,
+      "claims": [
+        "ebf44ed848e2289b3b3f0247bded926770b319e0",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 166,
+      "rule": "react-hooks/purity",
+      "prior_port": false,
+      "claims": [
+        "ebf44ed848e2289b3b3f0247bded926770b319e0",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 167,
+      "rule": "react-hooks/refs",
+      "prior_port": false,
+      "claims": [
+        "ebf44ed848e2289b3b3f0247bded926770b319e0",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 168,
+      "rule": "react-hooks/set-state-in-effect",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b",
+        "16444a057b300da1b12c3e0dd38273486f66424e",
+        "e1ce3998715def49235584853b5cfec7e96c1e61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 169,
+      "rule": "react-hooks/set-state-in-render",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b",
+        "16444a057b300da1b12c3e0dd38273486f66424e",
+        "e1ce3998715def49235584853b5cfec7e96c1e61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 170,
+      "rule": "react-hooks/static-components",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b",
+        "16444a057b300da1b12c3e0dd38273486f66424e",
+        "e1ce3998715def49235584853b5cfec7e96c1e61"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 171,
+      "rule": "react-hooks/unsupported-syntax",
+      "prior_port": false,
+      "claims": [
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 172,
+      "rule": "react-hooks/use-memo",
+      "prior_port": false,
+      "claims": [
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 173,
+      "rule": "react/boolean-prop-naming",
+      "prior_port": false,
+      "claims": [
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "41767ef34a4d515fe4041da01f8bfcdb9ae58b1d"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 174,
+      "rule": "react/button-has-type",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 175,
+      "rule": "react/checked-requires-onchange-or-readonly",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 176,
+      "rule": "react/display-name",
+      "prior_port": false,
+      "claims": [
+        "5ed966992618a7956883f53a925861e868ec21b3",
+        "b19a3d9648d51bfc56b5cab11294ae20f728f2d4"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 177,
+      "rule": "react/forbid-elements",
+      "prior_port": false,
+      "claims": [
+        "50003bc64335563819010a690d9cbed31403cf73"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 178,
+      "rule": "react/forbid-prop-types",
+      "prior_port": false,
+      "claims": [
+        "50003bc64335563819010a690d9cbed31403cf73"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 179,
+      "rule": "react/iframe-missing-sandbox",
+      "prior_port": false,
+      "claims": [
+        "50003bc64335563819010a690d9cbed31403cf73"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 180,
+      "rule": "react/jsx-fragments",
+      "prior_port": false,
+      "claims": [
+        "ebf44ed848e2289b3b3f0247bded926770b319e0",
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "16444a057b300da1b12c3e0dd38273486f66424e",
+        "e1ce3998715def49235584853b5cfec7e96c1e61",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 181,
+      "rule": "react/jsx-no-constructed-context-values",
+      "prior_port": false,
+      "claims": [
+        "ebf44ed848e2289b3b3f0247bded926770b319e0",
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "16444a057b300da1b12c3e0dd38273486f66424e",
+        "e1ce3998715def49235584853b5cfec7e96c1e61",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 182,
+      "rule": "react/jsx-no-undef",
+      "prior_port": false,
+      "claims": [
+        "ebf44ed848e2289b3b3f0247bded926770b319e0",
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "0df6ffaedf0580d354b47b900251a138dc894acf",
+        "b1bf203d487e6562370b87ccfc0800c04f4d2ac1",
+        "34afe1e1972eead7841aa3e6ebe6bbd1a8dbfa44",
+        "66c3d0cc28e1042aa327eff61dabd2e52cdeaf5a",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "7487a21a0c47117f6306490304e0844e9fe662ba",
+        "d44b93e605628d021cd8b12b96b95a69e867766a",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9",
+        "969f430a5e1a7a6c976e44728e20bbec612ef8d6",
+        "16444a057b300da1b12c3e0dd38273486f66424e",
+        "e1ce3998715def49235584853b5cfec7e96c1e61",
+        "17108e5d92ad4c1bcd771f46da20cbedfe333272"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 183,
+      "rule": "react/no-adjacent-inline-elements",
+      "prior_port": false,
+      "claims": [
+        "d1a292d76910bbbf6f191c50f5312134a7538182",
+        "0256029f96a82f916186ce3b83b875bfdb995c87",
+        "ebc0dce32862488d1501cb69ce678d9142f22252",
+        "15ae5c91590d4400f967136f3dd589a8afb4deb9"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 184,
+      "rule": "react/no-array-index-key",
+      "prior_port": false,
+      "claims": [
+        "0df6ffaedf0580d354b47b900251a138dc894acf"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 185,
+      "rule": "react/no-danger-with-children",
+      "prior_port": false,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 186,
+      "rule": "react/no-multi-comp",
+      "prior_port": false,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 187,
+      "rule": "react/no-namespace",
+      "prior_port": false,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 188,
+      "rule": "react/no-object-type-as-default-prop",
+      "prior_port": false,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 189,
+      "rule": "react/no-unstable-nested-components",
+      "prior_port": false,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 190,
+      "rule": "react/sort-default-props",
+      "prior_port": false,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 191,
+      "rule": "react/static-property-placement",
+      "prior_port": false,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 192,
+      "rule": "react/style-prop-object",
+      "prior_port": false,
+      "claims": [],
+      "source_hits": {}
+    },
+    {
+      "rank": 193,
+      "rule": "require-atomic-updates",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469",
+        "50003bc64335563819010a690d9cbed31403cf73",
+        "3bf3d17df2ac428c9300eccf12dbb833dc9b1a61",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 194,
+      "rule": "require-await",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469",
+        "50003bc64335563819010a690d9cbed31403cf73",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 195,
+      "rule": "structure/react-hook-no-any-type",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469",
+        "50003bc64335563819010a690d9cbed31403cf73",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 196,
+      "rule": "symbol-description",
+      "prior_port": false,
+      "claims": [
+        "90c1ba5bc0fb01e48c76bde2f6e7f920cd860117",
+        "77b88bdfe8d4ed562a30d08a6d60e33115b779fe",
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "fd9e4393c506034c4e3ede2d4a42c0fc96908469",
+        "50003bc64335563819010a690d9cbed31403cf73",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b"
+      ],
+      "source_hits": {}
+    },
+    {
+      "rank": 197,
+      "rule": "valid-typeof",
+      "prior_port": false,
+      "claims": [
+        "62e9a993b8855dbd5505de93d11258b0d5733062",
+        "acbc3208bf9b76f5b076b8b2991fd72d5fb838e1",
+        "ddb917e310b243593e8df8ed03ff6634fb66e2e2",
+        "88e4992ba85946ea887ac73ab520085b63d1e94b"
+      ],
+      "source_hits": {}
+    }
+  ]
+}
