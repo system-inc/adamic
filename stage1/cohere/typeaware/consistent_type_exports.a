@@ -1,0 +1,104 @@
+import type { Rules } from './rules.ts';
+import { ExportSymbolChain } from './export_symbol_chain.a';
+import { ExportModuleProperties } from './export_module_properties.a';
+import { Diagnostic } from './diagnostic.ts';
+import { Repair } from './repair.ts';
+
+const typeMessage = 'Every name in this export is a type, so the statement emits an import at runtime that resolves to nothing. Writing `export type` tells the compiler and any bundler that the whole statement can be erased.';
+export class ConsistentTypeExports {
+    readonly rules: Rules;
+    readonly facts: ExportSymbolChain;
+    readonly modules: ExportModuleProperties;
+    constructor(rules: Rules) { this.rules = rules; this.facts = new ExportSymbolChain(rules); this.modules = new ExportModuleProperties(rules); }
+    typeBased(index: number): boolean {
+        const chain = this.facts.symbols(index);
+        if(chain.length === 0) { return false; }
+        for(const symbol of chain) {
+            for(let at = 0; at < symbol.kinds.length; at++) {
+                if(symbol.direct[at] === true) { return true; }
+                const kind = symbol.kinds[at] ?? '';
+                const carrier = ['ImportSpecifier', 'NamespaceImport'].includes(kind) ? 'ImportClause' : kind === 'ExportSpecifier' ? 'ExportDeclaration' : '';
+                if(carrier === '') { continue; }
+                const emptyKinds: string[] = []; const emptyModifiers: boolean[] = [];
+                const parents = symbol.ancestorKinds[at] ?? emptyKinds; const modifiers = symbol.ancestorTypeOnly[at] ?? emptyModifiers;
+                for(let parent = 0; parent < parents.length; parent++) {
+                    const ancestor = parents[parent] ?? '';
+                    if(ancestor === carrier) { if(modifiers[parent] === true) { return true; } break; }
+                    if(ancestor === 'SourceFile' || (carrier === 'ImportClause' && ancestor === 'ImportDeclaration')) { break; }
+                }
+            }
+            if((symbol.flags & 111551) !== 0) { return false; }
+            if((symbol.flags & 2097152) === 0) { return true; }
+        }
+        return true;
+    }
+    names(index: number, cooked: boolean): string {
+        const node = this.rules.parser.node(index); const first = this.rules.parser.node(node.children[0] ?? -1);
+        if(cooked) { return first.kind === 'StringLiteral' ? first.text : this.rules.text(first); }
+        const last = this.rules.parser.node(node.children[node.children.length - 1] ?? -1);
+        const local = this.rules.text(first); const exported = this.rules.text(last);
+        return local === exported ? local : `${local} as ${exported}`;
+    }
+    report(index: number, id: string, message: string): Diagnostic { return this.rules.add('consistent-type-exports', id, message, index); }
+    star(index: number): void {
+        const rules = this.rules; const node = rules.parser.node(index);
+        const module = node.children.find((child) => rules.parser.node(child).kind === 'StringLiteral') ?? -1;
+        if(module < 0) { return; }
+        const properties = this.modules.module(module);
+        if(properties === undefined || properties.some((present) => present)) { return; }
+        const finding = this.report(index, 'typeOverValue', typeMessage);
+        const scanner = rules.scanner; scanner.pos = rules.start(node); scanner.scan();
+        const token = scanner.scan();
+        if(token === 'AsteriskToken') { const position = rules.byte(scanner.start); finding.repairs.push(new Repair(position, position, 'type ')); }
+    }
+    visit(index: number): void {
+        const rules = this.rules; const node = rules.parser.node(index);
+        if(node.semantic === '1') { return; }
+        const clauseIndex = node.children.find((child) => rules.parser.node(child).kind === 'NamedExports') ?? -1;
+        if(clauseIndex < 0) { this.star(index); return; }
+        const clause = rules.parser.node(clauseIndex);
+        const inline: number[] = []; const types: number[] = []; const values: number[] = [];
+        for(const specifier of clause.children) {
+            const element = rules.parser.node(specifier);
+            if(element.semantic === '1') { inline.push(specifier); continue; }
+            const name = element.children[element.children.length - 1] ?? -1;
+            if(this.facts.symbols(name).length === 0) { continue; }
+            if(this.typeBased(name)) { types.push(specifier); } else { values.push(specifier); }
+        }
+        if(types.length === 0) { return; }
+        if(values.length === 0) {
+            const finding = this.report(index, 'typeOverValue', typeMessage);
+            const start = rules.start(node); const position = rules.byte(start + 6);
+            if(rules.scanner.text.slice(start, start + 6) !== 'export') { return; }
+            const repairs: Repair[] = [new Repair(position, position, ' type')];
+            for(const specifier of inline) {
+                const first = rules.start(rules.parser.node(specifier));
+                if(rules.scanner.text.slice(first, first + 4) !== 'type') { return; }
+                let end = first + 4;
+                while([' ', '\t', '\n', '\r', '\f', '\v'].includes(rules.scanner.text.slice(end, end + 1))) { end++; }
+                repairs.push(new Repair(rules.byte(first), rules.byte(end), ''));
+            }
+            for(const repair of repairs) { finding.repairs.push(repair); }
+            return;
+        }
+        const names = types.map((specifier) => this.names(specifier, true));
+        const words = names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1] ?? ''}`;
+        const single = names.length === 1;
+        const message = single ? `The export ${words} is a type rather than a value, so it is being re-exported through a statement that survives to runtime. Move it into an \`export type\` statement so the two kinds stay separable.` : `The exports ${words} are types rather than values, so they are being re-exported through a statement that survives to runtime. Move them into an \`export type\` statement so the two kinds stay separable.`;
+        const finding = this.report(index, single ? 'singleExportIsType' : 'multipleExportsAreTypes', message);
+        const clauseStart = rules.start(clause); const source = rules.scanner.text;
+        const open = source.indexOf('{', clauseStart); const close = source.slice(0, clause.end).lastIndexOf('}');
+        if(open < clauseStart || close <= open || close >= clause.end) { return; }
+        const module = node.children.find((child) => rules.parser.node(child).kind === 'StringLiteral') ?? -1;
+        const inserted = `export type { ${types.concat(inline).map((specifier) => this.names(specifier, false)).join(', ')} }${module < 0 ? '' : ` from '${rules.parser.node(module).text}'`};\n`;
+        const position = rules.byte(rules.start(node));
+        finding.repairs.push(new Repair(position, position, inserted));
+        finding.repairs.push(new Repair(rules.byte(open + 1), rules.byte(close), ` ${values.map((specifier) => this.names(specifier, false)).join(', ')} `));
+    }
+    run(): void {
+        const root = this.rules.parser.nodes.findIndex((node) => node.kind === 'SourceFile');
+        for(const child of this.rules.parser.node(root).children) {
+            if(this.rules.parser.node(child).kind === 'ExportDeclaration') { this.visit(child); }
+        }
+    }
+}

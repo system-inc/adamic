@@ -1,0 +1,36 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class ExportSymbolFact {
+    readonly flags: number;
+    readonly kinds: readonly string[];
+    readonly direct: readonly boolean[];
+    readonly ancestorKinds: readonly string[][];
+    readonly ancestorTypeOnly: readonly boolean[][];
+    constructor(flags: number, kinds: readonly string[], direct: readonly boolean[], ancestorKinds: readonly string[][], ancestorTypeOnly: readonly boolean[][]) {
+        this.flags = flags; this.kinds = kinds; this.direct = direct;
+        this.ancestorKinds = ancestorKinds; this.ancestorTypeOnly = ancestorTypeOnly;
+    }
+}
+export class ExportSymbolChain {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    symbols(index: number): ExportSymbolFact[] {
+        const frames = new Frames(this.rules.ask(index, 'export-symbol-chain'));
+        header(frames, 'export-symbol-chain');
+        const count = frames.natural(); const result: ExportSymbolFact[] = [];
+        for(let at = 0; at < count; at++) {
+            const flags = frames.natural(); const declarations = frames.natural();
+            const kinds: string[] = []; const direct: boolean[] = [];
+            const ancestorKinds: string[][] = []; const ancestorTypeOnly: boolean[][] = [];
+            for(let declaration = 0; declaration < declarations; declaration++) {
+                kinds.push(frames.field()); direct.push(frames.yes());
+                const length = frames.natural(); const parents: string[] = []; const typeOnly: boolean[] = [];
+                for(let parent = 0; parent < length; parent++) { parents.push(frames.field()); typeOnly.push(frames.yes()); }
+                ancestorKinds.push(parents); ancestorTypeOnly.push(typeOnly);
+            }
+            result.push(new ExportSymbolFact(flags, kinds, direct, ancestorKinds, ancestorTypeOnly));
+        }
+        frames.end(); return result;
+    }
+}

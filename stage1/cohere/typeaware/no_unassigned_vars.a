@@ -1,0 +1,49 @@
+import { Bindings } from './bindings.ts';
+import { Reassign } from './reassign.ts';
+import { Diagnostic } from './diagnostic.ts';
+
+const message = 'This declares a variable without a value and nothing ever assigns one, so every read of it is `undefined`. The code below it is written as though the value arrives from somewhere, which is what makes this hard to see in review: the comparison, the property access, the fallback all read as ordinary until you notice nothing on the other side ever writes. The usual cause is an assignment that was deleted, moved into a branch that no longer runs, or never written. Give it an initializer, assign it where the value is known, or delete the declaration.';
+export class NoUnassignedVars {
+    readonly bindings: Bindings;
+    readonly writes: Reassign;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.writes = new Reassign(bindings.rules); }
+    exempt(index: number): boolean {
+        const rules = this.bindings.rules;
+        const parent = this.bindings.parent(index);
+        if(parent >= 0 && rules.parser.node(parent).kind === 'CatchClause') { return true; }
+        const list = parent < 0 ? undefined : rules.parser.node(parent);
+        if(list !== undefined && list.kind === 'VariableDeclarationList' && ['2', '4', '6'].includes(list.semantic)) { return true; }
+        const owner = parent < 0 ? -1 : this.bindings.parent(parent);
+        if(owner >= 0 && ['ForStatement', 'ForInStatement', 'ForOfStatement'].includes(rules.parser.node(owner).kind)) { return true; }
+        let current = index;
+        while(current >= 0) {
+            const node = rules.parser.node(current);
+            if(node.kind === 'ModuleDeclaration' || node.children.some((child) => rules.parser.node(child).kind === 'DeclareKeyword')) { return true; }
+            current = this.bindings.parent(current);
+        }
+        return false;
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind !== 'VariableDeclaration' || this.bindings.parent(index) < 0 || this.bindings.shape.initializer(index) >= 0 || this.exempt(index)) { continue; }
+            const name = this.bindings.shape.name(index);
+            if(name < 0 || rules.parser.node(name).kind !== 'Identifier') { continue; }
+            const anchor = this.bindings.list(name, 'binding-declarations', false)[0] ?? -1;
+            if(anchor < 0) { continue; }
+            let read = false; let write = false;
+            for(let at = 0; at < rules.parser.nodes.length; at++) {
+                const occurrence = rules.parser.node(at);
+                if(at === name || occurrence.kind !== 'Identifier' || occurrence.text !== rules.parser.node(name).text) { continue; }
+                if((this.bindings.list(at, 'binding-declarations', false)[0] ?? -1) !== anchor) { continue; }
+                if(this.writes.writes(at)) { write = true; break; }
+                read = true;
+            }
+            if(read && !write) {
+                const identifier = rules.parser.node(name);
+                rules.findings.push(new Diagnostic('no-unassigned-vars', 'noUnassignedVars', message, rules.byte(rules.start(identifier)), rules.byte(identifier.end), ''));
+            }
+        }
+    }
+}

@@ -1,0 +1,163 @@
+import { Bindings } from './bindings.ts';
+import { Frames, header } from './frames.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Suggestion } from './suggestion.ts';
+import { Repair } from './repair.ts';
+const messageMissingCause = "This throws a new error out of a catch block without attaching the error that was caught. The original stack, the original message, and whatever the underlying library said about what actually went wrong are all discarded at this line, and what reaches the log is a sentence somebody wrote by hand months ago. The failure that matters is the one you can no longer see. Pass the caught error as the `cause` option so both halves survive.";
+const messageIncorrectCause = "This error is thrown out of a catch block with a `cause`, but the cause is not the error that was caught. A property of it, a copy made earlier, or an unrelated value each loses something the original carried, usually its stack, and the reader of the log has no way to tell that the chain was cut here. Attach the caught error itself.";
+const messagePartiallyLostError = "This catch clause destructures the error it caught, so only the parts it names survive. The stack, and whatever else the pattern does not pick out, is gone before the block runs, and an error thrown from here cannot attach the original as its `cause`. Bind the whole error to a name and destructure it inside the block where that is still useful.";
+const messageCaughtErrorShadowed = "This attaches a `cause` spelled like the caught error, but a closer declaration of the same name shadows the catch parameter, so what is attached is that other value. The line reads as preserving the original and does not. Rename the inner declaration so the caught error is the one attached.";
+const messageIncludeCause = "Attach the caught error as the `cause` option. This changes what the thrown error carries, so it is offered rather than applied.";
+
+export class PreserveCaughtError {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    global(index: number): boolean {
+        const rules = this.bindings.rules;
+        const frames = new Frames(rules.ask(index, `resolved-name\n${rules.parser.node(index).text}`));
+        header(frames, 'resolved-name'); let global = false;
+        if(frames.yes()) {
+            frames.field(); const count = frames.natural();
+            for(let at = 0; at < count; at++) { frames.field(); const declarationFile = frames.yes(); frames.yes(); if(at === 0) { global = declarationFile; } }
+        }
+        frames.end(); return global;
+    }
+    identity(index: number): number {
+        const frames = new Frames(this.bindings.rules.ask(index, 'symbol-identities'));
+        header(frames, 'symbol-identities'); const own = frames.natural();
+        frames.natural(); frames.yes(); frames.natural(); const shorthand = frames.natural();
+        frames.end(); return shorthand === 0 ? own : shorthand;
+    }
+    kind(index: number): string { return index < 0 ? '' : this.bindings.rules.parser.node(index).kind; }
+    enclosing(index: number): number {
+        let current = this.bindings.parent(index);
+        while(current >= 0) {
+            const kind = this.kind(current);
+            if(kind === 'CatchClause') { return current; }
+            if(this.bindings.functionKind(kind) || kind === 'ClassStaticBlockDeclaration') { return -1; }
+            current = this.bindings.parent(current);
+        }
+        return -1;
+    }
+    report(index: number, id: string, message: string): Diagnostic {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        const finding = new Diagnostic('preserve-caught-error', id, message, rules.byte(rules.start(node)), rules.byte(node.end), '');
+        rules.findings.push(finding); return finding;
+    }
+    suggest(finding: Diagnostic, start: number, end: number, text: string): void {
+        const rules = this.bindings.rules;
+        finding.suggestions.push(new Suggestion('includeCause', messageIncludeCause, [new Repair(rules.byte(start), rules.byte(end), text)]));
+    }
+    key(index: number): string {
+        const rules = this.bindings.rules;
+        let node = rules.parser.node(index);
+        if(node.kind === 'ComputedPropertyName') {
+            node = rules.parser.node(rules.skip(node.children[0] ?? -1));
+            if(node.kind === 'Identifier' || node.kind === 'PrivateIdentifier') { return ''; }
+        }
+        return ['Identifier', 'StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(node.kind) ? node.text : '';
+    }
+    emptyCallPosition(index: number): number {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        const scanner = rules.scanner; scanner.pos = rules.start(node);
+        if(rules.parser.node(node.children[0] ?? -1).end === node.end) { return -1; }
+        const opens: number[] = []; let last = -1;
+        while(scanner.pos < node.end) {
+            const token = scanner.scan();
+            if(token === 'OpenParenToken') { opens.push(scanner.pos); }
+            if(token === 'CloseParenToken') { last = opens.pop() ?? -1; }
+            if(token === 'EndOfFileToken') { break; }
+        }
+        // A parenthesized callee has a close token too, but its end precedes
+        // the end of a call with an argument list.
+        return rules.scanner.text.slice(node.end - 1, node.end) === ')' ? last : -1;
+    }
+    missing(index: number, args: readonly number[], optionsIndex: number, name: string): void {
+        const rules = this.bindings.rules;
+        const finding = this.report(index, 'missingCause', messageMissingCause);
+        const thrown = rules.skip(rules.parser.node(index).children[0] ?? -1);
+        const cause = `{ cause: ${name} }`;
+        const leading = optionsIndex === 2 ? ['[]', '""'] : ['""'];
+        if(args.length < leading.length) {
+            const text = leading.slice(args.length).concat([cause]).join(', ');
+            if(args.length === 0) {
+                const position = this.emptyCallPosition(thrown);
+                const end = rules.parser.node(thrown).end;
+                this.suggest(finding, position < 0 ? end : position, position < 0 ? end : position, position < 0 ? `(${text})` : text);
+            }
+            else { const end = rules.parser.node(args[args.length - 1] ?? -1).end; this.suggest(finding, end, end, `, ${text}`); }
+        }
+        else if(args.length <= optionsIndex) {
+            const end = rules.parser.node(args[args.length - 1] ?? -1).end;
+            this.suggest(finding, end, end, `, ${cause}`);
+        }
+        else {
+            const options = rules.parser.node(rules.skip(args[optionsIndex] ?? -1));
+            const last = options.children[options.children.length - 1] ?? -1;
+            const position = last < 0 ? rules.start(options) + 1 : rules.parser.node(last).end;
+            this.suggest(finding, position, position, `${last < 0 ? '' : ', '}cause: ${name}`);
+        }
+    }
+    incorrect(property: number, value: number, multiple: boolean, name: string): void {
+        const rules = this.bindings.rules; const member = rules.parser.node(property);
+        let finding: Diagnostic;
+        if(value >= 0) { finding = this.report(value, 'incorrectCause', messageIncorrectCause); }
+        else {
+            const key = member.children.find((child) => !rules.parser.node(child).kind.endsWith('Keyword') && rules.parser.node(child).kind !== 'Decorator') ?? -1;
+            const scanner = rules.scanner; scanner.pos = key < 0 ? rules.start(member) : rules.parser.node(key).end;
+            let first = scanner.pos;
+            while(scanner.pos < member.end) {
+                const token = scanner.scan();
+                if(token === 'LessThanToken' || token === 'OpenParenToken') { first = scanner.start; break; }
+                if(token === 'EndOfFileToken') { break; }
+            }
+            finding = new Diagnostic('preserve-caught-error', 'incorrectCause', messageIncorrectCause, rules.byte(first), rules.byte(member.end), '');
+            rules.findings.push(finding);
+        }
+        if(multiple) { return; }
+        const replaceMember = value < 0 || member.kind === 'ShorthandPropertyAssignment';
+        const target = replaceMember ? member : rules.parser.node(value);
+        this.suggest(finding, rules.start(target), target.end, replaceMember ? `cause: ${name}` : name);
+    }
+    visit(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        const catchIndex = this.enclosing(index); if(catchIndex < 0) { return; }
+        const expression = rules.skip(node.children[0] ?? -1); const construction = rules.parser.node(expression);
+        if(!['NewExpression', 'CallExpression'].includes(construction.kind) || construction.children.some((child) => this.kind(child) === 'QuestionDotToken')) { return; }
+        const callee = rules.skip(construction.children[0] ?? -1); const called = rules.parser.node(callee);
+        if(called.kind !== 'Identifier' || !['Error', 'EvalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError', 'AggregateError'].includes(called.text)) { return; }
+        if(!this.global(callee)) { return; }
+        const caught = rules.parser.node(catchIndex);
+        const declaration = caught.children.find((child) => this.kind(child) === 'VariableDeclaration') ?? -1;
+        if(declaration < 0) { return; }
+        const binding = this.bindings.shape.name(declaration);
+        if(this.kind(binding) !== 'Identifier') { this.report(catchIndex, 'partiallyLostError', messagePartiallyLostError); return; }
+        const name = rules.parser.node(binding).text; const optionsIndex = called.text === 'AggregateError' ? 2 : 1;
+        let args: number[] = [];
+        if(construction.list > 0) { args = construction.children.slice(construction.children.length - construction.list); }
+        if(args.some((argument, at) => at <= optionsIndex && this.kind(argument) === 'SpreadElement')) { return; }
+        let property = -1; let count = 0;
+        if(args.length > optionsIndex) {
+            const options = rules.parser.node(rules.skip(args[optionsIndex] ?? -1));
+            if(options.kind !== 'ObjectLiteralExpression' || options.children.some((child) => this.kind(child) === 'SpreadAssignment')) { return; }
+            for(const memberIndex of options.children) {
+                const member = rules.parser.node(memberIndex);
+                const key = member.children.find((child) => !this.kind(child).endsWith('Keyword') && this.kind(child) !== 'Decorator') ?? -1;
+                if(key >= 0 && this.key(key) === 'cause') { property = memberIndex; count++; }
+            }
+        }
+        if(property < 0) { this.missing(index, args, optionsIndex, name); return; }
+        const member = rules.parser.node(property); let value = -1;
+        if(member.kind === 'PropertyAssignment') { value = rules.skip(member.children[member.children.length - 1] ?? -1); }
+        if(member.kind === 'ShorthandPropertyAssignment') { value = member.children[0] ?? -1; }
+        if(this.kind(value) !== 'Identifier' || rules.parser.node(value).text !== name) { this.incorrect(property, value, count > 1, name); return; }
+        const valueSymbol = this.identity(value);
+        if(valueSymbol !== 0 && valueSymbol !== this.identity(binding)) { this.report(index, 'caughtErrorShadowed', messageCaughtErrorShadowed); }
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            if(rules.parser.node(index).kind === 'ThrowStatement' && this.bindings.parent(index) >= 0) { this.visit(index); }
+        }
+    }
+}

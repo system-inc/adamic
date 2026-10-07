@@ -1,0 +1,17 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class ExportModuleProperties {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    module(index: number): boolean[] | undefined {
+        const frames = new Frames(this.rules.ask(index, 'export-module-properties'));
+        header(frames, 'export-module-properties');
+        let present = false; const result: boolean[] = [];
+        if(frames.yes() && frames.yes()) {
+            present = true; const count = frames.natural();
+            for(let at = 0; at < count; at++) { frames.field(); result.push(frames.yes()); }
+        }
+        frames.end(); return present ? result : undefined;
+    }
+}
