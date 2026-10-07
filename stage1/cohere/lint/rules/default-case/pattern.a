@@ -1,43 +1,20 @@
 import { panic } from 'adamic';
-// Stage 0 cannot construct a RegExp from a runtime string. Preserve the tested
-// Go pattern forms here and refuse unimplemented expressions explicitly.
-// Go's regexp case folding is per rune and never expands one rune to several.
-// Upper-then-lower also canonicalizes long s, final sigma and the micro sign.
-export function simpleFold(text: string): string {
-    let result = '';
-    for(const character of [...text]) {
-        const lower = character.toLowerCase();
-        if([...lower].length !== 1) { result += character; continue; }
-        const upper = character.toUpperCase();
-        const folded = [...upper].length === 1 ? upper.toLowerCase() : lower;
-        result += [...folded].length === 1 ? folded : lower;
-    }
-    return result;
-}
+import { fixedDefaultPattern } from './fixed_pattern.a';
+// Runtime options use the required constructor. Go option-dialect parity remains blocked.
 export class Pattern {
     readonly source: string;
     readonly ignoreCase: boolean;
     readonly valid: boolean;
-    constructor(source: string, ignoreCase: boolean) {
-        this.source = source; this.ignoreCase = ignoreCase;
-        this.valid = !['(', '[', '\\', '*', '+', '?'].includes(source);
-        if(this.valid && source !== '.?' && source !== 'no break:\\s?\\w+' && source !== 'break[\\s\\w]+omitted') {
-            const interior = source.startsWith('^') ? source.slice(1) : source;
-            const literal = interior.endsWith('$') ? interior.slice(0, interior.length - 1) : interior;
-            if(/[\\.\[\]{}()*+?|^$]/.test(literal)) { panic('NotYet: Go commentPattern outside the literal and captured character-class subset'); }
-        }
+    private readonly expression: RegExp;
+    private readonly fixed: boolean;
+    constructor(source: string, ignoreCase: boolean, fixed: boolean = false) {
+        this.source = source; this.ignoreCase = ignoreCase; this.valid = true;
+        this.fixed = fixed;
+        this.expression = fixed ? fixedDefaultPattern() : source === '' ? /(?:)/u : new RegExp(source, 'u');
     }
     match(text: string): boolean {
-        const value = this.ignoreCase ? simpleFold(text) : text;
-        if(this.source === '.?') { return true; }
-        if(this.source === 'no break:\\s?\\w+') { return /no break:[\t\n\f\r ]?[A-Za-z0-9_]+/.test(value); }
-        if(this.source === 'break[\\s\\w]+omitted') { return /break[\t\n\f\r A-Za-z0-9_]+omitted/.test(value); }
-        const pattern = this.ignoreCase ? simpleFold(this.source) : this.source;
-        const begin = pattern.startsWith('^'); const end = pattern.endsWith('$');
-        const literal = pattern.slice(begin ? 1 : 0, end ? pattern.length - 1 : pattern.length);
-        if(begin && end) { return value === literal; }
-        if(begin) { return value.startsWith(literal); }
-        if(end) { return value.endsWith(literal); }
-        return value.includes(literal);
+        if(!this.fixed) { panic('NotYet: Go commentPattern option parity with new RegExp(pattern, u) is unresolved'); }
+        this.expression.lastIndex = 0;
+        return this.expression.test(text);
     }
 }

@@ -1,0 +1,8 @@
+import { fixedDefaultPattern } from '../fixed_pattern.a';
+const expression = fixedDefaultPattern();
+for(const text of ["", "no default", "NO DEFAULT", "No Default", "no default\n", "no default\r\n", "no default suffix", "prefix no default", "no default\u2028", "no default\u00a0", "no default\u0000", "no default\ud83d\ude00", "\u00e9no default", "no defaulT", "no defaults", " no default"]) {
+    for(let repeat = 0; repeat < 2; repeat++) {
+        expression.lastIndex = 0;
+        console.log(String(expression.test(text)));
+    }
+}

@@ -1,0 +1,5 @@
+fixed table literal: 32 queries, private Go and all three runtimes match 184 bytes
+absolute_end_removed compiles, exits zero with empty stderr on every runtime; only private-Go output comparison catches it
+BLOCKED: required dynamic constructor succeeds on source Node; emitted JS and native lowering refuse RegExp with a nonconstant pattern
+option_parity_guard_removed caught on source Node only; no emitted/native mutant credit because lowering is blocked
+BLOCKED: raw option dialect differs: Go ASCII whitespace, no-fallthrough case-insensitivity, Go inline flag syntax

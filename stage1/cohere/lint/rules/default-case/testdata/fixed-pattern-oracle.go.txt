@@ -1,0 +1,3 @@
+package main
+import("fmt";"github.com/system-inc/cohere/internal/lint/rules/core")
+func main(){for _,text:=range []string{"", "no default", "NO DEFAULT", "No Default", "no default\n", "no default\r\n", "no default suffix", "prefix no default", "no default\u2028", "no default\u00a0", "no default\u0000", "no default😀", "\u00e9no default", "no defaulT", "no defaults", " no default"} {for repeat:=0;repeat<2;repeat++ {fmt.Println(core.AdamicDefaultPattern(text))}}}

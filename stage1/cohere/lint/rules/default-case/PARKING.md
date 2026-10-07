@@ -1,4 +1,6 @@
-# Parked for the unified lint harness (#zmh9v36)
+# Historical harness parking, superseded by the regex contract blocker
+
+Current status: NOT landing-ready under the new regex rule. The matcher fallback was removed; native/emitted lowering of runtime RegExp and Go/JS option-dialect parity block default-case and no-fallthrough. The historical green runs below apply to 551c529c8, before this migration. See REGEX_BLOCKER.md. No new helper is claimed until these blockers are resolved.
 
 This branch was rebased onto origin/main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Only owned rule directories and rule claims differ from main; the registration, helper and inventory foundations were removed from its history during the rebase. Integration owns shared registration and the harness.
 

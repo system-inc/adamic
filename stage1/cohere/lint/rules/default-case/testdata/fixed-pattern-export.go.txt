@@ -1,0 +1,2 @@
+package core
+func AdamicDefaultPattern(text string) bool {return defaultCaseDefaultCommentPattern.MatchString(text)}

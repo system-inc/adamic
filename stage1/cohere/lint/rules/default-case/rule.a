@@ -12,7 +12,7 @@ export class Rule {
         this.context = context;
         const pattern = context.settings.read('commentpattern', '');
         const custom = new Pattern(pattern, false);
-        this.pattern = pattern === '' || !custom.valid ? new Pattern('^no default$', true) : custom;
+        this.pattern = pattern === '' || !custom.valid ? new Pattern('^no default$', true, true) : custom;
     }
     fileComments(index: number): Comment[] {
         if(!this.ready) {

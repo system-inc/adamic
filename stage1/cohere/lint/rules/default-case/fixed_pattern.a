@@ -1,0 +1,3 @@
+// Port-time translation from codex/lint-regex table row core/default_case.go:29.
+// Go: (?i)^no default$. Reset lastIndex before each independent test.
+export function fixedDefaultPattern(): RegExp { return /^no default(?![\s\S])/gui; }
