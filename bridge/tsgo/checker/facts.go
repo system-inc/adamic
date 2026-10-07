@@ -203,6 +203,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "global-binding": return p.globalBinding(out, c, node, question)
+	case "global-source": return p.globalSource(out, c, node, question)
 	case "binding-state": return p.bindingState(out, c, node, question)
 	case "type-operations": return p.typeOperations(out, c, node, question)
 	case "scope-export-symbols": return p.scopeExportSymbols(out, c, node, question)
