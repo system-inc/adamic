@@ -12,8 +12,8 @@ codex/spread-any-position	system_adamic_compiler
 codex/parser-recovery	system_cohere_lint
 codex/no-shared-lists	system_cohere_lint
 codex/parser-parity-2	system_adamic
-codex/cohere-on-adamic	system_cohere
-codex/tsgo-c-library	system_cohere
+codex/cohere-on-adamic	system_cohere_build
+codex/tsgo-c-library	system_cohere_types
 codex/rename-documentation	system_adamic_integration
 codex/import-cycles	system_adamic_compiler
 codex/multi-root	system_adamic_compiler
