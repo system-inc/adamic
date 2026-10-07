@@ -1,6 +1,6 @@
 // Listener SyntaxKind values from pinned TypeScript src/compiler/types.ts.
 // Shared driver integration awaits numeric ParseNode kinds and supplied-node callbacks.
-export const listenerKinds: readonly number[] = [307]; // SourceFile
+export const listenerKinds: readonly string[] = ['SourceFile'];
 import { Bindings } from '../bindings.ts';
 import { Diagnostic } from '../diagnostic.ts';
 import { SourceFiles } from './source_files.a';

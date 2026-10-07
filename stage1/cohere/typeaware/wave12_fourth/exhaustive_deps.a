@@ -174,4 +174,4 @@ export class ExhaustiveDeps {
 
 // Listener SyntaxKind values from pinned TypeScript src/compiler/types.ts.
 // Shared driver integration awaits numeric ParseNode kinds and supplied-node callbacks.
-export const listenerKinds: readonly number[] = [214]; // CallExpression
+export const listenerKinds: readonly string[] = ['CallExpression'];

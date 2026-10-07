@@ -56,7 +56,7 @@ for row in records:
     fields=row.split('\t'); start,end=int(fields[0]),int(fields[1]);rule,id_=fields[2:4]
     name,source,construction,variable=cases[case_index]
     counts[rule]=counts.get(rule,0)+1
-    supplied=f'new SuppliedNode(80, {start}, {end})'
+    supplied=f'new SuppliedNode({start}, {end})'
     if rule=='react/jsx-fragments':call=f'fragment({supplied}, false)'
     elif rule=='react/jsx-no-undef':call=f'undef({supplied})'
     elif id_=='memoWithoutDependenciesMsg':call=f'memo({supplied}, "useMemo", 2)'
@@ -103,8 +103,8 @@ guard_results=[]
 context_file=copy/'jsx_no_constructed_context_values/messages.a'
 original_context=context_file.read_text()
 for name,call,before,after in [
-    ('ascii', 'context(new SuppliedNode(80,0,1), 0, 1, 1, "테")', "if(!((code >= 65", "if(!((true || code >= 65"),
-    ('construction-range', 'context(new SuppliedNode(80,0,1), 100, 1, 0, "")', "names[construction]", "names[0]"),
+    ('ascii', 'context(new SuppliedNode(0,1), 0, 1, 1, "테")', "if(!((code >= 65", "if(!((true || code >= 65"),
+    ('construction-range', 'context(new SuppliedNode(0,1), 100, 1, 0, "")', "names[construction]", "names[0]"),
 ]:
     entry.write_text(imports+'console.log('+call+'.written());\n')
     normal=scratch/(name+'-guard');run(normal.name+'-build',[stage0,'build',entry,'-o',normal])
@@ -115,25 +115,8 @@ for name,call,before,after in [
     guard_results.append(dict(guard=name,normal_exit=70,mutant_exit=0))
     context_file.write_text(original_context)
 entry.write_text(imports+'\n'.join(generated)+'\n')
-metadata_mutants=[]
-reference=Path(os.environ.get('ADAMIC_TYPESCRIPT_SOURCE','/workspace/wave-12/corpus'))/'src/compiler/types.ts'
-body=reference.read_text().split('export const enum SyntaxKind {',1)[1].split('}',1)[0]
-values={};number=0
-import re
-for raw in body.splitlines():
-    match=re.fullmatch(r'(\w+)(?:\s*=\s*([^,]+))?,?',raw.split('//')[0].strip())
-    if match is None:continue
-    key,expression=match.groups()
-    if expression:
-        if expression.isdigit():number=int(expression)
-        elif expression in values:number=values[expression]
-        else:break
-    values[key]=number;number+=1
-for folder,names in [('jsx_fragments',['JsxFragment','JsxElement','JsxSelfClosingElement']),('jsx_no_constructed_context_values',['JsxOpeningElement','JsxSelfClosingElement']),('jsx_no_undef',['JsxOpeningElement','JsxSelfClosingElement'])]:
-    data=json.loads((owned/folder/'rule.json').read_text());expected_kinds=[values[key] for key in names]
-    assert data['kinds']==expected_kinds
-    changed=list(data['kinds']);changed[0]+=1;assert changed!=expected_kinds
-    metadata_mutants.append(folder)
+from check_kinds import validate_kinds
+metadata_mutants=validate_kinds(scratch, run)
 parser=scratch/'shared-parser';run('shared-parser-build',[stage0,'build',repository/'stage1/typescript/parser/main.ts','-o',parser])
 got,err=run('shared-parser-refusal',[parser,paths[0],'--whole'],expected=70);assert not got;assert b'parser slice expected GreaterThanToken, got SlashToken' in err
 (scratch/'summary.json').write_text(json.dumps(dict(reporting_only=True,cases=len(cases),findings=counts,bytes=len(expected),mutants=mutants,guards=guard_results,metadata_mutants=metadata_mutants,commands=commands),indent=2)+'\n')

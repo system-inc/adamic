@@ -1,9 +1,10 @@
 {
   "name": "react/jsx-no-undef",
   "kinds": [
-    287,
-    286
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
   ],
   "status": "partial-reporting",
-  "blocker": "native JSX parser and supplied numeric node adapter absent on main"
+  "blocker": "native JSX parser absent on main; source discovery and callbacks incomplete",
+  "node": true
 }

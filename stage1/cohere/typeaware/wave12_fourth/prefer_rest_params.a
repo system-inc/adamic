@@ -19,4 +19,4 @@ const MESSAGE = 'This reads the implicit `arguments` object, which is array-like
 
 // Listener SyntaxKind values from pinned TypeScript src/compiler/types.ts.
 // Shared driver integration awaits numeric ParseNode kinds and supplied-node callbacks.
-export const listenerKinds: readonly number[] = [80]; // Identifier
+export const listenerKinds: readonly string[] = ['Identifier'];
