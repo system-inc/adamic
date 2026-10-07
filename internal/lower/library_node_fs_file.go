@@ -49,6 +49,9 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		if declaration.Parent == nil || declaration.Parent.Name() == nil || declaration.Parent.Name().Text() != "StatsBase" {
 			return nil, false, nil
 		}
+		if node.Flags&ast.NodeFlagsOptionalChain != 0 {
+			return nil, true, l.notYet(node, "node:fs.StatsBase."+memberName+" through an optional call")
+		}
 		if callee.Kind != ast.KindPropertyAccessExpression || len(call.Arguments.Nodes) != 0 {
 			return nil, true, l.notYet(node, memberName+": "+"a detached Stats method")
 		}
@@ -122,7 +125,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			read, reading := value.(ir.Read)
 			if reading {
 				for _, argument := range call.Arguments.Nodes {
-					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !l.exactObject(argument, 0) {
+					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !(l.exactObject(argument, 0) || operation == "stat" && l.nodeFSDirectoryStatOptions(argument)) {
 						continue
 					}
 					symbol := l.symbol(ast.SkipParentheses(argument))

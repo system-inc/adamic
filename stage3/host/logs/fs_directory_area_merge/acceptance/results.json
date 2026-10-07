@@ -1,0 +1,67 @@
+[
+  {
+    "file": "07_directoryExists.a",
+    "node": "Agrees",
+    "backends": {
+      "native": {
+        "stage": "NotYet"
+      },
+      "JavaScript": {
+        "stage": "NotYet"
+      }
+    },
+    "mutant": "Caught only by stdout comparison"
+  },
+  {
+    "file": "08_getDirectories.a",
+    "node": "Agrees",
+    "backends": {
+      "native": {
+        "stage": "NotYet"
+      },
+      "JavaScript": {
+        "stage": "NotYet"
+      }
+    },
+    "mutant": "Caught only by stdout comparison"
+  },
+  {
+    "file": "09_realpath.a",
+    "node": "Agrees",
+    "backends": {
+      "native": {
+        "stage": "NotYet"
+      },
+      "JavaScript": {
+        "stage": "NotYet"
+      }
+    },
+    "mutant": "Caught only by stdout comparison"
+  },
+  {
+    "file": "24_useCaseSensitiveFileNames.a",
+    "node": "Agrees",
+    "backends": {
+      "native": {
+        "stage": "NotYet"
+      },
+      "JavaScript": {
+        "stage": "NotYet"
+      }
+    },
+    "mutant": "Caught only by stdout comparison"
+  },
+  {
+    "file": "25_readDirectory.a",
+    "node": "Agrees",
+    "backends": {
+      "native": {
+        "stage": "Checker"
+      },
+      "JavaScript": {
+        "stage": "Checker"
+      }
+    },
+    "mutant": "Caught only by stdout comparison"
+  }
+]

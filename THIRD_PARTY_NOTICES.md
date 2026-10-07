@@ -13,6 +13,7 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - Source: https://github.com/nodejs/node/blob/v24.14.1/lib/fs.js
 - Version: Node.js v24.14.1, lib/fs.js, realpathSync (POSIX component walk).
 - In Adamic: `internal/native/runtime/directory.c`, `real_path_input` and `adamic_real_path`.
+- Also ported: Node.js v24.19.0, `lib/path.js` POSIX `basename`, in `internal/native/runtime/node_path.c`.
 - License: `MIT`
 
 ```text

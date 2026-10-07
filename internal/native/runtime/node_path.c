@@ -1,6 +1,7 @@
 // node_path.c: POSIX lexical paths. No filesystem lookup, including for NUL
 // bytes.
 #define _POSIX_C_SOURCE 200809L
+#define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <errno.h>
 #include <stdlib.h>
@@ -244,4 +245,50 @@ adamic_string *adamic_node_path_relative(const adamic_string *from,
 	adamic_release(absolute_from);
 	adamic_release(absolute_to);
 	return result;
+}
+
+// Ported from Node v24.19.0 lib/path.js, posix.basename (MIT; see notices).
+// Scan UTF-16 units: a suffix may match half of a surrogate pair.
+adamic_string *adamic_node_path_basename(const adamic_string *path,
+                                       const adamic_string *suffix) {
+    int64_t length = (int64_t)adamic_string_length(path);
+    int64_t start = 0, end = -1;
+    bool matched_slash = true;
+    int64_t suffix_length = suffix == NULL ? 0 : (int64_t)adamic_string_length(suffix);
+    if (suffix_length > 0 && suffix_length <= length) {
+        if (adamic_string_equal(suffix, path)) return text("", 0);
+        int64_t extension_at = suffix_length - 1, first_non_slash_end = -1;
+        for (int64_t i = length - 1; i >= 0; i--) {
+            double code = adamic_string_char_code_at(path, (double)i);
+            if (code == '/') {
+                if (!matched_slash) { start = i + 1; break; }
+            } else {
+                if (first_non_slash_end == -1) {
+                    matched_slash = false;
+                    first_non_slash_end = i + 1;
+                }
+                if (extension_at >= 0) {
+                    if (code == adamic_string_char_code_at(suffix, (double)extension_at)) {
+                        if (--extension_at == -1) end = i;
+                    } else {
+                        extension_at = -1;
+                        end = first_non_slash_end;
+                    }
+                }
+            }
+        }
+        if (start == end) end = first_non_slash_end;
+        else if (end == -1) end = length;
+        return adamic_string_slice(path, (double)start, (double)end, true);
+    }
+    for (int64_t i = length - 1; i >= 0; i--) {
+        if (adamic_string_char_code_at(path, (double)i) == '/') {
+            if (!matched_slash) { start = i + 1; break; }
+        } else if (end == -1) {
+            matched_slash = false;
+            end = i + 1;
+        }
+    }
+    if (end == -1) return text("", 0);
+    return adamic_string_slice(path, (double)start, (double)end, true);
 }
