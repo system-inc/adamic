@@ -1,0 +1,368 @@
+// Package naming assigns Apple declarations stable Adamic names without an SDK.
+// Name handles one declaration; Build validates the complete export surface before
+// a generator emits anything. Never emit a surface that Build rejects.
+package naming
+
+import (
+	"fmt"
+	"strings"
+)
+
+type Kind string
+
+const (
+	Class          Kind = "class"
+	Protocol       Kind = "protocol"
+	Category       Kind = "category"
+	InstanceMethod Kind = "instance-method"
+	ClassMethod    Kind = "class-method"
+	Property       Kind = "property"
+	Enum           Kind = "enum"
+	EnumConstant   Kind = "enum-constant"
+	OptionSet      Kind = "option-set"
+	OptionConstant Kind = "option-constant"
+	Struct         Kind = "struct"
+	StructField    Kind = "struct-field"
+	CFunction      Kind = "c-function"
+	Constant       Kind = "constant"
+	Typedef        Kind = "typedef"
+)
+
+type Nullability string
+
+const (
+	Unspecified Nullability = ""
+	Nonnull     Nullability = "nonnull"
+	Nullable    Nullability = "nullable"
+)
+
+// Type records the written spelling, not an Adamic or Swift spelling. Element
+// supplies a lightweight generic collection's element type for word omission.
+// OptionCases supplies the option set's complete literal domain.
+type Type struct {
+	Spelling    string
+	Nullability Nullability
+	Element     string
+	OptionCases []string
+	Object      bool          // clang says this written pointer points to an Objective-C object
+	Reference   bool          // pointer-like typedef, known from clang, even without a written star
+	Function    *FunctionType // block/function type facts, without parsing C declarators
+}
+type FunctionType struct {
+	Parameters []Type
+	Result     Type
+}
+type Parameter struct {
+	Name string
+	Type Type
+	// DefaultArgument is Swift's inferred default-argument fact. The generator
+	// must supply it when applicable; nullability alone does not imply a default.
+	DefaultArgument bool
+}
+type Enumerator struct {
+	Name        string
+	SwiftName   string
+	Unavailable bool
+	Deprecated  bool
+}
+
+// Parent is the original lexical parent, including an enum's owning class when
+// nested. ParentSwiftName is its imported name when API notes rename it.
+type Declaration struct {
+	Kind            Kind
+	Name            string
+	Parent          string
+	ParentSwiftName string
+	Framework       string
+	Parameters      []Parameter
+	Result          Type
+	SwiftName       string       // NS_SWIFT_NAME, exactly as written.
+	APIName         string       // effective SDK API-note/CF-bridge name, if there is no SwiftName.
+	RefinedForSwift bool         // NS_REFINED_FOR_SWIFT; retained, never silently hidden.
+	Enumerators     []Enumerator // all siblings, required for inferred case names
+	PropertyNames   []string     // includes inherited properties, for omission protection
+	Getter          string       // a property's getter selector, including a BOOL is-prefixed getter
+	Setter          string
+	// AccessorProperty joins getter/setter declarations to a property. Such
+	// accessors are emitted through the property, not independently by Build.
+	AccessorProperty string
+}
+
+type Argument struct {
+	Index      int // original Objective-C parameter index, for marshalling
+	SwiftLabel string
+	Name       string
+	Type       string
+}
+type Layout struct {
+	Constructor bool
+	Positional  []Argument
+	Options     []Argument // one trailing object, in original parameter order
+}
+type Output struct {
+	Name            string
+	Module          string
+	Original        string
+	SwiftName       string
+	RefinedForSwift bool
+	Type            string
+	Arguments       *Layout
+	Getter          string
+	Setter          string
+}
+
+func isType(k Kind) bool {
+	switch k {
+	case Class, Protocol, Category, Enum, OptionSet, Struct, Typedef:
+		return true
+	}
+	return false
+}
+func isCallable(k Kind) bool { return k == InstanceMethod || k == ClassMethod || k == CFunction }
+func isCase(k Kind) bool     { return k == EnumConstant || k == OptionConstant }
+
+// Name applies the ordered rules. Errors mean that the generator needs more
+// header facts or that this declaration cannot be represented safely yet.
+func Name(d Declaration) (Output, error) {
+	switch d.Kind {
+	case Class, Protocol, Category, InstanceMethod, ClassMethod, Property, Enum, EnumConstant, OptionSet, OptionConstant, Struct, StructField, CFunction, Constant, Typedef:
+	default:
+		return Output{}, fmt.Errorf("unknown declaration kind %q", d.Kind)
+	}
+	if !identifier(d.Framework) || d.Name == "" {
+		return Output{}, fmt.Errorf("missing or invalid framework/name")
+	}
+	if (d.Kind == InstanceMethod || d.Kind == ClassMethod || d.Kind == Property || d.Kind == StructField || d.Kind == Category || isCase(d.Kind)) && d.Parent == "" {
+		return Output{}, fmt.Errorf("%s %q needs a parent", d.Kind, d.Name)
+	}
+	for _, context := range []string{d.Parent, exportContext(d)} {
+		if context != "" {
+			for _, component := range strings.Split(context, ".") {
+				if !identifier(component) {
+					return Output{}, fmt.Errorf("invalid parent/context %q", context)
+				}
+			}
+		}
+	}
+	if !isCallable(d.Kind) && !identifier(d.Name) {
+		return Output{}, fmt.Errorf("invalid declaration name %q", d.Name)
+	}
+	swift, base, labels, err := swiftName(d)
+	if err != nil {
+		return Output{}, err
+	}
+	result := Output{Original: d.Name, SwiftName: swift, RefinedForSwift: d.RefinedForSwift, Getter: d.Getter, Setter: d.Setter}
+	result.Name = normalize(base, isType(d.Kind) || isCase(d.Kind))
+	if result.Name == "" {
+		return Output{}, fmt.Errorf("empty imported name for %q", d.Name)
+	}
+	if isCase(d.Kind) {
+		result.Name = "'" + result.Name + "'"
+	}
+	owner := exportContext(d)
+	if owner == "" {
+		owner = base
+	}
+	// Nested types live in their lexical owner's module; their exported name is
+	// still the terminal component. The enclosing type owns its members too.
+	owner = strings.Split(owner, ".")[0]
+	result.Module = "apple/" + strings.ToLower(d.Framework) + "/" + kebab(normalize(dropPrefix(owner), true))
+	if isCallable(d.Kind) && d.AccessorProperty == "" {
+		layout := &Layout{Constructor: strings.TrimPrefix(base, "__") == "init"}
+		if layout.Constructor {
+			result.Name = "constructor"
+		}
+		keys := map[string]bool{}
+		for i, p := range d.Parameters {
+			typ, e := MapType(p.Type)
+			if e != nil {
+				return Output{}, fmt.Errorf("%s parameter %d: %w", d.Name, i, e)
+			}
+			label := labels[i]
+			key := normalize(label, false)
+			if label == "_" {
+				key = normalize(p.Name, false)
+				if key == "" {
+					key = fmt.Sprintf("argument%d", i+1)
+				}
+			}
+			arg := Argument{Index: i, SwiftLabel: label, Name: key, Type: typ}
+			if (i == 0 && label == "_") || d.Kind == CFunction {
+				layout.Positional = append(layout.Positional, arg)
+			} else {
+				if label == "_" {
+					return Output{}, fmt.Errorf("%s: later unlabeled argument %d cannot key an options object", d.Name, i)
+				}
+				if !identifier(key) || keys[key] {
+					return Output{}, fmt.Errorf("%s: duplicate or invalid options key %q", d.Name, key)
+				}
+				keys[key] = true
+				layout.Options = append(layout.Options, arg)
+			}
+		}
+		result.Arguments = layout
+	}
+	if d.Result.Spelling != "" {
+		resultType := d.Result
+		if resultType.Spelling == "instancetype" {
+			resultType.Spelling = d.Parent + " *"
+			resultType.Object = true
+		}
+		result.Type, err = MapType(resultType)
+		if err != nil {
+			return Output{}, err
+		}
+	}
+	return result, nil
+}
+
+// MapType refuses unknown pointer shapes rather than claiming they are objects.
+// Unspecified reference nullability is deliberately nullable. Scalar values
+// cannot be null unless explicitly marked nullable.
+func MapType(t Type) (string, error) {
+	if t.Nullability != Unspecified && t.Nullability != Nonnull && t.Nullability != Nullable {
+		return "", fmt.Errorf("invalid nullability %q", t.Nullability)
+	}
+	s := strings.TrimSpace(t.Spelling)
+	for _, q := range []string{"const ", "volatile ", "_Nonnull", "_Nullable", "__nonnull", "__nullable"} {
+		s = strings.TrimSpace(strings.ReplaceAll(s, q, ""))
+	}
+	if t.Function != nil {
+		args := make([]string, len(t.Function.Parameters))
+		for i, p := range t.Function.Parameters {
+			mapped, e := MapType(p)
+			if e != nil {
+				return "", e
+			}
+			args[i] = fmt.Sprintf("argument%d: %s", i+1, mapped)
+		}
+		result, e := MapType(t.Function.Result)
+		if e != nil {
+			return "", e
+		}
+		name := "(" + strings.Join(args, ", ") + ") => " + result
+		if t.Nullability != Nonnull {
+			name = "(" + name + ") | null"
+		}
+		return name, nil
+	}
+	pointer := strings.Contains(s, "*")
+	base := strings.TrimSpace(strings.TrimSuffix(s, "*"))
+	var name string
+	switch base {
+	case "CGFloat", "NSInteger", "NSUInteger", "double", "float", "int", "unsigned int", "long", "unsigned long", "short", "unsigned short", "size_t":
+		name = "number"
+	case "BOOL", "bool", "_Bool":
+		name = "boolean"
+	case "void":
+		name = "void"
+	case "id":
+		name = "unknown"
+		t.Reference = true
+	case "instancetype":
+		return "", fmt.Errorf("instancetype needs a resolved concrete object type")
+	case "NSString":
+		if !pointer {
+			return "", fmt.Errorf("NSString needs an object pointer")
+		}
+		name = "string"
+	default:
+		if !identifier(base) {
+			return "", fmt.Errorf("unsupported type spelling %q", t.Spelling)
+		}
+		if pointer && !t.Object {
+			return "", fmt.Errorf("unknown object pointer %q", t.Spelling)
+		}
+		name = normalize(dropPrefix(base), true)
+	}
+	if pointer && (name == "number" || name == "boolean" || name == "void") {
+		return "", fmt.Errorf("unsupported scalar pointer %q", t.Spelling)
+	}
+	if len(t.OptionCases) > 0 {
+		if pointer {
+			return "", fmt.Errorf("option set cannot be a pointer")
+		}
+		literals := make([]string, len(t.OptionCases))
+		seen := map[string]bool{}
+		for i, c := range t.OptionCases {
+			n := normalize(c, true)
+			if !identifier(n) || seen[n] {
+				return "", fmt.Errorf("empty or colliding option literal %q", c)
+			}
+			seen[n] = true
+			literals[i] = "'" + n + "'"
+		}
+		name = "readonly (" + strings.Join(literals, " | ") + ")[]"
+	}
+	if name != "void" && (t.Nullability == Nullable || ((pointer || t.Reference) && t.Nullability == Unspecified)) {
+		name += " | null"
+	}
+	return name, nil
+}
+
+func identifier(s string) bool {
+	if s == "" {
+		return false
+	}
+	for i, c := range []byte(s) {
+		if !(upper(c) || lower(c) || c == '_' || (i > 0 && digit(c))) {
+			return false
+		}
+	}
+	return true
+}
+
+// Surface is a checked bijection of qualified names, not unqualified names.
+// The identity includes method kind, so +foo and -foo are different originals,
+// while the export key intentionally does not: Adamic has one member namespace.
+type Surface struct {
+	Forward map[string]Output
+	Reverse map[string]string
+}
+
+func Identity(d Declaration) string {
+	return string(d.Kind) + ":" + d.Framework + ":" + d.Parent + ":" + d.Name
+}
+func ExportKey(d Declaration, o Output) string {
+	scope := ""
+	if !isType(d.Kind) && exportContext(d) != "" {
+		scope = normalize(dropPrefix(exportContext(d)), true) + "."
+	}
+	return o.Module + "#" + scope + o.Name
+}
+func explicitName(d Declaration) string {
+	if d.SwiftName != "" {
+		return d.SwiftName
+	}
+	return d.APIName
+}
+func exportContext(d Declaration) string {
+	name := strings.Split(explicitName(d), "(")[0]
+	if dot := strings.LastIndexByte(name, '.'); dot >= 0 {
+		return name[:dot]
+	}
+	return parentName(d)
+}
+func Build(declarations []Declaration) (Surface, error) {
+	surface := Surface{Forward: map[string]Output{}, Reverse: map[string]string{}}
+	// Sorting is unnecessary: accepted output never depends on encounter order.
+	for _, d := range declarations {
+		if d.AccessorProperty != "" {
+			return Surface{}, fmt.Errorf("describe accessor %s through its property, with Getter and Setter", d.Name)
+		}
+		o, err := Name(d)
+		if err != nil {
+			return Surface{}, err
+		}
+		original, key := Identity(d), ExportKey(d, o)
+		if _, exists := surface.Forward[original]; exists {
+			return Surface{}, fmt.Errorf("duplicate original %s", original)
+		}
+		if other, exists := surface.Reverse[key]; exists {
+			return Surface{}, fmt.Errorf("collision at %s between %s and %s", key, other, original)
+		}
+		surface.Forward[original] = o
+		surface.Reverse[key] = original
+	}
+	return surface, nil
+}
