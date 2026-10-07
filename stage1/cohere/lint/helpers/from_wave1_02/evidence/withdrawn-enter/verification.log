@@ -1,0 +1,19 @@
+array-callback-return 79 actual calls
+consistent-return 123 actual calls
+no-unreachable-loop 8861 actual calls
+react-hooks-rules-of-hooks 495 actual calls
+controls 24 actual calls
+adamic: panic: TypeError: rows.split is not a function or its return value is not iterable
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/verify.py", line 45, in <module>
+    assert all(out==wanted for out in compare('baseline'))
+                                      ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/verify.py", line 37, in compare
+    node=subprocess.check_output(['node','--disable-warning=ExperimentalWarning',str(root/'oracle/node.mjs'),str(runner),str(trace)])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/entry_runner.a', '/tmp/adamic-gate/wave02-entry-sisdmh_y/trace.txt']' returned non-zero exit status 70.
