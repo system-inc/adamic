@@ -1,0 +1,31 @@
+=== RUN   TestWave15CoreAgreementAndMutants
+    wave_15_core_test.go:56: controls: 4188 identical finding bytes; findings 10
+    wave_15_core_test.go:59: controls-asan: 4188 identical finding bytes; findings 10
+=== RUN   TestWave15CoreAgreementAndMutants/label
+    wave_15_core_test.go:99: label: exit 0, independent Go bytes catch byte 52
+=== NAME  TestWave15CoreAgreementAndMutants
+    wave_15_core_test.go:111: repository: 18485 identical finding bytes; findings 0
+    wave_15_core_test.go:112: repository-asan: 18485 identical finding bytes; findings 0
+    wave_15_core_test.go:120: repository native=226.580621ms Go=157.239088ms; tsgo: load_ns=77866137 query_ns=0 queries=0 first_query_ns=0 run_ns=143332035
+         cohere: load_ns=68387385 rule_ns=0 run_ns=71820767
+    wave_15_core_test.go:111: compiler: 5318 identical finding bytes; findings 0
+    wave_15_core_test.go:112: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_15_core_test.go:120: compiler native=1.535141927s Go=337.160711ms; tsgo: load_ns=256723457 query_ns=146414797 queries=10 first_query_ns=100795014 run_ns=1257251498
+         cohere: load_ns=269200117 rule_ns=3984090 run_ns=48551516
+    wave_15_core_test.go:132: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15CoreAgreementAndMutants (42.90s)
+    --- PASS: TestWave15CoreAgreementAndMutants/label (4.52s)
+=== RUN   TestWave15RegexPartialControlsAndMutants
+    wave_15_regex_test.go:51: controls: 3390 identical finding bytes; findings 10
+    wave_15_regex_test.go:54: controls-asan: 3390 identical finding bytes; findings 10
+=== RUN   TestWave15RegexPartialControlsAndMutants/flags
+    wave_15_regex_test.go:95: flags: exit 0, independent Go bytes catch byte 124
+=== RUN   TestWave15RegexPartialControlsAndMutants/suggestion
+    wave_15_regex_test.go:95: suggestion: exit 0, independent Go bytes catch byte 2626
+=== NAME  TestWave15RegexPartialControlsAndMutants
+    wave_15_regex_test.go:108: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15RegexPartialControlsAndMutants (37.22s)
+    --- PASS: TestWave15RegexPartialControlsAndMutants/flags (4.74s)
+    --- PASS: TestWave15RegexPartialControlsAndMutants/suggestion (4.86s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	80.127s

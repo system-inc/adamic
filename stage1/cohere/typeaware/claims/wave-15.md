@@ -56,3 +56,8 @@ main and the bridge branch and claims on every origin branch, are:
 
 Reserved before implementation. Main and bridge matches are only inventories
 and count records, not ports.
+
+Third reservation status: implementation ea2a3879 contains the label rule and
+partial regex judgments. Full regex integration remains blocked by shared
+helpers; see WAVE_15_CORE_REPORT.md. Prior HTTPS push failures were resolved.
+No further rules are reserved.
