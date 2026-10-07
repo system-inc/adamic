@@ -29,7 +29,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
-	ast.KindTypePredicate:     {"a type predicate", "narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"},
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
@@ -55,6 +54,14 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
 		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
+	}
+	// File-level checking pragmas are separate from line-suppression directives. Use every
+	// parsed pragma, including one overridden by a later pragma, rather than just CheckJsDirective.
+	for _, pragma := range module.Pragmas {
+		if pragma.Name == "ts-nocheck" || pragma.Name == "ts-check" {
+			line, column := scanner.GetLineAndCharacterOfPosition(module, pragma.Pos())
+			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
+		}
 	}
 	var found error
 	var visit ast.Visitor
@@ -83,6 +90,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if err := l.recordStorageView(node); err != nil {
 			found = err
 			return true
+		}
+		if node.Kind == ast.KindTypePredicate {
+			if err := l.provePredicate(node); err != nil {
+				found = err
+				return true
+			}
 		}
 		var assertion *ast.Node
 		if node.Kind == ast.KindPropertyDeclaration {

@@ -1,0 +1,30 @@
+{
+  "change": "Flatten BuilderState namespace and qualify its original releaseCache body at module scope; update driver call only.",
+  "source": "// From TypeScript 6.0.3, src/compiler/builderState.ts:62\n// From TypeScript 6.0.3, src/compiler/builderState.ts:100\n// From TypeScript 6.0.3, src/compiler/builderState.ts:349\n// Census reason: a namespace\n// Minimal support contract represents the undefined values releaseCache writes.\nexport interface BuilderState {\n    allFilesExcludingDefaultLibraryFile: readonly string[] | undefined;\n    allFileNames: readonly string[] | undefined;\n}\n    export function releaseCache(state: BuilderState): void {\n        state.allFilesExcludingDefaultLibraryFile = undefined;\n        state.allFileNames = undefined;\n    }\nconst state: BuilderState = { allFilesExcludingDefaultLibraryFile: [\"index.ts\"], allFileNames: [\"index.ts\"] };\nreleaseCache(state);\nconsole.log(`${state.allFilesExcludingDefaultLibraryFile === undefined} ${state.allFileNames === undefined}`);\n",
+  "node": {
+    "stdout": "true true\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "mainBuild": {
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  "mainRun": {
+    "stdout": "true true\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "originalMain": {
+    "outcome": "Checker",
+    "what": "stage3/fixtures/namespaces/12_builder_release_cache.a:10:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nexit status 1\n"
+  },
+  "originalNode": {
+    "stdout": "true true\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "outcomeFlipped": true,
+  "caughtBy": "Main fixture status expectation: Checker changes to Compiles when namespace wrapper is flattened."
+}

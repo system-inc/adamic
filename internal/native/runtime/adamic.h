@@ -217,8 +217,6 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
-adamic_string *adamic_static_union_typeof(const adamic_heap *value);
-adamic_string *adamic_object_typeof(const adamic_object *object);
 adamic_value *adamic_static_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 // A readonly numeric view may see a field made with the undefined-only reference representation.
@@ -297,7 +295,7 @@ typedef struct adamic_map {
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
 // to them are visited, and entries deleted before it gets to them aren't, as ECMA-262 requires. It
-// holds the map, and letting go of it ends the iteration.
+// holds the map; exhaustion or letting go ends the iteration exactly once.
 typedef struct adamic_map_iterator {
 	adamic_heap heap;
 	adamic_map *map;
@@ -321,6 +319,7 @@ adamic_map *adamic_map_new_identity(bool reference_values);
 adamic_map *adamic_map_new_booleans(bool reference_values);
 bool adamic_map_maybe_key_equal(double left, double right);
 uint64_t adamic_map_maybe_key_hash(double key);
+uint64_t adamic_map_number_hash(double number);
 
 // adamic_map_new_maybe_numbers makes a map whose keys are packed number | undefined values.
 adamic_map *adamic_map_new_maybe_numbers(bool reference_values);
@@ -655,8 +654,9 @@ bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
 // string the caller owns.
 adamic_string *adamic_union_to_string(adamic_heap *value);
 
-// adamic_union_typeof is typeof value, a constant; the names typeof gives are these.
-adamic_string *adamic_union_typeof(const adamic_heap *value);
+// adamic_union_typeof classifies every reference, including static constructors. null says what
+// a missing pointer represents; null and undefined share NULL but have different typeof results.
+adamic_string *adamic_union_typeof(const adamic_heap *value, bool null);
 extern adamic_string adamic_typeof_number;
 extern adamic_string adamic_typeof_string;
 extern adamic_string adamic_typeof_boolean;

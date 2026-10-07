@@ -1,0 +1,28 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:2567
+// Census reason: in
+interface Node { pos: number; end: number; }
+type DiagnosticMessage = {message: string};
+type DiagnosticMessageChain = {messageText: string};
+type DiagnosticArguments = string[];
+function getSourceFileOfNode(_node: Node): string { return "app.ts"; }
+function createFileDiagnostic(_file: string, _start: number, _length: number, message: DiagnosticMessage, ...args: string[]): string { return message.message + args.join(","); }
+function createDiagnosticForFileFromMessageChain(_file: string, message: DiagnosticMessageChain): string { return message.messageText; }
+function createDiagnosticForNode(_node: Node, message: DiagnosticMessage, ...args: string[]): string { return message.message + args.join(","); }
+function createDiagnosticForNodeFromMessageChain(_file: string, _node: Node, message: DiagnosticMessageChain): string { return message.messageText; }
+function addErrorOrSuggestion(_isError: boolean, message: string): void { console.log(message); }
+    function errorOrSuggestion(isError: boolean, location: Node, message: DiagnosticMessage | DiagnosticMessageChain, ...args: DiagnosticArguments): void {
+        // Pseudo-synthesized input node
+        if (location.pos < 0 || location.end < 0) {
+            if (!isError) {
+                return; // Drop suggestions (we have no span to suggest on)
+            }
+            // Issue errors globally
+            const file = getSourceFileOfNode(location);
+            addErrorOrSuggestion(isError, "message" in message ? createFileDiagnostic(file, 0, 0, message, ...args) : createDiagnosticForFileFromMessageChain(file, message)); // eslint-disable-line local/no-in-operator
+            return;
+        }
+        addErrorOrSuggestion(isError, "message" in message ? createDiagnosticForNode(location, message, ...args) : createDiagnosticForNodeFromMessageChain(getSourceFileOfNode(location), location, message)); // eslint-disable-line local/no-in-operator
+    }
+
+errorOrSuggestion(true, {pos: 0, end: 1}, {message: "TS2322:"}, "number", "string");
+errorOrSuggestion(true, {pos: -1, end: -1}, {messageText: "chain"});
