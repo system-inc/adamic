@@ -53,3 +53,18 @@ All three have zero recorded compiler and repository findings. They are now
 reserved for this branch. This claim is pushed before any implementation code.
 The fetched ref SHAs and selection inventory are in
 validation-wave-22-third/selection.json.
+
+## Fourth batch claim
+
+After completing, testing and pushing all nine earlier claims through a7e33d0c,
+all origin heads were fetched and every origin claim and base/main port
+inventory was scanned again. The first three available entries in the combined
+by-volume ranking are:
+
+1. `prefer-numeric-literals`
+2. `prefer-object-has-own`
+3. `prefer-object-spread`
+
+All have zero recorded findings on both frozen corpora. These three are now
+reserved for this branch. The claim is pushed before implementation; fetched
+ref SHAs and the full selection are in validation-wave-22-fourth/selection.json.
