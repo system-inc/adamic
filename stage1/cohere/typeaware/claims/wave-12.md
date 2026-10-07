@@ -33,3 +33,18 @@ matching port names on main/the bridge branch; 74 entries remained. Exact
 module filename checks across all origin branches found no competing ports.
 This claim update is pushed before implementation. Existing shared harness and
 registration generator files will not be edited.
+
+## Third batch after completing six rules
+
+The second batch is implemented in `75fb78e8`, with validation in `97aab772`.
+After fetching all origin heads, the next three unclaimed ranking entries are:
+
+- `no-new-func` (0 compiler, 0 repository).
+- `no-new-native-nonconstructor` (0 compiler, 0 repository).
+- `no-new-wrappers` (0 compiler, 0 repository).
+
+The audit inspected 341 origin refs, 118 claimed ranking names and 25 checker
+ports on main/the bridge branch. There were 54 remaining entries. Matching
+module filename checks across all origin refs found no existing ports of these
+three. The earlier remaining Nexus entries are now claimed and were skipped.
+This claim update is pushed before implementation; shared files stay untouched.
