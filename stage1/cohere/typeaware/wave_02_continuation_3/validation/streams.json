@@ -1,0 +1,596 @@
+[
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-2-native-timing.stdout",
+    "artifact": "repository-2-native-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/controls-asan.stderr",
+    "artifact": "controls-asan.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-3-go-timing.stdout",
+    "artifact": "compiler-3-go-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/jsx-refusal.stderr",
+    "artifact": "jsx-refusal.stderr",
+    "bytes": 93,
+    "sha256": "f52c7c2e7b12a0874423105f0480f24499248d912dcd95f218d99719f187b230"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/oracle-build.stdout",
+    "artifact": "oracle-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/controls.manifest",
+    "artifact": "controls.manifest.gz",
+    "bytes": 28215,
+    "sha256": "d8ea884fd344f5210a0623c1c61d809c8a4b6a4dae4832bcd41855471fd8443f"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/valid-sources.stderr",
+    "artifact": "valid-sources.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/supported.manifest",
+    "artifact": "supported.manifest.gz",
+    "bytes": 27417,
+    "sha256": "18811e9ac7194e94c74933b5d4cf601abd281a8982351e7f7a06b04b2b8194ae"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/react-mutant-build.stderr",
+    "artifact": "react-mutant-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-native.stdout",
+    "artifact": "repository-native.stdout.gz",
+    "bytes": 13319,
+    "sha256": "ec6a7aced395f8ddeb2e56229259e23613a4872635155fac0022cab2f4e419ec"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/regex-mutant-build.stderr",
+    "artifact": "regex-mutant-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/native-asan-build.stderr",
+    "artifact": "native-asan-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/jsx-refusal.stdout",
+    "artifact": "jsx-refusal.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-1-go-timing.stdout",
+    "artifact": "compiler-1-go-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-1-native-timing.stdout",
+    "artifact": "repository-1-native-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-2-native-timing.stderr",
+    "artifact": "repository-2-native-timing.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/rest-mutant-build.stderr",
+    "artifact": "rest-mutant-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-asan.stderr",
+    "artifact": "repository-asan.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler.manifest",
+    "artifact": "compiler.manifest.gz",
+    "bytes": 4922,
+    "sha256": "c12c83fd90af8c7671aa19b60d7d0887626ae2b40e25ed7379c44242378c2f0d"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-3-go-timing.stderr",
+    "artifact": "compiler-3-go-timing.stderr",
+    "bytes": 60,
+    "sha256": "2e5f08b6e7d1d43f9bf2faf29e3d5860ee6637c4667605da432685e973981b39"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-go.stderr",
+    "artifact": "compiler-go.stderr",
+    "bytes": 60,
+    "sha256": "42a81f49a1f7afc0ba58810b9589809ed04e1a2cb0d5c3ee926b0f26775b31f4"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-run.stdout",
+    "artifact": "released-run.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-run.stderr",
+    "artifact": "released-run.stderr",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-mutant-run.stderr",
+    "artifact": "released-mutant-run.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/regex-mutant-build.stdout",
+    "artifact": "regex-mutant-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-3-native-timing.stderr",
+    "artifact": "repository-3-native-timing.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-3-native-timing.stderr",
+    "artifact": "compiler-3-native-timing.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/controls-native.stdout",
+    "artifact": "controls-native.stdout.gz",
+    "bytes": 221982,
+    "sha256": "6190f208b53261c5d4401148c1fd65bfd7a3263572ffa4789ce3bd018a11563d"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-registry-build.stdout",
+    "artifact": "released-registry-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-1-native-timing.stderr",
+    "artifact": "repository-1-native-timing.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/valid-sources.stdout",
+    "artifact": "valid-sources.stdout.gz",
+    "bytes": 28215,
+    "sha256": "d8ea884fd344f5210a0623c1c61d809c8a4b6a4dae4832bcd41855471fd8443f"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-asan.stdout",
+    "artifact": "repository-asan.stdout.gz",
+    "bytes": 13319,
+    "sha256": "ec6a7aced395f8ddeb2e56229259e23613a4872635155fac0022cab2f4e419ec"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-native.stderr",
+    "artifact": "repository-native.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/regex-mutant-run.stdout",
+    "artifact": "regex-mutant-run.stdout.gz",
+    "bytes": 208437,
+    "sha256": "62bac340aceb338cf11d0628eca2c7c0bcc3832b1a70e98e7b67cacdeefaac46"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/rest-mutant-run.stdout",
+    "artifact": "rest-mutant-run.stdout.gz",
+    "bytes": 222828,
+    "sha256": "58f1cd3ed14fb721d98f26cdd3aa551121e34aa98095075bf68289adc16acbc7"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-3-native-timing.stdout",
+    "artifact": "compiler-3-native-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-3-go-timing.stdout",
+    "artifact": "repository-3-go-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/rest-mutant-build.stdout",
+    "artifact": "rest-mutant-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/controls-asan.stdout",
+    "artifact": "controls-asan.stdout.gz",
+    "bytes": 221982,
+    "sha256": "6190f208b53261c5d4401148c1fd65bfd7a3263572ffa4789ce3bd018a11563d"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-2-go-timing.stderr",
+    "artifact": "repository-2-go-timing.stderr",
+    "bytes": 57,
+    "sha256": "c8e4f71b569c0d91cb585d8e817673cb0ba9ba48f89d6ed3912564f6206c7b0d"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-1-go-timing.stderr",
+    "artifact": "repository-1-go-timing.stderr",
+    "bytes": 57,
+    "sha256": "d63802c9990e629e1a2957d33b10c431628a1f84e4cd979af4aa3465a6a4af3c"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/timings.json",
+    "artifact": "timings.json",
+    "bytes": 1325,
+    "sha256": "bec79ea7a4d69d8cd4b5a19e2fad4378101094d05e97a4958e97ab18e58fbd86"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-2-go-timing.stdout",
+    "artifact": "repository-2-go-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/react-mutant-build.stdout",
+    "artifact": "react-mutant-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-mutant-build.stderr",
+    "artifact": "released-mutant-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-1-native-timing.stderr",
+    "artifact": "compiler-1-native-timing.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/jsx-mutant-run.stderr",
+    "artifact": "jsx-mutant-run.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-1-go-timing.stdout",
+    "artifact": "repository-1-go-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/controls-go.stdout",
+    "artifact": "controls-go.stdout.gz",
+    "bytes": 221982,
+    "sha256": "6190f208b53261c5d4401148c1fd65bfd7a3263572ffa4789ce3bd018a11563d"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/react-mutant-run.stderr",
+    "artifact": "react-mutant-run.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-asan.stderr",
+    "artifact": "compiler-asan.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-mutant-run.stdout",
+    "artifact": "released-mutant-run.stdout",
+    "bytes": 29,
+    "sha256": "ef68fca4039907ab3e10ddcbd79b5c08fc134ac65111de51aa19f50f0925793d"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/controls-go.stderr",
+    "artifact": "controls-go.stderr",
+    "bytes": 57,
+    "sha256": "45f8fc80262185cc062ec889f9d8e750bf64ef28f51d99c22843cc092dcbbfc1"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-build.stdout",
+    "artifact": "released-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-native.stdout",
+    "artifact": "compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "18e8aa5bd6f9dfa396b22d8b58b49201a1d87105020847764f9ce3e81940d94f"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/rest-mutant-run.stderr",
+    "artifact": "rest-mutant-run.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-2-native-timing.stdout",
+    "artifact": "compiler-2-native-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-1-native-timing.stdout",
+    "artifact": "compiler-1-native-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-build.stderr",
+    "artifact": "released-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-3-native-timing.stdout",
+    "artifact": "repository-3-native-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/commands.json",
+    "artifact": "commands.json.gz",
+    "bytes": 14323,
+    "sha256": "05a90aa2aedf82f0f5ba5c6113c8ad9443613a4a459ca1f78debc495a59e8431"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/blocked.json",
+    "artifact": "blocked.json",
+    "bytes": 3094,
+    "sha256": "73a4bc32d38ea79a4655a9202650ad110f747ade4fe0970be1ca930b5bb9ef83"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/jsx-go.stdout",
+    "artifact": "jsx-go.stdout",
+    "bytes": 452,
+    "sha256": "cae2bba5bfa84083c53cdb3a0eb62eb651765e5e713a60d3aca658fa7f4db6a7"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/jsx-mutant-build.stdout",
+    "artifact": "jsx-mutant-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-1-go-timing.stderr",
+    "artifact": "compiler-1-go-timing.stderr",
+    "bytes": 60,
+    "sha256": "5b19278108e36f0cfbd58ad19df66ae1fcfb85634128de252e93570d70db9409"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-2-go-timing.stderr",
+    "artifact": "compiler-2-go-timing.stderr",
+    "bytes": 60,
+    "sha256": "55c53462e0cacce45a731883a16aec9a8a20a8ef0726d59a7ed14892164f11b2"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-asan.stdout",
+    "artifact": "compiler-asan.stdout.gz",
+    "bytes": 5318,
+    "sha256": "18e8aa5bd6f9dfa396b22d8b58b49201a1d87105020847764f9ce3e81940d94f"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-registry-build.stderr",
+    "artifact": "released-registry-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/oracle-build.stderr",
+    "artifact": "oracle-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/jsx.manifest",
+    "artifact": "jsx.manifest",
+    "bytes": 57,
+    "sha256": "3381bc35de406babe165bd59aa683eb36fd30ec83973322be3b60d7b5a9945ad"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/react-mutant-run.stdout",
+    "artifact": "react-mutant-run.stdout.gz",
+    "bytes": 221855,
+    "sha256": "6dfaf9e8e7034e092fadf3ae223b92dd9dd10d522ce9a1a30aea9de7a39d9a55"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-go.stdout",
+    "artifact": "repository-go.stdout.gz",
+    "bytes": 13319,
+    "sha256": "ec6a7aced395f8ddeb2e56229259e23613a4872635155fac0022cab2f4e419ec"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-3-go-timing.stderr",
+    "artifact": "repository-3-go-timing.stderr",
+    "bytes": 57,
+    "sha256": "9485669b25b2d075e4221296af152ac194200965b1ba1672fc5fd05851412cf3"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/single.manifest",
+    "artifact": "single.manifest",
+    "bytes": 57,
+    "sha256": "bb5550d2007f63ab9f06f10974f95c6c82376293a4cf39027c1c6722a5266970"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-native.stderr",
+    "artifact": "compiler-native.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-2-native-timing.stderr",
+    "artifact": "compiler-2-native-timing.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/native-build.stdout",
+    "artifact": "native-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/repository-go.stderr",
+    "artifact": "repository-go.stderr",
+    "bytes": 57,
+    "sha256": "893496fba909daac1b93fd5087f6827ac64709f66348476e4ae7d582f23f3c0c"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/controls-native.stderr",
+    "artifact": "controls-native.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/jsx-mutant-run.stdout",
+    "artifact": "jsx-mutant-run.stdout",
+    "bytes": 73,
+    "sha256": "9fa68125c7dd073e53ccb3c2fcda60a9b9b1875c1fd627ea2c8e68e14d1c6bac"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/regex-mutant-run.stderr",
+    "artifact": "regex-mutant-run.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/native-asan-build.stdout",
+    "artifact": "native-asan-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/jsx-mutant-build.stderr",
+    "artifact": "jsx-mutant-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-go.stdout",
+    "artifact": "compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "18e8aa5bd6f9dfa396b22d8b58b49201a1d87105020847764f9ce3e81940d94f"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/native-build.stderr",
+    "artifact": "native-build.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/compiler-2-go-timing.stdout",
+    "artifact": "compiler-2-go-timing.stdout",
+    "bytes": 11,
+    "sha256": "8be98cd27fff1bd5b1825dc6ce205f7bad4747327034b9bdd333b049fe2aba29"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/jsx-go.stderr",
+    "artifact": "jsx-go.stderr",
+    "bytes": 53,
+    "sha256": "11b7544b4fdc12b0af4178b021a3c2443c63aecf47f101414227914ac6f30210"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/final4/released-mutant-build.stdout",
+    "artifact": "released-mutant-build.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/verification-hardened.log",
+    "artifact": "continuation-3-verification-hardened.log",
+    "bytes": 810,
+    "sha256": "3cf167634eb00f8223512c7973cd8b750d589724130ad47e226ea41b42e666d2"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/source-final.log",
+    "artifact": "continuation-3-source-final.log",
+    "bytes": 26,
+    "sha256": "ff1a41eece78d1de3713372b12ec0006511b9bcf056c355bead630122be3c68d"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/bridge.log",
+    "artifact": "continuation-3-bridge.log",
+    "bytes": 473,
+    "sha256": "2ac59a9941a5173ef2e1835caabacb024ae50e13f8df987a34c53334cf8eaeba"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/node.log",
+    "artifact": "continuation-3-node.log",
+    "bytes": 2577,
+    "sha256": "a9c28b29f70c6b4e9e34ac9720afd44b3f346c02a9bb6cccae3ba7e20faab2ef"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/vet-all.log",
+    "artifact": "continuation-3-vet-all.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/diff-check.log",
+    "artifact": "continuation-3-diff-check.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/implementation-push.log",
+    "artifact": "continuation-3-implementation-push.log",
+    "bytes": 118,
+    "sha256": "b9a1439996f107eeba73f211f6cbb497c39d1bd920bcfb8c4c27f17b184148ee"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/source-final/lint.stdout",
+    "artifact": "source-final-lint.stdout",
+    "bytes": 254,
+    "sha256": "dab9242f641c5c4e25cd5609ca9988f304299c917a4e4b22363ebe609b19f9ce"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/source-final/format.stdout",
+    "artifact": "source-final-format.stdout",
+    "bytes": 76,
+    "sha256": "5301785ec53447556e21943316382deea674fec83ae3e7abda87fb158ae84226"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/source-final/lint.stderr",
+    "artifact": "source-final-lint.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-02/continuation-3/source-final/format.stderr",
+    "artifact": "source-final-format.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

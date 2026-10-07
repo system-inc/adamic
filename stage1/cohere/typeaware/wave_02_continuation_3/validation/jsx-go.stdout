@@ -1,0 +1,3 @@
+file	/workspace/wave-02/continuation-3/final4/control-467.tsx
+33	53	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+findings 1
