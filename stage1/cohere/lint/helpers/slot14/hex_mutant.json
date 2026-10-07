@@ -1,0 +1,1 @@
+{"name":"fixed escape width omits its introducer","file":"regexp_decode_fixed_hex.a","from":"new FixedHexEscape(rune, size + digits, false, [])","to":"new FixedHexEscape(rune, digits, false, [])"}

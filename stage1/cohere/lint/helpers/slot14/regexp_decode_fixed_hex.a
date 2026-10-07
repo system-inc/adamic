@@ -1,0 +1,84 @@
+// Go string indexes are byte indexes. Keep source and error bytes explicit.
+export class FixedHexEscape {
+    readonly kind = 0;
+    readonly set = 0;
+    readonly negated = false;
+    readonly rune: number;
+    readonly width: number;
+    readonly failed: boolean;
+    readonly unsupported: boolean;
+    readonly errorBytes: readonly number[];
+    constructor(rune: number, width: number, failed: boolean, errorBytes: readonly number[]) {
+        this.rune = rune;
+        this.width = width;
+        this.failed = failed;
+        this.unsupported = failed;
+        this.errorBytes = errorBytes;
+    }
+}
+
+class RunePrefix {
+    readonly rune: number;
+    readonly width: number;
+    constructor(rune: number, width: number) { this.rune = rune; this.width = width; }
+}
+
+// utf8.DecodeRuneInString consumes one byte for an invalid encoding.
+function firstRune(source: readonly number[], index: number): RunePrefix {
+    const first = source[index];
+    if(first === undefined) { return new RunePrefix(65533, 0); }
+    if(first < 128) { return new RunePrefix(first, 1); }
+    let width = 0;
+    let minimum = 0;
+    let value = 0;
+    if(first >= 194 && first <= 223) { width = 2; minimum = 128; value = first % 32; }
+    else if(first >= 224 && first <= 239) { width = 3; minimum = 2048; value = first % 16; }
+    else if(first >= 240 && first <= 244) { width = 4; minimum = 65536; value = first % 8; }
+    else { return new RunePrefix(65533, 1); }
+    for(let offset = 1; offset < width; offset++) {
+        const next = source[index + offset];
+        if(next === undefined || next < 128 || next > 191) { return new RunePrefix(65533, 1); }
+        value = value * 64 + next - 128;
+    }
+    if(value < minimum || value > 1114111 || (value >= 55296 && value <= 57343)) { return new RunePrefix(65533, 1); }
+    return new RunePrefix(value, width);
+}
+
+// One retained helper: regexp.decodeFixedHex. Offset, size and digits are
+// nonnegative integers; index is in [0, source.length], and source contains
+// byte values in [0,255], as supplied by Go's escape scanner.
+export function decodeFixedHex(source: readonly number[], index: number, size: number, digits: number, unicode: boolean): FixedHexEscape {
+    const start = index + size;
+    if(start + digits <= source.length && digits > 0) {
+        let value = 0;
+        let valid = true;
+        for(let offset = 0; offset < digits; offset++) {
+            const byte = source[start + offset] ?? -1;
+            let digit = -1;
+            if(byte >= 48 && byte <= 57) { digit = byte - 48; }
+            else if(byte >= 65 && byte <= 70) { digit = byte - 65 + 10; }
+            else if(byte >= 97 && byte <= 102) { digit = byte - 97 + 10; }
+            if(digit < 0) { valid = false; break; }
+            value = value * 16 + digit;
+            if(value > 4294967295) { valid = false; break; }
+        }
+        if(valid) {
+            // ParseUint(..., 32) followed by Go's signed rune conversion.
+            const rune = value >= 2147483648 ? value - 4294967296 : value;
+            return new FixedHexEscape(rune, size + digits, false, []);
+        }
+    }
+    const prefix = firstRune(source, index);
+    if(unicode) {
+        const error: number[] = [];
+        const beginning = 'unsupported regexp syntax: \\';
+        const ending = ' naming no character';
+        for(let at = 0; at < beginning.length; at++) { error.push(beginning.charCodeAt(at)); }
+        // fmt's %.1s limits the original string to one rune, retaining its
+        // original bytes even when that rune decodes as RuneError.
+        for(let at = 0; at < prefix.width; at++) { error.push(source[index + at] ?? 0); }
+        for(let at = 0; at < ending.length; at++) { error.push(ending.charCodeAt(at)); }
+        return new FixedHexEscape(0, 0, true, error);
+    }
+    return new FixedHexEscape(prefix.rune, size, false, []);
+}

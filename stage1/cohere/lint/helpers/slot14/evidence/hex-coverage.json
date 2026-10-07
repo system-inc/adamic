@@ -1,0 +1,21 @@
+{
+  "@next/next/no-html-link-for-pages": {
+    "original_tests": "PASS",
+    "actual_private_calls": 0
+  },
+  "@typescript-eslint/no-empty-object-type": {
+    "original_tests": "PASS",
+    "actual_private_calls": 0,
+    "targeted_private_calls": 1
+  },
+  "no-restricted-exports": {
+    "original_tests": "PASS",
+    "actual_private_calls": 0,
+    "targeted_private_calls": 2
+  },
+  "no-restricted-imports": {
+    "original_tests": "PASS",
+    "actual_private_calls": 0,
+    "targeted_private_calls": 2
+  }
+}

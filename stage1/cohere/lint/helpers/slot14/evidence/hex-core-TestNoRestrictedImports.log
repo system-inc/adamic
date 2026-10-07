@@ -1,0 +1,46 @@
+=== RUN   TestNoRestrictedImportsGlobMatchesTheIgnorePackage
+=== PAUSE TestNoRestrictedImportsGlobMatchesTheIgnorePackage
+=== RUN   TestNoRestrictedImportsMatchesUpstream
+=== PAUSE TestNoRestrictedImportsMatchesUpstream
+=== RUN   TestNoRestrictedImportsIsSilentWithNoConfiguration
+=== PAUSE TestNoRestrictedImportsIsSilentWithNoConfiguration
+=== RUN   TestNoRestrictedImportsEmptyObjectRestrictsNothing
+=== PAUSE TestNoRestrictedImportsEmptyObjectRestrictsNothing
+=== RUN   TestNoRestrictedImportsChecksImportEquals
+=== PAUSE TestNoRestrictedImportsChecksImportEquals
+=== RUN   TestNoRestrictedImportsRejectsContradictoryConfiguration
+=== PAUSE TestNoRestrictedImportsRejectsContradictoryConfiguration
+=== RUN   TestNoRestrictedImportsFoldsPatternsAsStringsIntoOneGroup
+=== PAUSE TestNoRestrictedImportsFoldsPatternsAsStringsIntoOneGroup
+=== RUN   TestNoRestrictedImportsTreatsAnAllTypeSpecifierListAsTypeOnly
+=== PAUSE TestNoRestrictedImportsTreatsAnAllTypeSpecifierListAsTypeOnly
+=== RUN   TestNoRestrictedImportsAnchorsANamespaceFindingOnTheStar
+=== PAUSE TestNoRestrictedImportsAnchorsANamespaceFindingOnTheStar
+=== RUN   TestNoRestrictedImportsCaseSensitiveGovernsThePathOnly
+=== PAUSE TestNoRestrictedImportsCaseSensitiveGovernsThePathOnly
+=== RUN   TestNoRestrictedImportsRendersTheWholeMessage
+=== PAUSE TestNoRestrictedImportsRendersTheWholeMessage
+=== CONT  TestNoRestrictedImportsGlobMatchesTheIgnorePackage
+=== CONT  TestNoRestrictedImportsFoldsPatternsAsStringsIntoOneGroup
+=== CONT  TestNoRestrictedImportsRendersTheWholeMessage
+=== CONT  TestNoRestrictedImportsAnchorsANamespaceFindingOnTheStar
+=== CONT  TestNoRestrictedImportsCaseSensitiveGovernsThePathOnly
+--- PASS: TestNoRestrictedImportsAnchorsANamespaceFindingOnTheStar (0.00s)
+=== CONT  TestNoRestrictedImportsRejectsContradictoryConfiguration
+--- PASS: TestNoRestrictedImportsRendersTheWholeMessage (0.00s)
+=== CONT  TestNoRestrictedImportsTreatsAnAllTypeSpecifierListAsTypeOnly
+--- PASS: TestNoRestrictedImportsTreatsAnAllTypeSpecifierListAsTypeOnly (0.00s)
+=== CONT  TestNoRestrictedImportsIsSilentWithNoConfiguration
+--- PASS: TestNoRestrictedImportsIsSilentWithNoConfiguration (0.00s)
+=== CONT  TestNoRestrictedImportsMatchesUpstream
+--- PASS: TestNoRestrictedImportsRejectsContradictoryConfiguration (0.00s)
+=== CONT  TestNoRestrictedImportsChecksImportEquals
+--- PASS: TestNoRestrictedImportsFoldsPatternsAsStringsIntoOneGroup (0.00s)
+=== CONT  TestNoRestrictedImportsEmptyObjectRestrictsNothing
+--- PASS: TestNoRestrictedImportsEmptyObjectRestrictsNothing (0.00s)
+--- PASS: TestNoRestrictedImportsCaseSensitiveGovernsThePathOnly (0.00s)
+--- PASS: TestNoRestrictedImportsChecksImportEquals (0.00s)
+--- PASS: TestNoRestrictedImportsMatchesUpstream (0.03s)
+--- PASS: TestNoRestrictedImportsGlobMatchesTheIgnorePackage (0.11s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.120s

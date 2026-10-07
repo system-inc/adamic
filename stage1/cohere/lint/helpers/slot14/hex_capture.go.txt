@@ -1,0 +1,46 @@
+package regexp
+
+import (
+	"encoding/json"
+	"os"
+	"sync"
+)
+
+type slot14HexInput struct {
+	Source                  []int
+	Index, Size, Digits     int
+	Unicode, InClass, Named bool
+	Groups                  int
+}
+
+var slot14HexMutex sync.Mutex
+
+func decodeFixedHex(source string, index, size, digits int, context escapeContext) (decodedEscape, error) {
+	result, err := slot14OriginalFixedHex(source, index, size, digits, context)
+	path := os.Getenv("SLOT14_HEX_CAPTURE")
+	if path == "" {
+		return result, err
+	}
+	bytes := make([]int, len(source))
+	for at := 0; at < len(source); at++ {
+		bytes[at] = int(source[at])
+	}
+	row := slot14HexInput{Source: bytes, Index: index, Size: size, Digits: digits, Unicode: context.unicode, InClass: context.inClass, Named: context.named, Groups: context.groups}
+	data, marshalErr := json.Marshal(row)
+	if marshalErr != nil {
+		panic(marshalErr)
+	}
+	slot14HexMutex.Lock()
+	defer slot14HexMutex.Unlock()
+	file, openErr := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if openErr != nil {
+		panic(openErr)
+	}
+	if _, writeErr := file.Write(append(data, '\n')); writeErr != nil {
+		panic(writeErr)
+	}
+	if closeErr := file.Close(); closeErr != nil {
+		panic(closeErr)
+	}
+	return result, err
+}
