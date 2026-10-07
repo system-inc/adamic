@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 )
 
@@ -16,9 +17,9 @@ import (
 func TestAppleImplementationsAreOneModuleWhereverTheyreFound(t *testing.T) {
 	t.Parallel()
 	fs := &appleFS{FS: osvfs.FS()}
-	near := "/work/app/node_modules/apple/swiftui/state.ts"
-	far := "/node_modules/apple/swiftui/state.ts"
-	for _, path := range []string{near, far} {
+	near := tspath.RootedFilePathFromAbsolute("/work/app/node_modules/apple/swiftui/state.ts")
+	far := tspath.RootedFilePathFromAbsolute("/node_modules/apple/swiftui/state.ts")
+	for _, path := range []tspath.RootedFilePath{near, far} {
 		if !fs.FileExists(path) {
 			t.Fatalf("%s isn't found", path)
 		}
@@ -26,8 +27,8 @@ func TestAppleImplementationsAreOneModuleWhereverTheyreFound(t *testing.T) {
 			t.Fatalf("%s has no source", path)
 		}
 	}
-	if fs.Realpath(near) != fs.Realpath(far) {
-		t.Fatalf("one module, two real paths: %s and %s", fs.Realpath(near), fs.Realpath(far))
+	if fs.Realpath(near.AsPath()) != fs.Realpath(far.AsPath()) {
+		t.Fatalf("one module, two real paths: %s and %s", fs.Realpath(near.AsPath()), fs.Realpath(far.AsPath()))
 	}
 	if fs.FileExists("/work/app/node_modules/apple/swiftui/missing.ts") {
 		t.Fatal("a module with no embedded source is found")
@@ -60,7 +61,7 @@ func TestAProgramImportsAnAppleImplementation(t *testing.T) {
 	}
 	states := 0
 	for _, sourceFile := range program.compiler.GetSourceFiles() {
-		if filepath.Base(sourceFile.FileName()) == "state.ts" {
+		if filepath.Base(sourceFile.FileName().AsString()) == "state.ts" {
 			states++
 		}
 	}
@@ -95,7 +96,7 @@ func TestAGeneratedModuleTakesItsEmbeddedAddition(t *testing.T) {
 	served := []string{}
 	for _, sourceFile := range program.compiler.GetSourceFiles() {
 		if IsApple(sourceFile) {
-			served = append(served, sourceFile.FileName())
+			served = append(served, sourceFile.FileName().AsString())
 		}
 	}
 	sort.Strings(served)

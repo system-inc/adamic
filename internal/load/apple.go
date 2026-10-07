@@ -221,8 +221,8 @@ var relativeImport = regexp.MustCompile(`(?:from|import)\s*['"](\.{1,2}/[^'"]+)[
 // each other. It adds each one to overlay, which is how the source file system serves it. A module
 // with no binding file is left out, and the checker says it can't find it; bindings that can't be
 // generated are an error.
-func appleRoots(source *sourceFS, roots []string, overlay map[string]string) ([]string, error) {
-	added := []string{}
+func appleRoots(source *sourceFS, roots []tspath.RootedFilePath, overlay map[tspath.RootedFilePath]string) ([]tspath.RootedFilePath, error) {
+	added := []tspath.RootedFilePath{}
 	seen := map[string]bool{}
 	var failure error
 	var visit func(fileName string, text string)
@@ -238,8 +238,9 @@ func appleRoots(source *sourceFS, roots []string, overlay map[string]string) ([]
 				failure = err
 			}
 			for _, bindingPath := range sortedPaths(files) {
-				overlay[bindingPath] = files[bindingPath]
-				added = append(added, bindingPath)
+				root := tspath.RootedFilePathFromAbsolute(bindingPath)
+				overlay[root] = files[bindingPath]
+				added = append(added, root)
 				visit(bindingPath, files[bindingPath])
 			}
 			// An apple/ module written in Adamic is found by the resolver, but the binding files it
@@ -257,16 +258,16 @@ func appleRoots(source *sourceFS, roots []string, overlay map[string]string) ([]
 				continue
 			}
 			seen[imported] = true
-			if text, exists := source.ReadFile(imported); exists {
+			if text, exists := source.ReadFile(tspath.RootedFilePathFromAbsolute(imported)); exists {
 				visit(imported, text)
 			}
 		}
 	}
 	for _, root := range roots {
-		seen[root] = true
+		seen[root.AsString()] = true
 		// The checker knows a .a file as .a.ts; its text is the .a's.
 		if text, exists := source.ReadFile(root); exists {
-			visit(root, text)
+			visit(root.AsString(), text)
 		}
 	}
 	return added, failure
@@ -301,33 +302,33 @@ func (s *appleFS) implementation(path string) (string, bool) {
 	return string(source), err == nil
 }
 
-func (s *appleFS) FileExists(path string) bool {
-	if _, found := s.implementation(path); found {
+func (s *appleFS) FileExists(path tspath.RootedFilePath) bool {
+	if _, found := s.implementation(path.AsString()); found {
 		return true
 	}
 	return s.FS.FileExists(path)
 }
 
-func (s *appleFS) ReadFile(path string) (string, bool) {
-	if source, found := s.implementation(path); found {
+func (s *appleFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+	if source, found := s.implementation(path.AsString()); found {
 		return source, true
 	}
 	return s.FS.ReadFile(path)
 }
 
-func (s *appleFS) DirectoryExists(path string) bool {
-	if at := strings.LastIndex(path+"/", appleImplementations); at >= 0 {
+func (s *appleFS) DirectoryExists(path tspath.RootedDirectoryPath) bool {
+	if at := strings.LastIndex(path.AsString()+"/", appleImplementations); at >= 0 {
 		return true
 	}
-	if strings.HasSuffix(path, "/node_modules") {
+	if strings.HasSuffix(path.AsString(), "/node_modules") {
 		return true
 	}
 	return s.FS.DirectoryExists(path)
 }
 
-func (s *appleFS) Realpath(path string) string {
-	if _, found := s.implementation(path); found {
-		return path[strings.LastIndex(path, appleImplementations):]
+func (s *appleFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
+	if _, found := s.implementation(path.AsString()); found {
+		return tspath.RootedPathFromAbsolute(path.AsString()[strings.LastIndex(path.AsString(), appleImplementations):])
 	}
 	return s.FS.Realpath(path)
 }
@@ -335,5 +336,5 @@ func (s *appleFS) Realpath(path string) string {
 // IsApple reports whether a declaration comes from one of Apple's binding files, so its calls are
 // foreign: an Objective-C message or a C function, never an Adamic body.
 func IsApple(sourceFile *ast.SourceFile) bool {
-	return sourceFile != nil && strings.HasPrefix(sourceFile.FileName(), appleDirectory+"/")
+	return sourceFile != nil && strings.HasPrefix(sourceFile.FileName().AsString(), appleDirectory+"/")
 }
