@@ -1,0 +1,27 @@
+// Native ECMAScript regexp canonicalization. Unicode primitive mappings are
+// pinned data; the Unicode/non-Unicode decisions and orbit walk run here.
+import {uppercasePairs,foldPairs} from './unicode_case_data.a';
+
+function lookup(pairs:readonly number[],value:number):number {
+    let left=0;let right=pairs.length/2;
+    while(left<right){
+        const middle=Math.floor((left+right)/2);
+        const key=pairs[middle*2]??value;
+        if(key<value){left=middle+1;}else{right=middle;}
+    }
+    return pairs[left*2]===value?pairs[left*2+1]??value:value;
+}
+function expandsOnUppercase(value:number):boolean {
+    return value>=8064&&value<=8071||value>=8080&&value<=8087||value>=8096&&value<=8103||value===8115||value===8131||value===8179;
+}
+export function canonicalize(value:number,unicodeMode:boolean):number {
+    if(unicodeMode){
+        let least=value;let folded=lookup(foldPairs,value);
+        while(folded!==value){if(folded<least){least=folded;}folded=lookup(foldPairs,folded);}
+        return least;
+    }
+    if(value>65535||expandsOnUppercase(value)){return value;}
+    const upper=lookup(uppercasePairs,value);
+    if(value>=128&&upper<128){return value;}
+    return upper;
+}
