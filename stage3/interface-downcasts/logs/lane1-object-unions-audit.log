@@ -1,0 +1,21 @@
+{
+  "typescript": "6.0.3",
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "counts": {
+    "untagged: Refused: callable members": 432,
+    "untagged: NotYet: dictionary view": 9,
+    "untagged: NotYet: nullish or mixed union": 131,
+    "untagged: NotYet: optional field": 311,
+    "untagged: NotYet: union, nullish, intersection or generic field": 169,
+    "tagged: NotYet: union, nullish, intersection or generic field": 625,
+    "tagged: NotYet: union cast target": 261,
+    "tagged: NotYet: dictionary view": 230,
+    "tagged: NotYet: nullish or mixed union": 195,
+    "tagged: NotYet: optional field": 419,
+    "tagged: Refused: callable members": 25,
+    "untagged: NotYet: union cast target": 25,
+    "tagged: NotYet: array field": 3,
+    "untagged: NotYet: array field": 101
+  },
+  "limits": "Required scalar and object-unions contract rejection upper bound, not full-source lowering. Arrays, optional/mixed unions and nominal fields remain unsupported; objects-only also excludes interface descendants. Source representation, aliases and writable-slot checks may add reasons. Zero eligible targets proves zero complete sites unlocked; positive eligibility requires actual lowerer probes."
+}
