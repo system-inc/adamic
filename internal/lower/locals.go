@@ -77,9 +77,10 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-		} else if l.includesUndefined(l.checker.GetTypeAtLocation(name)) || l.evolvingObject(name) != nil {
+		} else if !l.result.Locals[local].NamespaceVar && (l.includesUndefined(l.checker.GetTypeAtLocation(name)) || l.evolvingObject(name) != nil) {
 			// An optional declaration can be read before assignment. Its first value
-			// is undefined, not the backend's unobservable storage placeholder.
+			// is undefined, not the backend's unobservable storage placeholder. Namespace
+			// var was initialized when hoisted; a later declaration must not reset it.
 			value = ir.Undefined{Of: ir.Object}
 		}
 		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
