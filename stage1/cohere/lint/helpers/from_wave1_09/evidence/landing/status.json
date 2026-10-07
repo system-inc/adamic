@@ -1,0 +1,42 @@
+{
+  "testedMain": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "helperPublishedBefore": "883291bfe7e3078bad8888566c111a51c3987ea1",
+  "helperRebasedTip": "ad6d3a759dce05b792e30f0286c3ca2352f558a3",
+  "helperHistoryPreservingTip": "cb92e7470055d43e40f8ead2606712813c8e9d76",
+  "rulePublishedUnchanged": "a7ff894881e0174e8371a08be1d4325f24b587b7",
+  "ownedOracle": {
+    "pass": true,
+    "seconds": 160.618,
+    "cases": 17154,
+    "semanticMutants": 19
+  },
+  "foundationOracles": {
+    "pass": true,
+    "optionsSeconds": 113.35,
+    "commentsSeconds": 132.302,
+    "semanticMutants": 10
+  },
+  "inputOracle": {
+    "pass": true,
+    "seconds": 46.611,
+    "probeMisses": 6
+  },
+  "ruleRebase": {
+    "complete": false,
+    "abortedAfterEvidence": true,
+    "conflicts": [
+      "stage1/cohere/lint/README.md",
+      "stage1/cohere/lint/lint.ts",
+      "stage1/cohere/lint/lint_test.go",
+      "stage1/cohere/lint/testdata/oracle.go"
+    ]
+  },
+  "originalConsumerGate": {
+    "pass": false,
+    "zeroHelperCallsInAllSix": true,
+    "failedSuites": 4,
+    "skippedSuites": 2
+  },
+  "allBranchesLandingReady": false,
+  "newClaims": 0
+}
