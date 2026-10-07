@@ -1,0 +1,38 @@
+import type { RuleContext } from '../../context.ts';
+import { decode } from './entities.a';
+import { missing, discouraged } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const children = this.context.node(index).children;
+        const tag = children[0] ?? -1;
+        if(tag < 0 || this.context.node(tag).kind !== 'Identifier' || this.context.node(tag).text !== 'link') { return; }
+        const attributes = children.find(child => this.context.node(child).kind === 'JsxAttributes') ?? -1;
+        if(attributes < 0) { return; }
+        let reference = '';
+        for(const property of this.context.node(attributes).children) {
+            if(this.context.node(property).kind !== 'JsxAttribute') { continue; }
+            const parts = this.context.node(property).children;
+            const name = parts[0] ?? -1;
+            if(name < 0 || this.context.node(name).kind !== 'Identifier' || this.context.node(name).text.toLowerCase() !== 'href') { continue; }
+            const value = parts[1] ?? -1;
+            if(value < 0 || this.context.node(value).kind !== 'StringLiteral') { return; }
+            reference = decode(this.context.node(value).text);
+            break;
+        }
+        if(!reference.startsWith('https://fonts.googleapis.com/css')) { return; }
+        const question = reference.indexOf('?');
+        let found = false;
+        let display = '';
+        if(question >= 0) {
+            for(const pair of reference.slice(question + 1).split('&')) {
+                const equals = pair.indexOf('=');
+                if(equals >= 0 && pair.slice(0, equals) === 'display') { found = true; display = pair.slice(equals + 1); break; }
+            }
+        }
+        if(!found) { this.context.report(index, '@next/next/google-font-display', 'googleFontDisplayMissing', missing, '', '', ''); }
+        else if(['auto', 'block', 'fallback'].includes(display)) { this.context.report(index, '@next/next/google-font-display', 'googleFontDisplayNotRecommended', discouraged, '', '', ''); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
