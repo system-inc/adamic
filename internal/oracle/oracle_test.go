@@ -38,6 +38,7 @@ var fixtures = []struct {
 	checked bool
 }{
 	{"internal/oracle/testdata/async_plain.a", true, false},
+	{"internal/oracle/testdata/async_typeof.a", true, false},
 	{"internal/oracle/testdata/async_three.a", true, false},
 	{"internal/oracle/testdata/async_nested.a", true, false},
 	{"internal/oracle/testdata/async_throw.a", true, false},

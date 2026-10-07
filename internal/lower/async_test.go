@@ -58,3 +58,16 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 		}
 	}
 }
+
+// Compound operands still need an async function value; they must name the gap rather than
+// indexing the empty synchronous function table. A typeof observation never calls its operand.
+func TestAsyncTypeOfCompoundFunctionValueIsNotYet(t *testing.T) {
+	t.Parallel()
+	for _, expression := range []string{"typeof (true ? f : f)", "typeof (f === f)"} {
+		_, err := lowerSource(t, "async function f(): Promise<void> {}\nconsole.log("+expression+");\n")
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "async function f as a value") || notYet.Where == "" {
+			t.Fatalf("%s: want a located async function value NotYet, got %v", expression, err)
+		}
+	}
+}

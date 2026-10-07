@@ -101,3 +101,45 @@ func TestAsyncThrowReleasesFrame(t *testing.T) {
 		})
 	}
 }
+
+// Mutate the shared lowered constant so both backends can agree with each other and still be
+// wrong. The source on Node must independently catch the mistaken async function classification.
+func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_typeof.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := onNode(t, path)
+	want := "function\nfunction\nnested: function\nstring\nnumber\nshadow after await: number\ninside: function\nfunction\n"
+	if oracle.exitCode != 0 || string(oracle.stdout) != want || len(oracle.stderr) != 0 {
+		t.Fatalf("Node witness: %+v", oracle)
+	}
+	changed := false
+	for index, value := range program.Strings {
+		if value == "function" {
+			program.Strings[index] = "object"
+			changed = true
+		}
+	}
+	if !changed {
+		t.Fatal("mutant did not change the async typeof constant")
+	}
+	binary := filepath.Join(t.TempDir(), "wrong-kind")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	for name, result := range map[string]run{
+		"native":     executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary),
+		"JavaScript": onJavaScriptBackend(t, program),
+	} {
+		if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
+			t.Fatalf("only Node stdout must catch %s's wrong-kind mutant: %+v", name, result)
+		}
+		t.Logf("Node stdout catches %s's async function classified as object", name)
+	}
+}
