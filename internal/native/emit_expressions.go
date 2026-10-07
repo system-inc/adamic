@@ -311,13 +311,13 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		}
 		return result
 	case ir.ArrayMap:
-		if e.hasArrayHoles() {
-			return e.arrayHolesMap(expression)
-		}
 		if !ir.HasArrayViews(e.program) {
 			if mapped, ok := e.mapped(expression); ok {
 				return mapped
 			}
+		}
+		if e.hasArrayHoles() {
+			return e.arrayHolesMap(expression)
 		}
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))

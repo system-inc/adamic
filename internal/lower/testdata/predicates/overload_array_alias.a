@@ -4,4 +4,5 @@ const identifier: Identifier = { kind: 80, escapedText: "name" };
 const nodes: Node[] = [identifier];
 function corrupt(array: readonly Node[]): array is readonly Identifier[];
 function corrupt(array: readonly Node[]): boolean { console.log("called"); nodes[0] = { kind: 11 }; return true; }
-console.log(`${corrupt(nodes)}`);
+function use(array: readonly Node[]): void { if (corrupt(array)) console.log(`${array.length}`); }
+use(nodes);

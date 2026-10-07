@@ -140,7 +140,7 @@ func Build(source string, output string, options Options) error {
 	if compiler == "gcc" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
 		return fmt.Errorf("native: GCC lane requires an unsplit build")
 	}
-	if err := ValidateOptions(options); err != nil {
+	if err := validateBuild(source, options); err != nil {
 		return err
 	}
 	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {

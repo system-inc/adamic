@@ -10,6 +10,10 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// PredicateChecks counts overload-result directions, per emitted call site.
+	// Unobservable is included in Proven: no narrowed read consumes that region.
+	PredicateChecks struct{ Proven, Checked, Unobservable int }
+
 	// CheckedFields conservatively checks these field names at every object read.
 	CheckedFields     map[string]bool
 	ViewContracts     []ViewContract

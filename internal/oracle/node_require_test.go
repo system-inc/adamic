@@ -42,7 +42,7 @@ func TestRequireFSAgreesWithNode(t *testing.T) {
 			t.Errorf("%s: %s (Node %q, backend %q)", name, difference, truth.stdout, observation.stdout)
 		}
 	}
-	if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+	if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
 		t.Errorf("leaks: %s", leaked)
 	}
 	t.Log("Node source: true true / true; both backends, ASan/UBSan and leaks agree")
@@ -74,7 +74,7 @@ func TestRequirePathAgreesWithNode(t *testing.T) {
 					t.Errorf("%s: %s (Node %q, backend %q)", name, difference, truth.stdout, observation.stdout)
 				}
 			}
-			if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+			if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
 				t.Errorf("leaks: %s", leaked)
 			}
 		})
@@ -109,7 +109,7 @@ func TestRequirePerformanceAgreesWithNode(t *testing.T) {
 					t.Errorf("%s: %s (Node %q, backend %q)", name, difference, truth.stdout, observation.stdout)
 				}
 			}
-			if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+			if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
 				t.Errorf("leaks: %s", leaked)
 			}
 		})

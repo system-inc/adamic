@@ -1,5 +1,6 @@
 // Linux is the gate of record. The filesystem owns descriptor offsets and paths;
 // the host owns only temporary buffers and returned counted values.
+#define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
 // macOS hides st_atimespec, st_mtimespec and mkdtemp once _POSIX_C_SOURCE is set, unless Darwin's
 // own extensions are asked for too. glibc ignores this macro.
@@ -15,6 +16,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#include "node_fs_wasi.h"
 
 static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
@@ -187,6 +189,13 @@ static int open_file(const adamic_string *path, const adamic_string *flag, doubl
     int of = flags(flag);
     if (of < 0) { free(name); return -1; }
     if (!integer(mode, 4294967295., "mode")) { free(name); return -1; }
+#ifdef ADAMIC_TARGET_WASI
+    if (mode != 0666) {
+        free(name);
+        adamic_panic("wasm32-wasi: file creation permission bits are not supported", sizeof "wasm32-wasi: file creation permission bits are not supported" - 1);
+    }
+    if (path->length == 0) { system_error(ENOENT, "open", name); free(name); return -1; }
+#endif
     int descriptor;
     do { descriptor = open(name, of | O_CLOEXEC, (mode_t)(uint32_t)mode); } while (descriptor < 0 && errno == EINTR);
     if (descriptor < 0) { system_error(errno, "open", name); }
@@ -200,6 +209,10 @@ double adamic_fs_file_open(const adamic_string *path, const adamic_string *flag,
 }
 
 int adamic_fs_file_read_bytes(int descriptor, unsigned char **out, size_t *length) {
+#ifdef ADAMIC_TARGET_WASI
+    struct stat information;
+    if (fstat(descriptor, &information) == 0 && S_ISDIR(information.st_mode)) { return EISDIR; }
+#endif
     size_t used = 0, capacity = 4096;
     unsigned char *buffer = malloc(capacity);
     if (buffer == NULL) { return ENOMEM; }
@@ -390,6 +403,9 @@ bool adamic_fs_file_exists(const adamic_string *path) {
     adamic_output_flush();
     char *name = path_bytes(path, false);
     if (name == NULL) { return false; }
+#ifdef ADAMIC_TARGET_WASI
+    if (path->length == 0) { free(name); return false; }
+#endif
     struct stat information;
     bool exists = stat(name, &information) == 0;
     free(name);
@@ -420,6 +436,12 @@ adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_miss
     adamic_output_flush();
     char *name = path_bytes(path, true);
     if (name == NULL) { return NULL; }
+#ifdef ADAMIC_TARGET_WASI
+    if (path->length == 0) {
+        if (throw_if_missing) { system_error(ENOENT, "stat", name); }
+        free(name); return NULL;
+    }
+#endif
     struct stat information;
     if (stat(name, &information) != 0) {
         int error = errno;
@@ -491,6 +513,13 @@ adamic_string *adamic_fs_file_mkdir(const adamic_string *path, bool recursive, d
     char *name = path_bytes(path, true);
     if (name == NULL) { return NULL; }
     if (!integer(mode, 4294967295., "options.mode")) { free(name); return NULL; }
+#ifdef ADAMIC_TARGET_WASI
+    if (mode != 0777) {
+        free(name);
+        adamic_panic("wasm32-wasi: directory creation permission bits are not supported", sizeof "wasm32-wasi: directory creation permission bits are not supported" - 1);
+    }
+    if (path->length == 0) { system_error(ENOENT, "mkdir", name); free(name); return NULL; }
+#endif
     adamic_string *first = NULL;
     int error = make_directory(name, (mode_t)(uint32_t)mode, recursive, &first);
     if (error != 0) { adamic_release(first); first = NULL; system_error(error, "mkdir", name); }
@@ -500,6 +529,10 @@ adamic_string *adamic_fs_file_mkdir(const adamic_string *path, bool recursive, d
 
 // libc mkdtemp atomically creates a private directory with a six-byte suffix.
 adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
+#ifdef ADAMIC_TARGET_WASI
+    (void)prefix;
+    adamic_panic("wasm32-wasi: fs.mkdtempSync requires temporary directory creation", sizeof "wasm32-wasi: fs.mkdtempSync requires temporary directory creation" - 1);
+#else
     adamic_output_flush();
     if (memchr(prefix->bytes, 0, prefix->length) != NULL) {
         invalid_value("The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received ", prefix);
@@ -515,6 +548,7 @@ adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
     else { int error = errno; memcpy(name + length, "XXXXXX", 7); system_error(error, "mkdtemp", name); }
     free(name);
     return result;
+#endif
 }
 
 // Node's native rmSync uses filesystem removal errors after its lstat check.
@@ -605,6 +639,14 @@ static double fs_utimes(const adamic_string *path, double atime, double mtime, b
             raise_error("TypeError", "ERR_INVALID_ARG_TYPE", message);
             return 0;
         }
+#ifdef ADAMIC_TARGET_WASI
+        // Preview 1 timestamps are unsigned. Node 24's WASI command host
+        // also drops subsecond precision in path_filestat_set_times.
+        if (value < 0 || value != floor(value) || value > 18446744073.) {
+            free(name);
+            adamic_panic("wasm32-wasi: fs.utimesSync timestamp precision or range is unavailable", sizeof "wasm32-wasi: fs.utimesSync timestamp precision or range is unavailable" - 1);
+        }
+#endif
         if (value < 0 && !dates[i]) { clock_gettime(CLOCK_REALTIME, &times[i]); continue; }
         // libuv converts double seconds to timespec nanoseconds on Linux.
         if (value >= 9223372036854774784.) { times[i].tv_sec = (time_t)INT64_MAX; times[i].tv_nsec = 0; }

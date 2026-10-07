@@ -93,3 +93,14 @@ The requested forEach, map, join, RangeError-bound and hole-count mutants each
 produce a Node-output disagreement. Disabling the conservative admission guard
 makes the alias refusal test fail. Timing and test262 observations are recorded
 in internal/native/performance/array-holes/REPORT.md.
+
+## Integration-prefix revalidation
+
+Merged p2b 047e857 with the host guards through merge commit 14b3d1bc.
+The integration prefix adds no Array lowering or backend operations to this
+inventory. The existing conservative source and IR admission rules still apply
+to locals, aliases, fields, parameters and returns. On the merged implementation,
+all ten accepted fixtures and all 31 refused fixtures pass, including the
+independent Node executions of refused sources. The alias and nullable diagnostic
+checks also pass. Ten real WebAssembly commands agree with Node on wasmtime
+49.0.2, without skips or target refusals.

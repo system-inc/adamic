@@ -1,6 +1,6 @@
 Built: numeric length constructors, own holes, indexed access, length writes, callback methods, searches and joins; unported consumers are explicitly refused.
-Commits: 1b86df6e (inventory), 41603d77 (probe), f7e1008a (operations), 91c5687b (proof integration), 85764567 (nullable boundary); all pushed on codex/library-array-holes.
-Commands and outputs: scanner prints 4 on both backends; ten accepted fixtures and 31 refusal fixtures pass; final lower/fresh/IR gates and vet pass; Array test262 has zero disagreements.
+Commits: 14b3d1bc (p2b merge), 8f724aa5 (wasmtime), e669f94d (operation/refusal checks), ceec0ca1 (test262), 87cc1212 (mutants and uncached gate); all pushed on codex/library-array-holes.
+Commands and outputs: ten accepted fixtures and 31 refusal fixtures pass uncached with native sanitizers/leaks and JavaScript; all ten agree on wasmtime; p2b Array test262 before/after has zero disagreements; vet passes.
 Mutants: forEach, map, join, length bound and hole count fail Node comparison; admission, exception edge, mutation effect, freshness and nullable-diagnostic mutants fail their respective checks.
 Uncovered: mixed-program dense-access performance guarantee, unported operations, arbitrary any[] element use, maximum-string/resource limits, actual macOS execution, and eight inherited test262 clang crashes.
 
@@ -209,3 +209,129 @@ and fresh/array_holes.go, with dedicated tests, claims, fixtures and evidence.
 No changes to internal/native/emit.go, internal/lower/lower.go,
 internal/native/native.go or internal/oracle/oracle_test.go; no one-line hooks
 were needed in those four files.
+
+## p2b merge and wasmtime milestone
+
+Merged origin/library/merge-p2b 047e857207bee9aa62dbd22204445a0ab59d4319
+with both parent histories retained in 14b3d1bc2e053387f3b694676e038c25ce34ef6f.
+Conflict resolution retained all ten Array allocation rows, took integration's
+unrelated host counts, and used integration's stage1 corpus/parser changes.
+This assumes integration's stage1 revisions supersede the older base copies.
+Host guards were imported without parallel edits. The merge imports an
+integration change to internal/native/native.go; this unit made no edits there.
+
+Added TestArrayHolesWasmtime in the existing unit test file
+internal/oracle/array_holes_test.go. It builds each real WASI command and compares
+stdout, stderr and exit code with independently executed Node source. It does
+not accept target refusals, traps or skipped builds as agreements.
+
+ADAMIC_ORACLE_WASI=1 ADAMIC_WASMTIME=/workspace/adamic-tools/wasmtime/wasmtime
+go test ./internal/oracle -run TestArrayHolesWasmtime -count=1 -v -timeout 10m
+passed all ten fixtures in 6.413s. Engine: wasmtime 49.0.2
+(3c8a3e79a, 2026-10-02). The guessed v38.0.0 URL returned 404; the GitHub latest
+release API identified v49.0.2, which was installed and pinned for this run.
+
+Toolchain refresh bash cloud/setup.sh --wasi-sdk passed in 31.027s;
+WASI SDK ready at 0.269s, Go build 30.806s, cache 30.990s, nproc 5.
+Go commands use GOPROXY=https://proxy.golang.org|direct. Node remains 24.19.0.
+
+The operation/refusal rerun on the merged branch used:
+
+go test ./internal/lower ./internal/oracle -run TestArrayHoles
+-skip TestArrayHolesWasmtime -count=1 -v -timeout 10m
+
+Lower passed in 0.812s; oracle passed in 36.192s. This includes the ten accepted
+fixtures with sanitizers, native release, JavaScript, Linux LeakSanitizer and
+31 independently executed Node refusal sources. The conservative alias and
+nullable checks pass. No Array operation implementation changed in p2b.
+
+## p2b Array test262 before and after
+
+Both runs use test262 c8c798898646638cd0c24879f8e0374e847e7d74,
+Node 24.19.0, and the same command:
+
+go run ./cmd/adamic-test262 -test262 /tmp/array-holes-test262
+-adapt -jobs 4 built-ins/Array
+
+The before checkout is exactly 047e857 in /tmp/array-holes-p2b-base;
+the after checkout contains merge 14b3d1bc and the unchanged Array implementation.
+
+| Checkout | Pass | Fail / disagreements | Refused | Crashed | Skipped | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 047e857 before | 125 | 0 | 2339 | 8 | 610 | 3082 |
+| Merged Array implementation after | 126 | 0 | 2338 | 8 | 610 | 3082 |
+
+Both complete per-directory tables are committed in evidence/p2b-test262-*.log.gz.
+The eight crashes remain the inherited indexOf/lastIndexOf clang failures listed
+above, not agreements. No runtime failure was reported as a disagreement.
+Successful observations may use the existing content-addressed cache; these
+worker runs do not claim the uncached integration gate.
+
+## p2b requested mutants and uncached final gate
+
+Added reproducible mutants.py. It changes one source at a time, writes each run
+to its own log, requires a Node stdout disagreement, rejects compiler/sanitizer
+failures as semantic kills, and restores the original bytes in finally.
+
+| Requested mutant | Node check that killed it |
+| --- | --- |
+| (a) forEach visits missing slots as undefined | callback fixture stdout differs |
+| (b) map makes missing slots present undefined | callback fixture mapped presence/count stdout differs |
+| (c) join prints undefined for a hole | callback fixture joined text stdout differs |
+| (d) upper RangeError bound is off by one | range fixture maximum-length stdout differs |
+| (e) write does not decrement the hole count | callback fixture filled-slot observations stdout differ |
+
+All five compiled and ran without a compiler or sanitizer failure. An initial
+narrow (e) run used the scanner source, which prints only length and did not
+kill this mutation. The callback fixture killed it on rerun; the reproducible
+driver now selects that fixture. The initial driver log is preserved rather
+than claiming every fixture distinguishes every mutation. Every source was
+restored before the final checks.
+
+Also added TestArrayHolesWasmtimeRunnerMutants to the unit's oracle test file.
+Its real Wasm control prints the scanner's expected 4; changing output to 5
+is caught as stdout differs, and returning 23 is caught as exit codes differ.
+This proves the requested runner's comparison can fail independently of the
+Array implementation mutants.
+
+Final command, uncached:
+
+ADAMIC_GATE_UNCACHED=1 ADAMIC_ORACLE_WASI=1
+ADAMIC_WASMTIME=/workspace/adamic-tools/wasmtime/wasmtime
+go test ./internal/lower ./internal/oracle -run TestArrayHoles
+-count=1 -v -timeout 10m
+
+Passed: lower 0.761s; oracle 12.181s. Ten accepted sources run sanitized native,
+release native, generated JavaScript and wasmtime; 31 refusal sources run on
+independent Node; Linux LeakSanitizer is enabled. There were no skips in the
+wasmtime Array leg. go vet ./... and git diff --check pass with empty logs.
+The complete repository gate was not rerun; this is the focused unit gate.
+
+Additional shared files changed in this follow-up:
+internal/oracle/array_holes_test.go (wasmtime and runner-mutant checks),
+internal/lower/library_array_holes_claims.md (validation evidence), and this
+report. Merge conflict resolutions touched internal/oracle/counts.md,
+stage1/cohere/lint/inventory/testdata/engine.go, and
+stage1/typescript/parser/testdata/oracle.go. Integration's changes, including
+internal/native/native.go and its host runtime guards, are preserved by the
+merge; the Array worker made no hand edits to those guard files or native.go.
+The other three prohibited shared files remain untouched by this unit.
+
+## p2b dense hot loop and final scope
+
+Repeated measure.py with --before /tmp/array-holes-p2b-base
+--after /workspace/adamic while the other checks were idle. Both native artifacts
+and independent Node printed 680000000. Emitted C is identical, with the same
+SHA-256 listed above. Fifteen samples after two warmups gave:
+
+| Before p2b median seconds | Merged Array median seconds | After / before |
+| ---: | ---: | ---: |
+| 0.078746430 | 0.078603124 | 0.998180159 |
+
+This observation found no dense-only hot-loop slowdown. It does not establish
+zero overhead for dense accesses in a compilation that also contains holes;
+those accesses still use the representation branch explained above. Operations
+not implemented remain explicitly refused. The eight inherited test262 clang
+crashes, unannotated any[] element use in the complete tsc function, gigantic
+materializing operations, and actual macOS execution remain outside this unit's
+verified coverage. No full repository gate is claimed.

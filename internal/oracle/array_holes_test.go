@@ -4,6 +4,9 @@ import (
 	"errors"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -86,6 +89,86 @@ func TestArrayHolesRefusals(t *testing.T) {
 				t.Fatalf("refusal has no operation reason: %v", err)
 			}
 			t.Logf("%v; Node stdout %q", err, truth.stdout)
+		})
+	}
+}
+
+// Array fixtures need no host capabilities. Compare real WASI commands with Node
+// without treating target refusals or traps as successful observations.
+func TestArrayHolesWasmtime(t *testing.T) {
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	runner := os.Getenv("ADAMIC_WASMTIME")
+	if runner == "" {
+		var err error
+		runner, err = exec.LookPath("wasmtime")
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	count := 0
+	for _, fixture := range fixtures {
+		if !strings.Contains(fixture.path, "library_array_holes_") {
+			continue
+		}
+		count++
+		t.Run(fixture.path, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			binary := filepath.Join(t.TempDir(), "array.wasm")
+			if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			actual := execute(t, runner, "run", binary)
+			if difference := disagreement(truth, actual); difference != "" {
+				t.Fatalf("%s: Node exit %d stdout %q stderr %q; wasmtime exit %d stdout %q stderr %q", difference, truth.exitCode, truth.stdout, truth.stderr, actual.exitCode, actual.stdout, actual.stderr)
+			}
+			t.Logf("Node and wasmtime stdout: %s", truth.stdout)
+		})
+	}
+	if count != 10 {
+		t.Fatalf("want 10 Array fixtures, got %d", count)
+	}
+}
+
+func TestArrayHolesWasmtimeRunnerMutants(t *testing.T) {
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	runner := os.Getenv("ADAMIC_WASMTIME")
+	if runner == "" {
+		var err error
+		runner, err = exec.LookPath("wasmtime")
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_array_holes_scanner_probe.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	for _, probe := range []struct{ name, source, difference string }{
+		{"control", "#include <stdio.h>\nint main(void) { puts(\"4\"); return 0; }\n", ""},
+		{"stdout", "#include <stdio.h>\nint main(void) { puts(\"5\"); return 0; }\n", "stdout differs"},
+		{"exit", "#include <stdio.h>\nint main(void) { puts(\"4\"); return 23; }\n", "exit codes differ"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			binary := filepath.Join(t.TempDir(), "runner.wasm")
+			if err := native.Build(probe.source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+				t.Fatal(err)
+			}
+			if difference := disagreement(truth, execute(t, runner, "run", binary)); difference != probe.difference {
+				t.Fatalf("want %q, got %q", probe.difference, difference)
+			}
 		})
 	}
 }

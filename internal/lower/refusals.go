@@ -120,15 +120,21 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
+		if node.Kind == ast.KindTypePredicate {
+			found = l.predicateRefusal(node)
+			return found != nil
+		}
+		if err := l.refuseNodeRequire(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.nodeLibraryRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if refused, isRefused := refusals[node.Kind]; isRefused && !l.nodeProcessEnvironmentDelete(node) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
-		}
-		if node.Kind == ast.KindTypePredicate {
-			if err := l.provePredicate(node); err != nil {
-				found = err
-				return true
-			}
 		}
 		if err := l.enumRefusal(node); err != nil {
 			found = err
@@ -143,7 +149,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
-			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
+			checkedCast = proof.lowering != castLoweringNone || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if err := l.recordStorageView(node); err != nil {
 			found = err

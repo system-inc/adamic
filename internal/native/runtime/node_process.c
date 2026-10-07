@@ -8,7 +8,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef ADAMIC_TARGET_WASI
 #include <sys/ioctl.h>
+#endif
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <time.h>
@@ -77,6 +79,14 @@ static void finish_host(void) {
 }
 
 void adamic_node_process_start(int count, char **values) {
+#ifdef ADAMIC_TARGET_WASI
+    // Preview 1 has no initial cwd. A command host can explicitly supply one
+    // inside its preopens; otherwise wasi-libc's virtual cwd remains '/'.
+    const char *directory = getenv("ADAMIC_WASI_CWD");
+    if (directory != NULL && chdir(directory) != 0) {
+        adamic_panic("wasm32-wasi: cannot enter supplied working directory", sizeof "wasm32-wasi: cannot enter supplied working directory" - 1);
+    }
+#endif
     saved_count = count;
     saved_values = values;
     monotonic_origin = milliseconds(CLOCK_MONOTONIC);
@@ -93,17 +103,27 @@ adamic_string *adamic_node_eol(void) {
 
 bool adamic_node_next_tick_feature(void) { return true; }
 
-double adamic_node_pid(void) { return (double)getpid(); }
+double adamic_node_pid(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_panic("wasm32-wasi: process.pid requires process identifiers", sizeof "wasm32-wasi: process.pid requires process identifiers" - 1);
+#else
+    return (double)getpid();
+#endif
+}
 
 adamic_string *adamic_node_platform(void) {
-#if defined(__APPLE__)
+#if defined(ADAMIC_TARGET_WASI)
+    adamic_panic("wasm32-wasi: process.platform requires a Node host platform", sizeof "wasm32-wasi: process.platform requires a Node host platform" - 1);
+#elif defined(__APPLE__)
     static adamic_string platform = ADAMIC_STRING("darwin");
 #elif defined(__linux__)
     static adamic_string platform = ADAMIC_STRING("linux");
 #else
 #error Unsupported Node host platform
 #endif
+#ifndef ADAMIC_TARGET_WASI
     return &platform;
+#endif
 }
 
 // Code-bearing host errors use the existing pending-exception word and cleanup paths.
@@ -170,6 +190,9 @@ adamic_string *adamic_node_cwd(void) {
 }
 
 static adamic_string *executable_path(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_panic("wasm32-wasi: process.argv requires executable paths", sizeof "wasm32-wasi: process.argv requires executable paths" - 1);
+#endif
 #if defined(__linux__)
     size_t capacity = 256;
     for (;;) {
@@ -222,6 +245,9 @@ adamic_array *adamic_node_exec_argv(void) {
 }
 
 adamic_maybe_number adamic_node_columns(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_panic("wasm32-wasi: process.stdout.columns requires terminal size", sizeof "wasm32-wasi: process.stdout.columns requires terminal size" - 1);
+#else
     adamic_maybe_number result = {0};
     if (isatty(STDOUT_FILENO)) {
         struct winsize size = {0};
@@ -229,6 +255,7 @@ adamic_maybe_number adamic_node_columns(void) {
         if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &size) == 0) { result.number = size.ws_col; }
     }
     return result;
+#endif
 }
 
 bool adamic_node_stdout_write(const adamic_string *text) {
@@ -236,6 +263,9 @@ bool adamic_node_stdout_write(const adamic_string *text) {
 }
 
 adamic_object *adamic_node_memory_usage(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_panic("wasm32-wasi: process.memoryUsage requires allocator observations", sizeof "wasm32-wasi: process.memoryUsage requires allocator observations" - 1);
+#endif
     static const char *const memory_names[] = {"heapUsed"};
     static const bool references[] = {false};
     static const adamic_shape shape = {1, memory_names, references, NULL};
@@ -306,13 +336,12 @@ adamic_object *adamic_node_measure(const adamic_string *name, const adamic_strin
 void adamic_node_clear_marks(const adamic_string *name) { clear_marks(name); }
 void adamic_node_clear_measures(const adamic_string *name) { (void)name; }
 
-static adamic_value set_blocking(adamic_closure *self, adamic_value *values, size_t count) {
-    (void)count;
+static adamic_value set_blocking(adamic_closure *self, adamic_value *values, size_t argument_count) { (void)argument_count;
     (void)self;
     adamic_output_flush();
     int flags = fcntl(STDOUT_FILENO, F_GETFL);
     if (flags >= 0) {
-        if (values[0].boolean) { flags &= ~O_NONBLOCK; }
+        if (argument_count > 0 && values[0].boolean) { flags &= ~O_NONBLOCK; }
         else { flags |= O_NONBLOCK; }
         (void)fcntl(STDOUT_FILENO, F_SETFL, flags);
     }
@@ -325,7 +354,7 @@ adamic_object *adamic_node_stdout_handle(void) {
     static const char *const handle_names[] = {"setBlocking"};
     static const bool references[] = {true};
     static const adamic_shape shape = {1, handle_names, references, NULL};
-    static adamic_closure method = {{0, adamic_kind_closure, 0}, set_blocking, 0, 0};
+    static adamic_closure method = {{0, adamic_kind_closure, 0}, set_blocking, false, 0};
     adamic_object *handle = adamic_object_new(&shape);
     handle->slots[0].reference = &method;
     return handle;
@@ -378,16 +407,16 @@ void adamic_node_chdir(const adamic_string *directory) {
     adamic_release(from);
 }
 
-static adamic_value performance_now_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; (void)args; return (adamic_value){.number = adamic_node_performance_now()}; }
-static adamic_value performance_mark_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; return (adamic_value){.reference = adamic_node_mark(args[0].reference)}; }
-static adamic_value performance_measure_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; return (adamic_value){.reference = adamic_node_measure(args[0].reference, args[1].reference, args[2].reference)}; }
-static adamic_value performance_clear_marks_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; adamic_node_clear_marks(args[0].reference); return (adamic_value){.reference = NULL}; }
-static adamic_value performance_clear_measures_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; adamic_node_clear_measures(args[0].reference); return (adamic_value){.reference = NULL}; }
-static adamic_closure performance_now_closure = {{0, adamic_kind_closure, 0}, performance_now_method, 0, 0};
-static adamic_closure performance_mark_closure = {{0, adamic_kind_closure, 0}, performance_mark_method, 0, 0};
-static adamic_closure performance_measure_closure = {{0, adamic_kind_closure, 0}, performance_measure_method, 0, 0};
-static adamic_closure performance_clear_marks_closure = {{0, adamic_kind_closure, 0}, performance_clear_marks_method, 0, 0};
-static adamic_closure performance_clear_measures_closure = {{0, adamic_kind_closure, 0}, performance_clear_measures_method, 0, 0};
+static adamic_value performance_now_method(adamic_closure *self, adamic_value *args, size_t argument_count) { (void)argument_count; (void)self; (void)args; return (adamic_value){.number = adamic_node_performance_now()}; }
+static adamic_value performance_mark_method(adamic_closure *self, adamic_value *args, size_t argument_count) { (void)argument_count; (void)self; return (adamic_value){.reference = adamic_node_mark(argument_count > 0 ? args[0].reference : NULL)}; }
+static adamic_value performance_measure_method(adamic_closure *self, adamic_value *args, size_t argument_count) { (void)argument_count; (void)self; return (adamic_value){.reference = adamic_node_measure(argument_count > 0 ? args[0].reference : NULL, argument_count > 1 ? args[1].reference : NULL, argument_count > 2 ? args[2].reference : NULL)}; }
+static adamic_value performance_clear_marks_method(adamic_closure *self, adamic_value *args, size_t argument_count) { (void)argument_count; (void)self; adamic_node_clear_marks(argument_count > 0 ? args[0].reference : NULL); return (adamic_value){.reference = NULL}; }
+static adamic_value performance_clear_measures_method(adamic_closure *self, adamic_value *args, size_t argument_count) { (void)argument_count; (void)self; adamic_node_clear_measures(argument_count > 0 ? args[0].reference : NULL); return (adamic_value){.reference = NULL}; }
+static adamic_closure performance_now_closure = {{0, adamic_kind_closure, 0}, performance_now_method, false, 0};
+static adamic_closure performance_mark_closure = {{0, adamic_kind_closure, 0}, performance_mark_method, false, 0};
+static adamic_closure performance_measure_closure = {{0, adamic_kind_closure, 0}, performance_measure_method, false, 0};
+static adamic_closure performance_clear_marks_closure = {{0, adamic_kind_closure, 0}, performance_clear_marks_method, false, 0};
+static adamic_closure performance_clear_measures_closure = {{0, adamic_kind_closure, 0}, performance_clear_measures_method, false, 0};
 static adamic_closure *const performance_methods[] = {&performance_now_closure, &performance_mark_closure, &performance_measure_closure, &performance_clear_marks_closure, &performance_clear_measures_closure};
 
 adamic_object *adamic_node_performance(void) {
