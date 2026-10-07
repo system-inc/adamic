@@ -35761,3 +35761,23 @@
 {"Time":"2026-10-07T19:29:24.054665324Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutants","Elapsed":73.96}
 {"Time":"2026-10-07T19:29:24.054692475Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo"}
 {"Time":"2026-10-07T19:29:24.054720727Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"=== RUN   TestMessageRefusalsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-07T19:29:32.86779464Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments"}
+{"Time":"2026-10-07T19:29:32.87992708Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentsMatchCohere"}
+{"Time":"2026-10-07T19:29:32.87999399Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentsMatchCohere","Output":"=== RUN   TestCommentsMatchCohere\n","OutputType":"frame"}
+{"Time":"2026-10-07T19:29:33.49736162Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSPrinterAgreesWithGo/default","Output":"    print_test.go:79: native ASan/UBSan, Node, JavaScript backend and separate LeakSanitizer pass\n"}
+{"Time":"2026-10-07T19:29:33.497717014Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSPrinterAgreesWithGo/default","Output":"    print_test.go:80: 24014 stylesheet formats and refusals agree byte for byte\n"}
+{"Time":"2026-10-07T19:29:33.497798266Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons"}
+{"Time":"2026-10-07T19:29:33.497804255Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons","Output":"=== RUN   TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons\n","OutputType":"frame"}
+{"Time":"2026-10-07T19:29:35.83022068Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native\n"}
+{"Time":"2026-10-07T19:29:35.853685354Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"--- PASS: TestMessageRefusalsMatchGo (11.80s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T19:29:35.853716631Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Elapsed":11.8}
+{"Time":"2026-10-07T19:29:35.853723752Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit"}
+{"Time":"2026-10-07T19:29:35.853726015Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"=== RUN   TestKnownGapsAreExplicit\n","OutputType":"frame"}
+{"Time":"2026-10-07T19:29:39.277910583Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"--- PASS: TestKnownGapsAreExplicit (3.42s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T19:29:39.277959146Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Elapsed":3.42}
+{"Time":"2026-10-07T19:29:39.277965295Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T19:29:39.281664846Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers\t173.009s\n"}
+{"Time":"2026-10-07T19:29:39.281682873Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Elapsed":173.009}
+{"Time":"2026-10-07T19:29:39.603239228Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory"}
+{"Time":"2026-10-07T19:29:39.604631131Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngine"}
+{"Time":"2026-10-07T19:29:39.604663379Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngine","Output":"=== RUN   TestInventoryEngine\n","OutputType":"frame"}
