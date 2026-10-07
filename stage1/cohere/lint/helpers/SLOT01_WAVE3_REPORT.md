@@ -1,8 +1,8 @@
-Built: attributeValues, decodeEntity and IsLikelyComponentName in three .a helper files plus two generated data files.  
-Commits: e31de1d, 1d106df and 0ca32ea pushed; report/evidence 3d69400 pushed; all naming claims preceded code.  
-Commands/results: complete helper package PASS, 228.362s; targeted PASS 107.976s; vet clean; filtered uncached oracle PASS 1.106s.  
-Mutants: seven new compiled semantic mutants caught by Go comparisons, plus all 18 prior/inherited mutants rerun.  
-Not covered: whole-rule findings/fixes, dynamic fixtures, cross-slot integration, invalid raw-byte strings and full repository gate; initial GitHub authentication failure resolved by the final retry.  
+Built: attributeValues, decodeEntity and IsLikelyComponentName in three .a helper files plus two generated data files.\
+Commits: e31de1d, 1d106df and 0ca32ea pushed; report/evidence 3d69400 pushed; all naming claims preceded code.\
+Commands/results: complete helper package PASS, 228.362s; targeted PASS 107.976s; vet clean; filtered uncached oracle PASS 1.106s.\
+Mutants: seven new compiled semantic mutants caught by Go comparisons, plus all 18 prior/inherited mutants rerun.\
+Not covered: whole-rule findings/fixes, dynamic fixtures, cross-slot integration, invalid raw-byte strings and full repository gate; initial GitHub authentication failure resolved by the final retry.
 
 # Slot 01 third helper batch report
 
