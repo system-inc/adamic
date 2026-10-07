@@ -1,0 +1,2 @@
+class Box { n!: number; }
+console.log(`${new Box().n + 1}`);

@@ -1,0 +1,2 @@
+const n = 'wrong' as unknown as number;
+console.log(`${n + 1}`);

@@ -1,0 +1,3 @@
+const x: { [key: string]: number } = {};
+const n: number = x['missing'];
+console.log(`${n + 1}`);

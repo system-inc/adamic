@@ -1,0 +1,3 @@
+const x = { n: 1 };
+Object.assign(x, { n: 2, s: 'new' });
+console.log(`${x.n}`);

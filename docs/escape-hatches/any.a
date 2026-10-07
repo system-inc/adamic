@@ -1,0 +1,3 @@
+const x: any = 'wrong';
+const n: number = x;
+console.log(`${n + 1}`);

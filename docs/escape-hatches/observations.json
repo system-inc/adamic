@@ -1,0 +1,528 @@
+{
+  "any": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/any.a:1:7: stage 0 can't lower a value of type any yet\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    }
+  },
+  "assertion": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/assertion.a:1:44: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    }
+  },
+  "assign-existing": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/assign-existing.a:2:18: stage 0 can't lower Object.assign adding a field to its target's fixed shape yet\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    }
+  },
+  "assign-fixed": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    }
+  },
+  "bivariant": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/bivariant.a:5:20: Adamic 0.1 refuses a function taking Dog seen as one taking Animal (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\nexit status 1\n"
+    },
+    "node": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "file:///tmp/escape-observations/bivariant.ts:4\nconst dogHandler = { run: (x     )         => x.bark() };\n                                                ^\n\nTypeError: x.bark is not a function\n    at Object.run (file:///tmp/escape-observations/bivariant.ts:4:49)\n    at Object.<anonymous> (file:///tmp/escape-observations/bivariant.ts:6:15)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    }
+  },
+  "cast-down-mutant": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/cast-down-mutant.a:1:49: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    }
+  },
+  "cast-down": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/cast-down.a:1:49: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    }
+  },
+  "cast-tag-mutant": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: cast failed: this A | B is not a A\n"
+    }
+  },
+  "cast-tag": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    }
+  },
+  "cast-unrelated": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/cast-unrelated.a:1:11: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    }
+  },
+  "cast-up": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  },
+  "define-property": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/define-property.a:2:1: Adamic 0.1 refuses Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "done\n",
+      "stderr": ""
+    }
+  },
+  "definite-field-assigned": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    }
+  },
+  "definite-field": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "NaN\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  },
+  "definite-local-assigned": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    }
+  },
+  "definite-local": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "NaN\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  },
+  "expando-inferred": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "docs/escape-hatches/expando-inferred.a:2:3: error TS2339: Property 'n' does not exist on type '{}'.\ndocs/escape-hatches/expando-inferred.a:3:18: error TS2339: Property 'n' does not exist on type '{}'.\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  },
+  "expando": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "docs/escape-hatches/expando.a:3:3: error TS2339: Property 'n' does not exist on type '{}'.\ndocs/escape-hatches/expando.a:4:18: error TS2339: Property 'n' does not exist on type '{}'.\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  },
+  "function-type": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/function-type.a:2:16: stage 0 can't lower a call to an Identifier yet\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    }
+  },
+  "guard": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/guard.a:1:40: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    }
+  },
+  "index-signature-optional": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/index-signature-optional.a:1:12: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "-1\n",
+      "stderr": ""
+    }
+  },
+  "index-signature": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "docs/escape-hatches/index-signature.a:2:7: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "NaN\n",
+      "stderr": ""
+    }
+  },
+  "non-null": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/non-null.a:2:11: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "NaN\n",
+      "stderr": ""
+    }
+  },
+  "optional-chain-string": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    }
+  },
+  "optional-chain": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/optional-chain.a:2:16: stage 0 can't lower ?. to a number, which would be number | undefined yet\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  },
+  "satisfies-mutant": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "docs/escape-hatches/satisfies-mutant.a:1:13: error TS2322: Type 'string' is not assignable to type 'number'.\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "wrong\n",
+      "stderr": ""
+    }
+  },
+  "satisfies": {
+    "c": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/docs/escape-hatches/satisfies.a:1:11: stage 0 can't lower a SatisfiesExpression yet\nexit status 1\n"
+    },
+    "node": {
+      "code": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    }
+  },
+  "ts-expect-error-boolean": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-1831291471/main.c:13:23: error: implicit conversion from 'double' to 'bool' changes value from 2 to true [-Werror,-Wliteral-conversion]\n   13 |         adamic_global_0_b = (0x1p+01);\n      |                           ~  ^~~~~~~\n1 error generated.\n\nexit status 1\n"
+    }
+  },
+  "ts-expect-error-call": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    }
+  },
+  "ts-expect-error": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-3299588801/main.c:15:20: error: assigning to 'double' from incompatible type 'adamic_string *' (aka 'struct adamic_string *')\n   15 |         adamic_global_0_n = &adamic_string_0;\n      |                           ^ ~~~~~~~~~~~~~~~~\n1 error generated.\n\nexit status 1\n"
+    }
+  },
+  "ts-ignore-boolean": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-3428376133/main.c:13:23: error: implicit conversion from 'double' to 'bool' changes value from 2 to true [-Werror,-Wliteral-conversion]\n   13 |         adamic_global_0_b = (0x1p+01);\n      |                           ~  ^~~~~~~\n1 error generated.\n\nexit status 1\n"
+    }
+  },
+  "ts-ignore-call": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "code": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    }
+  },
+  "ts-ignore": {
+    "c": {
+      "code": 0,
+      "stdout": "[generated C]",
+      "stderr": ""
+    },
+    "node": {
+      "code": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    },
+    "build": {
+      "code": 1,
+      "stdout": "",
+      "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-4219602995/main.c:15:20: error: assigning to 'double' from incompatible type 'adamic_string *' (aka 'struct adamic_string *')\n   15 |         adamic_global_0_n = &adamic_string_0;\n      |                           ^ ~~~~~~~~~~~~~~~~\n1 error generated.\n\nexit status 1\n"
+    }
+  }
+}
