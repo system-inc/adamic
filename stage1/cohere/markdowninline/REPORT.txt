@@ -1,0 +1,257 @@
+Built the parser-free Markdown inline leaf suite, the largest clean boundary found in this survey.
+105,925 leaf/context cases across 873 repository/submodule files match Go and Prettier 3.9.6 byte for byte.
+Native 15,420.3 texts/s; Go 6,725.6; source Node 28,959.4; Prettier 23,658.4 on the identical mixed-size corpus.
+ASan, UBSan, leaks, three output-only mutants, the regex gap, vet, style and scoped uncached oracles passed.
+Branch codex/stage1-markdown-escape; implementation aa750e6c0e666b71d58aa74372be00050db3683f; report committed separately.
+
+Base: origin/main d799ede40af1d947efe8c4a897efbb90c2ef2264.
+Go cohere: 715ba94f3608a6500086b1076ce5cb7e51b836db.
+Nested TypeScript: 8d550c837c90bd1805b047b7eeccc2baac2d5e7a.
+Toolchain: Go 1.27.1, Node 24.19.0, clang 20.1.8; nproc printed 5.
+
+Choice and what was built
+
+stage1/cohere/markdowninline ports word.go's contextual emphasis/strong escaping
+and print.go's inline code, wiki links, image URL/title/alt, full/collapsed/shortcut
+image references, label normalization and footnote reference printing. Its Unicode
+punctuation classification comes from classes_generated.go. This boundary shares
+string helpers and produces only strings/concatenations, so it needs neither a
+parser nor recursive child/doc layout. YAML block/collection and full Markdown
+printers require path/source state and doc layout. The full CSS declaration printer
+requires recursive value printing and those same dependencies; its parser belongs
+to the other worker. There were no compiler, parser or submodule modifications.
+
+The driver formats the entire file as one selected leaf value. This is a leaf
+printer suite, not a complete Markdown document formatter. Exported helpers take
+separate URL/title/alt/sibling values. Word context booleans are facts a future AST
+adapter must establish. GAPS.md gives the exact API boundary, all 19 driver modes,
+reproduction commands and exclusions. main.ts writes raw bytes via /dev/stdout on
+Linux and supports an escaped batch protocol for audit and timing.
+
+The Go overlay calls the actual printMdast through real printing.AstPath stacks,
+then doc.Print. The JavaScript adapter calls the original pinned plugin's mdast.print
+and Prettier's doc printer. It supplies identical node and path facts, with no
+substitute formatting algorithms. The pinned package was already installed from
+the prior slice in /tmp/adamic-cssstrings-prettier/node_modules/prettier and reused
+for final checks. This unit also installed the same exact version in the separate
+/tmp/adamic-markdown-prettier scratch directory. Each library run asserts 3.9.6.
+
+Observed corpus and verification
+
+873 files were read physically, including initialized submodules, with case-insensitive
+.md, .markdown, .mdown and .mkd suffixes and only .git directories excluded.
+4,702 generated texts include the exhaustive 8-token alphabet through length four,
+long values, malformed ends, NUL, quotes, whitespace, brackets, pipes, backticks,
+astral endpoints and one combined text examining all 63,488 BMP scalars on both
+sides of both delimiter kinds. All 5,575 texts ran through all 19 contexts, making
+105,925 cases. The final escaped input was 84,924,870 bytes. Native under ASan/UBSan,
+source Node, the JavaScript backend, Go and Prettier agreed byte for byte. A separate
+LeakSanitizer pass and a raw stdout test for every repository/submodule file passed.
+The persisted scratch corpus is /tmp/markdown-final-cases.txt; its .files.json sibling
+is the complete file manifest. They are reproducible from the test.
+
+Mutants (all lower, build, exit zero with empty stderr; no compiler refusal counts)
+
+1. Escaped delimiter parity: invert odd/even backslash parity. Native and source Node
+   both fail byte comparison at case 494, byte 3352, in mode w with
+   cohere/TypeScript/tsc/CHANGES.md. The altered JSDoc enum escape has an extra slash.
+2. Table pipe escaping: invert if(table). Both fail at case 6, byte 658, with CLAUDE.md
+   as ordinary preserved inline code. Pipes incorrectly gain backslashes.
+3. Minimum absent fence: prevent advancing past a present backtick-run length.
+   Both fail at case 6, byte 1, with CLAUDE.md. The fence is one backtick instead of two.
+
+The original regular-expression syntax is an executable gap, not a silent substitute:
+gaps/1_delimiter_expression.ts prints a\*b on Node and raises lower.NotYet with exactly
+"a RegularExpressionLiteral". TestDelimiterExpressionGap checks both observations.
+The finite matcher implements this one original pattern's ordered alternatives,
+greediness, backtracking, non-overlapping matches and UTF-16 semantics. The two
+whitespace expressions are scans. No discrepancy in supported output was observed.
+
+Timing interpretation
+
+The final test runs three fresh processes per implementation. Input, decoding,
+encoding, startup and captured output are included; builds are excluded. Every
+timed output is compared to Go. Native uses native.Build's ordinary -O2 build,
+not the sanitizer build. The original Prettier printer is measured directly.
+The totals were Go 47.248539s, native 20.607544s, source Node 10.973133s and
+Prettier 13.431816s. Native was about 2.29 times Go's measured rate, and slower than
+both JavaScript implementations. These are observations on this mixed-size corpus,
+including very large documents treated as single leaves, not a claim about full
+Markdown formatting or steady-state small-token throughput. Other test processes
+had finished before the timing phase.
+
+Gate scope and limitations
+
+The full gate was not repeated. The earlier full worker gate on this machine took
+about 16 minutes; this unit edits only its new stage-1 folder. Ran its complete unit
+checks, go vet ./..., gofmt over cmd/internal/the new folder, scoped cohere type/lint/
+format checks (276 rules on the three production TS files), nine relevant uncached
+runtime fixtures, the oracle's one-byte mutant and four output/file-order probes.
+The native/Node observations in those oracle runs were cache misses. No counts or
+compiler-owned files were edited. Integration's full uncached gate remains required
+by CLAUDE.md before main moves.
+
+Not covered: full Markdown parsing/layout, arbitrary AST adapters, MDX's legacy word
+printer, invalid AST shapes including null wiki targets, isolated surrogate/invalid
+UTF-8 file bytes, non-Linux raw stdout devices, all global oracle fixtures, YAML or
+CSS declaration layout. The corpus tests whole files as leaf values; it does not
+extract parsed Markdown nodes. No general regular-expression engine was added.
+
+Commands and actual outputs
+
+Initial branch command: git fetch origin && git checkout -b codex/stage1-markdown-escape origin/main
+Verified base and branch above; no history rewrite, no pull request.
+
+bash cloud/setup.sh > /tmp/markdown-slice-setup.log 2>&1
+source /workspace/adamic-tools/env.sh (in every toolchain shell)
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)
+v24.19.0
+setup: node ready (1s)
+setup: submodules ready (1s)
+setup: build cache warm (81s)
+setup: done in 81s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+
+nproc
+5
+
+npm install --prefix /tmp/adamic-markdown-prettier --save-exact prettier@3.9.6 > /tmp/markdown-npm.log 2>&1
+
+added 1 package in 633ms
+
+ADAMIC_MARKDOWNINLINE_LIBRARY=/tmp/adamic-cssstrings-prettier/node_modules/prettier ADAMIC_MARKDOWNINLINE_KEEP=/tmp/markdown-final-cases.txt go test -count=1 -v -timeout=30m ./stage1/cohere/markdowninline > /tmp/markdown-final-test.log 2>&1
+=== RUN   TestDelimiterExpressionGap
+=== PAUSE TestDelimiterExpressionGap
+=== RUN   TestMarkdownInline
+=== PAUSE TestMarkdownInline
+=== CONT  TestDelimiterExpressionGap
+=== CONT  TestMarkdownInline
+--- PASS: TestDelimiterExpressionGap (0.23s)
+=== NAME  TestMarkdownInline
+    port_test.go:268: Go/native/Node/JavaScript backend/Prettier batch byte parity passed (105925 cases)
+=== RUN   TestMarkdownInline/escaped_delimiter_parity
+    port_test.go:332: caught by output case 494, byte 3352: got "    | <pre><code>/\\\\\\\\** @enum {number} \\\\*/</code><br/><cod" want "    | <pre><code>/\\\\** @enum {number} \\\\*/</code><br/><code>"
+    port_test.go:332: caught by output case 494, byte 3352: got "    | <pre><code>/\\\\\\\\** @enum {number} \\\\*/</code><br/><cod" want "    | <pre><code>/\\\\** @enum {number} \\\\*/</code><br/><code>"
+=== RUN   TestMarkdownInline/table_pipe_escaping
+    port_test.go:332: caught by output case 6, byte 658: got "mic`: `adamic types \\\\| c \\\\| build \\\\| js <file>`.\\n- `inte" want "mic`: `adamic types | c | build | js <file>`.\\n- `internal/l"
+    port_test.go:332: caught by output case 6, byte 658: got "mic`: `adamic types \\\\| c \\\\| build \\\\| js <file>`.\\n- `inte" want "mic`: `adamic types | c | build | js <file>`.\\n- `internal/l"
+=== RUN   TestMarkdownInline/minimum_absent_fence
+    port_test.go:332: caught by output case 6, byte 1: got "`# Adamic\\n\\n> In dedication, with gratit" want "``# Adamic\\n\\n> In dedication, with grati"
+    port_test.go:332: caught by output case 6, byte 1: got "`# Adamic\\n\\n> In dedication, with gratit" want "``# Adamic\\n\\n> In dedication, with grati"
+=== NAME  TestMarkdownInline
+    port_test.go:366: throughput Go 6725.6 texts/s, 3 process runs 47.248539s (startup, input, escaping, output included; build excluded)
+    port_test.go:366: throughput native 15420.3 texts/s, 3 process runs 20.607544s (startup, input, escaping, output included; build excluded)
+    port_test.go:366: throughput Node 28959.4 texts/s, 3 process runs 10.973133s (startup, input, escaping, output included; build excluded)
+    port_test.go:366: throughput Prettier 23658.4 texts/s, 3 process runs 13.431816s (startup, input, escaping, output included; build excluded)
+    port_test.go:368: corpus: 873 repository/submodule files, 4702 generated texts, 105925 leaf/context cases; all byte-identical
+--- PASS: TestMarkdownInline (269.15s)
+    --- PASS: TestMarkdownInline/escaped_delimiter_parity (24.72s)
+    --- PASS: TestMarkdownInline/table_pipe_escaping (26.25s)
+    --- PASS: TestMarkdownInline/minimum_absent_fence (27.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdowninline	269.179s
+
+go vet ./... > /tmp/markdown-vet.log 2>&1
+(exit zero, no output)
+
+gofmt -l cmd internal stage1/cohere/markdowninline > /tmp/markdown-gofmt.log
+(exit zero, no output)
+
+/tmp/cssstrings-cohere --no-cache --no-fix stage1/cohere/markdowninline/inline.ts stage1/cohere/markdowninline/classes.ts stage1/cohere/markdowninline/main.ts > /tmp/markdown-lint-final.log 2>&1
+✓ 💎 0.09s (276 rules • 3 checked) • 100% Adamic-ready (3 of 3) • ⚠ only 3 of 93 files
+
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout=30m ./internal/oracle -run 'TestNativeAgreesWithNode/(strings\.a|strings_more\.a|string_index\.a|string_positions\.a|lone_surrogates\.a|ascii_scan\.a|searches\.a|visits\.a|maps_and_text\.a)$|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestFileWritesLandInNodesOrder' > /tmp/markdown-oracle.log 2>&1
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== RUN   TestOneFileHoldsNodesOrder
+=== PAUSE TestOneFileHoldsNodesOrder
+=== RUN   TestFileWritesLandInNodesOrder
+=== PAUSE TestFileWritesLandInNodesOrder
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestOneFileHoldsNodesOrder
+=== CONT  TestTheOracleCatchesOneByte
+=== CONT  TestFileWritesLandInNodesOrder
+=== RUN   TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a
+=== PAUSE TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a
+=== RUN   TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a
+=== PAUSE TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a
+=== RUN   TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a
+=== PAUSE TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a
+=== CONT  TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a
+=== RUN   TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a
+=== PAUSE TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a
+=== CONT  TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a
+=== CONT  TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a
+--- PASS: TestNativeAgreesWithNode (0.08s)
+=== CONT  TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a
+--- PASS: TestTheOracleCatchesOneByte (3.42s)
+--- PASS: TestFileWritesLandInNodesOrder (0.00s)
+    --- PASS: TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a (3.65s)
+    --- PASS: TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a (3.60s)
+--- PASS: TestOneFileHoldsNodesOrder (0.00s)
+    --- PASS: TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a (3.70s)
+    --- PASS: TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a (3.76s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=4
+ok  	github.com/system-inc/adamic/internal/oracle	3.777s
+
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout=30m ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/^(strings\.a|strings_more\.a|string_index\.a|string_positions\.a|lone_surrogates\.a|ascii_scan\.a|searches\.a|visits\.a|maps_and_text\.a)$' > /tmp/markdown-oracle-final.log 2>&1
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/searches.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/searches.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/ascii_scan.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/ascii_scan.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/ascii_scan.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/searches.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/ascii_scan.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a (0.98s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a (0.99s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a (0.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/visits.a (1.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a (0.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/searches.a (0.81s)
+PASS
+gate cache: native hits=0 misses=27
+gate cache: node hits=0 misses=18
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.821s
+
+The first oracle filter ran only the mutant and output probes: its fixture path filter
+selected no native fixtures. The corrected second command ran all nine named fixtures.
+Both outputs are retained above so the scope is explicit.
+
+git diff --cached --check: exit zero, no output.
+Implementation commit: aa750e6c0e666b71d58aa74372be00050db3683f
+Report commit follows; final chat records both commit IDs and the push result.

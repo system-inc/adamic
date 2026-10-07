@@ -147,6 +147,43 @@ func TestParallelFeatureCoverage(t *testing.T) {
 	}
 }
 
+// Check the generated regex programs independently of lowering too.
+func TestRegexProgramsPassTheChecker(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	for seed := uint64(1); seed <= 30; seed++ {
+		path := filepath.Join(directory, "program.a")
+		source := Generate(seed).Source()
+		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := load.Load([]string{path}); err != nil {
+			t.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
+		}
+	}
+}
+
+// The October vocabulary shows up: a hierarchy, bitwise shifts, and NaN keys. One seed is not
+// required to use all of them.
+func TestOctoberFeaturesAppear(t *testing.T) {
+	t.Parallel()
+	seen := map[string]bool{}
+	needles := []string{"extends ", "super.bump", ">>>", "numbers.get(NaN", "new Set<number>", "flags.has(-0)", "/a/g.exec"}
+	for seed := uint64(1); seed <= 200; seed++ {
+		source := Generate(seed).Source()
+		for _, needle := range needles {
+			if strings.Contains(source, needle) {
+				seen[needle] = true
+			}
+		}
+	}
+	for _, needle := range needles {
+		if !seen[needle] {
+			t.Errorf("200 seeds never wrote %s", needle)
+		}
+	}
+}
+
 // The shrinker keeps only what the failure needs. Here a program "fails" while it still deletes
 // from the table, so all that should be left is one delete.
 func TestShrinkKeepsOnlyWhatFails(t *testing.T) {

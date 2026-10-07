@@ -13,12 +13,14 @@ import "strings"
 type Type string
 
 const (
-	Number      Type = "number"
-	String      Type = "string"
-	Boolean     Type = "boolean"
-	NumberArray Type = "number[]"
-	StringArray Type = "string[]"
-	NumberMap   Type = "Map<string, number>"
+	Number       Type = "number"
+	String       Type = "string"
+	Boolean      Type = "boolean"
+	NumberArray  Type = "number[]"
+	StringArray  Type = "string[]"
+	NumberMap    Type = "Map<string, number>"
+	NumberKeyMap Type = "Map<number, number>"
+	NumberSet    Type = "Set<number>"
 	// Other is any type the shrinker never substitutes: a closure, a class instance, a holder object.
 	Other Type = ""
 )
