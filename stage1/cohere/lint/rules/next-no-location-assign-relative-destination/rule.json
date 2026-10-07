@@ -1,0 +1,10 @@
+{
+    "name": "@next/next/no-location-assign-relative-destination",
+    "kinds": ["CallExpression", "BinaryExpression"],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNextNoLocation",
+    "upstreamPackage": "next",
+    "upstreamTest": "TestNoLocationAssignRelativeDestination"
+}

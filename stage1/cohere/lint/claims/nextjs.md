@@ -15,3 +15,7 @@ Inventory: `73ac2eb`, broader remaining syntax queue. Batch 6 and batch 8 publis
 - `@next/next/no-unwanted-polyfillio`
 
 Each rule will own its registration directory. Go cohere is the independent answer; source on Node and sanitized native must preserve complete output bytes. Unsupported parser or helper boundaries will have explicit proving programs and will not be counted as passing parity.
+
+## Measured status
+
+Only `no-location-assign-relative-destination` is implemented and registered. The other nine are unimplemented: seven have executable JSX parser refusals; `no-head-import-in-document` and `no-typos` need filename-preserving shared witnesses/capture before registration can meet the parity bar. See [report](../rules/next-no-location-assign-relative-destination/REPORT.md) and [proving programs](../rules/next-no-location-assign-relative-destination/GAPS.md). This is a partial unit, not ten completed ports.

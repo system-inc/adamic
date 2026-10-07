@@ -1,0 +1,2 @@
+globalThis.location.assign('/positive-control');
+import { foo as location } from 'm'; location.assign('/shadow');

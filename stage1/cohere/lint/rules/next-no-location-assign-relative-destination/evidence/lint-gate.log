@@ -1,0 +1,287 @@
+=== RUN   TestNestedConstructorGap
+    gaps_test.go:35: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestNestedConstructorGap (0.13s)
+=== RUN   TestRulesAgree
+    lint_test.go:323: cohere cases: 316 unique source/rule/options combinations
+    lint_test.go:348: Go, Node, native identical: 159249 bytes
+--- PASS: TestRulesAgree (20.01s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:382: compiler and stage1: 197 files
+    lint_test.go:383: Go, Node, native identical: 12484673 bytes
+--- PASS: TestCompilerAndStage1Agree (31.09s)
+=== RUN   TestMutants
+=== RUN   TestMutants/debugger_fix_suppressed
+    lint_test.go:465: debugger fix suppressed caught on Node: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3814508955/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3814508955/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 		
+    lint_test.go:465: debugger fix suppressed caught on native: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3814508955/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed3814508955/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 		
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:465: empty function body reported caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported3607930035/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported3607930035/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported3607930035/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported3607930035/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:465: empty function body reported caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported3607930035/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported3607930035/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported3607930035/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported3607930035/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:465: suggestion applied as fix caught on Node: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1006609818/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1006609818/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+    lint_test.go:465: suggestion applied as fix caught on native: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1006609818/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1006609818/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+=== RUN   TestMutants/var_declaration_suppressed
+    lint_test.go:465: var declaration suppressed caught on Node: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed570890223/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed570890223/004/generated-3.ts:1:1"
+        Go context:
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 83 85 unexpected fix	!==	
+        fixed	a == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ == null; `a` !== 'b';
+        case 12
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed570890223/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed570890223/004/generated-3.ts:1:12
+    lint_test.go:465: var declaration suppressed caught on native: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed570890223/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed570890223/004/generated-3.ts:1:1"
+        Go context:
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 83 85 unexpected fix	!==	
+        fixed	a == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ == null; `a` !== 'b';
+        case 12
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed570890223/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed570890223/004/generated-3.ts:1:12
+=== RUN   TestMutants/duplicate_case_suppressed
+    lint_test.go:465: duplicate case suppressed caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed3328814343/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed3328814343/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed3328814343/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed3328814343/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:465: duplicate case suppressed caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed3328814343/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed3328814343/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed3328814343/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed3328814343/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/next-location-relative-guard
+    lint_test.go:465: next-location-relative-guard caught on Node: case 24 line 522: port "/tmp/adamic-gate/TestMutantsnext-location-relative-guard1100542879/007/next-no-location-assign-relative-destination-0.ts:2:45", Go "/tmp/adamic-gate/TestMutantsnext-location-relative-guard1100542879/007/next-no-location-assign-relative-destination-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsnext-location-relative-guard1100542879/007/next-no-location-assign-relative-destination-0.ts:1:1
+          @next/next/no-location-assign-relative-destination  Navigating to an internal page through `location.assign` or by writing `location.href` tears down the running application and reloads it from the server, so client state, the router's history entry and any in-flight data are all discarded. Use `redirect()` in the render phase, or `useRouter().push()` in a Client Component's event handler.
+        
+        range 0 47 noLocationAssign 		
+        fixed	globalThis.location.assign('/positive-control');\u000aconst first = second; const second = first; location.assign(first);\u000a
+    lint_test.go:465: next-location-relative-guard caught on native: case 24 line 522: port "/tmp/adamic-gate/TestMutantsnext-location-relative-guard1100542879/007/next-no-location-assign-relative-destination-0.ts:2:45", Go "/tmp/adamic-gate/TestMutantsnext-location-relative-guard1100542879/007/next-no-location-assign-relative-destination-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsnext-location-relative-guard1100542879/007/next-no-location-assign-relative-destination-0.ts:1:1
+          @next/next/no-location-assign-relative-destination  Navigating to an internal page through `location.assign` or by writing `location.href` tears down the running application and reloads it from the server, so client state, the router's history entry and any in-flight data are all discarded. Use `redirect()` in the render phase, or `useRouter().push()` in a Client Component's event handler.
+        
+        range 0 47 noLocationAssign 		
+        fixed	globalThis.location.assign('/positive-control');\u000aconst first = second; const second = first; location.assign(first);\u000a
+--- PASS: TestMutants (84.12s)
+    --- PASS: TestMutants/debugger_fix_suppressed (14.09s)
+    --- PASS: TestMutants/empty_function_body_reported (13.38s)
+    --- PASS: TestMutants/suggestion_applied_as_fix (14.09s)
+    --- PASS: TestMutants/var_declaration_suppressed (13.11s)
+    --- PASS: TestMutants/duplicate_case_suppressed (13.25s)
+    --- PASS: TestMutants/next-location-relative-guard (14.14s)
+=== RUN   TestThroughput
+    lint_test.go:473: set ADAMIC_LINT_BENCH=1
+--- SKIP: TestThroughput (0.00s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, native identical: 94622 bytes
+--- PASS: TestOwnedWitnesses (16.18s)
+=== RUN   TestRegistrationMutant
+    registration_test.go:64: wrong descriptor kind caught on Node: case 0 line 2: port "fixed\tdebugger;\\u000a", Go "/tmp/adamic-gate/TestRegistrationMutant1582103796/002/no-debugger-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestRegistrationMutant1582103796/002/no-debugger-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        fixed	\u000a
+    registration_test.go:64: wrong descriptor kind caught on native: case 0 line 2: port "fixed\tdebugger;\\u000a", Go "/tmp/adamic-gate/TestRegistrationMutant1582103796/002/no-debugger-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestRegistrationMutant1582103796/002/no-debugger-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        fixed	\u000a
+--- PASS: TestRegistrationMutant (16.05s)
+=== RUN   TestFactoryHooks
+    registration_test.go:129: finish-hook omission caught on Node
+    registration_test.go:129: finish-hook omission caught on native
+--- PASS: TestFactoryHooks (27.43s)
+=== RUN   TestNestedOutsideModuleCopy
+    registration_test.go:220: root-only import rewrite mutant caught by Node and native module loading
+--- PASS: TestNestedOutsideModuleCopy (0.44s)
+=== RUN   TestDecodedOptionsAndMutant
+    registration_test.go:234: Go, Node, native identical: 47 bytes
+    registration_test.go:251: ignored decoded-option mutant caught on Node: case 0 line 2: port "/tmp/adamic-gate/TestDecodedOptionsAndMutant255076398/001/catch.ts:1:26", Go "fixed\ttry { work(); } catch(e) {}\\u000a"
+        Go context:
+        case 0
+        fixed	try { work(); } catch(e) {}\u000a
+    registration_test.go:251: ignored decoded-option mutant caught on native: case 0 line 2: port "/tmp/adamic-gate/TestDecodedOptionsAndMutant255076398/001/catch.ts:1:26", Go "fixed\ttry { work(); } catch(e) {}\\u000a"
+        Go context:
+        case 0
+        fixed	try { work(); } catch(e) {}\u000a
+--- PASS: TestDecodedOptionsAndMutant (29.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	225.219s
+=== RUN   TestDeterministicRegeneration
+=== PAUSE TestDeterministicRegeneration
+=== RUN   TestDescriptorRejections
+=== PAUSE TestDescriptorRejections
+=== RUN   TestDuplicateOracleAdapter
+=== PAUSE TestDuplicateOracleAdapter
+=== CONT  TestDeterministicRegeneration
+=== CONT  TestDuplicateOracleAdapter
+=== CONT  TestDescriptorRejections
+=== RUN   TestDescriptorRejections/duplicate_public_name
+=== PAUSE TestDescriptorRejections/duplicate_public_name
+=== RUN   TestDescriptorRejections/unknown_field
+=== PAUSE TestDescriptorRejections/unknown_field
+=== RUN   TestDescriptorRejections/missing_named_export
+=== PAUSE TestDescriptorRejections/missing_named_export
+=== RUN   TestDescriptorRejections/bad_kind
+=== PAUSE TestDescriptorRejections/bad_kind
+=== RUN   TestDescriptorRejections/missing_oracle_export
+=== PAUSE TestDescriptorRejections/missing_oracle_export
+=== RUN   TestDescriptorRejections/no_listener
+=== PAUSE TestDescriptorRejections/no_listener
+=== RUN   TestDescriptorRejections/missing_factory
+=== PAUSE TestDescriptorRejections/missing_factory
+=== RUN   TestDescriptorRejections/missing_class
+=== PAUSE TestDescriptorRejections/missing_class
+=== RUN   TestDescriptorRejections/missing_finish_hook
+=== PAUSE TestDescriptorRejections/missing_finish_hook
+=== RUN   TestDescriptorRejections/unsafe_public_name
+=== PAUSE TestDescriptorRejections/unsafe_public_name
+=== CONT  TestDescriptorRejections/duplicate_public_name
+=== CONT  TestDescriptorRejections/no_listener
+=== CONT  TestDescriptorRejections/bad_kind
+=== NAME  TestDuplicateOracleAdapter
+    registry_test.go:147: mutant rejected: /tmp/adamic-gate/TestDuplicateOracleAdapter2816588322/001/rules/no-empty/rule.json: duplicate oracle adapter "oracleNoDebugger"
+--- PASS: TestDuplicateOracleAdapter (0.01s)
+=== CONT  TestDescriptorRejections/missing_named_export
+=== NAME  TestDescriptorRejections/bad_kind
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsbad_kind3031954233/001/rules/no-debugger/rule.json: invalid or duplicate kind "NotARealNode"
+=== NAME  TestDescriptorRejections/duplicate_public_name
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsduplicate_public_name2300509681/001/rules/no-empty/rule.json: invalid or duplicate rule name "no-empty"
+=== CONT  TestDescriptorRejections/unknown_field
+=== CONT  TestDescriptorRejections/missing_oracle_export
+=== NAME  TestDescriptorRejections/no_listener
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsno_listener2404727303/001/rules/no-debugger/rule.json: visit and kinds required
+=== NAME  TestDescriptorRejections/missing_named_export
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_named_export708190494/001/rules/no-debugger/rule.json: missing named hook "missing"
+=== CONT  TestDescriptorRejections/missing_finish_hook
+=== CONT  TestDescriptorRejections/unsafe_public_name
+=== NAME  TestDescriptorRejections/unknown_field
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsunknown_field1517565423/001/rules/no-debugger/rule.json: json: unknown field "vist"
+=== CONT  TestDescriptorRejections/missing_class
+=== NAME  TestDescriptorRejections/unsafe_public_name
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsunsafe_public_name2990239925/001/rules/no-debugger/rule.json: invalid or duplicate rule name "bad\\name"
+=== NAME  TestDescriptorRejections/missing_oracle_export
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_oracle_export796292520/001/rules/no-debugger/rule.json: missing oracle adapter exports
+=== NAME  TestDescriptorRejections/missing_finish_hook
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_finish_hook2886283000/001/rules/no-debugger/rule.json: missing named hook "missing"
+=== CONT  TestDescriptorRejections/missing_factory
+=== NAME  TestDescriptorRejections/missing_class
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_class794045322/001/rules/no-debugger/rule.json: missing named factory or class
+--- PASS: TestDeterministicRegeneration (0.03s)
+=== NAME  TestDescriptorRejections/missing_factory
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_factory1878218578/001/rules/no-debugger/rule.json: missing named factory or class
+--- PASS: TestDescriptorRejections (0.00s)
+    --- PASS: TestDescriptorRejections/bad_kind (0.01s)
+    --- PASS: TestDescriptorRejections/duplicate_public_name (0.01s)
+    --- PASS: TestDescriptorRejections/missing_named_export (0.01s)
+    --- PASS: TestDescriptorRejections/no_listener (0.01s)
+    --- PASS: TestDescriptorRejections/unknown_field (0.01s)
+    --- PASS: TestDescriptorRejections/unsafe_public_name (0.01s)
+    --- PASS: TestDescriptorRejections/missing_finish_hook (0.01s)
+    --- PASS: TestDescriptorRejections/missing_class (0.01s)
+    --- PASS: TestDescriptorRejections/missing_oracle_export (0.02s)
+    --- PASS: TestDescriptorRejections/missing_factory (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.034s

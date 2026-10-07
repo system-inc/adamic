@@ -1,0 +1,2 @@
+globalThis.location.assign('/positive-control');
+function go(location) { location.assign('/shadow'); }

@@ -1,0 +1,184 @@
+[
+    {
+        "rule": "@next/next/no-head-element",
+        "file": "components/Shell.tsx",
+        "source": "export const C = () => <div><head /></div>;",
+        "goFindings": [
+            {
+                "line": 1,
+                "column": 29,
+                "endLine": 1,
+                "endColumn": 37,
+                "messageId": "noHeadElement",
+                "message": "This is a raw <head> element. Use the `Head` component from `next/head`, which merges what every page contributes and deduplicates it, so two components asking for a title do not both emit one. A hand-written <head> is emitted as-is and silently competes with whatever the framework already put there."
+            }
+        ],
+        "otherFiles": 0,
+        "observations": {
+            "Node": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 34 in /workspace/scratch/nextjs-lint-probes/no-head-element.tsx\n"
+            },
+            "native": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 34 in /workspace/scratch/nextjs-lint-probes/no-head-element.tsx\n"
+            }
+        }
+    },
+    {
+        "rule": "@next/next/no-html-link-for-pages",
+        "file": "foo.tsx",
+        "source": "export const C = () => (<a href='/about' />);\n",
+        "goFindings": [
+            {
+                "line": 1,
+                "column": 25,
+                "endLine": 1,
+                "endColumn": 44,
+                "messageId": "noHtmlLinkForPages",
+                "message": "This is a raw <a> element navigating to `/about/`, a route this project's pages or app directory defines. Use `Link` from `next/link`, which navigates on the client and prefetches the destination. A plain <a> does a full document load instead, so the application is torn down and rebuilt and every piece of in-memory state goes with it."
+            }
+        ],
+        "otherFiles": 1,
+        "observations": {
+            "Node": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 27 in /workspace/scratch/nextjs-lint-probes/no-html-link-for-pages.tsx\n"
+            },
+            "native": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 27 in /workspace/scratch/nextjs-lint-probes/no-html-link-for-pages.tsx\n"
+            }
+        }
+    },
+    {
+        "rule": "@next/next/no-img-element",
+        "file": "Component.tsx",
+        "source": "export const C = () => <div><img src=\"/test.png\"></img></div>;",
+        "goFindings": [
+            {
+                "line": 1,
+                "column": 29,
+                "endLine": 1,
+                "endColumn": 50,
+                "messageId": "noImgElement",
+                "message": "This is a raw <img> element. Use `<Image />` from `next/image` instead, which serves a correctly sized image, defers what is offscreen, and reserves the space before the bytes arrive. A raw <img> does none of that, so it costs a slower Largest Contentful Paint and more bandwidth without failing anything at build time."
+            }
+        ],
+        "otherFiles": 0,
+        "observations": {
+            "Node": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 33 in /workspace/scratch/nextjs-lint-probes/no-img-element.tsx\n"
+            },
+            "native": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 33 in /workspace/scratch/nextjs-lint-probes/no-img-element.tsx\n"
+            }
+        }
+    },
+    {
+        "rule": "@next/next/no-page-custom-font",
+        "file": "pages/_document.tsx",
+        "source": "const [D] = [() => (<link href=\"https://fonts.googleapis.com/css2?family=Inter\" />)];\nexport default D;\n",
+        "goFindings": [
+            {
+                "line": 1,
+                "column": 21,
+                "endLine": 1,
+                "endColumn": 83,
+                "messageId": "noPageCustomFontOutsideDefaultExport",
+                "message": "This is a Google Fonts stylesheet inside the custom document but outside the component the document default-exports. The framework rewrites font links it finds in the exported document component, and a link rendered from a helper component is invisible to that rewriting, so automatic font optimization silently does nothing. Inline the link into the default-exported component."
+            }
+        ],
+        "otherFiles": 0,
+        "observations": {
+            "Node": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 26 in /workspace/scratch/nextjs-lint-probes/no-page-custom-font.tsx\n"
+            },
+            "native": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 26 in /workspace/scratch/nextjs-lint-probes/no-page-custom-font.tsx\n"
+            }
+        }
+    },
+    {
+        "rule": "@next/next/no-styled-jsx-in-document",
+        "file": "pages/_document.tsx",
+        "source": "export const a = <style jsx />;\n",
+        "goFindings": [
+            {
+                "line": 1,
+                "column": 18,
+                "endLine": 1,
+                "endColumn": 31,
+                "messageId": "noStyledJsxInDocument",
+                "message": "This is styled-jsx inside the custom document. The document shell renders once, outside the React tree that styled-jsx instruments, so the styles it collects here are never injected and the rule that looks correct in a page silently produces nothing. Move the styles into a page or a component, or emit plain CSS with a raw <style> element."
+            }
+        ],
+        "otherFiles": 0,
+        "observations": {
+            "Node": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 24 in /workspace/scratch/nextjs-lint-probes/no-styled-jsx-in-document.tsx\n"
+            },
+            "native": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 24 in /workspace/scratch/nextjs-lint-probes/no-styled-jsx-in-document.tsx\n"
+            }
+        }
+    },
+    {
+        "rule": "@next/next/no-sync-scripts",
+        "file": "Component.tsx",
+        "source": "export const C = () => <script src=\"/a.js\" />;",
+        "goFindings": [
+            {
+                "line": 1,
+                "column": 24,
+                "endLine": 1,
+                "endColumn": 46,
+                "messageId": "noSyncScripts",
+                "message": "This <script> has a src and neither `async` nor `defer`, so the browser stops parsing the document, fetches the script, and runs it before continuing. Everything below it waits on the network. Add `defer` to run it after parsing, `async` if it does not depend on the document, or use the `Script` component from `next/script`."
+            }
+        ],
+        "otherFiles": 0,
+        "observations": {
+            "Node": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 31 in /workspace/scratch/nextjs-lint-probes/no-sync-scripts.tsx\n"
+            },
+            "native": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 31 in /workspace/scratch/nextjs-lint-probes/no-sync-scripts.tsx\n"
+            }
+        }
+    },
+    {
+        "rule": "@next/next/no-unwanted-polyfillio",
+        "file": "Component.tsx",
+        "source": "export const A = () => <script src='https://polyfill.io/v3/polyfill.min.js' />;",
+        "goFindings": [
+            {
+                "line": 1,
+                "column": 32,
+                "endLine": 1,
+                "endColumn": 76,
+                "messageId": "noUnwantedPolyfillioSecurity",
+                "message": "This script loads from polyfill.io, whose domain was sold in 2024 and then used to serve malicious code to the sites embedding it. Every visitor runs whatever that domain returns, so this is a live supply chain risk rather than a stale dependency. Point it at https://cdnjs.cloudflare.com/polyfill/ or drop the polyfill and use the browser feature directly."
+            }
+        ],
+        "otherFiles": 0,
+        "observations": {
+            "Node": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 31 in /workspace/scratch/nextjs-lint-probes/no-unwanted-polyfillio.tsx\n"
+            },
+            "native": {
+                "exit": 70,
+                "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 31 in /workspace/scratch/nextjs-lint-probes/no-unwanted-polyfillio.tsx\n"
+            }
+        }
+    }
+]

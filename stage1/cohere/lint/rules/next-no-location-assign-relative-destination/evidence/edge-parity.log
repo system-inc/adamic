@@ -1,0 +1,33 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/next-location-relative-guard
+    lint_test.go:465: next-location-relative-guard caught on Node: case 24 line 522: port "/tmp/adamic-gate/TestMutantsnext-location-relative-guard3423621621/007/next-no-location-assign-relative-destination-0.ts:2:45", Go "/tmp/adamic-gate/TestMutantsnext-location-relative-guard3423621621/007/next-no-location-assign-relative-destination-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsnext-location-relative-guard3423621621/007/next-no-location-assign-relative-destination-0.ts:1:1
+          @next/next/no-location-assign-relative-destination  Navigating to an internal page through `location.assign` or by writing `location.href` tears down the running application and reloads it from the server, so client state, the router's history entry and any in-flight data are all discarded. Use `redirect()` in the render phase, or `useRouter().push()` in a Client Component's event handler.
+        
+        range 0 47 noLocationAssign 		
+        fixed	globalThis.location.assign('/positive-control');\u000aconst first = second; const second = first; location.assign(first);\u000a
+    lint_test.go:465: next-location-relative-guard caught on native: case 24 line 522: port "/tmp/adamic-gate/TestMutantsnext-location-relative-guard3423621621/007/next-no-location-assign-relative-destination-0.ts:2:45", Go "/tmp/adamic-gate/TestMutantsnext-location-relative-guard3423621621/007/next-no-location-assign-relative-destination-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsnext-location-relative-guard3423621621/007/next-no-location-assign-relative-destination-0.ts:1:1
+          @next/next/no-location-assign-relative-destination  Navigating to an internal page through `location.assign` or by writing `location.href` tears down the running application and reloads it from the server, so client state, the router's history entry and any in-flight data are all discarded. Use `redirect()` in the render phase, or `useRouter().push()` in a Client Component's event handler.
+        
+        range 0 47 noLocationAssign 		
+        fixed	globalThis.location.assign('/positive-control');\u000aconst first = second; const second = first; location.assign(first);\u000a
+--- PASS: TestMutants (15.98s)
+    --- PASS: TestMutants/next-location-relative-guard (13.84s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, native identical: 94466 bytes
+--- PASS: TestOwnedWitnesses (15.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	31.629s

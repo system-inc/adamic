@@ -1,0 +1,5 @@
+{
+    "name": "next-location-relative-guard",
+    "from": "if(this.relative(value, [])) {",
+    "to": "if(!this.relative(value, [])) {"
+}

@@ -1,0 +1,8 @@
+@next/next/no-head-element 1 Go findings; both exit 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 34 in /workspace/scratch/nextjs-lint-probes/no-head-element.tsx
+@next/next/no-html-link-for-pages 1 Go findings; both exit 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 27 in /workspace/scratch/nextjs-lint-probes/no-html-link-for-pages.tsx
+@next/next/no-img-element 1 Go findings; both exit 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 33 in /workspace/scratch/nextjs-lint-probes/no-img-element.tsx
+@next/next/no-page-custom-font 1 Go findings; both exit 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 26 in /workspace/scratch/nextjs-lint-probes/no-page-custom-font.tsx
+@next/next/no-styled-jsx-in-document 1 Go findings; both exit 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 24 in /workspace/scratch/nextjs-lint-probes/no-styled-jsx-in-document.tsx
+@next/next/no-sync-scripts 1 Go findings; both exit 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 31 in /workspace/scratch/nextjs-lint-probes/no-sync-scripts.tsx
+@next/next/no-unwanted-polyfillio 1 Go findings; both exit 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 31 in /workspace/scratch/nextjs-lint-probes/no-unwanted-polyfillio.tsx
+clean control passes on both backends; seven positive JSX sources refused explicitly

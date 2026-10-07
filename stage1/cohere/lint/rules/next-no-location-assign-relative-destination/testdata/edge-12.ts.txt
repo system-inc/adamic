@@ -1,0 +1,2 @@
+globalThis.location.assign('/positive-control');
+const destination = '/outer'; function go(destination) { location.assign(destination); }

@@ -1,0 +1,1602 @@
+=== RUN   TestAdamicFilenameBoundary
+    adamic_filename_boundary_test.go:22: @next/next/no-head-import-in-document: original filename reports 1, shared harness filename reports 0
+    adamic_filename_boundary_test.go:22: @next/next/no-typos: original filename reports 1, shared harness filename reports 0
+--- PASS: TestAdamicFilenameBoundary (0.00s)
+=== RUN   TestNoHeadElementReports
+=== PAUSE TestNoHeadElementReports
+=== RUN   TestNoHeadElementIsSilent
+=== PAUSE TestNoHeadElementIsSilent
+=== RUN   TestNoHeadImportInDocumentReports
+=== PAUSE TestNoHeadImportInDocumentReports
+=== RUN   TestNoHeadImportInDocumentReportsOncePerImport
+=== PAUSE TestNoHeadImportInDocumentReportsOncePerImport
+=== RUN   TestNoHeadImportInDocumentIsSilent
+=== PAUSE TestNoHeadImportInDocumentIsSilent
+=== RUN   TestNoHeadImportInDocumentPointsAtTheImportDeclaration
+=== PAUSE TestNoHeadImportInDocumentPointsAtTheImportDeclaration
+=== RUN   TestNoHeadImportInDocumentPointsAtEachImportSeparately
+=== PAUSE TestNoHeadImportInDocumentPointsAtEachImportSeparately
+=== RUN   TestNoHeadImportInDocumentMessage
+=== PAUSE TestNoHeadImportInDocumentMessage
+=== RUN   TestNoHtmlLinkForPagesReplaysUpstreamRows
+=== PAUSE TestNoHtmlLinkForPagesReplaysUpstreamRows
+=== RUN   TestNoHtmlLinkForPagesReadsThePagesDirectory
+=== PAUSE TestNoHtmlLinkForPagesReadsThePagesDirectory
+=== RUN   TestNoHtmlLinkForPagesReadsTheAppDirectory
+=== PAUSE TestNoHtmlLinkForPagesReadsTheAppDirectory
+=== RUN   TestNoHtmlLinkForPagesReportsOncePerRoute
+=== PAUSE TestNoHtmlLinkForPagesReportsOncePerRoute
+=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes
+=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes
+=== RUN   TestNoHtmlLinkForPagesFindsNoDirectory
+=== PAUSE TestNoHtmlLinkForPagesFindsNoDirectory
+=== RUN   TestNoHtmlLinkForPagesIsSilentBesideAPage
+=== PAUSE TestNoHtmlLinkForPagesIsSilentBesideAPage
+=== RUN   TestNoHtmlLinkForPagesReadsTheAnchorAsUpstreamDoes
+=== PAUSE TestNoHtmlLinkForPagesReadsTheAnchorAsUpstreamDoes
+=== RUN   TestNoHtmlLinkForPagesFollowsSymbolicLinksAsNodeLists
+=== PAUSE TestNoHtmlLinkForPagesFollowsSymbolicLinksAsNodeLists
+=== RUN   TestNoHtmlLinkForPagesTakesPagesDirectories
+=== PAUSE TestNoHtmlLinkForPagesTakesPagesDirectories
+=== RUN   TestNoHtmlLinkForPagesAnchorsRelativeDirectoriesToTheConfig
+=== PAUSE TestNoHtmlLinkForPagesAnchorsRelativeDirectoriesToTheConfig
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema
+=== RUN   TestNoHtmlLinkForPagesPointsAtTheOpeningElement
+=== PAUSE TestNoHtmlLinkForPagesPointsAtTheOpeningElement
+=== RUN   TestNoHtmlLinkForPagesNamesTheRouteInItsMessage
+=== PAUSE TestNoHtmlLinkForPagesNamesTheRouteInItsMessage
+=== RUN   TestNoImgElementReports
+=== PAUSE TestNoImgElementReports
+=== RUN   TestNoImgElementIsSilent
+=== PAUSE TestNoImgElementIsSilent
+=== RUN   TestNoLocationAssignRelativeDestinationFires
+=== PAUSE TestNoLocationAssignRelativeDestinationFires
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent
+=== RUN   TestNoLocationAssignRelativeDestinationPointsAtTheNavigation
+=== PAUSE TestNoLocationAssignRelativeDestinationPointsAtTheNavigation
+=== RUN   TestNoLocationAssignRelativeDestinationRendersItsMessage
+=== PAUSE TestNoLocationAssignRelativeDestinationRendersItsMessage
+=== RUN   TestNoPageCustomFontFires
+=== PAUSE TestNoPageCustomFontFires
+=== RUN   TestNoPageCustomFontStaysSilent
+=== PAUSE TestNoPageCustomFontStaysSilent
+=== RUN   TestNoPageCustomFontPointsAtTheWholeElement
+=== PAUSE TestNoPageCustomFontPointsAtTheWholeElement
+=== RUN   TestNoPageCustomFontPointsAtTheOpeningTagOfAPairedElement
+=== PAUSE TestNoPageCustomFontPointsAtTheOpeningTagOfAPairedElement
+=== RUN   TestNoPageCustomFontOutsideDefaultExportMessage
+=== PAUSE TestNoPageCustomFontOutsideDefaultExportMessage
+=== RUN   TestNoPageCustomFontDecodesEntities
+=== PAUSE TestNoPageCustomFontDecodesEntities
+=== RUN   TestNoStyledJsxInDocumentReports
+=== PAUSE TestNoStyledJsxInDocumentReports
+=== RUN   TestNoStyledJsxInDocumentIsSilent
+=== PAUSE TestNoStyledJsxInDocumentIsSilent
+=== RUN   TestNoStyledJsxInDocumentPointsAtTheOpeningElement
+=== PAUSE TestNoStyledJsxInDocumentPointsAtTheOpeningElement
+=== RUN   TestNoStyledJsxInDocumentPointsAtASelfClosingElement
+=== PAUSE TestNoStyledJsxInDocumentPointsAtASelfClosingElement
+=== RUN   TestNoStyledJsxInDocumentRendersItsMessage
+=== PAUSE TestNoStyledJsxInDocumentRendersItsMessage
+=== RUN   TestNoSyncScriptsReports
+=== PAUSE TestNoSyncScriptsReports
+=== RUN   TestNoSyncScriptsIsSilent
+=== PAUSE TestNoSyncScriptsIsSilent
+=== RUN   TestNoTyposReports
+=== PAUSE TestNoTyposReports
+=== RUN   TestNoTyposIsSilent
+=== PAUSE TestNoTyposIsSilent
+=== RUN   TestNoTyposPointsAtTheIdentifier
+=== PAUSE TestNoTyposPointsAtTheIdentifier
+=== RUN   TestNoTyposNamesBothTheTypoAndTheCorrection
+=== PAUSE TestNoTyposNamesBothTheTypoAndTheCorrection
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes
+=== RUN   TestNoTyposAppliesThresholdOne
+=== PAUSE TestNoTyposAppliesThresholdOne
+=== RUN   TestNoTyposGatesOnThePagesDirectory
+=== PAUSE TestNoTyposGatesOnThePagesDirectory
+=== RUN   TestNoUnwantedPolyfillioReports
+=== PAUSE TestNoUnwantedPolyfillioReports
+=== RUN   TestNoUnwantedPolyfillioIsSilent
+=== PAUSE TestNoUnwantedPolyfillioIsSilent
+=== RUN   TestNoUnwantedPolyfillioPointsAtTheSourceAttribute
+=== PAUSE TestNoUnwantedPolyfillioPointsAtTheSourceAttribute
+=== RUN   TestNoUnwantedPolyfillioNamesTheFeaturesItFound
+=== PAUSE TestNoUnwantedPolyfillioNamesTheFeaturesItFound
+=== RUN   TestNoUnwantedPolyfillioUsesStableMessageIds
+=== PAUSE TestNoUnwantedPolyfillioUsesStableMessageIds
+=== RUN   TestNoUnwantedPolyfillioSecurityMessageText
+=== PAUSE TestNoUnwantedPolyfillioSecurityMessageText
+=== RUN   TestNoUnwantedPolyfillioSecurityArmReturnsBeforeTheFeatureCheck
+=== PAUSE TestNoUnwantedPolyfillioSecurityArmReturnsBeforeTheFeatureCheck
+=== CONT  TestNoHeadElementReports
+=== RUN   TestNoHeadElementReports/paired_head
+=== PAUSE TestNoHeadElementReports/paired_head
+=== RUN   TestNoHeadElementReports/self_closing_head
+=== PAUSE TestNoHeadElementReports/self_closing_head
+=== CONT  TestNoPageCustomFontFires
+=== RUN   TestNoHeadElementReports/a_directory_whose_name_ends_in_app
+=== PAUSE TestNoHeadElementReports/a_directory_whose_name_ends_in_app
+=== CONT  TestNoHtmlLinkForPagesFindsNoDirectory
+=== RUN   TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory
+=== PAUSE TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory
+=== CONT  TestNoHtmlLinkForPagesReadsTheAppDirectory
+=== RUN   TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes
+=== PAUSE TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes
+=== RUN   TestNoPageCustomFontFires/upstream_fail_in_pages/index.tsx
+=== PAUSE TestNoPageCustomFontFires/upstream_fail_in_pages/index.tsx
+=== CONT  TestNoHtmlLinkForPagesReportsOncePerRoute
+=== RUN   TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root
+=== RUN   TestNoHtmlLinkForPagesFindsNoDirectory/a_file_named_pages
+=== PAUSE TestNoHtmlLinkForPagesFindsNoDirectory/a_file_named_pages
+=== RUN   TestNoPageCustomFontFires/upstream_fail_in_pages/_document.jsx
+=== RUN   TestNoHtmlLinkForPagesFindsNoDirectory/no_program
+=== PAUSE TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root
+=== RUN   TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories
+=== PAUSE TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories
+=== PAUSE TestNoPageCustomFontFires/upstream_fail_in_pages/_document.jsx
+=== RUN   TestNoPageCustomFontFires/a_document_outside_a_pages_directory
+=== PAUSE TestNoPageCustomFontFires/a_document_outside_a_pages_directory
+=== RUN   TestNoPageCustomFontFires/a_page_whose_name_merely_begins_with_the_word
+=== PAUSE TestNoPageCustomFontFires/a_page_whose_name_merely_begins_with_the_word
+=== CONT  TestNoHtmlLinkForPagesReadsThePagesDirectory
+=== RUN   TestNoPageCustomFontFires/no_rel_attribute_at_all
+=== PAUSE TestNoPageCustomFontFires/no_rel_attribute_at_all
+=== RUN   TestNoPageCustomFontFires/rel_is_preload_rather_than_stylesheet
+=== PAUSE TestNoPageCustomFontFires/rel_is_preload_rather_than_stylesheet
+=== RUN   TestNoPageCustomFontFires/a_paired_link_element
+=== PAUSE TestNoPageCustomFontFires/a_paired_link_element
+=== RUN   TestNoPageCustomFontFires/a_named_function_expression_takes_its_own_name
+=== PAUSE TestNoPageCustomFontFires/a_named_function_expression_takes_its_own_name
+=== RUN   TestNoPageCustomFontFires/an_arrow_whose_binding_is_not_the_default_export
+=== RUN   TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route
+=== PAUSE TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route
+=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows
+=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes
+=== PAUSE TestNoHtmlLinkForPagesFindsNoDirectory/no_program
+=== CONT  TestNoHeadImportInDocumentMessage
+=== PAUSE TestNoPageCustomFontFires/an_arrow_whose_binding_is_not_the_default_export
+=== RUN   TestNoHtmlLinkForPagesReplaysUpstreamRows/custom_pages_directory
+=== PAUSE TestNoHtmlLinkForPagesReplaysUpstreamRows/custom_pages_directory
+=== RUN   TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories
+=== PAUSE TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories
+=== RUN   TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory
+=== PAUSE TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory
+=== RUN   TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory
+=== PAUSE TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory
+=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments
+--- PASS: TestNoHeadImportInDocumentMessage (0.00s)
+=== CONT  TestNoHeadImportInDocumentPointsAtTheImportDeclaration
+=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments
+=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name
+=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name
+--- PASS: TestNoHeadImportInDocumentPointsAtTheImportDeclaration (0.00s)
+=== CONT  TestNoHeadImportInDocumentIsSilent
+=== CONT  TestNoHeadImportInDocumentPointsAtEachImportSeparately
+=== RUN   TestNoHeadImportInDocumentIsSilent/the_document_importing_head_from_next_document
+=== PAUSE TestNoHeadImportInDocumentIsSilent/the_document_importing_head_from_next_document
+=== RUN   TestNoHeadImportInDocumentIsSilent/an_ordinary_page_importing_next_head
+=== PAUSE TestNoHeadImportInDocumentIsSilent/an_ordinary_page_importing_next_head
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_longer_file_name_sharing_the_prefix
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_longer_file_name_sharing_the_prefix
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_sibling_of_the_document_directory
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_sibling_of_the_document_directory
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_plural_sharing_the_word
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_plural_sharing_the_word
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_name_merely_containing_the_word
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_name_merely_containing_the_word
+=== RUN   TestNoHeadImportInDocumentIsSilent/the_document_with_no_extension
+=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern
+=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern
+=== RUN   TestNoPageCustomFontFires/a_destructuring_binding
+=== PAUSE TestNoPageCustomFontFires/a_destructuring_binding
+=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page
+=== RUN   TestNoPageCustomFontFires/an_aliased_default_export
+=== PAUSE TestNoPageCustomFontFires/an_aliased_default_export
+=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page
+=== CONT  TestNoHeadImportInDocumentReportsOncePerImport
+=== PAUSE TestNoHeadImportInDocumentIsSilent/the_document_with_no_extension
+=== CONT  TestNoHeadImportInDocumentReports
+=== RUN   TestNoHeadImportInDocumentReportsOncePerImport/two_imports_of_the_module
+=== PAUSE TestNoHeadImportInDocumentReportsOncePerImport/two_imports_of_the_module
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_deep_path_into_the_module
+=== CONT  TestNoHeadElementIsSilent
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_deep_path_into_the_module
+=== RUN   TestNoHeadElementIsSilent/inside_an_app_directory
+=== PAUSE TestNoHeadElementIsSilent/inside_an_app_directory
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_trailing_slash_on_the_specifier
+=== RUN   TestNoHeadElementIsSilent/app_directory_deeper_in_the_path
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_trailing_slash_on_the_specifier
+=== RUN   TestNoHeadImportInDocumentReports/the_document_as_javascript
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_scoped_package_sharing_the_name
+=== PAUSE TestNoHeadImportInDocumentReports/the_document_as_javascript
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_scoped_package_sharing_the_name
+=== RUN   TestNoHeadImportInDocumentReports/the_document_as_typescript
+=== PAUSE TestNoHeadElementIsSilent/app_directory_deeper_in_the_path
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_relative_path_sharing_the_name
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_relative_path_sharing_the_name
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_require_of_the_module
+=== RUN   TestNoHeadElementIsSilent/the_next/head_component
+=== PAUSE TestNoHeadImportInDocumentReports/the_document_as_typescript
+=== PAUSE TestNoHeadElementIsSilent/the_next/head_component
+=== RUN   TestNoHeadElementIsSilent/no_head_at_all
+=== PAUSE TestNoHeadElementIsSilent/no_head_at_all
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_require_of_the_module
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_dynamic_import_of_the_module
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_dynamic_import_of_the_module
+=== RUN   TestNoHeadImportInDocumentIsSilent/an_unquoted_specifier_the_parser_recovers_from
+=== PAUSE TestNoHeadImportInDocumentIsSilent/an_unquoted_specifier_the_parser_recovers_from
+=== RUN   TestNoHeadImportInDocumentIsSilent/an_empty_specifier_the_parser_recovers_from
+=== PAUSE TestNoHeadImportInDocumentIsSilent/an_empty_specifier_the_parser_recovers_from
+=== RUN   TestNoHeadImportInDocumentIsSilent/a_re-export_of_the_module
+=== RUN   TestNoHeadImportInDocumentReports/the_page_suffix_convention
+=== PAUSE TestNoHeadImportInDocumentIsSilent/a_re-export_of_the_module
+=== PAUSE TestNoHeadImportInDocumentReports/the_page_suffix_convention
+=== RUN   TestNoHeadElementIsSilent/member_expression_name
+=== RUN   TestNoHeadImportInDocumentIsSilent/the_sibling_module_the_rule_points_people_toward
+=== PAUSE TestNoHeadElementIsSilent/member_expression_name
+=== RUN   TestNoHeadImportInDocumentReports/the_directory_form
+=== PAUSE TestNoHeadImportInDocumentIsSilent/the_sibling_module_the_rule_points_people_toward
+=== PAUSE TestNoHeadImportInDocumentReports/the_directory_form
+=== RUN   TestNoHeadImportInDocumentReports/the_directory_form_with_another_extension
+=== PAUSE TestNoHeadImportInDocumentReports/the_directory_form_with_another_extension
+=== RUN   TestNoHeadImportInDocumentReports/the_directory_form_with_a_compound_basename
+=== PAUSE TestNoHeadImportInDocumentReports/the_directory_form_with_a_compound_basename
+=== RUN   TestNoHeadImportInDocumentReports/a_longer_directory_name_sharing_the_prefix
+=== PAUSE TestNoHeadImportInDocumentReports/a_longer_directory_name_sharing_the_prefix
+=== RUN   TestNoHeadImportInDocumentReports/a_document_outside_any_pages_directory
+=== PAUSE TestNoHeadImportInDocumentReports/a_document_outside_any_pages_directory
+=== CONT  TestNoLocationAssignRelativeDestinationRendersItsMessage
+=== RUN   TestNoHeadImportInDocumentReports/a_bare_side_effect_import
+=== PAUSE TestNoHeadImportInDocumentReports/a_bare_side_effect_import
+=== RUN   TestNoHeadImportInDocumentReports/a_type_only_import
+=== PAUSE TestNoHeadImportInDocumentReports/a_type_only_import
+=== CONT  TestNoLocationAssignRelativeDestinationPointsAtTheNavigation
+=== RUN   TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_call
+=== PAUSE TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_call
+=== RUN   TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_call_through_window
+=== RUN   TestNoHeadImportInDocumentReports/a_renamed_default_binding
+=== PAUSE TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_call_through_window
+=== PAUSE TestNoHeadImportInDocumentReports/a_renamed_default_binding
+=== RUN   TestNoHeadImportInDocumentReports/a_template_literal_specifier
+=== PAUSE TestNoHeadImportInDocumentReports/a_template_literal_specifier
+=== RUN   TestNoHeadImportInDocumentReports/a_namespace_import
+=== PAUSE TestNoHeadImportInDocumentReports/a_namespace_import
+=== RUN   TestNoHeadImportInDocumentReports/the_double_quoted_specifier
+=== PAUSE TestNoHeadImportInDocumentReports/the_double_quoted_specifier
+=== RUN   TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/an_href_assignment
+=== PAUSE TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/an_href_assignment
+=== RUN   TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/an_href_assignment_through_window
+=== PAUSE TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/an_href_assignment_through_window
+=== RUN   TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_compound_assignment
+=== PAUSE TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_compound_assignment
+=== RUN   TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_parenthesized_receiver
+=== PAUSE TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_parenthesized_receiver
+=== RUN   TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_concatenation
+=== PAUSE TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_concatenation
+=== RUN   TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_nested_violation
+=== CONT  TestNoLocationAssignRelativeDestinationFires
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_bare_location.assign_with_a_rooted_path
+=== PAUSE TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_nested_violation
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent
+=== CONT  TestNoHtmlLinkForPagesNamesTheRouteInItsMessage
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/an_absolute_https_destination
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/an_absolute_https_destination
+=== CONT  TestNoImgElementReports
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_protocol-relative_destination
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_protocol-relative_destination
+=== RUN   TestNoImgElementReports/inside_a_div
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/an_uppercase_scheme
+=== PAUSE TestNoImgElementReports/inside_a_div
+=== CONT  TestNoImgElementIsSilent
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_bare_location.assign_with_a_rooted_path
+=== RUN   TestNoImgElementReports/returned_directly
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_window_receiver
+=== PAUSE TestNoImgElementReports/returned_directly
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_window_receiver
+=== RUN   TestNoImgElementReports/src_is_not_a_string_literal
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_globalThis_receiver
+=== PAUSE TestNoImgElementReports/src_is_not_a_string_literal
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_globalThis_receiver
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_document_receiver
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/an_uppercase_scheme
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_document_receiver
+=== RUN   TestNoImgElementIsSilent/next/image_component
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_mailto_scheme
+=== PAUSE TestNoImgElementIsSilent/next/image_component
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_self_receiver
+=== RUN   TestNoImgElementIsSilent/directly_inside_a_picture
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_self_receiver
+=== PAUSE TestNoImgElementIsSilent/directly_inside_a_picture
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_computed_assign_key
+=== RUN   TestNoImgElementIsSilent/inside_a_picture_with_a_source_sibling
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_computed_assign_key
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_computed_location_key
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_computed_location_key
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_href_assignment
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_href_assignment
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_href_assignment_through_window
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_href_assignment_through_window
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_plus-equals_href_assignment
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_plus-equals_href_assignment
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_minus-equals_href_assignment
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_minus-equals_href_assignment
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_logical-or-equals_href_assignment
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_logical-or-equals_href_assignment
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_nullish-equals_href_assignment
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_nullish-equals_href_assignment
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_computed_href_key
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_computed_href_key
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_path_with_no_leading_slash
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_path_with_no_leading_slash
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_dot-slash_relative_path
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_dot-slash_relative_path
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_dot-dot_relative_path
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_dot-dot_relative_path
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_empty_string
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_empty_string
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_fragment-only_destination
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_fragment-only_destination
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_query-only_destination
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_query-only_destination
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_template_whose_first_span_is_text
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_template_whose_first_span_is_text
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_template_opening_with_an_interpolation
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_template_opening_with_an_interpolation
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_template_with_only_interpolations
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_template_with_only_interpolations
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_no-substitution_template
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_no-substitution_template
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_concatenation_whose_left_side_is_relative
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_concatenation_whose_left_side_is_relative
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_concatenation_nested_to_the_left
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_concatenation_nested_to_the_left
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_concatenation_whose_left_side_is_a_template
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_concatenation_whose_left_side_is_a_template
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_identifier_initialized_to_a_relative_path
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_identifier_initialized_to_a_relative_path
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_identifier_initialized_to_a_template
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_identifier_initialized_to_a_template
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_identifier_rewritten_before_the_read
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_identifier_rewritten_before_the_read
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_identifier_declared_without_an_initializer_then_written
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_identifier_declared_without_an_initializer_then_written
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_identifier_resolved_through_two_hops
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_identifier_resolved_through_two_hops
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_violation_nested_inside_a_handler_inside_a_component
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_violation_nested_inside_a_handler_inside_a_component
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_violation_inside_a_class_method
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_violation_inside_a_class_method
+=== RUN   TestNoImgElementReports/paired_form
+=== PAUSE TestNoImgElementReports/paired_form
+=== PAUSE TestNoImgElementIsSilent/inside_a_picture_with_a_source_sibling
+=== RUN   TestNoImgElementIsSilent/member_expression_name
+=== RUN   TestNoImgElementReports/inside_a_div_inside_a_picture
+=== PAUSE TestNoImgElementIsSilent/member_expression_name
+=== RUN   TestNoImgElementIsSilent/paired_form_inside_a_picture
+=== PAUSE TestNoImgElementReports/inside_a_div_inside_a_picture
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_mailto_scheme
+=== CONT  TestNoTyposIsSilent
+=== PAUSE TestNoImgElementIsSilent/paired_form_inside_a_picture
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_parenthesized_href_target
+=== CONT  TestNoUnwantedPolyfillioSecurityArmReturnsBeforeTheFeatureCheck
+=== RUN   TestNoTyposIsSilent/both_correct_names,_variable_form
+--- PASS: TestNoHeadImportInDocumentPointsAtEachImportSeparately (0.00s)
+--- PASS: TestNoLocationAssignRelativeDestinationRendersItsMessage (0.00s)
+--- PASS: TestNoHtmlLinkForPagesNamesTheRouteInItsMessage (0.00s)
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_tel_scheme
+--- PASS: TestNoUnwantedPolyfillioSecurityArmReturnsBeforeTheFeatureCheck (0.00s)
+=== CONT  TestNoUnwantedPolyfillioSecurityMessageText
+--- PASS: TestNoUnwantedPolyfillioSecurityMessageText (0.00s)
+=== CONT  TestNoUnwantedPolyfillioUsesStableMessageIds
+=== RUN   TestNoUnwantedPolyfillioUsesStableMessageIds/security_arm
+=== PAUSE TestNoUnwantedPolyfillioUsesStableMessageIds/security_arm
+=== RUN   TestNoUnwantedPolyfillioUsesStableMessageIds/duplicate_arm
+=== PAUSE TestNoTyposIsSilent/both_correct_names,_variable_form
+=== RUN   TestNoTyposIsSilent/the_correct_server_side_name,_variable_form
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_parenthesized_href_target
+=== PAUSE TestNoTyposIsSilent/the_correct_server_side_name,_variable_form
+=== RUN   TestNoTyposIsSilent/both_correct_names,_function_form
+=== PAUSE TestNoTyposIsSilent/both_correct_names,_function_form
+=== RUN   TestNoTyposIsSilent/the_correct_server_side_name,_function_form
+=== PAUSE TestNoTyposIsSilent/the_correct_server_side_name,_function_form
+=== PAUSE TestNoUnwantedPolyfillioUsesStableMessageIds/duplicate_arm
+=== RUN   TestNoTyposIsSilent/three_trailing_s_is_distance_two,_outside_the_threshold
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_parenthesized_href_target_through_window
+=== PAUSE TestNoTyposIsSilent/three_trailing_s_is_distance_two,_outside_the_threshold
+=== RUN   TestNoTyposIsSilent/distance_three,_and_it_reads_like_a_typo_to_a_human
+=== PAUSE TestNoTyposIsSilent/distance_three,_and_it_reads_like_a_typo_to_a_human
+=== RUN   TestNoTyposIsSilent/a_typo,_but_the_file_is_not_under_a_pages_directory
+=== PAUSE TestNoTyposIsSilent/a_typo,_but_the_file_is_not_under_a_pages_directory
+=== RUN   TestNoTyposIsSilent/a_typo,_but_the_file_is_an_api_route
+=== PAUSE TestNoTyposIsSilent/a_typo,_but_the_file_is_an_api_route
+=== RUN   TestNoTyposIsSilent/the_windows_spelling_of_the_same_api_route
+=== PAUSE TestNoTyposIsSilent/the_windows_spelling_of_the_same_api_route
+=== CONT  TestNoUnwantedPolyfillioNamesTheFeaturesItFound
+=== RUN   TestNoUnwantedPolyfillioNamesTheFeaturesItFound/both_epsilon_spellings_are_named
+=== PAUSE TestNoUnwantedPolyfillioNamesTheFeaturesItFound/both_epsilon_spellings_are_named
+=== CONT  TestNoUnwantedPolyfillioPointsAtTheSourceAttribute
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_parenthesized_href_target_through_window
+=== RUN   TestNoUnwantedPolyfillioNamesTheFeaturesItFound/lowercase_es_alias_is_named
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_parenthesized_location_receiver
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_parenthesized_location_receiver
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_parenthesized_window_receiver
+=== PAUSE TestNoUnwantedPolyfillioNamesTheFeaturesItFound/lowercase_es_alias_is_named
+--- PASS: TestNoUnwantedPolyfillioPointsAtTheSourceAttribute (0.00s)
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_tel_scheme
+=== RUN   TestNoUnwantedPolyfillioNamesTheFeaturesItFound/singular_agrees_its_verb
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_template_whose_first_span_is_a_scheme
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_template_whose_first_span_is_a_scheme
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_concatenation_whose_left_side_is_absolute
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_concatenation_whose_left_side_is_absolute
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_initialized_to_an_absolute_url
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_initialized_to_an_absolute_url
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_rewritten_only_after_the_read
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_rewritten_only_after_the_read
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_declared_without_an_initializer_and_written_after_the_read
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_declared_without_an_initializer_and_written_after_the_read
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_bound_to_a_call
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_bound_to_a_call
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_property_access
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_property_access
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_call_result_passed_directly
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_call_result_passed_directly
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_location.replace_call
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_location.replace_call
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_window.location.replace_call
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_window.location.replace_call
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/an_href_read
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/an_href_read
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/an_assign_reference_that_is_not_called
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/an_assign_reference_that_is_not_called
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_call_with_no_arguments
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_call_with_no_arguments
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_parenthesized_window_receiver
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_parenthesized_callee
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_parenthesized_callee
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_parenthesized_argument
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_parenthesized_argument
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_optional_call
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_optional_call
+=== RUN   TestNoLocationAssignRelativeDestinationFires/an_optional_member_access
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/an_optional_member_access
+=== RUN   TestNoLocationAssignRelativeDestinationFires/a_use_outside_a_block_that_shadowed_the_name
+=== PAUSE TestNoLocationAssignRelativeDestinationFires/a_use_outside_a_block_that_shadowed_the_name
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_spread_argument
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_spread_argument
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_top_receiver
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_top_receiver
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_parent_receiver
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_parent_receiver
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_nested_self_under_window
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_nested_self_under_window
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_location_property_of_location
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_location_property_of_location
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_module-scope_binding_named_location
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_module-scope_binding_named_location
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter_named_location
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter_named_location
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter_named_window
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter_named_window
+=== CONT  TestNoUnwantedPolyfillioReports
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_named_import_of_the_name
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_named_import_of_the_name
+=== RUN   TestNoUnwantedPolyfillioReports/upstream_fail_1
+=== PAUSE TestNoUnwantedPolyfillioReports/upstream_fail_1
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_default_import_of_the_name
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_default_import_of_the_name
+=== CONT  TestNoUnwantedPolyfillioIsSilent
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_namespace_import_of_the_name
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_namespace_import_of_the_name
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/an_import_renamed_to_the_name
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/an_import_renamed_to_the_name
+=== RUN   TestNoUnwantedPolyfillioIsSilent/upstream_pass_1
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_function_declared_with_the_name
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_function_declared_with_the_name
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_class_declared_with_the_name
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_class_declared_with_the_name
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_catch_parameter_named_location
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_catch_parameter_named_location
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_catch_parameter_named_window
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_catch_parameter_named_window
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_shadow_inside_the_block_that_uses_it
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_shadow_inside_the_block_that_uses_it
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_user_object_with_a_location_property
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_user_object_with_a_location_property
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_property_named_href_on_another_object
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_property_named_href_on_another_object
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_differently_cased_method
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_differently_cased_method
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_differently_cased_receiver
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_differently_cased_receiver
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_different_method_on_location
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_different_method_on_location
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_template_literal_used_as_the_assign_key
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_template_literal_used_as_the_assign_key
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_template_literal_used_as_the_href_key
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_template_literal_used_as_the_href_key
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_non-literal_computed_key
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_non-literal_computed_key
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_non-literal_computed_receiver_key
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_non-literal_computed_receiver_key
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_sequence_expression_callee
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_sequence_expression_callee
+=== PAUSE TestNoUnwantedPolyfillioNamesTheFeaturesItFound/singular_agrees_its_verb
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_conditional_argument
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_conditional_argument
+=== RUN   TestNoUnwantedPolyfillioReports/upstream_fail_2
+=== PAUSE TestNoUnwantedPolyfillioReports/upstream_fail_2
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/upstream_pass_1
+=== RUN   TestNoUnwantedPolyfillioNamesTheFeaturesItFound/plural_names_both_in_url_order
+=== PAUSE TestNoUnwantedPolyfillioNamesTheFeaturesItFound/plural_names_both_in_url_order
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_logical_argument
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_logical_argument
+=== RUN   TestNoUnwantedPolyfillioIsSilent/upstream_pass_2
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/upstream_pass_2
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_destructuring_assignment_to_href
+=== RUN   TestNoUnwantedPolyfillioIsSilent/upstream_pass_3
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_destructuring_assignment_to_href
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/upstream_pass_3
+=== RUN   TestNoLocationAssignRelativeDestinationStaysSilent/a_member_of_href
+=== RUN   TestNoUnwantedPolyfillioIsSilent/feature_name_in_the_wrong_case
+=== PAUSE TestNoLocationAssignRelativeDestinationStaysSilent/a_member_of_href
+=== RUN   TestNoUnwantedPolyfillioReports/upstream_fail_3
+=== PAUSE TestNoUnwantedPolyfillioReports/upstream_fail_3
+=== RUN   TestNoUnwantedPolyfillioReports/upstream_fail_4
+=== PAUSE TestNoUnwantedPolyfillioReports/upstream_fail_4
+=== RUN   TestNoUnwantedPolyfillioReports/polyfill-fastly.net_host
+=== PAUSE TestNoUnwantedPolyfillioReports/polyfill-fastly.net_host
+=== RUN   TestNoUnwantedPolyfillioReports/unknown_feature_beside_a_shipped_one
+=== PAUSE TestNoUnwantedPolyfillioReports/unknown_feature_beside_a_shipped_one
+=== RUN   TestNoUnwantedPolyfillioReports/at_sign_iterator_feature
+=== PAUSE TestNoUnwantedPolyfillioReports/at_sign_iterator_feature
+=== RUN   TestNoUnwantedPolyfillioReports/both_epsilon_spellings
+=== PAUSE TestNoUnwantedPolyfillioReports/both_epsilon_spellings
+=== CONT  TestNoTyposAppliesThresholdOne
+=== RUN   TestNoUnwantedPolyfillioReports/named_next/script_import
+=== PAUSE TestNoUnwantedPolyfillioReports/named_next/script_import
+=== RUN   TestNoTyposAppliesThresholdOne/one_substitution
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/feature_name_in_the_wrong_case
+=== RUN   TestNoUnwantedPolyfillioIsSilent/lowercase_percent_escape_stays_undecoded
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/lowercase_percent_escape_stays_undecoded
+=== RUN   TestNoUnwantedPolyfillioIsSilent/unrelated_host
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/unrelated_host
+=== RUN   TestNoUnwantedPolyfillioIsSilent/http_rather_than_https
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/http_rather_than_https
+=== RUN   TestNoUnwantedPolyfillioIsSilent/protocol_relative_url
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/protocol_relative_url
+=== RUN   TestNoUnwantedPolyfillioReports/aliased_default_next/script_import
+=== RUN   TestNoUnwantedPolyfillioIsSilent/path_only_src
+=== CONT  TestNoTyposGatesOnThePagesDirectory
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/path_only_src
+=== RUN   TestNoTyposGatesOnThePagesDirectory/a_page
+=== RUN   TestNoUnwantedPolyfillioIsSilent/a_div_is_not_a_script
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/a_div_is_not_a_script
+=== PAUSE TestNoTyposGatesOnThePagesDirectory/a_page
+=== PAUSE TestNoTyposAppliesThresholdOne/one_substitution
+=== RUN   TestNoTyposAppliesThresholdOne/one_case_change
+=== PAUSE TestNoTyposAppliesThresholdOne/one_case_change
+=== RUN   TestNoTyposAppliesThresholdOne/one_insertion
+=== PAUSE TestNoTyposAppliesThresholdOne/one_insertion
+=== RUN   TestNoTyposAppliesThresholdOne/one_deletion
+=== PAUSE TestNoTyposAppliesThresholdOne/one_deletion
+=== RUN   TestNoTyposAppliesThresholdOne/a_leading_insertion
+=== PAUSE TestNoTyposAppliesThresholdOne/a_leading_insertion
+=== RUN   TestNoTyposAppliesThresholdOne/an_adjacent_transposition
+=== PAUSE TestNoTyposAppliesThresholdOne/an_adjacent_transposition
+=== RUN   TestNoTyposAppliesThresholdOne/two_substitutions
+=== PAUSE TestNoTyposAppliesThresholdOne/two_substitutions
+=== RUN   TestNoTyposAppliesThresholdOne/two_insertions
+=== PAUSE TestNoTyposAppliesThresholdOne/two_insertions
+=== RUN   TestNoTyposAppliesThresholdOne/two_deletions
+=== PAUSE TestNoTyposAppliesThresholdOne/two_deletions
+=== RUN   TestNoTyposAppliesThresholdOne/the_exact_name
+=== PAUSE TestNoTyposAppliesThresholdOne/the_exact_name
+=== RUN   TestNoTyposAppliesThresholdOne/an_unrelated_getter
+=== PAUSE TestNoTyposAppliesThresholdOne/an_unrelated_getter
+=== RUN   TestNoTyposAppliesThresholdOne/an_all_lowercase_spelling
+=== PAUSE TestNoTyposAppliesThresholdOne/an_all_lowercase_spelling
+=== PAUSE TestNoUnwantedPolyfillioReports/aliased_default_next/script_import
+=== RUN   TestNoUnwantedPolyfillioReports/namespace_next/script_import
+=== PAUSE TestNoUnwantedPolyfillioReports/namespace_next/script_import
+=== RUN   TestNoUnwantedPolyfillioReports/a_host_spelled_with_character_references
+=== PAUSE TestNoUnwantedPolyfillioReports/a_host_spelled_with_character_references
+=== RUN   TestNoUnwantedPolyfillioReports/a_feature_spelled_with_a_character_reference
+=== PAUSE TestNoUnwantedPolyfillioReports/a_feature_spelled_with_a_character_reference
+=== RUN   TestNoUnwantedPolyfillioReports/intrinsic_script_needs_no_import
+=== PAUSE TestNoUnwantedPolyfillioReports/intrinsic_script_needs_no_import
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_named_function_export
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_named_function_export
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_named_variable_export
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_named_variable_export
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_typo_among_clean_declarators
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_typo_among_clean_declarators
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_let_export
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_let_export
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_default_function_export
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_default_function_export
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_default_export_of_an_identifier
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_default_export_of_an_identifier
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_exported_class
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_exported_class
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_re-export
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_re-export
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_export_clause
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_export_clause
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_destructured_export
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_destructured_export
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_array_destructured_export
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_array_destructured_export
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_plain_local_declaration
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_plain_local_declaration
+=== RUN   TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_exported_type_alias
+=== PAUSE TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_exported_type_alias
+=== CONT  TestNoTyposPointsAtTheIdentifier
+=== CONT  TestNoTyposNamesBothTheTypoAndTheCorrection
+=== RUN   TestNoTyposGatesOnThePagesDirectory/a_page_under_a_source_directory
+=== RUN   TestNoUnwantedPolyfillioIsSilent/uppercase_SCRIPT_tag
+=== RUN   TestNoTyposNamesBothTheTypoAndTheCorrection/`getStaticpaths`_may_be_a_typo._Did_you_mean_`getStaticPaths`?_
+=== PAUSE TestNoTyposNamesBothTheTypoAndTheCorrection/`getStaticpaths`_may_be_a_typo._Did_you_mean_`getStaticPaths`?_
+=== PAUSE TestNoTyposGatesOnThePagesDirectory/a_page_under_a_source_directory
+=== RUN   TestNoTyposNamesBothTheTypoAndTheCorrection/`getServurSideProps`_may_be_a_typo._Did_you_mean_`getServerSideProps`?_
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/uppercase_SCRIPT_tag
+=== RUN   TestNoUnwantedPolyfillioIsSilent/Script_component_with_no_import
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/Script_component_with_no_import
+=== PAUSE TestNoTyposNamesBothTheTypoAndTheCorrection/`getServurSideProps`_may_be_a_typo._Did_you_mean_`getServerSideProps`?_
+=== RUN   TestNoTyposNamesBothTheTypoAndTheCorrection/`getStaticPropss`_may_be_a_typo._Did_you_mean_`getStaticProps`?_
+=== RUN   TestNoTyposGatesOnThePagesDirectory/a_nested_api_directory
+=== RUN   TestNoTyposPointsAtTheIdentifier/the_variable_form
+=== PAUSE TestNoTyposNamesBothTheTypoAndTheCorrection/`getStaticPropss`_may_be_a_typo._Did_you_mean_`getStaticProps`?_
+=== PAUSE TestNoTyposGatesOnThePagesDirectory/a_nested_api_directory
+=== CONT  TestNoStyledJsxInDocumentIsSilent
+=== RUN   TestNoUnwantedPolyfillioIsSilent/member_expression_tag
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/member_expression_tag
+=== RUN   TestNoUnwantedPolyfillioIsSilent/import_from_another_module
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/import_from_another_module
+=== RUN   TestNoUnwantedPolyfillioIsSilent/safe_host_with_no_query
+=== RUN   TestNoTyposGatesOnThePagesDirectory/a_directory_whose_name_begins_with_api
+=== RUN   TestNoStyledJsxInDocumentIsSilent/a_clean_document_with_no_style_element
+=== PAUSE TestNoTyposPointsAtTheIdentifier/the_variable_form
+=== RUN   TestNoTyposPointsAtTheIdentifier/the_function_form
+=== PAUSE TestNoTyposPointsAtTheIdentifier/the_function_form
+=== RUN   TestNoTyposPointsAtTheIdentifier/one_typo_among_several_declarators
+=== PAUSE TestNoTyposPointsAtTheIdentifier/one_typo_among_several_declarators
+=== RUN   TestNoTyposPointsAtTheIdentifier/two_typos_in_one_file,_in_source_order
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/safe_host_with_no_query
+=== RUN   TestNoUnwantedPolyfillioIsSilent/empty_features_value
+=== PAUSE TestNoTyposPointsAtTheIdentifier/two_typos_in_one_file,_in_source_order
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/a_clean_document_with_no_style_element
+=== CONT  TestNoTyposReports
+=== RUN   TestNoTyposReports/one_case_change,_variable_form
+=== PAUSE TestNoTyposReports/one_case_change,_variable_form
+=== RUN   TestNoTyposReports/two_typos_in_one_file,_function_form,_so_this_reports_twice
+=== PAUSE TestNoTyposReports/two_typos_in_one_file,_function_form,_so_this_reports_twice
+=== RUN   TestNoTyposReports/one_substitution,_function_form
+=== PAUSE TestNoTyposReports/one_substitution,_function_form
+=== RUN   TestNoTyposReports/one_substitution,_variable_form
+=== PAUSE TestNoTyposReports/one_substitution,_variable_form
+=== RUN   TestNoStyledJsxInDocumentIsSilent/plain_css_and_a_spread_only_style_in_a_document
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/plain_css_and_a_spread_only_style_in_a_document
+=== RUN   TestNoStyledJsxInDocumentIsSilent/styled_jsx_outside_the_document
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/styled_jsx_outside_the_document
+=== RUN   TestNoStyledJsxInDocumentIsSilent/a_file_whose_name_merely_begins_with_the_word_document
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/a_file_whose_name_merely_begins_with_the_word_document
+=== RUN   TestNoStyledJsxInDocumentIsSilent/a_spread_supplying_the_jsx_attribute
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/a_spread_supplying_the_jsx_attribute
+=== RUN   TestNoStyledJsxInDocumentIsSilent/a_jsx_attribute_in_the_wrong_case
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/a_jsx_attribute_in_the_wrong_case
+=== RUN   TestNoStyledJsxInDocumentIsSilent/global_without_jsx
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/global_without_jsx
+=== RUN   TestNoStyledJsxInDocumentIsSilent/a_capitalized_style_component
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/a_capitalized_style_component
+=== RUN   TestNoStyledJsxInDocumentIsSilent/a_member_expression_tag_named_style
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/a_member_expression_tag_named_style
+=== RUN   TestNoStyledJsxInDocumentIsSilent/a_jsx_attribute_on_a_different_element
+=== PAUSE TestNoTyposGatesOnThePagesDirectory/a_directory_whose_name_begins_with_api
+=== RUN   TestNoTyposGatesOnThePagesDirectory/an_api_route
+=== PAUSE TestNoTyposGatesOnThePagesDirectory/an_api_route
+=== RUN   TestNoTyposGatesOnThePagesDirectory/a_nested_api_route
+=== PAUSE TestNoTyposGatesOnThePagesDirectory/a_nested_api_route
+=== RUN   TestNoTyposGatesOnThePagesDirectory/outside_any_pages_directory
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/a_jsx_attribute_on_a_different_element
+=== RUN   TestNoStyledJsxInDocumentIsSilent/an_attribute_whose_name_contains_jsx
+=== CONT  TestNoSyncScriptsIsSilent
+=== RUN   TestNoSyncScriptsIsSilent/bare_async
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/empty_features_value
+=== RUN   TestNoUnwantedPolyfillioIsSilent/duplicate_features_key_takes_the_first
+=== PAUSE TestNoStyledJsxInDocumentIsSilent/an_attribute_whose_name_contains_jsx
+=== PAUSE TestNoSyncScriptsIsSilent/bare_async
+=== RUN   TestNoSyncScriptsIsSilent/bare_defer
+=== CONT  TestNoSyncScriptsReports
+=== RUN   TestNoSyncScriptsReports/src_with_no_async_or_defer
+=== PAUSE TestNoSyncScriptsIsSilent/bare_defer
+=== PAUSE TestNoSyncScriptsReports/src_with_no_async_or_defer
+=== RUN   TestNoSyncScriptsReports/self_closing_form
+=== RUN   TestNoSyncScriptsIsSilent/async_with_an_explicit_value
+=== PAUSE TestNoSyncScriptsIsSilent/async_with_an_explicit_value
+=== RUN   TestNoSyncScriptsIsSilent/inline_script_with_no_src
+=== PAUSE TestNoSyncScriptsIsSilent/inline_script_with_no_src
+=== RUN   TestNoSyncScriptsIsSilent/spread_attributes
+=== PAUSE TestNoSyncScriptsIsSilent/spread_attributes
+=== RUN   TestNoSyncScriptsIsSilent/member_expression_name
+=== PAUSE TestNoSyncScriptsIsSilent/member_expression_name
+=== RUN   TestNoSyncScriptsIsSilent/the_next/script_component
+=== PAUSE TestNoSyncScriptsIsSilent/the_next/script_component
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/duplicate_features_key_takes_the_first
+=== RUN   TestNoUnwantedPolyfillioIsSilent/computed_src_expression
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/computed_src_expression
+=== RUN   TestNoUnwantedPolyfillioIsSilent/script_with_no_src
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/script_with_no_src
+=== RUN   TestNoUnwantedPolyfillioIsSilent/spread_attributes_only
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/spread_attributes_only
+=== RUN   TestNoUnwantedPolyfillioIsSilent/feature_name_is_a_prefix_of_a_shipped_one
+=== PAUSE TestNoUnwantedPolyfillioIsSilent/feature_name_is_a_prefix_of_a_shipped_one
+=== CONT  TestNoStyledJsxInDocumentRendersItsMessage
+=== PAUSE TestNoSyncScriptsReports/self_closing_form
+=== RUN   TestNoSyncScriptsReports/src_with_an_unrelated_attribute
+=== PAUSE TestNoSyncScriptsReports/src_with_an_unrelated_attribute
+=== RUN   TestNoSyncScriptsReports/src_is_a_computed_expression
+=== PAUSE TestNoSyncScriptsReports/src_is_a_computed_expression
+=== CONT  TestNoStyledJsxInDocumentPointsAtASelfClosingElement
+--- PASS: TestNoStyledJsxInDocumentRendersItsMessage (0.00s)
+=== CONT  TestNoPageCustomFontOutsideDefaultExportMessage
+=== CONT  TestNoStyledJsxInDocumentPointsAtTheOpeningElement
+--- PASS: TestNoPageCustomFontOutsideDefaultExportMessage (0.00s)
+=== CONT  TestNoStyledJsxInDocumentReports
+--- PASS: TestNoStyledJsxInDocumentPointsAtASelfClosingElement (0.00s)
+=== RUN   TestNoStyledJsxInDocumentReports/styled_jsx_inside_a_document
+=== CONT  TestNoPageCustomFontDecodesEntities
+=== PAUSE TestNoStyledJsxInDocumentReports/styled_jsx_inside_a_document
+=== RUN   TestNoPageCustomFontDecodesEntities/an_encoded_slash_in_the_font_href
+=== PAUSE TestNoPageCustomFontDecodesEntities/an_encoded_slash_in_the_font_href
+=== RUN   TestNoStyledJsxInDocumentReports/a_document_outside_a_pages_directory
+=== RUN   TestNoPageCustomFontDecodesEntities/an_encoded_slash_in_another_href
+=== PAUSE TestNoStyledJsxInDocumentReports/a_document_outside_a_pages_directory
+=== PAUSE TestNoPageCustomFontDecodesEntities/an_encoded_slash_in_another_href
+=== RUN   TestNoStyledJsxInDocumentReports/the_document_directory_form,_wider_than_this_rule_upstream
+=== CONT  TestNoHtmlLinkForPagesAnchorsRelativeDirectoriesToTheConfig
+--- PASS: TestNoStyledJsxInDocumentPointsAtTheOpeningElement (0.00s)
+=== CONT  TestNoHtmlLinkForPagesPointsAtTheOpeningElement
+=== RUN   TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a>
+=== PAUSE TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a>
+=== RUN   TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/>
+=== PAUSE TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/>
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_
+=== PAUSE TestNoStyledJsxInDocumentReports/the_document_directory_form,_wider_than_this_rule_upstream
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_""
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_""
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"pages"
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"pages"
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"/elsewhere/pages"
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"/elsewhere/pages"
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_[]
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_[]
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_["a",_"../b",_""]
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_["a",_"../b",_""]
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_{}
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_{}
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_3
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_3
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_true
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_true
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_3]
+=== RUN   TestNoStyledJsxInDocumentReports/a_jsx_attribute_carrying_a_value
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_3]
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_null]
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_null]
+=== PAUSE TestNoTyposGatesOnThePagesDirectory/outside_any_pages_directory
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_"a"]
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_"a"]
+=== RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_"pages"
+=== PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_"pages"
+=== PAUSE TestNoStyledJsxInDocumentReports/a_jsx_attribute_carrying_a_value
+=== RUN   TestNoTyposGatesOnThePagesDirectory/a_directory_whose_name_ends_in_pages
+=== RUN   TestNoStyledJsxInDocumentReports/jsx_global
+=== PAUSE TestNoStyledJsxInDocumentReports/jsx_global
+=== PAUSE TestNoTyposGatesOnThePagesDirectory/a_directory_whose_name_ends_in_pages
+=== RUN   TestNoTyposGatesOnThePagesDirectory/a_pages_directory_nested_inside_an_api_route
+=== RUN   TestNoStyledJsxInDocumentReports/a_self_closing_styled_jsx_element
+=== PAUSE TestNoStyledJsxInDocumentReports/a_self_closing_styled_jsx_element
+=== CONT  TestNoHtmlLinkForPagesFollowsSymbolicLinksAsNodeLists
+=== PAUSE TestNoTyposGatesOnThePagesDirectory/a_pages_directory_nested_inside_an_api_route
+=== CONT  TestNoPageCustomFontPointsAtTheWholeElement
+--- PASS: TestNoPageCustomFontPointsAtTheWholeElement (0.00s)
+=== CONT  TestNoPageCustomFontPointsAtTheOpeningTagOfAPairedElement
+--- PASS: TestNoPageCustomFontPointsAtTheOpeningTagOfAPairedElement (0.00s)
+=== CONT  TestNoPageCustomFontStaysSilent
+=== RUN   TestNoPageCustomFontStaysSilent/upstream_pass_1
+=== PAUSE TestNoPageCustomFontStaysSilent/upstream_pass_1
+=== RUN   TestNoPageCustomFontStaysSilent/upstream_pass_2
+=== PAUSE TestNoPageCustomFontStaysSilent/upstream_pass_2
+=== RUN   TestNoPageCustomFontStaysSilent/upstream_pass_3
+=== PAUSE TestNoPageCustomFontStaysSilent/upstream_pass_3
+=== RUN   TestNoPageCustomFontStaysSilent/upstream_pass_4
+=== PAUSE TestNoPageCustomFontStaysSilent/upstream_pass_4
+=== RUN   TestNoPageCustomFontStaysSilent/upstream_pass_5
+=== PAUSE TestNoPageCustomFontStaysSilent/upstream_pass_5
+=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories
+=== RUN   TestNoPageCustomFontStaysSilent/upstream_pass_6
+=== PAUSE TestNoPageCustomFontStaysSilent/upstream_pass_6
+=== RUN   TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory
+=== RUN   TestNoPageCustomFontStaysSilent/upstream_pass_7
+=== PAUSE TestNoPageCustomFontStaysSilent/upstream_pass_7
+=== PAUSE TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory
+=== RUN   TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_alone
+=== PAUSE TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_alone
+=== RUN   TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_string
+=== PAUSE TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_string
+=== RUN   TestNoPageCustomFontStaysSilent/an_arrow_bound_to_the_default-exported_const
+=== PAUSE TestNoPageCustomFontStaysSilent/an_arrow_bound_to_the_default-exported_const
+=== RUN   TestNoHtmlLinkForPagesTakesPagesDirectories/a_directory_that_does_not_exist
+=== PAUSE TestNoHtmlLinkForPagesTakesPagesDirectories/a_directory_that_does_not_exist
+=== RUN   TestNoPageCustomFontStaysSilent/an_anonymous_function_expression_bound_to_the_default-exported_const
+=== PAUSE TestNoPageCustomFontStaysSilent/an_anonymous_function_expression_bound_to_the_default-exported_const
+=== RUN   TestNoPageCustomFontStaysSilent/an_anonymous_class_expression_bound_to_the_default-exported_const
+=== PAUSE TestNoPageCustomFontStaysSilent/an_anonymous_class_expression_bound_to_the_default-exported_const
+=== RUN   TestNoPageCustomFontStaysSilent/an_anonymous_default-exported_arrow
+=== PAUSE TestNoPageCustomFontStaysSilent/an_anonymous_default-exported_arrow
+=== RUN   TestNoPageCustomFontStaysSilent/an_href_expression_rather_than_a_string_literal
+=== PAUSE TestNoPageCustomFontStaysSilent/an_href_expression_rather_than_a_string_literal
+=== RUN   TestNoPageCustomFontStaysSilent/a_spread_carrying_the_href
+=== PAUSE TestNoPageCustomFontStaysSilent/a_spread_carrying_the_href
+=== RUN   TestNoPageCustomFontStaysSilent/an_href_containing_the_prefix_without_starting_with_it
+=== RUN   TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app
+=== PAUSE TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app
+=== PAUSE TestNoPageCustomFontStaysSilent/an_href_containing_the_prefix_without_starting_with_it
+=== CONT  TestNoHtmlLinkForPagesReadsTheAnchorAsUpstreamDoes
+=== RUN   TestNoPageCustomFontStaysSilent/an_href_with_a_leading_space
+=== PAUSE TestNoPageCustomFontStaysSilent/an_href_with_a_leading_space
+=== RUN   TestNoPageCustomFontStaysSilent/a_capitalized_Link_component
+=== PAUSE TestNoPageCustomFontStaysSilent/a_capitalized_Link_component
+=== RUN   TestNoPageCustomFontStaysSilent/an_attribute_name_spelled_in_capitals
+=== PAUSE TestNoPageCustomFontStaysSilent/an_attribute_name_spelled_in_capitals
+=== RUN   TestNoPageCustomFontStaysSilent/the_http_spelling_of_the_same_url
+=== PAUSE TestNoPageCustomFontStaysSilent/the_http_spelling_of_the_same_url
+=== RUN   TestNoPageCustomFontStaysSilent/another_font_host_entirely
+=== PAUSE TestNoPageCustomFontStaysSilent/another_font_host_entirely
+=== CONT  TestNoHeadElementReports/paired_head
+=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage
+=== RUN   TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a>
+=== PAUSE TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a>
+=== RUN   TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a>
+=== PAUSE TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a>
+=== RUN   TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link>
+=== PAUSE TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link>
+=== CONT  TestNoHeadElementReports/a_directory_whose_name_ends_in_app
+=== CONT  TestNoHeadElementReports/self_closing_head
+--- PASS: TestNoHeadElementReports (0.00s)
+    --- PASS: TestNoHeadElementReports/paired_head (0.00s)
+    --- PASS: TestNoHeadElementReports/a_directory_whose_name_ends_in_app (0.00s)
+    --- PASS: TestNoHeadElementReports/self_closing_head (0.00s)
+=== CONT  TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root
+--- PASS: TestNoHtmlLinkForPagesFollowsSymbolicLinksAsNodeLists (0.02s)
+=== CONT  TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories
+--- PASS: TestNoHtmlLinkForPagesAnchorsRelativeDirectoriesToTheConfig (0.02s)
+=== CONT  TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes
+=== CONT  TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route
+--- PASS: TestNoHtmlLinkForPagesReadsThePagesDirectory (0.03s)
+=== CONT  TestNoHtmlLinkForPagesFindsNoDirectory/no_program
+=== CONT  TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory
+=== CONT  TestNoHtmlLinkForPagesFindsNoDirectory/a_file_named_pages
+=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/custom_pages_directory
+--- PASS: TestNoHtmlLinkForPagesReadsTheAnchorAsUpstreamDoes (0.02s)
+--- PASS: TestNoHtmlLinkForPagesReportsOncePerRoute (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories (0.00s)
+=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory
+=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory
+--- PASS: TestNoHtmlLinkForPagesFindsNoDirectory (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesFindsNoDirectory/no_program (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesFindsNoDirectory/a_file_named_pages (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory (0.00s)
+=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories
+--- PASS: TestNoHtmlLinkForPagesReadsTheAppDirectory (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes (0.01s)
+=== CONT  TestNoPageCustomFontFires/a_destructuring_binding
+=== CONT  TestNoPageCustomFontFires/upstream_fail_in_pages/index.tsx
+=== CONT  TestNoPageCustomFontFires/an_arrow_whose_binding_is_not_the_default_export
+=== CONT  TestNoPageCustomFontFires/a_named_function_expression_takes_its_own_name
+=== CONT  TestNoPageCustomFontFires/a_paired_link_element
+=== CONT  TestNoPageCustomFontFires/rel_is_preload_rather_than_stylesheet
+=== CONT  TestNoPageCustomFontFires/no_rel_attribute_at_all
+=== CONT  TestNoPageCustomFontFires/a_document_outside_a_pages_directory
+=== CONT  TestNoPageCustomFontFires/upstream_fail_in_pages/_document.jsx
+=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments
+=== CONT  TestNoPageCustomFontFires/a_page_whose_name_merely_begins_with_the_word
+=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page
+=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name
+=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern
+--- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/custom_pages_directory (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory (0.01s)
+=== CONT  TestNoPageCustomFontFires/an_aliased_default_export
+--- PASS: TestNoPageCustomFontFires (0.00s)
+    --- PASS: TestNoPageCustomFontFires/a_destructuring_binding (0.00s)
+    --- PASS: TestNoPageCustomFontFires/upstream_fail_in_pages/index.tsx (0.00s)
+    --- PASS: TestNoPageCustomFontFires/an_arrow_whose_binding_is_not_the_default_export (0.00s)
+    --- PASS: TestNoPageCustomFontFires/a_named_function_expression_takes_its_own_name (0.00s)
+    --- PASS: TestNoPageCustomFontFires/a_paired_link_element (0.00s)
+    --- PASS: TestNoPageCustomFontFires/rel_is_preload_rather_than_stylesheet (0.00s)
+    --- PASS: TestNoPageCustomFontFires/no_rel_attribute_at_all (0.00s)
+    --- PASS: TestNoPageCustomFontFires/a_document_outside_a_pages_directory (0.00s)
+    --- PASS: TestNoPageCustomFontFires/upstream_fail_in_pages/_document.jsx (0.00s)
+    --- PASS: TestNoPageCustomFontFires/a_page_whose_name_merely_begins_with_the_word (0.00s)
+    --- PASS: TestNoPageCustomFontFires/an_aliased_default_export (0.00s)
+=== CONT  TestNoHeadImportInDocumentReportsOncePerImport/two_imports_of_the_module
+--- PASS: TestNoHeadImportInDocumentReportsOncePerImport (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReportsOncePerImport/two_imports_of_the_module (0.00s)
+=== CONT  TestNoHeadElementIsSilent/inside_an_app_directory
+=== CONT  TestNoHeadElementIsSilent/member_expression_name
+=== CONT  TestNoHeadElementIsSilent/no_head_at_all
+=== CONT  TestNoHeadElementIsSilent/the_next/head_component
+=== CONT  TestNoHeadImportInDocumentIsSilent/the_document_importing_head_from_next_document
+=== CONT  TestNoHeadElementIsSilent/app_directory_deeper_in_the_path
+=== CONT  TestNoHeadImportInDocumentIsSilent/the_sibling_module_the_rule_points_people_toward
+--- PASS: TestNoHeadElementIsSilent (0.00s)
+    --- PASS: TestNoHeadElementIsSilent/inside_an_app_directory (0.00s)
+    --- PASS: TestNoHeadElementIsSilent/member_expression_name (0.00s)
+    --- PASS: TestNoHeadElementIsSilent/no_head_at_all (0.00s)
+    --- PASS: TestNoHeadElementIsSilent/the_next/head_component (0.00s)
+    --- PASS: TestNoHeadElementIsSilent/app_directory_deeper_in_the_path (0.00s)
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_re-export_of_the_module
+=== CONT  TestNoHeadImportInDocumentIsSilent/an_empty_specifier_the_parser_recovers_from
+=== CONT  TestNoHeadImportInDocumentIsSilent/an_unquoted_specifier_the_parser_recovers_from
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_dynamic_import_of_the_module
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_require_of_the_module
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_relative_path_sharing_the_name
+=== CONT  TestNoHeadImportInDocumentIsSilent/the_document_with_no_extension
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_name_merely_containing_the_word
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_scoped_package_sharing_the_name
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_plural_sharing_the_word
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_sibling_of_the_document_directory
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_longer_file_name_sharing_the_prefix
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_trailing_slash_on_the_specifier
+=== CONT  TestNoHeadImportInDocumentIsSilent/a_deep_path_into_the_module
+=== CONT  TestNoHeadImportInDocumentIsSilent/an_ordinary_page_importing_next_head
+=== CONT  TestNoHeadImportInDocumentReports/the_document_as_javascript
+--- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name (0.00s)
+=== CONT  TestNoHeadImportInDocumentReports/the_double_quoted_specifier
+=== CONT  TestNoHeadImportInDocumentReports/a_namespace_import
+--- PASS: TestNoHeadImportInDocumentIsSilent (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/the_sibling_module_the_rule_points_people_toward (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_re-export_of_the_module (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/an_empty_specifier_the_parser_recovers_from (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/the_document_importing_head_from_next_document (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_require_of_the_module (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/an_unquoted_specifier_the_parser_recovers_from (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_dynamic_import_of_the_module (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_relative_path_sharing_the_name (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/the_document_with_no_extension (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_name_merely_containing_the_word (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_plural_sharing_the_word (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_scoped_package_sharing_the_name (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_sibling_of_the_document_directory (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_longer_file_name_sharing_the_prefix (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/an_ordinary_page_importing_next_head (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_trailing_slash_on_the_specifier (0.00s)
+    --- PASS: TestNoHeadImportInDocumentIsSilent/a_deep_path_into_the_module (0.00s)
+=== CONT  TestNoHeadImportInDocumentReports/a_template_literal_specifier
+=== CONT  TestNoHeadImportInDocumentReports/a_renamed_default_binding
+=== CONT  TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_call
+=== CONT  TestNoHeadImportInDocumentReports/a_type_only_import
+=== CONT  TestNoHeadImportInDocumentReports/a_bare_side_effect_import
+=== CONT  TestNoHeadImportInDocumentReports/a_document_outside_any_pages_directory
+=== CONT  TestNoHeadImportInDocumentReports/a_longer_directory_name_sharing_the_prefix
+=== CONT  TestNoHeadImportInDocumentReports/the_directory_form_with_another_extension
+=== CONT  TestNoHeadImportInDocumentReports/the_directory_form_with_a_compound_basename
+=== CONT  TestNoHeadImportInDocumentReports/the_document_as_typescript
+=== CONT  TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_nested_violation
+=== CONT  TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_concatenation
+=== CONT  TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_parenthesized_receiver
+=== CONT  TestNoHeadImportInDocumentReports/the_page_suffix_convention
+=== CONT  TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_compound_assignment
+=== CONT  TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/an_href_assignment
+=== CONT  TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/an_href_assignment_through_window
+=== CONT  TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_call_through_window
+=== CONT  TestNoImgElementReports/inside_a_div
+=== CONT  TestNoImgElementReports/paired_form
+--- PASS: TestNoLocationAssignRelativeDestinationPointsAtTheNavigation (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_call (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_nested_violation (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_concatenation (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_parenthesized_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/an_href_assignment (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_compound_assignment (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/an_href_assignment_through_window (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationPointsAtTheNavigation/a_call_through_window (0.00s)
+=== CONT  TestNoImgElementReports/inside_a_div_inside_a_picture
+=== CONT  TestNoHeadImportInDocumentReports/the_directory_form
+=== CONT  TestNoImgElementReports/returned_directly
+=== CONT  TestNoImgElementReports/src_is_not_a_string_literal
+=== CONT  TestNoImgElementIsSilent/next/image_component
+=== CONT  TestNoImgElementIsSilent/member_expression_name
+=== CONT  TestNoImgElementIsSilent/inside_a_picture_with_a_source_sibling
+=== CONT  TestNoImgElementIsSilent/directly_inside_a_picture
+--- PASS: TestNoImgElementReports (0.00s)
+    --- PASS: TestNoImgElementReports/inside_a_div_inside_a_picture (0.00s)
+    --- PASS: TestNoImgElementReports/paired_form (0.00s)
+    --- PASS: TestNoImgElementReports/inside_a_div (0.00s)
+    --- PASS: TestNoImgElementReports/returned_directly (0.00s)
+    --- PASS: TestNoImgElementReports/src_is_not_a_string_literal (0.00s)
+=== CONT  TestNoImgElementIsSilent/paired_form_inside_a_picture
+=== CONT  TestNoUnwantedPolyfillioUsesStableMessageIds/security_arm
+--- PASS: TestNoHeadImportInDocumentReports (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/the_document_as_javascript (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/a_namespace_import (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/a_template_literal_specifier (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/a_bare_side_effect_import (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/a_type_only_import (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/a_document_outside_any_pages_directory (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/a_longer_directory_name_sharing_the_prefix (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/the_directory_form_with_another_extension (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/the_double_quoted_specifier (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/a_renamed_default_binding (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/the_directory_form_with_a_compound_basename (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/the_document_as_typescript (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/the_page_suffix_convention (0.00s)
+    --- PASS: TestNoHeadImportInDocumentReports/the_directory_form (0.00s)
+=== CONT  TestNoUnwantedPolyfillioUsesStableMessageIds/duplicate_arm
+=== CONT  TestNoTyposIsSilent/both_correct_names,_variable_form
+=== CONT  TestNoTyposIsSilent/distance_three,_and_it_reads_like_a_typo_to_a_human
+=== CONT  TestNoTyposIsSilent/three_trailing_s_is_distance_two,_outside_the_threshold
+=== CONT  TestNoTyposIsSilent/both_correct_names,_function_form
+=== CONT  TestNoTyposIsSilent/a_typo,_but_the_file_is_an_api_route
+--- PASS: TestNoUnwantedPolyfillioUsesStableMessageIds (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioUsesStableMessageIds/security_arm (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioUsesStableMessageIds/duplicate_arm (0.00s)
+=== CONT  TestNoTyposIsSilent/the_correct_server_side_name,_variable_form
+--- PASS: TestNoImgElementIsSilent (0.00s)
+    --- PASS: TestNoImgElementIsSilent/member_expression_name (0.00s)
+    --- PASS: TestNoImgElementIsSilent/inside_a_picture_with_a_source_sibling (0.00s)
+    --- PASS: TestNoImgElementIsSilent/next/image_component (0.00s)
+    --- PASS: TestNoImgElementIsSilent/paired_form_inside_a_picture (0.00s)
+    --- PASS: TestNoImgElementIsSilent/directly_inside_a_picture (0.00s)
+=== CONT  TestNoTyposIsSilent/the_windows_spelling_of_the_same_api_route
+=== CONT  TestNoTyposIsSilent/the_correct_server_side_name,_function_form
+=== CONT  TestNoTyposIsSilent/a_typo,_but_the_file_is_not_under_a_pages_directory
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_bare_location.assign_with_a_rooted_path
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_template_opening_with_an_interpolation
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_template_with_only_interpolations
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_template_whose_first_span_is_text
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_query-only_destination
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_fragment-only_destination
+--- PASS: TestNoTyposIsSilent (0.00s)
+    --- PASS: TestNoTyposIsSilent/three_trailing_s_is_distance_two,_outside_the_threshold (0.00s)
+    --- PASS: TestNoTyposIsSilent/distance_three,_and_it_reads_like_a_typo_to_a_human (0.00s)
+    --- PASS: TestNoTyposIsSilent/both_correct_names,_variable_form (0.00s)
+    --- PASS: TestNoTyposIsSilent/a_typo,_but_the_file_is_an_api_route (0.00s)
+    --- PASS: TestNoTyposIsSilent/both_correct_names,_function_form (0.00s)
+    --- PASS: TestNoTyposIsSilent/the_correct_server_side_name,_variable_form (0.00s)
+    --- PASS: TestNoTyposIsSilent/the_correct_server_side_name,_function_form (0.00s)
+    --- PASS: TestNoTyposIsSilent/a_typo,_but_the_file_is_not_under_a_pages_directory (0.00s)
+    --- PASS: TestNoTyposIsSilent/the_windows_spelling_of_the_same_api_route (0.00s)
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_empty_string
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_dot-slash_relative_path
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_dot-dot_relative_path
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_computed_href_key
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_path_with_no_leading_slash
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_nullish-equals_href_assignment
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_logical-or-equals_href_assignment
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_minus-equals_href_assignment
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_plus-equals_href_assignment
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_href_assignment_through_window
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_href_assignment
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_computed_location_key
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_computed_assign_key
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_self_receiver
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_document_receiver
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_globalThis_receiver
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_window_receiver
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_violation_nested_inside_a_handler_inside_a_component
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_use_outside_a_block_that_shadowed_the_name
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_optional_call
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_optional_member_access
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_parenthesized_argument
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_parenthesized_callee
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_parenthesized_location_receiver
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_parenthesized_href_target_through_window
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_parenthesized_window_receiver
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_violation_inside_a_class_method
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_parenthesized_href_target
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_identifier_resolved_through_two_hops
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_identifier_declared_without_an_initializer_then_written
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_identifier_rewritten_before_the_read
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_identifier_initialized_to_a_template
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_concatenation_whose_left_side_is_relative
+=== CONT  TestNoLocationAssignRelativeDestinationFires/an_identifier_initialized_to_a_relative_path
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_concatenation_whose_left_side_is_a_template
+=== CONT  TestNoUnwantedPolyfillioNamesTheFeaturesItFound/both_epsilon_spellings_are_named
+=== CONT  TestNoUnwantedPolyfillioNamesTheFeaturesItFound/plural_names_both_in_url_order
+=== CONT  TestNoUnwantedPolyfillioNamesTheFeaturesItFound/singular_agrees_its_verb
+=== CONT  TestNoUnwantedPolyfillioNamesTheFeaturesItFound/lowercase_es_alias_is_named
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_concatenation_nested_to_the_left
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter_named_location
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/an_absolute_https_destination
+--- PASS: TestNoUnwantedPolyfillioNamesTheFeaturesItFound (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioNamesTheFeaturesItFound/both_epsilon_spellings_are_named (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioNamesTheFeaturesItFound/plural_names_both_in_url_order (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioNamesTheFeaturesItFound/lowercase_es_alias_is_named (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioNamesTheFeaturesItFound/singular_agrees_its_verb (0.00s)
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_location_property_of_location
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_module-scope_binding_named_location
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_top_receiver
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_property_access
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_spread_argument
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_call_with_no_arguments
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/an_assign_reference_that_is_not_called
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/an_href_read
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_window.location.replace_call
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_location.replace_call
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_call_result_passed_directly
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_differently_cased_method
+=== CONT  TestNoLocationAssignRelativeDestinationFires/a_no-substitution_template
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_member_of_href
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_destructuring_assignment_to_href
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_conditional_argument
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_non-literal_computed_receiver_key
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_non-literal_computed_key
+--- PASS: TestNoLocationAssignRelativeDestinationFires (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_bare_location.assign_with_a_rooted_path (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_template_opening_with_an_interpolation (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_template_whose_first_span_is_text (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_fragment-only_destination (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_dot-slash_relative_path (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_dot-dot_relative_path (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_template_with_only_interpolations (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_path_with_no_leading_slash (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_computed_href_key (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_nullish-equals_href_assignment (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_logical-or-equals_href_assignment (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_plus-equals_href_assignment (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_minus-equals_href_assignment (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_href_assignment (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_href_assignment_through_window (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_computed_assign_key (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_computed_location_key (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_document_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_self_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_window_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_globalThis_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_query-only_destination (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_violation_nested_inside_a_handler_inside_a_component (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_optional_call (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_empty_string (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_optional_member_access (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_use_outside_a_block_that_shadowed_the_name (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_parenthesized_href_target_through_window (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_parenthesized_window_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_parenthesized_callee (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_parenthesized_location_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_violation_inside_a_class_method (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_identifier_resolved_through_two_hops (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_identifier_declared_without_an_initializer_then_written (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_parenthesized_href_target (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_identifier_rewritten_before_the_read (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_identifier_initialized_to_a_template (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_parenthesized_argument (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/an_identifier_initialized_to_a_relative_path (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_concatenation_whose_left_side_is_relative (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_concatenation_whose_left_side_is_a_template (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_concatenation_nested_to_the_left (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationFires/a_no-substitution_template (0.00s)
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_nested_self_under_window
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_template_literal_used_as_the_href_key
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_template_literal_used_as_the_assign_key
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_different_method_on_location
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_differently_cased_receiver
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_concatenation_whose_left_side_is_absolute
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_parent_receiver
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_bound_to_a_call
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_declared_without_an_initializer_and_written_after_the_read
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_logical_argument
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_rewritten_only_after_the_read
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_template_whose_first_span_is_a_scheme
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/an_uppercase_scheme
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_sequence_expression_callee
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_tel_scheme
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_protocol-relative_destination
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_mailto_scheme
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_initialized_to_an_absolute_url
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_property_named_href_on_another_object
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_function_declared_with_the_name
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_shadow_inside_the_block_that_uses_it
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_catch_parameter_named_window
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_catch_parameter_named_location
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_default_import_of_the_name
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/an_import_renamed_to_the_name
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_user_object_with_a_location_property
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_class_declared_with_the_name
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_namespace_import_of_the_name
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter_named_window
+=== CONT  TestNoLocationAssignRelativeDestinationStaysSilent/a_named_import_of_the_name
+=== CONT  TestNoTyposAppliesThresholdOne/one_substitution
+=== CONT  TestNoUnwantedPolyfillioReports/upstream_fail_1
+=== CONT  TestNoTyposAppliesThresholdOne/an_all_lowercase_spelling
+=== CONT  TestNoTyposAppliesThresholdOne/an_unrelated_getter
+--- PASS: TestNoLocationAssignRelativeDestinationStaysSilent (0.01s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter_named_location (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/an_absolute_https_destination (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_location_property_of_location (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_module-scope_binding_named_location (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_top_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_property_access (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_spread_argument (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_call_with_no_arguments (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/an_href_read (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_window.location.replace_call (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/an_assign_reference_that_is_not_called (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_location.replace_call (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_differently_cased_method (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_call_result_passed_directly (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_member_of_href (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_destructuring_assignment_to_href (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_conditional_argument (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_non-literal_computed_receiver_key (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_non-literal_computed_key (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_template_literal_used_as_the_href_key (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_nested_self_under_window (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_template_literal_used_as_the_assign_key (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_different_method_on_location (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_differently_cased_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_concatenation_whose_left_side_is_absolute (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_parent_receiver (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_bound_to_a_call (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_declared_without_an_initializer_and_written_after_the_read (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_template_whose_first_span_is_a_scheme (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_logical_argument (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/an_uppercase_scheme (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_rewritten_only_after_the_read (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_protocol-relative_destination (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_mailto_scheme (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_sequence_expression_callee (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_tel_scheme (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/an_identifier_initialized_to_an_absolute_url (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_property_named_href_on_another_object (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_function_declared_with_the_name (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_catch_parameter_named_window (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_shadow_inside_the_block_that_uses_it (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_catch_parameter_named_location (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_default_import_of_the_name (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/an_import_renamed_to_the_name (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_namespace_import_of_the_name (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_named_import_of_the_name (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_parameter_named_window (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_user_object_with_a_location_property (0.00s)
+    --- PASS: TestNoLocationAssignRelativeDestinationStaysSilent/a_class_declared_with_the_name (0.00s)
+=== CONT  TestNoTyposAppliesThresholdOne/the_exact_name
+=== CONT  TestNoTyposAppliesThresholdOne/two_insertions
+=== CONT  TestNoTyposAppliesThresholdOne/two_deletions
+=== CONT  TestNoTyposAppliesThresholdOne/two_substitutions
+=== CONT  TestNoTyposAppliesThresholdOne/an_adjacent_transposition
+=== CONT  TestNoTyposAppliesThresholdOne/a_leading_insertion
+=== CONT  TestNoTyposAppliesThresholdOne/one_deletion
+=== CONT  TestNoTyposAppliesThresholdOne/one_insertion
+=== CONT  TestNoTyposAppliesThresholdOne/one_case_change
+=== CONT  TestNoUnwantedPolyfillioReports/both_epsilon_spellings
+=== CONT  TestNoUnwantedPolyfillioReports/intrinsic_script_needs_no_import
+=== CONT  TestNoUnwantedPolyfillioReports/a_feature_spelled_with_a_character_reference
+=== CONT  TestNoUnwantedPolyfillioReports/a_host_spelled_with_character_references
+=== CONT  TestNoUnwantedPolyfillioReports/namespace_next/script_import
+=== CONT  TestNoUnwantedPolyfillioReports/aliased_default_next/script_import
+=== CONT  TestNoUnwantedPolyfillioReports/named_next/script_import
+=== CONT  TestNoUnwantedPolyfillioReports/polyfill-fastly.net_host
+=== CONT  TestNoUnwantedPolyfillioReports/at_sign_iterator_feature
+=== CONT  TestNoUnwantedPolyfillioReports/upstream_fail_3
+--- PASS: TestNoTyposAppliesThresholdOne (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/one_substitution (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/an_all_lowercase_spelling (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/an_unrelated_getter (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/the_exact_name (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/two_substitutions (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/two_insertions (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/an_adjacent_transposition (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/two_deletions (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/one_deletion (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/one_case_change (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/one_insertion (0.00s)
+    --- PASS: TestNoTyposAppliesThresholdOne/a_leading_insertion (0.00s)
+=== CONT  TestNoUnwantedPolyfillioReports/unknown_feature_beside_a_shipped_one
+=== CONT  TestNoUnwantedPolyfillioReports/upstream_fail_4
+=== CONT  TestNoUnwantedPolyfillioReports/upstream_fail_2
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_named_function_export
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_re-export
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_exported_type_alias
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_array_destructured_export
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_destructured_export
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_plain_local_declaration
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_export_clause
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_default_function_export
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_exported_class
+--- PASS: TestNoUnwantedPolyfillioReports (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/upstream_fail_1 (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/intrinsic_script_needs_no_import (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/a_feature_spelled_with_a_character_reference (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/both_epsilon_spellings (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/a_host_spelled_with_character_references (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/namespace_next/script_import (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/aliased_default_next/script_import (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/polyfill-fastly.net_host (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/named_next/script_import (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/at_sign_iterator_feature (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/unknown_feature_beside_a_shipped_one (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/upstream_fail_4 (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/upstream_fail_3 (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioReports/upstream_fail_2 (0.00s)
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_default_export_of_an_identifier
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_typo_among_clean_declarators
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_let_export
+=== CONT  TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_named_variable_export
+=== CONT  TestNoTyposNamesBothTheTypoAndTheCorrection/`getStaticpaths`_may_be_a_typo._Did_you_mean_`getStaticPaths`?_
+=== CONT  TestNoTyposNamesBothTheTypoAndTheCorrection/`getStaticPropss`_may_be_a_typo._Did_you_mean_`getStaticProps`?_
+=== CONT  TestNoTyposNamesBothTheTypoAndTheCorrection/`getServurSideProps`_may_be_a_typo._Did_you_mean_`getServerSideProps`?_
+=== CONT  TestNoTyposPointsAtTheIdentifier/the_variable_form
+=== CONT  TestNoTyposPointsAtTheIdentifier/two_typos_in_one_file,_in_source_order
+=== CONT  TestNoTyposPointsAtTheIdentifier/the_function_form
+--- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_re-export (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_named_function_export (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_exported_type_alias (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_array_destructured_export (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_destructured_export (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_exported_class (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_plain_local_declaration (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/an_export_clause (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_default_function_export (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_typo_among_clean_declarators (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_default_export_of_an_identifier (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_let_export (0.00s)
+    --- PASS: TestNoTyposOnlyReadsNamedExportsOfTwoShapes/a_named_variable_export (0.00s)
+=== CONT  TestNoTyposPointsAtTheIdentifier/one_typo_among_several_declarators
+=== CONT  TestNoTyposReports/one_substitution,_variable_form
+--- PASS: TestNoTyposNamesBothTheTypoAndTheCorrection (0.00s)
+    --- PASS: TestNoTyposNamesBothTheTypoAndTheCorrection/`getStaticpaths`_may_be_a_typo._Did_you_mean_`getStaticPaths`?_ (0.00s)
+    --- PASS: TestNoTyposNamesBothTheTypoAndTheCorrection/`getStaticPropss`_may_be_a_typo._Did_you_mean_`getStaticProps`?_ (0.00s)
+    --- PASS: TestNoTyposNamesBothTheTypoAndTheCorrection/`getServurSideProps`_may_be_a_typo._Did_you_mean_`getServerSideProps`?_ (0.00s)
+=== CONT  TestNoTyposReports/one_substitution,_function_form
+=== CONT  TestNoStyledJsxInDocumentIsSilent/an_attribute_whose_name_contains_jsx
+=== CONT  TestNoTyposReports/one_case_change,_variable_form
+=== CONT  TestNoStyledJsxInDocumentIsSilent/a_jsx_attribute_on_a_different_element
+=== CONT  TestNoStyledJsxInDocumentIsSilent/a_member_expression_tag_named_style
+=== CONT  TestNoStyledJsxInDocumentIsSilent/a_capitalized_style_component
+=== CONT  TestNoStyledJsxInDocumentIsSilent/a_file_whose_name_merely_begins_with_the_word_document
+=== CONT  TestNoStyledJsxInDocumentIsSilent/a_clean_document_with_no_style_element
+=== CONT  TestNoStyledJsxInDocumentIsSilent/a_jsx_attribute_in_the_wrong_case
+=== CONT  TestNoStyledJsxInDocumentIsSilent/a_spread_supplying_the_jsx_attribute
+=== CONT  TestNoStyledJsxInDocumentIsSilent/styled_jsx_outside_the_document
+=== CONT  TestNoStyledJsxInDocumentIsSilent/plain_css_and_a_spread_only_style_in_a_document
+=== CONT  TestNoSyncScriptsIsSilent/bare_async
+--- PASS: TestNoTyposPointsAtTheIdentifier (0.00s)
+    --- PASS: TestNoTyposPointsAtTheIdentifier/the_function_form (0.00s)
+    --- PASS: TestNoTyposPointsAtTheIdentifier/the_variable_form (0.00s)
+    --- PASS: TestNoTyposPointsAtTheIdentifier/two_typos_in_one_file,_in_source_order (0.00s)
+    --- PASS: TestNoTyposPointsAtTheIdentifier/one_typo_among_several_declarators (0.00s)
+=== CONT  TestNoTyposReports/two_typos_in_one_file,_function_form,_so_this_reports_twice
+=== CONT  TestNoUnwantedPolyfillioIsSilent/upstream_pass_1
+=== CONT  TestNoUnwantedPolyfillioIsSilent/empty_features_value
+=== CONT  TestNoSyncScriptsIsSilent/the_next/script_component
+=== CONT  TestNoSyncScriptsIsSilent/member_expression_name
+=== CONT  TestNoSyncScriptsIsSilent/async_with_an_explicit_value
+=== CONT  TestNoStyledJsxInDocumentIsSilent/global_without_jsx
+=== CONT  TestNoSyncScriptsIsSilent/inline_script_with_no_src
+=== CONT  TestNoSyncScriptsIsSilent/spread_attributes
+--- PASS: TestNoTyposReports (0.00s)
+    --- PASS: TestNoTyposReports/one_substitution,_variable_form (0.00s)
+    --- PASS: TestNoTyposReports/one_substitution,_function_form (0.00s)
+    --- PASS: TestNoTyposReports/one_case_change,_variable_form (0.00s)
+    --- PASS: TestNoTyposReports/two_typos_in_one_file,_function_form,_so_this_reports_twice (0.00s)
+--- PASS: TestNoStyledJsxInDocumentIsSilent (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/an_attribute_whose_name_contains_jsx (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/a_jsx_attribute_on_a_different_element (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/a_member_expression_tag_named_style (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/a_file_whose_name_merely_begins_with_the_word_document (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/a_capitalized_style_component (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/a_jsx_attribute_in_the_wrong_case (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/a_spread_supplying_the_jsx_attribute (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/styled_jsx_outside_the_document (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/a_clean_document_with_no_style_element (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/plain_css_and_a_spread_only_style_in_a_document (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentIsSilent/global_without_jsx (0.00s)
+=== CONT  TestNoSyncScriptsIsSilent/bare_defer
+=== CONT  TestNoSyncScriptsReports/src_with_no_async_or_defer
+=== CONT  TestNoUnwantedPolyfillioIsSilent/path_only_src
+=== CONT  TestNoUnwantedPolyfillioIsSilent/import_from_another_module
+=== CONT  TestNoUnwantedPolyfillioIsSilent/member_expression_tag
+=== CONT  TestNoUnwantedPolyfillioIsSilent/Script_component_with_no_import
+=== CONT  TestNoUnwantedPolyfillioIsSilent/safe_host_with_no_query
+=== CONT  TestNoUnwantedPolyfillioIsSilent/uppercase_SCRIPT_tag
+=== CONT  TestNoUnwantedPolyfillioIsSilent/a_div_is_not_a_script
+=== CONT  TestNoUnwantedPolyfillioIsSilent/duplicate_features_key_takes_the_first
+=== CONT  TestNoUnwantedPolyfillioIsSilent/feature_name_is_a_prefix_of_a_shipped_one
+=== CONT  TestNoUnwantedPolyfillioIsSilent/spread_attributes_only
+=== CONT  TestNoUnwantedPolyfillioIsSilent/script_with_no_src
+=== CONT  TestNoUnwantedPolyfillioIsSilent/computed_src_expression
+=== CONT  TestNoUnwantedPolyfillioIsSilent/lowercase_percent_escape_stays_undecoded
+=== CONT  TestNoUnwantedPolyfillioIsSilent/http_rather_than_https
+=== CONT  TestNoUnwantedPolyfillioIsSilent/unrelated_host
+=== CONT  TestNoUnwantedPolyfillioIsSilent/upstream_pass_3
+=== CONT  TestNoUnwantedPolyfillioIsSilent/feature_name_in_the_wrong_case
+=== CONT  TestNoSyncScriptsReports/src_is_a_computed_expression
+=== CONT  TestNoSyncScriptsReports/self_closing_form
+=== CONT  TestNoPageCustomFontDecodesEntities/an_encoded_slash_in_the_font_href
+=== CONT  TestNoUnwantedPolyfillioIsSilent/upstream_pass_2
+=== CONT  TestNoSyncScriptsReports/src_with_an_unrelated_attribute
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_"pages"
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_"a"]
+=== CONT  TestNoUnwantedPolyfillioIsSilent/protocol_relative_url
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_null]
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_3]
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_true
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_3
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_{}
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_["a",_"../b",_""]
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_[]
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"pages"
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"/elsewhere/pages"
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_""
+=== CONT  TestNoStyledJsxInDocumentReports/styled_jsx_inside_a_document
+=== CONT  TestNoPageCustomFontDecodesEntities/an_encoded_slash_in_another_href
+=== CONT  TestNoTyposGatesOnThePagesDirectory/a_page
+=== CONT  TestNoStyledJsxInDocumentReports/jsx_global
+=== CONT  TestNoStyledJsxInDocumentReports/a_self_closing_styled_jsx_element
+=== CONT  TestNoStyledJsxInDocumentReports/the_document_directory_form,_wider_than_this_rule_upstream
+=== CONT  TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a>
+=== CONT  TestNoStyledJsxInDocumentReports/a_jsx_attribute_carrying_a_value
+=== CONT  TestNoStyledJsxInDocumentReports/a_document_outside_a_pages_directory
+=== CONT  TestNoTyposGatesOnThePagesDirectory/an_api_route
+=== CONT  TestNoTyposGatesOnThePagesDirectory/a_pages_directory_nested_inside_an_api_route
+=== CONT  TestNoTyposGatesOnThePagesDirectory/a_directory_whose_name_ends_in_pages
+=== CONT  TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/>
+=== CONT  TestNoTyposGatesOnThePagesDirectory/outside_any_pages_directory
+=== CONT  TestNoTyposGatesOnThePagesDirectory/a_nested_api_route
+=== CONT  TestNoTyposGatesOnThePagesDirectory/a_nested_api_directory
+=== CONT  TestNoTyposGatesOnThePagesDirectory/a_directory_whose_name_begins_with_api
+=== CONT  TestNoTyposGatesOnThePagesDirectory/a_page_under_a_source_directory
+=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory
+=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/a_directory_that_does_not_exist
+=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app
+=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_string
+--- PASS: TestNoSyncScriptsIsSilent (0.00s)
+    --- PASS: TestNoSyncScriptsIsSilent/bare_async (0.00s)
+    --- PASS: TestNoSyncScriptsIsSilent/the_next/script_component (0.00s)
+    --- PASS: TestNoSyncScriptsIsSilent/spread_attributes (0.00s)
+    --- PASS: TestNoSyncScriptsIsSilent/member_expression_name (0.00s)
+    --- PASS: TestNoSyncScriptsIsSilent/inline_script_with_no_src (0.00s)
+    --- PASS: TestNoSyncScriptsIsSilent/bare_defer (0.00s)
+    --- PASS: TestNoSyncScriptsIsSilent/async_with_an_explicit_value (0.00s)
+--- PASS: TestNoSyncScriptsReports (0.00s)
+    --- PASS: TestNoSyncScriptsReports/src_with_no_async_or_defer (0.00s)
+    --- PASS: TestNoSyncScriptsReports/self_closing_form (0.00s)
+    --- PASS: TestNoSyncScriptsReports/src_is_a_computed_expression (0.00s)
+    --- PASS: TestNoSyncScriptsReports/src_with_an_unrelated_attribute (0.00s)
+--- PASS: TestNoUnwantedPolyfillioIsSilent (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/empty_features_value (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/upstream_pass_1 (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/path_only_src (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/import_from_another_module (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/member_expression_tag (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/a_div_is_not_a_script (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/Script_component_with_no_import (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/safe_host_with_no_query (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/uppercase_SCRIPT_tag (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/duplicate_features_key_takes_the_first (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/spread_attributes_only (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/feature_name_is_a_prefix_of_a_shipped_one (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/computed_src_expression (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/lowercase_percent_escape_stays_undecoded (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/script_with_no_src (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/http_rather_than_https (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/unrelated_host (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/upstream_pass_3 (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/feature_name_in_the_wrong_case (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/upstream_pass_2 (0.00s)
+    --- PASS: TestNoUnwantedPolyfillioIsSilent/protocol_relative_url (0.00s)
+--- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_ (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_"pages" (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_"a"] (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_null] (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_3] (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_true (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_3 (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_{} (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_[] (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_["a",_"../b",_""] (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"pages" (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"" (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"/elsewhere/pages" (0.00s)
+--- PASS: TestNoPageCustomFontDecodesEntities (0.00s)
+    --- PASS: TestNoPageCustomFontDecodesEntities/an_encoded_slash_in_the_font_href (0.00s)
+    --- PASS: TestNoPageCustomFontDecodesEntities/an_encoded_slash_in_another_href (0.00s)
+--- PASS: TestNoTyposGatesOnThePagesDirectory (0.01s)
+    --- PASS: TestNoTyposGatesOnThePagesDirectory/a_page (0.00s)
+    --- PASS: TestNoTyposGatesOnThePagesDirectory/an_api_route (0.00s)
+    --- PASS: TestNoTyposGatesOnThePagesDirectory/a_directory_whose_name_ends_in_pages (0.00s)
+    --- PASS: TestNoTyposGatesOnThePagesDirectory/a_pages_directory_nested_inside_an_api_route (0.00s)
+    --- PASS: TestNoTyposGatesOnThePagesDirectory/outside_any_pages_directory (0.00s)
+    --- PASS: TestNoTyposGatesOnThePagesDirectory/a_nested_api_route (0.00s)
+    --- PASS: TestNoTyposGatesOnThePagesDirectory/a_nested_api_directory (0.00s)
+    --- PASS: TestNoTyposGatesOnThePagesDirectory/a_directory_whose_name_begins_with_api (0.00s)
+    --- PASS: TestNoTyposGatesOnThePagesDirectory/a_page_under_a_source_directory (0.00s)
+--- PASS: TestNoHtmlLinkForPagesPointsAtTheOpeningElement (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a> (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/> (0.00s)
+--- PASS: TestNoStyledJsxInDocumentReports (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentReports/jsx_global (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentReports/a_self_closing_styled_jsx_element (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentReports/styled_jsx_inside_a_document (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentReports/a_jsx_attribute_carrying_a_value (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentReports/a_document_outside_a_pages_directory (0.00s)
+    --- PASS: TestNoStyledJsxInDocumentReports/the_document_directory_form,_wider_than_this_rule_upstream (0.00s)
+=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_alone
+=== CONT  TestNoPageCustomFontStaysSilent/upstream_pass_1
+=== CONT  TestNoPageCustomFontStaysSilent/an_anonymous_default-exported_arrow
+=== CONT  TestNoPageCustomFontStaysSilent/another_font_host_entirely
+=== CONT  TestNoPageCustomFontStaysSilent/the_http_spelling_of_the_same_url
+=== CONT  TestNoPageCustomFontStaysSilent/an_attribute_name_spelled_in_capitals
+=== CONT  TestNoPageCustomFontStaysSilent/a_capitalized_Link_component
+=== CONT  TestNoPageCustomFontStaysSilent/an_href_with_a_leading_space
+=== CONT  TestNoPageCustomFontStaysSilent/an_href_containing_the_prefix_without_starting_with_it
+=== CONT  TestNoPageCustomFontStaysSilent/a_spread_carrying_the_href
+=== CONT  TestNoPageCustomFontStaysSilent/an_href_expression_rather_than_a_string_literal
+=== CONT  TestNoPageCustomFontStaysSilent/an_anonymous_class_expression_bound_to_the_default-exported_const
+=== CONT  TestNoPageCustomFontStaysSilent/upstream_pass_6
+=== CONT  TestNoPageCustomFontStaysSilent/an_anonymous_function_expression_bound_to_the_default-exported_const
+=== CONT  TestNoPageCustomFontStaysSilent/an_arrow_bound_to_the_default-exported_const
+=== CONT  TestNoPageCustomFontStaysSilent/upstream_pass_7
+=== CONT  TestNoPageCustomFontStaysSilent/upstream_pass_4
+=== CONT  TestNoPageCustomFontStaysSilent/upstream_pass_5
+=== CONT  TestNoPageCustomFontStaysSilent/upstream_pass_3
+=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a>
+=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link>
+=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a>
+=== CONT  TestNoPageCustomFontStaysSilent/upstream_pass_2
+--- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/a_directory_that_does_not_exist (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_string (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_alone (0.01s)
+--- PASS: TestNoPageCustomFontStaysSilent (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/an_anonymous_default-exported_arrow (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/upstream_pass_1 (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/another_font_host_entirely (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/the_http_spelling_of_the_same_url (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/an_attribute_name_spelled_in_capitals (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/a_capitalized_Link_component (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/an_href_with_a_leading_space (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/an_href_containing_the_prefix_without_starting_with_it (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/an_href_expression_rather_than_a_string_literal (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/a_spread_carrying_the_href (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/upstream_pass_6 (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/an_anonymous_class_expression_bound_to_the_default-exported_const (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/an_anonymous_function_expression_bound_to_the_default-exported_const (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/an_arrow_bound_to_the_default-exported_const (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/upstream_pass_7 (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/upstream_pass_4 (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/upstream_pass_3 (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/upstream_pass_5 (0.00s)
+    --- PASS: TestNoPageCustomFontStaysSilent/upstream_pass_2 (0.00s)
+--- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a> (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link> (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a> (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.066s
