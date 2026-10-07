@@ -1,0 +1,8 @@
+PASS symbol-description node=true kinds=[CallExpression]
+PASS structure/react-hook-no-any-type node=true kinds=[CallExpression]
+PASS require-await node=true kinds=[FunctionDeclaration FunctionExpression ArrowFunction MethodDeclaration GetAccessor SetAccessor Constructor]
+CAUGHT json: cannot unmarshal number into Descriptor.kinds.0 of type string
+CAUGHT invalid kind "CallExpressions"
+CAUGHT invalid kind "CallExpression"
+CAUGHT missing handed-node declaration
+PASS listener subset and generated handed-node calls; full Discover registration is not implemented
