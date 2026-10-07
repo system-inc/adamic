@@ -33,6 +33,12 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		}
 		return value, nil
 	}
+	if checked, err := l.viewArrayCast(node, value, source, target); checked != nil || err != nil {
+		return checked, err
+	}
+	if checked, err := l.viewProvenClassCast(node, value, source, target); checked != nil || err != nil {
+		return checked, err
+	}
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: "narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
 		if checked, err := l.interfaceCast(node, value, source, target); checked != nil || err != nil {

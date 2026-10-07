@@ -19,6 +19,9 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 	if seen[target] {
 		return nil
 	}
+	if l.checker.IsArrayType(target) || checker.IsTupleType(target) {
+		return l.viewArrayFields(node, target, fields, seen)
+	}
 	seen[target] = true
 	if isClassInstance(target) {
 		return l.notYet(node, "a nominal class field in a checked view")
@@ -29,14 +32,18 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 	for _, property := range l.checker.GetPropertiesOfType(target) {
 		declared := l.checker.GetTypeOfSymbol(property)
 		if l.callableViewContract(declared) {
-			return &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+			fields[property.Name] = true
+			if err := l.viewCallableFieldUses(node, target, property); err != nil {
+				return err
+			}
+			continue
 		}
 		of, known := l.representation(declared)
-		if property.Flags&ast.SymbolFlagsOptional != 0 || !viewDataType(declared) || !known || of < ir.Number || of > ir.Object {
+		if property.Flags&ast.SymbolFlagsOptional != 0 || !viewDataType(declared) || !known || of < ir.Number || of > ir.Array {
 			return l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))
 		}
 		fields[property.Name] = true
-		if of == ir.Object {
+		if of == ir.Object || of == ir.Array {
 			if len(l.checker.GetPropertiesOfType(declared)) == 0 {
 				return l.notYet(node, "an empty structural object field in a checked view")
 			}

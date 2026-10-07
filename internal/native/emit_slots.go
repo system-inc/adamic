@@ -11,6 +11,9 @@ import (
 func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
 	array := e.value(expression.Array)
 	index := e.value(expression.Index)
+	if expression.View != "" {
+		return e.emitViewArrayRead(expression, array, index)
+	}
 	slot := e.temporary()
 	lookup := "adamic_array_at"
 	if expression.Relative {

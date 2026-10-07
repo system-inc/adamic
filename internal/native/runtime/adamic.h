@@ -211,6 +211,8 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
 typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments);
+#include "view_callables.h"
+
 struct adamic_methods {
 	size_t count;
 	const char *const *names;
@@ -297,8 +299,11 @@ static inline void adamic_object_check_data_write(const adamic_object *object, c
 }
 
 // adamic_array is an array (array.c). references says whether its elements are references.
+#include "view_arrays.h"
+
 typedef struct adamic_array {
 	adamic_heap heap;
+	adamic_array_view_metadata view;
 	size_t length;
 	size_t capacity;
 	bool references;

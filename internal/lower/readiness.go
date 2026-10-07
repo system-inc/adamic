@@ -252,6 +252,20 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 					}
 				}
 				node = expression
+			case ir.ArrayIndex:
+				node = markProgramViewArrayRead(program, expression)
+			case ir.ArrayMap:
+				expression.ViewRead = markProgramViewArrayUse(program, expression.ViewRead)
+				node = expression
+			case ir.ArrayVisit:
+				expression.ViewRead = markProgramViewArrayUse(program, expression.ViewRead)
+				node = expression
+			case ir.ArrayReduce:
+				expression.ViewRead = markProgramViewArrayUse(program, expression.ViewRead)
+				node = expression
+			case ir.ArrayPop:
+				expression.ViewRead = markProgramViewArrayUse(program, expression.ViewRead)
+				node = expression
 			case ir.ObjectLiteral:
 				if expression.Spread != nil && len(fields) > 0 {
 					expression.NoReuse = true
@@ -263,7 +277,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !program.CheckedFields[expression.Name] || expression.Method {
+				if !program.CheckedFields[expression.Name] {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
@@ -318,6 +332,10 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 		return value
 	}
 	result := transform(reflect.ValueOf(statement)).Interface().(ir.Statement)
+	if loop, ok := result.(ir.ForOf); ok {
+		loop.ViewRead = markProgramViewArrayUse(program, loop.ViewRead)
+		result = loop
+	}
 	if assign, ok := result.(ir.Assign); ok && program.Locals[assign.Local].Uninitialized {
 		assign.Checked = false
 		result = assign

@@ -219,7 +219,11 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		} else {
 			method = e.temporary()
 			e.line("adamic_method %s = NULL;", method)
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			if property.View != "" {
+				closure = e.emitViewCallableRead(property, receiver, method)
+			} else {
+				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			}
 		}
 	}
 	arguments := []string{}

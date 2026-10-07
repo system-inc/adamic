@@ -155,6 +155,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		array := e.value(statement.Array)
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
+		e.viewArrayMutation(array, statement.Element)
 		if statement.Element.IsReference() {
 			value = retained(value)
 		}
@@ -376,6 +377,10 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.indent++
 	e.scopes = append(e.scopes, nil)
 	element := unslotted(statement.Element, fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element)))
+	if statement.ViewRead.View != "" {
+		slot := e.viewArrayElementSlot(statement.ViewRead, held, index)
+		element = unslotted(statement.Element, slot+"."+member(statement.Element))
+	}
 	// bindEntry declares a local from the step's key or value, retained, since the body may delete
 	// the entry.
 	bindEntry := func(local int, slot string, of ir.Type) {
