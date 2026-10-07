@@ -68,7 +68,12 @@ _Noreturn void adamic_stack_overflow(void) {
 }
 
 void adamic_stack_thread_start(void) {
+#ifdef ADAMIC_TARGET_WASI
+	// The only executor already has the linear-stack limit from its constructor.
+	return;
+#else
 	// Pool workers are created with an explicit 8 MiB stack; keep the same panic margin.
 	uintptr_t base = (uintptr_t)__builtin_frame_address(0);
 	adamic_stack_limit = base - ASSUMED_STACK + MARGIN;
+#endif
 }

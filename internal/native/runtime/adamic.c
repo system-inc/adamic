@@ -197,10 +197,14 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 }
 
 _Noreturn void adamic_panic(const char *message, size_t length) {
+#ifndef ADAMIC_TARGET_WASI
 	// Losing panics must not terminate the process before the winner finishes its one message.
 	if (atomic_flag_test_and_set_explicit(&panicking, memory_order_relaxed)) {
 		for (;;) { pause(); }
 	}
+#else
+	(void)panicking;
+#endif
 	pthread_mutex_lock(&output_lock);
 	static const char prefix[] = "adamic: panic: ";
 	// Everything the program printed comes first, as on Node.

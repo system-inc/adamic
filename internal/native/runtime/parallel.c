@@ -6,7 +6,9 @@
 #include "parallel.h"
 #include <errno.h>
 #include <pthread.h>
+#ifndef ADAMIC_TARGET_WASI
 #include <signal.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -52,6 +54,10 @@ static _Thread_local size_t worker_index;
 // Linux affinity and cgroup v2/v1 quotas cap online CPUs; macOS uses online CPUs.
 // An explicit override always wins.
 static size_t available_threads(void) {
+#ifdef ADAMIC_TARGET_WASI
+	// Plain WASI has no shared memory or worker threads, including with an override.
+	return 1;
+#else
 	long online = sysconf(_SC_NPROCESSORS_ONLN);
 	size_t count = online > 0 ? (size_t)online : 1;
 #ifdef __linux__
@@ -98,6 +104,7 @@ static size_t available_threads(void) {
 		count = (size_t)requested;
 	}
 	return count;
+#endif
 }
 
 static range *new_range(scope *scope, size_t from, size_t end) {
@@ -215,6 +222,12 @@ void adamic_parallel_shutdown(void) {
 }
 
 static void start(void) {
+#ifdef ADAMIC_TARGET_WASI
+	thread_count = available_threads();
+	// Keep the native worker entry referenced for strict unused-function checks.
+	(void)worker_main;
+	return;
+#else
 	thread_count = available_threads();
 	// This path creates no threads, not even an idle worker.
 	if (thread_count == 1) { return; }
@@ -236,6 +249,7 @@ static void start(void) {
 	pthread_sigmask(SIG_SETMASK, &saved, NULL);
 	pthread_attr_destroy(&attributes);
 	atexit(adamic_parallel_shutdown);
+#endif
 }
 
 size_t adamic_parallel_threads(void) { pthread_once(&started, start); return thread_count; }
