@@ -155,21 +155,21 @@ export function decodeJson(text, descriptor) {
 				return result;
 			}
 			case 'union': {
-				const children = node.children.map(index => ({ index, node: descriptor.nodes[index] }));
+				const children = node.children.map(index => ({ index, schema: descriptor.nodes[index] }));
 				if (jsonKind(value) === 'object') {
-					const objects = children.filter(child => child.node.kind === 'object');
+					const objects = children.filter(child => child.schema.kind === 'object');
 					if (objects.length === 1) return validate(objects[0].index, value, path);
 					if (objects.length > 1) {
 						const name = units(node.discriminantUnits, node.discriminant);
 						if (!Object.hasOwn(value, name)) missing(path, name);
 						for (const child of objects) {
-							const field = child.node.fields.find(field => units(field.nameUnits, field.name) === name);
+							const field = child.schema.fields.find(field => units(field.nameUnits, field.name) === name);
 							if (matches(descriptor.nodes[field.node], value[name])) return validate(child.index, value, path);
 						}
 						mismatch(node, `${path}.${name}`, value[name]);
 					}
 				}
-				for (const child of children) if (matches(child.node, value)) return validate(child.index, value, path);
+				for (const child of children) if (matches(child.schema, value)) return validate(child.index, value, path);
 				mismatch(node, path, value);
 			}
 			default: throw new Error(`Unsupported decodeJson descriptor kind: ${node.kind}`);

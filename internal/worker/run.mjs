@@ -26,7 +26,7 @@ if (mode === '--oracle-runtime') {
 			}
 			if (url.endsWith('.a') || url.endsWith('.ts')) {
 				let source = readFileSync(fileURLToPath(url), 'utf8');
-				if (source.includes('decodeJson')) source = JSON.parse(execFileSync('go', ['run', './oracle/json_types.go', fileURLToPath(url)], { cwd: fileURLToPath(new URL('../../', import.meta.url)), encoding: 'utf8' }))[fileURLToPath(url)];
+				if (source.includes('decodeJson') || source.includes('encodeJson')) source = JSON.parse(execFileSync('go', ['run', './oracle/json_types.go', fileURLToPath(url)], { cwd: fileURLToPath(new URL('../../', import.meta.url)), encoding: 'utf8' }))[fileURLToPath(url)];
 				return { format: 'module', source: stripTypeScriptTypes(source), shortCircuit: true };
 			}
 			return nextLoad(url, context);
