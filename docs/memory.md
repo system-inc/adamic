@@ -899,6 +899,6 @@ Since a string is immutable, a slice can read its parent's bytes in place, as a 
 
 ## How this is held honest
 
-- Every native fixture runs under ASan and UBSan (use-after-free, overflow, undefined behavior) and, separately, under a leak check (`leaks --atExit` on macOS, LeakSanitizer on Linux) for anything never freed. A mutant that drops releases is caught by the leak check (`2a2e30b`).
+- Every native fixture runs under ASan and UBSan (use-after-free, overflow, undefined behavior) and, separately, under a leak check for anything never freed: LeakSanitizer on Linux; on macOS the counted build, whose allocations must be its frees and its values in regions, and `leaks --atExit` on that binary for what the runtime takes from malloc outside the counts. (`leaks` alone can't see a value: the size-class allocator's chunks stay reachable from its own table.) A mutant that drops releases is caught by the leak check (`2a2e30b`).
 - Every change to counting or reuse is checked by the oracle against Node, byte for byte.
 - Retains and releases per fixture are counted (`adamic build --count`), and every oracle fixture's counts are checked in as `internal/oracle/counts.md`. A change that moves them fails the gate until the table is updated, so its effect shows in review as a diff of numbers, not a feeling.
