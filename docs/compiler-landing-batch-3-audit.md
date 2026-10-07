@@ -2,7 +2,7 @@
 
 ## Deliberate compile regressions first
 
-None through merge 7.
+None through merge 8.
 
 ## Merge 1: compiler/landing-batch-1 e5d34c099
 
@@ -182,3 +182,9 @@ Validation: final Linux counts 28.966s; load 2.026s; lower 38.742s; native 388.1
 Mutants: unknown in-always-true and omitted inner typeof were caught by Node stdout. FS mutation tests all passed, checking byte output and filesystem effects. Independent numeric-byte and digest-hex mutants were caught by Node stdout; hash-alias, runtime-field-layout and cycle-dispatch mutants were caught by their proof checks. Removing optional-boolean decoding changed native exit status; removing null-sentinel classification caused an ASan global-buffer-overflow; removing the qualified-name guard caused the observed compiler panic; removing constant-wrapper or synchronous-borrow repairs caused the corresponding admission tests to fail. All originals were restored, and focused Node/native/release/sanitizer/JavaScript and leak checks passed. The null mutant runner initially expected a stderr comparison; its valid rerun checks the actual ASan finding.
 
 The interaction program docs/verification/landing-batch-3/unknown-optional-boolean.a prints boolean, false, boolean, true, undefined on Node and all three backends, with exit 0, no stderr and no leaks. Initial probe forms used unsupported shorthand or class fields; the final explicit object fields exercise supported optional storage.
+
+## Merge 8: codex/discriminant-writes 5fbec436f
+
+Merge ce5c756d2 was clean. Only eight census/review files changed; the ruled compiler implementation was already present. Linux counts regenerated in 27.830s with no table change. The stock TypeScript 6.0.3 census at exact public source commit 050880ce59e30b356b686bd3144efe24f875ebc8 reproduces 77 files, zero diagnostics, 437 supplied events and 71 reviewed extras: 485 accepted / 23 refused combined. Exact reconciliation reports no missing, duplicate or changed original fields. The missing-review, stale-source-hash and duplicate-supplied-event mutants each failed with its intended evidence-check error. The fresh stock checkout first lacked generated diagnostics and Node/source-map-support types; upstream's generator and isolated pinned dependencies resolved these setup failures. No compiler behavior or Node observation changed.
+
+Checkpoint 8 passed: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./internal/flow ./internal/lower ./internal/native ./stage3/fixtures -count=1 -timeout 30m. Oracle 396.196s, flow 280.411s, lower 130.178s, native 314.094s, stage3 56.682s. Vet passed. Logs: /tmp/landing-batch-3-checkpoint-08.log, /tmp/landing-batch-3-08-{counts,vet,reconciliation,census-mutants}.log. No new compiler failure and no stage3 record edit.
