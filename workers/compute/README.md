@@ -58,6 +58,21 @@ Generator seed is xorshift32 `0x6a09e667`. An optional first argument selects an
 
 Replay accepts `.mjs`, `.ts` and `.a` paths. It strips types using Node's stripTypeScriptTypes, as oracle/node.mjs does. A mismatch reports the zero-based request index, full request, first differing field and both responses, then exits 1. It checks status, ordered header pairs, exact UTF-8 body bytes and response count. Record mode rejects non-UTF-8 bodies rather than recording lossy text. No option performs the requests and reports their count.
 
+### Replay a running Worker over HTTP
+
+```sh
+node --disable-warning=ExperimentalWarning workers/replay.mjs --url http://127.0.0.1:8787 workers/compute/corpus/requests.jsonl --compare workers/compute/corpus/responses.jsonl > /tmp/workers-http.log 2>&1
+node --disable-warning=ExperimentalWarning workers/compute/verify-url.mjs > /tmp/workers-verify-url.log 2>&1
+```
+
+`--url <base>` replaces module loading with HTTP requests. The base supplies the HTTP/HTTPS origin; each corpus request supplies its encoded path and query, method, headers and body. A path on the base is replaced. Redirects are not followed, so redirect statuses remain visible. The existing `--record`, `--compare` and replay-only options also work with this transport.
+
+In HTTP mode, the output header explicitly says that a HEAD request's expected body is empty, per RFC 9110 section 9.3.2. This normalization applies only to HTTP comparison; the committed module recording keeps the body's original value. HTTP recordings naturally contain an empty HEAD body.
+
+Only `content-type` and `allow` response headers participate in HTTP comparison, preserving their iterated pair order. Other names, including workerd's `content-encoding` and `transfer-encoding`, are reported with occurrence counts in the final summary line rather than failing comparison. Counts include responses received through the first mismatch when comparison fails. Module mode continues to compare every header. Bodies and statuses retain the same exact comparison; fetch decodes HTTP content encoding before body comparison.
+
+The Node HTTP adapter in `verify-url.mjs` serves the twin and deliberately adds non-contract headers. The observed good run matched all 600 requests, including five HEAD requests, and counted `content-encoding` and `x-adapter` on all 600 responses. Its drop-allow mutant exited 1 at zero-based request 351 with `headers.length`: the expected 405 response had allow and the wire response did not. Output is in `/tmp/workers-verify-url.log`. The user separately verified phase one against real workerd over HTTP: 600 of 600 responses identical. This follow-up's automated witness is the Node adapter.
+
 `verify.mjs` regenerates twice, compares bytes to each other and to the committed corpus, compares every response, checks a fresh recording, and asserts independent known answers. It creates scratch mutants for p95 rank, even median, uncapped FLAT500, tax before discount, replay ignoring header order, replay ignoring a trailing byte, and generator ambient randomness. Each must fail its intended assertion. A separate invalid UTF-8 fixture proves body comparison is not fooled by lossy decoding. Scratch files are removed after the gate.
 
 Phase two adds only `compute/handler.a` and an entry `'compute/handler.a'` to the list in `workers/replay-all.mjs`. Replay's generic source adapter feeds named `handle` the shared plain HttpRequest and builds a Response from HttpResponse. Its loader already supports the landing branch's oracle/json_types.go descriptors and resolves 'adamic' to oracle/adamic.mjs. This requires decodeJson on the base branch, as scheduled. No compiler-generated handler code participates in this oracle. The production generated bridge and workerd measurements belong to later units; this phase does not provide them.
