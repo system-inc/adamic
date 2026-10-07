@@ -1,0 +1,4 @@
+await new Promise<void>(function(resolve) {
+    setTimeout(resolve, 500);
+});
+export {};

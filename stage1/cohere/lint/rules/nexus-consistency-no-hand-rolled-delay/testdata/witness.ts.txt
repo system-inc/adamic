@@ -1,0 +1,3 @@
+async function poll(milliseconds: number) {
+    await new Promise((resolve) => setTimeout(resolve, milliseconds));
+}

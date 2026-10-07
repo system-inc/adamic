@@ -1,0 +1,13 @@
+{
+  "name": "nexus/consistency-no-hand-rolled-delay",
+  "kinds": [
+    "NewExpression"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleConsistencyNoHandRolledDelay",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestConsistencyNoHandRolledDelay"
+}
