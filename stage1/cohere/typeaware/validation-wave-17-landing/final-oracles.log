@@ -1,0 +1,143 @@
+=== RUN   TestCoverageAgreementAndMutants
+    coverage_test.go:121: controls: 24022 identical finding bytes; findings 53
+    coverage_test.go:129: controls-asan: 24022 identical finding bytes; findings 53
+=== RUN   TestCoverageAgreementAndMutants/before
+    coverage_test.go:153: before: exit 0, Go byte oracle catches byte 56; findings 52
+=== RUN   TestCoverageAgreementAndMutants/cast
+    coverage_test.go:153: cast: exit 0, Go byte oracle catches byte 1556; findings 53
+=== RUN   TestCoverageAgreementAndMutants/methods
+    coverage_test.go:153: methods: exit 0, Go byte oracle catches byte 2203; findings 46
+=== RUN   TestCoverageAgreementAndMutants/coercion
+    coverage_test.go:153: coercion: exit 0, Go byte oracle catches byte 1162; findings 53
+=== RUN   TestCoverageAgreementAndMutants/caller
+    coverage_test.go:153: caller: exit 0, Go byte oracle catches byte 10248; findings 54
+=== RUN   TestCoverageAgreementAndMutants/parameter
+    coverage_test.go:153: parameter: exit 0, Go byte oracle catches byte 368; findings 50
+=== RUN   TestCoverageAgreementAndMutants/invariant
+    coverage_test.go:153: invariant: exit 0, Go byte oracle catches byte 12759; findings 48
+=== RUN   TestCoverageAgreementAndMutants/optional
+    coverage_test.go:153: optional: exit 0, Go byte oracle catches byte 15522; findings 53
+=== RUN   TestCoverageAgreementAndMutants/alias
+    coverage_test.go:153: alias: exit 0, Go byte oracle catches byte 15998; findings 53
+=== RUN   TestCoverageAgreementAndMutants/unused
+    coverage_test.go:153: unused: exit 0, Go byte oracle catches byte 16815; findings 56
+=== NAME  TestCoverageAgreementAndMutants
+    coverage_test.go:182: released program queried using a new question: panic 70, invalid or released checker handle
+    coverage_test.go:187: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestCoverageAgreementAndMutants (162.84s)
+    --- PASS: TestCoverageAgreementAndMutants/before (13.40s)
+    --- PASS: TestCoverageAgreementAndMutants/cast (10.93s)
+    --- PASS: TestCoverageAgreementAndMutants/methods (8.95s)
+    --- PASS: TestCoverageAgreementAndMutants/coercion (8.96s)
+    --- PASS: TestCoverageAgreementAndMutants/caller (9.35s)
+    --- PASS: TestCoverageAgreementAndMutants/parameter (8.80s)
+    --- PASS: TestCoverageAgreementAndMutants/invariant (9.81s)
+    --- PASS: TestCoverageAgreementAndMutants/optional (9.22s)
+    --- PASS: TestCoverageAgreementAndMutants/alias (8.87s)
+    --- PASS: TestCoverageAgreementAndMutants/unused (8.69s)
+=== RUN   TestWave17FifthAgreementAndMutants
+    wave_17_fifth_test.go:110: controls: 50360 identical bytes
+    wave_17_fifth_test.go:116: 155 upstream and edge control files
+    wave_17_fifth_test.go:151: syntax mutant exits 0, empty stderr; Go byte oracle catches byte 55
+    wave_17_fifth_test.go:151: memo mutant exits 0, empty stderr; Go byte oracle catches byte 9283
+    wave_17_fifth_test.go:151: boolean mutant exits 0, empty stderr; Go byte oracle catches byte 1203
+    wave_17_fifth_test.go:160: options [--boolean-props --nested]: 50489 identical bytes
+    wave_17_fifth_test.go:160: options [--boolean-props --message-test]: 50443 identical bytes
+    wave_17_fifth_test.go:160: options [--boolean-props --nested --message-test]: 50592 identical bytes
+    wave_17_fifth_test.go:169: binding question rejects released program: panic 70
+    wave_17_fifth_test.go:177: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_fifth_test.go:190: symbol identity question rejects released handle; retained registry mutant finishes cleanly, required panic catches it
+    wave_17_fifth_test.go:206: ordinary-controls: 12909 identical finding bytes; findings 24
+    wave_17_fifth_test.go:207: ordinary-controls-asan: 12909 identical finding bytes; findings 24
+    wave_17_fifth_test.go:208: 44 controls use the ordinary native parser
+    wave_17_fifth_test.go:234: repository: 18485 identical finding bytes; findings 0
+    wave_17_fifth_test.go:235: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_fifth_test.go:234: compiler: 5318 identical finding bytes; findings 0
+    wave_17_fifth_test.go:235: compiler-asan: 5318 identical finding bytes; findings 0
+--- PASS: TestWave17FifthAgreementAndMutants (150.41s)
+=== RUN   TestWave17FourthAgreementAndMutants
+    wave_17_fourth_test.go:98: controls: 74680 identical finding bytes; findings 197
+    wave_17_fourth_test.go:104: 335 upstream and edge control files
+    wave_17_fourth_test.go:107: controls-asan: 74680 identical finding bytes; findings 197
+    wave_17_fourth_test.go:147: throw mutant exits 0, empty stderr; Go byte oracle catches byte 17497
+    wave_17_fourth_test.go:147: regex mutant exits 0, empty stderr; Go byte oracle catches byte 1235
+    wave_17_fourth_test.go:147: arrow mutant exits 0, empty stderr; Go byte oracle catches byte 334
+    wave_17_fourth_test.go:147: tracker mutant exits 0, empty stderr; Go byte oracle catches byte 15013
+    wave_17_fourth_test.go:156: options [--allow-named]: 72160 identical bytes
+    wave_17_fourth_test.go:156: options [--disallow-unbound]: 77049 identical bytes
+    wave_17_fourth_test.go:156: options [--allow-named --disallow-unbound]: 74266 identical bytes
+    wave_17_fourth_test.go:165: binding question rejects released program: panic 70
+    wave_17_fourth_test.go:173: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_fourth_test.go:186: symbol identity question rejects released handle; retained registry mutant finishes cleanly, required panic catches it
+    wave_17_fourth_test.go:212: repository: 18485 identical finding bytes; findings 0
+    wave_17_fourth_test.go:213: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_fourth_test.go:212: compiler: 5318 identical finding bytes; findings 0
+    wave_17_fourth_test.go:213: compiler-asan: 5318 identical finding bytes; findings 0
+--- PASS: TestWave17FourthAgreementAndMutants (145.79s)
+=== RUN   TestWave17HeadJudgmentsAndParserBoundary
+    wave_17_heads_test.go:102: projected-controls: 10364 identical finding bytes; findings 21
+    wave_17_heads_test.go:108: 40 projected JSX controls; decisions are native, parser is explicitly bypassed
+    wave_17_heads_test.go:111: projected-controls-asan: 10364 identical finding bytes; findings 21
+    wave_17_heads_test.go:138: duplicate mutant exits 0, empty stderr; Go bytes catch byte 54
+    wave_17_heads_test.go:138: script mutant exits 0, empty stderr; Go bytes catch byte 472
+    wave_17_heads_test.go:147: end-to-end JSX remains blocked: shared parser slice refusal, panic 70
+--- PASS: TestWave17HeadJudgmentsAndParserBoundary (90.45s)
+=== RUN   TestWave17NextAgreementAndMutants
+    wave_17_next_test.go:201: controls: 35147 identical finding bytes; findings 77
+    wave_17_next_test.go:207: 53 upstream and edge control files
+    wave_17_next_test.go:210: controls-asan: 35147 identical finding bytes; findings 77
+    wave_17_next_test.go:238: collection mutant exits 0, empty stderr; Go byte oracle catches byte 3687
+    wave_17_next_test.go:238: outcome mutant exits 0, empty stderr; Go byte oracle catches byte 16784
+    wave_17_next_test.go:238: pure mutant exits 0, empty stderr; Go byte oracle catches byte 8422
+    wave_17_next_test.go:248: ancestry await mutant exits 0, empty stderr; Go byte oracle catches byte 15716
+    wave_17_next_test.go:256: new ancestry question rejects released program: panic 70
+    wave_17_next_test.go:264: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_next_test.go:290: repository: 18485 identical finding bytes; findings 0
+    wave_17_next_test.go:291: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_next_test.go:290: compiler: 5318 identical finding bytes; findings 0
+    wave_17_next_test.go:291: compiler-asan: 5318 identical finding bytes; findings 0
+--- PASS: TestWave17NextAgreementAndMutants (118.52s)
+=== RUN   TestWave17AgreementMutantAndJSXBoundary
+    wave_17_test.go:83: controls: 9854 identical finding bytes; findings 19
+    wave_17_test.go:87: 38 non-JSX upstream and edge controls
+    wave_17_test.go:90: controls-asan: 9854 identical finding bytes; findings 19
+    wave_17_test.go:115: async end+1 mutant: exit 0, empty stderr; Go byte oracle catches byte 59
+    wave_17_test.go:134: duplicate-head: Go findings 1; native explicitly refuses JSX with exit 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 58 in /workspace/wave-17-landing/original/duplicate-head.tsx
+    wave_17_test.go:134: script-in-head: Go findings 1; native explicitly refuses JSX with exit 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 61 in /workspace/wave-17-landing/original/script-in-head.tsx
+    wave_17_test.go:134: async-jsx: Go findings 1; native explicitly refuses JSX with exit 70: adamic: panic: parser slice expected GreaterThanToken, got CloseBraceToken at 69 in /workspace/wave-17-landing/original/async-jsx.tsx
+    wave_17_test.go:153: released handle: panic 70; registry mutant exits 0, caught by required panic
+    wave_17_test.go:178: repository: 18485 identical finding bytes; findings 0
+    wave_17_test.go:179: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_test.go:184: repository wave17-oracle: whole process 0.135568s; findings 0; cohere: load_ns=75213227 rule_ns=36595 run_ns=47321905
+    wave_17_test.go:184: repository wave17: whole process 0.284436s; findings 0; tsgo: load_ns=82606736 query_ns=0 queries=0 first_query_ns=0 run_ns=196362725
+    wave_17_test.go:178: compiler: 5318 identical finding bytes; findings 0
+    wave_17_test.go:179: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_17_test.go:184: compiler wave17-oracle: whole process 0.283510s; findings 0; cohere: load_ns=226797291 rule_ns=17565 run_ns=39163870
+    wave_17_test.go:184: compiler wave17: whole process 1.657699s; findings 0; tsgo: load_ns=234587952 query_ns=0 queries=0 first_query_ns=0 run_ns=1411987874
+--- PASS: TestWave17AgreementMutantAndJSXBoundary (66.40s)
+=== RUN   TestWave17ThirdAgreementAndMutants
+    wave_17_third_test.go:125: controls: 62161 identical finding bytes; findings 159
+    wave_17_third_test.go:131: 315 upstream and edge control files
+    wave_17_third_test.go:134: controls-asan: 62161 identical finding bytes; findings 159
+    wave_17_third_test.go:162: global mutant exits 0, empty stderr; Go byte oracle catches byte 13247
+    wave_17_third_test.go:162: implicit mutant exits 0, empty stderr; Go byte oracle catches byte 52
+    wave_17_third_test.go:162: eval mutant exits 0, empty stderr; Go byte oracle catches byte 52
+    wave_17_third_test.go:175: source-js fact mutant exits 0, empty stderr; Go bytes catch byte 55157
+    wave_17_third_test.go:175: shorthand fact mutant exits 0, empty stderr; Go bytes catch byte 4716
+    wave_17_third_test.go:184: options [--lexical-bindings]: 64563 identical bytes
+    wave_17_third_test.go:184: options [--exception=Object --exception=String]: 55423 identical bytes
+    wave_17_third_test.go:184: options [--lexical-bindings --exception=Array]: 63857 identical bytes
+    wave_17_third_test.go:193: new binding question rejects released program: panic 70
+    wave_17_third_test.go:201: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_third_test.go:214: source metadata question rejects released handle; retained registry mutant finishes cleanly, required panic catches it
+    wave_17_third_test.go:240: repository: 18485 identical finding bytes; findings 0
+    wave_17_third_test.go:241: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_third_test.go:240: compiler: 5318 identical finding bytes; findings 0
+    wave_17_third_test.go:241: compiler-asan: 5318 identical finding bytes; findings 0
+--- PASS: TestWave17ThirdAgreementAndMutants (156.64s)
+=== RUN   TestWave17UnicodeUpper
+    wave_17_unicode_test.go:45: all 1,114,112 code points agree with Go unicode.IsUpper, 10634 output bytes, sanitizers clean
+    wave_17_unicode_test.go:62: uppercase boundary mutant: exit 0, empty stderr, direct Go byte oracle catches byte 1
+--- PASS: TestWave17UnicodeUpper (2.44s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	893.495s

@@ -144,3 +144,13 @@ its configurable native regexp matcher is blocked by stage0's RegExp constructor
 refusal, and complete component/props integration remains unwired. No complete
 BooleanPropNaming parity is claimed and no further rules are claimed. Exact
 commands, limits and timings are in [the fifth report](../WAVE_17_FIFTH_REPORT.md).
+
+## Landing cap status
+
+The sole published branch from this session was rebased onto main e8ba3d5d;
+validated source tip 7138b515. All seven wave-17 oracles and the inherited
+inventory oracle passed again, including sanitizer, fact, handle and comparison
+mutants. No new rules were claimed. Full evidence and historical SHA mapping
+are in [the landing report](../WAVE_17_LANDING_REPORT.md). Production JSX and
+complete configurable BooleanPropNaming remain the documented unfinished scope;
+current main explicitly refuses RegExp with a nonconstant pattern.

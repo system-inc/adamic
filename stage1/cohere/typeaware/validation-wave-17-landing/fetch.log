@@ -1,0 +1,111 @@
+From https://github.com/system-inc/adamic
+   689f30bc..34308def  apple/bridge            -> origin/apple/bridge
+ * [new branch]        apple/generator-sdk     -> origin/apple/generator-sdk
+ * [new branch]        area/apple              -> origin/area/apple
+ * [new branch]        area/compiler           -> origin/area/compiler
+ * [new branch]        area/developer-tools    -> origin/area/developer-tools
+ * [new branch]        area/library            -> origin/area/library
+ * [new branch]        area/runtime            -> origin/area/runtime
+ * [new branch]        area/stage1-format      -> origin/area/stage1-format
+ * [new branch]        area/stage1-lint        -> origin/area/stage1-lint
+ * [new branch]        area/stage3             -> origin/area/stage3
+ * [new branch]        cloud/apple-generator   -> origin/cloud/apple-generator
+   167cd089..d9c13221  cloud/integrate-16      -> origin/cloud/integrate-16
+ * [new branch]        cloud/integrate-c-1     -> origin/cloud/integrate-c-1
+ * [new branch]        cloud/integrate-l-1     -> origin/cloud/integrate-l-1
+ * [new branch]        cloud/integrate-r-1     -> origin/cloud/integrate-r-1
+   35ed8a55..0886fd9f  cloud/integrate-s2-2    -> origin/cloud/integrate-s2-2
+   ef55b050..175435de  cloud/integrate-s3-2    -> origin/cloud/integrate-s3-2
+ * [new branch]        cloud/json-decode-landing -> origin/cloud/json-decode-landing
+ * [new branch]        cloud/merge-tree        -> origin/cloud/merge-tree
+   0fc1f05a..64a3eed1  codex/async-ordinary    -> origin/codex/async-ordinary
+ * [new branch]        codex/borrow-conventions -> origin/codex/borrow-conventions
+   e816797f..982e2118  codex/checked-downcasts -> origin/codex/checked-downcasts
+ * [new branch]        codex/devirtualize      -> origin/codex/devirtualize
+   40973847..246ecc07  codex/flag-enums        -> origin/codex/flag-enums
+ * [new branch]        codex/graph-regions     -> origin/codex/graph-regions
+   7545a010..e68aa13f  codex/host-buffer-crypto -> origin/codex/host-buffer-crypto
+   aa987b30..3a090c7e  codex/host-fs-directory -> origin/codex/host-fs-directory
+ * [new branch]        codex/host-fs-fresh     -> origin/codex/host-fs-fresh
+   9efe6d1f..89f59518  codex/host-node-types   -> origin/codex/host-node-types
+   3555c7f8..7a52252c  codex/host-process      -> origin/codex/host-process
+   9b83948c..c6def18d  codex/interface-downcasts -> origin/codex/interface-downcasts
+   bcf803d5..bc6b9d30  codex/library-array-2   -> origin/codex/library-array-2
+   2f70bac2..1c49c285  codex/library-array-3   -> origin/codex/library-array-3
+   c42bf9f5..5992275e  codex/lint-helpers-01   -> origin/codex/lint-helpers-01
+   9aff573c..039220d5  codex/lint-helpers-02   -> origin/codex/lint-helpers-02
+   c06493f0..04237837  codex/lint-helpers-03   -> origin/codex/lint-helpers-03
+   8890cfce..6877b840  codex/lint-helpers-04   -> origin/codex/lint-helpers-04
+   2a267300..b2ed8252  codex/lint-helpers-05   -> origin/codex/lint-helpers-05
+ * [new branch]        codex/lint-helpers-from-codex-lint-wave1-03 -> origin/codex/lint-helpers-from-codex-lint-wave1-03
+ * [new branch]        codex/lint-helpers-from-codex-lint-wave1-14 -> origin/codex/lint-helpers-from-codex-lint-wave1-14
+ * [new branch]        codex/lint-helpers-from-codex/lint-wave1-04 -> origin/codex/lint-helpers-from-codex/lint-wave1-04
+ * [new branch]        codex/lint-helpers-from-codex/lint-wave1-06 -> origin/codex/lint-helpers-from-codex/lint-wave1-06
+ * [new branch]        codex/lint-helpers-from-codex/lint-wave1-09 -> origin/codex/lint-helpers-from-codex/lint-wave1-09
+ * [new branch]        codex/lint-helpers-from-codex/lint-wave1-10 -> origin/codex/lint-helpers-from-codex/lint-wave1-10
+ * [new branch]        codex/lint-helpers-from-codex/lint-wave1-11 -> origin/codex/lint-helpers-from-codex/lint-wave1-11
+ * [new branch]        codex/lint-helpers-from-codex/lint-wave1-15 -> origin/codex/lint-helpers-from-codex/lint-wave1-15
+ * [new branch]        codex/lint-helpers-from-lint-wave1-05 -> origin/codex/lint-helpers-from-lint-wave1-05
+ * [new branch]        codex/lint-helpers-from-lint-wave1-08 -> origin/codex/lint-helpers-from-lint-wave1-08
+ * [new branch]        codex/lint-helpers-from-lint-wave1-12 -> origin/codex/lint-helpers-from-lint-wave1-12
+ * [new branch]        codex/lint-helpers-from-lint-wave1-13 -> origin/codex/lint-helpers-from-lint-wave1-13
+ * [new branch]        codex/lint-runtime-fixes -> origin/codex/lint-runtime-fixes
+   b21364cf..5f070b55  codex/lint-runtime-profile -> origin/codex/lint-runtime-profile
+   b6bd1641..94af70f0  codex/lint-wave1-07     -> origin/codex/lint-wave1-07
+   4bbc8781..d6a9b070  codex/multi-root        -> origin/codex/multi-root
+   ebc4704f..37efb4bc  codex/namespaces-tsc    -> origin/codex/namespaces-tsc
+   b15216da..59fe216b  codex/nested-functions  -> origin/codex/nested-functions
+   e05e5415..6ae58a03  codex/non-null-check    -> origin/codex/non-null-check
+ * [new branch]        codex/phantom-brands    -> origin/codex/phantom-brands
+   dd4b67e7..4dc5419a  codex/process-exit-and-tty -> origin/codex/process-exit-and-tty
+ * [new branch]        codex/progress          -> origin/codex/progress
+   955cfcdc..dff2e8f1  codex/refuse-ts-nocheck -> origin/codex/refuse-ts-nocheck
+   a8cc9037..ab512274  codex/regex-v8-divergences -> origin/codex/regex-v8-divergences
+   e88d7a22..11436c1a  codex/stage1-lint-output -> origin/codex/stage1-lint-output
+   dca32401..02dc785c  codex/stage3-explicit-any -> origin/codex/stage3-explicit-any
+   7e65e723..7e400a0e  codex/stage3-fixtures-records -> origin/codex/stage3-fixtures-records
+   07f637cc..4fd00b8d  codex/stage3-indexed-reads -> origin/codex/stage3-indexed-reads
+ * [new branch]        codex/stage3-indexed-reads-checker -> origin/codex/stage3-indexed-reads-checker
+ * [new branch]        codex/stage3-indexed-reads-emit -> origin/codex/stage3-indexed-reads-emit
+ * [new branch]        codex/stage3-indexed-reads-program -> origin/codex/stage3-indexed-reads-program
+   709fe868..70456b76  codex/stage3-latent-census -> origin/codex/stage3-latent-census
+   e3535e70..b7e379e0  codex/stage3-optional-declarations -> origin/codex/stage3-optional-declarations
+ * [new branch]        codex/stage3-readonly-views -> origin/codex/stage3-readonly-views
+   f061bbda..347b5948  codex/stage3-regex-captures -> origin/codex/stage3-regex-captures
+   4c108ebe..138022f6  codex/stage3-scanner-proof -> origin/codex/stage3-scanner-proof
+   aa896b5d..cabb7f1d  codex/taste-not-soundness -> origin/codex/taste-not-soundness
+   5afbdb83..eb6df00e  codex/tsgo-c-library    -> origin/codex/tsgo-c-library
+   6252e44c..b66943db  codex/typeaware-wave-01 -> origin/codex/typeaware-wave-01
+   ff7f6c9e..3bffa89e  codex/typeaware-wave-02 -> origin/codex/typeaware-wave-02
+   c2758b18..570f68e1  codex/typeaware-wave-03 -> origin/codex/typeaware-wave-03
+   cd471e5f..2f79da56  codex/typeaware-wave-04 -> origin/codex/typeaware-wave-04
+   e6553fc8..ad6a485b  codex/typeaware-wave-05 -> origin/codex/typeaware-wave-05
+   d0dc8c2c..2cd43c56  codex/typeaware-wave-06 -> origin/codex/typeaware-wave-06
+   87ebb321..b9e43baf  codex/typeaware-wave-07 -> origin/codex/typeaware-wave-07
+   f1488562..5de178b9  codex/typeaware-wave-08 -> origin/codex/typeaware-wave-08
+   aa8aca95..aa38a538  codex/typeaware-wave-09 -> origin/codex/typeaware-wave-09
+   5e14644c..569ca634  codex/typeaware-wave-11 -> origin/codex/typeaware-wave-11
+   acb1ff7c..dc360b91  codex/typeaware-wave-12 -> origin/codex/typeaware-wave-12
+   756d7ea9..df0f8d80  codex/typeaware-wave-13 -> origin/codex/typeaware-wave-13
+   6f236b82..ec47031e  codex/typeaware-wave-14 -> origin/codex/typeaware-wave-14
+   5ebe19e4..e0e1727f  codex/typeaware-wave-15 -> origin/codex/typeaware-wave-15
+   58d204d3..b03c2289  codex/typeaware-wave-16 -> origin/codex/typeaware-wave-16
+   ca3ed859..f28732f8  codex/typeaware-wave-17 -> origin/codex/typeaware-wave-17
+   eb1251ab..72f84449  codex/typeaware-wave-18 -> origin/codex/typeaware-wave-18
+   8845163b..165964a0  codex/typeaware-wave-19 -> origin/codex/typeaware-wave-19
+   1ef7ed97..cb87c3c4  codex/typeaware-wave-20 -> origin/codex/typeaware-wave-20
+   6af00212..fbbf0e59  codex/typeaware-wave-21 -> origin/codex/typeaware-wave-21
+   7f3b9262..5b86729d  codex/typeaware-wave-22 -> origin/codex/typeaware-wave-22
+   c47e2d1e..ca76e25f  codex/typeaware-wave-23 -> origin/codex/typeaware-wave-23
+   09bf947b..0bc69d87  codex/typeaware-wave-24 -> origin/codex/typeaware-wave-24
+   056799e9..16a717e8  codex/typeaware-wave-25 -> origin/codex/typeaware-wave-25
+   8180b758..2b64539b  codex/typeaware-wave-26 -> origin/codex/typeaware-wave-26
+   24d4f417..46018855  codex/typeaware-wave-27 -> origin/codex/typeaware-wave-27
+   431ab666..1e3a68ef  codex/typeaware-wave-28 -> origin/codex/typeaware-wave-28
+   7f4eabb8..5b1590fe  codex/typeaware-wave-29 -> origin/codex/typeaware-wave-29
+   a6c2a932..5cc0b875  codex/typeaware-wave-30 -> origin/codex/typeaware-wave-30
+ * [new branch]        codex/wasi-agreement    -> origin/codex/wasi-agreement
+ * [new branch]        coverage/json-decode    -> origin/coverage/json-decode
+ * [new branch]        devtools/generators-i16 -> origin/devtools/generators-i16
+ * [new branch]        runtime/stack-arguments-linux -> origin/runtime/stack-arguments-linux
+ * [new branch]        runtime/stdout-edges-usr1-counts -> origin/runtime/stdout-edges-usr1-counts

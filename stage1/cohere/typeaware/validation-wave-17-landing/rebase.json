@@ -1,0 +1,109 @@
+{
+  "original_tip": "f28732f86eba1c14c1b62f61e0ecabc4d0aa4d56",
+  "first_main": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "first_rebased_tip": "53aaf76c217188aa68b9de13ec20970385157d32",
+  "main": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "rebased_tip": "7138b515663aa684215ad963e5243f62d730b97d",
+  "commits": [
+    {
+      "old": "0d540f413625f016f20fea39761c7b184f335de6",
+      "rebased": "55cd83bbdeb2e27921c05fe1aede0f7a6b18b08c",
+      "subject": "Port ten inventory-ranked lint rules through the checker bridge"
+    },
+    {
+      "old": "808be7f8cd493592bffe05f6ab61da206ceb5cae",
+      "rebased": "6864bc754b3630dbb48a9e817f6478c664426eb8",
+      "subject": "Claim the three rules assigned to type-aware wave 17"
+    },
+    {
+      "old": "dd5481bcb611867890b937f32a15f57b9949b2a7",
+      "rebased": "f0ab37eaf1b3de4837262b3c97b725aee3ea7741",
+      "subject": "Port async client component checks for non-JSX input and prove the JSX boundary"
+    },
+    {
+      "old": "8ddbc28959cbe78d8262d6a83aede76e7938454b",
+      "rebased": "81d96176687b82f0ff17262b9386cfb3b161e650",
+      "subject": "Record wave 17 evidence and the two unimplemented JSX rules"
+    },
+    {
+      "old": "32735084dd48f063070d0328560d7563b557cc84",
+      "rebased": "0c5ea102dab175e6f9232cfae55856c5bfb1193a",
+      "subject": "Preserve validation logs and clean report whitespace"
+    },
+    {
+      "old": "71501c4d9b8a8827070cc99adc112c3c154f1bf1",
+      "rebased": "abb2ffd04c32d097211ba670fe10557cc7cae83c",
+      "subject": "Claim next three Nexus type-aware rules for wave 17"
+    },
+    {
+      "old": "0be2374dff3dc6dabf4e774f0945044ef35c7cae",
+      "rebased": "60c3bda7a6b8ac021178532505dc82ea7e6159df",
+      "subject": "Port three claimed Nexus type-aware rules in native Adamic"
+    },
+    {
+      "old": "1330dbc287e8fff382b458815101c7b032ad4e33",
+      "rebased": "f13d6e051fc255d781010c2868b6325770c8bc36",
+      "subject": "Record Nexus wave 17 validation and shared harness blocker"
+    },
+    {
+      "old": "8f3d8d050ac4253fd3fc9b1c0fd2be19327b14c1",
+      "rebased": "cb7085de9099d139fa2d3ad7558bc80ca833418f",
+      "subject": "Implement native Head rule decisions and record the JSX parser boundary"
+    },
+    {
+      "old": "bc581497414ae470aba5af8c62805cb28c51b171",
+      "rebased": "feba1ed55f6eaf9b60c39e8eb5a9aaf3874344ad",
+      "subject": "Claim the next three unclaimed global binding rules"
+    },
+    {
+      "old": "a7306edbcde675f7038002cd281e669c5ecae3a2",
+      "rebased": "34722275cdefbac50ce094dfcb41d7c4abc0e124",
+      "subject": "Port global assignment, implicit globals and implied eval to native Adamic"
+    },
+    {
+      "old": "101aff2f7f6620301de1944aa1515549d61c1998",
+      "rebased": "3e705f7589e292badc0aae51aeeda5e9e43f68cf",
+      "subject": "Record global rule parity, mutants, ownership checks and native timings"
+    },
+    {
+      "old": "dd9c6958c3a073bdbb1c445fb367f259d54b117d",
+      "rebased": "e381291e96b2e2b8b54fbe77e9193ced0904b559",
+      "subject": "Claim throw literal, useless backreference and arrow callback rules"
+    },
+    {
+      "old": "b2a0bc7231961d3707dfb60188b60e36672a73e4",
+      "rebased": "136b31a28e587110c81fe41c3c4813943c85c7db",
+      "subject": "Port throw, backreference and arrow callback rules"
+    },
+    {
+      "old": "6359e05c767c89d90c5d12fe4579ba5395068bac",
+      "rebased": "555ba53bc3fb4d80bd01a7dbca8d4e529621d677",
+      "subject": "Record fourth batch parity, mutants and timings"
+    },
+    {
+      "old": "ca3ed8590070a5d70b9bff0aaaf23f0294c4759b",
+      "rebased": "5d9aa204bb37a2bae669e8d27f150deb82cf54bb",
+      "subject": "Preserve fourth batch validation logs"
+    },
+    {
+      "old": "1de5a3847df7376363afeb06ff3b0268ef8bf04d",
+      "rebased": "1aee8767a6395784cb60540090c32b9f0a296d21",
+      "subject": "Claim unsupported syntax, use memo and boolean prop naming rules"
+    },
+    {
+      "old": "34369377a558e765905f8ae8df841b62c569681e",
+      "rebased": "87c37616fbfa3bd52b78bbbabf8a760cc69b5211",
+      "subject": "Port React compiler hook checks and partial boolean prop naming"
+    },
+    {
+      "old": "4f9f26dc505f23ff12b59f47c12d4c5e9fde6114",
+      "rebased": "5f27f836911c1f0bd2317bdb4a9e2b4f15d77ae2",
+      "subject": "Match Go boolean prop message interpolation exactly"
+    },
+    {
+      "old": "f28732f86eba1c14c1b62f61e0ecabc4d0aa4d56",
+      "rebased": "7138b515663aa684215ad963e5243f62d730b97d",
+      "subject": "Record hook parity and explicit boolean prop naming gaps"
+    }
+  ]
+}
