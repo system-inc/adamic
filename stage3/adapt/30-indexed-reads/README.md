@@ -759,3 +759,79 @@ Evidence: `scanner-coverage-audit.json`, `scanner-coverage-proof.json`, census
 JSON, and the owner-site lists. Delivery stays on codex/stage3-indexed-reads;
 main is reserved for @system_adamic_integration. No force-push or rebase of a
 pushed branch is allowed; bring new main work in with a merge of origin/main.
+
+
+## Whole-file closure: debug.ts, proof blocked
+
+This unit merged origin/area/stage3 at 634ef061fc72c061e2de1606d5c8faebec4411f6
+by fast-forward on codex/stage3-indexed-reads. No rebase or force-push is used.
+All 17 owned source hashes before this change match run 0 of the pinned latent
+report at 176a496. Only debug.ts receives a new source edit.
+
+The new `whole-sites.json` ledger records declaration repairs separately from
+indexed reads. `whole-files.cjs` adds `| undefined` to the value type inside
+`Partial<Record<AssertionKeys, ...>>` at debug.ts:155. The private cache is
+explicitly cleared by `assertionCache[key] = undefined` at line 171. The earlier
+read is held in cachedFunc and tested against undefined before dereferencing.
+The owning declaration therefore must admit stored undefined. Partial continues
+to express absent keys. Every read, write and evaluation point is unchanged;
+stock TypeScript emits byte-identical JavaScript. This is a truthful declaration
+repair, not a presence assertion. The AST guard checks the exact original owner
+and its two entry fields, and recognizes precisely its repaired union on rerun.
+
+| Site | Class | Action | Invariant |
+| --- | --- | --- | --- |
+| debug.ts:155, write at 171:21 | truthful index-value declaration | add value union with undefined | Clearing populated cache slots stores undefined; guarded reads already handle it. |
+
+The file census is **1 -> 0**, with **all diagnostic codes** retained, on all
+78 roots using the area/stage3 checker with the pinned meter's loader options.
+`whole-census.sh` verifies that the enum feature options differ from the local
+options only by ErasableSyntaxOnly=false. It overlays that options block without
+changing repository compiler files. This does **not** reproduce the meter's
+merged scratch compiler: global counts are 717 -> 716 rather than its reported
+382. No global checker-clean count or native compiler acceptance is claimed.
+The baseline meter's debug.ts diagnostic is the same TS2322 at 171:21.
+
+All 17 owned files pass the existing emitted-JavaScript, site-contract and
+idempotence verifier. A mutant removes only the new cache value union. The
+all-code census returns TS2322 again and the adapter's --check rejects it with
+`truthful cache value union missing: debug.ts:155`, exit 1. Since this is a
+pure type edit, emitted JavaScript comparison alone would not catch that mutant.
+The existing required-read `?? 0` mutant proofs remain recorded above.
+
+An integrated rerun also needed a narrow contract compatibility rule: adaptation
+46 already selects `(matchResult[2] ?? matchResult[3])!`. Adaptation 30 continues
+to decline the individual optional captures, and recognizes exactly that
+already-approved selection on rerun. This guard changes no adapted source.
+Other coalesced declined reads remain rejected.
+
+The required API exception check **fails** before accepting any baseline.
+Adaptation 40 changes public brand declarations from any to undefined, including
+__sortedArrayBrand and __pathBrand. Those changes are outside the user-sanctioned
+adaptation 20 / adaptation 70 exceptions. No adaptation 70 is present at 634ef06.
+The adaptation-20 acceptance command made no baseline write. The fresh
+integrated pipeline already carries adaptation 40 baseline edits; these are
+not sanctioned by this unit. The default oracle finished in 375.858s: install
+and build pass, tests exit 1, **106,366 passing and one failing**. Its only
+differing baseline is api/typescript.d.ts; the diff is **48,691 bytes**. The
+independent API proof rejects the adaptation 40 brand changes before it can
+accept the sanctioned adaptation 20 changes. No extra exception was accepted.
+Until the required empty baseline diff is established, **debug.ts is not counted
+as a completed whole-file closure**. The remaining target files have not been
+started, respecting the instruction to finish one file before starting another.
+
+Reproduction, with each command redirected to its own log:
+
+```sh
+source /workspace/adamic-tools/env.sh
+bash stage3/adapt/30-indexed-reads/whole-census.sh <integrated-tree> <out> debug.ts
+CENSUS_TYPESCRIPT=<stock-typescript-6.0.3> node stage3/adapt/30-indexed-reads/verify.cjs <before-17-file-snapshot> <integrated-tree>
+TSC_ADAPT_TYPESCRIPT=<stock-typescript-6.0.3> node stage3/adapt/20-optional-declarations/check-baselines.cjs <pristine-tree> <integrated-tree> <373-owner-report> --accept-api
+bash stage3/oracle/run.sh <integrated-tree> <oracle-out>
+```
+
+Evidence: `whole-debug-{before,after,mutant}.json`, `whole-debug-proof.json`,
+`whole-debug-verify.log`, `whole-debug-mutant-contract.log`, and
+`whole-debug-api-blocker.log`, `whole-debug-oracle.json`, and
+`whole-debug-baseline.diff`. Toolchain setup: Go 0s, clang 0s, Node 0s,
+submodules 0s, cache 117s, total 117s; nproc 5, CPU quota 4.

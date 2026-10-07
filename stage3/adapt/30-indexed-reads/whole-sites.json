@@ -1,0 +1,13 @@
+[
+  {
+    "file": "debug.ts",
+    "owner": "Debug.assertionCache",
+    "line": 155,
+    "class": "truthful index-value declaration",
+    "action": "add undefined to the Record value type, retaining Partial and every runtime write",
+    "diagnostics": [
+      "TS2322 at debug.ts:171:21"
+    ],
+    "proof": "setAssertionLevel clears populated cache slots by writing undefined at line 171; the read at line 168 is guarded by cachedFunc !== undefined before dereferencing, so the private cache's value type must represent stored undefined as well as missing keys."
+  }
+]
