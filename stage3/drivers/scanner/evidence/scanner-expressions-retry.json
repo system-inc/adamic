@@ -1,0 +1,35 @@
+{
+  "feature_commit": "998fb3eb",
+  "scratch_commit": "934af3c1a93258be1fa945f5bf6b82737d918f44",
+  "compiler_build_exit": 0,
+  "probe": "probes/string-number-concatenation.a",
+  "probe_build_exit": 0,
+  "probe_results": {
+    "node": {
+      "exit": 0,
+      "stdout": "7\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "7\n",
+      "stderr": ""
+    },
+    "one_byte_mutant_diff_exit": 1
+  },
+  "merge": "docs/0.1.md and generated counts conflicts retained scratch versions; expression.go auto-merged. Initial fetch/merge failed for disk space; cleaned only partial merge checkout, obsolete scratch compiler binary and redundant Node dump; canonical Node golden preserved.",
+  "discovery_command": "/workspace/scratch/scanner-case-fix-adamic c /workspace/scratch/scanner-map-discovery/main.a",
+  "discovery_exit": 2,
+  "discovery_C_bytes": 0,
+  "discovery_diagnostic": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x607afd]\n\ngoroutine 1 [running]:\ngithub.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0xbf491643600?, 0x25?)\n\t/workspace/scratch/scanner-front2/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8694 +0x1d\ngithub.com/system-inc/adamic/internal/lower.(*lowering).nestedDeclarations(0xbf491643600, {0xbf48e86db50, 0x4d, 0x1c36810?})\n\t/workspace/scratch/scanner-front2/internal/lower/nested_functions.go:99 +0x11a8\ngithub.com/system-inc/adamic/internal/lower.(*lowering).statements(0xbf491643600, {0xbf48e86db50, 0x4d, 0xbf496507560?})\n\t/workspace/scratch/scanner-front2/internal/lower/statements.go:12 +0x26\ngithub.com/system-inc/adamic/internal/lower.(*lowering).lowerBody(0xbf491643600, 0x18, 0xbf48e879768, 0xffffffffffffffff, {0xbf491676558, 0x1, 0xbf492d1f9c0?}, {0x1d32480, 0x0, 0x0})\n\t/workspace/scratch/scanner-front2/internal/lower/functions.go:253 +0x178c\ngithub.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0xbf491643600, 0x18, 0xbf48e879768, 0xffffffffffffffff)\n\t/workspace/scratch/scanner-front2/internal/lower/functions.go:55 +0x17e\ngithub.com/system-inc/adamic/internal/lower.(*lowering).functionBody(0xbf491643600, 0xbf48e879768)\n\t/workspace/scratch/scanner-front2/internal/lower/functions.go:12 +0x65\ngithub.com/system-inc/adamic/internal/lower.(*lowering).declareModule(0xbf491643600, {0xbf492cd2008?, 0x51?, 0xbf48e53d508?})\n\t/workspace/scratch/scanner-front2/internal/lower/modules.go:183 +0xa45\ngithub.com/system-inc/adamic/internal/lower.Lower({0x1c4b308?, 0x1d32480?}, 0xbf48e60de00)\n\t/workspace/scratch/scanner-front2/internal/lower/lower.go:55 +0x525\nmain.compileLibrary({0x7fffa342235b?, 0x8?}, 0x0)\n\t/workspace/scratch/scanner-front2/cmd/adamic/main.go:110 +0x65\nmain.compile(...)\n\t/workspace/scratch/scanner-front2/cmd/adamic/main.go:99\nmain.run({0xbf48cf9e220?, 0x1c5b768?, 0xbf48cea61e0?})\n\t/workspace/scratch/scanner-front2/cmd/adamic/main.go:50 +0xc6\nmain.main()\n\t/workspace/scratch/scanner-front2/cmd/adamic/main.go:33 +0x45\n",
+  "discovery_bypasses": [
+    "Existing getNameOfScriptTarget Map helper body stub retained.",
+    "Restored complete parsePseudoBigInt from validated slice, replaced first compound write with void shiftedDigit and conditional residual write with if (residual) void residual.",
+    "Restored complete scanner.ts from validated slice, retaining both nested overload signatures; no previous scanner discovery bypasses remain."
+  ],
+  "discovery_result": "No other parsePseudoBigInt blocker appeared before nestedDeclarations nil-pointer panic at nested_functions.go:99. This is observed lowering order under discovery stubs, not behavioral equivalence.",
+  "slice_audit": "PASS: 168 byte-identical source spans; 79 ordered module import lists\n",
+  "full_validated_slice": "Not rerun in this step. Last real stop remains checked non-null typed-array assignment.",
+  "native_scanner_comparison": "not run; no real scanner binary",
+  "limits": "Focused probe only; no full compiler gate or new scanner token reference generated."
+}

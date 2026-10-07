@@ -1,5 +1,31 @@
 # Scanner blockers
 
+## October 7: numeric concatenation fixed; narrow bigint bypass reaches overload panic
+
+Merged scanner-expressions 998fb3eb into unpushed scratch 934af3c1.
+The unchanged string-number-concatenation.a builds and prints `7`, matching
+source Node stdout, empty stderr and exit 0. A one-byte native stdout mutant
+is caught by diff exit 1. No lowering conflicts in this merge; expression.go
+auto-merged, while documentation and generated counts retained scratch versions.
+Exact evidence: `evidence/scanner-expressions-retry.json`.
+
+In the untracked discovery copy, restored parsePseudoBigInt's complete validated
+body and scanner.ts's complete validated contents. Replaced ONLY the two compound
+writes with `void shiftedDigit` and `if (residual) void residual`, retaining the
+Uint16Array allocation, digit computations, and division reads/writes. The known
+Map-using getNameOfScriptTarget stub remains. No other earlier scanner bypasses
+remain, including no removed overload signatures.
+
+Discovery now reaches the nested overload nil-pointer panic in
+nested_functions.go:99, before any additional parsePseudoBigInt stop appears.
+The existing nested-overload-declaration.a is its minimal probe. C output is
+empty. This observes lowering order under explicit stubs; it proves neither
+stubbed runtime equivalence nor native scanner correctness.
+
+The validated slice byte audit passes. No validated source was changed, no full
+slice retry performed here, and no native scanner token diff is available.
+The last real slice stop remains the checked non-null typed-array write target.
+
 ## October 7: Map iteration and Uint16 constructor fixed; non-null write stops first
 
 Merged host-blockers cd220dd5 into the scratch with runtime 1836fc27's
