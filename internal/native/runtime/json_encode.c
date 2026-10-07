@@ -105,15 +105,19 @@ static void quote(encode_builder *w, const adamic_string *text) {
 
 // A slot's storage may be an optional scalar, even though its schema names the
 // present type. Layout metadata distinguishes scalar slots from undefined NULL.
-static bool encode_field(const adamic_object *object, const adamic_decode_field *field,
-						 const adamic_decode_node *type, adamic_value *value) {
-	size_t position = object->shape->count;
-	for (size_t i = 0; i < object->shape->count; i++) {
-		if (strcmp(object->shape->names[i], field->name) == 0) {
-			position = i;
-			break;
+static bool encode_field(const adamic_object *object, adamic_encode_field *field,
+						 const adamic_encode_node *type, adamic_value *value) {
+	if (field->cache.shape != object->shape) {
+		field->cache.shape = object->shape;
+		field->cache.index = object->shape->count;
+		for (size_t i = 0; i < object->shape->count; i++) {
+			if (strcmp(object->shape->names[i], field->name) == 0) {
+				field->cache.index = i;
+				break;
+			}
 		}
 	}
+	size_t position = field->cache.index;
 	if (position == object->shape->count) {
 		return false;
 	}
@@ -139,7 +143,7 @@ static bool encode_field(const adamic_object *object, const adamic_decode_field 
 	}
 	return true;
 }
-static bool encode_literal(adamic_value value, int representation, const adamic_decode_node *type) {
+static bool encode_literal(adamic_value value, int representation, const adamic_encode_node *type) {
 	if (representation != type->representation) {
 		return false;
 	}
@@ -155,10 +159,10 @@ static bool encode_literal(adamic_value value, int representation, const adamic_
 	}
 }
 static void encode_write(encode_builder *builder, adamic_value value,
-						 const adamic_decode_schema *schema, size_t index, size_t depth) {
+						 const adamic_encode_schema *schema, size_t index, size_t depth) {
 	ADAMIC_CHECK_STACK();
-	const adamic_decode_node *type = &schema->nodes[index];
-	if (strcmp(type->kind, "union") == 0) {
+	const adamic_encode_node *type = &schema->nodes[index];
+	if (type->kind == adamic_encode_union) {
 		int representation = type->representation;
 		if (representation == 10) {
 			const adamic_heap *heap = value.reference;
@@ -188,18 +192,18 @@ static void encode_write(encode_builder *builder, adamic_value value,
 		}
 		for (size_t i = 0; i < type->child_count; i++) {
 			size_t child = type->children[i];
-			const adamic_decode_node *member = &schema->nodes[child];
-			bool match = strcmp(member->kind, "literal") == 0
+			const adamic_encode_node *member = &schema->nodes[child];
+			bool match = member->kind == adamic_encode_literal
 							 ? encode_literal(value, representation, member)
 							 : representation == member->representation;
-			if (match && strcmp(member->kind, "object") == 0 && type->discriminant[0] != '\0') {
+			if (match && member->kind == adamic_encode_object && type->discriminant[0] != '\0') {
 				match = false;
 				for (size_t f = 0; f < member->field_count; f++) {
-					const adamic_decode_field *field = &member->fields[f];
+					adamic_encode_field *field = &member->fields[f];
 					if (strcmp(field->name, type->discriminant) != 0) {
 						continue;
 					}
-					const adamic_decode_node *literal = &schema->nodes[field->node];
+					const adamic_encode_node *literal = &schema->nodes[field->node];
 					adamic_value tag = {0};
 					match = encode_field(value.reference, field, literal, &tag) &&
 							encode_literal(tag, literal->representation, literal);
@@ -214,9 +218,9 @@ static void encode_write(encode_builder *builder, adamic_value value,
 		adamic_panic("encodeJson: value does not match its declared union",
 					 sizeof "encodeJson: value does not match its declared union" - 1);
 	}
-	if (strcmp(type->kind, "array") == 0 || strcmp(type->kind, "tuple") == 0 ||
-		strcmp(type->kind, "object") == 0) {
-		if (strcmp(type->kind, "array") == 0) {
+	if (type->kind == adamic_encode_array || type->kind == adamic_encode_tuple ||
+		type->kind == adamic_encode_object) {
+		if (type->kind == adamic_encode_array) {
 			const adamic_array *array = value.reference;
 			ascii(builder, "[");
 			for (size_t i = 0; i < array->length; i++) {
@@ -228,12 +232,12 @@ static void encode_write(encode_builder *builder, adamic_value value,
 			ascii(builder, "]");
 			return;
 		}
-		bool tuple = strcmp(type->kind, "tuple") == 0;
+		bool tuple = type->kind == adamic_encode_tuple;
 		const adamic_object *object = value.reference;
 		ascii(builder, tuple ? "[" : "{");
 		size_t written = 0;
 		for (size_t i = 0; i < type->field_count; i++) {
-			const adamic_decode_field *field = &type->fields[i];
+			adamic_encode_field *field = &type->fields[i];
 			adamic_value child = {0};
 			if (!encode_field(object, field, &schema->nodes[field->node], &child)) {
 				if (field->optional) {
@@ -275,7 +279,7 @@ static void encode_write(encode_builder *builder, adamic_value value,
 		adamic_panic("encodeJson: invalid descriptor", sizeof "encodeJson: invalid descriptor" - 1);
 	}
 }
-adamic_string *adamic_json_encode(adamic_value value, const adamic_decode_schema *schema) {
+adamic_string *adamic_json_encode(adamic_value value, const adamic_encode_schema *schema) {
 	encode_builder builder = {NULL, 0, 64, 0};
 	builder.bytes = malloc(builder.capacity);
 	if (builder.bytes == NULL) {

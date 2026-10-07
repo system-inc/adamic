@@ -17,19 +17,20 @@ func TestJSONEncodeNativeMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	const field = "const adamic_decode_field *field = &type->fields[i];\n\t\t\tadamic_value child = {0};"
+	const field = "adamic_encode_field *field = &type->fields[i];\n\t\t\tadamic_value child = {0};"
 	cases := []struct{ name, source, from, to string }{
-		{"runtime_order", `interface Pair {readonly first:string;readonly second:number} const v:Pair={second:2,first:'one'};console.log(encodeJson<Pair>(v));`, field, `const adamic_decode_field *field=&type->fields[i];
+		{"runtime_order", `interface Pair {readonly first:string;readonly second:number} const v:Pair={second:2,first:'one'};console.log(encodeJson<Pair>(v));`, field, `adamic_encode_field *field=&type->fields[i];
 if (!tuple) { for (size_t f=0;f<type->field_count;f++) { if (strcmp(type->fields[f].name,object->shape->names[i])==0) {field=&type->fields[f];break;} } }
 adamic_value child={0};`},
-		{"hidden_field", `interface Pair {readonly first:string;readonly second:number} const full={first:'one',second:2,hidden:'secret'.repeat(2)};const v:Pair=full;console.log(encodeJson<Pair>(v));`, field, `adamic_decode_field extra={"hidden",type->fields[0].node,false};
-const adamic_decode_field *field=i<type->field_count?&type->fields[i]:&extra;adamic_value child={0};`},
+		{"hidden_field", `interface Pair {readonly first:string;readonly second:number} const full={first:'one',second:2,hidden:'secret'.repeat(2)};const v:Pair=full;console.log(encodeJson<Pair>(v));`, field, `adamic_encode_field extra={.name="hidden",.node=type->fields[0].node,.optional=false};
+adamic_encode_field *field=i<type->field_count?&type->fields[i]:&extra;adamic_value child={0};`},
 		{"negative_zero", `console.log(encodeJson<number>(-0));`, "char bytes[ADAMIC_NUMBER_FORMAT_MAX];\n\t\tsize_t length = adamic_number_format(value.number, bytes);", `if (value.number==0.0 && signbit(value.number)) { ascii(builder,"-0");return; }
 char bytes[ADAMIC_NUMBER_FORMAT_MAX];size_t length=adamic_number_format(value.number,bytes);`},
 		{"nan", `console.log(encodeJson<number>(NaN));`, "if (!isfinite(value.number)) {\n\t\t\tascii(builder, \"null\");\n\t\t\treturn;\n\t\t}", `if (isnan(value.number)) { ascii(builder,"NaN");return; }
 if (!isfinite(value.number)) { ascii(builder,"null");return; }`},
 		{"raw_surrogate", `console.log(encodeJson<string>('x'.repeat(3)+'\ud800'));`, `width == 3 && code == 0xed && here[1] >= 0xa0`, `width == 3 && code == 0xed && here[1] >= 0xa0 && false`},
 		{"split_byte_run", `console.log(encodeJson<string>('ordinary'.repeat(3)));`, `append(w, bytes + run, length - run, units);`, `append(w, bytes + run, length - run > 0 ? length - run - 1 : 0, units);`},
+		{"cache_invalidation", `interface Pair {readonly first:string;readonly second:string} const values:readonly Pair[]=[{first:"a",second:"b"},{second:"d",first:"c"},{second:"f",first:"e"},{first:"g",second:"h"}];console.log(encodeJson<readonly Pair[]>(values));`, `field->cache.shape != object->shape`, `field->cache.shape == NULL`},
 	}
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
@@ -101,7 +102,7 @@ func TestJSONEncodeNativeStringMetadata(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	const wrapper = `static adamic_string *checked_encode(adamic_value value, const adamic_decode_schema *schema) {
+	const wrapper = `static adamic_string *checked_encode(adamic_value value, const adamic_encode_schema *schema) {
  adamic_string *result=metadata_target(value,schema);
  if (!((result->length==15 && result->units==13) || (result->length==5 && result->units==6))) {
   adamic_panic("encode metadata differs",sizeof "encode metadata differs"-1);
