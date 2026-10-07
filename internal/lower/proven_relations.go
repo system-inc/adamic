@@ -167,13 +167,14 @@ func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.N
 }
 
 // An explicitly written field may itself be an exact literal. Shorthands and spread fields
-// remain structural views, whose runtime fields their types may hide.
+// remain structural views, whose runtime fields their types may hide. Computed keys
+// do too: syntax alone cannot prove which runtime field they initialize.
 func relationFieldExpression(origin *ast.Node, name string) *ast.Node {
 	if origin == nil || origin.Kind != ast.KindObjectLiteralExpression {
 		return nil
 	}
 	for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
-		if property.Kind == ast.KindPropertyAssignment && property.Name().Text() == name {
+		if property.Kind == ast.KindPropertyAssignment && property.Name().Kind != ast.KindComputedPropertyName && property.Name().Text() == name {
 			return property.AsPropertyAssignment().Initializer
 		}
 	}
