@@ -1,9 +1,10 @@
 {
   "helpers": [
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.nodesFromStaticDeclarations",
-    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort"
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue"
   ],
-  "removed_dependency_occurrences": 12,
+  "removed_dependency_occurrences": 18,
   "fully_unblocked_rules": [],
   "consumers": [
     {
@@ -84,7 +85,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseAtRule",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCSS",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCandidate",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseVariant",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.PropertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.StyleRule",
@@ -277,7 +277,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseAtRule",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCSS",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCandidate",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseVariant",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.PrintVariant",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.PropertySort",
@@ -480,7 +479,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseAtRule",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCSS",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCandidate",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseVariant",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.PropertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.StyleRule",
@@ -633,7 +631,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseAtRule",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCSS",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCandidate",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseVariant",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.PropertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ResolveFunctionalUtilityValue",
@@ -845,7 +842,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseAtRule",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCSS",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCandidate",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseVariant",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.PropertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.SelectorShapeForRoot",
@@ -1064,7 +1060,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseAtRule",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCSS",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCandidate",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseVariant",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.PropertySort",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ResolveFunctionalUtilityValue",
