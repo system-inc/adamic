@@ -1,0 +1,98 @@
+// One file view of the run's checker. Facts retain the bridge's exact selector and grammar.
+import { panic, tsgoInspect, tsgoProgram, tsgoRelease } from 'adamic';
+import type { Parser } from '../../typescript/parser/parser.ts';
+import { Frames } from '../typeaware/frames.ts';
+
+export type TSGoError = { readonly kind: 'Error'; readonly message: string };
+export function openProgram(config: string, files: readonly string[]): number | TSGoError { return tsgoProgram(config, files); }
+export function releaseProgram(program: number): void | TSGoError { return tsgoRelease(program); }
+function inspect(program: number, path: string, start: number, end: number, kind: string, question: string): string | TSGoError {
+    return tsgoInspect(program, path, start, end, kind, question);
+}
+export class FileQuestion {
+    readonly kind: string;
+    readonly text: string;
+    constructor(kind: string, text: string) { this.kind = kind; this.text = text; }
+}
+export class Answer {
+    readonly value: string | undefined;
+    readonly reason: string;
+    constructor(value: string | undefined, reason: string) { this.value = value; this.reason = reason; }
+}
+export class Refusal {
+    readonly rule: string;
+    readonly start: number;
+    readonly end: number;
+    readonly reason: string;
+    constructor(rule: string, start: number, end: number, reason: string) {
+        this.rule = rule; this.start = start; this.end = end; this.reason = reason;
+    }
+}
+function frame(value: string): string { return `${value.length}\n${value}`; }
+export class Checker {
+    readonly program: number;
+    readonly path: string;
+    readonly parser: Parser;
+    readonly offsets: number[] = [0];
+    readonly refusals: Refusal[] = [];
+    readonly recorded: string[] = [];
+    readonly replay: Frames | undefined;
+    root = -1;
+    rule = '';
+    reads: readonly string[] = [];
+    constructor(program: number, path: string, parser: Parser, source: string, replay: string | undefined) {
+        this.program = program; this.path = path; this.parser = parser;
+        this.replay = replay === undefined ? undefined : new Frames(replay);
+        let bytes = 0;
+        for(let index = 0; index < source.length; index++) {
+            const code = source.codePointAt(index) ?? 0;
+            if(code > 65535) { this.offsets.push(bytes); index++; }
+            bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+            this.offsets.push(bytes);
+        }
+    }
+    enter(rule: string, reads: readonly string[]): void { this.rule = rule; this.reads = reads; }
+    refuse(start: number, end: number, reason: string): Answer {
+        this.refusals.push(new Refusal(this.rule, start, end, reason));
+        return new Answer(undefined, reason);
+    }
+    askFile(question: FileQuestion): Answer {
+        if(!this.reads.includes(question.kind)) {
+            return this.refuse(0, this.offsets[this.parser.scanner.text.length] ?? 0, `undeclared program read ${question.kind}`);
+        }
+        return this.ask(this.root >= 0 ? this.root : panic('checker asked before parsing'), question.text);
+    }
+    ask(index: number, question: string): Answer {
+        const node = this.parser.node(index);
+        const start = this.offsets[node.pos] ?? panic('checker span outside source');
+        const end = this.offsets[node.end] ?? panic('checker span outside source');
+        const key = frame(this.path) + frame(`${start}`) + frame(`${end}`) + frame(node.kind) + frame(question);
+        let value = '';
+        if(this.replay !== undefined) {
+            if(this.replay.cursor === this.replay.text.length) { return this.refuse(start, end, 'missing transcript entry'); }
+            const expected = this.replay.field();
+            const outcome = this.replay.field();
+            value = this.replay.field();
+            if(expected !== key) { return this.refuse(start, end, 'transcript ask mismatch'); }
+            if(outcome === 'Error') { return this.refuse(start, end, value); }
+            if(outcome !== 'Value') { return this.refuse(start, end, 'invalid transcript outcome'); }
+        }
+        else {
+            // Pending Adamic's returned-error builtin: tsgoInspect still panics on bridge errors.
+            const inspected = inspect(this.program, this.path, start, end, node.kind, question);
+            if(typeof inspected !== 'string') {
+                this.recorded.push(frame(key) + frame('Error') + frame(inspected.message));
+                return this.refuse(start, end, inspected.message);
+            }
+            value = inspected;
+        }
+        this.recorded.push(frame(key) + frame('Value') + frame(value));
+        return new Answer(value, '');
+    }
+    finish(): void {
+        if(this.replay !== undefined && this.replay.cursor !== this.replay.text.length) {
+            this.refuse(0, 0, 'unasked transcript entry');
+        }
+    }
+    transcript(): string { return this.recorded.join(''); }
+}

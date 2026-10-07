@@ -142,12 +142,23 @@ func buildPort(t *testing.T, directory string, sanitize bool) string {
 	if err != nil {
 		t.Fatal(err)
 	}
+	program.EnableTSGo()
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+	source := native.C(lowered)
+	if native.UsesTSGo(lowered) {
+		source, err = native.TSGoC(lowered)
+		if err != nil {
+			t.Fatal(err)
+		}
+		err = native.BuildTSGo(source, binary, checkerArchive(t, sanitize), native.Options{Sanitize: sanitize})
+	} else {
+		err = native.Build(source, binary, native.Options{Sanitize: sanitize})
+	}
+	if err != nil {
 		t.Fatal(err)
 	}
 	return binary
@@ -904,6 +915,7 @@ func emittedJavaScript(t *testing.T, directory string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
+	program.EnableTSGo()
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
 		t.Fatal(err)

@@ -132,3 +132,8 @@ export function fileStatus(path) {
 export function programArguments() {
 	return process.argv.slice(2);
 }
+
+// Checker facts are replayed by the lint harness on Node. A live bridge call is a refusal here.
+export function tsgoProgram() { panic('tsgo requires the native checker library renderer'); }
+export function tsgoInspect() { panic('tsgo requires the native checker library renderer'); }
+export function tsgoRelease() { panic('tsgo requires the native checker library renderer'); }

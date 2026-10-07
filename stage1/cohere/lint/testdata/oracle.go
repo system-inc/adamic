@@ -3,6 +3,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
@@ -11,7 +12,9 @@ import (
 	"github.com/system-inc/cohere/internal/edit"
 	"github.com/system-inc/cohere/internal/lint/report"
 	"github.com/system-inc/cohere/internal/lint/rule"
+	"github.com/system-inc/cohere/internal/types/program"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 	"unicode/utf16"
@@ -44,7 +47,7 @@ func simpleSuggestion(fixes []rule.Fix) bool {
 	}
 	return true
 }
-func run(row string, countOnly bool, out *bufio.Writer) int {
+func run(row string, countOnly bool, out *bufio.Writer, graph *program.Graph) int {
 	fields := strings.Split(row, "\t")
 	for len(fields) < 7 {
 		fields = append(fields, "")
@@ -55,7 +58,14 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 		panic(err)
 	}
 	source := string(data)
-	diagnostics := collect(path, source, fields)
+	if graph == nil {
+		for _, item := range registeredRules() {
+			if item.subject.NeedsTypeChecker && (fields[1] == "" || fields[1] == "all" || fields[1] == item.subject.Name) {
+				fmt.Fprintf(out, "skipped %s no program\n", item.subject.Name)
+			}
+		}
+	}
+	diagnostics := collect(path, source, fields, graph)
 	if countOnly {
 		return len(diagnostics)
 	}
@@ -122,8 +132,13 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 		fmt.Fprintln(out, "recovery findings only")
 		return len(diagnostics)
 	}
+	firstPass := true
 	result, err := edit.FixText(path, source, func(fileName, text string) ([]edit.Proposal, error) {
-		return edit.ProposalsFrom(collect(fileName, text, fields)), nil
+		if firstPass {
+			firstPass = false
+			return edit.ProposalsFrom(diagnostics), nil
+		}
+		return edit.ProposalsFrom(collect(fileName, text, fields, nil)), nil
 	}, 10)
 	if err != nil {
 		panic(fmt.Sprintf("fix failed: %v %+v", err, result))
@@ -155,8 +170,18 @@ func parse(path, source string) *ast.SourceFile {
 	return parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(path), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(path))}, source, kind)
 }
 
-func collect(path, source string, fields []string) []rule.Diagnostic {
+func collect(path, source string, fields []string, graph *program.Graph) []rule.Diagnostic {
 	file := parse(path, source)
+	if graph != nil {
+		absolute, err := filepath.Abs(path)
+		if err != nil {
+			panic(err)
+		}
+		file = graph.Program.GetSourceFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(absolute)))
+		if file == nil || file.Text() != source {
+			panic("typed row is not the program's source: " + path)
+		}
+	}
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
@@ -164,12 +189,24 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	// by public name. The port dispatches each node in the same order, so ties at one position agree.
 	var diagnostics []rule.Diagnostic
 	var listeners []rule.Listeners
+	checkerContext := rule.Context{}
+	if graph != nil {
+		checker, release := graph.CheckerForFile(context.Background(), file)
+		defer release()
+		checkerContext.TypeChecker = checker
+	}
 	for _, item := range registeredRules() {
 		subject := item.subject
 		if fields[1] != "" && fields[1] != "all" && fields[1] != subject.Name {
 			continue
 		}
-		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
+		if subject.NeedsTypeChecker && graph == nil {
+			continue
+		}
+		ctx := rule.Context{TypeChecker: checkerContext.TypeChecker, SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
+		if graph != nil {
+			ctx.Program = rule.ViewProgram(graph.Program, file, subject)
+		}
 		options := item.options(fields)
 		// A row that selects this rule and carries options must reach an adapter that decodes them. An
 		// adapter returning nil there would run the rule on its defaults and still agree with any port that
@@ -202,18 +239,31 @@ func main() {
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 	if args[0] != "--manifest" {
-		run(args[0], false, out)
+		run(args[0], false, out, nil)
 		return
 	}
 	data, err := os.ReadFile(args[1])
 	if err != nil {
 		panic(err)
 	}
+	var graph *program.Graph
+	rows := strings.Split(string(data), "\n")
+	if len(rows) > 0 && strings.HasPrefix(rows[0], "program ") {
+		config, err := filepath.Abs(strings.TrimPrefix(rows[0], "program "))
+		if err != nil {
+			panic(err)
+		}
+		graph, err = program.Build(program.Options{ConfigFileName: config, CurrentDirectory: filepath.Dir(config), SingleThreaded: true})
+		if err != nil {
+			panic(err)
+		}
+		rows = rows[1:]
+	}
 	// --diagnostics answers, per row, whether typescript-go's parse of its file reports a diagnostic: 1 or 0.
 	// A test marks such a row "recovery", which compares findings only, rather than asking the oracle to
 	// fix a file Go would refuse (a legacy octal escape, say, which no-octal-escape exists to report).
 	if len(args) > 2 && args[2] == "--diagnostics" {
-		for _, row := range strings.Split(string(data), "\n") {
+		for _, row := range rows {
 			if row == "" {
 				continue
 			}
@@ -232,14 +282,14 @@ func main() {
 	}
 	countOnly := len(args) > 2 && args[2] == "--count"
 	count, index := 0, 0
-	for _, row := range strings.Split(string(data), "\n") {
+	for _, row := range rows {
 		if row == "" {
 			continue
 		}
 		if !countOnly {
 			fmt.Fprintf(out, "case %d\n", index)
 		}
-		count += run(row, countOnly, out)
+		count += run(row, countOnly, out, graph)
 		index++
 	}
 	if countOnly {

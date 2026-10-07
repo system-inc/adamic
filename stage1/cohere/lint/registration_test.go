@@ -20,7 +20,9 @@ func TestMain(m *testing.M) {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	os.Exit(m.Run())
+	code := m.Run()
+	cleanupCheckerArchives()
+	os.Exit(code)
 }
 
 func TestOwnedWitnesses(t *testing.T) {
