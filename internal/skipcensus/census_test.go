@@ -117,7 +117,7 @@ func TestLogClassesAndMutants(t *testing.T) {
 	if err := CheckLog(strings.NewReader(log), &output, rows); err == nil || !strings.Contains(output.String(), "required-input=1") {
 		t.Fatalf("required-input skip survived: %v %s", err, &output)
 	}
-	for _, class := range []string{"measurement", "not-applicable"} {
+	for _, class := range []string{"measurement", "not-applicable", "opt-in-lane"} {
 		rows[0].Class = class
 		output.Reset()
 		if err := CheckLog(strings.NewReader(log), &output, rows); err != nil || !strings.Contains(output.String(), class) {
@@ -247,4 +247,27 @@ func TestHistoricalPlainSkips(t *testing.T) {
 		}
 	}
 	t.Log("skips=33 required-input=17 unknown=0; TestWholeCompilerAgrees included")
+}
+
+func TestReleaseLaneSkippedFixture(t *testing.T) {
+	t.Parallel()
+	table, err := os.Open("testdata/skips.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer table.Close()
+	rows, err := Load(table)
+	if err != nil {
+		t.Fatal(err)
+	}
+	log := `{"Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeReleaseFlagsAgreeWithNode/panic.a","Output":"    release_flags_test.go:62: finishing fixtures only: Node exit 70\n"}
+{"Action":"skip","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeReleaseFlagsAgreeWithNode/panic.a"}`
+	var output bytes.Buffer
+	if err := CheckLog(strings.NewReader(log), &output, rows); err != nil || !strings.Contains(output.String(), "opt-in-lane\t") || !strings.Contains(output.String(), "skips=1 required-input=0 unknown=0") {
+		t.Fatalf("release scope skip: %v\n%s", err, &output)
+	}
+	// Numeric formatting must not turn arbitrary reasons into declared skips.
+	if err := CheckLog(strings.NewReader(strings.Replace(log, "Node exit 70", "Node exit missing", 1)), &output, rows); err == nil {
+		t.Fatal("unrecognized release reason passed")
+	}
 }

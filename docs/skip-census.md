@@ -41,7 +41,12 @@ read expressions retain symbolic paths rather than inventing concrete filenames.
 `required-input` is the default for verification, debug bypasses and harness
 inputs. `measurement` covers opt-in throughput and profile comparisons, never a
 replacement for correctness. `not-applicable` states a platform or CPU witness
-that cannot run on this host. Provisioning details are in [gate-inputs.md](gate-inputs.md).
+that cannot run on this host. `opt-in-lane` declares a verification lane selected
+on its own shard, or its explicit fixture scope; it is not a benchmark. GCC uses
+ADAMIC_GCC_LANE=1 and the shipping-build lane uses ADAMIC_RELEASE_LANE=1.
+Their missing tools are failures after opt-in. Release runs restrict their scope
+to fixtures that finish on Node; ordinary oracle verification covers the others.
+Provisioning details are in [gate-inputs.md](gate-inputs.md).
 No result cache is added: ADAMIC_GATE_UNCACHED=1 and ordinary mode compute the
 same answers directly from source and log.
 

@@ -83,6 +83,39 @@
     "provides": "Requires an FMA-capable arm64 or amd64 CPU; amd64 capability is read from /proc/cpuinfo on Linux or sysctl hw.optional.fma on macOS."
   },
   {
+    "file": "internal/native/library_test.go",
+    "test": "TestRuntimeCacheKeepsCoverageApart",
+    "id": "TestRuntimeCacheKeepsCoverageApart:f034a76dc2d88e93498b899f83099e32b5f67108d5048d3821fb4cf1ab8d2811",
+    "line": 78,
+    "condition": "CoverageRequested()",
+    "reads": [
+      "os.Stat(profile)"
+    ],
+    "callers": [
+      "TestRuntimeCacheKeepsCoverageApart"
+    ],
+    "message": "\"ADAMIC_C_COVERAGE=1 puts coverage in every build\"",
+    "class": "required-input",
+    "provides": "The normal correctness gate must leave ADAMIC_C_COVERAGE unset (or not equal to 1). CoverageRequested in internal/native/native.go reads this variable; forcing coverage on every build prevents the covered/ordinary runtime cache separation proof."
+  },
+  {
+    "file": "internal/native/record_test.go",
+    "test": "TestRecordBenchmark",
+    "id": "TestRecordBenchmark:06ee23e4bcdbf34555e793a31d7dc4a10bdb21fb5c9a110c068aa7683ad1f84d",
+    "line": 271,
+    "condition": "os.Getenv(\"ADAMIC_RECORD_BENCH\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_RECORD_BENCH\")",
+      "os.ReadFile(filepath.Join(recordFixtures, \"harness.c\"))"
+    ],
+    "callers": [
+      "TestRecordBenchmark"
+    ],
+    "message": "\"set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons\"",
+    "class": "measurement",
+    "provides": "Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness."
+  },
+  {
     "file": "internal/native/units_measure_test.go",
     "test": "TestMeasureClangUnits",
     "id": "TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70",
@@ -120,6 +153,26 @@
     "provides": "ADAMIC_CLANG_TSGO_ARCHIVE: bridge/tsgo built c-archive for the pinned cohere TypeScript checker, using go build -buildmode=c-archive -o /path/tsgo.a ./bridge/tsgo/archive; see docs/gate-inputs.md."
   },
   {
+    "file": "internal/oracle/gcc_lane_test.go",
+    "test": "TestGCCAgreesWithNode",
+    "id": "TestGCCAgreesWithNode:8e1ac89c8ea9525bf996608391643f7c58b47070d50d2866cc1b34260c01c49f",
+    "line": 21,
+    "condition": "os.Getenv(\"ADAMIC_GCC_LANE\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GCC_LANE\")",
+      "os.Getenv(\"ADAMIC_LANE_CC\")",
+      "os.Getenv(\"ADAMIC_LANE_REPORT\")",
+      "os.Getenv(\"ADAMIC_LANE_SANITIZE\")",
+      "os.ReadFile(filepath.Join(source, entry.Name()))"
+    ],
+    "callers": [
+      "TestGCCAgreesWithNode"
+    ],
+    "message": "\"opt in with ADAMIC_GCC_LANE=1\"",
+    "class": "opt-in-lane",
+    "provides": "Dedicated GCC verification lane opts in with ADAMIC_GCC_LANE=1. ADAMIC_LANE_CC selects the compiler (default gcc); ADAMIC_LANE_SANITIZE=1 enables sanitizers. Missing compiler or failed builds fail the opted-in lane rather than skipping it."
+  },
+  {
     "file": "internal/oracle/regexp_cycle_test.go",
     "test": "TestRegexCycleFixtureHasItsNativeDependency",
     "id": "TestRegexCycleFixtureHasItsNativeDependency:5ea8f17a1b90a1533213564d9622d40e0b920f656bd88e7a19d25f75821458b3",
@@ -132,6 +185,66 @@
     "message": "\"native regex lowering/emission is on codex/stage1-css; run this fixture on the scratch merge\"",
     "class": "required-input",
     "provides": "Gate tree must include ir.Program.Regexps and the native regex lowering/emission dependency."
+  },
+  {
+    "file": "internal/oracle/release_flags_test.go",
+    "test": "TestNativeReleaseFlagsAgreeWithNode",
+    "id": "TestNativeReleaseFlagsAgreeWithNode:acee7bcd3dc3537b672326f62074666026f5bf75dfbc5007fde603e48d7d3efd",
+    "line": 18,
+    "condition": "os.Getenv(\"ADAMIC_RELEASE_LANE\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_RELEASE_LANE\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestNativeReleaseFlagsAgreeWithNode"
+    ],
+    "message": "\"set ADAMIC_RELEASE_LANE=1 for the full shipping-build lane\"",
+    "class": "opt-in-lane",
+    "provides": "Dedicated shipping-build verification lane opts in with ADAMIC_RELEASE_LANE=1. The lane traces production release options; missing tools or failed builds fail the opted-in lane rather than skipping it."
+  },
+  {
+    "file": "internal/oracle/release_flags_test.go",
+    "test": "TestNativeExistingReleaseAgreesWithNode",
+    "id": "TestNativeExistingReleaseAgreesWithNode:657fcad842d7dc04a11e8f0a17b161826c0f0fd4c245d76eff93418ab613fe0d",
+    "line": 28,
+    "condition": "os.Getenv(\"ADAMIC_RELEASE_MEASURE\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_RELEASE_MEASURE\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestNativeExistingReleaseAgreesWithNode"
+    ],
+    "message": "\"set ADAMIC_RELEASE_MEASURE=1 for the timing control\"",
+    "class": "measurement",
+    "provides": "Opt-in timing control: ADAMIC_RELEASE_MEASURE=1 compares the existing release variant on finishing fixtures; not a substitute for the shipping-build verification lane."
+  },
+  {
+    "file": "internal/oracle/release_flags_test.go",
+    "test": "releaseFixturesAgreeWithNode",
+    "id": "TestNativeExistingReleaseAgreesWithNode,TestNativeReleaseFlagsAgreeWithNode:6dac94da17b777b16c15309ffde545489d230e3831413b1cbcc18499c581455f",
+    "line": 62,
+    "condition": "expected.exitCode != 0",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestNativeExistingReleaseAgreesWithNode",
+      "TestNativeReleaseFlagsAgreeWithNode"
+    ],
+    "message": "\"finishing fixtures only: Node exit %d\"",
+    "class": "opt-in-lane",
+    "provides": "Both selectable release runs explicitly cover finishing fixtures only. Node exit != 0 excludes that fixture from this lane; the ordinary oracle covers non-finishing behavior. This is a declared lane scope exclusion, not a missing toolchain or corpus."
   },
   {
     "file": "internal/oracle/stage3_hook_test.go",

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -52,7 +53,7 @@ func CheckLog(input io.Reader, output io.Writer, rows []Row) error {
 			var matched []Row
 			for _, row := range candidates {
 				literal, err := strconv.Unquote(row.Message)
-				if err == nil && strings.Contains(messages[k], literal) {
+				if err == nil && skipReasonMatches(literal, messages[k]) {
 					matched = append(matched, row)
 				}
 			}
@@ -65,7 +66,7 @@ func CheckLog(input io.Reader, output io.Writer, rows []Row) error {
 		}
 		row := candidates[0]
 		switch row.Class {
-		case "required-input", "measurement", "not-applicable":
+		case "required-input", "measurement", "not-applicable", "opt-in-lane":
 		default:
 			unknown++
 			fmt.Fprintf(output, "unknown\t%s\t%s\n", event.Package, event.Test)
@@ -83,3 +84,17 @@ func CheckLog(input io.Reader, output io.Writer, rows []Row) error {
 	return nil
 }
 func base(path string) string { parts := strings.Split(path, "/"); return parts[len(parts)-1] }
+
+// Skipf's numeric exit code changes the rendered message, not the declared site.
+// Other unsupported format directives still fail closed when sites are ambiguous.
+func skipReasonMatches(literal, output string) bool {
+	if strings.Contains(output, literal) {
+		return true
+	}
+	if !strings.Contains(literal, "%d") {
+		return false
+	}
+	pattern := strings.ReplaceAll(regexp.QuoteMeta(literal), "%d", "[+-]?[0-9]+")
+	matched, _ := regexp.MatchString(pattern, output)
+	return matched
+}

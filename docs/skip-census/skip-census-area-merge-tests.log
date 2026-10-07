@@ -1,0 +1,50 @@
+=== RUN   TestCensus
+=== PAUSE TestCensus
+=== RUN   TestASTAndDriftMutants
+=== PAUSE TestASTAndDriftMutants
+=== RUN   TestLogClassesAndMutants
+=== PAUSE TestLogClassesAndMutants
+=== RUN   TestLogUsesReasonForMultipleSites
+=== PAUSE TestLogUsesReasonForMultipleSites
+=== RUN   TestTestingAliasesAndNonTestingMethod
+=== PAUSE TestTestingAliasesAndNonTestingMethod
+=== RUN   TestInvalidDeclarations
+=== PAUSE TestInvalidDeclarations
+=== RUN   TestHistoricalPlainSkips
+=== PAUSE TestHistoricalPlainSkips
+=== RUN   TestReleaseLaneSkippedFixture
+=== PAUSE TestReleaseLaneSkippedFixture
+=== CONT  TestCensus
+=== CONT  TestTestingAliasesAndNonTestingMethod
+=== CONT  TestLogClassesAndMutants
+=== CONT  TestLogUsesReasonForMultipleSites
+--- PASS: TestLogClassesAndMutants (0.00s)
+=== CONT  TestReleaseLaneSkippedFixture
+=== CONT  TestHistoricalPlainSkips
+--- PASS: TestLogUsesReasonForMultipleSites (0.00s)
+=== CONT  TestInvalidDeclarations
+=== RUN   TestInvalidDeclarations/duplicate
+--- PASS: TestTestingAliasesAndNonTestingMethod (0.00s)
+=== CONT  TestASTAndDriftMutants
+=== RUN   TestInvalidDeclarations/class
+=== RUN   TestInvalidDeclarations/provider
+=== RUN   TestInvalidDeclarations/metadata
+--- PASS: TestInvalidDeclarations (0.00s)
+    --- PASS: TestInvalidDeclarations/duplicate (0.00s)
+    --- PASS: TestInvalidDeclarations/class (0.00s)
+    --- PASS: TestInvalidDeclarations/provider (0.00s)
+    --- PASS: TestInvalidDeclarations/metadata (0.00s)
+--- PASS: TestReleaseLaneSkippedFixture (0.00s)
+=== NAME  TestASTAndDriftMutants
+    census_test.go:94: undeclared skip probe_test.go:TestNew:b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b (TestNew:8)
+    census_test.go:99: removed skip probe_test.go:TestProbe:e38ab1305b967cfd827a7f783226b2fb1d2650cdc2e296c4c98123f8510c0a7c
+    census_test.go:108: removed skip probe_test.go:TestProbe:e38ab1305b967cfd827a7f783226b2fb1d2650cdc2e296c4c98123f8510c0a7c
+        undeclared skip probe_test.go:TestProbe:f508f10ef10bd0182d331290391989042370309bfd05fef47089b57c42f11810 (helper:5)
+--- PASS: TestASTAndDriftMutants (0.00s)
+=== NAME  TestHistoricalPlainSkips
+    census_test.go:249: skips=33 required-input=17 unknown=0; TestWholeCompilerAgrees included
+--- PASS: TestHistoricalPlainSkips (0.00s)
+--- PASS: TestCensus (0.10s)
+PASS
+ok  	github.com/system-inc/adamic/internal/skipcensus	0.100s
+?   	github.com/system-inc/adamic/internal/skipcensus/cmd	[no test files]

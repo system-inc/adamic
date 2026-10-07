@@ -280,7 +280,7 @@ func Validate(actual, declared []Row) error {
 			return fmt.Errorf("duplicate declaration %s", k)
 		}
 		switch r.Class {
-		case "required-input", "measurement", "not-applicable":
+		case "required-input", "measurement", "not-applicable", "opt-in-lane":
 		default:
 			return fmt.Errorf("invalid class for %s", k)
 		}
