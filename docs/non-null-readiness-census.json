@@ -492,8 +492,10 @@
     "SkippedDependency": 23
   },
   "raw_sha256": "03b96febbdd5862f29797c145e67adbbb420457a6040e0cff79f1124dc484967",
-  "raw_log": "/tmp/readiness-final-census.jsonl",
+  "raw_log": "/tmp/readiness-merged-census.jsonl",
   "source_hashes_verified": 78,
   "checker_diagnostics": 2165,
-  "audit": "continuation, checker body eligibility, same-line attribution, no output IR, planted finding and range mutants passed; expected non-null refusal count updated to zero"
+  "audit": "continuation, checker body eligibility, same-line attribution, no output IR, planted finding and range mutants passed; expected non-null refusal count updated to zero",
+  "lowering_checkpoint": "b99710ca2e87ccc5d551e9e61b0e466e2faf7e0e, after merging origin/main e8ba3d5; before the subsequently ruled lazy computed initializers",
+  "measurement_binary_sha256": "fa71484125f75d30856fa132612616a9c6c91c4bea4e9a1d7fccfd2653dd766f"
 }

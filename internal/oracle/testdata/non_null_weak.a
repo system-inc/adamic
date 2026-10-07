@@ -7,6 +7,5 @@ function clear(slot: Holder): void { slot.value = undefined; }
 if (holder.value !== undefined) {
     clear(holder);
     console.log('before');
-    const target = holder.value!;
-    console.log(`${target === undefined}`);
+    console.log(`${holder.value! === undefined}`);
 }

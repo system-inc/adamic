@@ -16,7 +16,7 @@ func sourceExpression(node *ast.Node) string {
 }
 
 // Only direct initializer syntax reserves an uninitialized slot. Assignments, returns,
-// and assertions around computed operands continue to use the nullish check.
+// and assertions outside initializer positions continue to use the nullish check.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
 	if node == nil {
 		return false
@@ -241,6 +241,9 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 					if expression.Readiness == "" {
 						expression.Readiness = program.Locals[expression.Local].Name
 					}
+					if origin := program.Locals[expression.Local].InitializerExpression; origin != "" {
+						expression.Readiness = origin
+					}
 					expression.Checked = false
 				} else {
 					expression.Readiness = ""
@@ -346,4 +349,61 @@ func readinessCalls(instruction *flow.Instruction) bool {
 		return true
 	})
 	return calls
+}
+
+// assertionInitializer recognizes syntax only; its operand is evaluated at the declaration.
+func assertionInitializer(node *ast.Node) bool {
+	return node != nil && ast.SkipParentheses(node).Kind == ast.KindNonNullExpression
+}
+
+func assertionVarList(list *ast.Node) bool {
+	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
+		if !ast.IsIdentifier(declaration.Name()) || !assertionInitializer(declaration.AsVariableDeclaration().Initializer) {
+			return false
+		}
+	}
+	return len(list.AsVariableDeclarationList().Declarations.Nodes) > 0
+}
+
+// lazyAssertion holds the original representation once and assigns only when present.
+func (l *lowering) lazyAssertion(node *ast.Node, to ir.Type) ([]ir.Statement, ir.Expression, ir.Expression, error) {
+	operand := ast.SkipParentheses(node).AsNonNullExpression().Expression
+	value, err := l.expression(operand)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+	for {
+		switch narrowed := value.(type) {
+		case ir.Unwrap:
+			value = narrowed.Value
+		case ir.Defined:
+			value = narrowed.Value
+		case ir.Narrow:
+			value = narrowed.Value
+		default:
+			goto stored
+		}
+	}
+stored:
+	if weak, ok := value.(ir.WeakTarget); ok {
+		weak.Present = false
+		value = weak
+	}
+	if !value.Type().IsMaybe() && !value.Type().IsReference() {
+		return nil, ir.BooleanConstant{Value: true}, fit(value, to), nil
+	}
+	local := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "assertion_initializer", Type: value.Type(), Function: l.functionIndex})
+	read := ir.Read{Local: local, Of: value.Type()}
+	present := ir.Expression(ir.BooleanConstant{Value: true})
+	if value.Type().IsMaybe() {
+		present = ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: read}}
+	} else if value.Type().IsReference() {
+		present = ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}}}
+	}
+	assigned := fit(read, to)
+	if read.Type() == ir.Union && to != ir.Union {
+		assigned = ir.Narrow{Value: read, To: to}
+	}
+	return []ir.Statement{ir.Declare{Local: local, Value: value}}, present, assigned, nil
 }

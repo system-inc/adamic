@@ -358,7 +358,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 	case ir.Assign:
 		value := e.value(statement.Value)
-		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global {
+		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
 			temporary := e.temporary()
 			e.line("const %s = %s;", temporary, value)
 			e.line("if (!%s_declared) adamicUnready(%s);", readyName(statement.Local), quote(e.program.Locals[statement.Local].Name))

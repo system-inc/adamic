@@ -1,7 +1,7 @@
 const map = new Map<string, number>();
 try {
 	console.log('before');
-	const value = map.get('missing')!;
+	console.log(`${map.get('missing')!}`);
 	console.log('after');
 } catch {
 	console.log('caught');

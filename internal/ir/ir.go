@@ -163,9 +163,11 @@ func (t Type) IsReference() bool {
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
 	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
-	Uninitialized bool
-	Name          string
-	Type          Type
+	Uninitialized         bool
+	InitializerExpression string
+	Hoisted               bool
+	Name                  string
+	Type                  Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool

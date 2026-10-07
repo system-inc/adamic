@@ -6,6 +6,5 @@ const holder: Holder = { value: held };
 if (holder.value !== undefined) {
     held = undefined;
     console.log('before');
-    const target = holder.value!;
-    console.log(target.label);
+    console.log(holder.value!.label);
 }
