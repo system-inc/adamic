@@ -4,6 +4,8 @@ import { thenCallbackSignatures } from './then_callback_signatures.a';
 import { Repair } from './repair.ts';
 import { Suggestion } from './suggestion.ts';
 
+// Pinned parser SyntaxKind values for the forthcoming kind-indexed driver.
+export const returnAwaitSyntaxKinds: number[] = [254, 220];
 export class ReturnAwait {
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }

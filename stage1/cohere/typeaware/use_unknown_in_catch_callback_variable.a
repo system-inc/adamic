@@ -6,6 +6,8 @@ import { Repair } from './repair.ts';
 import { Suggestion } from './suggestion.ts';
 import { Shadow } from './shadow.ts';
 
+// Pinned parser SyntaxKind values for the forthcoming kind-indexed driver.
+export const useUnknownInCatchCallbackVariableSyntaxKinds: number[] = [214];
 export class UseUnknownInCatchCallbackVariable {
     readonly rules: Rules;
     readonly shape: Shadow;

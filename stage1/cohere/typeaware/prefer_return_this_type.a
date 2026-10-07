@@ -3,6 +3,8 @@ import { ClassThisTypes } from './class_this_types.a';
 import { types } from './facts.ts';
 import { Repair } from './repair.ts';
 
+// Pinned parser SyntaxKind values for the forthcoming kind-indexed driver.
+export const preferReturnThisTypeSyntaxKinds: number[] = [264, 232];
 export class PreferReturnThisType {
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }

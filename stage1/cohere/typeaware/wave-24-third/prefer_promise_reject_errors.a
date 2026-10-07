@@ -3,6 +3,8 @@ import type { Shadow } from '../shadow.ts';
 import { Diagnostic } from '../diagnostic.ts';
 import { Provenance } from '../wave-24-next/symbol_provenance.a';
 import { node as atNode } from '../wave-24-next/shape.a';
+// Pinned parser SyntaxKind values for the forthcoming kind-indexed driver.
+export const preferPromiseRejectErrorsSyntaxKinds: number[] = [214, 215];
 export class PreferPromiseRejectErrors {
     readonly rules: Rules; readonly shape: Shadow;
     readonly symbols = new Map<number, Provenance>();

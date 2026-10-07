@@ -7,6 +7,8 @@ import { Modules } from './modules.a';
 import { ModuleEdges } from './program_module_edges.a';
 import { NoProcessExitAfterOutput } from './no_process_exit_after_output.a';
 import { PathGraph } from './path_graph.a';
+// Pinned parser SyntaxKind values for the forthcoming kind-indexed driver.
+export const requireBlockingStandardStreamsSyntaxKinds: number[] = [307];
 export class RequireBlockingStandardStreams {
     readonly rules: Rules; readonly modules: Modules; readonly bindings: Bindings;
     readonly path: NoProcessExitAfterOutput; readonly functionState = new Map<string, number>();

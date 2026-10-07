@@ -6,6 +6,8 @@ import { Repair } from '../repair.ts';
 import { Provenance } from '../wave-24-next/symbol_provenance.a';
 import { node as atNode, skip } from '../wave-24-next/shape.a';
 import { RegexPattern } from './regex_pattern.a';
+// Pinned parser SyntaxKind values for the forthcoming kind-indexed driver.
+export const preferRegexLiteralsSyntaxKinds: number[] = [307];
 export class PreferRegexLiterals {
     readonly rules: Rules; readonly references: RegexReferences;
     constructor(rules: Rules, references: RegexReferences) { this.rules = rules; this.references = references; }
