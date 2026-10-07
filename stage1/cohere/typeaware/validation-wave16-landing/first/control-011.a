@@ -1,0 +1,2 @@
+Math['pow'](2,3); Math[`pow`](2,3); Math['p'+'ow'](2,3); Math[`p${'ow'}`](2,3); globalThis.Math.pow(2,3); Math?.pow(2,3); (Math.pow)(2,3);
+export {};

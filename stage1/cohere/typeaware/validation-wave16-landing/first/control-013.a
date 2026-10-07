@@ -1,0 +1,2 @@
+Math.pow('/* string */' as any,2); Math.pow(/a/.test('a') as any,2); Math.pow({x:1} as any,2);
+export {};

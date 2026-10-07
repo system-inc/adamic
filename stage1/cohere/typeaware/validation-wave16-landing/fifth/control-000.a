@@ -1,0 +1,2 @@
+throw 'x';throw 1;throw undefined;throw new Error();throw (new Error());throw (undefined);throw true;throw null;throw {};throw [];throw ()=>{};throw class{};
+export {};

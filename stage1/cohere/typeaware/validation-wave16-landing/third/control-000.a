@@ -1,0 +1,2 @@
+alert('x'); confirm('x');prompt('x');window.alert();globalThis['prompt']();window[`confirm`]();window[('alert')]();(alert)();alert?.();window?.alert();this.alert();window[alert]();
+export {};

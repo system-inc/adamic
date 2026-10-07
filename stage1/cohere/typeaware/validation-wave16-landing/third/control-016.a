@@ -1,0 +1,2 @@
+function f<T extends string>(x:T){return `WHERE name='${x}'`;}function g<T>(x:T){return `WHERE id=${x}`;}declare const sql:(s:TemplateStringsArray,...x:unknown[])=>unknown,word:string;sql`WHERE name='${word}'`;
+export {};

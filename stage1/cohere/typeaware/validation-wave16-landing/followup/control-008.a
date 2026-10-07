@@ -1,0 +1,2 @@
+import * as ns from './helper.a';import {mock} from 'node:test';mock.method(ns.default,'value');const copy=ns;mock.method(copy,'value');function f(ns:object){mock.method(ns,'value');}const fake={method(o:object,k:string){}};fake.method(ns,'value');
+export {};

@@ -1,0 +1,2 @@
+function handler(e:Event){if(e.target instanceof HTMLInputElement){(e.target as HTMLInputElement).value;}(e.target as SVGCircleElement).cx;}window.addEventListener('click',handler);
+export {};

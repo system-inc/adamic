@@ -1,0 +1,10 @@
+declare module 'node:child_process' {
+ export function exec(command:string,...args:unknown[]):unknown;
+ export namespace exec {export function __promisify__(command:string):unknown;}
+ export function execSync(command:string,...args:unknown[]):unknown;
+ export function spawn(command:string,...args:unknown[]):unknown;
+ export function spawnSync(command:string,...args:unknown[]):unknown;
+ export function execFile(command:string,...args:unknown[]):unknown;
+ export function execFileSync(command:string,...args:unknown[]):unknown;
+}
+declare module 'node:util' {export function promisify(f:typeof import('node:child_process').exec):typeof import('node:child_process').exec.__promisify__;}

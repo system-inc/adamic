@@ -1,0 +1,2 @@
+import {value as a} from './helper.a'; import {value as b} from './helper.a'; b=2; ({x:a}=obj); declare const obj:any;
+export {};

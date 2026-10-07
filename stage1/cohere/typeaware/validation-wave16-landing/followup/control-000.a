@@ -1,0 +1,2 @@
+document.addEventListener('click',e=>{(e.target as HTMLInputElement).value; (e.target as HTMLElement).title; (e.currentTarget as HTMLInputElement).value;});
+export {};

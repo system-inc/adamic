@@ -1,0 +1,2 @@
+new String('x');new Number(1);new Boolean(false);new (String)('x');new ((Number))(1);String('x');Number(1);Boolean(false);
+export {};

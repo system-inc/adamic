@@ -1,0 +1,2 @@
+import {object} from './helper.a'; object.x=2; function f(object:number){object=2;} import * as ns from './helper.a'; function g(ns:any){ns.value=2;} function h(Object:any){Object.assign(ns,{});}
+export {};

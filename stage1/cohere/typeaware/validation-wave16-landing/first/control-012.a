@@ -1,0 +1,2 @@
+function f(Math:{pow:(a:number,b:number)=>number}){return Math.pow(2,3);} const pow=Math.pow; pow(2,3); const M=Math; M.pow(2,3);
+export {};

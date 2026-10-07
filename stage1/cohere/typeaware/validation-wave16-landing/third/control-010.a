@@ -1,0 +1,2 @@
+declare const word:string;`(LOWER(name) LIKE '%${word}%' OR last LIKE '${word}')`;`Matching names LIKE '${word}'`;`SELECT '${word}' to continue`;`delete refused: '${word}'`;`echo 'WHERE name LIKE '${word}' OR all'`;
+export {};

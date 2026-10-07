@@ -1,0 +1,2 @@
+declare let a:number,b:number; a+Math.pow(++b,2); Math.pow(a?b:2,3); Math.pow(a,b)in {}; Math.pow(a,b).toFixed(); typeof Math.pow(a,b); Math.pow(a,b) as number;
+export {};

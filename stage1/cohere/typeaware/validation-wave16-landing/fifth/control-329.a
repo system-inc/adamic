@@ -1,0 +1,2 @@
+qux(async function (foo:number = 1, bar:number = 2, baz:number = 3) { return baz; })
+export {};

@@ -1,0 +1,2 @@
+import {execSync,spawn,execFileSync} from 'node:child_process';declare const input:string,n:number,mode:'status'|'diff';execSync(`echo ${input}`);execSync('echo '+input);execSync(`echo ${n}`);execSync(`git ${mode}`);execFileSync('echo',[input]);spawn('echo',[input],{shell:true});spawn(`echo ${input}`,[],{shell:'sh'});
+export {};

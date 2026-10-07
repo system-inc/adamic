@@ -1,0 +1,2 @@
+import * as ns from './helper.a'; (ns.value)=3; ((ns['value']))++; [ns.value]=[]; ({x:ns.value}=obj); declare const obj:any; ns.value=2; ns['value']++; delete (ns.value); Object.assign(ns,{}); Reflect.set(ns,'value',2); Object.freeze(ns);
+export {};

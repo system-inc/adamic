@@ -1,0 +1,2 @@
+import {exec,spawn} from 'node:child_process';import {promisify} from 'node:util';declare const input:string,n:number,flag:boolean;promisify(exec)(`echo ${input}`);spawn('echo',[input,n,,...[]],{shell:false});spawn('echo',[input],{shell:true});spawn('echo',[input],{shell:flag});spawn('echo',[input],{shell:''});
+export {};

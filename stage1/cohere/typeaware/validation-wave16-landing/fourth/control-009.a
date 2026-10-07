@@ -1,0 +1,2 @@
+declare const foo:any;foo.Function.call(null);(foo,Function).call(null);Function.Function.call(null);foo().Function.call(null);new window.String();new globalThis.Number();new Object();Function[0](null);
+export {};

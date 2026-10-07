@@ -1,0 +1,2 @@
+import {value as renamed} from './helper.a'; renamed=2; renamed++; ({renamed}=obj); [renamed]=rows; declare const obj:any,rows:any;
+export {};

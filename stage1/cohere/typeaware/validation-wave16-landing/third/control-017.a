@@ -1,0 +1,2 @@
+declare const word:string;`WHERE id=${word.replaceAll('\\','\\\\').replaceAll("'","''")}`;`SELECT * FROM ${word} WHERE id IN (${word}) AND ${word}`;`WHERE id <> ${word}`;
+export {};

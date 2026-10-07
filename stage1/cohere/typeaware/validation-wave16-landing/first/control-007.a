@@ -1,0 +1,2 @@
+declare const x:number; x===Number[`NaN`]; x!==((NaN)); switch(x){case (1,NaN):break;} x===Number[(1,'NaN')];
+export {};

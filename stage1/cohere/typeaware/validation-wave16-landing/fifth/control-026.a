@@ -1,0 +1,2 @@
+throw 'literal' && new Error();
+export {};

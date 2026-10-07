@@ -1,0 +1,2 @@
+new Function('x','return x');Function('return 1');Function.call(null,'return 1');Function.bind(null,'return 1')();Function.apply(null,['return 1']);Function['call'](null);Function[`bind`](null);(Function?.call)(null);new (Function)();Function.toString();Function.call;new Function.call(null);
+export {};

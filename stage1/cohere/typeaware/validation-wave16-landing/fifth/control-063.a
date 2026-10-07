@@ -1,0 +1,2 @@
+if (foo) { const RegExp = bar; RegExp('\\1(a)'); }
+export {};

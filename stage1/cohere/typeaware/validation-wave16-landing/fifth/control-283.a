@@ -1,0 +1,2 @@
+foo(function() {}.bind(this).bind(obj))
+export {};

@@ -1,0 +1,2 @@
+function nested(){return function Function(){Function();};}new Function();Function.bind;Function.notAMethod();
+export {};

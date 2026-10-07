@@ -1,0 +1,2 @@
+type Brand=string&{readonly brand:'x'};declare const branded:Brand,numeric:`${number}-${number}`,textual:`id-${string}`;`WHERE name='${branded}'`;`WHERE name='${numeric}'`;`WHERE name='${textual}'`;`WHERE id=${textual}`;
+export {};

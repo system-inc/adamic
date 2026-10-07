@@ -1,0 +1,4 @@
+/* 世界 🌍 */
+document.addEventListener('click',e=>{(e.target as HTMLTextAreaElement).value;});
+
+export {};

@@ -1,0 +1,2 @@
+qux(async function (foo = 1, bar = 2, baz = 3) { return this; }.bind(this))
+export {};

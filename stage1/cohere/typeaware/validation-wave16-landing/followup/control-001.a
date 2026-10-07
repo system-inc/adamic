@@ -1,0 +1,2 @@
+window.addEventListener('click',function(e){const t=(e.target as unknown as HTMLTextAreaElement);function inner(e:Event){(e.target as HTMLInputElement).value;}setTimeout(()=>{(e.target! as HTMLSelectElement).value;});});
+export {};

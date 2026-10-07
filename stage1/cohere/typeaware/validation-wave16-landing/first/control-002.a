@@ -1,0 +1,2 @@
+import * as ns from './helper.a'; ns.object.x=2; Object.assign(ns.object,{}); Object.seal(ns); const o={}; Object.assign(o,ns); o[ns as any]=2;
+export {};

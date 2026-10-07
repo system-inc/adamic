@@ -1,0 +1,2 @@
+new Symbol('x');new BigInt(1);new (Symbol)('x');new ((BigInt))(1);Symbol('x');BigInt(1);
+export {};

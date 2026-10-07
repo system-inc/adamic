@@ -1,0 +1,2 @@
+function alert(){}alert();function f(window:{alert:()=>void},confirm:()=>void){window.alert();confirm();globalThis.prompt();}const o={alert(){}};o.alert();import('./helper.a');
+export {};

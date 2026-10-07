@@ -1,0 +1,2 @@
+const r = RegExp, p = '\\1', s = '(a)'; new r(p + s);
+export {};

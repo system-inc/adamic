@@ -1,0 +1,2 @@
+let handler=(e:Event)=>{(e.target as HTMLInputElement).value;};document.addEventListener('click',handler);
+export {};

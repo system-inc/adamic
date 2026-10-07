@@ -1,0 +1,2 @@
+function f(NaN:number,Number:{NaN:number},x:number){return [x===NaN,x===Number.NaN];} const a=[NaN].indexOf(NaN);
+export {};
