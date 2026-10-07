@@ -105,3 +105,12 @@ try recursion proves each next component exists. Both U-position reads are
 asserted at their original points. Stock JavaScript and idempotence pass, and
 the path-index mutant is caught twice. Default oracle **106367
 passing**, empty baseline diff, 219.657s. [Proof](proof/whole-files/ts/README.md).
+
+### transformers/utilities.ts: three owner declines
+
+All-code census **3 -> 3**, no source edits. Each returned decorator object
+legitimately owns `parameters: undefined`, confirmed by ordinary Node probes.
+The truthful owner edit is `AllDecorators.parameters | undefined` in `types.ts`,
+outside this partition. All three findings have individual decline entries.
+Idempotence passes; default oracle **106367 passing**, empty
+baseline diff, 218.69s. [Owner handoff](proof/whole-files/utilities/README.md).

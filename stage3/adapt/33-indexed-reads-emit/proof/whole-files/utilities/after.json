@@ -1,0 +1,29 @@
+{
+  "roots": 78,
+  "file": "transformers/utilities.ts",
+  "code_filter": null,
+  "counts": {
+    "TS2375": 3
+  },
+  "total": 3,
+  "diagnostics": [
+    {
+      "code": "TS2375",
+      "line": 689,
+      "column": 5,
+      "diagnostic": "src/compiler/transformers/utilities.ts:689:5: error TS2375: Type '{ decorators: readonly Decorator[] | undefined; parameters: (readonly Decorator[] | undefined)[] | undefined; }' is not assignable to type 'AllDecorators' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'parameters' are incompatible.\n    Type '(readonly Decorator[] | undefined)[] | undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.\n      Type 'undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'."
+    },
+    {
+      "code": "TS2375",
+      "line": 749,
+      "column": 5,
+      "diagnostic": "src/compiler/transformers/utilities.ts:749:5: error TS2375: Type '{ decorators: readonly Decorator[] | undefined; parameters: (readonly Decorator[] | undefined)[] | undefined; getDecorators: readonly Decorator[] | undefined; setDecorators: ... | undefined; }' is not assignable to type 'AllDecorators' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'parameters' are incompatible.\n    Type '(readonly Decorator[] | undefined)[] | undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.\n      Type 'undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'."
+    },
+    {
+      "code": "TS2375",
+      "line": 773,
+      "column": 5,
+      "diagnostic": "src/compiler/transformers/utilities.ts:773:5: error TS2375: Type '{ decorators: readonly Decorator[] | undefined; parameters: (readonly Decorator[] | undefined)[] | undefined; }' is not assignable to type 'AllDecorators' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'parameters' are incompatible.\n    Type '(readonly Decorator[] | undefined)[] | undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.\n      Type 'undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'."
+    }
+  ]
+}
