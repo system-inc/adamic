@@ -1,3 +1,41 @@
+# Checked addRange invariant: updated plan before implementation
+
+The user now permits a loud checked read on states TypeScript's own parser
+callers cannot produce. The previous whole-public-API counterexamples remain
+valid, but do not alone establish reachability from createSourceFile.
+
+**64-temporary-parser-range-read:** at addRange's second read only, change
+`to.push(from[i])` to `to.push(from[i]!)`. Preserve both reads and the push
+property lookup. This is contingent on the 13 retained direct callers' ordinary
+array provenance: no indexed accessor/proxy and no side-effecting push getter.
+The default compiler callbacks inspect nodes or assign module-indicator fields;
+they do not install array descriptors. Debug NodeArray prototypes add only
+__tsDebuggerDisplay, inherit Array.prototype, and do not change push or indices.
+
+Reviewed producers: parseList's []/push statement arrays; initializeState's
+[]/push diagnostic array and its saved alias; fresh [] jsDocDiagnostics;
+mapDefined/filter/Array.filter tag arrays built from parsed JSDoc; sameFlatMap's
+[]/slice result with the internal flattenCommaElements callback's node.elements
+or two-element literal; mergeEmitNode's slice destination and compiler-created
+synthetic-comment arrays (the latter is not reached for freshly parsed nodes
+whose emitNode is undefined). Sparse/undefined entries at the first read remain
+valid and are skipped exactly as before. The assertion only rejects absence
+at the conditional second read.
+
+This is a parser-entry checked invariant, not a universal addRange promise for
+client-created arrays, custom factories, custom module-indicator callbacks or
+prototype mutations. Evidence must enumerate all retained call sites, assert
+there are no unreviewed flatMap/sameFlatMap callbacks, and retain a checked Node
+probe that rejects both previously demonstrated getter states. Observed corpus
+and directed case runs supplement the producer review, not replace it.
+
+If these checks reveal a real compiler-owned getter state, no adaptation is
+made; report an upstream candidate. Otherwise run the strict checker, exact
+parser/scanner oracles and default stage3 suite, then record the first actual
+lowering outcome and continue only through justified source adaptations.
+
+---
+
 # Temporary parser repairs: list pushed before implementation
 
 ## Current measured result after temporaries 60-63
