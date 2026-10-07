@@ -1,0 +1,53 @@
+package main
+
+import (
+	"encoding/json"
+	"errors"
+	"os"
+	"path/filepath"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// Not parallel: this probe writes the single output path selected by its environment.
+func TestExportStrictnessSurvey(t *testing.T) {
+	root := os.Getenv("ADAMIC_SURVEY_ROOT")
+	var paths []string
+	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !entry.IsDir() && filepath.Ext(path) == ".ts" {
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, baseline := load.Load(paths)
+	overlay, rewrites, err := importAdaptations(paths, baseline)
+	if os.Getenv("ADAMIC_SURVEY_OPTIONAL") == "1" {
+		overlay, rewrites, err = adaptations(paths, baseline)
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, adapted := load.LoadOverlay(paths, overlay)
+	var diagnostics *load.CheckError
+	if !errors.As(adapted, &diagnostics) {
+		t.Fatalf("expected checker diagnostics, got %v", adapted)
+	}
+	data, err := json.MarshalIndent(struct {
+		Roots       int          `json:"roots"`
+		Rewrites    []adaptation `json:"rewrites"`
+		Diagnostics []string     `json:"diagnostics"`
+	}{len(paths), rewrites, diagnostics.Diagnostics}, "", "  ")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(os.Getenv("ADAMIC_SURVEY_OUT"), data, 0644); err != nil {
+		t.Fatal(err)
+	}
+}

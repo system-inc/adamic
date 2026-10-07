@@ -1,0 +1,10 @@
+tsgo_go_profile: inspect_ns=10870670956 parts_ns=2353656 allocated_bytes=3188202792 allocated_objects=50572140 collections=10
+tsgo_c_profile: input_ns=28856467 call_ns=10969247478 output_ns=124013652 facts_bytes=67327486
+tsgo: load_ns=298274324 query_ns=11139486898 queries=131755 first_query_ns=26950 run_ns=18389618052
+adamic: counts: allocations 61003189 frees 61003189 retains 333200401 releases 380025789 peak 735248 regions 0
+native_phase: adamic_function_38_byteOffsets=190856301
+native_phase: adamic_function_47_types=5269553023
+native_phase: adamic_function_117_Parser_file=953548349
+native_phase: adamic_function_186_Rules_links=61075940
+native_phase: adamic_function_197_Rules_walk=16993280254
+native_phase: adamic_function_198_Rules_run=18103038537

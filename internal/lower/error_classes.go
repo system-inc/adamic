@@ -52,7 +52,7 @@ func (l *lowering) errorInstance(name string) *instance {
 	if l.instances == nil {
 		l.instances = map[string]*instance{}
 	}
-	lowered := &instance{class: len(l.result.Classes) + 1, constructor: len(l.result.Functions), initializer: len(l.result.Functions) + 1, methods: map[string]int{}, slots: map[string]int{}, static: map[string]bool{}, base: base, builtinError: name}
+	lowered := &instance{class: len(l.result.Classes) + 1, constructor: len(l.result.Functions), initializer: len(l.result.Functions) + 1, methods: map[string]int{}, slots: map[string]int{}, staticMethods: map[string]bool{}, base: base, builtinError: name}
 	l.instances[key] = lowered
 	definition := 1 << 30
 	for i, kind := range errorNames {
@@ -317,4 +317,15 @@ func (l *lowering) errorPrototypeRead(node *ast.Node) bool {
 	}
 	parent := node.Parent
 	return parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "call" && called(parent)
+}
+
+// Generated class failures have nominal identities just like source Error values.
+// Their constant message and absent cause need no user constructor call.
+func (l *lowering) generatedError(name, message string) ir.Expression {
+	instance := l.errorInstance(name)
+	return ir.ObjectLiteral{Class: instance.class, Methods: instance.methodList(), Fields: []ir.Field{
+		{Name: "name", Value: ir.StringConstant{Index: l.constant(name)}},
+		{Name: "message", Value: ir.StringConstant{Index: l.constant(message)}},
+		{Name: "cause", Value: ir.Undefined{Of: ir.Union}},
+	}}
 }

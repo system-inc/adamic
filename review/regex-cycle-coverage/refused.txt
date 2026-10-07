@@ -1,0 +1,63 @@
+These cycles still do not run. Native regex emission is not on codex/regex-cycle-proof, so every program below is first "stage 0 can't lower a RegularExpressionLiteral yet". The messages here are from a scratch merge of origin/codex/regex-matcher, which is what makes the regex values exist. On that compiler the four fixtures regexp_cycle_fields.a, regexp_cycle_collections.a, regexp_cycle_closures.a and regexp_cycle_weak.a match Node, the JavaScript backend, ASan/UBSan and the leak check. A regex field does not turn a real back-edge into an accepted write.
+
+Scratch counts (ulimit -s 8192), not added to counts.md because the fixtures register only when ir.Program has Regexps:
+
+| internal/oracle/testdata/regexp_cycle_fields.a | 61 | 61 | 112 | 110 | 44 | 0 |
+| internal/oracle/testdata/regexp_cycle_collections.a | 31 | 31 | 78 | 82 | 23 | 0 |
+| internal/oracle/testdata/regexp_cycle_closures.a | 11 | 11 | 25 | 26 | 10 | 0 |
+| internal/oracle/testdata/regexp_cycle_weak.a | 4 | 4 | 11 | 13 | 4 | 0 |
+
+The merge also needs adamic_shape.methods on the regex runtime shapes (NULL). That compatibility fix is scratch-only, same as docs/regex-cycle-proof.md.
+
+Object cycle, regex field beside the back-edge:
+
+source:
+interface Loop {
+    pattern: RegExp;
+    self: Loop | undefined;
+}
+function loop(): Loop {
+    const node: Loop = { pattern: /a/, self: undefined };
+    node.self = node;
+    return node;
+}
+const node = loop();
+console.log(`${node.pattern.test('a')} ${node.self === node}`);
+
+native:
+Adamic 0.1 refuses Loop.self, a mutable field of type Loop | undefined, which can reach back to the Loop holding it: a cycle reference counting can't free, and the write at the self assignment may close one (the value written may reach what it's written into, where loop is called from the top level); declare it self: Weak<Loop> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+
+Class cycle, same shape:
+
+source:
+class Loop {
+    pattern: RegExp;
+    self: Loop | undefined = undefined;
+    constructor() { this.pattern = /a/; }
+    tie(): void { this.self = this; }
+}
+const node = new Loop();
+node.tie();
+console.log(`${node.pattern.test('a')}`);
+
+native:
+Adamic 0.1 refuses Loop.self, a mutable field of type Loop | undefined, which can reach back to the Loop holding it: a cycle reference counting can't free, and the write at tie's assignment may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare it self: Weak<Loop> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+
+Closure stored on the instance that captures this, with a regex field beside it:
+
+source:
+class Holder {
+    pattern: RegExp;
+    run: (text: string) => boolean;
+    constructor(pattern: RegExp) {
+        this.pattern = pattern;
+        this.run = (text: string): boolean => this.pattern.test(text);
+    }
+}
+const holder = new Holder(/a/);
+console.log(`${holder.run('ba')}`);
+
+native:
+Adamic 0.1 refuses Holder.run, a mutable field of type (text: string) => boolean, which can reach back to the Holder holding it: a cycle reference counting can't free, and the write in the constructor may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where Holder_new is called from the top level); declare it run: Weak<(text: string) => boolean> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+
+What does compile is a closure that captures the regex, not the holder. That is regexp_cycle_closures.a. The back-edge the messages ask for is regexp_cycle_weak.a: self is Weak<Loop>, the regex stays, and while the loop is still strongly held the read agrees with Node.

@@ -319,3 +319,41 @@ func TestReaderNullMutants(t *testing.T) {
 		})
 	}
 }
+
+func TestMergedGeneratedErrorMutants(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ kind, fixture string }{
+		{"TypeError", "class_features_static_private.a"},
+		{"ReferenceError", "class_inheritance_conditional.a"},
+	} {
+		t.Run(probe.kind, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.fixture))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := onNode(t, path)
+			changed := false
+			for index := range program.Classes {
+				if program.Classes[index].Name == probe.kind {
+					program.Classes[index].Base = 0
+					changed = true
+				}
+			}
+			if !changed {
+				t.Fatal("mutant changed nothing")
+			}
+			got, _ := natively(t, program)
+			for backend, observation := range map[string]run{"native": got, "JavaScript": onJavaScriptBackend(t, program)} {
+				if observation.exitCode != 0 || string(observation.stdout) == string(want.stdout) {
+					t.Fatalf("%s lost ancestry must be caught by stdout at exit 0: %+v", backend, observation)
+				}
+				t.Logf("%s lost %s ancestry caught by Node stdout", backend, probe.kind)
+			}
+		})
+	}
+}
