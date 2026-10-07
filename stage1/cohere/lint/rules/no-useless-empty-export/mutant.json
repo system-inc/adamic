@@ -1,6 +1,6 @@
 {
   "name": "omit-empty-export-fix",
-  "file": "rule.a",
+  "file": "rule.ts",
   "from": "'uselessEmptyExport', message, 'fix'",
   "to": "'uselessEmptyExport', message, ''"
 }
