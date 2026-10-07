@@ -1,8 +1,21 @@
 # Latent census
 
-The newest meter uses pinned `origin/area/stage3` with its own adaptations
+The current report measures untouched `origin/main` and `origin/area/stage3`,
+with no additional feature merges. Each uses its own `apply.sh` and adapted
+source tree. [REPORT.md](REPORT.md) and [REPORT.json](REPORT.json) record NotYet
+and Refused totals, both combined top-ten reason tables, and full file/reason
+ledgers. All counts are measured on a checker-rejected program.
+
+Use `unmerged4.py OUTPUT_DIRECTORY` to recount/render and `audit_unmerged4.py`
+to verify untouched pins, source hashes, unique sites, rankings and body skips.
+The runner accepts a per-configuration `adapted` path and `unmerged: true`;
+it then verifies an unchanged head and empty feature set. Raw observations and
+logs are in `data/unmerged4/`. The prior meter is archived in
+`data/meter3-REPORT.md` and `data/meter3-REPORT.json.gz`.
+
+The previous meter used pinned `origin/area/stage3` with its own adaptations
 10, 20, 30–33, 40, 45 and 46, plus the latest cumulative-2 feature tips.
-[REPORT.md](REPORT.md) and [REPORT.json](REPORT.json) contain the score out of 78,
+The archived meter3 reports contain the score out of 78,
 the complete zero-diagnostic list, every file with 1–10 diagnostics and all its
 codes/lines/causes, totals by code, and the latent lowering and variance ledgers.
 All counts are measured on a checker-rejected program.
@@ -10,7 +23,7 @@ All counts are measured on a checker-rejected program.
 Recount/render with `meter3.py OUTPUT_DIRECTORY ADAPTED`; verify using
 `audit_meter3.py ADAPTED`. `write_report.py` dispatches to the matching renderer.
 The previous rerun report is preserved in `data/rerun2-REPORT.md` and
-`data/rerun2-REPORT.json.gz`. Current observations, pinned scratch integration,
+`data/rerun2-REPORT.json.gz`. Meter3 observations, pinned scratch integration,
 adaptation hashes and audit logs are in `data/meter3/`. Source hashes identify
 the exact adapted input; use a fresh output path for `apply.sh`.
 

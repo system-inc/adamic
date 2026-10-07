@@ -1,5 +1,142 @@
 # Scanner blockers
 
+## October 7: developer-tools split compile on and off
+
+Merged area/developer-tools 2adf65c2 without conflicts into scratch 64d47034,
+retaining the previous front-2/records/library integration. Rebuilt compiler
+successfully. nproc is **5**. Tried the unchanged scanner slice with
+ADAMIC_NATIVE_SPLIT=0 and with ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=5.
+Both stop at the same Error-as-any refusal in debug.ts:14:14. Both Node
+streams contain 509,014 tokens and match the full-tree oracle (empty diff).
+
+`adamic c` refuses at the same location before writing C (stdout 0 bytes).
+Therefore no scanner generated-C byte/line count, clang wall time (unsplit,
+split cold or warm), or binary size is available. Zero stdout is a failed
+emission, not a zero-sized generated program; clang is not reached.
+
+Added build-metrics.go, explicitly run inside the integrated compiler checkout
+(`go run stage3/drivers/scanner/build-metrics.go GENERATED_C NEW_OUTPUT 5`).
+It prewarms the release runtime, then times native.Build unsplit, split with
+cold object cache, and split with warm object cache. The new private cache
+keeps cold/warm observations separate from unrelated programs. Its wall scope
+follows CLANG_UNITS.md: splitting, preprocessing, cache checks, clang compilation
+and linking; C generation and Go startup are excluded. This includes API
+bookkeeping rather than pretending to report pure optimizer phase time.
+
+Validated the helper on the unchanged admitted MapLike probe only. All three
+binaries print `ok`, byte-identical to Node; a one-byte mutation of warm-split
+native output is caught (diff exit 1). These control measurements do not stand
+in for scanner measurements. Raw numbers and scope are in
+evidence/split-control-metrics.json. No compiler change or scratch merge was
+pushed. Evidence: split-run.json and split-*.log/.diff.
+
+
+## October 7: records closes MapLike, next real gate is Error's any cast
+
+Scratch 06b7f7b3 contains newest area/stage3 4ad53a4, front-2 860a0d5
+(which includes import-cycles 779ff9d), library/qualified-as-const 8280fd08,
+records-lowering 70fb62b1 and runtime-records 754e6667, retaining prior scanner
+features. All five requested tips are ancestors. Compiler rebuild succeeds.
+
+**MapLike blocker closed:** unchanged probes/index-signature-type-only.a
+compiles and prints `ok` natively, identical to Node. The pure mutable
+string-indexed type-only declaration is admitted; this probe needs no additional
+compiler fix. Changing one byte of this probe's native output is caught by
+diff (exit 1), scoped to the probe rather than scanner output.
+
+**RED, exact next real failure:** `debug.ts:14:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)`.
+The expression is `(Error as any)` in Debug.fail's captureStackTrace condition.
+The existing unmodified error-constructor-value.a is the minimal program:
+Node prints `captureStackTrace available`; this compiler refuses its cast at
+2:6. Error as a value is implemented in the scratch merge; the checked-cast
+preflight now refuses the cast to any before the Error value lowering gets it.
+The source also has the same cast in the subsequent capture call. No Error
+stub, removed capture operation, or unchecked compiler admission was added.
+As previously assigned, removal of these casts after admitting the pinned Node
+declarations belongs to adaptation 40's unit, not a scanner source bypass.
+
+Records merge lowering conflicts: expression.go combines recordExpression with
+enum/namespace/Error dispatch; refusals.go replaces the blanket index-signature
+refusal with recordLiteralRead, recordStorageView, recordElement and delete
+admission while preserving all existing feature checks. The runtime branch was
+already an ancestor of records-lowering. Updating front-2 conflicts only in
+oracle counts. Two scratch rooted-filename API conversions were needed in
+expression.go and records.go. No compiler edit or scratch merge was pushed.
+
+The unstubbed scanner still emits 509,014 Node tokens over all 81 files; the
+full-tree diff is empty (exit 0). Token end+1 mutant is caught (exit 1). Native
+scanner binary, token diff, timings and size remain unavailable at this refusal;
+perf is not installed. No further stub discovery or full compiler gate was run.
+Evidence: records-run.json and records-*.log/.diff.
+
+
+## October 7: front-2 plus explicit import-cycles and library loader, real run
+
+**RED, exact first failure:** `corePublic.ts:9:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added`.
+This is the reached type-only `MapLike<T>` declaration's `[index: string]: T`,
+from upstream corePublic.ts:14. No body lowering or ownership pass is reached.
+
+Scratch 6ade8c38 includes newest area/stage3 4ad53a4, front-2 80fb9b75, explicit
+import-cycles 779ff9d, library/qualified-as-const 8280fd08, and the previous
+scanner feature integration. All four requested refs are ancestors. Compiler
+build succeeds; the safe import-cycle probe prints `1` natively. This retires
+the previous conservative cyclic-import stopping point. Lowering conflicts and
+scratch API resolutions are reported in evidence/front2-conflicts.md; none are
+pushed as compiler changes. No stubs or new source adaptations were used.
+
+Minimal reproduction: probes/index-signature-type-only.a. Node prints `ok`;
+stage 0 refuses its index signature at 3:5. The control omits only the interface,
+prints `ok` natively, and matches Node (diff exit 0). Flipping exactly one byte
+of that native control's output (`ok` -> `nk`) is caught by diff (exit 1).
+This is a native **control** mutant, not scanner native output. The runner also
+contains the requested one-byte scanner native-output mutant, for when it builds.
+
+Node scanner over all 81 files still emits 509,014 tokens, 27,879,197 bytes,
+SHA256 c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f.
+The full-tree diff is empty (exit 0), and the token-end mutant is caught (exit 1).
+Native scanner diff, best-of-three timings, and scanner binary size are unavailable
+because compilation stops. perf is not installed here. measure.py will record
+all three user CPU times and binary bytes and attempts instruction counting when
+a green native comparison exists. Full compiler gate was not run.
+
+This is a compiler admission blocker for a reached type-only string-indexed
+record. Replacing it with Map changes TypeScript's declaration; silently dropping
+it would violate the slice contract. No further bypass discovery was done.
+Evidence: front2-run.json, front2-*.log/.diff, and front2-conflicts.md.
+
+
+## October 7: real unstubbed run after library Error and non-null tip
+
+Scratch compiler e034d3d merges library-error-value 6469f37 and non-null-check
+a02613e, retaining the earlier feature integration. Compiler build passes;
+the original error-constructor-value.a probe prints `captureStackTrace available`
+natively. No Error capture stub or discovery bypass is present. Selected
+validated adaptations remain 52, 53, 54, 55, 56, 57, 59, 81, 82, 85; 58 is retired.
+
+**Next real blocker, before lowering:**
+`diagnosticInformationMap.generated.ts:13:45: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)`.
+The read is `DiagnosticCategory.Error` in the Diagnostics initializer. The
+order-preserving slice retains types.ts -> _namespaces/ts.ts -> generated
+diagnostics -> types.ts. The interim guard rejects all top-level imported
+reads in a cyclic program, including initialized exporters and enum members.
+This is an observation on the scratch merge, not a claim of unsafe execution.
+
+Minimal program: probes/cyclic-initialized-enum/{main,barrel,types,reader}.a.
+Stock TypeScript 6.0.3 on Node prints `1`; stage 0 refuses reader.a:2:23 with
+the same diagnostic. codex/import-cycles tip 7b2c3f2 was fetched and inspected:
+it still installs conservativeLoadTimeReads; the public runner admission seam
+is TODO #xjdce2d. Needed compiler change: prove safe imported reads using actual
+module evaluation order (including const-enum reads), while refusing premature
+value reads. No source adaptation was made: deferring Diagnostics changes
+verbatim declarations, and removing barrel cycles discards the evaluation-order
+proof the shared slicer now preserves. Native build and native token diff stop
+here; no further stub discovery or full compiler gate was run.
+
+Node over all 81 corpus files emits 509,014 tokens, 27,879,197 bytes, exactly
+matching the full-tree oracle (diff exit 0). Token end+1 mutant is caught
+(diff exit 1); unmodified comparison control exits 0. Evidence: error-real-*.
+
+
 ## October 7: slice evaluation order and reference-chain repair
 
 Shared tool now retains the original runtime graph and binding modules.
