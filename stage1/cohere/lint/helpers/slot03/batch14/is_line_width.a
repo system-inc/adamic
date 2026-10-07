@@ -1,0 +1,9 @@
+export type LineWidthDependencies = {segment: (value: string, separator: string) => string[]; isLength: (part: string) => boolean; isNumber: (part: string) => boolean};
+export function isLineWidth(value: string, dependencies: LineWidthDependencies): boolean {
+  for (const part of dependencies.segment(value, ' ')) {
+    if (dependencies.isLength(part) || dependencies.isNumber(part)) { continue; }
+    if (['thin', 'medium', 'thick'].includes(part)) { continue; }
+    return false;
+  }
+  return true;
+}

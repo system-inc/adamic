@@ -1,0 +1,11 @@
+export type BackgroundPositionDependencies = {segment: (value: string, separator: string) => string[]; isLength: (part: string) => boolean; isPercentage: (part: string) => boolean};
+export function isBackgroundPosition(value: string, dependencies: BackgroundPositionDependencies): boolean {
+  let count = 0;
+  for (const part of dependencies.segment(value, ' ')) {
+    if (['center', 'top', 'right', 'bottom', 'left'].includes(part)) { count++; continue; }
+    if (/^var\(/u.test(part)) { continue; }
+    if (dependencies.isLength(part) || dependencies.isPercentage(part)) { count++; continue; }
+    return false;
+  }
+  return count > 0;
+}

@@ -1,0 +1,76 @@
+=== RUN   TestBatch14Helpers
+    batch14_test.go:75: 8610 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch14Helpers (4.51s)
+=== RUN   TestBatch14Mutants
+=== RUN   TestBatch14Mutants/is_line_width.a
+    batch14_test.go:135: compiled semantic mutant caught at line 955: got "false/segment: ;length:0;number:0;length:1;number:1;" Go "true/segment: ;length:0;number:0;length:1;number:1;"
+=== RUN   TestBatch14Mutants/is_line_width.a#01
+    batch14_test.go:135: compiled semantic mutant caught at line 1: got "false/segment: ;number:0;length:0;number:0;" Go "false/segment: ;length:0;number:0;"
+=== RUN   TestBatch14Mutants/is_line_width.a#02
+    batch14_test.go:135: compiled semantic mutant caught at line 1: got "false/segment: ;length:-1;number:0;" Go "false/segment: ;length:0;number:0;"
+=== RUN   TestBatch14Mutants/is_line_width.a#03
+    batch14_test.go:135: compiled semantic mutant caught at line 1: got "false/segment: ;wrong-value;length:0;number:0;" Go "false/segment: ;length:0;number:0;"
+=== RUN   TestBatch14Mutants/is_line_width.a#04
+    batch14_test.go:135: compiled semantic mutant caught at line 1: got "false/segment:,;length:0;number:0;" Go "false/segment: ;length:0;number:0;"
+=== RUN   TestBatch14Mutants/is_line_width.a#05
+    batch14_test.go:135: compiled semantic mutant caught at line 1: got "true/segment: ;length:0;number:0;" Go "false/segment: ;length:0;number:0;"
+=== RUN   TestBatch14Mutants/is_image.a
+    batch14_test.go:135: compiled semantic mutant caught at line 2426: got "false/segment:,;" Go "false/segment:,;url:0;"
+=== RUN   TestBatch14Mutants/is_image.a#01
+    batch14_test.go:135: compiled semantic mutant caught at line 7484: got "true/segment:,;" Go "false/segment:,;"
+=== RUN   TestBatch14Mutants/is_image.a#02
+    batch14_test.go:135: compiled semantic mutant caught at line 5321: got "false/segment:,;url:0;" Go "true/segment:,;url:0;"
+=== RUN   TestBatch14Mutants/is_image.a#03
+    batch14_test.go:135: compiled semantic mutant caught at line 5288: got "false/segment:,;url:0;" Go "true/segment:,;url:0;"
+=== RUN   TestBatch14Mutants/is_image.a#04
+    batch14_test.go:135: compiled semantic mutant caught at line 3674: got "false/segment:,;url:0;" Go "true/segment:,;url:0;"
+=== RUN   TestBatch14Mutants/is_image.a#05
+    batch14_test.go:135: compiled semantic mutant caught at line 2099: got "true/segment:,;url:0;" Go "false/segment:,;url:0;"
+=== RUN   TestBatch14Mutants/is_image.a#06
+    batch14_test.go:135: compiled semantic mutant caught at line 2: got "false/segment:,;url:-1;" Go "false/segment:,;url:0;"
+=== RUN   TestBatch14Mutants/is_image.a#07
+    batch14_test.go:135: compiled semantic mutant caught at line 2: got "false/segment:,;wrong-value;url:0;" Go "false/segment:,;url:0;"
+=== RUN   TestBatch14Mutants/is_image.a#08
+    batch14_test.go:135: compiled semantic mutant caught at line 113: got "false/segment:,;url:0;url:1;" Go "false/segment:,;url:0;"
+=== RUN   TestBatch14Mutants/is_image.a#09
+    batch14_test.go:135: compiled semantic mutant caught at line 6473: got "false/segment:,;url:0;" Go "true/segment:,;url:0;"
+=== RUN   TestBatch14Mutants/is_background_position.a
+    batch14_test.go:135: compiled semantic mutant caught at line 1308: got "false/segment: ;length:0;percentage:0;length:1;percentage:1;" Go "true/segment: ;length:0;percentage:0;"
+=== RUN   TestBatch14Mutants/is_background_position.a#01
+    batch14_test.go:135: compiled semantic mutant caught at line 1365: got "false/segment: ;length:0;percentage:0;length:1;percentage:1;" Go "true/segment: ;length:0;percentage:0;"
+=== RUN   TestBatch14Mutants/is_background_position.a#02
+    batch14_test.go:135: compiled semantic mutant caught at line 7485: got "true/segment: ;" Go "false/segment: ;"
+=== RUN   TestBatch14Mutants/is_background_position.a#03
+    batch14_test.go:135: compiled semantic mutant caught at line 3: got "false/segment: ;length:0;" Go "false/segment: ;length:0;percentage:0;"
+=== RUN   TestBatch14Mutants/is_background_position.a#04
+    batch14_test.go:135: compiled semantic mutant caught at line 3: got "false/segment: ;percentage:0;length:0;percentage:0;" Go "false/segment: ;length:0;percentage:0;"
+=== RUN   TestBatch14Mutants/is_background_position.a#05
+    batch14_test.go:135: compiled semantic mutant caught at line 3: got "false/segment: ;length:-1;percentage:0;" Go "false/segment: ;length:0;percentage:0;"
+=== RUN   TestBatch14Mutants/is_background_position.a#06
+    batch14_test.go:135: compiled semantic mutant caught at line 3: got "false/segment:,;length:0;percentage:0;" Go "false/segment: ;length:0;percentage:0;"
+--- PASS: TestBatch14Mutants (53.49s)
+    --- PASS: TestBatch14Mutants/is_line_width.a (2.01s)
+    --- PASS: TestBatch14Mutants/is_line_width.a#01 (1.91s)
+    --- PASS: TestBatch14Mutants/is_line_width.a#02 (2.73s)
+    --- PASS: TestBatch14Mutants/is_line_width.a#03 (2.27s)
+    --- PASS: TestBatch14Mutants/is_line_width.a#04 (2.18s)
+    --- PASS: TestBatch14Mutants/is_line_width.a#05 (2.44s)
+    --- PASS: TestBatch14Mutants/is_image.a (2.77s)
+    --- PASS: TestBatch14Mutants/is_image.a#01 (2.33s)
+    --- PASS: TestBatch14Mutants/is_image.a#02 (2.28s)
+    --- PASS: TestBatch14Mutants/is_image.a#03 (2.32s)
+    --- PASS: TestBatch14Mutants/is_image.a#04 (2.60s)
+    --- PASS: TestBatch14Mutants/is_image.a#05 (2.15s)
+    --- PASS: TestBatch14Mutants/is_image.a#06 (2.37s)
+    --- PASS: TestBatch14Mutants/is_image.a#07 (2.58s)
+    --- PASS: TestBatch14Mutants/is_image.a#08 (2.15s)
+    --- PASS: TestBatch14Mutants/is_image.a#09 (2.16s)
+    --- PASS: TestBatch14Mutants/is_background_position.a (2.23s)
+    --- PASS: TestBatch14Mutants/is_background_position.a#01 (2.37s)
+    --- PASS: TestBatch14Mutants/is_background_position.a#02 (2.23s)
+    --- PASS: TestBatch14Mutants/is_background_position.a#03 (2.12s)
+    --- PASS: TestBatch14Mutants/is_background_position.a#04 (2.22s)
+    --- PASS: TestBatch14Mutants/is_background_position.a#05 (2.23s)
+    --- PASS: TestBatch14Mutants/is_background_position.a#06 (2.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	58.003s

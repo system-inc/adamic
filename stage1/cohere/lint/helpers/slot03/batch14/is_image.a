@@ -1,0 +1,12 @@
+export type ImageDependencies = {segment: (value: string, separator: string) => string[]; isURL: (part: string) => boolean};
+export function isImage(value: string, dependencies: ImageDependencies): boolean {
+  let count = 0;
+  for (const part of dependencies.segment(value, ',')) {
+    if (/^var\(/u.test(part)) { continue; }
+    if (dependencies.isURL(part)) { count++; continue; }
+    if (/^(?:repeating-)?(?:conic|linear|radial)-gradient\(/u.test(part)) { count++; continue; }
+    if (/^(?:element|image|cross-fade|image-set)\(/u.test(part)) { count++; continue; }
+    return false;
+  }
+  return count > 0;
+}

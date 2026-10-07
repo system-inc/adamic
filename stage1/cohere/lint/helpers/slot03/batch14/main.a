@@ -1,0 +1,24 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {isLineWidth} from './is_line_width.a';
+import {isImage} from './is_image.a';
+import {isBackgroundPosition} from './is_background_position.a';
+const file=readTextFile(programArguments()[0] ?? panic('missing cases'));if(file.kind==='Error') {panic(file.message);}
+const json=new OptionsJson(file.text);const root=json.parse();if(root<0) {panic(json.error);}
+const adapter={row:0,value:'',mode:'space',trace:''};
+function segment(input:string,separator:string):string[] {
+ adapter.trace+=`segment:${separator};`;if(input!==adapter.value) {adapter.trace+='wrong-value;';}
+ const parts:string[]=[];for(const entry of json.node(json.field(adapter.row,adapter.mode)).children) {parts.push(json.node(json.field(entry,'value')).text);}return parts;
+}
+function predicate(input:string,name:string):boolean {
+ const entries=json.node(json.field(adapter.row,adapter.mode)).children;let index=-1;
+ for(let i=0;i<entries.length;i++) {const entry=entries[i] ?? panic('missing part');if(json.node(json.field(entry,'value')).text===input) {index=i;break;}}
+ adapter.trace+=`${name}:${index};`;if(index<0) {return false;}
+ const entry=entries[index] ?? panic('invalid part');return json.node(json.field(entry,name)).text==='true';
+}
+for(const row of json.node(root).children) {
+ adapter.row=row;adapter.value=json.node(json.field(row,'value')).text;
+ adapter.mode='space';adapter.trace='';const width=isLineWidth(adapter.value,{segment:(value,separator)=>segment(value,separator),isLength:part=>predicate(part,'length'),isNumber:part=>predicate(part,'number')});console.log(`${width}/${adapter.trace}`);
+ adapter.mode='comma';adapter.trace='';const image=isImage(adapter.value,{segment:(value,separator)=>segment(value,separator),isURL:part=>predicate(part,'url')});console.log(`${image}/${adapter.trace}`);
+ adapter.mode='space';adapter.trace='';const position=isBackgroundPosition(adapter.value,{segment:(value,separator)=>segment(value,separator),isLength:part=>predicate(part,'length'),isPercentage:part=>predicate(part,'percentage')});console.log(`${position}/${adapter.trace}`);
+}
