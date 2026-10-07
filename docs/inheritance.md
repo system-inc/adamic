@@ -24,6 +24,8 @@ The oracle compares each fixture with its source on Node, generated JavaScript, 
 
 The fixtures cover three hierarchy levels, abstract methods, overriding through base-typed arrays and parameters, direct super calls, observable initializer and constructor order, ancestor tests, private fields, a live Weak parent, and constructor and virtual-method exceptions. Mutants were caught for static dispatch, early derived initialization, skipped base destruction, unsound overrides, missing inherited cycle fields, premature this, nominal-view violations, omitted virtual throws, private-field aliasing and retained spread identity. The base-destructor mutant leaked computed strings, rather than relying on immortal literals.
 
+Override signature regressions include adding a number default, removing a number default, and removing defaults from number and string methods. Lowering refuses each with `NotYet` naming `factor` and its repair. Removing the parameter comparison accepts all three and fails the refusal tests. Result and parameter-count comparison mutants also fail refusal assertions. Identical defaults, optional parameters and parameter widening with the same representation agree with source Node through both backends and pass sanitizers and the leak check.
+
 The initial implementation passed `go vet ./...` and `go test -count=1 -timeout 30m ./...`. Cohere formatting passed on equivalent `.ts` copies; a full Cohere lint run had findings and is not claimed green.
 
 ## Regions and reuse
@@ -85,7 +87,7 @@ Each run exited 1 at the named oracle or assertion, then restored the implementa
 
 ## Current limits
 
-Super calls used as values or inside deferred functions report `NotYet`; use statements in each branch. Generic class arguments must have known native representations. Explicit replacement constructor returns, computed base expressions, static members, declare/abstract fields, overloaded overrides and changed native override representations or parameter counts report `NotYet`. Calls through a union of class types require `instanceof` narrowing first. Structural interface method dispatch remains a separate stage-0 gap.
+Super calls used as values or inside deferred functions report `NotYet`; use statements in each branch. Generic class arguments must have known native representations. Explicit replacement constructor returns, computed base expressions, static members, declare/abstract fields, overloaded overrides and changed native override representations or parameter counts report `NotYet`. Override signatures are compared in their lowered native forms, including defaulted and optional parameters and void results. A changed parameter representation names the parameter and asks for the base method's parameter form; no adaptation thunk is generated. Identical defaults and parameter widening with the same representation remain supported. Calls through a union of class types require `instanceof` narrowing first. Structural interface method dispatch remains a separate stage-0 gap.
 
 Base constructors cannot publish this or call methods while derived fields are uninitialized. Field initializers may read earlier fields and inherited fields after super; future-field reads and arbitrary this escapes are refused. Lexically early captures of this are conservatively refused.
 

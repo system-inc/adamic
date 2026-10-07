@@ -82,16 +82,7 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
 		return (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;
 	}
-	double number = key.number;
-	if (number == 0) {
-		number = 0; // -0 and +0 are one key
-	}
-	if (isnan(number)) {
-		return 0x7ff8000000000000ull; // every NaN is one key
-	}
-	uint64_t bits;
-	memcpy(&bits, &number, sizeof bits);
-	return (bits ^ (bits >> 29)) * 1099511628211ull;
+	return adamic_map_number_hash(key.number);
 }
 
 static bool same_key(const adamic_map *map, adamic_value left, adamic_value right) {
@@ -270,7 +261,10 @@ bool adamic_map_iterator_next(adamic_map_iterator *iterator, adamic_value *key, 
 			return true;
 		}
 	}
+	// A held iterator that reached done no longer needs stable entry positions.
+	// exhausted also tells its eventual free not to drop the count a second time.
 	iterator->exhausted = true;
+	iterator->map->iterating--;
 	return false;
 }
 

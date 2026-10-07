@@ -1,0 +1,19 @@
+// From TypeScript 6.0.3, src/compiler/parser.ts:1437
+// From TypeScript 6.0.3, src/compiler/parser.ts:1455
+// From TypeScript 6.0.3, src/compiler/parser.ts:1512
+// Census reason: a namespace
+interface Node { readonly kind: number; }
+namespace Parser {
+    var nodeCount: number;
+    function countNode(node: Node) {
+        nodeCount++;
+        return node;
+    }
+    // Fixture driver initializes the same singleton slot initializeState resets.
+    export function run(nodes: Node[]): number {
+        nodeCount = 0;
+        for (const node of nodes) { countNode(node); }
+        return nodeCount;
+    }
+}
+console.log(`${Parser.run([{ kind: 80 }, { kind: 9 }, { kind: 11 }])} ${Parser.run([{ kind: 80 }])}`);

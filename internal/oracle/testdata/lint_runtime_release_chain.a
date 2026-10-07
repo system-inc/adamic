@@ -1,0 +1,26 @@
+// Each link owns fresh text and an array, plus the preceding link. Drop the head at once.
+interface Link {
+    readonly next: Link | undefined;
+    readonly label: string;
+    readonly payload: readonly (string | undefined)[];
+}
+let chain: Link | undefined = undefined;
+for (const count of [100000, 0, 1000]) {
+    for (let index = 0; index < count; index++) {
+        const label = `link${index}`;
+        chain = { next: chain, label, payload: [label, label, undefined, 'literal'] };
+    }
+    console.log(`${chain?.label ?? 'empty'} ${chain === undefined ? 0 : chain.payload.length}`);
+    chain = undefined;
+    console.log('drained');
+}
+// A wide last-owner array queues more children than the drain's initial capacity.
+function forest(): void {
+    const roots: Link[] = [];
+    for (let index = 0; index < 256; index++) {
+        const label = `root${index}`;
+        roots.push({ next: undefined, label, payload: [label, undefined] });
+    }
+    console.log(`${roots.length} ${roots[255]?.label ?? 'missing'}`);
+}
+forest();

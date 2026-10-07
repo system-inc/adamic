@@ -1,0 +1,20 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:5408
+// Census reason: destructuring with rest
+type Symbol = string;
+function getWithAlternativeContainers(container: Symbol): Symbol[] { return [container, container + "Alias"]; }
+function append<T>(items: T[], item: T | undefined): T[] { if (item !== undefined) items.push(item); return items; }
+function addRange<T>(items: T[], rest: T[]): T[] { items.push(...rest); return items; }
+function concatenate<T>(left: T[], right: T[]): T[] { return left.concat(right); }
+function getContainersOfSymbol(containers: Symbol[]): Symbol[] {
+        let bestContainers: Symbol[] = [];
+        let alternativeContainers: Symbol[] = [];
+
+        for (const container of containers) {
+            const [bestMatch, ...rest] = getWithAlternativeContainers(container);
+            bestContainers = append(bestContainers, bestMatch);
+            alternativeContainers = addRange(alternativeContainers, rest);
+        }
+
+        return concatenate(bestContainers, alternativeContainers);
+}
+console.log(getContainersOfSymbol(["ts", "factory"]).join(","));
