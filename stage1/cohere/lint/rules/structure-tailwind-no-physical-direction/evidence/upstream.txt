@@ -1,0 +1,18 @@
+=== RUN   TestContinuationCorpus
+    lint_test.go:324: cohere cases: 402 unique source/rule/options combinations
+=== RUN   TestContinuationCorpus/@next/next/no-assign-module-variable
+    continuation_overlay_test.go:30: compared cases: 13
+    continuation_overlay_test.go:31: Go, Node, emitted JavaScript, native identical: 3502 bytes
+=== RUN   TestContinuationCorpus/@typescript-eslint/default-param-last
+    continuation_overlay_test.go:30: compared cases: 117
+    continuation_overlay_test.go:31: Go, Node, emitted JavaScript, native identical: 36275 bytes
+=== RUN   TestContinuationCorpus/structure/tailwind-no-physical-direction
+    continuation_overlay_test.go:25: EXPLICIT GAP: JSX parser unsupported: /tmp/adamic-gate/TestContinuationCorpus581866584/001/case-388.tsx	structure/tailwind-no-physical-direction			false	null
+    continuation_overlay_test.go:30: compared cases: 53
+    continuation_overlay_test.go:31: Go, Node, emitted JavaScript, native identical: 17396 bytes
+--- PASS: TestContinuationCorpus (39.64s)
+    --- PASS: TestContinuationCorpus/@next/next/no-assign-module-variable (0.53s)
+    --- PASS: TestContinuationCorpus/@typescript-eslint/default-param-last (0.54s)
+    --- PASS: TestContinuationCorpus/structure/tailwind-no-physical-direction (0.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	39.690s

@@ -1,0 +1,6 @@
+=== RUN   TestContinuationJSXRefusal
+    continuation_overlay_test.go:101: Node JSX refusal exit=70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestContinuationJSXRefusal415986466/002/gap.tsx
+    continuation_overlay_test.go:101: native JSX refusal exit=70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestContinuationJSXRefusal415986466/002/gap.tsx
+--- PASS: TestContinuationJSXRefusal (21.56s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	21.570s

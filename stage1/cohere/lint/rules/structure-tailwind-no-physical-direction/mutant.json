@@ -1,0 +1,6 @@
+{
+  "name": "direction_exemption_ignored",
+  "file": "rule.a",
+  "from": "if(directionAware) { continue; }",
+  "to": "if(directionAware && base === \"\") { continue; }"
+}
