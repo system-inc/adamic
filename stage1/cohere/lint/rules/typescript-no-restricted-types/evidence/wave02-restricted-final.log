@@ -1,0 +1,39 @@
+=== RUN   TestThirdWitnesses
+    lint_test.go:621: Go, Node, emitted JavaScript, native identical: 15111 bytes
+--- PASS: TestThirdWitnesses (16.40s)
+=== RUN   TestRestrictedTypesMutant
+    lint_test.go:782: allowed ban mutant caught only by output comparison on Node: case 0 line 2: port "/tmp/adamic-gate/TestRestrictedTypesMutant3951918042/001/typescript-no-restricted-types-0.ts:1:12", Go "/tmp/adamic-gate/TestRestrictedTypesMutant3951918042/001/typescript-no-restricted-types-0.ts:5:13"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestRestrictedTypesMutant3951918042/001/typescript-no-restricted-types-0.ts:5:13
+          @typescript-eslint/no-restricted-types  Don't use `string` as a type.
+        
+        range 82 88 bannedTypeMessage
+        fixed	let value: Foo;\u000alet generic: Foo<Bar>;\u000alet tuple: [];\u000alet object: {};\u000alet scalar: string;\u000a
+    lint_test.go:782: allowed ban mutant caught only by output comparison on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestRestrictedTypesMutant3951918042/001/typescript-no-restricted-types-0.ts:1:12", Go "/tmp/adamic-gate/TestRestrictedTypesMutant3951918042/001/typescript-no-restricted-types-0.ts:5:13"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestRestrictedTypesMutant3951918042/001/typescript-no-restricted-types-0.ts:5:13
+          @typescript-eslint/no-restricted-types  Don't use `string` as a type.
+        
+        range 82 88 bannedTypeMessage
+        fixed	let value: Foo;\u000alet generic: Foo<Bar>;\u000alet tuple: [];\u000alet object: {};\u000alet scalar: string;\u000a
+    lint_test.go:782: allowed ban mutant caught only by output comparison on sanitized native: case 0 line 2: port "/tmp/adamic-gate/TestRestrictedTypesMutant3951918042/001/typescript-no-restricted-types-0.ts:1:12", Go "/tmp/adamic-gate/TestRestrictedTypesMutant3951918042/001/typescript-no-restricted-types-0.ts:5:13"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestRestrictedTypesMutant3951918042/001/typescript-no-restricted-types-0.ts:5:13
+          @typescript-eslint/no-restricted-types  Don't use `string` as a type.
+        
+        range 82 88 bannedTypeMessage
+        fixed	let value: Foo;\u000alet generic: Foo<Bar>;\u000alet tuple: [];\u000alet object: {};\u000alet scalar: string;\u000a
+--- PASS: TestRestrictedTypesMutant (15.73s)
+=== RUN   TestRestrictedTypesCompiler
+    lint_test.go:795: restricted types compiler/stage1: 209 files
+    lint_test.go:797: Go, Node, emitted JavaScript, native identical: 12248892 bytes
+--- PASS: TestRestrictedTypesCompiler (32.22s)
+=== RUN   TestRestrictedTypesThroughput
+    lint_test.go:806: next-google-font-display: missing rule descriptor
+--- FAIL: TestRestrictedTypesThroughput (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	64.352s
+FAIL
