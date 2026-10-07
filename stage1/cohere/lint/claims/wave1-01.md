@@ -24,3 +24,22 @@ this worker. The remaining rule is not declared ported.
 Consistent-type-assertions is blocked on the shared .a registration and suggestion
 record contracts. No partial rule is registered. Reproducible evidence and exact
 validation commands are in wave1-01-report.md and wave1-01-evidence/.
+
+## Next three rules, October 7
+
+Previous work was already pushed at 4541490 before fetching the new queue.
+Fetched main: ef3d907ecdc4c771b016f7d9c52372def057a340.
+Every fetched origin branch's stage1/cohere/lint/claims/ Markdown was searched
+for these public names; main's stage1 Adamic/TypeScript source was searched for
+ports. None of the following names occurs in either search.
+
+1. structure/tailwind-no-physical-direction, position 46 of the original
+   helper-ready handoff referenced by helpers/REPORT.md.
+2. @eslint-community/eslint-comments/require-description, first remaining
+   syntax-only inventory entry (needs_type_information=false).
+3. @next/next/google-font-display, next remaining syntax-only inventory entry.
+
+The first 45 helper-ready names already occur in origin claim files. Once that
+46-name handoff is exhausted, selection follows inventory.json array order on
+origin/codex/lint-inventory. New helper packages are dependencies, not claims of
+rule completion. This claim update is pushed before any new implementation.
