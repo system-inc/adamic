@@ -372,11 +372,9 @@ func (n *inference) value(expression ir.Expression) shape {
 		}
 		return n.call(operands)
 	case ir.CallClosure:
-		operands := []shape{n.value(expression.Closure)}
-		for _, argument := range expression.Arguments {
-			operands = append(operands, n.value(argument))
-		}
-		return n.call(operands)
+		// Every target, bounded or Unknown, has the same conservative effect here:
+		// anything it can reach may change. Evaluate the callee as an operand too.
+		return n.call(n.operands(expression))
 	}
 	// Everything else: the effects of what it evaluates, field by field, and then, as cohere assumes
 	// of a call it has no signature for, that it mutates and may return any of them. That covers

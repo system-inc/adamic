@@ -37,6 +37,11 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/call_targets_element.a", true, false},
+	{"internal/oracle/testdata/call_targets_region.a", true, false},
+	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
+	{"internal/oracle/testdata/call_targets_closure.a", true, false},
+	{"internal/oracle/testdata/call_targets_sort.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
@@ -249,6 +254,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions_constructor_capture.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
+	{"internal/oracle/testdata/borrow_element_throw.a", true, false},
+	{"internal/oracle/testdata/borrow_element_virtual_store.a", true, false},
 	// A variable borrowed from an array, then the array moved into a consumed parameter of a
 	// function that only reads it, through a virtual call and through super (integration's reading
 	// of aa17d3c): the array is never moved while something borrows from it.
