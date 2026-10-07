@@ -1,6 +1,6 @@
 Language blockers remain in 14, 16, 17, 18-20 and 22; no language construct or acceptance fixture was rewritten.
-Parent commit 776f9d6; this checkpoint preserves Darwin malloc declarations and proves System.newLine namespace reads already work on this branch.
-Commands: exact-construct `go run ./cmd/adamic c` reproducers recorded below; `go test ./internal/oracle -run '^TestNodeProcessOSNamespace$' -count=1 -timeout 30m -v` PASS 10.877s.
+Parent commit 776f9d6; checkpoint 2316c2c preserves Darwin malloc declarations and proves System.newLine namespace reads already work on this branch.
+Commands: namespace oracle PASS 10.877s; complete process subset PASS 23.848s; native package PASS 132.735s; flow package PASS 86.527s; affected-package vet exit 0.
 Mutants: native EOL LF changed to CRLF and generated JavaScript EOL LF changed to CRLF each run cleanly and are caught only by Node stdout comparison.
 Not covered yet: full acceptance fixtures past fs.mkdtempSync pending the supplied area merge SHA, language changes, or a macOS compile/run.
 
@@ -23,4 +23,10 @@ The method-result refusal belongs to the plain object wrapper's void return: low
 
 node_process.c now defines _DARWIN_C_SOURCE immediately after _POSIX_C_SOURCE. This keeps Darwin's malloc_zone_t declarations visible; Linux compilation is exercised by the namespace oracle. No new runtime translation unit was added, and no macOS outcome is claimed. Keep the identical macro from fs-file when the provided area commit is merged, without rebase or force push.
 
-Logs are in logs/next-unit/. The remaining native/flow package gate and complete process subset are running at this checkpoint; their final results will be reported separately. All 25 host fixtures will be rerun after the user supplies the area SHA containing fs-file.
+Logs are in logs/next-unit/. The native/flow package gate and complete process subset passed, including the existing host/performance mutants. Affected-package vet exited 0. The exact commands and outcomes are retained in process.log, packages.log and vet.log. All 25 host fixtures will be rerun after the user supplies the area SHA containing fs-file.
+
+```sh
+go test ./internal/native ./internal/flow -count=1 -timeout 30m > /tmp/process-next/packages.log 2>&1
+go test ./internal/oracle -run '^TestNodeProcess|^TestProcessExitOutput$|TestInputAgreesWithNode/internal/oracle/testdata/node_process' -count=1 -timeout 30m -v > /tmp/process-next/process.log 2>&1
+go vet ./internal/oracle ./internal/native ./internal/lower > /tmp/process-next/vet.log 2>&1
+```
