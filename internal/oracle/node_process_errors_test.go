@@ -194,7 +194,7 @@ func TestNodeProcessCwdErrorRuntime(t *testing.T) {
 	program.Main = []ir.Statement{
 		ir.Evaluate{Value: ir.ProcessCall{Operation: "chdir", Of: ir.Object, Arguments: []ir.Expression{ir.StringConstant{Index: 0}}}},
 		ir.Evaluate{Value: ir.ProcessCall{Operation: "stdoutWrite", Of: ir.Object, Arguments: []ir.Expression{ir.StringConstant{Index: 1}}}},
-		ir.Evaluate{Value: ir.ReadTextFile{Path: ir.StringConstant{Index: 2}}},
+		ir.Evaluate{Value: ir.ReadTextFile{Path: ir.Coalesce{Value: ir.ArrayIndex{Array: ir.ProgramArguments{}, Index: ir.NumberConstant{Value: 0}, Element: ir.String}, Fallback: ir.StringConstant{Index: 2}, Of: ir.String}}},
 		ir.Try{HasCatch: true, CatchLocal: 0, Body: []ir.Statement{ir.Evaluate{Value: ir.ProcessCall{Operation: "cwd", Of: ir.String}}}, Catch: []ir.Statement{
 			ir.WriteLine{Stream: ir.Stdout, Value: ir.Property{Object: errorValue, Name: "code", Of: ir.String}},
 			ir.WriteLine{Stream: ir.Stdout, Value: ir.Property{Object: errorValue, Name: "message", Of: ir.String}},
