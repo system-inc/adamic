@@ -106,8 +106,6 @@ func TestAdamicOptionsAreOn(t *testing.T) {
 	}{
 		{"noUncheckedIndexedAccess", "const items: number[] = [1];\nconst first: number = items[0];\n", "TS2322"},
 		{"exactOptionalPropertyTypes", "const point: { x?: number } = { x: undefined };\n", "TS2375"},
-		// Unannotated, so strict's own TS2366 (a declared return type with a missing return) can't stand in.
-		{"noImplicitReturns", "function sign(value: number) {\n\tif (value > 0) {\n\t\treturn 1;\n\t}\n}\n", "TS7030"},
 		{"erasableSyntaxOnly", "enum Color {\n\tRed,\n}\n", "TS1294"},
 		{"lib is es2024, not the DOM", "const element = document.body;\n", "TS2584"},
 	} {
@@ -248,5 +246,25 @@ func TestOverlayPrecedesDiskForAdamicAliases(t *testing.T) {
 				t.Fatalf("disk source changed: %v", diagnostics)
 			}
 		})
+	}
+}
+
+// These checks are house style. Strict typing still includes the undefined result at an implicit exit.
+func TestHouseStyleOptionsDoNotRejectValidControlFlow(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"function sign(value: number) { if (value > 0) { return 1; } }",
+		"function choose(value: number): number { let result=0; switch(value) { case 1: result+=1; default: result+=2; } return result; }",
+	} {
+		t.Run(source, func(t *testing.T) {
+			t.Parallel()
+			if _, err := Load(writeProgram(t, [2]string{"main.a", source})); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+	diagnostics := checkErrors(t, writeProgram(t, [2]string{"main.a", "function sign(value: number): number { if (value > 0) { return 1; } }"}))
+	if !slices.ContainsFunc(diagnostics, func(diagnostic string) bool { return strings.Contains(diagnostic, "TS2366") }) {
+		t.Fatalf("the explicit result still needs undefined: %v", diagnostics)
 	}
 }

@@ -974,6 +974,7 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		return nil, err
 	}
 	lowered := ir.Switch{Value: value}
+	groups := []switchGroup{}
 	tests := []ir.Expression{}
 	defaultPending := false
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
@@ -1009,6 +1010,7 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			// Empty labels enter the next body, including labels on either side of default.
 			continue
 		}
+		groups = append(groups, switchGroup{tests: tests, body: body, isDefault: defaultPending})
 		if defaultPending {
 			lowered.Default = body
 		}
@@ -1022,6 +1024,16 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	if len(tests) > 0 {
 		// A trailing empty label matches and leaves the switch without running default.
 		lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests})
+	}
+	if len(tests) > 0 || defaultPending {
+		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
+	}
+	for index, group := range groups {
+		// A default with tests must also have one body, rather than sharing statement
+		// addresses between two branches (flow instrumentation identifies those addresses).
+		if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
+			return l.fallthroughSwitch(value, groups), nil
+		}
 	}
 	return []ir.Statement{lowered}, nil
 }
