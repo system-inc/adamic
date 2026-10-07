@@ -206,3 +206,13 @@ Dynamic native RegExp and whole-rule JavaScript/shared checker binding remain
 blocked; the three React analysis claims remain parked. The refreshed 632-ref
 claim inventory has no available ranked rule, so no new reservation is made.
 See rules/wave-22-seventh/LANDING_MAIN_C7991B900.md for complete fresh evidence.
+
+## Registry integration b46914832 landing refresh
+
+Rebased onto origin/area/stage1-lint b46914832, including main c7991b900. All
+eighteen existing ports passed complete byte oracles, mutants, released handles
+and sanitized frozen corpora again; older gate 739.135s. Registry descriptor and
+mutation tests pass. Owned rule/checker sources are unchanged. Existing dynamic
+RegExp and checker-context/JavaScript gaps remain; the three analysis claims are
+parked. No available ranked rule remains and no new claim is made. Fresh evidence
+is in rules/wave-22-seventh/LANDING_REGISTRY_B46914832.md.
