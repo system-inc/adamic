@@ -42,3 +42,17 @@ Inventory snapshot: `73ac2eb0963e1a4166eaa0fbd160203f11dcdbdf`.
 Syntax-only means neither checker/type information nor binding required; the
 inventory's original order is preserved, including entries waiting on helpers.
 No new rule code precedes this claim push. Prior reservations remain unchanged.
+
+## Next continuation, October 7
+
+Pushed existing work (everything up to date), then fetched all 320 origin refs.
+The original 46 helper-ready names are claimed. Scanning actual claim Markdown
+on every origin branch and main's source leaves these first syntax-only entries:
+
+1. `@typescript-eslint/no-non-null-asserted-optional-chain`
+2. `@typescript-eslint/no-non-null-assertion`
+3. `@typescript-eslint/no-this-alias`
+
+Inventory evidence JSON that enumerates a rule with `claims: []` is not a claim;
+these names occur only in such selection ledgers, not reservations. Main remains
+`ef3d907ecdc4c771b016f7d9c52372def057a340`. This reservation is pushed before code.
