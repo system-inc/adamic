@@ -1,0 +1,30 @@
+[
+  {
+    "mutant": "promise",
+    "case": "case-1001187216",
+    "byte": 77,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "mutant": "regex-suggestion-span",
+    "case": "case-102540695",
+    "byte": 615,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "mutant": "rest",
+    "case": "case-1124234137",
+    "byte": 106,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "mutant": "binding-origin",
+    "case": "case-1006578395",
+    "byte": 77,
+    "exit": 0,
+    "stderr_bytes": 0
+  }
+]

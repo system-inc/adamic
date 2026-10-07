@@ -1,0 +1,194 @@
+import type { Rules } from '../rules.ts';
+import type { BindingOrigin } from './binding_origin.a';
+import { makeBindingOrigin } from './binding_origin.a';
+import type { Syntax } from '../no-process-exit-after-output/syntax.a';
+import { makeSyntax } from '../no-process-exit-after-output/syntax.a';
+import { report } from '../no-process-exit-after-output/report.a';
+export class PreferPromiseRejectErrors {
+    readonly rules: Rules;
+    readonly origins: BindingOrigin;
+    readonly syntax: Syntax;
+    readonly allowEmptyReject: boolean;
+    constructor(rules: Rules, allowEmptyReject = false) {
+        this.rules = rules;
+        this.origins = makeBindingOrigin(rules);
+        this.syntax = makeSyntax(rules);
+        this.allowEmptyReject = allowEmptyReject;
+    }
+    unwrap(index: number): number {
+        let current = index;
+        while(
+            [
+                'ParenthesizedExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+                'NonNullExpression',
+            ].includes(this.syntax.kind(current))
+        ) {
+            current = this.syntax.child(current, this.syntax.kind(current) === 'TypeAssertionExpression' ? 1 : 0);
+        }
+        return current;
+    }
+    globalPromise(index: number): boolean {
+        const declarations = this.origins.original(index).declarations;
+        return declarations.length > 0 && declarations.every((declarationRecord) => declarationRecord.ambient);
+    }
+    couldBeError(index: number): boolean {
+        const inner = this.unwrap(index);
+        const kind = this.syntax.kind(inner);
+        if(
+            [
+                'Identifier',
+                'CallExpression',
+                'NewExpression',
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'TaggedTemplateExpression',
+                'YieldExpression',
+                'AwaitExpression',
+            ].includes(kind)
+        ) {
+            return true;
+        }
+        if(kind === 'ConditionalExpression') {
+            return this.couldBeError(this.syntax.child(inner, 2)) || this.couldBeError(this.syntax.child(inner, 4));
+        }
+        if(kind !== 'BinaryExpression') {
+            return false;
+        }
+        const operator = this.syntax.kind(this.syntax.child(inner, 1));
+        if(
+            ['EqualsToken', 'AmpersandAmpersandEqualsToken', 'AmpersandAmpersandToken', 'CommaToken'].includes(operator)
+        ) {
+            return this.couldBeError(this.syntax.child(inner, 2));
+        }
+        if(
+            ['BarBarEqualsToken', 'QuestionQuestionEqualsToken', 'BarBarToken', 'QuestionQuestionToken'].includes(
+                operator,
+            )
+        ) {
+            return this.couldBeError(this.syntax.child(inner, 0)) || this.couldBeError(this.syntax.child(inner, 2));
+        }
+        return false;
+    }
+    check(index: number): void {
+        const argumentsList = this.syntax.arguments(index);
+        if(argumentsList.length === 0 && this.allowEmptyReject) {
+            return;
+        }
+        const reason = argumentsList[0] ?? -1;
+        const globalUndefined =
+            this.syntax.kind(reason) === 'Identifier' &&
+            this.rules.parser.node(reason).text === 'undefined' &&
+            this.origins.original(reason).declarations.length === 0;
+        if(reason >= 0 && this.couldBeError(reason) && !globalUndefined) {
+            return;
+        }
+        this.rules.findings.push(
+            report(
+                this.rules,
+                'prefer-promise-reject-errors',
+                'rejectAnError',
+                'Expected the Promise rejection reason to be an Error. A rejection carrying a string or a plain object arrives at the catch with no stack, so the line that failed is lost and the handler cannot tell one failure from another.',
+                index,
+            ),
+        );
+    }
+    staticReject(index: number): boolean {
+        const callee = this.unwrap(this.syntax.child(index, 0));
+        const kind = this.syntax.kind(callee);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(kind)) {
+            return false;
+        }
+        const property = this.syntax.last(callee);
+        if(
+            kind === 'ElementAccessExpression' &&
+            !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.syntax.kind(property))
+        ) {
+            return false;
+        }
+        if(this.rules.parser.node(property).text !== 'reject') {
+            return false;
+        }
+        const receiver = this.unwrap(this.syntax.child(callee, 0));
+        return (
+            this.syntax.kind(receiver) === 'Identifier' &&
+            this.rules.parser.node(receiver).text === 'Promise' &&
+            this.globalPromise(receiver)
+        );
+    }
+    parameterName(index: number): number {
+        return (
+            this.rules.parser
+                .node(index)
+                .children.find((child) =>
+                    ['Identifier', 'ObjectBindingPattern', 'ArrayBindingPattern'].includes(this.syntax.kind(child)),
+                ) ?? -1
+        );
+    }
+    executor(index: number): void {
+        const callee = this.syntax.child(index, 0);
+        if(
+            this.syntax.kind(callee) !== 'Identifier' ||
+            this.rules.parser.node(callee).text !== 'Promise' ||
+            !this.globalPromise(callee)
+        ) {
+            return;
+        }
+        const executor = this.syntax.arguments(index)[0] ?? -1;
+        if(!['ArrowFunction', 'FunctionExpression', 'FunctionDeclaration'].includes(this.syntax.kind(executor))) {
+            return;
+        }
+        const parameters = this.rules.parser
+            .node(executor)
+            .children.filter((child) => this.syntax.kind(child) === 'Parameter');
+        const second = parameters[1] ?? -1;
+        if(second < 0) {
+            return;
+        }
+        const secondName = this.parameterName(second);
+        if(this.syntax.kind(secondName) !== 'Identifier') {
+            return;
+        }
+        const targets: number[] = [];
+        for(const parameter of parameters) {
+            const name = this.parameterName(parameter);
+            if(
+                this.syntax.kind(name) === 'Identifier' &&
+                this.rules.parser.node(name).text === this.rules.parser.node(secondName).text
+            ) {
+                const id = this.origins.original(name).id;
+                if(id !== 0) {
+                    targets.push(id);
+                }
+            }
+        }
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            if(this.syntax.kind(at) !== 'CallExpression') {
+                continue;
+            }
+            let parent = this.syntax.parent(at);
+            while(parent >= 0 && parent !== executor) {
+                parent = this.syntax.parent(parent);
+            }
+            if(parent !== executor) {
+                continue;
+            }
+            const target = this.unwrap(this.syntax.child(at, 0));
+            if(this.syntax.kind(target) === 'Identifier' && targets.includes(this.origins.original(target).id)) {
+                this.check(at);
+            }
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.syntax.kind(index) === 'CallExpression' && this.staticReject(index)) {
+                this.check(index);
+            }
+            if(this.syntax.kind(index) === 'NewExpression') {
+                this.executor(index);
+            }
+        }
+    }
+}

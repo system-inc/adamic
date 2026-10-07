@@ -1,0 +1,9 @@
+import type { OriginDeclaration } from './origin_declaration.a';
+export class OriginSymbol {
+    readonly id: number;
+    readonly declarations: readonly OriginDeclaration[];
+    constructor(id: number, declarations: readonly OriginDeclaration[]) {
+        this.id = id;
+        this.declarations = declarations;
+    }
+}

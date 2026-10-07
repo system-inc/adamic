@@ -1,0 +1,41 @@
+import type { Rules } from '../rules.ts';
+import type { BindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
+import { makeBindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
+import { report } from '../no-process-exit-after-output/report.a';
+export class PreferRestParams {
+    readonly rules: Rules;
+    readonly origins: BindingOrigin;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.origins = makeBindingOrigin(rules);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'Identifier' || node.text !== 'arguments') {
+                continue;
+            }
+            const symbol = this.origins.original(index);
+            if(symbol.id === 0 || symbol.declarations.length !== 0) {
+                continue;
+            }
+            const parent = this.rules.parents[index] ?? -1;
+            if(
+                parent >= 0 &&
+                this.rules.parser.node(parent).kind === 'PropertyAccessExpression' &&
+                this.rules.parser.node(parent).children[0] === index
+            ) {
+                continue;
+            }
+            this.rules.findings.push(
+                report(
+                    this.rules,
+                    'prefer-rest-params',
+                    'preferRestParams',
+                    'This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.',
+                    index,
+                ),
+            );
+        }
+    }
+}

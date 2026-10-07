@@ -1,0 +1,14 @@
+export class OriginDeclaration {
+    readonly file: string;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly ambient: boolean;
+    constructor(file: string, kind: string, start: number, end: number, ambient: boolean) {
+        this.file = file;
+        this.kind = kind;
+        this.start = start;
+        this.end = end;
+        this.ambient = ambient;
+    }
+}

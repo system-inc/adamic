@@ -1,0 +1,10 @@
+export class CharacterSpan {
+    readonly start: number;
+    end: number;
+    readonly breaker: boolean;
+    constructor(start: number, end: number, breaker = false) {
+        this.start = start;
+        this.end = end;
+        this.breaker = breaker;
+    }
+}

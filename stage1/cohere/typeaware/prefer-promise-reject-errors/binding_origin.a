@@ -1,0 +1,49 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+import { OriginDeclaration } from './origin_declaration.a';
+import { OriginSymbol } from './origin_symbol.a';
+export class BindingOrigin {
+    readonly rules: Rules;
+    readonly originals = new Map<number, OriginSymbol>();
+    readonly reads = new Map<number, OriginSymbol>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    load(index: number): void {
+        if(this.originals.has(index)) {
+            return;
+        }
+        const frames = new Frames(this.rules.ask(index, 'binding-origin'));
+        header(frames, 'binding-origin');
+        const symbols: OriginSymbol[] = [];
+        for(let slot = 0; slot < 2; slot++) {
+            const id = frames.natural();
+            const count = frames.natural();
+            const declarations: OriginDeclaration[] = [];
+            for(let declarationIndex = 0; declarationIndex < count; declarationIndex++) {
+                const file = frames.field();
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                const ambient = frames.yes();
+                declarations.push(new OriginDeclaration(file, kind, start, end, ambient));
+            }
+            symbols.push(new OriginSymbol(id, declarations));
+        }
+        frames.end();
+        this.originals.set(index, symbols[0] ?? panic('missing original binding'));
+        this.reads.set(index, symbols[1] ?? panic('missing read binding'));
+    }
+    original(index: number): OriginSymbol {
+        this.load(index);
+        return this.originals.get(index) ?? panic('missing original binding');
+    }
+    read(index: number): OriginSymbol {
+        this.load(index);
+        return this.reads.get(index) ?? panic('missing read binding');
+    }
+}
+export function makeBindingOrigin(rules: Rules): BindingOrigin {
+    return new BindingOrigin(rules);
+}

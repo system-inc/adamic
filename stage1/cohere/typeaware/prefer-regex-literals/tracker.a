@@ -1,0 +1,361 @@
+import type { Rules } from '../rules.ts';
+import type { BindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
+import { makeBindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
+import type { Syntax } from '../no-process-exit-after-output/syntax.a';
+import { makeSyntax } from '../no-process-exit-after-output/syntax.a';
+import { Constant } from './constant.a';
+export class Tracker {
+    readonly rules: Rules;
+    readonly origins: BindingOrigin;
+    readonly syntax: Syntax;
+    readonly following: number[] = [];
+    readonly calls: number[] = [];
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.origins = makeBindingOrigin(rules);
+        this.syntax = makeSyntax(rules);
+    }
+    constant(index: number): Constant | undefined {
+        const inner = this.syntax.kind(index) === 'ParenthesizedExpression' ? this.syntax.child(index, 0) : index;
+        const kind = this.syntax.kind(inner);
+        if(kind === 'ParenthesizedExpression') {
+            return this.constant(inner);
+        }
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(kind)) {
+            return new Constant(this.rules.parser.node(inner).text, true);
+        }
+        if(kind === 'NumericLiteral') {
+            return new Constant(this.rules.parser.node(inner).text, false);
+        }
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(kind)) {
+            return new Constant(kind === 'TrueKeyword' ? 'true' : kind === 'FalseKeyword' ? 'false' : 'null', false);
+        }
+        if(kind === 'BinaryExpression' && this.syntax.kind(this.syntax.child(inner, 1)) === 'PlusToken') {
+            const left = this.constant(this.syntax.child(inner, 0));
+            const right = this.constant(this.syntax.child(inner, 2));
+            if(left !== undefined && right !== undefined && (left.stringValue || right.stringValue)) {
+                return new Constant(left.text + right.text, true);
+            }
+        }
+        if(kind === 'TemplateExpression') {
+            const children = this.rules.parser.node(inner).children;
+            let text = this.rules.parser.node(children[0] ?? -1).text;
+            for(const span of children.slice(1)) {
+                const value = this.constant(this.syntax.child(span, 0));
+                if(value === undefined) {
+                    return undefined;
+                }
+                text += value.text + this.rules.parser.node(this.syntax.child(span, 1)).text;
+            }
+            return new Constant(text, true);
+        }
+        return undefined;
+    }
+    key(index: number): string | undefined {
+        if(this.syntax.kind(index) === 'PropertyAccessExpression') {
+            return this.rules.parser.node(this.syntax.last(index)).text;
+        }
+        return this.constant(this.syntax.last(index))?.text;
+    }
+    isValue(index: number): boolean {
+        const parent = this.syntax.parent(index);
+        const kind = this.syntax.kind(parent);
+        if(
+            [
+                'TypeReference',
+                'TypeQuery',
+                'QualifiedName',
+                'LabeledStatement',
+                'BreakStatement',
+                'ContinueStatement',
+                'JsxAttribute',
+                'ImportSpecifier',
+                'ImportClause',
+                'NamespaceImport',
+            ].includes(kind)
+        ) {
+            return false;
+        }
+        if(kind === 'PropertyAccessExpression') {
+            return this.syntax.child(parent, 0) === index;
+        }
+        if(kind === 'BindingElement') {
+            return this.syntax.initializer(parent) === index;
+        }
+        if(
+            [
+                'VariableDeclaration',
+                'Parameter',
+                'FunctionDeclaration',
+                'FunctionExpression',
+                'ClassDeclaration',
+                'ClassExpression',
+                'MethodDeclaration',
+                'PropertyDeclaration',
+                'GetAccessor',
+                'SetAccessor',
+                'InterfaceDeclaration',
+                'TypeAliasDeclaration',
+                'PropertyAssignment',
+            ].includes(kind)
+        ) {
+            if(
+                this.rules.parser
+                    .node(parent)
+                    .children.find((child) =>
+                        [
+                            'Identifier',
+                            'ObjectBindingPattern',
+                            'ArrayBindingPattern',
+                            'ComputedPropertyName',
+                            'StringLiteral',
+                            'NumericLiteral',
+                            'PrivateIdentifier',
+                        ].includes(this.syntax.kind(child)),
+                    ) === index
+            ) {
+                return false;
+            }
+        }
+        return parent >= 0;
+    }
+    writes(index: number): boolean {
+        let current = index;
+        for(let parent = this.syntax.parent(current); parent >= 0; parent = this.syntax.parent(current)) {
+            const kind = this.syntax.kind(parent);
+            if(
+                [
+                    'ParenthesizedExpression',
+                    'SpreadElement',
+                    'SpreadAssignment',
+                    'ArrayLiteralExpression',
+                    'ObjectLiteralExpression',
+                ].includes(kind)
+            ) {
+                current = parent;
+                continue;
+            }
+            if(kind === 'PropertyAssignment' && this.syntax.last(parent) === current) {
+                current = parent;
+                continue;
+            }
+            if(kind === 'ShorthandPropertyAssignment' && this.syntax.child(parent, 0) === current) {
+                current = parent;
+                continue;
+            }
+            if(kind === 'BinaryExpression') {
+                const operator = this.syntax.kind(this.syntax.child(parent, 1));
+                return (
+                    this.syntax.child(parent, 0) === current &&
+                    [
+                        'EqualsToken',
+                        'PlusEqualsToken',
+                        'MinusEqualsToken',
+                        'AsteriskEqualsToken',
+                        'AsteriskAsteriskEqualsToken',
+                        'SlashEqualsToken',
+                        'PercentEqualsToken',
+                        'LessThanLessThanEqualsToken',
+                        'GreaterThanGreaterThanEqualsToken',
+                        'GreaterThanGreaterThanGreaterThanEqualsToken',
+                        'AmpersandEqualsToken',
+                        'BarEqualsToken',
+                        'CaretEqualsToken',
+                        'BarBarEqualsToken',
+                        'AmpersandAmpersandEqualsToken',
+                        'QuestionQuestionEqualsToken',
+                    ].includes(operator)
+                );
+            }
+            if(['PrefixUnaryExpression', 'PostfixUnaryExpression'].includes(kind)) {
+                return ['PlusPlusToken', 'MinusMinusToken'].includes(this.rules.parser.node(parent).operator);
+            }
+            if(['ForOfStatement', 'ForInStatement'].includes(kind)) {
+                return this.syntax.child(parent, 0) === current;
+            }
+            return false;
+        }
+        return false;
+    }
+    pass(index: number, parent: number): boolean {
+        const kind = this.syntax.kind(parent);
+        if(
+            [
+                'ParenthesizedExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+                'NonNullExpression',
+                'ExpressionWithTypeArguments',
+            ].includes(kind)
+        ) {
+            return true;
+        }
+        if(kind === 'ConditionalExpression') {
+            return this.syntax.child(parent, 2) === index || this.syntax.child(parent, 4) === index;
+        }
+        if(kind === 'BinaryExpression') {
+            const operator = this.syntax.kind(this.syntax.child(parent, 1));
+            return (
+                ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator) ||
+                (operator === 'CommaToken' && this.syntax.child(parent, 2) === index)
+            );
+        }
+        return false;
+    }
+    reads(target: number, tag: number): void {
+        if(this.syntax.kind(target) !== 'Identifier') {
+            return;
+        }
+        const id = this.origins.read(target).id;
+        if(id === 0 || this.following.includes(id)) {
+            return;
+        }
+        this.following.push(id);
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(
+                node.kind === 'Identifier' &&
+                node.text === this.rules.parser.node(target).text &&
+                this.isValue(index) &&
+                this.origins.read(index).id === id
+            ) {
+                this.value(index, tag);
+            }
+        }
+        this.following.pop();
+    }
+    target(index: number, tag: number): void {
+        const inner = this.rules.skip(index);
+        const kind = this.syntax.kind(inner);
+        if(kind === 'Identifier') {
+            this.reads(inner, tag);
+            return;
+        }
+        if(kind === 'BinaryExpression' && this.syntax.kind(this.syntax.child(inner, 1)) === 'EqualsToken') {
+            this.target(this.syntax.child(inner, 0), tag);
+            return;
+        }
+        if(tag !== 0 || !['ObjectBindingPattern', 'ObjectLiteralExpression'].includes(kind)) {
+            return;
+        }
+        for(const element of this.rules.parser.node(inner).children) {
+            const children = this.rules.parser.node(element).children;
+            if(children.some((child) => this.syntax.kind(child) === 'DotDotDotToken')) {
+                continue;
+            }
+            const key = children[0] ?? -1;
+            const keyKind = this.syntax.kind(key);
+            const name =
+                keyKind === 'ComputedPropertyName'
+                    ? this.constant(this.syntax.child(key, 0))?.text
+                    : ['Identifier', 'StringLiteral', 'NumericLiteral'].includes(keyKind)
+                      ? this.rules.parser.node(key).text
+                      : undefined;
+            if(name !== 'RegExp') {
+                continue;
+            }
+            let target = key;
+            if(this.syntax.kind(element) === 'PropertyAssignment') {
+                target = this.syntax.last(element);
+            }
+            if(this.syntax.kind(element) === 'BindingElement' && children.length > 1) {
+                const second = children[1] ?? -1;
+                const between = this.rules.scanner.text.slice(
+                    this.rules.parser.node(key).end,
+                    this.rules.parser.node(second).pos,
+                );
+                if(between.includes(':')) {
+                    target = second;
+                }
+            }
+            this.target(target, 1);
+        }
+    }
+    value(index: number, tag: number): void {
+        let current = index;
+        let parent = this.syntax.parent(current);
+        while(parent >= 0 && this.pass(current, parent)) {
+            current = parent;
+            parent = this.syntax.parent(current);
+        }
+        const kind = this.syntax.kind(parent);
+        if(
+            ['PropertyAccessExpression', 'ElementAccessExpression'].includes(kind) &&
+            this.syntax.child(parent, 0) === current &&
+            tag === 0 &&
+            this.key(parent) === 'RegExp'
+        ) {
+            this.value(parent, 1);
+            return;
+        }
+        if(
+            ['CallExpression', 'NewExpression'].includes(kind) &&
+            this.syntax.child(parent, 0) === current &&
+            tag === 1
+        ) {
+            this.calls.push(parent);
+            return;
+        }
+        if(
+            kind === 'BinaryExpression' &&
+            this.syntax.child(parent, 2) === current &&
+            [
+                'EqualsToken',
+                'BarBarEqualsToken',
+                'AmpersandAmpersandEqualsToken',
+                'QuestionQuestionEqualsToken',
+            ].includes(this.syntax.kind(this.syntax.child(parent, 1)))
+        ) {
+            this.target(this.syntax.child(parent, 0), tag);
+            this.value(parent, tag);
+            return;
+        }
+        if(
+            ['VariableDeclaration', 'Parameter', 'BindingElement'].includes(kind) &&
+            this.syntax.initializer(parent) === current
+        ) {
+            let target = this.syntax.child(parent, 0);
+            if(kind === 'BindingElement' && this.rules.parser.node(parent).children.length > 2) {
+                target = this.syntax.child(parent, 1);
+            }
+            this.target(target, tag);
+        }
+        if(
+            kind === 'ShorthandPropertyAssignment' &&
+            this.syntax.last(parent) === current &&
+            this.syntax.child(parent, 0) !== current
+        ) {
+            this.target(this.syntax.child(parent, 0), tag);
+        }
+    }
+    run(): number[] {
+        if(!this.rules.scanner.text.includes('RegExp')) {
+            return this.calls;
+        }
+        for(const name of ['RegExp', 'global', 'globalThis', 'self', 'window']) {
+            const references: number[] = [];
+            let modified = false;
+            for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+                const node = this.rules.parser.node(index);
+                if(node.kind !== 'Identifier' || node.text !== name || !this.isValue(index)) {
+                    continue;
+                }
+                if(this.origins.read(index).declarations.some((declarationRecord) => !declarationRecord.ambient)) {
+                    continue;
+                }
+                if(this.writes(index)) {
+                    modified = true;
+                    break;
+                }
+                references.push(index);
+            }
+            if(!modified) {
+                for(const reference of references) {
+                    this.value(reference, name === 'RegExp' ? 1 : 0);
+                }
+            }
+        }
+        return this.calls;
+    }
+}

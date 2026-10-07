@@ -1,0 +1,364 @@
+import type { Rules } from '../rules.ts';
+import type { Syntax } from '../no-process-exit-after-output/syntax.a';
+import { makeSyntax } from '../no-process-exit-after-output/syntax.a';
+import type { BindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
+import { makeBindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
+import { report } from '../no-process-exit-after-output/report.a';
+import { Suggestion } from '../suggestion.ts';
+import { Repair } from '../repair.ts';
+import { Pattern } from './pattern.a';
+import { Tracker } from './tracker.a';
+export class PreferRegexLiterals {
+    readonly rules: Rules;
+    readonly syntax: Syntax;
+    readonly origins: BindingOrigin;
+    readonly disallowRedundantWrapping: boolean;
+    constructor(rules: Rules, disallowRedundantWrapping = false) {
+        this.rules = rules;
+        this.syntax = makeSyntax(rules);
+        this.origins = makeBindingOrigin(rules);
+        this.disallowRedundantWrapping = disallowRedundantWrapping;
+    }
+    staticString(index: number): string | undefined {
+        const kind = this.syntax.kind(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(kind)) {
+            return this.rules.parser.node(index).text;
+        }
+        if(kind !== 'TaggedTemplateExpression') {
+            return undefined;
+        }
+        const template = this.syntax.last(index);
+        if(this.syntax.kind(template) !== 'NoSubstitutionTemplateLiteral') {
+            return undefined;
+        }
+        let tag = this.syntax.child(index, 0);
+        while(this.syntax.kind(tag) === 'ParenthesizedExpression') {
+            tag = this.syntax.child(tag, 0);
+        }
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.syntax.kind(tag))) {
+            return undefined;
+        }
+        const name = this.syntax.last(tag);
+        if(
+            this.syntax.kind(tag) === 'ElementAccessExpression' &&
+            !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.syntax.kind(name))
+        ) {
+            return undefined;
+        }
+        if(this.rules.parser.node(name).text !== 'raw') {
+            return undefined;
+        }
+        const receiver = this.syntax.child(tag, 0);
+        if(this.syntax.kind(receiver) !== 'Identifier' || this.rules.parser.node(receiver).text !== 'String') {
+            return undefined;
+        }
+        const declarations = this.origins.original(receiver).declarations;
+        if(declarations.length === 0 || declarations.some((declarationRecord) => !declarationRecord.ambient)) {
+            return undefined;
+        }
+        const node = this.rules.parser.node(template);
+        let text = this.rules.scanner.text.slice(this.rules.start(node), node.end);
+        if(text.startsWith('`')) {
+            text = text.slice(1);
+        }
+        if(text.endsWith('`')) {
+            text = text.slice(0, -1);
+        }
+        return text;
+    }
+    lineComment(index: number): number {
+        let start = this.rules.scanner.text.slice(0, index + 1).lastIndexOf('\n') + 1;
+        let quote = '';
+        while(start <= index) {
+            const character = this.rules.scanner.text.slice(start, start + 1);
+            if(character === '\\') {
+                start += 2;
+                continue;
+            }
+            if(quote !== '') {
+                if(character === quote) {
+                    quote = '';
+                }
+            }
+            else if(["'", '"', '`'].includes(character)) {
+                quote = character;
+            }
+            else if(this.rules.scanner.text.slice(start, start + 2) === '//') {
+                return start;
+            }
+            start++;
+        }
+        return -1;
+    }
+    preceding(start: number): boolean {
+        if(start <= 0 || start > this.rules.scanner.text.length) {
+            return true;
+        }
+        let index = start - 1;
+        while(index >= 0) {
+            if([' ', '\t', '\r', '\n', '\v', '\f'].includes(this.rules.scanner.text.slice(index, index + 1))) {
+                index--;
+                continue;
+            }
+            if(this.rules.scanner.text.slice(index - 1, index + 1) === '*/') {
+                const opening = this.rules.scanner.text.slice(0, index).lastIndexOf('/*');
+                if(opening < 0) {
+                    return true;
+                }
+                index = opening - 1;
+                continue;
+            }
+            const comment = this.lineComment(index);
+            if(comment >= 0) {
+                index = comment - 1;
+                continue;
+            }
+            break;
+        }
+        if(index < 0) {
+            return true;
+        }
+        const firstNewline = this.rules.scanner.text.indexOf('\n');
+        if(
+            this.rules.scanner.text.startsWith('#!') &&
+            firstNewline >= 0 &&
+            start > firstNewline &&
+            this.rules.scanner.text.slice(firstNewline + 1, start).trim() === ''
+        ) {
+            return true;
+        }
+        const allow = [
+            '(',
+            ';',
+            '[',
+            ',',
+            '=',
+            '+',
+            '*',
+            '-',
+            '?',
+            '~',
+            '%',
+            '**',
+            '!',
+            'typeof',
+            'instanceof',
+            '&&',
+            '||',
+            '??',
+            'return',
+            '...',
+            'delete',
+            'void',
+            'in',
+            '<',
+            '>',
+            '<=',
+            '>=',
+            '==',
+            '===',
+            '!=',
+            '!==',
+            '<<',
+            '>>',
+            '>>>',
+            '&',
+            '|',
+            '^',
+            ':',
+            '{',
+            '=>',
+            '*=',
+            '<<=',
+            '>>=',
+            '>>>=',
+            '^=',
+            '|=',
+            '&=',
+            '??=',
+            '||=',
+            '&&=',
+            '**=',
+            '+=',
+            '-=',
+            '/=',
+            '%=',
+            '/',
+            'do',
+            'break',
+            'continue',
+            'debugger',
+            'case',
+            'throw',
+        ];
+        let wordStart = index;
+        while(wordStart >= 0 && this.word(this.rules.scanner.text.slice(wordStart, wordStart + 1))) {
+            wordStart--;
+        }
+        if(wordStart < index) {
+            return allow.includes(this.rules.scanner.text.slice(wordStart + 1, index + 1));
+        }
+        for(let length = 4; length >= 1; length--) {
+            if(
+                index - length + 1 >= 0 &&
+                allow.includes(this.rules.scanner.text.slice(index - length + 1, index + 1))
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+    word(character: string): boolean {
+        return (
+            character !== '' && 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$'.includes(character)
+        );
+    }
+    comments(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        this.rules.scanner.pos = this.rules.start(node);
+        while(this.rules.scanner.pos < node.end) {
+            const previous = this.rules.scanner.pos;
+            this.rules.scanner.scan();
+            const trivia = this.rules.scanner.text.slice(previous, this.rules.scanner.start);
+            if(trivia.includes('//') || trivia.includes('/*')) {
+                return true;
+            }
+            if(this.rules.scanner.kind === 'RegularExpressionLiteral') {
+                continue;
+            }
+            if(this.rules.scanner.kind === 'SlashToken' || this.rules.scanner.kind === 'SlashEqualsToken') {
+                this.rules.scanner.rescanSlash();
+            }
+            if(this.rules.scanner.pos <= previous) {
+                break;
+            }
+        }
+        return false;
+    }
+    canSuggest(index: number, pattern: string, flags: string): boolean {
+        return (
+            !this.comments(index) &&
+            this.preceding(this.rules.start(this.rules.parser.node(index))) &&
+            new Pattern(pattern, flags).valid()
+        );
+    }
+    replacement(index: number, text: string): Repair {
+        const node = this.rules.parser.node(index);
+        const start = this.rules.start(node);
+        const source = this.rules.scanner.text;
+        let replacement = text;
+        if(start > 0 && source.slice(start - 1, start) === '/') {
+            replacement = ` ${replacement}`;
+        }
+        if(this.word(source.slice(node.end, node.end + 1))) {
+            replacement += ' ';
+        }
+        return new Repair(this.rules.byte(start), this.rules.byte(node.end), replacement);
+    }
+    constructed(index: number, pattern: string, flags: string): void {
+        const diagnostic = report(
+            this.rules,
+            'prefer-regex-literals',
+            'unexpectedRegExp',
+            'This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.',
+            index,
+        );
+        const printable =
+            ' \t\r\n\v\f-\\[](){}!@#$%^&*+=/~`.><?,\'"|:;_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        if(
+            this.canSuggest(index, pattern, flags) &&
+            pattern.split('').every((character) => printable.includes(character))
+        ) {
+            const parsed = new Pattern(pattern, flags);
+            parsed.walk();
+            const rewritten = parsed.rewritten();
+            diagnostic.suggestions.push(
+                new Suggestion('replaceWithLiteral', 'Replace with an equivalent regular expression literal.', [
+                    this.replacement(index, `/${rewritten === '' ? '(?:)' : rewritten}/${flags}`),
+                ]),
+            );
+        }
+        this.rules.findings.push(diagnostic);
+    }
+    redundant(index: number, literal: number, flags: string | undefined): void {
+        const text = this.rules.parser.node(literal).text;
+        const closing = text.lastIndexOf('/');
+        const pattern = text.slice(1, closing);
+        const literalFlags = text.slice(closing + 1);
+        const diagnostic = report(
+            this.rules,
+            'prefer-regex-literals',
+            flags === undefined ? 'unexpectedRedundantRegExp' : 'unexpectedRedundantRegExpWithFlags',
+            flags === undefined
+                ? 'This wraps a regular expression literal in the `RegExp` constructor, which builds a second identical expression from the first and then discards the original. The literal already is the value being asked for, so the constructor adds a copy and a runtime parse and changes nothing else.'
+                : "This hands a regular expression literal to the `RegExp` constructor along with a flags argument, and the flags argument wins outright: the flags written on the literal are discarded rather than combined. That is the trap, because the literal's own flags sit right there in the source looking as though they still apply. Write one literal carrying the flags it should have.",
+            index,
+        );
+        if(flags === undefined) {
+            if(this.canSuggest(index, pattern, literalFlags)) {
+                diagnostic.suggestions.push(
+                    new Suggestion('replaceWithLiteral', 'Replace with an equivalent regular expression literal.', [
+                        this.replacement(index, text),
+                    ]),
+                );
+            }
+        }
+        else {
+            if(this.canSuggest(index, pattern, flags)) {
+                diagnostic.suggestions.push(
+                    new Suggestion(
+                        'replaceWithLiteralAndFlags',
+                        `Replace with an equivalent regular expression literal with flags '${flags}'.`,
+                        [this.replacement(index, `/${pattern}/${flags}`)],
+                    ),
+                );
+            }
+            let merged = '';
+            for(const flag of (literalFlags + flags).split('')) {
+                if(!merged.includes(flag)) {
+                    merged += flag;
+                }
+            }
+            const mergedSorted = merged
+                .split('')
+                .sort((left, right) => (left < right ? -1 : left > right ? 1 : 0))
+                .join('');
+            const flagsSorted = flags
+                .split('')
+                .sort((left, right) => (left < right ? -1 : left > right ? 1 : 0))
+                .join('');
+            if(mergedSorted !== flagsSorted && this.canSuggest(index, pattern, merged)) {
+                diagnostic.suggestions.push(
+                    new Suggestion(
+                        'replaceWithIntendedLiteralAndFlags',
+                        `Replace with a regular expression literal with flags '${merged}'.`,
+                        [this.replacement(index, `/${pattern}/${merged}`)],
+                    ),
+                );
+            }
+        }
+        this.rules.findings.push(diagnostic);
+    }
+    run(): void {
+        const tracker = new Tracker(this.rules);
+        for(const index of tracker.run()) {
+            const argumentsList = this.syntax.arguments(index);
+            if(argumentsList.length !== 1 && argumentsList.length !== 2) {
+                continue;
+            }
+            const first = argumentsList[0] ?? -1;
+            const flags = argumentsList.length === 2 ? this.staticString(argumentsList[1] ?? -1) : '';
+            if(argumentsList.length === 2 && flags === undefined) {
+                continue;
+            }
+            if(this.disallowRedundantWrapping && this.syntax.kind(first) === 'RegularExpressionLiteral') {
+                this.redundant(index, first, argumentsList.length === 2 ? flags : undefined);
+                continue;
+            }
+            const pattern = this.staticString(first);
+            if(pattern !== undefined) {
+                this.constructed(index, pattern, flags ?? '');
+            }
+        }
+    }
+}

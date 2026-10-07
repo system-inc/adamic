@@ -203,6 +203,8 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "binding-origin":
+		return p.bindingOrigin(out, c, node, question)
 	case "module-records":
 		return p.moduleRecords(out, node, question)
 	case "resolved-callee":
