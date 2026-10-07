@@ -1,0 +1,58 @@
+=== RUN   TestBytesGoNodeNativeJavaScript
+=== RUN   TestBytesGoNodeNativeJavaScript/witnesses.json
+    bytes_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 12116 output lines
+=== RUN   TestBytesGoNodeNativeJavaScript/consumers.json
+    bytes_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 23608 output lines
+=== RUN   TestBytesGoNodeNativeJavaScript/--full
+    bytes_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 723206 output lines
+--- PASS: TestBytesGoNodeNativeJavaScript (10.83s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/witnesses.json (0.32s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/consumers.json (0.47s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/--full (3.47s)
+=== RUN   TestBytesCompilingMutants
+=== RUN   TestBytesCompilingMutants/top_of_stack.astack[stack.length_-_1]
+    bytes_test.go:183: Node source compiling mutant caught at line 16: got "top 0", Go "top 1"
+    bytes_test.go:183: sanitized native compiling mutant caught at line 16: got "top 0", Go "top 1"
+    bytes_test.go:183: emitted JavaScript compiling mutant caught at line 16: got "top 0", Go "top 1"
+=== RUN   TestBytesCompilingMutants/peek_byte.areturn_input[index]
+    bytes_test.go:183: Node source compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+    bytes_test.go:183: sanitized native compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+    bytes_test.go:183: emitted JavaScript compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+=== RUN   TestBytesCompilingMutants/peek_byte.areturn_0;
+    bytes_test.go:183: Node source compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+    bytes_test.go:183: sanitized native compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+    bytes_test.go:183: emitted JavaScript compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+--- PASS: TestBytesCompilingMutants (4.67s)
+    --- PASS: TestBytesCompilingMutants/top_of_stack.astack[stack.length_-_1] (1.26s)
+    --- PASS: TestBytesCompilingMutants/peek_byte.areturn_input[index] (1.36s)
+    --- PASS: TestBytesCompilingMutants/peek_byte.areturn_0; (1.26s)
+=== RUN   TestBytesConsumerCoverage
+    bytes_test.go:251: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestBytesConsumerCoverage (0.00s)
+=== RUN   TestSortedKeys
+=== RUN   TestSortedKeys/sort-witnesses.json
+    bytes_test.go:291: Go, source Node, sanitized native and emitted JavaScript match 759 map-state lines
+=== RUN   TestSortedKeys/sort-consumers.json
+    bytes_test.go:291: Go, source Node, sanitized native and emitted JavaScript match 3 map-state lines
+--- PASS: TestSortedKeys (4.60s)
+    --- PASS: TestSortedKeys/sort-witnesses.json (1.71s)
+    --- PASS: TestSortedKeys/sort-consumers.json (1.14s)
+=== RUN   TestSortedKeysCompilingMutants
+=== RUN   TestSortedKeysCompilingMutants/omit_false_values
+    bytes_test.go:341: Node source compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+    bytes_test.go:341: sanitized native compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+    bytes_test.go:341: emitted JavaScript compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+=== RUN   TestSortedKeysCompilingMutants/reverse_UTF8
+    bytes_test.go:341: Node source compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+    bytes_test.go:341: sanitized native compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+    bytes_test.go:341: emitted JavaScript compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+=== RUN   TestSortedKeysCompilingMutants/UTF16_comparator
+    bytes_test.go:341: Node source compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+    bytes_test.go:341: sanitized native compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+    bytes_test.go:341: emitted JavaScript compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+--- PASS: TestSortedKeysCompilingMutants (5.05s)
+    --- PASS: TestSortedKeysCompilingMutants/omit_false_values (1.50s)
+    --- PASS: TestSortedKeysCompilingMutants/reverse_UTF8 (1.59s)
+    --- PASS: TestSortedKeysCompilingMutants/UTF16_comparator (1.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave4	25.170s
