@@ -1,0 +1,11 @@
+upstream cases {'complexity': 201} exclusions=0
+compiler/stage1 files 351
+baseline Node identical 13425677 bytes
+baseline JavaScript identical 13425677 bytes
+baseline native identical 13425677 bytes
+mutant-0 Node mutant caught 13425677 bytes
+mutant-0 JavaScript mutant caught 13425677 bytes
+mutant-0 native mutant caught 13425677 bytes
+complexity Go findings 1325 seconds 0.196981 findings/s 6726.55
+complexity native findings 1325 seconds 1.371648 findings/s 965.99
+complexity Node findings 1325 seconds 0.866104 findings/s 1529.84

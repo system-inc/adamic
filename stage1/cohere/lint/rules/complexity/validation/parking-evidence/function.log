@@ -1,0 +1,23 @@
+upstream cases {'@typescript-eslint/prefer-function-type': 39, '@typescript-eslint/prefer-namespace-keyword': 22, '@typescript-eslint/triple-slash-reference': 70} exclusions=0
+compiler/stage1 files 351
+baseline Node identical 39582002 bytes
+baseline JavaScript identical 39582002 bytes
+baseline native identical 39582002 bytes
+mutant-0 Node mutant caught 39582002 bytes
+mutant-0 JavaScript mutant caught 39582002 bytes
+mutant-0 native mutant caught 39582002 bytes
+mutant-1 Node mutant caught 39582002 bytes
+mutant-1 JavaScript mutant caught 39582002 bytes
+mutant-1 native mutant caught 39582002 bytes
+mutant-2 Node mutant caught 39582002 bytes
+mutant-2 JavaScript mutant caught 39582002 bytes
+mutant-2 native mutant caught 39582002 bytes
+@typescript-eslint/prefer-function-type Go findings 1000 seconds 0.200046 findings/s 4998.85
+@typescript-eslint/prefer-function-type native findings 1000 seconds 3.876008 findings/s 258.00
+@typescript-eslint/prefer-function-type Node findings 1000 seconds 1.507664 findings/s 663.28
+@typescript-eslint/prefer-namespace-keyword Go findings 1000 seconds 0.203412 findings/s 4916.14
+@typescript-eslint/prefer-namespace-keyword native findings 1000 seconds 1.026702 findings/s 973.99
+@typescript-eslint/prefer-namespace-keyword Node findings 1000 seconds 0.800297 findings/s 1249.54
+@typescript-eslint/triple-slash-reference Go findings 1000 seconds 0.249130 findings/s 4013.96
+@typescript-eslint/triple-slash-reference native findings 1000 seconds 1.735881 findings/s 576.08
+@typescript-eslint/triple-slash-reference Node findings 1000 seconds 1.116776 findings/s 895.44

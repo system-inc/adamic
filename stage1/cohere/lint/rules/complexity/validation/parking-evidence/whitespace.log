@@ -1,0 +1,11 @@
+upstream cases {'better-tailwindcss/no-unnecessary-whitespace': 4} JSX exclusions 21
+compiler/stage1 files 351
+baseline Node identical 13185533 bytes
+baseline JavaScript identical 13185533 bytes
+baseline native identical 13185533 bytes
+mutant-0 Node mutant caught 13185533 bytes
+mutant-0 JavaScript mutant caught 13185533 bytes
+mutant-0 native mutant caught 13185533 bytes
+better-tailwindcss/no-unnecessary-whitespace Go findings 1000 seconds 0.272414 findings/s 3670.89
+better-tailwindcss/no-unnecessary-whitespace native findings 1000 seconds 1.182008 findings/s 846.02
+better-tailwindcss/no-unnecessary-whitespace Node findings 1000 seconds 1.038673 findings/s 962.77
