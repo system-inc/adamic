@@ -1,0 +1,5 @@
+{
+  "name": "no-caller-property",
+  "from": "name !== 'caller' && name !== 'callee'",
+  "to": "name !== 'caller' && name !== 'length'"
+}
