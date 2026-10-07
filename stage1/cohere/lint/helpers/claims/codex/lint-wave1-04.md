@@ -43,3 +43,22 @@ Five compiling semantic mutants are caught across Node, emitted JavaScript and
 sanitized native execution by the actual Go comparison. See the owned REPORT.md
 and evidence/both-tests.log for the exact dependency boundaries and residual
 rule prerequisites. No claim of whole-rule/native CSS engine completion is made.
+
+3. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace
+   File: helpers/from_wave1_04/trim_leading_javascript_space.a.
+   Four consumers, tied for the highest remaining unclaimed named helper count:
+   better-tailwindcss/enforce-consistent-class-order,
+   better-tailwindcss/enforce-shorthand-classes,
+   better-tailwindcss/no-conflicting-classes,
+   better-tailwindcss/no-unknown-classes.
+   Selection: 550 fetched origin refs and all 19 distinct helper claim blobs
+   inspected, plus the shared comment claim in HELPERS.md. Larger named helpers
+   are delivered or reserved. Prior rule branch is rebased and parked with green
+   owned comparisons, pushed as ebdc5a5c; helper branch beeb6533 is rebased, green
+   and pushed on main f8013f0. No main or area branch is pushed.
+   Preserve the leading run only, unchanged remainder, complete-string trimming,
+   empty input and Unicode rune behavior. The separately claimed JavaScript-space
+   predicate is an explicit dependency. Compare actual Go on fixture literal
+   domains from all four consumers plus Unicode and boundary controls, source
+   Node, emitted JavaScript and sanitized native; require compiling mutants.
+   One helper per .a file. This claim is pushed before implementation.
