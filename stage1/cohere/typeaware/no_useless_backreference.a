@@ -1,0 +1,94 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { FifthBindings, FifthConstants } from './fifth_bindings.a';
+import { RegexpTracker } from './regexp_tracker.a';
+import { BackreferenceStructure } from './backreference_structure.a';
+export class NoUselessBackreference {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    report(index: number, pattern: string, flags: string): void {
+        const structure = new BackreferenceStructure(pattern, flags);
+        if(!structure.scan() || structure.references.length === 0 || !structure.valid()) return;
+        for(const ref of structure.references) {
+            const groups = structure.groups.filter((group, at) =>
+                ref.name !== '' ? group.name === ref.name : ref.index === at + 1,
+            );
+            const problems: number[] = [];
+            const affected: number[] = [];
+            let reachable = false;
+            for(let i = 0; i < groups.length; i++) {
+                const group = groups[i];
+                if(group === undefined) continue;
+                const problem = structure.problem(ref, group);
+                if(problem === 0) {
+                    reachable = true;
+                    break;
+                }
+                problems.push(problem);
+                affected.push(i);
+            }
+            if(reachable || affected.length === 0) continue;
+            const same = affected.filter((i) => (problems[i] ?? 0) !== 2);
+            const selected = same.length > 0 ? same : affected;
+            const at = selected[0] ?? -1;
+            const group = groups[at];
+            if(group === undefined) continue;
+            const problem = problems[at] ?? 0;
+            const id = ['', 'nested', 'disjunctive', 'forward', 'backward', 'intoNegativeLookaround'][problem] ?? '';
+            const reason =
+                [
+                    '',
+                    'encloses the reference and so has captured nothing yet when it is reached',
+                    'sits in a different branch of the same disjunction, and only one branch ever runs',
+                    'appears later in the pattern, and matching runs left to right',
+                    'appears earlier in a lookbehind, which matches right to left',
+                    'sits in a negative lookaround, so it only runs on a path that then fails',
+                ][problem] ?? '';
+            const others = selected.length - 1;
+            const also =
+                others === 1
+                    ? ' (and so does one other group of that name)'
+                    : others > 1
+                      ? ` (and so do ${others} other groups of that name)`
+                      : '';
+            const message = `The backreference ${pattern.slice(ref.start, ref.end)} can never match, because ${pattern.slice(group.start, group.end)} ${reason}${also}. It matches the empty string instead of failing, so the pattern quietly matches more than it looks like it does.`;
+            const node = this.rules.parser.node(index);
+            this.rules.findings.push(
+                new Diagnostic(
+                    'no-useless-backreference',
+                    id,
+                    message,
+                    this.rules.byte(this.rules.start(node)),
+                    this.rules.byte(node.end),
+                    '',
+                ),
+            );
+        }
+    }
+    run(): void {
+        const facts = new FifthBindings(this.rules);
+        const constants = new FifthConstants(facts);
+        for(const index of new RegexpTracker(this.rules, facts).run()) {
+            const node = this.rules.parser.node(index);
+            if(node.list === 0) continue;
+            const args = node.children.slice(node.children.length - node.list);
+            const pattern = constants.get(args[0] ?? -1);
+            if(!pattern.valid) continue;
+            const flagValue = constants.get(args[1] ?? -1);
+            const flags = args.length > 1 && flagValue.valid ? flagValue.text : '';
+            this.report(index, pattern.text, flags);
+        }
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const node = this.rules.parser.node(i);
+            if(node.kind !== 'RegularExpressionLiteral' || (this.rules.parents[i] ?? -1) < 0) continue;
+            const text = node.text;
+            if(text.length < 2 || !text.startsWith('/')) continue;
+            const last = text.lastIndexOf('/');
+            const pattern = last <= 0 ? text.slice(1) : text.slice(1, last);
+            const flags = last <= 0 ? '' : text.slice(last + 1);
+            if(pattern !== '') this.report(i, pattern, flags);
+        }
+    }
+}

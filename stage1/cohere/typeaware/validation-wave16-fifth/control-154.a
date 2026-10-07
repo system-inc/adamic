@@ -1,0 +1,2 @@
+new RegExp('(?!(?<foo>\\n))\\1')
+export {};

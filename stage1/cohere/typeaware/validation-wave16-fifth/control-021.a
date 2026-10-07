@@ -1,0 +1,2 @@
+class C { #field; foo() { throw foo.#field; } }
+export {};

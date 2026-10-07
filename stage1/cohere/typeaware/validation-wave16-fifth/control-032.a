@@ -1,0 +1,2 @@
+async function foo() { throw await bar; }
+export {};

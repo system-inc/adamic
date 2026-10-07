@@ -1,0 +1,2 @@
+const pattern='\\1(a)';let flags='u';new RegExp(pattern,flags);let changed='\\1(a)';changed='x';RegExp(changed);function f(RegExp:any){RegExp('\\1(a)');}
+export {};

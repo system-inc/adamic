@@ -1,0 +1,2 @@
+RegExp('\\1(a){','u');declare const flags:string;RegExp('\\1(a){',flags);RegExp('\\k<a>(?<a>x)\\k<b>');RegExp('[[]\\1](a)','v');
+export {};

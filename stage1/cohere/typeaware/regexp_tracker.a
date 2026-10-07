@@ -1,0 +1,171 @@
+import type { Rules } from './rules.ts';
+import { FifthBindings, FifthConstants } from './fifth_bindings.a';
+import { ambientName } from './wave16_facts.a';
+export class RegexpTracker {
+    readonly rules: Rules;
+    readonly facts: FifthBindings;
+    readonly constants: FifthConstants;
+    readonly following: string[] = [];
+    readonly calls: number[] = [];
+    constructor(rules: Rules, facts: FifthBindings) {
+        this.rules = rules;
+        this.facts = facts;
+        this.constants = new FifthConstants(facts);
+    }
+    key(index: number): string {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'PropertyAccessExpression')
+            return this.rules.parser.node(node.children[node.children.length - 1] ?? -1).text;
+        const value = this.constants.get(node.children[node.children.length - 1] ?? -1, false);
+        return value.valid ? value.text : '';
+    }
+    refs(name: string, id: number, global: boolean): number[] {
+        const result: number[] = [];
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const node = this.rules.parser.node(i);
+            if(
+                node.kind !== 'Identifier' ||
+                node.text !== name ||
+                !this.facts.valueReference(i) ||
+                (this.rules.parents[i] ?? -1) < 0
+            )
+                continue;
+            if(global ? !ambientName(this.rules, i, true, true) : this.facts.symbol(i, true) !== id) continue;
+            if(global && this.facts.writes.writes(i)) {
+                const empty: number[] = [];
+                return empty;
+            }
+            result.push(i);
+        }
+        return result;
+    }
+    reads(name: string, id: number, global: boolean, root: boolean): void {
+        const key = global ? `global:${name}` : `symbol:${id}`;
+        if(this.following.includes(key)) return;
+        this.following.push(key);
+        for(const reference of this.refs(name, id, global)) this.value(reference, root);
+        this.following.pop();
+    }
+    target(index: number, root: boolean): void {
+        if(index < 0) return;
+        index = this.rules.skip(index);
+        if(index < 0) return;
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            const id = this.facts.symbol(index, true);
+            if(id !== 0) this.reads(node.text, id, false, root);
+            return;
+        }
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken') {
+            this.target(node.children[0] ?? -1, root);
+            return;
+        }
+        if(!root) return;
+        if(node.kind === 'ObjectBindingPattern')
+            for(const child of node.children) {
+                const member = this.rules.parser.node(child);
+                if(member.children.some((c) => this.rules.parser.node(c).kind === 'DotDotDotToken')) continue;
+                const name = this.facts.bindings.shape.name(child);
+                if(name < 0) continue;
+                let keyIndex = member.children[0] ?? -1;
+                if(keyIndex < 0) continue;
+                const key = this.rules.parser.node(keyIndex);
+                let text = key.text;
+                if(key.kind === 'ComputedPropertyName') {
+                    const value = this.constants.get(key.children[0] ?? -1, false);
+                    text = value.valid ? value.text : '';
+                }
+                if(text === 'RegExp') this.target(name, false);
+            }
+        if(node.kind === 'ObjectLiteralExpression')
+            for(const child of node.children) {
+                const member = this.rules.parser.node(child);
+                if(!['PropertyAssignment', 'ShorthandPropertyAssignment'].includes(member.kind)) continue;
+                const key = this.rules.parser.node(member.children[0] ?? -1);
+                let text = key.text;
+                if(key.kind === 'ComputedPropertyName') {
+                    const value = this.constants.get(key.children[0] ?? -1, false);
+                    text = value.valid ? value.text : '';
+                }
+                if(text === 'RegExp')
+                    this.target(
+                        member.kind === 'PropertyAssignment'
+                            ? (member.children[member.children.length - 1] ?? -1)
+                            : (member.children[0] ?? -1),
+                        false,
+                    );
+            }
+    }
+    value(index: number, root: boolean): void {
+        let current = index;
+        while(true) {
+            const parent = this.facts.bindings.parent(current);
+            if(parent < 0) return;
+            const node = this.rules.parser.node(parent);
+            let pass = [
+                'ParenthesizedExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+                'NonNullExpression',
+                'ExpressionWithTypeArguments',
+            ].includes(node.kind);
+            if(node.kind === 'ConditionalExpression')
+                pass = node.children[2] === current || node.children[4] === current;
+            if(node.kind === 'BinaryExpression') {
+                const op = this.rules.parser.node(node.children[1] ?? -1).kind;
+                pass =
+                    ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(op) ||
+                    (op === 'CommaToken' && node.children[2] === current);
+            }
+            if(pass) {
+                current = parent;
+                continue;
+            }
+            if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) {
+                if(root && node.children[0] === current && this.key(parent) === 'RegExp') this.value(parent, false);
+                return;
+            }
+            if(['CallExpression', 'NewExpression'].includes(node.kind)) {
+                if(!root && node.children[0] === current) this.calls.push(parent);
+                return;
+            }
+            if(node.kind === 'BinaryExpression') {
+                const op = this.rules.parser.node(node.children[1] ?? -1).kind;
+                if(
+                    node.children[2] !== current ||
+                    ![
+                        'EqualsToken',
+                        'BarBarEqualsToken',
+                        'AmpersandAmpersandEqualsToken',
+                        'QuestionQuestionEqualsToken',
+                    ].includes(op)
+                )
+                    return;
+                this.target(node.children[0] ?? -1, root);
+                this.value(parent, root);
+                return;
+            }
+            if(
+                ['VariableDeclaration', 'Parameter', 'BindingElement'].includes(node.kind) &&
+                this.facts.bindings.shape.initializer(parent) === current
+            ) {
+                this.target(this.facts.bindings.shape.name(parent), root);
+                return;
+            }
+            if(
+                node.kind === 'ShorthandPropertyAssignment' &&
+                node.children[node.children.length - 1] === current &&
+                node.children.length > 1
+            )
+                this.target(node.children[0] ?? -1, root);
+            return;
+        }
+    }
+    run(): number[] {
+        if(!this.rules.scanner.text.includes('RegExp')) return this.calls;
+        this.reads('RegExp', 0, true, false);
+        for(const name of ['global', 'globalThis', 'self', 'window']) this.reads(name, 0, true, true);
+        return this.calls;
+    }
+}

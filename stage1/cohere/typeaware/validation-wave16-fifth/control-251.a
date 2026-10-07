@@ -1,0 +1,2 @@
+foo(function bar() { arguments; }.bind(this));
+export {};

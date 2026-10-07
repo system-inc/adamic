@@ -1,0 +1,22 @@
+=== RUN   TestWave16FifthAgreementAndMutants
+    wave16_fifth_test.go:425: controls: 83416 identical finding bytes; findings 216
+    wave16_fifth_test.go:433: controls-asan: 83416 identical finding bytes; findings 216
+=== RUN   TestWave16FifthAgreementAndMutants/throw-range
+    wave16_fifth_test.go:450: throw-range: exit 0, Go byte oracle catches byte 116; findings 216
+=== RUN   TestWave16FifthAgreementAndMutants/backreference-range
+    wave16_fifth_test.go:450: backreference-range: exit 0, Go byte oracle catches byte 9227; findings 216
+=== RUN   TestWave16FifthAgreementAndMutants/arrow-fix
+    wave16_fifth_test.go:450: arrow-fix: exit 0, Go byte oracle catches byte 6021; findings 216
+=== NAME  TestWave16FifthAgreementAndMutants
+    wave16_fifth_test.go:458: repository: 18485 identical finding bytes; findings 0
+    wave16_fifth_test.go:459: repository-asan: 18485 identical finding bytes; findings 0
+    wave16_fifth_test.go:466: compiler: 5780 identical finding bytes; findings 0
+    wave16_fifth_test.go:467: compiler-asan: 5780 identical finding bytes; findings 0
+    wave16_fifth_test.go:479: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_fifth_test.go:484: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16FifthAgreementAndMutants (64.89s)
+    --- PASS: TestWave16FifthAgreementAndMutants/throw-range (5.66s)
+    --- PASS: TestWave16FifthAgreementAndMutants/backreference-range (5.65s)
+    --- PASS: TestWave16FifthAgreementAndMutants/arrow-fix (5.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	64.892s

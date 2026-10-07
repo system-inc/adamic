@@ -1,0 +1,2 @@
+throw foo ? 'not an Error' : 'literal';
+export {};

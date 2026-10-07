@@ -1,0 +1,2 @@
+function foo() { var RegExp; RegExp('\\1(a)', 'u'); }
+export {};

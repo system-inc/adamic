@@ -1,0 +1,2 @@
+let alias;alias=RegExp;alias=1;alias('\\1(a)');const wrap=(RegExp as any);wrap('\\1(a)');(false?RegExp:RegExp)('\\1(a)');
+export {};

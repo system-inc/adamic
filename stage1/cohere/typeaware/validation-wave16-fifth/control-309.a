@@ -1,0 +1,2 @@
+obj.test('clean', function (foo) { this.foo = 'Cleaned!'; });
+export {};

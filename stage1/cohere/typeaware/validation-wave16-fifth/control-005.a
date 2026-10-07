@@ -1,0 +1,3 @@
+declare const foo:any;foo(function(a,a){});foo(function(this:any){});foo(async function
+(){});new foo(function(){});foo(function*(){});foo(function(){new.target;});
+export {};

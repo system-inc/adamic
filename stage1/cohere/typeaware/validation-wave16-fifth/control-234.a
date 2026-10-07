@@ -1,0 +1,2 @@
+/((?<foo>bar)|\k<foo>(?<foo>baz)|(?<foo>qux))/
+export {};

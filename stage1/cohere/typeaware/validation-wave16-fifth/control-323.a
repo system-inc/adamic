@@ -1,0 +1,2 @@
+qux(function(foo:any, bar:any, baz:any) { return foo * this.qux; }.bind(this))
+export {};

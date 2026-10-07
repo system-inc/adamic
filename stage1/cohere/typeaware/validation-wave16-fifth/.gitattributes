@@ -1,0 +1,3 @@
+# Preserve exact failed-run logs and imported control source bytes.
+*.log -whitespace
+control-*.a -whitespace

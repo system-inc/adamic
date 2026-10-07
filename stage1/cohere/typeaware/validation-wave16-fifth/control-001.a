@@ -1,0 +1,2 @@
+declare let x:any;throw x&&'bad';throw 'bad'&&new Error();throw x||'bad';throw x?'bad':'bad';throw x?'bad':new Error();throw x=1;throw x=new Error();throw x+=new Error();throw x&&=new Error();throw x??='bad';throw new Error(),1;
+export {};

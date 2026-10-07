@@ -1,0 +1,2 @@
+test('clean', function (this: any) { this.foo = 'Cleaned!';});
+export {};

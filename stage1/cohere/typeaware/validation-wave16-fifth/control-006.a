@@ -1,0 +1,2 @@
+const R=RegExp;R('\\1(a)');let alias;alias=RegExp;new alias('\\1(a)');globalThis.RegExp('\\1(a)');const {RegExp:r}=globalThis;r('\\1(a)');
+export {};

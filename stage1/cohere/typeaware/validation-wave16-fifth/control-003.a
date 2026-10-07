@@ -1,0 +1,2 @@
+declare const foo:any;foo(function bar(){bar();});foo(function bar(){const bar=1;bar;});foo(function(){function inner(){arguments;}});foo(function(){arguments;});foo(function(arguments:any){arguments;});
+export {};

@@ -1,0 +1,11 @@
+
+            test(
+                function (
+                    ...args
+                ) /* Lorem ipsum
+                dolor sit amet. */ {
+                    return args;
+                }
+            );
+            
+export {};

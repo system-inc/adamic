@@ -1,0 +1,168 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Frames, header } from './frames.ts';
+import { Reassign } from './reassign.ts';
+import { ambientName } from './wave16_facts.a';
+export class FifthBindings {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly writes: Reassign;
+    readonly identities = new Map<number, number>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+        this.writes = new Reassign(rules);
+    }
+    symbol(index: number, read = false): number {
+        if(!read && this.identities.has(index)) return this.identities.get(index) ?? 0;
+        const frames = new Frames(this.rules.ask(index, 'symbol-identities'));
+        header(frames, 'symbol-identities');
+        const id = frames.natural();
+        frames.natural();
+        frames.yes();
+        const local = frames.natural();
+        const shorthand = frames.natural();
+        frames.end();
+        this.identities.set(index, id);
+        if(read) {
+            const parent = this.bindings.parent(index);
+            if(parent >= 0) {
+                const kind = this.rules.parser.node(parent).kind;
+                if(kind === 'ShorthandPropertyAssignment') return shorthand;
+                if(kind === 'ExportSpecifier') return local;
+            }
+        }
+        return id;
+    }
+    declared(index: number): boolean {
+        const frames = new Frames(this.rules.ask(index, 'binding-declarations'));
+        header(frames, 'binding-declarations');
+        let result = false;
+        if(frames.yes()) {
+            frames.natural();
+            const count = frames.natural();
+            result = count > 0;
+            for(let i = 0; i < count; i++) {
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+            }
+        }
+        frames.end();
+        return result;
+    }
+    valueReference(index: number): boolean {
+        const parent = this.bindings.parent(index);
+        if(parent < 0) return false;
+        const node = this.rules.parser.node(parent);
+        if(node.kind === 'ShorthandPropertyAssignment') return true;
+        if(
+            [
+                'TypeReference',
+                'TypeQuery',
+                'QualifiedName',
+                'LabeledStatement',
+                'BreakStatement',
+                'ContinueStatement',
+                'ImportSpecifier',
+            ].includes(node.kind)
+        )
+            return false;
+        if(
+            node.kind === 'BindingElement' &&
+            node.children.length > 1 &&
+            node.children[0] === index &&
+            this.bindings.shape.name(parent) !== index
+        )
+            return false;
+        return !this.bindings.declaring(index);
+    }
+    initializer(index: number): number {
+        const declarations = this.bindings.list(index, 'binding-declarations', false);
+        if(declarations.length !== 1) return -1;
+        const declaration = declarations[0] ?? -1;
+        const node = this.rules.parser.node(declaration);
+        if(node.kind !== 'VariableDeclaration' || ambientName(this.rules, index, false, false)) return -1;
+        const initial = this.bindings.shape.initializer(declaration);
+        if(initial < 0) return -1;
+        const parent = this.bindings.parent(declaration);
+        if(parent < 0 || this.rules.parser.node(parent).kind !== 'VariableDeclarationList') return -1;
+        if(!this.rules.text(this.rules.parser.node(parent)).trimStart().startsWith('const')) {
+            const name = this.bindings.shape.name(declaration);
+            if(name < 0) return -1;
+            const id = this.symbol(index, true);
+            for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+                const n = this.rules.parser.node(i);
+                if(
+                    i !== name &&
+                    n.kind === 'Identifier' &&
+                    n.text === this.rules.parser.node(name).text &&
+                    this.writes.writes(i) &&
+                    this.symbol(i, true) === id
+                )
+                    return -1;
+            }
+        }
+        return initial;
+    }
+}
+export class ConstantText {
+    readonly text: string;
+    readonly string: boolean;
+    readonly valid: boolean;
+    constructor(text: string, string: boolean, valid: boolean) {
+        this.text = text;
+        this.string = string;
+        this.valid = valid;
+    }
+}
+export class FifthConstants {
+    readonly facts: FifthBindings;
+    readonly following: number[] = [];
+    constructor(facts: FifthBindings) {
+        this.facts = facts;
+    }
+    get(index: number, scope = true): ConstantText {
+        const rules = this.facts.rules;
+        if(index < 0) return new ConstantText('', false, false);
+        index = rules.skip(index);
+        if(index < 0) return new ConstantText('', false, false);
+        const node = rules.parser.node(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind))
+            return new ConstantText(node.text, true, true);
+        if(node.kind === 'NumericLiteral') return new ConstantText(node.text, false, true);
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(node.kind))
+            return new ConstantText(
+                node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : 'null',
+                false,
+                true,
+            );
+        if(scope && node.kind === 'RegularExpressionLiteral') return new ConstantText(node.text, true, true);
+        if(scope && node.kind === 'Identifier') {
+            const initial = this.facts.initializer(index);
+            const id = this.facts.symbol(index, true);
+            if(initial < 0 || this.following.includes(id)) return new ConstantText('', false, false);
+            this.following.push(id);
+            const value = this.get(initial, scope);
+            this.following.pop();
+            return value;
+        }
+        if(node.kind === 'BinaryExpression' && rules.parser.node(node.children[1] ?? -1).kind === 'PlusToken') {
+            const a = this.get(node.children[0] ?? -1, scope);
+            const b = this.get(node.children[2] ?? -1, scope);
+            return new ConstantText(a.text + b.text, true, a.valid && b.valid && (a.string || b.string));
+        }
+        if(node.kind === 'TemplateExpression') {
+            let text = rules.parser.node(node.children[0] ?? -1).text;
+            for(const child of node.children.slice(1)) {
+                const span = rules.parser.node(child);
+                const value = this.get(span.children[0] ?? -1, scope);
+                if(!value.valid) return new ConstantText('', false, false);
+                text += value.text + rules.parser.node(span.children[1] ?? -1).text;
+            }
+            return new ConstantText(text, true, true);
+        }
+        return new ConstantText('', false, false);
+    }
+}

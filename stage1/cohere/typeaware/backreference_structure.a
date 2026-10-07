@@ -1,0 +1,285 @@
+// Regex path scanner and classification, matching cohere's five ordered problems.
+export class RegexPathNode {
+    readonly kind: number;
+    readonly negative: boolean;
+    constructor(kind: number, negative: boolean) {
+        this.kind = kind;
+        this.negative = negative;
+    }
+}
+export class RegexCapture {
+    readonly name: string;
+    readonly start: number;
+    end = 0;
+    readonly path: number[];
+    constructor(name: string, start: number, path: number[]) {
+        this.name = name;
+        this.start = start;
+        this.path = path;
+    }
+}
+export class RegexReference {
+    readonly name: string;
+    readonly index: number;
+    readonly start: number;
+    readonly end: number;
+    readonly path: number[];
+    constructor(name: string, index: number, start: number, end: number, path: number[]) {
+        this.name = name;
+        this.index = index;
+        this.start = start;
+        this.end = end;
+        this.path = path;
+    }
+}
+export class BackreferenceStructure {
+    readonly pattern: string;
+    readonly unicode: boolean;
+    readonly sets: boolean;
+    readonly nodes: RegexPathNode[] = [];
+    readonly groups: RegexCapture[] = [];
+    readonly references: RegexReference[] = [];
+    readonly stack: number[] = [];
+    readonly groupStack: number[] = [];
+    constructor(pattern: string, flags: string) {
+        this.pattern = pattern;
+        this.unicode = flags.includes('u') || flags.includes('v');
+        this.sets = flags.includes('v');
+    }
+    char(index: number): string {
+        return this.pattern.slice(index, index + 1);
+    }
+    hex(start: number, end: number): boolean {
+        if(start >= end) return false;
+        for(let i = start; i < end; i++) if(!'0123456789abcdefABCDEF'.includes(this.char(i))) return false;
+        return true;
+    }
+    escape(index: number): number {
+        if(index + 1 >= this.pattern.length) return -1;
+        const next = this.char(index + 1);
+        if(next === 'x') return index + 3 < this.pattern.length && this.hex(index + 2, index + 4) ? 4 : 2;
+        if(next === 'u') {
+            if(this.char(index + 2) === '{') {
+                if(!this.unicode) return 2;
+                const end = this.pattern.indexOf('}', index + 3);
+                return end < 0 ? 2 : end - index + 1;
+            }
+            return index + 5 < this.pattern.length && this.hex(index + 2, index + 6) ? 6 : 2;
+        }
+        if(next === 'c') return index + 2 < this.pattern.length ? 3 : 2;
+        if(['p', 'P', 'q'].includes(next) && this.unicode && this.char(index + 2) === '{') {
+            const end = this.pattern.indexOf('}', index + 3);
+            return end < 0 ? 2 : end - index + 1;
+        }
+        const code = this.pattern.charCodeAt(index + 1);
+        return code >= 55296 && code <= 56319 && index + 2 < this.pattern.length ? 3 : 2;
+    }
+    classEnd(index: number): number {
+        let depth = 1;
+        let at = index + 1;
+        if(this.char(at) === '^') at++;
+        while(at < this.pattern.length) {
+            const c = this.char(at);
+            if(c === '\\') {
+                const step = this.escape(at);
+                if(step < 0) return -1;
+                at += step;
+            }
+            else if(c === '[' && this.sets) {
+                depth++;
+                at++;
+            }
+            else if(c === ']') {
+                depth--;
+                at++;
+                if(depth === 0) return at;
+            }
+            else at++;
+        }
+        return -1;
+    }
+    push(kind: number, negative = false): void {
+        this.nodes.push(new RegexPathNode(kind, negative));
+        this.stack.push(this.nodes.length - 1);
+    }
+    group(index: number): number {
+        let kind = 1;
+        let negative = false;
+        let name = '';
+        let next = index + 1;
+        if(this.char(next) === '?') {
+            if(this.char(next + 1) === ':') {
+                kind = 2;
+                next += 2;
+            }
+            else if(this.char(next + 1) === '=') {
+                kind = 3;
+                next += 2;
+            }
+            else if(this.char(next + 1) === '!') {
+                kind = 3;
+                negative = true;
+                next += 2;
+            }
+            else if(this.pattern.slice(next + 1, next + 3) === '<=') {
+                kind = 4;
+                next += 3;
+            }
+            else if(this.pattern.slice(next + 1, next + 3) === '<!') {
+                kind = 4;
+                negative = true;
+                next += 3;
+            }
+            else if(this.char(next + 1) === '<') {
+                const end = this.pattern.indexOf('>', next + 2);
+                if(end < 0) {
+                    kind = 2;
+                    next += 2;
+                }
+                else {
+                    name = this.pattern.slice(next + 2, end);
+                    next = end + 1;
+                }
+            }
+            else {
+                kind = 2;
+                next += 2;
+            }
+        }
+        this.push(kind, negative);
+        if(kind === 1) {
+            this.groups.push(new RegexCapture(name, index, this.stack.slice()));
+            this.groupStack.push(this.groups.length - 1);
+        }
+        else this.groupStack.push(-1);
+        this.push(0);
+        return next;
+    }
+    reference(index: number): number {
+        if(index + 1 >= this.pattern.length) return -1;
+        const next = this.char(index + 1);
+        if(next >= '1' && next <= '9') {
+            let end = index + 1;
+            let value = 0;
+            while(end < this.pattern.length && this.char(end) >= '0' && this.char(end) <= '9') {
+                value = value * 10 + this.pattern.charCodeAt(end) - 48;
+                end++;
+            }
+            this.references.push(new RegexReference('', value, index, end, this.stack.slice()));
+            return end - index;
+        }
+        if(next === 'k' && this.char(index + 2) === '<') {
+            const end = this.pattern.indexOf('>', index + 3);
+            if(end >= 0) {
+                this.references.push(
+                    new RegexReference(this.pattern.slice(index + 3, end), 0, index, end + 1, this.stack.slice()),
+                );
+                return end - index + 1;
+            }
+        }
+        return this.escape(index);
+    }
+    scan(): boolean {
+        this.push(2);
+        this.push(0);
+        for(let i = 0; i < this.pattern.length;) {
+            const c = this.char(i);
+            if(c === '\\') {
+                const step = this.reference(i);
+                if(step < 0) return false;
+                i += step;
+            }
+            else if(c === '[') {
+                const end = this.classEnd(i);
+                if(end < 0) return false;
+                i = end;
+            }
+            else if(c === '(') i = this.group(i);
+            else if(c === ')') {
+                if(this.groupStack.length === 0) return false;
+                this.stack.pop();
+                const group = this.groupStack.pop() ?? -1;
+                if(group >= 0) {
+                    const g = this.groups[group];
+                    if(g !== undefined) g.end = i + 1;
+                }
+                this.stack.pop();
+                i++;
+            }
+            else if(c === '|') {
+                this.stack.pop();
+                this.push(0);
+                i++;
+            }
+            else i++;
+        }
+        return this.groupStack.length === 0;
+    }
+    quantifier(index: number): boolean {
+        let at = index + 1;
+        let digits = 0;
+        while(at < this.pattern.length && this.char(at) >= '0' && this.char(at) <= '9') {
+            at++;
+            digits++;
+        }
+        if(digits === 0) return false;
+        if(this.char(at) === ',') {
+            at++;
+            while(at < this.pattern.length && this.char(at) >= '0' && this.char(at) <= '9') at++;
+        }
+        return this.char(at) === '}';
+    }
+    valid(): boolean {
+        const named = this.groups.some((g) => g.name !== '');
+        for(const ref of this.references) {
+            if(ref.name !== '') {
+                if(!this.groups.some((g) => g.name === ref.name) && (named || this.unicode)) return false;
+            }
+            else if(this.unicode && ref.index > this.groups.length) return false;
+        }
+        if(this.unicode)
+            for(let i = 0; i < this.pattern.length;) {
+                const c = this.char(i);
+                if(c === '\\') {
+                    const step = this.escape(i);
+                    if(step < 0) return false;
+                    i += step;
+                }
+                else if(c === '[') {
+                    const end = this.classEnd(i);
+                    if(end < 0) return false;
+                    i = end;
+                }
+                else if(c === '{') {
+                    if(!this.quantifier(i)) return false;
+                    i++;
+                }
+                else i++;
+            }
+        return true;
+    }
+    problem(ref: RegexReference, group: RegexCapture): number {
+        if(group.start <= ref.start && ref.end <= group.end) return 1;
+        let common = 1;
+        while(common < ref.path.length && common < group.path.length && ref.path[common] === group.path[common])
+            common++;
+        const cut = group.path.slice(common);
+        let backwards = false;
+        for(let i = common - 1; i >= 0; i--) {
+            const n = this.nodes[ref.path[i] ?? -1];
+            if(n !== undefined && (n.kind === 3 || n.kind === 4)) {
+                backwards = n.kind === 4;
+                break;
+            }
+        }
+        const first = this.nodes[cut[0] ?? -1];
+        if(first !== undefined && first.kind === 0) return 2;
+        if(!backwards && ref.end <= group.start) return 3;
+        if(backwards && group.end <= ref.start) return 4;
+        for(const at of cut) {
+            const n = this.nodes[at];
+            if(n !== undefined && n.negative && (n.kind === 3 || n.kind === 4)) return 5;
+        }
+        return 0;
+    }
+}

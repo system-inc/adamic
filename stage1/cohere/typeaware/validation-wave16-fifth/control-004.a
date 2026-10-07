@@ -1,0 +1,2 @@
+declare const foo:any;foo(function /*keep*/ named(a:number):number {return a;});foo(function(){return this;}.bind(this));foo((function(){return this;}).bind(this));foo((function(){return this;}?.bind)(this));foo(function(){return this;}.bind(/*keep*/this));
+export {};

@@ -1,0 +1,2 @@
+foo((function() { this.bar(); }).bind(obj).bind(this))
+export {};
