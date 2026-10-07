@@ -246,7 +246,7 @@ func (l *lowering) constant(value string) int {
 }
 
 // localRead preserves checker narrowing for both private and qualified singleton reads.
-func (l *lowering) localRead(node *ast.Node, local int) ir.Expression {
+func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local) || l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
 	if l.result.Locals[local].Type == ir.Union {
 		// Where the checker has narrowed it to fewer members held one way, it's read as that.
@@ -299,5 +299,5 @@ func (l *lowering) localRead(node *ast.Node, local int) ir.Expression {
 			read = ir.Unwrap{Value: read}
 		}
 	}
-	return l.defined(node, read)
+	return l.defined(node, read), nil
 }
