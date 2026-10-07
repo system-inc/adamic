@@ -1,0 +1,61 @@
+import type { RuleContext } from '../../context.ts';
+import { saveRepairs } from '../typescript-no-unnecessary-type-constraint/repairs.a';
+import type { Edit } from '../typescript-no-unnecessary-type-constraint/repairs.a';
+import { description } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    matching(type: number, value: number): boolean {
+        if(type < 0 || value < 0 || this.context.node(type).kind !== 'LiteralType') { return false; }
+        const literal = this.context.node(type).children[0] ?? -1;
+        if(literal < 0) { return false; }
+        const node = this.context.node(literal);
+        if(node.kind !== 'StringLiteral' && node.kind !== 'NumericLiteral') { return false; }
+        return node.kind === this.context.node(value).kind && node.text === this.context.node(value).text;
+    }
+    visit(index: number): void {
+        const node = this.context.node(index);
+        let type = -1;
+        let value = -1;
+        let name = -1;
+        const fixes: Edit[] = [];
+        if(node.kind === 'AsExpression') {
+            value = node.children[0] ?? -1;
+            type = node.children[1] ?? -1;
+            if(!this.matching(type, value)) { return; }
+            fixes.push({ start: this.context.start(type), end: this.context.node(type).end, text: 'const' });
+        }
+        else {
+            let previous = this.context.start(index);
+            let colon = -1;
+            for(const child of node.children) {
+                const start = this.context.start(child);
+                this.context.scanner.pos = previous;
+                let annotation = false;
+                let initializer = false;
+                while(this.context.scanner.scan() !== 'EndOfFile' && this.context.scanner.start < start) {
+                    const kind = this.context.scanner.kind;
+                    if(kind === 'ExclamationToken' || kind === 'QuestionToken') { return; }
+                    if(kind === 'ColonToken') { annotation = true; colon = this.context.scanner.start; }
+                    if(kind === 'EqualsToken') { initializer = true; }
+                }
+                const kind = this.context.node(child).kind;
+                if(kind === 'ExclamationToken' || kind === 'QuestionToken') { return; }
+                if(annotation) { type = child; }
+                else if(initializer) { value = child; }
+                else if(kind === 'Identifier' || kind === 'StringLiteral' || kind === 'NumericLiteral' ||
+                    kind === 'ComputedPropertyName' || kind === 'ArrayBindingPattern' || kind === 'ObjectBindingPattern') { name = child; }
+                previous = this.context.node(child).end;
+            }
+            if(!this.matching(type, value)) { return; }
+            if(name >= 0 && colon >= 0 && (node.kind === 'PropertyDeclaration' || this.context.node(name).kind === 'Identifier')) {
+                fixes.push({ start: colon, end: this.context.node(type).end, text: '' });
+                fixes.push({ start: this.context.node(value).end, end: this.context.node(value).end, text: ' as const' });
+            }
+        }
+        const rule = '@typescript-eslint/prefer-as-const';
+        this.context.report(type, rule, 'preferAsConst', description, '', '', '');
+        saveRepairs(rule, this.context.start(type), { fixes: fixes, suggestions: [] });
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
