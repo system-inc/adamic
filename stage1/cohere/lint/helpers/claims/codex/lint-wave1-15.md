@@ -19,3 +19,18 @@ method and every consumer's fixture-derived roots, plus missing/empty/Unicode
 and live-map controls, Node, emitted JavaScript, sanitized native and a compiling
 semantic mutant. Claim pushed before code. Six prerequisite edges, zero final
 blockers. Re-fetch before claiming a next helper.
+
+## Race correction and replacement
+
+Withdraw DesignSystem.VariantKind to slot 04 8890cfce (02:29:54 UTC), earlier
+than this slot 4f3c8f1f (02:31:36 UTC). No duplicate source will be delivered
+or counted; retain prior evidence only as withdrawn work. Refetched all 407
+origin refs and checked 17 distinct helper claim blobs. Reserve this
+unclaimed six-consumer tie, before code:
+
+- github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSString
+
+File: wave15/css_string/parse_css_string.a. Preserve raw byte offsets, escaping,
+semicolon/CRLF error details and the unusual EOF success-at-start behavior.
+All six consumer fixtures and all-byte controls against actual private Go,
+source Node, emitted JavaScript and ASan/UBSan native, with a compiling mutant.
