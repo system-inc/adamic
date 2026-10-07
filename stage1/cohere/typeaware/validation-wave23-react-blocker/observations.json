@@ -1,0 +1,43 @@
+{
+  "claim": "9e54b141",
+  "branch": "codex/typeaware-wave-23",
+  "go_positive_findings": 3,
+  "exit_codes": {
+    "native-build": 0,
+    "native-control": 0,
+    "native-component": 70,
+    "native-effect": 70,
+    "native-render": 70,
+    "go-all": 0,
+    "go-compiler": 0,
+    "go-repository": 0
+  },
+  "streams": {
+    "go-all": {
+      "bytes": 1909,
+      "sha256": "8b8ef69982b07d1c64cd0cc6490213f83fddc4c99be0ff49e918986b355957c8",
+      "summary": "findings 3"
+    },
+    "go-compiler": {
+      "bytes": 5318,
+      "sha256": "a144049c847ffa8ebdd980d63258a4f582399b5a5f080fcec5d6c3bc5d487366",
+      "summary": "findings 0"
+    },
+    "go-repository": {
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+      "summary": "findings 0"
+    }
+  },
+  "source_hashes": {
+    "control.a": "b864c80c574a6a8e8a8154ab5343cfd60d936ecce8099e40ae9b2d0b5e4cd5b4",
+    "component.tsx": "f6d087458e9534afb6e18ad21b8350fe127a7f32c94eef6dde7728505b18ff16",
+    "effect.tsx": "537c6bb8cd725dc9c2419ecb07ae69191b0f41f7cf9f98560f5e9f9422686502",
+    "render.tsx": "5970a6daf797def94918a589152a97f2a6ac4ad5d1c7db4e19e5208bb297eb1b",
+    "react-types.d.ts": "21e49be4f865f68685d9e3a7effab48a6723423ae3368c65725a3617b1a1f126"
+  },
+  "nproc": 5,
+  "native_rule_ports": 0,
+  "rule_mutants_run": 0,
+  "native_go_performance_comparison": null
+}

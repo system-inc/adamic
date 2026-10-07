@@ -96,3 +96,8 @@ claimed on other origin branches and were skipped. Main advanced to e011f8f6,
 with no change to its typeaware port inventory; the bridge tip remains 5afbdb83.
 No conflicting full or short rule-name claim was found for these three. This
 claim update is pushed before implementation.
+
+Status: blocked by the shared native parser lacking JSX grammar. The independent
+Go oracle accepts three positive JSX controls and reports one finding per rule;
+the unchanged native parser exits 70 on each. See WAVE_23_REACT_BLOCKER_REPORT.md.
+These claims remain reserved, with no native rule ports or parity claimed.

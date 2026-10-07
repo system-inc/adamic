@@ -1,0 +1,13 @@
+// Capability probe for the claimed React rules. This runs the existing shared
+// parser unchanged; it does not approximate a rule's missing graph analysis.
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { Parser } from '../../typescript/parser/parser.ts';
+const args = programArguments();
+const path = args[1] ?? panic('missing input path');
+const source = readTextFile(path);
+if(source.kind === 'Error') { panic(source.message); }
+const program = tsgoProgram(args[0] ?? panic('missing config'), [path]);
+const parser = new Parser(source.text, path);
+const root = parser.file();
+console.log(`parsed ${parser.node(root).kind}`);
+tsgoRelease(program);

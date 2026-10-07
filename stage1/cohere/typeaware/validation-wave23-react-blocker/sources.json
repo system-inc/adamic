@@ -1,0 +1,7 @@
+{
+  "control.a": "function Widget(){return 1;}\nexport {};\n",
+  "component.tsx": "function Widget(){const Inner=makeIt();return <Inner />;}\nexport {};\n",
+  "effect.tsx": "function EffectWidget(){const [value,setValue]=useState(0);useEffect(()=>{setValue(1);});return <div />;}\nexport {};\n",
+  "render.tsx": "function RenderWidget(){const [value,setValue]=useState(0);setValue(1);return <div />;}\nexport {};\n",
+  "react-types.d.ts": "type Dispatch<T> = (value: T) => void;\ndeclare function useState<T>(initial: T): [T, Dispatch<T>];\ndeclare function useEffect(effect: () => void): void;\n"
+}
