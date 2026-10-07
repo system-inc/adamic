@@ -1,0 +1,49 @@
+class Base {
+ stored = 2;
+ get x(): number { console.log('base get'); return this.stored; }
+ set x(value: number) { console.log(`base set ${value}`); this.stored = value; }
+ get label(): string { return `base${this.x}`; }
+}
+class Middle extends Base {
+ override get x(): number { console.log('middle get'); return super.x + 10; }
+ override set x(value: number) { console.log(`middle set ${value}`); super.x = value * 2; }
+ override get label(): string { return `${super.label}!`; }
+}
+class Leaf extends Middle {
+ override get x(): number { console.log('leaf get'); return super.x + 100; }
+ override set x(value: number) { console.log(`leaf set ${value}`); super.x = value + 1; }
+ update(): void { super.x += 3; super.x++; }
+}
+const leaf = new Leaf();
+const base: Base = leaf;
+console.log(`${base.x}`);
+base.x = 4;
+console.log(`${leaf.stored} ${leaf.x}`);
+const held = leaf.label;
+leaf.update();
+console.log(`${held} ${leaf.label} ${leaf.stored}`);
+class Generic<T> {
+ stored: T;
+ constructor(value: T) { this.stored = value; }
+ get value(): T { return this.stored; }
+ set value(next: T) { this.stored = next; }
+}
+class GenericDerived<T> extends Generic<T> {
+ override get value(): T { return super.value; }
+ override set value(next: T) { super.value = next; }
+}
+const generic = new GenericDerived<string>(`generic${leaf.stored}`);
+const old = generic.value;
+generic.value = `${old}!`;
+console.log(`${old} ${generic.value}`);
+class ThrowBase {
+ get x(): number { throw new Error('base getter'); }
+ set x(value: number) { console.log(`unexpected setter ${value}`); }
+}
+function operand(): number { console.log('unexpected operand'); return 1; }
+class ThrowDerived extends ThrowBase {
+ override get x(): number { return 9; }
+ override set x(value: number) { console.log(`unexpected derived setter ${value}`); }
+ update(): void { super.x += operand(); }
+}
+try { new ThrowDerived().update(); } catch { console.log('caught'); }

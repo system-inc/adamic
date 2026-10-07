@@ -37,7 +37,6 @@ func TestAccessorRefusals(t *testing.T) {
 		{"interface descriptor", `interface View { get x(): number; }`, "accessor-declaration", true},
 		{"setter parameter narrowing", `class A { get x(): number { return 1; } set x(value: number) {} } class B extends A { override get x(): number { return 1; } override set x(value: 1) {} } const b = new B();`, "accessor-override", false},
 		{"override representation", `class A { get x(): number | string { return 1; } } class B extends A { override get x(): number { return 1; } } const b = new B();`, "accessor-override-representation", true},
-		{"super", `class A { get x(): number { return 1; } } class B extends A { override get x(): number { return super.x + 1; } } const b = new B();`, "super-accessor", true},
 		{"literal", `const value = { get x(): number { return 1; } };`, "object-accessor", true},
 		{"optional", `class A { get x(): number { return 1; } } function read(a: A | undefined): number | undefined { return a?.x; }`, "optional-accessor", true},
 		{"indexed", `class A { get x(): number { return 1; } } const a = new A(); console.log(a['x'].toString());`, "accessor-property-operation", true},
@@ -49,6 +48,8 @@ func TestAccessorRefusals(t *testing.T) {
 		{"computed", `class A { get ['x'](): number { return 1; } }`, "accessor-name", true},
 		{"constructor escape", `class A { x: number; get value(): number { return this.x; } constructor() { console.log(this.value.toString()); this.x = 1; } } const value = new A();`, "this escaping", false},
 		{"base constructor escape", `class A { get x(): number { return 1; } constructor() { console.log(this.x.toString()); } } class B extends A { field = 1; } const value = new B();`, "this escaping", false},
+		{"super initializer escape", `class A { get x(): number { return 1; } } class B extends A { z = super.x; } const value = new B();`, "field initializer", false},
+		{"super constructor escape", `class A { get x(): number { return 1; } } class B extends A { y: number; constructor() { super(); console.log(super.x.toString()); this.y = 2; } } const value = new B();`, "this escaping", false},
 		{"initializer escape", `class A { get x(): number { return this.y; } z = this.x; y = 1; } const value = new A();`, "field initializer", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -163,5 +164,34 @@ const value = new Derived<Dog>();`)
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "accessor-override") {
 		t.Fatalf("want accessor override refusal, got %v", err)
+	}
+}
+
+func TestSuperAccessorsAreDirectCallsWithCurrentReceiver(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `class A { stored = 1; get x(): number { return this.stored; } set x(value: number) { this.stored = value; } }
+class B extends A { override get x(): number { return super.x; } override set x(value: number) { super.x = value; } } const value = new B();`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	seen := 0
+	for _, function := range program.Functions {
+		if function.Name != "B_get:x" && function.Name != "B_set:x" {
+			continue
+		}
+		var call ir.Call
+		if function.Name == "B_get:x" {
+			call = function.Body[0].(ir.Return).Value.(ir.Call)
+		} else {
+			call = function.Body[0].(ir.Evaluate).Value.(ir.Call)
+		}
+		receiver := call.Arguments[0].(ir.Read)
+		if call.Virtual != 0 || receiver.Local != function.Parameters[0] || !strings.HasPrefix(program.Functions[call.Function].Name, "A_") {
+			t.Fatalf("super must call the base with current this: %#v", call)
+		}
+		seen++
+	}
+	if seen != 2 {
+		t.Fatalf("want both descriptor halves, got %d", seen)
 	}
 }

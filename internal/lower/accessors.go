@@ -61,9 +61,6 @@ func (l *lowering) accessorRefusal(node *ast.Node) error {
 	}
 	if node.Kind == ast.KindPropertyAccessExpression && accessorSymbol(l.checker.GetSymbolAtLocation(node.Name())) {
 		access := node.AsPropertyAccessExpression()
-		if ast.SkipParentheses(access.Expression).Kind == ast.KindSuperKeyword {
-			return l.notYet(node, "super accessor access (adamic/super-accessor)")
-		}
 		if access.QuestionDotToken != nil {
 			return l.notYet(node, "optional accessor access (adamic/optional-accessor)")
 		}
@@ -144,12 +141,18 @@ func (l *lowering) accessorCall(target *ast.Node, kind ast.Kind, object ir.Expre
 		return ir.Call{}, l.notYet(target, "accessor dispatch through a union (adamic/accessor-union)")
 	}
 	lowered := l.instance
-	if ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword || lowered == nil {
+	if (ast.SkipParentheses(receiver).Kind != ast.KindThisKeyword && ast.SkipParentheses(receiver).Kind != ast.KindSuperKeyword) || lowered == nil {
 		var err error
 		lowered, err = l.instantiate(declaration.Parent, l.checker.GetTypeAtLocation(receiver), target)
 		if err != nil {
 			return ir.Call{}, err
 		}
+	}
+	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
+		if l.instance == nil || l.instance.base == nil {
+			return ir.Call{}, l.notYet(target, "super outside a derived class")
+		}
+		lowered = l.instance.base
 	}
 	name := classMethodName(declaration)
 	function, exists := lowered.methods[name]
@@ -165,11 +168,15 @@ func (l *lowering) accessorCall(target *ast.Node, kind ast.Kind, object ir.Expre
 		}
 		arguments = append(arguments, value)
 	}
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns, Virtual: lowered.slots[name] + 1}, nil
+	virtual := lowered.slots[name] + 1
+	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
+		virtual = 0
+	}
+	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns, Virtual: virtual}, nil
 }
 
 func (l *lowering) getAccessor(target *ast.Node) (ir.Expression, error) {
-	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
+	object, err := l.accessorReceiver(target)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +199,7 @@ func (l *lowering) getAccessor(target *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) setAccessor(target, valueNode *ast.Node) ([]ir.Statement, error) {
-	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
+	object, err := l.accessorReceiver(target)
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +221,7 @@ func (l *lowering) accessorLocal(name string, value ir.Expression) (ir.Statement
 }
 
 func (l *lowering) updateAccessor(node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
-	receiver, err := l.expression(target.AsPropertyAccessExpression().Expression)
+	receiver, err := l.accessorReceiver(target)
 	if err != nil {
 		return nil, err
 	}
@@ -308,4 +315,19 @@ func (l *lowering) accessorType(declaration *ast.Node, receiver *checker.Type) *
 		return proven
 	}
 	return instantiateType(l.checker, proven, mapper)
+}
+
+// super selects a descriptor on the base but does not change its receiver.
+func (l *lowering) accessorReceiver(target *ast.Node) (ir.Expression, error) {
+	receiver := target.AsPropertyAccessExpression().Expression
+	if ast.SkipParentheses(receiver).Kind != ast.KindSuperKeyword {
+		return l.expression(receiver)
+	}
+	if l.instance == nil || l.instance.base == nil || l.this < 0 {
+		return nil, l.notYet(target, "super outside a derived class")
+	}
+	if err := l.useOfThis(receiver); err != nil {
+		return nil, err
+	}
+	return ir.Read{Local: l.this, Of: ir.Object}, nil
 }

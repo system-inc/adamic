@@ -40,7 +40,7 @@ between a call and a stored field true.
 | `class C<T> { get x() { return 1; } }` and generic class setters | Admitted. Accessors are monomorphized with the class. Override proofs substitute the read and write types through each declaration's nominal class view; mutable contents and native representations are checked on those substituted types. |
 | `interface View { get x(): number; }` or another descriptor declaration outside a class | NotYet, `adamic/accessor-declaration`. Structural descriptor syntax still does not prove a nominal virtual layout. |
 | `function read<T extends A>(value: T) { return value.x; }` | NotYet, `adamic/generic-accessor-receiver`. The up-front pass cannot yet prove every instantiation has the constraint's nominal table rather than a structural property. |
-| A derived getter returning `super.x` or a setter assigning `super.x` | NotYet, `adamic/super-accessor`. Super property access needs the base descriptor with the current receiver, rather than ordinary virtual dispatch. |
+| A derived getter returning `super.x` or a setter assigning `super.x` | Admitted. `super.x` directly calls the base getter and `super.x = value` directly calls the base setter with the current receiver. These are non-virtual calls; ordinary accessor reads inside the base body still dispatch virtually. |
 | `a?.x` | NotYet, `adamic/optional-accessor`. A short-circuiting call must preserve optional-chain order and result representation. |
 | `a['x']`, `{ ...a }`, `const { x } = a`, or `function f({ x }: A) {}` | NotYet, `adamic/accessor-property-operation`. Existing indexed and destructured reads assume loads. Class accessors are inherited and absent from Node's own-field spread, so copying the type's accessor properties would be wrong. These operations conservatively refuse any accessor-bearing source. |
 | `const old = a.x++`, `const sum = (a.x += 1)` or `const written = (a.x = 2)` | NotYet, `adamic/accessor-update-value`. Stage 0 has statement updates but no sequence expression carrying assignment or prefix/postfix results. Updates in expression statements and for-loop update positions are admitted. |
@@ -167,3 +167,25 @@ Commands: `go test -count=1 -timeout 10m ./internal/lower`, the uncached
 `go test -count=1 -timeout 30m ./internal/oracle -run TestCountsAreRecorded -args -update-counts`.
 Logs are `/tmp/accessors-2-generic-*.log`. Static accessors and generic function
 receivers remain NotYet. Getters remain virtual `ir.Call` nodes.
+
+## Super descriptor calls
+
+`accessors_super.a` passes source Node, both backends, ASan/UBSan and
+LeakSanitizer. It covers three levels of descriptor overrides, direct base calls
+with the leaf receiver, virtual calls made inside a base body, compound super
+updates, fresh string results held across writes, generic base descriptors and
+a throwing base getter that suppresses the operand and setter.
+
+Four mutants were run and restored:
+
+- Making super descriptor calls virtual fails
+  `TestSuperAccessorsAreDirectCallsWithCurrentReceiver`.
+- Skipping a super setter fails stdout parity against Node in both backends;
+  native and JavaScript finish with exit 0, so clang and sanitizers do not mask it.
+- Ignoring super in field-initializer validation admits the initializer probe.
+- Skipping `useOfThis` for super admits the early constructor accessor probe.
+
+Validation: full `internal/lower` passed (15.917s), the uncached accessor oracle
+filter passed (1.445s), and the full counts update passed (18.729s), adding only
+the super fixture's row. Logs are `/tmp/accessors-2-super-*.log`. These getter
+reads remain direct `ir.Call` nodes, never loads.

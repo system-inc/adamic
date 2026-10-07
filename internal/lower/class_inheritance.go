@@ -527,7 +527,7 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 		if refused != nil {
 			return true
 		}
-		if node.Kind == ast.KindThisKeyword {
+		if node.Kind == ast.KindThisKeyword || node.Kind == ast.KindSuperKeyword {
 			parent := node.Parent
 			if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || !available[l.fieldName(parent.Name())] {
 				refused = &Refused{Where: l.program.Where(node), What: "this in a field initializer before the fields it reads are initialized", Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
