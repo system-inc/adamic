@@ -119,14 +119,14 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 			if slotless(of) {
 				return nil, l.notYet(member, "a static field without a native slot")
 			}
-			if member.AsPropertyDeclaration().Initializer == nil && !l.includesUndefined(l.checker.GetTypeAtLocation(member.Name())) {
+			if member.AsPropertyDeclaration().Initializer == nil && !l.uninitializedDeclaration(member) && !l.includesUndefined(l.checker.GetTypeAtLocation(member.Name())) {
 				return nil, l.notYet(member, "an uninitialized nonnullable static field; initialize it at its declaration")
 			}
 			value := zeroValue(of)
 			if of.IsReference() {
 				value = ir.Undefined{Of: of}
 			}
-			field := ir.Field{Name: memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier}
+			field := ir.Field{Name: memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || assertionInitializer(member.AsPropertyDeclaration().Initializer)}
 			slot := -1
 			for i, previous := range metadata.Fields {
 				if previous.Name == field.Name {
@@ -274,14 +274,30 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 			of, _ := l.typeOf(member.Name())
 			value := zeroValue(of)
 			initializer := member.AsPropertyDeclaration().Initializer
-			if initializer != nil {
-				value, err = l.expression(initializer)
-				value = fit(value, of)
-			} else if of.IsReference() {
-				value = ir.Undefined{Of: of}
-			}
-			if err == nil {
-				function.Body = []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: memberKey(member.Name(), lowered.class), Value: value, Define: true, Site: l.staticWriteSite(declaration.Name())}}
+
+			if assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
+				prefix, present, assigned, lazyErr := l.lazyAssertion(initializer, of)
+				err = lazyErr
+				if of.IsReference() {
+					value = ir.Undefined{Of: of}
+				}
+				if err == nil {
+					function.Body = append(prefix, ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: memberKey(member.Name(), lowered.class), Value: value, Define: true, Uninitialized: true, Site: l.staticWriteSite(declaration.Name())}, ir.If{Condition: present, Then: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: memberKey(member.Name(), lowered.class), Value: assigned, Define: true, Site: l.staticWriteSite(declaration.Name())}}})
+				}
+			} else {
+				if l.uninitializedDeclaration(member) {
+					if of.IsReference() {
+						value = ir.Undefined{Of: of}
+					}
+				} else if initializer != nil {
+					value, err = l.expression(initializer)
+					value = fit(value, of)
+				} else if of.IsReference() {
+					value = ir.Undefined{Of: of}
+				}
+				if err == nil {
+					function.Body = []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: memberKey(member.Name(), lowered.class), Value: value, Define: true, Uninitialized: l.uninitializedDeclaration(member), Site: l.staticWriteSite(declaration.Name())}}
+				}
 			}
 			available[member.Name().Text()] = true
 		}

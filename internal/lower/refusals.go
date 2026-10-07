@@ -31,7 +31,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
-	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
