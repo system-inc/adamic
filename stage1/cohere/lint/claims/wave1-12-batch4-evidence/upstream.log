@@ -1,0 +1,630 @@
+=== RUN   TestNoNonNullAssertedOptionalChainFires
+=== PAUSE TestNoNonNullAssertedOptionalChainFires
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent
+=== RUN   TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator
+=== PAUSE TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator
+=== RUN   TestNoThisAliasFires
+=== PAUSE TestNoThisAliasFires
+=== RUN   TestNoThisAliasStaysSilent
+=== PAUSE TestNoThisAliasStaysSilent
+=== RUN   TestNoThisAliasDeclinesJavaScript
+=== PAUSE TestNoThisAliasDeclinesJavaScript
+=== RUN   TestNoThisAliasPointsAtTheAliasItself
+=== PAUSE TestNoThisAliasPointsAtTheAliasItself
+=== RUN   TestNoThisAliasMessagesSayWhichJudgmentFired
+=== PAUSE TestNoThisAliasMessagesSayWhichJudgmentFired
+=== RUN   TestNoThisAliasDecodeMapsUpstreamSpellings
+=== PAUSE TestNoThisAliasDecodeMapsUpstreamSpellings
+=== RUN   TestNoUnnecessaryTypeConstraintFires
+=== PAUSE TestNoUnnecessaryTypeConstraintFires
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== CONT  TestNoNonNullAssertedOptionalChainFires
+=== RUN   TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_member_chain
+=== PAUSE TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_member_chain
+=== RUN   TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_call_chain
+=== PAUSE TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_call_chain
+=== RUN   TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_an_element_chain
+=== PAUSE TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_an_element_chain
+=== RUN   TestNoNonNullAssertedOptionalChainFires/an_assertion_after_an_optional_call
+=== PAUSE TestNoNonNullAssertedOptionalChainFires/an_assertion_after_an_optional_call
+=== RUN   TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_longer_chain
+=== PAUSE TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_longer_chain
+=== RUN   TestNoNonNullAssertedOptionalChainFires/an_assertion_wrapping_a_parenthesized_chain
+=== PAUSE TestNoNonNullAssertedOptionalChainFires/an_assertion_wrapping_a_parenthesized_chain
+=== RUN   TestNoNonNullAssertedOptionalChainFires/a_parenthesized_chain_then_a_member
+=== PAUSE TestNoNonNullAssertedOptionalChainFires/a_parenthesized_chain_then_a_member
+=== RUN   TestNoNonNullAssertedOptionalChainFires/a_parenthesized_chain_then_a_call
+=== PAUSE TestNoNonNullAssertedOptionalChainFires/a_parenthesized_chain_then_a_call
+=== RUN   TestNoNonNullAssertedOptionalChainFires/a_parenthesized_assertion_at_chain_end
+=== PAUSE TestNoNonNullAssertedOptionalChainFires/a_parenthesized_assertion_at_chain_end
+=== CONT  TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_member_chain
+=== CONT  TestNoThisAliasMessagesSayWhichJudgmentFired
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent
+--- PASS: TestNoThisAliasMessagesSayWhichJudgmentFired (0.00s)
+=== CONT  TestNoThisAliasFires
+=== CONT  TestNoThisAliasPointsAtTheAliasItself
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== RUN   TestNoThisAliasPointsAtTheAliasItself/an_identifier_alias
+=== PAUSE TestNoThisAliasPointsAtTheAliasItself/an_identifier_alias
+=== RUN   TestNoThisAliasPointsAtTheAliasItself/an_object_pattern
+=== PAUSE TestNoThisAliasPointsAtTheAliasItself/an_object_pattern
+=== RUN   TestNoThisAliasPointsAtTheAliasItself/an_array_pattern
+=== PAUSE TestNoThisAliasPointsAtTheAliasItself/an_array_pattern
+=== RUN   TestNoThisAliasPointsAtTheAliasItself/a_parenthesized_target
+=== PAUSE TestNoThisAliasPointsAtTheAliasItself/a_parenthesized_target
+=== RUN   TestNoThisAliasPointsAtTheAliasItself/a_target_through_a_type_assertion
+=== PAUSE TestNoThisAliasPointsAtTheAliasItself/a_target_through_a_type_assertion
+=== RUN   TestNoThisAliasPointsAtTheAliasItself/a_doubly_parenthesized_target
+=== PAUSE TestNoThisAliasPointsAtTheAliasItself/a_doubly_parenthesized_target
+=== RUN   TestNoThisAliasPointsAtTheAliasItself/an_object_destructuring_assignment
+=== PAUSE TestNoThisAliasPointsAtTheAliasItself/an_object_destructuring_assignment
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== CONT  TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator
+=== RUN   TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator/a_property_access
+=== PAUSE TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator/a_property_access
+=== RUN   TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator/a_call
+=== PAUSE TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator/a_call
+=== CONT  TestNoThisAliasStaysSilent
+=== RUN   TestNoThisAliasStaysSilent/an_object_pattern_with_destructuring_allowed
+=== PAUSE TestNoThisAliasStaysSilent/an_object_pattern_with_destructuring_allowed
+=== RUN   TestNoThisAliasStaysSilent/a_single-member_object_pattern
+=== PAUSE TestNoThisAliasStaysSilent/a_single-member_object_pattern
+=== RUN   TestNoThisAliasStaysSilent/a_two-member_object_pattern
+=== PAUSE TestNoThisAliasStaysSilent/a_two-member_object_pattern
+=== RUN   TestNoThisAliasStaysSilent/a_single-element_array_pattern
+=== PAUSE TestNoThisAliasStaysSilent/a_single-element_array_pattern
+=== RUN   TestNoThisAliasStaysSilent/a_two-element_array_pattern
+=== PAUSE TestNoThisAliasStaysSilent/a_two-element_array_pattern
+=== RUN   TestNoThisAliasStaysSilent/an_allow_list_naming_the_alias
+=== PAUSE TestNoThisAliasStaysSilent/an_allow_list_naming_the_alias
+=== RUN   TestNoThisAliasStaysSilent/the_typo'd_allow_list_naming_the_alias
+=== PAUSE TestNoThisAliasStaysSilent/the_typo'd_allow_list_naming_the_alias
+=== RUN   TestNoThisAliasStaysSilent/a_parenthesized_initializer
+=== PAUSE TestNoThisAliasStaysSilent/a_parenthesized_initializer
+=== RUN   TestNoThisAliasStaysSilent/an_initializer_through_a_type_assertion
+=== PAUSE TestNoThisAliasStaysSilent/an_initializer_through_a_type_assertion
+=== RUN   TestNoThisAliasStaysSilent/an_initializer_through_a_non-null_assertion
+=== PAUSE TestNoThisAliasStaysSilent/an_initializer_through_a_non-null_assertion
+=== RUN   TestNoThisAliasStaysSilent/an_initializer_through_satisfies
+=== PAUSE TestNoThisAliasStaysSilent/an_initializer_through_satisfies
+=== RUN   TestNoThisAliasStaysSilent/an_initializer_inside_a_comma_expression
+=== PAUSE TestNoThisAliasStaysSilent/an_initializer_inside_a_comma_expression
+=== RUN   TestNoThisAliasStaysSilent/an_assignment_to_a_property_of_this
+=== PAUSE TestNoThisAliasStaysSilent/an_assignment_to_a_property_of_this
+=== RUN   TestNoThisAliasStaysSilent/an_assignment_to_a_nested_property
+=== PAUSE TestNoThisAliasStaysSilent/an_assignment_to_a_nested_property
+=== RUN   TestNoThisAliasStaysSilent/an_assignment_to_an_element_access
+=== PAUSE TestNoThisAliasStaysSilent/an_assignment_to_an_element_access
+=== RUN   TestNoThisAliasStaysSilent/an_object_pattern_with_no_configuration_at_all
+=== PAUSE TestNoThisAliasStaysSilent/an_object_pattern_with_no_configuration_at_all
+=== RUN   TestNoThisAliasStaysSilent/an_array_pattern_with_no_configuration_at_all
+=== PAUSE TestNoThisAliasStaysSilent/an_array_pattern_with_no_configuration_at_all
+=== RUN   TestNoThisAliasStaysSilent/a_destructuring_assignment_with_no_configuration_at_all
+=== PAUSE TestNoThisAliasStaysSilent/a_destructuring_assignment_with_no_configuration_at_all
+=== RUN   TestNoThisAliasStaysSilent/a_class_property_holding_this
+=== PAUSE TestNoThisAliasStaysSilent/a_class_property_holding_this
+=== RUN   TestNoThisAliasStaysSilent/an_initializer_reading_a_member_of_this
+=== PAUSE TestNoThisAliasStaysSilent/an_initializer_reading_a_member_of_this
+=== RUN   TestNoThisAliasStaysSilent/a_declaration_with_no_initializer
+=== PAUSE TestNoThisAliasStaysSilent/a_declaration_with_no_initializer
+=== RUN   TestNoThisAliasStaysSilent/a_comparison_against_this
+=== PAUSE TestNoThisAliasStaysSilent/a_comparison_against_this
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_a_member
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_a_member
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_a_call
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_a_call
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_an_element_access
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_an_element_access
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain,_longer
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain,_longer
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_inside_a_computed_property
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_inside_a_computed_property
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_in_an_argument
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_in_an_argument
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_with_no_chain
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_with_no_chain
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_then_a_plain_member
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_then_a_plain_member
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/a_doubled_assertion_with_no_chain
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/a_doubled_assertion_with_no_chain
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/a_chain_with_no_assertion
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/a_chain_with_no_assertion
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/a_chain_in_a_parenthesis_with_no_assertion
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/a_chain_in_a_parenthesis_with_no_assertion
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_before_an_optional_access
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_before_an_optional_access
+=== RUN   TestNoNonNullAssertedOptionalChainStaysSilent/a_definite_assignment
+=== PAUSE TestNoNonNullAssertedOptionalChainStaysSilent/a_definite_assignment
+=== CONT  TestNoNonNullAssertedOptionalChainFires/a_parenthesized_assertion_at_chain_end
+=== CONT  TestNoNonNullAssertedOptionalChainFires/an_assertion_wrapping_a_parenthesized_chain
+=== CONT  TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_longer_chain
+=== CONT  TestNoNonNullAssertedOptionalChainFires/an_assertion_after_an_optional_call
+=== CONT  TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_an_element_chain
+=== CONT  TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_call_chain
+=== RUN   TestNoThisAliasFires/an_identifier_alias_with_no_configuration
+=== PAUSE TestNoThisAliasFires/an_identifier_alias_with_no_configuration
+=== RUN   TestNoThisAliasFires/an_object_pattern_with_destructuring_disallowed
+=== PAUSE TestNoThisAliasFires/an_object_pattern_with_destructuring_disallowed
+=== RUN   TestNoThisAliasFires/an_array_pattern_with_destructuring_disallowed
+=== PAUSE TestNoThisAliasFires/an_array_pattern_with_destructuring_disallowed
+=== RUN   TestNoThisAliasFires/an_assignment_to_an_existing_binding
+=== PAUSE TestNoThisAliasFires/an_assignment_to_an_existing_binding
+=== RUN   TestNoThisAliasFires/an_assignment_through_a_type_assertion
+=== PAUSE TestNoThisAliasFires/an_assignment_through_a_type_assertion
+=== RUN   TestNoThisAliasFires/an_alias_inside_a_function
+=== PAUSE TestNoThisAliasFires/an_alias_inside_a_function
+=== RUN   TestNoThisAliasFires/an_alias_inside_an_arrow_function
+=== PAUSE TestNoThisAliasFires/an_alias_inside_an_arrow_function
+=== RUN   TestNoThisAliasFires/a_class_with_every_shape_at_once
+=== PAUSE TestNoThisAliasFires/a_class_with_every_shape_at_once
+=== RUN   TestNoThisAliasFires/an_allow_list_naming_a_different_name
+=== PAUSE TestNoThisAliasFires/an_allow_list_naming_a_different_name
+=== RUN   TestNoThisAliasFires/the_typo'd_allow_list_naming_a_different_name
+=== PAUSE TestNoThisAliasFires/the_typo'd_allow_list_naming_a_different_name
+=== RUN   TestNoThisAliasFires/a_compound_assignment
+=== PAUSE TestNoThisAliasFires/a_compound_assignment
+=== RUN   TestNoThisAliasFires/a_nullish_assignment
+=== PAUSE TestNoThisAliasFires/a_nullish_assignment
+=== RUN   TestNoThisAliasFires/a_parenthesized_assignment_target
+=== PAUSE TestNoThisAliasFires/a_parenthesized_assignment_target
+=== RUN   TestNoThisAliasFires/a_doubly_parenthesized_assignment_target
+=== PAUSE TestNoThisAliasFires/a_doubly_parenthesized_assignment_target
+=== RUN   TestNoThisAliasFires/an_assignment_through_satisfies
+=== PAUSE TestNoThisAliasFires/an_assignment_through_satisfies
+=== RUN   TestNoThisAliasFires/an_assignment_through_a_non-null_assertion
+=== PAUSE TestNoThisAliasFires/an_assignment_through_a_non-null_assertion
+=== RUN   TestNoThisAliasFires/an_array_destructuring_assignment
+=== PAUSE TestNoThisAliasFires/an_array_destructuring_assignment
+=== RUN   TestNoThisAliasFires/an_object_destructuring_assignment
+=== PAUSE TestNoThisAliasFires/an_object_destructuring_assignment
+=== RUN   TestNoThisAliasFires/two_declarators_in_one_declaration
+=== PAUSE TestNoThisAliasFires/two_declarators_in_one_declaration
+=== CONT  TestNoNonNullAssertedOptionalChainFires/a_parenthesized_chain_then_a_call
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoNonNullAssertedOptionalChainFires/a_parenthesized_chain_then_a_member
+--- PASS: TestNoNonNullAssertedOptionalChainFires (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_member_chain (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainFires/a_parenthesized_assertion_at_chain_end (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainFires/an_assertion_wrapping_a_parenthesized_chain (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_longer_chain (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainFires/an_assertion_after_an_optional_call (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_an_element_chain (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainFires/an_assertion_ending_a_call_chain (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainFires/a_parenthesized_chain_then_a_call (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainFires/a_parenthesized_chain_then_a_member (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintFires
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== CONT  TestNoThisAliasDeclinesJavaScript
+=== CONT  TestNoThisAliasDecodeMapsUpstreamSpellings
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== CONT  TestNoThisAliasPointsAtTheAliasItself/an_identifier_alias
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+--- PASS: TestNoThisAliasDeclinesJavaScript (0.00s)
+=== CONT  TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator/a_property_access
+=== CONT  TestNoThisAliasPointsAtTheAliasItself/an_object_destructuring_assignment
+=== CONT  TestNoThisAliasPointsAtTheAliasItself/a_doubly_parenthesized_target
+=== CONT  TestNoThisAliasPointsAtTheAliasItself/a_target_through_a_type_assertion
+=== CONT  TestNoThisAliasPointsAtTheAliasItself/a_parenthesized_target
+=== CONT  TestNoThisAliasPointsAtTheAliasItself/an_array_pattern
+=== CONT  TestNoThisAliasPointsAtTheAliasItself/an_object_pattern
+--- PASS: TestNoThisAliasPointsAtTheAliasItself (0.00s)
+    --- PASS: TestNoThisAliasPointsAtTheAliasItself/an_identifier_alias (0.00s)
+    --- PASS: TestNoThisAliasPointsAtTheAliasItself/an_object_destructuring_assignment (0.00s)
+    --- PASS: TestNoThisAliasPointsAtTheAliasItself/a_doubly_parenthesized_target (0.00s)
+    --- PASS: TestNoThisAliasPointsAtTheAliasItself/a_target_through_a_type_assertion (0.00s)
+    --- PASS: TestNoThisAliasPointsAtTheAliasItself/a_parenthesized_target (0.00s)
+    --- PASS: TestNoThisAliasPointsAtTheAliasItself/an_array_pattern (0.00s)
+    --- PASS: TestNoThisAliasPointsAtTheAliasItself/an_object_pattern (0.00s)
+=== CONT  TestNoThisAliasStaysSilent/an_object_pattern_with_destructuring_allowed
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_a_member
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== CONT  TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator/a_call
+--- PASS: TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator/a_property_access (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainSuggestsRemovingTheOperator/a_call (0.00s)
+=== CONT  TestNoThisAliasFires/an_identifier_alias_with_no_configuration
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== CONT  TestNoThisAliasStaysSilent/a_comparison_against_this
+=== CONT  TestNoThisAliasStaysSilent/a_declaration_with_no_initializer
+=== CONT  TestNoThisAliasStaysSilent/an_initializer_reading_a_member_of_this
+=== CONT  TestNoThisAliasStaysSilent/a_class_property_holding_this
+=== CONT  TestNoThisAliasStaysSilent/a_destructuring_assignment_with_no_configuration_at_all
+--- PASS: TestNoUnnecessaryTypeConstraintStaysSilent (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{} (0.00s)
+=== CONT  TestNoThisAliasStaysSilent/an_array_pattern_with_no_configuration_at_all
+=== CONT  TestNoThisAliasStaysSilent/an_object_pattern_with_no_configuration_at_all
+=== CONT  TestNoThisAliasStaysSilent/an_assignment_to_an_element_access
+=== CONT  TestNoThisAliasStaysSilent/an_assignment_to_a_nested_property
+=== CONT  TestNoThisAliasStaysSilent/an_assignment_to_a_property_of_this
+=== CONT  TestNoThisAliasStaysSilent/an_initializer_inside_a_comma_expression
+=== CONT  TestNoThisAliasStaysSilent/an_initializer_through_satisfies
+=== CONT  TestNoThisAliasStaysSilent/an_initializer_through_a_non-null_assertion
+=== CONT  TestNoThisAliasStaysSilent/an_initializer_through_a_type_assertion
+=== CONT  TestNoThisAliasStaysSilent/the_typo'd_allow_list_naming_the_alias
+=== CONT  TestNoThisAliasStaysSilent/a_parenthesized_initializer
+=== CONT  TestNoThisAliasStaysSilent/an_allow_list_naming_the_alias
+=== CONT  TestNoThisAliasStaysSilent/a_two-element_array_pattern
+=== CONT  TestNoThisAliasStaysSilent/a_single-element_array_pattern
+=== CONT  TestNoThisAliasStaysSilent/a_two-member_object_pattern
+=== CONT  TestNoThisAliasStaysSilent/a_single-member_object_pattern
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/a_definite_assignment
+--- PASS: TestNoThisAliasStaysSilent (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_object_pattern_with_destructuring_allowed (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/a_comparison_against_this (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/a_declaration_with_no_initializer (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_initializer_reading_a_member_of_this (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/a_class_property_holding_this (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/a_destructuring_assignment_with_no_configuration_at_all (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_array_pattern_with_no_configuration_at_all (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_object_pattern_with_no_configuration_at_all (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_assignment_to_a_nested_property (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_assignment_to_a_property_of_this (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_assignment_to_an_element_access (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_initializer_inside_a_comma_expression (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_initializer_through_satisfies (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_initializer_through_a_non-null_assertion (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_initializer_through_a_type_assertion (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/a_parenthesized_initializer (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/the_typo'd_allow_list_naming_the_alias (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/a_two-element_array_pattern (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/a_single-element_array_pattern (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/an_allow_list_naming_the_alias (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/a_two-member_object_pattern (0.00s)
+    --- PASS: TestNoThisAliasStaysSilent/a_single-member_object_pattern (0.00s)
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== RUN   TestNoThisAliasDecodeMapsUpstreamSpellings/an_empty_object_leaves_upstream's_permissive_default
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/a_chain_in_a_parenthesis_with_no_assertion
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/a_chain_with_no_assertion
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/a_doubled_assertion_with_no_chain
+=== PAUSE TestNoThisAliasDecodeMapsUpstreamSpellings/an_empty_object_leaves_upstream's_permissive_default
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_then_a_plain_member
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_with_no_chain
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_in_an_argument
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_inside_a_computed_property
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain,_longer
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_an_element_access
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_a_call
+=== CONT  TestNoThisAliasFires/an_allow_list_naming_a_different_name
+=== CONT  TestNoThisAliasFires/two_declarators_in_one_declaration
+=== CONT  TestNoThisAliasFires/an_object_destructuring_assignment
+=== CONT  TestNoThisAliasFires/an_array_destructuring_assignment
+=== CONT  TestNoThisAliasFires/an_assignment_through_a_non-null_assertion
+=== CONT  TestNoThisAliasFires/an_assignment_through_satisfies
+=== CONT  TestNoThisAliasFires/a_doubly_parenthesized_assignment_target
+=== CONT  TestNoThisAliasFires/a_parenthesized_assignment_target
+=== CONT  TestNoThisAliasFires/a_nullish_assignment
+=== CONT  TestNoThisAliasFires/a_compound_assignment
+=== CONT  TestNoThisAliasFires/the_typo'd_allow_list_naming_a_different_name
+=== CONT  TestNoThisAliasFires/an_array_pattern_with_destructuring_disallowed
+=== CONT  TestNoThisAliasFires/a_class_with_every_shape_at_once
+=== CONT  TestNoThisAliasFires/an_alias_inside_an_arrow_function
+=== CONT  TestNoThisAliasFires/an_alias_inside_a_function
+=== CONT  TestNoThisAliasFires/an_assignment_through_a_type_assertion
+=== CONT  TestNoThisAliasFires/an_assignment_to_an_existing_binding
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoThisAliasFires/an_object_pattern_with_destructuring_disallowed
+--- PASS: TestNoThisAliasFires (0.00s)
+    --- PASS: TestNoThisAliasFires/an_identifier_alias_with_no_configuration (0.00s)
+    --- PASS: TestNoThisAliasFires/an_allow_list_naming_a_different_name (0.00s)
+    --- PASS: TestNoThisAliasFires/two_declarators_in_one_declaration (0.00s)
+    --- PASS: TestNoThisAliasFires/an_object_destructuring_assignment (0.00s)
+    --- PASS: TestNoThisAliasFires/an_array_destructuring_assignment (0.00s)
+    --- PASS: TestNoThisAliasFires/an_assignment_through_a_non-null_assertion (0.00s)
+    --- PASS: TestNoThisAliasFires/an_assignment_through_satisfies (0.00s)
+    --- PASS: TestNoThisAliasFires/a_doubly_parenthesized_assignment_target (0.00s)
+    --- PASS: TestNoThisAliasFires/a_parenthesized_assignment_target (0.00s)
+    --- PASS: TestNoThisAliasFires/a_nullish_assignment (0.00s)
+    --- PASS: TestNoThisAliasFires/a_compound_assignment (0.00s)
+    --- PASS: TestNoThisAliasFires/the_typo'd_allow_list_naming_a_different_name (0.00s)
+    --- PASS: TestNoThisAliasFires/an_array_pattern_with_destructuring_disallowed (0.00s)
+    --- PASS: TestNoThisAliasFires/a_class_with_every_shape_at_once (0.00s)
+    --- PASS: TestNoThisAliasFires/an_alias_inside_an_arrow_function (0.00s)
+    --- PASS: TestNoThisAliasFires/an_alias_inside_a_function (0.00s)
+    --- PASS: TestNoThisAliasFires/an_assignment_through_a_type_assertion (0.00s)
+    --- PASS: TestNoThisAliasFires/an_assignment_to_an_existing_binding (0.00s)
+    --- PASS: TestNoThisAliasFires/an_object_pattern_with_destructuring_disallowed (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+--- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{}; (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+--- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim (0.01s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== RUN   TestNoThisAliasDecodeMapsUpstreamSpellings/allowDestructuring_true_is_the_default_spelled_out
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== PAUSE TestNoThisAliasDecodeMapsUpstreamSpellings/allowDestructuring_true_is_the_default_spelled_out
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== RUN   TestNoThisAliasDecodeMapsUpstreamSpellings/allowDestructuring_false_turns_reporting_on
+=== PAUSE TestNoThisAliasDecodeMapsUpstreamSpellings/allowDestructuring_false_turns_reporting_on
+=== RUN   TestNoThisAliasDecodeMapsUpstreamSpellings/allowedNames_binds
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== PAUSE TestNoThisAliasDecodeMapsUpstreamSpellings/allowedNames_binds
+=== RUN   TestNoThisAliasDecodeMapsUpstreamSpellings/the_typo'd_allowNames_binds_the_same_field
+=== PAUSE TestNoThisAliasDecodeMapsUpstreamSpellings/the_typo'd_allowNames_binds_the_same_field
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== RUN   TestNoThisAliasDecodeMapsUpstreamSpellings/both_spellings_at_once_prefers_the_correct_one
+=== PAUSE TestNoThisAliasDecodeMapsUpstreamSpellings/both_spellings_at_once_prefers_the_correct_one
+=== CONT  TestNoThisAliasDecodeMapsUpstreamSpellings/an_empty_object_leaves_upstream's_permissive_default
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== CONT  TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_before_an_optional_access
+=== CONT  TestNoThisAliasDecodeMapsUpstreamSpellings/both_spellings_at_once_prefers_the_correct_one
+=== CONT  TestNoThisAliasDecodeMapsUpstreamSpellings/the_typo'd_allowNames_binds_the_same_field
+=== CONT  TestNoThisAliasDecodeMapsUpstreamSpellings/allowedNames_binds
+=== CONT  TestNoThisAliasDecodeMapsUpstreamSpellings/allowDestructuring_false_turns_reporting_on
+=== CONT  TestNoThisAliasDecodeMapsUpstreamSpellings/allowDestructuring_true_is_the_default_spelled_out
+--- PASS: TestNoThisAliasDecodeMapsUpstreamSpellings (0.01s)
+    --- PASS: TestNoThisAliasDecodeMapsUpstreamSpellings/an_empty_object_leaves_upstream's_permissive_default (0.00s)
+    --- PASS: TestNoThisAliasDecodeMapsUpstreamSpellings/both_spellings_at_once_prefers_the_correct_one (0.00s)
+    --- PASS: TestNoThisAliasDecodeMapsUpstreamSpellings/the_typo'd_allowNames_binds_the_same_field (0.00s)
+    --- PASS: TestNoThisAliasDecodeMapsUpstreamSpellings/allowedNames_binds (0.00s)
+    --- PASS: TestNoThisAliasDecodeMapsUpstreamSpellings/allowDestructuring_false_turns_reporting_on (0.00s)
+    --- PASS: TestNoThisAliasDecodeMapsUpstreamSpellings/allowDestructuring_true_is_the_default_spelled_out (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+--- PASS: TestNoUnnecessaryTypeConstraintFires (0.02s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01 (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{} (0.00s)
+--- PASS: TestNoNonNullAssertedOptionalChainStaysSilent (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_a_member (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/a_definite_assignment (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/a_chain_in_a_parenthesis_with_no_assertion (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/a_chain_with_no_assertion (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_then_a_plain_member (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_with_no_chain (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_in_an_argument (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_inside_a_computed_property (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain,_longer (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_an_element_access (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_mid-chain_before_a_call (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/an_assertion_before_an_optional_access (0.00s)
+    --- PASS: TestNoNonNullAssertedOptionalChainStaysSilent/a_doubled_assertion_with_no_chain (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.032s

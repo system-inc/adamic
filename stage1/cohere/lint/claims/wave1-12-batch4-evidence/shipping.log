@@ -1,0 +1,9 @@
+=== RUN   TestAliasUpstream
+    wave12_overlay_test.go:93: cohere cases: 40 unique source/rule/options combinations
+    wave12_overlay_test.go:100: Go, Node, emitted JavaScript, native identical: 15665 bytes
+--- PASS: TestAliasUpstream (25.35s)
+=== RUN   TestAliasOptions
+    wave12_overlay_test.go:111: Go, Node, emitted JavaScript, native identical: 95230 bytes
+--- PASS: TestAliasOptions (21.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	46.531s

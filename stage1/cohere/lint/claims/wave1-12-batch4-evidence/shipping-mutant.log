@@ -1,0 +1,42 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/this_alias_allowed_name_ignored
+    lint_test.go:491: this_alias_allowed_name_ignored caught on Node: case 24 line 522: port "fixed\tconst self = this;\\u000alet alias; alias += this;\\u000aconst { x } = this;\\u000aconst quiet = (this);\\u000athis.member = this;\\u000a", Go "/tmp/adamic-gate/TestMutantsthis_alias_allowed_name_ignored1459611732/007/typescript-no-this-alias-0.ts:1:7"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsthis_alias_allowed_name_ignored1459611732/007/typescript-no-this-alias-0.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment 		
+        /tmp/adamic-gate/TestMutantsthis_alias_allowed_name_ignored1459611732/007/typescript-no-this-alias-0.ts:2:12
+    lint_test.go:491: this_alias_allowed_name_ignored caught on emitted JavaScript: case 24 line 522: port "fixed\tconst self = this;\\u000alet alias; alias += this;\\u000aconst { x } = this;\\u000aconst quiet = (this);\\u000athis.member = this;\\u000a", Go "/tmp/adamic-gate/TestMutantsthis_alias_allowed_name_ignored1459611732/007/typescript-no-this-alias-0.ts:1:7"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsthis_alias_allowed_name_ignored1459611732/007/typescript-no-this-alias-0.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment 		
+        /tmp/adamic-gate/TestMutantsthis_alias_allowed_name_ignored1459611732/007/typescript-no-this-alias-0.ts:2:12
+    lint_test.go:491: this_alias_allowed_name_ignored caught on native: case 24 line 522: port "fixed\tconst self = this;\\u000alet alias; alias += this;\\u000aconst { x } = this;\\u000aconst quiet = (this);\\u000athis.member = this;\\u000a", Go "/tmp/adamic-gate/TestMutantsthis_alias_allowed_name_ignored1459611732/007/typescript-no-this-alias-0.ts:1:7"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsthis_alias_allowed_name_ignored1459611732/007/typescript-no-this-alias-0.ts:1:7
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 6 10 thisAssignment 		
+        /tmp/adamic-gate/TestMutantsthis_alias_allowed_name_ignored1459611732/007/typescript-no-this-alias-0.ts:2:12
+--- PASS: TestMutants (26.38s)
+    --- PASS: TestMutants/this_alias_allowed_name_ignored (23.28s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	26.400s

@@ -1,0 +1,40 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 218 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 12629606 bytes
+--- PASS: TestCompilerAndStage1Agree (50.16s)
+=== RUN   TestAliasOptions
+    wave12_overlay_test.go:111: /tmp/adamic-gate/TestAliasOptions2797965548/002/oracle [--manifest /tmp/adamic-gate/TestAliasOptions2797965548/005/manifest.txt]: exit status 2
+        panic: fix failed: /tmp/adamic-gate/TestAliasOptions2797965548/001/options.js does not parse before any fix is applied (TS17008: JSX element 'any' has no corresponding closing tag. (and 1 more)) {FileName:/tmp/adamic-gate/TestAliasOptions2797965548/001/options.js Text:const self = this; const other = this; const {x} = this; [x] = this; ({x} = this); (q as any) = this; ({x}) = this; ([x]) = this; obj.member = this; const quiet = (this);
+        	(<any>q) = this;
+        	 Changed:false Passes:0 Applied:[] Rejected:[] Converged:false UnconvergedRules:[] Transformed:false TransformSkipped:false TransformSkipReason: Failed:false}
+        
+        goroutine 1 [running]:
+        main.run({0x1f4615697f6e?, 0x1f46158f4940?}, 0x0, 0x1f46158f4940)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:82 +0x8d4
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:143 +0x2f7
+--- FAIL: TestAliasOptions (23.61s)
+=== RUN   TestAliasThroughput
+    wave12_overlay_test.go:138: @typescript-eslint/no-this-alias: compiler alone 77 files findings=0
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 1 Go 0.309642s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 1 native 1.692248s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 1 Node 1.099470s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 2 Go 0.252872s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 2 native 1.473211s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 2 Node 1.123067s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 3 Go 0.253402s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 3 native 1.517399s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 3 Node 1.021758s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 4 Go 0.238935s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 4 native 1.521024s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 4 Node 1.092236s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 5 Go 0.271014s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 5 native 1.507510s findings=1000
+    wave12_overlay_test.go:170: @typescript-eslint/no-this-alias round 5 Node 1.080948s findings=1000
+    wave12_overlay_test.go:178: @typescript-eslint/no-this-alias best of 5 Go 0.238935s 4185.25 findings/s (78 files, 1000 findings)
+    wave12_overlay_test.go:178: @typescript-eslint/no-this-alias best of 5 native 1.473211s 678.79 findings/s (78 files, 1000 findings)
+    wave12_overlay_test.go:178: @typescript-eslint/no-this-alias best of 5 Node 1.021758s 978.71 findings/s (78 files, 1000 findings)
+--- PASS: TestAliasThroughput (21.95s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	95.738s
+FAIL

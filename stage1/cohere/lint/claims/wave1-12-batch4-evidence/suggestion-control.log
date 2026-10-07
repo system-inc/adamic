@@ -1,0 +1,17 @@
+=== RUN   TestSuggestionRangesExceedSharedContract
+    suggestions_test.go:54: @typescript-eslint/no-non-null-asserted-optional-chain did not expose the range mismatch: <nil> case 0
+        /workspace/adamic/stage1/cohere/lint/claims/wave1-12-batch4-evidence/optional.ts.txt:1:15
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 14 23 noNonNullOptionalChain 		
+        fixed	const value = foo?.bar!;\u000a
+    suggestions_test.go:54: @typescript-eslint/no-unnecessary-type-constraint did not expose the range mismatch: <nil> case 0
+        /workspace/adamic/stage1/cohere/lint/claims/wave1-12-batch4-evidence/constraint.ts.txt:1:16
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 15 16 noUnnecessaryTypeConstraint 		
+        fixed	function value<T extends any>() {}\u000a
+--- FAIL: TestSuggestionRangesExceedSharedContract (7.78s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/claims/wave1-12-batch4-evidence	7.783s
+FAIL

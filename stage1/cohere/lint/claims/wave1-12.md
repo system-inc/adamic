@@ -284,3 +284,17 @@ remaining inventory entries with needs_type_information=false are claimed:
 3. @typescript-eslint/no-unnecessary-type-constraint
 
 This claim is pushed before new code.
+
+### Fourth-batch outcome after Ahra's correction
+
+This-alias implementation e41b30da uses temporary .ts modules as authorized.
+Forty original cases with filenames/options preserved, the option matrix and
+218 compiler/stage1 files agree across Go, Node, emitted JavaScript and sanitized
+native through the previously proposed scratch overlay. Its compiling semantic
+mutant is caught by comparison on all three backends; own lint/format passes.
+
+The optional-chain and constraint rules are blocked because the unchanged shared
+serializer rejects their legitimate suggestion subranges. Dropping those edits
+would break parity. No shared files are edited and no additional claim is made.
+Work stops at those exact blockers, as instructed. Full evidence and rates are
+in [the fourth-batch report](wave1-12-batch4-evidence/REPORT.md).

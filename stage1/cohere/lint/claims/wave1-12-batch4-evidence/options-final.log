@@ -1,0 +1,8 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 14208 bytes
+--- PASS: TestOwnedWitnesses (23.09s)
+=== RUN   TestAliasOptions
+    wave12_overlay_test.go:110: Go, Node, emitted JavaScript, native identical: 77180 bytes
+--- PASS: TestAliasOptions (21.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	44.321s

@@ -1,0 +1,18 @@
+package main
+
+import (
+	"github.com/system-inc/cohere/internal/lint/rule"
+	rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
+)
+
+type registeredRule struct {
+	subject rule.Rule
+	options func([]string) any
+}
+
+func registeredRules() []registeredRule {
+	return []registeredRule{
+		{rules.NoNonNullAssertedOptionalChain, func([]string) any { return nil }},
+		{rules.NoUnnecessaryTypeConstraint, func([]string) any { return nil }},
+	}
+}
