@@ -1,7 +1,9 @@
 package native
 
 import (
+	"crypto/sha256"
 	"embed"
+	"encoding/hex"
 	"fmt"
 	"os"
 	"os/exec"
@@ -15,7 +17,7 @@ import (
 // objc_msgSend, its arguments converted on the way in and its result on the way out, by
 // apple/apple.c (docs/apple.md).
 
-//go:embed apple/*.c apple/*.h
+//go:embed apple/*.c apple/*.h apple/*.swift
 var apple embed.FS
 
 // UsesApple reports whether a program calls into Apple's frameworks, and so builds with them.
@@ -103,6 +105,9 @@ func (e *emitter) foreignBody(function ir.Function) {
 			}
 		case ir.NativeRectangle:
 			value = "adamic_apple_rectangle_from(" + parameter(argument) + ")"
+		case ir.NativeObjects:
+			value = "adamic_apple_objects(" + parameter(argument) + ")"
+			cleanups = append(cleanups, "adamic_apple_let_go("+name+");")
 		case ir.NativeEnumeration, ir.NativeOptions:
 			names, values := []string{}, []string{}
 			for member, memberName := range argument.Type.Names {
@@ -197,7 +202,7 @@ func (e *emitter) foreignReturn(function ir.Function, result string) {
 	// What Apple promises isn't nil, or what new made, is checked: nil there panics, never trusted.
 	what := cString(strings.TrimSpace(foreign.Class + " " + foreign.Selector))
 	switch {
-	case foreign.Kind == ir.Construct:
+	case foreign.Kind == ir.Construct && foreign.Returns.Kind == ir.NativeObject:
 		e.line("return adamic_apple_box(adamic_apple_constructed(adamic_apple_present(%s, %s)), true);", result, what)
 	case function.Returns == 0:
 	case foreign.Returns.Kind == ir.NativeObject && !foreign.Returns.Nullable:
@@ -326,6 +331,46 @@ func (e *emitter) blockFunctions(block ir.NativeType) string {
 	return name
 }
 
+// swiftUIShim is swiftui.swift compiled to an object, cached under the user cache directory by the
+// source and swiftc's version, so a build after the first takes no Swift compile.
+func swiftUIShim() (string, error) {
+	source, err := apple.ReadFile("apple/swiftui.swift")
+	if err != nil {
+		return "", fmt.Errorf("native: %w", err)
+	}
+	version, err := exec.Command("xcrun", "swiftc", "--version").CombinedOutput()
+	if err != nil {
+		return "", fmt.Errorf("native: swiftc --version: %w\n%s", err, version)
+	}
+	cache, err := os.UserCacheDir()
+	if err != nil {
+		return "", fmt.Errorf("native: cache directory: %w", err)
+	}
+	key := sha256.Sum256(append(append([]byte{}, source...), version...))
+	directory := filepath.Join(cache, "adamic", "swiftui", hex.EncodeToString(key[:]))
+	object := filepath.Join(directory, "swiftui.o")
+	if _, err := os.Stat(object); err == nil {
+		return object, nil
+	}
+	if err := os.MkdirAll(directory, 0o755); err != nil {
+		return "", fmt.Errorf("native: %w", err)
+	}
+	sourcePath := filepath.Join(directory, "swiftui.swift")
+	if err := os.WriteFile(sourcePath, source, 0o644); err != nil {
+		return "", fmt.Errorf("native: %w", err)
+	}
+	// Written beside its final name and renamed, so a build running at the same time never links half
+	// an object.
+	partial := object + fmt.Sprintf(".%d", os.Getpid())
+	if combined, err := exec.Command("xcrun", "swiftc", "-parse-as-library", "-emit-object", "-O", "-module-name", "AdamicSwiftUI", "-target", "arm64-apple-macos15.0", sourcePath, "-o", partial).CombinedOutput(); err != nil {
+		return "", fmt.Errorf("native: swiftc failed: %w\n%s", err, combined)
+	}
+	if err := os.Rename(partial, object); err != nil {
+		return "", fmt.Errorf("native: %w", err)
+	}
+	return object, nil
+}
+
 // BuildApple compiles a program that calls Apple's frameworks: Build's, with the Objective-C
 // conversions compiled beside it and AppKit, Foundation and libobjc linked.
 func BuildApple(source string, output string, options Options) error {
@@ -363,6 +408,19 @@ func BuildApple(source string, output string, options Options) error {
 	arguments = append(arguments, units...)
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-framework", "AppKit", "-framework", "Foundation", "-framework", "CoreFoundation", "-lobjc")
+	// SwiftUI is Swift only: a program that names one of swiftui.swift's classes links it, compiled
+	// once for each version of it and of swiftc, and Swift's libraries with it.
+	if strings.Contains(source, "AdamicSwiftUI") {
+		shim, err := swiftUIShim()
+		if err != nil {
+			return err
+		}
+		sdk, err := exec.Command("xcrun", "--show-sdk-path").Output()
+		if err != nil {
+			return fmt.Errorf("native: the SDK's path: %w", err)
+		}
+		arguments = append(arguments, shim, "-framework", "SwiftUI", "-L", filepath.Join(strings.TrimSpace(string(sdk)), "usr", "lib", "swift"), "-L", "/usr/lib/swift", "-Xlinker", "-rpath", "-Xlinker", "/usr/lib/swift")
+	}
 	if combined, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}

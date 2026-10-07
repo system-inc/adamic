@@ -25,6 +25,7 @@ const fetched = UrlSession.shared.dataTask(stack, (data, response, error) => {
 		console.log(`error: ${error.localizedDescription}`);
 	} else if (data !== undefined && response !== undefined) {
 		console.log(`bytes: ${data.length}, type: ${response.mimeType}, expected: ${response.expectedContentLength}`);
+		console.log(`text: ${data.utf8Text() ?? 'not UTF-8'}`);
 	}
 	refused.resume();
 });

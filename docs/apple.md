@@ -37,9 +37,10 @@ constructor(contentRectangle: Rectangle, options: { readonly styleMask: readonly
 - `@objc static <selector> <arguments> -> <result>` is a message to the class (a constructor may be one, as `+[NSButton buttonWithTitle:target:action:]` is).
 - `@objc method <selector> <arguments> -> <result>` is a message to the object.
 - `@objc get <selector> -> <result>` and `@objc set <selector> <type>` are a property's getter and setter.
+- `@objc alloc <Class> <selector> <arguments> -> <result>` sends `alloc` to another class, then the init, its result retained: `data.utf8Text()` is `[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]`.
 - `@objc function <symbol> <arguments> -> <result>` is a C function: on its own, as a class's static member, or as an instance member, where the object is its first argument (`CFRunLoopStop(loop)` is `loop.stop()`).
 
-Each argument is `<source>:<type>`, in the selector's order. The source is the Adamic argument's position (`0`), a field of an options object written at the call (`1.styleMask`, or `1.defer?:boolean=no` where the field may be left out), or a constant (`nil`, `yes`, `no`). The types:
+Each argument is `<source>:<type>`, in the selector's order. The source is the Adamic argument's position (`0`), a field of an options object written at the call (`1.styleMask`, or `1.defer?:boolean=no` where the field may be left out), the object the member is called on (`this`), or a constant (`nil`, `yes`, `no`, or a number, `const(4)`). The types:
 
 | Tag | Native | Adamic |
 | --- | --- | --- |
@@ -58,6 +59,26 @@ Each argument is `<source>:<type>`, in the selector's order. The source is the A
 A result marked `-> new object` comes back retained (`alloc`, `new`, `copy`); any other object result is retained on its way into Adamic. A result Apple promises isn't `nil` (`object`, `string`), and whatever `new` makes, is checked: `nil` there panics, naming the selector, rather than reaching Adamic as a value its type says can't be. So `new Url('not a url')` panics, as Swift's `URL(string:)!` would.
 
 The seed bindings are written by hand for the first proof. The generator (#qxe07rq) writes them from the SDK's headers through clang's syntax tree, with the rename table (#cgs2gpc) choosing each Adamic name, and replaces them.
+
+## SwiftUI
+
+SwiftUI is Swift only: its views are generic value types no C can name. So `internal/native/apple/swiftui.swift` makes them Objective-C classes the bridge already reaches: an `AdamicSwiftUIView` holds an `AnyView`, made by class methods (`text:`, `button:action:`, `verticalStack:children:`) and changed by modifiers (`padding:`, `font:`), and an `AdamicSwiftUIHost` shows one in an `NSHostingView` and swaps it when the program renders again. It's compiled with `swiftc` once per version of it and of `swiftc`, cached under the user cache directory, and linked only into a program whose C names one of its classes. This first cut is written by hand; the generator writes it per API an app uses (#7xv3pcs), and then it's measured against calling Swift's stable binary interface directly.
+
+```ts
+const count = new State<number>(0);
+function body(): View {
+	return verticalStack({ spacing: 12 }, [
+		text(`Count: ${count.value}`).font('Title'),
+		button('Add one', () => count.set(count.value + 1)),
+	]).padding(20);
+}
+const host = new Host(body());
+renderWhenStateChanges(() => host.render(body()));
+```
+
+`State` (`apple/swiftui/state`) is written in Adamic, not declared: some `apple/` modules are Adamic code, embedded as `internal/load/apple/<path>.a` and served by the loader where the resolver looks for any package, one module however many directories import it (`internal/load/apple.go`). Setting a `State` renders again through whatever `renderWhenStateChanges` was given. Bindings for plain functions that message a class use `@objc send <Class> <selector>`, and an array of views crosses as an `NSArray` (`objects`).
+
+`examples/apple/counter.a` is the app.
 
 ## How a call is compiled
 
@@ -99,13 +120,16 @@ Node can't run AppKit, so an Apple program answers to a witness instead (`intern
 
 macOS's `leaks` tool isn't one of the checks. Inside an AppKit process it reports nothing for an object leaked on purpose, in plain Objective-C as in Adamic, though it finds the same leak in a program that only uses Foundation. A check that can't fail proves nothing.
 
-The test serves JSON from a server of its own and gives every program its address. `window.a` drives a window, a view, a label and a button through real target-action; `fetch.a` makes two requests through `URLSession`, one fetching the JSON and one refused, each completion a closure Apple calls as a block on a background queue.
+The test serves JSON from a server of its own and gives every program its address. `window.a` drives a window, a view, a label and a button through real target-action; `fetch.a` makes two requests through `URLSession`, one fetching the JSON and one refused, each completion a closure Apple calls as a block on a background queue; `counter.a` is a SwiftUI counter, held to `counter.swift`, the same view written as plain SwiftUI (where the API is Swift only, the witness is Swift). Both read the size SwiftUI lays the view out at: ten presses make the count a digit wider, 122 by 102 points becoming 131.5 by 102, so a render that didn't happen shows.
 
-Each check has been shown to fail: dropping the closure's release in an action's `dealloc` (allocations 47, frees 46), a box that retains what it was handed already retained (47, 46), draining the pool after the counts are reported (47, 46), dropping the last UTF-16 unit of a string coming back (the witness disagrees), never letting go of the `NSString`s made for arguments (73 owed), a block's dispose that keeps its holder (26, 24), a block's deliver that keeps the values it made (26, 23), and a block's invoke that calls Adamic without the hop to the main thread (the program panics).
+A SwiftUI button is pressed by running the block its `Button` holds, in both. SwiftUI's accessibility tree is empty until an assistive client connects, and its buttons aren't `NSButton`s, so nothing in process can reach the button itself: SwiftUI's own tap dispatch is the one step these tests don't exercise.
+
+Each check has been shown to fail: dropping the closure's release in an action's `dealloc` (allocations 47, frees 46), a box that retains what it was handed already retained (47, 46), draining the pool after the counts are reported (47, 46), dropping the last UTF-16 unit of a string coming back (the witness disagrees), never letting go of the `NSString`s made for arguments (73 owed), a block's dispose that keeps its holder (26, 24), a block's deliver that keeps the values it made (26, 23), and a block's invoke that calls Adamic without the hop to the main thread (the program panics), a `State` that doesn't render when it's set (the counter disagrees with its witness), and the shim keeping its buttons' actions past exit (119 allocated, 118 freed).
 
 ## Not yet
 
 - **Cycles through Apple.** An action's closure that captures something holding the control it's attached to is a cycle neither count can see. The cycle finder will treat what a foreign value holds as a slot that reaches anything unless it's `Weak`, and refuse the closing write, as it does for a map's values; a delegate is the test case.
 - **The rest of the bridge:** blocks that return a value or take a block, struct or enumeration; delegates and `NSObject` subclasses written as Adamic classes; rectangles, enumerations and options as results; options objects passed as a value rather than written at the call; compound assignment to an Apple property.
 - **Identity.** Two boxes of the same object aren't `===` yet.
+- **Retained results.** The release of a result that comes back retained (`alloc`, `new`, `copy`) is one line of emitted C that no check counts yet: dropping it would leak without the owed count noticing.
 - **The analyses.** A foreign callee is taken as unknown by region planning; the other analyses read its IR body, which only panics, until every analysis asks one place what a call can do (internal/ir/call_targets.go, landing from codex/call-targets), where a foreign callee will answer unknown. That matters beyond ownership: a foreign call can run Adamic code before it returns (`performClick` runs the button's closure), so nothing may assume a variable is unchanged across one. The native side never keeps a value without retaining it, so the counts hold either way.

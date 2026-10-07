@@ -9,6 +9,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs"
 )
 
 // Apple's frameworks reach Adamic through binding files: declarations of what an apple/ module
@@ -79,6 +80,57 @@ func appleRoots(source *sourceFS, roots []string, overlay map[string]string) []s
 		}
 	}
 	return added
+}
+
+// Some apple/ modules are written in Adamic rather than declared: State, which re-renders a view
+// when it's set, or a decoder over what Apple hands back. They're embedded as apple/<path>.a and
+// found by the resolver where it looks for any package, under node_modules: appleFS answers for
+// node_modules/apple/<path>.ts in every directory, and gives each one real path, so a module two
+// directories import is one module.
+const appleImplementations = "/node_modules/apple/"
+
+type appleFS struct{ vfs.FS }
+
+// implementation is the embedded Adamic source behind a path the resolver tries, when there is one.
+func (s *appleFS) implementation(path string) (string, bool) {
+	at := strings.LastIndex(path, appleImplementations)
+	if at < 0 || !strings.HasSuffix(path, ".ts") {
+		return "", false
+	}
+	module := strings.TrimSuffix(path[at+len(appleImplementations):], ".ts")
+	source, err := appleBindings.ReadFile("apple/" + module + ".a")
+	return string(source), err == nil
+}
+
+func (s *appleFS) FileExists(path string) bool {
+	if _, found := s.implementation(path); found {
+		return true
+	}
+	return s.FS.FileExists(path)
+}
+
+func (s *appleFS) ReadFile(path string) (string, bool) {
+	if source, found := s.implementation(path); found {
+		return source, true
+	}
+	return s.FS.ReadFile(path)
+}
+
+func (s *appleFS) DirectoryExists(path string) bool {
+	if at := strings.LastIndex(path+"/", appleImplementations); at >= 0 {
+		return true
+	}
+	if strings.HasSuffix(path, "/node_modules") {
+		return true
+	}
+	return s.FS.DirectoryExists(path)
+}
+
+func (s *appleFS) Realpath(path string) string {
+	if _, found := s.implementation(path); found {
+		return path[strings.LastIndex(path, appleImplementations):]
+	}
+	return s.FS.Realpath(path)
 }
 
 // IsApple reports whether a declaration comes from one of Apple's binding files, so its calls are

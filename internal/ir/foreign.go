@@ -105,6 +105,9 @@ const (
 	// target and its action selector, made from one Adamic () => void.
 	NativeAction
 
+	// NativeObjects is an Adamic array of Objective-C objects as an NSArray.
+	NativeObjects
+
 	// NativeBlock is a closure as an Objective-C block that returns nothing: Apple calls it with
 	// Parameters, on whatever thread it likes, and the closure runs on the main thread.
 	NativeBlock

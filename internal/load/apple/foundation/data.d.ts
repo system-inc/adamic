@@ -13,5 +13,12 @@ declare module 'apple/foundation/data' {
 		 * @objc get length -> unsigned
 		 */
 		readonly length: number;
+
+		/**
+		 * [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]: the bytes as UTF-8
+		 * text, or undefined where they aren't UTF-8.
+		 * @objc alloc NSString initWithData:encoding: this:object const(4):unsigned -> string?
+		 */
+		utf8Text(): string | undefined;
 	}
 }

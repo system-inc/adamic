@@ -77,6 +77,10 @@ id adamic_apple_class(const char *name);
 id adamic_apple_string(const adamic_string *text);
 adamic_string *adamic_apple_string_from(id string);
 
+// adamic_apple_objects is an array of Apple's objects as an NSArray, retained for the caller to let go
+// of (adamic_apple_let_go). Each element is a box the checker proved holds an object.
+id adamic_apple_objects(const adamic_array *array);
+
 // adamic_apple_rectangle_from reads { x, y, width, height }.
 adamic_apple_rectangle adamic_apple_rectangle_from(const adamic_object *object);
 

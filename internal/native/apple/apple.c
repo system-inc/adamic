@@ -51,6 +51,11 @@ static void *pool;
 static bool draining;
 
 static void drain(void) {
+	// SwiftUI's shim keeps each button's action for tests to press, when it's linked.
+	Class swiftui = objc_getClass("AdamicSwiftUIView");
+	if (swiftui != Nil) {
+		((message_void)objc_msgSend)((id)swiftui, sel_registerName("forgetActions"));
+	}
 	objc_autoreleasePoolPop(pool);
 #ifdef ADAMIC_COUNT
 	char line[64];
@@ -179,6 +184,23 @@ adamic_string *adamic_apple_string_from(id string) {
 	adamic_string *result = adamic_string_from_char_codes(length, codes);
 	free(characters);
 	free(codes);
+	return result;
+}
+
+id adamic_apple_objects(const adamic_array *array) {
+	static SEL allocate, initialize;
+	if (allocate == NULL) {
+		allocate = sel_registerName("alloc");
+		initialize = sel_registerName("initWithObjects:count:");
+	}
+	id *objects = adamic_apple_call_new((array->length == 0 ? 1 : array->length) * sizeof *objects);
+	for (size_t index = 0; index < array->length; index++) {
+		objects[index] = adamic_apple_present(adamic_apple_unbox(array->elements[index].reference), "an element of an array handed to Apple");
+	}
+	id result = ((message_object)objc_msgSend)(adamic_apple_class("NSArray"), allocate);
+	result = ((id (*)(id, SEL, id *, unsigned long))objc_msgSend)(result, initialize, objects, array->length);
+	adamic_apple_call_free(objects);
+	TAKEN();
 	return result;
 }
 

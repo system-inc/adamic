@@ -62,14 +62,22 @@ func TestProgramsAgreeWithTheirWitnesses(t *testing.T) {
 		name := strings.TrimSuffix(filepath.Base(program), ".a")
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
+			// The witness is Objective-C, or Swift where the API is Swift's only (SwiftUI).
 			witnessSource := strings.TrimSuffix(program, ".a") + ".m"
 			if _, err := os.Stat(witnessSource); err != nil {
-				t.Fatalf("%s has no witness: write %s, the same calls in Objective-C", program, witnessSource)
+				witnessSource = strings.TrimSuffix(program, ".a") + ".swift"
+			}
+			if _, err := os.Stat(witnessSource); err != nil {
+				t.Fatalf("%s has no witness: write %s.m or .swift, the same calls in Objective-C or Swift", program, strings.TrimSuffix(program, ".a"))
 			}
 			directory := t.TempDir()
 
 			witness := filepath.Join(directory, "witness")
-			compile(t, "clang", "-fobjc-arc", "-fsanitize=address,undefined", "-fno-sanitize-recover=all", "-g", "-Wall", "-Werror", witnessSource, "-framework", "AppKit", "-o", witness)
+			if strings.HasSuffix(witnessSource, ".swift") {
+				compile(t, "xcrun", "swiftc", "-O", "-sanitize=address", witnessSource, "-o", witness)
+			} else {
+				compile(t, "clang", "-fobjc-arc", "-fsanitize=address,undefined", "-fno-sanitize-recover=all", "-g", "-Wall", "-Werror", witnessSource, "-framework", "AppKit", "-o", witness)
+			}
 			expected := run(t, witness, address)
 
 			sanitized := filepath.Join(directory, "sanitized")
