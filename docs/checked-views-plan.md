@@ -431,3 +431,43 @@ and the required brand/schema proof support, arriving by October 9. This is a
 conditional working estimate, not an unconditional promise to erase phantom
 brands or admit incomplete dictionaries/callable signatures. Completion evidence
 and remaining pair/read totals are updated at every push.
+
+### Lane 4 scope split, October 7, 2026
+
+This ruling supersedes lane 4's earlier all-213 assignment and delivery estimate.
+Lane 4 on `codex/views-mixed-unions` now owns only these two families:
+
+| Family | Assigned pairs | Read sites | Delivery target |
+| --- | ---: | ---: | --- |
+| __String primitive phantom brands, including nullish members | 30 | 543 | October 9, 2026, 17:00 MDT (23:00 UTC) |
+| Mixed primitive unions | 63 | 690 | October 13, 2026, 17:00 MDT (23:00 UTC) |
+
+These are the user's assigned family totals, not an additive partition: branded
+strings also occur in the mixed-primitive census. Neither total denotes completed
+source integration. The old 213-pair ledger remains historical evidence until
+exact pair membership is reconciled with this split; no completed pairs are claimed.
+
+Object-plus-primitive unions belong to lane 4b, worker 01a11877-e6c0, on
+`codex/views-object-primitive-unions`. Untagged object unions belong to lane 4c,
+worker 01a11878-0860, on `codex/views-untagged-object-unions`. Non-brand
+intersections belong to lane 7, worker 01a11878-4afa. Lane 4 stops building those
+families. Its existing selector component evidence remains available to those
+owners; it does not establish their compiler integration.
+
+For __String, the latest ruling explicitly erases the primitive phantom brand
+and checks string membership at each potentially viewed read. This supersedes
+this document's earlier requirement for runtime brand proof and its prohibition
+on phantom-brand erasure. Merge `codex/phantom-brands` at d90994da, retaining its
+15:28 overload rule. A nullish alternative needs its own membership check.
+
+Lane 4's first compiler checkpoint remains the two leading pairs with 448 reads,
+then the most-read mixed primitive shapes. Wire the C and JavaScript selectors
+from 583d19b7 into the compiler for this scope, coordinating shared hooks with
+lane 1 and merging lazy admission as it lands. Presence/readiness still use the
+shared machinery; Unknown flow retains checks, including helper reads. Every
+completion needs actual source fixtures held to Node, both backend refusal pins
+and semantic mutants. Report family pairs and reads remaining after every push.
+
+Working target for both families is October 13 at 17:00 MDT. Nullish encoding,
+optional presence and shared dispatch merges remain integration risks; report an
+observed blocker immediately rather than counting a component test as completion.
