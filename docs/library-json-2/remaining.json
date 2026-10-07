@@ -1,0 +1,170 @@
+[
+  {
+    "path": "built-ins/JSON/15.12-0-1.js",
+    "directory": "built-ins/JSON",
+    "kind": "refused",
+    "reason": "not yet: JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation)"
+  },
+  {
+    "path": "built-ins/JSON/15.12-0-4.js",
+    "directory": "built-ins/JSON",
+    "kind": "refused",
+    "reason": "not yet: JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation)"
+  },
+  {
+    "path": "built-ins/JSON/isRawJSON/builtin.js",
+    "directory": "built-ins/JSON/isRawJSON",
+    "kind": "refused",
+    "reason": "error TS2550: Property '\u2026' does not exist on type '\u2026'. Do you need to change your target library? Try changing the '\u2026' compiler option to '\u2026' or later. (tsc: TS2339,TS2345)"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-1.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-10.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-2.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-3.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-4.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-5.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-6.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-7.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-8.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/15.12.2-2-9.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/parse/duplicate-proto.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "not yet: a value of type any"
+  },
+  {
+    "path": "built-ins/JSON/parse/reviver-array-get-prop-from-prototype.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "refuses delete"
+  },
+  {
+    "path": "built-ins/JSON/parse/reviver-array-non-configurable-prop-create.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "refuses var"
+  },
+  {
+    "path": "built-ins/JSON/parse/reviver-array-non-configurable-prop-delete.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "refuses var"
+  },
+  {
+    "path": "built-ins/JSON/parse/reviver-get-name-err.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "refuses var"
+  },
+  {
+    "path": "built-ins/JSON/parse/reviver-object-non-configurable-prop-create.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "refuses var"
+  },
+  {
+    "path": "built-ins/JSON/parse/reviver-object-non-configurable-prop-delete.js",
+    "directory": "built-ins/JSON/parse",
+    "kind": "refused",
+    "reason": "refuses var"
+  },
+  {
+    "path": "built-ins/JSON/rawJSON/basic.js",
+    "directory": "built-ins/JSON/rawJSON",
+    "kind": "refused",
+    "reason": "error TS2550: Property '\u2026' does not exist on type '\u2026'. Do you need to change your target library? Try changing the '\u2026' compiler option to '\u2026' or later. (tsc: TS2339)"
+  },
+  {
+    "path": "built-ins/JSON/rawJSON/builtin.js",
+    "directory": "built-ins/JSON/rawJSON",
+    "kind": "refused",
+    "reason": "error TS2550: Property '\u2026' does not exist on type '\u2026'. Do you need to change your target library? Try changing the '\u2026' compiler option to '\u2026' or later. (tsc: TS2339,TS2345)"
+  },
+  {
+    "path": "built-ins/JSON/rawJSON/illegal-empty-and-start-end-chars.js",
+    "directory": "built-ins/JSON/rawJSON",
+    "kind": "refused",
+    "reason": "error TS2550: Property '\u2026' does not exist on type '\u2026'. Do you need to change your target library? Try changing the '\u2026' compiler option to '\u2026' or later. (tsc: TS2339)"
+  },
+  {
+    "path": "built-ins/JSON/stringify/replacer-array-number-object.js",
+    "directory": "built-ins/JSON/stringify",
+    "kind": "refused",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/JSON/stringify/replacer-array-string-object.js",
+    "directory": "built-ins/JSON/stringify",
+    "kind": "refused",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/JSON/stringify/replacer-array-undefined.js",
+    "directory": "built-ins/JSON/stringify",
+    "kind": "refused",
+    "reason": "not yet: new an Identifier"
+  },
+  {
+    "path": "built-ins/JSON/stringify/space-number-object.js",
+    "directory": "built-ins/JSON/stringify",
+    "kind": "refused",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)"
+  },
+  {
+    "path": "built-ins/JSON/stringify/space-string-object.js",
+    "directory": "built-ins/JSON/stringify",
+    "kind": "refused",
+    "reason": "refuses a method read as a value (toString would lose its object, and this with it)"
+  }
+]
