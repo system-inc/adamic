@@ -6,9 +6,11 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -37,22 +39,61 @@ func TestMarkdownHTMLBlockLayout(t *testing.T) {
 	testBlockLayout(t, "html")
 }
 
-// Not parallel: the composed fixture stream and six sanitizer clones have a large peak working set.
-func TestMarkdownWhitespaceLayout(t *testing.T) { testBlockLayout(t, "whitespace") }
+// Bound the large fixture streams below so layouts fit both memory and the gate deadline.
+var layoutSlots = make(chan struct{}, 2)
 
-func TestMarkdownLeafComposition(t *testing.T) { testBlockLayout(t, "leaves") }
+type layoutFixture struct {
+	root, directory, nativeCases, canonicalCases, main, fork, goLayout, script string
+	inputs                                                                     []auditInput
+	files                                                                      int
+	want                                                                       []byte
+	program                                                                    *ir.Program
+}
 
-func TestMarkdownRootLayout(t *testing.T) { testBlockLayout(t, "root") }
+var layoutOnce sync.Once
+var completeLayout *layoutFixture
 
-func TestMarkdownStructureLayout(t *testing.T) { testBlockLayout(t, "structure") }
+func fullLayoutFixture(t *testing.T) *layoutFixture {
+	t.Helper()
+	layoutOnce.Do(func() { completeLayout = buildLayoutFixture(t) })
+	if completeLayout == nil {
+		t.Fatal("the complete layout baseline failed")
+	}
+	return completeLayout
+}
 
-func testBlockLayout(t *testing.T, slice string) {
+func TestMarkdownWhitespaceLayout(t *testing.T) {
+	t.Parallel()
+	testBlockLayout(t, "whitespace")
+}
+
+func TestMarkdownLeafComposition(t *testing.T) {
+	t.Parallel()
+	testBlockLayout(t, "leaves")
+}
+
+func TestMarkdownRootLayout(t *testing.T) {
+	t.Parallel()
+	testBlockLayout(t, "root")
+}
+
+func TestMarkdownStructureLayout(t *testing.T) {
+	t.Parallel()
+	testBlockLayout(t, "structure")
+}
+
+func buildLayoutFixture(t *testing.T) *layoutFixture {
+	// This last cumulative corpus contains every earlier layout milestone's inputs.
+	const slice = "whitespace"
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputs, files := blockCorpus(t, root, slice)
-	dir := t.TempDir()
+	dir := filepath.Join(artifactDirectory, "layout-fixtures")
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		t.Fatal(err)
+	}
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
@@ -209,6 +250,24 @@ func testBlockLayout(t *testing.T, slice string) {
 		}
 	}
 	t.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
+	release := releaseRun(t, program, nativeCases)
+	clean(t, "release block layout", release)
+	equal(t, "release block layout", release.stdout, want.stdout)
+	return &layoutFixture{
+		root: root, directory: dir, nativeCases: nativeCases, canonicalCases: canonicalCases,
+		main: main, fork: fork, goLayout: goLayout, script: script,
+		inputs: inputs, files: files, want: want.stdout, program: program,
+	}
+}
+
+func testBlockLayout(t *testing.T, slice string) {
+	fixture := fullLayoutFixture(t)
+	layoutSlots <- struct{}{}
+	defer func() { <-layoutSlots }()
+	root, nativeCases, canonicalCases := fixture.root, fixture.nativeCases, fixture.canonicalCases
+	main, fork, goLayout, script := fixture.main, fixture.fork, fixture.goLayout, fixture.script
+	inputs, files, program := fixture.inputs, fixture.files, fixture.program
+	want := run{stdout: fixture.want}
 	if slice == "whitespace" {
 		testWhitespacePolicy(t, nativeCases, fork)
 	}
@@ -322,7 +381,7 @@ func testBlockLayout(t *testing.T, slice string) {
 			content = []byte(strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1))
 			mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
 			write(t, mutantMain, content)
-			result := nativelyRun(t, lowered(t, mutantMain), nativeCases)
+			result := nativeMutant(t, lowered(t, mutantMain), nativeCases)
 			clean(t, "native list mutant", result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				t.Fatal("list mutant survived")
@@ -332,27 +391,27 @@ func testBlockLayout(t *testing.T, slice string) {
 			t.Logf("output-only native mutant caught by %q at byte %d", inputs[index].Name, offset)
 		})
 	}
-	fast := filepath.Join(dir, "native-fast")
-	if err := native.Build(native.C(program), fast, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
-	runner, err := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, side := range []struct {
-		name, command string
-		args          []string
-	}{{"Go document layout", goLayout, []string{canonicalCases}}, {"native block/layout component", fast, []string{nativeCases}}, {"source Node block/layout component", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, nativeCases}}, {"original Node document layout", "node", []string{script, fork, canonicalCases}}} {
-		var elapsed time.Duration
-		for round := 0; round < 3; round++ {
-			start := time.Now()
-			result := execute(t, nil, side.command, side.args...)
-			elapsed += time.Since(start)
-			clean(t, side.name, result)
-			equal(t, side.name, result.stdout, want.stdout)
+	// Repeat timings only on request; all corpus and mutant comparisons ran above.
+	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
+		fast := nativeBinary(t, native.C(program), false)
+		runner, err := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
+		if err != nil {
+			t.Fatal(err)
 		}
-		t.Logf("component throughput %s %.1f documents/s, three runs %.6fs; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
+		for _, side := range []struct {
+			name, command string
+			args          []string
+		}{{"Go document layout", goLayout, []string{canonicalCases}}, {"native block/layout component", fast, []string{nativeCases}}, {"source Node block/layout component", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, nativeCases}}, {"original Node document layout", "node", []string{script, fork, canonicalCases}}} {
+			var elapsed time.Duration
+			for round := 0; round < 3; round++ {
+				start := time.Now()
+				result := execute(t, nil, side.command, side.args...)
+				elapsed += time.Since(start)
+				clean(t, side.name, result)
+				equal(t, side.name, result.stdout, want.stdout)
+			}
+			t.Logf("component throughput %s %.1f documents/s, three runs %.6fs; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
+		}
 	}
 	data, err := os.ReadFile(nativeCases)
 	if err != nil {

@@ -5,8 +5,7 @@ import (
 	"testing"
 )
 
-// Explicitly recorded wrong behavior, never an oracle for the production decoder.
-// Delete this observation and the workaround when the compiler gap closes.
+// Optional declarations start as undefined on every backend, as Node decides.
 func TestOptionalStringInitializationWitness(t *testing.T) {
 	path, err := filepath.Abs("gaps/6_uninitialized_optional_string.ts")
 	if err != nil {
@@ -20,12 +19,12 @@ func TestOptionalStringInitializationWitness(t *testing.T) {
 	for _, side := range []struct {
 		name   string
 		result run
-	}{{"known native miscompile", answer}, {"known backend miscompile", onJavaScriptBackend(t, program)}} {
+	}{{"native", answer}, {"backend", onJavaScriptBackend(t, program)}} {
 		clean(t, side.name, side.result)
-		equal(t, side.name, side.result.stdout, []byte("present\n"))
+		equal(t, side.name, side.result.stdout, source.stdout)
 	}
 	if report := leaks(t, program, binary); report != "" {
 		t.Fatal(report)
 	}
-	t.Log("Node missing; native and JavaScript backend present. Decoder uses an explicit match flag.")
+	t.Log("Node, native and JavaScript backend agree on missing.")
 }

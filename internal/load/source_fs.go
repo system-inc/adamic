@@ -67,11 +67,14 @@ func (s *sourceFS) ReadFile(path string) (string, bool) {
 	if path == preludePath {
 		return prelude, true
 	}
-	if adamicPath, isAdamic := s.adamicFile(path); isAdamic {
-		return s.FS.ReadFile(adamicPath)
-	}
 	if source, exists := s.overlay[path]; exists {
 		return source, true
+	}
+	if adamicPath, isAdamic := s.adamicFile(path); isAdamic {
+		if source, exists := s.overlay[adamicPath]; exists {
+			return source, true
+		}
+		return s.FS.ReadFile(adamicPath)
 	}
 	return s.FS.ReadFile(path)
 }

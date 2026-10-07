@@ -29,7 +29,7 @@ func TestClassifyCorpus(t *testing.T) {
 			t.Fatal(err)
 		}
 		lines := strings.Split(strings.TrimSpace(string(want)), "\n")
-		got := classify(filepath.Base(path), string(source))
+		got := classify(filepath.Base(path), string(source), false)
 		kind := "attempted"
 		if got.Skip != "" {
 			kind = "skipped"
@@ -166,7 +166,7 @@ assert(true);
 	if got.NegativePhase != "runtime" || got.NegativeType != "TypeError" {
 		t.Fatalf("negative %s %s", got.NegativePhase, got.NegativeType)
 	}
-	classified := classify("built-ins/String/x.js", source)
+	classified := classify("built-ins/String/x.js", source, false)
 	if classified.Skip != "" {
 		t.Fatalf("a padStart test was skipped: %s", classified.Skip)
 	}
@@ -210,5 +210,43 @@ func TestMiniRunner(t *testing.T) {
 	}
 	if len(refused.RefusalReasons) == 0 || !strings.Contains(refused.RefusalReasons[0].Reason, "refuses var") {
 		t.Fatalf("var fixture reason: %+v", refused.RefusalReasons)
+	}
+}
+
+// A large sort previously reached clang with its C cut at 256 KiB, falsely blaming the emitter.
+func TestLargeCompilerOutputIsComplete(t *testing.T) {
+	root := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(root, "test"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	source := strings.Repeat("assert.sameValue(1, 1);\n", 1800)
+	if err := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	engine, err := prepare("../..", root, t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	report, err := engine.runFilter("large.js", 0, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if report.Pass != 1 {
+		t.Fatalf("large program: %+v", report)
+	}
+	generated, err := os.ReadFile(filepath.Join(engine.programDirectory(classify("large.js", source, false)), "program.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(generated) <= outputLimit || generated[len(generated)-1] != '\n' {
+		t.Fatalf("fixture must exceed old limit and end with newline: %d bytes", len(generated))
+	}
+}
+
+func TestOutputOverflowIsReported(t *testing.T) {
+	buffer := limitedBuffer{limit: 3}
+	written, err := buffer.Write([]byte("abcdef"))
+	if err != nil || written != 6 || !buffer.exceeded || buffer.String() != "abc" {
+		t.Fatalf("overflow: written=%d error=%v buffer=%+v", written, err, buffer)
 	}
 }

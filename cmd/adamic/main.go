@@ -27,7 +27,7 @@ const usage = `usage:
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts>
   adamic js <file.a|file.ts>
-  adamic build <file.a|file.ts> -o <out> [--count]`
+  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]`
 
 func main() {
 	os.Exit(run(os.Args[1:]))
@@ -51,6 +51,10 @@ func run(arguments []string) int {
 		if lowered == nil {
 			return code
 		}
+		if native.UsesTSGo(lowered) {
+			fmt.Fprintln(os.Stderr, "adamic: tsgo requires a native build with --tsgo <archive>")
+			return 1
+		}
 		fmt.Print(native.C(lowered))
 		return 0
 	case len(arguments) == 2 && arguments[0] == "js":
@@ -58,18 +62,16 @@ func run(arguments []string) int {
 		if lowered == nil {
 			return code
 		}
-		fmt.Print(javascript.JavaScript(lowered))
-		return 0
-	case (len(arguments) == 4 || len(arguments) == 5 && arguments[4] == "--count") && arguments[0] == "build" && arguments[2] == "-o":
-		lowered, code := compile(arguments[1])
-		if lowered == nil {
-			return code
-		}
-		if err := native.Build(native.C(lowered), arguments[3], native.Options{Count: len(arguments) == 5}); err != nil {
-			fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+		if native.UsesTSGo(lowered) {
+			fmt.Fprintln(os.Stderr, "adamic: tsgo is an external native checker library; JavaScript is not supported")
 			return 1
 		}
+		fmt.Print(javascript.JavaScript(lowered))
 		return 0
+	case len(arguments) >= 6 && arguments[0] == "build" && arguments[1] == "--target" && arguments[4] == "-o":
+		return build(arguments[3], arguments[5], append([]string{"--target", arguments[2]}, arguments[6:]...))
+	case len(arguments) >= 4 && arguments[0] == "build" && arguments[2] == "-o":
+		return build(arguments[1], arguments[3], arguments[4:])
 	}
 	fmt.Fprintln(os.Stderr, usage)
 	return 2
@@ -94,9 +96,16 @@ func check(paths []string) (*load.Program, int) {
 
 // compile checks and lowers one program.
 func compile(path string) (*ir.Program, int) {
+	return compileLibrary(path, false)
+}
+
+func compileLibrary(path string, tsgo bool) (*ir.Program, int) {
 	program, code := check([]string{path})
 	if program == nil {
 		return nil, code
+	}
+	if tsgo {
+		program.EnableTSGo()
 	}
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {

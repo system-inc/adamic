@@ -3,12 +3,14 @@ package markdownblocks
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -21,6 +23,102 @@ import (
 )
 
 const repository = "../../.."
+
+var artifactDirectory string
+var artifacts sync.Map
+var formatterOnce sync.Once
+var formatterBinary string
+var formatterError error
+
+type artifactKey struct {
+	source   [32]byte
+	sanitize bool
+}
+
+type artifactBuild struct {
+	done   chan struct{}
+	binary string
+	err    error
+}
+
+func TestMain(m *testing.M) {
+	var err error
+	artifactDirectory, err = os.MkdirTemp("", "adamic-markdown-build-")
+	if err != nil {
+		panic(err)
+	}
+	code := m.Run()
+	if err := os.RemoveAll(artifactDirectory); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		code = 1
+	}
+	os.Exit(code)
+}
+
+// TestMain keeps the formatter alive for every regeneration check in this package run.
+func cohereFormatter(t *testing.T) string {
+	t.Helper()
+	formatterOnce.Do(func() {
+		formatterBinary = filepath.Join(artifactDirectory, "cohere")
+		cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
+		if err != nil {
+			formatterError = err
+			return
+		}
+		command := bounded(t, "go", "build", "-o", formatterBinary, "./command/cohere")
+		command.Dir = cohere
+		if output, err := command.CombinedOutput(); err != nil {
+			formatterError = fmt.Errorf("build cohere formatter: %w\n%s", err, output)
+		}
+	})
+	if formatterError != nil {
+		t.Fatal(formatterError)
+	}
+	t.Logf("regeneration formatter: %s", formatterBinary)
+	return formatterBinary
+}
+
+// Reuse compilation only within this package execution, never observations.
+// All corpora, oracle comparisons and leak checks execute afresh even uncached.
+func nativeBinary(t *testing.T, source string, sanitize bool) string {
+	t.Helper()
+	key := artifactKey{source: sha256.Sum256([]byte(source)), sanitize: sanitize}
+	pending := &artifactBuild{done: make(chan struct{})}
+	actual, loaded := artifacts.LoadOrStore(key, pending)
+	build := actual.(*artifactBuild)
+	if !loaded {
+		build.binary = filepath.Join(artifactDirectory, fmt.Sprintf("%x-%t", key.source, sanitize))
+		build.err = native.Build(source, build.binary, native.Options{Sanitize: sanitize})
+		close(build.done)
+	}
+	<-build.done
+	if build.err != nil {
+		t.Fatal(build.err)
+	}
+	return build.binary
+}
+
+func TestNativeBuildModesAreDistinct(t *testing.T) {
+	t.Parallel()
+	const source = `#include <stdio.h>
+int main(void) {
+#if __has_feature(address_sanitizer)
+    puts("sanitized");
+#else
+    puts("release");
+#endif
+    return 0;
+}
+`
+	for _, mode := range []struct {
+		sanitize bool
+		want     string
+	}{{true, "sanitized\n"}, {false, "release\n"}} {
+		answer := execute(t, nil, nativeBinary(t, source, mode.sanitize))
+		clean(t, "clang build mode", answer)
+		equal(t, "clang build mode", answer.stdout, []byte(mode.want))
+	}
+}
 
 // run is one execution's observable behavior.
 type run struct {
@@ -56,19 +154,6 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	}
 	command.WaitDelay = 5 * time.Second
 	return command
-}
-
-// cohereFormatter builds cohere from the pinned submodule for the generators' -check runs, which format
-// what they generate with it. A formatter outside the repository is a binary the gate doesn't have.
-func cohereFormatter(t *testing.T, root string) string {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "cohere")
-	command := bounded(t, "go", "build", "-buildvcs=false", "-o", binary, "./command/cohere")
-	command.Dir = filepath.Join(root, "cohere")
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("building cohere: %v\n%s", err, output)
-	}
-	return binary
 }
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
@@ -115,15 +200,45 @@ func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
 	return result
 }
 
+// Output-only mutants need sanitizer checks, not repeated optimizer work on the
+// full formatter. The unchanged port is checked at -O1 and release -O2 separately.
+func nativeMutant(t *testing.T, program *ir.Program, arguments ...string) run {
+	t.Helper()
+	directory := t.TempDir()
+	options := native.Options{Sanitize: true}
+	library, err := native.RuntimeLibrary("", options)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "mutant")
+	write(t, source, []byte(native.C(program)))
+	flags := native.Flags(options)
+	for index, flag := range flags {
+		if flag == "-O1" {
+			flags[index] = "-O0"
+		}
+	}
+	flags = append(flags, "-I", filepath.Dir(library), "-o", binary, source)
+	flags = append(flags, native.RuntimeLinkFlags(library)...)
+	flags = append(flags, "-lm")
+	if output, err := bounded(t, "clang", flags...).CombinedOutput(); err != nil {
+		t.Fatalf("mutant build: %v\n%s", err, output)
+	}
+	return execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
+}
+
+func releaseRun(t *testing.T, program *ir.Program, arguments ...string) run {
+	t.Helper()
+	binary := nativeBinary(t, native.C(program), false)
+	return execute(t, nil, binary, arguments...)
+}
+
 // natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
 // returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
 // its own run.
 func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := nativeBinary(t, native.C(program), true)
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}

@@ -1,0 +1,14 @@
+==134691== Callgrind, a call-graph generating cache profiler
+==134691== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==134691== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==134691== Command: /workspace/scratch/lint-perf/5-kind-dispatch/profiled --manifest /workspace/scratch/lint-perf/5-kind-dispatch/compiler.txt --count
+==134691== 
+==134691== For interactive control, run 'callgrind_control -h'.
+==134691== brk segment overflow in thread #1: can't grow to 0x489b000
+==134691== (see section Limitations in user manual)
+==134691== NOTE: further instances of this message will not be shown
+==134691== 
+==134691== Events    : Ir
+==134691== Collected : 15617555059
+==134691== 
+==134691== I   refs:      15,617,555,059

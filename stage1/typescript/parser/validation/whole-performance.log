@@ -1,0 +1,31 @@
+=== RUN   TestWholePerformance
+    performance_test.go:42: Node preflight: 44766682 identical whole-tree bytes
+    performance_test.go:42: release native preflight: 44766682 identical whole-tree bytes
+    performance_test.go:45: machine: linux/amd64 logical processors=5
+    performance_test.go:61: machine /proc/cpuinfo: model name	: AMD EPYC 9V74 80-Core Processor
+    performance_test.go:61: machine /sys/fs/cgroup/cpu.max: 400000 100000
+    performance_test.go:61: machine /sys/fs/cgroup/memory.max: 17179869184
+    performance_test.go:61: machine /proc/loadavg: 0.79 0.97 1.04 1/183 110668
+    performance_test.go:116: sample=1 side=Go nodes=887803 seconds=0.177848422 nodes/s=4991908 load=0.81 0.97 1.04 2/183 110691
+    performance_test.go:116: sample=1 side=Node nodes=887803 seconds=0.695961583 nodes/s=1275649 load=0.81 0.97 1.04 1/183 110698
+    performance_test.go:116: sample=1 side=native nodes=887803 seconds=0.843182044 nodes/s=1052920 load=0.81 0.97 1.04 2/183 110699
+    performance_test.go:116: sample=2 side=Node nodes=887803 seconds=0.653935711 nodes/s=1357630 load=0.81 0.97 1.04 1/183 110706
+    performance_test.go:116: sample=2 side=native nodes=887803 seconds=0.782590196 nodes/s=1134442 load=0.81 0.97 1.04 3/183 110707
+    performance_test.go:116: sample=2 side=Go nodes=887803 seconds=0.156707557 nodes/s=5665349 load=0.81 0.97 1.04 1/183 110714
+    performance_test.go:116: sample=3 side=native nodes=887803 seconds=0.822073617 nodes/s=1079956 load=0.83 0.97 1.04 3/183 110715
+    performance_test.go:116: sample=3 side=Go nodes=887803 seconds=0.172230207 nodes/s=5154746 load=0.83 0.97 1.04 1/183 110722
+    performance_test.go:116: sample=3 side=Node nodes=887803 seconds=0.696704555 nodes/s=1274289 load=0.83 0.97 1.04 1/183 110729
+    performance_test.go:116: sample=4 side=Go nodes=887803 seconds=0.166092769 nodes/s=5345224 load=0.83 0.97 1.04 1/183 110737
+    performance_test.go:116: sample=4 side=Node nodes=887803 seconds=0.706395899 nodes/s=1256807 load=0.83 0.97 1.04 2/183 110744
+    performance_test.go:116: sample=4 side=native nodes=887803 seconds=0.936547525 nodes/s=947953 load=0.83 0.97 1.04 2/183 110745
+    performance_test.go:116: sample=5 side=Node nodes=887803 seconds=0.686425150 nodes/s=1293372 load=0.83 0.97 1.04 1/183 110752
+    performance_test.go:116: sample=5 side=native nodes=887803 seconds=0.808674488 nodes/s=1097850 load=0.83 0.97 1.04 1/183 110753
+    performance_test.go:116: sample=5 side=Go nodes=887803 seconds=0.159033892 nodes/s=5582477 load=0.83 0.97 1.04 2/183 110760
+    performance_test.go:120: BEST side=Go files=77 nodes=887803 seconds=0.156707557 nodes/s=5665349
+    performance_test.go:120: BEST side=Node files=77 nodes=887803 seconds=0.653935711 nodes/s=1357630
+    performance_test.go:120: BEST side=native files=77 nodes=887803 seconds=0.782590196 nodes/s=1134442
+    performance_test.go:122: native/Go time ratio 4.994x; native/Node time ratio 1.197x
+    performance_test.go:136: artifacts: /workspace/scratch/parser-whole-benchmark
+--- PASS: TestWholePerformance (20.38s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	20.386s

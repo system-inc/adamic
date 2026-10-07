@@ -24,11 +24,15 @@ type Match struct {
 // Integer targets, range tables, registers and assertion subprograms can be
 // serialized for a C executor without Go callbacks or interface dispatch.
 type Program struct {
-	code     []instruction
-	flags    Flags
-	captures int
-	names    map[string][]int
-	repeats  int
+	code        []instruction
+	flags       Flags
+	captures    int
+	names       map[string][]int
+	repeats     int
+	firstASCII  [2]uint64
+	filterFirst bool
+	prefix      []rune
+	anchored    bool
 }
 
 type opcode uint8
@@ -120,6 +124,9 @@ func compilePattern(tree *Pattern, properties PropertyProvider) (*Program, error
 		return nil, err
 	}
 	p.code = append(p.code, instruction{op: opAccept})
+	p.firstASCII, p.filterFirst = p.nativeFirstASCII()
+	p.prefix = p.nativePrefix()
+	p.anchored = p.nativeAnchored()
 	return p, nil
 }
 
@@ -327,6 +334,29 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 		if unicodeMode(p.flags) && position > 0 && position < len(input) && high(input[position-1]) && low(input[position]) {
 			position--
 		}
+		if p.anchored && position != 0 {
+			break
+		}
+		if !p.anchored && !p.flags.Sticky {
+			for position < len(input) {
+				c := input[position]
+				possible := !p.filterFirst || c >= 128 || p.firstASCII[c/64]&(uint64(1)<<uint(c%64)) != 0
+				prefix := len(p.prefix) == 0
+				if len(p.prefix) > 0 && position+len(p.prefix) <= len(input) {
+					prefix = true
+					for j, c := range p.prefix {
+						if input[position+j] != uint16(c) {
+							prefix = false
+							break
+						}
+					}
+				}
+				if possible && prefix {
+					break
+				}
+				_, position, _ = readCharacter(input, position, 1, unicodeMode(p.flags))
+			}
+		}
 		caps := make([]int, 2*(p.captures+1))
 		for i := range caps {
 			caps[i] = -1
@@ -356,7 +386,7 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
 			}
 			return match, nil
 		}
-		if p.flags.Sticky {
+		if p.anchored || p.flags.Sticky {
 			break
 		}
 		_, next, ok := readCharacter(input, position, 1, unicodeMode(p.flags))
@@ -424,6 +454,15 @@ func (p *Program) run(input []uint16, pos int, caps []int, budget *executionBudg
 		case opSave:
 			s.caps[i.x] = s.pos
 		case opSet:
+			if len(i.set.strings) == 0 {
+				c, next, exists := readCharacter(input, s.pos, i.direction, unicodeMode(i.flags))
+				if exists && i.set.contains(canonicalize(c, i.flags)) {
+					s.pos = next
+				} else {
+					failed = true
+				}
+				break
+			}
 			positions := i.set.match(input, s.pos, i.direction, i.flags)
 			if len(positions) == 0 {
 				failed = true
@@ -488,34 +527,33 @@ func (p *Program) run(input []uint16, pos int, caps []int, budget *executionBudg
 			reg := s.repeats[i.x]
 			canExit := reg.count.Cmp(i.min) >= 0
 			canBody := i.max == nil || reg.count.Cmp(i.max) < 0
-			body := s.clone()
-			body.pc++
-			body.repeats[i.x].start = s.pos
-			for _, id := range i.clear {
-				body.caps[2*id] = -1
-				body.caps[2*id+1] = -1
+			if !canBody && !canExit {
+				failed = true
+				break
 			}
-			exit := s.clone()
-			exit.pc = i.y
-			if canBody && canExit {
-				if i.greedy {
-					stack = append(stack, exit)
-					s = body
-				} else {
-					stack = append(stack, body)
-					s = exit
+			enter := func(state *machineState) {
+				state.pc++
+				state.repeats[i.x].start = state.pos
+				for _, id := range i.clear {
+					state.caps[2*id] = -1
+					state.caps[2*id+1] = -1
 				}
-				continue
 			}
-			if canBody {
-				s = body
-				continue
+			if canBody && canExit {
+				alternative := s.clone()
+				if i.greedy {
+					alternative.pc = i.y
+				} else {
+					enter(&alternative)
+				}
+				stack = append(stack, alternative)
 			}
-			if canExit {
-				s = exit
-				continue
+			if canBody && (!canExit || i.greedy) {
+				enter(&s)
+			} else {
+				s.pc = i.y
 			}
-			failed = true
+			continue
 		case opRepeatEnd:
 			reg := s.repeats[i.x]
 			if reg.count.Cmp(i.min) >= 0 && reg.start == s.pos {

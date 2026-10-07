@@ -1,0 +1,4 @@
+PASS: 16 fixture observations and exact status schema
+CAUGHT by stdout: remove own-property guard
+CAUGHT by stdout: reverse key enumeration
+Runtime panic and ownership mutants are not claimed: stage 0 does not compile these inputs.

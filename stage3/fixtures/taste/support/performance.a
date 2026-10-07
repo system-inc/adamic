@@ -1,0 +1,4 @@
+// From TypeScript 6.0.3, src/compiler/_namespaces/ts.ts:79
+// Census reason: an ExportDeclaration
+const performance = {timeOrigin: 0};
+export { performance };

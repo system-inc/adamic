@@ -31,7 +31,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	defer func() { e.depth-- }()
 	outerLendAt, outerLent := e.lendAt, e.lent
 	// A read evaluated here may be lent when its parent is a consumer that said so.
-	e.lendable = e.depth == outerLendAt
+	e.lendable = e.depth == outerLendAt || e.borrowChain(expression)
 	if consumes(expression) {
 		e.lendAt = e.depth + 1
 	} else {
@@ -58,9 +58,14 @@ func lendable(valueType ir.Type) bool {
 // consumes reports whether an expression is a consumer whose operands it can lend: pure, done with
 // its operands when it's evaluated (not handing one on as its own value, as a conditional or ??
 // does), and with every operand pure.
+//
+// Every pure operation whose value is one of its operands, as it is (a narrowing, a cast, a box),
+// must be on the list below: on pure's list without being here, it lends the read it hands on, and
+// its parent keeps that uncounted pointer while a later operand frees it (ir.Defined, once pure,
+// did: borrow_defined_lent.a). TestPassThroughsAreNotConsumers holds every pure kind to a decision.
 func consumes(expression ir.Expression) bool {
 	switch expression.(type) {
-	case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Undefined,
+	case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Defined, ir.Undefined,
 		ir.NumberConstant, ir.BooleanConstant, ir.StringConstant:
 		return false
 	}
@@ -89,7 +94,7 @@ func pureKind(expression ir.Expression) bool {
 	switch expression.(type) {
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Read, ir.Undefined,
 		ir.Unary, ir.Binary, ir.NumberToString, ir.BooleanToString, ir.Concat, ir.Length, ir.StringLength,
-		ir.CharCodeAt, ir.StringIndex, ir.ArrayIndex, ir.Property, ir.MapGet, ir.MapHas, ir.MapSize,
+		ir.CharCodeAt, ir.StringIndex, ir.ArrayIndex, ir.Property, ir.MapGet, ir.MapHas, ir.MapSize, ir.HasOwn,
 		ir.IsUndefined, ir.Unwrap, ir.MaybeOf, ir.Box, ir.Narrow, ir.TypeOf, ir.Conditional, ir.Coalesce,
 		ir.MathCall, ir.NumberCall, ir.ToFixed, ir.NumberFormat, ir.Trim, ir.StringCall, ir.CodePoints,
 		ir.ArraySearch, ir.CheckedCast, ir.UnionToString, ir.MaybeToString, ir.Defined, ir.InstanceOf:
@@ -124,4 +129,147 @@ func eachOperand(expression ir.Expression, visit func(ir.Expression)) {
 		}
 	}
 	each(reflect.ValueOf(expression))
+}
+
+// lentArgument lends only a direct global read to a borrowed parameter. Every later
+// argument is pure, and all possible callees are proved not to touch the global.
+// touches also rejects unknown closure and callback effects. Reads of the global
+// are conservatively refused along with writes.
+func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
+	read, ok := call.Arguments[index].(ir.Read)
+	if !ok || !e.program.Locals[read.Local].Global || !lendable(read.Of) {
+		return "", false
+	}
+	for _, argument := range call.Arguments[index+1:] {
+		if !pure(argument) {
+			return "", false
+		}
+	}
+	// Every target that can run must borrow this parameter, so each one's own parameters are
+	// read rather than the static callee's.
+	for _, target := range e.program.CallTargets(call) {
+		parameters := e.program.Functions[target].Parameters
+		if index >= len(parameters) || touches(e.program, target, read.Local, map[int]bool{}) || !e.program.Locals[parameters[index]].Borrowed || e.reuse.consumed[parameters[index]] {
+			return "", false
+		}
+	}
+	if read.Checked {
+		e.checkReady(read.Local)
+	}
+	return e.snapshot(read.Of, e.localName(read.Local)), true
+}
+
+// chainRoot follows strong field loads only. A weak handle is not an owner of its
+// target, so a weak read deliberately ends the chain. Names conservatively match
+// every holder: the native IR does not retain the checker's related-holder types.
+func chainRoot(expression ir.Expression, names map[string]bool) (int, bool) {
+	switch expression := expression.(type) {
+	case ir.Property:
+		if expression.Method || expression.Optional || expression.Object.Type() == ir.Weak {
+			return 0, false
+		}
+		names[expression.Name] = true
+		return chainRoot(expression.Object, names)
+	case ir.Defined:
+		return chainRoot(expression.Value, names)
+	case ir.Read:
+		return expression.Local, true
+	}
+	return 0, false
+}
+
+// chainUnchanged proves fields remain held throughout a scope and every call it
+// can make. Visiting a recursive target once suffices: all its statements are
+// checked, not just the path returning to the call. Unknown callbacks refuse.
+func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]bool) bool {
+	seen := map[int]bool{}
+	safe := true
+	var statements func([]ir.Statement)
+	var target func(int)
+	target = func(index int) {
+		if safe && !seen[index] {
+			seen[index] = true
+			statements(program.Functions[index].Body)
+		}
+	}
+	statements = func(body []ir.Statement) {
+		for _, statement := range body {
+			if !safe {
+				return
+			}
+			if write, ok := statement.(ir.SetProperty); ok && names[write.Name] {
+				safe = false
+			}
+			walkStatement(statement, func(expression ir.Expression) {
+				if !safe {
+					return
+				}
+				switch expression := expression.(type) {
+				case ir.Call:
+					for _, index := range program.CallTargets(expression) {
+						target(index)
+					}
+				case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
+					targets := program.ClosureTargets(expression)
+					if targets.Unknown {
+						safe = false
+					}
+					for _, index := range targets.Functions {
+						target(index)
+					}
+				case ir.ObjectLiteral:
+					if expression.Spread != nil {
+						safe = false
+					}
+				case ir.ArrayLiteral, ir.ArrayPush, ir.MakeClosure, ir.MakeError:
+					// These operations do not remove fields. Their operands are walked too.
+				default:
+					if !pureKind(expression) {
+						safe = false
+					}
+				}
+			}, statements)
+		}
+	}
+	statements(body)
+	return safe
+}
+
+// borrowChain extends the existing lent-read emission to a strong chain whose
+// root and fields survive the whole function. Stores and owned returns still go
+// through kept/retained; a declaration borrows only when its planner says so.
+func (e *emitter) borrowChain(expression ir.Expression) bool {
+	if _, ok := expression.(ir.Property); !ok || e.function == nil {
+		return false
+	}
+	names := map[string]bool{}
+	root, ok := chainRoot(expression, names)
+	if !ok {
+		return false
+	}
+	local := e.program.Locals[root]
+	if local.Global || local.Captured || local.Function != e.functionIndex || assignedLocals(e.function.Body)[root] {
+		return false
+	}
+	if e.reuse != nil {
+		if e.reuse.consumed[root] {
+			return false
+		}
+		for _, moves := range e.reuse.moves {
+			if moves[root] {
+				return false
+			}
+		}
+		for _, spreads := range e.reuse.spreads {
+			if spreads[root] {
+				return false
+			}
+		}
+		for _, arrays := range e.reuse.arrays {
+			if arrays[root] {
+				return false
+			}
+		}
+	}
+	return chainUnchanged(e.program, e.function.Body, names)
 }

@@ -163,23 +163,29 @@ func TestMarkdownSourceDecoding(t *testing.T) {
 			t.Log("caught by decoded bytes")
 		})
 	}
-	fast := filepath.Join(dir, "fast")
-	if err := native.Build(native.C(program), fast, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
-	for _, side := range []struct {
-		name, command string
-		args          []string
-	}{{"Go", goBinary, []string{cases}}, {"native", fast, []string{cases}}, {"actual original Node", "node", []string{"testdata/decode_library.mjs", fork, cases}}} {
-		started := time.Now()
-		for i := 0; i < 3; i++ {
-			result := execute(t, nil, side.command, side.args...)
-			clean(t, side.name, result)
-			equal(t, side.name, result.stdout, want.stdout)
+	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
+		fast := filepath.Join(dir, "fast")
+		if err := native.Build(native.C(program), fast, native.Options{}); err != nil {
+			t.Fatal(err)
 		}
-		t.Logf("%s %.1f texts/s, startup, decoding, serialization and stdout included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
+		for _, side := range []struct {
+			name, command string
+			args          []string
+		}{{"Go", goBinary, []string{cases}}, {"native", fast, []string{cases}}, {"actual original Node", "node", []string{"testdata/decode_library.mjs", fork, cases}}} {
+			started := time.Now()
+			for i := 0; i < 3; i++ {
+				result := execute(t, nil, side.command, side.args...)
+				clean(t, side.name, result)
+				equal(t, side.name, result.stdout, want.stdout)
+			}
+			t.Logf("%s %.1f texts/s, startup, decoding, serialization and stdout included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
+		}
+	} else {
+		result := releaseRun(t, program, cases)
+		clean(t, "release decoder", result)
+		equal(t, "release decoder", result.stdout, want.stdout)
 	}
-	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_entities", "-check", "-formatter", cohereFormatter(t, root))
+	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_entities", "-check", "-formatter", cohereFormatter(t))
 	command.Dir = root
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("regeneration %v %s", err, output)

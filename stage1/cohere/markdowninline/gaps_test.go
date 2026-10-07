@@ -2,7 +2,6 @@ package markdowninline
 
 import (
 	"context"
-	"errors"
 	"path/filepath"
 	"testing"
 
@@ -10,7 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func TestDelimiterExpressionGap(t *testing.T) {
+func TestDelimiterExpressionMatchesNode(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs("gaps/1_delimiter_expression.ts")
 	if err != nil {
@@ -23,9 +22,15 @@ func TestDelimiterExpressionGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "a RegularExpressionLiteral" {
-		t.Fatalf("gap changed: %v; update GAPS.md and remove the scanner if general regex becomes available", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
 	}
+	native, binary := natively(t, lowered)
+	clean(t, "native delimiter expression", native)
+	equal(t, "native delimiter expression", native.stdout, answer.stdout)
+	backend := onJavaScriptBackend(t, lowered)
+	clean(t, "backend delimiter expression", backend)
+	equal(t, "backend delimiter expression", backend.stdout, answer.stdout)
+	leaks(t, lowered, binary)
 }

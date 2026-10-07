@@ -1,0 +1,26 @@
+{
+  "typescript": "6.0.3",
+  "writers": [
+    {
+      "view": "clear(array: unknown[])",
+      "declaration": "src/compiler/core.ts:311:23",
+      "where": "src/compiler/core.ts:312:5",
+      "expression": "array.length = 0",
+      "value": "0",
+      "classification": "latent element-widening capacity; setting length to zero inserts no wrong-typed value",
+      "public": false
+    },
+    {
+      "view": "SourceFileLike.lineMap",
+      "declaration": "src/compiler/types.ts:4289:5",
+      "where": "src/compiler/scanner.ts:504:35",
+      "expression": "sourceFile.lineMap = computeLineStarts(sourceFile.text)",
+      "value": "number[]",
+      "original_slot": "readonly number[]",
+      "fits_original_slot": true,
+      "classification": "latent wider-view capacity; this observed write fits SourceFile.lineMap",
+      "public": true
+    }
+  ],
+  "limit": "Direct checker-resolved writes for two inspected families; not a transitive write census of every declined target."
+}

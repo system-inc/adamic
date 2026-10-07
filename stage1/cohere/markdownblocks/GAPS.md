@@ -347,14 +347,13 @@ including every numeric code point in decimal and hexadecimal, all physical
 Markdown files and generated contexts. Three output-only native mutants fail.
 This closes a parser primitive; it does not implement tokenizer events or mdast.
 
-`gaps/6_uninitialized_optional_string.ts` proves a silent compiler miscompile:
-Node prints `missing`, whereas sanitized native and the JavaScript backend print
-`present`. Generated C initializes an uninitialized `string | undefined` to the
-empty string. The decoder's full oracle caught the production manifestation:
-`&&` was removed in CLAUDE.md. The native decoder now uses an initialized string
-and a separate initialized match flag; every complete decoding oracle passes.
-`optional_gap_test.go` explicitly records the wrong behavior as a gap observation,
-never as the production decoder's oracle. Compiler-owned files are untouched.
+`gaps/6_uninitialized_optional_string.ts` caught a compiler miscompile before
+integration: Node printed `missing`, while both compiled backends printed
+`present` because the declaration used an empty string storage placeholder.
+Integration 15 initializes optional declarations with an explicit undefined IR
+value. `optional_gap_test.go` now requires Node/native/backend byte parity and
+leak checks; removing that initialization must fail this regression. The decoder
+retains its separately verified explicit match flag.
 The initial combined entity file exceeded cohere's 2,000-line limit. Splitting
 case-sensitive keys and values into their own data concerns passes all 276 rules.
 
@@ -558,6 +557,7 @@ line-oriented approximation is the same parser. No compiler files were modified.
 
 ```sh
 source /workspace/adamic-tools/env.sh
+(cd cohere && go build -o /tmp/cssstrings-cohere ./command/cohere)
 ADAMIC_MARKDOWNBLOCKS_CENSUS=1 \
   ADAMIC_MARKDOWNWIDTH_DEPS=/tmp/adamic-markdown-width \
   ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork \
@@ -577,6 +577,23 @@ adapter checks `prettier.version === '3.9.6'`. The unit report records its pin a
 bundle digests. This is an installation of the vendored original, not a guessed
 patch to npm Prettier. The stock comparison uses the separately installed exact
 npm version in `/tmp/adamic-markdown-prettier/node_modules/prettier`.
+
+Set `ADAMIC_MARKDOWN_BENCH=1` for the repeated throughput measurements. The
+ordinary gate still runs every corpus comparison, sanitizer/leak check, native
+mutant and byte-identical data regeneration; only repeated timings are opt-in.
+Layout tests admit at most two fixture streams concurrently. Output-only layout
+and whitespace-policy mutants retain ASan/UBSan at `-O0`; unchanged ports retain
+the normal `-O1` sanitizer run and an `-O2` release comparison. These controls
+keep the expanded suite within the gate's deadline without reducing its corpus.
+Identical unchanged drivers share compiled artifacts within one package run,
+keyed by generated C bytes and sanitizer mode. Executions and observations are
+never reused, including in an uncached gate; the temporary binaries disappear
+when the package exits. A source-key mutant must fail the existing parity tests.
+The layout milestones all use the same final driver on cumulative corpora. Their
+unchanged baseline now runs once on the final full superset, comparing fresh Go,
+source Node, backend, sanitizer, release, leak and original-library observations.
+Every area's native mutants still run against that full oracle answer. Selecting
+an individual layout test also runs this complete baseline; no case is omitted.
 
 The census includes `.md`, `.markdown`, `.mdown` and `.mkd`, skipping only `.git`.
 Generated cases cover heading forms, all list marker types and five nesting

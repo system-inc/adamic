@@ -33,6 +33,9 @@ var errReadOnly = errors.New("load: the source file system is read-only")
 
 // Program is a loaded Adamic program that the checker accepted.
 type Program struct {
+	// tsgo opts this compilation into the external native checker library.
+	tsgo bool
+
 	compiler *compiler.Program
 	fs       *sourceFS
 
@@ -118,7 +121,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(bundled.WrapFS(fs))
+	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
 	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, tspath.ComparePathsOptions{
 		UseCaseSensitiveFileNames: fileSystem.UseCaseSensitiveFileNames(),
 		CurrentDirectory:          currentDirectory,

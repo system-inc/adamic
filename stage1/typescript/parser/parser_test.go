@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,7 +21,7 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"nodes.ts", "parser.ts", "main.ts"}
+var portFiles = []string{"nodes.ts", "grammar.ts", "lookahead.ts", "statements.ts", "jsx.ts", "parser.ts", "main.ts"}
 
 type execution struct {
 	output   []byte
@@ -151,7 +152,22 @@ func difference(got, want []byte) string {
 			right = b[i]
 		}
 		if left != right {
-			return fmt.Sprintf("line %d: port %q, Go %q", i+1, left, right)
+			caseLine := ""
+			for j := i; j >= 0; j-- {
+				if j < len(b) && strings.HasPrefix(b[j], "case ") {
+					caseLine = b[j]
+					break
+				}
+			}
+			start := i - 5
+			if start < 0 {
+				start = 0
+			}
+			end := i + 5
+			if end > len(b) {
+				end = len(b)
+			}
+			return fmt.Sprintf("%s line %d: port %q, Go %q\nGo context:\n%s", caseLine, i+1, left, right, strings.Join(b[start:end], "\n"))
 		}
 	}
 	return "different bytes"
@@ -189,7 +205,7 @@ func TestExpressionsAgree(t *testing.T) {
 		}
 	}
 	t.Logf("%d inputs, %d identical canonical bytes", len(cases), len(want.output))
-	mutant := copyPort(t, "parser.ts", "return 14;", "return 12;")
+	mutant := copyPort(t, "grammar.ts", "return 14;", "return 12;")
 	for _, side := range []struct {
 		name string
 		data []byte
@@ -221,4 +237,55 @@ func TestExpressionsAgree(t *testing.T) {
 		t.Logf("%s parenthesized expression misclassified as arrow caught: %s", side.name, difference(side.data, want.output))
 	}
 
+}
+
+func compilerManifest(t *testing.T) (string, int) {
+	t.Helper()
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
+	}
+	output, err := exec.Command("git", "-C", source, "rev-parse", "HEAD").Output()
+	if err != nil || strings.TrimSpace(string(output)) != compilerCommit {
+		t.Fatalf("corpus pin differs: %q %v", output, err)
+	}
+	var manifest strings.Builder
+	files := 0
+	err = filepath.WalkDir(filepath.Join(source, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
+			manifest.WriteString(path + "\n")
+			files++
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "compiler.txt")
+	if err := os.WriteFile(path, []byte(manifest.String()), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return path, files
+}
+
+func TestCompilerExpressionsAgree(t *testing.T) {
+	path, files := compilerManifest(t)
+	oracle := goOracle(t)
+	want := execute(t, "", oracle, "--manifest", path)
+	absolute, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := node(t, absolute, path, false)
+	if diff := difference(got.output, want.output); diff != "" {
+		t.Fatalf("Node: %s", diff)
+	}
+	got = execute(t, "", buildPort(t, absolute, true), "--manifest", path)
+	if diff := difference(got.output, want.output); diff != "" {
+		t.Fatalf("native: %s", diff)
+	}
+	t.Logf("%d whole compiler files, %d identical expression tree bytes", files, len(want.output))
 }

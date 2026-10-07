@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // keyable reports whether values of a type can be a Map's keys or a Set's elements: strings, numbers
@@ -25,6 +26,19 @@ func keyable(valueType ir.Type) bool {
 // entries, and map.keys(), map.values(), map.entries(), set.keys() and set.values().
 func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 	node = ast.SkipParentheses(node)
+	if element, iterator := l.libraryIteratorElement(node); iterator {
+		value, err := l.expression(node)
+		if err != nil {
+			return nil, 0, err
+		}
+		return l.libraryIteratorArray(node, value, element), element, nil
+	}
+	if plan, err := l.planIteration(node); err != nil {
+		return nil, 0, err
+	} else if plan != nil {
+		value, err := l.collectIteration(node, node, nil, plan, plan.element)
+		return value, plan.element, err
+	}
 	if node.Kind == ast.KindCallExpression && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		if callee := ast.SkipParentheses(node.AsCallExpression().Expression); callee.Kind == ast.KindPropertyAccessExpression {
 			receiver := callee.AsPropertyAccessExpression().Expression
@@ -72,7 +86,11 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 func (l *lowering) collectionPart(node *ast.Node, receiver *ast.Node, part string) (ir.Expression, ir.Type, error) {
 	if l.isSet(receiver) {
 		if part == "entries" {
-			return nil, 0, l.notYet(node, "a Set's entries ([element, element] pairs) outside a for...of")
+			iterator, _, err := l.libraryCollectionIterator(node, receiver, part)
+			if err != nil {
+				return nil, 0, err
+			}
+			return l.libraryIteratorArray(node, iterator, ir.Object), ir.Object, nil
 		}
 		element, err := l.setElement(receiver)
 		if err != nil {
@@ -127,8 +145,15 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
 	source = ast.SkipParentheses(source)
 	sourceType := l.checker.GetTypeAtLocation(source)
-	if l.checker.IsArrayType(sourceType) {
+	if l.checker.IsArrayType(sourceType) || l.isLibraryType(sourceType, "MapIterator", "SetIterator", "Set", "ReadonlySet") {
 		element := l.checker.GetElementTypeOfArrayType(sourceType)
+		if element == nil {
+			arguments := l.typeArguments(sourceType)
+			if len(arguments) != 1 {
+				return 0, 0, false
+			}
+			element = arguments[0]
+		}
 		if !checker.IsTupleType(element) {
 			return 0, 0, false
 		}
@@ -147,8 +172,12 @@ func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
 		}
 		source = callee.AsPropertyAccessExpression().Expression
 	}
-	if representation, _ := l.representation(l.checker.GetTypeAtLocation(source)); representation != ir.Map || l.isSet(source) {
+	if representation, _ := l.representation(l.checker.GetTypeAtLocation(source)); representation != ir.Map {
 		return 0, 0, false
+	}
+	if l.isSet(source) {
+		element, err := l.setElement(source)
+		return element, element, err == nil
 	}
 	key, value, err := l.mapTypes(source)
 	return key, value, err == nil
@@ -177,6 +206,9 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 			return nil, true, l.notYet(node, "clear with arguments")
 		}
 		return ir.MapClear{Map: collection}, true, nil
+	}
+	if len(arguments) == 2 {
+		return l.libraryForEachThisArg(node, receiver, set)
 	}
 	if len(arguments) != 1 {
 		return nil, true, l.notYet(node, "forEach with other than one callback")
@@ -224,6 +256,13 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 	if initializer == nil {
 		return nil, l.notYet(pattern, "a destructuring declaration without a value")
 	}
+	if pattern.Kind == ast.KindArrayBindingPattern {
+		if plan, err := l.planIteration(initializer); err != nil {
+			return nil, err
+		} else if plan != nil {
+			return l.destructureIterator(pattern, initializer, plan)
+		}
+	}
 	value, err := l.expression(initializer)
 	if err != nil {
 		return nil, err
@@ -263,6 +302,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		}
 		var field string
 		var fieldType *checker.Type
+		absent := false
 		if tuple {
 			if index >= len(elementTypes) {
 				return nil, l.notYet(binding, "destructuring past a tuple's end")
@@ -281,7 +321,24 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			if property == nil {
 				return nil, l.notYet(binding, "destructuring a field the type doesn't name")
 			}
+			if l.inheritedLibrarySymbol(property) {
+				return nil, l.prototypeRead(binding, field)
+			}
+			if property.Flags&ast.SymbolFlagsMethod != 0 {
+				return nil, &Refused{Where: l.program.Where(binding), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this"}
+			}
+			for _, root := range l.checker.GetRootSymbols(property) {
+				for _, declaration := range root.Declarations {
+					if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+						return nil, l.notYet(binding, "an inherited library member in object destructuring, which is not an own field")
+					}
+				}
+			}
+			if err := l.erasedMethodField(binding, destructured, field); err != nil {
+				return nil, err
+			}
 			fieldType = l.checker.GetTypeOfSymbol(property)
+			absent = property.Flags&ast.SymbolFlagsOptional != 0
 		}
 		local, err := l.declareLocal(binding.Name())
 		if err != nil {
@@ -291,7 +348,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
-		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of}
+		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
 		statements = append(statements, ir.Declare{Local: local, Value: value})
 	}
 	return statements, nil

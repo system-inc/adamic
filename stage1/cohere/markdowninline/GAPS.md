@@ -49,18 +49,18 @@ AST adapter. `--batch <file>` reads mode-prefixed, escaped lines; the four escap
 are backslash, newline, carriage return and tab. Unknown modes fail explicitly.
 Raw stdout uses `/dev/stdout`, verified on Linux.
 
-## Executable gap
+## Closed delimiter-expression gap
 
-`gaps/1_delimiter_expression.ts` proves the original non-u expression cannot be
-lowered by stage 0:
+`gaps/1_delimiter_expression.ts` checks the original non-u expression against
+Node, native sanitizers, the JavaScript backend and LeakSanitizer:
 
 ```text
 Node: a\*b
-stage 0: stage 0 can't lower a RegularExpressionLiteral yet
+native and JavaScript backend: a\*b
 ```
 
-`TestDelimiterExpressionGap` asserts the exact `lower.NotYet` reason and the Node
-output. `inline.ts` substitutes a finite matcher for this specific expression,
+`TestDelimiterExpressionMatchesNode` verifies that native regex closes this gap.
+`inline.ts` retains its independently verified finite matcher for this specific expression,
 including greedy delimiter runs, ordered alternatives, backtracking, escaped
 backslash parity, line terminators and non-overlapping matches. It is not a
 regular-expression engine. The two simple whitespace expressions are explicit

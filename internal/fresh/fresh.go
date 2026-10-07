@@ -129,8 +129,14 @@ func directlyCalled(program *ir.Program) map[int]bool {
 				walk(node.Elem())
 			}
 		case reflect.Struct:
-			if sorted, ok := node.Interface().(ir.ArraySort); ok && sorted.Callback == nil {
-				delete(direct, sorted.Comparator)
+			if sorted, ok := node.Interface().(ir.ArraySort); ok {
+				targets := program.ClosureTargets(sorted)
+				if targets.Unknown {
+					clear(direct)
+				}
+				for _, target := range targets.Functions {
+					delete(direct, target)
+				}
 			}
 			for index := 0; index < node.NumField(); index++ {
 				walk(node.Field(index))
@@ -1005,8 +1011,11 @@ func (a *analysis) value(expression ir.Expression) value {
 	if expression == nil {
 		return value{}
 	}
+	if held, known := a.libraryLanguage(expression); known {
+		return held
+	}
 	switch expression := expression.(type) {
-	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined:
+	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
 		return value{}
 	case ir.Read:
 		declared := a.proof.program.Locals[expression.Local]
@@ -1029,6 +1038,35 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.Binary:
 		a.value(expression.Left)
 		a.value(expression.Right)
+		return value{}
+	case ir.IsNull:
+		a.value(expression.Value)
+		return value{}
+	case ir.RegExpNew:
+		for _, argument := range expression.Arguments {
+			a.value(argument)
+		}
+		// Patterns are compiled constants; the runtime object holds only immutable strings.
+		return a.fresh(anyField, value{})
+	case ir.RegExpCall:
+		return a.regexCall(expression)
+	case ir.RegExpProperty:
+		a.value(expression.Array)
+		if mutable(expression.Type()) {
+			return outsideValue()
+		}
+		return value{}
+	case ir.RegExpGroup:
+		a.value(expression.Object)
+		if mutable(expression.Type()) {
+			return outsideValue()
+		}
+		return value{}
+	case ir.JSONStringify:
+		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
+		a.value(expression.Value)
+		a.value(expression.Replacer)
+		a.value(expression.Space)
 		return value{}
 	case ir.NumberToString:
 		a.value(expression.Value)
@@ -1096,6 +1134,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(argument)
 		}
 		return value{}
+	case ir.ObjectCall:
+		return a.objectCall(expression)
 	case ir.NumberCall:
 		for _, argument := range expression.Arguments {
 			a.value(argument)
@@ -1175,11 +1215,18 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.fresh(anyField, value{})
 	case ir.MakeError:
 		a.value(expression.Message)
+		if expression.Name != nil {
+			a.value(expression.Name)
+		}
 		return a.fresh(anyField, value{})
 	case ir.ObjectLiteral:
 		var copied value
 		if expression.Spread != nil {
-			copied = a.everything(a.value(expression.Spread))
+			source := a.value(expression.Spread)
+			if expression.NoReuse {
+				a.state.escape(source)
+			}
+			copied = a.everything(source)
 		}
 		all := append(append([]ir.Field{}, expression.Fields...), expression.Empty...)
 		fields := make([]value, len(all))
@@ -1203,6 +1250,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			elements.merge(held)
 		}
 		return a.fresh(elementKey, elements)
+	case ir.CollectionIterator:
+		return a.fresh(anyField, a.value(expression.Collection))
 	case ir.MapNew:
 		var entries value
 		for _, entry := range expression.Entries {
@@ -1251,6 +1300,9 @@ func (a *analysis) value(expression ir.Expression) value {
 			elements.merge(a.load(a.value(other), elementKey))
 		}
 		return a.fresh(elementKey, elements)
+	case ir.HasAccessor:
+		a.value(expression.Object)
+		return value{}
 	case ir.Property:
 		return a.load(a.value(expression.Object), expression.Name)
 	case ir.ArrayIndex:
@@ -1262,6 +1314,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ArraySearch:
 		a.value(expression.Array)
 		a.value(expression.Value)
+		if expression.From != nil {
+			a.value(expression.From)
+		}
 		return value{}
 	case ir.ArrayJoin:
 		a.value(expression.Array)
@@ -1322,6 +1377,10 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MapSize:
 		a.value(expression.Map)
 		return value{}
+	case ir.HasOwn:
+		a.value(expression.Object)
+		a.value(expression.Key)
+		return value{}
 	case ir.SetAdd:
 		holder := a.value(expression.Set)
 		held := a.value(expression.Value)
@@ -1338,24 +1397,30 @@ func (a *analysis) value(expression ir.Expression) value {
 		for _, argument := range expression.Arguments {
 			operands = append(operands, a.value(argument))
 		}
-		if a.proof.top || expression.Virtual != 0 {
+		if a.proof.top {
 			return a.call(operands, expression.Returns)
 		}
-		if !a.proof.direct[expression.Function] {
-			// Its parameters are outside to it, so it may keep them anywhere.
-			a.call(operands, 0)
+		before := a.state.copy()
+		joined := before.copy()
+		var result value
+		for _, target := range a.proof.program.CallTargets(expression) {
+			a.state = before.copy()
+			if !a.proof.direct[target] {
+				// Its parameters are outside to it, so it may keep them anywhere.
+				a.call(operands, 0)
+			}
+			result.merge(a.made(target, a.proof.summaries[target], operands))
+			joined.join(a.state)
 		}
-		result := a.made(expression.Function, a.proof.summaries[expression.Function], operands)
+		a.state = joined
 		if !mutable(expression.Returns) {
 			return value{}
 		}
 		return result
 	case ir.CallClosure:
-		operands := []value{a.value(expression.Closure)}
-		for _, argument := range expression.Arguments {
-			operands = append(operands, a.value(argument))
-		}
-		return a.call(operands, expression.Returns)
+		// Cells and structural receivers are outside this summary's model. The
+		// union for any bounded target set, and for Unknown, is an arbitrary call.
+		return a.call(a.operands(expression), expression.Returns)
 	case ir.ArrayMap:
 		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, ir.Array)
 	case ir.ArrayVisit:

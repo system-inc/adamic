@@ -9,6 +9,7 @@ export class ParseNode {
     text = '';
     raw = '';
     operator = '';
+    semantic = '';
     optional = false;
     literalFlags = 0;
     list = -1;
@@ -34,14 +35,20 @@ export function written(text: string): string {
     return result;
 }
 
-export function printTree(nodes: readonly ParseNode[], root: number, offsets: readonly number[], depth = 0): number {
+export function printTree(
+    nodes: readonly ParseNode[],
+    root: number,
+    offsets: readonly number[],
+    depth = 0,
+    whole = false,
+): number {
     const node = nodes[root] ?? panic('missing parse node');
     console.log(
-        `${depth} ${node.kind} ${offsets[node.pos] ?? panic('node start outside source')} ${offsets[node.end] ?? panic('node end outside source')} ${node.optional ? 32 : 0} ${node.literalFlags} ${node.list} ${node.trailing ? 1 : 0} ${node.multiLine ? 1 : 0}\t${node.operator}\t${written(node.text)}\t${written(node.raw)}`,
+        `${depth} ${node.kind} ${offsets[node.pos] ?? panic('node start outside source')} ${offsets[node.end] ?? panic('node end outside source')} ${node.optional ? 32 : 0} ${node.literalFlags} ${node.list} ${node.trailing ? 1 : 0} ${node.multiLine ? 1 : 0}\t${node.operator}\t${written(node.text)}\t${written(node.raw)}${whole ? `\t${node.semantic}` : ''}`,
     );
     let count = 1;
     for(const child of node.children) {
-        count += printTree(nodes, child, offsets, depth + 1);
+        count += printTree(nodes, child, offsets, depth + 1, whole);
     }
     return count;
 }

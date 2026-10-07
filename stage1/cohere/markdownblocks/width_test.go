@@ -136,23 +136,29 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 			t.Log("caught by observable width output")
 		})
 	}
-	fast := filepath.Join(dir, "fast")
-	if e := native.Build(native.C(program), fast, native.Options{}); e != nil {
-		t.Fatal(e)
-	}
-	for _, side := range []struct {
-		name, command string
-		args          []string
-	}{{"Go", goBinary, []string{cases}}, {"native", fast, []string{cases}}, {"original Node dependencies", "node", []string{"testdata/width_library.mjs", widthDependencies, cases}}} {
-		started := time.Now()
-		for i := 0; i < 3; i++ {
-			r := execute(t, nil, side.command, side.args...)
-			clean(t, side.name, r)
-			equal(t, side.name, r.stdout, want.stdout)
+	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
+		fast := filepath.Join(dir, "fast")
+		if e := native.Build(native.C(program), fast, native.Options{}); e != nil {
+			t.Fatal(e)
 		}
-		t.Logf("%s %.1f texts/s, startup, decoding and output included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
+		for _, side := range []struct {
+			name, command string
+			args          []string
+		}{{"Go", goBinary, []string{cases}}, {"native", fast, []string{cases}}, {"original Node dependencies", "node", []string{"testdata/width_library.mjs", widthDependencies, cases}}} {
+			started := time.Now()
+			for i := 0; i < 3; i++ {
+				r := execute(t, nil, side.command, side.args...)
+				clean(t, side.name, r)
+				equal(t, side.name, r.stdout, want.stdout)
+			}
+			t.Logf("%s %.1f texts/s, startup, decoding and output included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
+		}
+	} else {
+		result := releaseRun(t, program, cases)
+		clean(t, "release width", result)
+		equal(t, "release width", result.stdout, want.stdout)
 	}
-	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_width", "-check", "-formatter", cohereFormatter(t, root))
+	command = bounded(t, "go", "run", "./stage1/cohere/markdownblocks/tools/generate_width", "-check", "-formatter", cohereFormatter(t))
 	command.Dir = root
 	if output, e := command.CombinedOutput(); e != nil {
 		t.Fatalf("regeneration %v %s", e, output)
