@@ -80,3 +80,8 @@ reconstructs the pre-claim branch head `b64a21b3`; selection still yields exactl
 three rules in the pushed claim. Pinned cohere's standalone CLI `.a` limitation remains
 as reported in the previous batch; the independent production-registry loader and
 native suite both support the authored `.a` controls.
+
+Completion update: the two formerly incomplete process rules are completed in
+182d776e. The original partial report above records its historical scope; see
+[WAVE_30_PROCESS_REPORT.md](WAVE_30_PROCESS_REPORT.md) for the complete gates,
+mutants, bridge questions and timings. All third-batch claims are complete.
