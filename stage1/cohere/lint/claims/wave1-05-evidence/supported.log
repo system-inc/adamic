@@ -1,0 +1,10 @@
+=== RUN   TestWave05SupportedCorpus
+    lint_test.go:324: cohere cases: 454 unique source/rule/options combinations
+    wave05_overlay_test.go:24: JSX outside coverage: /tmp/adamic-gate/TestWave05SupportedCorpus2935524006/001/case-103.tsx	@eslint-community/eslint-comments/require-description			false	{"ignore":null,"additionalDirectives":null}
+    wave05_overlay_test.go:22: unterminated comment outside driver contract: /tmp/adamic-gate/TestWave05SupportedCorpus2935524006/001/case-105.tsx	@eslint-community/eslint-comments/require-description			false	{"ignore":null,"additionalDirectives":null}
+    wave05_overlay_test.go:24: JSX outside coverage: /tmp/adamic-gate/TestWave05SupportedCorpus2935524006/001/case-440.tsx	structure/tailwind-no-physical-direction			false	null
+    wave05_overlay_test.go:28: supported=451 JSX excluded=2 malformed excluded=1
+    wave05_overlay_test.go:29: Go, Node, emitted JavaScript, native identical: 136399 bytes
+--- PASS: TestWave05SupportedCorpus (21.42s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	21.430s

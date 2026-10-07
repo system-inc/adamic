@@ -1,0 +1,118 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/reason_ignored
+    lint_test.go:491: reason ignored caught on Node: case 24 line 526: port "/tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:2:1", Go "/tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:4:1"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 20 missingDescription 		
+        /tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:4:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 112 134 missingDescription 		
+        fixed	/* eslint-disable */\u000a// eslint-disable-next-line -- deliberate exception\u000aconst fake = '// eslint-disable-line';\u000a// cohere-disable-line\u000a
+    lint_test.go:491: reason ignored caught on emitted JavaScript: case 24 line 526: port "/tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:2:1", Go "/tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:4:1"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 20 missingDescription 		
+        /tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:4:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 112 134 missingDescription 		
+        fixed	/* eslint-disable */\u000a// eslint-disable-next-line -- deliberate exception\u000aconst fake = '// eslint-disable-line';\u000a// cohere-disable-line\u000a
+    lint_test.go:491: reason ignored caught on native: case 24 line 526: port "/tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:2:1", Go "/tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:4:1"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 20 missingDescription 		
+        /tmp/adamic-gate/TestMutantsreason_ignored232032832/007/eslint-comments-require-description-0.ts:4:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 112 134 missingDescription 		
+        fixed	/* eslint-disable */\u000a// eslint-disable-next-line -- deliberate exception\u000aconst fake = '// eslint-disable-line';\u000a// cohere-disable-line\u000a
+=== RUN   TestMutants/compound_assignment_omitted
+    lint_test.go:491: compound assignment omitted caught on Node: case 24 line 522: port "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:2:11", Go "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:1:14"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:1:14
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 13 15 condAssign 		
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:2:11
+    lint_test.go:491: compound assignment omitted caught on emitted JavaScript: case 24 line 522: port "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:2:11", Go "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:1:14"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:1:14
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 13 15 condAssign 		
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:2:11
+    lint_test.go:491: compound assignment omitted caught on native: case 24 line 522: port "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:2:11", Go "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:1:14"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:1:14
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 13 15 condAssign 		
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1785759478/007/no-cond-assign-0.ts:2:11
+=== RUN   TestMutants/rtl_exemption_removed
+    lint_test.go:491: rtl exemption removed caught on Node: case 24 line 530: port "/tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:1:17", Go "/tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:2:22"
+        Go context:
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "md:hover:text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:2:22
+          structure/tailwind-no-physical-direction  The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 73 81 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:2:35
+    lint_test.go:491: rtl exemption removed caught on emitted JavaScript: case 24 line 530: port "/tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:1:17", Go "/tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:2:22"
+        Go context:
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "md:hover:text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:2:22
+          structure/tailwind-no-physical-direction  The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 73 81 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:2:35
+    lint_test.go:491: rtl exemption removed caught on native: case 24 line 530: port "/tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:1:17", Go "/tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:2:22"
+        Go context:
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "md:hover:text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:2:22
+          structure/tailwind-no-physical-direction  The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 73 81 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed4077274602/007/structure-tailwind-no-physical-direction-0.ts:2:35
+--- PASS: TestMutants (45.68s)
+    --- PASS: TestMutants/reason_ignored (16.94s)
+    --- PASS: TestMutants/compound_assignment_omitted (13.45s)
+    --- PASS: TestMutants/rtl_exemption_removed (13.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	45.689s

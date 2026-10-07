@@ -1,0 +1,20 @@
+=== RUN   TestRulesAgree
+    lint_test.go:324: cohere cases: 452 unique source/rule/options combinations
+    lint_test.go:374: /tmp/adamic-gate/TestRulesAgree1211752762/001/oracle [--manifest /tmp/adamic-gate/TestRulesAgree1211752762/013/manifest.txt]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestRulesAgree1211752762/010/case-103.ts: [Unterminated regular expression literal.]
+        
+        goroutine 1 [running]:
+        main.collect({0x1ac5f7e20a9b, 0x39}, {0x1ac5f7df24c0?, 0x1?}, {0x1ac5f7e2fbc0, 0x6, 0x6})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:91 +0xb05
+        main.run({0x1ac5f7e20a9b?, 0x1ac5f7e0c000?}, 0x0, 0x1ac5f7e0c000)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:143 +0x2f7
+--- FAIL: TestRulesAgree (43.27s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 214 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 12710560 bytes
+--- PASS: TestCompilerAndStage1Agree (39.45s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	82.723s
+FAIL

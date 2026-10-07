@@ -1,0 +1,43 @@
+=== RUN   TestWave05Throughput
+    wave05_overlay_test.go:44: no-cond-assign compiler-only findings=52
+    wave05_overlay_test.go:55: no-cond-assign round=1 side=Go seconds=0.186094 count=1052
+    wave05_overlay_test.go:55: no-cond-assign round=1 side=native seconds=1.138364 count=1052
+    wave05_overlay_test.go:55: no-cond-assign round=1 side=Node seconds=0.832354 count=1052
+    wave05_overlay_test.go:55: no-cond-assign round=2 side=Go seconds=0.183279 count=1052
+    wave05_overlay_test.go:55: no-cond-assign round=2 side=native seconds=1.131543 count=1052
+    wave05_overlay_test.go:55: no-cond-assign round=2 side=Node seconds=0.968288 count=1052
+    wave05_overlay_test.go:55: no-cond-assign round=3 side=Go seconds=0.169452 count=1052
+    wave05_overlay_test.go:55: no-cond-assign round=3 side=native seconds=1.116539 count=1052
+    wave05_overlay_test.go:55: no-cond-assign round=3 side=Node seconds=0.781970 count=1052
+    wave05_overlay_test.go:58: no-cond-assign best-of-3 Go 0.169452s 6208.24 findings/s (78 files 1052 findings)
+    wave05_overlay_test.go:58: no-cond-assign best-of-3 native 1.116539s 942.20 findings/s (78 files 1052 findings)
+    wave05_overlay_test.go:58: no-cond-assign best-of-3 Node 0.781970s 1345.32 findings/s (78 files 1052 findings)
+    wave05_overlay_test.go:44: structure/tailwind-no-physical-direction compiler-only findings=0
+    wave05_overlay_test.go:55: structure/tailwind-no-physical-direction round=1 side=Go seconds=0.195561 count=2000
+    wave05_overlay_test.go:55: structure/tailwind-no-physical-direction round=1 side=native seconds=1.324699 count=2000
+    wave05_overlay_test.go:55: structure/tailwind-no-physical-direction round=1 side=Node seconds=1.600066 count=2000
+    wave05_overlay_test.go:55: structure/tailwind-no-physical-direction round=2 side=Go seconds=0.589719 count=2000
+    wave05_overlay_test.go:55: structure/tailwind-no-physical-direction round=2 side=native seconds=1.245160 count=2000
+    wave05_overlay_test.go:55: structure/tailwind-no-physical-direction round=2 side=Node seconds=0.962835 count=2000
+    wave05_overlay_test.go:55: structure/tailwind-no-physical-direction round=3 side=Go seconds=0.243622 count=2000
+    wave05_overlay_test.go:55: structure/tailwind-no-physical-direction round=3 side=native seconds=1.241443 count=2000
+    wave05_overlay_test.go:55: structure/tailwind-no-physical-direction round=3 side=Node seconds=0.848415 count=2000
+    wave05_overlay_test.go:58: structure/tailwind-no-physical-direction best-of-3 Go 0.195561s 10227.00 findings/s (78 files 2000 findings)
+    wave05_overlay_test.go:58: structure/tailwind-no-physical-direction best-of-3 native 1.241443s 1611.03 findings/s (78 files 2000 findings)
+    wave05_overlay_test.go:58: structure/tailwind-no-physical-direction best-of-3 Node 0.848415s 2357.34 findings/s (78 files 2000 findings)
+    wave05_overlay_test.go:44: @eslint-community/eslint-comments/require-description compiler-only findings=125
+    wave05_overlay_test.go:55: @eslint-community/eslint-comments/require-description round=1 side=Go seconds=0.318630 count=1125
+    wave05_overlay_test.go:55: @eslint-community/eslint-comments/require-description round=1 side=native seconds=1.930918 count=1125
+    wave05_overlay_test.go:55: @eslint-community/eslint-comments/require-description round=1 side=Node seconds=2.207485 count=1125
+    wave05_overlay_test.go:55: @eslint-community/eslint-comments/require-description round=2 side=Go seconds=0.335166 count=1125
+    wave05_overlay_test.go:55: @eslint-community/eslint-comments/require-description round=2 side=native seconds=2.080694 count=1125
+    wave05_overlay_test.go:55: @eslint-community/eslint-comments/require-description round=2 side=Node seconds=1.087318 count=1125
+    wave05_overlay_test.go:55: @eslint-community/eslint-comments/require-description round=3 side=Go seconds=0.299047 count=1125
+    wave05_overlay_test.go:55: @eslint-community/eslint-comments/require-description round=3 side=native seconds=2.004342 count=1125
+    wave05_overlay_test.go:55: @eslint-community/eslint-comments/require-description round=3 side=Node seconds=1.083534 count=1125
+    wave05_overlay_test.go:58: @eslint-community/eslint-comments/require-description best-of-3 Go 0.299047s 3761.95 findings/s (78 files 1125 findings)
+    wave05_overlay_test.go:58: @eslint-community/eslint-comments/require-description best-of-3 native 1.930918s 582.62 findings/s (78 files 1125 findings)
+    wave05_overlay_test.go:58: @eslint-community/eslint-comments/require-description best-of-3 Node 1.083534s 1038.27 findings/s (78 files 1125 findings)
+--- PASS: TestWave05Throughput (33.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	33.784s
