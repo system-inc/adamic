@@ -98,3 +98,33 @@ react-hooks/set-state-in-effect, react-hooks/set-state-in-render and
 react-hooks/static-components remain pending their JSX parser and native React
 HIR/SSA prerequisites. See WAVE_22_FIFTH_REPORT.md for the runtime reproduction
 and independent production Go tests. No new native coverage is claimed for them.
+
+## Latest continuation check
+
+Fetched every origin head again successfully. Main remains e8ba3d5d, already
+an ancestor of published tip 4758f5c4. The rule/compiler sources were not
+changed after the passing 682.845s oracle run and 147.768s bridge run above;
+those checks were not repeated for this documentation-only update. No other
+branch was pushed for this unit.
+
+A prerequisite has progressed: origin/codex/stage1-jsx-lint at
+a8a62d62ca49db7415e14c3887dd305022b17309 contains jsx.ts and its JSX_REPORT.md
+records native JSX parser parity and batch-8 integration. This is published
+worker evidence, not a new validation run by this unit. It is not on the
+inspected main. The earlier parser panic remains evidence about this branch,
+not a claim that no JSX implementation exists anywhere on origin.
+
+The inspected JSX branch still has no native React HIR/SSA paths or matches
+for ForFunctionWithoutManualMemoization, ControlDominators or
+UnconditionalBlocks under stage1/cohere. The three pending rules require these
+graph and capture/value analyses, as described in WAVE_22_FIFTH_REPORT.md.
+Bringing JSX syntax alone into this branch would not unblock their ports.
+Ahra's instruction to stop at other blockers without editing shared files
+still applies. No shared files were edited and no new claims were made.
+
+The latest instruction requires new rules to declare rule.json kinds and
+consume the provided node without string relevance dispatch. No new rule was
+written in this continuation, and no compliant new listener is claimed.
+The message supplies no shared Diagnostic integration SHA, so no rebase onto
+a speculative batch-8 worker tip was performed. Exact inspected tips and
+ancestry are in validation-wave-22-speed-landing/latest-prerequisites.json.
