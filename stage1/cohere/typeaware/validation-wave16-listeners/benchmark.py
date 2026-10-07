@@ -10,7 +10,7 @@ import time
 
 REPOSITORY = Path(__file__).resolve().parents[4]
 ARTIFACTS = Path(sys.argv[1]).resolve()
-OUT = Path(__file__).resolve().parent / 'timing'
+OUT = Path(sys.argv[2]).resolve() if len(sys.argv) > 2 else Path(__file__).resolve().parent / 'timing'
 OUT.mkdir(exist_ok=True)
 rows = []
 for population, config, manifest in [

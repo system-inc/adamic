@@ -9,7 +9,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[4]
 SCRATCH = Path(sys.argv[1]).resolve()
-OUT = Path(__file__).resolve().parent
+OUT = Path(sys.argv[2]).resolve() if len(sys.argv) > 2 else Path(__file__).resolve().parent
 metadata = {
     'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
     'main': subprocess.check_output(['git', 'rev-parse', 'origin/main'], cwd=ROOT, text=True).strip(),
