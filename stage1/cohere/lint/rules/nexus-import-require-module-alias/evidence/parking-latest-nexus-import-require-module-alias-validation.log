@@ -1,0 +1,40 @@
+=== RUN   TestWave14Rules
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:327: cohere cases: 917 unique source/rule/options combinations
+    wave1_14_test.go:52: module alias captured source/options combinations: 27
+    wave1_14_test.go:74: rule fixture findings: 42
+    wave1_14_test.go:75: Go, Node, native identical: 17816 bytes
+    wave1_14_test.go:75: emitted JavaScript identical: 17816 bytes
+--- PASS: TestWave14Rules (121.06s)
+=== RUN   TestWave14Mutant
+    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on Node source: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:1:8"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:1:8
+          nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
+        
+        range 7 17 requireDefaultStyle 		
+        /tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:2:8
+    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on sanitized native: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:1:8"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:1:8
+          nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
+        
+        range 7 17 requireDefaultStyle 		
+        /tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:2:8
+    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:1:8"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:1:8
+          nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
+        
+        range 7 17 requireDefaultStyle 		
+        /tmp/adamic-gate/TestWave14Mutant2814344952/001/nexus-import-require-module-alias-0.ts:2:8
+--- PASS: TestWave14Mutant (15.66s)
+=== RUN   TestWave14DuplicateOptions
+    wave1_14_test.go:197: duplicate-key refusal identical on Node, emitted JavaScript and sanitized native; deleting the guard compiles and prints accepted on all three
+--- PASS: TestWave14DuplicateOptions (17.83s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	154.553s

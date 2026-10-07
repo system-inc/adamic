@@ -1,0 +1,123 @@
+=== RUN   TestWave14NextRules
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:327: cohere cases: 917 unique source/rule/options combinations
+=== RUN   TestWave14NextRules/typescript-eslint-no-duplicate-enum-values
+    wave1_14_next_test.go:36: captured upstream cases: 57
+    wave1_14_next_test.go:40: findings: 35
+    wave1_14_next_test.go:42: Go, Node, native identical: 23107 bytes
+    wave1_14_next_test.go:42: emitted JavaScript identical: 23107 bytes
+=== RUN   TestWave14NextRules/typescript-eslint-no-dynamic-delete
+    wave1_14_next_test.go:36: captured upstream cases: 42
+    wave1_14_next_test.go:40: findings: 25
+    wave1_14_next_test.go:42: Go, Node, native identical: 8616 bytes
+    wave1_14_next_test.go:42: emitted JavaScript identical: 8616 bytes
+--- PASS: TestWave14NextRules (23.48s)
+    --- PASS: TestWave14NextRules/typescript-eslint-no-duplicate-enum-values (1.13s)
+    --- PASS: TestWave14NextRules/typescript-eslint-no-dynamic-delete (1.17s)
+=== RUN   TestWave14NextMutants
+=== RUN   TestWave14NextMutants/typescript-eslint-no-duplicate-enum-values
+    wave1_14_next_test.go:73: numeric duplicate anchor advances: Node source caught only by comparison: case 0 line 6: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:21", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:2:14
+    wave1_14_next_test.go:73: numeric duplicate anchor advances: sanitized native caught only by comparison: case 0 line 6: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:21", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:2:14
+    wave1_14_next_test.go:73: numeric duplicate anchor advances: emitted JavaScript caught only by comparison: case 0 line 6: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:21", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values3924443039/002/typescript-eslint-no-duplicate-enum-values-0.ts:2:14
+=== RUN   TestWave14NextMutants/typescript-eslint-no-dynamic-delete
+    wave1_14_next_test.go:73: unary plus accepted as static key: Node source caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:2:10", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:1:10
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 9 11 dynamicDelete 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:2:10
+    wave1_14_next_test.go:73: unary plus accepted as static key: sanitized native caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:2:10", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:1:10
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 9 11 dynamicDelete 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:2:10
+    wave1_14_next_test.go:73: unary plus accepted as static key: emitted JavaScript caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:2:10", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:1:10
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 9 11 dynamicDelete 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete3368653441/002/typescript-eslint-no-dynamic-delete-0.ts:2:10
+--- PASS: TestWave14NextMutants (28.06s)
+    --- PASS: TestWave14NextMutants/typescript-eslint-no-duplicate-enum-values (12.53s)
+    --- PASS: TestWave14NextMutants/typescript-eslint-no-dynamic-delete (13.39s)
+=== RUN   TestWave14Rules
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:327: cohere cases: 917 unique source/rule/options combinations
+    wave1_14_test.go:52: module alias captured source/options combinations: 27
+    wave1_14_test.go:74: rule fixture findings: 42
+    wave1_14_test.go:75: Go, Node, native identical: 17816 bytes
+    wave1_14_test.go:75: emitted JavaScript identical: 17816 bytes
+--- PASS: TestWave14Rules (21.55s)
+=== RUN   TestWave14Mutant
+    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on Node source: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:1:8"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:1:8
+          nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
+        
+        range 7 17 requireDefaultStyle 		
+        /tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:2:8
+    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on sanitized native: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:1:8"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:1:8
+          nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
+        
+        range 7 17 requireDefaultStyle 		
+        /tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:2:8
+    wave1_14_test.go:122: compiling, successful mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:1:8"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:1:8
+          nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
+        
+        range 7 17 requireDefaultStyle 		
+        /tmp/adamic-gate/TestWave14Mutant3164945565/001/nexus-import-require-module-alias-0.ts:2:8
+--- PASS: TestWave14Mutant (15.29s)
+=== RUN   TestWave14DuplicateOptions
+    wave1_14_test.go:197: duplicate-key refusal identical on Node, emitted JavaScript and sanitized native; deleting the guard compiles and prints accepted on all three
+--- PASS: TestWave14DuplicateOptions (17.36s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	105.738s

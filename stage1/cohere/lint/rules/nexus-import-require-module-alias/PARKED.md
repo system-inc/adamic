@@ -1,6 +1,6 @@
 # Parked rule branch
 
-Branch: codex/lint-wave1-14. Current-main base: b8fb957aa839a9e8cb0b54279dd9864fa317bd30.
+Branch: codex/lint-wave1-14. Current-main base: 39638d9e278d38bb5aeae887f46d55a70e47aaad.
 Only owned rule, claim and evidence commits were replayed. The conflicting shared registration and helper foundation commits were excluded.
 
 ## Integration blocker
@@ -52,3 +52,9 @@ Both owned branches were rebased onto c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. 
 ## Recheck after inherited static-field emission
 
 Rebased onto b8fb957aa839a9e8cb0b54279dd9864fa317bd30. The compiler implementation changed, so the entire supported fixture/corpus/mutant/boundary suite was rebuilt and replayed rather than reusing the stage3 identity cache. All thirteen rules pass. Every wrapper command exits zero, all original Go assertions pass, and all semantic and refusal mutants are caught. The throughput table above records this fresh run. The integration blocker and named parser/UTF-8 boundaries remain.
+
+## Latest landing-first refresh
+
+Rebased onto 39638d9e278d38bb5aeae887f46d55a70e47aaad. Changes since b8fb957aa are confined to uncompiled stage3/record paths: git diff over cmd, internal, go.mod, go.sum, cohere, oracle and stage1 is empty. All compiled inputs, tools and the 331-file corpus retain byte identity. Fresh four-way fixtures and all thirteen clean compiling rule mutants pass again, along with duplicate-options refusal. The full 1,413,265,526-byte enum corpus and other complete corpus evidence from the immediate preceding compiler run are reused solely under that input-identity proof. New parking-latest logs preserve the full parking logs instead of overwriting them. The helper branch independently rebuilds its retained fixed-hex helper and passes 68,844 inputs on all three runtimes again. Correctly filtered inherited-field and one-byte oracles pass again. No new helper was claimed during this landing-cap refresh; the parked integration blocker remains unchanged.
+
+Refresh commands: ADAMIC_PARKING_LOG_PREFIX=parking-latest- ADAMIC_PARKING_STOP_AFTER=typescript-eslint-no-misused-new/validate.py ADAMIC_RULE_TEST_FILTER='^TestWave14(Rules|Mutant|DuplicateOptions|NextRules|NextMutants|ThirdRules|ThirdMutants)$' python3 stage1/cohere/lint/rules/nexus-import-require-module-alias/validate_parking.py; python3 stage1/cohere/lint/rules/nexus-import-require-module-alias/validate_rebase.py. The three selected wrappers and nine-rule refresh all exit zero.
