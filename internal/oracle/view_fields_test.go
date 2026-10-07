@@ -19,10 +19,10 @@ func TestRequiredViewFieldPrimitive(t *testing.T) {
 		{"number", []ir.Field{{Name: "value", Value: ir.NumberConstant{Value: 7}}}, ir.Number, run{stdout: []byte("7\n")}},
 		{"boolean", []ir.Field{{Name: "value", Value: ir.BooleanConstant{Value: true}}}, ir.Boolean, run{stdout: []byte("true\n")}},
 		{"string", []ir.Field{{Name: "value", Value: ir.StringConstant{}}}, ir.String, run{stdout: []byte("name\n")}},
-		{"wrong string", []ir.Field{{Name: "value", Value: ir.NumberConstant{}}}, ir.String, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not a string\n")}},
-		{"missing", nil, ir.Number, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not initialized\n")}},
-		{"uninitialized", []ir.Field{{Name: "value", Value: ir.NumberConstant{}, Uninitialized: true}}, ir.Number, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not initialized\n")}},
-		{"wrong type", []ir.Field{{Name: "value", Value: ir.NumberConstant{}}}, ir.Boolean, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not a boolean\n")}},
+		{"wrong string", []ir.Field{{Name: "value", Value: ir.NumberConstant{}}}, ir.String, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not a string; expected string, found number\n")}},
+		{"missing", nil, ir.Number, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not initialized; expected number, found missing\n")}},
+		{"uninitialized", []ir.Field{{Name: "value", Value: ir.NumberConstant{}, Uninitialized: true}}, ir.Number, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not initialized; expected number, found uninitialized\n")}},
+		{"wrong type", []ir.Field{{Name: "value", Value: ir.NumberConstant{}}}, ir.Boolean, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not a boolean; expected boolean, found number\n")}},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			program := &ir.Program{Source: "view-field", Strings: []string{"name"}, Locals: []ir.Local{{Name: "node", Type: ir.Object, Function: -1}}}
@@ -158,7 +158,7 @@ func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 			want := run{stdout: []byte(probe.stdout)}
 			if !probe.initialized {
 				want.exitCode = 70
-				want.stderr = []byte("adamic: panic: field read failed: node." + probe.field + " is not initialized\n")
+				want.stderr = []byte("adamic: panic: field read failed: node." + probe.field + " is not initialized; expected " + map[string]string{"escapedText": "string", "value": "number"}[probe.field] + ", found uninitialized\n")
 			} else {
 				if difference := disagreement(want, onNode(t, path)); difference != "" {
 					t.Fatal("Node: " + difference)
@@ -237,5 +237,38 @@ func TestViewFieldInheritedStaticReadiness(t *testing.T) {
 		if difference := disagreement(want, got); difference != "" {
 			t.Fatalf("inherited field owner: %s; got %#v", difference, got)
 		}
+	}
+}
+
+// These exercise real source casts and writes, without replacing any lowered IR.
+func TestDefaultTaggedSourceViews(t *testing.T) {
+	for _, probe := range []struct{ name, stdout, diagnostic string }{
+		{"default-staged", "okok\n", ""},
+		{"default-boxed-string", "okok\n", ""},
+		{"default-boxed-write", "42\ntrue\n", ""},
+		{"default-destructure", "okok\n", ""},
+		{"default-wrong-type", "", "field read failed: (node as Identifier).name is not a string; expected string, found number"},
+		{"default-wrong-boolean", "", "field read failed: (node as Identifier).ready is not a boolean; expected boolean, found number"},
+		{"default-literal", "", "field read failed: (node as Identifier).name expected \"wanted\", found string other"},
+		{"default-read-before-set", "", "field read failed: (held as Identifier).escapedText is not initialized; expected string, found uninitialized"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			program, path := interfaceFixture(t, probe.name)
+			want := run{stdout: []byte(probe.stdout)}
+			if probe.diagnostic == "" {
+				if difference := disagreement(want, onNode(t, path)); difference != "" {
+					t.Fatal("Node: " + difference)
+				}
+			} else {
+				want.exitCode = 70
+				want.stderr = []byte("adamic: panic: " + probe.diagnostic + "\n")
+			}
+			actual, _ := nativelyUncached(t, program)
+			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s; got %#v", difference, got)
+				}
+			}
+		})
 	}
 }

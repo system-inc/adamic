@@ -1067,8 +1067,8 @@ Failing reads flush preceding stdout, print one newline-terminated message to
 stderr and terminate with exit 70, without running catch or finally:
 
 ```
-adamic: panic: field read failed: <expression text>.<field> is not initialized
-adamic: panic: field read failed: <expression text>.<field> is not a <type>
+adamic: panic: field read failed: <expression text>.<field> is not initialized; expected <type>, found missing|uninitialized
+adamic: panic: field read failed: <expression text>.<field> is not a <type>; expected <type>, found <runtime category>
 ```
 
 Capture the receiver expression text at compile time. Evaluate the receiver and
@@ -1083,7 +1083,7 @@ reuse and region allocation. The non-null worker on `codex/non-null-check` owns
 field initialization state and will push that representation separately. This unit
 merges and uses that helper instead of adding a second bitmap or state convention.
 Removing the old admission gate before all three read checks exist is unsafe.
-`ADAMIC_INTERFACE_DOWNCASTS` is removed when the default implementation is ready.
+`ADAMIC_INTERFACE_DOWNCASTS` has been removed. The supported scalar subset is default; broader contracts remain NotYet during implementation.
 
 A compatible dominating store or a construction certificate valid at this read
 can erase the checks. A failed proof leaves a check, rather than refusing the
@@ -1124,38 +1124,43 @@ unchecked control is an experimental artifact, not a production option. If check
 are costly, improve proofs; never reduce the required checks. No benchmark or
 checked-read share is claimed by this decision entry.
 
-Tagged (c) lands first. Untagged checked views have a deadline of 18:00 UTC on
-October 8. If that step cannot finish, report it early with the highest-exposure
+Tagged (c) lands first. The updated delivery targets are tagged admission by 16:00 UTC October 7 and
+untagged checked views by 02:00 UTC October 8. Both were reported at risk before
+this partial checkpoint because complete tsc field contracts remain unsupported. If that step cannot finish, report it early with the highest-exposure
 untagged locations, clearly distinguishing static counts from measured hot paths.
 
 ### Implementation progress, October 7
 
-Both backend view-read helpers now call the worker's readiness helper instead of
-repeating its presence/readiness predicate. A diagnostic mode selects the decided
-field-read message; ordinary readiness reads retain their existing diagnostic.
-Native reads also return the actual slot owner so inherited static fields use that
-owner's readiness and representation bytes. Object-literal `undefined!` and `null!`
-initializers with supported contextual field types now use the worker's existing
-`ir.Field.Uninitialized` flag and initializer recognizer. Later stores use the same
-write helper and mark the field ready. This extension does not implement lazy computed
-assertion initializers in object literals or admit missing native layout fields.
-Supplemental staged-factory fixtures hold completed objects as `Node`; their visitor
-reads are changed to checked-view reads in test IR. They validate helper integration,
-not default admission of `node as Identifier`.
+The flag and construction admission gate have been removed from production.
+Tagged casts with required number, boolean or string fields now use the tag check
+and checked reads by default. Finite literal and enum contracts additionally compare
+values. Missing or malformed scalar payloads lower and fail at their first read;
+unused malformed factories no longer prevent admission. Staged fields, destructuring,
+boxed scalar reads and supported boxed stores have source fixtures on both backends.
+The non-null tip `e2ea9ab2`, including `c680ecf4`, supplies the shared readiness helper
+and state; no second initialization representation was added.
 
+The reusable lowering entry point is `(*lowering).view(node, value, target)` in
+`internal/lower/interface_cast.go`. It returns the original operand, preserving
+identity, and registers fields for conservative program-wide checks across aliases.
+This checkpoint is incomplete: optional/nullish, object-valued, mixed scalar and
+recursive contracts remain NotYet, as do unsupported accessor/conversion aliases.
+Untagged admission, transitive object views and proof erasure are not implemented.
+The machinery is not ready for the optional-property widening worker to consume.
+Direct callable contracts and callable fields are Refused because a runtime function
+tag cannot certify a parameter/result contract. Backend gaps are NotYet, not new
+permanent language refusals. Generated helper reads and opaque runtime object
+producers still need a complete propagation/metadata audit before integration.
 
-The ruling above is decided; default checked-view cast lowering is still unfinished.
-The previous `ADAMIC_INTERFACE_DOWNCASTS` implementation remains an archived, opt-in
-construction-gated prototype until the replacement is complete. It does not implement
-this ruling. Required-field backend primitives now use the non-null worker's shared
-initialization state from `6ae58a0`, updated by merging the requested non-null tip
-`e2ea9ab2` (including `c680ecf4`); there is no second initialization representation.
-They independently check presence, initialization, and physical field representation,
-with the prescribed field-read diagnostic and exit 70. Primitive fixtures cover
-numbers, booleans, strings and operand evaluation. This is groundwork, not admission
-of the 1,758 tagged casts. Logical union conversions, literal/class contracts, view
-propagation, staged additions to native layouts, type-changing writes and proof erasure
-must be complete before replacing the existing cast gate.
+The pinned assertions ledger target audit yields zero eligible complete contracts:
+19 of 1,758 tagged targets have callable members, and 1,739 need broader field
+contracts; 71 of 1,178 untagged targets have callable members, 1,106 need broader
+contracts, and one otherwise scalar target still needs untagged admission. Exact
+locations, fields and types are in `stage3/interface-downcasts/default-contracts.json`.
+This is an outside-checker rejection upper bound, not an observation of compiling
+all tsc source files. It establishes 0/1,758 and 0/1,178 supported complete contracts;
+positive lowering coverage would require actual lowerer probes. No checked-read
+share or release benchmark is claimed at this checkpoint.
 
 The additional native representation storage is exactly one byte per physical field,
 following the worker's existing one-byte initialization state. Heap storage is
@@ -1164,7 +1169,9 @@ rounding; region storage rounds that size up to a multiple of 16. A checked requ
 read makes one runtime helper call, performs cached own-name lookup, reads initialization
 and representation bytes, and validates a referenced value's heap kind before using
 it. A cache miss compares field names linearly; a hit does not scan. A successful
-primitive check allocates nothing. Reference reads currently retain and later release
+native scalar read check allocates nothing. JavaScript finite-literal checks currently
+construct the allowed-values array at each read; object construction also records
+representation metadata in a WeakMap. Reference reads currently retain and later release
 the value. Failure formatting allocates a message before the exit-70 panic. JavaScript
 checks own presence, the shared readiness WeakMap, and the value's built-in runtime
 kind; diagnostic type names are allocated once for the program. These are primitive

@@ -23,10 +23,8 @@ func interfaceFixture(t *testing.T, name string) (*ir.Program, string) {
 	return program, path
 }
 
-// Not parallel: the opt-in lowering flag is process-wide and is restored before parallel tests.
-// The experimental fixtures are separate from the default-off oracle registry.
+// Default tagged admission is compared to Node on successful programs.
 func TestInterfaceCastOracle(t *testing.T) {
-	t.Setenv("ADAMIC_INTERFACE_DOWNCASTS", "1")
 	for _, name := range []string{"visitor", "wrong-kind"} {
 		t.Run(name, func(t *testing.T) {
 			program, path := interfaceFixture(t, name)
@@ -60,11 +58,8 @@ func TestInterfaceCastOracle(t *testing.T) {
 	}
 }
 
-// This witness is legal Node source. The compiler must reject its construction, even though
-// the requested discriminant matches. An accepted program kills the tag-only compiler mutant.
-// Not parallel: the opt-in flag is process-wide.
-func TestInterfaceCastRefusesMalformed(t *testing.T) {
-	t.Setenv("ADAMIC_INTERFACE_DOWNCASTS", "1")
+// This legal Node construction fails only when a required field is read through the cast.
+func TestInterfaceCastChecksMalformedRead(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/missing-name.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -74,18 +69,20 @@ func TestInterfaceCastRefusesMalformed(t *testing.T) {
 		t.Fatalf("Node: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
 	}
 	program, err := lowered(t, path)
-	if err == nil {
-		result := released(t, program)
-		t.Logf("accepted mutant emitted and built valid C: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
+	if err != nil {
+		t.Fatal(err)
 	}
-	if err == nil || !strings.Contains(err.Error(), "matching kind lacks required field name") {
-		t.Fatalf("construction check must refuse matching kind without payload, got %v", err)
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n")}
+	actual, _ := nativelyUncached(t, program)
+	for _, result := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, result); difference != "" {
+			t.Fatalf("malformed view read: %s; got %#v", difference, result)
+		}
 	}
 }
 
-// Not parallel: the opt-in flag is process-wide. Mutants change only native IR after lowering.
+// Mutants change only native IR after lowering.
 func TestInterfaceCastRuntimeMutants(t *testing.T) {
-	t.Setenv("ADAMIC_INTERFACE_DOWNCASTS", "1")
 	for _, name := range []string{"skip tag", "wrong tag", "twice operand"} {
 		t.Run(name, func(t *testing.T) {
 			fixture := "visitor"
@@ -141,10 +138,8 @@ func TestInterfaceCastRuntimeMutants(t *testing.T) {
 	}
 }
 
-// Not parallel: the opt-in flag is process-wide. An imported unused allocation also invalidates
-// the global proof; testing a second module prevents an entry-file-only proof from passing.
+// An unused malformed factory does not prevent a valid read in another module.
 func TestInterfaceCastImportedConstruction(t *testing.T) {
-	t.Setenv("ADAMIC_INTERFACE_DOWNCASTS", "1")
 	directory := t.TempDir()
 	sources := map[string]string{
 		"nodes.a": `export interface Node { readonly kind: 'identifier' | 'number'; } export interface Identifier extends Node { readonly kind: 'identifier'; readonly name: string; } export function bad(): Node { return { kind: 'identifier' }; }`,
@@ -155,16 +150,21 @@ func TestInterfaceCastImportedConstruction(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	_, err := lowered(t, filepath.Join(directory, "main.a"))
-	if err == nil || !strings.Contains(err.Error(), "nodes.a") || !strings.Contains(err.Error(), "lacks required field name") {
-		t.Fatalf("imported malformed factory must invalidate proof: %v", err)
+	program, err := lowered(t, filepath.Join(directory, "main.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := onNode(t, filepath.Join(directory, "main.a"))
+	actual, _ := nativelyUncached(t, program)
+	for _, got := range []run{actual, onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Fatal(difference)
+		}
 	}
 }
 
-// Not parallel: the opt-in flag is process-wide. Numeric and boolean tags exercise the same
-// construction proof with scalar representations, independently of enum syntax support.
+// Numeric and boolean tags use the same default cast check.
 func TestInterfaceCastScalarTags(t *testing.T) {
-	t.Setenv("ADAMIC_INTERFACE_DOWNCASTS", "1")
 	for _, test := range []struct {
 		name, domain, target, argument string
 		fails                          bool

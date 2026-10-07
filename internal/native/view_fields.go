@@ -3,6 +3,7 @@ package native
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 )
 
 // The runtime returns a borrowed slot snapshot only after validating its physical storage.
@@ -15,8 +16,18 @@ func (e *emitter) viewField(property ir.Property) string {
 	if !supported || property.Optional || property.Absent || property.Method {
 		panic("compiler bug: incomplete checked field contract")
 	}
+	if property.ViewType != "" {
+		name = property.ViewType
+	}
 	e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))
 	value := unslotted(property.Of, fmt.Sprintf("%s.%s", slot, member(property.Of)))
+	if len(property.ViewAllowed) != 0 {
+		tests := []string{}
+		for _, allowed := range property.ViewAllowed {
+			tests = append(tests, e.binary(ir.Equal, property.Of, value, e.value(allowed)))
+		}
+		e.line("if (!(%s)) adamic_view_literal_failure(%s, %s, %d, %s);", strings.Join(tests, " || "), cString(property.View), cString(name), property.Of, slot)
+	}
 	if property.Of.IsReference() {
 		return e.own(property.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(property.Of), value))
 	}

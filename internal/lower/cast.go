@@ -74,6 +74,10 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		if len(cast.Allowed) == 0 {
 			return nil, refused
 		}
+		if _, err := l.view(node, value, target); err != nil {
+			return nil, err
+		}
+		cast.CheckedFields = true
 		return cast, nil
 	}
 	return nil, refused

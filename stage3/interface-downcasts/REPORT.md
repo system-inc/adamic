@@ -1,8 +1,8 @@
-Built so far: decided (c) documentation and checked required-field primitives; merged the requested non-null tip and reused its readiness helper on both backends.
-Commits: prior feature tip 38bda39d; merged non-null e2ea9ab2c247f43e17a7c5703818518fce0cd2e6, including c680ecf4; origin/main e8ba3d5 is already an ancestor.
-Commands and outputs: touched packages PASS; filtered Node oracle PASS 12.220s; field-read integration PASS 4.421s; source mutants and vet PASS; counts regenerated with 33 new rows and no changed existing rows.
-Mutants: drop field check, shared initialization check, type check, or single evaluation all caught by independent semantic assertions; staged number readiness-state removal also caught with valid release C.
-Not covered: default cast admission, proof erasure, transitive checked views, staged missing-field stores, tsc checked-read share/timing, or post-(c) latent refusal rerun.
+Built so far: merged current main; default tagged scalar checks with shared readiness, literal contracts, boxed reads/stores and a reusable view entry point.
+Commits: prerequisite main merge 6b50efe; previous readiness integration 21558749; this partial checkpoint follows. Only codex/interface-downcasts is pushed.
+Commands and outputs: touched packages PASS (lower 28.351s, IR 27.948s, native 173.520s); uncached full ordinary Node oracle plus focused tests/counts PASS 167.771s; scoped vet PASS.
+Mutants: dropped read, initialization, runtime type and single evaluation caught by independent semantic assertions with valid C; no-proof erasure also caught on an ordinary source fixture.
+Not covered: complete tagged tsc targets, untagged/transitive views, erasure, opaque producer/generated-read audit, post-(c) latent refusals, checked-read share or release benchmark.
 
 No main or area branch was pushed or merged into. Both dependency merges were into
 `codex/interface-downcasts`; only that feature branch was pushed. The unit is still
@@ -241,3 +241,77 @@ Touched lower/IR/JavaScript/native packages passed (21.538s/23.020s/no local tes
 counts passed in 66.324s. Commands and output are in main-b6b1538-packages.log and
 main-b6b1538-oracle.log. Full repository gate was not run. This is the prerequisite
 merge, not default cast admission or a new ledger lowering count.
+
+
+## Default scalar admission checkpoint
+
+The production flag and construction admission gate are gone. Required scalar
+contracts are checked at reads; single-literal tags are checked at casts. Finite
+payload literals need a value check after their primitive tag check. Both backends
+name the field/expression, expected contract and observed runtime category, exit 70.
+The non-null worker's readiness byte/WeakMap is still the only initialization state.
+Stores preserve boxed scalar storage and validate physical representation before
+releasing or interpreting old payloads. Staged undefined!/null! fields remain legal.
+Eight ordinary source fixtures exercise this path without test IR substitution.
+
+Entry point: `(*lowering).view(node, value, target)` in interface_cast.go. Current
+conservative field-name registration preserves checks across aliases; it does not
+yet implement recursive object contracts or support optional-property widening.
+Both the complete step 1 deadline (16:00 UTC October 7) and step 2 deadline
+(02:00 UTC October 8) were reported as not credible during this checkpoint. This
+branch remains in progress and is not ready for integration as complete ruling (c).
+
+Pinned TypeScript 6.0.3 at 050880ce59e30b356b686bd3144efe24f875ebc8 and the
+assertions ledger with SHA256 15739c81ad33071014c88e0b4514b08c7562cb3191d0bd20e7df321fc2bc1cab
+produce the target-contract audit in default-contract-summary.json. All 2,936 selected
+source expression offsets/text match, with zero stock-checker diagnostics:
+
+| Bucket | Eligible complete contracts | Callable member refusal | Broader contract NotYet | Untagged admission NotYet |
+| --- | ---: | ---: | ---: | ---: |
+| Tagged | 0/1,758 | 19 | 1,739 | 0 |
+| Untagged | 0/1,178 | 71 | 1,106 | 1 |
+
+These are outside-checker rejection upper bounds, not observations of compiling
+all tsc files. The zero eligible contracts establishes zero supported sites;
+nonzero future eligibility must be followed by actual lowerer probes. Every site,
+callable member and unsupported property appears in default-contracts.json. Callable
+signatures are the current permanent refusal; optional/object/nullish/intersection/
+type-parameter contracts are implementation gaps. The prior 69 latent findings are
+not claimed rerun against completed (c).
+
+The counts update adds eight default fixture rows. library_string_raw.a increases
+retains/releases from 61/95 to 65/99 because its existing tagged cast now uses checked
+reference reads. Its allocation/free/peak counts do not change. Other existing rows
+do not change. The complete ordinary source Node oracle passed along with count
+regeneration; the full repository adapter gate was not rerun. Test output is captured
+in default-packages.log, default-oracle.log, default-final-counts.log and default-vet.log.
+
+Setup remains the original unit setup: 95s total, nproc 5, CPU quota 4; Go 1.27.1,
+clang 20.1.8, Node 24.19.0. No main or area branch has been written, no PR opened,
+and no cohere source copied. Main's protected-file changes are inherited merges;
+this checkpoint does not edit the protected emitter/lowerer/oracle files.
+
+Production-source mutants were rerun after default admission. All five emitted valid
+release C and failed independent semantic assertions: drop-view-read,
+drop-view-initialization, drop-view-type, erase-view-without-proof and
+view-operand-twice. The no-proof erasure mutation removes the registered field checks
+in readiness.go; the boolean source fixture then prints false and exits 0 instead of
+the pinned exit-70 failure. A skipped-transitive-view mutant remains pending because
+transitive object contracts are not implemented. Each mutant restores its production
+file in finally. default-mutants.log and the per-mutant logs retain the evidence.
+
+Additional final source/count verification passed in 18.952s with the eighth fixture.
+All test output was redirected, never piped. Commands:
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower ./internal/ir ./internal/javascript ./internal/native -count=1 -timeout 30m > /tmp/interface-default-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode|TestCountsAreRecorded|TestDefaultTagged|TestInterfaceCast|TestReadiness|TestRequiredViewField|TestNarrowedField|TestViewFieldInherited' -count=1 -timeout 30m -args -update-counts > /tmp/interface-default-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestDefaultTaggedSourceViews|TestCountsAreRecorded' -count=1 -timeout 30m -args -update-counts > /tmp/interface-default-final-counts.log 2>&1
+python3 stage3/interface-downcasts/primitive-mutants.py > /tmp/interface-default-mutants.log 2>&1
+go vet ./internal/lower ./internal/ir ./internal/javascript ./internal/native ./internal/oracle > /tmp/interface-default-vet.log 2>&1
+go test ./internal/oracle -run 'TestDefaultTaggedSourceViews|TestCountsAreRecorded' -count=1 -timeout 30m > /tmp/interface-default-counts-check.log 2>&1
+NODE_PATH=/tmp/interface-downcasts-api/node_modules node stage3/interface-downcasts/default-contract-audit.cjs /tmp/interface-downcasts-typescript stage3/fixtures/assertions/ledger.json stage3/interface-downcasts/other-locations.tsv stage3/interface-downcasts > /tmp/interface-default-contract-audit.log 2>&1
+```
+
+Restored-source final oracle/count check: PASS 20.667s. No additional count row changed.

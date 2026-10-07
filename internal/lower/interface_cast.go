@@ -2,7 +2,6 @@ package lower
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -10,32 +9,113 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// This experimental closed-program proof is intentionally smaller than a builder verifier.
-// Every relevant literal must be complete at allocation, and no checked field may be written.
-// Readonly scalar fields avoid nested alias, optional-presence and callable obligations.
+// A tag chooses the interface; its fields remain checked at every read.
 func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
-	if os.Getenv("ADAMIC_INTERFACE_DOWNCASTS") != "1" {
-		return nil, nil
-	}
-	if source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || value.Type() != ir.Object {
+	if source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || value.Type() != ir.Object || isClassInstance(target) {
 		return nil, nil
 	}
 	for _, property := range l.checker.GetPropertiesOfType(source) {
 		field := property.Name
 		literal := l.fieldLiteral(target, field)
-		if literal == nil || !l.interfaceScalarShape(source) || !l.interfaceScalarShape(target) || !l.checker.IsTypeAssignableTo(target, source) || l.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
+		if literal == nil || !l.checker.IsTypeAssignableTo(target, source) || l.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
 			continue
 		}
 		allowed, fieldType, constant := l.literalConstant(literal)
 		if !constant {
 			continue
 		}
-		if err := l.interfaceConstructions(node, target, field, literal); err != nil {
+		if _, err := l.view(node, value, target); err != nil {
 			return nil, err
 		}
-		return ir.CheckedCast{Value: value, Field: field, FieldType: fieldType, Allowed: []ir.Expression{allowed}, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
+		return ir.CheckedCast{Value: value, Field: field, FieldType: fieldType, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
 	}
 	return nil, nil
+}
+
+// view is the shared entry point. Checking by field name throughout the program is
+// conservative: aliases and function boundaries cannot lose a checked read.
+// More precise view propagation and erasure can reduce that set without trusting casts.
+func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+	if l.callableViewContract(target) {
+		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
+	}
+	// Diagnose unreifiable contracts before temporary backend limitations.
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		declared := l.checker.GetTypeOfSymbol(property)
+		if l.callableViewContract(declared) {
+			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+		}
+	}
+	fields := map[string]bool{}
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		declared := l.checker.GetTypeOfSymbol(property)
+		if l.callableViewContract(declared) {
+			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+		}
+		of, known := l.representation(declared)
+		if property.Flags&ast.SymbolFlagsOptional != 0 || !interfaceScalar(declared) || !known || of < ir.Number || of > ir.String {
+			return nil, l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))
+		}
+		fields[property.Name] = true
+	}
+	modules, err := l.moduleOrder(l.program.Files()[0])
+	if err != nil {
+		return nil, err
+	}
+	var found error
+	var visit ast.Visitor
+	visit = func(part *ast.Node) bool {
+		if found != nil {
+			return true
+		}
+		if part.Kind == ast.KindGetAccessor && part.Name() != nil && fields[part.Name().Text()] {
+			found = l.notYet(part, "a getter in a checked field contract")
+		}
+		if part.Kind == ast.KindObjectBindingPattern {
+			for _, binding := range part.AsBindingPattern().Elements.Nodes {
+				name := binding.Name()
+				if binding.AsBindingElement().PropertyName != nil {
+					name = binding.AsBindingElement().PropertyName
+				}
+				if name != nil && fields[name.Text()] {
+					declared := l.checker.GetTypeAtLocation(binding.Name())
+					of, known := l.representation(declared)
+					if !known || of < ir.Number || of > ir.String || !interfaceScalar(declared) {
+						found = l.notYet(binding, "a checked destructured alias requiring a representation conversion")
+					}
+				}
+			}
+		}
+		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {
+			access := part.AsPropertyAccessExpression()
+			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
+				field := l.checker.GetSymbolAtLocation(part.Name())
+				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
+					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+					if !interfaceScalar(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.String || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
+						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
+					}
+				}
+			}
+		}
+		if found == nil {
+			part.ForEachChild(visit)
+		}
+		return found != nil
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	if found != nil {
+		return nil, found
+	}
+	if l.result.CheckedFields == nil {
+		l.result.CheckedFields = map[string]bool{}
+	}
+	for field := range fields {
+		l.result.CheckedFields[field] = true
+	}
+	return value, nil
 }
 
 func interfaceScalar(proven *checker.Type) bool {
@@ -213,4 +293,35 @@ func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Ty
 		}
 	}
 	fail(node, "a write may invalidate the kind-to-shape invariant")
+}
+
+// A finite literal contract is checked as well as its primitive representation.
+func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		var allowed []ir.Expression
+		for _, member := range declared.Types() {
+			values := l.viewLiterals(member)
+			if len(values) == 0 {
+				return nil
+			}
+			allowed = append(allowed, values...)
+		}
+		return allowed
+	}
+	value, _, known := l.literalConstant(declared)
+	if known {
+		return []ir.Expression{value}
+	}
+	return nil
+}
+
+func (l *lowering) callableViewContract(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if l.callableViewContract(member) {
+				return true
+			}
+		}
+	}
+	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
 }

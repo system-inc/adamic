@@ -361,6 +361,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		object := e.temporary()
 		e.line("adamic_object *%s = %s;", object, e.value(expression.Value))
 		field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", object, cString(expression.Field), e.cache(), member(expression.FieldType))
+		if expression.CheckedFields {
+			slot := e.temporary()
+			e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(expression.Field), e.cache(), expression.FieldType, cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[expression.FieldType]), cString(expression.Field))
+			field = fmt.Sprintf("%s.%s", slot, member(expression.FieldType))
+		}
 		if expression.FieldType.IsReference() {
 			field = fmt.Sprintf("((%s)%s)", cType(expression.FieldType), field)
 		}
