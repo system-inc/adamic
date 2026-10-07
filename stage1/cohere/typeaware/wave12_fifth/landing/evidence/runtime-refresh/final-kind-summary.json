@@ -1,0 +1,198 @@
+{
+  "declarations": 15,
+  "mutants": [
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "refetch-instead-of-supplied-node"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "refetch-instead-of-supplied-node"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "refetch-instead-of-supplied-node"
+    },
+    {
+      "declaration": "no_redeclare.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "no_redeclare.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "no_redeclare.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "no_test_on_global_regex.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "no_test_on_global_regex.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "no_test_on_global_regex.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "no_write_only_collection.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "no_write_only_collection.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "no_write_only_collection.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_next/no_process_exit_after_output.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_next/no_process_exit_after_output.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_next/no_process_exit_after_output.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_next/no_uncleared_race_timeout.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_next/no_uncleared_race_timeout.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_next/no_uncleared_race_timeout.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_next/require_blocking_standard_streams.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_next/require_blocking_standard_streams.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_next/require_blocking_standard_streams.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_third/no_new_func.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_third/no_new_func.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_third/no_new_func.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_third/no_new_native_nonconstructor.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_third/no_new_native_nonconstructor.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_third/no_new_native_nonconstructor.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_third/no_new_wrappers.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_third/no_new_wrappers.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_third/no_new_wrappers.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_regex_literals.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_regex_literals.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_regex_literals.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_rest_params.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_rest_params.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_rest_params.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_fourth/exhaustive_deps.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_fourth/exhaustive_deps.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_fourth/exhaustive_deps.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "wrong-listener"
+    }
+  ],
+  "ast_names": 351
+}
