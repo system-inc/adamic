@@ -1,0 +1,78 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 358 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 13862188 bytes
+--- PASS: TestCompilerAndStage1Agree (105.06s)
+=== RUN   TestFifthUpstream
+    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
+    wave08_fifth_test.go:26: assigned upstream selected=map[no-constructor-return:53 no-delete-var:9 no-eq-null:14]; no omitted cases
+    wave08_fifth_test.go:37: Go, Node, emitted JavaScript, native identical: 22552 bytes
+--- PASS: TestFifthUpstream (211.87s)
+=== RUN   TestFifthShapes
+    wave08_fifth_test.go:61: Go, Node, emitted JavaScript, native identical: 866 bytes
+--- PASS: TestFifthShapes (27.26s)
+=== RUN   TestFourthUpstream
+    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
+    wave08_fourth_test.go:26: assigned upstream selected=map[default-case-last:38 default-param-last:128 for-direction:46]; no omitted cases
+    wave08_fourth_test.go:37: Go, Node, emitted JavaScript, native identical: 58751 bytes
+--- PASS: TestFourthUpstream (49.14s)
+=== RUN   TestOriginalUpstream
+    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
+    wave08_original_test.go:31: Recovery blocked: rule=no-useless-computed-key source="({ ['x' });"
+    wave08_original_test.go:31: Recovery blocked: rule=no-useless-computed-key source="({ ['x': 0 });"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getFalse)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getTrue)';\n  'use memo if(getFalse)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getTrue)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(true)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(true)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getTrue)';\n  'use memo if(getFalse)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(true)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var Foo = createReactClass({\n          propTypes: Bar.propTypes,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var Foo = createReactClass({\n          propTypes: Bar[\"propTypes\"],\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var { propTypes } = SomeComponent\n        var Foo = createReactClass({\n          propTypes,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var { propTypes: things, ...foo } = SomeComponent\n        var Foo = createReactClass({\n          propTypes,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var { propTypes: typesOfProps } = SomeComponent\n        var Foo = createReactClass({\n          propTypes: typesOfProps,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        const Message = (props) => (<div>{props.message}</div>);\n        Message.propTypes = {\n          message: PropTypes.string\n        };\n        const Hello = (props) => (<Message>Hello {props.name}</Message>);\n        Hello.propTypes = {\n          name: Message.propTypes.message\n        };\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        const Message = (props) => (<div>{props.message}</div>);\n        Message.propTypes = {\n          message: PropTypes.string\n        };\n        const Hello = (props) => (<Message>Hello {props.name}</Message>);\n        Hello.propTypes = {\n          name: Message.propTypes.message\n        };\n      "
+    wave08_original_test.go:42: assigned upstream selected=map[no-useless-computed-key:120 react-hooks/gating:35 react/forbid-foreign-prop-types:53] blockedJSX=map[no-useless-computed-key recovery:2 react-hooks/gating:7 react/forbid-foreign-prop-types:7]
+    wave08_original_test.go:53: Go, Node, emitted JavaScript, native identical: 69735 bytes
+--- PASS: TestOriginalUpstream (44.60s)
+=== RUN   TestWave08Shapes
+=== RUN   TestWave08Shapes/NonTSX
+    wave08_second_test.go:49: Go, Node, emitted JavaScript, native identical: 10752 bytes
+=== RUN   TestWave08Shapes/TSX
+    wave08_second_test.go:49: node [--disable-warning=ExperimentalWarning /tmp/wave08-park/oracle/node.mjs /tmp/wave08-park/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestWave08ShapesTSX2703829138/001/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected GreaterThanToken, got Identifier at 15 in /tmp/adamic-gate/TestWave08Shapes855858294/002/shape-1.tsx
+--- FAIL: TestWave08Shapes (24.15s)
+    --- PASS: TestWave08Shapes/NonTSX (1.94s)
+    --- FAIL: TestWave08Shapes/TSX (0.22s)
+=== RUN   TestWave08UpstreamSupported
+    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
+    wave08_second_test.go:146: JSX parser blocker: /tmp/adamic-gate/TestWave08UpstreamSupported3237769648/001/case-1116.tsx	structure/tailwind-no-physical-direction			false	null source="export const c = <div className=\"flex ml-4\" />;\n"
+    wave08_second_test.go:152: selected=map[@next/next/no-assign-module-variable:13 @typescript-eslint/default-param-last:117 structure/tailwind-no-physical-direction:53] blockedJSX=map[structure/tailwind-no-physical-direction:1]
+    wave08_second_test.go:160: Go, Node, emitted JavaScript, native identical: 57963 bytes
+--- PASS: TestWave08UpstreamSupported (45.98s)
+=== RUN   TestSixthUpstream
+    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div attr='Line 1 \\\n Line 2' />;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div attr={'Line 1 \\\n Line 2'} />;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div {...'Line 1 \\\n Line 2'} />;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div {...{a: 'Line 1 \\\n Line 2'}} />;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div>\n<h1>Wat</h1>\n</div>;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-multi-str source="var a = <div>{'Line 1 \\\n Line 2'}</div>;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-octal source="var a = 01.5;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-octal source="var a = 0755n;"
+    wave08_sixth_test.go:28: parser blocked: rule=no-octal source="var a = 0777.5;"
+    wave08_sixth_test.go:34: assigned upstream selected=map[no-multi-str:15 no-nonoctal-decimal-escape:31 no-octal:28]; exclusions logged
+    wave08_sixth_test.go:45: Go, Node, emitted JavaScript, native identical: 31191 bytes
+--- PASS: TestSixthUpstream (38.35s)
+=== RUN   TestThirdUpstream
+    lint_test.go:324: cohere cases: 1130 unique source/rule/options combinations
+    wave08_third_test.go:26: assigned upstream cases: map[@typescript-eslint/no-unnecessary-type-constraint:43 @typescript-eslint/prefer-as-const:69 @typescript-eslint/prefer-enum-initializers:21]
+    wave08_third_test.go:34: Go, Node, emitted JavaScript, native identical: 48589 bytes
+--- PASS: TestThirdUpstream (43.87s)
+=== RUN   TestThirdShapes
+    wave08_third_test.go:65: Go, Node, emitted JavaScript, native identical: 13282 bytes
+--- PASS: TestThirdShapes (29.51s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	619.806s
+FAIL

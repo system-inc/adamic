@@ -1,6 +1,6 @@
 # Rule branch parking on current main
 
-Target main: f8013f0baac41ddc340d76f83bddde38536a8f07. Previous pushed rule tip: 6a66e2d3e42854d4385801d032f17cff314f55b7. Replayed all 33 owned commits with `git rebase --onto origin/main 615fe315 codex/lint-wave1-08`. Implementation tip before this evidence commit: dfae1de4b. Shared registration/helper foundation commits are deliberately excluded from this replay; no conflict resolution or production edit was made in shared files.
+Initial target main: f8013f0baac41ddc340d76f83bddde38536a8f07. Previous pushed rule tip: 6a66e2d3e42854d4385801d032f17cff314f55b7. Replayed all 33 owned commits with `git rebase --onto origin/main 615fe315 codex/lint-wave1-08`. Implementation tip before this evidence commit: dfae1de4b. Shared registration/helper foundation commits are deliberately excluded from this replay; no conflict resolution or production edit was made in shared files.
 
 ## Named parking blocker
 
@@ -53,3 +53,11 @@ All eighteen owned semantic mutants PASS in 436.021s; each compiled and exited z
 Directory registry PASS in 0.114s, including rejection mutants. Whole-repository `go vet ./...` on the actual rebased rule tree exited zero with empty log after linking the existing cohere checkout into that isolated worktree. Filtered uncached external `TestTheOracleCatchesOneByte` PASS in 0.495s, zero native/Node cache hits. The first vet/oracle attempt lacked the worktree submodule and failed before testing; the submodule link resolved that environment issue, with no tracked source edit.
 
 Supported combined uncached gate exited zero. Command: `go test -overlay=/tmp/wave08-park-overlay/overlay.json ./stage1/cohere/lint -run '^(TestOwnedWitnesses|TestOriginalUpstream|TestWave08UpstreamSupported|TestThirdUpstream|TestFourthUpstream|TestFifthUpstream|TestSixthUpstream|TestWave08Shapes|TestThirdShapes|TestFifthShapes|TestCompilerAndStage1Agree)$/^NonTSX$' -count=1 -v -timeout=20m`, with ADAMIC_GATE_UNCACHED=1 and ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-08-typescript. See supported.log for total timing and every equal-byte count.
+
+## Refreshed current main c01907a70
+
+Current target: c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Main advanced while tests ran. Rebasing the owned rule history again replayed cleanly; pre-evidence tip 9f373b306f29cd473639310d37ae9acd5c18d499. `git diff --name-only f8013f0ba origin/main -- cmd internal stage1 oracle go.mod go.sum go.work` lists only internal/oracle/stage3_hook_test.go. Other additions are Stage 3 and documentation. Compiler, runtime, parser, owned rule programs and Stage 1 corpus are identical to the supported 399.189s gate and eighteen-mutant run above; those broader results retain that evidence boundary rather than being called new post-rebase runs.
+
+Refreshed the scratch with current-main additions, then reran uncached `go test -overlay=/tmp/wave08-park-overlay/overlay.json ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -v -timeout=10m`: PASS in 24.246s, 29,308 identical bytes on Go, Node, emitted JavaScript and sanitized native. Temporary filenames account for differing byte totals between runs. Actual rebased tree `go vet ./...` exited zero with empty c019_tree-vet.log. Uncached filtered external oracle PASS in 0.387s with zero native/Node cache hits. Unoverlaid scratch vet failed on historical profile_test.go's portFiles variable/function mismatch; this is precisely why the reproducible runner uses the owned compatibility overlay. That scratch failure is retained as c019_vet.log, without changing shared source.
+
+The owned helper branch also rebased to this main and freshly passed all four helpers and mutants in 19.617s; vet exited zero and external oracle passed in 0.501s. Its pushed evidence tip is 6982efe8d5993dd549c42a1651b22b919bdc75e8. No fresh claim or implementation. Both branches are pushed only to their own names; parser coverage remains the reason not to assert the harness-only parking exception.

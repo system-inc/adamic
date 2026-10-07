@@ -1,0 +1,664 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/module_declaration_suppressed
+    lint_test.go:491: module_declaration_suppressed caught on Node: case 24 line 554: port "fixed\tlet a = 0, module = {};\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule_declaration_suppressed3144943665/007/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsmodule_declaration_suppressed3144943665/007/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 		
+        fixed	let a = 0, module = {};\u000a
+    lint_test.go:491: module_declaration_suppressed caught on emitted JavaScript: case 24 line 554: port "fixed\tlet a = 0, module = {};\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule_declaration_suppressed3144943665/007/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsmodule_declaration_suppressed3144943665/007/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 		
+        fixed	let a = 0, module = {};\u000a
+    lint_test.go:491: module_declaration_suppressed caught on native: case 24 line 554: port "fixed\tlet a = 0, module = {};\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule_declaration_suppressed3144943665/007/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsmodule_declaration_suppressed3144943665/007/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 		
+        fixed	let a = 0, module = {};\u000a
+=== RUN   TestMutants/optional_parameter_ignored
+    lint_test.go:491: optional_parameter_ignored caught on Node: case 24 line 554: port "fixed\tfunction f(a?: number, b: number) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsoptional_parameter_ignored1096610214/007/typescript-default-param-last-0.ts:1:12"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsoptional_parameter_ignored1096610214/007/typescript-default-param-last-0.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 21 shouldBeLast 		
+        fixed	function f(a?: number, b: number) {}\u000a
+    lint_test.go:491: optional_parameter_ignored caught on emitted JavaScript: case 24 line 554: port "fixed\tfunction f(a?: number, b: number) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsoptional_parameter_ignored1096610214/007/typescript-default-param-last-0.ts:1:12"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsoptional_parameter_ignored1096610214/007/typescript-default-param-last-0.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 21 shouldBeLast 		
+        fixed	function f(a?: number, b: number) {}\u000a
+    lint_test.go:491: optional_parameter_ignored caught on native: case 24 line 554: port "fixed\tfunction f(a?: number, b: number) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsoptional_parameter_ignored1096610214/007/typescript-default-param-last-0.ts:1:12"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsoptional_parameter_ignored1096610214/007/typescript-default-param-last-0.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 21 shouldBeLast 		
+        fixed	function f(a?: number, b: number) {}\u000a
+=== RUN   TestMutants/constraint_suggestion_wrong
+    lint_test.go:491: constraint_suggestion_wrong caught on Node: case 24 line 558: port "suggestion removeOtherConstraint Remove the constraint that does nothing.", Go "suggestion removeTheConstraint Remove the constraint that does nothing."
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsconstraint_suggestion_wrong3288735394/007/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint 		
+        suggestion removeTheConstraint Remove the constraint that does nothing.
+        edit 12 24 
+        applied	function f<T>() {}\u000a
+        fixed	function f<T extends any>() {}\u000a
+    lint_test.go:491: constraint_suggestion_wrong caught on emitted JavaScript: case 24 line 558: port "suggestion removeOtherConstraint Remove the constraint that does nothing.", Go "suggestion removeTheConstraint Remove the constraint that does nothing."
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsconstraint_suggestion_wrong3288735394/007/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint 		
+        suggestion removeTheConstraint Remove the constraint that does nothing.
+        edit 12 24 
+        applied	function f<T>() {}\u000a
+        fixed	function f<T extends any>() {}\u000a
+    lint_test.go:491: constraint_suggestion_wrong caught on native: case 24 line 558: port "suggestion removeOtherConstraint Remove the constraint that does nothing.", Go "suggestion removeTheConstraint Remove the constraint that does nothing."
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsconstraint_suggestion_wrong3288735394/007/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint 		
+        suggestion removeTheConstraint Remove the constraint that does nothing.
+        edit 12 24 
+        applied	function f<T>() {}\u000a
+        fixed	function f<T extends any>() {}\u000a
+=== RUN   TestMutants/const_append_wrong
+    lint_test.go:491: const_append_wrong caught on Node: case 24 line 559: port "fix 28 28  as unknown", Go "fix 28 28  as const"
+        Go context:
+        /tmp/adamic-gate/TestMutantsconst_append_wrong1280459015/007/typescript-prefer-as-const-0.ts:1:12
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 11 18 preferAsConst 		
+        fix 9 18 
+        fix 28 28  as const
+        fixed	let value = 'hello' as const;\u000a
+    lint_test.go:491: const_append_wrong caught on emitted JavaScript: case 24 line 559: port "fix 28 28  as unknown", Go "fix 28 28  as const"
+        Go context:
+        /tmp/adamic-gate/TestMutantsconst_append_wrong1280459015/007/typescript-prefer-as-const-0.ts:1:12
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 11 18 preferAsConst 		
+        fix 9 18 
+        fix 28 28  as const
+        fixed	let value = 'hello' as const;\u000a
+    lint_test.go:491: const_append_wrong caught on native: case 24 line 559: port "fix 28 28  as unknown", Go "fix 28 28  as const"
+        Go context:
+        /tmp/adamic-gate/TestMutantsconst_append_wrong1280459015/007/typescript-prefer-as-const-0.ts:1:12
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 11 18 preferAsConst 		
+        fix 9 18 
+        fix 28 28  as const
+        fixed	let value = 'hello' as const;\u000a
+=== RUN   TestMutants/enum_second_suggestion_wrong
+    lint_test.go:491: enum_second_suggestion_wrong caught on Node: case 24 line 561: port "suggestion defineInitializerSuggestion Can be fixed to B = 3", Go "suggestion defineInitializerSuggestion Can be fixed to B = 2"
+        Go context:
+        
+        range 17 18 defineInitializer 		
+        suggestion defineInitializerSuggestion Can be fixed to B = 1
+        edit 17 18 B = 1
+        applied	enum D { A = 10, B = 1, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 2
+        edit 17 18 B = 2
+        applied	enum D { A = 10, B = 2, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 'B'
+        edit 17 18 B = 'B'
+    lint_test.go:491: enum_second_suggestion_wrong caught on emitted JavaScript: case 24 line 561: port "suggestion defineInitializerSuggestion Can be fixed to B = 3", Go "suggestion defineInitializerSuggestion Can be fixed to B = 2"
+        Go context:
+        
+        range 17 18 defineInitializer 		
+        suggestion defineInitializerSuggestion Can be fixed to B = 1
+        edit 17 18 B = 1
+        applied	enum D { A = 10, B = 1, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 2
+        edit 17 18 B = 2
+        applied	enum D { A = 10, B = 2, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 'B'
+        edit 17 18 B = 'B'
+    lint_test.go:491: enum_second_suggestion_wrong caught on native: case 24 line 561: port "suggestion defineInitializerSuggestion Can be fixed to B = 3", Go "suggestion defineInitializerSuggestion Can be fixed to B = 2"
+        Go context:
+        
+        range 17 18 defineInitializer 		
+        suggestion defineInitializerSuggestion Can be fixed to B = 1
+        edit 17 18 B = 1
+        applied	enum D { A = 10, B = 1, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 2
+        edit 17 18 B = 2
+        applied	enum D { A = 10, B = 2, C }\u000a
+        suggestion defineInitializerSuggestion Can be fixed to B = 'B'
+        edit 17 18 B = 'B'
+=== RUN   TestMutants/default_clause_suppressed
+    lint_test.go:491: default_clause_suppressed caught on Node: case 24 line 554: port "fixed\tswitch (x) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault_clause_suppressed2427184730/007/default-case-last-0.ts:1:14"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsdefault_clause_suppressed2427184730/007/default-case-last-0.ts:1:14
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 13 28 notLast 		
+        fixed	switch (x) { default: break; case 1: break; }\u000a
+    lint_test.go:491: default_clause_suppressed caught on emitted JavaScript: case 24 line 554: port "fixed\tswitch (x) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault_clause_suppressed2427184730/007/default-case-last-0.ts:1:14"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsdefault_clause_suppressed2427184730/007/default-case-last-0.ts:1:14
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 13 28 notLast 		
+        fixed	switch (x) { default: break; case 1: break; }\u000a
+    lint_test.go:491: default_clause_suppressed caught on native: case 24 line 554: port "fixed\tswitch (x) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault_clause_suppressed2427184730/007/default-case-last-0.ts:1:14"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsdefault_clause_suppressed2427184730/007/default-case-last-0.ts:1:14
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 13 28 notLast 		
+        fixed	switch (x) { default: break; case 1: break; }\u000a
+=== RUN   TestMutants/core_default_suppressed
+    lint_test.go:491: core_default_suppressed caught on Node: case 24 line 554: port "fixed\tfunction f(a = 1, b) {}\\u000a", Go "/tmp/adamic-gate/TestMutantscore_default_suppressed532249638/007/default-param-last-0.ts:1:12"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantscore_default_suppressed532249638/007/default-param-last-0.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 16 shouldBeLast 		
+        fixed	function f(a = 1, b) {}\u000a
+    lint_test.go:491: core_default_suppressed caught on emitted JavaScript: case 24 line 554: port "fixed\tfunction f(a = 1, b) {}\\u000a", Go "/tmp/adamic-gate/TestMutantscore_default_suppressed532249638/007/default-param-last-0.ts:1:12"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantscore_default_suppressed532249638/007/default-param-last-0.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 16 shouldBeLast 		
+        fixed	function f(a = 1, b) {}\u000a
+    lint_test.go:491: core_default_suppressed caught on native: case 24 line 554: port "fixed\tfunction f(a = 1, b) {}\\u000a", Go "/tmp/adamic-gate/TestMutantscore_default_suppressed532249638/007/default-param-last-0.ts:1:12"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantscore_default_suppressed532249638/007/default-param-last-0.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 16 shouldBeLast 		
+        fixed	function f(a = 1, b) {}\u000a
+=== RUN   TestMutants/loop_direction_reversed
+    lint_test.go:491: loop_direction_reversed caught on Node: case 12 line 306: port "/tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:8", Go "/tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:12"
+        Go context:
+        case 12
+        /tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:12
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 11 18 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:28
+    lint_test.go:491: loop_direction_reversed caught on emitted JavaScript: case 12 line 306: port "/tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:8", Go "/tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:12"
+        Go context:
+        case 12
+        /tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:12
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 11 18 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:28
+    lint_test.go:491: loop_direction_reversed caught on native: case 12 line 306: port "/tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:8", Go "/tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:12"
+        Go context:
+        case 12
+        /tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:12
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 11 18 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsloop_direction_reversed912924644/004/generated-3.ts:1:28
+=== RUN   TestMutants/constructor_return_suppressed
+    lint_test.go:491: constructor_return_suppressed caught on Node: case 24 line 554: port "fixed\tclass C { constructor() { return 1; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsconstructor_return_suppressed2571612952/007/no-constructor-return-0.ts:1:27"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsconstructor_return_suppressed2571612952/007/no-constructor-return-0.ts:1:27
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 26 35 noConstructorReturn 		
+        fixed	class C { constructor() { return 1; } }\u000a
+    lint_test.go:491: constructor_return_suppressed caught on emitted JavaScript: case 24 line 554: port "fixed\tclass C { constructor() { return 1; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsconstructor_return_suppressed2571612952/007/no-constructor-return-0.ts:1:27"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsconstructor_return_suppressed2571612952/007/no-constructor-return-0.ts:1:27
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 26 35 noConstructorReturn 		
+        fixed	class C { constructor() { return 1; } }\u000a
+    lint_test.go:491: constructor_return_suppressed caught on native: case 24 line 554: port "fixed\tclass C { constructor() { return 1; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsconstructor_return_suppressed2571612952/007/no-constructor-return-0.ts:1:27"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsconstructor_return_suppressed2571612952/007/no-constructor-return-0.ts:1:27
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 26 35 noConstructorReturn 		
+        fixed	class C { constructor() { return 1; } }\u000a
+=== RUN   TestMutants/delete_identifier_suppressed
+    lint_test.go:491: delete_identifier_suppressed caught on Node: case 24 line 554: port "fixed\tdelete value;\\u000a", Go "/tmp/adamic-gate/TestMutantsdelete_identifier_suppressed1905049886/007/no-delete-var-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsdelete_identifier_suppressed1905049886/007/no-delete-var-0.ts:1:1
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 0 12 unexpectedDeleteVar 		
+        fixed	delete value;\u000a
+    lint_test.go:491: delete_identifier_suppressed caught on emitted JavaScript: case 24 line 554: port "fixed\tdelete value;\\u000a", Go "/tmp/adamic-gate/TestMutantsdelete_identifier_suppressed1905049886/007/no-delete-var-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsdelete_identifier_suppressed1905049886/007/no-delete-var-0.ts:1:1
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 0 12 unexpectedDeleteVar 		
+        fixed	delete value;\u000a
+    lint_test.go:491: delete_identifier_suppressed caught on native: case 24 line 554: port "fixed\tdelete value;\\u000a", Go "/tmp/adamic-gate/TestMutantsdelete_identifier_suppressed1905049886/007/no-delete-var-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsdelete_identifier_suppressed1905049886/007/no-delete-var-0.ts:1:1
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 0 12 unexpectedDeleteVar 		
+        fixed	delete value;\u000a
+=== RUN   TestMutants/null_inequality_only
+    lint_test.go:491: null_inequality_only caught on Node: case 8 line 218: port "/tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:71", Go "/tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:67"
+        Go context:
+        range 18 20 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:37
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 36 38 unexpected fix	!==	
+        /tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:67
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 66 77 unexpected 		
+        /tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:71
+    lint_test.go:491: null_inequality_only caught on emitted JavaScript: case 8 line 218: port "/tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:71", Go "/tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:67"
+        Go context:
+        range 18 20 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:37
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 36 38 unexpected fix	!==	
+        /tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:67
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 66 77 unexpected 		
+        /tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:71
+    lint_test.go:491: null_inequality_only caught on native: case 8 line 218: port "/tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:71", Go "/tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:67"
+        Go context:
+        range 18 20 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:37
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 36 38 unexpected fix	!==	
+        /tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:67
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 66 77 unexpected 		
+        /tmp/adamic-gate/TestMutantsnull_inequality_only705875395/003/generated-2.ts:1:71
+=== RUN   TestMutants/multiline_suppressed
+    lint_test.go:491: multiline_suppressed caught on Node: case 24 line 554: port "fixed\tconst x = 'a\\u005c\\u000ab';\\u000a", Go "/tmp/adamic-gate/TestMutantsmultiline_suppressed2578110544/007/no-multi-str-0.ts:1:11"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsmultiline_suppressed2578110544/007/no-multi-str-0.ts:1:11
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 10 16 multilineString 		
+        fixed	const x = 'a\u005c\u000ab';\u000a
+    lint_test.go:491: multiline_suppressed caught on emitted JavaScript: case 24 line 554: port "fixed\tconst x = 'a\\u005c\\u000ab';\\u000a", Go "/tmp/adamic-gate/TestMutantsmultiline_suppressed2578110544/007/no-multi-str-0.ts:1:11"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsmultiline_suppressed2578110544/007/no-multi-str-0.ts:1:11
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 10 16 multilineString 		
+        fixed	const x = 'a\u005c\u000ab';\u000a
+    lint_test.go:491: multiline_suppressed caught on native: case 24 line 554: port "fixed\tconst x = 'a\\u005c\\u000ab';\\u000a", Go "/tmp/adamic-gate/TestMutantsmultiline_suppressed2578110544/007/no-multi-str-0.ts:1:11"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsmultiline_suppressed2578110544/007/no-multi-str-0.ts:1:11
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 10 16 multilineString 		
+        fixed	const x = 'a\u005c\u000ab';\u000a
+=== RUN   TestMutants/decimal_suggestion_wrong
+    lint_test.go:491: decimal_suggestion_wrong caught on Node: case 24 line 559: port "edit 11 13 0", Go "edit 11 13 8"
+        Go context:
+        /tmp/adamic-gate/TestMutantsdecimal_suggestion_wrong2177799157/007/no-nonoctal-decimal-escape-0.ts:1:12
+          no-nonoctal-decimal-escape  This is a `\8` or `\9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+        
+        range 11 13 nonoctalDecimalEscape 		
+        suggestion nonoctalDecimalEscape Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+        edit 11 13 8
+        applied	const x = '8';\u000a
+        suggestion nonoctalDecimalEscape Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+        edit 11 13 \u005c\u005c8
+        applied	const x = '\u005c\u005c8';\u000a
+    lint_test.go:491: decimal_suggestion_wrong caught on emitted JavaScript: case 24 line 559: port "edit 11 13 0", Go "edit 11 13 8"
+        Go context:
+        /tmp/adamic-gate/TestMutantsdecimal_suggestion_wrong2177799157/007/no-nonoctal-decimal-escape-0.ts:1:12
+          no-nonoctal-decimal-escape  This is a `\8` or `\9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+        
+        range 11 13 nonoctalDecimalEscape 		
+        suggestion nonoctalDecimalEscape Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+        edit 11 13 8
+        applied	const x = '8';\u000a
+        suggestion nonoctalDecimalEscape Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+        edit 11 13 \u005c\u005c8
+        applied	const x = '\u005c\u005c8';\u000a
+    lint_test.go:491: decimal_suggestion_wrong caught on native: case 24 line 559: port "edit 11 13 0", Go "edit 11 13 8"
+        Go context:
+        /tmp/adamic-gate/TestMutantsdecimal_suggestion_wrong2177799157/007/no-nonoctal-decimal-escape-0.ts:1:12
+          no-nonoctal-decimal-escape  This is a `\8` or `\9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+        
+        range 11 13 nonoctalDecimalEscape 		
+        suggestion nonoctalDecimalEscape Replace `\u005c8` with `8` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.
+        edit 11 13 8
+        applied	const x = '8';\u000a
+        suggestion nonoctalDecimalEscape Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+        edit 11 13 \u005c\u005c8
+        applied	const x = '\u005c\u005c8';\u000a
+=== RUN   TestMutants/octal_suppressed
+    lint_test.go:491: octal_suppressed caught on Node: case 24 line 554: port "fixed\tconst x = 0755;\\u000a", Go "/tmp/adamic-gate/TestMutantsoctal_suppressed2970059356/007/no-octal-0.ts:1:11"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsoctal_suppressed2970059356/007/no-octal-0.ts:1:11
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 10 14 noOctal 		
+        fixed	const x = 0755;\u000a
+    lint_test.go:491: octal_suppressed caught on emitted JavaScript: case 24 line 554: port "fixed\tconst x = 0755;\\u000a", Go "/tmp/adamic-gate/TestMutantsoctal_suppressed2970059356/007/no-octal-0.ts:1:11"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsoctal_suppressed2970059356/007/no-octal-0.ts:1:11
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 10 14 noOctal 		
+        fixed	const x = 0755;\u000a
+    lint_test.go:491: octal_suppressed caught on native: case 24 line 554: port "fixed\tconst x = 0755;\\u000a", Go "/tmp/adamic-gate/TestMutantsoctal_suppressed2970059356/007/no-octal-0.ts:1:11"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsoctal_suppressed2970059356/007/no-octal-0.ts:1:11
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 10 14 noOctal 		
+        fixed	const x = 0755;\u000a
+=== RUN   TestMutants/computed_replacement_wrong
+    lint_test.go:491: computed_replacement_wrong caught on Node: case 24 line 558: port "fix 12 17 'different'", Go "fix 12 17 'x'"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantscomputed_replacement_wrong3895781121/007/no-useless-computed-key-0.ts:1:13
+          no-useless-computed-key  Unnecessarily computed property ['x'] found. This property key is wrapped in brackets that compute nothing. The brackets say the name is decided when the code runs, so a reader stops to work out what it evaluates to, and the answer is the literal already written inside them.
+        
+        range 12 20 unnecessarilyComputedProperty 		
+        fix 12 17 'x'
+        fixed	const v = { 'x': 1 };\u000a
+    lint_test.go:491: computed_replacement_wrong caught on emitted JavaScript: case 24 line 558: port "fix 12 17 'different'", Go "fix 12 17 'x'"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantscomputed_replacement_wrong3895781121/007/no-useless-computed-key-0.ts:1:13
+          no-useless-computed-key  Unnecessarily computed property ['x'] found. This property key is wrapped in brackets that compute nothing. The brackets say the name is decided when the code runs, so a reader stops to work out what it evaluates to, and the answer is the literal already written inside them.
+        
+        range 12 20 unnecessarilyComputedProperty 		
+        fix 12 17 'x'
+        fixed	const v = { 'x': 1 };\u000a
+    lint_test.go:491: computed_replacement_wrong caught on native: case 24 line 558: port "fix 12 17 'different'", Go "fix 12 17 'x'"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantscomputed_replacement_wrong3895781121/007/no-useless-computed-key-0.ts:1:13
+          no-useless-computed-key  Unnecessarily computed property ['x'] found. This property key is wrapped in brackets that compute nothing. The brackets say the name is decided when the code runs, so a reader stops to work out what it evaluates to, and the answer is the literal already written inside them.
+        
+        range 12 20 unnecessarilyComputedProperty 		
+        fix 12 17 'x'
+        fixed	const v = { 'x': 1 };\u000a
+=== RUN   TestMutants/gating_invalid_suppressed
+    lint_test.go:491: gating_invalid_suppressed caught on Node: case 24 line 554: port "fixed\tfunction f() { 'use memo if(true)'; }\\u000a", Go "/tmp/adamic-gate/TestMutantsgating_invalid_suppressed3012662920/007/react-hooks-gating-0.ts:1:16"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsgating_invalid_suppressed3012662920/007/react-hooks-gating-0.ts:1:16
+          react-hooks/gating  The condition inside `use memo if(...)` is not a JavaScript identifier. React Compiler imports that exact name from the gating module and calls it to decide whether the memoized version of this function runs, so it has to be something importable. A literal like `true`, an expression, or a reserved word cannot be imported, and the compiler rejects the whole file rather than guessing. Name the flag getter and write that identifier instead.
+        
+        range 15 35 invalidGatingDirective 		
+        fixed	function f() { 'use memo if(true)'; }\u000a
+    lint_test.go:491: gating_invalid_suppressed caught on emitted JavaScript: case 24 line 554: port "fixed\tfunction f() { 'use memo if(true)'; }\\u000a", Go "/tmp/adamic-gate/TestMutantsgating_invalid_suppressed3012662920/007/react-hooks-gating-0.ts:1:16"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsgating_invalid_suppressed3012662920/007/react-hooks-gating-0.ts:1:16
+          react-hooks/gating  The condition inside `use memo if(...)` is not a JavaScript identifier. React Compiler imports that exact name from the gating module and calls it to decide whether the memoized version of this function runs, so it has to be something importable. A literal like `true`, an expression, or a reserved word cannot be imported, and the compiler rejects the whole file rather than guessing. Name the flag getter and write that identifier instead.
+        
+        range 15 35 invalidGatingDirective 		
+        fixed	function f() { 'use memo if(true)'; }\u000a
+    lint_test.go:491: gating_invalid_suppressed caught on native: case 24 line 554: port "fixed\tfunction f() { 'use memo if(true)'; }\\u000a", Go "/tmp/adamic-gate/TestMutantsgating_invalid_suppressed3012662920/007/react-hooks-gating-0.ts:1:16"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsgating_invalid_suppressed3012662920/007/react-hooks-gating-0.ts:1:16
+          react-hooks/gating  The condition inside `use memo if(...)` is not a JavaScript identifier. React Compiler imports that exact name from the gating module and calls it to decide whether the memoized version of this function runs, so it has to be something importable. A literal like `true`, an expression, or a reserved word cannot be imported, and the compiler rejects the whole file rather than guessing. Name the flag getter and write that identifier instead.
+        
+        range 15 35 invalidGatingDirective 		
+        fixed	function f() { 'use memo if(true)'; }\u000a
+=== RUN   TestMutants/foreign_read_suppressed
+    lint_test.go:491: foreign_read_suppressed caught on Node: case 24 line 554: port "fixed\tconst p = Foo.propTypes;\\u000a", Go "/tmp/adamic-gate/TestMutantsforeign_read_suppressed2637134836/007/react-forbid-foreign-prop-types-0.ts:1:15"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsforeign_read_suppressed2637134836/007/react-forbid-foreign-prop-types-0.ts:1:15
+          react/forbid-foreign-prop-types  Reading another component's `propTypes` breaks in production. The React production build strips `propTypes` off components to save bytes, so this expression is an object in development and `undefined` in the build users actually run, and the failure lands at runtime in the one environment nobody was testing. Declare the shape where it is used, or export the plain object both components can import.
+        
+        range 14 23 forbiddenPropType 		
+        fixed	const p = Foo.propTypes;\u000a
+    lint_test.go:491: foreign_read_suppressed caught on emitted JavaScript: case 24 line 554: port "fixed\tconst p = Foo.propTypes;\\u000a", Go "/tmp/adamic-gate/TestMutantsforeign_read_suppressed2637134836/007/react-forbid-foreign-prop-types-0.ts:1:15"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsforeign_read_suppressed2637134836/007/react-forbid-foreign-prop-types-0.ts:1:15
+          react/forbid-foreign-prop-types  Reading another component's `propTypes` breaks in production. The React production build strips `propTypes` off components to save bytes, so this expression is an object in development and `undefined` in the build users actually run, and the failure lands at runtime in the one environment nobody was testing. Declare the shape where it is used, or export the plain object both components can import.
+        
+        range 14 23 forbiddenPropType 		
+        fixed	const p = Foo.propTypes;\u000a
+    lint_test.go:491: foreign_read_suppressed caught on native: case 24 line 554: port "fixed\tconst p = Foo.propTypes;\\u000a", Go "/tmp/adamic-gate/TestMutantsforeign_read_suppressed2637134836/007/react-forbid-foreign-prop-types-0.ts:1:15"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsforeign_read_suppressed2637134836/007/react-forbid-foreign-prop-types-0.ts:1:15
+          react/forbid-foreign-prop-types  Reading another component's `propTypes` breaks in production. The React production build strips `propTypes` off components to save bytes, so this expression is an object in development and `undefined` in the build users actually run, and the failure lands at runtime in the one environment nobody was testing. Declare the shape where it is used, or export the plain object both components can import.
+        
+        range 14 23 forbiddenPropType 		
+        fixed	const p = Foo.propTypes;\u000a
+=== RUN   TestMutants/direction_escape_removed
+    lint_test.go:491: direction_escape_removed caught on Node: case 24 line 555: port "  structure/tailwind-no-physical-direction  The class \"rtl:ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"rtl:ms-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"mr-2\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"me-2\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsdirection_escape_removed4111953580/007/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 43 useLogicalClass 		
+        fixed	export const classes = 'flex rtl:ml-4 mr-2';\u000a
+    lint_test.go:491: direction_escape_removed caught on emitted JavaScript: case 24 line 555: port "  structure/tailwind-no-physical-direction  The class \"rtl:ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"rtl:ms-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"mr-2\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"me-2\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsdirection_escape_removed4111953580/007/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 43 useLogicalClass 		
+        fixed	export const classes = 'flex rtl:ml-4 mr-2';\u000a
+    lint_test.go:491: direction_escape_removed caught on native: case 24 line 555: port "  structure/tailwind-no-physical-direction  The class \"rtl:ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"rtl:ms-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"mr-2\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"me-2\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsdirection_escape_removed4111953580/007/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 43 useLogicalClass 		
+        fixed	export const classes = 'flex rtl:ml-4 mr-2';\u000a
+--- PASS: TestMutants (435.99s)
+    --- PASS: TestMutants/module_declaration_suppressed (44.29s)
+    --- PASS: TestMutants/optional_parameter_ignored (18.04s)
+    --- PASS: TestMutants/constraint_suggestion_wrong (20.41s)
+    --- PASS: TestMutants/const_append_wrong (25.45s)
+    --- PASS: TestMutants/enum_second_suggestion_wrong (22.60s)
+    --- PASS: TestMutants/default_clause_suppressed (23.44s)
+    --- PASS: TestMutants/core_default_suppressed (25.86s)
+    --- PASS: TestMutants/loop_direction_reversed (21.44s)
+    --- PASS: TestMutants/constructor_return_suppressed (19.50s)
+    --- PASS: TestMutants/delete_identifier_suppressed (25.61s)
+    --- PASS: TestMutants/null_inequality_only (18.69s)
+    --- PASS: TestMutants/multiline_suppressed (23.99s)
+    --- PASS: TestMutants/decimal_suggestion_wrong (23.92s)
+    --- PASS: TestMutants/octal_suppressed (18.95s)
+    --- PASS: TestMutants/computed_replacement_wrong (21.17s)
+    --- PASS: TestMutants/gating_invalid_suppressed (25.03s)
+    --- PASS: TestMutants/foreign_read_suppressed (21.75s)
+    --- PASS: TestMutants/direction_escape_removed (20.87s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	436.021s
