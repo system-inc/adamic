@@ -1063,7 +1063,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		return l.callFunction(call, instance)
+		value, err := l.callFunction(call, instance)
+		if err == nil {
+			value = l.namespaceReadyCall(callee, value)
+		}
+		return value, err
 	}
 	// Host units get their builtin dispatch first. Refuse the remainder by the
 	// resolved member name rather than attempting a declaration-only function.
@@ -1077,7 +1081,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
-	return l.callFunction(call, function)
+	value, err := l.callFunction(call, function)
+	if err == nil {
+		value = l.namespaceReadyCall(callee, value)
+	}
+	return value, err
 }
 
 // callFunction lowers a call's arguments, in order, and the call to function.

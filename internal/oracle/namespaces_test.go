@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/namespaces_debug_probe.a", "internal/oracle/testdata/namespaces_observed_narrowing.a", "internal/oracle/testdata/namespaces_parser_factory.a", "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a", "internal/oracle/testdata/namespaces_debug_modules/main.a", "internal/oracle/testdata/namespaces_debug_state.a", "internal/oracle/testdata/namespaces_parser_body.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a"} {
+	for _, path := range []string{"internal/oracle/testdata/namespaces_map_before.a", "internal/oracle/testdata/namespaces_safe_initialization.a", "internal/oracle/testdata/namespaces_debug_probe.a", "internal/oracle/testdata/namespaces_observed_narrowing.a", "internal/oracle/testdata/namespaces_parser_factory.a", "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a", "internal/oracle/testdata/namespaces_debug_modules/main.a", "internal/oracle/testdata/namespaces_debug_state.a", "internal/oracle/testdata/namespaces_parser_body.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -21,6 +21,14 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/namespaces_unready.a", true, true})
+
+	for _, path := range []string{"internal/oracle/testdata/namespaces_unknown_before.a", "internal/oracle/testdata/namespaces_unknown_function_before.a", "internal/oracle/testdata/namespaces_unknown_write_before.a", "internal/oracle/testdata/namespaces_unknown_void_before.a", "internal/oracle/testdata/namespaces_unknown_enum_before.a"} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{path, true, false})
+	}
 
 	for _, name := range []string{"BuilderState", "JsxNames", "ReactNames", "BinaryExpressionState", "Parser.JSDocParser"} {
 		fixtures = append(fixtures, struct {
@@ -104,6 +112,22 @@ func TestNamespaceSemanticMutants(t *testing.T) {
 							changed = true
 							break
 						}
+						// A qualified write snapshots its RHS before the write check.
+						if read, ok := assign.Value.(ir.Read); ok {
+							for at, statement := range program.Main {
+								if declared, ok := statement.(ir.Declare); ok && declared.Local == read.Local {
+									if number, ok := declared.Value.(ir.NumberConstant); ok && number.Value == 3 {
+										declared.Value = ir.NumberConstant{Value: 30}
+										program.Main[at] = declared
+										changed = true
+									}
+								}
+							}
+						}
+						if changed {
+							break
+						}
+
 					}
 				}
 			} else if family == "wrong body order" {

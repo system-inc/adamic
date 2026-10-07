@@ -25,10 +25,8 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		{"destructured state", "namespace N {const [x]=[1];}", "destructuring inside a namespace"},
 		{"computed member", "namespace N {export const x=1;} console.log(`${N['x']}`);", "namespace object"},
 		{"replace function", "namespace N {export function read():number{return 1;}} N.read=()=>2;", "replacing a namespace export"},
-		{"early call", "function early():number{return N.x;} const x=early(); namespace N {export const x=1;}", "call before all runtime namespaces"},
+		{"early call", "function early():number{return N.x;} const x=early(); namespace N {export const x=1;}", "namespace read before runtime initialization"},
 		{"early read", "const x=N.read; namespace N {export function read():number{return 1;}}", "namespace read before"},
-		{"initializer call", "function get():number{return 1;} namespace N {export const x=get();}", "call before all runtime namespaces"},
-		{"unknown body call", "function effect():void{} namespace N {effect();}", "call before all runtime namespaces"},
 		{"block var", "namespace N {if(true){var x=1;}}", "var inside namespace control flow"},
 		{"nested early read", "namespace N {const x=Inner.read; export namespace Inner {export function read():number{return 1;}}}", "namespace read before"},
 		{"explicit receiver", "namespace N {export const x=1; export function read(this:{readonly x:number}):number{return 1;}}", "explicit namespace-function"},
@@ -108,5 +106,48 @@ func TestNamespaceReturnedAssignmentLimits(t *testing.T) {
 		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "only scalar singleton assignment is proven") {
 			t.Fatalf("got %v, want the scalar returned-assignment boundary", err)
 		}
+	}
+}
+
+func TestNamespaceInitializationReachability(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"direct", "helper"} {
+		t.Run(name, func(t *testing.T) {
+			source, err := os.ReadFile("testdata/namespaces_notyet/reaching_" + name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowerSource(t, string(source))
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "through a reachable call") {
+				t.Fatalf("reaching call lost its initialization refusal: %v", err)
+			}
+		})
+	}
+}
+
+func TestNamespaceClosedCallGraphEdges(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"function read():boolean{return N.x;} class C {static readonly x=read();} namespace N {export let x=false;}",
+		"function read():boolean{return N.x;} const alias=read; alias(); namespace N {export let x=false;}",
+		"function read():boolean{return N.x;} [1].map(read); namespace N {export let x=false;}",
+		"function read(x:boolean=N.x):boolean{return x;} read(); namespace N {export let x=false;}",
+		"function one(x:boolean):boolean{return x ? two(false) : N.x;} function two(x:boolean):boolean{return one(x);} one(true); namespace N {export let x=false;}",
+	} {
+		_, err := lowerSource(t, source)
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "through a reachable call") {
+			t.Fatalf("got %v", err)
+		}
+	}
+}
+
+func TestEmptyNeverMapCannotGainWritableInhabitants(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, "const empty = new Map<never, never>(); const wide: Map<string, number> = empty; wide.set('x', 1);")
+	var refused *Refused
+	if !errors.As(err, &refused) {
+		t.Fatalf("got %v, want invariant mutable view refused", err)
 	}
 }

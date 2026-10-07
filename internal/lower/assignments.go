@@ -74,7 +74,18 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 	}
-	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}}, nil
+	statements := l.namespaceReadyStatements(target, false)
+	if !isCompound && target.Kind == ast.KindPropertyAccessExpression && l.namespaceMember(target) {
+		// A simple property assignment evaluates its RHS before PutValue discovers
+		// an undefined receiver. Earlier containers in a nested chain are reads.
+		statements = l.namespaceReadyStatements(target.Expression(), false)
+		temporary := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "namespace_assignment", Type: value.Type(), Function: l.functionIndex})
+		statements = append(statements, ir.Declare{Local: temporary, Value: value})
+		statements = append(statements, l.namespaceReadyStatements(target, true)...)
+		value = ir.Read{Local: temporary, Of: value.Type()}
+	}
+	return append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}), nil
 }
 
 // tupleField reads element index of the tuple held in the local held, as the tuple's element type
@@ -181,5 +192,5 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		step = ir.Subtract
 	}
 	current := ir.Read{Local: local, Of: ir.Number, Checked: l.checked(local)}
-	return []ir.Statement{ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}}, nil
+	return append(l.namespaceReadyStatements(operand, false), ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}), nil
 }
