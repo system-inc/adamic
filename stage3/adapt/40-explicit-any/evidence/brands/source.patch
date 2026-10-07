@@ -1,0 +1,316 @@
+--- before/src/compiler/builder.ts
++++ after/src/compiler/builder.ts
+@@ -1071,9 +1071,9 @@
+ }
+ 
+ /** @internal */
+-export type IncrementalBuildInfoFileId = number & { __incrementalBuildInfoFileIdBrand: any; };
+-/** @internal */
+-export type IncrementalBuildInfoFileIdListId = number & { __incrementalBuildInfoFileIdListIdBrand: any; };
++export type IncrementalBuildInfoFileId = number & { __incrementalBuildInfoFileIdBrand: undefined; };
++/** @internal */
++export type IncrementalBuildInfoFileIdListId = number & { __incrementalBuildInfoFileIdListIdBrand: undefined; };
+ /** @internal */
+ export type IncrementalBuildInfoDiagnosticOfFile = [fileId: IncrementalBuildInfoFileId, diagnostics: readonly ReusableDiagnostic[]];
+ /** @internal */
+--- before/src/compiler/checker.ts
++++ after/src/compiler/checker.ts
+@@ -1449,7 +1449,7 @@
+ }));
+ 
+ const SymbolLinks = class implements SymbolLinks {
+-    declare _symbolLinksBrand: any;
++    declare _symbolLinksBrand: undefined;
+ };
+ 
+ function NodeLinks(this: NodeLinks) {
+--- before/src/compiler/corePublic.ts
++++ after/src/compiler/corePublic.ts
+@@ -15,11 +15,11 @@
+ }
+ 
+ export interface SortedReadonlyArray<T> extends ReadonlyArray<T> {
+-    " __sortedArrayBrand": any;
++    " __sortedArrayBrand": undefined;
+ }
+ 
+ export interface SortedArray<T> extends Array<T> {
+-    " __sortedArrayBrand": any;
++    " __sortedArrayBrand": undefined;
+ }
+ 
+ /**
+--- before/src/compiler/moduleNameResolver.ts
++++ after/src/compiler/moduleNameResolver.ts
+@@ -972,7 +972,7 @@
+ }
+ 
+ /** @internal */
+-export type RedirectsCacheKey = string & { __compilerOptionsKey: any; };
++export type RedirectsCacheKey = string & { __compilerOptionsKey: undefined; };
+ 
+ function createCacheWithRedirects<K, V>(ownOptions: CompilerOptions | undefined, optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey>): CacheWithRedirects<K, V> {
+     const redirectsMap = new Map<CompilerOptions, Map<K, V>>();
+@@ -1110,7 +1110,7 @@
+ }
+ 
+ /** @internal */
+-export type ModeAwareCacheKey = string & { __modeAwareCacheKey: any; };
++export type ModeAwareCacheKey = string & { __modeAwareCacheKey: undefined; };
+ /** @internal */
+ export function createModeAwareCacheKey(specifier: string, mode: ResolutionMode) {
+     return (mode === undefined ? specifier : `${mode}|${specifier}`) as ModeAwareCacheKey;
+--- before/src/compiler/path.ts
++++ after/src/compiler/path.ts
+@@ -454,7 +454,7 @@
+ }
+ 
+ /** @internal */
+-export type PathPathComponents = Path[] & { __pathComponensBrand: any; };
++export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };
+ 
+ /**
+  * Parse a path into an array containing a root component (at index 0) and zero or more path
+--- before/src/compiler/transformers/esnext.ts
++++ after/src/compiler/transformers/esnext.ts
+@@ -771,7 +771,7 @@
+     return 0;
+ }
+ 
+-function isUsingVariableDeclarationList(node: Node): node is VariableDeclarationList & { _usingBrand: any; } {
++function isUsingVariableDeclarationList(node: Node): node is VariableDeclarationList & { _usingBrand: undefined; } {
+     return isVariableDeclarationList(node) && getUsingKindOfVariableDeclarationList(node) !== UsingKind.None;
+ }
+ 
+--- before/src/compiler/types.ts
++++ after/src/compiler/types.ts
+@@ -20,7 +20,7 @@
+ 
+ // branded string type used to store absolute, normalized and canonicalized paths
+ // arbitrary file name can be converted to Path via toPath function
+-export type Path = string & { __pathBrand: any; };
++export type Path = string & { __pathBrand: undefined; };
+ 
+ /** @internal */
+ export type MatchingKeys<TRecord, TMatch, K extends keyof TRecord = keyof TRecord> = K extends (TRecord[K] extends TMatch ? K : never) ? K : never;
+@@ -955,7 +955,7 @@
+ }
+ 
+ export interface JSDocContainer extends Node {
+-    _jsdocContainerBrand: any;
++    _jsdocContainerBrand: undefined;
+     /** @internal */ jsDoc?: JSDocArray; // JSDoc that directly precedes this node
+ }
+ 
+@@ -965,13 +965,13 @@
+ }
+ 
+ export interface LocalsContainer extends Node {
+-    _localsContainerBrand: any;
++    _localsContainerBrand: undefined;
+     /** @internal */ locals?: SymbolTable; // Locals associated with node (initialized by binding)
+     /** @internal */ nextContainer?: HasLocals; // Next container in declaration order (initialized by binding)
+ }
+ 
+ export interface FlowContainer extends Node {
+-    _flowContainerBrand: any;
++    _flowContainerBrand: undefined;
+     /** @internal */ flowNode?: FlowNode; // Associated FlowNode (initialized by binding)
+ }
+ 
+@@ -1754,7 +1754,7 @@
+     | EntityNameExpression;
+ 
+ export interface Declaration extends Node {
+-    _declarationBrand: any;
++    _declarationBrand: undefined;
+     /** @internal */ symbol: Symbol; // Symbol declared by node (initialized by binding)
+     /** @internal */ localSymbol?: Symbol; // Local symbol declared by node (initialized by binding only for exported nodes)
+ }
+@@ -1941,7 +1941,7 @@
+ }
+ 
+ export interface AutoAccessorPropertyDeclaration extends PropertyDeclaration {
+-    _autoAccessorBrand: any;
++    _autoAccessorBrand: undefined;
+ }
+ 
+ /** @internal */
+@@ -1978,7 +1978,7 @@
+ export type InitializedPropertyDeclaration = PropertyDeclaration & { readonly initializer: Expression; };
+ 
+ export interface ObjectLiteralElement extends NamedDeclaration {
+-    _objectLiteralBrand: any;
++    _objectLiteralBrand: undefined;
+     readonly name?: PropertyName;
+ }
+ 
+@@ -2061,7 +2061,7 @@
+  * - AccessorDeclaration
+  */
+ export interface FunctionLikeDeclarationBase extends SignatureDeclarationBase {
+-    _functionLikeDeclarationBrand: any;
++    _functionLikeDeclarationBrand: undefined;
+ 
+     readonly asteriskToken?: AsteriskToken | undefined;
+     readonly questionToken?: QuestionToken | undefined;
+@@ -2182,7 +2182,7 @@
+ }
+ 
+ export interface TypeNode extends Node {
+-    _typeNodeBrand: any;
++    _typeNodeBrand: undefined;
+ }
+ 
+ /** @internal */
+@@ -2394,7 +2394,7 @@
+ // never actually given values.  At runtime they have zero cost.
+ 
+ export interface Expression extends Node {
+-    _expressionBrand: any;
++    _expressionBrand: undefined;
+ }
+ 
+ export interface OmittedExpression extends Expression {
+@@ -2409,13 +2409,13 @@
+ }
+ 
+ export interface UnaryExpression extends Expression {
+-    _unaryExpressionBrand: any;
++    _unaryExpressionBrand: undefined;
+ }
+ 
+ /** Deprecated, please use UpdateExpression */
+ export type IncrementExpression = UpdateExpression;
+ export interface UpdateExpression extends UnaryExpression {
+-    _updateExpressionBrand: any;
++    _updateExpressionBrand: undefined;
+ }
+ 
+ // see: https://tc39.github.io/ecma262/#prod-UpdateExpression
+@@ -2446,15 +2446,15 @@
+ }
+ 
+ export interface LeftHandSideExpression extends UpdateExpression {
+-    _leftHandSideExpressionBrand: any;
++    _leftHandSideExpressionBrand: undefined;
+ }
+ 
+ export interface MemberExpression extends LeftHandSideExpression {
+-    _memberExpressionBrand: any;
++    _memberExpressionBrand: undefined;
+ }
+ 
+ export interface PrimaryExpression extends MemberExpression {
+-    _primaryExpressionBrand: any;
++    _primaryExpressionBrand: undefined;
+ }
+ 
+ export interface NullLiteral extends PrimaryExpression {
+@@ -2782,7 +2782,7 @@
+ // or any literal of a template, this means quotes have been removed and escapes have been converted to actual characters.
+ // For a NumericLiteral, the stored value is the toString() representation of the number. For example 1, 1.00, and 1e0 are all stored as just "1".
+ export interface LiteralExpression extends LiteralLikeNode, PrimaryExpression {
+-    _literalExpressionBrand: any;
++    _literalExpressionBrand: undefined;
+ }
+ 
+ export interface RegularExpressionLiteral extends LiteralExpression {
+@@ -2979,7 +2979,7 @@
+ }
+ 
+ export interface PropertyAccessChain extends PropertyAccessExpression {
+-    _optionalChainBrand: any;
++    _optionalChainBrand: undefined;
+     readonly name: MemberName;
+ }
+ 
+@@ -2994,7 +2994,7 @@
+ 
+ /** Brand for a PropertyAccessExpression which, like a QualifiedName, consists of a sequence of identifiers separated by dots. */
+ export interface PropertyAccessEntityNameExpression extends PropertyAccessExpression {
+-    _propertyAccessExpressionLikeQualifiedNameBrand?: any;
++    _propertyAccessExpressionLikeQualifiedNameBrand?: undefined;
+     readonly expression: EntityNameExpression;
+     readonly name: Identifier;
+ }
+@@ -3007,7 +3007,7 @@
+ }
+ 
+ export interface ElementAccessChain extends ElementAccessExpression {
+-    _optionalChainBrand: any;
++    _optionalChainBrand: undefined;
+ }
+ 
+ /** @internal */
+@@ -3031,7 +3031,7 @@
+ }
+ 
+ export interface CallChain extends CallExpression {
+-    _optionalChainBrand: any;
++    _optionalChainBrand: undefined;
+ }
+ 
+ /** @internal */
+@@ -3165,7 +3165,7 @@
+ }
+ 
+ export interface NonNullChain extends NonNullExpression {
+-    _optionalChainBrand: any;
++    _optionalChainBrand: undefined;
+ }
+ 
+ // NOTE: MetaProperty is really a MemberExpression, but we consider it a PrimaryExpression
+@@ -3319,7 +3319,7 @@
+     | JsxFragment;
+ 
+ export interface Statement extends Node, JSDocContainer {
+-    _statementBrand: any;
++    _statementBrand: undefined;
+ }
+ 
+ // Represents a statement that is elided as part of a transformation to emit comments on a
+@@ -3565,12 +3565,12 @@
+     | ClassExpression;
+ 
+ export interface ClassElement extends NamedDeclaration {
+-    _classElementBrand: any;
++    _classElementBrand: undefined;
+     readonly name?: PropertyName;
+ }
+ 
+ export interface TypeElement extends NamedDeclaration {
+-    _typeElementBrand: any;
++    _typeElementBrand: undefined;
+     readonly name?: PropertyName;
+     readonly questionToken?: QuestionToken | undefined;
+ }
+@@ -3900,7 +3900,7 @@
+ }
+ 
+ export interface JSDocType extends TypeNode {
+-    _jsDocTypeBrand: any;
++    _jsDocTypeBrand: undefined;
+ }
+ 
+ export interface JSDocAllType extends JSDocType {
+@@ -6056,7 +6056,7 @@
+ // dprint-ignore
+ /** @internal */
+ export interface SymbolLinks {
+-    _symbolLinksBrand: any;
++    _symbolLinksBrand: undefined;
+     immediateTarget?: Symbol;                   // Immediate target of an alias. May be another alias. Do not access directly, use `checker.getImmediateAliasedSymbol` instead.
+     aliasTarget?: Symbol,                       // Resolved (non-alias) target of an alias
+     target?: Symbol;                            // Original version of an instantiated symbol
+--- before/src/compiler/utilities.ts
++++ after/src/compiler/utilities.ts
+@@ -4286,7 +4286,7 @@
+ 
+ /** @internal */
+ export interface PrototypePropertyAssignment extends AssignmentExpression<EqualsToken> {
+-    _prototypePropertyAssignmentBrand: any;
++    _prototypePropertyAssignmentBrand: undefined;
+     readonly left: AccessExpression;
+ }
+ 

@@ -1,0 +1,11 @@
+keys-integer-last: caught by Node comparison, exit=1
+keys-descending: caught by Node comparison, exit=1
+values-first-slot: caught by Node comparison, exit=1
+entries-wrong-key: caught by Node comparison, exit=1
+assign-a-plus-one: caught by Node comparison, exit=1
+same-value-nan-false: caught by Node comparison, exit=1
+same-value-zero: caught by Node comparison, exit=1
+has-own-always-false: caught by Node comparison, exit=1
+freeze-no-flag: caught by Node comparison, exit=1
+freeze-write-ignored: caught by Node comparison, exit=1
+spread-reuses-frozen: caught by Node comparison, exit=1

@@ -1,0 +1,7 @@
+// Execute tests in isolated realms and record dynamically constructed regexps.
+const fs=require('fs'),vm=require('vm'),path=require('path');const root=process.argv[2];const files=JSON.parse(fs.readFileSync(0,'utf8'));
+for(const rel of files){const source=fs.readFileSync(path.join(root,rel),'utf8');const rows=[];const context=vm.createContext({console,setTimeout,clearTimeout,print(){},$DONOTEVALUATE(){throw Error('do not evaluate')}});const Native=vm.runInContext('RegExp',context);function record(args){if((typeof args[0]==='string'||args[0]===undefined)&&(typeof args[1]==='string'||args[1]===undefined))rows.push([args[0]===undefined?'':args[0],args[1]===undefined?'':args[1],rel]);}const proxy=new Proxy(Native,{apply(t,x,a){record(a);return Reflect.apply(t,x,a)},construct(t,a,n){record(a);return Reflect.construct(t,a,n===proxy?t:n)}});context.RegExp=proxy;context.global=context;context.globalThis=context;context.$262={global:context,evalScript(s){return vm.runInContext(s,context)},createRealm(){return {$262:context.$262}},detachArrayBuffer(){},gc(){}};
+let includes=['sta.js','assert.js'];const m=/includes:\s*\[([^\]]*)\]/.exec(source);if(m)includes.push(...m[1].split(',').map(x=>x.trim()).filter(Boolean));try{for(const inc of [...new Set(includes)]){const p=path.join(root,'harness',inc);if(fs.existsSync(p))vm.runInContext(fs.readFileSync(p,'utf8'),context,{filename:inc,timeout:100});}vm.runInContext(source,context,{filename:rel,timeout:100});}catch{}
+for(const row of rows)process.stdout.write(JSON.stringify(row)+'\n');
+}
+process.exit(0);

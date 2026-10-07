@@ -1,0 +1,10 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10954
+// Census reason: non-boolean control condition
+interface Type { flags: number; isThisType: boolean; }
+type TypeParameter = Type;
+const TypeFlags = {TypeParameter: 262144};
+export function isThisTypeParameter(type: Type): boolean {
+    return !!(type.flags & TypeFlags.TypeParameter && (type as TypeParameter).isThisType);
+}
+
+for (const flags of [0, 262144, 524288]) { console.log(String(isThisTypeParameter({flags, isThisType: true}))); console.log(String(isThisTypeParameter({flags, isThisType: false}))); console.log(String(isThisTypeParameter({flags, isThisType: false}))); }

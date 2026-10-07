@@ -1,0 +1,5 @@
+panic: measurement loader exposed an output program
+
+goroutine 1 [running]:
+main.main()
+	/tmp/latent3-tree/stage3/census/latent/tool/main.go:49 +0x51f

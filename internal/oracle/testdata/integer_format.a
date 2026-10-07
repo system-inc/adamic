@@ -1,0 +1,60 @@
+// Numbers as text, around the integer fast path (number.c): an integer up to 2^53 - 1 is written by
+// its digits, anything else by the shortest digits that read back. Enumerated, not sampled: 0 and -0,
+// every power of two to 2^1023 and of ten to 10^308, each with the integers beside it and the doubles
+// beside it, the safe range's edges, halves beside integers, and the negative of each, written as a
+// template, toString and an array's join all write a number.
+
+// ulp is the distance from a positive value to the next double above it.
+function ulp(value: number): number {
+	let power = 1;
+	while (power * 2 <= value) {
+		power *= 2;
+	}
+	while (power > value) {
+		power /= 2;
+	}
+	return power * Number.EPSILON;
+}
+
+function around(value: number): number[] {
+	const step = ulp(value);
+	// The double below a power of two is half as far as the one above.
+	const below = value - (step === ulp(value - step / 2) ? step : step / 2);
+	return [value, value - 1, value + 1, below, value + step, value - 0.5, value + 0.5];
+}
+
+const values: number[] = [0, -0, 0.5, 1.5, 2 ** 51 + 0.5, 2 ** 53 - 1, 2 ** 53, 2 ** 53 + 2, 2 ** 54, 2 ** 54 + 4, 2 ** 54 + 8, 2 ** 54 - 2, Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MAX_VALUE, Number.MIN_VALUE];
+for (let power = 1; power <= 2 ** 1023; power *= 2) {
+	for (const value of around(power)) {
+		values.push(value);
+	}
+	if (power === 2 ** 1023) {
+		break;
+	}
+}
+let ten = 1;
+for (let exponent = 0; exponent <= 308; exponent++) {
+	for (const value of around(ten)) {
+		values.push(value);
+	}
+	ten *= 10;
+}
+
+let lines = 0;
+let row: string[] = [];
+for (const value of values) {
+	for (const signed of [value, -value]) {
+		const written = `${signed}`;
+		if ( signed.toString() !== written || [signed].join() !== written) {
+			console.log(`the ways of writing ${written} disagree`);
+		}
+		row.push(written);
+	}
+	if (row.length >= 14) {
+		console.log(row.join(' '));
+		row = [];
+		lines++;
+	}
+}
+console.log(row.join(' '));
+console.log(`${values.length} values, ${lines + 1} lines`);

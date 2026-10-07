@@ -1,0 +1,62 @@
+// A write inside try, catch or finally is a write: lower/borrow.go's walk once skipped them, so a
+// parameter written only there was taken as borrowed (and its write released the caller's value),
+// and a loop bound written only there was taken as never written, so its loop's counter was kept in
+// an integer that ran on past 2^53 where JavaScript's stops. The strings are built at runtime, since
+// literals are immortal.
+class Box {
+	label: string;
+	constructor(label: string) {
+		this.label = label;
+	}
+}
+
+function replaced(box: Box, how: number): string {
+	try {
+		if (how === 0) {
+			box = new Box(['re', 'placed'].join(''));
+		} else {
+			throw new Error(['th', 'rown'].join(''));
+		}
+	} catch {
+		box = new Box(['cau', 'ght'].join(''));
+	} finally {
+		console.log(`finally ${how}`);
+	}
+	return box.label;
+}
+
+for (let how = 0; how < 2; how++) {
+	const kept = new Box(['ori', 'ginal', `${how}`].join(''));
+	console.log(`${replaced(kept, how)} ${kept.label}`);
+}
+
+function counted(): string {
+	let bound = 5;
+	try {
+		bound = Infinity;
+	} finally {
+		bound += 0;
+	}
+	let seen = 0;
+	let last = 0;
+	for (let counter = 9007199254740989; counter < bound; counter++) {
+		last = counter;
+		seen += 1;
+		if (seen >= 6) {
+			break;
+		}
+	}
+	return `${seen} ${last}`;
+}
+console.log(counted());
+
+// A loop inside try is a loop like any other.
+try {
+	let sum = 0;
+	for (let counter = 9; counter >= 0; counter -= 3) {
+		sum += counter;
+	}
+	console.log(`${sum}`);
+} catch {
+	console.log('unreachable');
+}

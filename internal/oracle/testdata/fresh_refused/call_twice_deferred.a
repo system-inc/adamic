@@ -1,0 +1,18 @@
+// A write deferred twice, through a helper that calls the helper, closing a cycle at the top.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function addChild(parent: Node, child: Node): void {
+	parent.nodes.push(child); // closes the cycle
+}
+function addBoth(parent: Node, first: Node, second: Node): void {
+	addChild(parent, first);
+	addChild(parent, second);
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	addBoth(node, { kind: `c${n}`, nodes: [] }, node);
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);

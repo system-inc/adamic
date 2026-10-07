@@ -1,0 +1,12 @@
+=== RUN   TestStringIndexMatchesNode
+=== PAUSE TestStringIndexMatchesNode
+=== RUN   TestStringIndexCacheStatesMatchNode
+=== PAUSE TestStringIndexCacheStatesMatchNode
+=== CONT  TestStringIndexMatchesNode
+=== CONT  TestStringIndexCacheStatesMatchNode
+--- PASS: TestStringIndexCacheStatesMatchNode (8.31s)
+=== NAME  TestStringIndexMatchesNode
+    string_index_test.go:285: 8796 lines, 0 mismatches
+--- PASS: TestStringIndexMatchesNode (16.76s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	16.800s

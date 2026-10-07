@@ -1,0 +1,5 @@
+// String.fromCodePoint throws a RangeError for anything that isn't a code point, after the ones before
+// it are made; 0.1 makes that a panic, in V8's words.
+console.log(String.fromCodePoint(0x1f30d));
+console.log(String.fromCodePoint(104, 1.5, 105));
+console.log('never printed');

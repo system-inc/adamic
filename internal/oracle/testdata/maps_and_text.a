@@ -1,0 +1,29 @@
+const counts = new Map<string, number>();
+for (const word of ['b', 'a', 'b', 'c', 'b', 'a']) {
+	counts.set(word, (counts.get(word) ?? 0) + 1);
+}
+console.log(`${counts.size} ${counts.get('b') ?? -1} ${counts.get('z') ?? -1} ${counts.has('a')} ${counts.has('z')}`);
+console.log(`${counts.delete('a')} ${counts.delete('a')} ${counts.size}`);
+counts.set('a', 9);
+const maybe = counts.get('c');
+if (maybe !== undefined) {
+	console.log(`c is ${maybe + 1}`);
+}
+console.log(`${maybe === undefined} ${counts.get('a') ?? 0}`);
+
+const numbers = new Map<number, string>([
+	[0, 'zero'],
+	[-0, 'negative zero'],
+	[0 / 0, 'not a number'],
+]);
+console.log(`${numbers.size} ${numbers.get(0) ?? '?'} ${numbers.get(0 / 0) ?? '?'} ${numbers.get(1) ?? 'missing'}`);
+
+const text = '  héllo, 世界 🌍 \n';
+const trimmed = text.trim();
+console.log(`[${trimmed}] ${trimmed.length} ${text.length} ${trimmed.charCodeAt(1)} ${trimmed.charCodeAt(10)} ${trimmed.charCodeAt(11)} ${trimmed.charCodeAt(12)}`);
+let spelled = '';
+for (const character of trimmed) {
+	spelled = spelled + `<${character}>`;
+}
+console.log(spelled);
+console.log(`[${'　  wide ﻿'.trim()}] [${''.trim()}] [${'   '.trim()}]`);

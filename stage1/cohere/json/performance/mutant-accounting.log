@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/json/profile.py", line 130, in <module>
+    main()
+  File "/workspace/adamic/stage1/cohere/json/profile.py", line 122, in main
+    result = summarize(args.profile)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/json/profile.py", line 67, in summarize
+    raise RuntimeError("callgrind self costs do not sum to summary")
+RuntimeError: callgrind self costs do not sum to summary

@@ -1,0 +1,116 @@
+import type { Weak } from 'adamic';
+abstract class Base {
+    readonly label = 'base';
+    abstract describe(): string;
+}
+class Box<T> extends Base {
+    readonly value: T;
+    constructor(value: T) {
+        super();
+        this.value = value;
+    }
+    read(): T {
+        return this.value;
+    }
+    override describe(): string {
+        return `${this.label}/box`;
+    }
+}
+class Pair<T> extends Box<T> {
+    readonly other: T;
+    constructor(value: T, other: T) {
+        super(value);
+        this.other = other;
+    }
+    override read(): T {
+        return this.other;
+    }
+    override describe(): string {
+        return `${super.describe()}/pair`;
+    }
+}
+class TextPair extends Pair<string> {}
+class ArrayBox<T> extends Box<readonly T[]> {}
+function numberRead(box: Box<number>): number {
+    return box.read();
+}
+function stringRead(box: Box<string>): string {
+    return box.read();
+}
+const numberPair = new Pair<number>(11, 22);
+const stringPair = new Pair<string>(`left${1}`, `right${2}`);
+const booleanPair = new Pair<boolean>(false, true);
+const text = new TextPair(`one${3}`, `two${4}`);
+const array = new ArrayBox<number>([31, 32]);
+const object = new Pair<{ readonly text: string }>({ text: `a${5}` }, { text: `b${6}` });
+console.log(`${numberPair.value}/${numberRead(numberPair)}`);
+console.log(`${stringPair.value}/${stringRead(stringPair)}`);
+console.log(`${booleanPair.value}/${booleanPair.read()}`);
+console.log(`${text.value}/${text.read()}`);
+console.log(`${array.read()[1]}/${object.read().text}`);
+const bases: readonly Base[] = [numberPair, stringPair, booleanPair, text, array, object];
+for(const base of bases) {
+    console.log(
+        `${base.describe()}/${base instanceof Base}/${base instanceof Box}/${base instanceof Pair}/${base instanceof TextPair}`,
+    );
+}
+console.log(`${numberPair instanceof Pair}/${stringPair instanceof Pair}/${array instanceof Box}`);
+// The identity can be needed before any instance of the generic class is lowered.
+class Unmade<T> extends Box<T> {}
+console.log(`${numberPair instanceof Unmade}`);
+const unmade = new Unmade<number>(44);
+console.log(`${unmade instanceof Unmade}/${unmade instanceof Box}/${unmade.read()}`);
+
+class Duo<A, B> extends Box<A> {
+    readonly second: B;
+    constructor(first: A, second: B) {
+        super(first);
+        this.second = second;
+    }
+    readSecond(): B {
+        return this.second;
+    }
+}
+class Flipped<A, B> extends Duo<B, A> {}
+const flipped = new Flipped<number, string>(`flipped${7}`, 88);
+console.log(`${flipped.read()}/${flipped.readSecond()}/${flipped instanceof Box}`);
+
+class Back<T> extends Box<T> {
+    readonly parent: Weak<Base>;
+    constructor(value: T, parent: Base) {
+        super(value);
+        this.parent = parent;
+    }
+    override describe(): string {
+        return `${super.describe()}/${this.parent?.label}`;
+    }
+}
+const back = new Back<string>(`back${9}`, numberPair);
+console.log(`${back.read()}/${back.describe()}/${back.parent === numberPair}`);
+
+function makePair<T>(left: T, right: T): Pair<T> {
+    return new Pair<T>(left, right);
+}
+function forwardPair<T>(left: T, right: T): Pair<T> {
+    return makePair<T>(left, right);
+}
+function genericRead<T>(box: Box<T>): T {
+    return box.read();
+}
+const madeNumber = forwardPair<number>(51, 52);
+const madeString = forwardPair<string>(`factory${10}`, `factory${11}`);
+const madeArray = makePair<readonly number[]>([61], [62]);
+const madeObject = makePair<{ readonly text: string }>({ text: `c${12}` }, { text: `d${13}` });
+console.log(
+    `${genericRead(madeNumber)}/${genericRead(madeString)}/${genericRead(madeArray)[0]}/${genericRead(madeObject).text}`,
+);
+
+class Projected<T extends { readonly native: number | string }> extends Box<T['native']> {}
+function makeProjected<T extends { readonly native: number | string }>(value: T['native']): Projected<T> {
+    return new Projected<T>(value);
+}
+const projectedNumber = makeProjected<{ readonly native: number }>(71);
+const projectedString = makeProjected<{ readonly native: string }>(`projection${14}`);
+console.log(
+    `${projectedNumber.read()}/${projectedString.read()}/${projectedNumber instanceof Box}/${projectedString instanceof Projected}`,
+);

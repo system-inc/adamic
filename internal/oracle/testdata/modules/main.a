@@ -1,0 +1,7 @@
+import { count, increment } from './counter.a';
+import { show } from './format.a';
+
+console.log(show('start'));
+increment();
+increment();
+console.log(`${show('after')} ${count}`);

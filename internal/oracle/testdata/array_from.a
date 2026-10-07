@@ -1,0 +1,41 @@
+// Array.from({ length }, (_, index) => ...): a new array, each element what the callback returns for
+// its index, the callback's first argument always undefined.
+const squares = Array.from({ length: 5 }, (_, index) => index * index);
+console.log(squares.join(' '));
+
+// The length as JavaScript reads it: a fraction truncates, and NaN and anything below 1 make none.
+const length = 2.9;
+console.log(`${Array.from({ length }, (_, index) => index).length}`);
+for (const count of [-3, -0.5, 0, NaN, 1]) {
+	console.log(`${count}: [${Array.from({ length: count }, (_, index) => `${index}`).join(',')}]`);
+}
+
+// Strings the program builds, so a reference counted wrong shows under the sanitizers.
+const words = Array.from({ length: 4 }, (_, index) => 'ab'.repeat(index + 1));
+console.log(words.join('|'));
+const missing = Array.from({ length: 2 }, (value, index) => value === undefined && index >= 0);
+console.log(missing.join(' '));
+
+// Objects, and a closure that captures and counts.
+let calls = 0;
+const points = Array.from({ length: 3 }, (_, index) => {
+	calls += 1;
+	return { x: index, label: `p${index}` };
+});
+console.log(`${points.map((point) => `${point.label}=${point.x}`).join(' ')} after ${calls} calls`);
+
+// A grid: Array.from inside Array.from.
+const grid = Array.from({ length: 3 }, (_, row) => Array.from({ length: 4 }, (_, column) => row * 4 + column));
+console.log(grid.map((cells) => cells.join(',')).join(' / '));
+
+// The length is evaluated once, before any call.
+const order: string[] = [];
+function size(): number {
+	order.push('length');
+	return 2;
+}
+const made = Array.from({ length: size() }, (_, index) => {
+	order.push(`call ${index}`);
+	return index;
+});
+console.log(`${made.join(',')}: ${order.join(', ')}`);

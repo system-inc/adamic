@@ -1,0 +1,56 @@
+// What fixtures used to write around: a conditional whose branches are held differently, a function
+// taking a destructured parameter, ?.[] on a tuple that may be missing, and booleans as a Set's
+// elements and a Map's keys. Strings are built at run time, so a reference not taken is caught.
+
+function word(stem: string, index: number): string {
+	return `${stem}${index}`;
+}
+
+// A reference or undefined, by a condition.
+function tailOf(text: string): string | undefined {
+	return text.length > 3 ? text.slice(1) : undefined;
+}
+interface Point {
+	readonly x: number;
+	readonly y: number;
+	readonly label: string;
+}
+const origin: Point = { x: 0, y: 0, label: word('origin', 0) };
+const tails = [tailOf(word('long', 1)), tailOf('ab')];
+const chosen = tails.length > 5 ? origin : undefined;
+const other = tails.length > 1 ? origin : undefined;
+const list = tails.length > 1 ? undefined : [1, 2];
+console.log(`${tails[0] ?? 'none'} ${tails[1] ?? 'none'} ${chosen === undefined} ${other?.label ?? 'none'} ${list === undefined}`);
+const counted = tails.length > 1 ? 7 : undefined;
+console.log(`${counted ?? -1}`);
+
+// Destructured parameters: a tuple's elements and an object's fields, renamed or not.
+const scores = new Map<string, number>([[word('a', 1), 1], [word('b', 2), 2], [word('c', 3), 3]]);
+const shown = [...scores].map(([key, value]) => `${key}=${value}`);
+const kept = [...scores].filter(([, value]) => value > 1).map(([key]) => key);
+console.log(`${shown.join(',')} ${kept.join(',')}`);
+const points: Point[] = [origin, { x: 3, y: 4, label: word('p', 2) }];
+const sums = points.map(({ x, y: why, label }) => `${label}:${x + why}`);
+function area({ x, y }: Point): number {
+	return x * y;
+}
+console.log(`${sums.join(' ')} ${area(points[1] ?? origin)}`);
+const { x: firstX, label } = points[1] ?? origin;
+const [left, right] = [word('left', 1), 2] as const;
+console.log(`${firstX} ${label} ${left} ${right}`);
+
+// ?.[] on a tuple that may be missing.
+const pairs = [...scores];
+const none = [...new Map<string, number>()];
+console.log(`${pairs[0]?.[0] ?? 'none'} ${pairs[2]?.[1] ?? -1} ${none[0]?.[0] ?? 'none'} ${none[0]?.[1] ?? -1}`);
+
+// Booleans as elements and keys.
+const answers = new Set<boolean>([true, false, true]);
+const named = new Map<boolean, string>([[true, word('yes', 1)], [false, word('no', 0)]]);
+named.set(true, word('yes', 2));
+const seen: string[] = [];
+for (const answer of answers) {
+	seen.push(`${answer}:${named.get(answer) ?? 'none'}`);
+}
+answers.delete(true);
+console.log(`${answers.size} ${named.size} ${seen.join(' ')} ${answers.has(true)} ${[...named.keys()].join(',')} ${[...answers].join(',')}`);

@@ -1,0 +1,16 @@
+// The value and the holder are handed to one call, which ties them together: pair's result holds
+// node, and node is given it.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function pair(first: Node, second: Node): Node {
+	return { kind: 'pair', nodes: [first, second] };
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	const other: Node = { kind: `o${n}`, nodes: [] };
+	node.nodes.push(pair(node, other)); // closes the cycle
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);

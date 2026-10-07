@@ -1,0 +1,33 @@
+const values = [1, 2, 3, 4, 5];
+const groups = Map.groupBy(values, (value: number, index: number): number => {
+	console.log(`callback ${index} ${value}`);
+	if (index === 0) { values.push(6); }
+	return value % 2;
+});
+for (const [key, bucket] of groups) { console.log(`${key}: ${bucket.join(',')}`); }
+console.log(`${values.length} ${groups.size}`);
+const letters = Map.groupBy('a🌍aé', (letter: string, index: number): string => index % 2 === 0 ? letter : 'odd');
+for (const [key, bucket] of letters) { console.log(`${key}: ${bucket.join('|')}`); }
+const live = new Set<number>([1, 2, 3]);
+const setGroups = Map.groupBy(live, (value: number, index: number): number => {
+	if (index === 0) { live.delete(2); live.add(4); }
+	return value % 2;
+});
+for (const [key, bucket] of setGroups) { console.log(`${key}: ${bucket.join(',')}`); }
+const words = ['aa', 'bb', 'cc'];
+const wordGroups = Map.groupBy(words, (word: string, index: number): number | undefined => index === 0 ? undefined : NaN);
+for (const [key, bucket] of wordGroups) { console.log(`${key}: ${bucket.join(',')}`); }
+const cursor = new Set<number>([5, 6, 7]).values();
+cursor.next();
+const cursorGroups = Map.groupBy(cursor, (value: number): number => value % 2);
+for (const [key, bucket] of cursorGroups) { console.log(`${key}: ${bucket.join(',')}`); }
+const empty: number[] = [];
+console.log(`${Map.groupBy(empty, (value: number): number => value).size}`);
+try {
+	Map.groupBy(values, (value: number): string => {
+		if (value === 3) { throw new Error('callback failed'); }
+		return `${value}`;
+	});
+} catch (error) {
+	if (error instanceof Error) { console.log(error.message); }
+}

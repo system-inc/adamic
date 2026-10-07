@@ -1,0 +1,30 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+--- PASS: TestTheOracleCatchesOneByte (4.74s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regions.a (7.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a (7.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a (7.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures.a (7.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a (6.68s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	11.430s

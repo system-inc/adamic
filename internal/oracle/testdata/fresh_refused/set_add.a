@@ -1,0 +1,11 @@
+// A set's add of the holder into its own set.
+interface Step {
+	readonly name: string;
+	readonly seen: Set<Step>;
+}
+function run(n: number): number {
+	const step: Step = { name: `s${n}`, seen: new Set<Step>() };
+	step.seen.add(step); // closes the cycle
+	return step.seen.size;
+}
+console.log(`${run(1)}`);

@@ -1,0 +1,5 @@
+type Entry = { cursor: SetIterator<Entry> | undefined };
+const entry: Entry = { cursor: undefined };
+const set = new Set<Entry>([entry]);
+entry.cursor = set.values(); // closes the cycle
+console.log(`${set.size}`);

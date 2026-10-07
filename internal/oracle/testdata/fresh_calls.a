@@ -1,0 +1,86 @@
+// The holder proof across calls (docs/memory.md): a helper's push into a parameter can't be proven
+// inside the helper, so it's judged at each call, where the caller knows it made the parent and
+// hasn't let it escape.
+import type { Weak } from 'adamic';
+
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+	parent: Weak<Node>;
+}
+
+function addChild(parent: Node, child: Node): void {
+	parent.nodes.push(child);
+}
+
+// Deferred twice: through a helper that calls the helper.
+function addPair(parent: Node, first: Node, second: Node): void {
+	addChild(parent, first);
+	addChild(parent, second);
+}
+
+// A helper that makes the child, adds it with a Weak parent pointer, and returns it.
+function make(parent: Node, kind: string): Node {
+	const child: Node = { kind, nodes: [], parent: undefined };
+	child.parent = parent;
+	addChild(parent, child);
+	return child;
+}
+
+let position = 0;
+let source = '';
+
+function parseItem(): Node {
+	const kind = source[position] ?? '';
+	position += 1;
+	const node: Node = { kind, nodes: [], parent: undefined };
+	if (source[position] === '(') {
+		position += 1;
+		while (position < source.length && source[position] !== ')') {
+			addChild(node, parseItem());
+		}
+		position += 1;
+	}
+	return node;
+}
+
+function show(node: Node): string {
+	const parts: string[] = [];
+	for (const child of node.nodes) {
+		parts.push(show(child));
+	}
+	return parts.length === 0 ? node.kind : `${node.kind}(${parts.join(' ')})`;
+}
+
+function parse(text: string): Node {
+	source = text;
+	position = 0;
+	const root: Node = { kind: 'root', nodes: [], parent: undefined };
+	while (position < source.length) {
+		addChild(root, parseItem());
+	}
+	return root;
+}
+
+for (const text of ['a(bc(d))e', 'x', 'p(q(r(s)))']) {
+	console.log(show(parse(text)));
+}
+
+// At the top level the holder is a global, so the value must be fresh, and it is.
+const top: Node = { kind: 'top', nodes: [], parent: undefined };
+addChild(top, { kind: 'leaf', nodes: [], parent: undefined });
+addPair(top, { kind: 'one', nodes: [], parent: undefined }, { kind: 'two', nodes: [], parent: undefined });
+console.log(show(top));
+
+function family(name: string): Node {
+	const root: Node = { kind: name, nodes: [], parent: undefined };
+	const first = make(root, `${name}.a`);
+	make(first, `${name}.a.1`);
+	make(root, `${name}.b`);
+	addPair(root, parse('k(l)'), parse('m'));
+	return root;
+}
+const tree = family('f');
+const firstChild = tree.nodes[0];
+const parentOfFirst = firstChild === undefined ? undefined : firstChild.parent;
+console.log(`${show(tree)} ${parentOfFirst === undefined ? 'orphan' : parentOfFirst.kind}`);
