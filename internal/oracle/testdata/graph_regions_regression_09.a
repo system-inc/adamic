@@ -1,0 +1,8 @@
+interface Room {
+	readonly name: string;
+	readonly groups: Map<string, Set<Room>>;
+}
+const groups = new Map<string, Set<Room>>();
+const hall: Room = { name: 'hall', groups };
+groups.set('all', new Set([hall]));
+

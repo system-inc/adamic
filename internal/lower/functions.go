@@ -240,6 +240,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	function.Environment = l.result.Functions[index].Environment
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
+	l.finishNestedEnvironment(&function, index)
 	l.result.Functions[index] = function
 	return nil
 }
