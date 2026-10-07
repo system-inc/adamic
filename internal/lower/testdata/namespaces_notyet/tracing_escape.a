@@ -1,0 +1,9 @@
+namespace tracingEnabled {
+ enum Phase { Start, Stop }
+ let count: number;
+ export function start(): void { count = Phase.Start; }
+ export function read(): number { return count; }
+}
+const tracing = tracingEnabled;
+tracing.start();
+console.log(`${tracing.read()}`);

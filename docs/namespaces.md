@@ -210,3 +210,18 @@ The Debug-state fixture checks inside/outside numeric writes, compound updates,
 increment, optional built-string replacement and narrowing, and boolean state.
 Changing an outside write from 3 to 30 is caught by Node stdout. This admits the
 state portion of Debug; its class and callable log merge remain separate limits.
+
+## Stage 3: escaped tracing object remains NotYet
+
+`tracing = tracingEnabled` requires a real namespace container. Flattening its
+qualified names does not implement container identity, live exported storage
+through aliases, callable receivers or JavaScript's staged export properties.
+A plain object of current member values would snapshot mutable exports and could
+change receiver behavior. That is not a small sound extension of this lowering,
+so escape, reflection and observation keep an explicit NotYet explaining the
+missing runtime container. `tracing_escape.a` preserves the compiler's alias
+shape, with singleton state and an enum, and checks that exact reason.
+
+The escape-guard mutant removes only the container observation guard. The
+regression must lose the explicit reason and fail before C emission; the later
+unbound-name NotYet is not mistaken for runtime object support.
