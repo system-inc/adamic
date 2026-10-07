@@ -1,6 +1,6 @@
 # Slot 04 wave 19 report
 
-Built three utility evaluation helpers, one per Adamic file: walk, resolveDeclaration and resolveValueFunctions. All 53 prior helpers were complete, green and pushed before this reservation; this wave raises the retained total to 56. Claim 3b65415d was pushed before code. Implementation SHA is in the final handoff.
+Built three utility evaluation helpers, one per Adamic file: walk, resolveDeclaration and resolveValueFunctions. All 53 prior helpers were complete, green and pushed before this reservation; this wave raises the retained total to 56. Claim 3b65415d was pushed before code. Implementation and fixtures: 5b2395f9e904b57f3a9b24db58c2d02b22e8e7a8. Raw evidence is committed separately because repository ignore rules exclude logs by default. The final handoff names the complete pushed tip.
 
 The branch remains based on lint area d65a8f931c98655936ae04c6899f38f14862b73e, which contains current main 39638d9e278d38bb5aeae887f46d55a70e47aaad. Final fetch confirms both are unchanged and ancestors of HEAD. No main or area branch was pushed. Incoming finding-model, emitted-JavaScript harness and allocator changes remain intact.
 

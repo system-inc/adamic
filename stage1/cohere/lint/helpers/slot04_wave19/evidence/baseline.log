@@ -1,0 +1,13 @@
+=== RUN   TestUtilityTraversalGoNodeNativeJavaScript
+=== RUN   TestUtilityTraversalGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 37440 utility traversal observations
+=== RUN   TestUtilityTraversalGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 963 utility traversal observations
+=== RUN   TestUtilityTraversalGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 36 utility traversal observations
+--- PASS: TestUtilityTraversalGoNodeNativeJavaScript (14.34s)
+    --- PASS: TestUtilityTraversalGoNodeNativeJavaScript/witnesses.json (9.01s)
+    --- PASS: TestUtilityTraversalGoNodeNativeJavaScript/consumers.json (0.69s)
+    --- PASS: TestUtilityTraversalGoNodeNativeJavaScript/calls.json (0.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave19	14.351s
