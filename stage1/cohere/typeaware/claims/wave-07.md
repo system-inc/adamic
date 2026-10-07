@@ -111,3 +111,12 @@ previously failing controls (exit 0, jsx 1), plus the ordinary control (jsx 0).
 The wave branch's shared parser remains unchanged pending integration by its
 owner. No React rule is implemented yet; these three claims remain incomplete.
 The updated report records exact dependency evidence. No more rules claimed.
+
+## Landing refresh
+
+Rebased onto origin/main e8ba3d5d after an earlier rebase to e011f8f6. All nine
+completed ports were rebuilt and re-greened against production Go, including
+sanitizers, per-rule mutants, bridge-fact mutants and released-handle checks.
+See ../wave07_react/LANDING_REPORT.md for fresh timings and exact gate evidence.
+The three React claims remain unported pending shared JSX parser integration;
+the four private-overlay bridge routes also remain pending. No new claims.

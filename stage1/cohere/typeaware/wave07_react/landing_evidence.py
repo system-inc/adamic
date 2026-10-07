@@ -43,7 +43,7 @@ for label,directory in sources:
         with gzip.open(target/(path.name+'.gz'),'wb') as output:
             output.write(content)
         index[label+'/'+path.name] = dict(sha256=hashlib.sha256(content).hexdigest(),bytes=len(content))
-for name in ['landing-fetch','landing-rebase','landing-setup','landing-gates']:
+for name in ['landing-fetch','landing-rebase','landing-rebase-current','landing-setup','landing-gates','landing-gates-current']:
     path = pathlib.Path('/workspace/wave-07-artifacts')/(name+'.log')
     content = path.read_bytes()
     with gzip.open(EVIDENCE/(name+'.log.gz'),'wb') as output:
