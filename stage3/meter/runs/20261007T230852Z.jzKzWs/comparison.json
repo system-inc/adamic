@@ -1,0 +1,233 @@
+{
+  "baseline": "20261007T205008Z.iT8wjb",
+  "current": "20261007T230852Z.jzKzWs",
+  "evidence_only": true,
+  "compiler_commit": "e1198a5772ba4b6d7d322043292696ea11989044",
+  "compiler_mode": "single",
+  "trees": {
+    "main": {
+      "baseline_source_sha": "48c05d091f0a43c31cbe051b1d6578d99eeedf19",
+      "current_source_sha": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "baseline_compiler_sha": "84d5eadf00b30a540b9aa4dd79ce8a690aae9136",
+      "current_compiler_sha": "e1198a5772ba4b6d7d322043292696ea11989044",
+      "baseline_totals": {
+        "NotYet": 1470,
+        "Refused": 4684,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "current_totals": {
+        "NotYet": 1560,
+        "Refused": 3735,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 2
+      },
+      "deltas": {
+        "NotYet": 90,
+        "Refused": -949,
+        "SkippedDependency": 0,
+        "error": 0,
+        "panic": -1
+      },
+      "target_reason": {
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "owner": "OWNER BLANK",
+        "before": 966,
+        "after": 0
+      },
+      "moves": {
+        "checker_whole_program": {
+          "pass_to_fail": [],
+          "fail_to_pass": []
+        },
+        "checker_own_file": {
+          "pass_to_fail": [],
+          "fail_to_pass": []
+        },
+        "lowering": {
+          "pass_to_fail": [],
+          "fail_to_pass": []
+        }
+      },
+      "reason_deltas": {
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand": 16,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field _jsDocTypeAssertionBrand": 2,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand": 3,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand": 20,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field elements": 1,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field escapedText": 3,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field expression": 3,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field left": 6,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field multiLine": 1,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field name": 3,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field parent": 24,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field statements": 4,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field tag": 2,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field textSourceNode": 2,
+        "Refused: a cast the runtime can't check": 2,
+        "Refused: a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
+        "Refused: a value of type ComputedPropertyName seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
+        "Refused: a value of type EnumDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
+        "Refused: a value of type GeneratedIdentifier seen as GeneratedIdentifier | Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace": 1,
+        "Refused: a value of type ModuleBlock seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
+        "Refused: a value of type ModuleDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
+        "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read": -2,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read": 2,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/main-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read": 1,
+        "Refused: an object refinement using an open numeric enum as a literal tag": -966,
+        "Refused: an unproven singleton numeric enum member field in an object view": 5,
+        "Refused: an unproven value assigned to a numeric literal or enum member slot SyntaxKind.BindingElement": -1,
+        "Refused: the non-null assertion !": 4
+      }
+    },
+    "area": {
+      "baseline_source_sha": "03ccf222dfeedef4bfe5cc3e219e4586d14a5c13",
+      "current_source_sha": "234ab1aa5f728a5221fb6075c35b94f88a2c6437",
+      "baseline_compiler_sha": "84d5eadf00b30a540b9aa4dd79ce8a690aae9136",
+      "current_compiler_sha": "e1198a5772ba4b6d7d322043292696ea11989044",
+      "baseline_totals": {
+        "NotYet": 1468,
+        "Refused": 5059,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "current_totals": {
+        "NotYet": 1558,
+        "Refused": 3894,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 2
+      },
+      "deltas": {
+        "NotYet": 90,
+        "Refused": -1165,
+        "SkippedDependency": 0,
+        "error": 0,
+        "panic": -1
+      },
+      "target_reason": {
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "owner": "OWNER BLANK",
+        "before": 1182,
+        "after": 0
+      },
+      "moves": {
+        "checker_whole_program": {
+          "pass_to_fail": [],
+          "fail_to_pass": []
+        },
+        "checker_own_file": {
+          "pass_to_fail": [],
+          "fail_to_pass": []
+        },
+        "lowering": {
+          "pass_to_fail": [],
+          "fail_to_pass": []
+        }
+      },
+      "reason_deltas": {
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand": 16,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field _jsDocTypeAssertionBrand": 2,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand": 3,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand": 20,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field elements": 1,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field escapedText": 3,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field expression": 3,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field left": 6,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field multiLine": 1,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field name": 3,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field parent": 24,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field statements": 4,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field tag": 2,
+        "NotYet: a checked numeric enum object view with an incompatible structured or optional payload field textSourceNode": 2,
+        "NotYet: a value of type any": -1,
+        "NotYet: a value of type unknown": 1,
+        "Refused: a cast the runtime can't check": 2,
+        "Refused: a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
+        "Refused: a value of type ComputedPropertyName seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
+        "Refused: a value of type EnumDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
+        "Refused: a value of type GeneratedIdentifier seen as GeneratedIdentifier | Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace": 1,
+        "Refused: a value of type ModuleBlock seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
+        "Refused: a value of type ModuleDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
+        "Refused: a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read": -2,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.0qVD1D/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read": -1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read": 2,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read": 1,
+        "Refused: a value of type typeof import(\"/tmp/adamic-gate/stage3-meter.ki64ZZ/area-adapted/src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read": 1,
+        "Refused: an object refinement using an open numeric enum as a literal tag": -1182,
+        "Refused: an unproven singleton numeric enum member field in an object view": 5,
+        "Refused: an unproven value assigned to a numeric literal or enum member slot SyntaxKind.BindingElement": -1,
+        "Refused: the non-null assertion !": 4
+      }
+    }
+  }
+}
