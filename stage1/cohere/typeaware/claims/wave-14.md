@@ -138,3 +138,16 @@ checks. Current shared ParseNode has only kind: string, so numeric handed-node
 dispatch remains blocked on the shared parser/driver work; no shared file changed.
 Native pattern validation, undefined labels and real JSX remain incomplete.
 No additional rules are claimed. See ../WAVE_14_LISTENERS_REPORT.md.
+
+## Native pattern slice and refreshed landing gate
+
+regexp_pattern_validation.a now supplies native ASCII literal/flat-class
+validation and exact Go rewrite errors. The former '[' refusal reports normally;
+broader grammar such as '(' still explicitly refuses. The 115 new controls match
+36 findings under sanitizers, with a comparison-only range mutant. A further
+741-constructor ASCII/range matrix matches 168 findings byte for byte.
+After main advanced, this branch rebased onto f8013f0b at tested head 852560ba.
+All owned suites pass again in 505.910 s, along with bridge, filtered uncached
+Node and vet. Remaining pattern grammar, shared numeric dispatch, undefined
+labels and real JSX are incomplete. No new rules are claimed.
+See ../WAVE_14_PATTERN_REPORT.md for current commands, mutants and timing.
