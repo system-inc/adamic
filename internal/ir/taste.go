@@ -39,3 +39,11 @@ type Effects struct {
 }
 
 func (e Effects) Type() Type { return e.Result.Type() }
+
+// Labeled is a statement with a named break destination.
+type Labeled struct {
+	Name string
+	Body []Statement
+}
+
+func (Labeled) statement() {}

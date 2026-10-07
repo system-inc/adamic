@@ -378,6 +378,8 @@ func eachNested(statement ir.Statement, visit func([]ir.Statement)) {
 	case ir.Loop:
 		visit(statement.Body)
 		visit(statement.Update)
+	case ir.Labeled:
+		visit(statement.Body)
 	case ir.Block:
 		visit(statement.Body)
 	case ir.ForOf:

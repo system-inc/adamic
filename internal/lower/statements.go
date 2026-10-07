@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
-	"strings"
 )
 
 // statements lowers a list of statements.
@@ -68,14 +67,17 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return l.forOf(node)
 	case ast.KindSwitchStatement:
 		return l.switchStatement(node)
+	case ast.KindLabeledStatement:
+		return l.labeled(node)
 	case ast.KindBreakStatement, ast.KindContinueStatement:
+		label := ""
 		if node.Label() != nil {
-			return nil, l.notYet(node, "a labeled "+strings.ToLower(strings.TrimSuffix(strings.TrimPrefix(node.Kind.String(), "Kind"), "Statement")))
+			label = node.Label().Text()
 		}
 		if node.Kind == ast.KindBreakStatement {
-			return []ir.Statement{ir.Break{}}, nil
+			return []ir.Statement{ir.Break{Label: label}}, nil
 		}
-		return []ir.Statement{ir.Continue{}}, nil
+		return []ir.Statement{ir.Continue{Label: label}}, nil
 	case ast.KindThrowStatement:
 		return l.throwStatement(node)
 	case ast.KindTryStatement:
