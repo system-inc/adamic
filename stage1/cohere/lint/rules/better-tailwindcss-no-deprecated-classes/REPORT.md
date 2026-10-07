@@ -1,0 +1,3 @@
+Status: claimed, not implemented or registered.
+
+Go uses ClassLiteralReaderFor, ClassLiteralsIn, classTokensIn, the generated Tailwind version and its deprecation table. The existing structure/tailwind-no-physical-direction implementation reads all strings; reusing it would falsely include unrelated title attributes, variables and callees. No stage1 class-literal reader was found. This rule can use the existing single-edit Finding once its reader is ported. It does not itself require the live design system. Work stopped on the no-unknown-classes dependency investigation under Ahra's instruction to stop on other blockers. No parity, mutant or throughput claim is made for this rule.

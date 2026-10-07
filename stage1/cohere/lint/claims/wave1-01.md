@@ -51,3 +51,5 @@ The completed claimed implementations and evidence were pushed at bf9675da befor
 3. better-tailwindcss/no-unknown-classes
 
 This claim update is committed and pushed before writing any implementation for these three rules.
+
+Outcome of the new selection: all three remain reserved and unported. Investigation stopped at the absent live design-system engine and program context, following Ahra's instruction for blockers beyond the shared harness. Each own rule directory contains a REPORT.md; no rule descriptor was added and no passing parity claim is made.
