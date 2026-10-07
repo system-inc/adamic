@@ -12,10 +12,14 @@ const original = upstream.statements.find(n => ts.isFunctionDeclaration(n) && n.
 const previous = fixture.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === 'memoize');
 assert(original && previous);
 const replacement = original.getText(upstream).replace(/\r\n/g, '\n');
-assert.equal(replacement, previous.getText(fixture), 'declined adaptation must leave memoize unchanged');
+const expected = "export function memoize<T>(callback: (() => T) | undefined): () => T { let value: T; return () => { if (callback) { value = callback(); callback = undefined; } return value; }; }";
+assert.equal(replacement.replace(/\s+/g, ' '), expected, 'adaptation 48 A must be applied in the source tree');
+const old = expected.replace('callback: (() => T) | undefined', 'callback: () => T').replace('callback = undefined;', 'callback = undefined!;');
+assert([expected, old].includes(previous.getText(fixture).replace(/\s+/g, ' ')), 'unreviewed fixture memoize');
+const sourceChanged = replacement !== previous.getText(fixture);
 let next = text.slice(0, previous.getStart(fixture)) + replacement + text.slice(previous.end);
 next = next.replace(/^\/\/ From TypeScript 6\.0\.3, src\/compiler\/core\.ts:1891; adapted line 1891[^\n]*/, '// From TypeScript 6.0.3, src/compiler/core.ts:1891; adapted line 1891; stage3 ' + commit);
-fs.writeFileSync(file, next);
+next = next.replace(/^(\/\/ From TypeScript 6\.0\.3, src\/compiler\/core\.ts:[^\n]*\n)\/\/ Adaptations:[^\n]*/, '$1// Adaptations: 48-memoize (A applied)');
 const manifestFile = path.join(bucket, 'source-spans.json');
 const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
 const row = manifest.fixtures.find(r => r.file === filename);
@@ -23,10 +27,9 @@ row.stage3 = commit;
 const printer = ts.createPrinter({newLine: ts.NewLineKind.LineFeed, removeComments: true});
 const canonical = n => printer.printNode(ts.EmitHint.Unspecified, n, n.getSourceFile()).replace(/^export /, '');
 const span = row.spans.find(s => s.name === 'memoize');
-assert.equal(span.tokens, canonical(original));
 span.tokens = canonical(original);
-assert.deepEqual(span.adaptations, []);
-assert.deepEqual(row.changedDeclarations, []);
+span.adaptations = ['48-memoize'];
+row.changedDeclarations = ['memoize'];
 const updated = ts.createSourceFile(filename, next, ts.ScriptTarget.Latest, true);
 let checked = 0;
 for (const entry of row.spans) {
@@ -41,8 +44,9 @@ for (const entry of row.spans) {
     }
     assert(matches(source, entry.tokens), 'upstream copied span: ' + entry.name);
     assert(matches(updated, entry.tokens), 'fixture copied span: ' + entry.name);
-    if (entry.name === 'memoize') assert(!matches(source, entry.tokens.replace('callback = undefined!;', 'callback = undefined;')), 'changed declaration mutant must fail audit');
+    if (entry.name === 'memoize') assert(!matches(source, entry.tokens.replace('callback = undefined;', 'callback = undefined!;')), 'changed declaration mutant must fail audit');
     checked++;
 }
+fs.writeFileSync(file, next);
 fs.writeFileSync(manifestFile, JSON.stringify(manifest, null, 2) + '\n');
-console.log(JSON.stringify({file: filename, sourceCommit: commit, copiedDeclarations: checked, sourceChanged: false, diagnosticFix: false, sourceMutantCaught: true}));
+console.log(JSON.stringify({file: filename, sourceCommit: commit, copiedDeclarations: checked, sourceChanged, adaptation: "48-memoize", candidate: "A", applied: true, nativeFixClaimed: false, sourceMutantCaught: true}));

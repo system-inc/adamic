@@ -2,7 +2,7 @@
 
 22/25 adapted fixtures and 16/25 pristine fixtures execute and agree with fresh Node observations on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
 
-Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at daa638ed. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
+Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 0d11046e. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
 | Fixture | Pristine native | Pristine JS | Adapted native | Adapted JS | First adapted blocker | Owner |
 |---|---|---|---|---|---|---|
@@ -19,7 +19,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 11_setModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 12_deleteFile.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 13_createDirectory.a | Checker | Checker | Agrees | Agrees | None | None |
-| 14_getCurrentDirectory.a | Refused | Refused | Refused | Refused | exactly undefined non-null assertion at 17:24 | Compiler / adaptation ruling |
+| 14_getCurrentDirectory.a | Refused | Refused | Refused | Refused | callback capture cycle at 12:28 | Compiler / runtime graph ownership |
 | 15_getExecutingFilePath.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 16_getEnvironmentVariable.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 17_write.a | Agrees | Agrees | Agrees | Agrees | None | None |
@@ -183,3 +183,15 @@ Four requested flow tests: all FAIL, package time 111.071s. The old unknown-arra
 - TestLivenessHoldsOnEveryPath: `trace_test.go:390: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet`
 
 Focused Node unknown/errorCode oracle PASS 1.233s, including native sanitizer/release and JS for four fixtures. Full flow logs retained; no claim that flow is green.
+
+## Adaptation 48 recount
+
+Took the exact stage3/fixtures/host tree at 0d11046e. Its memoize parameter is now `callback: (() => T) | undefined` and clearing is `callback = undefined`. No compiler changes. Re-ran all 25 original and adapted fixtures on both backends: 22/25 adapted, 16/25 pristine agree byte-for-byte with fresh Node. 05/13/11/24 remain green. 08 still refuses default sort (219:9); 25 still refuses never-to-generic-U (579:22).
+
+14 now reaches the capture-cycle check: Refused on both backends at 12:28, owner compiler/runtime graph ownership. Exact diagnostic:
+
+```
+adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:12:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+```
+
+Verified one-line reproduction in probes/14_adapted_capture_cycle.a on both backends (1:28, same diagnostic). verify-14.cjs passed: fresh Node output equals the historical golden; omitting callback clearing changes stdout to true/false and is caught by exact comparison. This proves the source adaptation keeps memoization; it does not claim native execution of 14. Test logs fs_recount_0d_*.log; no full gate, flow rerun or WASI rerun for this source-only recount. Prior four flow tests remain failed as recorded in the previous recount. Only the proof branch is pushed; no main/area push, force-push or rebase.

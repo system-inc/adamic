@@ -1,0 +1,4 @@
+pass: 164 copied declarations match adapted source; no reduction-added casts, non-null assertions or any
+caught mutant: reduction-only ErrnoException cast rejected
+pass: 126 upstream function and method spans retain their tokens
+caught mutant: SHA256 call changed to SHA1, rejected by upstream function tokens

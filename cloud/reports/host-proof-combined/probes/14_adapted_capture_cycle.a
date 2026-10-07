@@ -1,0 +1,1 @@
+export function memoize<T>(callback: (() => T) | undefined): () => T { let value: T; return () => { if (callback) { value = callback(); callback = undefined; } return value; }; } console.log(memoize(() => 'x')());

@@ -1,5 +1,8 @@
 # Host fixtures from the adapted compiler
 
+The applied memoize A follow-up at the end supersedes the earlier fixture 14
+source and decline. Native compiler observations retain their historical pins.
+
 The October 7 fixture 25 follow-up below supersedes the historical checker
 options and outcomes in this initial report.
 
@@ -289,7 +292,7 @@ checks, the full Go gate and full upstream oracle/lane were not rerun for
 this fixture extraction. The adaptation branch's own proof and gate artifacts
 arrive through the merge and are not presented as new executions here.
 
-## Fixture 14 memoize follow-up
+## Historical fixture 14 memoize follow-up
 
 Merged codex/stage3-adapt-memoize at
 `34ac6b2a6aa653ceba26d91fd9b6d23aa18c45e5` into the newest fetched host
@@ -355,3 +358,67 @@ on the final fixtures and the full source audit: all unchanged, 164 declarations
 and 126 function/method spans pass. Final extraction is again idempotent.
 The stage 0 ledger remains byte-identical to 7218520a's record. Final logs are
 in brands-followup-evidence and the integration pin is in the proof JSON.
+
+
+## Fixture 14 applied memoize A
+
+Adaptation 48 **is applied** on the tsc side, independently of native compiler
+support. Merged accepted adaptation commit
+`d0e9a37362d02d1401fa5681777bebbd6c2cec0b` into newest host tip
+`daa638ed` with two-parent merge
+`83a79ca5aec1f805037a0746927d8267c507b095`, without rebasing.
+The only merge conflict was fixture 25's stage 0 record; the latest host
+branch's Refused record was retained instead of an older area Checker record.
+No host compiler ledger or Node golden was changed.
+
+Generated a fresh composed tree with
+`bash stage3/apply.sh /tmp/memoize-host-accepted-tree --write-table`, exit 0.
+The measured row for 48 is one file, two lines added and two removed. The
+composed table also refreshes the existing adaptation 40 row from the actual
+latest host output; total is 78 files, 5124 added, 5098 removed. Re-extracted
+memoize from this tree, rather than patching the fixture independently.
+Fixture 14 now contains exactly:
+
+```a
+export function memoize<T>(callback: (() => T) | undefined): () => T {
+```
+
+and `callback = undefined;`, with no `undefined!` assignment. Its header and
+source-spans.json explicitly record `48-memoize`; changedDeclarations lists
+memoize and the per-fixture source pin is the composed merge above.
+getCurrentDirectory and the driver are unchanged. The extractor checks both
+copied declarations against the actual adapted tree and a second extraction
+leaves fixture and manifest byte-identical.
+
+Node v24.19.0 retains stdout `true\ntrue\n`, stderr empty, exit 0. Both
+streams compare byte for byte with the saved pre-extraction observation and
+the unchanged recorded golden. Stock TypeScript 6.0.3 emits identical fixture
+JavaScript before/after with comments removed (the provenance comments change).
+The full bucket audit passes **164 declarations and 126 function/method spans**.
+The caching mutant omits callback clearing and prints `true\nfalse\n`, caught
+by exact Node stdout comparison. Actual full-audit mutants restoring the old
+non-null assignment and restoring the old non-optional parameter both exit 1
+as missing or changed copied declarations. The existing reduction-cast and
+SHA256-to-SHA1 audit mutants are caught too. See 14-memoize-proof.json and
+14-memoize-evidence/applied-a/. The pre-acceptance proof is retained separately
+as 14-memoize-evidence/pre-acceptance-proof.json.
+
+Reproduction, after sourcing /workspace/adamic-tools/env.sh and setting
+NODE_PATH to stock TypeScript 6.0.3's node_modules; all outputs go to logs:
+
+```sh
+bash stage3/apply.sh <fresh-tree> --write-table > apply.log 2>&1
+node stage3/fixtures/host/reextract-14.cjs . <fresh-tree> 83a79ca5aec1f805037a0746927d8267c507b095 > extract.log 2>&1
+node stage3/fixtures/host/verify-14.cjs <new-results> > node.log 2>&1
+node stage3/fixtures/host/source-audit.cjs <fresh-tree> > audit.log 2>&1
+```
+
+Native support remains separate: the unchanged A and B standalone probes both
+exit 1 at callable conditions on updated area b2c4549f and the scratch merge
+with compiler adab0fe5, as recorded in adaptation 48's p2-repeat evidence.
+This extraction does not rerun native host-library integration, sanitizer/leak
+checks, all-25 host execution, the full Go gate or the full upstream oracle/lane.
+The historical fixture 14 native diagnostic in status.json is not a current
+measurement of this newly adapted source. The setup from the ongoing native
+recheck succeeded in 289.304s, nproc=5, quota=4, with GOPROXY fallback set
+before setup; all timing lines are in adaptation 48's p2-repeat/setup.log.

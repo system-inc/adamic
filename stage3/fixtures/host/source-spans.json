@@ -641,8 +641,10 @@
           "name": "memoize",
           "originalLine": 1891,
           "adaptedLine": 1891,
-          "adaptations": [],
-          "tokens": "function memoize<T>(callback: () => T): () => T {\n    let value: T;\n    return () => {\n        if (callback) {\n            value = callback();\n            callback = undefined!;\n        }\n        return value;\n    };\n}"
+          "adaptations": [
+            "48-memoize"
+          ],
+          "tokens": "function memoize<T>(callback: (() => T) | undefined): () => T {\n    let value: T;\n    return () => {\n        if (callback) {\n            value = callback();\n            callback = undefined;\n        }\n        return value;\n    };\n}"
         },
         {
           "file": "src/compiler/sys.ts",
@@ -654,8 +656,10 @@
           "tokens": "const getCurrentDirectory = memoize(() => process.cwd());"
         }
       ],
-      "changedDeclarations": [],
-      "stage3": "ac5e16ccc578de24fa0680bd9f2e8feafb7ab12a"
+      "changedDeclarations": [
+        "memoize"
+      ],
+      "stage3": "83a79ca5aec1f805037a0746927d8267c507b095"
     },
     {
       "file": "15_getExecutingFilePath.a",
