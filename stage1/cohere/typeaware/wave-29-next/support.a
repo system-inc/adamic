@@ -1,0 +1,47 @@
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { Shadow } from '../shadow.ts';
+import { ReferenceSymbolOrigins } from './reference_symbol_origins.a';
+export class Support {
+    readonly rules: Rules;
+    readonly shape: Shadow;
+    readonly symbols = new Map<number, ReferenceSymbolOrigins>();
+    constructor(rules: Rules) { this.rules = rules; this.shape = new Shadow(rules); }
+    parent(index: number): number { return this.rules.parents[index] ?? -1; }
+    kind(index: number): string { return index < 0 ? '' : this.rules.parser.node(index).kind; }
+    child(index: number, at: number): number { return index < 0 ? -1 : this.rules.parser.node(index).children[at] ?? -1; }
+    last(index: number): number { const children = this.rules.parser.node(index).children; return children[children.length - 1] ?? -1; }
+    down(index: number): number { let current = index; while(this.kind(current) === 'ParenthesizedExpression') { current = this.child(current, 0); } return current; }
+    up(index: number): number { let current = index; while(this.kind(current) === 'ParenthesizedExpression') { current = this.parent(current); } return current; }
+    symbol(index: number): ReferenceSymbolOrigins {
+        let result = this.symbols.get(index);
+        if(result === undefined) { result = new ReferenceSymbolOrigins(this.rules, index); this.symbols.set(index, result); }
+        return result;
+    }
+    report(index: number, rule: string, id: string, message: string): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(new Diagnostic(rule, id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+    }
+    key(index: number, numeric = true): string | undefined {
+        if(index < 0) { return undefined; }
+        let current = index;
+        if(this.kind(current) === 'ComputedPropertyName') {
+            current = this.down(this.child(current, 0));
+            if(['Identifier', 'PrivateIdentifier'].includes(this.kind(current))) { return undefined; }
+        }
+        const node = this.rules.parser.node(current);
+        if(['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) { return node.text; }
+        if(numeric && node.kind === 'NumericLiteral') { return node.text; }
+        return undefined;
+    }
+    access(index: number): boolean { return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.kind(index)); }
+    accessed(index: number): string | undefined {
+        if(!this.access(index)) { return undefined; }
+        let target = this.last(index);
+        if(this.kind(index) === 'ElementAccessExpression') {
+            target = this.down(target);
+            if(['Identifier', 'PrivateIdentifier'].includes(this.kind(target))) { return undefined; }
+        }
+        return this.key(target);
+    }
+}

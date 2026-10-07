@@ -1,0 +1,31 @@
+import type { Rules } from '../rules.ts';
+import { Reassign } from '../reassign.ts';
+import { Support } from './support.a';
+export class NoShadowRestrictedNames {
+    readonly tree: Support;
+    readonly writes: Reassign;
+    constructor(rules: Rules) { this.tree = new Support(rules); this.writes = new Reassign(rules); }
+    safe(index: number): boolean {
+        const declaration = this.tree.parent(index);
+        if(this.tree.kind(declaration) !== 'VariableDeclaration' || this.tree.kind(this.tree.parent(declaration)) !== 'VariableDeclarationList' || this.tree.shape.initializer(declaration) >= 0) { return false; }
+        const anchor = this.tree.symbol(index).first(this.tree.rules.path);
+        if(anchor === '') { return false; }
+        for(let current = 0; current < this.tree.rules.parser.nodes.length; current++) {
+            const node = this.tree.rules.parser.node(current);
+            if(node.kind === 'Identifier' && node.text === 'undefined' && this.writes.writes(current) && this.tree.symbol(current).first(this.tree.rules.path) === anchor) { return false; }
+        }
+        return true;
+    }
+    run(allowGlobalThis = false): void {
+        for(let index = 0; index < this.tree.rules.parser.nodes.length; index++) {
+            const node = this.tree.rules.parser.node(index);
+            if(!['VariableDeclaration', 'BindingElement', 'Parameter', 'FunctionDeclaration', 'FunctionExpression', 'ClassDeclaration', 'ClassExpression', 'ImportClause', 'ImportSpecifier', 'NamespaceImport'].includes(node.kind)) { continue; }
+            const name = this.tree.shape.name(index);
+            if(name < 0 || this.tree.kind(name) !== 'Identifier') { continue; }
+            const text = this.tree.rules.parser.node(name).text;
+            if(!['undefined', 'NaN', 'Infinity', 'eval', 'arguments'].includes(text) && !(text === 'globalThis' && !allowGlobalThis)) { continue; }
+            if(text === 'undefined' && this.safe(name)) { continue; }
+            this.tree.report(name, 'no-shadow-restricted-names', 'shadowingRestrictedName', "This declares a binding named after a global the rest of the file assumes is the global. Every read of that name inside the new scope gets this binding instead, so a comparison against `undefined` compares against whatever was assigned here, `NaN` stops being the value no comparison equals, and `arguments` stops being the call's arguments. The damage is silent and it is not local to this line: the code that breaks is the code that never mentioned the shadow and reads the name expecting the global. Rename the binding.");
+        }
+    }
+}

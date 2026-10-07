@@ -32,3 +32,5 @@ Original three rules completed, tested and pushed in 0fa8f823, including configu
 3. `no-shadow-restricted-names`: combined volume 0.
 
 This update is committed and pushed before any new rule code is written. Earlier available candidates became claimed by other workers and were skipped during the refreshed scan. The remaining emitted-JavaScript checker-adapter gap is a shared harness dependency; native findings, fixes and suggestions are still held to Go.
+
+Native implementations and comparison evidence for these three rules are in [wave-29-next/REPORT.md](../wave-29-next/REPORT.md). All configured and frozen-corpus comparisons, three rule mutants, raw shorthand facts, released handles and sanitizers pass. JSX parsing and the emitted-JavaScript checker adapter remain shared dependencies and are explicitly reported; no further claims were taken.

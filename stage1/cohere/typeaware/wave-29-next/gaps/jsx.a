@@ -1,0 +1,5 @@
+// The rule's JSX classifications are implemented, but the shared parser cannot
+// produce their nodes on this branch. Keep an executable gap rather than a pass.
+import { Parser } from '../../../../typescript/parser/parser.ts';
+const parser = new Parser('export const Shown = () => <Option />;', 'input.tsx');
+console.log(`${parser.file()}`);

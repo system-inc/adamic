@@ -1,0 +1,3667 @@
+[
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      "bar"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "var foo = 1;",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      "bar"
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "import foo from 'bar';",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function foo() {}",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { var foo; }",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar",
+    "options": [
+      "bar"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "bar",
+        "message": "Use baz instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "globals": [
+          "bar"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "const foo = 1",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      {
+        "globals": [
+          "bar"
+        ]
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "import foo from 'bar';",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function foo() {}",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { let foo; }",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar",
+    "options": [
+      {
+        "globals": [
+          "bar"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "bar",
+            "message": "Use baz instead."
+          }
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "self.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "globalThis.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "myGlobal.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "myGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "self.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "globalThis.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "myGlobal.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "otherGlobal.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "otherGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.window.bar()",
+    "options": [
+      {
+        "globals": [
+          "bar"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.self.bar()",
+    "options": [
+      {
+        "globals": [
+          "bar"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.globalThis.bar()",
+    "options": [
+      {
+        "globals": [
+          "bar"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.myGlobal.bar()",
+    "options": [
+      {
+        "globals": [
+          "bar"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "myGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let window; window.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let self; self.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let globalThis; globalThis.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let myGlobal; myGlobal.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "myGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      "foo"
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      "foo",
+      "event"
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      "foo"
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo()",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar()",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      "foo",
+      {
+        "name": "event"
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo()",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar()",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      "foo",
+      {
+        "name": "event",
+        "message": "Use local event parameter."
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo()",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar()",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "var foo = obj => hasOwnProperty(obj, 'name');",
+    "options": [
+      "hasOwnProperty"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      {
+        "globals": [
+          "foo",
+          "event"
+        ]
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo"
+          }
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo"
+          }
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo"
+          }
+        ]
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      {
+        "globals": [
+          "foo",
+          {
+            "name": "event"
+          }
+        ]
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo"
+          }
+        ]
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo()",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo"
+          }
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar()",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo"
+          }
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo",
+            "message": "Use bar instead."
+          }
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo",
+            "message": "Use bar instead."
+          }
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn() { foo; }",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo",
+            "message": "Use bar instead."
+          }
+        ]
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      {
+        "globals": [
+          "foo",
+          {
+            "name": "event",
+            "message": "Use local event parameter."
+          }
+        ]
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo",
+            "message": "Use bar instead."
+          }
+        ]
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo()",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo",
+            "message": "Use bar instead."
+          }
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar()",
+    "options": [
+      {
+        "globals": [
+          {
+            "name": "foo",
+            "message": "Use bar instead."
+          }
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "var foo = obj => hasOwnProperty(obj, 'name');",
+    "options": [
+      {
+        "globals": [
+          "hasOwnProperty"
+        ]
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "self.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window.window.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "self.self.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "globalThis.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "globalThis.globalThis.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "myGlobal.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "myGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "myGlobal.myGlobal.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "myGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window[\"foo\"]",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "self[\"foo\"]",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "globalThis[\"foo\"]",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "myGlobal[\"foo\"]",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "myGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window?.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "self?.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window.foo(); myGlobal.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "window,self,event,myGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "myGlobal.foo(); myOtherGlobal.bar()",
+    "options": [
+      {
+        "globals": [
+          "foo",
+          "bar"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal",
+          "myOtherGlobal"
+        ]
+      }
+    ],
+    "environment": "myGlobal,myOtherGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo(); window.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo(); self.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo(); myGlobal.foo()",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "myGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function onClick(event) { console.log(event); console.log(window.event); }",
+    "options": [
+      {
+        "globals": [
+          "event"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function onClick(event) { console.log(event); console.log(self.event); }",
+    "options": [
+      {
+        "globals": [
+          "event"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function onClick(event) { console.log(event); console.log(globalThis.event); }",
+    "options": [
+      {
+        "globals": [
+          "event"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function onClick(event) { console.log(event); console.log(myGlobal.event); }",
+    "options": [
+      {
+        "globals": [
+          "event"
+        ],
+        "checkGlobalObject": true,
+        "globalObjects": [
+          "myGlobal"
+        ]
+      }
+    ],
+    "environment": "myGlobal",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      "bar"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "const foo: number = 1;",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      "bar"
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "import foo from 'bar';",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function foo(): void {}",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn(): void { let foo; }",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar",
+    "options": [
+      "bar"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "bar",
+        "message": "Use baz instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "\n\t\t\texport default class Test {\n\t\t\t\tprivate status: string;\n\t\t\t\tgetStatus() {\n\t\t\t\t\treturn this.status;\n\t\t\t\t}\n\t\t\t}",
+    "options": [
+      "status"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "type Handler = (event: string) => any",
+    "options": [
+      "event"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: bigint",
+    "options": [
+      "bigint"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: boolean",
+    "options": [
+      "boolean"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: never",
+    "options": [
+      "never"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: null",
+    "options": [
+      "null"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: number",
+    "options": [
+      "number"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: object",
+    "options": [
+      "object"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: string",
+    "options": [
+      "string"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: symbol",
+    "options": [
+      "symbol"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: undefined",
+    "options": [
+      "undefined"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: unknown",
+    "options": [
+      "unknown"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: void",
+    "options": [
+      "void"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: []",
+    "options": [
+      "[]"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: {}",
+    "options": [
+      "{}"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: Test",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: Test[]",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: [Test]",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let b: { c: Test }",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function foo(param: Test) {}",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "1 as Test",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "class Derived implements Test {}",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "class Derived implements Test1, Test2 {}",
+    "options": [
+      "Test1",
+      "Test2"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "interface Derived extends Test {}",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "type Intersection = Test & {}",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "type Union = Test | {}",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: NS.Test",
+    "options": [
+      "NS"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: NS.Test",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: NS.Test",
+    "options": [
+      "NS.Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: typeof Test",
+    "options": [
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "let value: Type<Test>",
+    "options": [
+      "Type",
+      "Test"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "type Intersection = Test<any>",
+    "options": [
+      "Test",
+      "any"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "type Intersection = Test<A, B>",
+    "options": [
+      "Test",
+      "A",
+      "B"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn(): void { foo; }",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn(): void { foo; }",
+    "options": [
+      "foo"
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      "foo",
+      "event"
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      "foo"
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo()",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar()",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn(): void { foo; }",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn(): void { foo; }",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      "foo",
+      {
+        "name": "event"
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo()",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar()",
+    "options": [
+      {
+        "name": "foo"
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn(): void { foo; }",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "function fn(): void { foo; }",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "event",
+    "options": [
+      "foo",
+      {
+        "name": "event",
+        "message": "Use local event parameter."
+      }
+    ],
+    "environment": "window,self,event",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "foo",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo()",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo.bar()",
+    "options": [
+      {
+        "name": "foo",
+        "message": "Use bar instead."
+      }
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "const foo = obj => hasOwnProperty(obj, 'name');",
+    "options": [
+      "hasOwnProperty"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "const x: Promise<any> = Promise.resolve();",
+    "options": [
+      "Promise"
+    ],
+    "environment": "",
+    "function": "global"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo;",
+    "options": [
+      "foo"
+    ],
+    "environment": "",
+    "function": "TestNoRestrictedGlobalsSpan"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window.foo();",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "TestNoRestrictedGlobalsSpan"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window[\"foo\"];",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "TestNoRestrictedGlobalsSpan"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "window.window.foo();",
+    "options": [
+      {
+        "globals": [
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "TestNoRestrictedGlobalsSpan"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val){ return val + 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { static set a(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set a(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { return val; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { return undefined; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set a(val) { return null; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { return x + y; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { return foo(); } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set a(val) { return this._a; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { return this.a; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { if (foo) { return 1; }; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { try { return 1; } catch(e) {} } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set a(val) { while (foo){ if (bar) break; else return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { return 1; }, set b(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { return 1; } set b(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set a(val) { return 1; } static set b(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { if(val) { return 1; } else { return 2 }; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { switch(val) { case 1: return x; case 2: return y; default: return z } } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { static set a(val) { if (val > 0) { this._val = val; return val; } return false; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { if(val) { return 1; } else { return; }; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { switch(val) { case 1: return x; case 2: return; default: return z } } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { static set a(val) { if (val > 0) { this._val = val; return; } return false; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { function b(){} return b(); } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { return () => {}; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set a(val) { function b(){ return 1; } return 2; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { function b(){ return; } return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { var x = function() { return 1; }; return 2; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set a(val) { var x = () => { return; }; return 2; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "function f(){}; ({ set a(val) { return 1; } });",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "x = function f(){}; class A { set a(val) { return 1; } };",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "x = () => {}; A = class { set a(val) { return 1; } };",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "return; ({ set a(val) { return 1; } }); return 2;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnFires"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "function foo() { return 1; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "function set(val) { return 1; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "var foo = function() { return 1; };",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "var foo = function set() { return 1; };",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "var set = function() { return 1; };",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "var set = function set(val) { return 1; };",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "var set = val => { return 1; };",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "var set = val => 1;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { }}); function foo() { return 1; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { }}); (function () { return 1; });",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { }}); (() => { return 1; });",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { }}); (() => 1);",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "return 1;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "return 1;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "return 1; function foo(){ return 1; } return 1;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "function foo(){} return 1; var bar = function*(){ return 1; }; return 1; var baz = () => {}; return 1;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set foo(val) { return; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set foo(val) { if (val) { return; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set foo(val) { return; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set foo(val) { if (val) { return; } else { return; } return; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set foo(val) { try {} catch(e) { return; } } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ get foo() { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ get set() { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set: function(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ foo: function set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set: function set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set: (val) => { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set: (val) => 1 })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "set = { foo(val) { return 1; } };",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { constructor(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class set { constructor(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class set { foo(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "var set = class { foo(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class set { foo(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { get foo() { return val; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { get set() { return val; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { static set(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set: set = function set(val) { return 1; } } = {})",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set: set = (val) => 1 } = {})",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class C { set; foo() { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set foo(val) { function foo(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set foo(val) { var foo = function(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set foo(val) { var foo = (val) => { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set foo(val) { var foo = (val) => 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set [function() { return 1; }](val) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set [() => { return 1; }](val) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set [() => 1](val) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set foo(val = function() { return 1; }) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set foo(val = v => 1) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set foo(val) { function foo(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set foo(val) { var foo = function(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set foo(val) { var foo = (val) => { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set foo(val) { var foo = (val) => 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set [function() { return 1; }](val) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set [() => { return 1; }](val) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set [() => 1](val) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set foo(val = function() { return 1; }) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "(class { set foo(val = (v) => 1) {} })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty(foo, 'bar', { set(val) { return; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperty(foo, 'bar', { set(val) { if (val) { return; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperties(foo, { bar: { set(val) { try { return; } catch(e){} } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.create(foo, { bar: { set: function(val) { return; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "x = { set(val) { return 1; } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "x = { foo: { set(val) { return 1; } } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty(foo, 'bar', { value(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperty(foo, 'bar', { value: function set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperties(foo, { bar: { [set](val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.create(foo, { bar: { 'set ': function(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty(foo, 'bar', { [`set `]: (val) => { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperty(foo, 'bar', { Set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperties(foo, { bar: { value: (val) => 1 } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.create(foo, { set: { value: function(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty(foo, 'bar', { baz(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperty(foo, 'bar', { get(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.create(foo, { set: function(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty(foo, { set: (val) => 1 })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty(foo, 'bar', { set(val) { function foo() { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperty(foo, 'bar', { set(val) { var foo = function() { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperties(foo, { bar: { set(val) { () => { return 1 }; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.create(foo, { bar: { set: (val) => { (val) => 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty(foo, 'bar', 'baz', { set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty(foo, { set(val) { return 1; } }, 'bar')",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty({ set(val) { return 1; } }, foo, 'bar')",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperty(foo, 'bar', 'baz', { set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperty(foo, { set(val) { return 1; } }, 'bar')",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperty({ set(val) { return 1; } }, foo, 'bar')",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperties(foo, bar, { baz: { set(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperties({ bar: { set(val) { return 1; } } }, foo)",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.create(foo, bar, { baz: { set(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.create({ bar: { set(val) { return 1; } } }, foo)",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.DefineProperty(foo, 'bar', { set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.DefineProperty(foo, 'bar', { set(val) { if (val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.DefineProperties(foo, { bar: { set(val) { try { return 1; } catch(e){} } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.Create(foo, { bar: { set: function(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "object.defineProperty(foo, 'bar', { set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "reflect.defineProperty(foo, 'bar', { set(val) { if (val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperties(foo, { bar: { set(val) { try { return 1; } catch(e){} } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "object.create(foo, { bar: { set: function(val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Reflect.defineProperty(foo, 'bar', { set(val) { if (val) { return 1; } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "/* globals Object:off */ Object.defineProperty(foo, 'bar', { set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperties(foo, { bar: { set(val) { try { return 1; } catch(e){} } } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "let Object; Object.defineProperty(foo, 'bar', { set(val) { return 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "function f() { Reflect.defineProperty(foo, 'bar', { set(val) { if (val) { return 1; } } }); var Reflect;}",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "function f(Object) { Object.defineProperties(foo, { bar: { set(val) { try { return 1; } catch(e){} } } }) }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "if (x) { const Object = getObject(); Object.create(foo, { bar: { set: function(val) { return 1; } } }) }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "x = function Object() { Object.defineProperty(foo, 'bar', { set(val) { return 1; } }) }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnStaysSilent"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val){ return val + 1; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnSpansTheWholeStatement"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "({ set a(val) { if(val) { return 1; } else { return 2 }; } })",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnSpansTheWholeStatement"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "class A { set a(val) { switch(val) { case 1: return x; case 2: return y; default: return z } } }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoSetterReturnSpansTheWholeStatement"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function NaN(NaN) { var NaN; !function NaN(NaN) { try {} catch(NaN) {} }; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function undefined(undefined) { !function undefined(undefined) { try {} catch(undefined) {} }; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function Infinity(Infinity) { var Infinity; !function Infinity(Infinity) { try {} catch(Infinity) {} }; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function arguments(arguments) { var arguments; !function arguments(arguments) { try {} catch(arguments) {} }; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function eval(eval) { var eval; !function eval(eval) { try {} catch(eval) {} }; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var eval = (eval) => { var eval; !function eval(eval) { try {} catch(eval) {} }; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var [undefined] = [1]",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var {undefined} = obj; var {a: undefined} = obj; var {a: {b: {undefined}}} = obj; var {a, ...undefined} = obj;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; undefined = 5;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import undefined from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import { undefined } from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import { baz as undefined } from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import * as undefined from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function globalThis(globalThis) { var globalThis; !function globalThis(globalThis) { try {} catch(globalThis) {} }; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "const [globalThis] = [1]",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var {globalThis} = obj; var {a: globalThis} = obj; var {a: {b: {globalThis}}} = obj; var {a, ...globalThis} = obj;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "let globalThis; globalThis = 5;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "class globalThis {}",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "(class globalThis {})",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import globalThis from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import { globalThis } from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import { baz as globalThis } from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import * as globalThis from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesFires"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function foo(bar){ var baz; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "!function foo(bar){ var baz; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "!function(bar){ var baz; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "try {} catch(e) {}",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "export default function() {}",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "try {} catch {}",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; doSomething(undefined);",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; var undefined;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "let undefined",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import { undefined as undef } from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "globalThis.foo",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "const foo = globalThis",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function foo() { return globalThis; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import { globalThis as foo } from 'bar'",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "export enum Globals { undefined = 'undefined', NaN = 'nan', Infinity = 'infinity', eval = 'eval', arguments = 'arguments' }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesStaysSilent"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "let globalThis;",
+    "options": {
+      "reportGlobalThis": false
+    },
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesRespectsAllowGlobalThis"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "class globalThis {}",
+    "options": {
+      "reportGlobalThis": false
+    },
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesRespectsAllowGlobalThis"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import { baz as globalThis } from 'foo';",
+    "options": {
+      "reportGlobalThis": false
+    },
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesRespectsAllowGlobalThis"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function NaN(NaN) {}",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesPointsAtTheName"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "class globalThis {}",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesPointsAtTheName"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "(class globalThis {})",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesPointsAtTheName"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "try {} catch(eval) {}",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesPointsAtTheName"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import * as undefined from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesPointsAtTheName"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "import { baz as undefined } from 'foo';",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesPointsAtTheName"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; undefined = 5;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesPointsAtTheName"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var {a, ...arguments} = obj;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesPointsAtTheName"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; undefined += 1;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; undefined ??= 1;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; undefined++;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; --undefined;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; for (undefined of []) {}",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; [undefined] = [1];",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; ({undefined} = obj);",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; function f() { undefined = 1; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "undefined = 1; var undefined;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined = 5;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function f(){ var undefined; } var undefined; undefined = 1;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; undefined.x;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; undefined.x = 1;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; var other; other = undefined;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; var other; ({undefined: other} = obj);",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; !undefined;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; var undefined; doSomething(undefined);",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function f() { let undefined; }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var notRestricted;",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var o = { undefined: 1, NaN: 2, eval: 3 };",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "class C { undefined = 1; NaN() {} }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "interface NaN { x: number }",
+    "options": null,
+    "environment": "",
+    "function": "TestNoShadowRestrictedNamesCarveOutBoundary"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "export const values={status}; export {status as renamed};",
+    "options": [
+      "status"
+    ],
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "export const values={status}; export {status as renamed}; const status=1;",
+    "options": [
+      "status"
+    ],
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "const {length:size}=String(); const x: Promise<void>=Promise.resolve();",
+    "options": [
+      "length",
+      "Promise"
+    ],
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "globalThis[0x10]; globalThis[(\"foo\")]; globalThis[`foo`]; globalThis?.globalThis?.foo;",
+    "options": [
+      {
+        "globals": [
+          "16",
+          "foo"
+        ],
+        "checkGlobalObject": true
+      }
+    ],
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "foo;",
+    "options": [
+      {
+        "name": "foo",
+        "message": "世界 🌍"
+      },
+      {
+        "name": "foo",
+        "message": "later"
+      }
+    ],
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-restricted-globals",
+    "source": "const a={event}; event; window.event;",
+    "options": [],
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty({},\"x\",{set: value => (value+1)}); Object.defineProperties({}, {x:{[\"set\"](value){return value;}}}); Object.create({}, {x:{[`set`]: value=>value}}); Reflect[\"defineProperty\"]({},\"x\",{set: value=>value});",
+    "options": null,
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "let Object:any;Object.defineProperty({},\"x\",{set: value=>value});",
+    "options": null,
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-setter-return",
+    "source": "Object.defineProperty({set(v){return v;}},\"x\",{}); Object.create({}, {set(v){return v;}}); ({set x(v){return (()=>{return v;})();}});",
+    "options": null,
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; ({undefined}=obj);",
+    "options": null,
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "function f(){var undefined;} var undefined; undefined=1;",
+    "options": null,
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined; function f(){var undefined; undefined=1;}",
+    "options": null,
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var undefined = /* comment */ 1; var {x:NaN}=obj; enum E{undefined};",
+    "options": null,
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "var globalThis; const eval=1;",
+    "options": {
+      "reportGlobalThis": false
+    },
+    "environment": "",
+    "function": "local"
+  },
+  {
+    "rule": "no-shadow-restricted-names",
+    "source": "/* 世界 🌍 */\r\nfunction NaN(undefined){return undefined;}\r\n",
+    "options": null,
+    "environment": "",
+    "function": "local"
+  }
+]

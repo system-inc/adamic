@@ -1,0 +1,37 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export interface ReferenceDeclaration {
+    readonly path: string;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly ambient: boolean;
+}
+export class ReferenceSymbolOrigins {
+    readonly id: number;
+    readonly declarations: ReferenceDeclaration[] = [];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'reference-symbol-origins'));
+        header(frames, 'reference-symbol-origins');
+        this.id = frames.natural();
+        if(this.id !== 0) {
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const path = frames.field();
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                const ambient = frames.yes();
+                if(end < start) { panic('invalid reference declaration span'); }
+                this.declarations.push({path, kind, start, end, ambient});
+            }
+        }
+        frames.end();
+    }
+    source(): boolean { return this.declarations.some((declaration) => !declaration.ambient); }
+    first(path: string): string {
+        const declaration = this.declarations.find((candidate) => candidate.path === path);
+        return declaration === undefined ? '' : `${declaration.kind}:${declaration.start}:${declaration.end}`;
+    }
+}

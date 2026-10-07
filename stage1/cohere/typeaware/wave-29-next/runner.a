@@ -1,0 +1,81 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Rules } from '../rules.ts';
+import { NoRestrictedGlobals } from './no_restricted_globals.a';
+import type { RestrictedGlobal } from './no_restricted_globals.a';
+import { NoSetterReturn } from './no_setter_return.a';
+import { NoShadowRestrictedNames } from './no_shadow_restricted_names.a';
+import { Frames } from '../frames.ts';
+
+
+const args = programArguments();
+const config = args[0] ?? panic('usage: wave_29.a tsconfig manifest [--count]');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') {
+    panic(manifest.message);
+}
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(config, paths);
+const profilePath = args[2] ?? '';
+let profiles = new Frames('');
+const configured = profilePath !== '' && profilePath !== '--count';
+if(configured) {
+    const content = readTextFile(profilePath);
+    if(content.kind === 'Error') { panic(content.message); }
+    profiles = new Frames(content.text);
+    if(profiles.natural() !== paths.length) { panic('profile length mismatch'); }
+}
+let findings = 0;
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const offsets = byteOffsets(source.text);
+    const unary = new UnaryMinus(program, path, parser, scanner, offsets);
+    const linter = new Rules(program, path, parser, scanner, offsets, unary);
+    const root = parser.file();
+    for(let at = 0; at < parser.nodes.length; at++) {
+        linter.parents.push(-1);
+    }
+    linter.links(root, -1);
+    if(configured) {
+        const subject = profiles.field();
+        const entries: RestrictedGlobal[] = [];
+        const count = profiles.natural();
+        for(let at = 0; at < count; at++) { entries.push({name: profiles.field(), message: profiles.field()}); }
+        const globalObject = profiles.yes();
+        const objects: string[] = [];
+        const length = profiles.natural();
+        for(let at = 0; at < length; at++) { objects.push(profiles.field()); }
+        const allowGlobalThis = profiles.yes();
+        if(subject === 'no-restricted-globals') { new NoRestrictedGlobals(linter).run(entries, globalObject, objects); }
+        else if(subject === 'no-setter-return') { new NoSetterReturn(linter).run(); }
+        else if(subject === 'no-shadow-restricted-names') { new NoShadowRestrictedNames(linter).run(allowGlobalThis); }
+        else { panic('unknown configured rule'); }
+    }
+    else {
+        new NoRestrictedGlobals(linter).run();
+        new NoSetterReturn(linter).run();
+        new NoShadowRestrictedNames(linter).run();
+    }
+    for(const finding of linter.findings) {
+        finding.sortKey = finding.written();
+    }
+    linter.findings.sort((left, right) => left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0);
+    findings += linter.findings.length;
+    if(!args.includes('--count')) {
+        console.log(`file\t${written(path)}`);
+        for(const finding of linter.findings) {
+            console.log(finding.written());
+        }
+    }
+}
+if(configured) { profiles.end(); }
+console.log(`findings ${findings}`);
+tsgoRelease(program);

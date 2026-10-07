@@ -1,0 +1,69 @@
+import type { Rules } from '../rules.ts';
+import { SymbolProvenance } from '../symbol_provenance.a';
+import { Support } from './support.a';
+export class NoSetterReturn {
+    readonly tree: Support;
+    constructor(rules: Rules) { this.tree = new Support(rules); }
+    functionKind(kind: string): boolean { return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor'].includes(kind); }
+    descriptor(index: number): boolean {
+        const parent = this.tree.parent(index);
+        let key: string | undefined;
+        let holder = -1;
+        if(this.tree.kind(parent) === 'PropertyAssignment') {
+            key = this.tree.key(this.tree.child(parent, 0), false);
+            holder = this.tree.parent(parent);
+        }
+        else if(this.tree.kind(index) === 'MethodDeclaration' && this.tree.kind(parent) === 'ObjectLiteralExpression') {
+            // Method names precede parameters and may be quoted or computed.
+            const node = this.tree.rules.parser.node(index);
+            const name = node.children.find((child) => ['Identifier', 'StringLiteral', 'NoSubstitutionTemplateLiteral', 'ComputedPropertyName', 'NumericLiteral'].includes(this.tree.kind(child))) ?? -1;
+            key = this.tree.key(name, false);
+            holder = parent;
+        }
+        if(key !== 'set' || this.tree.kind(holder) !== 'ObjectLiteralExpression') { return false; }
+        let argument = holder;
+        let nested = false;
+        const container = this.tree.parent(holder);
+        if(this.tree.kind(container) === 'PropertyAssignment') {
+            argument = this.tree.parent(container);
+            if(this.tree.kind(argument) !== 'ObjectLiteralExpression') { return false; }
+            nested = true;
+        }
+        const call = this.tree.up(this.tree.parent(argument));
+        if(this.tree.kind(call) !== 'CallExpression') { return false; }
+        const callee = this.tree.down(this.tree.child(call, 0));
+        if(!this.tree.access(callee)) { return false; }
+        const object = this.tree.down(this.tree.child(callee, 0));
+        if(this.tree.kind(object) !== 'Identifier') { return false; }
+        const objectName = this.tree.rules.parser.node(object).text;
+        let member = this.tree.key(this.tree.last(callee), false);
+        if(this.tree.kind(callee) === 'ElementAccessExpression') {
+            const target = this.tree.down(this.tree.last(callee));
+            if(!['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.tree.kind(target))) { return false; }
+            member = this.tree.key(target, false);
+        }
+        if(nested ? objectName !== 'Object' || !['defineProperties', 'create'].includes(member ?? '') : !['Object', 'Reflect'].includes(objectName) || member !== 'defineProperty') { return false; }
+        const node = this.tree.rules.parser.node(call);
+        const argumentsList = node.children.slice(node.children.length - Math.max(0, node.list));
+        const wanted = argumentsList[nested ? 1 : 2] ?? -1;
+        if(this.tree.down(wanted) !== argument) { return false; }
+        const symbol = new SymbolProvenance(this.tree.rules, object, false);
+        return symbol.id !== 0 && symbol.declarations.length > 0 && symbol.declarations.every((declaration) => declaration.ambient);
+    }
+    report(index: number): void {
+        this.tree.report(index, 'no-setter-return', 'noSetterReturn', 'This returns a value from a setter, and the language discards it: an assignment evaluates to the value assigned, never to what the setter returned, so nothing can ever read this. Either the value is dead and the return should be bare, or it was meant to reach a caller and this is a bug that stays silent at runtime.');
+    }
+    run(): void {
+        for(let index = 0; index < this.tree.rules.parser.nodes.length; index++) {
+            const node = this.tree.rules.parser.node(index);
+            if(node.kind === 'ArrowFunction') {
+                const body = this.tree.last(index);
+                if(body >= 0 && this.tree.kind(body) !== 'Block' && this.descriptor(index)) { this.report(body); }
+            }
+            if(node.kind !== 'ReturnStatement' || node.children.length === 0) { continue; }
+            let target = this.tree.parent(index);
+            while(target >= 0 && !this.functionKind(this.tree.kind(target))) { target = this.tree.parent(target); }
+            if(target >= 0 && (this.tree.kind(target) === 'SetAccessor' || this.descriptor(target))) { this.report(index); }
+        }
+    }
+}

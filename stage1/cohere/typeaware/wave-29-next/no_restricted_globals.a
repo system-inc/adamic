@@ -1,0 +1,61 @@
+import type { Rules } from '../rules.ts';
+import { Bindings } from '../bindings.ts';
+import { Support } from './support.a';
+export interface RestrictedGlobal { readonly name: string; readonly message: string; }
+export class NoRestrictedGlobals {
+    readonly tree: Support;
+    readonly bindings: Bindings;
+    constructor(rules: Rules) { this.tree = new Support(rules); this.bindings = new Bindings(rules); }
+    value(index: number): boolean {
+        const parent = this.tree.parent(index);
+        const kind = this.tree.kind(parent);
+        if(parent < 0 || ['TypeReference', 'TypeQuery', 'QualifiedName', 'LabeledStatement', 'BreakStatement', 'ContinueStatement', 'ImportSpecifier', 'JsxAttribute'].includes(kind)) { return false; }
+        if(kind === 'ExportSpecifier') {
+            let ancestor = parent;
+            while(ancestor >= 0 && this.tree.kind(ancestor) !== 'ExportDeclaration') { ancestor = this.tree.parent(ancestor); }
+            if(ancestor >= 0 && this.tree.rules.parser.node(ancestor).children.some((child) => this.tree.kind(child) === 'StringLiteral')) { return false; }
+            const names = this.tree.rules.parser.node(parent).children.filter((child) => this.tree.kind(child) === 'Identifier' || this.tree.kind(child) === 'StringLiteral');
+            return names.length === 1 || names[0] === index;
+        }
+        if(kind === 'ShorthandPropertyAssignment') { return true; }
+        if(this.bindings.declaring(index)) { return false; }
+        if(['JsxOpeningElement', 'JsxSelfClosingElement', 'JsxClosingElement'].includes(kind)) {
+            const text = this.tree.rules.parser.node(index).text;
+            const code = text.charCodeAt(0);
+            return !(code >= 97 && code <= 122) && !text.includes('-');
+        }
+        return true;
+    }
+    run(entries: readonly RestrictedGlobal[] = [], checkGlobalObject = false, globalObjects: readonly string[] = []): void {
+        const restricted = new Map<string, string>();
+        for(const entry of entries) { if(entry.name !== '') { restricted.set(entry.name, entry.message); } }
+        if(restricted.size === 0) { return; }
+        const objects = ['globalThis', 'self', 'window', ...globalObjects];
+        for(let index = 0; index < this.tree.rules.parser.nodes.length; index++) {
+            const node = this.tree.rules.parser.node(index);
+            if(node.kind !== 'Identifier') { continue; }
+            if(restricted.has(node.text) && this.value(index) && !this.tree.symbol(index).source()) {
+                this.report(index, node.text, restricted.get(node.text) ?? '');
+                continue;
+            }
+            if(!checkGlobalObject || !objects.includes(node.text)) { continue; }
+            const symbol = this.tree.symbol(index);
+            if(symbol.id === 0 || symbol.source()) { continue; }
+            let access = this.tree.parent(index);
+            if(!this.tree.access(access) || this.tree.child(access, 0) !== index) { continue; }
+            while(objects.includes(this.tree.accessed(access) ?? '')) {
+                const next = this.tree.parent(access);
+                if(!this.tree.access(next) || this.tree.child(next, 0) !== access) { break; }
+                access = next;
+            }
+            const name = this.tree.accessed(access);
+            if(name !== undefined && restricted.has(name)) { this.report(this.tree.last(access), name, restricted.get(name) ?? ''); }
+        }
+    }
+    report(index: number, name: string, custom: string): void {
+        const message = custom === ''
+            ? `Unexpected use of '${name}'. This name was restricted by configuration. It resolves to a global rather than to anything declared here, so what it holds depends on the environment the code runs in.`
+            : `Unexpected use of '${name}'. ${custom} This name was restricted by configuration.`;
+        this.tree.report(index, 'no-restricted-globals', custom === '' ? 'defaultMessage' : 'customMessage', message);
+    }
+}

@@ -205,6 +205,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	switch mode {
 	case "symbol-provenance": return p.finishSymbolProvenance(out, c, source, node, question)
 	case "regexp-program": return regexpProgramFacts(out, question)
+	case "reference-symbol-origins": return p.referenceSymbolOrigins(out, c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {
 			return "", err
