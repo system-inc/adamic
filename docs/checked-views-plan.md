@@ -471,3 +471,56 @@ and semantic mutants. Report family pairs and reads remaining after every push.
 Working target for both families is October 13 at 17:00 MDT. Nullish encoding,
 optional presence and shared dispatch merges remain integration risks; report an
 observed blocker immediately rather than counting a component test as completion.
+
+
+## Lane 7: nonprimitive intersection field contracts, October 7
+
+Branch `codex/views-intersections` starts at lane 4 tip 9ecdda53, after
+583d19b7, and merges phantom-brands d90994da without copying cohere code.
+The user authorizes this lane-specific plan addition. Own only new
+`internal/lower/view_intersections.go` and `view_intersections_test.go`,
+`internal/native/view_intersections.go` and `view_intersections_test.go`,
+`internal/javascript/view_intersections.go` and `view_intersections_test.go`,
+`internal/native/runtime/view_intersections.c/.h`,
+`internal/oracle/checked_views_intersections_test.go`, and
+`stage3/interface-downcasts/lane7/` fixtures, ranking, evidence and reports.
+Existing shared files remain with their owners, including counts.md.
+
+The frozen family ledger contains 198 pairs and 1,145 reads. Primitive brands
+are tracked separately, never counted as lane 7 completions. Lane 4 owns
+__String (30 direct-display pairs, 543 reads); other primitive branded aliases
+such as Path need ownership reconciliation. Type displays alone cannot establish
+that an intersection constituent is phantom. Reuse phantomField from the merged
+brand implementation and preserve the overload result rule.
+
+Priority follows the ranked pair ledger, starting with object refinement fields,
+then nested intersections, interface composition, and array/callable overlaps.
+An intersection checks every runtime constituent, ignoring only a proven phantom
+constituent. A bare object heap tag never proves constituent fields. Nested
+results retain their intersection contract through helper, generic, callback,
+container and alias reads. Optional absence and readiness use shared machinery.
+Unknown provenance retains checks; unread unsupported children do not refuse casts.
+
+Concrete handoff to the lazy-admission/shared-dispatch owner:
+
+1. Route TypeFlagsIntersection before generic representation/callable dispatch
+   through lane 7's viewIntersectionContractHook. The lane will supply the hook
+   and builder in its new lower file. Reserve recursive ids in the common registry.
+2. Supply a distinct intersection descriptor (all member ids, not union selection)
+   in common IR, or an explicit all-members discriminator. ViewUnion cannot encode
+   conjunction. ViewObject flattened fields alone must preserve repeated-field
+   conjunction and each member's readonly/optional obligations.
+3. At each potentially viewed intersection read, validate shared presence/readiness
+   once and hand the evaluated snapshot plus all constituent ids to the lane's
+   matcher. Keep child contracts on subsequent reads; no getter reevaluation.
+4. Expose a pure non-panicking shared member matcher and normalized slot probes.
+   They must distinguish missing, uninitialized, undefined and null. Array and
+   callable constituents require the respective owners' adapters. Unsupported
+   members remain named read-site obligations, not successful Unknown contracts.
+
+Observed base has no intersection hook or descriptor. Lazy-admission branch is
+not yet published at this checkpoint. These handoffs are prerequisites for source
+integration; a standalone helper must not be counted as completed pairs.
+Working estimate for the whole nonprimitive family: October 16, 2026, 23:00 UTC,
+conditional on shared hooks and lazy admission by October 9. This is a planning
+estimate, not an observed delivery. No runtime completion is claimed yet.
