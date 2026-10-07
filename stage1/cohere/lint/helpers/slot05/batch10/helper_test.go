@@ -24,6 +24,13 @@ func TestSlot05ControlEscape(t *testing.T) {
 	verify(t, "control", "decode_control_escape.a", mutation{"byte % 32", "byte % 31"}, mutation{"!context.unicode && context.inClass", "!context.unicode"}, mutation{"if(context.unicode)", "if(false)"}, mutation{"rune: 92, width: 0", "rune: 92, width: 1"})
 }
 
+func TestSlot05NamedBackreference(t *testing.T) {
+	verify(t, "reference", "named_backreference.a", mutation{"if(end < 0)", "if(end <= 0)"}, mutation{"utf8Length(text)", "text.length"}, mutation{"body.indexOf('>')", "body.lastIndexOf('>')"}, mutation{"if(!source.startsWith('\\\\k<'))", "if(false)"})
+}
+func TestSlot05NamedGroupOpener(t *testing.T) {
+	verify(t, "opener", "named_group_opener.a", mutation{"if(end < 0)", "if(end <= 0)"}, mutation{"utf8Length(text)", "text.length"}, mutation{"body.indexOf('>')", "body.lastIndexOf('>')"}, mutation{"body.startsWith('=') || body.startsWith('!')", "body.startsWith('=')"})
+}
+
 // Not parallel: large generated corpora and multiple sanitized compiler builds share the memory budget.
 func verify(t *testing.T, mode, target string, mutations ...mutation) {
 	root, _ := filepath.Abs("../../../../../..")
@@ -96,8 +103,6 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 				}
 				data = []byte(strings.Replace(string(data), old, replacement, 1))
 			}
-			data = []byte(strings.ReplaceAll(string(data), "'../batch4/theme_live_keys.a'", strconvQuote(filepath.Join(root, "stage1/cohere/lint/helpers/slot05/batch4/theme_live_keys.a"))))
-			data = []byte(strings.ReplaceAll(string(data), "'../batch5/theme_clear_all.a'", strconvQuote(filepath.Join(root, "stage1/cohere/lint/helpers/slot05/batch5/theme_clear_all.a"))))
 			data = []byte(strings.ReplaceAll(string(data), "'../../options_json.ts'", strconvQuote(filepath.Join(root, "stage1/cohere/lint/helpers/options_json.ts"))))
 
 			if e = os.WriteFile(filepath.Join(mutant, name), data, 0644); e != nil {

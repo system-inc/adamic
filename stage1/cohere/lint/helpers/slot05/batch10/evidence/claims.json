@@ -1,0 +1,43 @@
+{
+  "branches_scanned": 18,
+  "main": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+  "main_is_ancestor": true,
+  "matches": [
+    {
+      "branch": "refs/remotes/origin/codex/lint-helpers-02",
+      "file": "stage1/cohere/lint/helpers/claims/02.md",
+      "helpers": [
+        "regexp.decodeControlEscape"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/lint-helpers-05",
+      "file": "stage1/cohere/lint/helpers/claims/05.md",
+      "helpers": [
+        "regexp.decodeControlEscape",
+        "regexp.namedBackreference",
+        "regexp.namedGroupOpener"
+      ]
+    }
+  ],
+  "withdrawn_before_code": {
+    "helpers": [
+      "regexp.boundedQuantifierWidth",
+      "regexp.groupKindOf"
+    ],
+    "owner_branch": "codex/lint-helpers-01",
+    "owner_claim": "9867cb691fa2a22d32990310e025c1034bb13bde",
+    "owner_utc": "2026-10-07T04:37:46Z",
+    "our_claim": "94e0c37490aa43dea5aa144159f4b89adad62be1",
+    "our_utc": "2026-10-07T04:37:54Z"
+  },
+  "historical_match_resolution": {
+    "helper": "regexp.decodeControlEscape",
+    "our_claim": "94e0c37490aa43dea5aa144159f4b89adad62be1",
+    "our_utc": "2026-10-07T04:37:54Z",
+    "later_claim": "e6aaf5c2fe3c706acc3794826a3789f956448af6",
+    "later_utc": "2026-10-07T04:39:31Z",
+    "explicit_withdrawal": "0a2619964948446d16fc250eb4d07fb71ee701d8",
+    "active_owner": "codex/lint-helpers-05"
+  }
+}

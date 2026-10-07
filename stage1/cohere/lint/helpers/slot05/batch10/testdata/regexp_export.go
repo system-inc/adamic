@@ -8,3 +8,6 @@ func AdamicControlEscape(source string, index, size int, unicode, inClass bool, 
 	}
 	return int(result.kind), int(result.set), int(result.r), result.width, result.negated, message
 }
+
+func AdamicNamedBackreference(source string) (string, int, bool) { return namedBackreference(source) }
+func AdamicNamedGroupOpener(source string) (string, int, bool)   { return namedGroupOpener(source) }

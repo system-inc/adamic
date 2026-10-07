@@ -1,6 +1,8 @@
 import { panic, readTextFile, programArguments } from 'adamic';
 import { OptionsJson } from '../../options_json.ts';
 import { decodeControlEscape } from './decode_control_escape.a';
+import { namedBackreference } from './named_backreference.a';
+import { namedGroupOpener } from './named_group_opener.a';
 const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
 if(input.kind === 'Error') { panic(input.message); }
 const json = new OptionsJson(input.text); const root = json.parse();
@@ -8,7 +10,21 @@ if(root < 0) { panic(json.error); }
 function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
 function number(index: number, field: string): number { return Number(text(index, field)); }
 for(const row of json.node(root).children) {
-    const source = text(row, 'source');
+    const source = text(row, 'source'); const mode = text(row, 'mode');
+    if(mode === 'reference' || mode === 'opener') {
+        const prefix = mode === 'reference' ? namedBackreference(source) : namedGroupOpener(source);
+        console.log(`${prefix.found}:${prefix.width}`); console.log(prefix.text); continue;
+    }
+    if(mode === 'referenceSweep' || mode === 'openerSweep') {
+        for(let scalar = 0; scalar <= 0x10ffff; scalar++) {
+            if(scalar >= 0xd800 && scalar <= 0xdfff) { continue; }
+            const name = String.fromCodePoint(scalar);
+            const prefix = mode === 'referenceSweep' ? namedBackreference('\\k<' + name + '>tail') : namedGroupOpener('(?<' + name + '>tail');
+            console.log(`${prefix.found}:${prefix.width}`); console.log(prefix.text);
+        }
+        continue;
+    }
+    if(mode !== 'control') { panic('unsupported mode'); }
     for(const query of json.node(json.field(row, 'queries')).children) {
         const context = {unicode: text(query, 'unicode') === 'true', inClass: text(query, 'inClass') === 'true', groups: number(query, 'groups'), named: text(query, 'named') === 'true'};
         const escape = decodeControlEscape(source, number(query, 'index'), number(query, 'size'), context);

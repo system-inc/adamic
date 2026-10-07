@@ -25,6 +25,7 @@ type query struct {
 	Named   bool `json:"named"`
 }
 type sample struct {
+	Mode    string  `json:"mode"`
 	Source  string  `json:"source"`
 	Queries []query `json:"queries"`
 }
@@ -36,10 +37,9 @@ func must(err error) {
 }
 func main() {
 	root, output, symbol := os.Args[1], os.Args[2], os.Args[3]
-	if symbol != "control" {
-		panic("unsupported mode")
-	}
-	symbol = "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeControlEscape"
+	mode := symbol
+	symbol = "github.com/system-inc/cohere/internal/lint/ecmascript/regexp." + map[string]string{"control": "decodeControlEscape", "reference": "namedBackreference", "opener": "namedGroupOpener"}[mode]
+
 	data, err := os.ReadFile(filepath.Join(root, "stage1/cohere/lint/helpers/readiness.json"))
 	must(err)
 	var readiness struct {
@@ -99,6 +99,65 @@ func main() {
 		}
 	}
 
+	for _, source := range []string{"\\k<>", "\\k<name>tail", "\\k<é>tail", "\\k<😀>tail", "\\k<line\nname>", "\\k<\x00>", "\\k<a>b>", "\\k<a\\>b>", "\\k<missing", "\\K<n>", "abc>tail", "(?<>", "(?<name>tail", "(?<é>tail", "(?<😀>tail", "(?<line\nname>", "(?<\x00>", "(?<a>b>", "(?<a\\>b>", "(?<missing", "(?<=n>tail", "(?<!n>tail", "(x?<n>", "(?<\\!>"} {
+		sources[source] = true
+	}
+	if mode != "control" {
+		all := map[string]bool{"": true}
+		for source := range sources {
+			if !utf8.ValidString(source) {
+				panic("invalid UTF-8 source outside adapter")
+			}
+			all[source] = true
+			for offset := range source {
+				all[source[offset:]] = true
+			}
+		}
+		ordered := []string{}
+		for source := range all {
+			ordered = append(ordered, source)
+		}
+		sort.Strings(ordered)
+		corpus := []sample{}
+		var expected strings.Builder
+		verdicts := 0
+		observe := func(source string) {
+			var text string
+			var width int
+			var found bool
+			if mode == "reference" {
+				text, width, found = esregexp.AdamicNamedBackreference(source)
+			} else {
+				text, width, found = esregexp.AdamicNamedGroupOpener(source)
+			}
+			fmt.Fprintf(&expected, "%t:%d\n%s\n", found, width, text)
+			verdicts++
+		}
+		for _, source := range ordered {
+			corpus = append(corpus, sample{Mode: mode, Source: source, Queries: []query{}})
+			observe(source)
+		}
+		corpus = append(corpus, sample{Mode: mode + "Sweep", Queries: []query{}})
+		for scalar := 0; scalar <= 0x10ffff; scalar++ {
+			if scalar >= 0xd800 && scalar <= 0xdfff {
+				continue
+			}
+			prefix := "\\k<"
+			if mode == "opener" {
+				prefix = "(?<"
+			}
+			observe(prefix + string(rune(scalar)) + ">tail")
+		}
+		data, err = json.Marshal(corpus)
+		must(err)
+		must(os.WriteFile(filepath.Join(output, "cases.json"), data, 0644))
+		must(os.WriteFile(filepath.Join(output, "want.txt"), []byte(expected.String()), 0644))
+		data, err = json.MarshalIndent(counts, "", "  ")
+		must(err)
+		must(os.WriteFile(filepath.Join(output, "coverage.json"), data, 0644))
+		fmt.Printf("%d consumers, %d source suffixes and controls plus scalar sweep, %d Go verdicts\n", len(consumers), len(corpus)-1, verdicts)
+		return
+	}
 	for _, source := range []string{"", "c", "cA", "ca", "cZ", "cz", "c0", "c9", "c_", "c!", "c😀", "cK", "😀cA", "éca", "c\x00", "\\c9", "\\c_"} {
 		sources[source] = true
 	}
@@ -120,7 +179,7 @@ func main() {
 	var expected strings.Builder
 	verdicts := 0
 	for _, source := range ordered {
-		row := sample{Source: source, Queries: []query{}}
+		row := sample{Mode: mode, Source: source, Queries: []query{}}
 		sizes := []int{1}
 		if len(source) <= 6 {
 			sizes = []int{0, 1, 2, 4}

@@ -1,0 +1,5 @@
+export interface NamedPrefix {
+    readonly text: string;
+    readonly width: number;
+    readonly found: boolean;
+}

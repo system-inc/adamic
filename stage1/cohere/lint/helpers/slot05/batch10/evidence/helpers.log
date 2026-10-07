@@ -1,0 +1,41 @@
+=== RUN   TestSlot05ControlEscape
+    helper_test.go:56: 4 consumers, 1072 strings and controls, 123160 Go verdicts
+    helper_test.go:66: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:119: decode_control_escape.a mutant "byte % 32" -> "byte % 31" caught at verdict 225: mutant "0:0:4:2:false", Go "0:0:2:2:false"
+    helper_test.go:119: decode_control_escape.a mutant "!context.unicode && context.inClass" -> "!context.unicode" caught at verdict 4057: mutant "0:0:31:2:false", Go "0:0:92:0:false"
+    helper_test.go:119: decode_control_escape.a mutant "if(context.unicode)" -> "if(false)" caught at verdict 5: mutant "0:0:92:0:false", Go "0:0:0:0:false"
+    helper_test.go:119: decode_control_escape.a mutant "rune: 92, width: 0" -> "rune: 92, width: 1" caught at verdict 1: mutant "0:0:92:1:false", Go "0:0:92:0:false"
+--- PASS: TestSlot05ControlEscape (64.17s)
+=== RUN   TestSlot05NamedBackreference
+    helper_test.go:56: 4 consumers, 16911 source suffixes and controls plus scalar sweep, 1128975 Go verdicts
+    helper_test.go:66: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:119: named_backreference.a mutant "if(end < 0)" -> "if(end <= 0)" caught at verdict 8907: mutant "false:0", Go "true:4"
+    helper_test.go:119: named_backreference.a mutant "utf8Length(text)" -> "text.length" caught at verdict 8920: mutant "true:5", Go "true:6"
+    helper_test.go:119: named_backreference.a mutant "body.indexOf('>')" -> "body.lastIndexOf('>')" caught at verdict 8909: mutant "true:7", Go "true:5"
+    helper_test.go:119: named_backreference.a mutant "if(!source.startsWith('\\\\k<'))" -> "if(false)" caught at verdict 133: mutant "true:41", Go "false:0"
+--- PASS: TestSlot05NamedBackreference (29.89s)
+=== RUN   TestSlot05NamedGroupOpener
+    helper_test.go:56: 4 consumers, 16911 source suffixes and controls plus scalar sweep, 1128975 Go verdicts
+    helper_test.go:66: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:119: named_group_opener.a mutant "if(end < 0)" -> "if(end <= 0)" caught at verdict 5277: mutant "false:0", Go "true:4"
+    helper_test.go:119: named_group_opener.a mutant "utf8Length(text)" -> "text.length" caught at verdict 5292: mutant "true:5", Go "true:6"
+    helper_test.go:119: named_group_opener.a mutant "body.indexOf('>')" -> "body.lastIndexOf('>')" caught at verdict 5281: mutant "true:7", Go "true:5"
+    helper_test.go:119: named_group_opener.a mutant "body.startsWith('=') || body.startsWith('!')" -> "body.startsWith('=')" caught at verdict 5273: mutant "true:6", Go "false:0"
+--- PASS: TestSlot05NamedGroupOpener (29.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch10	124.034s

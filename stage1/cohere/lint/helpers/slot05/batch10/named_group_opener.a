@@ -1,0 +1,11 @@
+import { utf8Length } from 'adamic';
+import type { NamedPrefix } from './types.a';
+export function namedGroupOpener(source: string): NamedPrefix {
+    if(!source.startsWith('(?<')) { return {text: '', width: 0, found: false}; }
+    const body = source.slice(3);
+    if(body.startsWith('=') || body.startsWith('!')) { return {text: '', width: 0, found: false}; }
+    const end = body.indexOf('>');
+    if(end < 0) { return {text: '', width: 0, found: false}; }
+    const text = source.slice(0, 3 + end + 1);
+    return {text, width: utf8Length(text), found: true};
+}

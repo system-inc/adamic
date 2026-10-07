@@ -1,0 +1,9 @@
+import { utf8Length } from 'adamic';
+import type { NamedPrefix } from './types.a';
+export function namedBackreference(source: string): NamedPrefix {
+    if(!source.startsWith('\\k<')) { return {text: '', width: 0, found: false}; }
+    const body = source.slice(3); const end = body.indexOf('>');
+    if(end < 0) { return {text: '', width: 0, found: false}; }
+    const text = source.slice(0, 3 + end + 1);
+    return {text, width: utf8Length(text), found: true};
+}
