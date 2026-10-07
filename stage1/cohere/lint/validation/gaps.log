@@ -1,0 +1,15 @@
+=== RUN   TestNestedConstructorGap
+    gaps_test.go:35: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestNestedConstructorGap (0.10s)
+=== RUN   TestOptionAndComparatorGaps
+=== PAUSE TestOptionAndComparatorGaps
+=== CONT  TestOptionAndComparatorGaps
+=== RUN   TestOptionAndComparatorGaps/2_optional_index.ts
+    gaps_test.go:66: Node prints "1\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/2_optional_index.ts:3:16: stage 0 can't lower ?.[] on a value yet
+=== RUN   TestOptionAndComparatorGaps/3_numeric_or.ts
+    gaps_test.go:66: Node prints "2\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/3_numeric_or.ts:2:12: stage 0 can't lower a BinaryExpression with a number and a number yet
+--- PASS: TestOptionAndComparatorGaps (0.18s)
+    --- PASS: TestOptionAndComparatorGaps/2_optional_index.ts (0.09s)
+    --- PASS: TestOptionAndComparatorGaps/3_numeric_or.ts (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.284s

@@ -398,7 +398,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			return nil
 		}
 		own, contextual = l.checker.GetTypeAtLocation(node.Name()), l.checker.GetTypeOfSymbol(property)
-		found = l.widened(own, contextual, map[[2]*checker.Type]bool{})
+		found = l.freshOrWidened(node.Name(), own, contextual)
 	case node.Kind == ast.KindSpreadAssignment:
 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
 		// it is kennel's value seen as the literal's field.
@@ -453,6 +453,9 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		if enumObjectSymbol(found.target) != nil {
 			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
 		}
+		if l.flagEnum(l.enumIdentity(found.target)) {
+			return l.flagWriteRefusal(node, found.target)
+		}
 		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
 	}
 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
@@ -477,6 +480,12 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 // covariant, and only what's inside it, held elsewhere too, is walked as a view.
 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
 	node = ast.SkipParentheses(node)
+	if found := l.flagMemberWidened(node, contextual); found != nil {
+		return found
+	}
+	if target := l.flagTarget(contextual); target != nil && l.flagDomain(node, target) {
+		return nil
+	}
 	switch node.Kind {
 	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
 		// Made as the type it's written into, held by nothing else: its own parts are sites.

@@ -242,3 +242,244 @@ passed in 22.854s; the final whole-oracle run also verified the recorded table.
 Vet, formatting and whitespace logs were empty. The compiler guard mutation
 runs recorded `CAUGHT` for all 16 guard mutants, after restoring each edit.
 Together with the seven runtime mutants, this gives 23 killed mutants.
+
+## Flag enums
+
+Decision by @system_adamic: opt in by initializer shape, never by the evaluated
+values. Every member must have an explicit initializer: `0`, `1 << n` with a
+numeric literal `n` from 0 to 30, or an `|` expression whose leaves are members
+of this same enum. Parentheses do not change the shape. Implicit `0, 1, 2`,
+bare nonzero literals and arithmetic initializers keep an enum closed and
+switch-exhaustive under the preceding rules. The source-fixture follow-up below
+also admits direct same-enum aliases, whose values cannot add bits.
+
+```ts
+enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30 }
+const combined: Flags = Flags.A | Flags.B;
+const masked: Flags = combined & ~Flags.A;
+const toggled: Flags = masked ^ Flags.High;
+```
+
+A flag enum's domain is the non-negative int32 values whose bits are a subset
+of the union of its declared member bits. Values retain declaration identity.
+`x & y` has a domain proof when either operand has that enum's proof; `x | y`
+and `x ^ y` require both. This admits `flags & ~Flags.A` without admitting
+`~Flags.A` alone. A bare number gains no enum identity just because its bits
+fit. Complement, arithmetic, shifts, increment and decrement leave the domain.
+Their results belong in a `number`, and cannot be stored into a flag slot.
+Bitwise compound assignments follow the same proofs. Compound arithmetic and
+compound shifts are refused. Immutable aliases preserve an expression's proof;
+an inferred mutable number variable does not.
+
+The same writes are checked in fields, arrays, Map values, arguments and returns,
+including imports and const enums. Writable views retain the preceding invariant
+container checks. An enum member type still denotes that member, so a combination
+cannot be stored as `Flags.A`. Excluding other members does not prove that a flag
+is the last remaining member: it could be a combination. Such a narrowed full
+flag slot is conservatively refused when stored into a member-specific slot;
+return the explicit member after validation instead.
+
+Every switch on a flag enum requires a `default`, even if it lists every declared
+member. Combinations and zero are values too. Reverse lookup of an undeclared
+combination returns `undefined`, with type `string | undefined`.
+A closed non-flag enum switch that covers all its possible values may use
+`default: { const unreachable: never = value; ... }`. Its proven unreachable
+default body is omitted locally during switch lowering; flag defaults are kept.
+
+These programs are refused, with a rule and a fix in the diagnostic:
+
+| Program | Reason |
+| --- | --- |
+| `const value: Flags = ~Flags.A` | Complement has no flag domain proof. |
+| `const value: Flags = Flags.A + 1` | Arithmetic produces a number. |
+| `flags++` | Increment writes an unproven number into a flag slot. |
+| `flags <<= 1` | A compound shift leaves the domain. |
+| `enum Bad { A = 1 << 31 }` | The sign bit exceeds the non-negative int32 bound. |
+| `enum Color { Red, Green, Blue }; const c: Color = Color.Red | Color.Green` | Implicit initializers do not opt into flags. |
+| A flag switch without `default` | Declared cases do not cover the flag domain. |
+| `const value: Flags = Flags.A | Other.B` | OR requires two operands from this enum. |
+| `const value: Other = Flags.A | Other.B` | Declaration identity also excludes the other target. |
+
+The new fixtures are `enums_flags.a`, `enums_flags_modules/main.a` and
+`enums_flags_never_default.a`. They cover combinations, masking in both operand
+orders, bit tests, fields, arrays, Map values, function parameters and returns,
+ordinary and const enums across modules, the high bit at position 30, reverse
+lookup of combinations, default switches and the never-default idiom. Node is
+the independent source oracle for stdout and exit code; both generated backends,
+native release, ASan/UBSan and LeakSanitizer are checked.
+
+One guard mutant per rule was run against a named lowering test and restored.
+All 16 below were caught by assertion failures; no Go or clang build failure
+counts as a caught mutant. The mutation runner initially misparsed the trailing
+`$` in the never-default test filter. After fixing that parser, every mutant was
+rerun and all 16 were reported caught in the fresh run.
+
+| Mutant | Named catch |
+| --- | --- |
+| Classify by numeric values instead of initializer shape | `TestFlagEnumsRefused/implicit` |
+| Require both AND operands to be flags | `TestFlagEnumsDomain/and_left` |
+| Admit OR with only one flag operand | `TestFlagEnumsRefused/or_number` |
+| Admit XOR with only one flag operand | `TestFlagEnumsRefused/xor_number` |
+| Preserve the operand's domain through complement | `TestFlagEnumsRefused/complement` |
+| Give addition a flag proof | `TestFlagEnumsRefused/arithmetic` |
+| Give shifts a flag proof | `TestFlagEnumsRefused/shift_result` |
+| Permit increment of a flag slot | `TestFlagEnumsRefused/increment` |
+| Permit compound shift of a flag slot | `TestFlagEnumsRefused/shift_update` |
+| Drop the flag switch default requirement | `TestFlagEnumsRefused/switch_default` |
+| Drop the non-negative int32 initializer bound | `TestFlagEnumsRefused/sign_bit` |
+| Ignore operand enum identity | `TestFlagEnumsRefused/cross_enum_left` and `cross_enum_right` |
+| Trust inferred mutable number aliases | `TestFlagEnumsRefused/mutable_alias` |
+| Trust exclusion narrowing into a member slot | `TestFlagEnumsRefused/narrowed_member` |
+| Permit bitwise compound updates with an open number | `TestFlagEnumsRefused/compound_or_number` |
+| Lower a proven unreachable never-default body | `TestEnumNeverDefault` |
+
+Setup reported Go, clang, Node and submodules ready at 1s, build cache warm at
+122s, and total 122s. `nproc` reported 5; the cgroup quota was four CPUs.
+The new fixture counts are:
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak | In regions |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| enums_flags.a | 44 | 44 | 23 | 64 | 11 | 0 |
+| enums_flags_never_default.a | 2 | 2 | 6 | 6 | 2 | 0 |
+| enums_flags_modules/main.a | 9 | 9 | 6 | 12 | 5 | 0 |
+
+Final restored-source validation passed with the commands below. Lowering took
+39.028s, the uncached three-fixture oracle took 2.492s, and counts verification
+took 17.832s. Vet, formatting and whitespace logs were empty. This unit ran the
+full touched lowering package and a filtered oracle, not the full repository
+gate or a compilation of TypeScript's compiler.
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower -count=1 -timeout 30m > /tmp/flag-enums-final-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags' -count=1 -v -timeout 30m > /tmp/flag-enums-final-oracle.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m > /tmp/flag-enums-final-counts.log 2>&1
+go vet ./... > /tmp/flag-enums-final-vet.log 2>&1
+gofmt -l cmd internal > /tmp/flag-enums-final-format.log
+git diff --check > /tmp/flag-enums-final-diff.log
+```
+
+
+## Integration with current main
+
+Merged `origin/main` at `50045bd` with a merge commit. The only conflict was
+`internal/lower/lower.go`: the enum branch modified code that main extracted.
+The resolution preserves main's ownership map: initialization preflight stays
+in `lower.go`, module enum registration moves to `modules.go`, and enum statement
+dispatch moves to `statements.go`. The native split is unchanged from main.
+
+Validation passed: `go vet ./...`; `gofmt -l cmd internal` (empty output);
+`go test ./internal/lower ./internal/load -count=1 -timeout 30m` (52.204s and
+2.586s); the six enum Node fixtures with `ADAMIC_GATE_UNCACHED=1`, `-count=1`
+(65.508s, zero cache hits); and `TestCountsAreRecorded -count=1` (101.364s).
+Logs are `/tmp/flag-enums-merge-{vet,format,packages,oracle,counts}.log`.
+Setup reported Go ready at 0s, clang, Node and submodules at 1s, build cache warm
+and total at 152s. `nproc` is 5 and the CPU quota is four CPUs.
+
+Counts verification passed without regeneration. Main supplied 12 new rows and
+changed the 20 existing rows below; the merge introduces no further count drift.
+Only retains and releases changed. All fixture paths are under
+`internal/oracle/testdata/` except the explicitly named load fixture.
+
+| Fixture | Retains before | Retains after | Releases before | Releases after |
+| --- | ---: | ---: | ---: | ---: |
+| class_oct6_subclass_holder.a | 49 | 55 | 110 | 116 |
+| internal/load/testdata/0.1/compile/09_tree.ts | 82 | 85 | 123 | 126 |
+| casts.a | 16 | 17 | 24 | 25 |
+| visits.a | 124 | 125 | 208 | 209 |
+| narrowed_reads.a | 0 | 3 | 5 | 7 |
+| narrowed_methods.a | 1 | 3 | 5 | 6 |
+| narrowed_fields.a | 2 | 4 | 5 | 6 |
+| fills.a | 27 | 28 | 50 | 51 |
+| fresh_writes.a | 407 | 409 | 523 | 525 |
+| fresh_calls.a | 266 | 268 | 321 | 323 |
+| weak_narrowed.a | 50 | 53 | 69 | 72 |
+| undefined_keys.a | 171 | 173 | 236 | 238 |
+| undefined_strings.a | 20 | 21 | 42 | 43 |
+| undefined_references.a | 36 | 37 | 51 | 52 |
+| reuse_narrowed.a | 4 | 6 | 7 | 8 |
+| reuse_lent_global.a | 7 | 8 | 14 | 15 |
+| regexp.a | 355 | 369 | 408 | 422 |
+| regexp_null_narrowed.a | 7 | 8 | 5 | 5 |
+| regexp_exec.a | 81 | 82 | 159 | 160 |
+| regexp_unicode.a | 99 | 101 | 86 | 88 |
+
+
+## TypeScript source fixtures
+
+Merged `codex/stage3-fixtures-enums` at `671e1fd` with merge commit `df351a6`.
+The thirteen upstream fixtures remain unchanged. The audited before count was
+6 Compiles, 5 Refused and 2 Checker. The observed after count is 7 Compiles,
+4 Refused and 2 Checker. All seven native observations match source Node on
+stdout, stderr and exit code. Exact observations are in
+[implementation-results.json](../stage3/fixtures/enums/implementation-results.json).
+
+Same-enum member aliases now preserve flag classification. Every declaration
+still needs explicit qualifying initializers and every member value remains a
+non-negative int32. A const for-of binding over a fresh inline array of proven
+flags also preserves its domain when TypeScript infers number[]. An aliased
+mutable array, a mutable loop binding, an unproven element and a different enum
+cannot acquire that proof. Shorthand fields resolve their value symbol, rather
+than the field symbol, and use the same domain checks as explicit fields.
+These changes make `04_parse_tree_mask.a` compile without changing its source.
+
+Name enumeration over a runtime enum and its typeof aliases now lowers through
+`for...in`. Its fixed shape includes numeric reverse keys, sorted as JavaScript
+integer keys, followed by forward member names in declaration order. String
+enums have forward names only. `enums_names.a` holds these rules to Node.
+This support does not admit an arbitrary any object or inherited unknown keys.
+
+The six remaining boundaries and their required adaptations are documented in
+[the fixture report](../stage3/fixtures/enums/README.md#implementation-follow-up).
+`05` and `09` need a signed-mask contract or a source adaptation. `06` needs
+an invariant flag field rather than a generic mutable cast. `07` needs a
+readonly Map view and an explicit sparse-table representation. `08` and `11`
+need typed reflection and checked reads instead of any and unchecked indexing.
+
+The merge had four conflicts. `lower.go` retains both enum initialization
+preflight and accessor-name registration. `class_inheritance.go` retains both
+enum identity/invariance and recursive nominal checks. `refusals.go` retains
+both enum-specific and definite-assignment refusals. `counts.md` retains both
+branches' rows; counts are regenerated for the combined fixture set.
+
+The full uncached `TestNativeAgreesWithNode` suite and the six boundary tests
+passed in 108.586s (native hits 0, Node hits 0). All seven real compiling fixtures
+and the name-enumeration fixture run source Node, generated JavaScript, native
+release, ASan/UBSan and LeakSanitizer. Full lower/load tests passed in 37.094s
+and 2.151s. The permanent name-ordering mutant passed in 0.485s: it compiled and
+exited 0 with empty stderr, and only Node stdout comparison caught its error.
+
+Six temporary compiler mutants were restored after each run and caught by
+assertion failures, with no build failures counted:
+
+| Mutant | Named catch |
+| --- | --- |
+| Disable direct alias classification | TestFlagEnumMemberAliases |
+| Accept a foreign enum alias | TestFlagEnumAliasBoundaries |
+| Skip inline iterable element proofs | TestFlagEnumAliasBoundaries |
+| Preserve a mutable loop binding's proof | TestFlagEnumAliasBoundaries |
+| Skip shorthand value/domain proof | TestFlagEnumInlineIteration |
+| Disable enum-object for-in origin proof | TestEnumNameEnumeration |
+
+Logs are `/tmp/stage3-enums-{oracle-restored,packages,mutants,permanent-mutant-restored}.log`.
+Setup's first warm build overlapped the unresolved merge and failed on conflict
+markers. After resolution, setup passed: Go, clang, Node and submodules ready
+at 0s; cache warm and total at 125s; nproc 5, quota four CPUs. The complete Go
+repository test gate and the complete TypeScript compiler remain untested.
+
+Counts regeneration passed in 16.205s and adds eight rows, the seven compilable
+source fixtures and `enums_names.a`. No existing numeric counts changed.
+`class_inheritance_conditional.a` moved in table order only. Vet, gofmt and
+whitespace outputs are empty.
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower ./internal/load -count=1 -timeout 30m > /tmp/stage3-enums-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStage3EnumBoundaries|TestNativeAgreesWithNode' -count=1 -v -timeout 30m > /tmp/stage3-enums-oracle-restored.log 2>&1
+go test ./internal/oracle -run 'TestEnumNameEnumerationMutant|TestStage3EnumBoundaries' -count=1 -v -timeout 30m > /tmp/stage3-enums-permanent-mutant-restored.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/stage3-enums-counts-update-restored.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m > /tmp/stage3-enums-counts-verify.log 2>&1
+go vet ./... > /tmp/stage3-enums-vet-restored.log 2>&1
+gofmt -l cmd internal > /tmp/stage3-enums-format-restored.log
+git diff --check > /tmp/stage3-enums-diff-restored.log
+```

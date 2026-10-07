@@ -128,7 +128,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		for _, wanted := range targets {
 			related := false
 			for _, member := range members {
-				if l.castAssignable(wanted, member) && l.nominalAncestor(wanted, member) {
+				if l.castAssignable(wanted, member) && l.nominalAncestor(wanted, member, map[[2]*checker.Type]bool{}) {
 					if !l.classCastArguments(member, wanted) {
 						return castProof{}, refused
 					}
@@ -136,7 +136,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 				}
 				// An erased identity cannot distinguish incompatible arguments of the same
 				// generic class, even if another source member provides a valid ancestor.
-				if l.classView(member, l.classNodeFor(wanted)) != nil && !l.nominalAncestor(member, wanted) {
+				if l.classView(member, l.classNodeFor(wanted)) != nil && !l.nominalAncestor(member, wanted, map[[2]*checker.Type]bool{}) {
 					return castProof{}, refused
 				}
 			}
