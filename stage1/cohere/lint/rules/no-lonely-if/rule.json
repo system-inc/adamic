@@ -1,0 +1,13 @@
+{
+  "name": "no-lonely-if",
+  "kinds": [
+    "IfStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoLonelyIf",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoLonelyIf",
+  "node": true
+}

@@ -363,3 +363,23 @@ The unfiltered TestMutants gate PASSes (901.463s): all 48 registered mutants
 compile, run with clean stderr and exit zero, and disagree with actual Go on
 Node, emitted JavaScript and ASan/UBSan native. All three requested unified
 gates are green. No full repository gate or new throughput benchmark was run.
+
+## Shared budget and script-kind fix
+
+Rebased the landing branch onto the explicitly supplied harness fix
+4f18a05c9ee0fc3c17a3a769329bb5c705875027. Restored no-lonely-if from its
+complete preserved implementation, including its unchanged eleven-level budget
+witness and extra-space mutant. The shared oracle now serializes its rejected
+fix-engine proposal and unconverged rule rather than panicking. The constructor
+parser rule stays outside the branch, with its exact reproducer in PARKED_RULES.md.
+Nine owned rule descriptors are active. No shared file was edited by this unit.
+
+Fresh unfiltered TestRulesAgree PASSes (84.74s); TestOwnedWitnesses PASSes
+(23.92s), 1,569,752 identical bytes across Go, Node, emitted JavaScript and
+ASan/UBSan native, including the restored budget witness and shared JSX witness.
+Command: go test ./stage1/cohere/lint -run '^Test(OwnedWitnesses|RulesAgree)$'
+-count=1 -timeout 30m -v. lint-registry PASSes. The fresh unfiltered TestMutants gate PASSes (1020.902s), with all 49 mutants
+caught by comparison on Node, emitted JavaScript and sanitized native.
+go vet ./... PASSes and all owned oracle files are gofmt clean. Earlier split
+logs remain historical evidence; evidence/fixed-*.log records this final run.
+No full repository gate or new throughput benchmark is claimed.
