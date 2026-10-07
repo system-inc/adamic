@@ -133,3 +133,11 @@ This claim is pushed before implementation. New native sources use .a. All
 three depend on Cohere's high-level intermediate representation; its lowering,
 capture identities and control-flow semantics must be preserved. Shared generator
 and harness remain untouched; incomplete analysis must fail explicitly.
+
+Sixth batch status: BLOCKED, not ported. The native stage-1 tree has no equivalent
+of Cohere's function HIR lowering, SSA construction, capture edges, post-dominators
+or manual-memoization erasure/inlining. These are required by all three validators,
+not checker facts or the pending .a/suggestion harness changes. No rule stubs or
+shared-file edits were made. The three reservations remain explicit and are not
+marked complete; no further rules are claimed. Evidence and the prerequisite map
+are in ../WAVE_11_SIXTH_REPORT.md.

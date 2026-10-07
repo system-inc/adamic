@@ -1,0 +1,18 @@
+{
+  "head": "8100c5a4c89c56b45d2d3d883ef1bf3a0389ebc3",
+  "native_source_files_searched": 148,
+  "needles": [
+    "ControlDominators",
+    "UnconditionalBlocks",
+    "ForFunctionWithoutManualMemoization",
+    "high_level_intermediate_representation",
+    "interface Phi",
+    "class Phi",
+    "class HIR",
+    "class Hir",
+    "function constructSSA",
+    "function lowerFunction"
+  ],
+  "hits": {},
+  "observation": "No existing native definitions or imports of these Cohere HIR APIs were found. This search is evidence of the missing current implementation, not proof that a native port cannot be written."
+}
