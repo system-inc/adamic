@@ -1,0 +1,323 @@
+// Native spelling/validity operations from cohere's regexsyntax and regexpattern shelves.
+// Positions are UTF-16 indices here; the caller accepts only the printable ASCII rewrite set.
+export class RegexSyntax {
+    readonly pattern: string;
+    readonly flags: string;
+    constructor(pattern: string, flags: string) {
+        this.pattern = pattern;
+        this.flags = flags;
+    }
+    hex(text: string): boolean {
+        if(text === '') {
+            return false;
+        }
+        for(let index = 0; index < text.length; index++) {
+            if(!'0123456789abcdefABCDEF'.includes(text.slice(index, index + 1))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    escapeEnd(index: number): number {
+        if(index + 1 >= this.pattern.length) {
+            return -1;
+        }
+        const next = this.pattern.slice(index + 1, index + 2);
+        if(next === 'x' && index + 3 < this.pattern.length && this.hex(this.pattern.slice(index + 2, index + 4))) {
+            return index + 4;
+        }
+        if(next === 'u' && index + 5 < this.pattern.length && this.hex(this.pattern.slice(index + 2, index + 6))) {
+            return index + 6;
+        }
+        if(next === 'c' && index + 2 < this.pattern.length) {
+            return index + 3;
+        }
+        if(
+            ['u', 'p', 'P', 'q'].includes(next) &&
+            (this.flags.includes('u') || this.flags.includes('v')) &&
+            this.pattern.slice(index + 2, index + 3) === '{'
+        ) {
+            const end = this.pattern.indexOf('}', index + 3);
+            if(end >= 0) {
+                return end + 1;
+            }
+        }
+        return index + 2;
+    }
+    classEnd(start: number): number {
+        let depth = 1;
+        for(let index = start + 1; index < this.pattern.length;) {
+            const char = this.pattern.slice(index, index + 1);
+            if(char === '\\') {
+                index = this.escapeEnd(index);
+                if(index < 0) {
+                    return -1;
+                }
+                continue;
+            }
+            if(char === '[' && this.flags.includes('v')) {
+                depth++;
+            }
+            if(char === ']') {
+                depth--;
+                if(depth === 0) {
+                    return index + 1;
+                }
+            }
+            index++;
+        }
+        return -1;
+    }
+    braceEnd(start: number): number {
+        let index = start + 1;
+        const begin = index;
+        while(index < this.pattern.length && '0123456789'.includes(this.pattern.slice(index, index + 1))) {
+            index++;
+        }
+        if(index === begin) {
+            return -1;
+        }
+        if(this.pattern.slice(index, index + 1) === ',') {
+            index++;
+            while(index < this.pattern.length && '0123456789'.includes(this.pattern.slice(index, index + 1))) {
+                index++;
+            }
+        }
+        return this.pattern.slice(index, index + 1) === '}' ? index + 1 : -1;
+    }
+    classEscapeEnd(index: number): number {
+        const end = this.escapeEnd(index);
+        if(end < 0) {
+            return -1;
+        }
+        const next = this.pattern.slice(index + 1, index + 2);
+        if(next === 'B' && (this.flags.includes('u') || this.flags.includes('v'))) {
+            return -1;
+        }
+        if(
+            ['u', 'p', 'P', 'q'].includes(next) &&
+            (this.flags.includes('u') || this.flags.includes('v')) &&
+            this.pattern.slice(index + 2, index + 3) === '{'
+        ) {
+            const close = this.pattern.indexOf('}', index + 3);
+            if(close < 0 || (next === 'u' && !this.hex(this.pattern.slice(index + 3, close)))) {
+                return -1;
+            }
+        }
+        return end;
+    }
+    breaker(index: number): boolean {
+        if(this.pattern.slice(index, index + 1) !== '\\') {
+            return false;
+        }
+        const next = this.pattern.slice(index + 1, index + 2);
+        return (
+            'dDwWsS'.includes(next) ||
+            (['p', 'P', 'q'].includes(next) &&
+                (this.flags.includes('u') || this.flags.includes('v')) &&
+                this.pattern.slice(index + 2, index + 3) === '{')
+        );
+    }
+    classValid(start: number, end: number): boolean {
+        let pending = false;
+        for(let index = start + 1; index < end - 1;) {
+            const char = this.pattern.slice(index, index + 1);
+            if(index === start + 1 && char === '^') {
+                index++;
+                continue;
+            }
+            if(char === '[' && this.flags.includes('v')) {
+                index = this.classEnd(index);
+                if(index < 0) {
+                    return false;
+                }
+                pending = false;
+                continue;
+            }
+            if(
+                ['-', '&'].includes(char) &&
+                this.flags.includes('v') &&
+                this.pattern.slice(index + 1, index + 2) === char
+            ) {
+                index += 2;
+                pending = false;
+                continue;
+            }
+            if(char === '-' && pending && index + 1 < end - 1) {
+                index++;
+                if(this.breaker(index)) {
+                    return false;
+                }
+                const next = this.pattern.slice(index, index + 1) === '\\' ? this.classEscapeEnd(index) : index + 1;
+                if(next < 0) {
+                    return false;
+                }
+                index = next;
+                pending = false;
+                continue;
+            }
+            const next = char === '\\' ? this.classEscapeEnd(index) : index + 1;
+            if(next < 0) {
+                return false;
+            }
+            pending = !this.breaker(index);
+            index = next;
+        }
+        return true;
+    }
+    valid(): boolean {
+        const seen: string[] = [];
+        for(let index = 0; index < this.flags.length; index++) {
+            const flag = this.flags.slice(index, index + 1);
+            if(!'dgimsuvy'.includes(flag) || seen.includes(flag)) {
+                return false;
+            }
+            seen.push(flag);
+        }
+        if(seen.includes('u') && seen.includes('v')) {
+            return false;
+        }
+        let depth = 0;
+        let repeatable = false;
+        for(let index = 0; index < this.pattern.length;) {
+            const char = this.pattern.slice(index, index + 1);
+            if(char === '\\') {
+                index = this.escapeEnd(index);
+                if(index < 0) {
+                    return false;
+                }
+                repeatable = true;
+                continue;
+            }
+            if(char === '[') {
+                const end = this.classEnd(index);
+                if(end < 0 || !this.classValid(index, end)) {
+                    return false;
+                }
+                index = end;
+                repeatable = true;
+                continue;
+            }
+            if(char === '(') {
+                depth++;
+                repeatable = false;
+            }
+            else if(char === ')') {
+                depth--;
+                if(depth < 0) {
+                    return false;
+                }
+                repeatable = true;
+            }
+            else if(['*', '+', '?'].includes(char)) {
+                if(!repeatable) {
+                    return false;
+                }
+                repeatable = false;
+            }
+            else if(char === '{') {
+                const end = this.braceEnd(index);
+                if(end >= 0) {
+                    if(!repeatable) {
+                        return false;
+                    }
+                    index = end;
+                    repeatable = false;
+                    continue;
+                }
+                if(seen.includes('u') || seen.includes('v')) {
+                    return false;
+                }
+                repeatable = true;
+            }
+            else if(char === '|') {
+                repeatable = false;
+            }
+            else {
+                repeatable = true;
+            }
+            index++;
+        }
+        return depth === 0;
+    }
+    spelling(text: string): string {
+        const char = text.startsWith('\\') ? text.slice(1) : text;
+        if(char === '\n') {
+            return '\\n';
+        }
+        if(char === '\r') {
+            return '\\r';
+        }
+        if(char === '\t') {
+            return '\\t';
+        }
+        if(char === '\v') {
+            return '\\v';
+        }
+        if(char === '\f') {
+            return '\\f';
+        }
+        return text === '/' ? '\\/' : text;
+    }
+    escaped(): string {
+        // The pattern walker reports class ranges as one span and ignores nested v classes.
+        let output = '';
+        let classStart = -1;
+
+        for(let index = 0; index < this.pattern.length;) {
+            const char = this.pattern.slice(index, index + 1);
+            if(char === '[' && classStart < 0) {
+                classStart = index;
+                output += char;
+                index++;
+
+                continue;
+            }
+            if(char === ']' && classStart >= 0) {
+                classStart = -1;
+                output += char;
+                index++;
+
+                continue;
+            }
+            if(char === '[' && classStart >= 0 && this.flags.includes('v')) {
+                const end = this.classEnd(index);
+                output += this.pattern.slice(index, end);
+                index = end;
+
+                continue;
+            }
+            let end = char === '\\' ? this.escapeEnd(index) : index + 1;
+            if(end < 0) {
+                return this.pattern;
+            }
+            let written = this.pattern.slice(index, end);
+            if(
+                classStart >= 0 &&
+                !this.breaker(index) &&
+                this.pattern.slice(end, end + 1) === '-' &&
+                this.pattern.slice(end + 1, end + 2) !== ']' &&
+                end + 1 < this.pattern.length
+            ) {
+                const next = this.pattern.slice(end + 1, end + 2) === '\\' ? this.escapeEnd(end + 1) : end + 2;
+                if(next >= 0) {
+                    end = next;
+                    written = this.pattern.slice(index, end);
+                }
+            }
+            if(
+                classStart >= 0 &&
+                ['-', '&'].includes(char) &&
+                this.flags.includes('v') &&
+                this.pattern.slice(index + 1, index + 2) === char
+            ) {
+                end = index + 2;
+                written = this.pattern.slice(index, end);
+            }
+            output += this.spelling(written);
+
+            index = end;
+        }
+        return output;
+    }
+}

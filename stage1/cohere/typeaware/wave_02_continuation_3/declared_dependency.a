@@ -1,0 +1,10 @@
+export class Declared {
+    readonly path: string;
+    readonly index: number;
+    readonly external: boolean;
+    constructor(path: string, index: number, external: boolean) {
+        this.path = path;
+        this.index = index;
+        this.external = external;
+    }
+}

@@ -1,0 +1,508 @@
+import type { Rules } from '../rules.ts';
+import type { Bindings } from '../bindings.ts';
+import type { Unused } from '../unused.ts';
+import { nodeSymbol } from '../library_declarations.a';
+import type { Reassign } from '../reassign.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { Suggestion } from '../suggestion.ts';
+import { Repair } from '../repair.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { RegexSyntax } from './regex_syntax.a';
+export class PreferRegexLiterals {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly symbols: Unused;
+    readonly writes: Reassign;
+    readonly globalCache = new Map<string, boolean>();
+    constructor(rules: Rules, bindings: Bindings, symbols: Unused, writes: Reassign) {
+        this.rules = rules;
+        this.bindings = bindings;
+        this.symbols = symbols;
+        this.writes = writes;
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.rules.parser.node(index).kind;
+    }
+    child(index: number, offset: number): number {
+        return index < 0 ? -1 : (this.rules.parser.node(index).children[offset] ?? -1);
+    }
+    last(index: number): number {
+        return index < 0
+            ? -1
+            : (this.rules.parser.node(index).children[this.rules.parser.node(index).children.length - 1] ?? -1);
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    skip(index: number): number {
+        return index < 0 ? -1 : this.rules.skip(index);
+    }
+    text(index: number): string {
+        return index < 0 ? '' : this.rules.parser.node(index).text;
+    }
+    reference(index: number): boolean {
+        const parent = this.parent(index);
+        const kind = this.kind(parent);
+        if(
+            parent < 0 ||
+            [
+                'TypeReference',
+                'TypeQuery',
+                'QualifiedName',
+                'LabeledStatement',
+                'BreakStatement',
+                'ContinueStatement',
+                'JsxAttribute',
+                'ImportSpecifier',
+            ].includes(kind)
+        ) {
+            return false;
+        }
+        if(kind !== 'ShorthandPropertyAssignment' && kind !== 'ExportSpecifier' && this.bindings.declaring(index)) {
+            return false;
+        }
+        if(kind === 'BindingElement' && this.bindings.shape.name(parent) !== index) {
+            return false;
+        }
+        return true;
+    }
+    identity(index: number): number {
+        const ids = this.symbols.identity(index);
+        return this.kind(this.parent(index)) === 'ShorthandPropertyAssignment' && ids.shorthand !== 0
+            ? ids.shorthand
+            : ids.own;
+    }
+    globalReference(index: number): boolean {
+        return !nodeSymbol(this.rules, index).declarations.some((declaration) => !declaration.declarationFile);
+    }
+    globalAvailable(name: string): boolean {
+        const cached = this.globalCache.get(name);
+        if(cached !== undefined) {
+            return cached;
+        }
+        let available = false;
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(
+                this.kind(index) !== 'Identifier' ||
+                this.text(index) !== name ||
+                !this.reference(index) ||
+                !this.globalReference(index)
+            ) {
+                continue;
+            }
+            if(this.writes.writes(index)) {
+                this.globalCache.set(name, false);
+                return false;
+            }
+            available = true;
+        }
+        this.globalCache.set(name, available);
+        return available;
+    }
+    constantKnown(index: number): boolean {
+        const current = this.skip(index);
+        const kind = this.kind(current);
+        if(
+            [
+                'StringLiteral',
+                'NoSubstitutionTemplateLiteral',
+                'NumericLiteral',
+                'TrueKeyword',
+                'FalseKeyword',
+                'NullKeyword',
+            ].includes(kind)
+        ) {
+            return true;
+        }
+        if(kind === 'TemplateExpression') {
+            const node = this.rules.parser.node(current);
+            for(const span of node.children.slice(1)) {
+                if(!this.constantKnown(this.child(span, 0))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        if(kind === 'BinaryExpression' && this.kind(this.child(current, 1)) === 'PlusToken') {
+            const left = this.child(current, 0);
+            const right = this.child(current, 2);
+            return (
+                this.constantKnown(left) &&
+                this.constantKnown(right) &&
+                (this.constantString(left) || this.constantString(right))
+            );
+        }
+        return false;
+    }
+    constantString(index: number): boolean {
+        return ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression', 'BinaryExpression'].includes(
+            this.kind(this.skip(index)),
+        );
+    }
+    constant(index: number): string {
+        const current = this.skip(index);
+        if(!this.constantKnown(current)) {
+            return '';
+        }
+        const kind = this.kind(current);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(kind)) {
+            return this.text(current);
+        }
+        if(kind === 'TrueKeyword') {
+            return 'true';
+        }
+        if(kind === 'FalseKeyword') {
+            return 'false';
+        }
+        if(kind === 'NullKeyword') {
+            return 'null';
+        }
+        if(kind === 'BinaryExpression') {
+            return this.constant(this.child(current, 0)) + this.constant(this.child(current, 2));
+        }
+        let text = this.text(this.child(current, 0));
+        for(const span of this.rules.parser.node(current).children.slice(1)) {
+            text += this.constant(this.child(span, 0)) + this.text(this.last(span));
+        }
+        return text;
+    }
+    key(index: number): string {
+        if(this.kind(index) === 'PropertyAccessExpression') {
+            return this.text(this.last(index));
+        }
+        if(this.kind(index) === 'ElementAccessExpression') {
+            return this.constant(this.last(index));
+        }
+        if(this.kind(index) === 'ComputedPropertyName') {
+            return this.constant(this.child(index, 0));
+        }
+        return this.text(index);
+    }
+    targetMatches(target: number, symbol: number, stage: number, visiting: readonly number[]): boolean {
+        const current = this.skip(target);
+        if(this.kind(current) === 'Identifier') {
+            return this.identity(current) === symbol;
+        }
+        if(stage === 0 && ['ObjectBindingPattern', 'ObjectLiteralExpression'].includes(this.kind(current))) {
+            for(const member of this.rules.parser.node(current).children) {
+                const name = this.child(member, 0);
+                let value = this.bindings.shape.name(member);
+                if(this.kind(member) === 'PropertyAssignment') {
+                    value = this.last(member);
+                }
+                if(this.kind(member) === 'BindingElement' && this.kind(name) === 'DotDotDotToken') {
+                    continue;
+                }
+                if(this.key(name) === 'RegExp' && this.targetMatches(value, symbol, 1, visiting)) {
+                    return true;
+                }
+            }
+        }
+        if(this.kind(current) === 'BinaryExpression' && this.kind(this.child(current, 1)) === 'EqualsToken') {
+            return this.targetMatches(this.child(current, 0), symbol, stage, visiting);
+        }
+        return false;
+    }
+    value(index: number, stage: number, visiting: readonly number[]): number {
+        const current = this.skip(index);
+        const kind = this.kind(current);
+        if(
+            [
+                'AsExpression',
+                'NonNullExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+                'ExpressionWithTypeArguments',
+            ].includes(kind)
+        ) {
+            return this.value(
+                kind === 'TypeAssertionExpression' ? this.last(current) : this.child(current, 0),
+                stage,
+                visiting,
+            );
+        }
+        if(kind === 'Identifier') {
+            const name = this.text(current);
+            if(this.globalReference(current)) {
+                const global =
+                    stage === 1
+                        ? name === 'RegExp' && this.globalAvailable(name)
+                        : ['global', 'globalThis', 'self', 'window'].includes(name) && this.globalAvailable(name);
+                return global ? 1 : 0;
+            }
+            const symbol = this.identity(current);
+            if(symbol === 0 || visiting.includes(symbol)) {
+                return 0;
+            }
+            const next = [...visiting, symbol];
+            let found = 0;
+            for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+                const node = this.rules.parser.node(at);
+                if(['VariableDeclaration', 'Parameter', 'BindingElement'].includes(node.kind)) {
+                    const target = this.bindings.shape.name(at);
+                    const initializer = this.bindings.shape.initializer(at);
+                    if(initializer < 0 || target < 0) {
+                        continue;
+                    }
+                    if(this.kind(this.skip(target)) === 'Identifier' && this.identity(this.skip(target)) === symbol) {
+                        found += this.value(initializer, stage, next);
+                    }
+                    if(
+                        stage === 1 &&
+                        this.kind(target) === 'ObjectBindingPattern' &&
+                        this.targetMatches(target, symbol, 0, next)
+                    ) {
+                        found += this.value(initializer, 0, next);
+                    }
+                }
+                if(
+                    node.kind === 'BinaryExpression' &&
+                    [
+                        'EqualsToken',
+                        'BarBarEqualsToken',
+                        'AmpersandAmpersandEqualsToken',
+                        'QuestionQuestionEqualsToken',
+                    ].includes(this.kind(this.child(at, 1)))
+                ) {
+                    if(this.targetMatches(this.child(at, 0), symbol, stage, next)) {
+                        found += this.value(this.child(at, 2), stage, next);
+                    }
+                    if(
+                        stage === 1 &&
+                        ['ObjectLiteralExpression', 'ObjectBindingPattern'].includes(
+                            this.kind(this.skip(this.child(at, 0))),
+                        ) &&
+                        this.targetMatches(this.child(at, 0), symbol, 0, next)
+                    ) {
+                        found += this.value(this.child(at, 2), 0, next);
+                    }
+                }
+            }
+            return found;
+        }
+        if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(kind)) {
+            return stage === 1 && this.key(current) === 'RegExp' ? this.value(this.child(current, 0), 0, visiting) : 0;
+        }
+        if(kind === 'ConditionalExpression') {
+            return (
+                this.value(this.child(current, 2), stage, visiting) + this.value(this.last(current), stage, visiting)
+            );
+        }
+        if(kind === 'BinaryExpression') {
+            const operator = this.kind(this.child(current, 1));
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator)) {
+                return (
+                    this.value(this.child(current, 0), stage, visiting) +
+                    this.value(this.child(current, 2), stage, visiting)
+                );
+            }
+            if(
+                [
+                    'CommaToken',
+                    'EqualsToken',
+                    'BarBarEqualsToken',
+                    'AmpersandAmpersandEqualsToken',
+                    'QuestionQuestionEqualsToken',
+                ].includes(operator)
+            ) {
+                return this.value(this.child(current, 2), stage, visiting);
+            }
+        }
+        return 0;
+    }
+    realString(index: number): boolean {
+        const symbol = nodeSymbol(this.rules, index);
+        return symbol.present && symbol.declarations.length > 0 && (symbol.declarations[0]?.declarationFile ?? false);
+    }
+    staticValue(index: number): boolean {
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.kind(index))) {
+            return true;
+        }
+        if(
+            this.kind(index) !== 'TaggedTemplateExpression' ||
+            this.kind(this.last(index)) !== 'NoSubstitutionTemplateLiteral'
+        ) {
+            return false;
+        }
+        const tag = this.skip(this.child(index, 0));
+        if(
+            !['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.kind(tag)) ||
+            this.key(tag) !== 'raw'
+        ) {
+            return false;
+        }
+        if(
+            this.kind(tag) === 'ElementAccessExpression' &&
+            !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.kind(this.last(tag)))
+        ) {
+            return false;
+        }
+        const receiver = this.child(tag, 0);
+        return this.kind(receiver) === 'Identifier' && this.text(receiver) === 'String' && this.realString(receiver);
+    }
+    staticText(index: number): string {
+        if(this.kind(index) === 'TaggedTemplateExpression') {
+            const node = this.rules.parser.node(this.last(index));
+            return this.rules.parser.scanner.text.slice(this.rules.start(node) + 1, node.end - 1);
+        }
+        return this.text(index);
+    }
+    printable(pattern: string): boolean {
+        const allow =
+            ' \t\r\n\v\f-\\[](){}!@#$%^&*+=/~`.><?,\'"|:;_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        for(let index = 0; index < pattern.length; index++) {
+            if(!allow.includes(pattern.slice(index, index + 1))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    suggestible(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        const start = this.rules.start(node);
+        const source = this.rules.parser.scanner.text;
+        const scanner = new Scanner(source);
+        let previous = '';
+        while(true) {
+            scanner.scan();
+            if(scanner.kind === 'EndOfFile' || scanner.start >= node.end) {
+                break;
+            }
+            const trivia = source.slice(scanner.fullStart, scanner.start);
+            if(
+                scanner.fullStart >= start &&
+                scanner.start <= node.end &&
+                (trivia.includes('//') || trivia.includes('/*'))
+            ) {
+                return false;
+            }
+            if(scanner.start < start && !['WhitespaceTrivia', 'NewLineTrivia'].includes(scanner.kind)) {
+                previous = source.slice(scanner.start, scanner.pos);
+            }
+        }
+        if(previous === '' || previous.startsWith('#!')) {
+            return true;
+        }
+        return [
+            '(',
+            ';',
+            '[',
+            ',',
+            '=',
+            '+',
+            '*',
+            '-',
+            '?',
+            '~',
+            '%',
+            '**',
+            '!',
+            'typeof',
+            'instanceof',
+            '&&',
+            '||',
+            '??',
+            'return',
+            '...',
+            'delete',
+            'void',
+            'in',
+            '<',
+            '>',
+            '<=',
+            '>=',
+            '==',
+            '===',
+            '!=',
+            '!==',
+            '<<',
+            '>>',
+            '>>>',
+            '&',
+            '|',
+            '^',
+            ':',
+            '{',
+            '=>',
+            '*=',
+            '<<=',
+            '>>=',
+            '>>>=',
+            '^=',
+            '|=',
+            '&=',
+            '??=',
+            '||=',
+            '&&=',
+            '**=',
+            '+=',
+            '-=',
+            '/=',
+            '%=',
+            '/',
+            'do',
+            'break',
+            'continue',
+            'debugger',
+            'case',
+            'throw',
+        ].includes(previous);
+    }
+    check(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.list !== 1 && node.list !== 2) {
+            return;
+        }
+        const argumentsStart = node.children.length - node.list;
+        const first = node.children[argumentsStart] ?? -1;
+        const second = node.list === 2 ? (node.children[argumentsStart + 1] ?? -1) : -1;
+        if(!this.staticValue(first) || (second >= 0 && !this.staticValue(second))) {
+            return;
+        }
+        const occurrences = this.value(node.children[0] ?? -1, 1, []);
+        if(occurrences === 0) {
+            return;
+        }
+        const finding = new Diagnostic(
+            'prefer-regex-literals',
+            'unexpectedRegExp',
+            'This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.',
+            this.rules.byte(this.rules.start(node)),
+            this.rules.byte(node.end),
+            '',
+        );
+        const pattern = this.staticText(first);
+        const flags = second < 0 ? '' : this.staticText(second);
+        const syntax = new RegexSyntax(pattern, flags);
+        if(this.printable(pattern) && this.suggestible(index) && syntax.valid()) {
+            let replacement = `/${pattern === '' ? '(?:)' : syntax.escaped()}/${flags}`;
+            const source = this.rules.parser.scanner.text;
+            const start = this.rules.start(node);
+            if(start > 0 && source.slice(start - 1, start) === '/') {
+                replacement = ` ${replacement}`;
+            }
+            const next = source.slice(node.end, node.end + 1);
+            if(next !== '' && 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$'.includes(next)) {
+                replacement += ' ';
+            }
+            finding.suggestions.push(
+                new Suggestion('replaceWithLiteral', 'Replace with an equivalent regular expression literal.', [
+                    new Repair(finding.start, finding.end, replacement),
+                ]),
+            );
+        }
+        for(let count = 0; count < occurrences; count++) {
+            this.rules.findings.push(finding);
+        }
+    }
+    run(): void {
+        if(!this.rules.parser.scanner.text.includes('RegExp')) {
+            return;
+        }
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(['CallExpression', 'NewExpression'].includes(this.kind(index)) && this.parent(index) >= 0) {
+                this.check(index);
+            }
+        }
+    }
+}

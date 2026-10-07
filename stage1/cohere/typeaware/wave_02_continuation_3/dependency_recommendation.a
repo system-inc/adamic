@@ -1,0 +1,6 @@
+export class Recommendation {
+    readonly suggested: string[] = [];
+    readonly missing: string[] = [];
+    readonly unnecessary: string[] = [];
+    readonly duplicate: string[] = [];
+}

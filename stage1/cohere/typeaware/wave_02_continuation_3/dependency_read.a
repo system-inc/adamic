@@ -1,0 +1,10 @@
+export class Read {
+    readonly path: string;
+    readonly optional: readonly string[];
+    readonly stable: boolean;
+    constructor(path: string, optional: readonly string[], stable: boolean) {
+        this.path = path;
+        this.optional = optional;
+        this.stable = stable;
+    }
+}

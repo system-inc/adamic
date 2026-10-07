@@ -1,0 +1,862 @@
+import { Recommendation } from './dependency_recommendation.a';
+import { Declared } from './declared_dependency.a';
+import { Read } from './dependency_read.a';
+import type { Rules } from '../rules.ts';
+import type { Bindings } from '../bindings.ts';
+import type { Unused } from '../unused.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { Suggestion } from '../suggestion.ts';
+import { Frames, header } from '../frames.ts';
+import { astContext } from '../ast_context.a';
+const messageIds = [
+    'exhaustiveDepsMissing',
+    'exhaustiveDepsUnnecessary',
+    'exhaustiveDepsDuplicate',
+    'exhaustiveDepsConstruction',
+    'exhaustiveDepsComplexExpression',
+    'exhaustiveDepsLiteral',
+    'exhaustiveDepsSpread',
+    'exhaustiveDepsNotArrayLiteral',
+    'exhaustiveDepsAsyncEffect',
+    'exhaustiveDepsMissingCallback',
+    'exhaustiveDepsUselessWithoutDependencies',
+    'exhaustiveDepsUnknownDependencies',
+    'exhaustiveDepsEffectEvent',
+    'exhaustiveDepsSetStateNoDependencies',
+    'exhaustiveDepsRefCleanup',
+    'exhaustiveDepsRequireExplicitEffectDeps',
+    'exhaustiveDepsStaleAssignment',
+];
+const messages = [
+    'This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.',
+    'This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.',
+    'This dependency array names the same value twice. The second copy changes nothing about when the Hook re-runs, so it is noise that will drift out of step with the first. Remove it.',
+    'This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.',
+    'A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.',
+    'A literal in a dependency array never changes between renders, so it can never cause the Hook to re-run and it is doing nothing. Remove it. If the intent was to depend on a variable of that name, write the variable without quotes.',
+    'A spread in a dependency array hides which values the Hook depends on, so neither React nor this rule can tell whether the list is right. Write the dependencies out one by one.',
+    'The dependency argument is not an array written at the call site, so its contents cannot be read here and nothing can cohere them. Pass an array literal.',
+    'An async effect callback returns a promise, and React expects the return value to be a cleanup function, so the cleanup never runs and overlapping runs race. Keep the callback synchronous and declare the async function inside it.',
+    'This Hook was called with no callback, so there is nothing for it to run. Pass the function the Hook is supposed to invoke.',
+    'useMemo and useCallback exist to reuse a value across renders, and they decide whether to reuse by comparing a dependency array. Called with only a callback there is nothing to compare, so the value is rebuilt every render and the Hook does nothing. Pass a dependency array.',
+    'The callback is not written at the call site, so what it reads cannot be seen here and the dependency array cannot be checked against it. Pass an inline function.',
+    "A function from useEffectEvent always sees the latest render's values, which is the whole reason it exists, so listing it as a dependency re-runs the effect for a change that could never have gone stale. Remove it from the array.",
+    'This effect sets state and has no dependency array, so it runs after every render, and the state it sets causes the next render. That is a loop with no exit. Pass a dependency array saying what the effect actually depends on.',
+    "A cleanup function runs after the component has moved on, so a ref read there gives whatever the ref points at then, not what it pointed at when the effect ran. Copy the ref's value into a local inside the effect and read that local in the cleanup.",
+    'This effect was called with no second argument, and the configuration asks every effect to say what it depends on. An effect with no array runs after every render, which is sometimes the intent and often an oversight nobody can tell apart from it. Pass a dependency array, or an explicit `undefined` to say every render is meant.',
+    "Assigning to a variable declared in the component body from inside a Hook writes to that render's copy, which is discarded when the next render makes a new one. Hold the value in a useRef so it survives, or move the variable inside the callback.",
+];
+// Production default options. All rule decisions remain native.
+
+export class ExhaustiveDeps {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly symbols: Unused;
+    constructor(rules: Rules, bindings: Bindings, symbols: Unused) {
+        this.rules = rules;
+        this.bindings = bindings;
+        this.symbols = symbols;
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.rules.parser.node(index).kind;
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    child(index: number, offset: number): number {
+        return index < 0 ? -1 : (this.rules.parser.node(index).children[offset] ?? -1);
+    }
+    last(index: number): number {
+        return index < 0
+            ? -1
+            : (this.rules.parser.node(index).children[this.rules.parser.node(index).children.length - 1] ?? -1);
+    }
+    text(index: number): string {
+        return index < 0 ? '' : this.rules.parser.node(index).text;
+    }
+    skip(index: number): number {
+        let current = index;
+        while(
+            [
+                'ParenthesizedExpression',
+                'NonNullExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+            ].includes(this.kind(current))
+        ) {
+            current = this.kind(current) === 'TypeAssertionExpression' ? this.last(current) : this.child(current, 0);
+        }
+        return current;
+    }
+    functionLike(index: number): boolean {
+        return (
+            this.bindings.functionKind(this.kind(index)) ||
+            [
+                'MethodSignature',
+                'CallSignature',
+                'JSDocSignature',
+                'ConstructSignature',
+                'IndexSignature',
+                'FunctionType',
+                'ConstructorType',
+            ].includes(this.kind(index))
+        );
+    }
+    contains(outer: number, inner: number): boolean {
+        for(let current = inner; current >= 0; current = this.parent(current)) {
+            if(current === outer) {
+                return true;
+            }
+        }
+        return false;
+    }
+    report(index: number, message: number): Diagnostic {
+        const node = this.rules.parser.node(index);
+        const finding = new Diagnostic(
+            'react-hooks/exhaustive-deps',
+            messageIds[message] ?? '',
+            messages[message] ?? '',
+            this.rules.byte(this.rules.start(node)),
+            this.rules.byte(node.end),
+            '',
+        );
+        this.rules.findings.push(finding);
+        return finding;
+    }
+    hook(index: number): string {
+        const callee = this.skip(index);
+        if(this.kind(callee) === 'Identifier') {
+            return this.text(callee);
+        }
+        if(
+            this.kind(callee) === 'PropertyAccessExpression' &&
+            this.kind(this.skip(this.child(callee, 0))) === 'Identifier' &&
+            this.text(this.skip(this.child(callee, 0))) === 'React' &&
+            this.kind(this.last(callee)) === 'Identifier'
+        ) {
+            return this.text(this.last(callee));
+        }
+        return '';
+    }
+    nonDependency(index: number): boolean {
+        const parent = this.parent(index);
+        for(let current = parent; current >= 0; current = this.parent(current)) {
+            const kind = this.kind(current);
+            if(
+                [
+                    'TypeReference',
+                    'FunctionType',
+                    'ConstructorType',
+                    'TypeQuery',
+                    'TypeLiteral',
+                    'ArrayType',
+                    'TupleType',
+                    'OptionalType',
+                    'RestType',
+                    'UnionType',
+                    'IntersectionType',
+                    'ConditionalType',
+                    'InferType',
+                    'ParenthesizedType',
+                    'ThisType',
+                    'TypeOperator',
+                    'IndexedAccessType',
+                    'MappedType',
+                    'LiteralType',
+                    'NamedTupleMember',
+                    'TemplateLiteralType',
+                    'TemplateLiteralTypeSpan',
+                    'ImportType',
+                    'TypePredicate',
+                    'StringKeyword',
+                    'NumberKeyword',
+                    'BooleanKeyword',
+                    'AnyKeyword',
+                    'UnknownKeyword',
+                    'NeverKeyword',
+                    'ObjectKeyword',
+                    'VoidKeyword',
+                    'UndefinedKeyword',
+                    'BigIntKeyword',
+                    'SymbolKeyword',
+                ].includes(kind)
+            ) {
+                return true;
+            }
+            if(this.functionLike(current) || kind === 'SourceFile') {
+                break;
+            }
+        }
+        const kind = this.kind(parent);
+        if(kind === 'PropertyAccessExpression') {
+            return this.last(parent) === index;
+        }
+        if(kind === 'PropertyAssignment') {
+            return this.child(parent, 0) === index;
+        }
+        if(
+            [
+                'QualifiedName',
+                'MethodDeclaration',
+                'PropertyDeclaration',
+                'PropertySignature',
+                'MethodSignature',
+                'GetAccessor',
+                'SetAccessor',
+                'EnumMember',
+                'ImportSpecifier',
+                'ImportClause',
+                'NamespaceImport',
+                'TypeParameter',
+                'TypeReference',
+                'TypeQuery',
+                'JsxAttribute',
+            ].includes(kind)
+        ) {
+            return this.bindings.shape.name(parent) === index;
+        }
+        return false;
+    }
+    identity(index: number): number {
+        const ids = this.symbols.identity(index);
+        return this.kind(this.parent(index)) === 'ShorthandPropertyAssignment' && ids.shorthand !== 0
+            ? ids.shorthand
+            : ids.own;
+    }
+    declarations(index: number): number[] {
+        const frames = new Frames(this.rules.ask(index, 'binding-declarations'));
+        header(frames, 'binding-declarations');
+        const declarations: number[] = [];
+        if(frames.yes()) {
+            frames.natural();
+            const length = frames.natural();
+            for(let at = 0; at < length; at++) {
+                const file = frames.field();
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                if(file !== this.rules.path) {
+                    continue;
+                }
+                const found = this.bindings.spans.get(`${kind}:${start}:${end}`) ?? -1;
+                if(found >= 0) {
+                    declarations.push(found);
+                }
+            }
+        }
+        frames.end();
+        return declarations;
+    }
+    earliest(index: number): number {
+        let earliest = -1;
+        for(const declared of this.declarations(index)) {
+            if(earliest < 0 || this.rules.parser.node(declared).pos < this.rules.parser.node(earliest).pos) {
+                earliest = declared;
+            }
+        }
+        return earliest;
+    }
+    /** @mutates optional Records which links use an explicit optional access. */
+    chain(index: number, optional: string[]): string {
+        const current = this.skip(index);
+        if(this.kind(current) === 'Identifier') {
+            return this.text(current);
+        }
+        if(this.kind(current) !== 'PropertyAccessExpression' || this.kind(this.last(current)) !== 'Identifier') {
+            return '';
+        }
+        const prefix = this.chain(this.child(current, 0), optional);
+        if(prefix === '') {
+            return '';
+        }
+        const path = `${prefix}.${this.text(this.last(current))}`;
+        if(
+            this.rules.parser.node(current).children.some((child) => this.kind(child) === 'QuestionDotToken') &&
+            !optional.includes(path)
+        ) {
+            optional.push(path);
+        }
+        return path;
+    }
+    root(index: number): number {
+        let current = this.skip(index);
+        while(this.kind(current) === 'PropertyAccessExpression') {
+            current = this.skip(this.child(current, 0));
+        }
+        return current;
+    }
+    outermost(index: number): number {
+        let current = index;
+        while(true) {
+            const parent = this.parent(current);
+            if(
+                [
+                    'ParenthesizedExpression',
+                    'NonNullExpression',
+                    'AsExpression',
+                    'SatisfiesExpression',
+                    'TypeAssertionExpression',
+                ].includes(this.kind(parent))
+            ) {
+                current = parent;
+                continue;
+            }
+            if(
+                this.kind(parent) !== 'PropertyAccessExpression' ||
+                this.child(parent, 0) !== current ||
+                this.kind(this.last(parent)) !== 'Identifier' ||
+                this.text(this.last(parent)) === 'current'
+            ) {
+                const holder = this.parent(current);
+                if(
+                    this.kind(current) === 'PropertyAccessExpression' &&
+                    this.kind(holder) === 'BinaryExpression' &&
+                    this.child(holder, 0) === current &&
+                    this.kind(this.child(holder, 1)) === 'EqualsToken'
+                ) {
+                    return this.child(current, 0);
+                }
+                return current;
+            }
+            const grandparent = this.parent(parent);
+            if(this.kind(grandparent) === 'CallExpression' && this.child(grandparent, 0) === parent) {
+                return current;
+            }
+            current = parent;
+        }
+    }
+    literal(index: number): boolean {
+        return [
+            'StringLiteral',
+            'NumericLiteral',
+            'BigIntLiteral',
+            'TrueKeyword',
+            'FalseKeyword',
+            'NullKeyword',
+            'NoSubstitutionTemplateLiteral',
+            'RegularExpressionLiteral',
+        ].includes(this.kind(this.skip(index)));
+    }
+    primitive(index: number): boolean {
+        return ['StringLiteral', 'NumericLiteral', 'NullKeyword', 'NoSubstitutionTemplateLiteral'].includes(
+            this.kind(this.skip(index)),
+        );
+    }
+    setterHook(declared: number): string {
+        const pattern = this.parent(declared);
+        if(this.kind(pattern) !== 'ArrayBindingPattern') {
+            return '';
+        }
+        const children = this.rules.parser.node(pattern).children;
+        if(
+            children.length !== 2 ||
+            children[1] !== declared ||
+            this.kind(this.parent(pattern)) !== 'VariableDeclaration'
+        ) {
+            return '';
+        }
+        const initializer = this.skip(this.bindings.shape.initializer(this.parent(pattern)));
+        return this.kind(initializer) === 'CallExpression' ? this.hook(this.child(initializer, 0)) : '';
+    }
+    reassigned(declared: number, component: number): boolean {
+        const name = this.bindings.shape.name(declared);
+        if(this.kind(name) !== 'Identifier') {
+            return false;
+        }
+        const symbol = this.identity(name);
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(
+                this.kind(index) !== 'BinaryExpression' ||
+                !this.contains(component, index) ||
+                this.kind(this.child(index, 1)) !== 'EqualsToken'
+            ) {
+                continue;
+            }
+            const target = this.skip(this.child(index, 0));
+            if(this.kind(target) === 'Identifier' && this.identity(target) === symbol) {
+                return true;
+            }
+        }
+        return false;
+    }
+    stable(index: number, component: number, visiting: readonly number[]): boolean {
+        const id = this.identity(index);
+        if(visiting.includes(id)) {
+            return false;
+        }
+        const declared = this.earliest(index);
+        const kind = this.kind(declared);
+        if(kind === 'BindingElement') {
+            return (
+                ['useState', 'useReducer', 'useActionState', 'useTransition'].includes(this.setterHook(declared)) &&
+                !this.reassigned(declared, component)
+            );
+        }
+        if(kind === 'FunctionDeclaration') {
+            return this.functionStable(declared, component, [...visiting, id]);
+        }
+        if(kind !== 'VariableDeclaration') {
+            return false;
+        }
+        const initializer = this.skip(this.bindings.shape.initializer(declared));
+        if(['ArrowFunction', 'FunctionExpression'].includes(this.kind(initializer))) {
+            return this.functionStable(initializer, component, [...visiting, id]);
+        }
+        const list = this.parent(declared);
+        if(
+            this.kind(list) === 'VariableDeclarationList' &&
+            this.rules.parser.node(list).semantic === '2' &&
+            this.primitive(initializer)
+        ) {
+            return true;
+        }
+        return (
+            this.kind(initializer) === 'CallExpression' &&
+            ['useRef', 'useEffectEvent'].includes(this.hook(this.child(initializer, 0)))
+        );
+    }
+    functionStable(functionIndex: number, component: number, visiting: readonly number[]): boolean {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.kind(index) !== 'Identifier' || !this.contains(functionIndex, index) || this.nonDependency(index)) {
+                continue;
+            }
+            const declarations = this.declarations(index);
+            if(declarations.some((declared) => this.contains(functionIndex, declared))) {
+                continue;
+            }
+            if(
+                declarations.some((declared) => this.contains(component, declared)) &&
+                !this.stable(index, component, visiting)
+            ) {
+                return false;
+            }
+        }
+        return true;
+    }
+    reads(callback: number, component: number): Read[] {
+        const reads: Read[] = [];
+        const order: number[] = [];
+        const queue: number[] = [callback];
+        for(let at = 0; at < queue.length; at++) {
+            const current = queue[at] ?? -1;
+            order.push(current);
+            const children = this.rules.parser.node(current).children;
+            // Depth-first order matches Go ForEachChild and its insertion-ordered advice.
+            for(let offset = children.length - 1; offset >= 0; offset--) {
+                queue.splice(at + 1, 0, children[offset] ?? -1);
+            }
+        }
+        for(const index of order) {
+            if(this.kind(index) !== 'Identifier' || this.nonDependency(index)) {
+                continue;
+            }
+            const declarations = this.declarations(index);
+            if(
+                declarations.some((declared) => this.contains(callback, declared)) ||
+                !declarations.some((declared) => this.contains(component, declared))
+            ) {
+                continue;
+            }
+            const call = this.parent(callback);
+            if(
+                this.kind(call) === 'CallExpression' &&
+                declarations.some(
+                    (declared) =>
+                        this.kind(declared) === 'VariableDeclaration' &&
+                        this.skip(this.bindings.shape.initializer(declared)) === call,
+                )
+            ) {
+                continue;
+            }
+            const optional: string[] = [];
+            const path = this.chain(this.outermost(index), optional);
+            if(path === '' || reads.some((read) => read.path === path)) {
+                continue;
+            }
+            reads.push(new Read(path, optional, this.stable(index, component, [])));
+        }
+        return reads;
+    }
+    recommend(reads: readonly Read[], declared: readonly Declared[], effect: boolean): Recommendation {
+        const result = new Recommendation();
+        const paths: string[] = [];
+        for(const read of reads) {
+            if(!read.stable) {
+                paths.push(read.path);
+            }
+        }
+        const satisfied: string[] = declared.map((entry) => entry.path);
+        for(const read of reads) {
+            if(read.stable) {
+                satisfied.push(read.path);
+            }
+        }
+        // Flattened trie traversal with explicit insertion-order child lists.
+        const nodes: string[] = [''];
+        for(const path of [...paths, ...satisfied]) {
+            let prefix = '';
+            for(const part of path.split('.')) {
+                prefix = prefix === '' ? part : `${prefix}.${part}`;
+                if(!nodes.includes(prefix)) {
+                    nodes.push(prefix);
+                }
+            }
+        }
+        const satisfying: string[] = [];
+        this.scanTree(
+            '',
+            nodes,
+            paths,
+            satisfied,
+            reads.map((read) => read.path),
+            result.missing,
+            satisfying,
+        );
+        const seen: string[] = [];
+        for(const entry of declared) {
+            if(satisfying.includes(entry.path)) {
+                if(!seen.includes(entry.path)) {
+                    seen.push(entry.path);
+                    result.suggested.push(entry.path);
+                }
+                else if(!result.duplicate.includes(entry.path)) {
+                    result.duplicate.push(entry.path);
+                }
+            }
+            else if(effect && !entry.path.endsWith('.current') && !entry.external) {
+                if(!seen.includes(entry.path)) {
+                    seen.push(entry.path);
+                    result.suggested.push(entry.path);
+                }
+            }
+            else if(!result.unnecessary.includes(entry.path)) {
+                result.unnecessary.push(entry.path);
+            }
+        }
+        for(const path of result.missing) {
+            result.suggested.push(path);
+        }
+        return result;
+    }
+    /**
+     * @mutates missing Accumulates unsatisfied read paths in traversal order.
+     * @mutates satisfying Records declared prefixes satisfying read subtrees.
+     */
+    scanTree(
+        prefix: string,
+        nodes: readonly string[],
+        paths: readonly string[],
+        satisfied: readonly string[],
+        used: readonly string[],
+        missing: string[],
+        satisfying: string[],
+    ): void {
+        for(const path of nodes) {
+            const parts = path.split('.');
+            const parent = parts.slice(0, -1).join('.');
+            if(path === '' || parent !== prefix) {
+                continue;
+            }
+            if(satisfied.includes(path)) {
+                if(used.some((read) => read === path || read.startsWith(`${path}.`))) {
+                    satisfying.push(path);
+                }
+                continue;
+            }
+            if(paths.includes(path)) {
+                if(!missing.includes(path)) {
+                    missing.push(path);
+                }
+                continue;
+            }
+            this.scanTree(path, nodes, paths, satisfied, used, missing, satisfying);
+        }
+    }
+    construction(index: number): boolean {
+        const current = this.skip(index);
+        if(
+            [
+                'ObjectLiteralExpression',
+                'ArrayLiteralExpression',
+                'ArrowFunction',
+                'FunctionExpression',
+                'ClassExpression',
+                'NewExpression',
+                'RegularExpressionLiteral',
+                'JsxElement',
+                'JsxFragment',
+                'JsxSelfClosingElement',
+            ].includes(this.kind(current))
+        ) {
+            return true;
+        }
+        if(this.kind(current) === 'ConditionalExpression') {
+            return this.construction(this.child(current, 2)) || this.construction(this.last(current));
+        }
+        if(this.kind(current) === 'BinaryExpression') {
+            const operator = this.kind(this.child(current, 1));
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator)) {
+                return this.construction(this.child(current, 0)) || this.construction(this.child(current, 2));
+            }
+            if(operator === 'EqualsToken') {
+                return this.construction(this.child(current, 2));
+            }
+        }
+        return false;
+    }
+    analyze(callback: number, deps: number, call: number, component: number, effect: boolean): void {
+        const functionNode = this.rules.parser.node(callback);
+        const context = astContext(
+            this.rules,
+            this.rules.path,
+            this.rules.byte(functionNode.pos),
+            this.rules.byte(functionNode.end),
+            functionNode.kind,
+        );
+        if(effect && context.async[0] === true) {
+            this.report(callback, 8);
+        }
+        const reads = this.reads(callback, component);
+        if(deps < 0) {
+            // Only direct reads of a state setter, excluding nested function bodies.
+            for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+                if(this.kind(index) !== 'Identifier' || !this.contains(callback, index) || this.nonDependency(index)) {
+                    continue;
+                }
+                let nested = false;
+                for(
+                    let current = this.parent(index);
+                    current >= 0 && current !== callback;
+                    current = this.parent(current)
+                ) {
+                    if(this.functionLike(current)) {
+                        nested = true;
+                        break;
+                    }
+                }
+                if(nested) {
+                    continue;
+                }
+                const declared = this.earliest(index);
+                if(
+                    this.kind(declared) === 'BindingElement' &&
+                    this.contains(component, declared) &&
+                    !this.contains(callback, declared) &&
+                    this.setterHook(declared) === 'useState'
+                ) {
+                    this.report(call, 13);
+                    break;
+                }
+            }
+            return;
+        }
+        const declared: Declared[] = [];
+        const entryIndexes: number[] = [];
+        const entryMessages: number[] = [];
+        const array = this.skip(deps);
+        if(this.kind(array) !== 'ArrayLiteralExpression') {
+            entryIndexes.push(deps);
+            entryMessages.push(7);
+        }
+        else {
+            for(const element of this.rules.parser.node(array).children) {
+                if(this.kind(element) === 'OmittedExpression') {
+                    continue;
+                }
+                let warning = -1;
+                if(this.kind(element) === 'SpreadElement') {
+                    warning = 6;
+                }
+                else {
+                    const root = this.skip(element);
+                    const declaration = this.kind(root) === 'Identifier' ? this.earliest(root) : -1;
+                    const initializer =
+                        this.kind(declaration) === 'VariableDeclaration'
+                            ? this.skip(this.bindings.shape.initializer(declaration))
+                            : -1;
+                    if(
+                        this.kind(initializer) === 'CallExpression' &&
+                        this.contains(component, declaration) &&
+                        this.hook(this.child(initializer, 0)) === 'useEffectEvent'
+                    ) {
+                        warning = 12;
+                    }
+                    else {
+                        const key = this.chain(element, []);
+                        if(key === '') {
+                            warning = this.literal(element) ? 5 : 4;
+                        }
+                        else {
+                            const identifier = this.root(element);
+                            const local =
+                                this.kind(identifier) === 'Identifier' &&
+                                this.declarations(identifier).some((binding) => this.contains(component, binding));
+                            declared.push(new Declared(key, element, !local));
+                        }
+                    }
+                }
+                if(warning >= 0) {
+                    entryIndexes.push(element);
+                    entryMessages.push(warning);
+                }
+            }
+        }
+        const recommendation = this.recommend(reads, declared, effect);
+        const message =
+            recommendation.missing.length > 0
+                ? 0
+                : recommendation.unnecessary.length > 0
+                  ? 1
+                  : recommendation.duplicate.length > 0
+                    ? 2
+                    : -1;
+        if(message < 0) {
+            for(const entry of declared) {
+                if(entry.path.includes('.')) {
+                    continue;
+                }
+                const root = this.skip(entry.index);
+                if(this.kind(root) !== 'Identifier') {
+                    continue;
+                }
+                const binding = this.earliest(root);
+                if(binding < 0 || !this.contains(component, binding) || this.contains(callback, binding)) {
+                    continue;
+                }
+                if(
+                    ['FunctionDeclaration', 'ClassDeclaration'].includes(this.kind(binding)) ||
+                    (this.kind(binding) === 'VariableDeclaration' &&
+                        this.kind(this.bindings.shape.name(binding)) === 'Identifier' &&
+                        this.construction(this.bindings.shape.initializer(binding)))
+                ) {
+                    this.report(binding, 3);
+                }
+            }
+        }
+        else {
+            const suggested =
+                !effect && recommendation.missing.length > 0
+                    ? this.recommend(reads, [], effect).suggested
+                    : recommendation.suggested;
+            const keys = declared.map((entry) => entry.path);
+            let sorted = true;
+            for(let index = 1; index < keys.length; index++) {
+                if((keys[index - 1] ?? '') > (keys[index] ?? '')) {
+                    sorted = false;
+                }
+            }
+            if(sorted) {
+                suggested.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+            }
+            const formatted: string[] = [];
+            for(const path of suggested) {
+                const parts = path.split('.');
+                let value = parts[0] ?? '';
+                for(let index = 1; index < parts.length; index++) {
+                    const prefix = parts.slice(0, index + 1).join('.');
+                    value += `${reads.some((read) => read.optional.includes(prefix)) ? '?.' : '.'}${parts[index] ?? ''}`;
+                }
+                formatted.push(value);
+            }
+            const finding = this.report(deps, message);
+            finding.suggestions.push(
+                new Suggestion(
+                    'exhaustiveDepsUpdateArray',
+                    `Update the dependency array to [${formatted.join(', ')}].`,
+                    [],
+                ),
+            );
+        }
+        for(let index = 0; index < entryIndexes.length; index++) {
+            this.report(entryIndexes[index] ?? -1, entryMessages[index] ?? -1);
+        }
+    }
+    check(call: number): void {
+        const name = this.hook(this.child(call, 0));
+        const callbackIndex =
+            name === 'useImperativeHandle'
+                ? 1
+                : ['useEffect', 'useLayoutEffect', 'useCallback', 'useMemo'].includes(name)
+                  ? 0
+                  : -1;
+        if(callbackIndex < 0) {
+            return;
+        }
+        let component = this.parent(call);
+        while(component >= 0 && !this.functionLike(component)) {
+            component = this.parent(component);
+        }
+        if(component < 0) {
+            return;
+        }
+        const node = this.rules.parser.node(call);
+        const argumentsStart = node.children.length - node.list;
+        if(node.list <= callbackIndex) {
+            this.report(call, 9);
+            return;
+        }
+        let deps = node.list > callbackIndex + 1 ? (node.children[argumentsStart + callbackIndex + 1] ?? -1) : -1;
+        if(this.kind(deps) === 'Identifier' && this.text(deps) === 'undefined') {
+            deps = -1;
+        }
+        const effect = ['useEffect', 'useLayoutEffect'].includes(name);
+        if(deps < 0 && !effect) {
+            if(['useMemo', 'useCallback'].includes(name)) {
+                this.report(call, 10);
+            }
+            return;
+        }
+        let callback = this.skip(node.children[argumentsStart + callbackIndex] ?? -1);
+        if(this.kind(callback) === 'Identifier') {
+            if(deps < 0) {
+                return;
+            }
+            const array = this.skip(deps);
+            if(
+                this.kind(array) === 'ArrayLiteralExpression' &&
+                this.rules.parser
+                    .node(array)
+                    .children.some(
+                        (element) =>
+                            this.kind(this.skip(element)) === 'Identifier' &&
+                            this.text(this.skip(element)) === this.text(callback),
+                    )
+            ) {
+                return;
+            }
+            const binding = this.earliest(callback);
+            if(this.kind(binding) === 'FunctionDeclaration') {
+                callback = binding;
+            }
+            else if(this.kind(binding) === 'VariableDeclaration') {
+                const initializer = this.skip(this.bindings.shape.initializer(binding));
+                if(initializer < 0) {
+                    this.report(call, 11);
+                    return;
+                }
+                if(!['ArrowFunction', 'FunctionExpression'].includes(this.kind(initializer))) {
+                    this.report(deps, 0);
+                    return;
+                }
+                callback = initializer;
+            }
+            else {
+                this.report(call, 11);
+                return;
+            }
+        }
+        else if(!['ArrowFunction', 'FunctionExpression'].includes(this.kind(callback))) {
+            this.report(call, 11);
+            return;
+        }
+        this.analyze(callback, deps, call, component, effect);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.kind(index) === 'CallExpression' && this.parent(index) >= 0) {
+                this.check(index);
+            }
+        }
+    }
+}

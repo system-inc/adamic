@@ -98,3 +98,15 @@ The core promise-rejection rule is reserved by this correction before any code
 for it. The prior exhaustive-deps reservation is released; its already-written
 native default implementation and JSX parser failures will be retained as
 reviewable supplemental work, not presented as a completed extra allocation.
+
+### Correction refresh and skip
+
+A fresh origin fetch after the correction found exact core-rule reservations on
+waves 07, 18, 20, 24 and 26. Therefore `prefer-promise-reject-errors` is skipped
+and this attempted reservation is released before any implementation was written.
+Wave 01 also mentions skipping it, and wave 04's compressed audit lists its name;
+those two mentions are not represented as worker allocations.
+
+The two eligible original reservations, prefer-regex-literals and prefer-rest-params,
+remain this wave's implemented allocation. The supplemental exhaustive-deps
+implementation remains released and is limited by shared JSX parsing.
