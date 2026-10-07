@@ -33,3 +33,22 @@ origin refs, are:
 The scan inspected 33 distinct Markdown claim blobs, finding 96 claimed inventory
 rules, and 25 checker-dependent existing ports. It leaves 76 unclaimed entries.
 This update is pushed before second-batch implementation.
+
+## Third batch
+
+The second batch is complete and pushed in `deb33e49`. After fetching all
+origin heads on October 7, the first three remaining candidates in the combined
+by-volume ranking, excluding ports on origin/main and origin/codex/tsgo-c-library
+and claim documents on all 356 origin refs, are:
+
+| Rule | Combined findings |
+| --- | ---: |
+| prefer-promise-reject-errors | 0 |
+| prefer-regex-literals | 0 |
+| prefer-rest-params | 0 |
+
+The scan inspected 33 distinct Markdown claim blobs, finding 132 claimed
+checker-dependent inventory rules and 25 existing checker-dependent ports.
+It leaves 40 unclaimed entries before these three claims. Compressed test
+evidence beneath claims/ was excluded from claim documents. This update is
+pushed before third-batch implementation.
