@@ -1,0 +1,34 @@
+[
+  {
+    "command": [
+      "rg",
+      "-n",
+      "high_level_intermediate_representation|AnalyzePreservedManualMemoization|AssignReactiveScopes|refsEnvironment",
+      "stage1",
+      "--glob",
+      "*.a",
+      "--glob",
+      "*.ts",
+      "--glob",
+      "*.go",
+      "--glob",
+      "!wave_04_react/**"
+    ],
+    "exit": 1,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "command": [
+      "rg",
+      "-n",
+      "react|hir|memo|phi",
+      "bridge/tsgo/checker",
+      "--glob",
+      "*.go"
+    ],
+    "exit": 1,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  }
+]

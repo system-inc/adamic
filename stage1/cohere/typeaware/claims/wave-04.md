@@ -64,3 +64,8 @@ rules named in remote claim files are excluded. The first three remaining are:
 These three are claimed before implementation. Their zero inventory counts are
 selection evidence only. Native code will live in `wave_04_react/`; shared harness
 and registration files remain outside this worker's changes.
+
+Second continuation status: reporting portions are compiled and tested in
+`758b9c60`. The three React analyses remain unfinished and claimed, blocked by
+missing native React HIR and the shared parser's JSX support. No further rules
+are claimed. See [the precise blocker report](../wave_04_react/REPORT.md).
