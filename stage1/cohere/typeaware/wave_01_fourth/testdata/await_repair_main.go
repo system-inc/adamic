@@ -1,0 +1,8 @@
+package main
+
+import (
+	"fmt"
+	"github.com/system-inc/cohere/internal/lint/rules/core"
+)
+
+func main() { fmt.Print(string(core.Wave01AwaitRepairCapture())) }

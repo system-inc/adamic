@@ -414,3 +414,42 @@ full-rule throughput coverage is claimed. Existing full-rule gates were unchange
 and not repeated. No new claims were taken and no shared files were edited. Full
 await checker-demand and source-range/repair analysis, full atomic integration
 and symbol native-driver integration remain unfinished.
+
+## Await whitespace and semicolon repair continuation
+
+Added require_await/repair.a. Adamic consumes exactly space, tab, LF and CR
+after async and decides whether deletion must insert a semicolon. It checks
+continuation by bracket/parenthesis or the ASCII byte-boundary rules Go uses
+for in/instanceof, predecessor property initializer or statement status, and
+an existing trailing semicolon. The structural predecessor facts and async
+keyword end are still supplied, not reconstructed from a native driver here.
+
+An independent Go overlay parses 24 controls and captures raw suffix/predecessor
+fields. Expected whitespace lengths and replacements come from unchanged
+requireAwaitAsyncKeywordRange and requireAwaitReplacement. Every output byte
+matches native under ASan/UBSan/LSan. Controls include comments, empty property
+initializers, preceding methods, tabs, NBSP, keyword prefixes, dollar boundaries
+and non-ASCII names. Whitespace consumed is ASCII, so its UTF-16 length equals
+its byte count; no byte-offset conversion is used in this helper. No Go regex
+is present in these source predicates; this preserves their existing byte tests.
+
+The identifier-boundary mutant drops dollar from the continuation guard. It
+compiles, exits zero with empty sanitizer stderr and fails only byte comparison.
+Exact captures and streams are preserved in validation/await-repair.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_repair.py /workspace/wave01-await-repair /workspace/wave-01-fourth-adamic > /tmp/wave01-await-repair.log 2>&1
+```
+
+Output: PASS 24 Go whitespace and semicolon decisions; sanitizer-clean
+identifier-boundary mutant caught by bytes. gofmt and git diff --check pass.
+Main/area bases remain unchanged. No new claims or shared edits were made.
+Full await head-range/token/sibling discovery and contextual checker demand,
+full atomic integration and symbol native integration remain unfinished.
+No full-rule timing or new checker-handle check is claimed for this pure helper.
+
+The complete stage-1 gate, including the 17 newly required external correctness
+comparisons, was not run for this isolated helper. No check was disabled,
+relaxed, deleted or invoked with missing inputs and called green. Existing
+completed-rule corpus gates were not repeated and remain separately recorded.

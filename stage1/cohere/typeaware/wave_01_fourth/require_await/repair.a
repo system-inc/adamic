@@ -1,0 +1,36 @@
+export function asyncWhitespace(suffix: string): number {
+    let end = 0;
+    while(end < suffix.length) {
+        const code = suffix.charCodeAt(end);
+        if(code !== 32 && code !== 9 && code !== 10 && code !== 13) {
+            break;
+        }
+        end++;
+    }
+    return end;
+}
+function identifierByte(code: number): boolean {
+    return (code >= 97 && code <= 122) || (code >= 65 && code <= 90) || (code >= 48 && code <= 57) || code === 95 || code === 36;
+}
+export function awaitReplacement(suffix: string, previousProperty: boolean, previousInitializer: boolean, previousStatement: boolean, previousText: string): string {
+    const after = asyncWhitespace(suffix);
+    const rest = suffix.slice(after);
+    let continues = rest.startsWith('[') || rest.startsWith('(');
+    for(const keyword of ['instanceof', 'in']) {
+        if(rest.startsWith(keyword) && (rest.length === keyword.length || !identifierByte(rest.charCodeAt(keyword.length)))) {
+            continues = true;
+        }
+    }
+    if(!continues || (!(previousProperty && previousInitializer) && !previousStatement)) {
+        return '';
+    }
+    let end = previousText.length;
+    while(end > 0) {
+        const code = previousText.charCodeAt(end - 1);
+        if(code !== 32 && code !== 9 && code !== 10 && code !== 13) {
+            break;
+        }
+        end--;
+    }
+    return end === 0 || previousText.charCodeAt(end - 1) !== 59 ? ';' : '';
+}
