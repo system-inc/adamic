@@ -71,3 +71,7 @@ volume and lexical ties are reserved here:
 - prefer-arrow-callback (combined volume 0)
 
 Implementation begins only after this claim commit is pushed successfully.
+
+Claim abdad124 was pushed before implementation. These three native .a ports
+and their byte comparisons, mutants, sanitizers and released-handle checks are
+complete in WAVE_25_FOURTH_REPORT.md. No additional rules are claimed.

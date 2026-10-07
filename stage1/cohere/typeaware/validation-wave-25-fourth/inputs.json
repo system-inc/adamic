@@ -1,0 +1,2204 @@
+[
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-000.ts",
+    "sha256": "bb6cb4109f2bb1f56d9f2fa397b5a7ab0fcf1a8b7ef724d36436c35c3ea69c6f",
+    "parse_valid": true,
+    "source": "throw new Error();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-001.ts",
+    "sha256": "e560e17f08b9ee7ddaa435bf9cb8bddef69d2bfdf472d498e315d4757cf444c8",
+    "parse_valid": true,
+    "source": "throw new Error('error');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-002.ts",
+    "sha256": "13e7c79a9921d710e0111599d388169580678bd0205e2aff7fecb9c216cbf31f",
+    "parse_valid": true,
+    "source": "throw Error('error');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-003.ts",
+    "sha256": "cd96f661fdbee01e95a33224a6c7018c764f0d252039b638194f9fc68d1693e4",
+    "parse_valid": true,
+    "source": "var e = new Error(); throw e;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-004.ts",
+    "sha256": "44760cf404c7c5cede085719246cbb20488a4d4dd1bae1d55259d39d2c71c19a",
+    "parse_valid": true,
+    "source": "function foo(undefined) { throw undefined; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-005.ts",
+    "sha256": "494b1e06b799737499d2241daff4934a2e31d37e635daea429b4db62f9ae8790",
+    "parse_valid": true,
+    "source": "try {throw new Error();} catch (e) {throw e;};\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-006.ts",
+    "sha256": "cf6031fe42dc69602d41ddee2d10dcbb56fbb3245fe08ea30a8ef8b44fefa67f",
+    "parse_valid": true,
+    "source": "throw a;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-007.ts",
+    "sha256": "e6ee6d0b7b913e30ce9d9f1e6206d39936dfa1f9238a6cd0969d1a2f6c900393",
+    "parse_valid": true,
+    "source": "throw foo();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-008.ts",
+    "sha256": "bc9ab8c48203437d7c61ff6d707ba8b5fd973fae0a6d8f176241de65fef5ca60",
+    "parse_valid": true,
+    "source": "throw new foo();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-009.ts",
+    "sha256": "adbe2df6c0aecd53e47650eca260f5e5ffada7b2462cf71a27f5f064b3899363",
+    "parse_valid": true,
+    "source": "throw foo.bar;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-010.ts",
+    "sha256": "5f56389ee757c41ccd179c4dfbeab64e03686ea741febf3b896bef75f74832fa",
+    "parse_valid": true,
+    "source": "throw foo[bar];\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-011.ts",
+    "sha256": "f979f1e9b5c6cce03ad0531ed7d258e24acf485a8b3ade3dc094a03867efe4bc",
+    "parse_valid": true,
+    "source": "class C { #field; foo() { throw foo.#field; } }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-012.ts",
+    "sha256": "20211dd8c138a6cf486a9c515460309fa35d3a77b32ba2f6afa7c9b5559b2e01",
+    "parse_valid": true,
+    "source": "throw foo = new Error();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-013.ts",
+    "sha256": "e06f44fa4c965a27730a67ca16b98cfb893bbe984fffe7527663161853c23e33",
+    "parse_valid": true,
+    "source": "throw foo.bar ||= 'literal'\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-014.ts",
+    "sha256": "3ee531421da2286c4d771371445c35a4122ccd60c719732f0357a9fcb1cd21d0",
+    "parse_valid": true,
+    "source": "throw foo[bar] ??= 'literal'\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-015.ts",
+    "sha256": "b8c1c3abac08c5ca8c0452989cd1cae7fcc49ee2fccac6c3d43583d0f7ed2cd7",
+    "parse_valid": true,
+    "source": "throw 1, 2, new Error();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-016.ts",
+    "sha256": "5f04ed50ef25e0bf8b14e9fe8e639897e19e945c6d516785a74451864fe77896",
+    "parse_valid": true,
+    "source": "throw 'literal' && new Error();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-017.ts",
+    "sha256": "70b60efcde345079c6b845a8f35457562522eba9cb6a80bb38e0556aa1988574",
+    "parse_valid": true,
+    "source": "throw new Error() || 'literal';\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-018.ts",
+    "sha256": "632e1f4c9c85f95ce413fc23910a55717b62da3a5f3626966dfab12f0f6adee3",
+    "parse_valid": true,
+    "source": "throw foo ? new Error() : 'literal';\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-019.ts",
+    "sha256": "f912548b181bdde774847065649a99894e9befd2da8dd97b71a8aa2d2c0874b4",
+    "parse_valid": true,
+    "source": "throw foo ? 'literal' : new Error();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-020.ts",
+    "sha256": "8a7dc62e01e3ed2f7249936fec14d770315290ef957ad7ae3662366d8c7bcbf4",
+    "parse_valid": true,
+    "source": "throw tag `${foo}`;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-021.ts",
+    "sha256": "de19c757e8fb177488e6688c13c9d362fe9ce06c3a620ed63a581145fd91be89",
+    "parse_valid": true,
+    "source": "function* foo() { var index = 0; throw yield index++; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-022.ts",
+    "sha256": "d4d24c3c3486f624bd9bb9133a7546d817fe5d7170bec49ee037bd54bcf9f40f",
+    "parse_valid": true,
+    "source": "async function foo() { throw await bar; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-023.ts",
+    "sha256": "82be3669fd3a182aad2c2fcf774e4620bc41c1ad317718bc565d22220f186126",
+    "parse_valid": true,
+    "source": "throw obj?.foo\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-024.ts",
+    "sha256": "19c2adab6bf8984c69c8df76154656ab1722706bbd95020c9b8f7a0fe1973daa",
+    "parse_valid": true,
+    "source": "throw obj?.foo()\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-025.ts",
+    "sha256": "6a8bd7d4f02dd9f35777f21350e827129ec40057ee06bffa3b21fde1ee633545",
+    "parse_valid": true,
+    "source": "throw 'error';\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-026.ts",
+    "sha256": "f86850087374afa028b6e9f5938aa372a865bdbd3554ca63df63a0ecdc7963e6",
+    "parse_valid": true,
+    "source": "throw 0;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-027.ts",
+    "sha256": "ee78c841b39438d737ec0bc2bd99c12c6f0cabdd4b1fa44cbfcb8f56e0ca66b5",
+    "parse_valid": true,
+    "source": "throw false;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-028.ts",
+    "sha256": "17251a2ea1e2647c4cb5946abd42b5b85660566a1dc7fcc13d14c415024f2bfb",
+    "parse_valid": true,
+    "source": "throw null;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-029.ts",
+    "sha256": "1fd4bd3d441b444c625bada8a182527efcffcbccf9ab0e75ac44763b20172570",
+    "parse_valid": true,
+    "source": "throw {};\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-030.ts",
+    "sha256": "a7c8ec5639f04abb61250048f91112e118ccd231bfe7d079ccbe4a37b26bc17a",
+    "parse_valid": true,
+    "source": "throw 'a' + 'b';\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-031.ts",
+    "sha256": "55b93dbc52f7c470dc5d26aab26d7f7e2e91aaf5749eb8af3a9bda4d0468ba84",
+    "parse_valid": true,
+    "source": "var b = new Error(); throw 'a' + b;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-032.ts",
+    "sha256": "f2e7fa7b792f010e729df7831d3dd16acb5ab7687725bbc886888d1b5bbefe4c",
+    "parse_valid": true,
+    "source": "throw foo = 'error';\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-033.ts",
+    "sha256": "e2abbde612feea0a53ba0b03632b09cc726ac3ae203134f6c1e758a85f03dc44",
+    "parse_valid": true,
+    "source": "throw foo += new Error();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-034.ts",
+    "sha256": "7a6cd9aaf7a8ee9140cc58d96be3cdddde3b9deb5245c6c71fdc540e584256a5",
+    "parse_valid": true,
+    "source": "throw foo &= new Error();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-035.ts",
+    "sha256": "62cd9b44de7050d4335ad7f950c387e1750e461e037bd6e7407a74a01436a905",
+    "parse_valid": true,
+    "source": "throw foo &&= 'literal'\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-036.ts",
+    "sha256": "79161b594cb12d438c6a43ec016acaa543afdc2702f0f9ecbf55e855da6a6c0d",
+    "parse_valid": true,
+    "source": "throw new Error(), 1, 2, 3;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-037.ts",
+    "sha256": "20a28d5ea94fc134852db30736878ccaf2997f551b442ec7a0d972a865ed86a7",
+    "parse_valid": true,
+    "source": "throw 'literal' && 'not an Error';\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-038.ts",
+    "sha256": "aabca48f60181594644e47a9ad6e4c3596272971d78284f67f7d1b8720527c4c",
+    "parse_valid": true,
+    "source": "throw foo && 'literal'\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-039.ts",
+    "sha256": "196c1bdf36676a98550d828aa22d5083358cf9cd6b7a7aeaa49f9f31fbc6e0f0",
+    "parse_valid": true,
+    "source": "throw foo ? 'not an Error' : 'literal';\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-040.ts",
+    "sha256": "f23bb1e90dc1ede023fa2ff59a053f212d1e4cceda6ed1a664f9c63574a6b35b",
+    "parse_valid": true,
+    "source": "throw `${err}`;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-041.ts",
+    "sha256": "1a8549e6e0803f75f3e26044e435ff3e45d75747fade7e55d22e0070add22013",
+    "parse_valid": true,
+    "source": "throw undefined;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-042.ts",
+    "sha256": "3ecf451367a5aee3391caa6db97e4fe7d138a4b56b8cfb7de6ddee4a0626b8d4",
+    "parse_valid": true,
+    "source": "declare const foo: unknown;\nthrow new Error() ?? 'literal';\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-043.ts",
+    "sha256": "6c89c45c7d7239a634e0d9d351382f016c03919330b6bf6661bb5a35f60cc3ac",
+    "parse_valid": true,
+    "source": "declare const foo: unknown;\nthrow 'a' ?? 'b';\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-044.ts",
+    "sha256": "f2d1ac1c6c99dc7ad3844861c798144b9f9eba1a8411b45db190302534dac784",
+    "parse_valid": true,
+    "source": "declare let foo: unknown;\nthrow foo ??= 'literal';\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-045.ts",
+    "sha256": "ac71e2ceaa07e4563d291f276185873d4932396ff0017029bbe5e683f92f9ae7",
+    "parse_valid": false,
+    "source": "function f() { throw; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-046.ts",
+    "sha256": "738f6a6003236b29c8f314b51c9bd79de69e286227245727e34230b7e03ffabc",
+    "parse_valid": true,
+    "source": "function foo() { throw undefined; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-047.ts",
+    "sha256": "cf0554d41d3ef5db0140349e7fd3920cb6268ab95218faddc872b38658ae6ea5",
+    "parse_valid": true,
+    "source": "/(b)(\\2a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-048.ts",
+    "sha256": "51dba3ef1e63fad88d400483b9ec135a019650d89f86860b27769b883ded0898",
+    "parse_valid": true,
+    "source": "/\\k<foo>(?<foo>bar)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-049.ts",
+    "sha256": "ff1f5999ff55c442382ae52da8e905afbe4ea160b8e2f74597f94634829b30ca",
+    "parse_valid": true,
+    "source": "RegExp('(a|bc)|\\\\1')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-050.ts",
+    "sha256": "24af4ffbcef03f0aa7aa6103a47223f21aef287d1266db6c572782780353d36a",
+    "parse_valid": true,
+    "source": "new RegExp('(?!(?<foo>\\\\n))\\\\1')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-051.ts",
+    "sha256": "62a82a07f76e053c839e5376949f2f4f99d2c696eaee9bb01c1956457af8f696",
+    "parse_valid": true,
+    "source": "/(?<!(a)\\1)b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-052.ts",
+    "sha256": "974480c34a8d205475af264c858804a4e5f127c8911c10f7f1d193736790fad0",
+    "parse_valid": true,
+    "source": "new RegExp('(\\\\1)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-053.ts",
+    "sha256": "37bba7444c33532a4487bf56e6841da1b9e201e8a547156677a895fe60b5a670",
+    "parse_valid": true,
+    "source": "/^(a\\1)$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-054.ts",
+    "sha256": "19e2114e97bf8a9fc36a3283be6312efeb4e3491027ca29b0b64fa6fa2c5cd14",
+    "parse_valid": true,
+    "source": "/^((a)\\1)$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-055.ts",
+    "sha256": "25569beb730a875fc2c2c5562b4f9596b3059a7b88151578bec3f78244ee4786",
+    "parse_valid": true,
+    "source": "new RegExp('^(a\\\\1b)$')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-056.ts",
+    "sha256": "8a7d2be85cedfb8f24bec954beddcffcd11586ca5666e590b9cfdabd5154f099",
+    "parse_valid": true,
+    "source": "RegExp('^((\\\\1))$')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-057.ts",
+    "sha256": "01f7361ac59d7417088dd69203a08941b4913cfce675787ec722148a58f858a9",
+    "parse_valid": true,
+    "source": "/((\\2))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-058.ts",
+    "sha256": "e55a85665014df9f132864fc25f683e3203e184a4af37f23e6d651f2ec476da2",
+    "parse_valid": true,
+    "source": "/a(?<foo>(.)b\\1)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-059.ts",
+    "sha256": "a36b1f7e4fd23dbf536447c670eebccb0248502a92429182b966e7c5db7b51d1",
+    "parse_valid": true,
+    "source": "/a(?<foo>\\k<foo>)b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-060.ts",
+    "sha256": "987fd1ba3a10b018479fc3cfe7d0461fa4a73ddf086b537b5b09b14d9e5799b6",
+    "parse_valid": true,
+    "source": "/^(\\1)*$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-061.ts",
+    "sha256": "5c06b17bbaf49bbce966f7b0425312c555fcf254d16a30d8f6f9ae7bc87d1ba4",
+    "parse_valid": true,
+    "source": "/^(?:a)(?:((?:\\1)))*$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-062.ts",
+    "sha256": "3de141be7e0af24851c38ab38933df10264ee63df1c2088a5c09223ed51169b0",
+    "parse_valid": true,
+    "source": "/(?!(\\1))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-063.ts",
+    "sha256": "f3fa4dc9cc9bdec27b336612fec2c1e86fcb9968ac522bff54903183ad968ae1",
+    "parse_valid": true,
+    "source": "/a|(b\\1c)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-064.ts",
+    "sha256": "08921daccc32cc278aee99f4c65dd315405fc22f342b15dc2abeec65db236fdf",
+    "parse_valid": true,
+    "source": "/(a|(\\1))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-065.ts",
+    "sha256": "066ee283081d68855ab8482ba8e0f83aeaaddc25a04c210ebbdae40331ce1725",
+    "parse_valid": true,
+    "source": "/(a|(\\2))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-066.ts",
+    "sha256": "01fdc2db90b4ff64e8b2b04da6733cf4374a2d3cf0647354cfa22fcb44ac83b5",
+    "parse_valid": true,
+    "source": "/(?:a|(\\1))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-067.ts",
+    "sha256": "1d66dad2e5e00945dde45ef7d2146c6389b55f5f272870732efb178ffcf4f5cc",
+    "parse_valid": true,
+    "source": "/(a)?(b)*(\\3)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-068.ts",
+    "sha256": "f0c628f02bf3a877f6c18cace858e3e880a56ab385a495a250c6e364bf5c3d64",
+    "parse_valid": true,
+    "source": "/(?<=(a\\1))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-069.ts",
+    "sha256": "26568b9af157faafad4ec2c96e4d3007397142c440f0c852a55ce7387e17a98f",
+    "parse_valid": true,
+    "source": "/\\1(a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-070.ts",
+    "sha256": "aa4e49c4d4f2efe41b9a3b12c7e00a148d3b846a69590b6b84504ec43b4c275c",
+    "parse_valid": true,
+    "source": "/\\1.(a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-071.ts",
+    "sha256": "a793ed1700abeaf849ffb5fc1ce5f8979222cb0123f75e649d11d277763aa490",
+    "parse_valid": true,
+    "source": "/(?:\\1)(?:(a))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-072.ts",
+    "sha256": "b3426d378d1d514ac5f5e7859c31bcadb209ef26833742510dea166056592f88",
+    "parse_valid": true,
+    "source": "/(?:\\1)(?:((a)))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-073.ts",
+    "sha256": "c6989976bbde19de6efd0363f5b482f3c13a20469c93ca613ea2281f2fa69580",
+    "parse_valid": true,
+    "source": "/(?:\\2)(?:((a)))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-074.ts",
+    "sha256": "c3f5d988407220b23a3e65b8dd105ffec698da9ff10f1a318d6e87499c8f7cf3",
+    "parse_valid": true,
+    "source": "/(?:\\1)(?:((?:a)))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-075.ts",
+    "sha256": "78c6c9ceaf3e294562afbcd71e5ac1799113989263357d5185ae7076281fcfc0",
+    "parse_valid": true,
+    "source": "/(\\2)(a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-076.ts",
+    "sha256": "060c55f8d051c61b23208b4202a197d0a4034bc1ccd9fb55bbfbaf4ca12cd84b",
+    "parse_valid": true,
+    "source": "RegExp('(a)\\\\2(b)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-077.ts",
+    "sha256": "62463c1d55dae4dc3a9ebf5e6acec1b2402bf39893ef772fd875ccaa1bab4a50",
+    "parse_valid": true,
+    "source": "/(?:a)(b)\\2(c)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-078.ts",
+    "sha256": "04e3811219e68d0312fdb48be6be1d6a60dc02935a341c4d31b98f77a821725d",
+    "parse_valid": true,
+    "source": "/\\k<foo>(?<foo>a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-079.ts",
+    "sha256": "729fbc2a4f5f7920c2108cfee1a4c9f1726b7ff48fd66593e28ffd4565d2dc09",
+    "parse_valid": true,
+    "source": "/(?:a(b)\\2)(c)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-080.ts",
+    "sha256": "c0f6e0c63ba3b337e49c3bf7ec790c6f4121250aab5c9f8ae22258a52fff9262",
+    "parse_valid": true,
+    "source": "new RegExp('(a)(b)\\\\3(c)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-081.ts",
+    "sha256": "fef3a237db8f4dee14580ab2abc78a79119bc13f9aea83879f00e72b1a3f2b86",
+    "parse_valid": true,
+    "source": "/\\1(?<=(a))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-082.ts",
+    "sha256": "ab3e4d0659a7fb4e961b46ea46f35bdd02a28887b85b32cfb88aba122e16ea43",
+    "parse_valid": true,
+    "source": "/\\1(?<!(a))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-083.ts",
+    "sha256": "8bb7e336116f833a34add03c45455b1e59d582a03f836e57ed6395d71ee511e3",
+    "parse_valid": true,
+    "source": "/(?<=\\1)(?<=(a))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-084.ts",
+    "sha256": "af81c7afcc50bc16757a0c5fd3ab04365cd5fe5517dd16aa9bff13dc59f6deb5",
+    "parse_valid": true,
+    "source": "/(?<!\\1)(?<!(a))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-085.ts",
+    "sha256": "6f7049028f8dc80d6005e76b1f0cffe14877171a480cacbc4d229acbfb3c75d0",
+    "parse_valid": true,
+    "source": "/(?=\\1(a))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-086.ts",
+    "sha256": "1107c84475561587f20a89e3cd6871a52e410bb0e0bf57952f2ded47fd461b80",
+    "parse_valid": true,
+    "source": "/(?!\\1(a))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-087.ts",
+    "sha256": "96145feea98ac7c4e53d29210614a26bfea0b506c6354792592d61e36186cb4a",
+    "parse_valid": true,
+    "source": "/(?<=(a)\\1)b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-088.ts",
+    "sha256": "76dd367a9dd8b0ae36a0eae74db95829110eb9ea2b9367b9bdcb9b3d69521c21",
+    "parse_valid": true,
+    "source": "/(?<!.(a).\\1.)b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-089.ts",
+    "sha256": "4fa36733ba00f769312e7d971940c727c7789f23c517c5d36ecbdb259ea15b65",
+    "parse_valid": true,
+    "source": "/(.)(?<!(b|c)\\2)d/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-090.ts",
+    "sha256": "90cbc47691d400352468c91942ef6af8e2183277193ba30d3fd4007b55744fe3",
+    "parse_valid": true,
+    "source": "/(?<=(?:(a)\\1))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-091.ts",
+    "sha256": "b033a458394c5824222a39cb9f6fb39dd065545931e1e40cb64d4bacf435d289",
+    "parse_valid": true,
+    "source": "/(?<=(?:(a))\\1)b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-092.ts",
+    "sha256": "48b103ff7dc351b4066b7c6d3750cc473c9985b7b9b22412275b3fdee74d3326",
+    "parse_valid": true,
+    "source": "/(?<=(a)(?:\\1))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-093.ts",
+    "sha256": "f0c3e3dffda41b9bfeb9a5ff02dccd2efdb7434905695c81b991197954037511",
+    "parse_valid": true,
+    "source": "/(?<!(?:(a))(?:\\1))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-094.ts",
+    "sha256": "bdb4efdd1a33c1e7a67e41ff6016a5d7f0df2d9e1ccca18fbff78decc43b0525",
+    "parse_valid": true,
+    "source": "/(?<!(?:(a))(?:\\1)|.)b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-095.ts",
+    "sha256": "41056685603cc0067829fd2e9476ee7847809de6bd12ba2b0b8cab9a3efac2db",
+    "parse_valid": true,
+    "source": "/.(?!(?<!(a)\\1))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-096.ts",
+    "sha256": "b07e51b58d2a8842e3517d2a4669af45831fef5089fad0d45ff54497bb706c16",
+    "parse_valid": true,
+    "source": "/.(?=(?<!(a)\\1))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-097.ts",
+    "sha256": "736626e5f95a953b52a555742114bd11bccb2f40f0c9dba4362e5f7cb27cd0d7",
+    "parse_valid": true,
+    "source": "/.(?!(?<=(a)\\1))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-098.ts",
+    "sha256": "56f4dd87a11bfdbbaeedc94cfd90ee6d5b5d2b210708244e6d1e5bf2b0ea2dda",
+    "parse_valid": true,
+    "source": "/.(?=(?<=(a)\\1))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-099.ts",
+    "sha256": "593e161e0641114c04efae0cd1cc3b4f8dd99bad9d8c695b3cbd2242acb88aef",
+    "parse_valid": true,
+    "source": "/(a)|\\1b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-100.ts",
+    "sha256": "54b729bb81df66a19ec3435edd48d1e06a45386215f84c28d3b932a50a02c7d6",
+    "parse_valid": true,
+    "source": "/^(?:(a)|\\1b)$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-101.ts",
+    "sha256": "409f81e0b904c5272ccdad9cc9735081cc28676f354882617f7f191ba7068156",
+    "parse_valid": true,
+    "source": "/^(?:(a)|b(?:c|\\1))$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-102.ts",
+    "sha256": "a18b7e877772dc781612f005f275250c5c8e3b0df6a44af26ae03f300323208e",
+    "parse_valid": true,
+    "source": "/^(?:a|b(?:(c)|\\1))$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-103.ts",
+    "sha256": "c718c6fa317f23ff602abe334a2781ccaa8ded581db80a35e5db47e8d3a9ac5c",
+    "parse_valid": true,
+    "source": "/^(?:(a(?!b))|\\1b)+$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-104.ts",
+    "sha256": "3f7b45b5c62f38a5a4efb854fc5e513c7f68646fca393d16ac53a0479bfed819",
+    "parse_valid": true,
+    "source": "/^(?:(?:(a)(?!b))|\\1b)+$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-105.ts",
+    "sha256": "f3c61541b855a68e1625caf0d16efadce1600c4ec2d8e2c1649f297af9c37470",
+    "parse_valid": true,
+    "source": "/^(?:(a(?=a))|\\1b)+$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-106.ts",
+    "sha256": "0d374386adea066fec8e291b16b2a63e50f1c9e53af4079673c652656ef199ea",
+    "parse_valid": true,
+    "source": "/^(?:(a)(?=a)|\\1b)+$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-107.ts",
+    "sha256": "e1750b7c70e88ae1311650be7a7b787406ed5b716abd70e14c85ca9988e6a2a3",
+    "parse_valid": true,
+    "source": "/.(?:a|(b)).|(?:(\\1)|c)./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-108.ts",
+    "sha256": "8cd111ea7bef31ad15388a9d244d8f23fedea9a81a8af4e1019a1a39f190e469",
+    "parse_valid": true,
+    "source": "/.(?!(a)|\\1)./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-109.ts",
+    "sha256": "28e10a2e9f5f072b93bbcf636fd75bc3a241522cc688d619b898fe4516c9ee69",
+    "parse_valid": true,
+    "source": "/.(?<=\\1|(a))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-110.ts",
+    "sha256": "c0478e8d3973eb1a4553fcaed9cd0cbf101b51baacb6e790b98c63ea4825846f",
+    "parse_valid": true,
+    "source": "/a(?!(b)).\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-111.ts",
+    "sha256": "8ac8ecf969ae9d471b1d17f2a9168066206fcded229e7c161a3a6e147047fb18",
+    "parse_valid": true,
+    "source": "/(?<!(a))b\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-112.ts",
+    "sha256": "fd0193ecd9c3b0d4d0f4df9a12b5f251a90c23cefcd76cf2ae3cd85dfa61879a",
+    "parse_valid": true,
+    "source": "/(?<!(a))(?:\\1)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-113.ts",
+    "sha256": "f8df4ff70a1a9dc4b8715e6e00baf2c9b1143e53936f1d0f795085dc383b1aca",
+    "parse_valid": true,
+    "source": "/.(?<!a|(b)).\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-114.ts",
+    "sha256": "60c7588c90b275ead03c9c2e018e923efdae8dc765c2492250234fa401f8de3f",
+    "parse_valid": true,
+    "source": "/.(?!(a)).(?!\\1)./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-115.ts",
+    "sha256": "607741cbd20e06605532f0dc10f8f2408f20e2c9847d25cd11570b0ffb0bf9a2",
+    "parse_valid": true,
+    "source": "/.(?<!(a)).(?<!\\1)./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-116.ts",
+    "sha256": "61032fb2054bfb3616a74235da4c6a389c7e9101ac3e1c546c01f699daeb2462",
+    "parse_valid": true,
+    "source": "/.(?=(?!(a))\\1)./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-117.ts",
+    "sha256": "d0469295ce2f5cbec7e1b3476c73980fa11365357d4601ffb9f24c0cde28cf7b",
+    "parse_valid": true,
+    "source": "/.(?<!\\1(?!(a)))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-118.ts",
+    "sha256": "1042a22d0be0ba67dad13274c24488f47cb91f787122469758e11fb10bb9a525",
+    "parse_valid": true,
+    "source": "/\\1(a)(b)\\2/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-119.ts",
+    "sha256": "507bcf61aa63556f1d360c8772636712f3de94937ba310618de4d96394de7ccf",
+    "parse_valid": true,
+    "source": "/\\1(a)\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-120.ts",
+    "sha256": "4bff87faa24a144498433259e5b57b3f4e44a9d7ae551420ef68249e7ab3382e",
+    "parse_valid": true,
+    "source": "/\\1(a)\\2(b)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-121.ts",
+    "sha256": "4d517691b3e4771589e202631a0e3394585d9d352058f59cbc45fd15d3dcdadf",
+    "parse_valid": true,
+    "source": "/\\1.(?<=(a)\\1)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-122.ts",
+    "sha256": "cbcefb20b0881fe97763baacd695a3455dc7c25e538d64dab9112d77c4e53eac",
+    "parse_valid": true,
+    "source": "/(?!\\1(a)).\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-123.ts",
+    "sha256": "bc90e8e769e1538f298d8f47fdd7fa18991d133b8bb1ec4590d3a9ffd1869e46",
+    "parse_valid": true,
+    "source": "/(a)\\2(b)/; RegExp('(\\\\1)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-124.ts",
+    "sha256": "333f60f899f870323bbb7b6b79586533e6750a44752facfb9dd0a459d1334629",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1(a){', flags);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-125.ts",
+    "sha256": "b9222ed6fb78c425ad81603c130e10463662860c206d32a710640a2627cd8be5",
+    "parse_valid": true,
+    "source": "new RegExp('\\\\1([[A--B]])', 'v')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-126.ts",
+    "sha256": "1ef1ab1f26e5610a52c9b44fb8bccf0f717124c50350ec494e21e39227deb866",
+    "parse_valid": true,
+    "source": "/\\k<foo>((?<foo>bar)|(?<foo>baz))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-127.ts",
+    "sha256": "23ec8d98c97749883b479befd2a87e9787ba576595a003773fdd30b08f96e64f",
+    "parse_valid": true,
+    "source": "/((?<foo>bar)|\\k<foo>(?<foo>baz))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-128.ts",
+    "sha256": "1c242e215753a3a141cd5883161a2fd8c1ccb72fe82107ba565a60a8b569ef3d",
+    "parse_valid": true,
+    "source": "/\\k<foo>((?<foo>bar)|(?<foo>baz)|(?<foo>qux))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-129.ts",
+    "sha256": "fe6fdefca758c8734f3056dd62c104b9fafbe81c7c9e1d2da1f85aad91807849",
+    "parse_valid": true,
+    "source": "/((?<foo>bar)|\\k<foo>(?<foo>baz)|(?<foo>qux))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-130.ts",
+    "sha256": "958b7e9862eeb1b97d1c8899414bd04e376d048c764c196a06f830eb41492c4c",
+    "parse_valid": true,
+    "source": "/((?<foo>bar)|\\k<foo>|(?<foo>baz))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-131.ts",
+    "sha256": "6f466cb9622f01580c8b3b032b49caaf619e414180200cb25208d1e62724aadf",
+    "parse_valid": true,
+    "source": "/((?<foo>bar)|\\k<foo>|(?<foo>baz)|(?<foo>qux))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-132.ts",
+    "sha256": "1410018002a2501977a2661fb72713a0e760028cca843a5244d68df26b20bc6f",
+    "parse_valid": true,
+    "source": "/((?<foo>bar)|(?<foo>baz\\k<foo>)|(?<foo>qux\\k<foo>))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-133.ts",
+    "sha256": "4291a38cf4a97828cd1d3fdc8bf70a1f4e7373c11ebc7ed0cf1f3b61994628c2",
+    "parse_valid": true,
+    "source": "/(?<=((?<foo>bar)|(?<foo>baz))\\k<foo>)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-134.ts",
+    "sha256": "2f5504807333dfdfda1b9f1ea035cdde752adb4944b1cf408c74afb57100cc1a",
+    "parse_valid": true,
+    "source": "/((?!(?<foo>bar))|(?!(?<foo>baz)))\\k<foo>/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-135.ts",
+    "sha256": "bf49347dd5a2300b850600161b1fe9551af0fd4215066c78a63d0be9088a0fc2",
+    "parse_valid": false,
+    "source": "'\\1(a)'\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-136.ts",
+    "sha256": "cb74d05ce37cb6b627e108bc02716bb6a3b1059f83e279e6df8067b2e0d9392a",
+    "parse_valid": true,
+    "source": "regExp('\\\\1(a)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-137.ts",
+    "sha256": "c8449b50d3781b8dc67f9d74ba1e7d360e2b3ee8f6fad97891920bb4678e6c8a",
+    "parse_valid": true,
+    "source": "new Regexp('\\\\1(a)', 'u')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-138.ts",
+    "sha256": "f9ee1e831f04b0ff2dfca4499bf3c4aeece80ab83ac575c1d9e8016f32383ca4",
+    "parse_valid": true,
+    "source": "RegExp.foo('\\\\1(a)', 'u')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-139.ts",
+    "sha256": "c016875401c27cc798e189e3512638c898d8a8b4f80cc6655e81a3bc8703359b",
+    "parse_valid": true,
+    "source": "new foo.RegExp('\\\\1(a)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-140.ts",
+    "sha256": "1c8af5af2a8d7d01f6b8abeeac92e3232633b10211af8156f397e36c45771194",
+    "parse_valid": true,
+    "source": "RegExp(p)\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-141.ts",
+    "sha256": "2fe5e6ba22d8d8a79c49a02a9d3f77d65a20f092adc05e0b5e32466f8b465fb8",
+    "parse_valid": true,
+    "source": "new RegExp(p, 'u')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-142.ts",
+    "sha256": "303df433e8b2e41eac9fe6a499bcd1502213d707fe7249f2b7385fdaa8efc574",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1(a)' + suffix)\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-143.ts",
+    "sha256": "66785110ebc5a507535179ce18cad6311836a81f9fe2d7782b8b6b1e528fb0b3",
+    "parse_valid": true,
+    "source": "new RegExp(`${prefix}\\\\1(a)`)\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-144.ts",
+    "sha256": "4237f25d45791717451af1506406a6953bb97ef647461c5601e6f58f6585ab90",
+    "parse_valid": true,
+    "source": "/(?:)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-145.ts",
+    "sha256": "d80112ab1f05cedbbcefe9dc427daf20268f267b17688a434a493b50a3963e6b",
+    "parse_valid": true,
+    "source": "/(?:a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-146.ts",
+    "sha256": "59b5244229e72b271c064322387a8dccb411a96b0bae97d0bc59bf0022a67ed8",
+    "parse_valid": true,
+    "source": "new RegExp('')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-147.ts",
+    "sha256": "d52090f7f175fb3b6a7006fc7e9ebe3898735e074ef3fa809cc8767650e51439",
+    "parse_valid": true,
+    "source": "RegExp('(?:a)|(?:b)*')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-148.ts",
+    "sha256": "7297a949eeea6e999aa50f9da31c118fe4260620504e481245eecea8fa9780a4",
+    "parse_valid": true,
+    "source": "/^ab|[cd].\\n$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-149.ts",
+    "sha256": "c2d73f602cfc921756037b4cc207aadee286ea71aa0dc8542c9b8956626fc013",
+    "parse_valid": true,
+    "source": "/(a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-150.ts",
+    "sha256": "45b267047522274bca8dd345b4d80683ad6518cf54a1604ba2fa4ae63dcab28b",
+    "parse_valid": true,
+    "source": "RegExp('(a)|(b)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-151.ts",
+    "sha256": "959fd87632cbdc632f6eee57f504bba1056b97343a7cc071888bd3bd7e78728a",
+    "parse_valid": true,
+    "source": "new RegExp('\\\\n\\\\d(a)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-152.ts",
+    "sha256": "2c5238de0932402bbd8aea6fe5cca8c7f47c601029af537f2e0153c16ff3c8be",
+    "parse_valid": true,
+    "source": "/\\0(a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-153.ts",
+    "sha256": "e4ae04e315e5905354d85a43ee09cf0f95c7a2820e69beb3e9752fe3257d5e85",
+    "parse_valid": true,
+    "source": "/\\0(a)/u\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-154.ts",
+    "sha256": "3efc7d4ed9ea26c5c9ca0a9cf1356146e1486f1196da3ea0cb3dabaedd5ad56d",
+    "parse_valid": true,
+    "source": "/(?<=(a))(b)(?=(c))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-155.ts",
+    "sha256": "b7cd1a509c0c47471b1e90eccffaf7f15d5bb1fc1b8b1acbb9ba41529e679e9e",
+    "parse_valid": true,
+    "source": "/(?<!(a))(b)(?!(c))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-156.ts",
+    "sha256": "d000fddd0badcdcfc44f0aa8791b744d3cc0b8a5e2f824f3532f2ce2e65a12f2",
+    "parse_valid": true,
+    "source": "/(?<foo>a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-157.ts",
+    "sha256": "1063b57385c60d50d1f7b956d70b1e144e237b1e9229ab60e822cd6989def183",
+    "parse_valid": false,
+    "source": "RegExp('\\1(a)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-158.ts",
+    "sha256": "661d894a5cbea564b9221cc7546810dffdd469bc6e7c3b213203f58765aeb241",
+    "parse_valid": true,
+    "source": "RegExp('\\\\\\\\1(a)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-159.ts",
+    "sha256": "1032634a7de342a9a53c43d45b01cfb5f2b4aa6f6208fddbb0cbe7fd09687140",
+    "parse_valid": true,
+    "source": "/\\\\1(a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-160.ts",
+    "sha256": "7f02460ff1374483f9063605498d8343cc58924dc62e03f5545364faba512668",
+    "parse_valid": true,
+    "source": "/\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-161.ts",
+    "sha256": "ed67795ed9aae2f747ac839f1dcbcdac524ad4cabfe464e047b30f410ef95858",
+    "parse_valid": true,
+    "source": "/^\\1$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-162.ts",
+    "sha256": "9cb18c18121b559ed5cce31a3d970ee74b67cc598df76a2d93576093ddeb32dc",
+    "parse_valid": true,
+    "source": "/\\2(a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-163.ts",
+    "sha256": "c7a4cbc8210eb12b6b8ca707447479cbb5c422a9d7a902351129b184b2f54f9a",
+    "parse_valid": true,
+    "source": "/\\1(?:a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-164.ts",
+    "sha256": "8e2a4211a77c61407a2a1c96f285938a08782d80df51e5bab8ed0138685993dd",
+    "parse_valid": true,
+    "source": "/\\1(?=a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-165.ts",
+    "sha256": "aef1fc60307ae9b76e184ad331fa78ed2a0ca0ed43ead01b8b2121868653fb87",
+    "parse_valid": true,
+    "source": "/\\1(?!a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-166.ts",
+    "sha256": "9bad236850ecd3219e598f867dfcf5af3392088dc5a0b4e4c148ffdfed6a53c6",
+    "parse_valid": true,
+    "source": "/^[\\1](a)$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-167.ts",
+    "sha256": "efbd8da4ec32afbb36fb64ea68ff3d639971d6cd846c68658faa075f3384ef27",
+    "parse_valid": true,
+    "source": "new RegExp('[\\\\1](a)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-168.ts",
+    "sha256": "6c2553d87e2980bec1541dca3c6509540dfd975161135486d8002029c1cddb7a",
+    "parse_valid": true,
+    "source": "/\\11(a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-169.ts",
+    "sha256": "9eaf6cc7f354adf2633d274e57f9ba64e726f5306fa702d4e467b9da7a47188b",
+    "parse_valid": true,
+    "source": "/\\k<foo>(a)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-170.ts",
+    "sha256": "a1bfb02d7051689bd511da0996710c86516b5308abcc5a6718801e5493cbe579",
+    "parse_valid": true,
+    "source": "/^(a)\\1\\\\2$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-171.ts",
+    "sha256": "f1ea2f1a6e6169a998a8b78b74664fd05b19ae2483534baead2b3749402df3b4",
+    "parse_valid": true,
+    "source": "/(a)\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-172.ts",
+    "sha256": "e3c6a19d54ae64602d75e8efc4814a93148d074a7e2853ba551af98eee254f51",
+    "parse_valid": true,
+    "source": "/(a).\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-173.ts",
+    "sha256": "67c57e2d5e0288b151b9fea1b050de1e272167bc7102eb29b4292c4edfe04f9f",
+    "parse_valid": true,
+    "source": "RegExp('(a)\\\\1(b)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-174.ts",
+    "sha256": "aa0c332c70524cd049852433a164dc629fea473b7fdd072c165baa5a029490b9",
+    "parse_valid": true,
+    "source": "/(a)(b)\\2(c)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-175.ts",
+    "sha256": "082cdd420ce80f2095b91774650c228eadcd82189f4a34c80748c6a1570602e1",
+    "parse_valid": true,
+    "source": "/(?<foo>a)\\k<foo>/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-176.ts",
+    "sha256": "426468c518a215ec3defd6025e7b255e108e559b34fa8bfbd9d51421fe7c2898",
+    "parse_valid": true,
+    "source": "new RegExp('(.)\\\\1')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-177.ts",
+    "sha256": "ef63eacb29b2e58e06840fca7fb25cc2b818dac89e52c29c55a01b2ad7faa09a",
+    "parse_valid": true,
+    "source": "RegExp('(a)\\\\1(?:b)')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-178.ts",
+    "sha256": "c55d4389d0da5a795b51ea076eae15067f44c082fbb24a50665ed40c925fecc8",
+    "parse_valid": true,
+    "source": "/(a)b\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-179.ts",
+    "sha256": "40ad18c03dc46792e5e569fcc7240b945d3e3cd3f879114d739ebfe385c36bf6",
+    "parse_valid": true,
+    "source": "/((a)\\2)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-180.ts",
+    "sha256": "20bf21d8e411e2f866d179a5faedee3f045abc8e4c8b3391d60d1ac8cb2dbcc2",
+    "parse_valid": true,
+    "source": "/((a)b\\2c)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-181.ts",
+    "sha256": "761e002d88aa5ccf73fabc437bfaf168fe4fea2643a47fa306de2e356682b2af",
+    "parse_valid": true,
+    "source": "/^(?:(a)\\1)$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-182.ts",
+    "sha256": "7867843aa5f2922523a0e160db2947018a60a3cef70a7d5f293498f97745cc05",
+    "parse_valid": true,
+    "source": "/^((a)\\2)$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-183.ts",
+    "sha256": "5e812f101ec48830a704812c444c5c7fde708d86df3a052a73a07d400620857a",
+    "parse_valid": true,
+    "source": "/^(((a)\\3))|b$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-184.ts",
+    "sha256": "4034ef886b60681fe648750d412ba994bd36b6c07b33921113da270372f9948a",
+    "parse_valid": true,
+    "source": "/a(?<foo>(.)b\\2)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-185.ts",
+    "sha256": "c7b4474aa7a09aa2ac000eae9aec889b8e5f605c9681c763042f197c99597133",
+    "parse_valid": true,
+    "source": "/(a)?(b)*(\\1)(c)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-186.ts",
+    "sha256": "66c4486f2dc564e3322dffd26f1679b5af4909c8a1714d99a0237a09f843727b",
+    "parse_valid": true,
+    "source": "/(a)?(b)*(\\2)(c)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-187.ts",
+    "sha256": "785204a821c20f47b2d47154642054f9dc5391e63105a6fe92423b293209ba3e",
+    "parse_valid": true,
+    "source": "/(?<=(a))b\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-188.ts",
+    "sha256": "688292a7367510fb8cdada12eba11681ae2e89e29857b2b04d413a857108313e",
+    "parse_valid": true,
+    "source": "/(?<=(?=(a)\\1))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-189.ts",
+    "sha256": "4db8e39f28f390aff3c5e3fed2b432d91fc495a213ad333ebe2cd46ed2092e65",
+    "parse_valid": true,
+    "source": "/(?<!\\1(a))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-190.ts",
+    "sha256": "def3228edb28b53e39470135af4960f36b47d79eedc3662a0b216cb6f690ec5e",
+    "parse_valid": true,
+    "source": "/(?<=\\1(a))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-191.ts",
+    "sha256": "c39502bfb18194c897a5a1f34a2978cd9ef84c0fa3c8af09d1afbdb5fc08dab0",
+    "parse_valid": true,
+    "source": "/(?<!\\1.(a))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-192.ts",
+    "sha256": "e39ff7a30584d3850f211d922d339efdc6ec78c5b3519672935fa8eebfe7ab24",
+    "parse_valid": true,
+    "source": "/(?<=\\1.(a))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-193.ts",
+    "sha256": "44a79e58fcfda9804050049530a5db6d8bcc78b5ff89c92da3d73535a1ed8140",
+    "parse_valid": true,
+    "source": "/(?<=(?:\\1.(a)))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-194.ts",
+    "sha256": "2914383a0ca0410c071cef74cbdab5ffdb3c8f4fa5f7a78b2e2d5021eb5ed279",
+    "parse_valid": true,
+    "source": "/(?<!(?:\\1)((a)))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-195.ts",
+    "sha256": "18b2028c9f1b689830011a68deee4f222927462872a6bd9ad7c788e63a824934",
+    "parse_valid": true,
+    "source": "/(?<!(?:\\2)((a)))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-196.ts",
+    "sha256": "6d932b9c148e5aaa43da97ea8786a61b9c30631102761e2436e9c060efca9ef1",
+    "parse_valid": true,
+    "source": "/(?=(?<=\\1(a)))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-197.ts",
+    "sha256": "259221afd0bd301ba1d59bf521e48b495842de2e857b6152c16659eed82d0625",
+    "parse_valid": true,
+    "source": "/(?=(?<!\\1(a)))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-198.ts",
+    "sha256": "5811696e7ca8d757355ace9518b71d30d4592a6bbc0d67843e338dfb72218f74",
+    "parse_valid": true,
+    "source": "/(.)(?<=\\2(a))b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-199.ts",
+    "sha256": "c61f0bd274f1d77844855fae788fadb16d195b498ac5b5aa9682227c16a5bbf6",
+    "parse_valid": true,
+    "source": "/^(a)\\1|b/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-200.ts",
+    "sha256": "a8609cfa7e0d8c789deeb9b8a945698bba8525a94ab4e314da66b8a2741ff7d8",
+    "parse_valid": true,
+    "source": "/^a|(b)\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-201.ts",
+    "sha256": "dc70d28e0d6a6a2103aed3bc21497d5b339c0f7551e570fcef1fb1b4a3b28704",
+    "parse_valid": true,
+    "source": "/^a|(b|c)\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-202.ts",
+    "sha256": "caafb3116e09cf3f21d706dbd0db7ad92b2f77c11319ea80473b2dc1f9e5cbee",
+    "parse_valid": true,
+    "source": "/^(a)|(b)\\2/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-203.ts",
+    "sha256": "2d240c7ede9736e470f609437652b6ffe50a2770ffe90ae390559d431b67a836",
+    "parse_valid": true,
+    "source": "/^(?:(a)|(b)\\2)$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-204.ts",
+    "sha256": "0ecc7e3dadfe044c722f472220f3d6c8c3755e5c42f0079a908fa892c1e5c9a9",
+    "parse_valid": true,
+    "source": "/^a|(?:.|(b)\\1)/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-205.ts",
+    "sha256": "bba34bf5ff31297e866ff333417e89adbbe282eb29d4ea30fcd510bb48010038",
+    "parse_valid": true,
+    "source": "/^a|(?:.|(b).(\\1))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-206.ts",
+    "sha256": "d30fbc8e8f9164a9c14f4919aae82d121b2e25a5782ce90aa1d86044797750b0",
+    "parse_valid": true,
+    "source": "/^a|(?:.|(?:(b)).(\\1))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-207.ts",
+    "sha256": "13754c3fc856f16a8f703bfd3ddc6cf0ad0e83b005d65415019581f8b7fcccaa",
+    "parse_valid": true,
+    "source": "/^a|(?:.|(?:(b)|c).(\\1))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-208.ts",
+    "sha256": "9011f05c67c1961aaef4558d7deeec4967ec77ad3da07c3b9ddbf9f1e249eb05",
+    "parse_valid": true,
+    "source": "/^a|(?:.|(?:(b)).(\\1|c))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-209.ts",
+    "sha256": "a135e826c9380cb09a56a762dc9f48086fdeae74939350fbfd43e8cea3bfcef2",
+    "parse_valid": true,
+    "source": "/^a|(?:.|(?:(b)|c).(\\1|d))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-210.ts",
+    "sha256": "f613d5ca73a7ccdcd04e9d34a0d46e158ae73afb77bb9fe4974b3c3839d0fb04",
+    "parse_valid": true,
+    "source": "/.(?=(b))\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-211.ts",
+    "sha256": "bf1bc44816cd7ae4bff21a0062aabad7553975c6bf0753c40d8cf272f3fd7bcd",
+    "parse_valid": true,
+    "source": "/.(?<=(b))\\1/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-212.ts",
+    "sha256": "d9b2f407d268c18c80db0a7503b9690c08a75dd1f1c875b821a933a8f8b3d510",
+    "parse_valid": true,
+    "source": "/a(?!(b)\\1)./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-213.ts",
+    "sha256": "71030147328c5e41014a7dda8db24311f786ef0a9bd75f282fdf571080fcc688",
+    "parse_valid": true,
+    "source": "/a(?<!\\1(b))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-214.ts",
+    "sha256": "d0df17f380a459dd3f01d4fb98a757debf1d7baae7b0cd290a48ef9ea92b7381",
+    "parse_valid": true,
+    "source": "/a(?!(b)(\\1))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-215.ts",
+    "sha256": "9a402656101f49d1acdf3b6fb91cf01beb359cddf0032877643667df80185943",
+    "parse_valid": true,
+    "source": "/a(?!(?:(b)\\1))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-216.ts",
+    "sha256": "45356bf51af907139ecf94b7114b7afd8967031e58d65b556dbb1c81ac5982c1",
+    "parse_valid": true,
+    "source": "/a(?!(?:(b))\\1)./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-217.ts",
+    "sha256": "4541a9e088b6d2f2884edf72f1dc1be4a41f75617b8ae48c2a12bcb8ca393370",
+    "parse_valid": true,
+    "source": "/a(?<!(?:\\1)(b))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-218.ts",
+    "sha256": "f15801028630976a53ac2e8086ced0208f7526dd127e39ebd745587dd8418eda",
+    "parse_valid": true,
+    "source": "/a(?<!(?:(?:\\1)(b)))./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-219.ts",
+    "sha256": "a960421dbd7a2f65737521465885417f5ca84b089fc733e9367f397c3b40861b",
+    "parse_valid": true,
+    "source": "/(?<!(a))(b)(?!(c))\\2/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-220.ts",
+    "sha256": "946e21e4ab36d6287503af86e43d76767c9ffba2c06644420f617d203a3d5799",
+    "parse_valid": true,
+    "source": "/a(?!(b|c)\\1)./\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-221.ts",
+    "sha256": "c31ea46147dc75084a8d9b1ef7cfb9e845ce8ea7b6a094305bcfd059b3ddeb36",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1(a)[')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-222.ts",
+    "sha256": "2ae3dba04dde51ac77b257b202426abc364ce834203a935317e9aaf2a73d870e",
+    "parse_valid": true,
+    "source": "new RegExp('\\\\1(a){', 'u')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-223.ts",
+    "sha256": "df5fe9ac403201f76501b8ca0b7f16452fc4ca5760eb8197e5d03beb51d5033b",
+    "parse_valid": true,
+    "source": "new RegExp('\\\\1(a)\\\\2', 'ug')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-224.ts",
+    "sha256": "4333ad1aeec62bb8b08d4c14dce50643f91e346b3831c756214de05fb6f86bdb",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1(a)\\\\k<foo>', 'u')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-225.ts",
+    "sha256": "3031597c098704ed5d580e71700e59e673e227ec8f4ac02af2e7e5cce5e1f7df",
+    "parse_valid": true,
+    "source": "new RegExp('\\\\k<foo>(?<foo>a)\\\\k<bar>')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-226.ts",
+    "sha256": "578b307d90a17e029bcff105e7f33a8348f3fc6cc056debcf34da31743d8bd72",
+    "parse_valid": true,
+    "source": "new RegExp('([[A--B]])\\\\1', 'v')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-227.ts",
+    "sha256": "499db3716e54295782e4611707da126c9f39b9b68cc356895f52b86c1a8372f8",
+    "parse_valid": true,
+    "source": "new RegExp('[[]\\\\1](a)', 'v')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-228.ts",
+    "sha256": "f6d59a3dc4c9c6723a8b987fea53d3f2dece045452337f02b59e12e08f568009",
+    "parse_valid": true,
+    "source": "/((?<foo>bar)\\k<foo>|(?<foo>baz))/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-229.ts",
+    "sha256": "0798665dc6d2c31345c259fe97bc5de1254653e86457a3a5129863ddf2e63876",
+    "parse_valid": true,
+    "source": "/\\1(a)\\2/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-230.ts",
+    "sha256": "22ed8da865ce9099747b81d4d385a5e2439d2d95482eb3e685be8e5cfd331c5e",
+    "parse_valid": true,
+    "source": "/\\1(a)\\2/u\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-231.ts",
+    "sha256": "32a49f054cc663a1b2dd1080a38059fd2c0ee2a35965ca06eb0fdd755b442bcd",
+    "parse_valid": true,
+    "source": "RegExp(/\\1(a)/, '');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-232.ts",
+    "sha256": "005b82a80bb820fcaf7875d9091ce22ad1dc1f820ef03c15bb7c09e21863ad2d",
+    "parse_valid": true,
+    "source": "const flags = 'gus'; RegExp('\\\\1(a){', flags);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-233.ts",
+    "sha256": "5efec348de7686d959addee2c08f77aa2d0c38beb7cae5120a1227cd1695a19a",
+    "parse_valid": true,
+    "source": "let flags = 'u'; flags = ''; RegExp('\\\\1(a){', flags);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-234.ts",
+    "sha256": "96f66828eb379a844bf6df4f3aafdd0a1ecc2253609f9ccf78ce790cf549c1e4",
+    "parse_valid": true,
+    "source": "RegExp(String.raw`\\1(a)`);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-235.ts",
+    "sha256": "2a536d662fa440cf5853480fb7d0107c1338dab6aac1e13071c67e999b1f49d8",
+    "parse_valid": true,
+    "source": "x = /(a|\\1b)/g\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-236.ts",
+    "sha256": "c82000b69cfa8faf44d742beb3e02049c5f5b0c6f059f02badfe5904b7f6c21b",
+    "parse_valid": true,
+    "source": "foo;\nnew RegExp(\n  '\\\\1(a)'\n)\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-237.ts",
+    "sha256": "41e077fd48e841f0bbbcb3b973a41b792d6fc1ca7a8c8c1dae7b68f28d298a35",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1(a')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-238.ts",
+    "sha256": "21d3d262854aa538a0f662118c40c6d48afbae1f51b09f69d2386c6d6a23e2f5",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1(a))')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-239.ts",
+    "sha256": "0b0759fd9fcdc47a36e0b88ccdb75ee09bdc59f4c14b9ac89547766629f6aaa9",
+    "parse_valid": true,
+    "source": "RegExp('(a)\\\\1\\\\')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-240.ts",
+    "sha256": "f7c1ec7ed7ea1f13ef14405532dc3a52ff7c1861c86c7a17725bdb4ec91cff2e",
+    "parse_valid": true,
+    "source": "RegExp('(a)\\\\1[')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-241.ts",
+    "sha256": "f3eaf0686d05afbe9ef05f648f67473891a5281a26890c14eaaa99b25dd65826",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1(a){,}')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-242.ts",
+    "sha256": "329431f975be37655d893bf5de438769b1d12625f4929e18bfe90711efef9213",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1(a){,}', 'u')\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-243.ts",
+    "sha256": "dad0bab77c180a34df54f3de7947922b513118fc53991171fb6fc3c1ce6ecbd6",
+    "parse_valid": true,
+    "source": "let RegExp; new RegExp('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-244.ts",
+    "sha256": "bfabc4c50073637289409466f49cc68c9f4669a43a04625b403db4cf0c1a49be",
+    "parse_valid": true,
+    "source": "function foo() { var RegExp; RegExp('\\\\1(a)', 'u'); }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-245.ts",
+    "sha256": "b5a7f1fed13471f152b61bc8e241b63019ab3f904199af3287379800b1c50407",
+    "parse_valid": true,
+    "source": "function foo(RegExp) { new RegExp('\\\\1(a)'); }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-246.ts",
+    "sha256": "f5455f3f3169735bca70f6f8b8a97e6777a82f8844bcdb2ce4a60d62c799b981",
+    "parse_valid": true,
+    "source": "if (foo) { const RegExp = bar; RegExp('\\\\1(a)'); }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-247.ts",
+    "sha256": "7905cf341069c236e880ee2898a19787a25bcaf3517a38d0920fcab57c564064",
+    "parse_valid": true,
+    "source": "/* globals RegExp:off */ new RegExp('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-248.ts",
+    "sha256": "d4a9a6a5ee68997fb1908705ea07078089bfa9563edb9ab587e48054a3f0dd09",
+    "parse_valid": true,
+    "source": "/^(a)\\1\\2$/\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-249.ts",
+    "sha256": "932359927a751bd6d40b1477154209637e79ed36109d1676423d3634be372ca0",
+    "parse_valid": true,
+    "source": "const r = RegExp, p = '\\\\1', s = '(a)'; new r(p + s);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-250.ts",
+    "sha256": "3e40fbd1f166e1a7f4f9181c8476c05fc37239a588207a2d2e1f986403324d1d",
+    "parse_valid": true,
+    "source": "let f = 'u'; f = ''; RegExp('\\\\1(a){', f);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-251.ts",
+    "sha256": "61807284ccfd2715fdb798014b5e16515135b4c95909426318622fee579a5de2",
+    "parse_valid": true,
+    "source": "let p = '\\\\1(a)'; RegExp(p);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-252.ts",
+    "sha256": "3dac5247ed564a5f9e41f4d68fd8e4a078a909649be73c5c41138cbfb3b75dc9",
+    "parse_valid": true,
+    "source": "let p = '\\\\1(a)'; p = '(a)'; RegExp(p);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-253.ts",
+    "sha256": "52389c5dd30a0ad6b92f6127c1212d781a680b56627c59c041fc5f93e68d4580",
+    "parse_valid": true,
+    "source": "const {p} = {p: '\\\\1(a)'}; RegExp(p);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-254.ts",
+    "sha256": "4eea2b79349a78925afb46827f3afeaa591b168316c625679648a3b317da71c3",
+    "parse_valid": true,
+    "source": "new RegExp(/\\1(a)/);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-255.ts",
+    "sha256": "e38a1c5c63960aa8366ab3a6b3053226f1a56e90dee44b223c22ebc0af10b38a",
+    "parse_valid": true,
+    "source": "new RegExp(/\\1(a)/, 'u');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-256.ts",
+    "sha256": "036faca9b286d9caf2a28222e8835fe5fec670c597f9ef0917f17c270e14a34d",
+    "parse_valid": true,
+    "source": "RegExp(`\\\\1(a)`);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-257.ts",
+    "sha256": "4031b543b6a416264734feb3bc5215a1c6fbcbfc04802659bf5a15e6ca67376c",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1' + '(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-258.ts",
+    "sha256": "e5284334126e2ef4bc687dda6a27dd02682274f8a6658bf48fa028eaf80d535c",
+    "parse_valid": true,
+    "source": "globalThis.RegExp('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-259.ts",
+    "sha256": "643ef4b8c8e03ee58221955519c5789218cb9af2f4799b61f223487c3ab95b7d",
+    "parse_valid": true,
+    "source": "const R = globalThis.RegExp; new R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-260.ts",
+    "sha256": "14d0406e9a0f4085d590c3cd23d3310129a7b190736fcbe07b272a5e356e9c79",
+    "parse_valid": true,
+    "source": "RegExp(\n  '\\\\1(a)'\n);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-261.ts",
+    "sha256": "40d0647c858c5433b8dab6455016760038b3c90a26b52633e1a902140dd50328",
+    "parse_valid": true,
+    "source": "function f(RegExp) { return /\\1(a)/; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-262.ts",
+    "sha256": "7710e63b5ff76c1ac85283189f7a96e59771ace8c2c9f37b0d31bfe9e925622f",
+    "parse_valid": true,
+    "source": "const p = '(a)\\\\1'; const q = p + '\\\\2(b)'; RegExp(q);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-263.ts",
+    "sha256": "a49e5650e96bc2e0eab83364c42a6fcf069d356fe19ef4aa0e852a9a97ba3770",
+    "parse_valid": true,
+    "source": "RegExp(foo + '\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-264.ts",
+    "sha256": "403f2adbfe85285e492f15fb82002ec8b245cc85a34339507215d2e977b051c4",
+    "parse_valid": true,
+    "source": "RegExp('\\\\1(a)', flags);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-265.ts",
+    "sha256": "1000c8958a46c1e702009f55da02c243987db2ae09e7c14b0add28f27a8f5ce6",
+    "parse_valid": true,
+    "source": "/\\1(a)\\k<x>(?<x>b)/;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-266.ts",
+    "sha256": "ef5654da5af821099ab0e68f168396a6f9f80fc5a57ba80888927c7cf91592a6",
+    "parse_valid": true,
+    "source": "/(?<a>x)|(?<a>y)\\k<a>/;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-267.ts",
+    "sha256": "349148dea829e88f23c9e82509f2daeddc457bbfb65f0850ac2ab3f091f00b24",
+    "parse_valid": true,
+    "source": "RegExp(1);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-268.ts",
+    "sha256": "471659143426ff3abf3a122835087f6651a62bc043f0a9a6d9b3444f44745bee",
+    "parse_valid": true,
+    "source": "foo(function bar() {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-269.ts",
+    "sha256": "48060fce8f20f9a3e8b5e41e0c29ece8836383fd60267ca1f6df7bd09caa101b",
+    "parse_valid": true,
+    "source": "foo(function() {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-270.ts",
+    "sha256": "5ef911013bd658613078526a78df63c8f15d2540667c032c218aa3a71eaa20f6",
+    "parse_valid": true,
+    "source": "foo(nativeCb || function() {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-271.ts",
+    "sha256": "d8c7ebbf6905401994216f0e4f55d5e0ccb1ee7dd0cf41588afb4c6caa1dc161",
+    "parse_valid": true,
+    "source": "foo(bar ? function() {} : function() {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-272.ts",
+    "sha256": "ae1cc549bcb22537d304a228669eb098060464f952bd9c8195ace324282c62a5",
+    "parse_valid": true,
+    "source": "foo(function() { (function() { this; }); });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-273.ts",
+    "sha256": "2d9a95dca11784a4e183cad7fecb0ca9bb782f8f901324d880f4846626b96ed8",
+    "parse_valid": true,
+    "source": "foo(function() { this; }.bind(this));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-274.ts",
+    "sha256": "1b5a6c55c7013fa6178aa99091591c6b6841b1728cca04563290c2a897860515",
+    "parse_valid": true,
+    "source": "foo(bar || function() { this; }.bind(this));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-275.ts",
+    "sha256": "81405365217749d5c62b2a84622e6d85923192a10d284059b74e672eef82016b",
+    "parse_valid": true,
+    "source": "foo(function() { (() => this); }.bind(this));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-276.ts",
+    "sha256": "5b31bf63b9cd761ab4a3d62500c56e2deae9cd69bd644144beb3261bcec2251c",
+    "parse_valid": true,
+    "source": "foo(function bar(a) { a; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-277.ts",
+    "sha256": "ac0d3fd2a6b24fe92af9c4b5a04e75a592a1221ff59f983c55065910d5d95c65",
+    "parse_valid": true,
+    "source": "foo(function(a) { a; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-278.ts",
+    "sha256": "b32a84463ff9dc76ae036672a6776b39f4690864250e5810b52573444c503c73",
+    "parse_valid": true,
+    "source": "foo(function(arguments) { arguments; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-279.ts",
+    "sha256": "6a5a8a526959dc945e1439954d2da9658432b8f14d6aaaadf1dbf734dafe5ff3",
+    "parse_valid": true,
+    "source": "foo(function() { this; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-280.ts",
+    "sha256": "1219d03673f8ec33fe0a1e69bc945cecc369727082823f997c57448598646583",
+    "parse_valid": true,
+    "source": "foo(function() { (() => this); });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-281.ts",
+    "sha256": "1bf368fbc73964915c368c56de21fb3397b111a037c1128e7cf609846cdab515",
+    "parse_valid": true,
+    "source": "qux(function(foo, bar, baz) { return foo * 2; })\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-282.ts",
+    "sha256": "33a818095ceb78f5a4052e4a2917d27fa5d550650e5244ec18bb07bd2f0bf773",
+    "parse_valid": true,
+    "source": "qux(function(foo, bar, baz) { return foo * bar; }.bind(this))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-283.ts",
+    "sha256": "16439ecc8faecb111e722785a192a0514c7ce2641069353cf2648b63c4336f9f",
+    "parse_valid": true,
+    "source": "qux(function(foo, bar, baz) { return foo * this.qux; }.bind(this))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-284.ts",
+    "sha256": "79ad99a66f7cd4e3227eebcdfadf1fbf3f577ce0fc7f02885dba5593d6ba3565",
+    "parse_valid": true,
+    "source": "foo(function() {}.bind(this, somethingElse))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-285.ts",
+    "sha256": "24bced479ed4d258e636b9f3df7414c6856ac2eede20f45be1acee8f73c98d88",
+    "parse_valid": true,
+    "source": "qux(function(foo = 1, [bar = 2] = [], {qux: baz = 3} = {foo: 'bar'}) { return foo + bar; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-286.ts",
+    "sha256": "3e61f518e24da038ee296b50a03147e9f0f82c548974967ccfe187a21ff5592f",
+    "parse_valid": true,
+    "source": "qux(function(baz, baz) { })\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-287.ts",
+    "sha256": "1661fe852f25784af3b0a1d1587313e6f77b6a87e12f25e7abb45de1cf824ad7",
+    "parse_valid": true,
+    "source": "qux(function( /* no params */ ) { })\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-288.ts",
+    "sha256": "81a0fcf3f30a40377a050bd4aba0b5452bd9a14b9983b896ef76880c607cae3c",
+    "parse_valid": true,
+    "source": "qux(function( /* a */ foo /* b */ , /* c */ bar /* d */ , /* e */ baz /* f */ ) { return foo; })\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-289.ts",
+    "sha256": "c5c133539aac3c08230b428e3f627df5ec7dd60f4ff04a0235f5cfb81fadd637",
+    "parse_valid": true,
+    "source": "qux(async function (foo = 1, bar = 2, baz = 3) { return baz; })\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-290.ts",
+    "sha256": "45dcf5298c72ae55343b48a12795e9bc31ee9b1f881b669c9a8c8af92f5964f3",
+    "parse_valid": true,
+    "source": "qux(async function (foo = 1, bar = 2, baz = 3) { return this; }.bind(this))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-291.ts",
+    "sha256": "0190378ae9617439d5d6583eb7dee1068683e652e6f2b6a64c9fe9fde4efab31",
+    "parse_valid": true,
+    "source": "foo(async function /*\n*/ () { return 1; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-292.ts",
+    "sha256": "4adb7f9d6191b55e2ae5233376d75932c007a50f262ccfaf405698b38a08077e",
+    "parse_valid": true,
+    "source": "foo(async function // c\n () { return 1; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-293.ts",
+    "sha256": "eb25535c5147c48f39a9ec3c137001ab8c7f1eb609c9cab25d4e123883073f88",
+    "parse_valid": true,
+    "source": "foo(async function\n () { return 1; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-294.ts",
+    "sha256": "2d3180768a7892f60459b4a23840f96fbc969da8e54e2a653b362343ecbec5a0",
+    "parse_valid": true,
+    "source": "foo(async function /* c */ () { return 1; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-295.ts",
+    "sha256": "f7ba180011e83a52451a884e5d9d40476d88b72e560bc0d25145f441df4488e9",
+    "parse_valid": true,
+    "source": "foo((bar || function() {}).bind(this))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-296.ts",
+    "sha256": "09e1532eff37c40d4ce8f66305482dffceed6bcea136a223a286404122ea18fa",
+    "parse_valid": true,
+    "source": "foo(function() {}.bind(this).bind(obj))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-297.ts",
+    "sha256": "5714149ab3f113a7f0bb49b097a00844af8813b884e8724312d9ad246c4f4ed4",
+    "parse_valid": true,
+    "source": "foo?.(function() {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-298.ts",
+    "sha256": "5319395f958158edf92254e73ca581de7abef1a0bcccaf4c4c72cc2aa6bf861f",
+    "parse_valid": true,
+    "source": "foo?.(function() { return this; }.bind(this));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-299.ts",
+    "sha256": "0f7539deb3f0bb058e87c52661724e1b7ccf0abdc160e8938e529b9d2e042cc4",
+    "parse_valid": true,
+    "source": "foo(function() { return this; }?.bind(this));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-300.ts",
+    "sha256": "f7a005f8efa46399d7c9d2450f0e06b8cb024e8b43dba18e754c993e6625261e",
+    "parse_valid": true,
+    "source": "foo((function() { return this; }?.bind)(this));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-301.ts",
+    "sha256": "a5a9e6451b953a0d45d948c2b779b48fb318b4b8919f3f21295f87f89e0f29c5",
+    "parse_valid": true,
+    "source": "\n            test(\n                function ()\n                { }\n            );\n            \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-302.ts",
+    "sha256": "6a116dd27400836850bb14621ddb169e151e80daa0af5b221e9692b3f2ed4a33",
+    "parse_valid": true,
+    "source": "\n            test(\n                function (\n                    ...args\n                ) /* Lorem ipsum\n                dolor sit amet. */ {\n                    return args;\n                }\n            );\n            \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-303.ts",
+    "sha256": "05c6204f5d0e58009e82f90e8e07354097ef838cefe6237d64b7682b8961ef39",
+    "parse_valid": true,
+    "source": "foo(function(a:string) {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-304.ts",
+    "sha256": "60a1b0cc7ac4abf0bb40feb4f3fa225ae875c640cc34d1f7628636e062f76594",
+    "parse_valid": true,
+    "source": "foo(function bar(a:string) { a; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-305.ts",
+    "sha256": "9a7cd0e2bf6b1347e9de44ed540ec7873edc6dfe000e49fcc69b71b12f65f70b",
+    "parse_valid": true,
+    "source": "foo(function(a:any) { a; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-306.ts",
+    "sha256": "1dabd2d120093466ed8d5323e80f019c266f034bcf22d125f2f690dd8152da51",
+    "parse_valid": true,
+    "source": "foo(function(arguments:any) { arguments; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-307.ts",
+    "sha256": "d6d1c4ca6cc0f54b2008d3aa9164ce074fcd0cc56d78fa5c2d3c706742197695",
+    "parse_valid": true,
+    "source": "foo(function(a:string) { this; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-308.ts",
+    "sha256": "553c6cb7bc2f9c2bacb39e8d12b9f463119b8caa99e03d3d6f6395590f06ad33",
+    "parse_valid": true,
+    "source": "qux(function(foo:string, bar:number, baz:string) { return foo * 2; })\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-309.ts",
+    "sha256": "de7d2779e3d2f837ffb4a8019298d50603e7747f59bbf2048686417df16f4de7",
+    "parse_valid": true,
+    "source": "qux(function(foo:number, bar:number, baz:number) { return foo * bar; }.bind(this))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-310.ts",
+    "sha256": "02e4e900783ad79f088e375b222c05b16345f64541c8b8b58b92110c9bb33ccc",
+    "parse_valid": true,
+    "source": "qux(function(foo:any, bar:any, baz:any) { return foo * this.qux; }.bind(this))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-311.ts",
+    "sha256": "ce1da2e8dcd2a6d1f0da1a0aa6800f2a4b8ea82af16f162df216b835249e9b21",
+    "parse_valid": true,
+    "source": "qux(function(baz:string, baz:string) { })\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-312.ts",
+    "sha256": "32f2e1da26d2b0509f939f11f2e125451f4b2932a6c592255cf982f3ab0ef3e6",
+    "parse_valid": true,
+    "source": "qux(function( /* a */ foo:string /* b */ , /* c */ bar:string /* d */ , /* e */ baz:string /* f */ ) { return foo; })\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-313.ts",
+    "sha256": "712cc84e8b10c8e0a79991ad3f722dc32305c9a2df09f9a84e10de6bc87ac56f",
+    "parse_valid": true,
+    "source": "qux(async function (foo:number = 1, bar:number = 2, baz:number = 3) { return baz; })\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-314.ts",
+    "sha256": "89185c0eec2961e1a74941501235ccbff267c38ae205492351b37102fa8b64a4",
+    "parse_valid": true,
+    "source": "qux(async function (foo:number = 1, bar:number = 2, baz:number = 3) { return this; }.bind(this))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-315.ts",
+    "sha256": "823ea6328a4131e81e9d5192653ef93372840029a72b6b2d9fb19758f0431b74",
+    "parse_valid": true,
+    "source": "foo(function():string { return 'foo' });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-316.ts",
+    "sha256": "85e58e976f987a9dc4cdb4e08bd98ff7442c8829bf0994a11baa305910dd5bf3",
+    "parse_valid": true,
+    "source": "test('foo', function (this: any) {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-317.ts",
+    "sha256": "ef95b19783f8938d3ca264a394b8c8d54ab7d885d6b4a640e8a29dc95e876fcb",
+    "parse_valid": true,
+    "source": "foo(a => a);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-318.ts",
+    "sha256": "c2f10f97951cf9a580cd9b491e15fdf77f6f85a8b6832a79938f18a668aedc86",
+    "parse_valid": true,
+    "source": "foo(function*() {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-319.ts",
+    "sha256": "c930a4297f8ca26b749017dfc591c78813c524640174c97a26ebf89f3d40d808",
+    "parse_valid": true,
+    "source": "foo(function() { this; }.bind(obj));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-320.ts",
+    "sha256": "afafbac806c3562655f26eed2f5a5463ec50eb1f6cbd077a1dc1a50379f4be59",
+    "parse_valid": true,
+    "source": "foo(function() { this; }.call(this));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-321.ts",
+    "sha256": "cb8729ce2059af213d8e1d0445190936be5a49788899c4eff2645c3b8a641f2b",
+    "parse_valid": true,
+    "source": "foo(a => { (function() {}); });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-322.ts",
+    "sha256": "2772e7193e3a798b31fd54f8a44a8143ad6a673da9f0e2031d3e9bd20c166d73",
+    "parse_valid": true,
+    "source": "var foo = function foo() {};\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-323.ts",
+    "sha256": "c0a8a53e2a39b7cf94ca7e635ca4aa349592ce689a4f391deed842ecdbcbb912",
+    "parse_valid": true,
+    "source": "(function foo() {})();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-324.ts",
+    "sha256": "ad07772403ef90dccd25a59fdd0d06ca28cc10dbd7a252667f419c6c020314fc",
+    "parse_valid": true,
+    "source": "foo(function bar() { bar; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-325.ts",
+    "sha256": "2f67c21d9e683d317772e37df0e4e6dd39a648969bcc434a616a942bcc538668",
+    "parse_valid": true,
+    "source": "foo(function bar() { arguments; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-326.ts",
+    "sha256": "9fd006a2add544271239c6f93f29121759f83f27a2280b34825ad8fcd7fb1f2f",
+    "parse_valid": true,
+    "source": "foo(function bar() { arguments; }.bind(this));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-327.ts",
+    "sha256": "9abd959952f2e85fd9eeacea9650150fe0f93d6b313eedb087fe51369438c68c",
+    "parse_valid": true,
+    "source": "foo(function bar() { new.target; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-328.ts",
+    "sha256": "b02bbfb3405b58a02f688f31324334a78e694f09b5ad6e87c3167013bae8b609",
+    "parse_valid": true,
+    "source": "foo(function bar() { new.target; }.bind(this));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-329.ts",
+    "sha256": "d214613bbc6a4e9f66d623ed34f7e62903e0c41197e86d2681107e8be0325161",
+    "parse_valid": true,
+    "source": "foo(function bar() { this; }.bind(this, somethingElse));\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-330.ts",
+    "sha256": "05c6445a6c4dc5b158f43548859931c7166b91aad2f7e363f0cc8b0a677adeb8",
+    "parse_valid": true,
+    "source": "foo((function() {}).bind.bar)\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-331.ts",
+    "sha256": "1216cc750d62a630db6b6191e9d43acc182e336924edaf37f69297347f226619",
+    "parse_valid": true,
+    "source": "foo((function() { this.bar(); }).bind(obj).bind(this))\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-332.ts",
+    "sha256": "8d86a80d0deaefda10780ea7c379bb26f6f5e94466185eccf6d74570da3c6f9e",
+    "parse_valid": true,
+    "source": "foo((a:string) => a);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-333.ts",
+    "sha256": "69612c92b5325753d138cd2445da01c645de261e749fb3b624126af4483194f3",
+    "parse_valid": true,
+    "source": "foo(function bar(a:string) {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-334.ts",
+    "sha256": "09e2bde208308f56bc13b01178add3c1839a863ab445e3afc798ef71d835b4fe",
+    "parse_valid": true,
+    "source": "test('clean', function (this: any) { this.foo = 'Cleaned!';});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-335.ts",
+    "sha256": "d5738c683587ac615b45f8dc1fbbc72f18d98a013298e45e335bc0cb492890d3",
+    "parse_valid": true,
+    "source": "obj.test('clean', function (foo) { this.foo = 'Cleaned!'; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-336.ts",
+    "sha256": "c2d831f76c5b1dede37423633a7f2d4e3802d9e94510904155be74309bb59ae9",
+    "parse_valid": true,
+    "source": "foo(function bar() { bar(); });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-337.ts",
+    "sha256": "d9464e3f59862f831589af1a595fd8e2ebe014ee215231e2e0da8327a2df3265",
+    "parse_valid": true,
+    "source": "foo(function bar() { function bar() {} bar(); });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-338.ts",
+    "sha256": "76772b48096b30228dbbedc243e72d09e949765f627108d4dd816f5e53b1f806",
+    "parse_valid": true,
+    "source": "foo(function bar() { const bar = 1; bar; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-339.ts",
+    "sha256": "f9115c77b701bf1b433e99b57a0e0eb48bdc090836a3f000dc284ca7159d4567",
+    "parse_valid": true,
+    "source": "foo(function bar() { baz(); });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-340.ts",
+    "sha256": "1395fbc854864b666c0b6c751e8bf730876f11d3c725eedcbcf1dda94283e4ab",
+    "parse_valid": true,
+    "source": "foo(function() { arguments; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-341.ts",
+    "sha256": "3c54fa19a40ef452f94b463abffd8ca046e30abc8e5bc871a961efb996dadb58",
+    "parse_valid": true,
+    "source": "foo(function() { function inner() { arguments; } });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-342.ts",
+    "sha256": "261f9e9834466cdd30ee84a2eda38d7440fcfdbf35f4656a601dcb2e2bdcfef7",
+    "parse_valid": true,
+    "source": "new Foo(function() {});\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-343.ts",
+    "sha256": "de074c5716b3587ee3ea8199c8156300bc5f536de6f13ae289bee08275b015b3",
+    "parse_valid": true,
+    "source": "new Foo(function() { this; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-344.ts",
+    "sha256": "c9decc63b5bbb58f9aa409434655491b7061d0a230bfe1a5c6f3ea59c02635c9",
+    "parse_valid": true,
+    "source": "new (function() {})();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-345.ts",
+    "sha256": "316a5d3c1b90f4b25bb94c88e33b04609b570ca4e49f6df692584687bdc0040a",
+    "parse_valid": true,
+    "source": "const x = new Promise(function(resolve) { resolve(); });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-346.ts",
+    "sha256": "25e74c9069069727b15e753c4d56e5113c44324359c9f0b4fec52c9028c628ac",
+    "parse_valid": true,
+    "source": "const {RegExp: R} = globalThis; R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-347.ts",
+    "sha256": "691dbff39d9a9eb527f966f3d6f3efc964bd02faec19b1d17d97e37bfde6fbd7",
+    "parse_valid": true,
+    "source": "let R; R = RegExp; R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-348.ts",
+    "sha256": "74867c5b5953e44c71a4182e6305602ef271ea27557f96acee605f2aac3924ca",
+    "parse_valid": true,
+    "source": "RegExp = other; RegExp('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-349.ts",
+    "sha256": "fd1af7516ba72ef9ff9e489cd1e99bd3566b81d2e0df4885c8fe83e2f34874dd",
+    "parse_valid": true,
+    "source": "const p = '\\\\1'; RegExp(p + '(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-350.ts",
+    "sha256": "8b990071c5a8418e64bc449a9f3b2325f6bb1033e475730a15aaaf8d57a72040",
+    "parse_valid": true,
+    "source": "throw flag ? new Error() : new Error();\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-351.ts",
+    "sha256": "23ab6adcf2ab19d82a50ef7cbb94e45c61ab720db462cc3658f2abf56e47b859",
+    "parse_valid": true,
+    "source": "/* 世界 🌍 */\nfoo(function café(a) { return a; });\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-352.ts",
+    "sha256": "c88839a269af96b75317a168e39bcc01106d7c3d9e3daf2965a76d5150bf98f9",
+    "parse_valid": true,
+    "source": "const suffix = '(a)'; RegExp(`\\\\1${suffix}`);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-353.ts",
+    "sha256": "0b01eb9cfe6b1d0c8add6da0099959186dd749cb9d87ed6ab8117b1d85b8f221",
+    "parse_valid": true,
+    "source": "const G = globalThis; const R = G['RegExp']; R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-354.ts",
+    "sha256": "b899365e73ee442246e484f0e6c5917918348ec3aa27e03877ed180d82405d58",
+    "parse_valid": true,
+    "source": "let R; ({RegExp: R} = globalThis); R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-355.ts",
+    "sha256": "9799c4d90b63868a3f42dd16a8710333befcca81e01192c7cb96d1c3be9dc1b0",
+    "parse_valid": true,
+    "source": "function f(R = RegExp) { R('\\\\1(a)'); }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-356.ts",
+    "sha256": "cb9312c1e0cd2911589b4947b9a845135faf840f0dc1cc2d826e39d19cf16f62",
+    "parse_valid": true,
+    "source": "let R; const o = {R = RegExp}; R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-357.ts",
+    "sha256": "71c275438286ef482705c378cab346e5c2bbd4229a23c866776c90613576be75",
+    "parse_valid": true,
+    "source": "const R = RegExp; const o = {R}; export {R as Exported}; R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-358.ts",
+    "sha256": "e4c573ec1926e1cc3522b466ff4f08b82529d588119aa86f11a050e98acbd9ad",
+    "parse_valid": true,
+    "source": "let p = '\\\\1(a)'; [p] = ['(a)']; RegExp(p);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-359.ts",
+    "sha256": "94d7b3001b803d9cbf34ce43f9ec71472fb6f2ea4bf3fe606ace134f16ab6b6c",
+    "parse_valid": true,
+    "source": "let p = '\\\\1(a)'; ({x:p} = obj); RegExp(p);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-360.ts",
+    "sha256": "530221f42a3f53808e1eedd845f4ec01646c429d3705869f5a3421ed87d72d29",
+    "parse_valid": true,
+    "source": "const R = RegExp as typeof RegExp; R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-361.ts",
+    "sha256": "bae1438daf12dcf0f91f31c85726ad8b321f65e8683ab77f74f65839b4157517",
+    "parse_valid": true,
+    "source": "const R = flag ? RegExp : RegExp; R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-362.ts",
+    "sha256": "ce59f930e3fb633e24e7a9b33da65306c6cb4effc71160fda6c5e292935b49be",
+    "parse_valid": true,
+    "source": "const R = RegExp; R('\\\\1(a)'); globalThis.RegExp('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-363.ts",
+    "sha256": "58495c2b8fef89d7e2b191461c075d4688915f9b981ac0806f9a1bbda48d0cd3",
+    "parse_valid": true,
+    "source": "const p = p + '(a)'; RegExp(p);\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-364.ts",
+    "sha256": "8c841afee039115c9a138ee0b17ef27e211bf2b80dd377429a0691be13ff711d",
+    "parse_valid": true,
+    "source": "const R = RegExp; const recursive = recursive; R('\\\\1(a)');\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-365.ts",
+    "sha256": "12fc96316cf1b4e4acc5f5ca11efa10f9b9db1cf20e571821b01ace68203765e",
+    "parse_valid": true,
+    "source": "foo(function /* preserve */ café(a) { return a; });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fourth-final/controls/control-366.ts",
+    "sha256": "60133d023ae7c8233011a6180473f25a85bed50a2857e5606f229b28fd6523eb",
+    "parse_valid": true,
+    "source": "foo(async function\n(a) { return a; });\nexport {};\n"
+  }
+]

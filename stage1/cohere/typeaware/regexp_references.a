@@ -1,0 +1,82 @@
+import { panic } from 'adamic';
+import type { SyntaxProjection } from './syntax_projection.a';
+import { SyntaxReferences } from './syntax_reference_facts.a';
+export class ConstantText {
+    readonly text: string; readonly string: boolean; readonly known: boolean;
+    constructor(text: string, string: boolean, known: boolean) { this.text = text; this.string = string; this.known = known; }
+}
+export class RegExpReferences {
+    readonly syntax: SyntaxProjection; readonly references: SyntaxReferences; readonly names = new Map<string, number[]>(); readonly found: number[] = [];
+    constructor(syntax: SyntaxProjection) {
+        this.syntax = syntax; this.references = new SyntaxReferences(syntax);
+        // Index only spellings the global tracker can reach, adding alias spellings lazily.
+    }
+    named(name: string): readonly number[] {
+        const cached = this.names.get(name); if(cached !== undefined) { return cached; } const result: number[] = [];
+        for(let at = 1; at <= this.syntax.nodes.length; at++) { const node = this.syntax.node(at); if(node.kind === 'Identifier' && node.text === name && this.references.value(at)) { result.push(at); } }
+        this.names.set(name, result); return result;
+    }
+    global(name: string): readonly number[] {
+        const result: number[] = []; for(const index of this.named(name)) { if(this.references.get(index).symbol.declarations.some((declaration) => !declaration.declarationFile)) { continue; } if(this.references.writes(index)) { const empty: number[] = []; return empty; } result.push(index); } return result;
+    }
+    constant(index: number, scoped = true, following: readonly number[] = []): ConstantText {
+        const syntax = this.syntax; if(index === 0) { return new ConstantText('', false, false); } const current = syntax.skip(index); const node = syntax.node(current);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) { return new ConstantText(node.text, true, true); }
+        if(node.kind === 'NumericLiteral') { return new ConstantText(node.text, false, true); }
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(node.kind)) { return new ConstantText(node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : 'null', false, true); }
+        if(scoped && node.kind === 'RegularExpressionLiteral') { return new ConstantText(node.text, true, true); }
+        if(scoped && node.kind === 'Identifier') {
+            const symbol = this.references.get(current).symbol; const local = symbol.declarations.filter((declaration) => declaration.file === syntax.path);
+            if(symbol.identity === 0 || local.length !== 1 || following.includes(symbol.identity) || symbol.declarations.every((declaration) => declaration.declarationFile)) { return new ConstantText('', false, false); }
+            const declaration = local[0] ?? panic('missing constant declaration'); if(declaration.kind !== 'VariableDeclaration') { return new ConstantText('', false, false); }
+            const variable = syntax.locate(declaration.kind, declaration.pos, declaration.end); const value = syntax.node(variable); if(value.initializer === 0 || value.parent === 0 || syntax.node(value.parent).kind !== 'VariableDeclarationList') { return new ConstantText('', false, false); }
+            if((syntax.node(value.parent).flags & 2) === 0) {
+                for(const use of this.named(node.text)) { if(use !== value.name && this.references.writes(use) && this.references.get(use).symbol.identity === symbol.identity) { return new ConstantText('', false, false); } }
+            }
+            const next = following.slice(); next.push(symbol.identity); return this.constant(value.initializer, true, next);
+        }
+        if(node.kind === 'TemplateExpression') {
+            let result = ''; for(const child of node.children) { const part = syntax.node(child); if(part.kind === 'TemplateHead') { result += part.text; } else if(part.kind === 'TemplateSpan') { const value = this.constant(part.expression, scoped, following); if(!value.known) { return new ConstantText('', false, false); } result += value.text; const last = part.children[part.children.length - 1] ?? 0; result += syntax.node(last).text; } } return new ConstantText(result, true, true);
+        }
+        if(node.kind === 'BinaryExpression' && node.operator === 'PlusToken') { const left = this.constant(node.children[0] ?? 0, scoped, following); const right = this.constant(node.children[2] ?? 0, scoped, following); if(left.known && right.known && (left.string || right.string)) { return new ConstantText(left.text + right.text, true, true); } }
+        return new ConstantText('', false, false);
+    }
+    pass(index: number): boolean {
+        const syntax = this.syntax; const node = syntax.node(index); if(node.parent === 0) { return false; } const parent = syntax.node(node.parent);
+        if(['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'NonNullExpression', 'ExpressionWithTypeArguments'].includes(parent.kind)) { return true; }
+        if(parent.kind === 'ConditionalExpression') { return parent.children[2] === index || parent.children[4] === index; }
+        return parent.kind === 'BinaryExpression' && (['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(parent.operator) || (parent.operator === 'CommaToken' && parent.children[2] === index));
+    }
+    reads(key: string, indices: readonly number[], globalObject: boolean, following: readonly string[]): void {
+        if(following.includes(key)) { return; } const next = following.slice(); next.push(key); for(const index of indices) { this.value(index, globalObject, next); }
+    }
+    target(index: number, globalObject: boolean, following: readonly string[]): void {
+        const syntax = this.syntax; const current = syntax.skip(index); if(current === 0) { return; } const node = syntax.node(current);
+        if(node.kind === 'Identifier') { const symbol = this.references.get(current).symbol.identity; if(symbol === 0) { return; } const indices = this.named(node.text).filter((use) => this.references.get(use).symbol.identity === symbol); this.reads(`symbol:${symbol}`, indices, globalObject, following); }
+        else if(globalObject && node.kind === 'ObjectBindingPattern') {
+            for(const child of node.children) { const binding = syntax.node(child); if(binding.kind !== 'BindingElement' || binding.children.some((part) => syntax.node(part).kind === 'DotDotDotToken')) { continue; } const property = this.references.get(child).property; this.property(property === 0 ? binding.name : property, binding.name, following); }
+        }
+        else if(globalObject && node.kind === 'ObjectLiteralExpression') { for(const child of node.children) { const member = syntax.node(child); if(member.kind === 'PropertyAssignment') { this.property(member.name, member.initializer, following); } else if(member.kind === 'ShorthandPropertyAssignment') { this.property(member.name, member.name, following); } } }
+        else if(node.kind === 'BinaryExpression' && node.operator === 'EqualsToken') { this.target(node.children[0] ?? 0, globalObject, following); }
+    }
+    property(key: number, value: number, following: readonly string[]): void {
+        if(key === 0) { return; } const node = this.syntax.node(key); const name = node.kind === 'ComputedPropertyName' ? this.constant(node.expression, false) : new ConstantText(node.text, true, ['Identifier', 'StringLiteral', 'NumericLiteral'].includes(node.kind));
+        if(name.known && name.text === 'RegExp') { this.target(value, false, following); }
+    }
+    value(index: number, globalObject: boolean, following: readonly string[]): void {
+        const syntax = this.syntax; let current = index; while(this.pass(current)) { current = syntax.node(current).parent; } const parent = syntax.node(current).parent; if(parent === 0) { return; } const node = syntax.node(parent);
+        if(globalObject && ['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind) && node.expression === current) {
+            const key = node.kind === 'PropertyAccessExpression' ? new ConstantText(syntax.node(node.name).text, true, true) : this.constant(node.children[node.children.length - 1] ?? 0, false);
+            if(key.known && key.text === 'RegExp') { this.value(parent, false, following); }
+        }
+        else if(!globalObject && ['CallExpression', 'NewExpression'].includes(node.kind) && node.expression === current) { this.found.push(parent); }
+        else if(node.kind === 'BinaryExpression' && node.children[2] === current && ['EqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(node.operator)) { this.target(node.children[0] ?? 0, globalObject, following); this.value(parent, globalObject, following); }
+        else if(['VariableDeclaration', 'Parameter', 'BindingElement'].includes(node.kind) && node.initializer === current) { this.target(node.name, globalObject, following); }
+        else if(node.kind === 'ShorthandPropertyAssignment' && node.name !== current && node.children[node.children.length - 1] === current) { this.target(node.name, globalObject, following); }
+    }
+    run(): readonly number[] {
+        const empty: string[] = []; this.reads('global:RegExp', this.global('RegExp'), false, empty);
+        for(const name of ['global', 'globalThis', 'self', 'window']) { this.reads(`global:${name}`, this.global(name), true, empty); }
+        return this.found;
+    }
+}

@@ -1,0 +1,18 @@
+import { panic } from 'adamic';
+import { byteOffsets } from './unary_minus.ts';
+function byteCharacter(offsets: readonly number[], byte: number): number { let lower = 0; let upper = offsets.length; while(lower < upper) { const middle = Math.floor((lower + upper) / 2); if((offsets[middle] ?? 0) < byte) { lower = middle + 1; } else { upper = middle; } } if(offsets[lower] !== byte) { panic('source byte index splits a character'); } return lower; }
+export class SourceBytes {
+    readonly text: string; readonly offsets: readonly number[];
+    constructor(text: string) { const offsets = byteOffsets(text); this.text = text; this.offsets = offsets; }
+    character(byte: number): number { return byteCharacter(this.offsets, byte); }
+    byte(character: number): number { return this.offsets[character] ?? panic('source character index out of bounds'); }
+    slice(start: number, end: number): string { const lower = byteCharacter(this.offsets, start); const upper = byteCharacter(this.offsets, end); return this.text.slice(lower, upper); }
+    space(index: number): boolean { return [' ', '\t', '\n', '\r'].includes(this.text[index] ?? ''); }
+    find(start: number, end: number, value: string): number { const lower = byteCharacter(this.offsets, start); const upper = byteCharacter(this.offsets, end); const offset = this.text.slice(lower, upper).indexOf(value); return offset < 0 ? -1 : this.offsets[lower + offset] ?? panic('missing byte offset'); }
+    comments(start: number, end: number): boolean {
+        const lower = byteCharacter(this.offsets, start); const upper = byteCharacter(this.offsets, end); const text = this.text.slice(lower, upper); for(let at = 0; at < text.length - 1; at++) {
+            const char = text[at] ?? ''; if(["'", '"', '`'].includes(char)) { at++; while(at < text.length && text[at] !== char) { if(text[at] === '\\') { at++; } at++; } }
+            else if(char === '/' && ['/', '*'].includes(text[at + 1] ?? '')) { return true; }
+        } return false;
+    }
+}

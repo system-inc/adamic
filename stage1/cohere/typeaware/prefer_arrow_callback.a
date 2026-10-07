@@ -1,0 +1,87 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import type { SyntaxProjection } from './syntax_projection.a';
+import { SyntaxReferences } from './syntax_reference_facts.a';
+import { ProcessSymbols } from './process_symbol_details.a';
+import { SourceBytes } from './source_bytes.a';
+import { Diagnostic } from './diagnostic.ts';
+import { Repair } from './repair.ts';
+class CallbackFrame {
+    readonly node: number; usesThis = false; usesSuper = false; usesNewTarget = false; usesArguments = false;
+    constructor(node: number) { this.node = node; }
+}
+class CallbackInfo { callback = false; lexical = false; member = 0; call = 0; }
+const callbackMessage = 'An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.';
+export class PreferArrowCallback {
+    readonly rules: Rules; readonly syntax: SyntaxProjection; readonly symbols: ProcessSymbols; readonly references: SyntaxReferences; readonly bytes: SourceBytes;
+    readonly allowNamed: boolean; readonly allowUnbound: boolean;
+    constructor(rules: Rules, syntax: SyntaxProjection, allowNamed = false, allowUnbound = true) { this.rules = rules; this.syntax = syntax; this.symbols = new ProcessSymbols(syntax); this.references = new SyntaxReferences(syntax); this.bytes = new SourceBytes(syntax.text); this.allowNamed = allowNamed; this.allowUnbound = allowUnbound; }
+    walk(index: number, owners: readonly CallbackFrame[]): void {
+        const syntax = this.syntax; const node = syntax.node(index); const owner = owners[owners.length - 1];
+        if(owner !== undefined) {
+            if(node.kind === 'ThisKeyword') { owner.usesThis = true; }
+            if(node.kind === 'SuperKeyword') { owner.usesSuper = true; }
+            if(node.kind === 'MetaProperty' && this.references.get(index).keyword === 'NewKeyword') { owner.usesNewTarget = true; }
+            if(node.kind === 'Identifier' && node.text === 'arguments') {
+                const parent = syntax.node(node.parent); const declared = ['VariableDeclaration', 'Parameter', 'FunctionDeclaration', 'FunctionExpression', 'ClassDeclaration', 'BindingElement'].includes(parent.kind) && parent.name === index;
+                if(!declared && this.symbols.get(index).declarations.length === 0) { owner.usesArguments = true; }
+            }
+        }
+        const opens = ['FunctionDeclaration', 'FunctionExpression', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor', 'ClassStaticBlockDeclaration'].includes(node.kind);
+        const next = owners.slice(); if(opens) { next.push(new CallbackFrame(index)); }
+        for(const child of node.children) { this.walk(child, next); }
+        if(opens && node.kind === 'FunctionExpression') { this.judge(index, next[next.length - 1] ?? panic('missing callback frame')); }
+    }
+    recursive(index: number): boolean {
+        const syntax = this.syntax; const name = syntax.node(index).name; if(name === 0) { return false; } const symbol = this.symbols.get(name); if(symbol.identity === 0) { return false; }
+        const queue: number[] = [index]; for(let at = 0; at < queue.length; at++) { const current = queue[at] ?? 0; const node = syntax.node(current);
+            if(current !== name && node.kind === 'Identifier' && node.text === syntax.node(name).text && this.symbols.get(current).identity === symbol.identity) { return true; }
+            for(const child of node.children) { queue.push(child); }
+        } return false;
+    }
+    info(index: number): CallbackInfo {
+        const syntax = this.syntax; const result = new CallbackInfo(); let current = index; let bound = false;
+        while(syntax.node(current).parent !== 0) { const parent = syntax.node(current).parent; const node = syntax.node(parent);
+            if(['ConditionalExpression', 'ParenthesizedExpression'].includes(node.kind)) { current = parent; }
+            else if(node.kind === 'BinaryExpression') { if(!['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(node.operator)) { return result; } current = parent; }
+            else if(node.kind === 'PropertyAccessExpression') {
+                if(node.expression !== current || node.name === 0 || syntax.node(node.name).kind !== 'Identifier' || syntax.node(node.name).text !== 'bind') { return result; }
+                let callee = parent; while(syntax.node(callee).parent !== 0 && syntax.node(syntax.node(callee).parent).kind === 'ParenthesizedExpression') { callee = syntax.node(callee).parent; }
+                const call = syntax.node(callee).parent; if(call === 0 || syntax.node(call).kind !== 'CallExpression' || syntax.node(call).expression !== callee) { return result; }
+                if(!bound) { bound = true; const args = syntax.node(call).arguments; result.lexical = args.length === 1 && syntax.node(args[0] ?? 0).kind === 'ThisKeyword'; result.member = parent; result.call = call; } current = call;
+            }
+            else if(['CallExpression', 'NewExpression'].includes(node.kind)) { result.callback = node.expression !== current; return result; }
+            else { return result; }
+        } return result;
+    }
+    parenthesized(index: number): boolean {
+        const node = this.syntax.node(index); if(node.parent !== 0 && this.syntax.node(node.parent).kind === 'ParenthesizedExpression') { return true; }
+        let before = this.bytes.character(node.pos) - 1; while(before >= 0 && this.bytes.space(before)) { before--; } let after = this.bytes.character(node.end); while(after < this.bytes.text.length && this.bytes.space(after)) { after++; }
+        return before >= 0 && this.bytes.text[before] === '(' && this.bytes.text[after] === ')';
+    }
+    fixes(index: number, frame: CallbackFrame, info: CallbackInfo): Repair[] {
+        const syntax = this.syntax; const node = syntax.node(index); const empty: Repair[] = []; if(!info.lexical && frame.usesThis) { return empty; }
+        const parameters = node.children.filter((child) => syntax.node(child).kind === 'Parameter'); const names: string[] = []; let simple = true; let duplicate = false;
+        for(const parameter of parameters) { const name = syntax.node(parameter).name; if(name === 0 || syntax.node(name).kind !== 'Identifier') { simple = false; break; } const text = syntax.node(name).text; if(names.includes(text)) { duplicate = true; break; } names.push(text); }
+        if(simple && duplicate) { return empty; } const first = parameters[0]; if(first !== undefined) { const name = syntax.node(first).name; if(name !== 0 && syntax.node(name).kind === 'Identifier' && syntax.node(name).text === 'this') { return empty; } }
+        const keyword = this.bytes.find(node.pos, node.end, 'function'); const list = this.bytes.find(node.pos, node.body === 0 ? node.end : syntax.node(node.body).pos, '(');
+        if(keyword < 0 || list < keyword + 8) { return empty; } if((node.functionFlags & 2) !== 0 && this.bytes.slice(keyword + 8, list).includes('\n')) { return empty; }
+        const fixes: Repair[] = [];
+        if(info.lexical) {
+            if(info.member === 0 || info.call === 0 || node.parent !== info.member || syntax.node(info.member).parent !== info.call) { return empty; }
+            const start = syntax.node(syntax.node(info.member).expression).end; const end = syntax.node(info.call).end; if(end <= start || this.bytes.comments(start, end)) { return empty; } fixes.push(new Repair(start, end, ''));
+        }
+        if(this.bytes.comments(keyword + 8, list)) { fixes.push(new Repair(keyword, keyword + 8, '')); if(node.name !== 0) { const name = syntax.node(node.name); fixes.push(new Repair(name.start, name.end, '')); } }
+        else { fixes.push(new Repair(keyword, list, '')); }
+        if(node.body === 0) { return empty; } let insertion = this.bytes.character(syntax.node(node.body).pos); while(insertion > 0 && this.bytes.space(insertion - 1)) { insertion--; } fixes.push(new Repair(this.bytes.byte(insertion), this.bytes.byte(insertion), ' =>'));
+        const replaced = info.lexical && info.call !== 0 ? info.call : index; const parent = syntax.node(replaced).parent;
+        if(parent !== 0 && !['CallExpression', 'NewExpression', 'ConditionalExpression'].includes(syntax.node(parent).kind) && !this.parenthesized(replaced) && !this.parenthesized(index)) { const outer = syntax.node(replaced); fixes.push(new Repair(outer.start, outer.start, '(')); fixes.push(new Repair(outer.end, outer.end, ')')); }
+        return fixes;
+    }
+    judge(index: number, frame: CallbackFrame): void {
+        const node = this.syntax.node(index); if((this.allowNamed && node.name !== 0) || (node.functionFlags & 1) !== 0 || this.recursive(index) || frame.usesArguments) { return; }
+        const info = this.info(index); if(!info.callback || (this.allowUnbound && frame.usesThis && !info.lexical) || frame.usesSuper || frame.usesNewTarget) { return; }
+        const finding = new Diagnostic('prefer-arrow-callback', 'preferArrowCallback', callbackMessage, node.start, node.end, ''); for(const fix of this.fixes(index, frame, info)) { finding.repairs.push(fix); } this.rules.findings.push(finding);
+    }
+    run(): void { const empty: CallbackFrame[] = []; this.walk(1, empty); }
+}

@@ -1,0 +1,36 @@
+import { panic } from 'adamic';
+import { Frames, header } from './frames.ts';
+import type { SyntaxProjection } from './syntax_projection.a';
+import { ProcessSymbol } from './process_symbol_details.a';
+export class ReferenceFact {
+    readonly declared: boolean; readonly write: boolean; readonly keyword: string; readonly property: number; readonly symbol: ProcessSymbol;
+    constructor(frames: Frames) { this.declared = frames.yes(); this.write = frames.yes(); this.keyword = frames.field(); this.property = frames.natural(); this.symbol = new ProcessSymbol(frames); }
+}
+export class SyntaxReferences {
+    readonly syntax: SyntaxProjection; readonly cache = new Map<number, ReferenceFact>();
+    constructor(syntax: SyntaxProjection) { this.syntax = syntax; }
+    get(index: number): ReferenceFact { const cached = this.cache.get(index); if(cached !== undefined) { return cached; } const frames = new Frames(this.syntax.ask(index, 'syntax-reference-facts')); header(frames, 'syntax-reference-facts'); const fact = new ReferenceFact(frames); frames.end(); this.cache.set(index, fact); return fact; }
+    writes(index: number): boolean {
+        const syntax = this.syntax; let current = index; const immediate = syntax.node(index).parent;
+        if(immediate !== 0 && syntax.node(immediate).kind === 'PropertyAccessExpression' && syntax.node(immediate).name === index) { return false; }
+        while(syntax.node(current).parent !== 0) { const parent = syntax.node(current).parent; const node = syntax.node(parent);
+            if(['SpreadElement', 'SpreadAssignment', 'ArrayLiteralExpression', 'ObjectLiteralExpression', 'ParenthesizedExpression'].includes(node.kind)) { current = parent; }
+            else if(node.kind === 'PropertyAssignment') { if(node.initializer !== current) { return false; } current = parent; }
+            else { return this.get(current).write; }
+        }
+        return this.get(current).write;
+    }
+    value(index: number): boolean {
+        const syntax = this.syntax; const node = syntax.node(index); if(node.parent === 0) { return false; } const parent = syntax.node(node.parent);
+        if(this.get(index).declared && !['ShorthandPropertyAssignment', 'ExportSpecifier'].includes(parent.kind)) { return false; }
+        if(['TypeReference', 'TypeQuery', 'QualifiedName', 'LabeledStatement', 'BreakStatement', 'ContinueStatement', 'JsxAttribute', 'ImportSpecifier'].includes(parent.kind)) { return false; }
+        if(parent.kind === 'PropertyAccessExpression') { return parent.name !== index; }
+        if(['JsxOpeningElement', 'JsxSelfClosingElement', 'JsxClosingElement'].includes(parent.kind)) { const initial = node.text[0] ?? ''; return !(initial >= 'a' && initial <= 'z') && !node.text.includes('-'); }
+        if(parent.kind === 'BindingElement') { return this.get(node.parent).property !== index; }
+        if(parent.kind === 'ExportSpecifier') {
+            for(let at = parent.parent; at !== 0; at = syntax.node(at).parent) { const ancestor = syntax.node(at); if(ancestor.kind === 'ExportDeclaration' && ancestor.children.some((child) => syntax.node(child).kind === 'StringLiteral')) { return false; } }
+            const property = this.get(node.parent).property; return property === 0 || property === index;
+        }
+        return true;
+    }
+}
