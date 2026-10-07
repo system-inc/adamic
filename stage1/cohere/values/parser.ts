@@ -1,19 +1,21 @@
-// A port of cohere's internal/format/css/values/parser.go to Adamic 0.1: postcss-values-parser 2.0.1,
-// lib/parser.js, with lib/errors/ParserError.js. Each piece names the Go it reads as.
-//
-// Where the port differs from the Go, and why:
-//
-//   - Throws. Upstream throws; the Go panics with an *Error and Parse recovers it. 0.1 has no
-//     exceptions, so a throw here records upstream's String(error) in #thrown and returns at once, and
-//     every caller that can see one returns too, so nothing upstream wouldn't run after a throw runs
-//     here. The loop stops at the first. The TypeErrors upstream hits reading a property of undefined
-//     are thrown where its expression reads them, in its order of evaluation.
-//   - Offsets. The Go converts every sourceIndex to a byte offset; the port keeps upstream's UTF-16
-//     index. The test converts the Go's back with cohere's own utf16IndexOf, as cohere's oracle test
-//     does before comparing with the library.
-//   - The methods come callee first, not in the Go's order: stage 0 takes a call to a method declared
-//     further down for a void one (gitignore's GAPS.md, gap 3).
-//   - The Go's unexported fields and methods are #private members (gap 4 in GAPS.md is closed).
+/*
+ * A port of cohere's internal/format/css/values/parser.go to Adamic 0.1: postcss-values-parser 2.0.1,
+ * lib/parser.js, with lib/errors/ParserError.js. Each piece names the Go it reads as.
+ *
+ * Where the port differs from the Go, and why:
+ *
+ *   - Throws. Upstream throws; the Go panics with an *Error and Parse recovers it. 0.1 has no
+ *     exceptions, so a throw here records upstream's String(error) in #thrown and returns at once, and
+ *     every caller that can see one returns too, so nothing upstream wouldn't run after a throw runs
+ *     here. The loop stops at the first. The TypeErrors upstream hits reading a property of undefined
+ *     are thrown where its expression reads them, in its order of evaluation.
+ *   - Offsets. The Go converts every sourceIndex to a byte offset; the port keeps upstream's UTF-16
+ *     index. The test converts the Go's back with cohere's own utf16IndexOf, as cohere's oracle test
+ *     does before comparing with the library.
+ *   - The methods come callee first, not in the Go's order: stage 0 takes a call to a method declared
+ *     further down for a void one (gitignore's `GAPS.md`, gap 3).
+ *   - The Go's unexported fields and methods are #private members (gap 4 in `GAPS.md` is closed).
+ */
 
 import { panic } from 'adamic';
 import { alphaNum, type Token } from './tokenize.ts';
@@ -63,6 +65,15 @@ function isDigit(text: string, index: number): boolean {
 	return code >= 0x30 && code <= 0x39;
 }
 
+// The Go's rNumber digit scan, with its captured text passed explicitly.
+function digitEnd(text: string, from: number): number {
+	let end = from;
+	while (isDigit(text, end)) {
+		end++;
+	}
+	return end;
+}
+
 // parser.go: rNumber, /^[\+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][\+\-]?\d+)?/: the length of the match at
 // the start of text, or -1.
 function rNumber(text: string): number {
@@ -70,21 +81,14 @@ function rNumber(text: string): number {
 	if (text.startsWith('+') || text.startsWith('-')) {
 		index++;
 	}
-	const digits = (from: number): number => {
-		let end = from;
-		while (isDigit(text, end)) {
-			end++;
-		}
-		return end;
-	};
-	const integerEnd = digits(index);
+	const integerEnd = digitEnd(text, index);
 	if (integerEnd > index) {
 		index = integerEnd;
 		if (text[index] === '.') {
-			index = digits(index + 1);
+			index = digitEnd(text, index + 1);
 		}
-	} else if (text[index] === '.' && digits(index + 1) > index + 1) {
-		index = digits(index + 1);
+	} else if (text[index] === '.' && digitEnd(text, index + 1) > index + 1) {
+		index = digitEnd(text, index + 1);
 	} else {
 		return -1;
 	}
@@ -93,7 +97,7 @@ function rNumber(text: string): number {
 		if (text[exponent] === '+' || text[exponent] === '-') {
 			exponent++;
 		}
-		const exponentEnd = digits(exponent);
+		const exponentEnd = digitEnd(text, exponent);
 		if (exponentEnd > exponent) {
 			index = exponentEnd;
 		}
@@ -146,7 +150,7 @@ function replaceFirst(value: string, search: string): string {
 
 // A leaf's children in its tree. tree() starts from it and replaces it for a container, where it would
 // write `children ?? []`, since stage 0 doesn't lower an empty array literal as a default yet (gap 5 in
-// GAPS.md).
+// `GAPS.md`).
 const noChildren: readonly ValueTree[] = [];
 
 // parser.go: parser.
@@ -362,9 +366,9 @@ export class Parser {
 		}
 
 		const currToken = this.#currToken();
-		for (let i = 0; i < indices.length; i++) {
-			const ind = indices[i] ?? panic(`index ${i} out of range`);
-			const following = indices[i + 1];
+		for (let indexPosition = 0; indexPosition < indices.length; indexPosition++) {
+			const ind = indices[indexPosition] ?? panic(`index ${indexPosition} out of range`);
+			const following = indices[indexPosition + 1];
 			const index = following !== undefined && following !== 0 ? following : word.length;
 			const value = word.slice(ind, index);
 			let node: ValueNode;
@@ -624,6 +628,9 @@ export class Parser {
 			case 'unicoderange':
 				this.#unicodeRange();
 				break;
+			case '#':
+			case '{':
+			case '}':
 			default:
 				this.#word();
 				break;
