@@ -1,0 +1,41 @@
+interface Item {
+    readonly label: string;
+}
+let saved: Item | undefined;
+function make(value: number): Item {
+    return { label: `item${value}` };
+}
+class Reader {
+    read(value: Item): number {
+        return value.label.length;
+    }
+    make(value: number): Item {
+        return { label: `fresh${value}` };
+    }
+}
+const shared = make(90);
+class Keeper extends Reader {
+    override read(value: Item): number {
+        saved = value;
+        return value.label.length;
+    }
+    override make(value: number): Item {
+        return shared;
+    }
+}
+function read(reader: Reader): void {
+    console.log(`${reader.read(make(12))}`);
+    console.log(`${saved?.label}`);
+}
+function produce(reader: Reader): Item {
+    return reader.make(34);
+}
+function length(value: Item): number {
+    return value.label.length;
+}
+read(new Reader());
+read(new Keeper());
+console.log(`${length(produce(new Reader()))}`);
+console.log(`${length(produce(new Keeper()))}`);
+console.log(shared.label);
+console.log(produce(new Keeper()).label);
