@@ -57,3 +57,18 @@ directory. No additional rules are claimed.
 
 The second continuation is complete. Implementations and full validation
 evidence are in `wave_06_constructors/REPORT.md` and its `validation/` directory.
+
+## Third continuation claim
+
+The earlier nine rules are complete and pushed through
+`7e889b141f26d239a2797050e1225fedb93bc44c`. An all-heads fetch checked
+347 origin refs, 33 unique claim documents, 126 claimed ranked rules and 25
+ranked ports on origin/main or origin/codex/tsgo-c-library. The next three
+entries (descending combined volume, lexical ties) are reserved before code:
+
+1. `no-throw-literal` (0 compiler, 0 repository)
+2. `no-useless-backreference` (0 compiler, 0 repository)
+3. `prefer-arrow-callback` (0 compiler, 0 repository)
+
+The intervening constructor and other core entries are now claimed elsewhere.
+Native implementations and evidence belong in `wave_06_callbacks/`.
