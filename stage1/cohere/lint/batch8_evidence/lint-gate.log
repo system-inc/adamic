@@ -1,0 +1,477 @@
+=== RUN   TestBatch8Capture
+    batch8_capture_test.go:90: batch 8 cohere cases: 714 unique source/rule/file/options combinations
+--- PASS: TestBatch8Capture (3.75s)
+=== RUN   TestBatch8PositionsAndRelease
+    batch8_positions_test.go:46: build load=115.055959ms lower=214.860274ms emit=116.178435ms clang=18.844818961s C_bytes=2281713
+    batch8_positions_test.go:47: Node execution 207.912307ms
+    batch8_positions_test.go:47: native execution 32.211517ms
+    batch8_positions_test.go:47: Go, Node, sanitized native identical: 12324 bytes, 14 cases; Go execution 8.354045ms
+    batch8_positions_test.go:48: build load=119.687865ms lower=227.590258ms emit=177.70824ms clang=4.774654784s C_bytes=2281713
+    batch8_positions_test.go:49: Node execution 279.089429ms
+    batch8_positions_test.go:49: native execution 3.067924ms
+    batch8_positions_test.go:49: Go, Node, sanitized native identical: 12324 bytes, 14 cases; Go execution 11.025913ms
+=== RUN   TestBatch8PositionsAndRelease/source_corpus
+    batch8_positions_test.go:50: Node execution 4.360808923s
+    batch8_positions_test.go:50: native execution 6.638649463s
+    batch8_positions_test.go:50: Go, Node, sanitized native identical: 12356124 bytes, 198 cases; Go execution 1.675464258s
+--- PASS: TestBatch8PositionsAndRelease (41.02s)
+    --- PASS: TestBatch8PositionsAndRelease/source_corpus (12.74s)
+=== RUN   TestBatch8
+    batch8_capture_test.go:90: batch 8 cohere cases: 714 unique source/rule/file/options combinations
+    batch8_test.go:173: unsupported source react/no-find-dom-node react/no-find-dom-node 96ce666179d9e348aeedcfa380a72f496e53469c6ca78f537246b94e567184df: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-find-dom-node react/no-find-dom-node f707970498790dd585afa3ddcf03c45e934fd5d8a0f148dab58390066fbba706: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-find-dom-node react/no-find-dom-node 154dd41d5ea95fa620d7ccb923d2aef6b017f4f4b32263b2feb623b18634baeb: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-find-dom-node react/no-find-dom-node ec8550c2f200f2d4baf78a70bcbc056dbb669f42549321cf31fe5b72d4af3b5f: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-find-dom-node react/no-find-dom-node 8c37ca1271f45690d6abeb74af75e540906edd8a57ae53d1cf686d5d0f473cfb: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-find-dom-node react/no-find-dom-node e26f29c6f3eedc220e28912b4f03efd101fdd45dcfb66721e4964b4c1ea68bfb: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-find-dom-node react/no-find-dom-node 2d09e6bcc1b2b86e3d6a51f88622d02c23fd57486520ceaac4fb5647633ef687: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-find-dom-node react/no-find-dom-node 17fd9fe17cda033c1a8362f66de3a239f82c5d5db303df2a771751e2b18446c4: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-find-dom-node react/no-find-dom-node 2930b4ae9693c0320eb305d36cdc6a6d955f1e9f817b363d97fdc8d8c6e1f0e5: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-is-mounted react/no-is-mounted 7f39015bf57cf9620d0afd10d0277bbe4c5defaec53b021129dc1118df5bef5a: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-is-mounted react/no-is-mounted 060476fe63faecfbe45742bc712ed4ffd2456878344bb5edd095016485570334: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-is-mounted react/no-is-mounted 375fffda6499bcc5851fc33438e691f2817a004a65164c203731831d707d57d0: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-is-mounted react/no-is-mounted 42214126a3e7f7fcbaf057c7901a501a7aae7ef980cde9a740f2ba1915efa760: JSX parser missing
+    batch8_test.go:173: unsupported source react/no-is-mounted react/no-is-mounted ad09686801b001d83faa87c1a39fa3b2dc7d748f7e4f5488b2e7677e76c502c8: JSX parser missing
+    batch8_test.go:189: upstream 714: 660 source cases, 40 Go-AST JSX listener cases, 14 unsupported source cases
+    batch8_test.go:190: build load=147.251871ms lower=198.365596ms emit=153.249617ms clang=23.155154496s C_bytes=2281713
+=== RUN   TestBatch8/jsx_gap
+    batch8_test.go:191: Go reports putCommentInBraces; node refuses: adamic: panic: parser slice unsupported primary EndOfFile at 33 in /tmp/adamic-gate/TestBatch8jsx_gap3062315318/001/jsx-gap.tsx
+    batch8_test.go:191: Go reports putCommentInBraces; /tmp/adamic-gate/TestBatch81789831503/720/lint refuses: adamic: panic: parser slice unsupported primary EndOfFile at 33 in /tmp/adamic-gate/TestBatch8jsx_gap3062315318/001/jsx-gap.tsx
+=== RUN   TestBatch8/upstream
+    batch8_test.go:192: Node execution 1.125045166s
+    batch8_test.go:192: native execution 10.989156345s
+    batch8_test.go:192: Go, Node, sanitized native identical: 12265076 bytes, 700 cases; Go execution 671.997018ms
+=== RUN   TestBatch8/compiler_and_stage1
+    batch8_test.go:193: Node execution 7.737273784s
+    batch8_test.go:193: native execution 36.512257368s
+    batch8_test.go:193: Go, Node, sanitized native identical: 12356124 bytes, 198 cases; Go execution 3.77615181s
+=== RUN   TestBatch8/mutants
+    batch8_test.go:194: Node execution 199.794234ms
+    batch8_test.go:194: native execution 28.172496ms
+    batch8_test.go:194: Go, Node, sanitized native identical: 7441 bytes, 12 cases; Go execution 16.851761ms
+=== RUN   TestBatch8/mutants/no_octal_escape
+=== PAUSE TestBatch8/mutants/no_octal_escape
+=== RUN   TestBatch8/mutants/no_unexpected_multiline
+=== PAUSE TestBatch8/mutants/no_unexpected_multiline
+=== RUN   TestBatch8/mutants/no_unused_private_class_members
+=== PAUSE TestBatch8/mutants/no_unused_private_class_members
+=== RUN   TestBatch8/mutants/no_useless_constructor
+=== PAUSE TestBatch8/mutants/no_useless_constructor
+=== RUN   TestBatch8/mutants/prefer_template
+=== PAUSE TestBatch8/mutants/prefer_template
+=== RUN   TestBatch8/mutants/forward_ref_uses_ref
+=== PAUSE TestBatch8/mutants/forward_ref_uses_ref
+=== RUN   TestBatch8/mutants/jsx_no_comment_textnodes
+=== PAUSE TestBatch8/mutants/jsx_no_comment_textnodes
+=== RUN   TestBatch8/mutants/no_find_dom_node
+=== PAUSE TestBatch8/mutants/no_find_dom_node
+=== RUN   TestBatch8/mutants/no_is_mounted
+=== PAUSE TestBatch8/mutants/no_is_mounted
+=== RUN   TestBatch8/mutants/no_redundant_should_component_update
+=== PAUSE TestBatch8/mutants/no_redundant_should_component_update
+=== RUN   TestBatch8/mutants/forward_ref_uses_ref#01
+=== PAUSE TestBatch8/mutants/forward_ref_uses_ref#01
+=== RUN   TestBatch8/mutants/prefer_template#01
+=== PAUSE TestBatch8/mutants/prefer_template#01
+=== CONT  TestBatch8/mutants/no_octal_escape
+    batch8_mutants_test.go:49: mutant if(width !== 0) -> if(width < 0)
+=== CONT  TestBatch8/mutants/no_useless_constructor
+    batch8_mutants_test.go:49: mutant if(body < 0) -> if(body < 0 || body >= 0)
+=== CONT  TestBatch8/mutants/no_redundant_should_component_update
+    batch8_mutants_test.go:49: mutant if(!pure) -> if(pure)
+=== CONT  TestBatch8/mutants/forward_ref_uses_ref
+    batch8_mutants_test.go:49: mutant if(counted !== 1) -> if(counted === 1)
+=== CONT  TestBatch8/mutants/jsx_no_comment_textnodes
+    batch8_mutants_test.go:49: mutant if(atLineStart && character === '/' -> if(!atLineStart && character === '/'
+=== NAME  TestBatch8/mutants/forward_ref_uses_ref
+    batch8_mutants_test.go:94: build load=240.82058ms lower=263.867464ms emit=184.242727ms clang=18.23550114s C_bytes=2281713
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tconst C = forwardRef(props => props);", Go "/tmp/adamic-gate/TestBatch8mutantsforward_ref_uses_ref3489979287/002/control.ts:1:22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsforward_ref_uses_ref3489979287/002/control.ts:1:22
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 21 35 forwardRefUsesRef
+        suggestion forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tconst C = forwardRef(props => props);", Go "/tmp/adamic-gate/TestBatch8mutantsforward_ref_uses_ref3489979287/002/control.ts:1:22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsforward_ref_uses_ref3489979287/002/control.ts:1:22
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 21 35 forwardRefUsesRef
+        suggestion forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.
+=== CONT  TestBatch8/mutants/no_is_mounted
+    batch8_mutants_test.go:49: mutant context.node(name).text !== 'isMounted' -> context.node(name).text === 'isMounted'
+=== NAME  TestBatch8/mutants/no_useless_constructor
+    batch8_mutants_test.go:94: build load=278.773593ms lower=280.454174ms emit=212.111453ms clang=19.010123765s C_bytes=2281755
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tclass C { constructor(){} }", Go "/tmp/adamic-gate/TestBatch8mutantsno_useless_constructor689510410/002/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_useless_constructor689510410/002/control.ts:1:11
+          no-useless-constructor  This constructor does nothing the language would not do without it. An empty constructor on a base class, or one whose only statement forwards its own parameters to `super`, is exactly the behaviour a class gets when it declares no constructor at all, so the code reads as though something happens at construction time when nothing does.
+        
+        range 10 21 noUselessConstructor
+        suggestion removeConstructor	Remove the constructor, leaving the behaviour the class already had.
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tclass C { constructor(){} }", Go "/tmp/adamic-gate/TestBatch8mutantsno_useless_constructor689510410/002/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_useless_constructor689510410/002/control.ts:1:11
+          no-useless-constructor  This constructor does nothing the language would not do without it. An empty constructor on a base class, or one whose only statement forwards its own parameters to `super`, is exactly the behaviour a class gets when it declares no constructor at all, so the code reads as though something happens at construction time when nothing does.
+        
+        range 10 21 noUselessConstructor
+        suggestion removeConstructor	Remove the constructor, leaving the behaviour the class already had.
+=== CONT  TestBatch8/mutants/no_find_dom_node
+    batch8_mutants_test.go:49: mutant context.node(name).text === 'findDOMNode' -> context.node(name).text !== 'findDOMNode'
+=== NAME  TestBatch8/mutants/no_redundant_should_component_update
+    batch8_mutants_test.go:94: build load=240.419671ms lower=276.444619ms emit=207.907412ms clang=25.651264576s C_bytes=2281712
+=== NAME  TestBatch8/mutants/no_octal_escape
+    batch8_mutants_test.go:94: build load=283.690556ms lower=268.704518ms emit=219.110765ms clang=25.621454048s C_bytes=2281712
+=== NAME  TestBatch8/mutants/no_redundant_should_component_update
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tclass C extends PureComponent {shouldComponentUpdate(){}}", Go "/tmp/adamic-gate/TestBatch8mutantsno_redundant_should_component_update1952420673/002/control.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_redundant_should_component_update1952420673/002/control.ts:1:1
+          react/no-redundant-should-component-update  C extends PureComponent and also writes shouldComponentUpdate. PureComponent's whole contribution IS an implementation of that method, a shallow comparison of props and state, and defining your own replaces it rather than adding to it. So the class pays for the base class and then discards what it bought, and a reader who sees PureComponent in the heritage will believe a shallow compare is happening when it is not. Extend Component instead, or delete the method.
+        
+        range 0 57 noShouldCompUpdate
+        fixed	class C extends PureComponent {shouldComponentUpdate(){}}
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tclass C extends PureComponent {shouldComponentUpdate(){}}", Go "/tmp/adamic-gate/TestBatch8mutantsno_redundant_should_component_update1952420673/002/control.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_redundant_should_component_update1952420673/002/control.ts:1:1
+          react/no-redundant-should-component-update  C extends PureComponent and also writes shouldComponentUpdate. PureComponent's whole contribution IS an implementation of that method, a shallow comparison of props and state, and defining your own replaces it rather than adding to it. So the class pays for the base class and then discards what it bought, and a reader who sees PureComponent in the heritage will believe a shallow compare is happening when it is not. Extend Component instead, or delete the method.
+        
+        range 0 57 noShouldCompUpdate
+        fixed	class C extends PureComponent {shouldComponentUpdate(){}}
+=== CONT  TestBatch8/mutants/no_unused_private_class_members
+    batch8_mutants_test.go:49: mutant if(!read) -> if(read)
+=== NAME  TestBatch8/mutants/no_octal_escape
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tconst value = '\\u005c251';", Go "/tmp/adamic-gate/TestBatch8mutantsno_octal_escape1673693855/002/control.ts:1:15"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_octal_escape1673693855/002/control.ts:1:15
+          no-octal-escape  Do not use the octal escape `\251`. This is a legacy octal escape, a numbering the language kept only for old web pages and forbids outright in strict mode and in modules, where it is a syntax error rather than a character. It also reads as decimal to almost everybody: the escape here is not the number it looks like. A unicode escape says the same character in a numbering that is unambiguous and legal everywhere.
+        
+        range 14 20 octalEscapeSequence
+        fixed	const value = '\u005c251';
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tconst value = '\\u005c251';", Go "/tmp/adamic-gate/TestBatch8mutantsno_octal_escape1673693855/002/control.ts:1:15"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_octal_escape1673693855/002/control.ts:1:15
+          no-octal-escape  Do not use the octal escape `\251`. This is a legacy octal escape, a numbering the language kept only for old web pages and forbids outright in strict mode and in modules, where it is a syntax error rather than a character. It also reads as decimal to almost everybody: the escape here is not the number it looks like. A unicode escape says the same character in a numbering that is unambiguous and legal everywhere.
+        
+        range 14 20 octalEscapeSequence
+        fixed	const value = '\u005c251';
+=== CONT  TestBatch8/mutants/prefer_template
+    batch8_mutants_test.go:49: mutant if(!contains(context, top, false)) -> if(contains(context, top, false))
+=== NAME  TestBatch8/mutants/no_is_mounted
+    batch8_mutants_test.go:94: build load=151.171202ms lower=330.249392ms emit=181.269675ms clang=19.461582863s C_bytes=2281710
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tclass C { m(){this.isMounted();} }", Go "/tmp/adamic-gate/TestBatch8mutantsno_is_mounted2441306785/002/control.ts:1:15"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_is_mounted2441306785/002/control.ts:1:15
+          react/no-is-mounted  `isMounted` is called on `this`. It was removed from React and never existed on a function component, so the call either throws or silently reads `undefined`. Where it does still run, it is an anti-pattern: it hides a leak rather than fixing one, because the only reason to ask whether a component is still mounted is that something asynchronous outlived it. Cancel that work when the component unmounts instead, so nothing is left holding a reference to ask about.
+        
+        range 14 30 noIsMounted
+        fixed	class C { m(){this.isMounted();} }
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tclass C { m(){this.isMounted();} }", Go "/tmp/adamic-gate/TestBatch8mutantsno_is_mounted2441306785/002/control.ts:1:15"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_is_mounted2441306785/002/control.ts:1:15
+          react/no-is-mounted  `isMounted` is called on `this`. It was removed from React and never existed on a function component, so the call either throws or silently reads `undefined`. Where it does still run, it is an anti-pattern: it hides a leak rather than fixing one, because the only reason to ask whether a component is still mounted is that something asynchronous outlived it. Cancel that work when the component unmounts instead, so nothing is left holding a reference to ask about.
+        
+        range 14 30 noIsMounted
+        fixed	class C { m(){this.isMounted();} }
+=== CONT  TestBatch8/mutants/prefer_template#01
+    batch8_mutants_test.go:49: mutant new Edit(tokenStart(context, top), context.node(top).end, replacement) -> new Edit(tokenStart(context, top), context.node(top).end, replacement + ' ')
+=== NAME  TestBatch8/mutants/jsx_no_comment_textnodes
+    batch8_mutants_test.go:94: build load=133.310333ms lower=236.531396ms emit=167.617171ms clang=25.394472787s C_bytes=2281716
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tconst view = <div>// comment</div>;", Go "/tmp/adamic-gate/TestBatch8mutantsjsx_no_comment_textnodes1737779389/002/control.tsx:1:19"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsjsx_no_comment_textnodes1737779389/002/control.tsx:1:19
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 18 28 putCommentInBraces
+        fixed	const view = <div>// comment</div>;
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tconst view = <div>// comment</div>;", Go "/tmp/adamic-gate/TestBatch8mutantsjsx_no_comment_textnodes1737779389/002/control.tsx:1:19"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsjsx_no_comment_textnodes1737779389/002/control.tsx:1:19
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 18 28 putCommentInBraces
+        fixed	const view = <div>// comment</div>;
+=== CONT  TestBatch8/mutants/forward_ref_uses_ref#01
+    batch8_mutants_test.go:49: mutant 'forwardRefAddRefParameter' -> 'wrongSecondSuggestion'
+=== NAME  TestBatch8/mutants/no_unused_private_class_members
+    batch8_mutants_test.go:94: build load=193.081471ms lower=287.257078ms emit=195.575178ms clang=22.895091384s C_bytes=2281712
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tclass C { #x=0; m(){this.#x=1;} }", Go "/tmp/adamic-gate/TestBatch8mutantsno_unused_private_class_members3274225979/002/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_unused_private_class_members3274225979/002/control.ts:1:11
+          no-unused-private-class-members  '#x' is declared but nothing in this class ever reads it. A private member is visible only inside its own class body, so a value no line here reads back can never be observed and the code that maintains it is dead too. Read it, or remove the member and its writes.
+        
+        range 10 12 noUnusedPrivateClassMember
+        fixed	class C { #x=0; m(){this.#x=1;} }
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tclass C { #x=0; m(){this.#x=1;} }", Go "/tmp/adamic-gate/TestBatch8mutantsno_unused_private_class_members3274225979/002/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_unused_private_class_members3274225979/002/control.ts:1:11
+          no-unused-private-class-members  '#x' is declared but nothing in this class ever reads it. A private member is visible only inside its own class body, so a value no line here reads back can never be observed and the code that maintains it is dead too. Read it, or remove the member and its writes.
+        
+        range 10 12 noUnusedPrivateClassMember
+        fixed	class C { #x=0; m(){this.#x=1;} }
+=== CONT  TestBatch8/mutants/no_unexpected_multiline
+    batch8_mutants_test.go:49: mutant context.line(start) !== context.line(context.node(expression).end - 1) -> context.line(start) === context.line(context.node(expression).end - 1)
+=== NAME  TestBatch8/mutants/no_find_dom_node
+    batch8_mutants_test.go:94: build load=209.854779ms lower=263.511292ms emit=185.841613ms clang=24.641342478s C_bytes=2281716
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tReactDOM['findDOMNode'](node);", Go "/tmp/adamic-gate/TestBatch8mutantsno_find_dom_node4021294051/002/control.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_find_dom_node4021294051/002/control.ts:1:10
+          react/no-find-dom-node  `findDOMNode` was deprecated in 2018 and removed in React 19, so this call throws on any current React. Even where it still runs it reaches around the component that owns the node: the parent reads a child's DOM element the child never agreed to expose, so the child cannot change what it renders without breaking a caller it does not know about. Pass a ref to the element instead, so the component decides what it hands out.
+        
+        range 9 22 noFindDOMNode
+        fixed	ReactDOM['findDOMNode'](node);
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tReactDOM['findDOMNode'](node);", Go "/tmp/adamic-gate/TestBatch8mutantsno_find_dom_node4021294051/002/control.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_find_dom_node4021294051/002/control.ts:1:10
+          react/no-find-dom-node  `findDOMNode` was deprecated in 2018 and removed in React 19, so this call throws on any current React. Even where it still runs it reaches around the component that owns the node: the parent reads a child's DOM element the child never agreed to expose, so the child cannot change what it renders without breaking a caller it does not know about. Pass a ref to the element instead, so the component decides what it hands out.
+        
+        range 9 22 noFindDOMNode
+        fixed	ReactDOM['findDOMNode'](node);
+=== NAME  TestBatch8/mutants/prefer_template#01
+    batch8_mutants_test.go:94: build load=138.453887ms lower=223.243557ms emit=215.861916ms clang=24.423504818s C_bytes=2281886
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 6: port "fix 10 21\t`a${  value}` ", Go "fix 10 21\t`a${  value}`"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsprefer_template#011065075485/002/control.ts:1:11
+          prefer-template  This builds a string by concatenating a literal with something that is not one. The `+` operator does double duty in JavaScript, so a reader has to work out from the operands whether a line adds or joins, and a single non-string operand silently changes the answer for the whole expression. A template literal says which one is meant in its first character, keeps the literal text contiguous instead of split across quotes and plus signs, and does not change meaning when an operand's type does.
+        
+        range 10 21 unexpectedStringConcatenation
+        fix 10 21	`a${  value}`
+        fixed	const x = `a${  value}`;
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 6: port "fix 10 21\t`a${  value}` ", Go "fix 10 21\t`a${  value}`"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsprefer_template#011065075485/002/control.ts:1:11
+          prefer-template  This builds a string by concatenating a literal with something that is not one. The `+` operator does double duty in JavaScript, so a reader has to work out from the operands whether a line adds or joins, and a single non-string operand silently changes the answer for the whole expression. A template literal says which one is meant in its first character, keeps the literal text contiguous instead of split across quotes and plus signs, and does not change meaning when an operand's type does.
+        
+        range 10 21 unexpectedStringConcatenation
+        fix 10 21	`a${  value}`
+        fixed	const x = `a${  value}`;
+=== NAME  TestBatch8/mutants/prefer_template
+    batch8_mutants_test.go:94: build load=192.186056ms lower=242.864842ms emit=154.370001ms clang=30.658900074s C_bytes=2281712
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tconst x = 'a' + value;", Go "/tmp/adamic-gate/TestBatch8mutantsprefer_template1078306856/002/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsprefer_template1078306856/002/control.ts:1:11
+          prefer-template  This builds a string by concatenating a literal with something that is not one. The `+` operator does double duty in JavaScript, so a reader has to work out from the operands whether a line adds or joins, and a single non-string operand silently changes the answer for the whole expression. A template literal says which one is meant in its first character, keeps the literal text contiguous instead of split across quotes and plus signs, and does not change meaning when an operand's type does.
+        
+        range 10 21 unexpectedStringConcatenation
+        fix 10 21	`a${  value}`
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tconst x = 'a' + value;", Go "/tmp/adamic-gate/TestBatch8mutantsprefer_template1078306856/002/control.ts:1:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsprefer_template1078306856/002/control.ts:1:11
+          prefer-template  This builds a string by concatenating a literal with something that is not one. The `+` operator does double duty in JavaScript, so a reader has to work out from the operands whether a line adds or joins, and a single non-string operand silently changes the answer for the whole expression. A template literal says which one is meant in its first character, keeps the literal text contiguous instead of split across quotes and plus signs, and does not change meaning when an operand's type does.
+        
+        range 10 21 unexpectedStringConcatenation
+        fix 10 21	`a${  value}`
+=== NAME  TestBatch8/mutants/forward_ref_uses_ref#01
+    batch8_mutants_test.go:94: build load=177.586639ms lower=238.059528ms emit=205.820379ms clang=28.104756258s C_bytes=2281709
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 8: port "suggestion wrongSecondSuggestion\tAdd a `ref` parameter.", Go "suggestion forwardRefAddRefParameter\tAdd a `ref` parameter."
+        Go context:
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 21 35 forwardRefUsesRef
+        suggestion forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.
+        edit 10 36	props => props
+        suggestion forwardRefAddRefParameter	Add a `ref` parameter.
+        edit 21 26	(props, ref)
+        fixed	const C = forwardRef(props => props);
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 8: port "suggestion wrongSecondSuggestion\tAdd a `ref` parameter.", Go "suggestion forwardRefAddRefParameter\tAdd a `ref` parameter."
+        Go context:
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 21 35 forwardRefUsesRef
+        suggestion forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.
+        edit 10 36	props => props
+        suggestion forwardRefAddRefParameter	Add a `ref` parameter.
+        edit 21 26	(props, ref)
+        fixed	const C = forwardRef(props => props);
+=== NAME  TestBatch8/mutants/no_unexpected_multiline
+    batch8_mutants_test.go:94: build load=214.1653ms lower=426.215044ms emit=319.703917ms clang=28.293355342s C_bytes=2281713
+    batch8_mutants_test.go:102: compiled mutant caught on Node: case 0 line 2: port "fixed\tconst x = f\\u000a(a);", Go "/tmp/adamic-gate/TestBatch8mutantsno_unexpected_multiline1575782786/002/control.ts:2:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_unexpected_multiline1575782786/002/control.ts:2:1
+          no-unexpected-multiline  A newline sits between this expression and the `(` that follows it, so what reads as two statements is one call. Automatic semicolon insertion does not fire before an open paren, so the line above is being invoked rather than ended.
+        
+        range 12 13 function
+        fixed	const x = f\u000a(a);
+    batch8_mutants_test.go:102: compiled mutant caught on native: case 0 line 2: port "fixed\tconst x = f\\u000a(a);", Go "/tmp/adamic-gate/TestBatch8mutantsno_unexpected_multiline1575782786/002/control.ts:2:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestBatch8mutantsno_unexpected_multiline1575782786/002/control.ts:2:1
+          no-unexpected-multiline  A newline sits between this expression and the `(` that follows it, so what reads as two statements is one call. Automatic semicolon insertion does not fire before an open paren, so the line above is being invoked rather than ended.
+        
+        range 12 13 function
+        fixed	const x = f\u000a(a);
+=== RUN   TestBatch8/throughput
+    batch8_test.go:196: build load=196.263084ms lower=206.131883ms emit=158.394253ms clang=7.888750892s C_bytes=2281713
+    batch8_test.go:196: round 1 Go 1.194275326s findings=161
+    batch8_test.go:196: round 1 native 3.017857196s findings=161
+    batch8_test.go:196: round 1 Node 3.287868622s findings=161
+    batch8_test.go:196: round 2 Go 608.483106ms findings=161
+    batch8_test.go:196: round 2 native 4.336738169s findings=161
+    batch8_test.go:196: round 2 Node 2.980911641s findings=161
+    batch8_test.go:196: round 3 Go 545.501542ms findings=161
+    batch8_test.go:196: round 3 native 3.423611971s findings=161
+    batch8_test.go:196: round 3 Node 2.039382167s findings=161
+    batch8_test.go:196: round 4 Go 622.889728ms findings=161
+    batch8_test.go:196: round 4 native 2.898728119s findings=161
+    batch8_test.go:196: round 4 Node 1.723092203s findings=161
+    batch8_test.go:196: round 5 Go 409.677545ms findings=161
+    batch8_test.go:196: round 5 native 3.472207352s findings=161
+    batch8_test.go:196: round 5 Node 2.30035267s findings=161
+    batch8_test.go:196: best of 5 Go: 0.409678s, 392.99 findings/s (77 files, 161 findings)
+    batch8_test.go:196: best of 5 native: 2.898728s, 55.54 findings/s (77 files, 161 findings)
+    batch8_test.go:196: best of 5 Node: 1.723092s, 93.44 findings/s (77 files, 161 findings)
+--- PASS: TestBatch8 (226.09s)
+    --- PASS: TestBatch8/jsx_gap (0.23s)
+    --- PASS: TestBatch8/upstream (12.86s)
+    --- PASS: TestBatch8/compiler_and_stage1 (48.16s)
+    --- PASS: TestBatch8/mutants (0.26s)
+        --- PASS: TestBatch8/mutants/forward_ref_uses_ref (19.22s)
+        --- PASS: TestBatch8/mutants/no_useless_constructor (20.08s)
+        --- PASS: TestBatch8/mutants/no_redundant_should_component_update (26.72s)
+        --- PASS: TestBatch8/mutants/no_octal_escape (26.78s)
+        --- PASS: TestBatch8/mutants/no_is_mounted (21.42s)
+        --- PASS: TestBatch8/mutants/jsx_no_comment_textnodes (45.45s)
+        --- PASS: TestBatch8/mutants/no_unused_private_class_members (24.02s)
+        --- PASS: TestBatch8/mutants/no_find_dom_node (32.37s)
+        --- PASS: TestBatch8/mutants/prefer_template#01 (30.29s)
+        --- PASS: TestBatch8/mutants/prefer_template (45.80s)
+        --- PASS: TestBatch8/mutants/forward_ref_uses_ref#01 (34.30s)
+        --- PASS: TestBatch8/mutants/no_unexpected_multiline (31.17s)
+    --- PASS: TestBatch8/throughput (41.36s)
+=== RUN   TestNestedConstructorGap
+    gaps_test.go:35: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestNestedConstructorGap (0.23s)
+=== RUN   TestRulesAgree
+    lint_test.go:258: cohere cases: 217 unique source/rule/options combinations
+    lint_test.go:283: Go, Node, native identical: 127976 bytes
+--- PASS: TestRulesAgree (23.82s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:317: compiler and stage1: 198 files
+    lint_test.go:318: Go, Node, native identical: 12524038 bytes
+--- PASS: TestCompilerAndStage1Agree (42.00s)
+=== RUN   TestMutants
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:363: suggestion applied as fix caught on Node: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutants3453217247/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutants3453217247/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+    lint_test.go:363: suggestion applied as fix caught on native: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutants3453217247/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutants3453217247/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:363: empty function body reported caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:363: empty function body reported caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/duplicate_case_suppressed
+    lint_test.go:363: duplicate case suppressed caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:363: duplicate case suppressed caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutants3453217247/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+--- PASS: TestMutants (56.54s)
+    --- PASS: TestMutants/suggestion_applied_as_fix (18.43s)
+    --- PASS: TestMutants/empty_function_body_reported (16.98s)
+    --- PASS: TestMutants/duplicate_case_suppressed (18.23s)
+=== RUN   TestThroughput
+    lint_test.go:410: machine Linux 55f663deaed4 6.18.44 #1 SMP Sat Sep 26 20:02:31 UTC 2026 x86_64 GNU/Linux; model name	: INTEL(R) XEON(R) PLATINUM 8573C; load before 1.21 1.70 1.70 1/229 84848
+    lint_test.go:433: round 1 Go 567.284868ms findings=451
+    lint_test.go:433: round 1 native 2.5547792s findings=451
+    lint_test.go:433: round 1 Node 1.980560503s findings=451
+    lint_test.go:433: round 2 Go 493.953363ms findings=451
+    lint_test.go:433: round 2 native 1.881204594s findings=451
+    lint_test.go:433: round 2 Node 1.540306935s findings=451
+    lint_test.go:433: round 3 Go 358.96206ms findings=451
+    lint_test.go:433: round 3 native 1.819466366s findings=451
+    lint_test.go:433: round 3 Node 1.575209802s findings=451
+    lint_test.go:433: round 4 Go 360.739363ms findings=451
+    lint_test.go:433: round 4 native 1.722397648s findings=451
+    lint_test.go:433: round 4 Node 1.330487953s findings=451
+    lint_test.go:433: round 5 Go 330.498926ms findings=451
+    lint_test.go:433: round 5 native 1.71719731s findings=451
+    lint_test.go:433: round 5 Node 1.134795765s findings=451
+    lint_test.go:441: best of 5 Go: 0.330499s, 1364.60 findings/s (77 files, 451 findings)
+    lint_test.go:441: best of 5 native: 1.717197s, 262.64 findings/s (77 files, 451 findings)
+    lint_test.go:441: best of 5 Node: 1.134796s, 397.43 findings/s (77 files, 451 findings)
+    lint_test.go:444: load after 1.47 1.72 1.70 2/229 84930
+--- PASS: TestThroughput (35.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	428.949s
+wall 437.078 seconds user 652.362 seconds sys 65.923 seconds
