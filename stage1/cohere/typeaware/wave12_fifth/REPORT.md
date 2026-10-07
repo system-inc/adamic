@@ -23,7 +23,7 @@ All three production rules consume cohere's React high_level_intermediate_repres
 | Rule | Required substrate missing from the native rule layer |
 | --- | --- |
 | set-state-in-effect | ForFunctionWithoutManualMemoization; erasure/inlining; per-function SSA identities; capture-to-context translation; ref-derived phi propagation; ControlDominators |
-| set-state-in-render | ForFunctionWithoutManualMemoization; AsCompilationUnit; capture translation; UnconditionalBlocks computed from post-dominators; useMemo callback handling |
+| set-state-in-render | ForFunction; AsCompilationUnit; capture translation; UnconditionalBlocks computed from post-dominators; useMemo callback handling |
 | static-components | ForFunction and AsCompilationUnit; reverse-postorder SSA/phi taint; JSX tag places with source identities |
 
 The current native parser also has no JSX productions. Every positive static-components finding requires JSX, so a positive native comparison for that rule is blocked independently of HIR. The existing source-has-jsx bridge question detects syntax and refuses it; it supplies no lowering or graph.
