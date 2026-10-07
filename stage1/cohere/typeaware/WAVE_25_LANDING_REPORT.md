@@ -219,3 +219,51 @@ is made. No shared files were changed and no new rules were claimed. Source
 implementations are unchanged; prior oracle results apply, and no native tests
 were rerun for this metadata-only change. JSON shape and upstream listener names
 were checked independently before committing.
+
+## Third landing, October 7, current main f8013f0b
+
+Rebased wave-25 cleanly onto f8013f0baac41ddc340d76f83bddde38536a8f07.
+Tested source tip: 343b9f2a2dbb0a927c738eed953bfd6a7f6713fb.
+No protected compiler file differs from main. No new rule was claimed.
+The final all-heads fetch confirmed the tested main base remained current.
+Compressed logs, exact scripts, source hashes and timings are preserved in
+validation-wave-25-landing-third. nproc is still 5; the existing toolchain
+was reused, with no setup rerun.
+
+All five owned rule suites passed against Go findings, fixes and suggestions
+on controls, repository sources and TypeScript compiler sources, including
+ASan/UBSan and released handles. The aggregate first command exited 1 because
+the separate refusal test reused an existing scratch symlink, not because of
+a source disagreement. Its isolated fresh-directory retry passed in 23.165s.
+No source or shared harness change was needed. The initial aggregate log,
+including that failure and the five passing suites, is retained intact.
+
+The inherited ten-rule dependency passed in 515.365s: controls 53 findings,
+repository 180 findings and compiler 16,589 findings with 7,120,613 identical
+serialized bytes under both normal and sanitizer runs. Bridge packages passed
+in 66.992s and 0.242s. The filtered uncached Node oracle passed in 10.690s,
+with zero cache hits, 25 native misses and 17 Node misses. go vet ./... exited
+0 with empty output. These are scoped checks, not the complete repository gate.
+
+All 24 rule mutants compiled, exited 0 and were caught only by independent Go
+byte comparisons. Owned mutants: graphql-mask, inject-strip, collection-zero,
+outcome-incomplete, pure-callback, exit-state, race-drop, blocking-count,
+throw-conditional, regex-forward, arrow-fix, eval-library, memo-inline and
+boolean-capital. Dependency mutants: before, cast, methods, coercion, caller,
+parameter, invariant, optional, alias and unused. Their exact differing byte
+offsets are recorded in the preserved logs. Released-registry mutants were
+caught by the required invalid-handle panic, separately from rule mutants.
+Bridge buffer bounds and leak mutants and the one-byte oracle mutant passed
+their intended negative checks.
+
+Three interleaved whole-process Go/native measurements used the rebuilt fifth
+suite with nil boolean options. Each output pair matched byte for byte.
+Compiler medians: native 4.078352513s, Go 0.388058155s, ratio 10.510.
+Repository medians: native 0.584706747s, Go 0.142006629s, ratio 4.117.
+These are total adapter times, not equivalent per-rule listener times.
+
+This landing preserves the existing limitations: boolean-prop-naming is
+partial for arbitrary runtime regex, imported props and typed wrappers;
+handed-node dispatch and string-kind removal remain unfinished. Its three
+React kinds declarations are present but not consumed by the current runner.
+No full gate or new emitted-JavaScript rule comparison was run.

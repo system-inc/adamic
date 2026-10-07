@@ -104,3 +104,11 @@ All five wave suites and the carried ten-rule bridge dependency are rebuilt
 and green against independent Go bytes, mutants, sanitizers and released
 handles. The report and evidence are in WAVE_25_LANDING_REPORT.md.
 Boolean-prop-naming remains partial and reserved; no new rules are claimed.
+
+## Third landing, October 7
+
+Rebased onto origin/main f8013f0baac41ddc340d76f83bddde38536a8f07 and
+revalidated all five wave suites, the inherited checker dependency, bridge,
+released handles, sanitizers, uncached filtered Node oracle and vet.
+Evidence: validation-wave-25-landing-third and WAVE_25_LANDING_REPORT.md.
+Boolean-prop-naming remains partial and reserved. No additional claims.
