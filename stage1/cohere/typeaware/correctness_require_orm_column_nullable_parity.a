@@ -1,0 +1,46 @@
+import type { ParityDecorators } from './parity_decorators.a';
+export class OrmColumnNullableParity {
+    readonly decorators: ParityDecorators;
+    constructor(decorators: ParityDecorators) {
+        this.decorators = decorators;
+    }
+    run(): void {
+        const decoratorFacts = this.decorators;
+        for(let index = 0; index < decoratorFacts.rules.parser.nodes.length; index++) {
+            const owner = decoratorFacts.rules.parser.node(index);
+            if(owner.kind !== 'PropertyDeclaration') {
+                continue;
+            }
+            const name = decoratorFacts.name(index);
+            if(name < 0 || decoratorFacts.rules.parser.node(name).kind !== 'Identifier') {
+                continue;
+            }
+            const decorators = decoratorFacts.of(index);
+            if(
+                decorators.some((at) =>
+                    ['OrmManyToOne', 'OrmOneToMany', 'OrmOneToOne'].includes(decoratorFacts.callName(at)),
+                )
+            ) {
+                continue;
+            }
+            for(const at of decorators) {
+                if(
+                    !['OrmColumn', 'TimestampColumn', 'OrmJoinColumn'].includes(decoratorFacts.callName(at)) ||
+                    decoratorFacts.option(at, 'nullable') !== 2
+                ) {
+                    continue;
+                }
+                const facts = decoratorFacts.facts(name);
+                if(!facts.present || decoratorFacts.nullable(facts)) {
+                    continue;
+                }
+                decoratorFacts.report(
+                    'correctness-require-orm-column-nullable-parity',
+                    'columnNullableButTypeNot',
+                    `Column declares 'nullable: true' but the type '${facts.root().name}' does not include null/undefined \u2014 a NULL row value will not match this type`,
+                    name,
+                );
+            }
+        }
+    }
+}

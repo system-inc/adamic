@@ -1,0 +1,97 @@
+import type { ParityDecorators } from './parity_decorators.a';
+const arrays = [
+    'VerifyIsArray',
+    'VerifyArrayMinimumSize',
+    'VerifyArrayMaximumSize',
+    'VerifyArrayUnique',
+    'VerifyIsNotEmpty',
+];
+const values = [
+    'VerifyIsBoolean',
+    'VerifyIsCountryCode',
+    'VerifyIsDate',
+    'VerifyIsDefined',
+    'VerifyIsDomain',
+    'VerifyIsEmail',
+    'VerifyIsEnum',
+    'VerifyIsInteger',
+    'VerifyIsIpAddress',
+    'VerifyIsLocale',
+    'VerifyIsNumber',
+    'VerifyIsObject',
+    'VerifyIsPhoneNumber',
+    'VerifyIsString',
+    'VerifyIsTimeZone',
+    'VerifyIsUrl',
+    'VerifyIsUuid',
+    'VerifyLength',
+    'VerifyMaximum',
+    'VerifyMaximumDate',
+    'VerifyMaximumLength',
+    'VerifyMinimum',
+    'VerifyMinimumDate',
+    'VerifyMinimumLength',
+    'VerifyStringMatches',
+];
+export class VerifyArrayParity {
+    readonly decorators: ParityDecorators;
+    constructor(decorators: ParityDecorators) {
+        this.decorators = decorators;
+    }
+    run(): void {
+        const decoratorFacts = this.decorators;
+        for(let index = 0; index < decoratorFacts.rules.parser.nodes.length; index++) {
+            const node = decoratorFacts.rules.parser.node(index);
+            if(node.kind !== 'PropertyDeclaration' && node.kind !== 'Parameter') {
+                continue;
+            }
+            if(
+                node.kind === 'Parameter' &&
+                !node.children.some((child) =>
+                    ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword'].includes(
+                        decoratorFacts.rules.parser.node(child).kind,
+                    ),
+                )
+            ) {
+                continue;
+            }
+            const key = decoratorFacts.name(index);
+            if(key < 0 || decoratorFacts.rules.parser.node(key).kind !== 'Identifier') {
+                continue;
+            }
+            let knownValue = false;
+            let suppressed = false;
+            for(const at of decoratorFacts.of(index)) {
+                const name = decoratorFacts.callName(at);
+                if(!name.startsWith('Verify')) {
+                    continue;
+                }
+                if(arrays.includes(name)) {
+                    suppressed = true;
+                }
+                else if(values.includes(name)) {
+                    knownValue = true;
+                }
+                else if(name !== 'VerifyIsOptional' && name !== 'VerifyBy') {
+                    suppressed = true;
+                }
+            }
+            if(!knownValue || suppressed) {
+                continue;
+            }
+            const facts = decoratorFacts.facts(key);
+            if(
+                !facts.present ||
+                !facts.parts(facts.root()).some((id) => facts.type(id).array === true || facts.type(id).tuple >= 0)
+            ) {
+                continue;
+            }
+            decoratorFacts.report(
+                'correctness-require-verify-array-parity',
+                'missingArrayRule',
+                `Array-typed property '${decoratorFacts.rules.parser.node(key).text}' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation.`,
+                key,
+            );
+        }
+    }
+}

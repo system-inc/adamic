@@ -1,0 +1,144 @@
+file	/workspace/adamic/stage1/cohere/typeaware/correctness_require_orm_column_nullable_parity.a
+1173	1196	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1173	1200	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type error typed assigned to a parameter of type `string`.	0	0
+1188	1196	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .callName on a type that cannot be resolved.	0	0
+1225	1246	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1240	1246	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .option on a type that cannot be resolved.	0	0
+1359	1393	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+1367	1387	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1382	1387	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .facts on a type that cannot be resolved.	0	0
+1421	1428	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .present on a type that cannot be resolved.	0	0
+1432	1455	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1447	1455	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .nullable on a type that cannot be resolved.	0	0
+1530	1551	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1545	1551	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .report on a type that cannot be resolved.	0	0
+1741	1751	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1747	1751	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .root on a type that cannot be resolved.	0	0
+1754	1758	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .name on a type that cannot be resolved.	0	0
+201	229	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+269	301	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+353	358	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+409	456	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+417	449	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+432	437	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+479	483	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .kind on a type that cannot be resolved.	0	0
+571	604	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+578	597	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+593	597	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .name on a type that cannot be resolved.	0	0
+633	665	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+648	653	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+672	676	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .kind on a type that cannot be resolved.	0	0
+755	792	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+768	785	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+783	785	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .of on a type that cannot be resolved.	0	0
+826	841	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+837	841	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .some on a type that cannot be resolved.	0	0
+927	950	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+927	954	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type error typed assigned to a parameter of type `string`.	0	0
+942	950	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .callName on a type that cannot be resolved.	0	0
+file	/workspace/adamic/stage1/cohere/typeaware/correctness_require_serializable_nullable_parity.a
+1016	1062	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+1025	1046	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1040	1046	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .option on a type that cannot be resolved.	0	0
+1169	1203	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+1177	1197	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1192	1197	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .facts on a type that cannot be resolved.	0	0
+1231	1238	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .present on a type that cannot be resolved.	0	0
+1312	1353	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+1323	1346	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1338	1346	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .nullable on a type that cannot be resolved.	0	0
+1423	1444	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1438	1444	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .report on a type that cannot be resolved.	0	0
+1659	1669	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1665	1669	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .root on a type that cannot be resolved.	0	0
+1672	1676	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .name on a type that cannot be resolved.	0	0
+1856	1877	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1871	1877	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .report on a type that cannot be resolved.	0	0
+204	232	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+2043	2053	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2049	2053	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .root on a type that cannot be resolved.	0	0
+2056	2060	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .name on a type that cannot be resolved.	0	0
+272	304	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+356	361	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+409	441	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+424	429	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+449	453	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .kind on a type that cannot be resolved.	0	0
+541	574	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+548	567	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+563	567	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .name on a type that cannot be resolved.	0	0
+603	635	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+618	623	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+642	646	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .kind on a type that cannot be resolved.	0	0
+735	752	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+750	752	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .of on a type that cannot be resolved.	0	0
+803	826	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+818	826	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .callName on a type that cannot be resolved.	0	0
+878	899	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+893	899	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .option on a type that cannot be resolved.	0	0
+file	/workspace/adamic/stage1/cohere/typeaware/correctness_require_verify_array_parity.a
+1008	1040	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+1092	1097	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+1148	1194	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+1155	1187	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1170	1175	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+1216	1220	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .kind on a type that cannot be resolved.	0	0
+1255	1259	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .kind on a type that cannot be resolved.	0	0
+1356	1360	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .kind on a type that cannot be resolved.	0	0
+1397	1415	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1402	1410	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .children on a type that cannot be resolved.	0	0
+1556	1588	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1556	1600	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type error typed assigned to a parameter of type `string`.	0	0
+1571	1576	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+1596	1600	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .kind on a type that cannot be resolved.	0	0
+1717	1749	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+1723	1742	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1738	1742	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .name on a type that cannot be resolved.	0	0
+1777	1809	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1792	1797	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+1815	1819	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .kind on a type that cannot be resolved.	0	0
+1980	1997	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1995	1997	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .of on a type that cannot be resolved.	0	0
+2030	2064	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+2037	2060	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2052	2060	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .callName on a type that cannot be resolved.	0	0
+2086	2101	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2091	2101	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .startsWith on a type that cannot be resolved.	0	0
+2198	2202	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type error typed assigned to a parameter of type `string`.	0	0
+2304	2308	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type error typed assigned to a parameter of type `string`.	0	0
+2621	2654	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+2629	2649	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2644	2649	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .facts on a type that cannot be resolved.	0	0
+2695	2702	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .present on a type that cannot be resolved.	0	0
+2723	2734	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2723	2753	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2729	2734	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .parts on a type that cannot be resolved.	0	0
+2735	2745	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2741	2745	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .root on a type that cannot be resolved.	0	0
+2749	2753	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .some on a type that cannot be resolved.	0	0
+2762	2772	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2768	2772	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .type on a type that cannot be resolved.	0	0
+2777	2782	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .array on a type that cannot be resolved.	0	0
+2795	2805	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2801	2805	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .type on a type that cannot be resolved.	0	0
+2810	2815	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .tuple on a type that cannot be resolved.	0	0
+2890	2911	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+2905	2911	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .report on a type that cannot be resolved.	0	0
+3049	3081	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+3064	3069	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .rules on a type that cannot be resolved.	0	0
+3087	3091	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .text on a type that cannot be resolved.	0	0
+940	968	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+file	/workspace/adamic/stage1/cohere/typeaware/parity_decorators.a
+file	/workspace/adamic/stage1/cohere/typeaware/wave_27_suite.a
+1565	1570	@typescript-eslint/no-unused-vars	noUnusedVars	'_node' is assigned a value and nothing ever reads it. A name that is written but never read is almost always the residue of an edit that moved on: an import whose call site was deleted, a parameter left behind when a signature changed, a variable holding a value nobody asked for. It costs nothing at runtime, which is what lets it accumulate, and it costs the next reader real time, because an unused name reads exactly like a used one until you search the file and find nothing. Delete it.	0	0
+1667	1708	@typescript-eslint/no-unsafe-assignment	anyAssignment	Unsafe assignment of an error typed value.	0	0
+1680	1708	@typescript-eslint/no-unsafe-call	errorNew	Unsafe construction of a type that could not be resolved.	0	0
+1714	1753	@typescript-eslint/no-unsafe-call	errorNew	Unsafe construction of a type that could not be resolved.	0	0
+1714	1757	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1754	1757	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .run on a type that cannot be resolved.	0	0
+1765	1807	@typescript-eslint/no-unsafe-call	errorNew	Unsafe construction of a type that could not be resolved.	0	0
+1765	1811	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1808	1811	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .run on a type that cannot be resolved.	0	0
+1819	1852	@typescript-eslint/no-unsafe-call	errorNew	Unsafe construction of a type that could not be resolved.	0	0
+1819	1856	@typescript-eslint/no-unsafe-call	errorCall	Unsafe call of a type that could not be resolved.	0	0
+1853	1856	@typescript-eslint/no-unsafe-member-access	errorMemberExpression	Unsafe member access .run on a type that cannot be resolved.	0	0
+findings 138

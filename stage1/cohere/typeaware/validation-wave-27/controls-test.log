@@ -1,0 +1,6 @@
+=== RUN   TestWave27AgreementAndMutants
+    wave_27_test.go:84: controls mismatch byte 567: native "orkspace/wave-27-scratch/validation/control-005.a\n864\t865\tbase/correctness-require-orm-column-nullable-parity\tcolumnNullableButTypeNot\tColumn declares 'nullable: true' but the type 'void' does not include null/undefined \\u2014 a NULL row value will not match this type\t0\t0\nfile\t/workspace/wave-27-scr" Go "orkspace/wave-27-scratch/validation/control-005.a\nfile\t/workspace/wave-27-scratch/validation/control-006.a\n864\t865\tbase/correctness-require-orm-column-nullable-parity\tcolumnNullableButTypeNot\tColumn declares 'nullable: true' but the type 'never' does not include null/undefined \\u2014 a NULL row valu"
+--- FAIL: TestWave27AgreementAndMutants (324.73s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	324.754s
+FAIL

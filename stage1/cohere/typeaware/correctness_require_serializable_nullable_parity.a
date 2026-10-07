@@ -1,0 +1,52 @@
+import type { ParityDecorators } from './parity_decorators.a';
+export class SerializableNullableParity {
+    readonly decorators: ParityDecorators;
+    constructor(decorators: ParityDecorators) {
+        this.decorators = decorators;
+    }
+    run(): void {
+        const decoratorFacts = this.decorators;
+        for(let index = 0; index < decoratorFacts.rules.parser.nodes.length; index++) {
+            if(decoratorFacts.rules.parser.node(index).kind !== 'PropertyDeclaration') {
+                continue;
+            }
+            const name = decoratorFacts.name(index);
+            if(name < 0 || decoratorFacts.rules.parser.node(name).kind !== 'Identifier') {
+                continue;
+            }
+            for(const at of decoratorFacts.of(index)) {
+                if(
+                    decoratorFacts.callName(at) !== 'SerializableField' ||
+                    decoratorFacts.option(at, 'defaultValue') !== 0
+                ) {
+                    continue;
+                }
+                const option = decoratorFacts.option(at, 'optional');
+                if(option === 3) {
+                    continue;
+                }
+                const facts = decoratorFacts.facts(name);
+                if(!facts.present) {
+                    continue;
+                }
+                const nullable = decoratorFacts.nullable(facts);
+                if(option === 2 && !nullable) {
+                    decoratorFacts.report(
+                        'correctness-require-serializable-nullable-parity',
+                        'decoratorOptionalButTypeNot',
+                        `@SerializableField declares 'optional: true' but type '${facts.root().name}' does not include null/undefined`,
+                        name,
+                    );
+                }
+                else if(option !== 2 && nullable) {
+                    decoratorFacts.report(
+                        'correctness-require-serializable-nullable-parity',
+                        'typeOptionalButDecoratorNot',
+                        `Type '${facts.root().name}' is nullable but @SerializableField does not declare 'optional: true'`,
+                        name,
+                    );
+                }
+            }
+        }
+    }
+}

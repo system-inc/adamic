@@ -1,0 +1,6 @@
+source lint: /workspace/adamic/stage1/cohere/typeaware/correctness_require_orm_column_nullable_parity.a 276 enabled rules
+source lint: /workspace/adamic/stage1/cohere/typeaware/correctness_require_serializable_nullable_parity.a 276 enabled rules
+source lint: /workspace/adamic/stage1/cohere/typeaware/correctness_require_verify_array_parity.a 276 enabled rules
+source lint: /workspace/adamic/stage1/cohere/typeaware/parity_decorators.a 276 enabled rules
+source lint: /workspace/adamic/stage1/cohere/typeaware/wave_27_suite.a 276 enabled rules
+cohere: load_ns=32917753 rule_ns=14287122 run_ns=32852244

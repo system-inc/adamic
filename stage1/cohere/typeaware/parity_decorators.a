@@ -1,0 +1,86 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import type { Types } from './types.ts';
+import { Diagnostic } from './diagnostic.ts';
+
+export class ParityDecorators {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    name(index: number): number {
+        return (
+            this.rules.parser.node(index).children.find((child) => {
+                const kind = this.rules.parser.node(child).kind;
+                return kind !== 'Decorator' && !kind.endsWith('Keyword');
+            }) ?? -1
+        );
+    }
+    call(index: number): number {
+        const expression = this.rules.parser.node(index).children[0] ?? -1;
+        return expression >= 0 && this.rules.parser.node(expression).kind === 'CallExpression' ? expression : -1;
+    }
+    callName(index: number): string {
+        const call = this.call(index);
+        if(call < 0) {
+            return '';
+        }
+        const callee = this.rules.parser.node(call).children[0] ?? -1;
+        if(callee < 0) {
+            return '';
+        }
+        const node = this.rules.parser.node(callee);
+        return node.kind === 'Identifier' ? node.text : '';
+    }
+    of(index: number): readonly number[] {
+        return this.rules.parser
+            .node(index)
+            .children.filter((child) => this.rules.parser.node(child).kind === 'Decorator');
+    }
+    // 0 absent, 1 false, 2 true, 3 present but not a boolean literal.
+    option(index: number, key: string): number {
+        const call = this.call(index);
+        if(call < 0) {
+            return 0;
+        }
+        const node = this.rules.parser.node(call);
+        for(const argument of node.children.slice(node.children.length - node.list)) {
+            const object = this.rules.parser.node(argument);
+            if(object.kind !== 'ObjectLiteralExpression') {
+                continue;
+            }
+            for(const property of object.children) {
+                const assignment = this.rules.parser.node(property);
+                if(assignment.kind !== 'PropertyAssignment') {
+                    continue;
+                }
+                const name = this.rules.parser.node(assignment.children[0] ?? -1);
+                if(name.kind !== 'Identifier' || name.text !== key) {
+                    continue;
+                }
+                const value = this.rules.parser.node(assignment.children[1] ?? -1).kind;
+                return value === 'TrueKeyword' ? 2 : value === 'FalseKeyword' ? 1 : 3;
+            }
+        }
+        return 0;
+    }
+    facts(name: number): Types {
+        return types(this.rules.ask(name, 'raw-type'), 'raw-type');
+    }
+    nullable(facts: Types): boolean {
+        return facts.has(facts.root(), 1 | 2 | 4 | 8 | 16);
+    }
+    report(rule: string, id: string, message: string, name: number): void {
+        const node = this.rules.parser.node(name);
+        this.rules.findings.push(
+            new Diagnostic(
+                rule,
+                id,
+                message,
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                'base/',
+            ),
+        );
+    }
+}
