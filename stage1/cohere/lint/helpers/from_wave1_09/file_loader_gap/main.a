@@ -1,0 +1,6 @@
+// This probes only the fixed witness's file-input boundary. It is not a CSS loader.
+import { panic, readTextFile, programArguments, utf8At, utf8Length } from 'adamic';
+const input = readTextFile(programArguments()[0] ?? panic('missing CSS witness'));
+if(input.kind === 'Error') { panic(input.message); }
+const value = input.text.slice(input.text.indexOf(':') + 1, input.text.indexOf(';')).trim();
+for(let index = 0; index < utf8Length(value); index++) { console.log(`${utf8At(value, index)}`); }
