@@ -1,5 +1,5 @@
 Built: a pushed reservation and independent prerequisite evidence for set-state-in-effect, set-state-in-render and static-components; no native implementations of these three are claimed.
-Commits: previous work pushed through 6af00212; claim 3e7267e2 pushed before investigation code; prerequisite/report commit recorded in git history.
+Commits: previous work pushed through 6af00212; claim 3e7267e2 pushed before investigation code; prerequisite/evidence 929d8603 pushed.
 Commands/output: TestWave21ReactPrerequisites PASS 47.819s; six Go-positive controls, compiler77 and repository287 Go baselines; parser checks normal and ASan/UBSan/LSan; vet/gofmt clean; nproc 5.
 Mutants: three Go control-selection mutants remove required messages; parser-bypass mutant removes the required JSX refusal. These are prerequisite guard mutants, not qualifying native rule mutants.
 Not covered: all three native rule implementations, native/Go agreement or speed comparison, native rule mutants, new-question released-handle checks, shared harness integration and the full gate.
@@ -107,7 +107,7 @@ Command, redirected directly to /workspace/wave21-react-final.log:
 
 PASS 47.819s. Touched-package go vet and gofmt output are empty. The initial
 run passed its controls but failed at a mistakenly supplied compiler config
-path; that log is retained, and the final run uses the correct frozen config.
+path; that log is retained compressed without changing its bytes, and the final run uses the correct frozen config.
 
 The original setup timing remains tools 0s, submodules 0s, cache 81s, total 81s;
 no fresh setup was needed for this continuation. nproc reports 5. Complete
