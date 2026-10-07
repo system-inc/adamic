@@ -1,0 +1,43 @@
+{
+  "claim": "f485a99df5a47770fcb9506122e38de23cf228d9",
+  "main": "71d7e491b3c9724f7a0e2ee754592149e7f9790b",
+  "area": "2fbfe42155387f67f297a41c89d318e3b6cde310",
+  "cohere": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "claim_scan_branches": {
+    "refs/remotes/origin/codex/lint-helpers": "95100eb440b47f3f18e960c6f5b49cadf0dc1d9d",
+    "refs/remotes/origin/codex/lint-helpers-01": "98f7e5f08c10f148d457e3a1fdde0355d1401f6c",
+    "refs/remotes/origin/codex/lint-helpers-02": "ff5090b777bc4e27bd51a5b57d9c824670f14b26",
+    "refs/remotes/origin/codex/lint-helpers-03": "3e85502d728bcd67b3ed326565bcf09749f2ec1b",
+    "refs/remotes/origin/codex/lint-helpers-04": "8e0d98a645ae73cc4cf72561c779f257b51b8c9a",
+    "refs/remotes/origin/codex/lint-helpers-05": "1312e58e069152af73978315e2156f374cf41f1b",
+    "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-03": "5e64fe3cf0d236a2fae7e4f8b645f0d3f33afc29",
+    "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-14": "7b6a7c28bdf9b9e715a8403cf27703a69afeeb74",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-02": "d62bb9d4df13cc6132f0b4bc2b1748d16934edb7",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-04": "8754bdeafe0ef400be14bfb1d8f1505c0c80c713",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-06": "6f2aff526107895a267896fdcbf182cd67c3c7a6",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-09": "017f34d7fc64fed98740ab5456f516c8cec2931e",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-10": "48c2db8a342ee27a2630f07d0b0923f4a5da0bca",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-11": "a6278560ea1d50cbbd9147b048a0c86b7bdf4478",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-15": "298ecc4cb20069615bb68130f177bd6f97dd7869",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-01": "72fca0ebb2abb157f395c2cf91520c04ea26d794",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-05": "376dd83f2c8c7cbeedc819c03631fdd670090c06",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-08": "bdae8bc99dfe54a06615b20e34084bc9b8ebb06e",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-12": "a4c72791598fb9494e02649b7eb380eab2a04779",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-13": "8d48f3f813a806a08d56dda1a71071af0c8a0674"
+  },
+  "prior_helpers": 92,
+  "unchanged_trees": {
+    "internal": "3e4388bfb9e66325e71b5b671112a964feac7d2e",
+    "oracle": "55570c43df2b8a8547f2ae5bb26b548c2bc0b598",
+    "cmd": "b159ba1d5219838422a967f00d09fe76400a1655",
+    "cohere": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+  },
+  "source_dependencies": {
+    "stage1/cohere/lint/helpers/slot05/batch32/main.a": "f2db8cf2a904aba60b78dedfc81a0d73386faa19129a823e021028116f1f79a9",
+    "stage1/cohere/lint/helpers/slot05/batch32/model.a": "b2df9101f2f6144ebce14e8273fcdbdff29196116eb7a1984cdbeab50cdd175f",
+    "stage1/cohere/lint/helpers/slot05/batch32/jsx_after_parentheses.a": "49f1664dc54c5a17da5f9d268ea6703bffee2edc7f2fdc24ed4b978f65677fcf",
+    "stage1/cohere/lint/helpers/slot05/batch32/return_argument_looks_like_jsx.a": "978f197a0ef4433b49af7a652108a160da88b82762e9fa5108747d6c9270dfb1",
+    "stage1/cohere/lint/helpers/slot05/batch32/is_jsx_value.a": "cd3965e25e95951e1007b7f4bbb4a5ed3fed65888ba37f797e7c4c850e5006a9",
+    "stage1/cohere/lint/helpers/options_json.ts": "c3e7e54d45145ff761d61e89229d86aaadb67a68163b2061ba903436bff1b232"
+  }
+}

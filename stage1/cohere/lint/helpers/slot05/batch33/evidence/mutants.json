@@ -1,0 +1,26 @@
+{
+  "native_semantic_mutants": [
+    "helper_test.go:128: is_likely_react_component.a mutant \"statement.returnStatement && looksLikeJsx(statement.expression)\" -> \"looksLikeJsx(statement.expression)\" caught at output line 4059: mutant \"true\", Go \"false\"",
+    "helper_test.go:128: is_likely_react_component.a mutant \"if (index < 0) { return false; }\" -> \"if (index < 0) { return true; }\" caught at output line 1: mutant \"true\", Go \"false\"",
+    "helper_test.go:128: is_likely_react_component.a mutant \"if (!node.functionLike) { return false; }\" -> \"if (!node.functionLike) { return true; }\" caught at output line 2: mutant \"true\", Go \"false\"",
+    "helper_test.go:128: is_likely_react_component.a mutant \"name.text === 'properties'\" -> \"name.text === '__properties__'\" caught at output line 3503: mutant \"false\", Go \"true\"",
+    "helper_test.go:128: is_likely_react_component.a mutant \"name.text === 'props'\" -> \"name.text === '__props__'\" caught at output line 4070: mutant \"false\", Go \"true\"",
+    "helper_test.go:128: is_likely_react_component.a mutant \"node.parameters[0]\" -> \"node.parameters[1]\" caught at output line 3503: mutant \"false\", Go \"true\"",
+    "helper_test.go:128: is_likely_react_component.a mutant \"if (node.body < 0) { return false; }\" -> \"if (node.body < 0) { return true; }\" caught at output line 787: mutant \"true\", Go \"false\"",
+    "helper_test.go:128: is_likely_react_component.a mutant \"statement.returnStatement && looksLikeJsx(statement.expression)\" -> \"false && looksLikeJsx(statement.expression)\" caught at output line 163: mutant \"false\", Go \"true\"",
+    "helper_test.go:128: is_likely_react_component.a mutant \"return looksLikeJsx(node.body);\" -> \"return false;\" caught at output line 2550: mutant \"false\", Go \"true\"",
+    "helper_test.go:128: is_likely_react_component.a mutant \"return false;\\n    }\\n    return looksLikeJsx(node.body);\" -> \"return true;\\n    }\\n    return looksLikeJsx(node.body);\" caught at output line 484: mutant \"true\", Go \"false\"",
+    "helper_test.go:128: type_reference_name.a mutant \"if (index < 0) { return ''; }\" -> \"if (index < 0) { return 'wrong'; }\" caught at output line 1: mutant \"wrong\", Go \"\"",
+    "helper_test.go:128: type_reference_name.a mutant \"if (!node.typeReference) { return ''; }\" -> \"if (node.typeReference) { return ''; }\" caught at output line 475: mutant \"\", Go \"T\"",
+    "helper_test.go:128: type_reference_name.a mutant \"if (!name.identifier) { return ''; }\" -> \"if (name.identifier) { return ''; }\" caught at output line 475: mutant \"\", Go \"T\"",
+    "helper_test.go:128: type_reference_name.a mutant \"return name.text;\" -> \"return 'wrong' + name.text;\" caught at output line 475: mutant \"wrongT\", Go \"T\"",
+    "helper_test.go:128: is_network_service_hook_call.a mutant \"while ((nodes[callee] ?? panic('missing callee')).parenthesized)\" -> \"while (false)\" caught at output line 28: mutant \"false\", Go \"true\"",
+    "helper_test.go:128: is_network_service_hook_call.a mutant \"while ((nodes[receiver] ?? panic('missing receiver')).parenthesized)\" -> \"while (false)\" caught at output line 27: mutant \"false\", Go \"true\"",
+    "helper_test.go:128: is_network_service_hook_call.a mutant \"if (!access.property) { return false; }\" -> \"if (!access.property) { return true; }\" caught at output line 58: mutant \"true\", Go \"false\"",
+    "helper_test.go:128: is_network_service_hook_call.a mutant \"object.text !== 'networkService'\" -> \"object.text !== 'other'\" caught at output line 1: mutant \"false\", Go \"true\"",
+    "helper_test.go:128: is_network_service_hook_call.a mutant \"return methods.get(method.text) ?? false;\" -> \"return methods.has(method.text);\" caught at output line 35: mutant \"true\", Go \"false\"",
+    "helper_test.go:128: is_network_service_hook_call.a mutant \"return methods.get(method.text) ?? false;\" -> \"return true;\" caught at output line 33: mutant \"true\", Go \"false\"",
+    "helper_test.go:128: is_network_service_hook_call.a mutant \"return methods.get(method.text) ?? false;\" -> \"return false;\" caught at output line 1: mutant \"false\", Go \"true\""
+  ],
+  "build_exit_zero_empty_stderr_required": true
+}
