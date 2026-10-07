@@ -3,14 +3,14 @@ import os
 import subprocess
 
 root = Path(__file__).resolve().parents[3]
-source = root / 'internal/load/rules.go'
+source = root / 'internal/lower/conditional_copy.go'
 saved = source.read_text()
-invocation = 'return rule_runner.RunRule(p.compiler, typeChecker, files, name)'
+invocation = '(cohereRuleRunner{}).RunRule(l.program.CompilerProgram(), l.checker, []*ast.SourceFile{module}, "adamic/invariant-mutable")'
 assert saved.count(invocation) == 1
 logs = Path('/workspace/scratch/conditional-mutant')
 logs.mkdir(exist_ok=True)
 try:
-    source.write_text(saved.replace(invocation, 'return nil, nil'))
+    source.write_text(saved.replace(invocation, 'func() ([]Finding, error) { return nil, nil }()'))
     with (logs / 'refusal.log').open('w') as output:
         result = subprocess.run(['go', 'test', './internal/oracle', '-run', '^TestConditionalCopyRefusedByCohere$', '-v', '-count=1', '-timeout', '30m'], cwd=root, stdout=output, stderr=subprocess.STDOUT)
     text = (logs / 'refusal.log').read_text()

@@ -1,0 +1,24 @@
+=== RUN   TestConditionalCopyRefusedByCohere
+    conditional_copy_test.go:40: Node stdout "1\n"; /workspace/adamic/internal/oracle/testdata/type_rules_conditional_copy.a:4:27: Adamic 0.1 refuses 'Dog[]' is seen here as 'Animal[]', and `dogs.length > 5 ? dogs.slice() : [][]` is mutable. Through the wider type anything that is a 'Animal' can be written there, and the original, still typed 'Dog', then holds it: TypeScript accepts this, and it is a TypeError at runtime. Make the slot read-only in the target type (`readonly T[]`, a `readonly` property, `ReadonlyMap`), so the narrower value is only read through it, or copy the value ([...items], { ...record }).; use a readonly view or an unconditional copy (adamic/invariant-mutable)
+--- PASS: TestConditionalCopyRefusedByCohere (0.77s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/fresh_writes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/fresh_writes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/invariance_readonly.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/invariance_readonly.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/fresh_writes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/invariance_readonly.a
+--- PASS: TestNativeAgreesWithNode (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/invariance_readonly.a (2.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a (2.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/fresh_writes.a (3.32s)
+PASS
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.183s

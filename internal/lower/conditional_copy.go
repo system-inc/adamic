@@ -24,7 +24,7 @@ func (l *lowering) refuseConditionalCopies(module *ast.SourceFile) error {
 	if len(sites) == 0 {
 		return nil
 	}
-	findings, err := l.program.RuleFindings(l.checker, []*ast.SourceFile{module}, "adamic/invariant-mutable")
+	findings, err := (cohereRuleRunner{}).RunRule(l.program.CompilerProgram(), l.checker, []*ast.SourceFile{module}, "adamic/invariant-mutable")
 	if err != nil {
 		return err
 	}
