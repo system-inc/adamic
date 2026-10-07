@@ -1,0 +1,93 @@
+=== RUN   TestDateOracleCatchesMutants
+=== PAUSE TestDateOracleCatchesMutants
+=== CONT  TestDateOracleCatchesMutants
+=== RUN   TestDateOracleCatchesMutants/nullable_typeof
+=== PAUSE TestDateOracleCatchesMutants/nullable_typeof
+=== RUN   TestDateOracleCatchesMutants/nullable_number
+=== PAUSE TestDateOracleCatchesMutants/nullable_number
+=== RUN   TestDateOracleCatchesMutants/nullable_stringify
+=== PAUSE TestDateOracleCatchesMutants/nullable_stringify
+=== RUN   TestDateOracleCatchesMutants/date_stringify
+=== PAUSE TestDateOracleCatchesMutants/date_stringify
+=== RUN   TestDateOracleCatchesMutants/toJSON
+=== PAUSE TestDateOracleCatchesMutants/toJSON
+=== RUN   TestDateOracleCatchesMutants/dynamic_parse
+=== PAUSE TestDateOracleCatchesMutants/dynamic_parse
+=== RUN   TestDateOracleCatchesMutants/constructor_clip
+=== PAUSE TestDateOracleCatchesMutants/constructor_clip
+=== RUN   TestDateOracleCatchesMutants/UTC
+=== PAUSE TestDateOracleCatchesMutants/UTC
+=== RUN   TestDateOracleCatchesMutants/invalid_NaN
+=== PAUSE TestDateOracleCatchesMutants/invalid_NaN
+=== RUN   TestDateOracleCatchesMutants/getters
+=== PAUSE TestDateOracleCatchesMutants/getters
+=== RUN   TestDateOracleCatchesMutants/setters
+=== PAUSE TestDateOracleCatchesMutants/setters
+=== RUN   TestDateOracleCatchesMutants/iso_format
+=== PAUSE TestDateOracleCatchesMutants/iso_format
+=== RUN   TestDateOracleCatchesMutants/format
+=== PAUSE TestDateOracleCatchesMutants/format
+=== RUN   TestDateOracleCatchesMutants/parse
+=== PAUSE TestDateOracleCatchesMutants/parse
+=== CONT  TestDateOracleCatchesMutants/nullable_typeof
+=== CONT  TestDateOracleCatchesMutants/UTC
+=== CONT  TestDateOracleCatchesMutants/parse
+=== CONT  TestDateOracleCatchesMutants/constructor_clip
+=== CONT  TestDateOracleCatchesMutants/dynamic_parse
+=== NAME  TestDateOracleCatchesMutants/parse
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/toJSON
+=== NAME  TestDateOracleCatchesMutants/UTC
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/date_stringify
+=== NAME  TestDateOracleCatchesMutants/nullable_typeof
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/nullable_stringify
+=== NAME  TestDateOracleCatchesMutants/constructor_clip
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/nullable_number
+=== NAME  TestDateOracleCatchesMutants/dynamic_parse
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/setters
+=== NAME  TestDateOracleCatchesMutants/date_stringify
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/format
+=== NAME  TestDateOracleCatchesMutants/toJSON
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/iso_format
+=== NAME  TestDateOracleCatchesMutants/setters
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/invalid_NaN
+=== NAME  TestDateOracleCatchesMutants/nullable_number
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/getters
+=== NAME  TestDateOracleCatchesMutants/nullable_stringify
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== NAME  TestDateOracleCatchesMutants/format
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== NAME  TestDateOracleCatchesMutants/iso_format
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== NAME  TestDateOracleCatchesMutants/invalid_NaN
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+=== NAME  TestDateOracleCatchesMutants/getters
+    library_date_test.go:68: Node caught the mutant: stdout differs; sanitizer clean
+--- PASS: TestDateOracleCatchesMutants (0.00s)
+    --- PASS: TestDateOracleCatchesMutants/parse (2.65s)
+    --- PASS: TestDateOracleCatchesMutants/UTC (2.85s)
+    --- PASS: TestDateOracleCatchesMutants/nullable_typeof (2.91s)
+    --- PASS: TestDateOracleCatchesMutants/constructor_clip (3.21s)
+    --- PASS: TestDateOracleCatchesMutants/dynamic_parse (3.23s)
+    --- PASS: TestDateOracleCatchesMutants/date_stringify (2.53s)
+    --- PASS: TestDateOracleCatchesMutants/toJSON (2.85s)
+    --- PASS: TestDateOracleCatchesMutants/setters (2.50s)
+    --- PASS: TestDateOracleCatchesMutants/nullable_number (2.54s)
+    --- PASS: TestDateOracleCatchesMutants/nullable_stringify (3.14s)
+    --- PASS: TestDateOracleCatchesMutants/format (2.16s)
+    --- PASS: TestDateOracleCatchesMutants/iso_format (2.23s)
+    --- PASS: TestDateOracleCatchesMutants/invalid_NaN (2.04s)
+    --- PASS: TestDateOracleCatchesMutants/getters (2.46s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	8.276s
