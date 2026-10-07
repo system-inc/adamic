@@ -1,0 +1,16 @@
+=== RUN   TestWave08RetainedUpstream
+    lint_test.go:399: cohere cases: 2502 unique source/rule/options combinations
+    wave08_unified_test.go:37: parser recovery blocker: "({ ['x' });"
+    wave08_unified_test.go:37: parser recovery blocker: "({ ['x': 0 });"
+    wave08_unified_test.go:47: six representable rules: map[@typescript-eslint/no-unnecessary-type-constraint:43 @typescript-eslint/prefer-enum-initializers:21 default-param-last:128 no-useless-computed-key:120 react-hooks/gating:42 react/forbid-foreign-prop-types:60]; prefer-as-const two-edit shape blocked separately
+    wave08_unified_test.go:48: Go, Node, emitted JavaScript, native identical: 149648 bytes
+--- PASS: TestWave08RetainedUpstream (116.90s)
+=== RUN   TestWave08RetainedCorpus
+    wave08_unified_test.go:88: compiler/stage1: 411 .ts/.a files, 2466 selected rule cases
+    wave08_unified_test.go:89: Go, Node, emitted JavaScript, native identical: 80209179 bytes
+--- PASS: TestWave08RetainedCorpus (240.08s)
+=== RUN   TestWave08ConstSingleEdit
+    wave08_unified_test.go:106: Go, Node, emitted JavaScript, native identical: 1011 bytes
+--- PASS: TestWave08ConstSingleEdit (43.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	400.645s
