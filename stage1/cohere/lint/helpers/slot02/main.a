@@ -1,0 +1,21 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import type { HelperNode } from '../slot02_ast.a';
+import { attributeName } from '../jsx_attribute_name.a';
+
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('cases path'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root < 0) { panic(json.error); }
+function text(index: number, name: string): string { return json.node(json.field(index, name)).text; }
+function number(index: number, name: string): number { return json.node(json.field(index, name)).number; }
+const nodes: HelperNode[] = [];
+for (const index of json.node(json.field(root, 'Nodes')).children) {
+    nodes.push({ kind: text(index, 'Kind'), text: text(index, 'Text'), expression: number(index, 'Expression'), tagName: number(index, 'TagName'), attributes: number(index, 'Attributes'), name: number(index, 'Name') });
+}
+for (const index of json.node(json.field(root, 'Queries')).children) {
+    const result = attributeName(nodes, number(index, 'Node'));
+    console.log(`${result.named}:${result.name}`);
+}

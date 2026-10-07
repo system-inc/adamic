@@ -1,0 +1,10 @@
+// A read-only projection of Go parser nodes. Edges are arena indices, -1 for nil.
+// Adapters must preserve node kinds, decoded identifier text, and child identity.
+export interface HelperNode {
+    readonly kind: string;
+    readonly text: string;
+    readonly expression: number;
+    readonly tagName: number;
+    readonly attributes: number;
+    readonly name: number;
+}

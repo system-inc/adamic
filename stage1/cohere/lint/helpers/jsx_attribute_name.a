@@ -1,0 +1,17 @@
+import { panic } from 'adamic';
+import type { HelperNode } from './slot02_ast.a';
+
+export interface AttributeNameResult {
+    readonly name: string;
+    readonly named: boolean;
+}
+
+// Only a JsxAttribute with a plain identifier name answers. Preserve present-empty.
+export function attributeName(nodes: readonly HelperNode[], property: number): AttributeNameResult {
+    if (property === -1) { return { name: '', named: false }; }
+    const node = nodes[property] ?? panic('invalid helper AST: missing property');
+    if (node.kind !== 'JsxAttribute' || node.name === -1) { return { name: '', named: false }; }
+    const name = nodes[node.name] ?? panic('invalid helper AST: missing name');
+    if (name.kind !== 'Identifier') { return { name: '', named: false }; }
+    return { name: name.text, named: true };
+}
