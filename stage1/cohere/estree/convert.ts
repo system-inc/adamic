@@ -911,7 +911,7 @@ export class Converter {
         const name = children[0] ?? -1;
         const global = this.ts(id).operator === 'GlobalKeyword';
         let innermost = id;
-        let declare = this.hasModifier(id, 'DeclareKeyword');
+        let declared = this.hasModifier(id, 'DeclareKeyword');
         let body = children[children.length - 1] ?? -1;
         if(body === name) {
             body = -1;
@@ -921,7 +921,7 @@ export class Converter {
             while(this.kind(body) === 'ModuleDeclaration') {
                 innermost = body;
                 if(this.hasModifier(innermost, 'DeclareKeyword')) {
-                    declare = true;
+                    declared = true;
                 }
                 const parts = dataChildren(this.parser.nodes, innermost);
                 const right = this.convert(parts[0] ?? -1);
@@ -942,7 +942,7 @@ export class Converter {
         const result = this.create(id, 'TSModuleDeclaration');
         if(global) {
             this.set(result, 'body', this.converted(body));
-            this.set(result, 'declare', boolValue(declare));
+            this.set(result, 'declare', boolValue(declared));
             this.set(result, 'global', boolValue(true));
             this.set(result, 'id', childValue(convertedName));
             this.set(result, 'kind', stringValue('global'));
@@ -952,13 +952,13 @@ export class Converter {
             if(body >= 0) {
                 this.set(result, 'body', this.converted(body));
             }
-            this.set(result, 'declare', boolValue(declare));
+            this.set(result, 'declare', boolValue(declared));
             this.set(result, 'global', boolValue(false));
             this.set(result, 'id', childValue(convertedName));
         }
         else {
             this.set(result, 'body', this.converted(body));
-            this.set(result, 'declare', boolValue(declare));
+            this.set(result, 'declare', boolValue(declared));
             this.set(result, 'global', boolValue(false));
             this.set(result, 'id', childValue(convertedName));
             this.set(
