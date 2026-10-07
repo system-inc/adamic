@@ -1,0 +1,35 @@
+// Mutation must propagate through recursive summaries and both sides of a cycle.
+interface Item { readonly label: string; }
+function recursive(items: Item[], depth: number): void {
+    if (depth > 0) { recursive(items, depth - 1); } else { items.pop(); }
+}
+function left(items: Item[], depth: number): void {
+    if (depth > 0) { right(items, depth - 1); } else { items.splice(0, 1); }
+}
+function right(items: Item[], depth: number): void { left(items, depth); }
+function inspect(mutual: boolean): void {
+    const items: Item[] = [{ label: `recursive${mutual}` }];
+    const first = items[0] ?? { label: `missing${items.length}` };
+    if (mutual) { right(items, 3); } else { recursive(items, 3); }
+    console.log(`${first.label}/${items.length}`);
+}
+inspect(false);
+inspect(true);
+interface Made { readonly label: string; }
+let kept: Made | undefined;
+function make(depth: number): Made {
+    if (depth > 0) { return other(depth - 1); }
+    return { label: `made${depth}` };
+}
+function other(depth: number): Made { return make(depth); }
+function keep(value: Made, depth: number): number {
+    if (depth > 0) { return keep(value, depth - 1); }
+    kept = value;
+    return value.label.length;
+}
+function drop(value: Made, depth: number): number {
+    if (depth > 0) { return drop(value, depth - 1); }
+    return value.label.length;
+}
+console.log(`${drop(make(4), 4)}/${keep(make(3), 3)}`);
+console.log(kept?.label ?? 'lost');

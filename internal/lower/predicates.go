@@ -6,6 +6,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 )
 
 // As in instantiate.go, this calls the pinned checker's own implementation until its shim
@@ -417,7 +418,9 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 			}
 		}
 		failure := func() error {
-			return &Refused{Where: l.program.Where(argument), What: "an unproven predicate argument for parameter " + parameter.Name, Fix: "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+			file := ast.GetSourceFileOfNode(argument)
+			text := file.Text()[scanner.GetTokenPosOfNode(argument, file, false):argument.End()]
+			return &Refused{Where: l.program.Where(argument), What: "an unproven predicate argument for parameter " + parameter.Name + " (argument " + fmt.Sprintf("%q", text) + ")", Fix: "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
 		}
 		if !ast.IsFunctionLike(implementation) || implementation.Body() == nil || implementation.Type() == nil || implementation.Type().Kind != ast.KindTypePredicate {
 			return failure()
