@@ -55,3 +55,18 @@ require a missing Tailwind installation and Kirk-local theme.css under
 /Users/kirkouimet/Projects/ahra/app/_theme/styles. Four suites exit zero through
 skips, which is not a live consumer parity pass. Reproduction, independent
 Go/helper evidence, mutants and exact limits are in ../slot14/REPORT.md.
+
+## First retained helper claim, after parking
+
+Both owned branches are rebased onto current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06, re-green and pushed: rule branch ad3fcb3c403721167fe2b41f95e9e3589ed8ced0, helper evidence branch ab302a57652659628f78640cd4cae2e8d9826a97. The rule branch is parked with shared context/registration/Diagnostic blockers named in its owned PARKED.md. No shared harness is edited.
+
+Claim: github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeFixedHex
+File: slot14/regexp_decode_fixed_hex.a.
+
+Refreshed all 580 origin refs and inspected 20 distinct helper claim contents, plus the delivered comment reservation in HELPERS.md. This concrete symbol ties the highest remaining unclaimed fan-out at four. Preserve Go byte offsets, fixed-digit ParseUint acceptance and 32-bit bounds, decoded rune/width/default fields, Unicode errors and non-Unicode identity fallback. Byte-backed inputs preserve UTF-8 behavior without confusing byte and UTF-16 offsets. Compare actual private Go over every consuming rule suite and boundary controls on source Node, emitted JavaScript and sanitized native, with a compiling semantic mutant. Push this claim before writing code.
+
+Consumers, four dependency entries and zero complete rule blocker sets removed alone:
+- @next/next/no-html-link-for-pages
+- @typescript-eslint/no-empty-object-type
+- no-restricted-exports
+- no-restricted-imports
