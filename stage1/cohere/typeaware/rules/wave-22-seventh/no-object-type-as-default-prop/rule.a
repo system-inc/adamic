@@ -18,13 +18,20 @@ export class Rule {
         if(initial.kind===Kind.CallExpression){const callee=c.skip(c.first(initial));if(callee.kind===Kind.Identifier&&callee.text==='Symbol'){return 'Symbol literal';}}
         return '';
     }
+    trim(text: string): string {
+        // Go TrimSpace uses Unicode White_Space, which includes U+0085 but excludes BOM.
+        let start=0;let end=text.length;
+        while(start<end&&this.components.elements.space(text.charCodeAt(start))){start++;}
+        while(start<end&&this.components.elements.space(text.charCodeAt(end-1))){end--;}
+        return text.slice(start,end);
+    }
     defaults(component: Node): void {
         if(![Kind.FunctionDeclaration,Kind.FunctionExpression,Kind.ArrowFunction,Kind.MethodDeclaration].includes(component.kind)){return;}
         const c=this.context;const parameter=c.parameters(component)[0];if(parameter===undefined){return;}
         const pattern=c.name(parameter);if(pattern===undefined||pattern.kind!==Kind.ObjectBindingPattern){return;}
         for(const id of pattern.children){const element=c.node(id);const initial=c.init(element);const type=this.forbidden(initial);if(type===''){continue;}
             const key=c.key(element);let name='';
-            if(key!==undefined){if(key.kind===Kind.ComputedPropertyName){const inner=key.children.length>0?c.first(key):undefined;name=inner===undefined?'[]':inner.kind===Kind.Identifier?inner.text:c.raw(inner).trim();}
+            if(key!==undefined){if(key.kind===Kind.ComputedPropertyName){const inner=key.children.length>0?c.first(key):undefined;name=inner===undefined?'[]':inner.kind===Kind.Identifier?inner.text:this.trim(c.fullRaw(inner));}
                 else if([Kind.Identifier,Kind.StringLiteral,Kind.NumericLiteral].includes(key.kind)){name=key.text;}}
             c.report(element,'no-object-type-as-default-prop','forbiddenTypeDefaultParam',`${name} has a/an ${type} as default prop. This could lead to potential infinite render loop in React. Use a variable reference instead of ${type}.`);
         }
