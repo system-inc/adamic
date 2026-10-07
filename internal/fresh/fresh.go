@@ -1062,6 +1062,9 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return value{}
+	case ir.JSONEncode:
+		a.value(expression.Value)
+		return value{}
 	case ir.JSONStringify:
 		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
 		a.value(expression.Value)

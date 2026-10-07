@@ -25,7 +25,8 @@ registerHooks({
 	load(url, context, nextLoad) {
 		if (url.endsWith('.a') || url.endsWith('.ts')) {
 			let source = readFileSync(fileURLToPath(url), 'utf8');
-			if (source.includes('decodeJson')) {
+			// Decode and encode use the identical source trigger and descriptor insertion path.
+			if (source.includes('decodeJson') || source.includes('encodeJson')) {
 				const root = fileURLToPath(new URL('../', import.meta.url));
 				const sources = JSON.parse(execFileSync('go', ['run', './oracle/json_types.go', fileURLToPath(url)], { cwd: root, encoding: 'utf8' }));
 				source = sources[fileURLToPath(url)];

@@ -1,0 +1,58 @@
+import { encodeJson, decodeJson, panic } from 'adamic';
+interface Item { readonly name: string; readonly price: number; readonly note?: string; }
+interface Order { readonly items: readonly Item[]; readonly enabled: boolean; readonly pair: readonly [string, number, boolean]; }
+const value: Order = { items: [{ name: 'one', price: 0.1 + 0.2, note: 'first' }, { name: 'two', price: 5e-324 }], enabled: true, pair: ['pair', -0, false] };
+const text = encodeJson<Order>(value);
+console.log(text);
+const decoded = decodeJson<Order>(text);
+if (decoded.kind !== 'Ok') panic('order round trip failed');
+if (encodeJson<Order>(decoded.value) !== text) panic('order re-encode differs');
+interface Empty {}
+const empty = encodeJson<Empty>({});
+console.log(empty);
+const emptyDecoded = decodeJson<Empty>(empty);
+if (emptyDecoded.kind !== 'Ok') panic('empty round trip failed');
+if (encodeJson<Empty>(emptyDecoded.value) !== empty) panic('empty re-encode differs');
+const array = encodeJson<readonly number[]>([]);
+console.log(array);
+const arrayDecoded = decodeJson<readonly number[]>(array);
+if (arrayDecoded.kind !== 'Ok') panic('array round trip failed');
+if (encodeJson<readonly number[]>(arrayDecoded.value) !== array) panic('array re-encode differs');
+const tuple = encodeJson<readonly []>([]);
+console.log(tuple);
+const tupleDecoded = decodeJson<readonly []>(tuple);
+if (tupleDecoded.kind !== 'Ok') panic('tuple round trip failed');
+if (encodeJson<readonly []>(tupleDecoded.value) !== tuple) panic('tuple re-encode differs');
+interface Optional { readonly name: string; readonly note?: string; readonly count?: number; readonly enabled?: boolean; }
+class PresentUndefined implements Optional {
+ readonly name = 'missing';
+ readonly note?: string;
+ readonly count?: number;
+}
+const optional = encodeJson<Optional>(new PresentUndefined());
+console.log(optional);
+const optionalDecoded = decodeJson<Optional>(optional);
+if (optionalDecoded.kind !== 'Ok') panic('optional round trip failed');
+if (encodeJson<Optional>(optionalDecoded.value) !== optional) panic('optional re-encode differs');
+const present = encodeJson<Optional>({ name: 'present', note: '', count: 0, enabled: false });
+console.log(present);
+const presentDecoded = decodeJson<Optional>(present);
+if (presentDecoded.kind !== 'Ok') panic('present optional round trip failed');
+if (encodeJson<Optional>(presentDecoded.value) !== present) panic('present optional re-encode differs');
+interface Unusual { readonly '\ud800': string; readonly '__proto__': number; readonly '#data': boolean; }
+const unusual = decodeJson<Unusual>('{"\\ud800":"unit","__proto__":1,"#data":true}');
+if (unusual.kind !== 'Ok') panic('unusual fields decode failed');
+const unusualText = encodeJson<Unusual>(unusual.value);
+console.log(unusualText);
+const unusualAgain = decodeJson<Unusual>(unusualText);
+if (unusualAgain.kind !== 'Ok') panic('unusual fields round trip failed');
+if (encodeJson<Unusual>(unusualAgain.value) !== unusualText) panic('unusual fields re-encode differs');
+
+// One call site crosses optional fields present and missing in several layouts.
+const middleOptional = {name:'middle', count:2};
+const changingShapes: readonly Optional[] = [
+ {name:'a', count:1}, middleOptional, {name:'b'},
+ {name:'c', count:3}, {name:'d', note:'é🌍'}
+];
+for (const value of changingShapes) console.log(encodeJson<Optional>(value));
+console.log(encodeJson<string>('é🌍'.repeat(10000)+'\ud800"end'));

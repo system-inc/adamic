@@ -245,7 +245,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 // Descriptor construction must not intern boundary-only literals into codegen's
 // string table. The same builder runs against a private table and reports no errors.
 func (l *lowering) boundarySchema(node *ast.Node, proven *checker.Type) *ir.JSONDecodeSchema {
-	schema, err := l.jsonDecodeSchema(node, proven, true, l.result.BoundaryStrings.Intern)
+	schema, err := l.jsonDecodeSchema(node, proven, jsonSchemaBoundary, l.result.BoundaryStrings.Intern)
 	if err != nil {
 		return nil
 	}

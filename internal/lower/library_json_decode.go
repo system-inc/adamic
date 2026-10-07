@@ -57,30 +57,67 @@ func (l *lowering) jsonDecodeContainsNull(t *checker.Type, seen map[*checker.Typ
 	return false
 }
 
+type jsonSchemaMode uint8
+
+const (
+	jsonSchemaDecode jsonSchemaMode = iota
+	jsonSchemaEncode
+	jsonSchemaBoundary
+)
+
+func (mode jsonSchemaMode) functionName() string {
+	if mode == jsonSchemaEncode {
+		return "encodeJson"
+	}
+	return "decodeJson"
+}
+
+// Only call-site dispatch inspects the prelude callee; the type walker uses mode.
+func (l *lowering) isJSONSchemaCall(node *ast.Node) bool {
+	return node.Kind == ast.KindCallExpression && (l.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") || l.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson"))
+}
+
+func (l *lowering) jsonSchemaCallType(node *ast.Node) (ir.JSONDecodeSchema, error) {
+	mode := jsonSchemaDecode
+	if l.isPreludeFunction(node.AsCallExpression().Expression, "encodeJson") {
+		mode = jsonSchemaEncode
+	}
+	return l.jsonSchemaType(node, mode)
+}
+
 func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
+	return l.jsonSchemaType(node, jsonSchemaDecode)
+}
+
+func (l *lowering) jsonSchemaType(node *ast.Node, mode jsonSchemaMode) (ir.JSONDecodeSchema, error) {
 	schema := ir.JSONDecodeSchema{}
 	call := node.AsCallExpression()
+	operation, argument := mode.functionName(), "text"
+	if mode == jsonSchemaEncode {
+		argument = "value"
+	}
 	if call.TypeArguments == nil || len(call.TypeArguments.Nodes) != 1 {
-		return schema, &Refused{Where: l.program.Where(node), What: "decodeJson requires a type argument", Fix: "name the type: decodeJson<YourType>(text)"}
+		return schema, &Refused{Where: l.program.Where(node), What: operation + " requires a type argument", Fix: "name the type: " + operation + "<YourType>(" + argument + ")"}
 	}
 	rootType := l.checker.GetTypeFromTypeNode(call.TypeArguments.Nodes[0])
 	if l.jsonDecodeContainsNull(rootType, map[*checker.Type]bool{}) {
-		return schema, &jsonDecodeNullableNotYet{NotYet{Where: l.program.Where(node), What: "decodeJson<" + l.checker.TypeToString(rootType) + "> containing null"}}
+		return schema, &jsonDecodeNullableNotYet{NotYet{Where: l.program.Where(node), What: operation + "<" + l.checker.TypeToString(rootType) + "> containing null"}}
 	}
-	return l.jsonDecodeSchema(node, rootType, false, l.constant)
+	return l.jsonDecodeSchema(node, rootType, mode, l.constant)
 }
 
 // jsonDecodeSchema is the one checker-type descriptor builder. Boundary mode
-// preserves undefined for fields; JSON decoding keeps its existing refusal.
-func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boundary bool, intern func(string) int) (ir.JSONDecodeSchema, error) {
+// preserves undefined for fields; decode and encode retain JSON admission rules.
+func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, mode jsonSchemaMode, intern func(string) int) (ir.JSONDecodeSchema, error) {
 	schema := ir.JSONDecodeSchema{}
+	operation := mode.functionName()
 	seen := map[*checker.Type]int{}
 	var visit func(*checker.Type) (int, error)
 	refuse := func(t *checker.Type) error {
-		return &Refused{Where: l.program.Where(node), What: "decodeJson cannot prove " + l.checker.TypeToString(t) + " is JSON data", Fix: "name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant"}
+		return &Refused{Where: l.program.Where(node), What: operation + " cannot prove " + l.checker.TypeToString(t) + " is JSON data", Fix: "name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant"}
 	}
 	visit = func(t *checker.Type) (int, error) {
-		if boundary {
+		if mode == jsonSchemaBoundary {
 			t = l.concrete(t)
 			held, _ := l.representation(t)
 			if l.weakTarget(t) != nil || held == ir.Weak {
@@ -127,7 +164,7 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boun
 			case ir.BooleanConstant:
 				n.Boolean = v.Value
 			}
-		} else if boundary && flags&checker.TypeFlagsUndefined != 0 {
+		} else if mode == jsonSchemaBoundary && flags&checker.TypeFlagsUndefined != 0 {
 			n.Kind = "undefined"
 		} else if flags&checker.TypeFlagsNumber != 0 {
 			n.Kind = "number"
@@ -141,7 +178,7 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boun
 		} else if flags&checker.TypeFlagsUnion != 0 {
 			n.Kind = "union"
 			of, ok := l.representation(t)
-			if !ok && !boundary {
+			if !ok && mode != jsonSchemaBoundary {
 				return 0, refuse(t)
 			}
 			n.Of = of
@@ -155,11 +192,11 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boun
 				k := schema.Nodes[child].Kind
 				if k == "object" {
 					objects = append(objects, member)
-				} else if !boundary && k != "null" && k != "literal" && k != "number" && k != "string" && k != "boolean" {
+				} else if mode != jsonSchemaBoundary && k != "null" && k != "literal" && k != "number" && k != "string" && k != "boolean" {
 					return 0, refuse(t)
 				}
 			}
-			if !boundary && len(objects) > 0 {
+			if mode != jsonSchemaBoundary && len(objects) > 0 {
 				if len(objects)+1 < len(n.Children) || len(objects) == 1 && len(n.Children) != 2 {
 					return 0, refuse(t)
 				}
@@ -193,6 +230,9 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boun
 				}
 			}
 		} else if flags&checker.TypeFlagsObject != 0 {
+			if mode == jsonSchemaEncode && isClassInstance(t) {
+				return 0, l.notYet(node, "encodeJson of a class instance is not yet supported; describe the data with an interface")
+			}
 			if isClassInstance(t) || l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Date", "RegExp") || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 || len(l.checker.GetIndexInfosOfType(t)) != 0 && !l.checker.IsArrayType(t) && !checker.IsTupleType(t) {
 				return 0, refuse(t)
 			}
@@ -223,7 +263,7 @@ func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boun
 					}
 					ft := l.checker.GetTypeOfSymbol(field)
 					optional := field.Flags&ast.SymbolFlagsOptional != 0
-					if !boundary && optional && ft.Flags()&checker.TypeFlagsUnion != 0 {
+					if mode != jsonSchemaBoundary && optional && ft.Flags()&checker.TypeFlagsUnion != 0 {
 						members := []*checker.Type{}
 						for _, member := range ft.Types() {
 							if member.Flags()&checker.TypeFlagsUndefined != 0 {
@@ -296,8 +336,8 @@ func DecodeJsonSources(ctx context.Context, program *load.Program) (map[string]s
 			if found != nil {
 				return true
 			}
-			if node.Kind == ast.KindCallExpression && l.isPreludeFunction(node.AsCallExpression().Expression, "decodeJson") {
-				descriptor, err := l.decodeJsonType(node)
+			if l.isJSONSchemaCall(node) {
+				descriptor, err := l.jsonSchemaCallType(node)
 				if err != nil {
 					found = err
 					return true

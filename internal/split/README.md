@@ -69,10 +69,11 @@ owner review before merge.
 
 
 The only schema-builder factor is lowering.jsonDecodeSchema(node, rootType,
-boundary, intern) in internal/lower/library_json_decode.go. decodeJson calls it with
-false and the existing codegen interner l.constant; function metadata calls it
-with true and ir.Program.BoundaryStrings.Intern. The
-encoder worker should reuse this visitor, rather than introduce another builder.
+mode, intern) in internal/lower/library_json_decode.go. decodeJson and encodeJson
+pass jsonSchemaDecode and jsonSchemaEncode respectively, with the codegen interner
+l.constant. Function metadata passes jsonSchemaBoundary and
+ir.Program.BoundaryStrings.Intern. The shared walker uses this explicit mode,
+never the callee, and boundary relaxations do not apply to decode or encode.
 
 ## Mutation evidence
 
