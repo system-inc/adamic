@@ -13,11 +13,10 @@ import (
 // plain object, a class, closures, and the Array and string methods the runtime has. It is also
 // what makes the oracle exact: no Math.random, no time, no input, loops with a bound the program
 // can't change, no recursion (a function only calls the ones declared before it), and growth that
-// stops (a push only below a length, a string written back cut to a length). Strings are often long
-// enough that a slice can share its owner's bytes, and one function appends to such a slice while
-// that owner is still live. Ownership scenes hand a narrowed object to a call that reassigns it,
-// borrow an array element and then move the array, spread an object while calling a method on it,
-// and construct an object straight into a call while a closure keeps it.
+// stops (a push only below a length, a string written back cut to a length). Ownership scenes
+// hand a narrowed object to a call that reassigns it, borrow an array element and then move the
+// array, spread an object while calling a method on it, and construct an object straight into a
+// call while a closure keeps it.
 //
 // The richest vein is calls with side effects inside expressions: every function writes to the
 // globals and the holder, and calls go everywhere a value can, so the order of reads and calls in

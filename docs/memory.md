@@ -357,10 +357,10 @@ adamic_release(adamic_local_5_held);
 
 | Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
 |---|---:|---:|---:|---:|---:|---:|
-| internal/oracle/testdata/memory_examples/regions.a | 14 | 8 | 0 | 5 | 2 | 6 |
+| internal/oracle/testdata/memory_examples/regions.a | 14 | 8 | 6 | 11 | 2 | 6 |
 
 The output is `18`: each of three `total += sum(build(item))` statements uses its own region and frees its two nodes together, while `const held = build(item)` uses the heap because `held` survives its declaration statement.
-Fourteen allocations are twelve nodes and two output strings: six nodes go with regions, eight values are freed individually, peak live is two, and zero retains plus five releases reflect moves into returned fields, borrowed `sum` parameters, three heap owners and two output temporaries.
+Fourteen allocations are twelve nodes and two output strings: six nodes go with regions, eight values are freed individually, peak live is two, and the integrated runtime measures six retains and eleven releases. These counts include references held through returned fields and the releases of heap owners and output temporaries.
 This is a region for one statement inside a loop, not for the whole iteration: values kept across statements still use the heap; regions for an entire call or request and arrays in regions remain outside this example's supported pattern (`internal/native/region.go`, `runtime/region.c`).
 
 ### 6. Append a string, slice it, then append to the slice
