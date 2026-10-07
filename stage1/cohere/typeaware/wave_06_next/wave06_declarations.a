@@ -1,0 +1,20 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class Declaration {
+    kind=''; name=''; file=''; start=0; end=0; ambient=false; external=false; body='';
+    readonly parents:string[]=[]; readonly names:string[]=[]; readonly flags:number[]=[]; readonly globals:boolean[]=[];
+}
+export class Declarations {
+    id=0; readonly items:Declaration[]=[];
+}
+export function declarations(rules:Rules,index:number,mode='symbol'):Declarations {
+    const f=new Frames(rules.ask(index,`wave06-declarations\n${mode}`));header(f,'wave06-declarations');
+    const result=new Declarations();result.id=f.natural();const count=f.natural();
+    for(let at=0;at<count;at++) {
+        const d=new Declaration();d.kind=f.field();d.name=f.field();d.file=f.field();d.start=f.natural();d.end=f.natural();
+        d.ambient=f.yes();d.external=f.yes();const parents=f.natural();
+        for(let parent=0;parent<parents;parent++){d.parents.push(f.field());d.names.push(f.field());d.flags.push(f.natural());d.globals.push(f.yes());}
+        d.body=f.field();result.items.push(d);
+    }
+    f.end();return result;
+}

@@ -1,0 +1,197 @@
+import { panic } from 'adamic';
+import type { Rules } from '../../rules.ts';
+import { Returns } from '../../returns.ts';
+import { Shadow } from '../../shadow.ts';
+
+// Statement events and edges use numeric indices, retaining the unreachable
+// continuation after an abrupt exit exactly as cohere's graph does.
+export class ReturnBlock {
+    readonly events: number[] = [];
+    readonly successors: number[] = [];
+    incoming = false;
+    reachable = false;
+}
+export class ReturnTry {
+    caught: number;
+    final: number;
+    position = 0;
+    forked = false;
+    returned = false;
+    thrown = false;
+    constructor(caught: number, final: number) { this.caught = caught; this.final = final; }
+}
+export class ResponseGraph {
+    readonly rules: Rules;
+    readonly finals:number[]=[];
+    readonly helper: Returns;
+    readonly blocks: ReturnBlock[] = [];
+    readonly tries: ReturnTry[] = [];
+    readonly jumpNodes: number[] = [];
+    readonly breakBlocks: number[] = [];
+    readonly continueBlocks: number[] = [];
+    current = 0;
+    root = 0;
+    constructor(rules: Rules) { this.rules = rules; this.helper = new Returns(rules, new Shadow(rules)); }
+    block(index: number): ReturnBlock { return this.blocks[index] ?? panic('missing return block'); }
+    make(): number { this.blocks.push(new ReturnBlock()); return this.blocks.length - 1; }
+    link(from: number, to: number): void {
+        if(from < 0 || to < 0) { return; }
+        this.block(from).successors.push(to);
+        if(this.block(from).reachable) { this.block(to).incoming = true; }
+    }
+    enter(index: number): void { this.current = index; this.block(index).reachable = this.block(index).incoming; }
+    dead(): void { const next = this.make(); this.block(this.current).successors.push(next); this.current = next; }
+    handler(returning: boolean): number {
+        for(let at = this.tries.length - 1; at >= 0; at--) {
+            const frame = this.tries[at] ?? panic('missing return try');
+            if(returning ? frame.final >= 0 : frame.position === 0 || frame.final >= 0) { return at; }
+        }
+        return -1;
+    }
+    target(frame: ReturnTry): number { return frame.position === 0 && frame.caught >= 0 ? frame.caught : frame.final; }
+    fork(): void {
+        if(!this.block(this.current).reachable) { return; }
+        const at = this.handler(false); if(at < 0) { return; }
+        const frame = this.tries[at] ?? panic('missing throwable try');
+        if(frame.forked) { return; }
+        frame.forked = true; frame.thrown = true; this.link(this.current, this.target(frame));
+        const next = this.make(); this.link(this.current, next); this.enter(next);
+    }
+    expression(index: number): void {
+        if(index < 0) { return; }
+        const node = this.rules.parser.node(index);
+        if(node.kind==='Identifier')this.block(this.current).events.push(index);
+        if(node.kind==='VariableDeclaration'){const name=node.children[0]??-1;for(const child of node.children.slice(1))this.expression(child);if(name>=0)this.block(this.current).events.push(name);return;}
+        if(this.helper.scope(index) || ['ClassStaticBlockDeclaration', 'PropertyDeclaration'].includes(node.kind)) { return; }
+        if(node.kind === 'ConditionalExpression') {
+            this.expression(node.children[0] ?? -1);
+            const from = this.current; const join = this.make(); const yes = this.make(); const no = this.make();
+            this.link(from, yes); this.enter(yes); this.expression(node.children[2] ?? -1); this.link(this.current, join);
+            this.link(from, no); this.enter(no); this.expression(node.children[4] ?? -1); this.link(this.current, join); this.enter(join); return;
+        }
+        if(node.kind === 'BinaryExpression' && ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken',
+            'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(this.rules.parser.node(node.children[1] ?? -1).kind)) {
+            this.expression(node.children[0] ?? -1);
+            const join = this.make(); const right = this.make(); this.link(this.current, join); this.link(this.current, right);
+            this.enter(right); this.expression(node.children[2] ?? -1); this.link(this.current, join); this.enter(join); return;
+        }
+        if(node.kind === 'YieldExpression') {
+            for(const child of node.children) { this.expression(child); }
+            this.route(true); this.route(false);
+            const next = this.make(); this.link(this.current, next); this.enter(next); return;
+        }
+        for(const child of node.children) { this.expression(child); }
+        if(['CallExpression', 'NewExpression', 'PropertyAccessExpression', 'ElementAccessExpression', 'TaggedTemplateExpression'].includes(node.kind) ||
+            (node.kind === 'Identifier' && this.helper.throwable(index))) { this.fork(); }
+    }
+    route(returning: boolean): void {
+        if(!this.block(this.current).reachable) { return; }
+        const at = this.handler(returning);
+        if(at >= 0) {
+            const frame = this.tries[at] ?? panic('missing abrupt try');
+            if(returning) { frame.returned = true; } else { frame.thrown = true; }
+            this.link(this.current, returning ? frame.final : this.target(frame));
+        }
+    }
+    list(children: readonly number[]): void { for(const child of children) { this.statement(child); } }
+    statement(index: number): void {
+        if(index < 0) { return; }
+        const node = this.rules.parser.node(index);
+        if(!['ReturnStatement','ThrowStatement'].includes(node.kind))this.block(this.current).events.push(index);
+        if(['Block', 'SourceFile', 'ModuleBlock'].includes(node.kind)) { this.list(node.children); return; }
+        if(node.kind === 'IfStatement') {
+            const after = this.make(); const yes = this.make(); const no = node.children.length > 2 ? this.make() : after;
+            this.expression(node.children[0] ?? -1); this.link(this.current, yes); this.link(this.current, no);
+            this.enter(yes); this.statement(node.children[1] ?? -1); this.link(this.current, after);
+            if(node.children.length > 2) { this.enter(no); this.statement(node.children[2] ?? -1); this.link(this.current, after); }
+            this.enter(after); return;
+        }
+        if(node.kind === 'ReturnStatement' || node.kind === 'ThrowStatement') {
+            for(const child of node.children) { this.expression(child); }
+            if(this.block(this.current).reachable) { if(node.kind==='ReturnStatement'&&this.handler(true)<0)this.finals.push(this.current);this.route(node.kind === 'ReturnStatement'); this.dead(); }
+            return;
+        }
+        if(node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') {
+            if(!this.block(this.current).reachable) { return; }
+            const target = this.helper.jump(index, node.kind === 'ContinueStatement');
+            let at = -1;
+            for(let jump = this.jumpNodes.length - 1; jump >= 0; jump--) { if(this.jumpNodes[jump] === target) { at = jump; break; } }
+            if(at >= 0) { this.link(this.current, node.kind === 'BreakStatement' ? this.breakBlocks[at] ?? -1 : this.continueBlocks[at] ?? -1); }
+            this.dead(); return;
+        }
+        if(node.kind === 'SwitchStatement') {
+            this.expression(node.children[0] ?? -1);
+            const after = this.make(); const clauses = this.rules.parser.node(node.children[1] ?? -1).children;
+            const bodies: number[] = []; for(const clause of clauses) { bodies.push(this.make()); }
+            let defaultAt = -1;
+            for(let at = 0; at < clauses.length; at++) {
+                const clause = this.rules.parser.node(clauses[at] ?? -1);
+                if(clause.kind === 'DefaultClause') { defaultAt = at; continue; }
+                this.expression(clause.children[0] ?? -1); this.link(this.current, bodies[at] ?? -1);
+                const next = this.make(); this.link(this.current, next); this.enter(next);
+            }
+            this.link(this.current, defaultAt < 0 ? after : bodies[defaultAt] ?? -1);
+            this.jumpNodes.push(index); this.breakBlocks.push(after); this.continueBlocks.push(-1);
+            let tail = -1;
+            for(let at = 0; at < clauses.length; at++) {
+                const clause = this.rules.parser.node(clauses[at] ?? -1);
+                this.link(tail, bodies[at] ?? -1); this.enter(bodies[at] ?? -1);
+                this.list(clause.children.slice(clause.kind === 'CaseClause' ? 1 : 0)); tail = this.current;
+            }
+            this.link(tail, after); this.jumpNodes.pop(); this.breakBlocks.pop(); this.continueBlocks.pop(); this.enter(after); return;
+        }
+        if(node.kind === 'TryStatement') { this.tryStatement(index); return; }
+        if(node.kind === 'LabeledStatement') {
+            const body = node.children[1] ?? -1;
+            if(['ForStatement', 'ForInStatement', 'ForOfStatement', 'WhileStatement', 'DoStatement', 'SwitchStatement'].includes(this.rules.parser.node(body).kind)) { this.statement(body); return; }
+            const after = this.make(); this.jumpNodes.push(index); this.breakBlocks.push(after); this.continueBlocks.push(-1);
+            this.statement(body); this.link(this.current, after); this.jumpNodes.pop(); this.breakBlocks.pop(); this.continueBlocks.pop(); this.enter(after); return;
+        }
+        if(['ForStatement', 'ForInStatement', 'ForOfStatement', 'WhileStatement', 'DoStatement'].includes(node.kind)) {
+            const body = node.kind === 'DoStatement' ? node.children[0] ?? -1 : node.children[node.children.length - 1] ?? -1;
+            const after = this.make(); const head = this.make(); this.link(this.current, head); this.enter(head);
+            for(const child of node.children) { if(child !== body) { this.expression(child); } }
+            const entry = this.make(); this.link(this.current, entry);
+            // Loop body returns are exempt. Reachability of later statements still
+            // follows the same normal/targeted-jump completion used by the suite.
+            const completion = this.helper.flow(index);
+            if(completion.normal) { this.link(this.current, after); }
+            this.jumpNodes.push(index); this.breakBlocks.push(after); this.continueBlocks.push(head);
+            this.enter(entry); this.statement(body); this.link(this.current, head);
+            this.jumpNodes.pop(); this.breakBlocks.pop(); this.continueBlocks.pop(); this.enter(after); return;
+        }
+        if(node.kind === 'WithStatement') { this.expression(node.children[0] ?? -1); this.statement(node.children[1] ?? -1); return; }
+        if(node.kind === 'FunctionDeclaration') { return; }
+        for(const child of node.children) { this.expression(child); }
+    }
+    tryStatement(index: number): void {
+        const node = this.rules.parser.node(index);
+        const caught = node.children.find((child) => this.rules.parser.node(child).kind === 'CatchClause') ?? -1;
+        const final = node.children.length > 1 && this.rules.parser.node(node.children[node.children.length - 1] ?? -1).kind === 'Block' ? node.children[node.children.length - 1] ?? -1 : -1;
+        const frame = new ReturnTry(caught < 0 ? -1 : this.make(), final < 0 ? -1 : this.make());
+        this.tries.push(frame); this.statement(node.children[0] ?? -1);
+        const ends: number[] = [];
+        if(caught >= 0) {
+            this.link(this.current, frame.caught); ends.push(this.current); frame.position = 1; frame.forked = false;
+            this.enter(frame.caught); const catchNode = this.rules.parser.node(caught);
+            this.statement(catchNode.children[catchNode.children.length - 1] ?? -1);
+        }
+        ends.push(this.current); this.tries.pop(); const after = this.make();
+        if(final < 0) { for(const end of ends) { this.link(end, after); } this.enter(after); return; }
+        const snapshot = this.tries.map((outer) => outer.forked);
+        const normal = this.make(); for(const end of ends) { this.link(end, normal); }
+        this.enter(normal); this.statement(final); this.link(this.current, after);
+        if(this.block(frame.final).incoming) {
+            for(let at = 0; at < snapshot.length; at++) { const outer = this.tries[at]; if(outer !== undefined) { outer.forked = snapshot[at] ?? false; } }
+            this.enter(frame.final); this.statement(final);
+            if(frame.returned) { if(this.handler(true)<0)this.finals.push(this.current);this.route(true); }
+            if(frame.thrown) { this.route(false); }
+        }
+        this.enter(after);
+    }
+    build(root:number):void {
+        this.root=root;this.current=this.make();this.block(0).incoming=true;this.block(0).reachable=true;
+        const node=this.rules.parser.node(root);const body=node.kind==='SourceFile'?root:node.children[node.children.length-1]??-1;
+        if(body>=0)this.statement(body);if(this.block(this.current).reachable)this.finals.push(this.current);
+    }
+}

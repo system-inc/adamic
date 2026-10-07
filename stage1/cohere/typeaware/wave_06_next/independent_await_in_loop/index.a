@@ -1,0 +1,139 @@
+import {Tools} from '../tools.a';
+import type {Rules} from '../../rules.ts';
+import {declarations} from '../wave06_declarations.a';
+import {Parser} from '../../../../typescript/parser/parser.ts';
+import {Scanner} from '../../../../typescript/scanner/scanner.ts';
+export class IndependentAwaitInLoop {
+    readonly tools:Tools;
+    constructor(rules:Rules){this.tools=new Tools(rules);}
+    loop=-1;body=-1;collection=-1;index=-1;
+    readonly tainted:number[]=[];
+    shape(loop:number):boolean {
+        this.loop=loop;this.body=this.tools.last(loop);this.index=-1;this.collection=-1;
+        if(this.tools.kind(loop)==='ForOfStatement') {if(this.tools.children(loop).some(child=>this.tools.kind(child)==='AwaitKeyword'))return false;this.collection=this.tools.children(loop)[this.tools.children(loop).length-2]??-1;return this.body>=0;}
+        if(this.tools.kind(loop)!=='ForStatement'||this.tools.children(loop).length!==4)return false;
+        const list=this.tools.child(loop),condition=this.tools.skip(this.tools.child(loop,1)),inc=this.tools.skip(this.tools.child(loop,2));
+        if(this.tools.kind(list)!=='VariableDeclarationList'||this.tools.children(list).length!==1||this.tools.kind(condition)!=='BinaryExpression'||this.tools.kind(this.tools.child(condition,1))!=='LessThanToken')return false;
+        const d=this.tools.child(list),name=this.tools.child(d),left=this.tools.skip(this.tools.child(condition)),right=this.tools.skip(this.tools.child(condition,2));
+        if(this.tools.kind(name)!=='Identifier'||this.tools.children(d).length<2||this.tools.kind(left)!=='Identifier'||this.tools.text(left)!==this.tools.text(name)||this.tools.kind(right)!=='PropertyAccessExpression'||this.tools.member(right)!=='length')return false;
+        let increment=false;
+        if(['PrefixUnaryExpression','PostfixUnaryExpression'].includes(this.tools.kind(inc)))increment=this.tools.rules.parser.node(inc).operator==='PlusPlusToken'&&this.tools.children(inc).some(child=>this.tools.kind(child)==='Identifier'&&this.tools.text(child)===this.tools.text(name));
+        if(this.tools.kind(inc)==='BinaryExpression')increment=this.tools.text(this.tools.skip(this.tools.child(inc)))===this.tools.text(name)&&this.tools.kind(this.tools.child(inc,1))==='PlusEqualsToken'&&this.tools.kind(this.tools.skip(this.tools.child(inc,2)))==='NumericLiteral'&&this.tools.text(this.tools.skip(this.tools.child(inc,2)))==='1';
+        if(!increment)return false;this.index=name;if(this.tools.symbol(name).id===0)return false;this.collection=this.tools.child(right);return true;
+    }
+    item(index:number):boolean {
+        index=this.tools.skip(index);
+        if(this.tools.kind(index)==='Identifier'&&this.tools.kind(this.loop)==='ForOfStatement') {
+            const init=this.tools.children(this.loop).find(child=>this.tools.kind(child)==='VariableDeclarationList')??this.tools.child(this.loop);
+            return this.tools.symbol(index).items.some(d=>d.file===this.tools.rules.path&&d.start>=this.tools.rules.byte(this.tools.rules.parser.node(init).pos)&&d.end<=this.tools.rules.byte(this.tools.rules.parser.node(init).end));
+        }
+        return this.tools.kind(index)==='ElementAccessExpression'&&this.index>=0&&this.tools.kind(this.tools.skip(this.tools.child(index,1)))==='Identifier'&&this.tools.same(this.tools.skip(this.tools.child(index,1)),this.index)&&this.segments(this.tools.child(index)).join('.')===this.segments(this.collection).join('.');
+    }
+    ownAwait(index:number,owned=true):boolean {
+        if(index<0||this.tools.boundary(index))return false;const kind=this.tools.kind(index);
+        if(kind==='AwaitExpression'&&owned&&!this.item(this.tools.child(index)))return true;
+        if(kind==='VariableDeclarationList'&&owned&&this.tools.text(index).trimStart().startsWith('await using'))return true;
+        if(kind==='ForStatement')return this.ownAwait(this.tools.child(index),owned)||this.tools.children(index).slice(1).some(child=>this.ownAwait(child,false));
+        if(['ForOfStatement','ForInStatement'].includes(kind)) {
+            if(owned&&kind==='ForOfStatement'&&this.tools.children(index).some(child=>this.tools.kind(child)==='AwaitKeyword'))return true;
+            const expr=this.tools.children(index)[this.tools.children(index).length-2]??-1;return this.ownAwait(expr,owned)||this.ownAwait(this.tools.child(index),false)||this.ownAwait(this.tools.last(index),false);
+        }
+        if(['WhileStatement','DoStatement'].includes(kind))return this.tools.children(index).some(child=>this.ownAwait(child,false));
+        return this.tools.children(index).some(child=>this.ownAwait(child,owned));
+    }
+    segments(index:number):string[] {index=this.tools.skip(index);if(this.tools.kind(index)==='Identifier'||this.tools.kind(index)==='ThisKeyword')return [this.tools.text(index)];if(this.tools.kind(index)==='PropertyAccessExpression'){const base=this.segments(this.tools.child(index));if(base.length>0)base.push(this.tools.member(index));return base;}return [];}
+    base(index:number):number{index=this.tools.skip(index);while(this.tools.kind(index)==='PropertyAccessExpression')index=this.tools.skip(this.tools.child(index));return ['Identifier','ThisKeyword'].includes(this.tools.kind(index))?index:-1;}
+    outerBinding(index:number):boolean {return index>=0&&(this.tools.kind(index)==='ThisKeyword'||!this.tools.symbol(index).items.some(d=>d.file===this.tools.rules.path&&d.start>=this.tools.rules.byte(this.tools.rules.parser.node(this.loop).pos)&&d.end<=this.tools.rules.byte(this.tools.rules.parser.node(this.loop).end)));}
+    orderedName(name:string,receiver:readonly string[],narrow=false):boolean {
+        const last=(receiver[receiver.length-1]??'').toLowerCase();
+        if(narrow&&(name==='setTimeout'||name==='setInterval'||name==='setImmediate'||(receiver[0]==='console'&&['error','warn','debug','trace','assert'].includes(name))||(receiver[0]==='process'&&receiver[1]==='stderr')||(last.includes('log')&&['error','warn','debug','trace'].includes(name))))return false;
+        if(receiver[0]==='console'||receiver[0]==='process'&&['stdout','stderr'].includes(receiver[1]??''))return true;
+        const lower=name.toLowerCase();return ['setTimeout','setInterval','setImmediate','write','writeSync','appendFile','appendFileSync'].includes(name)||['sleep','delay','wait','pause','throttle','backoff','ratelimit','print'].some(prefix=>lower.startsWith(prefix))||lower.includes('progress')||lower.includes('spinner')||last.includes('progress')||last.includes('spinner')||(last.includes('log')&&['log','info','warn','error','debug','trace'].includes(name))||(receiver.length===0&&name==='log');
+    }
+    ordered(index:number,narrow=false):boolean {index=this.tools.skip(index);if(this.tools.kind(index)==='Identifier')return this.orderedName(this.tools.text(index),[],narrow);if(this.tools.kind(index)==='PropertyAccessExpression')return this.orderedName(this.tools.member(index),this.segments(this.tools.child(index)),narrow);return false;}
+    calledOrdered(index:number):boolean {
+        index=this.tools.skip(index);const name=this.tools.kind(index)==='Identifier'?index:this.tools.kind(index)==='PropertyAccessExpression'?this.tools.last(index):-1;if(name<0)return false;
+        for(const d of declarations(this.tools.rules,name,'alias').items) {
+            if(d.body==='')continue;const parser=new Parser(d.body,d.file);const root=parser.file();const parents:number[]=[];for(let at=0;at<parser.nodes.length;at++)parents.push(-1);
+            const queue=[root];for(let q=0;q<queue.length;q++){const at=queue[q]??-1;for(const child of parser.node(at).children){parents[child]=at;queue.push(child);}}
+            for(let at=0;at<parser.nodes.length;at++) {
+                const node=parser.node(at);if(node.kind!=='CallExpression')continue;let parent=parents[at]??-1,catching=false;while(parent>=0){if(parser.node(parent).kind==='CatchClause'){catching=true;break;}parent=parents[parent]??-1;}if(catching)continue;
+                let callee=node.children[0]??-1;while(['ParenthesizedExpression','NonNullExpression'].includes(parser.node(callee).kind))callee=parser.node(callee).children[0]??-1;
+                const chain:string[]=[];let receiver=callee;
+                while(parser.node(receiver).kind==='PropertyAccessExpression'){const access=parser.node(receiver);chain.push(parser.node(access.children[access.children.length-1]??-1).text);receiver=access.children[0]??-1;}
+                if(['Identifier','ThisKeyword'].includes(parser.node(receiver).kind))chain.push(parser.node(receiver).text);else continue;
+                chain.reverse();const method=chain.pop()??'';if(this.orderedName(method,chain,true))return true;
+            }
+        }
+        return false;
+    }
+    sideEffect(index:number,insideFunction=false,insideCatch=false):boolean {
+        if(index<0)return false;const kind=this.tools.kind(index);
+        if(kind==='YieldExpression'&&!insideFunction)return true;
+        if(kind==='CallExpression'&&(this.ordered(this.tools.child(index),insideCatch)||this.calledOrdered(this.tools.child(index))))return true;
+        return this.tools.children(index).some(child=>this.sideEffect(child,insideFunction||this.tools.boundary(index),insideCatch||kind==='CatchClause'));
+    }
+    readSegments(index:number):string[]{let at=index;const result=this.segments(index);for(;;){let parent=this.tools.parent(at);while(['ParenthesizedExpression','NonNullExpression'].includes(this.tools.kind(parent))){at=parent;parent=this.tools.parent(at);}if(this.tools.kind(parent)!=='PropertyAccessExpression'||this.tools.child(parent)!==at)return result;result.push(this.tools.member(parent));at=parent;}}
+    sinkMethod(name:string):boolean{return ['push','unshift','set','add','append','delete'].includes(name)||['add','append','insert'].some(prefix=>name.startsWith(prefix)&&name.slice(prefix.length,prefix.length+1)>='A'&&name.slice(prefix.length,prefix.length+1)<='Z');}
+    propertyTarget(index:number):number {index=this.tools.skip(index);if(this.tools.kind(index)==='ElementAccessExpression')index=this.tools.child(index);return this.tools.kind(index)==='PropertyAccessExpression'||['Identifier','ThisKeyword'].includes(this.tools.kind(index))?this.outerBinding(this.base(index))?index:-1:-1;}
+    carries():boolean {
+        const sinks:number[]=[],reads:number[]=[],sinkRoots:number[]=[];
+        for(const index of this.tools.descendants(this.body)) {
+            const kind=this.tools.kind(index);
+            if(kind==='VariableDeclarationList'&&this.tools.text(index).trimStart().startsWith('var ')){let parent=this.tools.parent(index),nested=false;while(parent>=0&&parent!==this.body){if(this.tools.boundary(parent))nested=true;parent=this.tools.parent(parent);}if(!nested)return true;}
+            if(kind==='BinaryExpression'&&this.tools.assignment(this.tools.kind(this.tools.child(index,1)))) {const left=this.tools.child(index),target=['PropertyAccessExpression','ElementAccessExpression'].includes(this.tools.kind(this.tools.skip(left)))?this.propertyTarget(left):-1;if(target>=0){if(this.tools.kind(this.tools.child(index,1))!=='EqualsToken')return true;sinks.push(target);sinkRoots.push(this.base(target));}}
+            if(['PrefixUnaryExpression','PostfixUnaryExpression'].includes(kind)&&['PlusPlusToken','MinusMinusToken'].includes(this.tools.rules.parser.node(index).operator)&&this.tools.children(index).some(child=>['PropertyAccessExpression','ElementAccessExpression'].includes(this.tools.kind(this.tools.skip(child)))&&this.propertyTarget(child)>=0))return true;
+            if(kind==='DeleteExpression'){const target=this.propertyTarget(this.tools.child(index));if(target>=0){sinks.push(target);sinkRoots.push(this.base(target));}}
+            if(kind==='CallExpression') {const callee=this.tools.skip(this.tools.child(index));if(this.tools.kind(callee)==='PropertyAccessExpression'){const receiver=this.tools.child(callee),name=this.tools.member(callee);if(this.outerBinding(this.base(receiver))){if(['pop','shift','splice','next','read','sort','reverse'].includes(name))return true;if(this.sinkMethod(name)){sinks.push(receiver);sinkRoots.push(this.base(receiver));}}if(name==='assign'&&this.segments(receiver).join('.')==='Object'){const target=this.tools.child(index,1);if(this.outerBinding(this.base(target))){sinks.push(target);sinkRoots.push(this.base(target));}}}}
+            if(kind==='Identifier'&&!this.tools.nameOnly(index)){if(this.tools.writes(index)){if(this.outerBinding(index)||(this.index>=0&&this.tools.same(index,this.index)))return true;}else if(this.outerBinding(index))reads.push(index);}
+            if(kind==='ThisKeyword')reads.push(index);
+        }
+        if(sinks.length===0)return false;
+        for(const index of this.tools.descendants(this.collection)){if(this.tools.kind(index)==='ThisKeyword'||this.tools.kind(index)==='Identifier'&&!this.tools.nameOnly(index))reads.push(index);}
+        for(const sink of sinks){const path=this.segments(sink);for(const read of reads){if(sinkRoots.includes(read))continue;const other=this.readSegments(read),size=Math.min(path.length,other.length);if(size>0&&path.slice(0,size).join('.')===other.slice(0,size).join('.'))return true;}}
+        return false;
+    }
+    taint(index:number):boolean {if(index<0||this.tools.boundary(index))return false;if(this.tools.kind(index)==='AwaitExpression')return true;if(this.tools.kind(index)==='Identifier'&&!this.tools.nameOnly(index)&&this.tainted.includes(this.tools.symbol(index).id))return true;return this.tools.children(index).some(child=>this.taint(child));}
+    awaits(index:number,before=-1):boolean {if(index<0||this.tools.boundary(index))return false;return this.tools.kind(index)==='AwaitExpression'&&(before<0||this.tools.rules.parser.node(index).pos<before)||this.tools.children(index).some(child=>this.awaits(child,before));}
+    mark(index:number):boolean{let changed=false;for(const name of this.tools.descendants(index)){if(this.tools.kind(name)==='Identifier'){const id=this.tools.symbol(name).id;if(id!==0&&!this.tainted.includes(id)){this.tainted.push(id);changed=true;}}}return changed;}
+    computeTaint():void {
+        this.tainted.splice(0,this.tainted.length);
+        for(let iteration=0;iteration<8;iteration++){let changed=false;for(const index of this.tools.descendants(this.body,true)){const kind=this.tools.kind(index);
+            if(kind==='VariableDeclaration'&&this.tools.children(index).length>1&&this.taint(this.tools.last(index)))changed=this.mark(this.tools.child(index))||changed;
+            if(kind==='BinaryExpression'&&this.tools.assignment(this.tools.kind(this.tools.child(index,1)))&&this.taint(this.tools.child(index,2)))changed=this.mark(this.tools.child(index))||changed;
+            if(kind==='CatchClause'&&this.tools.kind(this.tools.child(index))==='VariableDeclaration'&&this.awaits(this.tools.child(this.tools.parent(index))))changed=this.mark(this.tools.child(this.tools.child(index)))||changed;
+            if(['ForOfStatement','ForInStatement'].includes(kind)&&this.taint(this.tools.children(index)[this.tools.children(index).length-2]??-1))changed=this.mark(this.tools.child(index))||changed;
+        }if(!changed)return;}
+    }
+    exits(index:number):boolean {
+        const kind=this.tools.kind(index);if(kind==='ReturnStatement')return true;
+        if(kind==='ThrowStatement'){let child=index;for(let parent=this.tools.parent(child);parent>=0&&child!==this.body;parent=this.tools.parent(parent)){if(this.tools.kind(parent)==='TryStatement'&&this.tools.child(parent)===child&&this.tools.children(parent).some(at=>this.tools.kind(at)==='CatchClause'))return false;child=parent;}return true;}
+        if(['BreakStatement','ContinueStatement'].includes(kind)){const target=this.tools.flow.jump(index,kind==='ContinueStatement');return kind==='BreakStatement'?target===this.loop||target>=0&&!this.tools.inside(target,this.loop):target>=0&&target!==this.loop&&!this.tools.inside(target,this.loop);}
+        return false;
+    }
+    guarded(jump:number,limit:number,siblings=true):boolean {
+        if(['ReturnStatement','ThrowStatement'].includes(this.tools.kind(jump))&&this.taint(this.tools.child(jump)))return true;
+        let child=jump;
+        for(let parent=this.tools.parent(child);parent>=0&&child!==limit;parent=this.tools.parent(parent)) {
+            const kind=this.tools.kind(parent);
+            if(['IfStatement','WhileStatement'].includes(kind)&&this.taint(this.tools.child(parent)))return true;
+            if(kind==='DoStatement'&&this.taint(this.tools.last(parent)))return true;
+            if(kind==='ForStatement'&&this.taint(this.tools.child(parent,1)))return true;
+            if(['ForOfStatement','ForInStatement'].includes(kind)&&this.taint(this.tools.children(parent)[this.tools.children(parent).length-2]??-1))return true;
+            if(['CaseClause','DefaultClause'].includes(kind)){const block=this.tools.parent(parent),sw=this.tools.parent(block);if(this.taint(this.tools.child(sw))||this.tools.children(block).some(clause=>this.tools.kind(clause)==='CaseClause'&&this.taint(this.tools.child(clause))))return true;}
+            if(kind==='CatchClause'&&this.awaits(this.tools.child(this.tools.parent(parent))))return true;
+            if(kind==='TryStatement'&&this.tools.child(parent)===child&&this.tools.children(parent).some(at=>this.tools.kind(at)==='CatchClause')&&this.awaits(child,this.tools.rules.parser.node(jump).pos))return true;
+            if(siblings&&['Block','CaseClause','DefaultClause'].includes(kind)){for(const sibling of this.tools.children(parent)){if(sibling===child||this.tools.rules.parser.node(sibling).pos>=this.tools.rules.parser.node(child).pos)break;for(const event of this.tools.descendants(sibling,true)){if(['BreakStatement','ContinueStatement','ReturnStatement','ThrowStatement'].includes(this.tools.kind(event))&&this.guarded(event,sibling,false))return true;}}}
+            child=parent;
+        }
+        return false;
+    }
+    run():void {
+        for(let loop=0;loop<this.tools.rules.parser.nodes.length;loop++) {
+            if(!['ForStatement','ForOfStatement'].includes(this.tools.kind(loop))||!this.shape(loop)||!this.ownAwait(this.body)||this.sideEffect(this.body)||this.carries())continue;
+            this.computeTaint();if(this.tools.descendants(this.body,true).some(index=>this.exits(index)&&this.guarded(index,this.body)))continue;
+            const first=this.tools.rules.start(this.tools.rules.parser.node(loop)),body=this.tools.rules.start(this.tools.rules.parser.node(this.body));
+            const text=this.tools.rules.scanner.text.slice(first,body).trimEnd();this.tools.report('nexus/performance-no-independent-await-in-loop','independentAwaitInLoop',"This loop awaits once per item, so the items run one after another, yet nothing carries from one iteration to the next: the awaited work reads only the item, its index and values the loop never changes, no outer variable is reassigned, nothing leaves the loop on an awaited result, and nothing prints, reports progress or sleeps between iterations. Start them together with `await Promise.all(items.map(async (item) => ...))`, or through a bounded concurrency helper when the collection can be large or the far side rate-limits. If the order is deliberate, say so where it lives: `// cohere-disable-next-line nexus/performance-no-independent-await-in-loop -- <why it is sequential>`.",loop,first+text.length);
+        }
+    }
+}

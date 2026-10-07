@@ -12,7 +12,7 @@ import (
 // caller decides whether removing a return would require an explicit return.
 func (p *Program) promisedShape(out *fields, c *checker.Checker, node *ast.Node, question string) (string, error) {
 	if strings.Split(question, "\n")[0] != "promised-shape" {
-		return "", fmt.Errorf("unsupported checker question: %s", question)
+		return p.wave06Question(out, c, node, question)
 	}
 	if question != "promised-shape" || !ast.IsFunctionLikeDeclaration(node) || node.Type() == nil {
 		return "", fmt.Errorf("promised-shape requires an annotated function")

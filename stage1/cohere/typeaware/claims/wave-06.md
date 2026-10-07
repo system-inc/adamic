@@ -34,3 +34,7 @@ became claimed on other origin branches during the final fetch and were skipped.
 No continuation implementation preceded this claim commit and push.
 New implementation and validation files will stay in this unit's own rule
 directories; existing shared harness and registration generator stay untouched.
+
+The continuation rules are complete; native implementations and complete byte
+comparison evidence are in `wave_06_next/REPORT.md` and `wave_06_next/validation/`.
+No further rules are reserved by this claim.

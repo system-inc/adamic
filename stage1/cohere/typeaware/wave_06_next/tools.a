@@ -1,0 +1,31 @@
+import type {Rules} from '../rules.ts';
+import {Bindings} from '../bindings.ts';
+import {Returns} from '../returns.ts';
+import {Shadow} from '../shadow.ts';
+import {Diagnostic} from '../diagnostic.ts';
+import {Declarations,declarations} from './wave06_declarations.a';
+export class Tools {
+    readonly rules:Rules; readonly bindings:Bindings; readonly flow:Returns;
+    readonly symbols=new Map<number,Declarations>();
+    constructor(rules:Rules){this.rules=rules;this.bindings=new Bindings(rules);this.flow=new Returns(rules,new Shadow(rules));}
+    kind(index:number):string{return index<0?'':this.rules.parser.node(index).kind;}
+    children(index:number):readonly number[]{return index<0?[]:this.rules.parser.node(index).children;}
+    child(index:number,at=0):number{return this.children(index)[at]??-1;}
+    last(index:number):number{return this.children(index)[this.children(index).length-1]??-1;}
+    parent(index:number):number{return this.rules.parents[index]??-1;}
+    text(index:number):string{return index<0?'':this.rules.text(this.rules.parser.node(index));}
+    skip(index:number):number{while(['ParenthesizedExpression','NonNullExpression'].includes(this.kind(index))){index=this.child(index);}return index;}
+    outer(index:number):number{while(['ParenthesizedExpression','NonNullExpression','AsExpression','SatisfiesExpression','TypeAssertionExpression'].includes(this.kind(this.parent(index)))){index=this.parent(index);}return index;}
+    symbol(index:number):Declarations{if(!this.symbols.has(index)){this.symbols.set(index,declarations(this.rules,index));}return this.symbols.get(index)??new Declarations();}
+    same(a:number,b:number):boolean{const id=this.symbol(a).id;return id!==0&&id===this.symbol(b).id;}
+    boundary(index:number):boolean{return this.flow.scope(index)||this.kind(index)==='ClassStaticBlockDeclaration';}
+    root(index:number):number{while(index>=0&&!this.boundary(index)&&this.kind(index)!=='SourceFile'){index=this.parent(index);}return index;}
+    inside(inner:number,outer:number):boolean{if(inner<0||outer<0)return false;const a=this.rules.parser.node(inner),b=this.rules.parser.node(outer);return a.pos>=b.pos&&a.end<=b.end;}
+    descendants(index:number,boundary=false):number[]{const out:number[]=[];if(index<0)return out;out.push(index);for(const child of this.children(index)){if(!boundary||!this.boundary(child)){for(const at of this.descendants(child,boundary))out.push(at);}}return out;}
+    typePosition(index:number):boolean{for(let at=this.parent(index);at>=0&&!this.boundary(at);at=this.parent(at)){const kind=this.kind(at);if(kind==='TypeQuery'||kind.endsWith('Type')||kind==='TypeReference'||kind==='TypeLiteral')return true;}return false;}
+    nameOnly(index:number):boolean{return this.bindings.declaring(index)||this.typePosition(index)||['BreakStatement','ContinueStatement','LabeledStatement','QualifiedName'].includes(this.kind(this.parent(index)));}
+    assignment(kind:string):boolean{return ['EqualsToken','PlusEqualsToken','MinusEqualsToken','AsteriskEqualsToken','AsteriskAsteriskEqualsToken','SlashEqualsToken','PercentEqualsToken','AmpersandEqualsToken','BarEqualsToken','CaretEqualsToken','LessThanLessThanEqualsToken','GreaterThanGreaterThanEqualsToken','GreaterThanGreaterThanGreaterThanEqualsToken','AmpersandAmpersandEqualsToken','BarBarEqualsToken','QuestionQuestionEqualsToken'].includes(kind);}
+    member(index:number):string{const kind=this.kind(index);if(kind==='PropertyAccessExpression')return this.text(this.last(index));if(kind==='ElementAccessExpression'){const key=this.child(index,1);if(['StringLiteral','NoSubstitutionTemplateLiteral'].includes(this.kind(key)))return this.rules.parser.node(key).text;}return '';}
+    writes(index:number):boolean{let at=this.outer(index),parent=this.parent(at);if(this.kind(parent)==='BinaryExpression'&&this.child(parent)===at&&this.assignment(this.kind(this.child(parent,1))))return true;if(['PrefixUnaryExpression','PostfixUnaryExpression'].includes(this.kind(parent)))return ['PlusPlusToken','MinusMinusToken'].includes(this.rules.parser.node(parent).operator);while(['BindingElement','ObjectBindingPattern','ArrayBindingPattern','ObjectLiteralExpression','ArrayLiteralExpression','PropertyAssignment','SpreadAssignment','SpreadElement','ShorthandPropertyAssignment'].includes(this.kind(parent))){at=parent;parent=this.parent(at);}return this.kind(parent)==='BinaryExpression'&&this.child(parent)===at&&this.assignment(this.kind(this.child(parent,1)));}
+    report(rule:string,id:string,message:string,index:number,end=-1):void{const node=this.rules.parser.node(index);this.rules.findings.push(new Diagnostic(rule,id,message,this.rules.byte(this.rules.start(node)),this.rules.byte(end<0?node.end:end),''));}
+}

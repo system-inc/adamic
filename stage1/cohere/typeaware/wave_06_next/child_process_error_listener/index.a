@@ -1,0 +1,83 @@
+import {Tools} from '../tools.a';
+import type {Rules} from '../../rules.ts';
+import {declarations} from '../wave06_declarations.a';
+import {types} from '../../facts.ts';
+import {Frames,header} from '../../frames.ts';
+export class ChildProcessErrorListener {
+    readonly tools:Tools;
+    constructor(rules:Rules){this.tools=new Tools(rules);}
+    readonly handled=new Map<number,boolean>();
+    producer(index:number):boolean {
+        const facts=declarations(this.tools.rules,index,'call');if(facts.items.length!==1)return false;
+        const d=facts.items[0];if(d===undefined||d.kind!=='FunctionDeclaration')return false;
+        let name=d.name;let module=1;
+        if(name==='__promisify__'&&d.parents[0]==='ModuleBlock'&&d.parents[1]==='ModuleDeclaration'){name=d.names[1]??'';module=3;}
+        return ['spawn','fork'].includes(name)&&d.parents[module-1]==='ModuleBlock'&&d.parents[module]==='ModuleDeclaration'&&['node:child_process','child_process'].includes(d.names[module]??'');
+    }
+    namesError(call:number):boolean {
+        const event=this.tools.skip(this.tools.child(call,1));if(event<0)return true;
+        if(['StringLiteral','NoSubstitutionTemplateLiteral'].includes(this.tools.kind(event)))return this.tools.rules.parser.node(event).text==='error';
+        const graph=types(this.tools.rules.ask(event,'raw-shape'),'raw-shape');if(!graph.present)return true;
+        for(const part of graph.parts(graph.root())) {const type=graph.type(part);if((type.flags&1024)===0)return true;
+            const f=new Frames(this.tools.rules.ask(event,`literal-value\n${type.id}`));header(f,'literal-value');const kind=f.field(),value=f.field();f.end();if(kind==='string'&&value==='error')return true;}
+        return false;
+    }
+    follow(index:number):number[] {
+        let current=index;
+        for(;;) {
+            current=this.tools.outer(current);const parent=this.tools.parent(current),kind=this.tools.kind(parent);
+            if(parent<0)return [2,-1];
+            if(['PropertyAccessExpression','ElementAccessExpression'].includes(kind)) {
+                if(this.tools.child(parent)!==current)return [2,-1];const member=this.tools.member(parent);if(member==='')return [2,-1];
+                const registers=['on','once','addListener','prependListener','prependOnceListener'].includes(member);
+                if(!registers&&!['off','removeListener','removeAllListeners','setMaxListeners'].includes(member))return [0,-1];
+                const call=this.tools.parent(parent);if(this.tools.kind(call)!=='CallExpression'||this.tools.child(call)!==parent)return [2,-1];
+                if(registers&&this.namesError(call))return [1,-1];current=call;continue;
+            }
+            if(['ExpressionStatement','VoidExpression','TypeOfExpression'].includes(kind))return [0,-1];
+            if(kind==='PrefixUnaryExpression'&&this.tools.rules.parser.node(parent).operator==='ExclamationToken')return [0,-1];
+            if(['IfStatement','WhileStatement','ConditionalExpression'].includes(kind)&&this.tools.child(parent)===current)return [0,-1];
+            if(kind==='DoStatement'&&this.tools.last(parent)===current)return [0,-1];
+            if(kind==='BinaryExpression') {
+                const op=this.tools.kind(this.tools.child(parent,1));if(['EqualsEqualsEqualsToken','ExclamationEqualsEqualsToken','EqualsEqualsToken','ExclamationEqualsToken'].includes(op))return [0,-1];
+                if(['InstanceOfKeyword','AmpersandAmpersandToken'].includes(op)&&this.tools.child(parent)===current)return [0,-1];
+                if(op==='EqualsToken'&&this.tools.child(parent,2)===current&&this.tools.kind(this.tools.skip(this.tools.child(parent)))==='Identifier')return [3,this.tools.skip(this.tools.child(parent))];
+            }
+            if(kind==='VariableDeclaration'&&this.tools.last(parent)===current&&this.tools.kind(this.tools.child(parent))==='Identifier')return [3,this.tools.child(parent)];
+            return [2,-1];
+        }
+    }
+    variable(bound:number):boolean {
+        const facts=this.tools.symbol(bound);if(facts.id===0||facts.items.length===0)return true;
+        const declared:number[]=[];
+        for(const d of facts.items) {
+            if(d.file!==this.tools.rules.path||!['VariableDeclaration','Parameter'].includes(d.kind))return true;
+            const index=this.tools.bindings.spans.get(`${d.kind}:${d.start}:${d.end}`)??-1;if(index<0)return true;
+            declared.push(this.tools.child(index));
+            if(d.kind==='VariableDeclaration') {
+                const list=this.tools.parent(index),statement=this.tools.parent(list);
+                if(this.tools.kind(list)!=='VariableDeclarationList')return true;
+                if(this.tools.kind(statement)==='VariableStatement'&&(this.tools.children(statement).some(child=>['ExportKeyword','DefaultKeyword'].includes(this.tools.kind(child)))||(this.tools.kind(this.tools.parent(statement))==='SourceFile'&&!d.external)))return true;
+            }
+        }
+        for(let index=0;index<this.tools.rules.parser.nodes.length;index++) {
+            if(this.tools.kind(index)!=='Identifier'||this.tools.text(index)!==this.tools.text(bound)||declared.includes(index)||this.tools.typePosition(index))continue;
+            const parent=this.tools.parent(index),kind=this.tools.kind(parent);
+            if(kind==='ExportSpecifier') {
+                const f=new Frames(this.tools.rules.ask(index,'symbol-identities'));header(f,'symbol-identities');f.natural();f.natural();f.yes();const local=f.natural();f.natural();f.end();if(local===facts.id)return true;continue;
+            }
+            if(this.tools.symbol(index).id!==facts.id||this.tools.writes(index))continue;
+            if(kind==='ShorthandPropertyAssignment')return true;
+            const fate=this.follow(index)[0]??0;if(fate!==0)return true;
+        }
+        return false;
+    }
+    run():void {
+        for(let index=0;index<this.tools.rules.parser.nodes.length;index++) {
+            if(this.tools.kind(index)!=='CallExpression'||!this.producer(index))continue;
+            const fate=this.follow(index),kind=fate[0]??0;if(kind===1||kind===2)continue;
+            if(kind===3) {const bound=fate[1]??-1;if(bound<0)continue;const id=this.tools.symbol(bound).id;if(id===0)continue;if(!this.handled.has(id))this.handled.set(id,this.variable(bound));if(this.handled.get(id)??false)continue;}
+            this.tools.report('nexus/correctness-require-child-process-error-listener','childProcessWithoutErrorListener',"This child process never gets an `'error'` listener. When the program is missing (ENOENT), cannot run (EACCES), or the process table is full (EAGAIN), node emits `'error'` on the ChildProcess instead of throwing at the call, and an `'error'` event with no listener throws \"Unhandled 'error' event\" and kills this whole process. Attach `child.on('error', ...)` in the same tick as the spawn, and decide there what a failed spawn means: reject, log, or fall back.",index);
+        }
+    }
+}

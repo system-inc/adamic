@@ -1,0 +1,13 @@
+controls 28864 identical bytes findings 42
+controls-asan 28864 identical bytes findings 42
+child_process_error_listener mutant exits 0, Go byte comparison catches it
+response_status_check mutant exits 0, Go byte comparison catches it
+independent_await_in_loop mutant exits 0, Go byte comparison catches it
+fact mutant exits 0, Go finding bytes catch the wrong resolved declaration; released handle panic 70 verified
+compiler 5318 identical bytes findings 0
+compiler-asan 5318 identical bytes findings 0
+compiler-timed 5318 identical bytes findings 0
+repository 18485 identical bytes findings 0
+repository-asan 18485 identical bytes findings 0
+repository-timed 18485 identical bytes findings 0
+PASS

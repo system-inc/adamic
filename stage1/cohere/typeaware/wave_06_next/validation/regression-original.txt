@@ -1,0 +1,15 @@
+=== RUN   TestWave06AgreementAndMutants
+    wave_06_test.go:137: controls: 36936 identical finding bytes; findings 129
+    wave_06_test.go:143: controls: 166 files
+    wave_06_test.go:149: controls-asan: 36936 identical finding bytes; findings 129
+    wave_06_test.go:160: nominal mutant: exit 0, only Go bytes catch byte 11780
+    wave_06_test.go:160: duplicate mutant: exit 0, only Go bytes catch byte 5511
+    wave_06_test.go:160: return mutant: exit 0, only Go bytes catch byte 296
+    wave_06_test.go:210: released-handle query: panic 70, invalid or released checker handle
+    wave_06_test.go:218: released-registry mutant exits 0, caught by required panic 70
+    wave_06_test.go:228: promised-shape mutant: exit 0, only Go byte oracle catches byte 25214
+--- PASS: TestWave06AgreementAndMutants (90.06s)
+=== RUN   TestWave06PinnedFlags
+--- PASS: TestWave06PinnedFlags (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	90.064s
