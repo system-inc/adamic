@@ -170,3 +170,44 @@ benchmark C is `/tmp/devirtualize-before.c` and `/tmp/devirtualize-after.c`.
 Fixture C is `/tmp/devirtualize-fixture.c`. No test output was piped.
 The whole repository gate was not run: the native package, call-target package,
 and complete oracle passed; stage 1 corpus packages were not run by this unit.
+
+Landing validation, October 7, 2026: the standing rule now requires landing this
+worker's pushed branch. `git fetch origin main:refs/remotes/origin/main` followed
+by `git merge --no-edit origin/main` reported `Already up to date`; current main
+remained `e011f8f60899586d6373a5ccb07335ad82cfbf3c`, including a second fetch after
+validation. No rebase or force push was used.
+
+The landing gate covers every compiler package changed relative to main, including
+the inherited call-target prerequisite, not only the devirtualization emitter:
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/devirtualize-landing-counts.log 2>&1
+# ok oracle 11.348s; no further counts.md changes
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/ir ./internal/flow ./internal/fresh ./internal/lower ./internal/oracle -count=1 -timeout 30m > /tmp/devirtualize-landing-gate.log 2>&1
+# ok native 157.059s; ir 1.354s; flow 102.290s; fresh 56.138s;
+# lower 38.761s; oracle 147.351s; exit 0
+```
+
+The visitor was also regenerated from the branch and rechecked against source
+Node, generated JavaScript through the oracle runtime resolver, and sanitized C.
+Each printed `759040000`; `cmp` of both outputs against Node exited 0. Logs are
+`/tmp/devirtualize-landing-visitor-{node,js,native}.log`.
+
+All count-row differences relative to the landing base are below. The five
+`call_targets_*` rows are new prerequisite regression fixtures, measuring the
+analysis changes on virtual calls, bounded closures and sort callbacks. They have
+no earlier rows to compare. `devirtualize.a` is this unit's new regression fixture.
+The one changed preexisting row removes only NULL closure temporary count calls.
+No other existing row changed, and landing regeneration changed no row further.
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |
+|---|---:|---:|---:|---:|---:|---:|
+| call_targets_element.a, new | 45 | 43 | 36 | 64 | 7 | 2 |
+| call_targets_region.a, new | 27 | 22 | 13 | 33 | 9 | 5 |
+| call_targets_reuse.a, new | 15 | 12 | 9 | 21 | 6 | 3 |
+| call_targets_closure.a, new | 25 | 25 | 8 | 31 | 6 | 0 |
+| call_targets_sort.a, new | 11 | 11 | 9 | 15 | 7 | 0 |
+| devirtualize.a, new | 43 | 39 | 26 | 66 | 10 | 4 |
+| class_as_interface.a, before | 372 | 372 | 360 | 525 | 60 | 0 |
+| class_as_interface.a, after | 372 | 372 | 349 | 514 | 60 | 0 |
