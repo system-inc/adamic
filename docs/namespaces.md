@@ -292,3 +292,14 @@ matches independent Node; the merged successes also pass sanitizers and leak
 checks. These are selected real executable bodies, stronger than normalized
 shapes but weaker than complete namespace or parser.ts support. See the
 [per-step matrix and all twelve outcomes](../stage3/namespaces/REAL_FIXTURES.md).
+
+## Original Parser.JSDocParser slice
+
+The original-source fixture 08 now runs natively. A direct returned assignment
+of a number or boolean namespace singleton evaluates its right side once,
+stores it, then returns the stored scalar through ordinary statement IR.
+Reference/optional storage and assignment expressions in other positions stay
+NotYet. The unchanged nextTokenJSDoc and parseOptionalJsdoc bodies print
+`true 1`, `false 1`, `3 3`, matching independent Node. Dropping the returned
+store is caught by Node stdout with clean native execution and sanitizers.
+Removing the scalar-only boundary is caught by its NotYet regression.

@@ -223,6 +223,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return append(statements, ir.Return{}), nil
 	}
+	if statements, handled, err := l.namespaceReturnAssignment(expression); handled {
+		return statements, err
+	}
 	value, err := l.expression(expression)
 	if err != nil {
 		return nil, err

@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/namespaces_nested.a", "internal/oracle/testdata/namespaces_pair/main.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a", "internal/oracle/testdata/namespaces_parser_body.a", "internal/oracle/testdata/namespaces_debug_state.a", "internal/oracle/testdata/namespaces_debug_modules/main.a"} {
+	for _, path := range []string{"internal/oracle/testdata/namespaces_nested.a", "internal/oracle/testdata/namespaces_pair/main.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a", "internal/oracle/testdata/namespaces_parser_body.a", "internal/oracle/testdata/namespaces_debug_state.a", "internal/oracle/testdata/namespaces_debug_modules/main.a", "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -33,10 +33,13 @@ func init() {
 }
 
 func TestNamespaceSemanticMutants(t *testing.T) {
-	for _, family := range []string{"wrong scoped function", "wrong scoped constant", "wrong namespace enum", "wrong body order", "wrong exported state"} {
+	for _, family := range []string{"wrong scoped function", "wrong scoped constant", "wrong namespace enum", "wrong body order", "wrong exported state", "drop returned assignment"} {
 		t.Run(family, func(t *testing.T) {
 			t.Parallel()
 			fixture := "namespaces.a"
+			if family == "drop returned assignment" {
+				fixture = "../../../stage3/fixtures/namespaces/08_parser_jsdoc_nested.a"
+			}
 			if family == "wrong exported state" {
 				fixture = "namespaces_debug_state.a"
 			}
@@ -55,7 +58,19 @@ func TestNamespaceSemanticMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			changed := false
-			if family == "wrong exported state" {
+			if family == "drop returned assignment" {
+				for index := range program.Functions {
+					if program.Functions[index].Name != "nextTokenJSDoc" {
+						continue
+					}
+					for at, statement := range program.Functions[index].Body {
+						if assign, ok := statement.(ir.Assign); ok {
+							program.Functions[index].Body[at] = ir.Evaluate{Value: assign.Value}
+							changed = true
+						}
+					}
+				}
+			} else if family == "wrong exported state" {
 				for index, statement := range program.Main {
 					if assign, ok := statement.(ir.Assign); ok && program.Locals[assign.Local].Name == "currentLogLevel" {
 						if constant, ok := assign.Value.(ir.NumberConstant); ok && constant.Value == 3 {
