@@ -63,15 +63,10 @@ print('race mutant compiled, exits 0, empty stderr; byte oracle catches',first,f
 run('flow-build',[args.stage0,'build',source/'testdata/flow_probe.a','-o',root/'flow'])
 output,errors,_=run('flow-run',[root/'flow']);truth,_,_=run('flow-go',['go','run',source/'testdata/flow_oracle.go']);assert output==truth and errors==b''
 run('handle-build',[args.stage0,'build',source/'testdata/handle_probe.a','-o',root/'handle','--tsgo',args.archive])
-for question in ['released','wave08-resolved-callee','wave08-program-loads']:
- output,errors,_=run(question,[root/'handle',root/'tsconfig.json',root/'control-00.a',question],expected=70)
- assert output==b''
- assert (b'invalid or released checker handle' if question=='released' else b'unsupported checker question') in errors
- print(question,'refused with exit 70',flush=True)
-for option in ['--process','--blocking']:
- output,errors,_=run(option,[root/'native',root/'tsconfig.json',root/'controls.manifest',option],expected=70)
- assert output==b'' and b'blocked:' in errors
- print(option,'explicitly refused before finding output',flush=True)
+for question in ['node-symbol-details','wave08-resolved-callee','wave08-program-loads','wave08-symbol-ancestry']:
+ output,errors,_=run('released-'+question,[root/'handle',root/'tsconfig.json',root/'control-00.a',question,'--release'],expected=70)
+ assert output==b'' and b'invalid or released checker handle' in errors
+ print(question,'released handle refused with exit 70',flush=True)
 (root/'results.json').write_text(json.dumps(records,indent=2)+'\n')
 for corpus in ['compiler','repository']:
  med={v:statistics.median(r['seconds'] for r in records if r.get('round') is not None and r['corpus']==corpus and r['variant']==v) for v in ['oracle','native']}

@@ -1,5 +1,4 @@
-// Native rule decision engine. Graph production and checker registrations are
-// pending; this file never substitutes source-order guesses for graph edges.
+// Native write-state and blocking decisions over control-flow graph events.
 export class ProcessEvent {
     readonly kind: string;
     readonly node: number;

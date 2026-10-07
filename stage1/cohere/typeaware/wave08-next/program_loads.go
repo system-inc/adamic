@@ -23,20 +23,31 @@ func ProgramLoadsFields(program *compiler.Program, node *ast.Node) ([]string, er
 	files := program.SourceFiles()
 	out := []string{"1", "wave08-program-loads", strconv.Itoa(len(files))}
 	for _, file := range files {
-		out = append(out, file.FileName(), flag(file.IsDeclarationFile), file.Text())
+		out = append(out, file.FileName(), flag(file.IsDeclarationFile), flag(ast.IsExternalModule(file)), file.Text())
 		var specifiers []*ast.Node
+		roles := map[*ast.Node]string{}
+		typeOnly := map[*ast.Node]bool{}
 		for _, statement := range file.Statements.Nodes {
 			switch statement.Kind {
 			case ast.KindImportDeclaration:
-				specifiers = append(specifiers, statement.AsImportDeclaration().ModuleSpecifier)
+				specifier := statement.AsImportDeclaration().ModuleSpecifier
+				specifiers = append(specifiers, specifier)
+				roles[specifier] = "ImportDeclaration"
+				clause := statement.AsImportDeclaration().ImportClause
+				typeOnly[specifier] = clause != nil && clause.IsTypeOnly()
 			case ast.KindExportDeclaration:
 				if specifier := statement.AsExportDeclaration().ModuleSpecifier; specifier != nil {
 					specifiers = append(specifiers, specifier)
+					roles[specifier] = "ExportDeclaration"
+					typeOnly[specifier] = statement.AsExportDeclaration().IsTypeOnly
 				}
 			case ast.KindImportEqualsDeclaration:
 				reference := statement.AsImportEqualsDeclaration().ModuleReference
 				if reference != nil && ast.IsExternalModuleReference(reference) {
-					specifiers = append(specifiers, reference.AsExternalModuleReference().Expression)
+					specifier := reference.AsExternalModuleReference().Expression
+					specifiers = append(specifiers, specifier)
+					roles[specifier] = "ImportEqualsDeclaration"
+					typeOnly[specifier] = statement.AsImportEqualsDeclaration().IsTypeOnly
 				}
 			}
 		}
@@ -44,8 +55,12 @@ func ProgramLoadsFields(program *compiler.Program, node *ast.Node) ([]string, er
 		visit = func(child *ast.Node) bool {
 			if child.Kind == ast.KindCallExpression && (ast.IsImportCall(child) || ast.IsRequireCall(child, false)) {
 				args := child.AsCallExpression().Arguments
-				if args != nil && len(args.Nodes) > 0 && ast.IsStringLiteralLike(args.Nodes[0]) {
+				if args != nil && len(args.Nodes) > 0 {
 					specifiers = append(specifiers, args.Nodes[0])
+					roles[args.Nodes[0]] = "CallExpression"
+				} else {
+					specifiers = append(specifiers, child)
+					roles[child] = "CallExpression"
 				}
 			}
 			child.ForEachChild(visit)
@@ -62,7 +77,7 @@ func ProgramLoadsFields(program *compiler.Program, node *ast.Node) ([]string, er
 					}
 				}
 			}
-			out = append(out, strconv.Itoa(specifier.Pos()), strconv.Itoa(specifier.End()), target)
+			out = append(out, strconv.Itoa(specifier.Pos()), strconv.Itoa(specifier.End()), target, roles[specifier], flag(typeOnly[specifier]), flag(ast.IsStringLiteralLike(specifier)))
 		}
 	}
 	return out, nil

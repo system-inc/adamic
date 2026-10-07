@@ -1,0 +1,334 @@
+import { ParseNode } from '../../../typescript/parser/nodes.ts';
+import { panic } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { Rules } from '../rules.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Bindings } from '../bindings.ts';
+import { ProgramLoads, LoadedFile } from './program_loads.a';
+import { SymbolAncestry } from './symbol_ancestry.a';
+import { NativeGraph } from './native_graph.a';
+import { ProcessEvent } from './process_flow.a';
+export class ProcessFile {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly root: number;
+    readonly spans = new Map<string, number>();
+    constructor(rules: Rules, root: number, bindings: Bindings) {
+        this.rules = rules;
+        this.root = root;
+        this.bindings = bindings;
+        for(let at = 0; at < rules.parser.nodes.length; at++) {
+            const node = rules.parser.node(at);
+            if((rules.parents[at] ?? -1) >= 0 || at === root) {
+                this.spans.set(`${node.kind}:${rules.byte(node.pos)}:${rules.byte(node.end)}`, at);
+            }
+        }
+    }
+    find(kind: string, start: number, end: number): number {
+        return this.spans.get(`${kind}:${start}:${end}`) ?? panic('process declaration absent from native tree');
+    }
+    node(index: number): ParseNode {
+        return index < 0 ? new ParseNode('', 0, 0, []) : this.rules.parser.node(index);
+    }
+    child(index: number, at: number): number {
+        return this.node(index).children[at] ?? -1;
+    }
+    last(index: number): number {
+        const children = this.node(index).children;
+        return children[children.length - 1] ?? -1;
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    body(index: number): number {
+        const last = this.last(index);
+        return this.node(last).kind === 'Block' || this.node(index).kind === 'ArrowFunction' ? last : -1;
+    }
+    function(index: number): boolean {
+        return this.bindings.functionKind(this.node(index).kind);
+    }
+    rootKind(index: number): boolean {
+        return (
+            this.function(index) ||
+            this.node(index).kind === 'SourceFile' ||
+            this.node(index).kind === 'ClassStaticBlockDeclaration' ||
+            (this.node(index).kind === 'PropertyDeclaration' && this.bindings.shape.initializer(index) >= 0)
+        );
+    }
+    rootOf(index: number): number {
+        let previous = index;
+        let decorator = -1;
+        for(let current = this.parent(index); current >= 0; current = this.parent(current)) {
+            if(this.node(current).kind === 'Decorator') {
+                decorator = current;
+            }
+            if(this.node(current).kind === 'SourceFile') {
+                return current;
+            }
+            if(this.rootKind(current)) {
+                if(this.node(current).kind === 'PropertyDeclaration') {
+                    if(this.bindings.shape.initializer(current) === previous) {
+                        return current;
+                    }
+                }
+                else if(this.node(current).kind === 'ClassStaticBlockDeclaration') {
+                    if(this.last(current) === previous) {
+                        return current;
+                    }
+                }
+                else if(
+                    this.bindings.shape.name(current) !== previous &&
+                    !(decorator >= 0 && (this.parent(decorator) === current || this.parent(decorator) === previous))
+                ) {
+                    return current;
+                }
+            }
+            previous = current;
+        }
+        return -1;
+    }
+    member(index: number): number {
+        const node = this.node(index);
+        if(node.kind === 'Identifier') {
+            return index;
+        }
+        if(node.kind === 'PropertyAccessExpression') {
+            const name = this.last(index);
+            return this.node(name).kind === 'Identifier' ? name : -1;
+        }
+        return -1;
+    }
+    isExit(index: number): boolean {
+        if(this.node(index).kind !== 'CallExpression') {
+            return false;
+        }
+        const name = this.member(this.rules.skip(this.child(index, 0)));
+        return name >= 0 && this.node(name).text === 'exit' && new SymbolAncestry(this.rules, name).processMember();
+    }
+    isWrite(index: number): boolean {
+        if(this.node(index).kind !== 'CallExpression') {
+            return false;
+        }
+        const callee = this.rules.skip(this.child(index, 0));
+        const kind = this.node(callee).kind;
+        if(kind !== 'PropertyAccessExpression' && kind !== 'ElementAccessExpression') {
+            return false;
+        }
+        const member = this.last(callee);
+        const memberNode = this.node(member);
+        if(
+            kind === 'ElementAccessExpression' &&
+            !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(memberNode.kind)
+        ) {
+            return false;
+        }
+        const name = memberNode.text;
+        const receiver = this.rules.skip(this.child(callee, 0));
+        const target = this.node(receiver);
+        if(
+            ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(name) &&
+            target.kind === 'Identifier' &&
+            target.text === 'console'
+        ) {
+            return new SymbolAncestry(this.rules, receiver).globalVariable();
+        }
+        if(name !== 'write') {
+            return false;
+        }
+        const stream = this.member(receiver);
+        return (
+            stream >= 0 &&
+            ['stdout', 'stderr'].includes(this.node(stream).text) &&
+            new SymbolAncestry(this.rules, stream).processMember()
+        );
+    }
+    holdsExit(index: number): boolean {
+        for(const child of this.node(index).children) {
+            if(this.rootKind(child)) {
+                continue;
+            }
+            if(this.isExit(child) || this.holdsExit(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    catchBinding(index: number, root: number): boolean {
+        let previous = index;
+        for(let current = this.parent(index); current >= 0 && current !== root; current = this.parent(current)) {
+            if(
+                this.node(current).kind === 'CatchClause' &&
+                this.node(previous).kind === 'VariableDeclaration' &&
+                this.child(current, 0) === previous
+            ) {
+                return true;
+            }
+            previous = current;
+        }
+        return false;
+    }
+    ownCalls(root: number): number[] {
+        const calls: number[] = [];
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            if(this.node(at).kind === 'CallExpression' && this.parent(at) >= 0 && this.rootOf(at) === root) {
+                calls.push(at);
+            }
+        }
+        return calls;
+    }
+    ownBodyWrites(function_: number): boolean {
+        const body = this.body(function_);
+        if(body < 0) {
+            return false;
+        }
+        const stack: number[] = this.node(body).kind === 'Block' ? this.node(body).children.slice() : [body];
+        let writes = false;
+        for(let at = 0; at < stack.length; at++) {
+            const index = stack[at] ?? -1;
+            if(this.rootKind(index)) {
+                continue;
+            }
+            if(this.isExit(index)) {
+                return false;
+            }
+            if(this.isWrite(index)) {
+                writes = true;
+            }
+            for(const child of this.node(index).children) {
+                stack.push(child);
+            }
+        }
+        return writes;
+    }
+    arguments(index: number): number[] {
+        const node = this.node(index);
+        return node.list > 0 ? node.children.slice(node.children.length - node.list) : [];
+    }
+    localFunction(expression: number): number {
+        if(expression < 0) {
+            return -1;
+        }
+        expression = this.rules.skip(expression);
+        if(['FunctionExpression', 'ArrowFunction'].includes(this.node(expression).kind)) {
+            return expression;
+        }
+        if(this.node(expression).kind !== 'Identifier') {
+            return -1;
+        }
+        for(const declared of this.bindings.list(expression, 'binding-declarations', false)) {
+            if(this.node(declared).kind === 'FunctionDeclaration' && this.body(declared) >= 0) {
+                return declared;
+            }
+            if(this.node(declared).kind === 'VariableDeclaration') {
+                const list = this.parent(declared);
+                this.rules.scanner.pos = this.node(list).pos;
+                let kind = this.rules.scanner.scan();
+                if(kind === 'AwaitKeyword') {
+                    kind = this.rules.scanner.scan();
+                }
+                if(kind !== 'ConstKeyword') {
+                    continue;
+                }
+                const initializer = this.bindings.shape.initializer(declared);
+                if(initializer < 0) {
+                    continue;
+                }
+                const initialized = this.rules.skip(initializer);
+                if(['FunctionExpression', 'ArrowFunction'].includes(this.node(initialized).kind)) {
+                    return initialized;
+                }
+            }
+        }
+        return -1;
+    }
+    inRunOf(index: number, root: number): boolean {
+        for(let current = this.parent(index); current >= 0 && current !== root; current = this.parent(current)) {
+            if(this.function(current) && this.body(current) >= 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+export class ProcessPool {
+    readonly program: number;
+    readonly loads: ProgramLoads;
+    readonly files = new Map<string, LoadedFile>();
+    readonly contexts = new Map<string, ProcessFile>();
+    constructor(initial: Rules, root: number, loads: ProgramLoads, initialFile: ProcessFile) {
+        this.program = initial.program;
+        this.loads = loads;
+        for(const file of this.loads.files) {
+            this.files.set(file.path, file);
+        }
+        this.contexts.set(initial.path, initialFile);
+    }
+    get(path: string): ProcessFile {
+        if(!this.contexts.has(path)) {
+            const file = this.files.get(path) ?? panic('process source absent from checker program');
+            const parser = new Parser(file.source, path);
+            const scanner = new Scanner(file.source);
+            const offsets = byteOffsets(file.source);
+            const unary = new UnaryMinus(this.program, path, parser, scanner, offsets);
+            const rules = new Rules(this.program, path, parser, scanner, offsets, unary);
+            parser.awaitContext = file.external;
+            const root = parser.file();
+            for(let at = 0; at < parser.nodes.length; at++) {
+                rules.parents.push(-1);
+            }
+            rules.links(root, -1);
+            this.contexts.set(path, new ProcessFile(rules, root, new Bindings(rules)));
+        }
+        return this.contexts.get(path) ?? panic('process context absent');
+    }
+    remember(rules: Rules, root: number): ProcessFile {
+        const file = new ProcessFile(rules, root, new Bindings(rules));
+        this.contexts.set(rules.path, file);
+        return file;
+    }
+}
+export class TryChains {
+    readonly file: ProcessFile;
+    readonly root: number;
+    readonly ids = new Map<number, number>();
+    constructor(file: ProcessFile, root: number) {
+        this.file = file;
+        this.root = root;
+    }
+    id(index: number): number {
+        if(!this.ids.has(index)) {
+            this.ids.set(index, this.ids.size);
+        }
+        return this.ids.get(index) ?? -1;
+    }
+    chain(index: number): string {
+        const ids: number[] = [];
+        let previous = index;
+        for(
+            let current = this.file.parent(index);
+            current >= 0 && current !== this.root;
+            current = this.file.parent(current)
+        ) {
+            if(
+                this.file.node(current).kind === 'TryStatement' &&
+                this.file.child(current, 0) === previous &&
+                this.file.node(current).children.some((child) => this.file.node(child).kind === 'CatchClause')
+            ) {
+                ids.push(this.id(current));
+            }
+            previous = current;
+        }
+        ids.sort((left, right) => left - right);
+        return ids.length === 0 ? ',' : `,${ids.join(',')},`;
+    }
+    catches(): Map<number, ProcessEvent[]> {
+        const events = new Map<number, ProcessEvent[]>();
+        for(let at = 0; at < this.file.rules.parser.nodes.length; at++) {
+            if(this.file.node(at).kind === 'Block' && this.file.node(this.file.parent(at)).kind === 'CatchClause') {
+                events.set(at, [new ProcessEvent('catch', at, ',', this.id(this.file.parent(this.file.parent(at))))]);
+            }
+        }
+        return events;
+    }
+}

@@ -1,0 +1,76 @@
+import { ProcessPool, ProcessFile } from './process_context.a';
+export class BlockingIndex {
+    readonly pool: ProcessPool;
+    readonly imported = new Set<string>();
+    readonly canBlock = new Set<string>();
+    readonly edges = new Map<string, string[]>();
+    constructor(pool: ProcessPool) {
+        this.pool = pool;
+        const seeds: string[] = [];
+        for(const loaded of pool.loads.files) {
+            if(this.streams(loaded.path)) {
+                seeds.push(loaded.path);
+            }
+            if(loaded.declarationFile) {
+                continue;
+            }
+            const targets: string[] = [];
+            this.edges.set(loaded.path, targets);
+            for(const specifier of loaded.specifiers) {
+                if(specifier.typeOnly) {
+                    continue;
+                }
+                if(specifier.role === 'CallExpression') {
+                    if(!loaded.source.includes('import(') && !loaded.source.includes('require(')) {
+                        continue;
+                    }
+                    if(!specifier.literal) {
+                        seeds.push(loaded.path);
+                        continue;
+                    }
+                }
+                if(specifier.literal && specifier.target !== loaded.path && pool.files.has(specifier.target)) {
+                    targets.push(specifier.target);
+                    this.imported.add(specifier.target);
+                }
+            }
+        }
+        const reverse = new Map<string, string[]>();
+        for(const [from, targets] of this.edges) {
+            for(const target of targets) {
+                if(!reverse.has(target)) {
+                    const entries: string[] = [];
+                    reverse.set(target, entries);
+                }
+                const entries = reverse.get(target);
+                if(entries !== undefined) {
+                    entries.push(from);
+                }
+            }
+        }
+        for(const seed of seeds) {
+            this.canBlock.add(seed);
+        }
+        const absent: string[] = [];
+        for(let at = 0; at < seeds.length; at++) {
+            for(const importer of reverse.get(seeds[at] ?? '') ?? absent) {
+                if(!this.canBlock.has(importer)) {
+                    this.canBlock.add(importer);
+                    seeds.push(importer);
+                }
+            }
+        }
+    }
+    streams(path: string): boolean {
+        return (
+            path.endsWith('/source/system/StandardStreams.ts') || path.endsWith('/source/system/StandardStreams.d.ts')
+        );
+    }
+    literal(file: ProcessFile, index: number): boolean {
+        return ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(file.node(index).kind);
+    }
+    span(file: ProcessFile, index: number, spans: Set<string>): void {
+        const node = file.node(index);
+        spans.add(`${file.rules.byte(node.pos)}:${file.rules.byte(node.end)}`);
+    }
+}

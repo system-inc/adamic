@@ -1,0 +1,82 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class Ancestor {
+    readonly kind: string;
+    readonly name: string;
+    readonly flags: number;
+    readonly global: boolean;
+    constructor(kind: string, name: string, flags: number, global: boolean) {
+        this.kind = kind;
+        this.name = name;
+        this.flags = flags;
+        this.global = global;
+    }
+}
+export class AncestorDeclaration {
+    readonly path: string;
+    readonly declarationFile: boolean;
+    readonly external: boolean;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly ancestors: Ancestor[] = [];
+    constructor(frames: Frames) {
+        this.path = frames.field();
+        this.declarationFile = frames.yes();
+        this.external = frames.yes();
+        this.kind = frames.field();
+        this.start = frames.natural();
+        this.end = frames.natural();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.ancestors.push(new Ancestor(frames.field(), frames.field(), frames.natural(), frames.yes()));
+        }
+    }
+}
+export class SymbolAncestry {
+    readonly flags: number;
+    readonly declarations: AncestorDeclaration[] = [];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'wave08-symbol-ancestry'));
+        header(frames, 'wave08-symbol-ancestry');
+        this.flags = frames.natural();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.declarations.push(new AncestorDeclaration(frames));
+        }
+        frames.end();
+    }
+    processMember(): boolean {
+        return (
+            this.declarations.length > 0 &&
+            this.declarations.every(
+                (declaration) =>
+                    declaration.declarationFile &&
+                    ['MethodSignature', 'PropertySignature'].includes(declaration.kind) &&
+                    declaration.ancestors[0]?.kind === 'InterfaceDeclaration' &&
+                    declaration.ancestors[0]?.name === 'Process' &&
+                    declaration.ancestors[1]?.kind === 'ModuleBlock' &&
+                    declaration.ancestors[2]?.kind === 'ModuleDeclaration' &&
+                    declaration.ancestors[2]?.name === 'NodeJS',
+            )
+        );
+    }
+    globalVariable(): boolean {
+        return (
+            this.declarations.length > 0 &&
+            this.declarations.every((declaration) => {
+                if(
+                    !declaration.declarationFile ||
+                    declaration.kind !== 'VariableDeclaration' ||
+                    declaration.ancestors[0]?.kind !== 'VariableDeclarationList' ||
+                    declaration.ancestors[1]?.kind !== 'VariableStatement'
+                ) {
+                    return false;
+                }
+                return declaration.ancestors[2]?.kind === 'SourceFile'
+                    ? !declaration.external
+                    : declaration.ancestors[2]?.kind === 'ModuleBlock' && (declaration.ancestors[3]?.global ?? false);
+            })
+        );
+    }
+}

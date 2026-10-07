@@ -74,7 +74,7 @@ func TestPendingFactsAndRegistrationRefusals(t *testing.T) {
 }
 
 func TestNativeFactFlagMasks(t *testing.T) {
-	if checker.TypeFlagsNever != 262144 || checker.TypeFlagsNumber != 64 || ast.FunctionFlagsGenerator != 1 || ast.FunctionFlagsAsync != 2 {
+	if checker.TypeFlagsNever != 262144 || checker.TypeFlagsNumber != 64 || ast.FunctionFlagsGenerator != 1 || ast.FunctionFlagsAsync != 2 || ast.NodeFlagsAwaitUsing != 6 || ast.NodeFlagsAmbient != 8388608 || ast.SymbolFlagsFunction != 16 {
 		t.Fatal("update native masks for the pinned checker")
 	}
 }

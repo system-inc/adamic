@@ -4,34 +4,51 @@ export class LoadSpecifier {
     readonly start: number;
     readonly end: number;
     readonly target: string;
-    constructor(start: number, end: number, target: string) {
+    readonly role: string;
+    readonly typeOnly: boolean;
+    readonly literal: boolean;
+    constructor(start: number, end: number, target: string, role: string, typeOnly: boolean, literal: boolean) {
         this.start = start;
         this.end = end;
         this.target = target;
+        this.role = role;
+        this.typeOnly = typeOnly;
+        this.literal = literal;
     }
 }
 export class LoadedFile {
     readonly path: string;
     readonly declarationFile: boolean;
     readonly source: string;
+    readonly external: boolean;
     readonly specifiers: LoadSpecifier[] = [];
-    constructor(path: string, declarationFile: boolean, source: string) {
+    constructor(path: string, declarationFile: boolean, external: boolean, source: string) {
         this.path = path;
         this.declarationFile = declarationFile;
         this.source = source;
+        this.external = external;
     }
 }
 export class ProgramLoads {
     readonly files: LoadedFile[] = [];
-    constructor(rules: Rules, root: number) {
-        const frames = new Frames(rules.ask(root, 'wave08-program-loads'));
+    constructor(rules: Rules, root: number, raw = '') {
+        const frames = new Frames(raw === '' ? rules.ask(root, 'wave08-program-loads') : raw);
         header(frames, 'wave08-program-loads');
         const count = frames.natural();
         for(let at = 0; at < count; at++) {
-            const file = new LoadedFile(frames.field(), frames.yes(), frames.field());
+            const file = new LoadedFile(frames.field(), frames.yes(), frames.yes(), frames.field());
             const length = frames.natural();
             for(let specifier = 0; specifier < length; specifier++) {
-                file.specifiers.push(new LoadSpecifier(frames.natural(), frames.natural(), frames.field()));
+                file.specifiers.push(
+                    new LoadSpecifier(
+                        frames.natural(),
+                        frames.natural(),
+                        frames.field(),
+                        frames.field(),
+                        frames.yes(),
+                        frames.yes(),
+                    ),
+                );
             }
             this.files.push(file);
         }

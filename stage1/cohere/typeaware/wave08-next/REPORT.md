@@ -1,204 +1,85 @@
-# Wave 08 continuation
+Built: all three continuation rules are native and production-oracle tested in the owned profile.
+Commits: continuation claim 126c0358; race/core groundwork 7330620a; completion follows in this commit.
+Commands and outputs: 100 upstream programs, compiler 77, repository 287 and race controls 22 agree normally and under sanitizers.
+Mutants: process callee 6 programs, blocking order 19 programs, race byte 50; raw facts/state and bridge ownership mutants also caught.
+Not covered: shared registration/integration and the full repository Go gate; no additional rules claimed before this completion.
 
-Built: no-uncleared-race-timeout is complete; the two process rules have partial native decision cores and pending raw fact adapters, not complete ports.
-Commits: original three rules pushed in d0d6310f; continuation claim 126c0358 pushed before implementation; the continuation code and this report are committed together.
-Checks: independent production Go byte agreement on 22 controls (13 findings, 8,196 bytes), compiler 77 (0, 5,780 bytes) and repository 287 (0, 18,485 bytes), normal and ASan/UBSan/LSan; isolated pending tests, vet and formatting passed.
-Mutants: race rule compiled and exited zero with empty stderr, byte oracle caught difference 47; two raw-fact mutants and two native event-core mutants were caught by their separate tests; released handle refused with exit 70.
-Not covered: complete process-rule integration, production Go finding agreement or production-rule mutants for those two rules; no additional rules claimed.
+The native ports are `no_process_exit_after_output.a`, `no_uncleared_race_timeout.a`
+and `require_blocking_standard_streams.a`. Earlier partial refusal behavior from
+7330620a is replaced by complete graph construction and module/function ordering.
+`native_graph.a` ports the pinned Go control-flow builder, including branches,
+loops, short-circuiting, optional chains, labels, destructuring, exception forks,
+and duplicated finally paths. Rule decisions remain native. Raw checker facts
+provide resolved overload declarations/return flags, program membership/module
+resolutions/import syntax, and symbol declarations/ancestors. They return no lint
+verdicts. External-module metadata gives the owned parser top-level await context.
 
-## Selection and claims
+The user prohibited shared dispatcher, harness and generator edits. Therefore
+`overlay_bridge.py` writes a scratch Go build overlay that connects the three raw
+questions; it does not modify any shared source file. `suite.a` is the owned
+three-rule profile (`--all`) and can run process rules individually. The unified
+shared harness still needs central registration/profile integration. A build
+without this owned overlay explicitly rejects unsupported questions. All new
+Adamic implementation files are `.a`; upstream TypeScript input fixtures are
+materialized in scratch only.
 
-Fetched every origin head with:
+Production evidence is in `validation-process/`. `capture_process.py` wraps the
+unmodified upstream Go test calls, retaining their assertions and original
+configs, and captures all 100 fixture programs, including 14 one-level callee
+programs. `testdata/oracle_process.go` uses Go cohere's unmodified production
+rules with an independent loader and walk. The byte protocol serializes ranges,
+rule/message ids, descriptions, every fix, and every suggestion. These process
+rules have no fixes or suggestions. Findings over captured programs: {'nexus/correctness-no-process-exit-after-output': 129, 'nexus/correctness-require-blocking-standard-streams': 21}.
+Normal and ASan/UBSan output is identical across all 100 programs. Both required
+corpora have zero findings for this continuation: compiler 77 files / 5,780 bytes;
+repository 287 files / 18,485 bytes. The race controls produce 13 findings across
+22 files / 8,262 bytes with their fresh scratch paths, normally and sanitized.
+The initial three rules' nonzero corpus evidence remains in ../WAVE08_REPORT.md.
 
-```sh
-git fetch origin '+refs/heads/*:refs/remotes/origin/*' --no-recurse-submodules \
-  > /workspace/wave08-next-fetch.log 2>&1
-```
+Each compiling rule mutant exits 0 with empty stderr and is rejected solely by
+production output comparison: disabling one-level process callees differs in six
+programs (first byte 164); disabling blocking order differs in nineteen (first
+byte 1690); inverting lost-race-timeout recognition differs at byte 50. Raw
+resolved return flags, resolved module targets and ancestor names have compiling
+mutants caught by pinned checker witnesses. Native write-state and blocking-state
+mutants compile and exit 0, but disagree with the independent Go event cases.
+Every new question rejects a released handle with exit 70 before output.
 
-Checked 325 origin refs and their 33 claim documents against all 197 entries of
-the combined compiler/repository by-volume ranking. Detected 25 ranked base ports
-through actual native registrations on origin/main and origin/codex/tsgo-c-library
-(existing filenames often abbreviate rule names). Ninety-six ranked entries were
-mentioned in claims; 76 entries remained. Equal volumes use lexical rule-name
-ordering. The audit with each rule's matching registrations and claim paths is
-validation/selection.json. Names in existing claims were conservatively excluded,
-including released claims still named there.
+The full bridge gate passed in 101.76s with the owned overlay: C ABI ownership,
+100 queries, outputs surviving release, stale/zero handles, 162-position native
+oracle, ASan/UBSan/LSan, and all existing input/output length, stale handle,
+wrong-position, link guard, C-output leak and region ownership mutants. Commands:
+`GOFLAGS=-overlay=/workspace/wave08-resume/overlay.json go test ./bridge/tsgo
+./bridge/tsgo/checker -count=1 -v`, `go test
+./stage1/cohere/typeaware/wave08-next -count=1 -v`, `go vet
+./stage1/cohere/typeaware/wave08-next`, and gofmt verification. Test output is
+written to log files, never piped. The filtered Node oracle and setup evidence
+from the original three ports still apply; protected compiler source is untouched.
+Setup completed in 132s; nproc was 5 with a four-core CPU quota.
 
-The first three available entries were:
+Quiet end-to-end timing includes fresh program load, rules and serialization.
+Three alternating rounds after concurrent verification completed: compiler
+native 4.131370s versus Go 0.433010s
+(9.541x); repository native
+0.501672s versus Go 0.166121s
+(3.020x). These are observations;
+no claim is made that this native profile is faster. Concurrent validation timing
+logs are retained but the quiet timing results above are the reported comparison.
 
-1. nexus/correctness-no-process-exit-after-output, combined volume 0.
-2. nexus/correctness-no-uncleared-race-timeout, combined volume 0.
-3. nexus/correctness-require-blocking-standard-streams, combined volume 0.
-
-The claim update was committed and pushed in 126c0358 before implementation.
-Work continues on codex/typeaware-wave-08; no PR is opened. All continuation
-changes are inside this directory except the expressly requested claim update.
-No shared harness, generator, dispatcher or protected compiler file was edited.
-New Adamic sources and stored lint controls are .a. Ambient TypeScript declarations
-are stored as text and materialized as .d.ts only in scratch validation.
-
-## Completed rule
-
-no_uncleared_race_timeout.a implements the production default rule: library
-PromiseConstructor.race, library Promise construction, const promise references,
-executor-local global timers, discarded handles, void/expression bodies,
-unread variable/assignment handles, parentheses, shorthand references and nested
-function/class exclusions. It reuses registered node-symbol-details,
-binding-declarations, wave08-symbol and syntax-metadata questions. declarations.a
-is an owned decoder. No new question or shared registration is needed for this
-rule. The pinned standard library's declaration scripts are identified by their
-compiler default-library status; non-library declaration scripts are parsed to
-exclude external modules. Module-block timers must belong to declare global.
-
-suite.a is an isolated runner using one checker program per manifest and the
-existing canonical diagnostic representation. testdata/oracle.go invokes only the
-production cohere race rule unchanged through the independent loader and walk.
-It imports no bridge implementation. Findings, complete message text and spans,
-fixes and suggestions compare; this rule emits no fixes or suggestions, and their
-empty serialized payloads compare too. Sorting preserves duplicate reports.
-
-The 22 controls include discarded/retained handles, assignment and const forms,
-const versus let promise references, shorthand reads, nested callbacks, shadowed
-symbols, generic Promise constructors, globalThis/window and DOM overloads,
-Unicode/CRLF and repeated references producing duplicate diagnostics. They are
-lint input fixtures, not claims that Adamic compiles every fixture as a program.
-The two frozen populations are exactly the prior 77 TypeScript v6.0.3 compiler
-files (050880ce59e30b356b686bd3144efe24f875ebc8) and 287 repository roots.
-Portable manifests and complete compressed outputs are preserved in validation.
-Repository/compiler source hashes were already recorded in the original wave-08
-validation and the input population did not change.
-
-| Population | Findings | Bytes | Normal | Sanitizers |
-| --- | ---: | ---: | --- | --- |
-| controls 22 | 13 | 8,196 | identical | identical |
-| compiler 77 | 0 | 5,780 | identical | identical |
-| repository 287 | 0 | 18,485 | identical | identical |
-
-The zero-volume corpora alone cannot prove this rule fires. The positive controls
-and mutant supply that evidence. The mutant reverses the lost-handle predicate,
-compiles, exits 0 with empty stderr, and only the production Go byte oracle catches
-it at byte 47. Mutant binaries are removed. Querying a released checker handle
-using node-symbol-details panics with exit 70 and the established invalid-handle
-message. The bridge archive is unchanged from the original wave-08 gate, which
-also proved the retaining-registry mutant, C ABI ownership and sanitizers.
-
-## Partial process rules and exact blockers
-
-Neither process rule is marked complete or included in the default runner.
---process and --blocking deliberately panic before any finding output. This
-prevents a zero-volume corpus from disguising an incomplete implementation.
-
-Prepared components:
-
-* resolved_callee.go and resolved_callee.a: raw resolved-signature declaration,
-  source/module status, body bounds, function flags and return flags. Native
-  callee eligibility declines overload signatures without bodies, generators,
-  unawaited async functions, foreign global scripts and never-returning calls.
-* program_loads.go and program_loads.a: program membership, raw source text and
-  static/import-equals/dynamic-import/require literal resolutions. They leave
-  runtime edge selection and blocking judgments to Adamic.
-* process_flow.a: native graph-event walk, minimal sets of write try-chains,
-  catch rollback, loop fixpoint, exit termination, ordered blocking termination,
-  and started/handed-on function decisions.
-* no_process_exit_after_output.a: native callee eligibility, event decisions and
-  exact production message/report construction.
-* require_blocking_standard_streams.a: reached-function traversal, entry decline,
-  source ordering and the exact reason/count message variants.
-
-First blocker: registered signature/signature-shape and call-returns questions
-return types/parameters/return types, but not the actual resolved signature's
-Declaration(). Picking the first binding declaration changes overloaded callees'
-behavior. wave08-resolved-callee supplies the missing raw identity. The existing
-bridge dispatcher does not recognize it.
-
-Second blocker: registered module-links enumerates only top-level import/export
-specifiers. The blocking rule's program index also needs import-equals, dynamic
-import and require literal resolution, plus raw program source for its transitive
-ordering analysis. wave08-program-loads prepares those facts. The existing
-bridge dispatcher does not recognize it either.
-
-Direct tests prove both raw extraction functions on checker nodes, including
-static and dynamic imports. Calls through the current native bridge explicitly
-fail with `unsupported checker question`, exit 70, before any finding output.
-Registering these adapters would require edits outside this directory, which
-Ahra's correction forbids: "Keep your changes inside your own rule directories"
-and "If anything else blocks you, say exactly what it is and stop, rather than
-editing shared files." No inferred permission or approval request was added.
-
-Native graph construction and production integration are also unfinished. The
-prepared decision cores consume preclassified graph events; they do not build
-cohere-equivalent CFGs, recognize all process symbols, build the blocking index
-or perform the complete writer/blocker traversal. Those remaining parts are
-explicit partial-work limits, not capabilities supplied by the pending questions.
-A graph-event core test is not production-rule byte agreement. Registering the
-questions alone therefore does not make these two rules complete. They remain
-claimed for integration, and no further rules are taken.
-
-Separate semantic mutants actually run:
-
-| Mutation | Observation |
-| --- | --- |
-| Resolved callee return flags replaced by 0 | compiled; direct checker fixture assertion fails |
-| Resolved module target emptied | compiled; static/dynamic resolution assertion fails |
-| Native write state requires two held chains | compiled, exit 0, empty stderr; Go event expectations differ |
-| Native blocking event ignored | compiled, exit 0, empty stderr; Go event expectations differ |
-
-The event-core control also runs under sanitizers. testdata/flow_oracle.go contains
-independent Go expectations for those event cases, not the complete production
-lint rule. No production-rule mutant claim is made for either partial port.
-Pinned flag masks (Number 64, Never 262144, Generator 1, Async 2) are checked in Go.
-
-## Measured time
-
-After builds and other test jobs finished, three alternating Go/native rounds
-compared complete output each time. Process wall time includes loading, parsing,
-judgments, rendering and teardown. Builds and sanitizers are excluded.
-
-| Corpus | Go median | Native median | Native / Go |
-| --- | ---: | ---: | ---: |
-| compiler | 0.468330s | 2.407551s | 5.14071 |
-| repository | 0.169830s | 0.336913s | 1.98382 |
-
-Raw rounds and bridge phase counters are in validation/results.json. These are
-observations for the completed race rule, not timing for all three claimed rules.
-Setup and toolchain are unchanged: setup passed in 132s; nproc 5, four-core CPU
-quota; Go 1.27.1, clang 20.1.8 and Node 24.19.0. Original setup timing lines are
-in ../validation-wave08/setup.log. No submodule pins were changed.
-
-## Commands and outputs
-
-All test output went directly to log files, without pipes. Source the installed
-environment before these commands. The existing archives were built and fully
-ownership-tested for the original three rules; no linked Go code changed here.
-They can be rebuilt independently with go build -buildmode=c-archive.
+Reproduce using the installed toolchain environment and the stage 0 compiler:
 
 ```sh
-source /workspace/adamic-tools/env.sh
-python3 stage1/cohere/typeaware/wave08-next/validate.py \
-  --artifacts /workspace/wave08-next-final \
-  --stage0 /workspace/wave08-validation/adamic \
-  --archive /workspace/wave08-validation/checker.a \
-  --asan-archive /workspace/wave08-validation/checker-asan.a \
-  --compiler-root /workspace/typescript-wave08-corpus \
-  > /workspace/wave08-next-final-validation.log 2>&1
-# PASS: complete race-rule bytes, sanitizers, byte mutant, timings and refusals.
-python3 stage1/cohere/typeaware/wave08-next/validate_pending.py \
-  --artifacts /workspace/wave08-next-extra \
-  --stage0 /workspace/wave08-validation/adamic \
-  > /workspace/wave08-next-extra.log 2>&1
-# Same procedure as the executed scratch script; PASS, two fact and two core mutants.
-go test ./stage1/cohere/typeaware/wave08-next -count=1 -v \
-  > /workspace/wave08-next-pending-tests.log 2>&1
-# PASS 0.077s, including pinned native masks.
-go vet ./... > /workspace/wave08-next-vet.log 2>&1
-gofmt -l stage1/cohere/typeaware/wave08-next \
-  > /workspace/wave08-next-gofmt.log
-# Both empty; production cohere formatter via the .a wrapper is idempotent too.
+python3 stage1/cohere/typeaware/wave08-next/overlay_bridge.py /tmp/wave08-bridge
+CC=clang go build -overlay /tmp/wave08-bridge/overlay.json -buildmode=c-archive -o /tmp/wave08-bridge/checker.a ./bridge/tsgo/archive
+CC=clang CGO_CFLAGS='-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all' go build -overlay /tmp/wave08-bridge/overlay.json -buildmode=c-archive -o /tmp/wave08-bridge/checker-asan.a ./bridge/tsgo/archive
+python3 stage1/cohere/typeaware/wave08-next/capture_process.py /tmp/wave08-fixtures
+python3 stage1/cohere/typeaware/wave08-next/validate_process.py --artifacts /tmp/wave08-process --fixtures /tmp/wave08-fixtures --stage0 /path/adamic --archive /tmp/wave08-bridge/checker.a --asan-archive /tmp/wave08-bridge/checker-asan.a --compiler-root /path/TypeScript
+python3 stage1/cohere/typeaware/wave08-next/validate.py --artifacts /tmp/wave08-race --stage0 /path/adamic --archive /tmp/wave08-bridge/checker.a --asan-archive /tmp/wave08-bridge/checker-asan.a --compiler-root /path/TypeScript
+python3 stage1/cohere/typeaware/wave08-next/validate_pending.py --artifacts /tmp/wave08-raw --stage0 /path/adamic
+python3 stage1/cohere/typeaware/wave08-next/time_process.py --artifacts /tmp/wave08-timing --native /tmp/wave08-process/native --go /tmp/wave08-process/oracle --compiler-root /path/TypeScript
 ```
 
-The portable validate_pending.py argument parser differs from the executed
-scratch script only in paths/options. Both procedures are saved in source and
-results are preserved. The full repository gate and original 26-rule suites
-were not rerun; the original wave-08 report records the complete bridge gate and
-filtered Node oracle. This continuation adds one complete rule and two partial
-ports. No claim of three completed new rules is made.
+`validation-process/streams.json.gz` holds full validation output; inputs and
+source hashes are saved beside it. Older `validation/` records the 7330620a
+partial stage and is retained for provenance, not asserted as the current status.
+The next claim search happens only after this completed work is committed/pushed.

@@ -6,7 +6,7 @@ if(source.kind === 'Error') {
     panic(source.message);
 }
 const program = tsgoProgram(args[0] ?? '', [path]);
-if(args[2] === 'released') {
+if(args[2] === 'released' || args.includes('--release')) {
     tsgoRelease(program);
 }
 console.log(

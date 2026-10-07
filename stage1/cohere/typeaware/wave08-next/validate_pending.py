@@ -18,6 +18,12 @@ stage=args.stage0
 run('flow-build',[stage,'build',str(source/'testdata/flow_probe.a'),'-o',str(root/'flow'),'--sanitize'])
 truth,_=run('flow-go',['go','run',str(source/'testdata/flow_oracle.go')]);output,errors=run('flow',[str(root/'flow')]);assert output==truth and errors==b''
 print('native event engine agrees with Go expectations under sanitizers',flush=True)
+path=source/'symbol_ancestry.go';text=path.read_text();before='name = named.Text()';assert text.count(before)==1
+replacement=root/'ancestor-name.go';replacement.write_text(text.replace(before,'name = "mutant"'));overlay=root/'ancestor-name.json';overlay.write_text(json.dumps({'Replace':{str(path):str(replacement)}}))
+output,errors=run('ancestor-name',['go','test','-overlay',str(overlay),'./stage1/cohere/typeaware/wave08-next','-run','^TestRawSymbolAncestry$','-count=1','-v'],1)
+assert b'ancestor differs' in output and b'build failed' not in output+errors
+print('ancestor-name compiled; pinned checker ancestry witnesses catch it',flush=True)
+
 for name,before,after in [('write-state','state.chains.length > 0','state.chains.length > 1'),('blocking-state',"blocking && event.kind === 'block'","false && event.kind === 'block'")]:
  directory=root/name;directory.mkdir(exist_ok=True)
  text=(source/'process_flow.a').read_text();assert text.count(before)==1;(directory/'process_flow.a').write_text(text.replace(before,after))

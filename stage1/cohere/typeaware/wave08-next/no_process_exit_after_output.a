@@ -2,6 +2,9 @@ import type { Rules } from '../rules.ts';
 import { Diagnostic } from '../diagnostic.ts';
 import { ProcessGraph, walkProcess } from './process_flow.a';
 import { ResolvedCallee } from './resolved_callee.a';
+import { ProcessPool, ProcessFile, TryChains } from './process_context.a';
+import { NativeGraph } from './native_graph.a';
+import { ProcessEvent } from './process_flow.a';
 import { panic } from 'adamic';
 const message =
     'This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.';
@@ -10,7 +13,7 @@ export class NoProcessExitAfterOutput {
     constructor(rules: Rules) {
         this.rules = rules;
     }
-    // One-level callee eligibility is native. The pending question supplies the
+    // One-level callee eligibility is native. The raw question supplies the
     // actual overload declaration, not an arbitrarily selected symbol declaration.
     followedCallee(call: number): ResolvedCallee | undefined {
         const fact = new ResolvedCallee(this.rules, call);
@@ -61,7 +64,68 @@ export class NoProcessExitAfterOutput {
             );
         }
     }
-    run(): void {
-        panic('wave08 process rule blocked: resolved-callee bridge registration and native graph integration pending');
+    run(pool: ProcessPool, root: number): void {
+        const file = pool.remember(this.rules, root);
+        const roots = new Map<number, number[]>();
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            if(file.parent(at) < 0 || !file.isExit(at)) {
+                continue;
+            }
+            const own = file.rootOf(at);
+            if(own < 0) {
+                continue;
+            }
+            if(!roots.has(own)) {
+                const values: number[] = [];
+                roots.set(own, values);
+            }
+            const found = roots.get(own);
+            if(found !== undefined) {
+                found.push(at);
+            }
+        }
+        const writers = new Map<string, boolean>();
+        for(const [own, exits] of roots) {
+            const calls = file.ownCalls(own);
+            const writes = new Set<number>();
+            for(const call of calls) {
+                if(file.isWrite(call)) {
+                    writes.add(call);
+                    continue;
+                }
+                const callee = this.followedCallee(call);
+                if(callee === undefined) {
+                    continue;
+                }
+                const key = `${callee.path}:${callee.start}:${callee.end}`;
+                if(!writers.has(key)) {
+                    const target = pool.get(callee.path);
+                    writers.set(key, target.ownBodyWrites(target.find(callee.kind, callee.start, callee.end)));
+                }
+                if(writers.get(key) ?? false) {
+                    writes.add(call);
+                }
+            }
+            if(writes.size === 0) {
+                continue;
+            }
+            const chains = new TryChains(file, own);
+            const events = new Map<number, ProcessEvent[]>();
+            for(const call of calls) {
+                if(file.catchBinding(call, own)) {
+                    continue;
+                }
+                if(exits.includes(call)) {
+                    events.set(call, [new ProcessEvent('exit', call)]);
+                }
+                else if(writes.has(call) && !file.holdsExit(call)) {
+                    events.set(call, [new ProcessEvent('write', call, chains.chain(call))]);
+                }
+            }
+            const builder = new NativeGraph(this.rules, events, chains.catches(), file.bindings);
+            const graph = builder.build(own);
+            graph.unrecordable = exits.some((exit) => !builder.recorded.has(exit));
+            this.reportGraph(graph, exits);
+        }
     }
 }
