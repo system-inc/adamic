@@ -74,6 +74,10 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
 		return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant("undefined")}}, nil
 	}
+	if text, known, err := l.dateStringConversion(node, value); known {
+		return text, err
+
+	}
 	switch value.Type() {
 	case ir.Number:
 		return ir.NumberToString{Value: value}, nil
