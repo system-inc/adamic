@@ -1,0 +1,37 @@
+{
+  "roots": 78,
+  "codes": [
+    2345,
+    18048,
+    2532,
+    2322,
+    2538
+  ],
+  "counts": {
+    "emitter.ts": {
+      "TS2345": 3,
+      "TS18048": 2,
+      "TS2532": 0,
+      "TS2322": 1,
+      "TS2538": 0
+    },
+    "sourcemap.ts": {
+      "TS2345": 1,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 1,
+      "TS2538": 0
+    }
+  },
+  "total": 8,
+  "diagnostics": [
+    "src/compiler/emitter.ts:1138:5: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/emitter.ts:4111:27: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/emitter.ts:4977:46: error TS2345: Argument of type '(string | undefined)[]' is not assignable to parameter of type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/emitter.ts:4979:40: error TS18048: 'lineText' is possibly 'undefined'.",
+    "src/compiler/emitter.ts:4980:17: error TS18048: 'line' is possibly 'undefined'.",
+    "src/compiler/emitter.ts:4982:23: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/sourcemap.ts:216:58: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.\n  Type 'undefined' is not assignable to type 'string | null'.",
+    "src/compiler/sourcemap.ts:83:25: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  ]
+}
