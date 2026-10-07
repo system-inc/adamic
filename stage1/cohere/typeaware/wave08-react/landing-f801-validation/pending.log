@@ -1,0 +1,7 @@
+return-flags compiled; direct checker test caught resolved callee differs
+module-target compiled; direct checker test caught module resolutions absent
+native event engine agrees with Go expectations under sanitizers
+ancestor-name compiled; pinned checker ancestry witnesses catch it
+write-state compiled, exit 0, empty stderr; Go event expectations differ
+blocking-state compiled, exit 0, empty stderr; Go event expectations differ
+PASS

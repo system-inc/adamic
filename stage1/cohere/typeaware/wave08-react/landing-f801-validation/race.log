@@ -1,0 +1,14 @@
+controls native 8174 findings 13
+controls native-asan 8174 findings 13
+compiler native 5780 findings 0
+compiler native-asan 5780 findings 0
+repository native 18485 findings 0
+repository native-asan 18485 findings 0
+race mutant compiled, exits 0, empty stderr; byte oracle catches 46
+node-symbol-details released handle refused with exit 70
+wave08-resolved-callee released handle refused with exit 70
+wave08-program-loads released handle refused with exit 70
+wave08-symbol-ancestry released handle refused with exit 70
+compiler median seconds {'oracle': 0.47402089499883004, 'native': 2.459695470000952} native/Go 5.189002206341606
+repository median seconds {'oracle': 0.17585510199933196, 'native': 0.33559530999991694} native/Go 1.908362658714285
+PASS

@@ -1,0 +1,6 @@
+native partial kernels equal unmodified Go: 36 lattice joins, six mutation decisions, ten derived effects; sanitized
+join kernel mutant compiles and exits 0; unmodified Go kernel bytes catch it
+dep-count kernel mutant compiles and exits 0; unmodified Go kernel bytes catch it
+--immutability production entry refuses before findings, exit 70
+--derivation production entry refuses before findings, exit 70
+PASS kernels only; neither HIR-dependent rule is a completed production port

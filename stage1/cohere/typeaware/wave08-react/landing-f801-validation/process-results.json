@@ -1,0 +1,1057 @@
+[
+  {
+    "corpus": "upstream",
+    "case": "00e6aeed814a90059c8da15ca9c0f599fb5f2087acd132f3a19d99903255678c",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_script_without_a_#!_that_another_file_imports",
+    "bytes": 1697,
+    "sha256": "a70b96cd9b176c83e447e51c3111d09032cb81e2a2afe01885399c0d9f4060c8",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "01de57af8a7542fa06592458fd6025a876cc03f9444626549489dc121dce75fe",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/an_arrow_whose_expression_body_writes",
+    "bytes": 974,
+    "sha256": "8736c212c20cbdf42fbd9ef03ec8f6e8d538b43652084311a98716ccd0cb81ff",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "0491a449716393f14d5e1148908543fa301a27734f7422beaf735c58532dc84b",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/members_of_the_bare_process_module",
+    "bytes": 702,
+    "sha256": "005ddc45b6b110da14fecf0da6b16dccb9799c54da864a3670228cdf560c4e40",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "055b403b958e702355951e56978b86075c8a23d4881c68c4be877db22252770a",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/a_write_inside_the_try,_the_exit_in_its_catch",
+    "bytes": 175,
+    "sha256": "591af2e7213b7403b2fe87ce8cd70d3f19e9cfa8d71272fbacc68ed6b6e91558",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "059be8bbfca43109ff9457cf903fe577916733664f9575325c95a425c96247c9",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_callback_the_module_hands_on_at_load_(FigmaMcpLauncher.ts)",
+    "bytes": 2182,
+    "sha256": "a902439a41b11e5a62bd5127c2fcef34c41140c8bc27f5c13ec0caf5f162dce0",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "06a6b358b821ea8382049c8b97672d8a840292a685e537d71ed133b098402377",
+    "name": "TestCorrectnessNoProcessExitAfterOutputRealSites/godwordRequireInteractiveTerminal_fixed",
+    "bytes": 175,
+    "sha256": "a00a4788d8029f861e66da57973c1d12fda0b0293a31531c845416fbb8eb4ce5",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "06ceccceddbe81c10ebdfc63ce32e123f8453080d30556c409890b94a62ce17a",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_imported_module_that_blocks_while_it_loads",
+    "bytes": 1701,
+    "sha256": "ef5971ab886ff71e9e84d2c27847a1101faf10d45fd94c4c4821a45b01cc32db",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "0bc327d00ca67ea8be94dfe5c81e49ba43d71ddf3f5e8abb8d5d41ecc066b0f1",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_function_called_by_a_function_called_at_load",
+    "bytes": 2178,
+    "sha256": "f46f8c4c06108db7e2b2c7517eda28cd588b1e52033396f8f2731eefc5374c52",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "0fe9c030642d73de72e93aa99983fab0465015511b44604619a30a9fa0192074",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_as_it_stood",
+    "bytes": 2182,
+    "sha256": "af32e88a203ca57f37471c4390afa3fdbde457529d50de3bee0d927c1adfd0d0",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "10816ee7f7ec8258c1215298c46d6dd6692ed5b1178ca4d2f9d489c184b9d917",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/an_exit_at_the_top_of_a_loop_whose_last_turn_printed",
+    "bytes": 702,
+    "sha256": "8173a5cad091aa121d2ade02bd3b0edb150cfe8729445b12204387fb9c45b4c2",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "156bd9885ab3c04e05946cccf41d251a5d9a9d7a849234c97bdf8e3125f45303",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/another_file's_blockStandardStreams_that_is_not_Nexus's",
+    "bytes": 2326,
+    "sha256": "05c54dd9ea7dd1cfb98a8d8d4666e7d6083fb8c26d9a3462cc1c50214ca8338a",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "15a32d3843b1c49ac6c9f2efdca9c8c652299e07119965c5319a09c220f11c9d",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try,_an_exit_in_its_catch",
+    "bytes": 702,
+    "sha256": "f9034893515e7a94f73f2c3b3f36821232af06f85360d1a11bb1ae796d452ef5",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "169e9454742e90d54d819bdce3293205d9a2a2733888abe71d888baec77c195e",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_with_a_guard_that_exits_above_the_hand-off",
+    "bytes": 2709,
+    "sha256": "2e2e928caef5838da3d388d72038e223d68de939d6f845e674d9623b53c83bf2",
+    "findings": "findings 4"
+  },
+  {
+    "corpus": "upstream",
+    "case": "1a673557abde33108047b4e520baf3753f4cdef9583ae7b1959dab9693f6639d",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_imported_from_a_module",
+    "bytes": 974,
+    "sha256": "717bca17ae5efafb6687f069331efabf7acec1e9672a3380926d0d06e56579bf",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "1f3b1a32d29582a3ac35e0e742b0b58646838470d328f398834be7c2d82d8d03",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_as_it_stood",
+    "bytes": 2182,
+    "sha256": "4bb239ce585445d77b5caf7b08fad5e6a882e0e2bfa01c99e8d9ec4c9574b764",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "2111d54b382cf24a8f559f91c1c1e8ee7bfc13f4a590b143b52925bfb973a1a2",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/an_async_helper_not_awaited",
+    "bytes": 447,
+    "sha256": "f6ec241ab00f964f834375757c3b967412d3715463ded2c3c5ac8ff73a4391af",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "25d1a97f36d74a3d7a2bf042e279d7e210c2945e4d792f0c00aec157d087d6b8",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/members_imported_by_name",
+    "bytes": 702,
+    "sha256": "1d03cdb49fb4d717eebbfd9feff6c61cdd87e5b8c03c2ed22f44c17a3efda78d",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "27877079d044802cd89957bd9b56d7a2e801e39590eda0c3a08090fb03f9dbdc",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_comes_before_any_write",
+    "bytes": 1028,
+    "sha256": "3e2cc6fa74e751e4b77391d4fe9d5641beeaacfac3f81f0d34de355ec7e33f0e",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "28e19fc7d7e98dcd6681422174434d247a84e2b6036f5f48109231d75d93c06d",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_fixed",
+    "bytes": 2609,
+    "sha256": "f3f985dbcc10b6ec71e8b541aa98e723b6833a10bbaffab710f8df266b5750c8",
+    "findings": "findings 4"
+  },
+  {
+    "corpus": "upstream",
+    "case": "299dcb39be55f40195d482938eed51d608f3c72d381b2ac03c9011b24a55a959",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_write_through_process.stdout_at_the_top_level",
+    "bytes": 2178,
+    "sha256": "c10d7c06bd7d928dece5d92a4e026a41d750228959f6e967405d8df95caeeba7",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "2b563df71e1b4c06d08b858c5fb7c9dbd2369e92d1f482480358b570b824d5ac",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/a_local_console",
+    "bytes": 175,
+    "sha256": "2b78213fa085eb1816ca1e957324d52438ef7b286b1aeccc439fec1fa5c67fd0",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "2eee9912b09997808be46a1da519db7f59512b6d76b94bf1d16c181e49c0807b",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/an_error_printed_in_a_catch,_then_the_exit",
+    "bytes": 702,
+    "sha256": "12913be5086367126ce2991b8a7a7b3ce9a7225b5b3455b343846103a5e5fc5f",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "31a83294f7e4de25aa74aa98077debb5f70b601cddb24b9af97232c07ee8b422",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/an_immediately_invoked_function",
+    "bytes": 2178,
+    "sha256": "2437b36640f107a2332b8510bd89e1bbb760801208ee22d1fa7ebd57e1be026a",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "3745fee06970d3592a7724ae9880a3485ffe4f8ecd61a6f23b9978501436eb0b",
+    "name": "TestCorrectnessNoProcessExitAfterOutputRealSites/runSync_as_it_stands",
+    "bytes": 704,
+    "sha256": "a43c33d9ae06f182aca687d46ac159e7550067ebfc42d41f26dbc30dedfea2af",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "384871e77123c220996cfdc7fb2dd54ffe2ad6cd70770e7038d472ebfa3ab991",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/a_case_that_prints_and_falls_through_to_the_exit",
+    "bytes": 702,
+    "sha256": "1dd237a10c6e99a689c3a411e03d37f974cd1763d94aaf2d06c2ce07efd8a72f",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "3b180f5dfbbf70e56183346c102c32a9436eaf0644919aa9ea497fd2e75a8a3f",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/the_write_in_a_callee_(runLink,_FinanceConnectionsCommandLineInterface.ts:79)",
+    "bytes": 175,
+    "sha256": "deeec78d559cd6daa19b5bfed8f38bb91819d5aaeb41df2aa8b3cf23b1648e6b",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "3c2bf485c80068f1adcbd622ff5e96336881781025737c8139d7d1e3d6c0b4ba",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_fixed",
+    "bytes": 2609,
+    "sha256": "078a509502942b7d8abb5fde57fcccbd486cde7aaea32eba2cc574d882b79ff1",
+    "findings": "findings 4"
+  },
+  {
+    "corpus": "upstream",
+    "case": "3cef31056e8b2d52588bf5b22c3722f3c3bf72603a8f811115a58fec28ad8c81",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/the_exit_in_the_write's_own_callback,_the_correct_form",
+    "bytes": 175,
+    "sha256": "da36f1f8a2a52c97e208e663598fa876875defbdc6d57ce46c8290157ba1bbf9",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "3e829265864da70fd2a5e2230d47959b5ffd088bb866ec249ddc9bbf28e09487",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_earlier_try_survives_the_catch_of_a_later_one",
+    "bytes": 702,
+    "sha256": "21562fa3747a4f6260fe542b4f7617153d44726529a7d01a7b7c636f5b424a24",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "3f8878200099ae8e2cf888819395554943e0e35d96d1ad28867236e40ea5f10e",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/every_console_method_that_writes",
+    "bytes": 3341,
+    "sha256": "a6e7291d332789be0ec26ef8ab30bdf0bfddcaa4086d11c7dcf8af4bf711d5a5",
+    "findings": "findings 6"
+  },
+  {
+    "corpus": "upstream",
+    "case": "407fcc3dc3a9fa79a4a232e86d3664cd0f22fd429c0d6d62857e5aa3c0197325",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_declared_helper,_with_no_body_to_read",
+    "bytes": 447,
+    "sha256": "5ee519741c98fa0646be8f65b668a3486404b394a28715e2cc11f4423015f658",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "419c2a78f69001be9c7dfe0c7388f9d3963d224a59cc898895768fb27b58166e",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/an_imported_module_whose_function_blocks,_never_called",
+    "bytes": 2329,
+    "sha256": "c5767dbd09c5adbf6a156eb94d75ffa718864f3d87d495200a9c1053eb2d7ed7",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "47ce136ce578dde13291d8de1821cafb58c17abbde59f3181864840a43fadbe1",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_a_try,_the_exit_in_its_finally",
+    "bytes": 702,
+    "sha256": "fe3e2d70f5cfc22152d1acf9f3325c59a14c289d488632387fbd5100a5368f2f",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "480a20fcc8e77eb344024be73517bd0aaacb84275c2691632940f0805c1f0e6d",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_the_arguments_of_the_call_that_starts_main",
+    "bytes": 1555,
+    "sha256": "1a6844317cddf1693af888d9688088b7ed837f2eed7ab06056efc1d2abcdd707",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "4b13af33822e784d8230ae1bf84d82359cfc9d7d554ecfb2f1bc1ed6c85bd6c9",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_callback,_in_a_file_that_blocks_after_handing_it_on",
+    "bytes": 1555,
+    "sha256": "b9b5617c27f8e4332cd9954135a09f316d90abbd6448273faab6fdab366a0277",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "4ba426124ebef075231a7fff0524f51c0c2504ebcf95756c293ea2b2153a5e56",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/an_exit_in_the_catch_binding,_which_runs_before_the_catch_block",
+    "bytes": 175,
+    "sha256": "ebb1d71782d3fb5e1a900275aa75bdbce3061050b826dd2a97cf33f72706c17a",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "4bca58f9ca467d4730c3fc6da7fb2b42f39cc6344e2bb0ede7ee7b3fba7ad73b",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/the_write_and_the_exit_on_different_branches",
+    "bytes": 175,
+    "sha256": "8762809047c55c105bc631a2eb878d8ca876eb22626f233b070ca3a72f4f8f99",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "4d8a175caf29d4b7e1d0ea852eb8f2bcb144c82626d0fd6a8f3636c102796a56",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/the_write_in_a_callback_the_function_passes_on",
+    "bytes": 175,
+    "sha256": "d6587db0829dcc6a836f851b3319d13049f46e9970017ddd80b250ce1b280340",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "4dbd19fdaf48483986236892a4a7045c6ef7c1a7bd4c3f30018cf16d320a7217",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_as_it_stood",
+    "bytes": 2168,
+    "sha256": "cccd08a6888a868604ac1ac648dd325927963acb714f546c5e6b95b6115c1b94",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "4ff01f859a2528bb1e745ccfc17d5ac5179acd68c8a472117fc5696ef843bb8b",
+    "name": "TestCorrectnessNoProcessExitAfterOutputRealSites/runStatement_as_it_stands",
+    "bytes": 702,
+    "sha256": "8ae331b1da2d2d7b6e5d2dd2f8202f7f696ba20dd8c2d3708a6a29f3d8c73ba6",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "53c43360110e1e2117280229819b5ce606821be00bd2cd2079fd1eed2b36707b",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_directly",
+    "bytes": 702,
+    "sha256": "84c43182140255b4f8ef7f3848268b858b20730399e445b0382ed87804d2dc07",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "5a7f136e2950f11eef2361d61fa5d2c089b469ecf7218953a860b86d82362d62",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_callback,_in_a_file_that_never_blocks",
+    "bytes": 2178,
+    "sha256": "06bd7aaa8a430eb77547482c58c2cd8f25f8391e0b2e88ab5f0029f75d76907a",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "65ef030ed1ca1044764294ad9ef6b147971afeffc54422c2ea323d3bc002f999",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_through_the_namespace_import,_then_the_exit_(GodwordEntropy.ts:146)",
+    "bytes": 702,
+    "sha256": "e7e6783c0f3ce7fbacd0cfee047acd8d9aaa3e7628700aaf25d0dfaee2f62e86",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "6639849b5b17a40be01279d5766b2b82bcf6f91ed50c12d4e08e254e67183c3c",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_computed_import()_before_the_exit,_which_may_load_anything",
+    "bytes": 1553,
+    "sha256": "25180c862b3653c5a68d085dc3969e77d9a0a74c642b8b32ef2ae5a62864f3b6",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "66c7d64667eef1827154df915827f9c7279ef9ae56a1098132f15b9a915bd6fc",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_call_through_a_value_the_checker_cannot_name,_in_a_file_that_can_block",
+    "bytes": 1555,
+    "sha256": "d8ee92eaa2c4ca0ee13f8bce1df3e6ef5bad918e129bd42e2e1729694d217466",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "695ef72814635e8229b86a89a59b78165b36e8ba4173faf3e38bc80f8cf5cf4f",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/another_stream's_stdout",
+    "bytes": 175,
+    "sha256": "c005a1b10761fa81d1c19919432537529c2e4b3d1401ef13d840a74558e04b4f",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "6971f24e7a994ce21b44aad71a5878a446736a7741adc8a234f272cc04b6708e",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/module_top_level",
+    "bytes": 1329,
+    "sha256": "99e9a6741f9ae6f449e5e645d7f319cb93c958857d60e78c4fd66fcf0adbf8f0",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "6c50e526fae51c5bf6825cf4c499ecd2979ea6fddeebcb3e71b65434e2ad79e7",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_generator,_whose_body_runs_only_when_iterated",
+    "bytes": 447,
+    "sha256": "e3ed5110999eb31aea18b2e3bf579859d97c106268d5cf16211500b69c636b2c",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "6ef28375f73989789dde55b74a5a0275de96092d29513c3c66df96182295d543",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_as_it_stood",
+    "bytes": 3262,
+    "sha256": "b6024f11228ad87e344d62ed404ffb2948178cc8fc2f5482675e46db52c7fd4d",
+    "findings": "findings 5"
+  },
+  {
+    "corpus": "upstream",
+    "case": "6efa925b507e59a63afedcc7f6f3e665e81f9622586ce06fbd44a99f47cb5814",
+    "name": "TestCorrectnessNoProcessExitAfterOutputRealSites/runSync_fixed",
+    "bytes": 175,
+    "sha256": "5309a34b82d34696afc3d831779f0a5e1ce4a98c76f7069537f9f16dce204021",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "6f887aa7c40f2a6a7458a5044e2541234a0c7fb34714c68148d9be0052806353",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_helper_in_another_file_that_blocks,_called_first",
+    "bytes": 1703,
+    "sha256": "29ca10afaaebf0854e9db38ed4ed9fca5e52835b2ea7047dac72f0707aba420d",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "6fd7e78750089a5c109778d85e672be12e98dbfa67d7cba8444fabad97d01cb9",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try_survives_the_catch_that_forgets_the_one_inside_it",
+    "bytes": 702,
+    "sha256": "640252836db03ec0c64e77edb05df6c48a64732359e9c511578ebfb533be801c",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "71c6f6b792d29e688c979a1dddfbd753fb1c2eb7b80597b0ba1650cff8b24a5e",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/an_overloaded_helper,_whose_resolved_declaration_has_no_body",
+    "bytes": 447,
+    "sha256": "a6556b1eacc1fe412cb231f7f895769f409b21d75179731ad37ad7e1611035dd",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "7390f71f1dd89e8cbb6ba122a4fd153d6c719f03bc486a47f5442388c88ae8b5",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_local_blockStandardStreams_in_a_file_that_also_imports_Nexus's",
+    "bytes": 2182,
+    "sha256": "b436310d984651dd349f42fd9d31cef39da10e6e0e858944c6f0b102b19989bb",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "74cda3c36977d81774b7f18459ff75847aaf8a8a9e6cf45d0aec092de02fdb22",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/an_exit_inside_the_write's_own_arguments",
+    "bytes": 175,
+    "sha256": "ee2420b25cfdb3b7a9abe944f84d6c1eef4bae3158c91f531cf43be7cff02fa0",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "780e1cc2152ec61e5b5f55661c7d45684c7878385fc3f709ab135be262e43b47",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_inner_catch_reaches_the_exit_after_the_outer_try",
+    "bytes": 702,
+    "sha256": "662f2a6cbcc9b1ba1f9fe7d38cea7e619c2fcdfb170bb4bf6af83918036073a8",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "7914ebd4f2e750f9062f80bded16c55fd0f6268ebc15a129567a0a3d8612ee05",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/the_exit_comes_before_any_write",
+    "bytes": 175,
+    "sha256": "2cbf5b41ddbd2c3e7f534a8c1a5ac52a9fec8b2125cd22b7986acd0c0acbeb3d",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "7af41e30a3cc906761045dc961158237d5d38bd547a80372db3bfd4da6138f28",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_file_other_files_import_(AhraOsLifecycleCommandLineInterface.ts)",
+    "bytes": 1699,
+    "sha256": "325a4bf24fc86c5655a292f5a1f2ee36cb83cc5bab93a4136ffba268f371ec00",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "7c22463198f8ff8f8e1c8eb47781e5c513180371b44090b68b45eafd2eaa522e",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_fixed",
+    "bytes": 1555,
+    "sha256": "e24e0063caaefcbd5c341b8e9a1a340e5fa0e4826be2bf4e9b7b84576a34fabc",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "7dddf13c59bbfcdeea6b2b3eba040a1e287993fc6fff65be19b868d02c676f33",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/a_console_method_that_does_not_write",
+    "bytes": 175,
+    "sha256": "e6abdded9d61664baca786dd77c4ea050602fab1c3cdee04578676eb47e47ee2",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "82b664e00b70382ad6e27f2b54a469b527e83f8952f6840ac947a6c79582977f",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/the_last-resort_catch_on_a_promise",
+    "bytes": 1329,
+    "sha256": "5a243c57d0daaabb25a62f6fc6abfcfad96e834d887b55594da496aea7587dc2",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "85d9ccb72e2b2fc8f31a69e5c64bcde66749bb11bb71d06d4363a610302a1fe1",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_code_set_and_nothing_exiting",
+    "bytes": 1028,
+    "sha256": "c2ca364988efbf77cb53cbd31ed34d6b627e643ca615023e40dfc629ff8e49ba",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "86b64968310bee04c1753211cbf4d16932edf0dcd2708271bf8225afd5c3dcca",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/console_reached_by_a_quoted_member",
+    "bytes": 702,
+    "sha256": "ad55ffc131b724610f632cb5922d057ac5d6a13c191d5b786e79278f81e3d1e0",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "895cad6881dfb1a21878b6acc11021c71e993f7a5f0475958fd98b46db39707b",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_write_and_exit_in_an_imported_function,_not_followed",
+    "bytes": 1701,
+    "sha256": "c48a5fe4e26adaab51fd97fc0cafe2c6d0e6560dec42218d04e0588be8646fcf",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "8b2c7b4fa00c3dedca18e531f53535b01cb8187a6ae46bb488c010309dfb8bad",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_declared_function_whose_body_this_program_cannot_see,_in_a_file_that_can_block",
+    "bytes": 1555,
+    "sha256": "0dcd616c34699d961a5aca765818116f9d7579fa12fc50020504fd63bd44b18a",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "8e4ca784910fcbf2cbb63c01c529b2eb92b1868ad4e715af212802b616de31f0",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/an_exit_after_an_await,_in_a_file_that_never_blocks",
+    "bytes": 2180,
+    "sha256": "edfe06564e2962b6d526781b05969b0dcb418a7609338653eb4424400c39eff8",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "95cedb2eb762fb6a45d86d1bae0a2c9b61d0f2210257b4fdb1181abd466acaef",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_library_with_a_#!_and_no_top-level_work_(ClaudeUsageApi.ts)",
+    "bytes": 1028,
+    "sha256": "302656fb9bd215b1a340d8d9514060519bd3c5616743ba89f9385f57d9c996ce",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "96f24607740719a53c5c9cc26e269a79dd3335ac5f680e0e0a8d337fbf9d960e",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_as_it_stands",
+    "bytes": 2082,
+    "sha256": "e915d3d413e02f9d6e8dd8ce9ea8007657c0eb391bceca3a65f740786116aa11",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "975b391d79e3c1f010a8e9ebc80967104b917be9bb562710c693de19f7f60bb9",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/a_Console_that_is_not_the_global_one",
+    "bytes": 175,
+    "sha256": "07cc0b92fd24cbfb5b05dc6bac10fd674ee131d38ee4ab39ba4394f0325c5409",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "9b6472444026a0a6b9f538f83ba4d3bb3c610b4a0b1c9ff901d63092169762b2",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/another_object's_exit",
+    "bytes": 175,
+    "sha256": "2c071a0beeddf5b0f67ab6642601386bafcb7f430f6862355b6468828650e329",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "a5a7cff5a01b94e1768984182f78a0ed1a87fcf8d6b2dace09a61f75dfd7dc4e",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_a_class_static_block,_which_the_graph_does_not_lay_out",
+    "bytes": 1555,
+    "sha256": "c568a433e7bff322526f333e8bf1281c098b96357ce159890711d1cad7ecaedd",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "a72c65e8b1a9b97643662027545d1c7890978f5096413ee90a48076709f947c4",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/a_local_function_named_exit",
+    "bytes": 175,
+    "sha256": "cb710d5e46e874f1b756c8a4cc62bc0328c0451597433e0988c93aa81e52e2ed",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "a7993565433ae14e351c9612655ae7f83bceafa2b89678f1b394285bcd8a6331",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_named_const_arrow_handed_on",
+    "bytes": 2178,
+    "sha256": "39868fb0fd4b8a5dc71d97d868064f4026fde32c22e440546210f4c44f6ca31a",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "aaca7c6d36cd083f198dbe5f2c86b821b0b49bd25b291a5086efac2356c3f803",
+    "name": "TestCorrectnessNoProcessExitAfterOutputRealSites/runQuickBooksCardBalances_fixed",
+    "bytes": 175,
+    "sha256": "fe91e14ed35b69164abace10f728f1d38191f7db1247bd4fe9e075fb6212b5de",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "af31faffeca74699936402c4192685bd2e04a40c4d61e4d7dd48212f5dcabac1",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_that_prints_only_through_another_helper,_two_levels_down",
+    "bytes": 447,
+    "sha256": "8f697c0b9af1ab49d7e65bdac293ced73d8cefe012e91ae7269ec678c500dfce",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "af7bf0086c1e3b7014fadda41b5679e36cdc0a44d82cfc731953d8c96b3f4996",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_as_it_stood",
+    "bytes": 3236,
+    "sha256": "0fa5186a93bd96c4b4e3a2840982ac993ad73f1f4fa67943ffd64ad7c56daef6",
+    "findings": "findings 5"
+  },
+  {
+    "corpus": "upstream",
+    "case": "b20331343419acff6da932af48fdae8307d6f97a6f3620747e5a7a39cc9cea5e",
+    "name": "TestCorrectnessNoProcessExitAfterOutputRealSites/godwordRequireInteractiveTerminal_as_it_stands",
+    "bytes": 702,
+    "sha256": "d9c7caa12a134fd8e99a68920f64f0ea678c5cd3ed8a1fe93c9e37f35e963974",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "b4cdfd0f0d47997da616b6bdb1a8b22b49830409123f5a50f160f41d5a858d4d",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/the_exit_code_set_and_the_function_left",
+    "bytes": 175,
+    "sha256": "bef35d6b8b34310d8561993a6b6fb52376040e1e3e12d0974b1f257daf97a119",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "bfd5c39324f945e46aa3286f3b58c2225e789f6b71c2c1d2a7813be871feac38",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/a_write_laid_out_after_an_earlier_exit",
+    "bytes": 175,
+    "sha256": "2df481e28b773013dcd101791b052969fa21d2960d91e1fdfc7e57c619db7c7c",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "c0434ca8d3d6620e1376179e5ea2bd82914ceb804cc4b9732685016f8a88e842",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_reached_through_import(),_as_reportFreshness",
+    "bytes": 974,
+    "sha256": "25e68e1d0f682b6bc70a55a34906643cb78a6efaeec326c90316fb73d4af4238",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "c1317c4a98b50897cee76153684d7d3a39a3b4243f81b1baafb9761f5c0ec5d6",
+    "name": "TestCorrectnessNoProcessExitAfterOutputFires/stderr_written_directly",
+    "bytes": 702,
+    "sha256": "a80cae27017689d272563ca172743d58199b2f688347f4aa1c22a05a9cc2e396",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "c46213d68114d058e99fccce0b611cca6dce328cbe502c1051b91c8809f01428",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_declared_never",
+    "bytes": 447,
+    "sha256": "7576d1e98867955e1d4b0266fa0bd98d2e5d1c16d1f6195c9afd0fbff99350d2",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "cf0068351849cffbf63cde4495585da481785b14f79b848d75332c095cf623d0",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_in_an_exported_function_nothing_runs_at_load",
+    "bytes": 1554,
+    "sha256": "aee74d754862d9d7bba9e20c0a165dc6186ca0f954887b90e6dcfcc510ae86f6",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "d34e38728763788733247b2ef1cdce7d1a546efda522f5ff07f5c877c07337c5",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/blockStandardStreams_imported_under_another_name",
+    "bytes": 1555,
+    "sha256": "89cd3e82e27b9fd7d446abc864e9995ea72755746e1d1e81b3d8567c2b6d5b8f",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "d71041a9378f0c1bc35d3eb7a42bd7cf2049dd23ff5865eff510b1da9760cf42",
+    "name": "TestCorrectnessNoProcessExitAfterOutputRealSites/runQuickBooksCardBalances_as_it_stands",
+    "bytes": 1231,
+    "sha256": "51453e746ad668af9476f6b560440183dbc4bc57d67723b2eb641cbfa33e4161",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "d78aa9b5cbe46db7cd628c5973b7541ef90134863386e98f914ffc4de7c5b1dd",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block",
+    "bytes": 2709,
+    "sha256": "c9aed81d627a57262766c4ef78d08f04fb7b805c9f16fcc442c99154756a2149",
+    "findings": "findings 4"
+  },
+  {
+    "corpus": "upstream",
+    "case": "d90a921e4734507724b5c99d29f42ea475f794956c0bc452630a2a204726a7d6",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_in_a_global_script,_which_no_import_reaches",
+    "bytes": 447,
+    "sha256": "5645d0ca6e4043ccab1b360dc1ad7cea6c68b13ec3656a5d25aed682ee58d8b6",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "dfd5927bbaa96307f581cfbdc843fc18dd203321cba75e9a991e964e0a13ef52",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import",
+    "bytes": 2308,
+    "sha256": "f0a6fc686341948a99e6884a55f9a2d324b7b795ccddb3de7f4645f45c99ee9b",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "e417eb24b8196ec4664fea2c912f382f5c8866ec36ac3ff94b49f50ed713c481",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_fixed",
+    "bytes": 1555,
+    "sha256": "579bf9adefe847f7b52ae0088fec130b7659c2f3f3edaa3e2ec7e2c83f7d0a60",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "ea1cc78dfa8a578488237d146bc5937f8404bd5ceedc81b5d44122d9dfc9b11d",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/an_async_helper_awaited",
+    "bytes": 974,
+    "sha256": "dc0fc501a71eacf84504bf72bf719864b3fadc0dacfee97a6203d24bcefc6dab",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "edbe111068017bfa705884056653867588bf17361db3012ad6c4227c1aba508a",
+    "name": "TestCorrectnessNoProcessExitAfterOutputStaysSilent/the_exit_in_a_callback,_the_write_outside_it",
+    "bytes": 175,
+    "sha256": "5f14944fe71e6fea202672b4b36a283612015c8f887271426a08cd8868657827",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "ef07ef6263f6a9ae29b1fd4c72e80ae1681eaafd54f0bf45f91cbe58e5b068b2",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_in_this_file,_as_showHelp",
+    "bytes": 974,
+    "sha256": "eda5ddfa41d4df79f31855320fc32b943c468efc2501249061e5bafbdc0a3b83",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "f0caa49cd70817b54c90a1c289b2be73964a608fca25b8768b86b770bc7a0fdf",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/Nexus's_function_handed_to_a_call_that_runs_it",
+    "bytes": 1555,
+    "sha256": "660930ebc85ad82cf2cb7c0c2ad950957a6fd25b01dc003aed863b82f2bb7321",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "f47c731c2729103eb1a2459364e76b3de1ce2ca58484a67ba66ab44c0e356a3f",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_after_an_await,_in_a_file_that_blocks_later",
+    "bytes": 1555,
+    "sha256": "5b6feb7f6b6c0697796f94441e8be60c22f984bb5f870eb61d6753844b5dbecc",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "f5beb8710e2e49b2c25d56820cb7aa04c0fd611cf5f2966252eae9531feb5209",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_that_exits",
+    "bytes": 974,
+    "sha256": "2d19bec89f170ffbeb65bdfb50c6e4e104c9b1dd4231a6193d666a79ae787769",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "f93f140b0a97670b80149606305c3cdbee01b4a87e75ce35f9f955646ab3f363",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_fixed",
+    "bytes": 1555,
+    "sha256": "3572e4d67cace6b2718ed7624a92e4f040b280a6993e539c5eaf9ff9ceefbd86",
+    "findings": "findings 2"
+  },
+  {
+    "corpus": "upstream",
+    "case": "f96520e8043b4ce4ddad5cfa353b216b055a3d6b236e8205dcd6ac5a51ca7f01",
+    "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_static_method",
+    "bytes": 974,
+    "sha256": "887d8c5e4a24802c4d61a5ef5780858d765ed2b6fc56593d7c1469c0005d8056",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "upstream",
+    "case": "fc1db58b231807ec9f89b01b7d082c6f4a8fd75dceb90eeb3d7642d692e2d190",
+    "name": "TestCorrectnessNoProcessExitAfterOutputRealSites/runStatement_fixed",
+    "bytes": 175,
+    "sha256": "55ab3e0d6ce260f7e62d9e061028d575deef69ab99d9b8a6808f29d2a8651dea",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "upstream",
+    "case": "fd2987fee4b8fcd4af95c981df31aad9eefe0331b742b038a4da8239f0a1beae",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_helper_from_a_file_that_imports_Nexus_but_never_blocks",
+    "bytes": 2325,
+    "sha256": "727bf4fb389b81fc26d7afb5f686925a0090a35ddb14b0558aed93441dcdb2ab",
+    "findings": "findings 3"
+  },
+  {
+    "corpus": "upstream",
+    "case": "fe72ebccb7050167f7b76bfa8c4ed41476dc7a2de284109b53dae79e63814965",
+    "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/the_exit_in_the_write's_own_callback,_the_correct_form",
+    "bytes": 1028,
+    "sha256": "b562a3b7dac1b2071db4dd70d4dbdc6e28456b6338aa3b569ec90263c66586c5",
+    "findings": "findings 1"
+  },
+  {
+    "corpus": "compiler",
+    "variant": "native",
+    "files": 77,
+    "bytes": 5780,
+    "sha256": "92b58928fccdea5b84d7e48155f3d14e140bb63e629d641286b9b48f566e83f2",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "compiler",
+    "variant": "native-asan",
+    "files": 77,
+    "bytes": 5780,
+    "sha256": "92b58928fccdea5b84d7e48155f3d14e140bb63e629d641286b9b48f566e83f2",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "compiler",
+    "variant": "oracle",
+    "round": 0,
+    "seconds": 0.6180334410000796,
+    "stderr": "cohere: load_ns=470154701 rule_ns=46790087 run_ns=103065978\n"
+  },
+  {
+    "corpus": "compiler",
+    "variant": "native",
+    "round": 0,
+    "seconds": 6.870175541998833,
+    "stderr": "tsgo: load_ns=416912937 query_ns=112071526 queries=63 first_query_ns=69011346 run_ns=6125986650\n"
+  },
+  {
+    "corpus": "compiler",
+    "variant": "native",
+    "round": 1,
+    "seconds": 5.219553392000307,
+    "stderr": "tsgo: load_ns=468358116 query_ns=122525206 queries=63 first_query_ns=96708502 run_ns=4517879565\n"
+  },
+  {
+    "corpus": "compiler",
+    "variant": "oracle",
+    "round": 1,
+    "seconds": 0.6406754059989908,
+    "stderr": "cohere: load_ns=421181269 rule_ns=89439987 run_ns=179432643\n"
+  },
+  {
+    "corpus": "compiler",
+    "variant": "oracle",
+    "round": 2,
+    "seconds": 0.5273037799997837,
+    "stderr": "cohere: load_ns=403894494 rule_ns=38621161 run_ns=85402705\n"
+  },
+  {
+    "corpus": "compiler",
+    "variant": "native",
+    "round": 2,
+    "seconds": 4.656000839000626,
+    "stderr": "tsgo: load_ns=404596379 query_ns=103019685 queries=63 first_query_ns=80749172 run_ns=3978777197\n"
+  },
+  {
+    "corpus": "repository",
+    "variant": "native",
+    "files": 287,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "repository",
+    "variant": "native-asan",
+    "files": 287,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": "findings 0"
+  },
+  {
+    "corpus": "repository",
+    "variant": "oracle",
+    "round": 0,
+    "seconds": 0.6031259009996575,
+    "stderr": "cohere: load_ns=300497847 rule_ns=8784255 run_ns=217024851\n"
+  },
+  {
+    "corpus": "repository",
+    "variant": "native",
+    "round": 0,
+    "seconds": 1.6896519319998333,
+    "stderr": "tsgo: load_ns=356134327 query_ns=88476579 queries=32 first_query_ns=73726702 run_ns=1218143663\n"
+  },
+  {
+    "corpus": "repository",
+    "variant": "native",
+    "round": 1,
+    "seconds": 0.7771424389993626,
+    "stderr": "tsgo: load_ns=151174910 query_ns=22159383 queries=32 first_query_ns=19700047 run_ns=580754835\n"
+  },
+  {
+    "corpus": "repository",
+    "variant": "oracle",
+    "round": 1,
+    "seconds": 0.22918715100058762,
+    "stderr": "cohere: load_ns=130427575 rule_ns=4704541 run_ns=72009778\n"
+  },
+  {
+    "corpus": "repository",
+    "variant": "oracle",
+    "round": 2,
+    "seconds": 0.21443293599986646,
+    "stderr": "cohere: load_ns=112654077 rule_ns=6448521 run_ns=77890477\n"
+  },
+  {
+    "corpus": "repository",
+    "variant": "native",
+    "round": 2,
+    "seconds": 0.8064720429993031,
+    "stderr": "tsgo: load_ns=170193501 query_ns=35887633 queries=32 first_query_ns=34115711 run_ns=605671504\n"
+  },
+  {
+    "mutant": "process-callee",
+    "exit": 0,
+    "stderr": "",
+    "caught": [
+      {
+        "case": "01de57af8a7542fa06592458fd6025a876cc03f9444626549489dc121dce75fe",
+        "byte": 164,
+        "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/an_arrow_whose_expression_body_writes"
+      },
+      {
+        "case": "1a673557abde33108047b4e520baf3753f4cdef9583ae7b1959dab9693f6639d",
+        "byte": 164,
+        "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_imported_from_a_module"
+      },
+      {
+        "case": "c0434ca8d3d6620e1376179e5ea2bd82914ceb804cc4b9732685016f8a88e842",
+        "byte": 164,
+        "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_reached_through_import(),_as_reportFreshness"
+      },
+      {
+        "case": "ea1cc78dfa8a578488237d146bc5937f8404bd5ceedc81b5d44122d9dfc9b11d",
+        "byte": 164,
+        "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/an_async_helper_awaited"
+      },
+      {
+        "case": "ef07ef6263f6a9ae29b1fd4c72e80ae1681eaafd54f0bf45f91cbe58e5b068b2",
+        "byte": 164,
+        "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_helper_in_this_file,_as_showHelp"
+      },
+      {
+        "case": "f96520e8043b4ce4ddad5cfa353b216b055a3d6b236e8205dcd6ac5a51ca7f01",
+        "byte": 164,
+        "name": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/a_static_method"
+      }
+    ]
+  },
+  {
+    "mutant": "blocking-order",
+    "exit": 0,
+    "stderr": "",
+    "caught": [
+      {
+        "case": "06ceccceddbe81c10ebdfc63ce32e123f8453080d30556c409890b94a62ce17a",
+        "byte": 1690,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_imported_module_that_blocks_while_it_loads"
+      },
+      {
+        "case": "28e19fc7d7e98dcd6681422174434d247a84e2b6036f5f48109231d75d93c06d",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_fixed"
+      },
+      {
+        "case": "3c2bf485c80068f1adcbd622ff5e96336881781025737c8139d7d1e3d6c0b4ba",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/ahra_facets_fixed"
+      },
+      {
+        "case": "480a20fcc8e77eb344024be73517bd0aaacb84275c2691632940f0805c1f0e6d",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_the_arguments_of_the_call_that_starts_main"
+      },
+      {
+        "case": "4b13af33822e784d8230ae1bf84d82359cfc9d7d554ecfb2f1bc1ed6c85bd6c9",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_callback,_in_a_file_that_blocks_after_handing_it_on"
+      },
+      {
+        "case": "6639849b5b17a40be01279d5766b2b82bcf6f91ed50c12d4e08e254e67183c3c",
+        "byte": 1542,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_computed_import()_before_the_exit,_which_may_load_anything"
+      },
+      {
+        "case": "66c7d64667eef1827154df915827f9c7279ef9ae56a1098132f15b9a915bd6fc",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_call_through_a_value_the_checker_cannot_name,_in_a_file_that_can_block"
+      },
+      {
+        "case": "6f887aa7c40f2a6a7458a5044e2541234a0c7fb34714c68148d9be0052806353",
+        "byte": 1692,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_helper_in_another_file_that_blocks,_called_first"
+      },
+      {
+        "case": "7c22463198f8ff8f8e1c8eb47781e5c513180371b44090b68b45eafd2eaa522e",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/NewMigration_fixed"
+      },
+      {
+        "case": "8b2c7b4fa00c3dedca18e531f53535b01cb8187a6ae46bb488c010309dfb8bad",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_declared_function_whose_body_this_program_cannot_see,_in_a_file_that_can_block"
+      },
+      {
+        "case": "96f24607740719a53c5c9cc26e269a79dd3335ac5f680e0e0a8d337fbf9d960e",
+        "byte": 2071,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/a_runCommandLineInterface_entry_as_it_stands"
+      },
+      {
+        "case": "a5a7cff5a01b94e1768984182f78a0ed1a87fcf8d6b2dace09a61f75dfd7dc4e",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/a_block_in_a_class_static_block,_which_the_graph_does_not_lay_out"
+      },
+      {
+        "case": "af7bf0086c1e3b7014fadda41b5679e36cdc0a44d82cfc731953d8c96b3f4996",
+        "byte": 1822,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/StructureLintEngineParity_as_it_stood"
+      },
+      {
+        "case": "d34e38728763788733247b2ef1cdce7d1a546efda522f5ff07f5c877c07337c5",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/blockStandardStreams_imported_under_another_name"
+      },
+      {
+        "case": "d78aa9b5cbe46db7cd628c5973b7541ef90134863386e98f914ffc4de7c5b1dd",
+        "byte": 1822,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block"
+      },
+      {
+        "case": "e417eb24b8196ec4664fea2c912f382f5c8866ec36ac3ff94b49f50ed713c481",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/the_forked_shard_worker_fixed"
+      },
+      {
+        "case": "f0caa49cd70817b54c90a1c289b2be73964a608fca25b8768b86b770bc7a0fdf",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/Nexus's_function_handed_to_a_call_that_runs_it"
+      },
+      {
+        "case": "f47c731c2729103eb1a2459364e76b3de1ce2ca58484a67ba66ab44c0e356a3f",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_after_an_await,_in_a_file_that_blocks_later"
+      },
+      {
+        "case": "f93f140b0a97670b80149606305c3cdbee01b4a87e75ce35f9f955646ab3f363",
+        "byte": 1544,
+        "name": "TestCorrectnessRequireBlockingStandardStreamsRealSites/a_main().catch_script_fixed"
+      }
+    ]
+  }
+]
