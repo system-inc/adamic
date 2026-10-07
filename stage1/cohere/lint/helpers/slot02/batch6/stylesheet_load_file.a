@@ -1,0 +1,43 @@
+export interface LoadValue { readonly value: string; readonly error: number; }
+export interface ParsedValue { readonly value: number; readonly error: number; }
+export interface FileCollector {
+    readonly visiting: Map<string, boolean>;
+    readonly stylesheets: string[];
+}
+export interface LoadDependencies {
+    readonly absolute: (path: string) => LoadValue;
+    readonly read: (path: string) => LoadValue;
+    readonly parse: (content: string) => ParsedValue;
+    readonly ingest: (nodes: number, path: string) => number;
+    readonly describe: (error: number) => string;
+    readonly makeError: (message: string, cause: number) => number;
+}
+
+// Error and node handles belong to the caller's arenas. -1 means no error.
+export function stylesheetLoadFile(collector: FileCollector, path: string, deps: LoadDependencies): number {
+    const absolute = deps.absolute(path);
+    if (absolute.error !== -1) {
+        return deps.makeError(`resolve ${path}: ${deps.describe(absolute.error)}`, absolute.error);
+    }
+    const resolved = absolute.value;
+    if (collector.visiting.get(resolved) ?? false) {
+        return deps.makeError(`circular @import: ${resolved} imports itself`, -1);
+    }
+    collector.visiting.set(resolved, true);
+    const content = deps.read(resolved);
+    if (content.error !== -1) {
+        const error = deps.makeError(`read ${resolved}: ${deps.describe(content.error)}`, content.error);
+        collector.visiting.delete(resolved);
+        return error;
+    }
+    const nodes = deps.parse(content.value);
+    if (nodes.error !== -1) {
+        const error = deps.makeError(`parse ${resolved}: ${deps.describe(nodes.error)}`, nodes.error);
+        collector.visiting.delete(resolved);
+        return error;
+    }
+    collector.stylesheets.push(resolved);
+    const result = deps.ingest(nodes.value, resolved);
+    collector.visiting.delete(resolved);
+    return result;
+}

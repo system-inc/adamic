@@ -1,0 +1,139 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { stylesheetLoadFile } from './stylesheet_load_file.a';
+import { stylesheetResolveImport } from './stylesheet_resolve_import.a';
+import { ingestCustomVariant } from './ingest_custom_variant.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus path'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function text(parent: number, key: string): string { return json.node(json.field(parent, key)).text; }
+function flag(parent: number, key: string): boolean { return text(parent, key) === 'true'; }
+function texts(parent: number, key: string): string[] {
+    const result: string[] = [];
+    for (const index of json.node(json.field(parent, key)).children) { result.push(json.node(index).text); }
+    return result;
+}
+for (const row of json.node(json.field(root, 'Variants')).children) {
+    const parts = texts(row, 'Parts');
+    let calls = 0;
+    let requested = '';
+    let separator = '';
+    const variants = new Map<string, boolean>();
+    variants.set('preexisting', false);
+    ingestCustomVariant(variants, text(row, 'Params'), (value: string, split: string): string[] => {
+        calls++;
+        requested = value;
+        separator = split;
+        return parts;
+    });
+    console.log(`variant:${variants.size}:${calls}:${requested}:${separator.charCodeAt(0)}`);
+    for (const [key, value] of variants) {
+        if (key !== 'preexisting') { console.log(`added:${key}:${value}`); }
+    }
+    console.log(`preexisting:${variants.get('preexisting') ?? false}`);
+}
+const messages: string[] = [];
+const causes: number[] = [];
+function makeError(message: string, cause: number): number {
+    const index = messages.length;
+    messages.push(message);
+    causes.push(cause);
+    return index;
+}
+function describe(error: number): string { return messages[error] ?? panic('error handle'); }
+function errorInput(parent: number, field: string): number {
+    const chain = texts(parent, field);
+    let error = -1;
+    for (let index = chain.length - 1; index >= 0; index--) { error = makeError(chain[index] ?? panic('error'), error); }
+    return error;
+}
+function printError(error: number): void {
+    let current = error;
+    while (current !== -1) {
+        console.log(`error:${describe(current)}`);
+        current = causes[current] ?? panic('cause');
+    }
+    console.log('end-error');
+}
+for (const row of json.node(json.field(root, 'Imports')).children) {
+    let segmentCalls = 0;
+    let segmentInput = '';
+    let segmentSeparator = '';
+    let calls = 0;
+    let requested = '';
+    let directory = '';
+    const parts = texts(row, 'Parts');
+    const failure = errorInput(row, 'Error');
+    const result = stylesheetResolveImport(text(row, 'Params'), text(row, 'Path'), {
+        trimSpace: (value: string): string => json.node(json.field(json.field(row, 'Trim'), value)).text,
+        segment: (value: string, separator: string): string[] => {
+            segmentCalls++;
+            segmentInput = value;
+            segmentSeparator = separator;
+            return parts;
+        },
+        directory: (value: string): string => {
+            if (value !== text(row, 'Path')) { return `wrong:${value}`; }
+            return text(row, 'Directory');
+        },
+        resolve: (specifier: string, base: string) => {
+            calls++;
+            requested = specifier;
+            directory = base;
+            return { value: failure === -1 ? `/resolved/${specifier}` : '', error: failure };
+        },
+        quote: (value: string): string => json.node(json.field(json.field(row, 'Quote'), value)).text,
+        describe: (error: number): string => describe(error),
+        makeError: (message: string, cause: number): number => makeError(message, cause),
+    });
+    console.log(`import-segment:${segmentCalls}:${segmentInput}:${segmentSeparator.charCodeAt(0)}`);
+    console.log(`resolve:${calls}:${requested}:${directory}`);
+    console.log(`resolved:${result.value}`);
+    printError(result.error);
+}
+interface LoadTrace { position: number; readonly steps: readonly number[]; readonly calls: string[]; }
+function take(state: LoadTrace, kind: string, value: string): number {
+    state.calls.push(`load-call:${kind}:${value}`);
+    const step = state.steps[state.position];
+    state.position++;
+    // Incorrect call order is observable without crashing a semantic mutant.
+    return step ?? -1;
+}
+for (const row of json.node(json.field(root, 'Loads')).children) {
+    const visiting = new Map<string, boolean>();
+    visiting.set('unrelated', true);
+    if (flag(row, 'InitialPresent')) { visiting.set(text(row, 'Absolute'), flag(row, 'Visiting')); }
+    const collector = { visiting, stylesheets: [] as string[] };
+    const steps = json.node(json.field(row, 'Steps')).children;
+    const calls: string[] = [];
+    const state = { position: 0, steps, calls };
+    const result = stylesheetLoadFile(collector, text(row, 'Path'), {
+        absolute: (value: string) => {
+            const step = take(state, 'abs', value);
+            return { value: step === -1 ? text(row, 'Absolute') : text(step, 'Value'), error: step === -1 ? -1 : errorInput(step, 'Error') };
+        },
+        read: (value: string) => {
+            const step = take(state, 'read', value);
+            return { value: step === -1 ? '' : text(step, 'Value'), error: step === -1 ? -1 : errorInput(step, 'Error') };
+        },
+        parse: (value: string) => {
+            const step = take(state, 'parse', value);
+            return { value: 1, error: step === -1 ? -1 : errorInput(step, 'Error') };
+        },
+        ingest: (nodes: number, value: string): number => {
+            const step = take(state, 'ingest', value);
+            const last = collector.stylesheets[collector.stylesheets.length - 1];
+            calls.push(`ingest-state:${collector.visiting.get(value) ?? false}:${last === value}:${nodes === 1}`);
+            return step === -1 ? -1 : errorInput(step, 'Error');
+        },
+        describe: (error: number): string => describe(error),
+        makeError: (message: string, cause: number): number => makeError(message, cause),
+    });
+    for (const call of calls) { console.log(call); }
+    printError(result);
+    console.log(`state:${collector.visiting.get(text(row, 'Absolute')) ?? false}:${collector.visiting.has(text(row, 'Absolute'))}:${collector.visiting.get('unrelated') ?? false}:${collector.stylesheets.length}`);
+    for (const sheet of collector.stylesheets) { console.log(`stylesheet:${sheet}`); }
+}

@@ -1,0 +1,27 @@
+import { panic } from 'adamic';
+// Go strings.TrimSpace uses Unicode White_Space, which differs from JS trim.
+function isSpace(value: number): boolean {
+    return (value >= 9 && value <= 13) || value === 32 || value === 133 || value === 160 ||
+        value === 5760 || (value >= 8192 && value <= 8202) || value === 8232 ||
+        value === 8233 || value === 8239 || value === 8287 || value === 12288;
+}
+function trimSpace(value: string): string {
+    let start = 0;
+    let end = value.length;
+    while (start < end && isSpace(value.charCodeAt(start))) { start++; }
+    while (end > start && isSpace(value.charCodeAt(end - 1))) { end--; }
+    return value.slice(start, end);
+}
+
+export function ingestCustomVariant(
+    customVariants: Map<string, boolean>,
+    params: string,
+    segment: (input: string, separator: string) => string[],
+): void {
+    const parts = segment(trimSpace(params), ' ');
+    if (parts.length === 0) { return; }
+    let name = trimSpace(parts[0] ?? panic('segment returned a missing first part'));
+    if (name.endsWith('-*')) { name = name.slice(0, name.length - 2); }
+    if (name === '') { return; }
+    customVariants.set(name, true);
+}

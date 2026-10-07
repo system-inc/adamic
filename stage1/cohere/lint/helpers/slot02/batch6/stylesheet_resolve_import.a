@@ -1,0 +1,36 @@
+import { panic } from 'adamic';
+export interface ImportValue { readonly value: string; readonly error: number; }
+export interface ImportDependencies {
+    readonly trimSpace: (input: string) => string;
+    readonly segment: (input: string, separator: string) => string[];
+    readonly directory: (path: string) => string;
+    readonly resolve: (specifier: string, directory: string) => ImportValue;
+    readonly quote: (value: string) => string;
+    readonly describe: (error: number) => string;
+    readonly makeError: (message: string, cause: number) => number;
+}
+
+export function stylesheetResolveImport(params: string, path: string, deps: ImportDependencies): ImportValue {
+    const parts = deps.segment(deps.trimSpace(params), ' ');
+    if (parts.length === 0 || parts[0] === '') {
+        return { value: '', error: deps.makeError(`${path}: @import with no specifier`, -1) };
+    }
+    const first = parts[0] ?? panic('segment returned a missing first part');
+    let start = 0;
+    let end = first.length;
+    while (start < end && (first.charCodeAt(start) === 34 || first.charCodeAt(start) === 39)) { start++; }
+    while (end > start && (first.charCodeAt(end - 1) === 34 || first.charCodeAt(end - 1) === 39)) { end--; }
+    const specifier = first.slice(start, end);
+    for (let index = 1; index < parts.length; index++) {
+        const modifier = deps.trimSpace(parts[index] ?? panic('segment returned a missing modifier'));
+        if (modifier === '') { continue; }
+        if (modifier.startsWith('source(')) { continue; }
+        const message = `${path}: unsupported @import modifier ${deps.quote(modifier)} on ${deps.quote(specifier)}; see the boundary note in themeloader.go`;
+        return { value: '', error: deps.makeError(message, -1) };
+    }
+    const resolved = deps.resolve(specifier, deps.directory(path));
+    if (resolved.error !== -1) {
+        return { value: '', error: deps.makeError(`${path}: resolve @import ${deps.quote(specifier)}: ${deps.describe(resolved.error)}`, resolved.error) };
+    }
+    return resolved;
+}
