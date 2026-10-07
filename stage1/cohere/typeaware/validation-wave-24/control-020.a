@@ -1,0 +1,2 @@
+declare const p:Promise<number>;const fn=(err:any)=>{};p.catch(fn);p.catch(...[fn]);p.then(...[undefined,fn]);({catch:(f:(e:any)=>void)=>{}}).catch(err=>{});
+export {};

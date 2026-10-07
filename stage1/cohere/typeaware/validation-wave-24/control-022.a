@@ -1,0 +1,2 @@
+declare const p:{then:(...callbacks:((x:number)=>void)[])=>unknown;catch:(f:(e:any)=>void)=>unknown};p.catch(err=>{});export async function f(){return await p;}
+export {};

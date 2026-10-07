@@ -1,0 +1,2 @@
+export class Foo { f = (): Foo => this; g = (): Foo => (this); h = function(): Foo { return this; }; }
+export {};

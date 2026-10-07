@@ -1,0 +1,2 @@
+export async function f<T>(p:T){return await p;}export async function g(p:any){return await p;}export async function h(p:unknown){return await p;}
+export {};

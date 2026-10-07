@@ -1,0 +1,2 @@
+export class Foo { f(): Foo { return this; } g(): Foo { return new Foo(); } h(): this {return this;} }
+export {};

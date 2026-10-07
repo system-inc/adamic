@@ -1,0 +1,2 @@
+declare const p:Promise<number>;p.catch(error=>{});p.catch((error:any)=>{});p.catch((error:unknown)=>{});p.then(undefined,(error:Error)=>{});
+export {};
