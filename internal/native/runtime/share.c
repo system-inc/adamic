@@ -108,7 +108,7 @@ void adamic_share(void *value) {
 			for (size_t i = 0; i < closure->count; i++) { append(&pending, closure->cells[i]); }
 			break;
 		}
-		case adamic_kind_number: case adamic_kind_boolean: break;
+		case adamic_kind_number: case adamic_kind_boolean: case adamic_kind_null: break;
 		case adamic_kind_typed_array: case adamic_kind_typed_array_iterator:
 		case adamic_kind_weak: case adamic_kind_map_iterator:
 			adamic_panic("compiler bug: non-shareable value reached a task", sizeof "compiler bug: non-shareable value reached a task" - 1);

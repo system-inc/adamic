@@ -1,0 +1,1 @@
+function identity<T>(value: T): T { return value; } function lower(value: string): string { return value.toLowerCase(); } function choose(flag: boolean): (value: string) => string { return flag ? identity : lower; } console.log(choose(true)('X'));

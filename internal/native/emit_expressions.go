@@ -55,7 +55,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return "false"
 		}
 		if expression.Value.Type() == ir.Union {
-			return fmt.Sprintf("(%s == &adamic_null || %s == &adamic_box_null)", e.value(expression.Value), e.value(expression.Value))
+			value := e.value(expression.Value)
+			return fmt.Sprintf("(%s == &adamic_null || %s == &adamic_box_null)", value, value)
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:

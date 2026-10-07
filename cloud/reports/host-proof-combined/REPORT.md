@@ -2,7 +2,7 @@
 
 22/25 adapted fixtures agree on native, 23/25 on JavaScript, and 22/25 on both. The pristine controls remain 16/25 on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
 
-Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 0d11046e. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
+Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 9eba5d10. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
 | Fixture | Pristine native | Pristine JS | Adapted native | Adapted JS | First adapted blocker | Owner |
 |---|---|---|---|---|---|---|
@@ -30,7 +30,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 22_createHash_fallback.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 23_newLine.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 24_useCaseSensitiveFileNames.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 25_readDirectory.a | Checker | Checker | Refused | Refused | Error as any cast at 693:10 | Adaptation |
+| 25_readDirectory.a | Checker | Checker | Refused | Refused | generic identity callback at 1088:12 | Compiler |
 
 Fixture 25 passes checking on both backends. Exact next diagnostic:
 ```
@@ -292,3 +292,30 @@ import { statSync } from 'node:fs'; import type { Dirent, Stats } from 'node:fs'
 Owner: library, Stats/Dirent method dispatch. Fixtures 14 and 25 retain their capture-cycle and Error-as-any refusals respectively. Since the normal measurement runner stops at a runtime mismatch, this recount used a copy that records observed/expected stdout, stderr and exit as Disagrees and continues, still returning failure. It does not change the compiler or production harness. Complete JSON records preserve the mismatch.
 
 Validation: filtered lower tests PASS (15.272s); string-sort oracle, four semantic mutants, string-sort refusals and selected WASI host tests PASS (46.855s). Mutants for code-point order, descending order, instability and undefined-as-holes were caught by Node stdout comparisons with clean execution. Focused ArrayHoles/debugger flow tests are recorded in fs_sort_flow.log. The four full flow tests were green at the previous checkpoint and were not rerun here. No full gate, counts regeneration or macOS execution is claimed. No main or area push, no force push; this remains a proof.
+
+## Error-value and storage exemption recount
+
+Inputs: Error branch 6469f37 via merge 6c978f67, compiler storage exemption 3a6c8231 via merge a5bbb1a0, exact fixtures/records 9eba5d10 via 8db8a198. All 25 adapted and all 25 pristine fixtures rerun on both backends. Adapted native 22/25, JavaScript 23/25, joint 22/25; pristine remains 16/25 each. Fixture 25 now gets past the removed Error cast and captureStackTrace no-op. Next diagnostic on both backends:
+
+```text
+adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)
+```
+
+Verified one-line compiler reproducer (Node prints X, exit 0; native lowering refuses at 1:190):
+
+```typescript
+function identity<T>(value: T): T { return value; } function lower(value: string): string { return value.toLowerCase(); } function choose(flag: boolean): (value: string) => string { return flag ? identity : lower; } console.log(choose(true)('X'));
+```
+
+08 retains its native Stats/Dirent dispatch disagreement and agrees on JavaScript; 14 retains its callback capture-cycle refusal. No routed host implementation was built here.
+
+The Error merge brings nominal runtime error infrastructure. Conflict resolutions retain both readiness/NoMove flags, current compiler truthiness, host and sparse-array exception edges, Buffer/crypto/process/phantom hooks, optional fields and deinitialization. Both null representations remain recognized. The new null kind is an immutable leaf in share.c, allowing the whole native and WASI runtime archive to compile. Conflict-marker scanning accidentally touched TypeScript's deliberately malformed baseline fixtures; those changes were restored before finishing, and the submodules remain clean. Counts preserve unique rows from both sides; no complete regeneration claimed.
+
+Validation:
+- Filtered lower Error/nullish/deinitialization tests PASS, 2.907s.
+- Error probe, typeof, debug_fail and stack refusal oracles PASS, 1.503s, including native sanitizers/release and JavaScript.
+- Configured WASI host refusal tests and empty-symlink oracle PASS. Removed-symlink-adapter mutant caught by Node output.
+- Four storage readiness mutants PASS: dropping local/field/static/identifier checks changes observed output and exits 0, caught by the pinned runtime comparison.
+- Selected oracle package command exits 1: TestNonNullStorageUnionRemainsRefused expected a refusal but lowering returns nil on this combined proof. Initial wider run also fails TestLibraryErrorCounts on the historical library_error_original_probe.a cast; exact diagnostics are in logs. These are reported failures, not green gates. The initial WASI invocation lacked WASI_SYSROOT; cloud/setup.sh --wasi-sdk supplied it and the WASI tests were rerun successfully.
+- Setup timing: node 0.021s, Go 0.022s, submodules 0.051s, markdown 0.066s, clang 0.159s, WASI SDK 0.176s; nproc 5. Initial setup overlapped conflict resolution and its warm build failed on unresolved markers; final SDK setup completed.
+- No full gate, four-full-flow rerun, counts regeneration or macOS execution. Proof branch only; no main/area or force push.
