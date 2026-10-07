@@ -1,0 +1,216 @@
+{
+  "baseline_rows": 430,
+  "final_rows": 456,
+  "added": {
+    "internal/oracle/testdata/memory_examples/list.a": [
+      7,
+      7,
+      6,
+      16,
+      5,
+      0
+    ],
+    "internal/oracle/testdata/memory_examples/tree.a": [
+      12,
+      12,
+      28,
+      31,
+      12,
+      0
+    ],
+    "internal/oracle/testdata/memory_examples/closures.a": [
+      9,
+      9,
+      2,
+      9,
+      7,
+      0
+    ],
+    "internal/oracle/testdata/memory_examples/regions.a": [
+      14,
+      8,
+      0,
+      5,
+      2,
+      6
+    ],
+    "internal/oracle/testdata/memory_examples/strings.a": [
+      14,
+      14,
+      2,
+      17,
+      5,
+      0
+    ],
+    "internal/oracle/testdata/reuse_comparator_spread.a": [
+      20,
+      20,
+      13,
+      32,
+      9,
+      0
+    ],
+    "internal/oracle/testdata/reuse_move_before_ready.a": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "internal/oracle/testdata/regions_escapes.a": [
+      78,
+      78,
+      27,
+      75,
+      38,
+      0
+    ],
+    "internal/oracle/testdata/regions_spread_fresh.a": [
+      23,
+      23,
+      9,
+      22,
+      10,
+      0
+    ],
+    "internal/oracle/testdata/regions_big.a": [
+      20,
+      14,
+      0,
+      14,
+      5,
+      6
+    ],
+    "internal/oracle/testdata/regions_paths.a": [
+      453588,
+      383864,
+      122122,
+      383714,
+      278521,
+      69724
+    ],
+    "internal/oracle/testdata/reduce_undefined_initial.a": [
+      8,
+      8,
+      12,
+      19,
+      7,
+      0
+    ],
+    "internal/oracle/testdata/reuse_handover_throw.a": [
+      44,
+      44,
+      21,
+      57,
+      5,
+      0
+    ],
+    "internal/oracle/testdata/reuse_handover_fresh.a": [
+      192,
+      192,
+      97,
+      238,
+      8,
+      0
+    ],
+    "internal/oracle/testdata/slab_sizes.a": [
+      13272,
+      13272,
+      22976,
+      30866,
+      45,
+      0
+    ],
+    "internal/oracle/testdata/aside_throw.a": [
+      23,
+      23,
+      22,
+      41,
+      6,
+      0
+    ],
+    "internal/oracle/testdata/uncaught_names.a": [
+      3,
+      1,
+      5,
+      4,
+      3,
+      0
+    ],
+    "internal/oracle/testdata/uncaught_names_empty.a": [
+      1,
+      0,
+      5,
+      2,
+      1,
+      0
+    ],
+    "internal/oracle/testdata/coverage_plain_view.a": [
+      6,
+      6,
+      10,
+      10,
+      3,
+      0
+    ],
+    "internal/oracle/testdata/coverage_uncaught_default_empty.a": [
+      1,
+      0,
+      3,
+      1,
+      1,
+      0
+    ],
+    "internal/oracle/testdata/coverage_uncaught_custom_empty.a": [
+      1,
+      0,
+      6,
+      3,
+      1,
+      0
+    ],
+    "internal/oracle/testdata/coverage_uncaught_custom_message.a": [
+      5,
+      2,
+      4,
+      5,
+      4,
+      0
+    ],
+    "internal/oracle/testdata/coverage_uncaught_empty_changed.a": [
+      3,
+      1,
+      5,
+      4,
+      3,
+      0
+    ],
+    "internal/oracle/testdata/coverage_uncaught_no_argument.a": [
+      1,
+      0,
+      3,
+      1,
+      1,
+      0
+    ],
+    "internal/oracle/testdata/release_fast_shared.a": [
+      200,
+      200,
+      86,
+      290,
+      57,
+      0
+    ],
+    "internal/oracle/testdata/release_fast_graph.a": [
+      10260,
+      10260,
+      5422,
+      10885,
+      417,
+      0
+    ]
+  },
+  "changed": {},
+  "rises": {}
+}
