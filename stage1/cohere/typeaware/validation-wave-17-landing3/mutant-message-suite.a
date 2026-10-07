@@ -1,0 +1,83 @@
+import { projectedReactTree } from '/workspace/adamic/stage1/cohere/typeaware/projected_react_tree.a';
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { written } from '/workspace/adamic/stage1/typescript/parser/nodes.ts';
+import { Parser } from '/workspace/adamic/stage1/typescript/parser/parser.ts';
+import { Scanner } from '/workspace/adamic/stage1/typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '/workspace/adamic/stage1/cohere/typeaware/unary_minus.ts';
+import { Rules } from '/workspace/adamic/stage1/cohere/typeaware/rules.ts';
+import { NexusFacts } from '/workspace/adamic/stage1/cohere/typeaware/nexus_facts.a';
+import { Bindings } from '/workspace/adamic/stage1/cohere/typeaware/bindings.ts';
+import { Reassign } from '/workspace/adamic/stage1/cohere/typeaware/reassign.ts';
+import { FourthFacts } from '/workspace/adamic/stage1/cohere/typeaware/fourth_facts.a';
+import { ReactCompilationGate } from '/workspace/adamic/stage1/cohere/typeaware/react_compilation_gate.a';
+import { ReactUnsupportedSyntax } from '/workspace/adamic/stage1/cohere/typeaware/react_unsupported_syntax.a';
+import { ReactUseMemo } from '/workspace/adamic/stage1/cohere/typeaware/react_use_memo.a';
+import {
+    ReactBooleanPropNaming,
+    BooleanPropNamingOptions,
+    defaultBooleanPropPattern,
+} from '/workspace/wave-17-landing3-regex/mutant-message-regex.a';
+
+const args = programArguments();
+const config = args[0] ?? panic('usage: wave_17_fifth_suite.a tsconfig manifest [--count]');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') {
+    panic(manifest.message);
+}
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(config, paths);
+let findings = 0;
+for(const path of paths) {
+    const source = readTextFile(path);
+    if(source.kind === 'Error') {
+        panic(source.message);
+    }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const offsets = byteOffsets(source.text);
+    const unary = new UnaryMinus(program, path, parser, scanner, offsets);
+    const linter = new Rules(program, path, parser, scanner, offsets, unary);
+    const fixture = readTextFile(path + '.tree');
+    if(fixture.kind === 'Error') panic(fixture.message);
+    const root = projectedReactTree(parser, fixture.text, offsets);
+    for(let at = 0; at < parser.nodes.length; at++) {
+        linter.parents.push(-1);
+    }
+    linter.links(root, -1);
+    const facts = new NexusFacts(linter);
+    const bindings = new Bindings(linter);
+    const writes = new Reassign(linter);
+    const fourth = new FourthFacts(linter);
+    const gate = new ReactCompilationGate(linter, bindings);
+    new ReactUnsupportedSyntax(linter, facts, gate).run();
+    new ReactUseMemo(linter, facts, bindings, gate, fourth).run();
+    if(args.includes('--boolean-props'))
+        new ReactBooleanPropNaming(
+            linter,
+            facts,
+            bindings,
+            fourth,
+            new BooleanPropNamingOptions(
+                '^(is|has)[A-Z]([A-Za-z0-9]?)+',
+                ['bool'],
+                args.includes('--nested'),
+                args.includes('--message-test')
+                    ? 'outer {{ {{propName}} / {{ pattern }} / {{component}} / {{ unknown }} / {{\u00a0propName}}'
+                    : '',
+            ),
+            defaultBooleanPropPattern,
+        ).run();
+    for(const finding of linter.findings) {
+        finding.sortKey = finding.written();
+    }
+    linter.findings.sort((left, right) => (left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0));
+    findings += linter.findings.length;
+    if(!args.includes('--count')) {
+        console.log(`file\t${written(path)}`);
+        for(const finding of linter.findings) {
+            console.log(finding.written());
+        }
+    }
+}
+console.log(`findings ${findings}`);
+tsgoRelease(program);

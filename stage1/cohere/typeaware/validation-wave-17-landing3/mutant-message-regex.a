@@ -1,0 +1,196 @@
+// PropTypes half, with an injected matcher so regex decisions remain native.
+// Integration is incomplete: no Go-compatible configurable matcher is available.
+import type { Rules } from '/workspace/adamic/stage1/cohere/typeaware/rules.ts';
+import { NexusFacts } from '/workspace/adamic/stage1/cohere/typeaware/nexus_facts.a';
+import { Bindings } from '/workspace/adamic/stage1/cohere/typeaware/bindings.ts';
+import { FourthFacts } from '/workspace/adamic/stage1/cohere/typeaware/fourth_facts.a';
+// Shared regex table row react/boolean_prop_naming.go:621.
+const booleanPropMessagePattern = /\{\{[ \t\n\f\r]*([A-Z_][A-Za-z0-9_]*)[ \t\n\f\r]*\}\}/gu;
+export class BooleanPropNamingOptions {
+    readonly booleanPropOptionsTag = true;
+    readonly pattern: string;
+    readonly names: readonly string[];
+    readonly nested: boolean;
+    readonly message: string;
+    constructor(pattern: string, names: string[], nested: boolean, message: string) {
+        this.pattern = pattern;
+        this.names = names;
+        this.nested = nested;
+        this.message = message;
+    }
+}
+export class ReactBooleanPropNaming {
+    readonly booleanPropNamingTag = true;
+    readonly reported: number[] = [];
+    readonly rules: Rules;
+    readonly facts: NexusFacts;
+    readonly bindings: Bindings;
+    readonly fourth: FourthFacts;
+    readonly options: BooleanPropNamingOptions;
+    readonly matches: (name: string) => boolean;
+    constructor(
+        rules: Rules,
+        facts: NexusFacts,
+        bindings: Bindings,
+        fourth: FourthFacts,
+        options: BooleanPropNamingOptions,
+        matches: (name: string) => boolean,
+    ) {
+        this.rules = rules;
+        this.facts = facts;
+        this.bindings = bindings;
+        this.fourth = fourth;
+        this.options = options;
+        this.matches = matches;
+    }
+    key(index: number): string {
+        const n = this.rules.parser.node(index);
+        if(n.kind === 'Identifier') return n.text;
+        if(n.kind === 'ComputedPropertyName') {
+            const inner = this.rules.skip(n.children[0] ?? -1);
+            return this.rules.parser.node(inner).kind === 'Identifier'
+                ? this.rules.parser.node(inner).text
+                : 'undefined';
+        }
+        return 'undefined';
+    }
+    named(index: number): boolean {
+        const n = this.rules.parser.node(index);
+        return (
+            n.kind === 'Identifier' ||
+            (n.kind === 'ComputedPropertyName' &&
+                this.rules.parser.node(this.rules.skip(n.children[0] ?? -1)).kind === 'Identifier')
+        );
+    }
+    interpolate(template: string, name: string): string {
+        booleanPropMessagePattern.lastIndex = 0;
+        let out = '';
+        let at = 0;
+        let match = booleanPropMessagePattern.exec(template);
+        while(match !== null) {
+            const whole = match[0] ?? '';
+            const key = match[1] ?? '';
+            out += template.slice(at, match.index);
+            out +=
+                key === 'propName' || key === 'component'
+                    ? name
+                    : key === 'pattern'
+                      ? this.options.pattern
+                      : whole;
+            at = match.index + whole.length;
+            match = booleanPropMessagePattern.exec(template);
+        }
+        return out + template.slice(at);
+    }
+    report(index: number, key: number): void {
+        if(this.reported.includes(index)) return;
+        const name = this.key(key);
+        if(this.named(key) && this.matches(name)) return;
+        this.reported.push(index);
+        const message =
+            this.options.message === ''
+                ? 'Prop name `' + name + '` doesn\u2019t match rule `' + this.options.pattern + '`'
+                : this.interpolate(this.options.message, name);
+        this.facts.report('react/boolean-prop-naming', 'patternMismatch', message, index);
+    }
+    boolean(index: number): boolean {
+        let n = this.rules.parser.node(this.rules.skip(index));
+        let name = '';
+        if(n.kind === 'Identifier') name = n.text;
+        else if(n.kind === 'PropertyAccessExpression') {
+            let key = n.children[n.children.length - 1] ?? -1;
+            if(this.rules.parser.node(key).kind !== 'Identifier') return false;
+            name = this.rules.parser.node(key).text;
+            if(name === 'isRequired') {
+                n = this.rules.parser.node(this.rules.skip(n.children[0] ?? -1));
+                if(n.kind !== 'PropertyAccessExpression') return false;
+                key = n.children[n.children.length - 1] ?? -1;
+                if(this.rules.parser.node(key).kind !== 'Identifier') return false;
+                name = this.rules.parser.node(key).text;
+            }
+        }
+        return this.options.names.includes(name);
+    }
+    value(index: number): void {
+        if(index < 0) return;
+        const n = this.rules.parser.node(this.rules.skip(index));
+        if(n.kind !== 'ObjectLiteralExpression') return;
+        for(const p of n.children) {
+            const prop = this.rules.parser.node(p);
+            if(prop.kind !== 'PropertyAssignment') continue;
+            const key = prop.children[0] ?? -1;
+            const value = prop.children[prop.children.length - 1] ?? -1;
+            const inner = this.rules.skip(value);
+            if(this.options.nested && this.rules.parser.node(inner).kind === 'CallExpression') {
+                const args = this.fourth.args(inner);
+                if(args.length > 0) this.value(args[0] ?? -1);
+                continue;
+            }
+            if(this.boolean(value)) this.report(p, key);
+        }
+    }
+    propTypes(index: number): boolean {
+        const n = this.rules.parser.node(index);
+        return ['Identifier', 'StringLiteral'].includes(n.kind) && n.text === 'propTypes';
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const n = this.rules.parser.node(i);
+            if(n.kind === 'PropertyDeclaration') {
+                const key = this.bindings.shape.name(i);
+                if(key >= 0 && this.propTypes(key)) this.value(this.bindings.shape.initializer(i));
+            }
+            else if(n.kind === 'PropertyAssignment') {
+                if(this.propTypes(n.children[0] ?? -1)) this.value(n.children[n.children.length - 1] ?? -1);
+            }
+            else if(
+                n.kind === 'BinaryExpression' &&
+                this.rules.parser.node(n.children[1] ?? -1).kind === 'EqualsToken'
+            ) {
+                const left = this.rules.parser.node(this.rules.skip(n.children[0] ?? -1));
+                if(
+                    left.kind === 'PropertyAccessExpression' &&
+                    this.propTypes(left.children[left.children.length - 1] ?? -1)
+                )
+                    this.value(n.children[2] ?? -1);
+            }
+        }
+    }
+    // Used once a detected component's exact props annotation is available.
+    members(index: number, visited: number[]): void {
+        if(index < 0 || visited.includes(index)) return;
+        visited.push(index);
+        const n = this.rules.parser.node(index);
+        if(n.kind === 'ParenthesizedType') this.members(n.children[0] ?? -1, visited);
+        else if(['UnionType', 'IntersectionType'].includes(n.kind)) for(const c of n.children) this.members(c, visited);
+        else if(['InterfaceDeclaration', 'TypeLiteral'].includes(n.kind))
+            for(const c of n.children) {
+                const member = this.rules.parser.node(c);
+                if(
+                    member.kind === 'PropertySignature' &&
+                    member.children.some((i) => this.rules.parser.node(i).kind === 'BooleanKeyword')
+                )
+                    this.report(c, this.bindings.shape.name(c));
+            }
+        else if(n.kind === 'TypeReference') {
+            const name = n.children[0] ?? -1;
+            if(this.rules.parser.node(name).kind !== 'Identifier') return;
+            for(const d of this.bindings.list(name, 'binding-declarations', false)) {
+                const decl = this.rules.parser.node(d);
+                if(decl.kind === 'InterfaceDeclaration') {
+                    this.members(d, visited);
+                    break;
+                }
+                if(decl.kind === 'TypeAliasDeclaration') {
+                    this.members(decl.children[decl.children.length - 1] ?? -1, visited);
+                    break;
+                }
+            }
+        }
+    }
+}
+// Translate the pinned Go default once. Configured patterns remain parked.
+const booleanPropDefaultPattern = /^(is|has)[A-Z]([A-Za-z0-9]?)+/u;
+export function defaultBooleanPropPattern(name: string): boolean {
+    return booleanPropDefaultPattern.test(name);
+}

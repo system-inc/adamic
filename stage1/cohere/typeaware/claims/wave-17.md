@@ -206,3 +206,12 @@ byte oracle, sanitizer and mutation checks pass again; a literal-class mutant
 is independently caught. Configurable patterns and full React integration remain
 parked. Evidence: [regex update](../validation-wave-17-regex/README.md).
 No new rules are claimed by this update.
+
+## Current-main landing and shared regex row
+
+Existing work is rebased onto main c01907a7, rebased tip f36356f1. All eight
+selected oracles passed again (909.575s). The remaining message interpolation
+matcher now uses shared regex row react/boolean_prop_naming.go:621; the final
+fifth-batch oracle passes in 171.661s and a literal mutant is caught at byte
+1134. No new claim; parked scopes remain explicit.
+Evidence: [third landing report](../WAVE_17_LANDING3_REPORT.md).
