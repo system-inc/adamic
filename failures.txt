@@ -1,0 +1,7 @@
+== github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:514: compiler and stage1: 550 files
+    lint_test.go:515: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/main.ts --manifest /workspace/gate-scratch/TestCompilerAndStage1Agree1052798418/005/manifest.txt]: exit status 70
+        adamic: panic: parser slice unsupported primary EqualsToken at 40792 in /workspace/adamic/stage1/cohere/estree/convert.ts
+--- FAIL: TestCompilerAndStage1Agree (51.28s)
+
