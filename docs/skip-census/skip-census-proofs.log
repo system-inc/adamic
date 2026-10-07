@@ -1,0 +1,5 @@
+scratch new t.Skip: exit 1; TestCensus named TestUndeclaredWitness
+allow-required: exit 1; TestLogClassesAndMutants caught the implementation mutant
+allow-added: exit 1; TestASTAndDriftMutants caught the implementation mutant
+allow-removed: exit 1; TestASTAndDriftMutants caught the implementation mutant
+historical plain log: exit 1; all 17 exact expected required-input skips; TestWholeCompilerAgrees included

@@ -1,0 +1,13 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/dedication/dedication.a
+=== PAUSE TestNativeAgreesWithNode/dedication/dedication.a
+=== CONT  TestNativeAgreesWithNode/dedication/dedication.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/dedication/dedication.a (9.38s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.390s
