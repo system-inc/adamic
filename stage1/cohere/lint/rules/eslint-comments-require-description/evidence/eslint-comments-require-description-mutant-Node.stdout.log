@@ -1,0 +1,235 @@
+case 0
+fixed	/*\u000a * eslint-disable\u000a */
+case 1
+fixed	/*\u000a eslint-disable\u000a */
+case 2
+fixed	/* c8 ignore next */
+case 3
+finding	0	20	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* c8 ignore next */
+case 4
+fixed	/* c8 ignore next -- description */
+case 5
+finding	0	24	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* c8 without options */
+case 6
+finding	0	16	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* c8x ignore */
+case 7
+fixed	/* cohere-disable */
+case 8
+fixed	/* cohere-disable */
+case 9
+fixed	/* cohere-disable -- generated */
+case 10
+fixed	/* cohere-enable */
+case 11
+fixed	/* cohere-enable */
+case 12
+fixed	/* cohere-enable -- generated */
+case 13
+fixed	/* eslint */
+case 14
+fixed	/* eslint */
+case 15
+fixed	/* eslint eqeqeq: "off", curly: "error" */
+case 16
+fixed	/* eslint eqeqeq: "off", curly: "error" -- Here's a description about why this configuration is necessary. */
+case 17
+fixed	/* eslint-disable */
+case 18
+fixed	/* eslint-disable */
+case 19
+fixed	/* eslint-disable */
+case 20
+fixed	/* eslint-disable */\u000afoo();\u000a// eslint-disable-next-line -- why\u000abar();\u000a/* eslint-enable */
+case 21
+fixed	/* eslint-disable -- \u0009 */
+case 22
+fixed	/* eslint-disable -- description */
+case 23
+fixed	/* eslint-disable eqeqeq */
+case 24
+fixed	/* eslint-disable-line\u000a */
+case 25
+fixed	/* eslint-disable-line */
+case 26
+fixed	/* eslint-disable-line */
+case 27
+fixed	/* eslint-disable-line -- description */
+case 28
+fixed	/* eslint-disable-line eqeqeq */
+case 29
+fixed	/* eslint-disable-next-line\u0009foo\u0009--\u0009reason */
+case 30
+fixed	/* eslint-disable-next-line\u000a */
+case 31
+fixed	/* eslint-disable-next-line */
+case 32
+fixed	/* eslint-disable-next-line */
+case 33
+fixed	/* eslint-disable-next-line -- description */
+case 34
+fixed	/* eslint-disable-next-line eqeqeq */
+case 35
+fixed	/* eslint-disable-next-line eqeqeq -- */
+case 36
+finding	0	35	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disable-next-line, foo */
+case 37
+finding	0	21	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* eslint-disabled */
+case 38
+fixed	/* eslint-enable */
+case 39
+fixed	/* eslint-enable */
+case 40
+fixed	/* eslint-enable */
+case 41
+fixed	/* eslint-enable -- description */
+case 42
+fixed	/* eslint-enable eqeqeq */
+case 43
+fixed	/* eslint-env */
+case 44
+fixed	/* eslint-env node */
+case 45
+fixed	/* exported */
+case 46
+fixed	/* exported */
+case 47
+fixed	/* exported -- description */
+case 48
+fixed	/* global */
+case 49
+fixed	/* global */
+case 50
+fixed	/* global -- description */
+case 51
+fixed	/* global _ */
+case 52
+fixed	/* globals */
+case 53
+fixed	/* globals */
+case 54
+fixed	/* globals -- description */
+case 55
+fixed	/* globals _ */
+case 56
+fixed	/* istanbul ignore next */
+case 57
+finding	0	37	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/* just eslint in a normal comment */
+case 58
+fixed	/* oxlint-enable foo */
+case 59
+finding	0	21	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	/** eslint-disable */
+case 60
+fixed	/*eslint-disable*/
+case 61
+finding	0	30	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// a note about cohere-disable
+case 62
+finding	0	30	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// a note about eslint-disable
+case 63
+fixed	// c8 ignore next
+case 64
+finding	0	17	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// c8 ignore next
+case 65
+fixed	// c8 ignore next -- covered elsewhere
+case 66
+fixed	// cohere-disable-next-line foo
+case 67
+fixed	// cohere-disable-next-line foo -- 
+case 68
+fixed	// cohere-disable-next-line foo--bar
+case 69
+fixed	// cohere-disable-next-line no-alert
+case 70
+fixed	// cohere-disable-next-line no-alert -- the kiosk build has no other channel
+case 71
+finding	0	18	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// cohere-disabled
+case 72
+finding	0	19	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint eqeqeq: 0
+case 73
+finding	0	17	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable
+case 74
+finding	0	17	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable
+case 75
+fixed	// eslint-disable -- generated
+case 76
+finding	0	24	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-disable eqeqeq
+case 77
+fixed	// eslint-disable-line
+case 78
+fixed	// eslint-disable-line
+case 79
+fixed	// eslint-disable-line\u000a
+case 80
+fixed	// eslint-disable-line -- description
+case 81
+fixed	// eslint-disable-line eqeqeq
+case 82
+fixed	// eslint-disable-line eqeqeq -- description
+case 83
+fixed	// eslint-disable-next-line
+case 84
+fixed	// eslint-disable-next-line
+case 85
+fixed	// eslint-disable-next-line -- description
+case 86
+fixed	// eslint-disable-next-line eqeqeq
+case 87
+fixed	// eslint-disable-next-line eqeqeq -- description
+case 88
+fixed	// eslint-disable-next-line foo --
+case 89
+fixed	// eslint-disable-next-line foo --\u0009
+case 90
+fixed	// eslint-disable-next-line foo -- 
+case 91
+fixed	// eslint-disable-next-line foo -- -- 
+case 92
+fixed	// eslint-disable-next-line foo -- --bar
+case 93
+fixed	// eslint-disable-next-line foo -- bar
+case 94
+fixed	// eslint-disable-next-line foo ---  bar
+case 95
+fixed	// eslint-disable-next-line foo--bar
+case 96
+fixed	// eslint-disable-next-line foo\u00a0--\u00a0bar
+case 97
+finding	0	16	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// eslint-enable
+case 98
+finding	0	13	missingDescription	Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+fixed	// global foo
+case 99
+fixed	// oxlint-disable-next-line foo
+case 100
+fixed	// verify-disable-next-line foo
+case 101
+fixed	//eslint-disable-line
+case 102
+fixed	const a = 1;\u000a    /* eslint-disable */\u000aconst b = 2;
+case 103
+fixed	const s = '/* eslint-disable */';
+case 104
+fixed	x;\u000a/* eslint-disable
+case 105
+fixed	x; // cohere-disable-line
+case 106
+fixed	x; // eslint-disable-line foo
+case 107
+fixed	{/* cohere-disable-next-line */}
+case 108
+fixed	// eslint-disable-next-line\u000aconst \u00e9 = 1;\u000a/* global x */\u000a/* cohere-disable -- reason */\u000a
