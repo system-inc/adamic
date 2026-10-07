@@ -117,7 +117,8 @@ func wasiGates(root string) (map[string]bool, error) {
 			if !ok || fn.Body == nil || !hasSkip(fn.Body) {
 				continue
 			}
-			aliases := map[string]bool{}
+			aliases := map[*ast.Object]bool{}
+			badAliases := map[*ast.Object]bool{}
 			calls := map[ast.Node]bool{}
 			var bad error
 			ast.Inspect(fn.Body, func(n ast.Node) bool {
@@ -151,7 +152,7 @@ func wasiGates(root string) (map[string]bool, error) {
 					if calls[n] {
 						yes = true
 					}
-					if id, ok := n.(*ast.Ident); ok && aliases[id.Name] {
+					if id, ok := n.(*ast.Ident); ok && id.Obj != nil && aliases[id.Obj] {
 						yes = true
 					}
 					return true
@@ -164,9 +165,29 @@ func wasiGates(root string) (map[string]bool, error) {
 				ast.Inspect(fn.Body, func(n ast.Node) bool {
 					if a, ok := n.(*ast.AssignStmt); ok {
 						for i, rhs := range a.Rhs {
-							if mentions(rhs) && i < len(a.Lhs) {
-								if id, ok := a.Lhs[i].(*ast.Ident); ok && !aliases[id.Name] {
-									aliases[id.Name] = true
+							// Only aliases of environment predicates are supported, not command outputs.
+							aliasExpression := true
+							switch rhs.(type) {
+							case *ast.CompositeLit, *ast.FuncLit:
+								aliasExpression = false
+							}
+							if aliasExpression && mentions(rhs) && i < len(a.Lhs) {
+								invalid := false
+								ast.Inspect(rhs, func(n ast.Node) bool {
+									if call, ok := n.(*ast.CallExpr); ok && !calls[call] {
+										invalid = true
+									}
+									if id, ok := n.(*ast.Ident); ok && id.Obj != nil && badAliases[id.Obj] {
+										invalid = true
+									}
+									return true
+								})
+								if id, ok := a.Lhs[i].(*ast.Ident); ok && id.Obj != nil && invalid && !badAliases[id.Obj] {
+									badAliases[id.Obj] = true
+									changed = true
+								}
+								if id, ok := a.Lhs[i].(*ast.Ident); ok && id.Obj != nil && !aliases[id.Obj] {
+									aliases[id.Obj] = true
 									changed = true
 								}
 							}
@@ -174,6 +195,9 @@ func wasiGates(root string) (map[string]bool, error) {
 					}
 					return true
 				})
+			}
+			if bad != nil {
+				return bad
 			}
 			gated := false
 			ast.Inspect(fn.Body, func(n ast.Node) bool {
@@ -187,6 +211,10 @@ func wasiGates(root string) (map[string]bool, error) {
 						return true
 					}
 					switch x := n.(type) {
+					case *ast.Ident:
+						if x.Obj != nil && badAliases[x.Obj] {
+							valid = false
+						}
 					case *ast.BinaryExpr:
 						if x.Op != token.EQL && x.Op != token.NEQ && x.Op != token.LAND && x.Op != token.LOR {
 							valid = false
@@ -240,7 +268,7 @@ func requireWASI(p *plan) error {
 	if len(gates) == 0 {
 		return nil
 	}
-	requirement := &wasiRequirement{Shard: p.Count - 1, Name: "required WASI", Command: "bash cloud/setup.sh --wasi-sdk && source <setup env.sh> && ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 adamic-gate shard -index " + strconv.Itoa(p.Count-1) + " -count " + strconv.Itoa(p.Count) + " -out <dir>"}
+	requirement := &wasiRequirement{Shard: p.Count - 1, Name: "required WASI", Command: `bash cloud/setup.sh --wasi-sdk && source "${ADAMIC_TOOLS:-/opt/adamic-tools}/env.sh" && ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 adamic-gate shard -index ` + strconv.Itoa(p.Count-1) + " -count " + strconv.Itoa(p.Count) + " -out <dir>"}
 	found := map[string]bool{}
 	for i := range p.Units {
 		u := &p.Units[i]
@@ -272,13 +300,22 @@ func wasiReady() error {
 	if sysroot == "" {
 		return fmt.Errorf("required WASI shard refuses to start: WASI_SYSROOT missing from setup env.sh")
 	}
-	for _, path := range []string{filepath.Join(sysroot, "include", "stdlib.h"), filepath.Join(sysroot, "lib", "wasm32-wasi", "libc.a"), filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin", "clang")} {
+	headerFound := false
+	for _, header := range []string{filepath.Join(sysroot, "include", "stdlib.h"), filepath.Join(sysroot, "include", "wasm32-wasi", "stdlib.h")} {
+		if info, err := os.Stat(header); err == nil && info.Mode().IsRegular() {
+			headerFound = true
+		}
+	}
+	if !headerFound {
+		return fmt.Errorf("required WASI shard refuses to start: SDK stdlib.h missing in %s", sysroot)
+	}
+	for _, path := range []string{filepath.Join(sysroot, "lib", "wasm32-wasi", "libc.a"), filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin", "clang"), filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin", "wasm-ld")} {
 		info, err := os.Stat(path)
 		if err != nil || !info.Mode().IsRegular() {
 			return fmt.Errorf("required WASI shard refuses to start: SDK missing %s", path)
 		}
-		if filepath.Base(path) == "clang" && info.Mode().Perm()&0111 == 0 {
-			return fmt.Errorf("WASI SDK clang is not executable: %s", path)
+		if (filepath.Base(path) == "clang" || filepath.Base(path) == "wasm-ld") && info.Mode().Perm()&0111 == 0 {
+			return fmt.Errorf("WASI SDK tool is not executable: %s", path)
 		}
 	}
 	return nil

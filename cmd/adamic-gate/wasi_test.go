@@ -24,6 +24,9 @@ func TestWASISourceGates(t *testing.T) {
 	}
 	check(`func TestProbe(t *testing.T) { if os.Getenv("ADAMIC_ORACLE_WASI") != "1" { t.Skip("opt in") } }`, true)
 	check(`func TestProbe(t *testing.T) { root := os.Getenv("WASI_SYSROOT"); if root == "" { t.Skip("missing") } }`, true)
+	check(`func TestProbe(t *testing.T) { root := os.Getenv("WASI_SYSROOT"); if root == "" { t.Skip("missing") }; if err := probe(); err != nil { t.Skip("tool missing") }; if err := compile(root); err != nil { t.Fatal(err) } }`, true)
+	check(`func TestProbe(t *testing.T) { root := os.Getenv("WASI_SYSROOT"); if root == "" { t.Skip("missing") }; flags := append([]string{}, root); if len(flags) == 0 { t.Fatal("empty") } }`, true)
+	check(`func TestProbe(t *testing.T) { disabled := strings.Contains(os.Getenv("NEW_WASI"), "no"); if disabled { t.Skip("disabled") } }`, false)
 	check(`func TestProbe(t *testing.T) { if strings.Contains(os.Getenv("NEW_WASI"), "yes") { t.Skip("missing") } }`, false)
 	check(`func TestProbe(t *testing.T) { if _, ok := os.LookupEnv("NEW_WASI"); !ok { t.Skip("missing") } }`, false)
 	check(`func helper(t *testing.T) { if os.Getenv("NEW_WASI") == "" { t.Skip("missing") } }`, false)
@@ -58,13 +61,42 @@ func TestWASIPreflight(t *testing.T) {
 	if wasiReady() == nil {
 		t.Fatal("missing SDK accepted")
 	}
-	for _, name := range []string{"share/wasi-sysroot/include/stdlib.h", "share/wasi-sysroot/lib/wasm32-wasi/libc.a", "bin/clang"} {
+	for _, name := range []string{"share/wasi-sysroot/include/stdlib.h", "share/wasi-sysroot/lib/wasm32-wasi/libc.a", "bin/clang", "bin/wasm-ld"} {
 		path := filepath.Join(sdk, name)
 		os.MkdirAll(filepath.Dir(path), 0700)
 		os.WriteFile(path, []byte("probe"), 0700)
 	}
 	if err := wasiReady(); err != nil {
 		t.Fatal(err)
+	}
+	for _, name := range []string{"ADAMIC_TEST_WASI", "ADAMIC_ORACLE_WASI", "WASI_SYSROOT"} {
+		saved := os.Getenv(name)
+		os.Setenv(name, "")
+		if wasiReady() == nil {
+			t.Fatalf("missing %s accepted", name)
+		}
+		os.Setenv(name, saved)
+	}
+	for _, name := range []string{"share/wasi-sysroot/include/stdlib.h", "share/wasi-sysroot/lib/wasm32-wasi/libc.a", "bin/clang", "bin/wasm-ld"} {
+		path := filepath.Join(sdk, name)
+		os.Remove(path)
+		if wasiReady() == nil {
+			t.Fatalf("missing SDK component %s accepted", name)
+		}
+		os.WriteFile(path, []byte("probe"), 0700)
+	}
+	clang := filepath.Join(sdk, "bin", "clang")
+	os.Chmod(clang, 0600)
+	if wasiReady() == nil {
+		t.Fatal("nonexecutable SDK compiler accepted")
+	}
+	os.Chmod(clang, 0700)
+	legacy := filepath.Join(root, "include", "stdlib.h")
+	multiarch := filepath.Join(root, "include", "wasm32-wasi", "stdlib.h")
+	os.MkdirAll(filepath.Dir(multiarch), 0700)
+	os.Rename(legacy, multiarch)
+	if err := wasiReady(); err != nil {
+		t.Fatalf("SDK 27 multiarch headers refused: %v", err)
 	}
 }
 
@@ -76,6 +108,7 @@ func TestWASICompilerSelectors(t *testing.T) {
 }
 
 func TestWASISDKResumeIdentity(t *testing.T) {
+	t.Setenv("ADAMIC_TOOLS", "")
 	sdk := t.TempDir()
 	root := filepath.Join(sdk, "share", "wasi-sysroot")
 	os.MkdirAll(root, 0700)
