@@ -67,12 +67,26 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 	if l.jsonDecodeContainsNull(rootType, map[*checker.Type]bool{}) {
 		return schema, &jsonDecodeNullableNotYet{NotYet{Where: l.program.Where(node), What: "decodeJson<" + l.checker.TypeToString(rootType) + "> containing null"}}
 	}
+	return l.jsonDecodeSchema(node, rootType, false, l.constant)
+}
+
+// jsonDecodeSchema is the one checker-type descriptor builder. Boundary mode
+// preserves undefined for fields; JSON decoding keeps its existing refusal.
+func (l *lowering) jsonDecodeSchema(node *ast.Node, rootType *checker.Type, boundary bool, intern func(string) int) (ir.JSONDecodeSchema, error) {
+	schema := ir.JSONDecodeSchema{}
 	seen := map[*checker.Type]int{}
 	var visit func(*checker.Type) (int, error)
 	refuse := func(t *checker.Type) error {
 		return &Refused{Where: l.program.Where(node), What: "decodeJson cannot prove " + l.checker.TypeToString(t) + " is JSON data", Fix: "name a data type made of JSON scalars, arrays, tuples and plain fields; give object unions one distinct literal discriminant"}
 	}
 	visit = func(t *checker.Type) (int, error) {
+		if boundary {
+			t = l.concrete(t)
+			held, _ := l.representation(t)
+			if l.weakTarget(t) != nil || held == ir.Weak {
+				return 0, refuse(t)
+			}
+		}
 		// An open generic is refused even if it has a data constraint.
 		if t.Flags()&checker.TypeFlagsTypeParameter != 0 {
 			return 0, refuse(t)
@@ -85,12 +99,21 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 		schema.Nodes = append(schema.Nodes, ir.JSONDecodeNode{})
 		n := ir.JSONDecodeNode{Expected: l.checker.TypeToString(t)}
 		flags := t.Flags()
-		if literal, of, ok := l.literalConstant(t); ok {
+		var literal ir.Expression
+		var of ir.Type
+		var ok bool
+		if flags&checker.TypeFlagsStringLiteral != 0 {
+			text, isText := t.AsLiteralType().Value().(string)
+			literal, of, ok = ir.StringConstant{Index: intern(text)}, ir.String, isText
+		} else {
+			literal, of, ok = l.literalConstant(t)
+		}
+		if ok {
 			n.Kind = "literal"
 			n.Of = of
 			switch v := literal.(type) {
 			case ir.StringConstant:
-				n.Literal = l.result.Strings[v.Index]
+				n.Literal = t.AsLiteralType().Value().(string)
 				n.LiteralUnits = ir.JSONLiteralUnits(n.Literal)
 			case ir.NumberConstant:
 				n.Number = v.Value
@@ -104,6 +127,8 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 			case ir.BooleanConstant:
 				n.Boolean = v.Value
 			}
+		} else if boundary && flags&checker.TypeFlagsUndefined != 0 {
+			n.Kind = "undefined"
 		} else if flags&checker.TypeFlagsNumber != 0 {
 			n.Kind = "number"
 			n.Of = ir.Number
@@ -116,7 +141,7 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 		} else if flags&checker.TypeFlagsUnion != 0 {
 			n.Kind = "union"
 			of, ok := l.representation(t)
-			if !ok {
+			if !ok && !boundary {
 				return 0, refuse(t)
 			}
 			n.Of = of
@@ -130,11 +155,11 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 				k := schema.Nodes[child].Kind
 				if k == "object" {
 					objects = append(objects, member)
-				} else if k != "null" && k != "literal" && k != "number" && k != "string" && k != "boolean" {
+				} else if !boundary && k != "null" && k != "literal" && k != "number" && k != "string" && k != "boolean" {
 					return 0, refuse(t)
 				}
 			}
-			if len(objects) > 0 {
+			if !boundary && len(objects) > 0 {
 				if len(objects)+1 < len(n.Children) || len(objects) == 1 && len(n.Children) != 2 {
 					return 0, refuse(t)
 				}
@@ -198,7 +223,7 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 					}
 					ft := l.checker.GetTypeOfSymbol(field)
 					optional := field.Flags&ast.SymbolFlagsOptional != 0
-					if optional && ft.Flags()&checker.TypeFlagsUnion != 0 {
+					if !boundary && optional && ft.Flags()&checker.TypeFlagsUnion != 0 {
 						members := []*checker.Type{}
 						for _, member := range ft.Types() {
 							if member.Flags()&checker.TypeFlagsUndefined != 0 {
