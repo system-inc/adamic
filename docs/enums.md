@@ -3,6 +3,9 @@
 The current decision is [Numeric enums are open](#numeric-enums-are-open).
 It supersedes the numeric closed-domain and flag-domain decisions recorded below.
 The earlier decisions and their verification records are retained as history.
+The [literal-tag follow-up](#literal-tag-narrowing-follow-up-october-7) records
+a partial implementation of the October 7 narrowing ruling and its remaining
+checked-view boundaries.
 
 Decision for Kirk, October 6, 2026: admit constant-valued numeric and string
 enums, const enums, and enum member types. Keep enum values a closed union of
@@ -699,3 +702,37 @@ never binding in both backends. Removing that recovery makes
 `TestNumericEnumNeverPathsPinned/index` fail at lowering, without a Go or C build
 failure. `TestNumericEnumsAreOpen/coalesce` preserves optional enum Map values
 through nullish coalescing; absence is checked separately from numeric values.
+
+## Literal tag narrowing follow-up, October 7
+
+The ruling by @system_adamic permits numeric member tags to narrow object unions
+by value, including `===`, `!==`, switches, and marker aliases such as `FirstX`.
+An unrelated open numeric enum field in a variant is no reason to reject that
+refinement. `enums_tag_narrowing.a` holds these operations to independent Node,
+including literal construction, an exact class and an existing checked downcast.
+
+An explicit numeric enum default remains reachable after all declared values
+are excluded. It runs normally until an actual `never` read inserts the existing
+runtime check. The fixture `enums_tag_never.a` prints `default` before stopping
+with exit 70 and exactly:
+
+```text
+adamic: panic: unreachable value 42 for numeric enum SyntaxKind
+```
+
+This follow-up is partial. The checker represents a singleton numeric enum and
+its member with the same type. Its open value can overlap another variant's tag
+without satisfying that variant's payload. That ambiguous refinement still has
+a precise `adamic/enum-tag` refusal. Removing it requires checked object views
+that validate the actual storage representation. Native primitive object slots
+are untagged `adamic_value` unions; an experimental read as an `ir.Union` was
+invalid and failed under ASan. That experiment was removed. No native emitter,
+IR representation or object-view infrastructure was changed by this unit.
+
+The source checker's object-union `never` remainder is also not rewritten to a
+full object type here. Numeric enum value assertions retain their existing loud
+checks. Implicit switch defaults retain the preceding checked-stop contract.
+These limits must be resolved before claiming the complete October 7 ruling.
+
+Validation, meter counts and the three independently caught mutants are recorded
+in [the unit report](verification/enum-tag-narrowing.md).
