@@ -278,3 +278,17 @@ The day 3 proof of unchanged parser.ts running natively is **not achieved**.
 Regressions live in `TestTscNamespaceDeclarationShapes`. All five accepted
 shapes are also oracle fixtures. The [validation report](../stage3/namespaces/REPORT.md) records commands,
 outputs, commits, mutants and the setup retry.
+
+## Original-source fixtures after the fixture branch merge
+
+The fixture branch a75ba00 is merged with a merge commit. Its twelve unchanged
+slices cover all eleven census declarations, including the type-only Status
+namespace. All twelve were built at the base, each of the six namespace steps,
+and the merge. The accepted count moves 1 -> 2 -> 3 -> 3 -> 4 -> 4 -> 4;
+the fixture branch merge keeps it at 4. Singleton state adds Parser countNode,
+enums add Status, and mutable exports add Debug shouldLog. BuilderState
+releaseCache already compiled on the base. Every successful native execution
+matches independent Node; the merged successes also pass sanitizers and leak
+checks. These are selected real executable bodies, stronger than normalized
+shapes but weaker than complete namespace or parser.ts support. See the
+[per-step matrix and all twelve outcomes](../stage3/namespaces/REAL_FIXTURES.md).
