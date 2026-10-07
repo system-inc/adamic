@@ -126,3 +126,10 @@ git push origin coverage/nbody-speed
 ```
 
 The first push succeeded. The second records the completed missing-slot path audit and broad gate result.
+
+Removed trailing spaces from blank diagnostic lines in the saved gate log (the raw log remains in /tmp/adamic-gate/nbody-gate.log), then ran git diff --check and committed the artifact formatting correction:
+
+```bash
+git commit -m "Trim blank-line whitespace in the saved gate log"
+git push origin coverage/nbody-speed
+```
