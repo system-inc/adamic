@@ -2,8 +2,8 @@
 // The full 0.1 library (docs/0.1.md) replaces es2024 with Adamic's own; until then, this.
 
 declare const console: {
-	log(message: string): void;
-	error(message: string): void;
+	log(message: string | null | undefined): void;
+	error(message: string | null | undefined): void;
 };
 
 // The supported process surface. Environment and stream observations are read-only.

@@ -1,0 +1,8 @@
+--- FAIL: TestRecordsAgainstNode (1.10s)
+    --- FAIL: TestRecordsAgainstNode/semantics (0.15s)
+        record_test.go:75: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+        record_test.go:83: Node comparison differs: native 34353 bytes, Node 34347 bytes; first difference at 4256
+    record_test.go:89: Object.getOwnPropertyNames(Object.prototype) on Node v24.19.0: constructor, __defineGetter__, __defineSetter__, hasOwnProperty, __lookupGetter__, __lookupSetter__, isPrototypeOf, propertyIsEnumerable, toString, valueOf, __proto__, toLocaleString
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.112s
+FAIL

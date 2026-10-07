@@ -57,7 +57,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
 	builder.WriteString("const adamicCallee = (object, name) => (object === performance || object === process.stdout._handle) ? { code: (closure, values) => object[name](...values) } : Object.hasOwn(object, name) ? object[name] : { code: (closure, values) => object[name](object, ...values) };\n")
-	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
+	builder.WriteString("const adamicOptionalCall = (object, name, values) => object == null ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
 	// map reads the length once, as JavaScript's does; an array the callback shrinks would leave a hole,

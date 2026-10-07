@@ -22,10 +22,17 @@ func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	if value.Type() != ir.String {
-		return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with a non-string argument")
+	if _, null := value.(ir.Null); null {
+		value = ir.StringConstant{Index: l.constant("null")}
+	} else if _, undefined := value.(ir.Undefined); undefined {
+		value = ir.StringConstant{Index: l.constant("undefined")}
+	} else {
+		value = l.spelled(arguments[0], value)
+		if value.Type() != ir.String {
+			return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with a non-string argument")
+		}
 	}
-	return ir.WriteLine{Stream: stream, Value: l.spelled(arguments[0], value)}, nil
+	return ir.WriteLine{Stream: stream, Value: value}, nil
 }
 
 // isPanicCall reports whether an expression is a call to the prelude's panic, which never returns.

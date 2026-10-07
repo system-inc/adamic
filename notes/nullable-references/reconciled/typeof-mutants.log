@@ -1,0 +1,44 @@
+=== RUN   TestTypeOfNullMutant
+=== PAUSE TestTypeOfNullMutant
+=== RUN   TestTypeOfNullSlotPresenceMutant
+=== PAUSE TestTypeOfNullSlotPresenceMutant
+=== CONT  TestTypeOfNullMutant
+=== RUN   TestTypeOfNullMutant/typeof_null.a
+=== PAUSE TestTypeOfNullMutant/typeof_null.a
+=== RUN   TestTypeOfNullMutant/typeof_null_compare.a
+=== PAUSE TestTypeOfNullMutant/typeof_null_compare.a
+=== RUN   TestTypeOfNullMutant/typeof_null_switch.a
+=== PAUSE TestTypeOfNullMutant/typeof_null_switch.a
+=== RUN   TestTypeOfNullMutant/typeof_null_slots.a
+=== PAUSE TestTypeOfNullMutant/typeof_null_slots.a
+=== RUN   TestTypeOfNullMutant/typeof_null_roll.a
+=== PAUSE TestTypeOfNullMutant/typeof_null_roll.a
+=== CONT  TestTypeOfNullMutant/typeof_null.a
+=== CONT  TestTypeOfNullMutant/typeof_null_slots.a
+=== CONT  TestTypeOfNullSlotPresenceMutant
+=== CONT  TestTypeOfNullMutant/typeof_null_switch.a
+=== CONT  TestTypeOfNullMutant/typeof_null_roll.a
+    typeof_null_test.go:61: caught 1 restored observations: Node "opsRoll null object null\n"; mutant "opsRoll null undefined null\n"
+=== CONT  TestTypeOfNullMutant/typeof_null_compare.a
+=== NAME  TestTypeOfNullMutant/typeof_null.a
+    typeof_null_test.go:61: caught 3 restored observations: Node "literal: object\nvariable: object\nfunction: object\nvalues: number boolean string undefined\n"; mutant "literal: undefined\nvariable: undefined\nfunction: undefined\nvalues: number boolean string undefined\n"
+=== NAME  TestTypeOfNullMutant/typeof_null_switch.a
+    typeof_null_test.go:61: caught 3 restored observations: Node "literal object\ncalled once\ncall object\nslot object\nslot object\nstring\nnumber\nundefined\n"; mutant "literal wrong\ncalled once\ncall wrong\nslot wrong\nslot object\nstring\nnumber\nundefined\n"
+=== NAME  TestTypeOfNullSlotPresenceMutant
+    typeof_null_test.go:139: caught: Node "index: object true\nobject slot\nindex: undefined false\nmissing slot\nrelative: object undefined\nmap: object object undefined\npop: object undefined\ngeneric: object\n"; mutant "index: object true\nobject slot\nindex: undefined true\nobject slot\nrelative: object object\nmap: object object object\npop: object object\ngeneric: object\n"
+--- PASS: TestTypeOfNullSlotPresenceMutant (2.18s)
+=== NAME  TestTypeOfNullMutant/typeof_null_slots.a
+    typeof_null_test.go:61: caught 11 restored observations: Node "index: object true\nobject slot\nindex: undefined false\nmissing slot\nrelative: object undefined\nmap: object object undefined\npop: object undefined\ngeneric: object\n"; mutant "index: undefined false\nmissing slot\nindex: undefined false\nmissing slot\nrelative: undefined undefined\nmap: undefined object undefined\npop: undefined undefined\ngeneric: undefined\n"
+=== NAME  TestTypeOfNullMutant/typeof_null_compare.a
+    typeof_null_test.go:61: caught 9 restored observations: Node "literal: true true\nslot: object true true true\nobject branch\nslot: object true true true\nobject branch\nfield: object true\ncontrols: undefined object object function\nabsent: undefined false\nabsent: object true\n"; mutant "literal: false false\nslot: undefined false false false\nwrong branch\nslot: object true true true\nobject branch\nfield: undefined false\ncontrols: undefined object object function\nabsent: undefined false\nabsent: object true\n"
+--- PASS: TestTypeOfNullMutant (0.00s)
+    --- PASS: TestTypeOfNullMutant/typeof_null_roll.a (1.82s)
+    --- PASS: TestTypeOfNullMutant/typeof_null.a (1.83s)
+    --- PASS: TestTypeOfNullMutant/typeof_null_switch.a (2.02s)
+    --- PASS: TestTypeOfNullMutant/typeof_null_slots.a (2.30s)
+    --- PASS: TestTypeOfNullMutant/typeof_null_compare.a (1.28s)
+PASS
+gate cache: native hits=0 misses=10
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.127s

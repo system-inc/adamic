@@ -117,6 +117,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			function.Parameters = append(function.Parameters, local)
 			continue
 		}
+		if l.includesNull(l.checker.GetTypeAtLocation(parameter.Name())) {
+			return l.notYet(parameter, "a defaulted nullable parameter (nullable reference needs an empty-case tag for omitted arguments)")
+		}
 		missing := ir.Maybe(l.result.Locals[local].Type)
 		if !missing.IsMaybe() && !missing.IsReference() {
 			return l.notYet(parameter, "a default for a "+typeName(missing)+" parameter")

@@ -1,0 +1,37 @@
+function stringify<T>(v: T): string | undefined { return JSON.stringify(v); }
+function strings(n: string | null, u: string | undefined): void {
+ console.log(JSON.stringify(n));
+ console.log(JSON.stringify(u));
+ console.log(`${JSON.stringify(u) === undefined}`);
+ console.log(JSON.stringify({n: n, u: u}));
+ console.log(JSON.stringify([n, u]));
+ console.log(stringify<string | null>(n));
+ console.log(stringify<string | undefined>(u));
+}
+function arrays(n: string[] | null, u: string[] | undefined): void {
+ console.log(JSON.stringify(n));
+ console.log(JSON.stringify(u));
+ console.log(JSON.stringify({n: n, u: u}));
+ console.log(JSON.stringify([n, u]));
+}
+function maps(n: Map<string, string> | null, u: Map<string, string> | undefined): void {
+ console.log(JSON.stringify(n));
+ console.log(JSON.stringify(u));
+ console.log(JSON.stringify({n: n, u: u}));
+ console.log(JSON.stringify([n, u]));
+}
+function functions(n: (() => string) | null, u: (() => string) | undefined): void {
+ console.log(JSON.stringify(n));
+ console.log(JSON.stringify(u));
+ console.log(JSON.stringify({n: n, u: u}));
+ console.log(JSON.stringify([n, u]));
+}
+strings(null, undefined);
+strings(`built${1}`, `built${2}`);
+strings('', '');
+arrays(null, undefined);
+arrays(['a'], ['b']);
+maps(null, undefined);
+maps(new Map<string, string>(), new Map<string, string>());
+functions(null, undefined);
+functions(() => 'a', () => 'b');

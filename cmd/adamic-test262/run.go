@@ -233,6 +233,7 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 		fmt.Fprint(e.log, diagnostics[index])
 		report.add(results[index])
 		if !classifyOnly {
+			// Retain every result, not just aggregate reasons, for before/after audits.
 			encoded, err := json.Marshal(results[index])
 			if err != nil {
 				return report, err
@@ -397,9 +398,6 @@ func (e *engine) attempt(test classified) result {
 		Node:          nodeRun,
 		Native:        nativeRun,
 	})
-	if decided.Kind != outcomePass {
-		fmt.Fprintf(e.log, "%s: %s; native stderr: %s; Node stderr: %s\n", test.Path, decided.Reason, firstLine(nativeRun.Stderr), firstLine(nodeRun.Stderr))
-	}
 	base.Kind = decided.Kind
 	base.Reason = decided.Reason
 	// The existing generic harness checks Error ancestry, not constructor
