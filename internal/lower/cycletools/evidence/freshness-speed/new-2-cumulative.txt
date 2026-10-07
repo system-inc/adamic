@@ -1,0 +1,433 @@
+File: final
+Build ID: 228ab6961c345b7aeff926ec4c42052fec5ee750
+Type: cpu
+Time: 2026-10-07 23:05:04 UTC
+Duration: 1.26s, Total samples = 1.52s (120.39%)
+Showing nodes accounting for 1.52s, 100% of 1.52s total
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%      1.14s 75.00%  github.com/system-inc/adamic/internal/lower.Lower
+         0     0%     0%      1.14s 75.00%  main.main
+         0     0%     0%      1.13s 74.34%  runtime.main
+         0     0%     0%      0.55s 36.18%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+         0     0%     0%      0.55s 36.18%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+         0     0%     0%      0.55s 36.18%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+         0     0%     0%      0.55s 36.18%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+         0     0%     0%      0.51s 33.55%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+         0     0%     0%      0.51s 33.55%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetTypeAtLocation
+     0.01s  0.66%  0.66%      0.51s 33.55%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionEx
+         0     0%  0.66%      0.51s 33.55%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfNode
+         0     0%  0.66%      0.51s 33.55%  github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func1
+         0     0%  0.66%      0.50s 32.89%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionWorker
+         0     0%  0.66%      0.50s 32.89%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getRegularTypeOfExpression
+         0     0%  0.66%      0.50s 32.89%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfExpression
+         0     0%  0.66%      0.48s 31.58%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild
+         0     0%  0.66%      0.48s 31.58%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild (inline)
+         0     0%  0.66%      0.48s 31.58%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild
+         0     0%  0.66%      0.46s 30.26%  github.com/system-inc/adamic/internal/lower.(*lowering).refuse
+         0     0%  0.66%      0.44s 28.95%  github.com/system-inc/adamic/internal/lower.(*lowering).findCycles
+         0     0%  0.66%      0.41s 26.97%  github.com/system-inc/adamic/internal/lower.(*cycleFinder).slotsOf
+         0     0%  0.66%      0.40s 26.32%  github.com/system-inc/adamic/internal/fresh.ProveWrites
+         0     0%  0.66%      0.40s 26.32%  github.com/system-inc/adamic/internal/lower.(*cycleFinder).unproven
+         0     0%  0.66%      0.39s 25.66%  github.com/system-inc/adamic/internal/fresh.(*freshness).analyze
+         0     0%  0.66%      0.38s 25.00%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ArrayLiteralExpression).ForEachChild (inline)
+         0     0%  0.66%      0.34s 22.37%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionForMutableLocation
+     0.01s  0.66%  1.32%      0.34s 22.37%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getContextualType
+         0     0%  1.32%      0.34s 22.37%  runtime.systemstack
+         0     0%  1.32%      0.32s 21.05%  github.com/system-inc/adamic/internal/lower.(*lowering).enumRefusal
+         0     0%  1.32%      0.29s 19.08%  runtime.gcBgMarkWorker
+         0     0%  1.32%      0.29s 19.08%  runtime.gcBgMarkWorker.func2
+         0     0%  1.32%      0.29s 19.08%  runtime.gcDrain
+     0.01s  0.66%  1.97%      0.27s 17.76%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkArrayLiteral
+         0     0%  1.97%      0.26s 17.11%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ObjectLiteralExpression).ForEachChild (inline)
+         0     0%  1.97%      0.26s 17.11%  github.com/microsoft/TypeScript/tsc/internal/ast.(*PropertyAssignment).ForEachChild
+         0     0%  1.97%      0.25s 16.45%  github.com/system-inc/adamic/internal/lower.(*lowering).enumObjectView
+         0     0%  1.97%      0.23s 15.13%  github.com/system-inc/adamic/internal/fresh.facts[go.shape.int32,go.shape.map[string]github.com/system-inc/adamic/internal/fresh.value].changed.func1 (inline)
+     0.01s  0.66%  2.63%      0.23s 15.13%  github.com/system-inc/adamic/internal/fresh.facts[go.shape.int32,go.shape.map[string]github.com/system-inc/adamic/internal/fresh.value].changed.func1.func1
+         0     0%  2.63%      0.23s 15.13%  github.com/system-inc/adamic/internal/lower.(*lowering).statement
+         0     0%  2.63%      0.23s 15.13%  github.com/system-inc/adamic/internal/lower.(*lowering).statements
+         0     0%  2.63%      0.22s 14.47%  github.com/system-inc/adamic/internal/lower.(*lowering).expression
+         0     0%  2.63%      0.21s 13.82%  github.com/system-inc/adamic/internal/fresh.(*state).join
+         0     0%  2.63%      0.21s 13.82%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+         0     0%  2.63%      0.21s 13.82%  github.com/system-inc/adamic/internal/lower.(*lowering).value
+         0     0%  2.63%      0.19s 12.50%  github.com/system-inc/adamic/internal/lower.(*lowering).variables
+         0     0%  2.63%      0.18s 11.84%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkPropertyAssignment
+         0     0%  2.63%      0.18s 11.84%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isConstContext
+         0     0%  2.63%      0.18s 11.84%  github.com/system-inc/adamic/internal/fresh.(*analysis).block
+         0     0%  2.63%      0.18s 11.84%  github.com/system-inc/adamic/internal/fresh.(*analysis).run
+         0     0%  2.63%      0.18s 11.84%  github.com/system-inc/adamic/internal/lower.(*lowering).arrayLiteral
+         0     0%  2.63%      0.18s 11.84%  runtime.gcDrainMarkWorkerIdle (inline)
+         0     0%  2.63%      0.17s 11.18%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkObjectLiteral
+         0     0%  2.63%      0.16s 10.53%  github.com/system-inc/adamic/internal/flow.EachSuccessor
+         0     0%  2.63%      0.16s 10.53%  github.com/system-inc/adamic/internal/fresh.(*analysis).flowOut
+         0     0%  2.63%      0.16s 10.53%  github.com/system-inc/adamic/internal/fresh.(*analysis).flowOut.func1
+         0     0%  2.63%      0.16s 10.53%  github.com/system-inc/adamic/internal/fresh.(*freshness).analyze.func1
+     0.01s  0.66%  3.29%      0.15s  9.87%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).mapTypeEx
+         0     0%  3.29%      0.15s  9.87%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseStringWidening
+         0     0%  3.29%      0.15s  9.87%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseWidening
+         0     0%  3.29%      0.14s  9.21%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfPropertyOfContextualTypeEx (inline)
+         0     0%  3.29%      0.14s  9.21%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfPropertyOfContextualTypeEx.func1
+         0     0%  3.29%      0.14s  9.21%  github.com/system-inc/adamic/internal/fresh.(*state).store
+         0     0%  3.29%      0.14s  9.21%  runtime.scanSpan
+         0     0%  3.29%      0.13s  8.55%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetContextualType
+         0     0%  3.29%      0.13s  8.55%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getContextualTypeForElementExpression
+         0     0%  3.29%      0.13s  8.55%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getContextualTypeForObjectLiteralElement
+         0     0%  3.29%      0.13s  8.55%  github.com/system-inc/adamic/internal/fresh.(*state).join-range2
+     0.01s  0.66%  3.95%      0.13s  8.55%  github.com/system-inc/adamic/internal/fresh.(*value).merge
+     0.01s  0.66%  4.61%      0.13s  8.55%  runtime.mapIterStart
+     0.03s  1.97%  6.58%      0.13s  8.55%  runtime.scanObject
+         0     0%  6.58%      0.12s  7.89%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getContextualTypeForElementExpression.func1
+         0     0%  6.58%      0.12s  7.89%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfPropertyOfContextualType
+         0     0%  6.58%      0.12s  7.89%  github.com/system-inc/adamic/internal/lower.(*lowering).objectLiteral
+         0     0%  6.58%      0.11s  7.24%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getApparentTypeOfContextualType
+         0     0%  6.58%      0.11s  7.24%  runtime.gcDrainMarkWorkerDedicated (inline)
+     0.07s  4.61% 11.18%      0.11s  7.24%  runtime.tryDeferToSpanScan
+         0     0% 11.18%      0.10s  6.58%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+         0     0% 11.18%      0.10s  6.58%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpression (inline)
+     0.01s  0.66% 11.84%      0.10s  6.58%  runtime.mallocgc
+         0     0% 11.84%      0.09s  5.92%  github.com/system-inc/adamic/internal/fresh.(*state).recent
+         0     0% 11.84%      0.08s  5.26%  github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild
+     0.01s  0.66% 12.50%      0.08s  5.26%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfSymbol
+     0.01s  0.66% 13.16%      0.08s  5.26%  github.com/microsoft/TypeScript/tsc/internal/jsnum.FromString
+     0.04s  2.63% 15.79%      0.08s  5.26%  internal/runtime/maps.(*Iter).Next
+         0     0% 15.79%      0.07s  4.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkIdentifier
+         0     0% 15.79%      0.07s  4.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkNonNullExpression
+         0     0% 15.79%      0.07s  4.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getContextualTypeForInitializerExpression
+         0     0% 15.79%      0.07s  4.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getContextualTypeForVariableLikeDeclaration
+         0     0% 15.79%      0.07s  4.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getQuickTypeOfExpression
+         0     0% 15.79%      0.07s  4.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromIndexInfosOfContextualType
+     0.01s  0.66% 16.45%      0.07s  4.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfConcretePropertyOfContextualType
+     0.01s  0.66% 17.11%      0.07s  4.61%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfVariableOrParameterOrProperty
+         0     0% 17.11%      0.07s  4.61%  github.com/system-inc/adamic/internal/fresh.(*state).recent-range2
+     0.02s  1.32% 18.42%      0.07s  4.61%  internal/runtime/maps.(*Iter).Init
+     0.06s  3.95% 22.37%      0.07s  4.61%  runtime.findObject
+         0     0% 22.37%      0.06s  3.95%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+         0     0% 22.37%      0.06s  3.95%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetTypeOfSymbol
+         0     0% 22.37%      0.06s  3.95%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).findApplicableIndexInfo
+         0     0% 22.37%      0.06s  3.95%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeNode
+         0     0% 22.37%      0.06s  3.95%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isApplicableIndexType
+     0.02s  1.32% 23.68%      0.06s  3.95%  github.com/system-inc/adamic/internal/fresh.(*analysis).value
+         0     0% 23.68%      0.06s  3.95%  github.com/system-inc/adamic/internal/fresh.(*objectFacts).add
+         0     0% 23.68%      0.06s  3.95%  github.com/system-inc/adamic/internal/fresh.value.copy (inline)
+         0     0% 23.68%      0.06s  3.95%  github.com/system-inc/adamic/internal/lower.(*lowering).genericFunction
+         0     0% 23.68%      0.06s  3.95%  runtime.mapaccess1_fast64
+         0     0% 23.68%      0.06s  3.95%  runtime.mapaccess2_fast64
+     0.01s  0.66% 24.34%      0.05s  3.29%  gcWriteBarrier
+     0.01s  0.66% 25.00%      0.05s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNumberLiteralType
+         0     0% 25.00%      0.05s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfType (inline)
+         0     0% 25.00%      0.05s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfTypeEx
+         0     0% 25.00%      0.05s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolOfDeclaration
+     0.01s  0.66% 25.66%      0.05s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeNodeWorker
+         0     0% 25.66%      0.05s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfVariableOrParameterOrPropertyWorker
+     0.01s  0.66% 26.32%      0.05s  3.29%  github.com/microsoft/TypeScript/tsc/internal/checker.isNumericLiteralName
+         0     0% 26.32%      0.05s  3.29%  github.com/system-inc/adamic/internal/fresh.(*facts[go.shape.int32,go.shape.bool]).set (inline)
+         0     0% 26.32%      0.05s  3.29%  github.com/system-inc/adamic/internal/fresh.(*state).escape
+     0.02s  1.32% 27.63%      0.05s  3.29%  github.com/system-inc/adamic/internal/fresh.insert[go.shape.int32,go.shape.bool]
+         0     0% 27.63%      0.05s  3.29%  github.com/system-inc/adamic/internal/lower.(*lowering).regexGroups
+         0     0% 27.63%      0.05s  3.29%  github.com/system-inc/adamic/internal/lower.(*lowering).regexUnsupportedUse
+         0     0% 27.63%      0.05s  3.29%  internal/runtime/maps.(*Map).growToSmall
+         0     0% 27.63%      0.05s  3.29%  internal/runtime/maps.newGroups (inline)
+         0     0% 27.63%      0.05s  3.29%  internal/runtime/maps.newarray
+         0     0% 27.63%      0.05s  3.29%  runtime.(*mcache).nextFree
+         0     0% 27.63%      0.05s  3.29%  runtime.(*mcache).refill
+     0.01s  0.66% 28.29%      0.05s  3.29%  runtime.mapaccess1_faststr
+     0.01s  0.66% 28.95%      0.05s  3.29%  runtime.mapaccess2_faststr
+         0     0% 28.95%      0.05s  3.29%  runtime.newarray
+         0     0% 28.95%      0.04s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkBinaryExpression (inline)
+         0     0% 28.95%      0.04s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkBinaryLikeExpression
+         0     0% 28.95%      0.04s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkGrammarNumericLiteral
+         0     0% 28.95%      0.04s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkPropertyAccessExpression
+         0     0% 28.95%      0.04s  2.63%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeOperatorNode
+         0     0% 28.95%      0.04s  2.63%  github.com/microsoft/TypeScript/tsc/internal/core.(*LinkStore[go.shape.*github.com/microsoft/TypeScript/tsc/internal/ast.Node,go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/checker.resolvedType *github.com/microsoft/TypeScript/tsc/internal/checker.Type; github.com/microsoft/TypeScript/tsc/internal/checker.outerTypeParameters []*github.com/microsoft/TypeScript/tsc/internal/checker.Type }]).Get
+         0     0% 28.95%      0.04s  2.63%  github.com/system-inc/adamic/internal/fresh.(*state).escapeObject
+         0     0% 28.95%      0.04s  2.63%  github.com/system-inc/adamic/internal/lower.(*lowering).classViewRefusal
+         0     0% 28.95%      0.04s  2.63%  github.com/system-inc/adamic/internal/lower.(*lowering).findCycles.func1
+         0     0% 28.95%      0.04s  2.63%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody
+         0     0% 28.95%      0.04s  2.63%  runtime.(*mcentral).cacheSpan
+     0.04s  2.63% 31.58%      0.04s  2.63%  runtime.asyncPreempt
+     0.03s  1.97% 33.55%      0.04s  2.63%  runtime.greyobject
+         0     0% 33.55%      0.04s  2.63%  runtime.mapaccess1
+     0.02s  1.32% 34.87%      0.04s  2.63%  runtime.mapaccess2
+         0     0% 34.87%      0.04s  2.63%  runtime.wbBufFlush
+         0     0% 34.87%      0.04s  2.63%  runtime.wbBufFlush.func1
+     0.02s  1.32% 36.18%      0.04s  2.63%  runtime.wbBufFlush1
+         0     0% 36.18%      0.04s  2.63%  strings.TrimFunc
+         0     0% 36.18%      0.03s  1.97%  github.com/microsoft/TypeScript/tsc/internal/ast.(*BinaryExpression).ForEachChild
+         0     0% 36.18%      0.03s  1.97%  github.com/microsoft/TypeScript/tsc/internal/ast.(*CallExpression).ForEachChild
+     0.02s  1.32% 37.50%      0.03s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getLateBoundSymbol
+         0     0% 37.50%      0.03s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isDeprecatedSymbol
+         0     0% 37.50%      0.03s  1.97%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).pushCachedContextualType (inline)
+     0.01s  0.66% 38.16%      0.03s  1.97%  github.com/microsoft/TypeScript/tsc/internal/jsnum.Number.String
+         0     0% 38.16%      0.03s  1.97%  github.com/microsoft/TypeScript/tsc/internal/jsnum.isStrWhiteSpace
+         0     0% 38.16%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.(*analysis).define
+         0     0% 38.16%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.(*facts[go.shape.int32,go.shape.map[string]github.com/system-inc/adamic/internal/fresh.value]).set (inline)
+         0     0% 38.16%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.(*state).closeEscapes
+         0     0% 38.16%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.(*state).closeEscapes.func1
+         0     0% 38.16%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.(*state).join-range1
+         0     0% 38.16%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.(*value).addStrong (inline)
+         0     0% 38.16%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.branch[go.shape.int32,go.shape.bool] (inline)
+     0.01s  0.66% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.branch[go.shape.int32,go.shape.map[string]github.com/system-inc/adamic/internal/fresh.value] (inline)
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.facts[go.shape.int,go.shape.struct { github.com/system-inc/adamic/internal/fresh.strong github.com/system-inc/adamic/internal/fresh.objects; github.com/system-inc/adamic/internal/fresh.weak github.com/system-inc/adamic/internal/fresh.objects }].changed.func1 (inline)
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.facts[go.shape.int,go.shape.struct { github.com/system-inc/adamic/internal/fresh.strong github.com/system-inc/adamic/internal/fresh.objects; github.com/system-inc/adamic/internal/fresh.weak github.com/system-inc/adamic/internal/fresh.objects }].changed.func1.func1
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.facts[go.shape.int32,go.shape.bool].changed.func1 (inline)
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.facts[go.shape.int32,go.shape.bool].changed.func1.func1
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.insert[go.shape.int32,go.shape.map[string]github.com/system-inc/adamic/internal/fresh.value]
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/fresh.objects.add (inline)
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/lower.(*lowering).declareModule
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/lower.(*lowering).functionBody
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction
+         0     0% 38.82%      0.03s  1.97%  github.com/system-inc/adamic/internal/lower.(*lowering).tupleType
+         0     0% 38.82%      0.03s  1.97%  internal/chacha8rand.(*State).Refill
+     0.03s  1.97% 40.79%      0.03s  1.97%  internal/chacha8rand.block
+     0.03s  1.97% 42.76%      0.03s  1.97%  internal/runtime/maps.memHashAES
+         0     0% 42.76%      0.03s  1.97%  internal/runtime/maps.rand
+         0     0% 42.76%      0.03s  1.97%  runtime.(*mcentral).grow
+         0     0% 42.76%      0.03s  1.97%  runtime.(*mspan).initHeapBits
+         0     0% 42.76%      0.03s  1.97%  runtime.mallocgcSmallScanNoHeader
+     0.02s  1.32% 44.08%      0.03s  1.97%  runtime.mallocgcSmallScanNoHeaderSC4
+     0.01s  0.66% 44.74%      0.03s  1.97%  runtime.mallocgcSmallScanNoHeaderSC5
+         0     0% 44.74%      0.03s  1.97%  runtime.mapIterNext
+     0.01s  0.66% 45.39%      0.03s  1.97%  runtime.mapassign_fast32
+         0     0% 45.39%      0.03s  1.97%  runtime.mapassign_faststr
+         0     0% 45.39%      0.03s  1.97%  runtime.rand
+     0.01s  0.66% 46.05%      0.03s  1.97%  runtime.scanObjectsSmall
+     0.03s  1.97% 48.03%      0.03s  1.97%  runtime.spanClass.sizeclass (inline)
+         0     0% 48.03%      0.03s  1.97%  strings.TrimLeftFunc (inline)
+     0.01s  0.66% 48.68%      0.03s  1.97%  strings.indexFunc (inline)
+     0.02s  1.32% 50.00%      0.03s  1.97%  unicode.Is
+         0     0% 50.00%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ExpressionStatement).ForEachChild (inline)
+         0     0% 50.00%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ForStatement).ForEachChild
+         0     0% 50.00%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ParenthesizedExpression).ForEachChild (inline)
+         0     0% 50.00%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild (inline)
+         0     0% 50.00%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/ast.(*WhileStatement).ForEachChild (inline)
+         0     0% 50.00%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/ast.IndexOfNode (inline)
+         0     0% 50.00%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetSymbolAtLocation
+     0.02s  1.32% 51.32%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).findContextualNode (inline)
+         0     0% 51.32%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getFlowTypeOfReferenceEx
+         0     0% 51.32%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfObjectType
+         0     0% 51.32%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolAtLocation
+         0     0% 51.32%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtFlowCondition
+     0.01s  0.66% 51.97%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeAtFlowNode
+         0     0% 51.97%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionTypeEx
+     0.01s  0.66% 52.63%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionTypeWorker
+         0     0% 52.63%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateContextualType
+     0.01s  0.66% 53.29%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isConstTypeVariable
+     0.02s  1.32% 54.61%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).maybeTypeOfKind
+     0.01s  0.66% 55.26%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/checker.isFreshLiteralType (inline)
+     0.01s  0.66% 55.92%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/core.Every[go.shape.*uint8] (inline)
+         0     0% 55.92%      0.02s  1.32%  github.com/microsoft/TypeScript/tsc/internal/jsnum.tryParseInt
+         0     0% 55.92%      0.02s  1.32%  github.com/system-inc/adamic/internal/fresh.(*analysis).argument
+         0     0% 55.92%      0.02s  1.32%  github.com/system-inc/adamic/internal/fresh.(*analysis).made
+         0     0% 55.92%      0.02s  1.32%  github.com/system-inc/adamic/internal/fresh.(*analysis).made.func1
+         0     0% 55.92%      0.02s  1.32%  github.com/system-inc/adamic/internal/fresh.(*state).closeEscapes-range1
+         0     0% 55.92%      0.02s  1.32%  github.com/system-inc/adamic/internal/fresh.(*state).join-range3
+         0     0% 55.92%      0.02s  1.32%  github.com/system-inc/adamic/internal/fresh.facts[go.shape.int32,go.shape.bool].get (inline)
+         0     0% 55.92%      0.02s  1.32%  github.com/system-inc/adamic/internal/fresh.facts[go.shape.int32,go.shape.bool].lookup (inline)
+     0.02s  1.32% 57.24%      0.02s  1.32%  github.com/system-inc/adamic/internal/fresh.facts[go.shape.int32,go.shape.bool].node (inline)
+         0     0% 57.24%      0.02s  1.32%  github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod
+         0     0% 57.24%      0.02s  1.32%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverIdentity
+         0     0% 57.24%      0.02s  1.32%  github.com/system-inc/adamic/internal/lower.(*lowering).forOf
+         0     0% 57.24%      0.02s  1.32%  github.com/system-inc/adamic/internal/lower.(*lowering).returnStatement
+         0     0% 57.24%      0.02s  1.32%  github.com/system-inc/adamic/internal/lower.(*lowering).symbol
+         0     0% 57.24%      0.02s  1.32%  internal/runtime/gc/scan.ScanSpanPacked (inline)
+         0     0% 57.24%      0.02s  1.32%  internal/runtime/gc/scan.ScanSpanPackedAVX512
+     0.02s  1.32% 58.55%      0.02s  1.32%  internal/runtime/gc/scan.scanSpanPackedAVX512
+     0.02s  1.32% 59.87%      0.02s  1.32%  internal/runtime/maps.(*groupsReference).group (inline)
+         0     0% 59.87%      0.02s  1.32%  internal/strconv.FormatInt
+         0     0% 59.87%      0.02s  1.32%  internal/strconv.ParseInt
+     0.02s  1.32% 61.18%      0.02s  1.32%  internal/strconv.ParseUint
+         0     0% 61.18%      0.02s  1.32%  runtime.bgsweep
+     0.02s  1.32% 62.50%      0.02s  1.32%  runtime.mallocgcSmallNoScanSC7
+     0.02s  1.32% 63.82%      0.02s  1.32%  runtime.mallocgcSmallScanSlowPath
+     0.02s  1.32% 65.13%      0.02s  1.32%  runtime.memclrNoHeapPointers
+         0     0% 65.13%      0.02s  1.32%  runtime.newobject
+         0     0% 65.13%      0.02s  1.32%  runtime.scanObjectSmall
+         0     0% 65.13%      0.02s  1.32%  runtime.slicebytetostring
+         0     0% 65.13%      0.02s  1.32%  runtime.sweepone
+     0.01s  0.66% 65.79%      0.02s  1.32%  slices.BinarySearchFunc[go.shape.[]*github.com/microsoft/TypeScript/tsc/internal/ast.Node,go.shape.*uint8,go.shape.*uint8]
+         0     0% 65.79%      0.02s  1.32%  strconv.FormatInt (inline)
+         0     0% 65.79%      0.02s  1.32%  strconv.ParseInt
+         0     0% 65.79%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ConditionalExpression).ForEachChild
+         0     0% 65.79%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ForInOrOfStatement).ForEachChild
+     0.01s  0.66% 66.45%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).DeclarationData (inline)
+     0.01s  0.66% 67.11%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ElementList
+         0     0% 67.11%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Elements (inline)
+     0.01s  0.66% 67.76%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).IsTypeOnly (inline)
+         0     0% 67.76%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Symbol (inline)
+     0.01s  0.66% 68.42%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text
+     0.01s  0.66% 69.08%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Type
+         0     0% 69.08%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.(*PropertyAccessExpression).ForEachChild
+         0     0% 69.08%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.CompareNodePositions
+         0     0% 69.08%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.FindAncestor (inline)
+     0.01s  0.66% 69.74%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.GetSourceFileOfNode (inline)
+         0     0% 69.74%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.HasDynamicName
+     0.01s  0.66% 70.39%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.IsDynamicName
+         0     0% 70.39%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.IsExpression
+         0     0% 70.39%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.IsInterfaceDeclaration (inline)
+     0.01s  0.66% 71.05%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.IsObjectLiteralMethod (inline)
+     0.01s  0.66% 71.71%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.IsParenthesizedExpression (inline)
+     0.01s  0.66% 72.37%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.IsPartOfTypeNode
+     0.01s  0.66% 73.03%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.SkipOuterExpressions
+         0     0% 73.03%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/ast.SkipPartiallyEmittedExpressions (inline)
+         0     0% 73.03%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/bundled.LibPath
+         0     0% 73.03%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).IsArrayType
+         0     0% 73.03%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).IsDeprecatedDeclaration
+         0     0% 73.03%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkArrayLiteral.func1
+         0     0% 73.03%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkIndexedAccess
+         0     0% 73.03%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkObjectLiteral.func1
+         0     0% 73.03%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkParenthesizedExpression
+     0.01s  0.66% 73.68%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getCombinedNodeFlagsCached
+     0.01s  0.66% 74.34%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getConditionalFlowTypeOfType
+         0     0% 74.34%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getContextualTypeForConditionalOperand
+     0.01s  0.66% 75.00%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getFreshTypeOfLiteralType
+         0     0% 75.00%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getMergedSymbol (inline)
+         0     0% 75.00%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getOptionalType
+     0.01s  0.66% 75.66%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getParentOfSymbol
+         0     0% 75.66%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getStringLiteralType
+         0     0% 75.66%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolOfNameOrPropertyAccessExpression
+         0     0% 75.66%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFacts (inline)
+     0.01s  0.66% 76.32%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFactsWorker
+         0     0% 76.32%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfPropertyOfType
+         0     0% 76.32%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionType (inline)
+         0     0% 76.32%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getWidenedLiteralLikeTypeForContextualType
+         0     0% 76.32%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getWidenedLiteralType
+         0     0% 76.32%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).hasBindableName
+         0     0% 76.32%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).hasTypeFacts (inline)
+     0.01s  0.66% 76.97%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isArrayType
+         0     0% 76.97%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isGenericTupleType
+         0     0% 76.97%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isInAmbientOrTypeNode (inline)
+         0     0% 76.97%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isInAmbientOrTypeNode.func1 (inline)
+         0     0% 76.97%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTupleLikeType
+         0     0% 76.97%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeAssignableTo (inline)
+         0     0% 76.97%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeRelatedTo
+         0     0% 76.97%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowType
+     0.01s  0.66% 77.63%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).narrowTypeByBinaryExpression
+     0.01s  0.66% 78.29%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).removeMissingType (inline)
+         0     0% 78.29%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).removeSubtypes
+         0     0% 78.29%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).removeSubtypes.func3 (inline)
+         0     0% 78.29%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveAliasWithDeprecationCheck
+         0     0% 78.29%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveEntityName
+     0.01s  0.66% 78.95%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Type).AsLiteralType (inline)
+         0     0% 78.95%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.(*symbolArenaLinkStore[go.shape.589b9887a0480d3642b2bb062e8af53427544c79db9d1f6a8349e93a8ce74449]).Get
+     0.01s  0.66% 79.61%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.isTupleType (inline)
+         0     0% 79.61%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/checker.someType
+     0.01s  0.66% 80.26%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/core.(*PagedLinkStore[go.shape.*uint8]).Get
+     0.01s  0.66% 80.92%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/core.CompareTextRanges (inline)
+         0     0% 80.92%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/core.Find[go.shape.*uint8] (inline)
+         0     0% 80.92%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/scanner.GetTextOfNode
+         0     0% 80.92%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/tspath.GetEncodedRootLength
+         0     0% 80.92%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/tspath.RootedDirectoryPathFromNormalized
+         0     0% 80.92%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/tspath.RootedPathFromNormalized (inline)
+         0     0% 80.92%      0.01s  0.66%  github.com/microsoft/TypeScript/tsc/internal/tspath.TryRootedPathFromNormalized
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/flow.(*Function).NewBlock (inline)
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/flow.(*builder).loop
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/flow.(*builder).statement
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/flow.(*builder).statements (inline)
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/flow.Build
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/fresh.(*analysis).load
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/fresh.(*state).closeEscapes-range2
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/fresh.(*state).recent.func1
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/fresh.(*value).addWeak (inline)
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/load.IsLibrary
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*cycleFinder).outgoing
+         0     0% 80.92%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*cycleFinder).reaches
+     0.01s  0.66% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*cycleFinder).shapeAssignable
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).arrayMethod
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).builtin
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).coalesce
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).conditional
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).constant (inline)
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).declaredField
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).elementAccess
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).flagValueSymbol
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).forStatement
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).freshOrWidened
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).input
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).isExpression
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).isLibraryType
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).isPreludeFunction
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).libraryIteratorElement
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).moduleOrder
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).numericLiteral
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).property
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).tsgo
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).tupleWhereArrayGoes
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.(*lowering).widened
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.borrow
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.esmModuleOrder
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.esmModuleOrder.func1
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.findAssigned (inline)
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.runtimeModuleStatement
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.walk
+         0     0% 81.58%      0.01s  0.66%  github.com/system-inc/adamic/internal/lower.walkValue
+     0.01s  0.66% 82.24%      0.01s  0.66%  indexbytebody
+     0.01s  0.66% 82.89%      0.01s  0.66%  internal/runtime/atomic.(*Uint32).CompareAndSwap (inline)
+     0.01s  0.66% 83.55%      0.01s  0.66%  internal/runtime/atomic.(*Uint64).Add (inline)
+         0     0% 83.55%      0.01s  0.66%  internal/runtime/maps.(*Map).Clone
+     0.01s  0.66% 84.21%      0.01s  0.66%  internal/runtime/maps.(*Map).Used (inline)
+     0.01s  0.66% 84.87%      0.01s  0.66%  internal/runtime/maps.(*Map).directoryAt (inline)
+     0.01s  0.66% 85.53%      0.01s  0.66%  internal/runtime/maps.(*Map).directoryIndex (inline)
+     0.01s  0.66% 86.18%      0.01s  0.66%  internal/runtime/maps.(*Map).getWithoutKeySmallFastStr
+     0.01s  0.66% 86.84%      0.01s  0.66%  internal/runtime/maps.(*groupReference).ctrls (inline)
+     0.01s  0.66% 87.50%      0.01s  0.66%  internal/runtime/maps.(*groupReference).key (inline)
+         0     0% 87.50%      0.01s  0.66%  internal/runtime/maps.MemHash
+         0     0% 87.50%      0.01s  0.66%  internal/runtime/maps.NewEmptyMap (inline)
+         0     0% 87.50%      0.01s  0.66%  internal/runtime/maps.cloneGroup
+     0.01s  0.66% 88.16%      0.01s  0.66%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+     0.01s  0.66% 88.82%      0.01s  0.66%  internal/runtime/maps.h2 (inline)
+     0.01s  0.66% 89.47%      0.01s  0.66%  internal/runtime/maps.memHash64AES
+     0.01s  0.66% 90.13%      0.01s  0.66%  internal/runtime/maps.probeSeq.next (inline)
+         0     0% 90.13%      0.01s  0.66%  internal/runtime/maps.typedmemmove
+         0     0% 90.13%      0.01s  0.66%  internal/stringslite.Index
+         0     0% 90.13%      0.01s  0.66%  internal/stringslite.IndexByte (inline)
+         0     0% 90.13%      0.01s  0.66%  maps.Clone[go.shape.map[string]github.com/system-inc/adamic/internal/fresh.value,go.shape.string,go.shape.struct { github.com/system-inc/adamic/internal/fresh.strong github.com/system-inc/adamic/internal/fresh.objects; github.com/system-inc/adamic/internal/fresh.weak github.com/system-inc/adamic/internal/fresh.objects }] (inline)
+         0     0% 90.13%      0.01s  0.66%  maps.clone
+     0.01s  0.66% 90.79%      0.01s  0.66%  reflect.(*rtype).NumMethod
+         0     0% 90.79%      0.01s  0.66%  reflect.Value.Elem
+         0     0% 90.79%      0.01s  0.66%  reflect.Value.NumMethod
+         0     0% 90.79%      0.01s  0.66%  reflect.packIfaceValueIntoEmptyIface (inline)
+         0     0% 90.79%      0.01s  0.66%  runtime.(*activeSweep).begin (inline)
+         0     0% 90.79%      0.01s  0.66%  runtime.(*atomicHeadTailIndex).incTail
+         0     0% 90.79%      0.01s  0.66%  runtime.(*gcControllerState).enlistWorker
+     0.01s  0.66% 91.45%      0.01s  0.66%  runtime.(*gcWork).putObjFast (inline)
+         0     0% 91.45%      0.01s  0.66%  runtime.(*mcentral).uncacheSpan
+     0.01s  0.66% 92.11%      0.01s  0.66%  runtime.(*mspan).base (inline)
+         0     0% 92.11%      0.01s  0.66%  runtime.(*mspan).initInlineMarkBits (inline)
+     0.01s  0.66% 92.76%      0.01s  0.66%  runtime.(*mspan).moveInlineMarks
+     0.01s  0.66% 93.42%      0.01s  0.66%  runtime.(*spanInlineMarkBits).init
+         0     0% 93.42%      0.01s  0.66%  runtime.(*spanSet).push
+         0     0% 93.42%      0.01s  0.66%  runtime.(*sweepLocked).sweep
+     0.01s  0.66% 94.08%      0.01s  0.66%  runtime.arenaIndex (inline)
+         0     0% 94.08%      0.01s  0.66%  runtime.casgstatus
+     0.01s  0.66% 94.74%      0.01s  0.66%  runtime.convT
+         0     0% 94.74%      0.01s  0.66%  runtime.deductAssistCredit
+     0.01s  0.66% 95.39%      0.01s  0.66%  runtime.deductSweepCredit
+     0.01s  0.66% 96.05%      0.01s  0.66%  runtime.futex
+         0     0% 96.05%      0.01s  0.66%  runtime.futexwakeup
+         0     0% 96.05%      0.01s  0.66%  runtime.gcAssistAlloc
+         0     0% 96.05%      0.01s  0.66%  runtime.gcAssistAlloc.func2
+         0     0% 96.05%      0.01s  0.66%  runtime.gcAssistAlloc1
+     0.01s  0.66% 96.71%      0.01s  0.66%  runtime.gcFlushBgCredit
+         0     0% 96.71%      0.01s  0.66%  runtime.growslice
+         0     0% 96.71%      0.01s  0.66%  runtime.heapArenaOf (inline)
+         0     0% 96.71%      0.01s  0.66%  runtime.makemap_small
+     0.01s  0.66% 97.37%      0.01s  0.66%  runtime.mallocgcSmallNoscan
+         0     0% 97.37%      0.01s  0.66%  runtime.mallocgcTinySC2
+         0     0% 97.37%      0.01s  0.66%  runtime.mapaccess1_fast32
+         0     0% 97.37%      0.01s  0.66%  runtime.mapaccess2_fast32
+         0     0% 97.37%      0.01s  0.66%  runtime.mapassign
+         0     0% 97.37%      0.01s  0.66%  runtime.memhash (inline)
+         0     0% 97.37%      0.01s  0.66%  runtime.memhash128
+     0.01s  0.66% 98.03%      0.01s  0.66%  runtime.memmove
+         0     0% 98.03%      0.01s  0.66%  runtime.notewakeup
+         0     0% 98.03%      0.01s  0.66%  runtime.procyield (inline)
+     0.01s  0.66% 98.68%      0.01s  0.66%  runtime.procyieldAsm
+     0.01s  0.66% 99.34%      0.01s  0.66%  runtime.spanSetScans
+         0     0% 99.34%      0.01s  0.66%  runtime.startm
+         0     0% 99.34%      0.01s  0.66%  runtime.typedmemmove
+         0     0% 99.34%      0.01s  0.66%  runtime.wakep
+         0     0% 99.34%      0.01s  0.66%  strings.Index (inline)
+         0     0% 99.34%      0.01s  0.66%  strings.TrimRightFunc
+         0     0% 99.34%      0.01s  0.66%  strings.lastIndexFunc
+     0.01s  0.66%   100%      0.01s  0.66%  unicode.is16

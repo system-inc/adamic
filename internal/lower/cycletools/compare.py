@@ -4,6 +4,7 @@ import concurrent.futures
 import hashlib
 import json
 import pathlib
+import os
 import subprocess
 
 parser = argparse.ArgumentParser()
@@ -12,6 +13,7 @@ parser.add_argument('new')
 parser.add_argument('census', type=pathlib.Path)
 parser.add_argument('output', type=pathlib.Path)
 parser.add_argument('--jobs', type=int, default=4)
+parser.add_argument('--freshness', action='store_true', help='compare instrumented ProveWrites vectors as well as lowering decisions')
 parser.add_argument('--manifest', type=pathlib.Path, help='explicit path-to-category JSON map')
 parser.add_argument('--baseline', type=pathlib.Path, help='reuse old decisions with verified input hashes')
 args = parser.parse_args()
@@ -49,11 +51,18 @@ def inspect(item):
             record[name] = earlier['old']
             continue
         result = subprocess.run([binary, path], capture_output=True, text=True,
-                                cwd=repository, timeout=600)
+                                cwd=repository, timeout=600,
+                                env=os.environ | ({'ADAMIC_TRACE_FRESH': '1'} if args.freshness else {}))
         if result.returncode:
             raise RuntimeError(f'{name}: {path}: exit {result.returncode}: {result.stderr}')
         record[name] = json.loads(result.stdout)
-    record['different'] = record['old']['decision'] != record['new']['decision']
+        if args.freshness:
+            record[name]['freshness'] = [json.loads(line.removeprefix('fresh decisions: '))
+                                         for line in result.stderr.splitlines()
+                                         if line.startswith('fresh decisions: ')]
+    record['lowering_different'] = record['old']['decision'] != record['new']['decision']
+    record['freshness_different'] = args.freshness and record['old']['freshness'] != record['new']['freshness']
+    record['different'] = record['lowering_different'] or record['freshness_different']
     return record
 
 
@@ -66,6 +75,15 @@ with (args.output / 'decisions.jsonl').open('w') as output:
     for record in records:
         output.write(json.dumps(record, sort_keys=True) + '\n')
 summary = dict(inputs=len(records), differences=sum(r['different'] for r in records))
+summary['lowering_differences'] = sum(r['lowering_different'] for r in records)
+summary['freshness_compared'] = args.freshness
+summary['freshness_differences'] = sum(r['freshness_different'] for r in records)
+if args.freshness:
+    summary['freshness_programs'] = sum(bool(r['new']['freshness']) for r in records)
+    summary['freshness_calls'] = sum(len(r['new']['freshness']) for r in records)
+    summary['freshness_writes'] = sum(len(writes) for r in records for writes in r['new']['freshness'])
+    if not summary['freshness_calls']:
+        raise RuntimeError('the instrumented probes produced no freshness observations')
 summary['categories'] = {c: sum(r['category'] == c for r in records)
                          for c in sorted(set(paths.values()))}
 summary['old_decisions'] = {}

@@ -1,0 +1,6 @@
+cycle reach: CollapseCopyNode -- slot contents --> CollapseCopyNode[]
+  CollapseCopyNode[] -- collection type argument --> CollapseCopyNode
+  CollapseCopyNode -- related holder types --> CollapseCopyNode
+cycle reach: CollapseCopyNode[] -- slot contents --> CollapseCopyNode
+  CollapseCopyNode -- field parent --> CollapseCopyNode[]
+  CollapseCopyNode[] -- related holder types --> CollapseCopyNode[]

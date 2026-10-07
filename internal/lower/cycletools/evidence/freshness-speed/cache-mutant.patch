@@ -1,0 +1,11 @@
+--- a/internal/fresh/facts.go
++++ b/internal/fresh/facts.go
+@@ -115,7 +115,7 @@
+ 	return func(yield func(K, V) bool) {
+ 		var walk func(*fact[K, V]) bool
+ 		walk = func(n *fact[K, V]) bool {
+-			if n == nil || previous.node(n.key) == n {
++			if n == nil || previous.node(n.key) != nil {
+ 				return true
+ 			}
+ 			return walk(n.left) && yield(n.key, n.value) && walk(n.right)

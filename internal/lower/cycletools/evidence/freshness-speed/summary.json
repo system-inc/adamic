@@ -1,0 +1,56 @@
+{
+  "old": {
+    "rounds": [
+      {
+        "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+        "decision": "accepted",
+        "load_seconds": 0.368051084,
+        "lower_seconds": 18.820812034,
+        "fresh_cpu_seconds": 17.07
+      },
+      {
+        "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+        "decision": "accepted",
+        "load_seconds": 0.399948255,
+        "lower_seconds": 18.012861732,
+        "fresh_cpu_seconds": 16.22
+      },
+      {
+        "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+        "decision": "accepted",
+        "load_seconds": 0.327274664,
+        "lower_seconds": 17.981856391,
+        "fresh_cpu_seconds": 15.72
+      }
+    ],
+    "median_lower_seconds": 18.012861732,
+    "median_fresh_cpu_seconds": 16.22
+  },
+  "new": {
+    "rounds": [
+      {
+        "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+        "decision": "accepted",
+        "load_seconds": 0.187922763,
+        "lower_seconds": 1.078067238,
+        "fresh_cpu_seconds": 0.45
+      },
+      {
+        "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+        "decision": "accepted",
+        "load_seconds": 0.350880597,
+        "lower_seconds": 1.254703226,
+        "fresh_cpu_seconds": 0.4
+      },
+      {
+        "path": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+        "decision": "accepted",
+        "load_seconds": 0.178506481,
+        "lower_seconds": 1.720092646,
+        "fresh_cpu_seconds": 0.67
+      }
+    ],
+    "median_lower_seconds": 1.254703226,
+    "median_fresh_cpu_seconds": 0.45
+  }
+}

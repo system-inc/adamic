@@ -1,0 +1,16 @@
+{
+  "inputs": 43,
+  "differences": 10,
+  "lowering_differences": 10,
+  "freshness_differences": 10,
+  "freshness_programs": 43,
+  "freshness_calls": 43,
+  "freshness_writes": 66,
+  "categories": {
+    "oracle": 43
+  },
+  "old_decisions": {
+    "*lower.Refused": 43
+  },
+  "freshness_compared": true
+}

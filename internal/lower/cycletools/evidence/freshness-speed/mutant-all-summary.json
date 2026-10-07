@@ -1,0 +1,21 @@
+{
+  "inputs": 1106,
+  "differences": 10,
+  "lowering_differences": 10,
+  "freshness_differences": 0,
+  "categories": {
+    "census": 77,
+    "census-adapted": 79,
+    "census-repro": 54,
+    "load": 16,
+    "oracle": 561,
+    "stage1": 319
+  },
+  "old_decisions": {
+    "*load.CheckError": 180,
+    "*lower.Refused": 76,
+    "accepted": 739,
+    "*lower.NotYet": 111
+  },
+  "freshness_compared": false
+}
