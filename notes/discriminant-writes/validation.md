@@ -2,7 +2,7 @@ Built: the ruled per-member discriminant-write check, shared by both backends, w
 Commits: initial blanket implementation f0d5de7, main merge 6ad16bb (e8ba3d5); final feature SHA is reported with the branch push.
 Commands and outputs: setup done 140s, nproc 5; touched packages, filtered uncached oracle, counts and go vet passed.
 Mutants: skip, first member only, every holder fresh, missed compound, missed base view, missed constructor update all caught by refusal assertions.
-Not covered: full gate completion, runtime enum syntax, whole-program construction classification of the additional 71 census events.
+Not covered: full gate completion, runtime enum syntax, whole-program heap proof for TypeScript itself; all 71 extra events now have reviewed local classifications.
 
 No push or merge to main or any area branch was performed. Main was merged into
 codex/discriminant-writes. The final fetch found origin/main unchanged at e8ba3d5.
@@ -65,8 +65,32 @@ All 79 kind events are inside construction. Two events of uncertain construction
 are assignability-safe. The independent JSON provides candidates and reviewed
 local construction, not final ruled verdicts. Every supplied event and every old
 30-site event is explained in typescript-writes.md. An independent traversal of
-all explicit assignment targets additionally finds 71 structural-view events,
-45 safe and 26 requiring freshness or refusal. The larger site sets therefore do
-not agree. The stock checker cannot establish their whole-program escape status,
-and the compiler source is outside Adamic 0.1's accepted syntax; we have not
-pretended to prove their confinement or silently dropped these differences.
+all explicit assignment targets additionally finds 71 structural-view events.
+This follow-up reviews all 71: 48 inside local construction, 23 outside, none
+not established. They add 55 accepted and 16 refused events, for a combined
+508 events / 485 accepted / 23 refused. This is a reviewed local classification
+with stock allocators, not a whole-program IR confinement proof.
+
+Reconciliation on October 7: every original event and JSON field agrees with
+commit d464614; all 93 assignment/update value types also agree after stock
+checker re-resolution. The supplied construction counts remain 388/47/2 and
+all 79 kind events are inside. The 71 extra site differences are individually
+explained: 65 lack indexed root declarations, six fail the independent
+receiver-to-member selection direction. That direction is rechecked on the
+cited union types; the compiler protects base views in the opposite direction.
+The source-hashed review and reconciliation.json preserve all evidence.
+
+Main advanced to c01907a and was merged into the feature branch as 7fb4a05.
+Post-merge go tests for lower/fresh/ir passed in 32.888s / 53.085s / 21.057s;
+the uncached discriminant/fresh-probe/counts oracle passed in 62.209s;
+go vet exited 0. Logs are /tmp/discriminant-reconcile-{packages,oracle,vet}.log.
+All six compiler mutants were caught again by missing-refusal assertions,
+including the first-union-member mutant. The three new census mutants were
+caught with exit 1: missing_review by `construction review missing`,
+stale_source_hash by `review source hash changed`, duplicate_supplied_event by
+`duplicate supplied event`. None reaches clang or a sanitizer. Logs are
+/tmp/discriminant-reconcile-compiler-mutants.log and
+/tmp/discriminant-reconcile-census-mutants.log. Reproduce the new mutants with:
+`python3 notes/discriminant-writes/census-mutants.py <TypeScript checkout> <npm checker package> <independent JSON>`.
+The checker census, exact field comparison and all review-source fingerprints
+passed. No compiler behavior was changed in this follow-up.

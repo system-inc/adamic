@@ -4,7 +4,9 @@ Stock checker 6.0.3; source `050880ce59e30b356b686bd3144efe24f875ebc8`; 77 compi
 
 **All 437 supplied candidates: 430 accepted, 7 refused. Of the 47 outside local construction: 40 accepted, 7 refused.** The plain blanket rule with the exact narrowing test refuses 32 of those 47. The other 15 have no compatible witnessed member under the exact test; a broad candidate flag alone is insufficient. The two parser events with construction not established both pass the ruled check. All 79 kind events are inside construction, as independently reported.
 
-This adjudicates the complete independent candidate ledger by checker types at its AST locations. The construction classifications are the independent reviewed spans, not an invented escape proof. Adamic itself uses the existing IR confinement proof. The stock checker cannot prove that every compiler factory keeps an object confined. We therefore report the independently discovered extra assignment targets below separately, without pretending a whole-program construction count is established.
+This adjudicates every event in the independent ledger by stock checker types at its exact AST span. The supplied construction partition agrees event by event: **388 inside, 47 outside local construction, 2 not established**. All original JSON fields match; all 93 assignment/update written-value types were rechecked and match. Nothing is missing or duplicated. The 79 kind events all remain inside construction.
+
+The separate structural-view discovery adds **71 events, now reviewed individually: 48 inside construction, 23 outside, zero not established**. Of these, **55 are accepted and 16 refused** under the ruled check. The combined ledger is **508 events: 436 inside, 70 outside, 2 not established; 485 accepted and 23 refused**. These are reviewed local construction classifications, using the stock factory/allocator and a conservative outside classification where publication can occur. They are not a claim that Adamic can lower the entire compiler or that the stock checker proves heap confinement.
 
 The cached status retag at `tsbuildPublic.ts:1921` is accepted: `UpToDate.type` declares all three up-to-date enum literals. The seven refused events write `FlowLabel.antecedent`; `FlowUnreachable` is structurally assignable to `FlowLabel` and declares that property as `undefined`. This is a conservative consequence of the ruled possible-member relation, not a Node observation.
 
@@ -12,13 +14,14 @@ Reproduce:
 
 ```sh
 node notes/discriminant-writes/count-typescript.mjs /path/to/TypeScript-v6.0.3 /path/to/npm/typescript /path/to/independent/discriminant-writes.json > census.json
+python3 notes/discriminant-writes/reconcile-census.py /path/to/independent/discriminant-writes.json census.json > reconciliation.json
 ```
 
 Prepare the source checkout using its diagnostic-generation script and installed compiler dependencies. The script exposes the stock private `isDiscriminantProperty` in memory, uses the inherited compiler tsconfig unchanged, discovers union witnesses at expressions/type nodes/declarations/constraints/call returns, and asks stock assignability for every compatible member. No textual search discovers writes.
 
 ## Event-by-event comparison
 
-No supplied event is dropped or duplicated; source spans identify each event. The independent JSON records construction and candidate populations, rather than a final ruled acceptance verdict. Each row below records both versions and explains its adjudication.
+No supplied event is dropped or duplicated, and no original JSON field differs; source spans identify each event. The independent JSON records construction and candidate populations, rather than a final ruled acceptance verdict. `reconciliation.json` records the exact event-set and field comparison, including the rechecked value types. Each row below records both versions and explains its adjudication.
 
 | Event | Property | Construction | Plain | Ruled | Explanation |
 | --- | --- | --- | --- | --- | --- |
@@ -462,81 +465,88 @@ No supplied event is dropped or duplicated; source spans identify each event. Th
 
 ## Extra structural views absent from the independent candidate ledger
 
-The independent discovery indexes property/root declarations. Adamic must also handle structural base interfaces: a narrower union member can inhabit a receiver even when its property declaration is different. A separate traversal of every explicit checker assignment target found **71 extra events: 45 assignability-safe; 26 requiring confinement or refusal**. This is a real scope difference, so the total site sets do not agree beyond the supplied 437. Factory construction and publication have not been independently proven for these extra events. Each location and incompatible member is retained in the JSON. Array tuple-length domains are included because the same exact checker predicate narrows on them; they are not excluded by an invented discriminant definition.
+Every extra event now has a source-hashed construction review in `construction-review.json`. The checker validates exact access/write spans, source hashes, review coverage and uniqueness before emitting a verdict.
 
-| Extra event | Property | Result before freshness | Incompatible members |
-| --- | --- | --- | --- |
-| src/compiler/core.ts:307:5 | length | requires freshness or refusal | [] |
-| src/compiler/core.ts:312:5 | length | requires freshness or refusal | [string, string], [modifiers: readonly Modifier[] &#124; undefined, typeParameters: readonly TypeParameterDeclaration[] &#124; undefined, parameters: readonly ParameterDeclaration[], type: TypeNode], [typeParameters: readonly TypeParameterDeclaration[] &#124; undefined, parameters: readonly ParameterDeclaration[], type: TypeNode], [node: ConstructorTypeNode, modifiers: readonly Modifier[] &#124; undefined, typeParameters: NodeArray<TypeParameterDeclaration> &#124; undefined, parameters: NodeArray<...>, type: TypeNode], [node: ConstructorTypeNode, typeParameters: NodeArray<TypeParameterDeclaration> &#124; undefined, parameters: NodeArray<ParameterDeclaration>, type: TypeNode], [IndexSignatureDeclaration], [DiagnosticMessage], [DiagnosticMessage, string &#124; number], [DiagnosticMessage, string], [number], [number, Expression], [Statement], [Expression &#124; undefined], [Expression, Expression], [signature: string], [string], [fileId: IncrementalBuildInfoFileId], [fileId: IncrementalBuildInfoFileId, emitKind: BuilderFileEmit], [IncrementalBuildInfoFileId], [IncrementalBuildInfoFileId, BuilderFileEmit.None &#124; BuilderFileEmit.Js &#124; BuilderFileEmit.JsMap &#124; BuilderFileEmit.JsInlineMap &#124; ... 6 more ... &#124; BuilderFileEmit.All], [DiagnosticMessage, number], [DiagnosticMessage, number, string], [DiagnosticMessage, number, number], [DiagnosticMessage, string, string] |
-| src/compiler/core.ts:1596:13 | length | requires freshness or refusal | [] |
-| src/compiler/tracing.ts:71:9 | length | accepted |  |
-| src/compiler/tracing.ts:163:9 | length | requires freshness or refusal | [] |
-| src/compiler/tracing.ts:170:9 | length | accepted |  |
-| src/compiler/sys.ts:233:17 | length | requires freshness or refusal | [] |
-| src/compiler/factory/nodeFactory.ts:1623:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:1654:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:1729:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:1773:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:1822:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:1869:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:1953:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:1975:13 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:1987:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:2043:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:2106:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:2232:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:2698:9 | operator | accepted |  |
-| src/compiler/factory/nodeFactory.ts:3189:9 | name | requires freshness or refusal | FunctionExpression & { readonly name?: undefined; }, Expression & FunctionExpression & { readonly name?: undefined; } |
-| src/compiler/factory/nodeFactory.ts:3659:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:3660:9 | name | requires freshness or refusal | ClassExpression & { readonly name?: undefined; }, Expression & ClassExpression & { readonly name?: undefined; } |
-| src/compiler/factory/nodeFactory.ts:3878:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4391:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4444:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4481:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4516:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4551:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4628:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4643:13 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4656:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4658:9 | isTypeOnly | requires freshness or refusal | ImportEqualsDeclaration & { readonly isTypeOnly: true; } |
-| src/compiler/factory/nodeFactory.ts:4698:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4732:9 | isTypeOnly | requires freshness or refusal | ImportClause & { readonly isTypeOnly: true; readonly name: Identifier; } |
-| src/compiler/factory/nodeFactory.ts:4762:9 | token | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4813:9 | token | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4897:9 | isTypeOnly | requires freshness or refusal | ImportSpecifier & { readonly isTypeOnly: true; } |
-| src/compiler/factory/nodeFactory.ts:4922:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4955:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:4956:9 | isTypeOnly | requires freshness or refusal | ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; } |
-| src/compiler/factory/nodeFactory.ts:4991:17 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:5016:9 | isTypeOnly | requires freshness or refusal | ExportSpecifier & { readonly isTypeOnly: true; } |
-| src/compiler/factory/nodeFactory.ts:5872:9 | token | accepted |  |
-| src/compiler/factory/nodeFactory.ts:5930:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:5949:13 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:5966:9 | modifiers | accepted |  |
-| src/compiler/factory/nodeFactory.ts:5984:13 | modifiers | accepted |  |
-| src/compiler/factory/emitNode.ts:308:9 | length | requires freshness or refusal | [] |
-| src/compiler/parser.ts:2283:17 | length | requires freshness or refusal | [] |
-| src/compiler/parser.ts:6749:9 | modifiers | accepted |  |
-| src/compiler/parser.ts:7547:13 | modifiers | accepted |  |
-| src/compiler/parser.ts:7939:9 | modifiers | accepted |  |
-| src/compiler/parser.ts:8142:9 | modifiers | accepted |  |
-| src/compiler/parser.ts:8380:9 | modifiers | accepted |  |
-| src/compiler/parser.ts:8867:13 | length | requires freshness or refusal | [] |
-| src/compiler/checker.ts:1974:9 | length | accepted |  |
-| src/compiler/checker.ts:8129:25 | length | requires freshness or refusal | [] |
-| src/compiler/checker.ts:8132:25 | length | requires freshness or refusal | [] |
-| src/compiler/checker.ts:16171:13 | length | requires freshness or refusal | [] |
-| src/compiler/checker.ts:43553:17 | value | requires freshness or refusal | IteratorReturnResult<undefined> |
-| src/compiler/checker.ts:51498:31 | modifiers | accepted |  |
-| src/compiler/sourcemap.ts:316:13 | length | requires freshness or refusal | [number], [fileId: IncrementalBuildInfoFileId], [fileId: IncrementalBuildInfoFileId, emitKind: BuilderFileEmit], [IncrementalBuildInfoFileId], [IncrementalBuildInfoFileId, BuilderFileEmit.None &#124; BuilderFileEmit.Js &#124; BuilderFileEmit.JsMap &#124; BuilderFileEmit.JsInlineMap &#124; ... 6 more ... &#124; BuilderFileEmit.All] |
-| src/compiler/transformers/esnext.ts:351:25 | length | accepted |  |
-| src/compiler/program.ts:364:17 | length | requires freshness or refusal | [string, string], [signature: string], [string], [] |
-| src/compiler/program.ts:371:13 | length | requires freshness or refusal | [string, string], [signature: string], [string], [] |
-| src/compiler/builder.ts:1424:16 | length | requires freshness or refusal | [fileId: IncrementalBuildInfoFileId], [], [IncrementalBuildInfoFileId] |
-| src/compiler/watch.ts:832:13 | version | requires freshness or refusal | FilePresenceUnknownOnHost, any |
-| src/compiler/watchPublic.ts:773:21 | version | requires freshness or refusal | FilePresenceUnknownOnHost |
-| src/compiler/expressionToTypeNode.ts:469:21 | modifiers | accepted |  |
-| src/compiler/binder.ts:1016:21 | node | requires freshness or refusal | FlowUnreachable, FlowLabel, FlowAssignment, FlowCondition, FlowSwitchClause, FlowArrayMutation, FlowCall, FlowReduceLabel |
+There are two independently checked scope differences:
+
+- **65 events:** the written property roots have no catalogue declaration witness. Structural member-to-receiver compatibility still supplies a union discriminant. Tuple `length` commonly has this difference because tuple-length witnesses have synthetic properties rather than the array declaration written through the wider view.
+- **6 events:** the roots have catalogue witnesses, but the independent selection tests receiver-to-member assignability. Our check tests member-to-receiver assignability to protect base views. The script re-resolves each cited union and verifies that the independent-direction test is false. Those six are nodeFactory.ts:3189, :3660, :4897, :5016; watchPublic.ts:773; binder.ts:1016.
+
+The independent code uses declaration/root indexing and receiver-to-member filtering in `select`; these are candidate-population choices, not TypeScript's discriminant-property definition. Our exact narrowing predicate remains stock `isDiscriminantProperty`. The difference is explicitly retained rather than forcing the larger count to 437.
+
+| Extra event | Property | Construction | Ruled | Scope difference | Allocation/publication evidence |
+| --- | --- | --- | --- | --- | --- |
+| src/compiler/core.ts:307:5 | length | outside local construction | refused | no indexed root declaration | Incoming array parameter in filterMutate/clear. |
+| src/compiler/core.ts:312:5 | length | outside local construction | refused | no indexed root declaration | Incoming array parameter in filterMutate/clear. |
+| src/compiler/core.ts:1596:13 | length | outside local construction | refused | no indexed root declaration | Queue array is captured by dequeue; the queue returns this closure, publishing the holder before later dequeue calls. Source: src/compiler/core.ts:1569, src/compiler/core.ts:1603 |
+| src/compiler/tracing.ts:71:9 | length | outside local construction | accepted | no indexed root declaration | Module-level typeCatalog/eventStack is persistent tracing state and reused across public tracing operations. |
+| src/compiler/tracing.ts:163:9 | length | outside local construction | refused | no indexed root declaration | Module-level typeCatalog/eventStack is persistent tracing state and reused across public tracing operations. |
+| src/compiler/tracing.ts:170:9 | length | outside local construction | accepted | no indexed root declaration | Module-level typeCatalog/eventStack is persistent tracing state and reused across public tracing operations. |
+| src/compiler/sys.ts:233:17 | length | outside local construction | refused | no indexed root declaration | Polling queue is supplied to the polling routine and reused between timer/poll invocations. |
+| src/compiler/factory/nodeFactory.ts:1623:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:1654:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:1729:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:1773:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:1822:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:1869:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:1953:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:1975:13 | modifiers | outside local construction | accepted | no indexed root declaration | finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished. |
+| src/compiler/factory/nodeFactory.ts:1987:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:2043:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:2106:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:2232:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:2698:9 | operator | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:3189:9 | name | inside | accepted | receiver-to-member filter; witnesses 1011, 1181 | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:3659:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:3660:9 | name | inside | accepted | receiver-to-member filter; witnesses 1011 | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:3878:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4391:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4444:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4481:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4516:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4551:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4628:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4643:13 | modifiers | outside local construction | accepted | no indexed root declaration | finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished. |
+| src/compiler/factory/nodeFactory.ts:4656:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4658:9 | isTypeOnly | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4698:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4732:9 | isTypeOnly | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4762:9 | token | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4813:9 | token | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4897:9 | isTypeOnly | inside | accepted | receiver-to-member filter; witnesses 1240 | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4922:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4955:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4956:9 | isTypeOnly | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:4991:17 | modifiers | outside local construction | accepted | no indexed root declaration | finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished. |
+| src/compiler/factory/nodeFactory.ts:5016:9 | isTypeOnly | inside | accepted | receiver-to-member filter; witnesses 1242 | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:5872:9 | token | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:5930:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:5949:13 | modifiers | outside local construction | accepted | no indexed root declaration | finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished. |
+| src/compiler/factory/nodeFactory.ts:5966:9 | modifiers | inside | accepted | no indexed root declaration | Local node is allocated by createBaseNode/createBaseDeclaration and initialized before this factory returns it. The stock base allocator performs new, not cache lookup. Source: src/compiler/factory/nodeFactory.ts:1209, src/compiler/factory/baseNodeFactory.ts:57 |
+| src/compiler/factory/nodeFactory.ts:5984:13 | modifiers | outside local construction | accepted | no indexed root declaration | finishUpdate helper writes its supplied updated parameter. A fresh clone may be passed by a caller, but this helper neither allocates nor proves that holder unpublished. |
+| src/compiler/factory/emitNode.ts:308:9 | length | outside local construction | refused | no indexed root declaration | sourceEmitHelpers aliases sourceEmitNode.helpers on an existing supplied source node; shrinking it updates published emit metadata. Source: src/compiler/factory/emitNode.ts:291 |
+| src/compiler/parser.ts:2283:17 | length | outside local construction | refused | no indexed root declaration | Rollback truncates the parser-owned diagnostic array reused across parse/speculation calls, not a newly constructed receiver. |
+| src/compiler/parser.ts:6749:9 | modifiers | inside | accepted | no indexed root declaration | Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children. Source: src/compiler/parser.ts:2600, src/compiler/parser.ts:2619, src/compiler/parser.ts:1847 |
+| src/compiler/parser.ts:7547:13 | modifiers | inside | accepted | no indexed root declaration | Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children. Source: src/compiler/parser.ts:2600, src/compiler/parser.ts:2619, src/compiler/parser.ts:1847 |
+| src/compiler/parser.ts:7939:9 | modifiers | inside | accepted | no indexed root declaration | Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children. Source: src/compiler/parser.ts:2600, src/compiler/parser.ts:2619, src/compiler/parser.ts:1847 |
+| src/compiler/parser.ts:8142:9 | modifiers | inside | accepted | no indexed root declaration | Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children. Source: src/compiler/parser.ts:2600, src/compiler/parser.ts:2619, src/compiler/parser.ts:1847 |
+| src/compiler/parser.ts:8380:9 | modifiers | inside | accepted | no indexed root declaration | Parser initializes a just-created property/shorthand/static-block/namespace-export or missing node before returning it. finishNode only sets positions and flags; withJSDoc attaches owned children. Source: src/compiler/parser.ts:2600, src/compiler/parser.ts:2619, src/compiler/parser.ts:1847 |
+| src/compiler/parser.ts:8867:13 | length | outside local construction | refused | no indexed root declaration | Rollback truncates the parser-owned diagnostic array reused across parse/speculation calls, not a newly constructed receiver. |
+| src/compiler/checker.ts:1974:9 | length | inside | accepted | no indexed root declaration | candidates is the local [] at 1965. Resolver fills the supplied output array; candidate signatures are copied into candidatesSet. The array itself is not returned or stored, and is reset before its second local resolver pass. Source: src/compiler/checker.ts:1963, src/compiler/checker.ts:36586 |
+| src/compiler/checker.ts:8129:25 | length | outside local construction | refused | no indexed root declaration | Recovery callback captures trackedSymbols/unreportedErrors and is returned by startRecoveryScope. The enclosing builder also returns the recovery API; truncation occurs when a holder of that API invokes it. Source: src/compiler/checker.ts:8109, src/compiler/checker.ts:8122 |
+| src/compiler/checker.ts:8132:25 | length | outside local construction | refused | no indexed root declaration | Recovery callback captures trackedSymbols/unreportedErrors and is returned by startRecoveryScope. The enclosing builder also returns the recovery API; truncation occurs when a holder of that API invokes it. Source: src/compiler/checker.ts:8109, src/compiler/checker.ts:8122 |
+| src/compiler/checker.ts:16171:13 | length | outside local construction | refused | no indexed root declaration | Conservative outside classification: result starts as a local slice/[], but 16169 passes it into a type mapper before this resize. Array mappers retain targets, and instantiation can retain/cache that mapper. A local allocation is not a fresh-holder proof after this potential publication. Source: src/compiler/checker.ts:16158, src/compiler/checker.ts:16169, src/compiler/checker.ts:20613, src/compiler/checker.ts:20786, src/compiler/checker.ts:20981 |
+| src/compiler/checker.ts:43553:17 | value | outside local construction | refused | no indexed root declaration | thisTypeForErrorOut is the supplied output-holder parameter; the routine writes an existing caller-owned record. |
+| src/compiler/checker.ts:51498:31 | modifiers | inside | accepted | no indexed root declaration | indexInfoToIndexSignatureDeclaration returns a fresh factory.createIndexSignature. Key/value serialization and tracker work precede allocation of this holder; its modifier initialization happens before result.push publishes it. Source: src/compiler/checker.ts:7977, src/compiler/checker.ts:8000, src/compiler/checker.ts:51501 |
+| src/compiler/sourcemap.ts:316:13 | length | outside local construction | refused | no indexed root declaration | mappingCharCodes is a captured buffer owned by the returned source-map generator; flushMappingBuffer runs on subsequent public generator operations. Source: src/compiler/sourcemap.ts:40, src/compiler/sourcemap.ts:52 |
+| src/compiler/transformers/esnext.ts:351:25 | length | inside | accepted | no indexed root declaration | declarations is a fresh local [] at 347. Invalid binding patterns clear it before any enclosing transformed statement is built or published. Source: src/compiler/transformers/esnext.ts:347 |
+| src/compiler/program.ts:364:17 | length | inside | accepted | no indexed root declaration | commonPathComponents aliases a newly returned normalized-path array. Synchronous local forEach truncates it before the function returns a path string; external canonicalization receives only component strings. Source: src/compiler/program.ts:342, src/compiler/program.ts:346, src/compiler/program.ts:351, src/compiler/program.ts:384 |
+| src/compiler/program.ts:371:13 | length | inside | accepted | no indexed root declaration | commonPathComponents aliases a newly returned normalized-path array. Synchronous local forEach truncates it before the function returns a path string; external canonicalization receives only component strings. Source: src/compiler/program.ts:342, src/compiler/program.ts:346, src/compiler/program.ts:351, src/compiler/program.ts:384 |
+| src/compiler/builder.ts:1424:16 | length | inside | accepted | no indexed root declaration | root is the local [] at 1254. Synchronous file-info enumeration invokes tryAddRoot while building it; the buildInfo object containing root is assembled/returned only after these writes. Source: src/compiler/builder.ts:1254, src/compiler/builder.ts:1257, src/compiler/builder.ts:1269, src/compiler/builder.ts:1364 |
+| src/compiler/watch.ts:832:13 | version | outside local construction | refused | no indexed root declaration | originalGetSourceFile returns an existing host-supplied source file. Rewriting its version updates a shared/cached receiver; this wrapper does not construct that receiver. |
+| src/compiler/watchPublic.ts:773:21 | version | outside local construction | refused | receiver-to-member filter; witnesses 1333, 1335 | hostSourceFile is an existing watch-host cache entry, possibly shared; assigning the loaded source file version changes that entry. |
+| src/compiler/expressionToTypeNode.ts:469:21 | modifiers | inside | accepted | no indexed root declaration | If visitEachChild returns the original, this path clones it; otherwise the stock factory visitor has created an updated copy. Stock markNodeReuse only clones/sets original and range metadata; it does not publish the clone. Modifiers are set before returning visited. Source: src/compiler/expressionToTypeNode.ts:463, src/compiler/checker.ts:6407, src/compiler/checker.ts:6517 |
+| src/compiler/binder.ts:1016:21 | node | outside local construction | refused | receiver-to-member filter; witnesses 11, 762, 764 | createBinder returns bindSourceFile at 560 before binding begins. currentFlow is persistent state captured by that published closure; storing the new flow record into currentFlow at 1014 publishes it to that existing holder before the node-field write at 1016. Allocation immediately before a write does not undo that publication. Source: src/compiler/binder.ts:509, src/compiler/binder.ts:526, src/compiler/binder.ts:560, src/compiler/binder.ts:1014 |
 
 ## Corrections to the earlier 30-site census
 
@@ -544,33 +554,33 @@ The earlier census is preserved as `baseline-census.json`, not presented as the 
 
 | Old event | Field | Comparison |
 | --- | --- | --- |
-| src/compiler/builder.ts:1424:16 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/checker.ts:1974:9 | length | structural view absent from declaration-indexed ledger; accepted |
-| src/compiler/checker.ts:8129:25 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/checker.ts:8132:25 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/checker.ts:16171:13 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/core.ts:307:5 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/core.ts:312:5 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/core.ts:1596:13 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/factory/emitNode.ts:308:9 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/factory/nodeFactory.ts:3370:9 | operator | same event; inside; ruled accepted |
-| src/compiler/factory/nodeFactory.ts:4658:9 | isTypeOnly | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/factory/nodeFactory.ts:4732:9 | isTypeOnly | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/factory/nodeFactory.ts:4897:9 | isTypeOnly | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/factory/nodeFactory.ts:4956:9 | isTypeOnly | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/factory/nodeFactory.ts:5016:9 | isTypeOnly | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/parser.ts:2283:17 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/parser.ts:8867:13 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/program.ts:364:17 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/program.ts:371:13 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/sourcemap.ts:316:13 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/sys.ts:233:17 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/tracing.ts:71:9 | length | structural view absent from declaration-indexed ledger; accepted |
-| src/compiler/tracing.ts:163:9 | length | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/tracing.ts:170:9 | length | structural view absent from declaration-indexed ledger; accepted |
-| src/compiler/transformers/esnext.ts:351:25 | length | structural view absent from declaration-indexed ledger; accepted |
-| src/compiler/utilities.ts:8509:5 | kind | same event; inside; ruled accepted |
-| src/compiler/utilities.ts:8523:5 | kind | same event; inside; ruled accepted |
-| src/compiler/utilities.ts:8535:5 | kind | same event; inside; ruled accepted |
-| src/compiler/watchPublic.ts:773:21 | version | structural view absent from declaration-indexed ledger; requires freshness or refusal |
-| src/compiler/watchPublic.ts:808:17 | version | same event; outside local construction; ruled accepted |
+| src/compiler/builder.ts:1424:16 | length | inside; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/checker.ts:1974:9 | length | inside; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/checker.ts:8129:25 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/checker.ts:8132:25 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/checker.ts:16171:13 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/core.ts:307:5 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/core.ts:312:5 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/core.ts:1596:13 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/factory/emitNode.ts:308:9 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/factory/nodeFactory.ts:3370:9 | operator | inside; ruled accepted |
+| src/compiler/factory/nodeFactory.ts:4658:9 | isTypeOnly | inside; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/factory/nodeFactory.ts:4732:9 | isTypeOnly | inside; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/factory/nodeFactory.ts:4897:9 | isTypeOnly | inside; ruled accepted; Root declarations have catalogue witnesses, but the independent receiver-to-member filter does not admit this broader view; the compiler checks member-to-receiver compatibility. |
+| src/compiler/factory/nodeFactory.ts:4956:9 | isTypeOnly | inside; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/factory/nodeFactory.ts:5016:9 | isTypeOnly | inside; ruled accepted; Root declarations have catalogue witnesses, but the independent receiver-to-member filter does not admit this broader view; the compiler checks member-to-receiver compatibility. |
+| src/compiler/parser.ts:2283:17 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/parser.ts:8867:13 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/program.ts:364:17 | length | inside; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/program.ts:371:13 | length | inside; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/sourcemap.ts:316:13 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/sys.ts:233:17 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/tracing.ts:71:9 | length | outside local construction; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/tracing.ts:163:9 | length | outside local construction; ruled refused; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/tracing.ts:170:9 | length | outside local construction; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/transformers/esnext.ts:351:25 | length | inside; ruled accepted; Written property roots have no declaration-indexed catalogue witness; the compiler admits the discriminant through a structurally compatible union member. |
+| src/compiler/utilities.ts:8509:5 | kind | inside; ruled accepted |
+| src/compiler/utilities.ts:8523:5 | kind | inside; ruled accepted |
+| src/compiler/utilities.ts:8535:5 | kind | inside; ruled accepted |
+| src/compiler/watchPublic.ts:773:21 | version | outside local construction; ruled refused; Root declarations have catalogue witnesses, but the independent receiver-to-member filter does not admit this broader view; the compiler checks member-to-receiver compatibility. |
+| src/compiler/watchPublic.ts:808:17 | version | outside local construction; ruled accepted |
