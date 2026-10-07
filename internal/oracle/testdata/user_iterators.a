@@ -430,19 +430,20 @@ for(const value of new GenericSequence([10, 20])) {
     break;
 }
 console.log([...new GenericSequence(['a', 'b'])].join(','));
+class BooleanIterator {
+    index = 0;
+    next(): { value: boolean; done: boolean } {
+        this.index++;
+        return { value: this.index === 1, done: this.index > 2 };
+    }
+    return(): { value: boolean; done: boolean } {
+        console.log('boolean:return');
+        return { value: false, done: true };
+    }
+}
 const booleans = {
-    [Symbol.iterator]() {
-        let index = 0;
-        return {
-            next(): { value: boolean; done: boolean } {
-                index++;
-                return { value: index === 1, done: index > 2 };
-            },
-            return() {
-                console.log('boolean:return');
-                return { value: false, done: true };
-            },
-        };
+    [Symbol.iterator](): BooleanIterator {
+        return new BooleanIterator();
     },
 };
 console.log(Array.from(booleans).join(','));
