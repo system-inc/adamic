@@ -14,7 +14,7 @@ import regenerate
 from compare import require_output
 
 
-def account(path):
+def account(path, tool="callgrind"):
     events=[];summary=[];footer=[];total=[];pending=False;function=False
     for line in path.read_text().splitlines():
         if line.startswith('events:'):
@@ -31,10 +31,13 @@ def account(path):
             total=[a+b for a,b in zip(total,values)]
     def reconcile(expected):
         if total!=expected:raise RuntimeError('simulated event accounting differs')
+    if tool == "cachegrind":
+        if footer:raise RuntimeError("unexpected Cachegrind totals footer")
+        footer=total.copy()
     reconcile(footer)
     def reconcile_summary(expected):
         delta=[a-b for a,b in zip(expected,footer)]
-        if delta[events.index('Ir')] not in [0,2] or any(v for i,v in enumerate(delta) if events[i]!='Ir'):
+        if delta[events.index('Ir')] not in ([0] if tool=='cachegrind' else [0,2]) or any(v for i,v in enumerate(delta) if events[i]!='Ir'):
             raise RuntimeError('unexpected summary/self accounting difference')
     reconcile_summary(summary)
     summary_mutant=summary.copy();summary_mutant[events.index('Ir')]+=1
@@ -60,6 +63,8 @@ def main():
     parser.add_argument('--hyperfine',required=True)
     parser.add_argument('--valgrind',required=True)
     parser.add_argument('--valgrind-lib',required=True)
+    parser.add_argument('--tool',choices=['callgrind','cachegrind'],default='callgrind')
+    parser.add_argument('--instructions-only',action='store_true',help='keep completed timing samples and rerun only counters')
     args=parser.parse_args();work=args.work.resolve()
     os.environ['GOMAXPROCS']='1'
     os.environ['VALGRIND_LIB']=args.valgrind_lib
@@ -76,7 +81,8 @@ def main():
             raise RuntimeError('validated binary changed: '+mode)
         check(commands[mode],'warm-'+mode)
     rounds=[]
-    for i in range(10):
+    if args.instructions_only and not (work/"timings.json").exists():raise RuntimeError("completed timings are required")
+    for i in range(0 if args.instructions_only else 10):
         base=modes if i<5 else modes[::-1]
         order=base[i%5:]+base[:i%5]
         row={'round':i+1,'order':order}
@@ -94,11 +100,11 @@ def main():
         print('round',json.dumps(row),flush=True)
     instructions={}
     for mode in modes:
-        profile=work/(mode+'.callgrind')
-        check(['taskset','-c','3',args.valgrind,'--tool=callgrind','--log-file='+str(work/(mode+'-callgrind.log')),'--cache-sim=yes','--branch-sim=yes','--I1=32768,8,64','--D1=32768,8,64','--LL=268435456,1,64','--callgrind-out-file='+str(profile),str(work/mode),'--manifest',str(work/'compiler.txt'),'--count'],'instructions-'+mode)
-        accounting=account(profile)
+        profile=work/(mode+'.'+args.tool)
+        check(['taskset','-c','3',args.valgrind,'--tool='+args.tool,'--log-file='+str(work/(mode+'-'+args.tool+'.log')),'--cache-sim=yes','--branch-sim=yes','--I1=32768,8,64','--D1=32768,8,64','--LL=268435456,1,64','--'+args.tool+'-out-file='+str(profile),str(work/mode),'--manifest',str(work/'compiler.txt'),'--count'],'instructions-'+mode)
+        accounting=account(profile,args.tool)
         summary=accounting['summary']
-        instructions[mode]={'instructions':summary['Ir'],'self_total':accounting['self_totals']['Ir'],'I1_misses':summary['I1mr'],'events':summary,'accounting':accounting,'binary_sha256':builds[mode]['binary_sha256']}
+        instructions[mode]={'tool':args.tool,'instructions':summary['Ir'],'self_total':accounting['self_totals']['Ir'],'I1_misses':summary['I1mr'],'events':summary,'accounting':accounting,'binary_sha256':builds[mode]['binary_sha256']}
         with gzip.open(str(profile)+'.gz','wb') as zipped:zipped.write(profile.read_bytes())
         (work/'instructions.json').write_text(json.dumps(instructions,indent=2)+'\n')
         print(mode,'instructions',summary['Ir'],flush=True)
