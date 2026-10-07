@@ -1,0 +1,23 @@
+import type { Weak } from 'adamic';
+interface Box {
+	readonly label: string;
+}
+interface WeakGetter {
+	get(): Weak<Box>;
+}
+class MatchingGetter {
+	readonly box: Box;
+	constructor(box: Box) {
+		this.box = box;
+	}
+	get(): Weak<Box> {
+		return this.box;
+	}
+}
+function run(n: number): void {
+	const box: Box = { label: `b${n}` };
+	const getter: WeakGetter = new MatchingGetter(box);
+	const got = getter.get();
+	console.log(`${got === box} ${got?.label ?? 'gone'}`);
+}
+run(1);

@@ -161,7 +161,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			if own := l.checker.GetTypeAtLocation(node); !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
-				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
+				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly; keep the Weak annotations the same in the view and implementation)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
 			}
@@ -231,9 +231,8 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		}
 	default:
 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
-			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
-				continue
-			}
+			// Methods carry call signatures too: their parameters and results must
+			// keep Weak handles the same way as the implementation they view.
 			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
 				return false
 			}
