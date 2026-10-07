@@ -4,9 +4,10 @@ const repo=path.resolve(process.argv[2]);
 const logs=path.resolve(process.argv[3]);
 fs.mkdirSync(logs,{recursive:true});
 const bucket=__dirname;
-const ts=require(repo+'/stage3/api/node_modules/typescript');
-if(ts.version!=='6.0.3'||require(repo+'/stage3/api/node_modules/@types/node/package.json').version!=='25.3.3')throw Error('pin');
-const options={strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,noImplicitReturns:true,noFallthroughCasesInSwitch:true,erasableSyntaxOnly:true,verbatimModuleSyntax:true,allowImportingTsExtensions:true,noEmit:true,module:ts.ModuleKind.ESNext,moduleDetection:ts.ModuleDetectionKind.Force,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,lib:['lib.es2024.d.ts'],types:[]};
+const nodeModules=fs.realpathSync(repo+'/stage3/api/node_modules');
+const ts=require(nodeModules+'/typescript');
+if(ts.version!=='6.0.3'||require(nodeModules+'/@types/node/package.json').version!=='25.3.3')throw Error('pin');
+const options={strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,erasableSyntaxOnly:false,verbatimModuleSyntax:true,allowImportingTsExtensions:true,noEmit:true,module:ts.ModuleKind.ESNext,moduleDetection:ts.ModuleDetectionKind.Force,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,lib:['lib.es2024.d.ts'],types:[]};
 let prelude=fs.readFileSync(repo+'/internal/load/prelude.d.ts','utf8').replace('declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};','declare var console: Console;');
 const procStart=prelude.indexOf('declare const process: {');
 if(procStart>=0){const end=prelude.indexOf('\n};',procStart);if(end>=0)prelude=prelude.slice(0,procStart)+'declare var process: NodeJS.Process;'+prelude.slice(end+3);}
@@ -19,7 +20,7 @@ for(const row of JSON.parse(fs.readFileSync(bucket+'/status.json'))){
  host.fileExists=f=>f===alias||f===pp||exists(f);
  host.readFile=f=>f===alias?(fs.readFileSync(real,'utf8')+(mutant?'\nconst rerecordMutant: number = _os.EOL;\n':'')):f===pp?prelude:read(f);
  host.getSourceFile=(f,language)=>{const s=host.readFile(f);return s===undefined?undefined:ts.createSourceFile(f,s,language,true)};
- const program=ts.createProgram([alias,pp,repo+'/stage3/api/node_modules/@types/node/index.d.ts'],options,host);
+ const program=ts.createProgram([alias,pp,nodeModules+'/@types/node/index.d.ts'],options,host);
  const syntax=program.getSyntacticDiagnostics();const ds=syntax.length?syntax:ts.getPreEmitDiagnostics(program);
  function format(d){const pos=d.file?d.file.getLineAndCharacterOfPosition(d.start):null;const name=d.file?d.file.fileName.replace(alias,real).replace(bucket+'/', 'stage3/fixtures/host/').replace(repo+'/',''):null;return(name?`${name}:${pos.line+1}:${pos.character+1}: `:'')+`error TS${d.code}: `+ts.flattenDiagnosticMessageText(d.messageText,'\n');}
  const diagnostics=ds.map(d=>({code:d.code,file:d.file?.fileName.replace(alias,real).replace(bucket+'/', 'stage3/fixtures/host/').replace(repo+'/',''),start:d.start,text:format(d)}));

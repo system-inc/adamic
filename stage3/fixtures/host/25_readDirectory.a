@@ -183,7 +183,7 @@
 // From TypeScript 6.0.3, src/compiler/sys.ts:1629; adapted line 1630
 // Adaptations: none
 // From TypeScript 6.0.3, src/compiler/sys.ts:1838; adapted line 1839
-// Adaptations: none
+// Adaptations: 40-explicit-any
 // From TypeScript 6.0.3, src/compiler/sys.ts:1491; adapted line 1492
 // Adaptations: none
 // From TypeScript 6.0.3, src/compiler/sys.ts:1913; adapted line 1914
@@ -1235,7 +1235,7 @@ function getAccessibleFileSystemEntries(path: string): FileSystemEntries {
                 continue;
             }
 
-            let stat: any;
+            let stat: import("fs").Stats | import("fs").Dirent | undefined;
             if (typeof dirent === "string" || dirent.isSymbolicLink()) {
                 const name = combinePaths(path, entry);
 
