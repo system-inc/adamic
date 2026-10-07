@@ -1,0 +1,80 @@
+{
+  "scope": "portable components only; no full-rule entry point, CSS loading or candidate parsing",
+  "cases": 336,
+  "canonicalBytes": 69771,
+  "canonicalSha256": "9f3defc9b304ccea9f077b217613777bba90e7c23b7a4e285f83c258ad1647da",
+  "observations": [
+    {
+      "name": "baseline",
+      "backend": "Node",
+      "stderrBytes": 0,
+      "bytes": 69771,
+      "sha256": "9f3defc9b304ccea9f077b217613777bba90e7c23b7a4e285f83c258ad1647da",
+      "equal": true
+    },
+    {
+      "name": "baseline",
+      "backend": "emitted",
+      "stderrBytes": 0,
+      "bytes": 69771,
+      "sha256": "9f3defc9b304ccea9f077b217613777bba90e7c23b7a4e285f83c258ad1647da",
+      "equal": true
+    },
+    {
+      "name": "baseline",
+      "backend": "native",
+      "stderrBytes": 0,
+      "bytes": 69771,
+      "sha256": "9f3defc9b304ccea9f077b217613777bba90e7c23b7a4e285f83c258ad1647da",
+      "equal": true
+    },
+    {
+      "name": "canonical_merge_value_check_lost",
+      "backend": "Node",
+      "stderrBytes": 0,
+      "bytes": 124557,
+      "sha256": "80c9db7ea3e6de3493d0543de44fcb950406686664972dd071ed645defec50b5",
+      "equal": false
+    },
+    {
+      "name": "canonical_merge_value_check_lost",
+      "backend": "emitted",
+      "stderrBytes": 0,
+      "bytes": 124557,
+      "sha256": "80c9db7ea3e6de3493d0543de44fcb950406686664972dd071ed645defec50b5",
+      "equal": false
+    },
+    {
+      "name": "canonical_merge_value_check_lost",
+      "backend": "native",
+      "stderrBytes": 0,
+      "bytes": 124557,
+      "sha256": "80c9db7ea3e6de3493d0543de44fcb950406686664972dd071ed645defec50b5",
+      "equal": false
+    },
+    {
+      "name": "class_order_descending_reversed",
+      "backend": "Node",
+      "stderrBytes": 0,
+      "bytes": 69824,
+      "sha256": "55db931c03db77256f2973af77cc1f238db140600af3d210a5c3beb3b565d6c4",
+      "equal": false
+    },
+    {
+      "name": "class_order_descending_reversed",
+      "backend": "emitted",
+      "stderrBytes": 0,
+      "bytes": 69824,
+      "sha256": "55db931c03db77256f2973af77cc1f238db140600af3d210a5c3beb3b565d6c4",
+      "equal": false
+    },
+    {
+      "name": "class_order_descending_reversed",
+      "backend": "native",
+      "stderrBytes": 0,
+      "bytes": 69824,
+      "sha256": "55db931c03db77256f2973af77cc1f238db140600af3d210a5c3beb3b565d6c4",
+      "equal": false
+    }
+  ]
+}

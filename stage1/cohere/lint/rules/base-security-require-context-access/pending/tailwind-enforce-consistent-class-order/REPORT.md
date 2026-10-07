@@ -1,5 +1,5 @@
 Built: portable class order components in .a: UTF-16 lexical ascending/descending ordering, separate slot fixes and message text. This is not a registered full rule.
-Commits: claim d316a491 was pushed before implementation; components are committed in this directory next.
+Commits: components 2cc9128a; claim d316a491 was pushed before implementation.
 Commands and outputs: components_validate.py PASS, 336 mixed component cases and 69,771 identical bytes on Node, emitted JavaScript and ASan/UBSan native.
 Mutants: class_order_descending_reversed builds and runs with zero exits and empty stderr, then fails only byte comparison on all three backends. This is component credit, not full-rule mutant credit.
 Not covered: full-rule findings/fixes parity over compiler, stage1 or upstream fixtures; full-rule throughput is unavailable. project CSS loading, candidate resolution and official/strict ranking, unknown/component groups, class-literal and template surfaces, source/deprecation fix checks and the full options/entry point.

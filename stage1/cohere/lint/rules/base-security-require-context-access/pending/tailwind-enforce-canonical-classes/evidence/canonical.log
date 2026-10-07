@@ -1,0 +1,1355 @@
+case 0
+inputs	-bottom-4|-top-4
+output	-inset-y-4
+message	The classes "-bottom-4", "-top-4" say the same thing as "-inset-y-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 1
+inputs	-top-4|-bottom-4
+output	-inset-y-4
+message	The classes "-top-4", "-bottom-4" say the same thing as "-inset-y-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 2
+inputs	
+output	
+message	
+case 3
+inputs	
+output	
+message	
+case 4
+inputs	
+output	
+message	
+case 5
+inputs	
+output	
+message	
+case 6
+inputs	
+output	
+message	
+case 7
+inputs	-inset-x-4|-inset-y-4
+output	-inset-4
+message	The classes "-inset-x-4", "-inset-y-4" say the same thing as "-inset-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 8
+inputs	-inset-y-4|-inset-x-4
+output	-inset-4
+message	The classes "-inset-y-4", "-inset-x-4" say the same thing as "-inset-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 9
+inputs	
+output	
+message	
+case 10
+inputs	
+output	
+message	
+case 11
+inputs	
+output	
+message	
+case 12
+inputs	
+output	
+message	
+case 13
+inputs	
+output	
+message	
+case 14
+inputs	-left-4|-right-4
+output	-inset-x-4
+message	The classes "-left-4", "-right-4" say the same thing as "-inset-x-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 15
+inputs	-right-4|-left-4
+output	-inset-x-4
+message	The classes "-right-4", "-left-4" say the same thing as "-inset-x-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 16
+inputs	
+output	
+message	
+case 17
+inputs	
+output	
+message	
+case 18
+inputs	
+output	
+message	
+case 19
+inputs	
+output	
+message	
+case 20
+inputs	
+output	
+message	
+case 21
+inputs	-mb-4|-mt-4
+output	-my-4
+message	The classes "-mb-4", "-mt-4" say the same thing as "-my-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 22
+inputs	-mt-4|-mb-4
+output	-my-4
+message	The classes "-mt-4", "-mb-4" say the same thing as "-my-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 23
+inputs	
+output	
+message	
+case 24
+inputs	
+output	
+message	
+case 25
+inputs	
+output	
+message	
+case 26
+inputs	
+output	
+message	
+case 27
+inputs	
+output	
+message	
+case 28
+inputs	-ml-4|-mr-4
+output	-mx-4
+message	The classes "-ml-4", "-mr-4" say the same thing as "-mx-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 29
+inputs	-mr-4|-ml-4
+output	-mx-4
+message	The classes "-mr-4", "-ml-4" say the same thing as "-mx-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 30
+inputs	
+output	
+message	
+case 31
+inputs	
+output	
+message	
+case 32
+inputs	
+output	
+message	
+case 33
+inputs	
+output	
+message	
+case 34
+inputs	
+output	
+message	
+case 35
+inputs	-mx-4|-my-4
+output	-m-4
+message	The classes "-mx-4", "-my-4" say the same thing as "-m-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 36
+inputs	-my-4|-mx-4
+output	-m-4
+message	The classes "-my-4", "-mx-4" say the same thing as "-m-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 37
+inputs	
+output	
+message	
+case 38
+inputs	
+output	
+message	
+case 39
+inputs	
+output	
+message	
+case 40
+inputs	
+output	
+message	
+case 41
+inputs	
+output	
+message	
+case 42
+inputs	-scroll-mb-4|-scroll-mt-4
+output	-scroll-my-4
+message	The classes "-scroll-mb-4", "-scroll-mt-4" say the same thing as "-scroll-my-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 43
+inputs	-scroll-mt-4|-scroll-mb-4
+output	-scroll-my-4
+message	The classes "-scroll-mt-4", "-scroll-mb-4" say the same thing as "-scroll-my-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 44
+inputs	
+output	
+message	
+case 45
+inputs	
+output	
+message	
+case 46
+inputs	
+output	
+message	
+case 47
+inputs	
+output	
+message	
+case 48
+inputs	
+output	
+message	
+case 49
+inputs	-scroll-ml-4|-scroll-mr-4
+output	-scroll-mx-4
+message	The classes "-scroll-ml-4", "-scroll-mr-4" say the same thing as "-scroll-mx-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 50
+inputs	-scroll-mr-4|-scroll-ml-4
+output	-scroll-mx-4
+message	The classes "-scroll-mr-4", "-scroll-ml-4" say the same thing as "-scroll-mx-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 51
+inputs	
+output	
+message	
+case 52
+inputs	
+output	
+message	
+case 53
+inputs	
+output	
+message	
+case 54
+inputs	
+output	
+message	
+case 55
+inputs	
+output	
+message	
+case 56
+inputs	-scroll-mx-4|-scroll-my-4
+output	-scroll-m-4
+message	The classes "-scroll-mx-4", "-scroll-my-4" say the same thing as "-scroll-m-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 57
+inputs	-scroll-my-4|-scroll-mx-4
+output	-scroll-m-4
+message	The classes "-scroll-my-4", "-scroll-mx-4" say the same thing as "-scroll-m-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 58
+inputs	
+output	
+message	
+case 59
+inputs	
+output	
+message	
+case 60
+inputs	
+output	
+message	
+case 61
+inputs	
+output	
+message	
+case 62
+inputs	
+output	
+message	
+case 63
+inputs	-skew-x-4|-skew-y-4
+output	-skew-4
+message	The classes "-skew-x-4", "-skew-y-4" say the same thing as "-skew-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 64
+inputs	-skew-y-4|-skew-x-4
+output	-skew-4
+message	The classes "-skew-y-4", "-skew-x-4" say the same thing as "-skew-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 65
+inputs	-skew-x-4|-skew-y-4
+output	-skew-4
+message	The classes "-skew-x-4", "-skew-y-4" say the same thing as "-skew-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 66
+inputs	-skew-y-4|-skew-x-4
+output	-skew-4
+message	The classes "-skew-y-4", "-skew-x-4" say the same thing as "-skew-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 67
+inputs	
+output	
+message	
+case 68
+inputs	
+output	
+message	
+case 69
+inputs	
+output	
+message	
+case 70
+inputs	-translate-x-4|-translate-y-4
+output	-translate-4
+message	The classes "-translate-x-4", "-translate-y-4" say the same thing as "-translate-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 71
+inputs	-translate-y-4|-translate-x-4
+output	-translate-4
+message	The classes "-translate-y-4", "-translate-x-4" say the same thing as "-translate-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 72
+inputs	-translate-x-4|-translate-y-4
+output	-translate-4
+message	The classes "-translate-x-4", "-translate-y-4" say the same thing as "-translate-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 73
+inputs	-translate-y-4|-translate-x-4
+output	-translate-4
+message	The classes "-translate-y-4", "-translate-x-4" say the same thing as "-translate-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 74
+inputs	
+output	
+message	
+case 75
+inputs	
+output	
+message	
+case 76
+inputs	
+output	
+message	
+case 77
+inputs	border-b-4|border-t-4
+output	border-y-4
+message	The classes "border-b-4", "border-t-4" say the same thing as "border-y-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 78
+inputs	border-t-4|border-b-4
+output	border-y-4
+message	The classes "border-t-4", "border-b-4" say the same thing as "border-y-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 79
+inputs	
+output	
+message	
+case 80
+inputs	
+output	
+message	
+case 81
+inputs	
+output	
+message	
+case 82
+inputs	
+output	
+message	
+case 83
+inputs	
+output	
+message	
+case 84
+inputs	border-l-4|border-r-4
+output	border-x-4
+message	The classes "border-l-4", "border-r-4" say the same thing as "border-x-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 85
+inputs	border-r-4|border-l-4
+output	border-x-4
+message	The classes "border-r-4", "border-l-4" say the same thing as "border-x-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 86
+inputs	
+output	
+message	
+case 87
+inputs	
+output	
+message	
+case 88
+inputs	
+output	
+message	
+case 89
+inputs	
+output	
+message	
+case 90
+inputs	
+output	
+message	
+case 91
+inputs	border-spacing-x-4|border-spacing-y-4
+output	border-spacing-4
+message	The classes "border-spacing-x-4", "border-spacing-y-4" say the same thing as "border-spacing-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 92
+inputs	border-spacing-y-4|border-spacing-x-4
+output	border-spacing-4
+message	The classes "border-spacing-y-4", "border-spacing-x-4" say the same thing as "border-spacing-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 93
+inputs	border-spacing-x-4|border-spacing-y-4
+output	border-spacing-4
+message	The classes "border-spacing-x-4", "border-spacing-y-4" say the same thing as "border-spacing-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 94
+inputs	border-spacing-y-4|border-spacing-x-4
+output	border-spacing-4
+message	The classes "border-spacing-y-4", "border-spacing-x-4" say the same thing as "border-spacing-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 95
+inputs	
+output	
+message	
+case 96
+inputs	
+output	
+message	
+case 97
+inputs	
+output	
+message	
+case 98
+inputs	border-x-4|border-y-4
+output	border-4
+message	The classes "border-x-4", "border-y-4" say the same thing as "border-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 99
+inputs	border-y-4|border-x-4
+output	border-4
+message	The classes "border-y-4", "border-x-4" say the same thing as "border-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 100
+inputs	
+output	
+message	
+case 101
+inputs	
+output	
+message	
+case 102
+inputs	
+output	
+message	
+case 103
+inputs	
+output	
+message	
+case 104
+inputs	
+output	
+message	
+case 105
+inputs	bottom-4|top-4
+output	inset-y-4
+message	The classes "bottom-4", "top-4" say the same thing as "inset-y-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 106
+inputs	top-4|bottom-4
+output	inset-y-4
+message	The classes "top-4", "bottom-4" say the same thing as "inset-y-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 107
+inputs	
+output	
+message	
+case 108
+inputs	
+output	
+message	
+case 109
+inputs	
+output	
+message	
+case 110
+inputs	
+output	
+message	
+case 111
+inputs	
+output	
+message	
+case 112
+inputs	gap-x-4|gap-y-4
+output	gap-4
+message	The classes "gap-x-4", "gap-y-4" say the same thing as "gap-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 113
+inputs	gap-y-4|gap-x-4
+output	gap-4
+message	The classes "gap-y-4", "gap-x-4" say the same thing as "gap-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 114
+inputs	gap-x-4|gap-y-4
+output	gap-4
+message	The classes "gap-x-4", "gap-y-4" say the same thing as "gap-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 115
+inputs	gap-y-4|gap-x-4
+output	gap-4
+message	The classes "gap-y-4", "gap-x-4" say the same thing as "gap-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 116
+inputs	
+output	
+message	
+case 117
+inputs	
+output	
+message	
+case 118
+inputs	
+output	
+message	
+case 119
+inputs	h-4|w-4
+output	size-4
+message	The classes "h-4", "w-4" say the same thing as "size-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 120
+inputs	w-4|h-4
+output	size-4
+message	The classes "w-4", "h-4" say the same thing as "size-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 121
+inputs	h-4|w-4
+output	size-4
+message	The classes "h-4", "w-4" say the same thing as "size-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 122
+inputs	w-4|h-4
+output	size-4
+message	The classes "w-4", "h-4" say the same thing as "size-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 123
+inputs	
+output	
+message	
+case 124
+inputs	
+output	
+message	
+case 125
+inputs	
+output	
+message	
+case 126
+inputs	inset-x-4|inset-y-4
+output	inset-4
+message	The classes "inset-x-4", "inset-y-4" say the same thing as "inset-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 127
+inputs	inset-y-4|inset-x-4
+output	inset-4
+message	The classes "inset-y-4", "inset-x-4" say the same thing as "inset-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 128
+inputs	
+output	
+message	
+case 129
+inputs	
+output	
+message	
+case 130
+inputs	
+output	
+message	
+case 131
+inputs	
+output	
+message	
+case 132
+inputs	
+output	
+message	
+case 133
+inputs	left-4|right-4
+output	inset-x-4
+message	The classes "left-4", "right-4" say the same thing as "inset-x-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 134
+inputs	right-4|left-4
+output	inset-x-4
+message	The classes "right-4", "left-4" say the same thing as "inset-x-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 135
+inputs	
+output	
+message	
+case 136
+inputs	
+output	
+message	
+case 137
+inputs	
+output	
+message	
+case 138
+inputs	
+output	
+message	
+case 139
+inputs	
+output	
+message	
+case 140
+inputs	mask-b-from-4|mask-t-from-4
+output	mask-y-from-4
+message	The classes "mask-b-from-4", "mask-t-from-4" say the same thing as "mask-y-from-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 141
+inputs	mask-t-from-4|mask-b-from-4
+output	mask-y-from-4
+message	The classes "mask-t-from-4", "mask-b-from-4" say the same thing as "mask-y-from-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 142
+inputs	mask-b-from-4|mask-t-from-4
+output	mask-y-from-4
+message	The classes "mask-b-from-4", "mask-t-from-4" say the same thing as "mask-y-from-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 143
+inputs	mask-t-from-4|mask-b-from-4
+output	mask-y-from-4
+message	The classes "mask-t-from-4", "mask-b-from-4" say the same thing as "mask-y-from-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 144
+inputs	
+output	
+message	
+case 145
+inputs	
+output	
+message	
+case 146
+inputs	
+output	
+message	
+case 147
+inputs	mask-b-to-4|mask-t-to-4
+output	mask-y-to-4
+message	The classes "mask-b-to-4", "mask-t-to-4" say the same thing as "mask-y-to-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 148
+inputs	mask-t-to-4|mask-b-to-4
+output	mask-y-to-4
+message	The classes "mask-t-to-4", "mask-b-to-4" say the same thing as "mask-y-to-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 149
+inputs	mask-b-to-4|mask-t-to-4
+output	mask-y-to-4
+message	The classes "mask-b-to-4", "mask-t-to-4" say the same thing as "mask-y-to-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 150
+inputs	mask-t-to-4|mask-b-to-4
+output	mask-y-to-4
+message	The classes "mask-t-to-4", "mask-b-to-4" say the same thing as "mask-y-to-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 151
+inputs	
+output	
+message	
+case 152
+inputs	
+output	
+message	
+case 153
+inputs	
+output	
+message	
+case 154
+inputs	mask-l-from-4|mask-r-from-4
+output	mask-x-from-4
+message	The classes "mask-l-from-4", "mask-r-from-4" say the same thing as "mask-x-from-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 155
+inputs	mask-r-from-4|mask-l-from-4
+output	mask-x-from-4
+message	The classes "mask-r-from-4", "mask-l-from-4" say the same thing as "mask-x-from-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 156
+inputs	mask-l-from-4|mask-r-from-4
+output	mask-x-from-4
+message	The classes "mask-l-from-4", "mask-r-from-4" say the same thing as "mask-x-from-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 157
+inputs	mask-r-from-4|mask-l-from-4
+output	mask-x-from-4
+message	The classes "mask-r-from-4", "mask-l-from-4" say the same thing as "mask-x-from-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 158
+inputs	
+output	
+message	
+case 159
+inputs	
+output	
+message	
+case 160
+inputs	
+output	
+message	
+case 161
+inputs	mask-l-to-4|mask-r-to-4
+output	mask-x-to-4
+message	The classes "mask-l-to-4", "mask-r-to-4" say the same thing as "mask-x-to-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 162
+inputs	mask-r-to-4|mask-l-to-4
+output	mask-x-to-4
+message	The classes "mask-r-to-4", "mask-l-to-4" say the same thing as "mask-x-to-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 163
+inputs	mask-l-to-4|mask-r-to-4
+output	mask-x-to-4
+message	The classes "mask-l-to-4", "mask-r-to-4" say the same thing as "mask-x-to-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 164
+inputs	mask-r-to-4|mask-l-to-4
+output	mask-x-to-4
+message	The classes "mask-r-to-4", "mask-l-to-4" say the same thing as "mask-x-to-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 165
+inputs	
+output	
+message	
+case 166
+inputs	
+output	
+message	
+case 167
+inputs	
+output	
+message	
+case 168
+inputs	max-w-4|max-w-screen-4
+output	max-w-4
+message	The classes "max-w-4", "max-w-screen-4" say the same thing as "max-w-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 169
+inputs	max-w-screen-4|max-w-4
+output	max-w-4
+message	The classes "max-w-screen-4", "max-w-4" say the same thing as "max-w-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 170
+inputs	max-w-4|max-w-screen-4
+output	max-w-4
+message	The classes "max-w-4", "max-w-screen-4" say the same thing as "max-w-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 171
+inputs	max-w-screen-4|max-w-4
+output	max-w-4
+message	The classes "max-w-screen-4", "max-w-4" say the same thing as "max-w-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 172
+inputs	
+output	
+message	
+case 173
+inputs	
+output	
+message	
+case 174
+inputs	
+output	
+message	
+case 175
+inputs	mb-4|mt-4
+output	my-4
+message	The classes "mb-4", "mt-4" say the same thing as "my-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 176
+inputs	mt-4|mb-4
+output	my-4
+message	The classes "mt-4", "mb-4" say the same thing as "my-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 177
+inputs	
+output	
+message	
+case 178
+inputs	
+output	
+message	
+case 179
+inputs	
+output	
+message	
+case 180
+inputs	
+output	
+message	
+case 181
+inputs	
+output	
+message	
+case 182
+inputs	ml-4|mr-4
+output	mx-4
+message	The classes "ml-4", "mr-4" say the same thing as "mx-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 183
+inputs	mr-4|ml-4
+output	mx-4
+message	The classes "mr-4", "ml-4" say the same thing as "mx-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 184
+inputs	
+output	
+message	
+case 185
+inputs	
+output	
+message	
+case 186
+inputs	
+output	
+message	
+case 187
+inputs	
+output	
+message	
+case 188
+inputs	
+output	
+message	
+case 189
+inputs	mx-4|my-4
+output	m-4
+message	The classes "mx-4", "my-4" say the same thing as "m-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 190
+inputs	my-4|mx-4
+output	m-4
+message	The classes "my-4", "mx-4" say the same thing as "m-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 191
+inputs	
+output	
+message	
+case 192
+inputs	
+output	
+message	
+case 193
+inputs	
+output	
+message	
+case 194
+inputs	
+output	
+message	
+case 195
+inputs	
+output	
+message	
+case 196
+inputs	pb-4|pt-4
+output	py-4
+message	The classes "pb-4", "pt-4" say the same thing as "py-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 197
+inputs	pt-4|pb-4
+output	py-4
+message	The classes "pt-4", "pb-4" say the same thing as "py-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 198
+inputs	
+output	
+message	
+case 199
+inputs	
+output	
+message	
+case 200
+inputs	
+output	
+message	
+case 201
+inputs	
+output	
+message	
+case 202
+inputs	
+output	
+message	
+case 203
+inputs	pl-4|pr-4
+output	px-4
+message	The classes "pl-4", "pr-4" say the same thing as "px-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 204
+inputs	pr-4|pl-4
+output	px-4
+message	The classes "pr-4", "pl-4" say the same thing as "px-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 205
+inputs	
+output	
+message	
+case 206
+inputs	
+output	
+message	
+case 207
+inputs	
+output	
+message	
+case 208
+inputs	
+output	
+message	
+case 209
+inputs	
+output	
+message	
+case 210
+inputs	px-4|py-4
+output	p-4
+message	The classes "px-4", "py-4" say the same thing as "p-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 211
+inputs	py-4|px-4
+output	p-4
+message	The classes "py-4", "px-4" say the same thing as "p-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 212
+inputs	
+output	
+message	
+case 213
+inputs	
+output	
+message	
+case 214
+inputs	
+output	
+message	
+case 215
+inputs	
+output	
+message	
+case 216
+inputs	
+output	
+message	
+case 217
+inputs	rounded-bl-4|rounded-br-4
+output	rounded-b-4
+message	The classes "rounded-bl-4", "rounded-br-4" say the same thing as "rounded-b-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 218
+inputs	rounded-br-4|rounded-bl-4
+output	rounded-b-4
+message	The classes "rounded-br-4", "rounded-bl-4" say the same thing as "rounded-b-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 219
+inputs	rounded-bl-4|rounded-br-4
+output	rounded-b-4
+message	The classes "rounded-bl-4", "rounded-br-4" say the same thing as "rounded-b-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 220
+inputs	rounded-br-4|rounded-bl-4
+output	rounded-b-4
+message	The classes "rounded-br-4", "rounded-bl-4" say the same thing as "rounded-b-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 221
+inputs	
+output	
+message	
+case 222
+inputs	
+output	
+message	
+case 223
+inputs	
+output	
+message	
+case 224
+inputs	rounded-bl-4|rounded-tl-4
+output	rounded-l-4
+message	The classes "rounded-bl-4", "rounded-tl-4" say the same thing as "rounded-l-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 225
+inputs	rounded-tl-4|rounded-bl-4
+output	rounded-l-4
+message	The classes "rounded-tl-4", "rounded-bl-4" say the same thing as "rounded-l-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 226
+inputs	rounded-bl-4|rounded-tl-4
+output	rounded-l-4
+message	The classes "rounded-bl-4", "rounded-tl-4" say the same thing as "rounded-l-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 227
+inputs	rounded-tl-4|rounded-bl-4
+output	rounded-l-4
+message	The classes "rounded-tl-4", "rounded-bl-4" say the same thing as "rounded-l-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 228
+inputs	
+output	
+message	
+case 229
+inputs	
+output	
+message	
+case 230
+inputs	
+output	
+message	
+case 231
+inputs	rounded-br-4|rounded-tr-4
+output	rounded-r-4
+message	The classes "rounded-br-4", "rounded-tr-4" say the same thing as "rounded-r-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 232
+inputs	rounded-tr-4|rounded-br-4
+output	rounded-r-4
+message	The classes "rounded-tr-4", "rounded-br-4" say the same thing as "rounded-r-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 233
+inputs	rounded-br-4|rounded-tr-4
+output	rounded-r-4
+message	The classes "rounded-br-4", "rounded-tr-4" say the same thing as "rounded-r-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 234
+inputs	rounded-tr-4|rounded-br-4
+output	rounded-r-4
+message	The classes "rounded-tr-4", "rounded-br-4" say the same thing as "rounded-r-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 235
+inputs	
+output	
+message	
+case 236
+inputs	
+output	
+message	
+case 237
+inputs	
+output	
+message	
+case 238
+inputs	rounded-ee-4|rounded-se-4
+output	rounded-e-4
+message	The classes "rounded-ee-4", "rounded-se-4" say the same thing as "rounded-e-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 239
+inputs	rounded-se-4|rounded-ee-4
+output	rounded-e-4
+message	The classes "rounded-se-4", "rounded-ee-4" say the same thing as "rounded-e-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 240
+inputs	rounded-ee-4|rounded-se-4
+output	rounded-e-4
+message	The classes "rounded-ee-4", "rounded-se-4" say the same thing as "rounded-e-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 241
+inputs	rounded-se-4|rounded-ee-4
+output	rounded-e-4
+message	The classes "rounded-se-4", "rounded-ee-4" say the same thing as "rounded-e-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 242
+inputs	
+output	
+message	
+case 243
+inputs	
+output	
+message	
+case 244
+inputs	
+output	
+message	
+case 245
+inputs	rounded-es-4|rounded-ss-4
+output	rounded-s-4
+message	The classes "rounded-es-4", "rounded-ss-4" say the same thing as "rounded-s-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 246
+inputs	rounded-ss-4|rounded-es-4
+output	rounded-s-4
+message	The classes "rounded-ss-4", "rounded-es-4" say the same thing as "rounded-s-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 247
+inputs	rounded-es-4|rounded-ss-4
+output	rounded-s-4
+message	The classes "rounded-es-4", "rounded-ss-4" say the same thing as "rounded-s-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 248
+inputs	rounded-ss-4|rounded-es-4
+output	rounded-s-4
+message	The classes "rounded-ss-4", "rounded-es-4" say the same thing as "rounded-s-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 249
+inputs	
+output	
+message	
+case 250
+inputs	
+output	
+message	
+case 251
+inputs	
+output	
+message	
+case 252
+inputs	rounded-tl-4|rounded-tr-4
+output	rounded-t-4
+message	The classes "rounded-tl-4", "rounded-tr-4" say the same thing as "rounded-t-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 253
+inputs	rounded-tr-4|rounded-tl-4
+output	rounded-t-4
+message	The classes "rounded-tr-4", "rounded-tl-4" say the same thing as "rounded-t-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 254
+inputs	rounded-tl-4|rounded-tr-4
+output	rounded-t-4
+message	The classes "rounded-tl-4", "rounded-tr-4" say the same thing as "rounded-t-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 255
+inputs	rounded-tr-4|rounded-tl-4
+output	rounded-t-4
+message	The classes "rounded-tr-4", "rounded-tl-4" say the same thing as "rounded-t-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 256
+inputs	
+output	
+message	
+case 257
+inputs	
+output	
+message	
+case 258
+inputs	
+output	
+message	
+case 259
+inputs	scroll-mb-4|scroll-mt-4
+output	scroll-my-4
+message	The classes "scroll-mb-4", "scroll-mt-4" say the same thing as "scroll-my-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 260
+inputs	scroll-mt-4|scroll-mb-4
+output	scroll-my-4
+message	The classes "scroll-mt-4", "scroll-mb-4" say the same thing as "scroll-my-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 261
+inputs	
+output	
+message	
+case 262
+inputs	
+output	
+message	
+case 263
+inputs	
+output	
+message	
+case 264
+inputs	
+output	
+message	
+case 265
+inputs	
+output	
+message	
+case 266
+inputs	scroll-ml-4|scroll-mr-4
+output	scroll-mx-4
+message	The classes "scroll-ml-4", "scroll-mr-4" say the same thing as "scroll-mx-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 267
+inputs	scroll-mr-4|scroll-ml-4
+output	scroll-mx-4
+message	The classes "scroll-mr-4", "scroll-ml-4" say the same thing as "scroll-mx-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 268
+inputs	
+output	
+message	
+case 269
+inputs	
+output	
+message	
+case 270
+inputs	
+output	
+message	
+case 271
+inputs	
+output	
+message	
+case 272
+inputs	
+output	
+message	
+case 273
+inputs	scroll-mx-4|scroll-my-4
+output	scroll-m-4
+message	The classes "scroll-mx-4", "scroll-my-4" say the same thing as "scroll-m-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 274
+inputs	scroll-my-4|scroll-mx-4
+output	scroll-m-4
+message	The classes "scroll-my-4", "scroll-mx-4" say the same thing as "scroll-m-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 275
+inputs	
+output	
+message	
+case 276
+inputs	
+output	
+message	
+case 277
+inputs	
+output	
+message	
+case 278
+inputs	
+output	
+message	
+case 279
+inputs	
+output	
+message	
+case 280
+inputs	scroll-pb-4|scroll-pt-4
+output	scroll-py-4
+message	The classes "scroll-pb-4", "scroll-pt-4" say the same thing as "scroll-py-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 281
+inputs	scroll-pt-4|scroll-pb-4
+output	scroll-py-4
+message	The classes "scroll-pt-4", "scroll-pb-4" say the same thing as "scroll-py-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 282
+inputs	
+output	
+message	
+case 283
+inputs	
+output	
+message	
+case 284
+inputs	
+output	
+message	
+case 285
+inputs	
+output	
+message	
+case 286
+inputs	
+output	
+message	
+case 287
+inputs	scroll-pl-4|scroll-pr-4
+output	scroll-px-4
+message	The classes "scroll-pl-4", "scroll-pr-4" say the same thing as "scroll-px-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 288
+inputs	scroll-pr-4|scroll-pl-4
+output	scroll-px-4
+message	The classes "scroll-pr-4", "scroll-pl-4" say the same thing as "scroll-px-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 289
+inputs	
+output	
+message	
+case 290
+inputs	
+output	
+message	
+case 291
+inputs	
+output	
+message	
+case 292
+inputs	
+output	
+message	
+case 293
+inputs	
+output	
+message	
+case 294
+inputs	scroll-px-4|scroll-py-4
+output	scroll-p-4
+message	The classes "scroll-px-4", "scroll-py-4" say the same thing as "scroll-p-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 295
+inputs	scroll-py-4|scroll-px-4
+output	scroll-p-4
+message	The classes "scroll-py-4", "scroll-px-4" say the same thing as "scroll-p-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 296
+inputs	
+output	
+message	
+case 297
+inputs	
+output	
+message	
+case 298
+inputs	
+output	
+message	
+case 299
+inputs	
+output	
+message	
+case 300
+inputs	
+output	
+message	
+case 301
+inputs	skew-x-4|skew-y-4
+output	skew-4
+message	The classes "skew-x-4", "skew-y-4" say the same thing as "skew-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 302
+inputs	skew-y-4|skew-x-4
+output	skew-4
+message	The classes "skew-y-4", "skew-x-4" say the same thing as "skew-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 303
+inputs	skew-x-4|skew-y-4
+output	skew-4
+message	The classes "skew-x-4", "skew-y-4" say the same thing as "skew-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 304
+inputs	skew-y-4|skew-x-4
+output	skew-4
+message	The classes "skew-y-4", "skew-x-4" say the same thing as "skew-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 305
+inputs	
+output	
+message	
+case 306
+inputs	
+output	
+message	
+case 307
+inputs	
+output	
+message	
+case 308
+inputs	translate-x-4|translate-y-4
+output	translate-4
+message	The classes "translate-x-4", "translate-y-4" say the same thing as "translate-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 309
+inputs	translate-y-4|translate-x-4
+output	translate-4
+message	The classes "translate-y-4", "translate-x-4" say the same thing as "translate-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 310
+inputs	translate-x-4|translate-y-4
+output	translate-4
+message	The classes "translate-x-4", "translate-y-4" say the same thing as "translate-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 311
+inputs	translate-y-4|translate-x-4
+output	translate-4
+message	The classes "translate-y-4", "translate-x-4" say the same thing as "translate-4". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 312
+inputs	
+output	
+message	
+case 313
+inputs	
+output	
+message	
+case 314
+inputs	
+output	
+message	
+case 315
+inputs	[&_svg]:px-[1fr_auto]!|[&_svg]:py-[1fr_auto]!
+output	[&_svg]:p-[1fr_auto]!
+message	The classes "[&_svg]:px-[1fr_auto]!", "[&_svg]:py-[1fr_auto]!" say the same thing as "[&_svg]:p-[1fr_auto]!". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 316
+inputs	[&_svg]:px-(--x)!|[&_svg]:py-(--x)!
+output	[&_svg]:p-(--x)!
+message	The classes "[&_svg]:px-(--x)!", "[&_svg]:py-(--x)!" say the same thing as "[&_svg]:p-(--x)!". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 317
+inputs	[&_svg]:px!|[&_svg]:py!
+output	[&_svg]:p!
+message	The classes "[&_svg]:px!", "[&_svg]:py!" say the same thing as "[&_svg]:p!". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks.
+case 318
+order	a|b
+message	These classes are not in Tailwind's own order, which is "a b". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 6	a
+fix	9 10	b
+case 319
+order	b|a
+message	These classes are not in Tailwind's own order, which is "b a". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+case 320
+order	a|b
+message	These classes are not in Tailwind's own order, which is "a b". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+case 321
+order	b|a
+message	These classes are not in Tailwind's own order, which is "b a". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 6	b
+fix	9 10	a
+case 322
+order	flex|gap-2|items-center
+message	These classes are not in Tailwind's own order, which is "flex gap-2 items-center". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	12 24	gap-2
+fix	27 32	items-center
+case 323
+order	items-center|gap-2|flex
+message	These classes are not in Tailwind's own order, which is "items-center gap-2 flex". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 9	items-center
+fix	12 24	gap-2
+fix	27 32	flex
+case 324
+order	a|z|z
+message	These classes are not in Tailwind's own order, which is "a z z". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 6	a
+fix	9 10	z
+case 325
+order	z|z|a
+message	These classes are not in Tailwind's own order, which is "z z a". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	9 10	z
+fix	13 14	a
+case 326
+order	\ud800\udc00|\ue000
+message	These classes are not in Tailwind's own order, which is "\ud800\udc00 \ue000". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 8	\ud800\udc00
+fix	11 15	\ue000
+case 327
+order	\ue000|\ud800\udc00
+message	These classes are not in Tailwind's own order, which is "\ue000 \ud800\udc00". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+case 328
+order	a|\ud83d\ude80|\uffff
+message	These classes are not in Tailwind's own order, which is "a \ud83d\ude80 \uffff". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 9	a
+fix	12 15	\ud83d\ude80
+fix	18 19	\uffff
+case 329
+order	\uffff|\ud83d\ude80|a
+message	These classes are not in Tailwind's own order, which is "\uffff \ud83d\ude80 a". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 9	\uffff
+fix	12 15	\ud83d\ude80
+case 330
+order	|a
+message	These classes are not in Tailwind's own order, which is " a". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+case 331
+order	a|
+message	These classes are not in Tailwind's own order, which is "a ". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 5	a
+fix	8 9	
+case 332
+order	ab|abc
+message	These classes are not in Tailwind's own order, which is "ab abc". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 8	ab
+fix	11 13	abc
+case 333
+order	abc|ab
+message	These classes are not in Tailwind's own order, which is "abc ab". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+case 334
+order	A|Z|a
+message	These classes are not in Tailwind's own order, which is "A Z a". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 6	A
+fix	9 10	Z
+fix	13 14	a
+case 335
+order	a|Z|A
+message	These classes are not in Tailwind's own order, which is "a Z A". Order carries no meaning to the browser, which is exactly why it should be mechanical: two elements with the same classes should read as the same line, so a diff shows what actually changed and a reader can scan a list without parsing it.
+fix	5 6	a
+fix	9 10	Z
