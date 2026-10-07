@@ -20,6 +20,7 @@
  *
  * Where the port differs from the Go, and why:
  *
+ *   - Each type here carries the house suffix (GraphInterface, EdgeType); its comment names the Go type it mirrors.
  *   - The four ids are numbers. Go's are distinct unsigned types; 0.1 has no nominal numbers, so the
  *     names say which id a number is, and nothing stops passing one for another.
  *   - Edge and Role are unions of their names, where Go's are integer enums.
@@ -34,7 +35,7 @@
  */
 
 /*
- * BlockId identifies a basic block within one function.
+ * BlockIdType (Go's BlockId) identifies a basic block within one function.
  *
  * Ids are dense and assigned in creation order, which is not execution order. A function's blocks are
  * held in reverse postorder once reversePostorder has run, so a walk that wants execution order
@@ -42,37 +43,37 @@
  * deliberately different things: an index into the block array moves when the order changes, an id
  * does not.
  */
-export type BlockId = number;
+export type BlockIdType = number;
 
 /*
- * IdentifierId names one value.
+ * IdentifierIdType (Go's IdentifierId) names one value.
  *
  * Two places with the same IdentifierId are the same value: not equal, the same. That is the property
  * the whole IR exists to provide, and it is what lets a later pass ask whether the object mutated here
  * is the object passed there without re-deriving aliasing from syntax.
  */
-export type IdentifierId = number;
+export type IdentifierIdType = number;
 
 /*
- * DeclarationId names one source-level binding across all the values it takes.
+ * DeclarationIdType (Go's DeclarationId) names one source-level binding across all the values it takes.
  *
  * One `let` reassigned three times is three IdentifierIds and one DeclarationId. Single-assignment
  * construction mints further IdentifierIds against the same DeclarationId, so a pass that wants "this
  * variable" rather than "this value" asks for the DeclarationId and keeps working afterwards.
  */
-export type DeclarationId = number;
+export type DeclarationIdType = number;
 
 /*
- * EvaluationOrder is a monotonically increasing position in the function's evaluation.
+ * EvaluationOrderType (Go's EvaluationOrder) is a monotonically increasing position in the function's evaluation.
  *
  * Terminals carry one as well as instructions, so "did A evaluate before B" is answerable across an
  * instruction and a terminal. Assigned by markEvaluationOrder in reverse postorder from 1. Zero means
  * unassigned.
  */
-export type EvaluationOrder = number;
+export type EvaluationOrderType = number;
 
 /*
- * Edge is what kind of edge a successor is.
+ * EdgeType (Go's Edge) is what kind of edge a successor is.
  *
  *   - 'Real' is an edge control takes.
  *   - 'Fallthrough' is a structural link, not an edge: the block after an if or a loop, which a
@@ -83,71 +84,71 @@ export type EvaluationOrder = number;
  *     Every pass treats it as 'Real' today. It is named apart because single assignment should give the
  *     handler the definitions from before the throwing instruction, not the block's end (#2yz9ra9).
  */
-export type Edge = 'Real' | 'Fallthrough' | 'Exceptional';
+export type EdgeType = 'Real' | 'Fallthrough' | 'Exceptional';
 
-// Role says whether a place reads its value ('Use') or defines it ('Define').
-export type Role = 'Use' | 'Define';
+// RoleType (Go's Role) says whether a place reads its value ('Use') or defines it ('Define').
+export type RoleType = 'Use' | 'Define';
 
-// PlaceVisitor sees one place and returns it, renamed or as it was.
-export type PlaceVisitor<P> = (place: P, role: Role) => P;
+// PlaceVisitorType (Go's func(place *P, role Role)) sees one place and returns it, renamed or as it was.
+export type PlaceVisitorType<P> = (place: P, role: RoleType) => P;
 
 /*
- * Phi is a merge: the value of place at the top of a block, given which predecessor control came from.
+ * PhiInterface (Go's Phi) is a merge: the value of place at the top of a block, given which predecessor control came from.
  *
  * operands holds one entry per entry in the block's predecessors, kept sorted by predecessor block id,
  * so iterating it is deterministic and is the order phiOperandsInOrder gives. The lookup "what came
  * from this predecessor" is phiOperand. Both fields are written in place: elimination renames a phi's
  * place and each operand's.
  */
-export interface Phi<P> {
+export interface PhiInterface<P> {
     place: P;
-    operands: PhiOperand<P>[];
+    operands: PhiOperandInterface<P>[];
 }
 
-// PhiOperand is the value a phi takes when control arrives from predecessor.
-export interface PhiOperand<P> {
-    readonly predecessor: BlockId;
+// PhiOperandInterface (Go's PhiOperand) is the value a phi takes when control arrives from predecessor.
+export interface PhiOperandInterface<P> {
+    readonly predecessor: BlockIdType;
     place: P;
 }
 
 /*
- * Graph is what the passes need of an intermediate representation: its function type F, its block type
+ * GraphInterface (Go's Graph) is what the passes need of an intermediate representation: its function type F, its block type
  * B and its place type P.
  *
  * An IR implements it once, and calls a pass with it and its function. The passes hold no IR type;
  * every read and write of one goes through here.
  */
-export interface Graph<F, B, P> {
+export interface GraphInterface<F, B, P> {
     // entry is the block control begins at.
-    readonly entry: (fn: F) => BlockId;
+    readonly entry: (fn: F) => BlockIdType;
     // blockBound is one past the largest block id the function has handed out or holds.
     readonly blockBound: (fn: F) => number;
     // block is the block with an id, and undefined for one the function does not hold.
-    readonly block: (fn: F, id: BlockId) => B | undefined;
+    readonly block: (fn: F, id: BlockIdType) => B | undefined;
     // blocks is the function's block array, in its current order.
     readonly blocks: (fn: F) => readonly B[];
     // setBlocks replaces the block array.
     readonly setBlocks: (fn: F, blocks: readonly B[]) => void;
     // retain forgets every block whose id keep declines, so block no longer finds it.
-    readonly retain: (fn: F, keep: (id: BlockId) => boolean) => void;
+    readonly retain: (fn: F, keep: (id: BlockIdType) => boolean) => void;
     // placeholder replaces a block nothing real reaches but a structured terminal still names with an
     // empty unreachable block under the same id, keeping its predecessors, and returns it. Only an IR
     // that reports 'Fallthrough' edges is asked.
     readonly placeholder: (fn: F, block: B) => B;
 
     // id is a block's id.
-    readonly id: (block: B) => BlockId;
+    readonly id: (block: B) => BlockIdType;
     // predecessors are the blocks with a real edge into a block.
-    readonly predecessors: (block: B) => readonly BlockId[];
+    readonly predecessors: (block: B) => readonly BlockIdType[];
     // setPredecessors replaces them.
-    readonly setPredecessors: (block: B, predecessors: readonly BlockId[]) => void;
+    readonly setPredecessors: (block: B, predecessors: readonly BlockIdType[]) => void;
     // phis are a block's merges.
-    readonly phis: (block: B) => readonly Phi<P>[];
+    readonly phis: (block: B) => readonly PhiInterface<P>[];
     // setPhis replaces them.
-    readonly setPhis: (block: B, phis: readonly Phi<P>[]) => void;
+    readonly setPhis: (block: B, phis: readonly PhiInterface<P>[]) => void;
     // eachEdge visits a block's successors: its structural fallthrough first, if it has one, then its
     // edges in the order its terminal names them.
-    readonly eachEdge: (block: B, visit: (successor: BlockId, edge: Edge) => void) => void;
+    readonly eachEdge: (block: B, visit: (successor: BlockIdType, edge: EdgeType) => void) => void;
     // endsInReturn reports whether a block's terminal returns from the function.
     readonly endsInReturn: (block: B) => boolean;
 
@@ -155,7 +156,7 @@ export interface Graph<F, B, P> {
     readonly instructionCount: (fn: F, block: B) => number;
     // eachInstructionPlace visits the places of a block's instruction at index, uses before
     // definitions, and writes back the place each visit returns, so a pass may rename them.
-    readonly eachInstructionPlace: (fn: F, block: B, index: number, visit: PlaceVisitor<P>) => void;
+    readonly eachInstructionPlace: (fn: F, block: B, index: number, visit: PlaceVisitorType<P>) => void;
     // isContextStore reports whether a block's instruction at index writes a binding a closure
     // captures, which single assignment defines once rather than versioning.
     readonly isContextStore: (fn: F, block: B, index: number) => boolean;
@@ -163,11 +164,11 @@ export interface Graph<F, B, P> {
     // result, the one definition upstream's invariant counts. Asked only of a context store.
     readonly contextStoreDefines: (fn: F, block: B, index: number, place: P) => boolean;
     // setInstructionOrder sets the evaluation order of a block's instruction at index.
-    readonly setInstructionOrder: (fn: F, block: B, index: number, order: EvaluationOrder) => void;
+    readonly setInstructionOrder: (fn: F, block: B, index: number, order: EvaluationOrderType) => void;
     // eachTerminalPlace visits the places of a block's terminal, writing back what each visit returns.
-    readonly eachTerminalPlace: (block: B, visit: PlaceVisitor<P>) => void;
+    readonly eachTerminalPlace: (block: B, visit: PlaceVisitorType<P>) => void;
     // setTerminalOrder sets the evaluation order of a block's terminal.
-    readonly setTerminalOrder: (block: B, order: EvaluationOrder) => void;
+    readonly setTerminalOrder: (block: B, order: EvaluationOrderType) => void;
 
     // params are the function's parameters, defined on entry, in an array whose elements a pass renames.
     readonly params: (fn: F) => P[];
@@ -176,18 +177,18 @@ export interface Graph<F, B, P> {
     // setReturns replaces it. Asked only of an IR whose returns gave a place.
     readonly setReturns: (fn: F, place: P) => void;
     // declaration is the binding an identifier is a value of.
-    readonly declaration: (fn: F, identifier: IdentifierId) => DeclarationId;
+    readonly declaration: (fn: F, identifier: IdentifierIdType) => DeclarationIdType;
     // contextual reports whether a binding is one a nested function captures.
-    readonly contextual: (fn: F, declaration: DeclarationId) => boolean;
+    readonly contextual: (fn: F, declaration: DeclarationIdType) => boolean;
     // mint makes a new value of the original's binding and returns its id.
-    readonly mint: (fn: F, original: IdentifierId) => IdentifierId;
+    readonly mint: (fn: F, original: IdentifierIdType) => IdentifierIdType;
     // named reports whether a value carries a source name rather than being a temporary.
-    readonly named: (fn: F, identifier: IdentifierId) => boolean;
+    readonly named: (fn: F, identifier: IdentifierIdType) => boolean;
     // placeString renders a value for a message.
-    readonly placeString: (fn: F, identifier: IdentifierId) => string;
+    readonly placeString: (fn: F, identifier: IdentifierIdType) => string;
 
     // identifierOf is the value a place names.
-    readonly identifierOf: (place: P) => IdentifierId;
+    readonly identifierOf: (place: P) => IdentifierIdType;
     // withIdentifier is a place naming another value, with everything else it carries unchanged.
-    readonly withIdentifier: (place: P, identifier: IdentifierId) => P;
+    readonly withIdentifier: (place: P, identifier: IdentifierIdType) => P;
 }

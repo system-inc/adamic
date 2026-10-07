@@ -18,10 +18,10 @@
  */
 
 import { panic } from 'adamic';
-import type { BlockId, Edge, Graph } from './static_single_assignment.ts';
+import type { BlockIdType, EdgeType, GraphInterface } from './static_single_assignment.ts';
 
 // inRange reports whether an id is under the function's block bound, which every set is as long as.
-function inRange(id: BlockId, bound: number): boolean {
+function inRange(id: BlockIdType, bound: number): boolean {
     return id < bound;
 }
 
@@ -47,7 +47,7 @@ function inRange(id: BlockId, bound: number): boolean {
  * target. An IR whose terminals have only real edges reports no 'Fallthrough', and the walk is then a
  * plain reverse postorder.
  */
-export function reversePostorder<F, B, P>(graph: Graph<F, B, P>, fn: F): void {
+export function reversePostorder<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
     // The three sets are dense arrays over block ids, bounded by blockBound, and the walk keeps its
     // frames and their successors in two flat stacks rather than a frame and two lists per block.
     const bound = graph.blockBound(fn);
@@ -55,18 +55,18 @@ export function reversePostorder<F, B, P>(graph: Graph<F, B, P>, fn: F): void {
     const used = Array.from({ length: bound }, () => false);
     const usedFallthroughs = Array.from({ length: bound }, () => false);
 
-    const postorder: BlockId[] = [];
+    const postorder: BlockIdType[] = [];
     // successors are every frame's edges still to follow, a frame's from its start to its end. A
     // child's are pushed after its parent's and popped when the child is, so the array is a stack in
     // step with the frames.
-    const successors: ReversePostorderSuccessor[] = [];
-    const stack: ReversePostorderFrame[] = [];
+    const successors: ReversePostorderSuccessorInterface[] = [];
+    const stack: ReversePostorderFrameInterface[] = [];
 
     // real and the fallthrough are what one block's edges gave, gathered by collect.
-    let real: BlockId[] = [];
+    let real: BlockIdType[] = [];
     let fallthroughBlock = 0;
     let hasFallthrough = false;
-    const collect = function(next: BlockId, edge: Edge): void {
+    const collect = function(next: BlockIdType, edge: EdgeType): void {
         if(edge === 'Fallthrough') {
             fallthroughBlock = next;
             hasFallthrough = true;
@@ -75,7 +75,7 @@ export function reversePostorder<F, B, P>(graph: Graph<F, B, P>, fn: F): void {
         real.push(next);
     };
 
-    const enter = function(id: BlockId, isUsed: boolean): ReversePostorderFrame | undefined {
+    const enter = function(id: BlockIdType, isUsed: boolean): ReversePostorderFrameInterface | undefined {
         if(!inRange(id, bound)) {
             return undefined;
         }
@@ -156,15 +156,15 @@ export function reversePostorder<F, B, P>(graph: Graph<F, B, P>, fn: F): void {
 }
 
 // ReversePostorderSuccessor is one edge reversePostorder will follow, and whether it is executable.
-interface ReversePostorderSuccessor {
-    readonly id: BlockId;
+interface ReversePostorderSuccessorInterface {
+    readonly id: BlockIdType;
     readonly isUsed: boolean;
 }
 
 // ReversePostorderFrame is one block on reversePostorder's walk stack. Its successors are the shared
 // stack's entries from start to end, and next is the one it follows next.
-interface ReversePostorderFrame {
-    readonly block: BlockId;
+interface ReversePostorderFrameInterface {
+    readonly block: BlockIdType;
     readonly start: number;
     readonly end: number;
     next: number;
@@ -172,15 +172,15 @@ interface ReversePostorderFrame {
 }
 
 // EdgeTo is one gathered edge.
-export interface EdgeTo {
-    readonly successor: BlockId;
-    readonly edge: Edge;
+export interface EdgeToInterface {
+    readonly successor: BlockIdType;
+    readonly edge: EdgeType;
 }
 
 // edgesOf gathers a block's edges, for a pass that reads them in a loop of its own rather than in a
 // callback.
-export function edgesOf<F, B, P>(graph: Graph<F, B, P>, block: B): EdgeTo[] {
-    const edges: EdgeTo[] = [];
+export function edgesOf<F, B, P>(graph: GraphInterface<F, B, P>, block: B): EdgeToInterface[] {
+    const edges: EdgeToInterface[] = [];
     graph.eachEdge(block, function(successor, edge) {
         edges.push({ successor, edge });
     });
@@ -196,14 +196,14 @@ export function edgesOf<F, B, P>(graph: Graph<F, B, P>, block: B): EdgeTo[] {
  * join by asking each predecessor what it holds, and a missing or spurious predecessor is a wrong phi
  * rather than a crash.
  */
-export function markPredecessors<F, B, P>(graph: Graph<F, B, P>, fn: F): void {
+export function markPredecessors<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
     const blocks = graph.blocks(fn);
     for(const block of blocks) {
         graph.setPredecessors(block, []);
     }
     for(const block of blocks) {
         const id = graph.id(block);
-        const seen = new Map<BlockId, boolean>();
+        const seen = new Map<BlockIdType, boolean>();
         for(const edge of edgesOf(graph, block)) {
             if(edge.edge === 'Fallthrough' || seen.get(edge.successor) === true) {
                 continue;
@@ -228,7 +228,7 @@ export function markPredecessors<F, B, P>(graph: Graph<F, B, P>, fn: F): void {
  * Starts at 1: zero means unassigned, and a pass that reads an order of zero has found a block the
  * finalizer did not reach.
  */
-export function markEvaluationOrder<F, B, P>(graph: Graph<F, B, P>, fn: F): void {
+export function markEvaluationOrder<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
     let order = 1;
     for(const block of graph.blocks(fn)) {
         const count = graph.instructionCount(fn, block);

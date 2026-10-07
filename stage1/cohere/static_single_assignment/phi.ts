@@ -10,13 +10,13 @@
  * caller stores it back in the phi.
  */
 
-import type { BlockId, Phi, PhiOperand } from './static_single_assignment.ts';
+import type { BlockIdType, PhiInterface, PhiOperandInterface } from './static_single_assignment.ts';
 
 // operandIndex is where predecessor's entry is in operands, or where it would go, and whether it is
 // there.
 function operandIndex<P>(
-    operands: readonly PhiOperand<P>[],
-    predecessor: BlockId,
+    operands: readonly PhiOperandInterface<P>[],
+    predecessor: BlockIdType,
 ): { readonly index: number; readonly found: boolean } {
     let index = 0;
     for(const operand of operands) {
@@ -29,7 +29,7 @@ function operandIndex<P>(
 }
 
 // phiOperand is the operand from predecessor, or undefined when there is none (Go's Get and At).
-export function phiOperand<P>(operands: readonly PhiOperand<P>[], predecessor: BlockId): P | undefined {
+export function phiOperand<P>(operands: readonly PhiOperandInterface<P>[], predecessor: BlockIdType): P | undefined {
     const position = operandIndex(operands, predecessor);
     if(!position.found) {
         return undefined;
@@ -38,7 +38,11 @@ export function phiOperand<P>(operands: readonly PhiOperand<P>[], predecessor: B
 }
 
 // withPhiOperand makes place the operand from predecessor, replacing one already there (Go's Set).
-export function withPhiOperand<P>(operands: PhiOperand<P>[], predecessor: BlockId, place: P): PhiOperand<P>[] {
+export function withPhiOperand<P>(
+    operands: PhiOperandInterface<P>[],
+    predecessor: BlockIdType,
+    place: P,
+): PhiOperandInterface<P>[] {
     const position = operandIndex(operands, predecessor);
     const existing = operands[position.index];
     if(position.found && existing !== undefined) {
@@ -49,7 +53,10 @@ export function withPhiOperand<P>(operands: PhiOperand<P>[], predecessor: BlockI
 }
 
 // withoutPhiOperand removes the operand from predecessor, if there is one (Go's Delete).
-export function withoutPhiOperand<P>(operands: PhiOperand<P>[], predecessor: BlockId): PhiOperand<P>[] {
+export function withoutPhiOperand<P>(
+    operands: PhiOperandInterface<P>[],
+    predecessor: BlockIdType,
+): PhiOperandInterface<P>[] {
     const position = operandIndex(operands, predecessor);
     if(!position.found) {
         return operands;
@@ -61,6 +68,6 @@ export function withoutPhiOperand<P>(operands: PhiOperand<P>[], predecessor: Blo
 //
 // A phi's operands are kept sorted by predecessor block id, so this is their predecessor ids in that
 // order, read straight off the list.
-export function phiOperandsInOrder<P>(phi: Phi<P>): BlockId[] {
+export function phiOperandsInOrder<P>(phi: PhiInterface<P>): BlockIdType[] {
     return phi.operands.map((operand) => operand.predecessor);
 }

@@ -25,23 +25,23 @@
  * its names. A violation's String is its detail, which a caller reads off the field.
  */
 
-import type { BlockId, Graph, IdentifierId, PlaceVisitor } from './static_single_assignment.ts';
+import type { BlockIdType, GraphInterface, IdentifierIdType, PlaceVisitorType } from './static_single_assignment.ts';
 
 // Dominance is the immediate-dominator array over a function's block array, by position in it.
 export class Dominance {
     // position maps a block id to its index in the block array, which is reverse postorder.
-    private readonly position: Map<BlockId, number>;
+    private readonly position: Map<BlockIdType, number>;
     // immediate[i] is the index of block i's immediate dominator; the entry is its own.
     private readonly immediate: number[];
 
-    constructor(position: Map<BlockId, number>, immediate: number[]) {
+    constructor(position: Map<BlockIdType, number>, immediate: number[]) {
         this.position = position;
         this.immediate = immediate;
     }
 
     // dominates reports whether every path from the entry to block passes through dominator. A block
     // dominates itself, the standard convention.
-    dominates(dominator: BlockId, block: BlockId): boolean {
+    dominates(dominator: BlockIdType, block: BlockIdType): boolean {
         const target = this.position.get(dominator);
         if(target === undefined) {
             return false;
@@ -67,9 +67,9 @@ export class Dominance {
 //
 // The block array is already in reverse postorder with unreachable blocks removed, which is the
 // precondition the algorithm needs and the reason this is short.
-export function computeDominance<F, B, P>(graph: Graph<F, B, P>, fn: F): Dominance {
+export function computeDominance<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): Dominance {
     const blocks = graph.blocks(fn);
-    const position = new Map<BlockId, number>();
+    const position = new Map<BlockIdType, number>();
     for(let index = 0; index < blocks.length; index++) {
         const block = blocks[index];
         if(block !== undefined) {
@@ -122,18 +122,18 @@ export function computeDominance<F, B, P>(graph: Graph<F, B, P>, fn: F): Dominan
     return new Dominance(position, immediate);
 }
 
-// SingleAssignmentViolationKind is which of the two invariants a violation breaks: a value written more
+// SingleAssignmentViolationKindType (Go's SSAViolationKind) is which of the two invariants a violation breaks: a value written more
 // than once, or a use the definition does not dominate.
-export type SingleAssignmentViolationKind = 'MultipleDefinitions' | 'UseNotDominated';
+export type SingleAssignmentViolationKindType = 'MultipleDefinitions' | 'UseNotDominated';
 
-// SingleAssignmentViolation is one broken invariant (Go's SSAViolation).
-export interface SingleAssignmentViolation {
+// SingleAssignmentViolationInterface (Go's SSAViolation) is one broken invariant.
+export interface SingleAssignmentViolationInterface {
     // kind is which invariant broke.
-    readonly kind: SingleAssignmentViolationKind;
+    readonly kind: SingleAssignmentViolationKindType;
     // identifier is the value involved.
-    readonly identifier: IdentifierId;
+    readonly identifier: IdentifierIdType;
     // block is where the violating use or duplicate definition sits.
-    readonly block: BlockId;
+    readonly block: BlockIdType;
     // detail is a readable explanation naming both ends.
     readonly detail: string;
 }
@@ -148,9 +148,12 @@ export interface SingleAssignmentViolation {
  *
  * Nested functions are not descended into; call it per function.
  */
-export function verifySingleAssignment<F, B, P>(graph: Graph<F, B, P>, fn: F): SingleAssignmentViolation[] {
+export function verifySingleAssignment<F, B, P>(
+    graph: GraphInterface<F, B, P>,
+    fn: F,
+): SingleAssignmentViolationInterface[] {
     const blocks = graph.blocks(fn);
-    const violations: SingleAssignmentViolation[] = [];
+    const violations: SingleAssignmentViolationInterface[] = [];
     if(blocks.length === 0) {
         return violations;
     }
@@ -158,11 +161,11 @@ export function verifySingleAssignment<F, B, P>(graph: Graph<F, B, P>, fn: F): S
     const dominance = computeDominance(graph, fn);
 
     // Where each value is defined. A parameter is defined at the entry block.
-    const definedIn = new Map<IdentifierId, BlockId>();
+    const definedIn = new Map<IdentifierIdType, BlockIdType>();
     // Position within the block, so a use earlier in the same block than its definition is caught.
-    const definedAt = new Map<IdentifierId, number>();
+    const definedAt = new Map<IdentifierIdType, number>();
 
-    const recordDefinition = function(id: IdentifierId, blockId: BlockId, position: number): void {
+    const recordDefinition = function(id: IdentifierIdType, blockId: BlockIdType, position: number): void {
         const previous = definedIn.get(id);
         if(previous !== undefined) {
             violations.push({
@@ -183,12 +186,12 @@ export function verifySingleAssignment<F, B, P>(graph: Graph<F, B, P>, fn: F): S
     }
 
     // The visitors read the block and position being walked from these.
-    let blockId: BlockId = 0;
+    let blockId: BlockIdType = 0;
     let position = 0;
     let count = 0;
     let isContextStore = false;
     let currentBlock: B | undefined;
-    const recordInstruction: PlaceVisitor<P> = function(place, role) {
+    const recordInstruction: PlaceVisitorType<P> = function(place, role) {
         if(role !== 'Define') {
             return place;
         }
@@ -202,7 +205,7 @@ export function verifySingleAssignment<F, B, P>(graph: Graph<F, B, P>, fn: F): S
         recordDefinition(graph.identifierOf(place), blockId, position);
         return place;
     };
-    const recordTerminal: PlaceVisitor<P> = function(place, role) {
+    const recordTerminal: PlaceVisitorType<P> = function(place, role) {
         if(role === 'Define') {
             recordDefinition(graph.identifierOf(place), blockId, count);
         }
@@ -233,7 +236,7 @@ export function verifySingleAssignment<F, B, P>(graph: Graph<F, B, P>, fn: F): S
     }
 
     // checkUse verifies one use sitting in useBlock at usePosition.
-    const checkUse = function(id: IdentifierId, useBlock: BlockId, usePosition: number, what: string): void {
+    const checkUse = function(id: IdentifierIdType, useBlock: BlockIdType, usePosition: number, what: string): void {
         const definitionBlock = definedIn.get(id);
         if(definitionBlock === undefined) {
             // Never defined in this function: a global, an import, or a capture. Not a violation; single
@@ -261,13 +264,13 @@ export function verifySingleAssignment<F, B, P>(graph: Graph<F, B, P>, fn: F): S
         }
     };
 
-    const checkInstruction: PlaceVisitor<P> = function(place, role) {
+    const checkInstruction: PlaceVisitorType<P> = function(place, role) {
         if(role !== 'Define') {
             checkUse(graph.identifierOf(place), blockId, position, 'instruction');
         }
         return place;
     };
-    const checkTerminal: PlaceVisitor<P> = function(place, role) {
+    const checkTerminal: PlaceVisitorType<P> = function(place, role) {
         if(role !== 'Define') {
             checkUse(graph.identifierOf(place), blockId, count, 'terminal');
         }
@@ -303,13 +306,13 @@ export function verifySingleAssignment<F, B, P>(graph: Graph<F, B, P>, fn: F): S
 }
 
 /*
- * SingleAssignmentStats counts what a verification actually had to look at (Go's SSAStats).
+ * SingleAssignmentStatsInterface (Go's SSAStats) counts what a verification actually had to look at.
  *
  * This exists because an empty violation list is exactly what a vacuous check returns. A function with
  * no phis and no renamed values passes verification perfectly while proving nothing. A caller reporting
  * a clean run should report these numbers alongside it.
  */
-export interface SingleAssignmentStats {
+export interface SingleAssignmentStatsInterface {
     // phis is how many merge points were placed.
     readonly phis: number;
     // namedValues is how many defined values carry a source name rather than being a temporary. Zero
@@ -320,11 +323,14 @@ export interface SingleAssignmentStats {
 }
 
 // collectSingleAssignmentStats measures one function (Go's CollectSSAStats).
-export function collectSingleAssignmentStats<F, B, P>(graph: Graph<F, B, P>, fn: F): SingleAssignmentStats {
+export function collectSingleAssignmentStats<F, B, P>(
+    graph: GraphInterface<F, B, P>,
+    fn: F,
+): SingleAssignmentStatsInterface {
     let phis = 0;
     let namedValues = 0;
     let uses = 0;
-    const seen = new Map<IdentifierId, boolean>();
+    const seen = new Map<IdentifierIdType, boolean>();
     const note = function(place: P): void {
         const id = graph.identifierOf(place);
         if(seen.get(id) === true) {
@@ -335,7 +341,7 @@ export function collectSingleAssignmentStats<F, B, P>(graph: Graph<F, B, P>, fn:
             namedValues++;
         }
     };
-    const instruction: PlaceVisitor<P> = function(place, role) {
+    const instruction: PlaceVisitorType<P> = function(place, role) {
         if(role === 'Define') {
             note(place);
             return place;
@@ -343,7 +349,7 @@ export function collectSingleAssignmentStats<F, B, P>(graph: Graph<F, B, P>, fn:
         uses++;
         return place;
     };
-    const terminal: PlaceVisitor<P> = function(place, role) {
+    const terminal: PlaceVisitorType<P> = function(place, role) {
         if(role !== 'Define') {
             uses++;
         }

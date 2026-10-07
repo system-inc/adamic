@@ -47,80 +47,80 @@ import { panic, programArguments, readTextFile } from 'adamic';
 import { construct } from './construct.ts';
 import { markEvaluationOrder, markPredecessors, reversePostorder } from './graph.ts';
 import type {
-    BlockId,
-    DeclarationId,
-    Edge,
-    EvaluationOrder,
-    Graph,
-    IdentifierId,
-    Phi,
-    PlaceVisitor,
+    BlockIdType,
+    DeclarationIdType,
+    EdgeType,
+    EvaluationOrderType,
+    GraphInterface,
+    IdentifierIdType,
+    PhiInterface,
+    PlaceVisitorType,
 } from './static_single_assignment.ts';
 import { collectSingleAssignmentStats, computeDominance, verifySingleAssignment } from './verify.ts';
 
-interface OraclePlace {
-    readonly id: IdentifierId;
+interface OraclePlaceInterface {
+    readonly id: IdentifierIdType;
     readonly tag: string;
 }
 
 class OracleInstruction {
-    readonly uses: OraclePlace[] = [];
-    readonly defines: OraclePlace[] = [];
+    readonly uses: OraclePlaceInterface[] = [];
+    readonly defines: OraclePlaceInterface[] = [];
     contextStore = false;
     // result is the definition a context store's own result is, the one the verifier counts.
-    readonly result: IdentifierId;
-    order: EvaluationOrder = 0;
+    readonly result: IdentifierIdType;
+    order: EvaluationOrderType = 0;
 
-    constructor(result: IdentifierId) {
+    constructor(result: IdentifierIdType) {
         this.result = result;
     }
 }
 
-interface OracleEdge {
-    readonly to: BlockId;
-    readonly kind: Edge;
+interface OracleEdgeInterface {
+    readonly to: BlockIdType;
+    readonly kind: EdgeType;
 }
 
 class OracleBlock {
-    readonly id: BlockId;
+    readonly id: BlockIdType;
     readonly instructions: OracleInstruction[] = [];
-    readonly edges: OracleEdge[] = [];
+    readonly edges: OracleEdgeInterface[] = [];
     returns = false;
-    predecessors: readonly BlockId[] = [];
-    phis: readonly Phi<OraclePlace>[] = [];
-    readonly terminalUses: OraclePlace[] = [];
-    readonly terminalDefines: OraclePlace[] = [];
-    terminalOrder: EvaluationOrder = 0;
+    predecessors: readonly BlockIdType[] = [];
+    phis: readonly PhiInterface<OraclePlaceInterface>[] = [];
+    readonly terminalUses: OraclePlaceInterface[] = [];
+    readonly terminalDefines: OraclePlaceInterface[] = [];
+    terminalOrder: EvaluationOrderType = 0;
     readonly placeholder: boolean;
 
-    constructor(id: BlockId, placeholder: boolean) {
+    constructor(id: BlockIdType, placeholder: boolean) {
         this.id = id;
         this.placeholder = placeholder;
     }
 }
 
-interface OracleIdentifier {
-    readonly declaration: DeclarationId;
+interface OracleIdentifierInterface {
+    readonly declaration: DeclarationIdType;
     readonly name: string;
 }
 
 class OracleFunction {
     readonly name: string;
-    entry: BlockId = 0;
+    entry: BlockIdType = 0;
     bound = 0;
     blocks: readonly OracleBlock[] = [];
-    readonly table = new Map<BlockId, OracleBlock>();
-    readonly identifiers: OracleIdentifier[] = [];
-    readonly params: OraclePlace[] = [];
-    returns: OraclePlace | undefined = undefined;
-    readonly contextual = new Map<DeclarationId, boolean>();
+    readonly table = new Map<BlockIdType, OracleBlock>();
+    readonly identifiers: OracleIdentifierInterface[] = [];
+    readonly params: OraclePlaceInterface[] = [];
+    returns: OraclePlaceInterface | undefined = undefined;
+    readonly contextual = new Map<DeclarationIdType, boolean>();
 
     constructor(name: string) {
         this.name = name;
     }
 }
 
-function identifierOf(fn: OracleFunction, id: IdentifierId): OracleIdentifier {
+function identifierOf(fn: OracleFunction, id: IdentifierIdType): OracleIdentifierInterface {
     return fn.identifiers[id] ?? panic(`no identifier ${id} in ${fn.name}`);
 }
 
@@ -129,7 +129,11 @@ function instructionOf(block: OracleBlock, index: number): OracleInstruction {
 }
 
 // visitAll visits every place in places, in order, and writes back what each visit returns.
-function visitAll(places: OraclePlace[], role: 'Use' | 'Define', visit: PlaceVisitor<OraclePlace>): void {
+function visitAll(
+    places: OraclePlaceInterface[],
+    role: 'Use' | 'Define',
+    visit: PlaceVisitorType<OraclePlaceInterface>,
+): void {
     for(let index = 0; index < places.length; index++) {
         places[index] = visit(places[index] ?? panic('a place index past its end'), role);
     }
@@ -143,7 +147,7 @@ function placeholderOf(fn: OracleFunction, block: OracleBlock): OracleBlock {
     return placeholder;
 }
 
-const oracleGraph: Graph<OracleFunction, OracleBlock, OraclePlace> = {
+const oracleGraph: GraphInterface<OracleFunction, OracleBlock, OraclePlaceInterface> = {
     entry: (fn) => fn.entry,
     blockBound: (fn) => fn.bound,
     block: (fn, id) => fn.table.get(id),
@@ -226,11 +230,11 @@ function textField(fields: readonly string[], index: number, line: string): stri
     return text === '-' ? '' : text;
 }
 
-function placeField(fields: readonly string[], line: string): OraclePlace {
+function placeField(fields: readonly string[], line: string): OraclePlaceInterface {
     return { id: numberField(fields, 1, line), tag: textField(fields, 2, line) };
 }
 
-function edgeKind(text: string, line: string): Edge {
+function edgeKind(text: string, line: string): EdgeType {
     switch(text) {
         case 'Real':
         case 'Fallthrough':
@@ -240,11 +244,11 @@ function edgeKind(text: string, line: string): Edge {
     return panic(`an unknown edge kind: ${line}`);
 }
 
-function placeText(place: OraclePlace): string {
+function placeText(place: OraclePlaceInterface): string {
     return `${place.id}:${place.tag === '' ? '-' : place.tag}`;
 }
 
-function placesText(places: readonly OraclePlace[]): string {
+function placesText(places: readonly OraclePlaceInterface[]): string {
     return places.map((place) => placeText(place)).join(',');
 }
 

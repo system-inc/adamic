@@ -17,7 +17,7 @@
  * equivalent is `eliminate_redundant_phi.rs`, 177 lines.
  */
 
-import type { Graph, IdentifierId, Phi, PlaceVisitor } from './static_single_assignment.ts';
+import type { GraphInterface, IdentifierIdType, PhiInterface, PlaceVisitorType } from './static_single_assignment.ts';
 
 /*
  * redundantPhiValue is the single value a phi collapses to, or undefined when it does not collapse.
@@ -26,9 +26,12 @@ import type { Graph, IdentifierId, Phi, PlaceVisitor } from './static_single_ass
  * operand names one value, the phi is that value. A phi with no operands other than itself cannot arise
  * from a reachable block and is treated as not redundant so it stays visible.
  */
-function redundantPhiValue<F, B, P>(graph: Graph<F, B, P>, phi: Phi<P>): IdentifierId | undefined {
+function redundantPhiValue<F, B, P>(
+    graph: GraphInterface<F, B, P>,
+    phi: PhiInterface<P>,
+): IdentifierIdType | undefined {
     const result = graph.identifierOf(phi.place);
-    let candidate: IdentifierId | undefined;
+    let candidate: IdentifierIdType | undefined;
     for(const entry of phi.operands) {
         const operand = graph.identifierOf(entry.place);
         if(operand === result) {
@@ -46,12 +49,17 @@ function redundantPhiValue<F, B, P>(graph: Graph<F, B, P>, phi: Phi<P>): Identif
 }
 
 // applyRewrites rewrites every place in the function through resolve.
-function applyRewrites<F, B, P>(graph: Graph<F, B, P>, fn: F, resolve: (id: IdentifierId) => IdentifierId): void {
+function applyRewrites<F, B, P>(
+    graph: GraphInterface<F, B, P>,
+    fn: F,
+    resolve: (id: IdentifierIdType) => IdentifierIdType,
+): void {
     // It takes the role it ignores: written (place) => ..., its type could be seen as Graph's
     // withIdentifier, and since it captures graph, stage 0's cycle finder would see the graph holding it
     // (`GAPS.md`, "The cycle rule's cost").
     // eslint-disable-next-line @typescript-eslint/no-unused-vars -- the parameter is what keeps the visitor from being seen as withIdentifier
-    const rewrite: PlaceVisitor<P> = (place, _role) => graph.withIdentifier(place, resolve(graph.identifierOf(place)));
+    const rewrite: PlaceVisitorType<P> = (place, _role) =>
+        graph.withIdentifier(place, resolve(graph.identifierOf(place)));
     for(const block of graph.blocks(fn)) {
         for(const phi of graph.phis(block)) {
             phi.place = rewrite(phi.place, 'Define');
@@ -82,13 +90,13 @@ function applyRewrites<F, B, P>(graph: Graph<F, B, P>, fn: F, resolve: (id: Iden
 // result to the value it collapsed to.
 //
 // Runs to a fixed point over one function; an IR recurses into nested functions itself.
-export function eliminateRedundantPhis<F, B, P>(graph: Graph<F, B, P>, fn: F): void {
+export function eliminateRedundantPhis<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
     for(;;) {
         // rewrites maps a removed phi's result to what it collapsed to.
-        const rewrites = new Map<IdentifierId, IdentifierId>();
+        const rewrites = new Map<IdentifierIdType, IdentifierIdType>();
 
         for(const block of graph.blocks(fn)) {
-            const kept: Phi<P>[] = [];
+            const kept: PhiInterface<P>[] = [];
             for(const phi of graph.phis(block)) {
                 const collapsed = redundantPhiValue(graph, phi);
                 if(collapsed !== undefined) {
@@ -107,7 +115,7 @@ export function eliminateRedundantPhis<F, B, P>(graph: Graph<F, B, P>, fn: F): v
         // A removed phi may collapse to another removed phi's result, so chase each chain to its end
         // before rewriting. The chain is acyclic because a phi only collapses to a value that is not
         // itself.
-        const resolve = function(start: IdentifierId): IdentifierId {
+        const resolve = function(start: IdentifierIdType): IdentifierIdType {
             let id = start;
             let seen = 0;
             for(;;) {

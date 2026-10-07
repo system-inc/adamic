@@ -36,11 +36,18 @@ import { panic } from 'adamic';
 import { eliminateRedundantPhis } from './eliminate.ts';
 import { edgesOf } from './graph.ts';
 import { withPhiOperand } from './phi.ts';
-import type { BlockId, DeclarationId, Graph, IdentifierId, PhiOperand, Role } from './static_single_assignment.ts';
+import type {
+    BlockIdType,
+    DeclarationIdType,
+    GraphInterface,
+    IdentifierIdType,
+    PhiOperandInterface,
+    RoleType,
+} from './static_single_assignment.ts';
 
 // SingleAssignmentState is one block's view: what each original binding currently resolves to, and the
 // phis whose operands are still waiting on an unprocessed predecessor.
-interface SingleAssignmentState<P> {
+interface SingleAssignmentStateInterface<P> {
     /*
      * definitions maps a binding to the value it holds on entry to, or within, this block.
      *
@@ -50,21 +57,21 @@ interface SingleAssignmentState<P> {
      * on the identifier would make each store a different variable, and a lookup would never find a
      * predecessor's definition because the predecessor stored under a different key.
      */
-    readonly definitions: Map<DeclarationId, IdentifierId>;
+    readonly definitions: Map<DeclarationIdType, IdentifierIdType>;
 
     // incompletePhis are phis minted before every predecessor was processed. Their result is already
     // bound in definitions; only the operands are outstanding.
-    incompletePhis: IncompletePhi<P>[];
+    incompletePhis: IncompletePhiInterface<P>[];
 }
 
 // newSingleAssignmentState is a block's view before anything is defined in it.
-function newSingleAssignmentState<P>(): SingleAssignmentState<P> {
-    return { definitions: new Map<DeclarationId, IdentifierId>(), incompletePhis: [] };
+function newSingleAssignmentState<P>(): SingleAssignmentStateInterface<P> {
+    return { definitions: new Map<DeclarationIdType, IdentifierIdType>(), incompletePhis: [] };
 }
 
 // IncompletePhi is a phi awaiting operands: original is the pre-assignment place being merged, the key
 // a lookup uses, and renamed the phi's result, already minted and already visible in definitions.
-interface IncompletePhi<P> {
+interface IncompletePhiInterface<P> {
     readonly original: P;
     readonly renamed: P;
 }
@@ -72,36 +79,36 @@ interface IncompletePhi<P> {
 // Walking is which of run's three visits a place is in: 'Uses' renames an instruction's uses and passes
 // over its definitions, 'Definitions' the reverse, and 'Terminal' renames a terminal's places, uses and
 // definitions both.
-type Walking = 'Uses' | 'Definitions' | 'Terminal';
+type WalkingType = 'Uses' | 'Definitions' | 'Terminal';
 
 class SingleAssignmentBuilder<F, B, P> {
-    private readonly graph: Graph<F, B, P>;
+    private readonly graph: GraphInterface<F, B, P>;
     private readonly fn: F;
 
-    private readonly states = new Map<BlockId, SingleAssignmentState<P>>();
+    private readonly states = new Map<BlockIdType, SingleAssignmentStateInterface<P>>();
 
     // unsealedPredecessors counts, per block, how many predecessors have not yet been processed. A block
     // whose count reaches zero is sealed and its incomplete phis can be filled. Absent from the map
     // means "not yet decremented", which is not the same as zero; the read sites start from the
     // predecessor count on first touch for exactly that reason.
-    private readonly unsealedPredecessors = new Map<BlockId, number>();
+    private readonly unsealedPredecessors = new Map<BlockIdType, number>();
 
     // unknown holds bindings a lookup walked off the entry block without finding. In cohere they are
     // globals, or captures from an enclosing function; in Adamic, which keeps both out of its graph, a
     // variable read before anything defines it. They are left un-renamed: there is no definition in this
     // function to merge, so a phi over them would be an invention.
-    private readonly unknown = new Map<DeclarationId, boolean>();
+    private readonly unknown = new Map<DeclarationIdType, boolean>();
 
     // visited records blocks already processed, so sealing only fills phis for a block whose body has
     // actually been walked.
-    private readonly visited = new Map<BlockId, boolean>();
+    private readonly visited = new Map<BlockIdType, boolean>();
 
     // walking, walkingBlock and walkingContextStore are where run's walk is, read by visitPlace.
-    private walking: Walking = 'Uses';
-    private walkingBlock: BlockId = 0;
+    private walking: WalkingType = 'Uses';
+    private walkingBlock: BlockIdType = 0;
     private walkingContextStore = false;
 
-    constructor(graph: Graph<F, B, P>, fn: F) {
+    constructor(graph: GraphInterface<F, B, P>, fn: F) {
         this.graph = graph;
         this.fn = fn;
     }
@@ -120,7 +127,7 @@ class SingleAssignmentBuilder<F, B, P> {
         }
 
         // One visitor for every place, which reads what to do from this.walking.
-        const visit = (place: P, role: Role): P => this.visitPlace(place, role);
+        const visit = (place: P, role: RoleType): P => this.visitPlace(place, role);
 
         for(const block of this.graph.blocks(this.fn)) {
             const blockId = this.graph.id(block);
@@ -172,7 +179,7 @@ class SingleAssignmentBuilder<F, B, P> {
     }
 
     // visitPlace is run's one visitor, doing what this.walking says for the block this.walkingBlock.
-    private visitPlace(place: P, role: Role): P {
+    private visitPlace(place: P, role: RoleType): P {
         switch(this.walking) {
             case 'Uses':
                 return role === 'Define' ? place : this.useIn(this.walkingBlock, place);
@@ -189,7 +196,7 @@ class SingleAssignmentBuilder<F, B, P> {
 
     // defineIn mints a fresh value for a definition, records it as the block's current answer, and
     // returns the place renamed to it.
-    private defineIn(blockId: BlockId, place: P): P {
+    private defineIn(blockId: BlockIdType, place: P): P {
         return this.defineInMaybeContext(blockId, place, false);
     }
 
@@ -204,7 +211,7 @@ class SingleAssignmentBuilder<F, B, P> {
      * keyed by declaration, and a function expression assigned to the same declaration would otherwise
      * reuse the identifier too, which is a real duplicate definition.
      */
-    private defineInMaybeContext(blockId: BlockId, place: P, contextStore: boolean): P {
+    private defineInMaybeContext(blockId: BlockIdType, place: P, contextStore: boolean): P {
         const binding = this.graph.declaration(this.fn, this.graph.identifierOf(place));
         const state = this.states.get(blockId) ?? panic('a definition in a block run never entered');
         if(contextStore && this.graph.contextual(this.fn, binding)) {
@@ -219,7 +226,7 @@ class SingleAssignmentBuilder<F, B, P> {
     }
 
     // useIn is a use renamed to whatever value reaches this block.
-    private useIn(blockId: BlockId, place: P): P {
+    private useIn(blockId: BlockIdType, place: P): P {
         return this.graph.withIdentifier(place, this.valueAt(place, blockId));
     }
 
@@ -238,7 +245,7 @@ class SingleAssignmentBuilder<F, B, P> {
      *  5. Several predecessors: a real join. Mint the result, record it, then collect operands; a
      *     predecessor whose lookup comes back around to this block must find the result already bound.
      */
-    private valueAt(place: P, blockId: BlockId): IdentifierId {
+    private valueAt(place: P, blockId: BlockIdType): IdentifierIdType {
         const original = this.graph.identifierOf(place);
         const binding = this.graph.declaration(this.fn, original);
         if(this.unknown.get(binding) === true) {
@@ -295,7 +302,7 @@ class SingleAssignmentBuilder<F, B, P> {
      * handler should see the definitions from just before it. That is #2yz9ra9, and its fix lands here.
      * The Go passes the block control arrives at too, for that fix; nothing reads it yet, so it's left out.
      */
-    private valueFromPredecessor(place: P, predecessor: BlockId): IdentifierId {
+    private valueFromPredecessor(place: P, predecessor: BlockIdType): IdentifierIdType {
         return this.valueAt(place, predecessor);
     }
 
@@ -303,13 +310,13 @@ class SingleAssignmentBuilder<F, B, P> {
     //
     // original is the place a lookup reads, and each operand is that place naming the predecessor's
     // value, so whatever else the place carries rides along on every operand.
-    private addPhi(blockId: BlockId, original: P, renamed: P): void {
+    private addPhi(blockId: BlockIdType, original: P, renamed: P): void {
         const block = this.graph.block(this.fn, blockId);
         if(block === undefined) {
             return;
         }
 
-        let operands: PhiOperand<P>[] = [];
+        let operands: PhiOperandInterface<P>[] = [];
         for(const predecessorId of this.graph.predecessors(block)) {
             operands = withPhiOperand(
                 operands,
@@ -322,7 +329,7 @@ class SingleAssignmentBuilder<F, B, P> {
     }
 
     // fixIncompletePhis fills in the operands of every phi minted before this block was sealed.
-    private fixIncompletePhis(blockId: BlockId): void {
+    private fixIncompletePhis(blockId: BlockIdType): void {
         const state = this.states.get(blockId);
         if(state === undefined) {
             return;
@@ -374,7 +381,7 @@ class SingleAssignmentBuilder<F, B, P> {
  * names the definition that actually reaches it, and each block's phis hold a phi wherever a binding's
  * value depends on which predecessor control arrived from.
  */
-export function construct<F, B, P>(graph: Graph<F, B, P>, fn: F): void {
+export function construct<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
     /*
      * Phis from a previous run are dropped, because this pass appends them and cannot reconcile what it
      * did not mint. A caller that restructures the graph and runs construction again is the case:

@@ -1,17 +1,17 @@
 # static_single_assignment
 
-cohere's `static_single_assignment` module in Adamic: the graph orderings (reverse postorder, predecessors, evaluation order), Braun's single static assignment construction, redundant phi elimination, the verifier and dominance, generic over a `Graph<F, B, P>` adapter an IR implements on its own function, block and place types. It's the one source stage 2's flow graph and the React rules build on (#dnv6f2c), and it follows the Go module file for file:
+cohere's `static_single_assignment` module in Adamic: the graph orderings (reverse postorder, predecessors, evaluation order), Braun's single static assignment construction, redundant phi elimination, the verifier and dominance, generic over a `GraphInterface<F, B, P>` adapter (Go's `Graph`) an IR implements on its own function, block and place types. It's the one source stage 2's flow graph and the React rules build on (#dnv6f2c), and it follows the Go module file for file:
 
 | Go | Here |
 | --- | --- |
-| `static_single_assignment.go` | `static_single_assignment.ts`: the ids, `Edge`, `Role`, `Phi` and `Graph` |
+| `static_single_assignment.go` | `static_single_assignment.ts`: the ids, `EdgeType`, `RoleType`, `PhiInterface` and `GraphInterface` |
 | `graph.go` | `graph.ts`: `reversePostorder`, `markPredecessors`, `markEvaluationOrder` |
 | `phi.go` | `phi.ts`: a phi's operands, sorted by predecessor |
 | `construct.go` | `construct.ts`: `construct` |
 | `eliminate.go` | `eliminate.ts`: `eliminateRedundantPhis` |
 | `verify.go` | `verify.ts`: `verifySingleAssignment`, `collectSingleAssignmentStats`, `computeDominance` |
 
-An IR uses it the way cohere's high-level IR uses the Go: implement `Graph` once, then finalize (`reversePostorder`, `markPredecessors`, `markEvaluationOrder`, in that order) and `construct`, recursing into nested functions itself. Import each file directly; there is no index. The one seam that differs from Go's is how a pass renames a place: a visitor returns the place, and the adapter writes it back, since 0.1 has no pointers. Each file's header says where it differs from the Go and why, and GAPS.md what stage 0 couldn't lower.
+An IR uses it the way cohere's high-level IR uses the Go: implement `GraphInterface` once, then finalize (`reversePostorder`, `markPredecessors`, `markEvaluationOrder`, in that order) and `construct`, recursing into nested functions itself. Import each file directly; there is no index. The one seam that differs from Go's is how a pass renames a place: a visitor returns the place, and the adapter writes it back, since 0.1 has no pointers. The types carry the house suffixes, each comment naming the Go type it mirrors. Each file's header says where it differs from the Go and why, and GAPS.md what stage 0 couldn't lower.
 
 ## Running it
 
