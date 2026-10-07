@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"strings"
 )
 
 // Ambient declarations are recognized by their module and declaration, never by a user's spelling.
@@ -105,6 +106,9 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		case "performance.clearMeasures":
 			call.Operation, call.Of, count = "clearMeasures", ir.Object, 1
 		default:
+			if strings.HasPrefix(path, "os.") || strings.HasPrefix(path, "performance.") {
+				return nil, true, l.notYet(node, path)
+			}
 			return nil, false, nil
 		}
 		if len(written.Arguments.Nodes) < minimum || len(written.Arguments.Nodes) > count {
@@ -146,6 +150,9 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 	case "performance.timeOrigin":
 		call.Operation, call.Of = "timeOrigin", ir.Number
 	default:
+		if strings.HasPrefix(path, "os.") || strings.HasPrefix(path, "performance.") {
+			return nil, true, l.notYet(node, path)
+		}
 		return nil, false, nil
 	}
 	if to, known := l.representation(l.checker.GetTypeAtLocation(node)); known {
