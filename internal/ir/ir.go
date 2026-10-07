@@ -10,7 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
-	// GraphTypes selects ownership by checker type identity after the cycle proof.
+	// GraphTypes selects ownership by checker identity and negative allocation-site
+	// flow IDs after the cycle proof.
 	GraphTypes map[int]bool
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.

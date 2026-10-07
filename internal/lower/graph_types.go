@@ -276,6 +276,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			f.l.result.Classes[instance.class-1].Graph = true
 		}
 	}
+	f.graphFlows()
 	return nil
 }
 

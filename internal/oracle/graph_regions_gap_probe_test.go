@@ -2,15 +2,15 @@ package oracle
 
 import (
 	"path/filepath"
-	"strings"
+	"strconv"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// These are accepted known leaks, deliberately outside the leak-clean fixture
-// registry. A compiler fix should make this test fail so the probes can graduate.
-func TestGraphAllocationClassificationGapIsLeakOnly(t *testing.T) {
+// The former leaks must match Node and free their graph, independently of
+// merely seeing graph types in the lowered program.
+func TestGraphAllocationFlowIsLeakClean(t *testing.T) {
 	for _, name := range []string{"return", "conditional", "mixed"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/graph_regions/classification_"+name+".a"))
@@ -40,12 +40,9 @@ func TestGraphAllocationClassificationGapIsLeakOnly(t *testing.T) {
 			if difference := disagreement(node, normal); difference != "" {
 				t.Fatalf("ASan/UBSan: %s: %d %s", difference, normal.exitCode, normal.stderr)
 			}
-			// All source frames have dropped their owners. Ignore stale machine
-			// stack/register words that can conservatively hide these known leaks.
 			report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1", "LSAN_OPTIONS=use_stacks=0:use_registers=0"}, binary)
-			diagnostics := string(report.stderr)
-			if report.exitCode == 0 || !strings.Contains(diagnostics, "LeakSanitizer: detected memory leaks") || strings.Contains(diagnostics, "heap-use-after-free") || strings.Contains(diagnostics, "runtime error:") || string(report.stdout) != string(node.stdout) {
-				t.Fatalf("want leak only, got %d %s", report.exitCode, diagnostics)
+			if difference := disagreement(node, report); difference != "" {
+				t.Fatalf("LeakSanitizer: %s: %d %s", difference, report.exitCode, report.stderr)
 			}
 			counted := filepath.Join(t.TempDir(), "counted")
 			if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
@@ -53,10 +50,16 @@ func TestGraphAllocationClassificationGapIsLeakOnly(t *testing.T) {
 			}
 			counts := execute(t, counted)
 			match := countsLine.FindSubmatch(counts.stderr)
-			if counts.exitCode != 0 || match == nil || string(match[1]) == string(match[2]) || graphRegionLine.Match(counts.stderr) {
-				t.Fatalf("gap unexpectedly freed: %d %s", counts.exitCode, counts.stderr)
+			if counts.exitCode != 0 || match == nil || !graphRegionLine.Match(counts.stderr) {
+				t.Fatalf("region free missing: %d %s", counts.exitCode, counts.stderr)
 			}
-			t.Logf("Node and ASan/UBSan output %q; counted: %s; leak report: %s", node.stdout, counts.stderr, diagnostics)
+			allocations, _ := strconv.Atoi(string(match[1]))
+			frees, _ := strconv.Atoi(string(match[2]))
+			arenas, _ := strconv.Atoi(string(match[6]))
+			if allocations != frees+arenas {
+				t.Fatalf("allocation flow leaked: %s", counts.stderr)
+			}
+			t.Logf("Node, ASan/UBSan and LeakSanitizer output %q; counted: %s", node.stdout, counts.stderr)
 		})
 	}
 }

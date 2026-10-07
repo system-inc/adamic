@@ -1174,8 +1174,9 @@ three exit zero with no diagnostic. Enabling LeakSanitizer reports only leaks.
 The lower test inspects the allocation IR: the returned literal and both
 conditional branches lack a selected allocation identity; the mixed witness
 has one counted literal and one graph literal. This is a real classification
-miss, not a mutant. The standalone known-gap tests deliberately are not in the
-ordinary leak-clean oracle fixture registry until flow classification fixes them.
+miss, not a mutant. At c3074cc these standalone known-gap tests were deliberately outside the
+ordinary leak-clean registry. They graduate into that registry in the flow
+classification build described below.
 LeakSanitizer can conservatively retain a string reachable through a stale stack
 word; allocation/free counts independently show the unfreed values.
 
@@ -1192,11 +1193,8 @@ The final-reference guard also refuses destruction with a nonzero region count.
 This is a lifetime argument under those ownership invariants, not a universal
 proof that the static classifier cannot miss another shape.
 
-The compiler selected flow-based classification for the next build. Allocation
-sites will be followed through returns, conditionals and assignments into graph
-slots and made graph before publication. Runtime promotion of an aliased
-counted allocation is not being implemented. That continuation is preserved
-separately while this urgent area release repair lands.
+The compiler selected flow-based classification, implemented below. Runtime
+promotion of an aliased counted allocation is not being implemented.
 
 ### Area runtime release repair on 14504c7
 
@@ -1282,6 +1280,113 @@ probes, and the complete regenerated counts table. The final format and vet
 logs are empty and git diff --check passed. The full required-package command
 is an additional running check at this repair checkpoint; lower has passed
 in 85.138s. No full repository gate pass is claimed here.
+
+### Flow-based allocation classification
+
+The three c3074cc programs now allocate graph members from the start and are
+ordinary registered oracle fixtures. TestGraphAllocationFlowClassification
+requires every literal in these witnesses to be selected; the former
+TestGraphAllocationClassificationGapIsLeakOnly is now
+TestGraphAllocationFlowIsLeakClean and requires Node/JavaScript agreement,
+clean ASan/UBSan and LeakSanitizer runs, balanced allocations/frees, and a real
+region-free report.
+
+| Witness | Before, on the repaired area tree | After |
+|---|---|---|
+| classification_return.a | 3 allocations, 1 free, 3 retains, 4 releases | 3 allocations, 3 frees, 2 retains, 4 releases |
+| classification_conditional.a | 3 allocations, 1 free, 5 retains, 6 releases | 3 allocations, 3 frees, 4 retains, 6 releases |
+| classification_mixed.a | 8 allocations, 4 frees, 6 retains, 10 releases | 8 allocations, 8 frees, 4 retains, 10 releases |
+
+The self-link witnesses remain lone graph members without region records. The
+mixed witness now joins two graph members: one region, one merge, 112 payload
+bytes and 96 metadata bytes, and frees both members together. The outside-held
+return keeps each graph alive across its builder's cleanup before the read.
+
+The existing cycle/type proof still selects graph components. Its sole new
+integration seam calls graphFlows after that proof. graph_flow.go assigns a
+negative identity to every allocation expression carrying GraphTypes, scoped
+to one lowered program; positive identities remain checker types. This avoids
+using a fresh literal's unstable checker identity as its only allocation key.
+The pass seeds graph-typed locals, recorded property/index/container write
+slots, and typed initializer fields/elements. Weak slots are excluded. Private
+and inherited field names use the existing cycleFieldMatches identity rule.
+
+From those sinks it follows the lowered value producers backwards: declaration
+initializers, every assignment to a local, both conditional branches, direct
+calls and all recorded virtual targets, caller arguments into formal parameters,
+and function return expressions. Statically known sibling and compatible
+function-value calls are included. Boxes, narrowing, unwraps and checked casts
+forward the same demand. A work list processes each local/result flow node once;
+loops and recursion join all possible producers. Reaching an allocation selects
+its site identity in GraphTypes. A program whose cycle proof has no graph
+components never runs this pass and keeps the previous emission.
+
+This adds compile-time IR traversal, allocation-site metadata and flow edges;
+there is no runtime flow analysis, branch, annotation or alias promotion. The
+pass keeps a linear number of nodes and producer edges for ordinary direct
+flows, plus recorded virtual/function-value targets; compatible closure matching
+can compare calls with multiple closure records. The conservative type proof
+can select an allocation on an unexecuted branch. Selected allocations pay the
+existing 16-byte graph prefix, boundary counts and region machinery, with a
+region record still created lazily. No new runtime or emission helper was added.
+
+This is not a general heap points-to analysis. The new pass does not itself
+trace a property/index/Map.get result back through arbitrary storage aliases;
+its typed slot/initializer seeds and the existing structural type graph cover
+those writes when their slot type is selected. Opaque function-value callees
+without a known local/closure view, library callback transfer rules not present
+in this pass, and allocation IR kinds without GraphTypes/adoption metadata
+remain outside its producer tracing. These are analysis frontiers, not proven
+new leaks or claims that every future IR operation is covered. Such a miss must
+still obey the actual-header boundary counting invariant and leak at worst;
+unchecked or incompatible structural views remain subject to the existing
+mutable-invariance and checked-cast refusals. Threads and Program-version service
+anchors remain separate units.
+
+Two production mutants independently show that both new tests can fail:
+
+| Mutant | Classification test | Native oracle |
+|---|---|---|
+| Omit return producers and their typed initializer seeds | Returned literal and mixed case are counted again | Node output unchanged; ASan/UBSan comparison clean; LeakSanitizer reports 122 bytes/2 allocations and 260 bytes/4 allocations |
+| Omit both conditional source branches | Both conditional literals are counted again | Node output unchanged; LeakSanitizer reports 122 bytes/2 allocations |
+
+The mutations never reached clang as invalid C, and were restored before gates.
+Runners are /tmp/graph-regions-flow-return-mutant.py and
+/tmp/graph-regions-flow-conditional-mutant.py, with results and per-package logs
+under the matching /tmp/graph-regions-flow-*-mutant names. Both runners reported
+classification exit 1 and oracle exit 1. The leak-only exit-root settings from
+the area repair are retained in the graduated dedicated test, so the return-flow
+mutant cannot hide behind stale native stack/register words. Normal source
+behavior comparisons and the ordinary registered fixture oracle also run.
+
+The additional repaired-area package gate completed after its push: lower
+85.138s, native 645.250s, fresh 109.681s; vet passed. The flow-specific package
+gate passed lower 60.274s and fresh 76.386s. Native runtime code is identical to
+the repaired-area runtime tested by that full native package gate. Flow counts
+regeneration passed in 87.753s. Every preexisting numeric counts row on the
+repaired-area baseline is unchanged; only the three graduated rows were added.
+
+Commands, with test output redirected to logs:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run '^TestGraphAllocationFlow' -count=1 -v > /tmp/graph-regions-flow-final-focused.log 2>&1
+python3 /tmp/graph-regions-flow-return-mutant.py > /tmp/graph-regions-flow-return-mutant-results.log 2>&1
+python3 /tmp/graph-regions-flow-conditional-mutant.py > /tmp/graph-regions-flow-conditional-mutant-results.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-flow-area-counts-update.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-flow-area-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(regions|weak|fresh|nested|string_views)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestGraphAllocationFlow|TestWeakRegionReview|TestNested.*|TestCountsAreRecorded' -count=1 -v -timeout 30m > /tmp/graph-regions-flow-area-oracle-final.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-flow-format.log 2>&1
+go vet ./... > /tmp/graph-regions-flow-vet.log 2>&1
+```
+
+The final flow oracle passed in 117.168s with native hits 0, misses 933, and
+Node hits 0, misses 250. It includes all 43 formerly refused fresh probes,
+Weak/nested/string-view checks, every graph fixture, the three graduated
+programs and the full counts table. Format and vet logs are empty;
+git diff --check passed. Production compiler changes are the new graph_flow.go
+pass, the single graphTypes integration call, and IR ownership-ID comments.
+No emission file or runtime function changed for flow classification. The
+area release repair remains the separate pushed 850a35e commit.
 
 ## Arenas
 

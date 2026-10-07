@@ -66,9 +66,8 @@ func TestWeakRegionReviewStaysCounted(t *testing.T) {
 	}
 }
 
-// Freeze the known classification gap, rather than inferring a miss from a leak.
-// These literal IDs are not selected although their later Link views are graph.
-func TestGraphAllocationClassificationGap(t *testing.T) {
+// Allocation-site flow IDs must select literals even when fresh checker IDs do not.
+func TestGraphAllocationFlowClassification(t *testing.T) {
 	for _, name := range []string{"return", "conditional", "mixed"} {
 		t.Run(name, func(t *testing.T) {
 			checked, err := load.Load([]string{"../oracle/testdata/graph_regions/classification_" + name + ".a"})
@@ -95,8 +94,8 @@ func TestGraphAllocationClassificationGap(t *testing.T) {
 					return true
 				})
 			}
-			if len(program.GraphTypes) == 0 || counted == 0 || (name == "mixed" && graph != 1) {
-				t.Fatalf("want missed allocation and graph view, got counted=%d graph=%d types=%v", counted, graph, program.GraphTypes)
+			if len(program.GraphTypes) == 0 || counted != 0 || graph == 0 {
+				t.Fatalf("want all flow allocations graph, got counted=%d graph=%d types=%v", counted, graph, program.GraphTypes)
 			}
 		})
 	}
