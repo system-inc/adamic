@@ -1,0 +1,448 @@
+vocabulary
+probe phi-opens-before 0 0 10
+probe phi-opens-before 5 10 10
+probe phi-opens-before 5 11 10
+probe phi-opens-before 1 99 0
+probe phi-opened-range 0 20 10
+probe phi-opened-range 5 20 10
+probe phi-opened-range 0 0 10
+probe phi-opened-range 0 2 1
+probe range 0 0 0
+probe range 0 0 5
+probe range 3 21 3
+probe range 3 21 10
+probe range 3 21 21
+probe range 3 21 2
+probe range 5 5 5
+probe range 6 5 5
+probe range 0 4 0
+probe range 4 0 4
+function parameters-defined-on-entry-without
+entry 1
+bound 2
+param 1
+param 2
+param 3
+block 1 0
+instruction 0
+use 2
+effect mutate-transitive-conditionally 1 - mutable
+instruction 0
+use 1
+instruction 0
+use 1
+effect mutate 1 - mutable
+passes finalize-ranges
+function parameters-defined-on-entry-with
+entry 1
+bound 2
+parameters-defined-on-entry
+param 1
+param 2
+param 3
+block 1 0
+instruction 0
+use 2
+effect mutate-transitive-conditionally 1 - mutable
+instruction 0
+use 1
+instruction 0
+use 1
+effect mutate 1 - mutable
+passes finalize-ranges
+function a-mutation-reaches-what-it-is-an-alias-of
+entry 1
+bound 2
+block 1 0
+instruction 0
+define 1
+effect create 1 - mutable
+instruction 0
+use 1
+define 2
+effect create 2 - mutable
+effect alias 2 1 mutable
+instruction 0
+use 2
+effect mutate 2 - mutable
+passes finalize-ranges
+function an-alias-made-after-a-mutation-does-not-widen
+entry 1
+bound 2
+block 1 0
+instruction 0
+define 1
+effect create 1 - mutable
+instruction 0
+define 2
+effect create 2 - mutable
+instruction 0
+use 2
+effect mutate 2 - mutable
+instruction 0
+use 1
+use 2
+effect alias 2 1 mutable
+passes finalize-ranges
+function frozen-parameters-drop-a-conditional-mutation
+entry 1
+bound 2
+frozen-parameters
+param 1
+block 1 0
+instruction 0
+use 1
+instruction 0
+use 1
+effect mutate-conditionally 1 - mutable
+passes finalize-ranges
+function mutable-parameters-widen-on-a-conditional-mutation
+entry 1
+bound 2
+param 1
+block 1 0
+instruction 0
+use 1
+instruction 0
+use 1
+effect mutate-conditionally 1 - mutable
+passes finalize-ranges
+function a-store-into-a-captured-binding-widens-from-its-shape
+entry 1
+bound 2
+block 1 0
+instruction 0
+define 1
+instruction 0
+use 1
+instruction 0
+use 1
+stored-context 1
+passes finalize-ranges
+function mutating-a-returned-value-reaches-the-returns-place
+entry 1
+bound 2
+returns 2
+block 1 0
+return 1
+instruction 0
+define 1
+effect create 1 - mutable
+passes finalize-ranges
+function a-function-without-a-returns-place-has-no-returns-node
+entry 1
+bound 2
+block 1 0
+return 1
+instruction 0
+define 1
+effect create 1 - mutable
+passes finalize-ranges
+function a-mutation-of-a-phi-reaches-its-operands
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 3 Real
+block 2 0
+edge 4 Real
+instruction 0
+define 1
+effect create 1 - mutable
+block 3 0
+edge 4 Real
+instruction 0
+define 2
+effect create 2 - mutable
+block 4 0
+phi 3 2=1 3=2
+instruction 0
+use 3
+effect mutate 3 - mutable
+passes finalize-ranges
+function phi-value-kinds-frozen-mutable
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - frozen
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - mutable
+passes finalize-ranges
+function phi-value-kinds-mutable-frozen
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - mutable
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - frozen
+passes finalize-ranges
+function phi-value-kinds-mixed-primitive
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - maybe-frozen
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - primitive
+passes finalize-ranges
+function phi-value-kinds-mixed-global
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - maybe-frozen
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - global
+passes finalize-ranges
+function phi-value-kinds-mixed-frozen
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - maybe-frozen
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - frozen
+passes finalize-ranges
+function phi-value-kinds-frozen-primitive
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - frozen
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - primitive
+passes finalize-ranges
+function phi-value-kinds-frozen-global
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - frozen
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - global
+passes finalize-ranges
+function phi-value-kinds-global-primitive
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - global
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - primitive
+passes finalize-ranges
+function phi-value-kinds-global-mutable
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - global
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - mutable
+passes finalize-ranges
+function phi-value-kinds-primitive-mutable
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+edge 4 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - primitive
+block 3 0
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - mutable
+passes finalize-ranges
+function phi-value-kinds-unvisited-predecessor
+entry 1
+bound 5
+block 1 0
+edge 2 Real
+block 2 0
+edge 3 Real
+instruction 0
+define 1
+effect create 1 - frozen
+block 3 0
+edge 4 Real
+phi 3 2=1 4=2
+instruction 0
+use 3
+block 4 0
+edge 3 Real
+instruction 0
+define 2
+effect create 2 - mutable
+passes finalize-ranges
+function create-from-mutation-propagates-transitively
+entry 1
+bound 2
+returns 4
+block 1 0
+return 4
+instruction 0
+define 1
+effect create 1 - mutable
+instruction 0
+define 2
+effect create 2 - mutable
+effect capture 2 1 mutable
+instruction 0
+use 2
+define 3
+effect create-from 3 2 mutable
+instruction 0
+define 4
+effect create 4 - primitive
+effect mutate 3 - mutable
+passes finalize-ranges
+function freeze-retains-primitive
+entry 1
+bound 2
+block 1 0
+instruction 0
+define 1
+effect create 1 - primitive
+instruction 0
+use 1
+effect freeze 1 - mutable
+passes finalize-ranges
+function freeze-retains-global
+entry 1
+bound 2
+block 1 0
+instruction 0
+define 1
+effect create 1 - global
+instruction 0
+use 1
+effect freeze 1 - mutable
+passes finalize-ranges
+function freeze-retains-frozen
+entry 1
+bound 2
+block 1 0
+instruction 0
+define 1
+effect create 1 - frozen
+instruction 0
+use 1
+effect freeze 1 - mutable
+passes finalize-ranges
