@@ -138,7 +138,7 @@ func TestFormatterMatchesGo(t *testing.T) {
 	}
 	library := os.Getenv("ADAMIC_YAML_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until cloud/setup.sh installs it")
+		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	external := run(t, "", nil, "node", "testdata/format_library.mjs", library, "--cases", cases)
 	expectedLines := bytes.Split(bytes.TrimSuffix(expected, []byte("\n")), []byte("\n"))
@@ -196,7 +196,7 @@ func unescapeCase(line string) string {
 func TestBundledParserDifference(t *testing.T) {
 	library := os.Getenv("ADAMIC_YAML_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until cloud/setup.sh installs it")
+		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	actual := run(t, "", nil, "node", "gaps/bundledParser.mjs", library)
 	expected := "yaml: accepted\nprettier: Invalid character\nyaml: accepted\nprettier: Invalid character\nyaml: tag.resolve is not a function\nprettier: c.resolve is not a function\n"
