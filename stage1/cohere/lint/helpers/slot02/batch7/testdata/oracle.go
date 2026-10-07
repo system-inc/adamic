@@ -54,7 +54,7 @@ func main() {
 	for _, s := range controls {
 		inputs = append(inputs, Source{File: "/controls.tsx", Source: strings.ReplaceAll(s, "\\`", "`")})
 	}
-	c := Corpus{UnicodeVersion: unicode.Version, Attributes: []int{-1, 0}, Names: []string{"", "href", "HREF", "async", "ASYNC", "defer", "src", "rel", "key", "k", "K", "s", "S", "σ", "Σ", "i", "styled"}}
+	c := Corpus{UnicodeVersion: unicode.Version, Attributes: []int{-1, 0}, Names: []string{"", "href", "HREF", "async", "ASYNC", "defer", "src", "rel", "key", "k", "K", "s", "S", "σ", "Σ", "i", "styled", "download", "jsx", "is", "dangerouslySetInnerHTML"}}
 	ptrs := []*ast.Node{}
 	ids := map[*ast.Node]int{}
 	names := map[string]bool{}
