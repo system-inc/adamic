@@ -1,0 +1,15 @@
+import type { MemoNode } from './memo_node.a';
+import type { Instability } from './instability.a';
+export class Evaluation {
+    readonly fresh: Instability | undefined;
+    readonly other: boolean;
+    readonly holders: readonly MemoNode[];
+    constructor(fresh?: Instability, other = false, holders: readonly MemoNode[] = []) {
+        this.fresh = fresh;
+        this.other = other;
+        this.holders = holders;
+    }
+    combine(other: Evaluation): Evaluation {
+        return new Evaluation(this.fresh ?? other.fresh, this.other || other.other, this.holders.concat(other.holders));
+    }
+}

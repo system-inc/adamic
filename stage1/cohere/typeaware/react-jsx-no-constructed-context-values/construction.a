@@ -1,0 +1,10 @@
+export class Construction {
+    readonly kind: string;
+    readonly node: number;
+    readonly usage: number;
+    constructor(kind: string, node: number, usage = -1) {
+        this.kind = kind;
+        this.node = node;
+        this.usage = usage;
+    }
+}

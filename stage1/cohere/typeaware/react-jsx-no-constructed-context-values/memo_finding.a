@@ -1,0 +1,9 @@
+import type { Instability } from './instability.a';
+export class MemoFinding {
+    readonly finding: Instability | undefined;
+    readonly other: boolean;
+    constructor(finding?: Instability, other = true) {
+        this.finding = finding;
+        this.other = other;
+    }
+}

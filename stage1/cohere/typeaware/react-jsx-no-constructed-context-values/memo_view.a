@@ -1,0 +1,163 @@
+import { panic, tsgoInspect } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { BindingFile } from '../react-jsx-fragments/binding_file.a';
+import { Frames, header } from '../frames.ts';
+import { OriginDeclaration } from '../prefer-promise-reject-errors/origin_declaration.a';
+import { OriginSymbol } from '../prefer-promise-reject-errors/origin_symbol.a';
+import type { ParseNode } from '../../../typescript/parser/nodes.ts';
+
+const functionKinds = [
+    'FunctionDeclaration',
+    'FunctionExpression',
+    'ArrowFunction',
+    'MethodDeclaration',
+    'GetAccessor',
+    'SetAccessor',
+    'Constructor',
+];
+export class MemoView {
+    readonly path: string;
+    readonly rules: Rules;
+    readonly file: BindingFile;
+    readonly originals = new Map<number, OriginSymbol>();
+    readonly reads = new Map<number, OriginSymbol>();
+    constructor(path: string, rules: Rules) {
+        this.path = path;
+        this.rules = rules;
+        this.file = new BindingFile(path, rules);
+    }
+    node(index: number): ParseNode {
+        return this.file.parser.node(index);
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.node(index).kind;
+    }
+    child(index: number, slot: number): number {
+        return index < 0 ? -1 : (this.node(index).children[slot] ?? -1);
+    }
+    parent(index: number): number {
+        return this.file.parent(index);
+    }
+    nearest(index: number): number {
+        for(let current = this.parent(index); current >= 0; current = this.parent(current)) {
+            if(functionKinds.includes(this.kind(current))) {
+                return current;
+            }
+        }
+        return -1;
+    }
+    unwrap(index: number): number {
+        let current = index;
+        while(
+            ['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'NonNullExpression'].includes(
+                this.kind(current),
+            )
+        ) {
+            current = this.child(current, 0);
+        }
+        return current;
+    }
+    parentheses(index: number): number {
+        let current = index;
+        while(this.kind(current) === 'ParenthesizedExpression') {
+            current = this.child(current, 0);
+        }
+        return current;
+    }
+    body(index: number): number {
+        const node = this.node(index);
+        const last = node.children[node.children.length - 1] ?? -1;
+        return this.kind(last) === 'Block' || node.kind === 'ArrowFunction' ? last : -1;
+    }
+    name(index: number): number {
+        for(const child of this.node(index).children) {
+            const kind = this.kind(child);
+            if(kind === 'Identifier') {
+                return child;
+            }
+            if(!kind.endsWith('Keyword') && kind !== 'Decorator' && kind !== 'AsteriskToken') {
+                return -1;
+            }
+        }
+        return -1;
+    }
+    args(index: number): readonly number[] {
+        const node = this.node(index);
+        return node.list <= 0 ? [] : node.children.slice(node.children.length - node.list);
+    }
+    query(index: number, question: string): string {
+        const node = this.node(index);
+        this.rules.queries++;
+        return tsgoInspect(
+            this.rules.program,
+            this.path,
+            this.file.offsets[node.pos] ?? panic('missing start'),
+            this.file.offsets[node.end] ?? panic('missing end'),
+            node.kind,
+            question,
+        );
+    }
+    symbol(index: number, read = false): OriginSymbol {
+        if(!this.originals.has(index)) {
+            const frames = new Frames(this.query(index, 'binding-origin'));
+            header(frames, 'binding-origin');
+            for(let slot = 0; slot < 2; slot++) {
+                const id = frames.natural();
+                const count = frames.natural();
+                const declarations: OriginDeclaration[] = [];
+                for(let declarationIndex = 0; declarationIndex < count; declarationIndex++) {
+                    declarations.push(
+                        new OriginDeclaration(
+                            frames.field(),
+                            frames.field(),
+                            frames.natural(),
+                            frames.natural(),
+                            frames.yes(),
+                        ),
+                    );
+                }
+                (slot === 0 ? this.originals : this.reads).set(index, new OriginSymbol(id, declarations));
+            }
+            frames.end();
+        }
+        return (read ? this.reads : this.originals).get(index) ?? panic('missing symbol');
+    }
+    hook(index: number): string {
+        if(this.kind(index) !== 'CallExpression') {
+            return '';
+        }
+        const callee = this.parentheses(this.child(index, 0));
+        let name = '';
+        if(this.kind(callee) === 'Identifier') {
+            name = this.node(callee).text;
+        }
+        else if(this.kind(callee) === 'PropertyAccessExpression') {
+            const base = this.parentheses(this.child(callee, 0));
+            if(this.kind(base) === 'Identifier' && this.node(base).text === 'React') {
+                const property = this.child(callee, 1);
+                name = property < 0 ? '' : this.node(property).text;
+            }
+        }
+        return name === 'useMemo' || name === 'useCallback' ? name : '';
+    }
+    start(index: number): number {
+        this.file.scanner.pos = this.node(index).pos;
+        this.file.scanner.scan();
+        return this.file.scanner.start;
+    }
+    text(index: number): string {
+        return this.file.scanner.text.slice(this.start(index), this.node(index).end);
+    }
+    constDeclaration(index: number): boolean {
+        const parent = this.parent(index);
+        if(this.kind(parent) !== 'VariableDeclarationList') {
+            return false;
+        }
+        this.file.scanner.pos = this.node(parent).pos;
+        return this.file.scanner.scan() === 'ConstKeyword';
+    }
+    factory(index: number): boolean {
+        const parent = this.parent(index);
+        return this.hook(parent) !== '' && this.args(parent)[0] === index;
+    }
+}

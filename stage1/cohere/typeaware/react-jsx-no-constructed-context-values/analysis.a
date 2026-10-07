@@ -1,0 +1,409 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../typescript/parser/nodes.ts';
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { BindingOrigin } from '../prefer-promise-reject-errors/binding_origin.a';
+import { BindingFile } from '../react-jsx-fragments/binding_file.a';
+import { Construction } from './construction.a';
+import { ContextStability } from './stability.a';
+import { MemoView } from './memo_view.a';
+import { MemoNode } from './memo_node.a';
+
+const functions = [
+    'FunctionDeclaration',
+    'FunctionExpression',
+    'ArrowFunction',
+    'MethodDeclaration',
+    'GetAccessor',
+    'SetAccessor',
+    'Constructor',
+];
+const assignments = [
+    'EqualsToken',
+    'PlusEqualsToken',
+    'MinusEqualsToken',
+    'AsteriskEqualsToken',
+    'AsteriskAsteriskEqualsToken',
+    'SlashEqualsToken',
+    'PercentEqualsToken',
+    'LessThanLessThanEqualsToken',
+    'GreaterThanGreaterThanEqualsToken',
+    'GreaterThanGreaterThanGreaterThanEqualsToken',
+    'AmpersandEqualsToken',
+    'BarEqualsToken',
+    'CaretEqualsToken',
+    'BarBarEqualsToken',
+    'AmpersandAmpersandEqualsToken',
+    'QuestionQuestionEqualsToken',
+];
+const logical = ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'];
+
+export class JsxConstructedContextValues {
+    readonly rules: Rules;
+    readonly origins: BindingOrigin;
+    readonly file: BindingFile;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.origins = new BindingOrigin(rules);
+        this.file = new BindingFile(rules.path, rules);
+    }
+    node(index: number): ParseNode {
+        return this.rules.parser.node(index);
+    }
+    child(node: ParseNode, slot: number): number {
+        return node.children[slot] ?? -1;
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.node(index).kind;
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    nearest(index: number): number {
+        for(let current = this.parent(index); current >= 0; current = this.parent(current)) {
+            if(functions.includes(this.kind(current))) {
+                return current;
+            }
+        }
+        return -1;
+    }
+    unwrap(index: number): number {
+        let current = index;
+        while(
+            ['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'NonNullExpression'].includes(
+                this.kind(current),
+            )
+        ) {
+            current = this.child(this.node(current), 0);
+        }
+        return current;
+    }
+    parentheses(index: number): number {
+        let current = index;
+        while(this.kind(current) === 'ParenthesizedExpression') {
+            current = this.child(this.node(current), 0);
+        }
+        return current;
+    }
+    declaration(index: number, last: boolean): number {
+        const declarations = this.origins.original(index).declarations;
+        const record = declarations[last ? declarations.length - 1 : 0];
+        // Construction tracing is render-local. Foreign declarations cannot share its function.
+        if(record === undefined || record.file !== this.rules.path) {
+            return -1;
+        }
+        return this.file.declaration(record);
+    }
+    provider(index: number): boolean {
+        if(this.kind(index) === 'PropertyAccessExpression') {
+            const name = this.child(this.node(index), 1);
+            return this.kind(name) === 'Identifier' && this.node(name).text === 'Provider';
+        }
+        if(this.kind(index) !== 'Identifier') {
+            return false;
+        }
+        // A bare provider can be initialized outside the render, so examine every raw declaration.
+        for(const record of this.origins.original(index).declarations) {
+            if(record.kind !== 'VariableDeclaration') {
+                continue;
+            }
+            const file = new BindingFile(record.file, this.rules);
+            const declaration = file.parser.node(file.declaration(record));
+            let initializer = file.initializer(declaration);
+            while(initializer >= 0 && file.parser.node(initializer).kind === 'ParenthesizedExpression') {
+                initializer = file.parser.node(initializer).children[0] ?? -1;
+            }
+            if(initializer < 0 || file.parser.node(initializer).kind !== 'CallExpression') {
+                continue;
+            }
+            let callee = file.parser.node(initializer).children[0] ?? -1;
+            while(callee >= 0 && file.parser.node(callee).kind === 'ParenthesizedExpression') {
+                callee = file.parser.node(callee).children[0] ?? -1;
+            }
+            if(callee < 0) {
+                continue;
+            }
+            const called = file.parser.node(callee);
+            if(called.kind === 'Identifier' && called.text === 'createContext') {
+                return true;
+            }
+            if(called.kind !== 'PropertyAccessExpression') {
+                continue;
+            }
+            let receiver = called.children[0] ?? -1;
+            while(receiver >= 0 && file.parser.node(receiver).kind === 'ParenthesizedExpression') {
+                receiver = file.parser.node(receiver).children[0] ?? -1;
+            }
+            const property = file.child(called, 1);
+            if(
+                receiver >= 0 &&
+                file.parser.node(receiver).kind === 'Identifier' &&
+                file.parser.node(receiver).text === 'React' &&
+                property.kind === 'Identifier' &&
+                property.text === 'createContext'
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+    value(attributes: ParseNode): number {
+        for(const index of attributes.children) {
+            const property = this.node(index);
+            if(property.kind !== 'JsxAttribute') {
+                continue;
+            }
+            const name = this.child(property, 0);
+            if(this.kind(name) !== 'Identifier' || this.node(name).text !== 'value') {
+                continue;
+            }
+            const initializer = this.child(property, 1);
+            return this.kind(initializer) === 'JsxExpression' ? this.child(this.node(initializer), 0) : -1;
+        }
+        return -1;
+    }
+    construction(index: number, depth: number): Construction | undefined {
+        if(index < 0 || depth > 16) {
+            return undefined;
+        }
+        const node = this.node(index);
+        let kind = '';
+        switch(node.kind) {
+            case 'ObjectLiteralExpression':
+                kind = 'object';
+                break;
+            case 'ArrayLiteralExpression':
+                kind = 'array';
+                break;
+            case 'ArrowFunction':
+            case 'FunctionExpression':
+                kind = 'function expression';
+                break;
+            case 'ClassExpression':
+                kind = 'class expression';
+                break;
+            case 'NewExpression':
+                kind = 'new expression';
+                break;
+            case 'RegularExpressionLiteral':
+                kind = 'regular expression';
+                break;
+            case 'JsxElement':
+            case 'JsxSelfClosingElement':
+                kind = 'JSX element';
+                break;
+            case 'JsxFragment':
+                kind = 'JSX fragment';
+                break;
+        }
+        if(kind !== '') {
+            return new Construction(kind, index);
+        }
+        switch(node.kind) {
+            case 'ParenthesizedExpression':
+            case 'AsExpression':
+            case 'SatisfiesExpression':
+                return this.construction(this.child(node, 0), depth + 1);
+            case 'ConditionalExpression':
+                return (
+                    this.construction(this.child(node, 2), depth + 1) ??
+                    this.construction(this.child(node, 4), depth + 1)
+                );
+            case 'BinaryExpression': {
+                const operator = this.kind(this.child(node, 1));
+                if(assignments.includes(operator)) {
+                    const found = this.construction(this.child(node, 2), depth + 1);
+                    return found === undefined
+                        ? undefined
+                        : new Construction('assignment expression', found.node, index);
+                }
+                return logical.includes(operator)
+                    ? (this.construction(this.child(node, 0), depth + 1) ??
+                          this.construction(this.child(node, 2), depth + 1))
+                    : undefined;
+            }
+            case 'PropertyAccessExpression': {
+                const object = this.child(node, 0);
+                const found = this.construction(object, depth + 1);
+                return found === undefined ? undefined : new Construction(found.kind, found.node, object);
+            }
+            case 'Identifier': {
+                const declaration = this.declaration(index, true);
+                if(declaration < 0 || this.nearest(declaration) !== this.nearest(index)) {
+                    return undefined;
+                }
+                if(this.kind(declaration) === 'FunctionDeclaration') {
+                    return new Construction('function declaration', declaration, index);
+                }
+                if(this.kind(declaration) !== 'VariableDeclaration') {
+                    return undefined;
+                }
+                const found = this.construction(this.file.initializer(this.node(declaration)), depth + 1);
+                return found === undefined ? undefined : new Construction(found.kind, found.node, index);
+            }
+            default:
+                return undefined;
+        }
+    }
+    name(index: number): number {
+        for(const child of this.node(index).children) {
+            const kind = this.kind(child);
+            if(kind === 'Identifier') {
+                return child;
+            }
+            if(!kind.endsWith('Keyword') && kind !== 'Decorator' && kind !== 'AsteriskToken') {
+                return -1;
+            }
+        }
+        return -1;
+    }
+    capital(index: number): boolean {
+        return this.kind(index) === 'Identifier' && /^\p{Lu}/u.test(this.node(index).text);
+    }
+    binding(index: number): boolean {
+        const parent = this.parent(index);
+        if(parent < 0) {
+            return false;
+        }
+        if(this.kind(parent) === 'CallExpression') {
+            return this.binding(parent);
+        }
+        return this.kind(parent) === 'VariableDeclaration' && this.capital(this.name(parent));
+    }
+    componentClass(index: number): boolean {
+        for(let current = this.parent(index); current >= 0; current = this.parent(current)) {
+            if(this.kind(current) !== 'ClassDeclaration' && this.kind(current) !== 'ClassExpression') {
+                continue;
+            }
+            for(const clauseIndex of this.node(current).children) {
+                const clause = this.node(clauseIndex);
+                if(clause.kind !== 'HeritageClause') {
+                    continue;
+                }
+                for(const typeIndex of clause.children) {
+                    const type = this.node(typeIndex);
+                    if(type.kind !== 'ExpressionWithTypeArguments') {
+                        continue;
+                    }
+                    const expression = this.child(type, 0);
+                    if(
+                        this.kind(expression) === 'Identifier' &&
+                        ['Component', 'PureComponent'].includes(this.node(expression).text)
+                    ) {
+                        return true;
+                    }
+                    if(this.kind(expression) === 'PropertyAccessExpression') {
+                        const base = this.child(this.node(expression), 0);
+                        const property = this.child(this.node(expression), 1);
+                        if(
+                            this.kind(base) === 'Identifier' &&
+                            this.node(base).text === 'React' &&
+                            this.kind(property) === 'Identifier' &&
+                            ['Component', 'PureComponent'].includes(this.node(property).text)
+                        ) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+    component(index: number): boolean {
+        for(let current = this.parent(index); current >= 0; current = this.parent(current)) {
+            switch(this.kind(current)) {
+                case 'FunctionDeclaration':
+                    return this.capital(this.name(current));
+                case 'ArrowFunction':
+                case 'FunctionExpression':
+                    return this.kind(this.parent(current)) === 'PropertyDeclaration'
+                        ? this.componentClass(this.parent(current))
+                        : this.binding(current);
+                case 'MethodDeclaration':
+                case 'GetAccessor':
+                case 'SetAccessor':
+                case 'Constructor':
+                case 'PropertyDeclaration':
+                    return this.componentClass(current);
+            }
+        }
+        return false;
+    }
+    line(index: number): number {
+        const position = this.rules.start(this.node(index));
+        let line = 1;
+        for(let offset = 0; offset < position; offset++) {
+            const code = this.rules.scanner.text.charCodeAt(offset);
+            if(code === 13) {
+                if(this.rules.scanner.text.charCodeAt(offset + 1) === 10) {
+                    offset++;
+                }
+                line++;
+            }
+            else if(code === 10 || code === 8232 || code === 8233) {
+                line++;
+            }
+        }
+        return line;
+    }
+    memoName(index: number): string {
+        if(this.kind(index) !== 'CallExpression') {
+            return '';
+        }
+        const callee = this.parentheses(this.child(this.node(index), 0));
+        let name = '';
+        if(this.kind(callee) === 'Identifier') {
+            name = this.node(callee).text;
+        }
+        else if(this.kind(callee) === 'PropertyAccessExpression') {
+            const base = this.parentheses(this.child(this.node(callee), 0));
+            if(this.kind(base) === 'Identifier' && this.node(base).text === 'React') {
+                const property = this.child(this.node(callee), 1);
+                name = property < 0 ? '' : this.node(property).text;
+            }
+        }
+        return name === 'useMemo' || name === 'useCallback' ? name : '';
+    }
+    // The kind-indexed driver hands over the entry once; relevance is not rechecked here.
+    visit(node: ParseNode, index: number): void {
+        const tag = this.child(node, 0);
+        if(tag < 0 || !this.provider(tag)) {
+            return;
+        }
+        const attributes = node.children[node.children.length - 1] ?? panic('missing JSX attributes');
+        const value = this.value(this.node(attributes));
+        if(value < 0) {
+            return;
+        }
+        const found = this.construction(value, 0);
+        if(!this.component(index)) {
+            return;
+        }
+        if(found === undefined) {
+            const view = new MemoView(this.rules.path, this.rules);
+            new ContextStability(this.rules, new MemoNode(view, this.nearest(index))).check(value);
+            return;
+        }
+        const functionKind = found.kind === 'function expression' || found.kind === 'function declaration';
+        const remedy = functionKind ? 'useCallback' : 'useMemo';
+        const suffix = functionKind ? 'Func' : '';
+        const tail = ` changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`;
+        let head = `The ${found.kind} passed as the value prop to the Context provider (at line ${this.line(found.node)})`;
+        if(found.usage >= 0) {
+            const name = this.kind(found.usage) === 'Identifier' ? this.node(found.usage).text : '';
+            head = `The ${JSON.stringify(name)} ${found.kind} (at line ${this.line(found.node)}) passed as the value prop to the Context provider (at line ${this.line(found.usage)})`;
+        }
+        const anchor = this.node(found.node);
+        this.rules.findings.push(
+            new Diagnostic(
+                'react/jsx-no-constructed-context-values',
+                `${found.usage < 0 ? 'defaultMsg' : 'withIdentifierMsg'}${suffix}`,
+                head + tail,
+                this.rules.byte(this.rules.start(anchor)),
+                this.rules.byte(anchor.end),
+                '',
+            ),
+        );
+    }
+}

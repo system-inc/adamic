@@ -1,0 +1,12 @@
+import type { MemoView } from './memo_view.a';
+export class MemoNode {
+    readonly view: MemoView;
+    readonly index: number;
+    constructor(view: MemoView, index: number) {
+        this.view = view;
+        this.index = index;
+    }
+    key(): string {
+        return `${this.view.path}:${this.index}`;
+    }
+}

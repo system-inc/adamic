@@ -1,0 +1,11 @@
+import type { MemoNode } from './memo_node.a';
+export class Instability {
+    readonly origin: MemoNode;
+    readonly reason: string;
+    readonly dependency: number;
+    constructor(origin: MemoNode, reason = '', dependency = -1) {
+        this.origin = origin;
+        this.reason = reason;
+        this.dependency = dependency;
+    }
+}

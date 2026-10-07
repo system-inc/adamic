@@ -1,0 +1,539 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { types } from '../facts.ts';
+import { numberLike, bigintLike, stringLike, booleanLike } from '../flags.ts';
+import { Frames, header } from '../frames.ts';
+import { OriginDeclaration } from '../prefer-promise-reject-errors/origin_declaration.a';
+import { Diagnostic } from '../diagnostic.ts';
+import { MemoView } from './memo_view.a';
+import { MemoNode } from './memo_node.a';
+import { Evaluation } from './evaluation.a';
+import { Instability } from './instability.a';
+import { MemoFinding } from './memo_finding.a';
+
+const functionKinds = [
+    'FunctionDeclaration',
+    'FunctionExpression',
+    'ArrowFunction',
+    'MethodDeclaration',
+    'GetAccessor',
+    'SetAccessor',
+    'Constructor',
+];
+const constructionKinds = [
+    'ObjectLiteralExpression',
+    'ArrayLiteralExpression',
+    'ArrowFunction',
+    'FunctionExpression',
+    'ClassExpression',
+    'NewExpression',
+    'RegularExpressionLiteral',
+    'JsxElement',
+    'JsxSelfClosingElement',
+    'JsxFragment',
+];
+const constructionNames = [
+    'object',
+    'array',
+    'function expression',
+    'function expression',
+    'class expression',
+    'new expression',
+    'regular expression',
+    'JSX element',
+    'JSX element',
+    'JSX fragment',
+];
+const logical = ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'];
+const primitive = numberLike | bigintLike | stringLike | booleanLike | 512 | 65536 | 16384 | 32768 | 4 | 8 | 16;
+
+export class ContextStability {
+    readonly rules: Rules;
+    readonly views = new Map<string, MemoView>();
+    readonly active = new Set<string>();
+    readonly render: MemoNode;
+    constructor(rules: Rules, render: MemoNode) {
+        this.rules = rules;
+        this.render = render;
+        this.views.set(rules.path, render.view);
+    }
+    view(path: string): MemoView {
+        const cached = this.views.get(path);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const result = new MemoView(path, this.rules);
+        this.views.set(path, result);
+        return result;
+    }
+    declaration(node: MemoNode): MemoNode | undefined {
+        const record = node.view.symbol(node.index).declarations[0];
+        if(record === undefined) {
+            return undefined;
+        }
+        const view = this.view(record.file);
+        return new MemoNode(view, view.file.declaration(record));
+    }
+    runsWith(owner: MemoNode, scope: MemoNode): boolean {
+        if(owner.index < 0) {
+            return false;
+        }
+        if(owner.key() === scope.key()) {
+            return true;
+        }
+        const chain: string[] = [];
+        let current = scope.index;
+        while(current >= 0) {
+            const key = new MemoNode(scope.view, current).key();
+            chain.push(key);
+            if(key === this.render.key()) {
+                break;
+            }
+            current = scope.view.nearest(current);
+        }
+        return chain[chain.length - 1] === this.render.key() && chain.includes(owner.key());
+    }
+    renderConst(node: MemoNode, scope: MemoNode): MemoNode | undefined {
+        const declaration = this.declaration(node);
+        if(
+            declaration === undefined ||
+            !this.runsWith(new MemoNode(declaration.view, declaration.view.nearest(declaration.index)), scope)
+        ) {
+            return undefined;
+        }
+        const kind = declaration.view.kind(declaration.index);
+        return kind === 'FunctionDeclaration' ||
+            (kind === 'VariableDeclaration' && declaration.view.constDeclaration(declaration.index))
+            ? declaration
+            : undefined;
+    }
+    primitive(node: MemoNode): boolean {
+        const facts = types(node.view.query(node.index, 'type-shape'), 'type-shape');
+        return facts.parts(facts.root()).every((id) => (facts.type(id).flags & primitive) !== 0);
+    }
+    memo(call: MemoNode, scope: MemoNode, depth: number): MemoFinding {
+        if(depth > 8 || this.active.has(call.key())) {
+            return new MemoFinding();
+        }
+        this.active.add(call.key());
+        const result = this.memoBody(call, scope, depth);
+        this.active.delete(call.key());
+        return result;
+    }
+    memoBody(call: MemoNode, scope: MemoNode, depth: number): MemoFinding {
+        const args = call.view.args(call.index);
+        if(args.length === 0) {
+            return new MemoFinding();
+        }
+        let finding: Instability | undefined;
+        if(args.length === 1) {
+            finding = new Instability(call);
+        }
+        else {
+            const list = call.view.unwrap(args[1] ?? -1);
+            if(call.view.kind(list) !== 'ArrayLiteralExpression') {
+                return new MemoFinding();
+            }
+            for(const element of call.view.node(list).children) {
+                const result = this.evaluate(new MemoNode(call.view, element), scope, depth + 1);
+                if(result.fresh !== undefined && (!result.other || !this.escapes(result.holders, true))) {
+                    finding = new Instability(result.fresh.origin, result.fresh.reason, element);
+                    break;
+                }
+            }
+            if(finding === undefined) {
+                return new MemoFinding();
+            }
+        }
+        if(call.view.hook(call.index) === 'useCallback') {
+            return new MemoFinding(finding, false);
+        }
+        const factory = call.view.unwrap(args[0] ?? -1);
+        if(call.view.kind(factory) !== 'ArrowFunction' && call.view.kind(factory) !== 'FunctionExpression') {
+            return new MemoFinding();
+        }
+        const result = this.functionEvaluation(new MemoNode(call.view, factory), depth + 1);
+        return result.fresh === undefined ? new MemoFinding() : new MemoFinding(finding, result.other);
+    }
+    evaluate(input: MemoNode, scope: MemoNode, depth: number): Evaluation {
+        const index = input.view.unwrap(input.index);
+        if(index < 0) {
+            return new Evaluation();
+        }
+        if(depth > 8) {
+            return new Evaluation(undefined, true);
+        }
+        const node = new MemoNode(input.view, index);
+        if(this.primitive(node)) {
+            return new Evaluation();
+        }
+        const kind = input.view.kind(index);
+        const slot = constructionKinds.indexOf(kind);
+        if(slot >= 0) {
+            return new Evaluation(
+                new Instability(
+                    node,
+                    `is a new ${constructionNames[slot] ?? panic('missing construction name')} built during render`,
+                ),
+            );
+        }
+        switch(kind) {
+            case 'ConditionalExpression':
+                return this.evaluate(new MemoNode(input.view, input.view.child(index, 2)), scope, depth + 1).combine(
+                    this.evaluate(new MemoNode(input.view, input.view.child(index, 4)), scope, depth + 1),
+                );
+            case 'BinaryExpression': {
+                const operator = input.view.kind(input.view.child(index, 1));
+                if(logical.includes(operator)) {
+                    return this.evaluate(
+                        new MemoNode(input.view, input.view.child(index, 0)),
+                        scope,
+                        depth + 1,
+                    ).combine(this.evaluate(new MemoNode(input.view, input.view.child(index, 2)), scope, depth + 1));
+                }
+                if(operator === 'CommaToken') {
+                    return this.evaluate(new MemoNode(input.view, input.view.child(index, 2)), scope, depth + 1);
+                }
+                if(operator !== 'EqualsToken') {
+                    return new Evaluation(undefined, true);
+                }
+                const target = input.view.unwrap(input.view.child(index, 0));
+                if(input.view.kind(target) !== 'Identifier') {
+                    return new Evaluation(undefined, true);
+                }
+                const local = this.declaration(new MemoNode(input.view, target));
+                if(
+                    local === undefined ||
+                    local.view.kind(local.index) !== 'VariableDeclaration' ||
+                    new MemoNode(local.view, local.view.nearest(local.index)).key() !== scope.key()
+                ) {
+                    return new Evaluation(undefined, true);
+                }
+                const result = this.evaluate(new MemoNode(input.view, input.view.child(index, 2)), scope, depth + 1);
+                return new Evaluation(
+                    result.fresh,
+                    result.other,
+                    result.fresh === undefined ? result.holders : result.holders.concat([local]),
+                );
+            }
+            case 'CallExpression': {
+                const hook = input.view.hook(index);
+                if(hook === '') {
+                    return this.call(node, depth + 1);
+                }
+                const inner = this.memo(node, scope, depth + 1);
+                const found = inner.finding;
+                if(found === undefined) {
+                    return new Evaluation(undefined, true);
+                }
+                const reason =
+                    found.dependency < 0
+                        ? `comes from a ${hook} with no dependency list`
+                        : `comes from a ${hook} whose own dependency ${JSON.stringify(input.view.text(found.dependency))} ${found.reason}`;
+                return new Evaluation(new Instability(found.origin, reason), inner.other);
+            }
+            case 'Identifier': {
+                const declaration = this.renderConst(node, scope);
+                if(declaration === undefined || this.active.has(declaration.key())) {
+                    return new Evaluation(undefined, true);
+                }
+                if(declaration.view.kind(declaration.index) === 'FunctionDeclaration') {
+                    return new Evaluation(new Instability(declaration, 'is a function declared during render'), false, [
+                        declaration,
+                    ]);
+                }
+                this.active.add(declaration.key());
+                const result = this.evaluate(
+                    new MemoNode(
+                        declaration.view,
+                        declaration.view.file.initializer(declaration.view.node(declaration.index)),
+                    ),
+                    scope,
+                    depth + 1,
+                );
+                this.active.delete(declaration.key());
+                return new Evaluation(
+                    result.fresh,
+                    result.other,
+                    result.fresh === undefined ? result.holders : result.holders.concat([declaration]),
+                );
+            }
+            default:
+                return new Evaluation(undefined, true);
+        }
+    }
+    call(call: MemoNode, depth: number): Evaluation {
+        const frames = new Frames(call.view.query(call.index, 'resolved-callee'));
+        header(frames, 'resolved-callee');
+        if(!frames.yes()) {
+            frames.end();
+            return new Evaluation(undefined, true);
+        }
+        frames.natural();
+        if(!frames.yes()) {
+            frames.end();
+            return new Evaluation(undefined, true);
+        }
+        const path = frames.field();
+        frames.yes();
+        const kind = frames.field();
+        const start = frames.natural();
+        const end = frames.natural();
+        const flags = frames.natural();
+        const body = frames.yes();
+        frames.end();
+        if(!body) {
+            return new Evaluation(undefined, true);
+        }
+        const calleeView = this.view(path);
+        const callee = new MemoNode(
+            calleeView,
+            calleeView.file.declaration(new OriginDeclaration(path, kind, start, end, false)),
+        );
+        const expression = call.view.unwrap(call.view.child(call.index, 0));
+        let name = 'the call';
+        if(call.view.kind(expression) === 'Identifier') {
+            name = call.view.node(expression).text;
+        }
+        else if(call.view.kind(expression) === 'PropertyAccessExpression') {
+            const property = call.view.child(expression, 1);
+            if(property >= 0) {
+                name = call.view.node(property).text;
+            }
+        }
+        if((flags & 2) !== 0) {
+            return new Evaluation(
+                new Instability(
+                    callee,
+                    `is the result of \`${name}(...)\`, an async function, which returns a new promise on every call`,
+                ),
+            );
+        }
+        if((flags & 1) !== 0) {
+            return new Evaluation(
+                new Instability(
+                    callee,
+                    `is the result of \`${name}(...)\`, a generator, which returns a new iterator on every call`,
+                ),
+            );
+        }
+        const result = this.functionEvaluation(callee, depth + 1);
+        return new Evaluation(
+            result.fresh === undefined
+                ? undefined
+                : new Instability(
+                      result.fresh.origin,
+                      `is the result of \`${name}(...)\`, which can return a new value on every call`,
+                  ),
+            result.other,
+            result.holders,
+        );
+    }
+    returns(view: MemoView, index: number, scope: MemoNode, depth: number): Evaluation {
+        let result = new Evaluation();
+        for(const child of view.node(index).children) {
+            const kind = view.kind(child);
+            if(kind === 'ReturnStatement') {
+                result = result.combine(this.evaluate(new MemoNode(view, view.child(child, 0)), scope, depth + 1));
+            }
+            else if(!functionKinds.includes(kind) && kind !== 'ClassDeclaration' && kind !== 'ClassExpression') {
+                result = result.combine(this.returns(view, child, scope, depth));
+            }
+        }
+        return result;
+    }
+    functionEvaluation(function_: MemoNode, depth: number): Evaluation {
+        if(depth > 8 || this.active.has(function_.key())) {
+            return new Evaluation(undefined, true);
+        }
+        const body = function_.view.body(function_.index);
+        if(body < 0) {
+            return new Evaluation(undefined, true);
+        }
+        this.active.add(function_.key());
+        const result =
+            function_.view.kind(body) === 'Block'
+                ? this.returns(function_.view, body, function_, depth)
+                : this.evaluate(new MemoNode(function_.view, body), function_, depth + 1);
+        this.active.delete(function_.key());
+        const own = result.holders.filter(
+            (holder) => new MemoNode(holder.view, holder.view.nearest(holder.index)).key() === function_.key(),
+        );
+        const enclosing = result.holders.filter(
+            (holder) => new MemoNode(holder.view, holder.view.nearest(holder.index)).key() !== function_.key(),
+        );
+        return new Evaluation(
+            result.fresh !== undefined && result.other && this.escapes(own, false) ? undefined : result.fresh,
+            result.other,
+            enclosing,
+        );
+    }
+    referencesEscape(
+        view: MemoView,
+        index: number,
+        name: number,
+        symbol: number,
+        scope: number,
+        render: boolean,
+    ): boolean {
+        for(const child of view.node(index).children) {
+            if(view.kind(child) === 'Identifier' && child !== name) {
+                const read = view.kind(view.parent(child)) === 'ShorthandPropertyAssignment';
+                if(view.symbol(child, read).id === symbol && !this.staysHome(view, child, scope, render)) {
+                    return true;
+                }
+            }
+            if(this.referencesEscape(view, child, name, symbol, scope, render)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    escapes(holders: readonly MemoNode[], render: boolean): boolean {
+        for(const holder of holders) {
+            const scope = holder.view.nearest(holder.index);
+            const name = holder.view.name(holder.index);
+            const body = scope < 0 ? -1 : holder.view.body(scope);
+            if(body < 0 || name < 0) {
+                return true;
+            }
+            const symbol = holder.view.symbol(name).id;
+            if(symbol === 0 || this.referencesEscape(holder.view, body, name, symbol, scope, render)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    callee(view: MemoView, index: number): boolean {
+        const parent = view.parent(index);
+        return view.kind(parent) === 'CallExpression' && view.child(parent, 0) === index;
+    }
+    memoResult(view: MemoView, object: number): boolean {
+        let expression = object;
+        while(view.kind(view.parent(expression)) === 'ParenthesizedExpression') {
+            expression = view.parent(expression);
+        }
+        const parent = view.parent(expression);
+        if(view.kind(parent) === 'ArrowFunction') {
+            return view.body(parent) === expression && view.factory(parent);
+        }
+        return view.kind(parent) === 'ReturnStatement' && view.factory(view.nearest(parent));
+    }
+    staysHome(view: MemoView, reference: number, scope: number, render: boolean): boolean {
+        let expression = reference;
+        while(
+            ['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'NonNullExpression'].includes(
+                view.kind(view.parent(expression)),
+            )
+        ) {
+            expression = view.parent(expression);
+        }
+        const parent = view.parent(expression);
+        if(parent < 0) {
+            return false;
+        }
+        const function_ = view.nearest(expression);
+        switch(view.kind(parent)) {
+            case 'ReturnStatement':
+                return function_ === scope || (render && view.factory(function_));
+            case 'ArrowFunction':
+                return view.body(parent) === expression && (parent === scope || (render && view.factory(parent)));
+            case 'PropertyAccessExpression':
+            case 'ElementAccessExpression':
+                return view.child(parent, 0) === expression && !this.callee(view, parent);
+            case 'BinaryExpression': {
+                const operator = view.kind(view.child(parent, 1));
+                return operator === 'EqualsToken'
+                    ? view.child(parent, 0) === expression
+                    : [
+                          'EqualsEqualsEqualsToken',
+                          'ExclamationEqualsEqualsToken',
+                          'EqualsEqualsToken',
+                          'ExclamationEqualsToken',
+                          'InstanceOfKeyword',
+                      ].includes(operator);
+            }
+            case 'PrefixUnaryExpression':
+                return view.node(parent).operator === 'ExclamationToken';
+            case 'TypeOfExpression':
+                return true;
+            case 'IfStatement':
+                return view.child(parent, 0) === expression;
+            case 'ArrayLiteralExpression': {
+                const call = view.parent(parent);
+                return render && view.hook(call) !== '' && view.args(call)[1] === parent;
+            }
+            case 'ShorthandPropertyAssignment':
+                return render && this.memoResult(view, view.parent(parent));
+            case 'PropertyAssignment':
+                return render && view.child(parent, 1) === expression && this.memoResult(view, view.parent(parent));
+            default:
+                return false;
+        }
+    }
+    line(node: MemoNode): number {
+        const end = node.view.start(node.index);
+        const source = node.view.file.scanner.text;
+        let line = 1;
+        for(let at = 0; at < end; at++) {
+            const code = source.charCodeAt(at);
+            if(code === 13) {
+                if(source.charCodeAt(at + 1) === 10) {
+                    at++;
+                }
+                line++;
+            }
+            else if(code === 10 || code === 8232 || code === 8233) {
+                line++;
+            }
+        }
+        return line;
+    }
+    check(value: number): void {
+        let index = this.render.view.unwrap(value);
+        if(this.render.view.hook(index) === '') {
+            if(this.render.view.kind(index) !== 'Identifier') {
+                return;
+            }
+            const declaration = this.renderConst(new MemoNode(this.render.view, index), this.render);
+            if(declaration === undefined || declaration.view.kind(declaration.index) !== 'VariableDeclaration') {
+                return;
+            }
+            index = declaration.view.unwrap(
+                declaration.view.file.initializer(declaration.view.node(declaration.index)),
+            );
+        }
+        const hook = this.render.view.hook(index);
+        if(hook === '') {
+            return;
+        }
+        const call = new MemoNode(this.render.view, index);
+        const result = this.memo(call, this.render, 0).finding;
+        if(result === undefined) {
+            return;
+        }
+        let anchor = this.render.view.child(index, 0);
+        let id = 'memoWithoutDependenciesMsg';
+        let message = `The ${hook} that builds the Context provider's value (at line ${this.line(call)}) has no dependency list, so it recomputes on every render and every consumer of this context re-renders on every render of this component, exactly as if it were not memoized. Pass the dependency list.`;
+        if(result.dependency >= 0) {
+            anchor = result.dependency;
+            id = 'unstableDependencyMsg';
+            const text = JSON.stringify(this.render.view.text(anchor));
+            const location =
+                result.origin.view.path === this.rules.path ? ` (at line ${this.line(result.origin)})` : '';
+            message = `The ${text} dependency of the ${hook} that builds the Context provider's value (at line ${this.line(call)}) ${result.reason}${location}, so the ${hook} recomputes on every render and every consumer of this context re-renders on every render of this component, exactly as if it were not memoized. A memoized value is only stable when every input is: make ${text} stable too, by memoizing it or by building it outside the component.`;
+        }
+        const node = this.render.view.node(anchor);
+        const start = this.rules.start(node);
+        this.rules.findings.push(
+            new Diagnostic(
+                'react/jsx-no-constructed-context-values',
+                id,
+                message,
+                this.rules.byte(start),
+                this.rules.byte(node.end),
+                '',
+            ),
+        );
+    }
+}
