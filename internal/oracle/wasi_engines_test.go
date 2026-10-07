@@ -30,7 +30,15 @@ func requireWasmtime(t *testing.T) {
 // working directory would change absolute paths and permission probes.
 func onWasmtime(t *testing.T, how inputRun, binary string) run {
 	t.Helper()
-	return executeInput(t, how, nil, "wasmtime", append([]string{"run", "--dir", "/::/", binary}, how.arguments...)...)
+	arguments := []string{"run", "--dir", "/::/"}
+	// WASI libc resolves relative paths against a dot preopen, not the host
+	// process cwd. Keep root access and add that alias for input fixtures.
+	if how.directory != "" {
+		arguments = append(arguments, "--dir", how.directory+"::.",
+			"--dir", filepath.Dir(binary)+"::"+filepath.Dir(binary), "--dir", "/dev::/dev")
+	}
+	arguments = append(arguments, binary)
+	return executeInput(t, how, nil, "wasmtime", append(arguments, how.arguments...)...)
 }
 
 // On a disagreement, run the same artifact under V8 too. This is diagnostic
@@ -42,7 +50,21 @@ func compareWasmtime(t *testing.T, expected, actual run, how inputRun, binary st
 		if err != nil {
 			t.Fatal(err)
 		}
-		v8 := executeInput(t, how, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, binary}, how.arguments...)...)
+		nodeArguments := []string{"--disable-warning=ExperimentalWarning", runner, binary}
+		if how.directory != "" {
+			// The stock runner has only root. An isolated runner adds the same aliases
+			// as wasmtime so diagnostics do not confuse cwd with an engine difference.
+			nodeArguments = []string{"--disable-warning=ExperimentalWarning", "--input-type=module", "-e", `
+import { readFileSync } from 'node:fs';
+import { WASI } from 'node:wasi';
+const binary = process.argv[1];
+const preopens = { '/': '/', '.': process.cwd(), [process.argv[2]]: process.argv[2], '/dev': '/dev' };
+const wasi = new WASI({version:'preview1', args:[binary, ...process.argv.slice(3)], env:process.env, preopens, returnOnExit:true});
+const module = await WebAssembly.compile(readFileSync(binary));
+const instance = await WebAssembly.instantiate(module, wasi.getImportObject());
+process.exitCode = wasi.start(instance);`, binary, filepath.Dir(binary)}
+		}
+		v8 := executeInput(t, how, nil, "node", append(nodeArguments, how.arguments...)...)
 		t.Errorf("%s\nnode source: exit %d, stdout %q, stderr %q\nwasmtime: exit %d, stdout %q, stderr %q\nv8 wasm: exit %d, stdout %q, stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr, v8.exitCode, v8.stdout, v8.stderr)
 	}
 }
@@ -147,12 +169,18 @@ func TestWasmtimeAgreesWithNode(t *testing.T) {
 				writable(t, shared, "written")
 			}
 			actual := onWasmtime(t, how, binary)
-			compareWasmtime(t, expected, actual, how, binary)
 			if fixture.writes {
 				if difference := filesDiffer(left, snapshot(t, how.arguments[0])); difference != "" {
 					t.Errorf("files differ: %s", difference)
 				}
 			}
+			if fixture.writes && disagreement(expected, actual) != "" {
+				if err := os.RemoveAll(how.arguments[0]); err != nil {
+					t.Fatal(err)
+				}
+				writable(t, shared, "written")
+			}
+			compareWasmtime(t, expected, actual, how, binary)
 		})
 	}
 }
@@ -194,4 +222,9 @@ func TestWasmtimeOracleCatchesMutants(t *testing.T) {
 		t.Fatalf("exit mutant: %q", difference)
 	}
 	t.Log("exit mutant caught by exit status comparison")
+	stderrMutant := "#include <stdio.h>\n" + original[:index] + "fputs(\"mutant\\n\", stderr); " + original[index:]
+	if difference := disagreement(expected, probe(stderrMutant)); difference != "stderr differs" {
+		t.Fatalf("stderr mutant: %q", difference)
+	}
+	t.Log("stderr mutant caught by exact byte comparison")
 }
