@@ -32,6 +32,13 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		// names runs first (moduleOrder).
 		return nil, nil
 	case ast.KindExportDeclaration, ast.KindExportAssignment:
+		if node.Kind == ast.KindExportDeclaration {
+			declaration := node.AsExportDeclaration()
+			if declaration.ModuleSpecifier != nil && declaration.ExportClause != nil && declaration.ExportClause.Kind == ast.KindNamedExports {
+				// Uses resolve through the checker; moduleOrder initializes the source module.
+				return nil, nil
+			}
+		}
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {

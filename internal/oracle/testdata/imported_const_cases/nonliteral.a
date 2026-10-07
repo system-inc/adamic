@@ -1,0 +1,8 @@
+import { WIDE as ALIAS } from './constants.a';
+switch (17) {
+	case ALIAS:
+		console.log('wide');
+		break;
+	default:
+		console.log('other');
+}
