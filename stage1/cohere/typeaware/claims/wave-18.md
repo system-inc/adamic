@@ -207,3 +207,14 @@ mutants, bridge, parked reporters, production Go, vet and filtered uncached Node
 pass. Refreshed 587-ref audit finds no unclaimed ranked rule. Four analysis
 claims remain parked with their prior blockers. See
 wave_18_component_props/LANDING_B8FB_REPORT.md and validation-b8fb.
+
+## Landing on the shared lint area 7481e032
+
+Rebased all wave-18 work onto fetched origin/area/stage1-lint 7481e032,
+including harness 41eb6eab2 and current fetched main 39638d9e. Six suites
+are green across the initial and targeted reruns; both standalone groups,
+sanitizers, released handles, mutants, shared harness, Node and vet pass.
+The shared parser now supports JSX; owned probes were updated, while
+the four named HIR/SSA/capture analysis claims remain parked. Audit of
+423 actual origin heads and 33 claim blobs finds no unclaimed ranked rule.
+See wave_18_component_props/AREA_LANDING_REPORT.md and validation-area.

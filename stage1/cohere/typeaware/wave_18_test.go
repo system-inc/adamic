@@ -140,18 +140,19 @@ func TestWave18AgreementAndMutants(t *testing.T) {
 		os.Remove(mutant)
 		os.Remove(mutantArchive)
 	}
-	// The missing JSX grammar is measured against a positive Go rule control.
+	// The shared parser now accepts JSX. This two-rule runner does not dispatch
+	// Next's rule; its positive finding is held by the separate title suite.
 	jsx := h.write("title-positive.tsx", `import {Head} from 'next/document';export const page=<Head><title>x</title></Head>;`)
 	jsxManifest := h.write("jsx.manifest", jsx+"\n")
 	positive := h.must("jsx-go-positive", exec.Command(oracle, config, jsxManifest))
 	if !bytes.Contains(positive.stdout, []byte("\t@next/next/no-title-in-document-head\t")) {
 		t.Fatal("missing Go JSX positive control")
 	}
-	negative := h.run("jsx-native-gap", exec.Command(binary, config, jsxManifest))
-	if code, ok := negative.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(negative.stderr, []byte("parser slice expected GreaterThanToken, got Identifier")) {
-		t.Fatalf("JSX gap changed: %v %s", negative.err, negative.stderr)
+	parsed := h.must("jsx-native-supported", exec.Command(binary, config, jsxManifest))
+	if len(parsed.stderr) != 0 || !bytes.HasSuffix(parsed.stdout, []byte("findings 0\n")) {
+		t.Fatalf("two-rule JSX parser control changed: %s %s", parsed.stdout, parsed.stderr)
 	}
-	t.Logf("Next rule not ported: Go positive, native JSX parser refuses with %s", strings.TrimSpace(string(negative.stderr)))
+	t.Log("shared parser accepts JSX; Next finding is checked in the dedicated title suite")
 	for _, name := range []string{"repository", "compiler"} {
 		variable := "ADAMIC_WAVE18_" + strings.ToUpper(name) + "_MANIFEST"
 		corpusManifest := os.Getenv(variable)
