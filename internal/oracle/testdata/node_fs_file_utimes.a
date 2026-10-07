@@ -1,8 +1,8 @@
 import { programArguments } from 'adamic';
 const root = programArguments()[0] ?? '';
 function failure(error: Error): void {
-    const errno: NodeJS.ErrnoException = error;
-    console.log(`${errno.code ?? ''}: ${error.message.replace(root, '<root>')}`);
+    const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+    console.log(`${code ?? ''}: ${error.message.replace(root, '<root>')}`);
 }
 import { utimesSync, statSync } from 'node:fs';
 utimesSync(root + '/file',1000.123,1700000000.987654);

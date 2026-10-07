@@ -34,7 +34,7 @@ export function createDirectory(path: string): void {
         if (stat !== undefined && stat.isDirectory()) { return; }
     } catch { /* getNodeSystem's directoryExists treats every failure as missing. */ }
     try { mkdirSync(path); }
-    catch (error) { if (error instanceof Error) { const errno: NodeJS.ErrnoException = error; if (errno.code !== 'EEXIST') { throw error; } } }
+    catch (error) { if (error instanceof Error) { const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined; if (code !== 'EEXIST') { throw error; } } }
 }
 
 export function readFile(fileName: string, _encoding?: string): string | undefined {

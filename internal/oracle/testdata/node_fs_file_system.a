@@ -1,8 +1,8 @@
 import { programArguments } from 'adamic';
 const root = programArguments()[0] ?? '';
 function failure(error: Error): void {
-    const errno: NodeJS.ErrnoException = error;
-    console.log(`${errno.code ?? ''}: ${error.message.replace(root, '<root>')}`);
+    const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+    console.log(`${code ?? ''}: ${error.message.replace(root, '<root>')}`);
 }
 import { readFileSync } from 'node:fs';
 import { writeFile, fileExists, getFileSize, getModifiedTime, setModifiedTime, deleteFile, createDirectory } from '../../load/node_fs_file_system.a';

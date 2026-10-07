@@ -1,7 +1,7 @@
 import { readFile } from '../../load/node_fs_file_system.a';
 import { readFileSync, openSync, closeSync } from 'node:fs';
 import { programArguments } from 'adamic';
-const root = programArguments()[0] ?? ''; 
+const root = programArguments()[0] ?? '';
 for (const name of ['file', 'utf8', 'bom', 'bad']) {
     const bytes = readFileSync(root + '/' + name);
     console.log(bytes.toString('hex'));
@@ -15,8 +15,8 @@ for (const name of ['missing', 'directory']) {
     try { readFileSync(root + '/' + name); }
     catch (error) {
         if (error instanceof Error) {
-            const errno: NodeJS.ErrnoException = error;
-            console.log(errno.code ?? 'missing');
+            const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+            console.log(code ?? 'missing');
         }
     }
 }

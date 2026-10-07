@@ -74,7 +74,7 @@ func TestNodeLibraryDistinguishesReceiverOwners(t *testing.T) {
 }
 
 func TestNodeLibraryQualifiedTypeAssertion(t *testing.T) {
-	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`); err != nil {
-		t.Fatal(err)
+	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`); err == nil || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
+		t.Fatalf("want audited optional widening refusal, got %v", err)
 	}
 }

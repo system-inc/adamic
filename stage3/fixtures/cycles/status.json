@@ -148,10 +148,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/09_function_value_load/core.a:4:22: stage 0 can't lower a value of type unknown yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/cycles/09_function_value_load/performance.a:5:42: stage 0 can't lower a function value taking union of differently held members yet"}
   },
   {
     "file": "10_hoisted_before_body/main.a",
@@ -165,9 +162,6 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/10_hoisted_before_body/core.a:4:22: stage 0 can't lower a value of type unknown yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/cycles/10_hoisted_before_body/performance.a:5:42: stage 0 can't lower a function value taking union of differently held members yet"}
   }
 ]

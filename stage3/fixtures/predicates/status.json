@@ -117,10 +117,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/predicates/07_typeof.a:7:26: stage 0 can't lower a value of type unknown yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/predicates/07_typeof.a:12:31: stage 0 can't lower .fileName on a string yet"}
   },
   {
     "file": "08_flags.a",

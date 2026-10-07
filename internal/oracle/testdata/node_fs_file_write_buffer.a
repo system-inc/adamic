@@ -15,4 +15,4 @@ console.log(readFileSync(root + '/binary-fd').toString('hex'));
 writeFileSync(root + '/binary',Buffer.from(''));
 console.log(readFileSync(root + '/binary').toString('hex'));
 try { writeFileSync(root + '/missing/child',data); }
-catch(error) { if(error instanceof Error) { const errno:NodeJS.ErrnoException=error; console.log(`${errno.code??''}: ${error.message.replace(root,'<root>')}`); } }
+catch(error) { if(error instanceof Error) { const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined; console.log(`${code??''}: ${error.message.replace(root,'<root>')}`); } }

@@ -141,6 +141,21 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		if literal.Spread != nil {
 			return nil, l.notYet(node, memberName+": "+"fs options containing a spread")
 		}
+		// Optional scalar literals use a presence wrapper after the nested-function merge.
+		// A present constant remains effect-free and can be passed to the host as its scalar.
+		for index, field := range literal.Fields {
+			value := field.Value
+			switch wrapper := value.(type) {
+			case ir.MaybeOf:
+				value = wrapper.Value
+			case ir.Box:
+				value = wrapper.Value
+			}
+			switch value.(type) {
+			case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant:
+				literal.Fields[index].Value = value
+			}
+		}
 		// Splitting a literal into runtime parameters must neither drop effects
 		// from unused fields nor reorder the effects of its fields.
 		for _, field := range literal.Fields {

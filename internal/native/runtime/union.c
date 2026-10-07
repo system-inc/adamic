@@ -66,6 +66,7 @@ adamic_string *adamic_union_typeof(const adamic_heap *value, bool null) {
 	if (value == NULL) {
 		return null ? &adamic_typeof_object : &adamic_typeof_undefined;
 	}
+	if (value == &adamic_null) { return &adamic_typeof_object; }
 	switch (value->kind) {
 	case adamic_kind_number:
 		return &adamic_typeof_number;
@@ -160,6 +161,10 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 		switch (entry->types[index]) {
 		case 1: return adamic_box_number(slot.number);
 		case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+		case 9: {
+			adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot.boolean);
+			return !boolean.present ? NULL : boolean.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+		}
 		case 7: {
 			adamic_maybe_number number = adamic_maybe_number_unpack(slot.number);
 			return number.present ? adamic_box_number(number.number) : NULL;
