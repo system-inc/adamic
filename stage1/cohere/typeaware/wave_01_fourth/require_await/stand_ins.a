@@ -1,0 +1,36 @@
+export interface AwaitStandInFacts {
+    parameters: readonly number[];
+    declared: readonly number[];
+    resolved: readonly number[];
+    argumentCount: number;
+    argumentIndex: number;
+    rest: boolean;
+    returnType: number;
+    positionType: number;
+}
+export function awaitStandIns(facts: AwaitStandInFacts): Map<number, number[]> {
+    const result = new Map<number, number[]>();
+    for(let index = 0; index < facts.argumentCount; index++) {
+        if(index === facts.argumentIndex || index >= facts.declared.length || index >= facts.resolved.length) {
+            continue;
+        }
+        if(facts.rest && index >= facts.declared.length - 1) {
+            continue;
+        }
+        const declared = facts.declared[index];
+        const resolved = facts.resolved[index];
+        if(declared !== undefined && resolved !== undefined && facts.parameters.includes(declared)) {
+            const empty: number[] = [];
+            const values = result.get(declared) ?? empty;
+            values.push(resolved);
+            result.set(declared, values);
+        }
+    }
+    if(facts.parameters.includes(facts.returnType) && facts.positionType !== 0) {
+        const empty: number[] = [];
+        const values = result.get(facts.returnType) ?? empty;
+        values.push(facts.positionType);
+        result.set(facts.returnType, values);
+    }
+    return result;
+}

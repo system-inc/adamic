@@ -742,3 +742,35 @@ partial: native checker-fact delivery and full-rule integration, generic
 ancestor-step collection/stand-in discovery and atomic CFG/event collection
 are unfinished. No new claims. Full gate, the 17 required external checks
 and fresh native/Go timings were not run or represented as green.
+
+## Generic type-parameter stand-ins
+
+Fetched landing refs; main b6b1538b and area d3a37422 were unchanged
+ancestors, so no rebase was needed. Added require_await/stand_ins.a to
+select other arguments whose declared parameter type is exactly a type
+parameter, excluding the argument under judgment and rest positions.
+A typed call result is also appended when the declared return type is
+exactly a type parameter. Multiple stand-ins preserve argument order.
+
+After sourcing /workspace/adamic-tools/env.sh, ran python3
+stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_stand.py
+/workspace/wave01-await-stand /workspace/wave-01-fourth-adamic, logged to
+/tmp/wave01-await-stand.log. PASS 12 real-signature stand-in cases;
+sanitizer-clean self-argument mutant caught by bytes. The unchanged Go
+requireAwaitTypeParameterStandIns supplies expected type IDs; independent
+checker signature and contextual-type questions supply the native facts.
+Controls cover ordinary and typed results, rest arguments, a nested
+type-parameter mention that upstream excludes, and multiple type parameters.
+Each argument position is independently judged. Including the argument
+under judgment changes the result, while both binaries exit zero with
+empty sanitizer stderr; byte comparison alone catches that mutant.
+The first native build refused an inferred array of never; explicit
+number[] empty arrays fixed the supported representation without a
+compiler change. Evidence is in validation/await-stand.
+
+This helper does not prove generic ancestor collection, full contextual
+step replay, native checker-fact delivery or full-rule parity. No new
+bridge question/handle was introduced. Three claims remain partial, with
+atomic CFG/event collection and native integration also pending. No new
+claims. Full gate, the 17 external comparisons and new native/Go timings
+were not run for this isolated helper and are not claimed green.
