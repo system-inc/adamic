@@ -68,3 +68,11 @@ Both own branches cleanly rebased onto current origin/main b8fb957aa, re-green a
 - github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].reachedStatement
 
 Four consumers tie maximum available fan-out: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/reached_statement.a plus owned node/hook driver, actual-Go observer, tests and evidence. Preserve optional callback invocation exactly once with the same builder and handed node, including nil node; absent callback does nothing. Observe actual Go call arguments on every consumer's upstream suites plus explicit callback/node/state identity controls. Opaque callback bodies and full graph integration remain caller-owned. Source Node, emitted JavaScript, sanitized native and compiling comparison-only mutants. No regex or shared harness changes. Push reservation before code.
+
+## Eighth helper
+
+reachedStatement green and pushed at f70eb4dfc. Both own branches contain current origin/main b8fb957aa, with fresh oracle evidence and named shared parking blockers. popJump was skipped because the refreshed audit finds it claimed elsewhere; no popJump reservation or implementation written. Fresh wildcard audit reads 592 refs and 20 distinct helper claims plus HELPERS.md. Claim before code:
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeArguments
+
+Four consumers tie maximum available fan-out: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/type_arguments.a plus owned handed-list/expr-callback driver, Go observer, tests and evidence. Preserve source-order traversal of node.TypeArguments(), invoking expression lowering exactly once per argument with exact node and builder identity, including empty lists and repeated/nil node references. The AST adapter supplies this inspected list; expression bodies and full AST/graph integration remain caller-owned. Actual private Go on every consumer suite plus bounded list/identity controls, source Node, emitted JavaScript, sanitized native and compiling comparison-only mutants. No shared harness, node-kind relevance dispatch or regex change. Push claim before code.
