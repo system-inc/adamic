@@ -1,0 +1,3 @@
+import { programArguments } from 'adamic';
+const args: [] = [];
+programArguments(...[...args] as const);
