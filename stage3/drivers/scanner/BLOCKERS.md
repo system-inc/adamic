@@ -1,5 +1,28 @@
 # Scanner blockers
 
+## October 7: checker clear in the adapted slice, first lowering blocker
+
+Main plus fallthrough alone removes ten TS7029 findings (34 to 24). Newest
+four-feature tips plus fallthrough leave eleven checker findings. Adaptations
+52 and 53, planned and pushed at `21cad99` before edits, remove those eleven.
+Adapted Node output still matches every byte of the 509,014-token full-tree
+oracle. Both scripts require slice.json and reject full-tree application.
+Full baseline validation is pending; these scripts are provisional probes.
+
+First lowering refusal, exactly:
+`core.ts:1:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports`.
+Census reason: module cycles. Closing feature: `codex/import-cycles`, remote
+`6b17636`, now being fetched. This is the type import from Debug back to core's
+AnyFunction plus core's value import of Debug. Node initialization passes.
+Logs: [member-first-lowering.log](evidence/member-first-lowering.log),
+[member-current-checker.log](evidence/member-current-checker.log), and
+[member-fallthrough-only.log](evidence/member-fallthrough-only.log).
+
+Scanner omission mutant completed: delete the reached
+unicodeESNextIdentifierStart declaration. Node exits 1 with ReferenceError
+at isUnicodeIdentifierStart during scanIdentifier; the unmutated control exits
+0 and matches the full token oracle. See stage3/slice/evidence/scanner-omission.stderr.
+
 ## October 7: namespace member slice is green on Node
 
 Commit `c4e011f` gathers namespace members independently. Eight source files,
@@ -13,7 +36,7 @@ assert and assertEqual; no enum formatter or registration member is needed.
 Current-main checker and prior four-feature scratch checker stop before
 lowering. Ordered diagnostics are [member-main-checker.json](evidence/member-main-checker.json)
 and [member-features-checker.json](evidence/member-features-checker.json).
-The latter has 22 findings: bounded indexed reads / TS2532 and generic indexed
+The latter has 21 findings: bounded indexed reads / TS2532 and generic indexed
 reads / TS2345, exact optional declarations / TS2375, and intentional switch
 fallthrough / TS7029. Main additionally rejects enums and namespaces / TS1294.
 Closing branches: flag-enums and namespaces-tsc for TS1294;
