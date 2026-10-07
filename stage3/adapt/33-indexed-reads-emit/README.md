@@ -153,3 +153,41 @@ up from 36, and **382 -> 366** total diagnostics. The nine requested files are
 decline; no native compiler options or out-of-partition source was changed.
 CRLF preservation across all 30 owned files is checked in the
 [closure summary](proof/whole-files/closure-summary.json).
+
+### Followup: transformers/module/module.ts at zero
+
+Remaining all-code census **2 -> 0**; **41 of 78 files clean**. A truthful
+optional context owner, 22 individually reviewed transformation-context reads
+and one explicit iterable overload type argument preserve Node computation.
+A stock symbol-resolved graph proves the required readers are unreachable from
+emission. Default oracle **106367 passing**, empty baseline diff, 213.165s.
+JavaScript equality, idempotence, required-read, owner, overload and graph
+mutants all pass their respective checks. [Complete proof](proof/whole-files/module-close/README.md).
+
+Revisited sourcemap.ts: the actual undefined payload can reach local storage,
+so truth also requires widening RawSourceMap.sourcesContent's element in
+types.ts:9889, outside this partition. Revisited declarations.ts: an empty
+second extends clause reaches a diagnostic helper that immediately reads kind;
+its endpoint cannot be asserted and an optional owner alone cannot prove the
+helper reads. Their source is unchanged and their prior complete census,
+counterexample and green oracle proofs remain applicable.
+
+### Followup: transformers/module/system.ts at zero
+
+Remaining all-code census **3 -> 0**; **42 of 78 files clean**. Three truthful
+context owners and 25 individually reviewed original-point reads preserve
+Node JavaScript. Twenty-three consumers are exclusive to transformation; two
+have export-name or import.meta emission proofs. Default oracle **106367
+passing**, empty baseline diff, 214.121s. Required-read, three
+owner, graph and two guard mutants are caught. JavaScript equality, idempotence
+and CRLF pass. [Complete proof](proof/whole-files/system-close/README.md).
+
+### Remaining followup work
+
+The five original remainder files are now **10 -> 5**: module.ts and system.ts
+are zero. sourcemap.ts retains 1, declarations.ts retains 1 and utilities.ts
+retains 3. No sources in those three files changed during this followup; fresh
+all-code results and exact owner handoffs are in
+[remaining review](proof/whole-files/remaining-review.json). RawSourceMap and
+AllDecorators owner changes belong to types.ts outside this partition. The
+empty heritage clause still has no truthful presence invariant.

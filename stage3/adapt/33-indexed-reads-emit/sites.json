@@ -2889,7 +2889,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "transformSourceFile returns early for plain scripts without populating this cache, while onEmitNode handles every SourceFile; currentModuleInfo may be undefined and nearby optional reads handle that. Owner widening requires a separate proof of every transform and emission context read; that protocol review is unfinished, so a required-read assertion is declined."
+    "invariant": "This cache is legitimately absent for skipped scripts. Its owning currentModuleInfo declaration now truthfully includes undefined; emission getExports reads already handle absence. Required transform-context receiver reads have separate individual proofs."
   },
   {
     "file": "transformers/module/module.ts",
@@ -3033,7 +3033,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Unconditional SourceFile emit notifications include plain scripts returned before cache population; moduleInfo can legitimately receive undefined. Widening its owning declaration requires a complete proof of required transformation and substitution context reads, which remains unfinished; no false required-read assertion is added."
+    "invariant": "The cache entry is legitimately absent for skipped plain scripts; its receiving owner now includes undefined. Required transformation and conditional emission consumers have separate individual proofs, so this sparse read is not asserted."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3045,7 +3045,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Unconditional SourceFile emit notifications include plain scripts returned before cache population; exportFunction can legitimately receive undefined. Widening its owning declaration requires a complete proof of required transformation and substitution context reads, which remains unfinished; no false required-read assertion is added."
+    "invariant": "The cache entry is legitimately absent for skipped plain scripts; its receiving owner now includes undefined. Required transformation and conditional emission consumers have separate individual proofs, so this sparse read is not asserted."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3069,7 +3069,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Unconditional SourceFile emit notifications include plain scripts returned before cache population; contextObject can legitimately receive undefined. Widening its owning declaration requires a complete proof of required transformation and substitution context reads, which remains unfinished; no false required-read assertion is added."
+    "invariant": "The cache entry is legitimately absent for skipped plain scripts; its receiving owner now includes undefined. Required transformation and conditional emission consumers have separate individual proofs, so this sparse read is not asserted."
   },
   {
     "file": "transformers/module/system.ts",
