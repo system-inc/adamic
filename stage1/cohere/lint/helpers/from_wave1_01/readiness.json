@@ -1,0 +1,12 @@
+{
+  "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enter",
+  "consumers": [
+    "array-callback-return",
+    "consistent-return",
+    "no-unreachable-loop",
+    "react-hooks/rules-of-hooks"
+  ],
+  "prerequisite_edges_removed": 4,
+  "complete_rules_unblocked": 0,
+  "boundary": "handed non-null block state and identity; adjacent CFG and full rule integration remain"
+}

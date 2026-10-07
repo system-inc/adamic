@@ -1,0 +1,15 @@
+=== RUN   TestEnterMatchesGo
+    enter_test.go:104: array-callback-return: 79 actual Go calls, 632 bytes per backend
+    enter_test.go:104: consistent-return: 123 actual Go calls, 984 bytes per backend
+    enter_test.go:104: no-unreachable-loop: 8861 actual Go calls, 70936 bytes per backend
+    enter_test.go:104: react-hooks_rules-of-hooks: 495 actual Go calls, 4309 bytes per backend
+    enter_test.go:104: controls: 120 actual Go calls, 960 bytes per backend
+    enter_test.go:135: retain prior reachability compiles and runs; comparison alone catches side 0
+    enter_test.go:135: retain prior reachability compiles and runs; comparison alone catches side 1
+    enter_test.go:135: retain prior reachability compiles and runs; comparison alone catches side 2
+    enter_test.go:135: retain prior current block compiles and runs; comparison alone catches side 0
+    enter_test.go:135: retain prior current block compiles and runs; comparison alone catches side 1
+    enter_test.go:135: retain prior current block compiles and runs; comparison alone catches side 2
+--- PASS: TestEnterMatchesGo (66.85s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	66.867s

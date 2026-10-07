@@ -1,0 +1,19 @@
+// A block owns no edges here. Other CFG helpers supply the graph and its events.
+export class Block {
+    readonly index: number;
+    incoming: boolean;
+    reachable: boolean;
+    constructor(index: number, incoming: boolean, reachable: boolean) {
+        this.index = index;
+        this.incoming = incoming;
+        this.reachable = reachable;
+    }
+}
+export class State {
+    current: Block | undefined = undefined;
+}
+// Go settles reachability from incoming edges and keeps this exact block identity.
+export function enter(node: Block, state: State): void {
+    node.reachable = node.incoming;
+    state.current = node;
+}
