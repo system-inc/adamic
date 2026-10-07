@@ -13,16 +13,21 @@ static void array_view_failure(const char *expression, const char *expected, con
 }
 
 static const char *array_storage_name(unsigned char storage) {
-    return storage == 1 || storage == 7 ? "number" : storage == 2 ? "boolean" : storage == 3 ? "string" : storage == 4 ? "object" : storage == 5 ? "array" : storage == 6 ? "Map" : storage == 8 ? "function" : "uncertified storage";
+    return storage == 1 || storage == 7 ? "number" : storage == 2 ? "boolean" : storage == 3 ? "string" : storage == 4 ? "object" : storage == 5 ? "array" : storage == 6 ? "Map" : storage == 8 ? "function" : storage == 10 ? "heap pointers" : "uncertified storage";
 }
 
 void adamic_array_view_storage(adamic_array *array, unsigned char storage) {
-    if (array->view.storage != 0 && array->view.storage != storage) { array_view_failure("<array allocation>", array_storage_name(storage), array_storage_name(array->view.storage)); }
-    array->view.storage = storage;
+    if (array->references) { storage = 10; }
+    if (array->element_kind != 0 && array->element_kind != storage) { array_view_failure("<array allocation>", array_storage_name(storage), array_storage_name(array->element_kind)); }
+    array->element_kind = storage;
 }
 
 void adamic_view_array_storage_check(const adamic_array *array, unsigned char storage, const char *expression) {
-    if (array->view.storage != storage) { array_view_failure(expression, array_storage_name(storage), array_storage_name(array->view.storage)); }
+    unsigned char physical = storage == 3 || storage == 4 || storage == 5 || storage == 6 || storage == 8 || storage == 10 ? 10 : storage;
+    if (array->element_kind != physical) { array_view_failure(expression, array_storage_name(storage), array_storage_name(array->element_kind)); }
+    // A pointer byte cannot certify the original object/class/map signature.
+    // Keep reference writes closed until the source element contract is known.
+    if (storage == 4 || storage == 5 || storage == 6 || storage == 8 || storage == 9 || storage == 10) { array_view_failure(expression, array_storage_name(storage), "uncertified source element contract"); }
 }
 
 adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot) {
@@ -31,9 +36,10 @@ adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool
         index = isnan(index) ? 0 : trunc(index);
         if (index < 0) index += (double)array->length;
     }
+
     adamic_value *slot = adamic_array_holes_at(array, index);
     if (slot == NULL) { return NULL; }
-    unsigned char actual = array->view.storage;
+    unsigned char actual = array->element_kind;
     *snapshot = *slot;
     if (actual == 7) {
         adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
@@ -48,7 +54,7 @@ adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool
         else if (reference->kind == adamic_kind_boolean) { actual = 2; snapshot->boolean = ((const adamic_boolean_box *)reference)->boolean; }
         else { actual = reference->kind == adamic_kind_string ? 3 : reference->kind == adamic_kind_object ? 4 : reference->kind == adamic_kind_array ? 5 : reference->kind == adamic_kind_map ? 6 : reference->kind == adamic_kind_closure ? 8 : 0; }
     }
-    if (actual != wanted && !(wanted == 7 && actual == 1) && !(wanted == 10 && array->view.storage == 10)) { array_view_failure(expression, expected, array_storage_name(actual)); }
+    if (actual != wanted && !(wanted == 7 && actual == 1) && !(wanted == 10 && array->element_kind == 10)) { array_view_failure(expression, expected, array_storage_name(actual)); }
     if (wanted == 7 && actual == 1) { snapshot->number = adamic_maybe_number_pack((adamic_maybe_number){true, snapshot->number}); }
     if (wanted == 10) { *snapshot = *slot; }
     return snapshot;
@@ -116,4 +122,47 @@ int adamic_view_array_default_compare(adamic_value left, adamic_value right, voi
     adamic_release(a);
     adamic_release(b);
     return result;
+}
+
+// The selected value has already been checked and retained. Commit removal only
+// afterward, preserving sparse ownership and missing-slot accounting.
+void adamic_view_array_pop_commit(adamic_array *array) {
+    if (array->length == 0) return;
+    if (array->sparse != NULL) {
+        double index = (double)array->length - 1;
+        if (adamic_array_holes_at(array, index) == NULL) { array->capacity--; }
+        else { adamic_map_delete(array->sparse, (adamic_value){.number = index}); }
+        array->length--;
+        return;
+    }
+    array->length--;
+    if (array->references) { adamic_release(array->elements[array->length].reference); }
+}
+
+void adamic_view_array_push(adamic_array *array, adamic_value value) {
+    if (array->sparse != NULL) { adamic_array_holes_set(array, (double)array->length, value); }
+    else { adamic_array_push(array, value); }
+}
+
+adamic_array *adamic_view_array_slice(const adamic_array *array, double start, double end, bool has_end) {
+    if (array->sparse == NULL) return adamic_array_slice(array, start, end, has_end);
+    double length = (double)array->length;
+    start = isnan(start) ? 0 : trunc(start);
+    start = start < 0 ? fmax(length + start, 0) : fmin(start, length);
+    end = !has_end ? length : isnan(end) ? 0 : trunc(end);
+    end = end < 0 ? fmax(length + end, 0) : fmin(end, length);
+    if (end < start) end = start;
+    adamic_array *result = adamic_array_holes(end - start, array->references);
+    if (result == NULL) return NULL;
+    result->element_kind = array->element_kind;
+    for (size_t at = 0; at < array->sparse->used; at++) {
+        const adamic_map_entry *entry = &array->sparse->entries[at];
+        double index = entry->key.number;
+        if (entry->deleted || !(index >= start && index < end) || index != trunc(index)) continue;
+        adamic_value value = entry->value;
+        if (array->references) adamic_retain(value.reference);
+        adamic_array_holes_set(result, index - start, value);
+    }
+    return result;
+
 }

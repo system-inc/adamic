@@ -1,12 +1,11 @@
 #ifndef ADAMIC_VIEW_ARRAYS_H
 #define ADAMIC_VIEW_ARRAYS_H
 
-// This byte certifies physical element storage, not initialization or a view's
-// asserted logical element type. Zero means no scalar storage certificate.
-typedef struct adamic_array_view_metadata {
-    unsigned char storage;
-} adamic_array_view_metadata;
+// Physical storage lives in the shared adamic_array.element_kind byte.
 struct adamic_array;
+struct adamic_array *adamic_view_array_slice(const struct adamic_array *array, double start, double end, bool has_end);
+void adamic_view_array_push(struct adamic_array *array, adamic_value value);
+void adamic_view_array_pop_commit(struct adamic_array *array);
 void adamic_view_array_missing(const char *expression, const char *expected);
 void adamic_array_view_storage(struct adamic_array *array, unsigned char storage);
 adamic_value *adamic_view_array_at(const struct adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot);

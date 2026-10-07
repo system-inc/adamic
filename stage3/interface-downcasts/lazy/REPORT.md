@@ -129,3 +129,27 @@ were reproduced with the pre-lazy c01ae313 source overlay (native baseline 1.116
 The runtime was not changed to suppress these failures. Logs are saved in census/.
 Integration remains blocked on these baseline failures and production checker policy;
 no final integration SHA was available from origin at the last branch check.
+
+## Optional Error follow-up (October 7)
+
+`new Error('plain') as NodeJS.ErrnoException` now reads absent `code` as
+undefined, matching Node's `missing`. The native Error producer owns only
+name and message, and certifies their string tags; it no longer invents an
+initialized optional code slot with an unknown representation. The own-message
+probe prints `plain:missing` in Node, sanitized native, release native and JavaScript.
+This covers absent optional strings and present string producer evidence, not
+arbitrary nullable unions. Null remains invalid for `code?: string`.
+
+The number and null payload mutants both stop at the code read with exit 70,
+naming code, string and the found number/null in all three compiled runs.
+A temporary implementation mutant treating null as undefined was caught by
+`TestCheckedViewLazyOptionalCodeMutants/null`: native ran on and printed missing.
+The runtime was restored. Focused uncached lazy oracles passed in 4.098s.
+The broader class-inheritance exception oracle still fails on an unrelated
+boolean-array view; restoring the original Error runtime reproduces it.
+Logs: `census/nullish-pass.log`, `census/null-collapse-mutant.log`,
+`census/error-baseline.log`.
+
+The adapted-tree follow-up supersedes the stock-tree production census: see
+[ADAPTED-CENSUS.md](ADAPTED-CENSUS.md) for exact cast counts and all remaining
+checker diagnostic rows. The designated integration tip is now merged.

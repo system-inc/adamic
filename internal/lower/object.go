@@ -1213,7 +1213,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		if arguments[0] = fit(arguments[0], element); arguments[0].Type() != element {
 			return nil, true, l.notYet(node, name+" with a value of another type than the elements")
 		}
-		return ir.ArraySearch{Array: array, Value: arguments[0], Element: element, Includes: name == "includes"}, true, nil
+		return l.viewArraySearch(node, receiver, array, arguments[0], element, name == "includes", false), true, nil
 	case "at":
 		if len(arguments) != 1 || arguments[0].Type() != ir.Number {
 			return nil, true, l.notYet(node, "at with other than one number")
@@ -1288,7 +1288,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	} else if len(arguments) > 1 {
 		return nil, true, l.notYet(node, "join with more than one argument")
 	}
-	return ir.ArrayJoin{Array: array, Separator: separator, Element: element}, true, nil
+	return l.viewArrayJoin(node, receiver, array, separator, element), true, nil
 }
 
 // arrayMethods are the array methods arrayMethod lowers, beside the visits.

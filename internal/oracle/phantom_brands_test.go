@@ -19,6 +19,7 @@ func init() {
 		"internal/oracle/testdata/phantom_catch.a",
 		"internal/oracle/testdata/phantom_array_brands.a",
 		"internal/oracle/testdata/native-sorted-array-brand.a",
+		"internal/oracle/testdata/phantom_overload_results.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path            string

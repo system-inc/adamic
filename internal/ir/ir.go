@@ -571,6 +571,7 @@ type (
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,
 	// which finds NaN.
 	ArraySearch struct {
+		ViewRead     ArrayViewRead
 		Array, Value Expression
 		From         Expression
 		Element      Type

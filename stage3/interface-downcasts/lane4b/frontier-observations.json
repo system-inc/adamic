@@ -1,0 +1,162 @@
+[
+  {
+    "fixture": "diagnostic-good.a",
+    "runs": {
+      "source_node": {
+        "exit": 0,
+        "stdout": "plain\nnested\n",
+        "stderr": ""
+      },
+      "native_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.a:5:17: stage 0 can't lower a field of type string | Chain yet\n"
+      },
+      "javascript_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.a:5:17: stage 0 can't lower a field of type string | Chain yet\n"
+      }
+    }
+  },
+  {
+    "fixture": "diagnostic-wrong.a",
+    "runs": {
+      "source_node": {
+        "exit": 0,
+        "stdout": "42\n",
+        "stderr": ""
+      },
+      "native_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/diagnostic-wrong.a:5:17: stage 0 can't lower a field of type string | Chain yet\n"
+      },
+      "javascript_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/diagnostic-wrong.a:5:17: stage 0 can't lower a field of type string | Chain yet\n"
+      }
+    }
+  },
+  {
+    "fixture": "jsdoc-good.a",
+    "runs": {
+      "source_node": {
+        "exit": 0,
+        "stdout": "plain\nnested\nabsent\n",
+        "stderr": ""
+      },
+      "native_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/jsdoc-good.a:5:17: stage 0 can't lower a field of type string | readonly Comment[] | undefined yet\n"
+      },
+      "javascript_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/jsdoc-good.a:5:17: stage 0 can't lower a field of type string | readonly Comment[] | undefined yet\n"
+      }
+    }
+  },
+  {
+    "fixture": "jsdoc-wrong.a",
+    "runs": {
+      "source_node": {
+        "exit": 0,
+        "stdout": "42\n",
+        "stderr": ""
+      },
+      "native_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/jsdoc-wrong.a:5:17: stage 0 can't lower a field of type string | readonly Comment[] | undefined yet\n"
+      },
+      "javascript_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/jsdoc-wrong.a:5:17: stage 0 can't lower a field of type string | readonly Comment[] | undefined yet\n"
+      }
+    }
+  },
+  {
+    "fixture": "node-indicator-good.a",
+    "runs": {
+      "source_node": {
+        "exit": 0,
+        "stdout": "true\nIdentifier\nabsent\n",
+        "stderr": ""
+      },
+      "native_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a:5:17: stage 0 can't lower a field of type true | Node | undefined yet\n"
+      },
+      "javascript_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a:5:17: stage 0 can't lower a field of type true | Node | undefined yet\n"
+      }
+    }
+  },
+  {
+    "fixture": "node-indicator-wrong.a",
+    "runs": {
+      "source_node": {
+        "exit": 0,
+        "stdout": "42\n",
+        "stderr": ""
+      },
+      "native_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/node-indicator-wrong.a:5:17: stage 0 can't lower a field of type true | Node | undefined yet\n"
+      },
+      "javascript_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/node-indicator-wrong.a:5:17: stage 0 can't lower a field of type true | Node | undefined yet\n"
+      }
+    }
+  },
+  {
+    "fixture": "option-type-good.a",
+    "runs": {
+      "source_node": {
+        "exit": 0,
+        "stdout": "string\n42\n",
+        "stderr": ""
+      },
+      "native_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/option-type-good.a:5:17: stage 0 can't lower a field of type \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet\n"
+      },
+      "javascript_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/option-type-good.a:5:17: stage 0 can't lower a field of type \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet\n"
+      }
+    }
+  },
+  {
+    "fixture": "option-type-wrong.a",
+    "runs": {
+      "source_node": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "[eval]:7\n const entry = member.get('answer');\n                      ^\n\nTypeError: member.get is not a function\n    at read ([eval]:7:23)\n    at [eval]:12:13\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:224:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:221:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.19.0\n"
+      },
+      "native_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/option-type-wrong.a:5:17: stage 0 can't lower a field of type \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet\n"
+      },
+      "javascript_compiler": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/option-type-wrong.a:5:17: stage 0 can't lower a field of type \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number> yet\n"
+      }
+    }
+  }
+]

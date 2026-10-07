@@ -35,6 +35,7 @@ func emitViewArrayFieldRead(object, member, expression, expected string) string 
 const viewArrayElementsRuntime = `const adamicViewArrayIndex = (array, index, relative, check) => {
     if (relative) { index = Math.trunc(Number(index)) || 0; if (index < 0) index += array.length; }
     if (!Number.isInteger(index) || index < 0 || index >= array.length) return undefined;
+    if (!(index in array)) return undefined;
     return check(array[index]);
 };
 const adamicViewArrayElement = (value, expression, type, expected, allowed, required = false) => {
@@ -67,16 +68,17 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 }
 
 const viewArrayOperationsRuntime = `const adamicArrayStorage = new WeakMap();
-const adamicArrayStorageValue = (array, storage) => { adamicArrayStorage.set(array, storage); return array; };
+const adamicArrayStorageValue = (array, storage) => { adamicArrayStorage.set(array, storage === 1 || storage === 2 || storage === 7 ? storage : 10); return array; };
 const adamicViewSlice = (array, arguments_) => adamicArrayStorageValue(array.slice(...arguments_), adamicArrayStorage.get(array));
-const adamicArrayWriteCheck = (array, storage) => { const actual = adamicArrayStorage.get(array); if (actual !== storage) panic("element read failed: <array write> expected " + (storage === 7 ? "number" : adamicViewTypeNames[storage] || "uncertified storage") + ", found " + (actual === 7 ? "number" : adamicViewTypeNames[actual] || "uncertified storage")); };
-const adamicViewMap = (array, callback, check) => adamicMap(array, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
+const adamicArrayWriteCheck = (array, storage) => { const actual = adamicArrayStorage.get(array); if (actual !== (storage === 1 || storage === 2 || storage === 7 ? storage : 10)) panic("element read failed: <array write> expected " + (storage === 7 ? "number" : adamicViewTypeNames[storage] || "uncertified storage") + ", found " + (actual === 7 ? "number" : actual === 10 ? "heap pointers" : adamicViewTypeNames[actual] || "uncertified storage")); if (storage === 4 || storage === 5 || storage === 6 || storage === 8 || storage === 9 || storage === 10) panic("element read failed: <array write> expected " + (adamicViewTypeNames[storage] || "uncertified storage") + ", found uncertified source element contract"); };
+const adamicViewMap = (array, callback, check) => array.map((value, index, all) => adamicCall(callback, [check(value), index, all]));
 const adamicViewVisit = (array, method, callback, check) => adamicVisit(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
 const adamicViewFind = (array, method, callback, check) => adamicFind(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
 const adamicViewReduce = (array, callback, initial, check) => adamicReduce(array, new AdamicClosure((self, values) => adamicCall(callback, [values[0], check(values[1]), values[2], values[3]]), []), initial);
-const adamicViewPop = (array, check) => { if (array.length === 0) return undefined; const value = check(array[array.length - 1]); array.pop(); return value; };
+const adamicViewPop = (array, check) => { if (array.length === 0) return undefined; const index = array.length - 1; const value = index in array ? check(array[index]) : undefined; array.pop(); return value; };
 const adamicViewPush = (array, value, storage) => { adamicArrayWriteCheck(array, storage); return array.push(value); };
-const adamicViewSetIndex = (array, index, value, storage) => { adamicArrayWriteCheck(array, storage); adamicSetIndex(array, index, value); };
+const adamicViewSetIndex = (array, index, value, storage, holes) => { adamicArrayWriteCheck(array, storage); if (holes) array[index] = value; else adamicSetIndex(array, index, value); };
+const adamicViewJoin = (array, separator, check) => array.map(value => check(value)).join(separator);
 `
 
 func (e *emitter) value(expression ir.Expression) string {
@@ -93,6 +95,8 @@ func (e *emitter) value(expression ir.Expression) string {
 	storage := ir.Type(0)
 	switch expression := expression.(type) {
 	case ir.ArrayLiteral:
+		storage = expression.Element
+	case ir.ArrayHoles:
 		storage = expression.Element
 	case ir.ArrayMap:
 		storage = expression.Result

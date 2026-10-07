@@ -21,7 +21,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	}
 	storage := ir.Type(0)
 	switch expression := expression.(type) {
-	case ir.ArrayLiteral:
+	case ir.ArrayHoles:
 		storage = expression.Element
 	case ir.ArrayMap:
 		storage = expression.Result
@@ -109,10 +109,7 @@ func (e *emitter) emitViewArrayPop(pop ir.ArrayPop) string {
 	} else {
 		result = e.own(pop.Element, fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s->reference)", slot, cType(pop.Element), slot))
 	}
-	e.line("if (%s->length != 0) {", array)
-	e.line("\t%s->length--;", array)
-	e.line("\tif (%s->references) adamic_release(%s->elements[%s->length].reference);", array, array, array)
-	e.line("}")
+	e.line("adamic_view_array_pop_commit(%s);", array)
 	return result
 }
 
@@ -161,4 +158,42 @@ func (e *emitter) viewArrayStringLiterals(literals []ir.ViewLiteral) string {
 		}
 	}
 	return "(adamic_value[]){" + strings.Join(values, ", ") + "}"
+}
+
+// join consumes all positions now; the original array is never scanned by a
+// field read. A temporary string array keeps physical source storage unchanged.
+func (e *emitter) emitViewArrayJoin(join ir.ArrayJoin) string {
+	array := e.snapshot(ir.Array, e.value(join.Array))
+	separator := e.snapshot(ir.String, e.value(join.Separator))
+	strings := e.own(ir.Array, "adamic_array_new(0, true)")
+	index := e.temporary()
+	e.line("for (size_t %s = 0; %s < %s->length; %s++) {", index, index, array, index)
+	e.indent++
+	read := join.ViewRead.Index()
+	read.Required = false
+	slot := e.emitViewArrayRead(read, array, "(double)"+index)
+	empty, yes, no := e.temporary(), e.temporary(), e.temporary()
+	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(\"\");", empty), fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(\"true\");", yes), fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(\"false\");", no))
+	text := e.temporary()
+	e.line("adamic_string *%s = &%s;", text, empty)
+	e.line("if (%s != NULL) {", slot)
+	e.indent++
+	switch join.Element {
+	case ir.Number:
+		e.line("%s = adamic_string_from_number(%s->number);", text, slot)
+	case ir.MaybeNumber:
+		value := e.temporary()
+		e.line("adamic_maybe_number %s = adamic_maybe_number_unpack(%s->number);", value, slot)
+		e.line("if (%s.present) %s = adamic_string_from_number(%s.number);", value, text, value)
+	case ir.Boolean:
+		e.line("%s = %s->boolean ? &%s : &%s;", text, slot, yes, no)
+	case ir.String:
+		e.line("%s = adamic_retain(%s->reference);", text, slot)
+	}
+	e.indent--
+	e.line("}")
+	e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", strings, text)
+	e.indent--
+	e.line("}")
+	return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, adamic_join_strings)", strings, separator))
 }

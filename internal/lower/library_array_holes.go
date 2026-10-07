@@ -88,6 +88,9 @@ func (l *lowering) checkArrayHoles() error {
 	}
 	var refused error
 	check := func(node any) bool {
+		if l.viewArrayHolesConsumer(node) {
+			return true
+		}
 		var operation string
 		switch node := node.(type) {
 		case ir.ArrayPush, ir.ArrayPop, ir.ArraySlice,
@@ -217,7 +220,7 @@ func (l *lowering) arrayHolesSourceRefusal() error {
 					found = l.notYet(node, "array "+name+" with nullable elements whose null and undefined slots are not distinguished")
 					return true
 				}
-				if denied[name] {
+				if denied[name] && !l.viewArrayHolesMethod(name) {
 					receiver, known := l.representation(l.checker.GetTypeAtLocation(access.Expression))
 					if known && receiver == ir.Array {
 						found = l.notYet(node, "array "+name+" on a potentially holey array")

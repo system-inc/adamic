@@ -42,7 +42,12 @@ func (e *emitter) arrayHolesMap(expression ir.ArrayMap) string {
 	e.indent++
 	e.line("adamic_value *%s = adamic_array_holes_at(%s, (double)%s);", slot, source, index)
 	e.line("if (%s == NULL) continue;", slot)
-	e.line("adamic_value %s = *%s;", element, slot)
+	if expression.ViewRead.View != "" {
+		checked := e.viewArrayElementSlot(expression.ViewRead, source, index)
+		e.line("adamic_value %s = %s;", element, checked)
+	} else {
+		e.line("adamic_value %s = *%s;", element, slot)
+	}
 	if expression.Element.IsReference() {
 		e.line("adamic_retain(%s.reference);", element)
 	}
