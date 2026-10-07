@@ -1,0 +1,12 @@
+=== RUN   TestWave05LeadingInteger
+    wave05_test.go:30: baseline Node identical 46136 bytes
+        baseline JavaScript identical 46136 bytes
+        baseline native identical 46136 bytes
+        mutant Node mutant caught 46063 bytes
+        mutant JavaScript mutant caught 46063 bytes
+        mutant native mutant caught 46063 bytes
+        consumers 6 fixtures 145 actual calls 4 cases 2589
+        
+--- PASS: TestWave05LeadingInteger (4.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	4.303s

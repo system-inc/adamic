@@ -1,0 +1,11 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { leadingInteger } from '../collapse_leading_integer.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const index of json.node(root).children) {
+    const result = leadingInteger(json.node(index).text);
+    console.log(`${result.valid}\t${result.decimal()}`);
+}

@@ -1,0 +1,3 @@
+package main
+import("encoding/json";"fmt";"os"; collapse "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse")
+func main(){b,e:=os.ReadFile(os.Args[1]);if e!=nil{panic(e)};var inputs []string;if e=json.Unmarshal(b,&inputs);e!=nil{panic(e)};for _,s:=range inputs{n,ok:=collapse.AdamicLeadingInteger(s);fmt.Printf("%t\t%d\n",ok,n)}}

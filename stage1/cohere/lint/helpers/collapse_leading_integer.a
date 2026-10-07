@@ -1,0 +1,47 @@
+// Go int is 64 bits on the pinned oracle host. Two unsigned words retain its
+// wrapping arithmetic without rounding through JavaScript's number type.
+export class Integer {
+    readonly high: number;
+    readonly low: number;
+    readonly valid: boolean;
+    constructor(high: number, low: number, valid: boolean) {
+        this.high = high; this.low = low; this.valid = valid;
+    }
+    decimal(): string {
+        let high = this.high; let low = this.low;
+        const negative = high >= 2147483648;
+        if(negative) {
+            high = (4294967295 - high + (low === 0 ? 1 : 0)) % 4294967296;
+            low = (4294967296 - low) % 4294967296;
+        }
+        let text = '';
+        do {
+            const remainder = high % 10;
+            high = Math.floor(high / 10);
+            const rest = remainder * 4294967296 + low;
+            text = String(rest % 10) + text; low = Math.floor(rest / 10);
+        } while(high !== 0 || low !== 0);
+        return (negative ? '-' : '') + text;
+    }
+
+}
+export function leadingInteger(value: string): Integer {
+    let index = 0;
+    while(index < value.length && [' ', '\t', '\n', '\r'].includes(value[index] ?? '')) { index++; }
+    let negative = false;
+    if(value[index] === '+' || value[index] === '-') { negative = value[index] === '-'; index++; }
+    const start = index; let high = 0; let low = 0;
+    while(index < value.length) {
+        const digit = value.charCodeAt(index) - 48;
+        if(digit < 0 || digit > 9) { break; }
+        const next = low * 10 + digit;
+        high = (high * 10 + Math.floor(next / 4294967296)) % 4294967296;
+        low = next % 4294967296; index++;
+    }
+    if(index === start) { return new Integer(0, 0, false); }
+    if(negative) {
+        high = (4294967295 - high + (low === 0 ? 1 : 0)) % 4294967296;
+        low = (4294967296 - low) % 4294967296;
+    }
+    return new Integer(high, low, true);
+}
