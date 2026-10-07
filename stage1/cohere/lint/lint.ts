@@ -11,6 +11,10 @@ import type { Finding } from './finding.ts';
 import { Scanner as SourceScanner } from '../../typescript/scanner/scanner.ts';
 import type { Settings } from './settings.ts';
 
+// passBudget and passBudgetMessage are cohere's edit engine's DefaultMaxPasses and ReasonPassesReached.
+const passBudget = 10;
+const passBudgetMessage = 'the pass budget was exhausted before the file converged';
+
 // compareFindings orders by position alone. The sort is stable, so findings at one position keep the order
 // they were collected in: walk order, and descriptor order within one node's visit.
 function compareFindings(left: Finding, right: Finding): number {
@@ -34,6 +38,14 @@ export class Linter {
     readonly scanner: Scanner;
     readonly findings: Finding[] = [];
     readonly rejected: string[] = [];
+    // The rules still proposing fixes on the pass that exhausted the budget, in the order they first
+    // propose, as cohere's edit engine names them. Empty when the fixes converge.
+    readonly unconverged: string[] = [];
+    // junkRows appends a copy of every row to the node table after parsing, attached to nothing. Stage 1
+    // reads the table only by following links from the root, and the flat copy of typescript-go's tree
+    // (#k4fm1vf) relies on it: its tables hold rows no link reaches. TestNodeTableIsLinkOnly sets this
+    // and requires the same findings, so a rule that walks the table by row fails there first.
+    junkRows = false;
     parents: number[] = [];
     root = -1;
     readonly selected: string;
@@ -62,6 +74,12 @@ export class Linter {
     }
     run(): void {
         this.root = this.parser.file();
+        if(this.junkRows) {
+            const attached = this.parser.nodes.length;
+            for(let index = 0; index < attached; index++) {
+                this.parser.nodes.push(this.parser.node(index));
+            }
+        }
         this.parents = this.parser.nodes.map(() => -1);
         this.ancestry(this.root, -1);
         const context = new RuleContext(
@@ -103,8 +121,10 @@ export class Linter {
     fixed(): string {
         let current = this.source;
         let findings = this.findings;
-        for(let pass = 0; pass < 10; pass++) {
+        let lastProposals: Finding[] = [];
+        for(let pass = 0; pass < passBudget; pass++) {
             const proposals = findings.filter((finding) => finding.repair === 'fix');
+            lastProposals = proposals;
             proposals.sort(compareEdits);
             const applied: Finding[] = [];
             let previous = -1;
@@ -137,7 +157,9 @@ export class Linter {
                 const finding = applied[index] ?? panic('missing fix');
                 result = result.slice(0, finding.editStart) + finding.replacement + result.slice(finding.editEnd);
             }
-            const parser = new Parser(result, 'fixed source');
+            // The parser takes its JSX and JavaScript modes from the path, so each pass reparses under the
+            // file's own path: a .tsx file's fixed source is still TSX.
+            const parser = new Parser(result, this.parser.path);
             const scanner = new SourceScanner(result);
             const next = new Linter(
                 result,
@@ -149,10 +171,21 @@ export class Linter {
                 this.allowCatch,
                 this.settings,
             );
+            next.junkRows = this.junkRows;
             next.run();
             current = result;
             findings = next.findings;
         }
-        panic('fix pass budget exhausted');
+        // The budget ran out with fixes still landing. Cohere's edit engine discards the whole run and
+        // leaves the file as it was found, because a fixpoint it did not reach is not a result it may
+        // write, and it names the rules still proposing on the last pass, since a rule whose fix does not
+        // silence its own finding is the defect, not the file.
+        this.rejected.push(`rejected fix-engine 0 0  ${passBudgetMessage} (${passBudget} passes)`);
+        for(const finding of lastProposals) {
+            if(!this.unconverged.includes(finding.rule)) {
+                this.unconverged.push(finding.rule);
+            }
+        }
+        return this.source;
     }
 }
