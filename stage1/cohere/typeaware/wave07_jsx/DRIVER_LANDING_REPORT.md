@@ -4,6 +4,8 @@ Checks: 19 owned landing steps and 100 external passing events across 16 roots p
 Mutants: all twelve rule witnesses, dispatch/listener/fact/library/ownership guards, nine record mutants and external comparison witnesses caught.
 Not covered: three parked React analyses, four production bridge routes, shared checker context, own emitted-JavaScript parity and the full repository gate.
 
+Latest refresh: [TYPEOF_LANDING_REPORT.md](TYPEOF_LANDING_REPORT.md).
+
 ## Integration and source scope
 
 Rebased cleanly onto origin/area/stage1-lint

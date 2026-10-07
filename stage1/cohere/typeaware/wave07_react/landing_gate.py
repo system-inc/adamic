@@ -82,7 +82,7 @@ run('fact-guards',['go','test','./stage1/cohere/typeaware','-run',
     '^(TestFactsDecoderGuards|TestInspectRequestRefusals|TestPinnedTypeFlags)$',
     '-count=1','-v','-timeout','30m'])
 run('node-oracle',['go','test','./internal/oracle','-run',
-    '^TestRuntimeLastIndexOfMatchesNode$|^TestTheOracleCatchesOneByte$|^TestLibraryMapSetIteratorCopiesRefused$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(maps_and_text|sorting|string_index|lone_surrogates|functions|closures|devirtualize|call_targets_.*|047cb0d_n_.*|library_map_set_iterator_(number_hash|exhausted)|override_same_representation|inherited_static_field_read|proven_(guards|class_guards|assertions|satisfies|upcasts))[.]a$',
+    '^TestTypeOf(Constructor|StringLiteral|Null|NullSlotPresence)Mutant$|^TestRuntimeLastIndexOfMatchesNode$|^TestTheOracleCatchesOneByte$|^TestLibraryMapSetIteratorCopiesRefused$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(maps_and_text|sorting|string_index|lone_surrogates|functions|closures|devirtualize|call_targets_.*|047cb0d_n_.*|library_map_set_iterator_(number_hash|exhausted)|override_same_representation|inherited_static_field_read|proven_(guards|class_guards|assertions|satisfies|upcasts)|typeof_(dispatch|null|null_compare|null_switch|null_slots|null_roll|string_literal))[.]a$',
     '-count=1','-v','-timeout','30m'])
 run('shared-finding-model',['go','test','./stage1/cohere/lint','./stage1/cohere/lint/registry','-run',
     '^(TestEmittedJavaScriptMismatch|TestCompleteSuggestionSerialization|TestSuggestionAlongsideAutomaticFix|TestAdamicRuleModule|TestDescriptorRejections|TestDeterministicRegeneration)$',

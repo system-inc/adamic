@@ -4,6 +4,8 @@ Checks: 19 landing steps and 100 required external passing events, zero skips or
 Mutants: all twelve rule and dispatch/listener/fact/library/ownership witnesses, nine record mutants and external comparison mutants caught.
 Not covered: three parked hook analyses, four production bridge routes, shared checker context, own emitted-JavaScript parity and the full repository gate.
 
+Latest refresh: [TYPEOF_LANDING_REPORT.md](TYPEOF_LANDING_REPORT.md).
+
 The all-origin audit ran after the green proof push to codex/typeaware-wave-07.
 Both fetched origin/main c7991b900362796aefd111474e65eb5398e91953 and
 origin/area/stage1-lint b46914832d70e00847d82d5d221ab7bb24040c53 are

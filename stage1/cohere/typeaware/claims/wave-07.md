@@ -236,3 +236,9 @@ main c7991b900; all 19 landing steps, JSX/listener/library proofs and 100 extern
 passing events re-green with zero skips or failures. No additional claims.
 The three hook claims remain parked for native IR, SSA and capture analysis.
 Fresh source/evidence pins and blockers: wave07_jsx/DRIVER_LANDING_REPORT.md.
+
+Typeof refresh: rebased onto area/stage1-lint d3a37422c containing main b6b1538b0.
+All 19 landing steps, JSX/listener/library proofs, 43 Node fixtures and eight
+incoming typeof mutant executions pass. Required external receipt: 100 passing
+events, zero skips or failures. No additional claims. Three hooks remain parked
+for native high-level IR, SSA and capture analysis. See TYPEOF_LANDING_REPORT.md.
