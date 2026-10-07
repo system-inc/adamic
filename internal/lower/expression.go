@@ -837,8 +837,8 @@ func (l *lowering) writable(proven *checker.Type) bool {
 }
 
 // slotless reports whether a value of the type can't yet be held in one word: a field, an element, a
-// map's value, a cell, or a function value's argument or result. number | undefined is packed into
-// one (a reserved NaN is undefined); boolean | undefined is two words that aren't packed yet, and a
+// map's value, or a cell. Function calls use argumentSlotless instead. number | undefined is packed into
+// one (a reserved NaN is undefined); boolean | undefined collection layouts remain unsupported, and a
 // Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
 // result takes one.
 func slotless(valueType ir.Type) bool {
@@ -972,14 +972,20 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}
 	symbol := l.symbol(node)
+	if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
+		symbol = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+		if symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = l.checker.GetAliasedSymbol(symbol)
+		}
+	}
 	for _, parameter := range symbol.Declarations[0].Parameters() {
 		declared := parameter.AsParameterDeclaration()
-		if declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
-			return nil, l.notYet(node, "a function with an optional or rest parameter, as a value")
+		if declared.DotDotDotToken != nil {
+			return nil, l.notYet(node, "a function with a rest parameter, as a value")
 		}
 	}
 	callee := l.result.Functions[target]
-	if slotless(callee.Returns) {
+	if argumentSlotless(callee.Returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
@@ -987,7 +993,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
-		if slotless(declared.Type) {
+		if argumentSlotless(declared.Type) {
 			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
 		}
 		local := len(l.result.Locals)
@@ -1062,22 +1068,34 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
-		for index, parameter := range signatures[0].Parameters() {
-			if index < len(arguments) {
-				if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
+	if signature := l.checker.GetResolvedSignature(node); signature != nil {
+		for index, parameter := range signature.Parameters() {
+			if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
+				// Defaulted parameters have a present body type but accept undefined at entry.
+				for _, declaration := range parameter.Declarations {
+					if declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().Initializer != nil {
+						takes = ir.Maybe(takes)
+					}
+				}
+				if index < len(arguments) {
 					arguments[index] = fit(arguments[index], takes)
+				} else {
+					arguments = append(arguments, fit(ir.Undefined{}, takes))
 				}
 			}
 		}
 	}
 	for _, argument := range arguments {
-		if slotless(argument.Type()) {
+		if argumentSlotless(argument.Type()) {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}
-	if slotless(returns) {
+	if argumentSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
 }
+
+// Optional booleans have a three-state byte in the function-call ABI.
+// General union arguments still need a representation adapter.
+func argumentSlotless(valueType ir.Type) bool { return valueType == ir.Union }

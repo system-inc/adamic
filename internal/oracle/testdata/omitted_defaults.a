@@ -1,0 +1,18 @@
+function greet(name: string, greeting?: string): string { return `${greeting ?? 'hi'} ${name}`; }
+const run: (name: string) => string = greet;
+console.log(run('a'));
+function make(): () => string {
+ function inner(n = 7, s = 'ok', b = true): string { return `${n}:${s}:${b}`; }
+ console.log(inner());
+ console.log(inner(0, '', false));
+ return inner;
+}
+console.log(make()());
+const arrow = (n = 9): number => n;
+console.log(String(arrow()));
+const narrow: () => number = arrow;
+console.log(String(narrow()));
+
+console.log([1, 2].map((value: number, index: number, values: number[], extra = 8): number => value + extra).join(','));
+console.log(String([1, 2].reduce((sum: number, value: number, index: number, values: number[], extra = 4): number => sum + value + extra, 0)));
+console.log(Array.from({length: 2}, (value: boolean | undefined, index: number, extra = 6): string => `${value === undefined}:${index}:${extra}`).join(','));

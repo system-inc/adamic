@@ -11,8 +11,6 @@ import (
 func TestNestedFunctionGapsAreLoud(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
-		{"optional", `function run(): number { function inner(value?: number): number { return value ?? 1; } return inner(); } console.log(String(run()));`, "function value with an optional parameter"},
-		{"default", `function run(): number { function inner(value = 1): number { return value; } return inner(); } console.log(String(run()));`, "function value with an optional parameter"},
 		{"rest", `function run(): number { function inner(...values: number[]): number { return values.length; } return inner(1); } console.log(String(run()));`, "parameter that isn't a plain name"},
 		{"self value", `function run(): () => number { function inner(): number { const self: () => number = inner; return 1; } return inner; } console.log(String(run()()));`, "first-class nested function reference"},
 		{"block", `function run(): number { if (true) { function inner(): number { return 1; } return inner(); } return 0; } console.log(String(run()));`, "block-scoped nested"},

@@ -68,7 +68,8 @@ levels forward the same ancestor cells through the intermediate closure.
 Initially accept declarations directly in a function body. Block-scoped
 function declarations, first-class generic nested values, dynamic this, first-class sibling references inside another sibling, and
 calls to a declaration in a different ancestor group remain loud NotYet cases.
-Optional/default/rest parameters retain existing closure ABI gaps. Plain
+The initial design retained optional/default/rest closure ABI gaps. The October 7
+omission fix below closes optional/default parameters; rest remains NotYet. Plain
 destructured parameters retain the existing lowering support. Rebinding is rejected
 by the TypeScript checker (TS2630), with a defensive lowering guard.
 These are implementation gaps, not permanent language refusals. A sibling call
@@ -212,7 +213,7 @@ refusal probes in internal/lower/nested_functions_test.go:
 
 * A declaration inside an if block.
 * Storing a generic inner<T> declaration as a value. Direct generic calls are supported.
-* inner(value?: number), inner(value = 1), or inner(...values: number[]).
+* inner(...values: number[]). Optional/default parameters are covered by the omission follow-up.
 * Returning sibling a from b, or storing inner as a value inside inner itself.
 * A third-level function calling a declaration from its grandparent's sibling group.
 * A declaration with a dynamic this parameter.
@@ -549,3 +550,63 @@ No complete repository stage1 gate or other new compiler feature is claimed.
 The complete uncached oracle passed in 76.919s, including all twenty synthetic
 nested fixtures, the eight supported originals, the three typed refusal probes
 and the permanent cycle mutant. Vet and formatting passed without diagnostics.
+
+
+## Omitted optional arguments, October 7
+
+This branch alone reproduces the scanner omission bug, without any of the other
+compiler tips. The unchanged probe at scanner-proof faae0e9 is Refused first at
+start!, and also uses truthiness. Replacing only (newText || '') with
+(newText ?? '') and start! with (start ?? 0) gives a policy-compatible witness:
+Node prints 11, release native prints 0 with exit 0, and ASan reports a
+stack-buffer-overflow. The interface call supplied one argument slot; the nested
+implementation read three. The two source normalizations are equivalent for
+this driver. The normalized witness is not claimed as compilation of the exact
+original. The exact original needs the non-null and taste policy work as well.
+
+Every closure and interface-method call now carries its supplied argument count.
+The callee guards reads of optional scalar/reference slots, producing absence
+rather than accessing beyond the argument array. This includes actual optional
+parameters hidden by a narrower static function signature. Direct typed calls
+pad with the same explicit absent helper. CallClosure lowering fits each argument
+to the resolved signature, pads omitted signature parameters with typed undefined,
+and treats a defaulted parameter as optional at entry. Defaults are still
+evaluated inside the callee. Sibling direct calls retain their CallClosure
+effects and use the same count-aware ABI. AllocateEnvironment is unchanged.
+
+Numbers retain their reserved packed undefined NaN. References use NULL,
+including strings, objects, arrays, functions, maps and Weak handles. Optional
+booleans use a three-state uint8_t slot: 0 false, 1 true, 2 absent. The pair
+representation remains unchanged outside slots. General union function arguments
+remain NotYet; optional boolean collection fields/captured cells retain their
+existing conservative guards. This does not open unsupported collection layouts.
+
+The call audit covers direct named calls, interface object functions, class
+interface thunks, dynamic interface dispatch, function values, extracted object
+method values, named siblings, escaping nested declarations, arrows, accessor
+closure adapters, Array.from/map/visits/reduce/sort and Map/Set callbacks.
+Runtime callbacks pass their actual supplied count, so extra optional/default
+parameters also work. Module functions with optional/default parameters can now
+be read as values and used in shorthand objects. Unbound class methods requiring
+dynamic this retain their existing restrictions.
+
+Nine new oracle fixtures cover the scanner witness and required/explicit-undefined
+controls; optional number/string/boolean/object parameters through direct,
+shorthand field, extracted field, function value, arrow and escaped nested calls;
+narrower signatures; defaults; class/interface dispatch; and callback defaults.
+Present zero, false, empty string and object controls distinguish absence from
+valid present inputs. The boolean fixture also checks optional boolean results.
+
+The permanent zero-padding IR mutant changes the scanner's two absent numeric
+slots into present zeros. It compiles, exits 0, has empty stderr and passes the
+leak check; only Node output comparison catches native 0 against Node 11.
+The proof log is /tmp/adamic-omitted-mutant.log. Initial mutant harness runs used
+a relative path incompatible with the observation cache; those harness failures
+are not counted as proof. The corrected run uses an absolute path.
+
+Setup succeeded: go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s,
+cache warm 27s, total 27s, nproc 5 with a four-core quota. Tests source
+/workspace/adamic-tools/env.sh and write output to logs. The original real-source
+fixture count remains 8/11; 01, 08 and 09 still pause on the language decisions
+listed above. No graph-regions changes, escape proof, main/area write, complete
+repository stage1 gate or full native tsc compilation is claimed.

@@ -50,7 +50,7 @@ void *adamic_allocate(size_t size, enum adamic_kind kind);
 // that reads or writes one, and to the runtime through each object's shape and each array's flag.
 typedef union adamic_value {
 	double number;
-	bool boolean;
+	uint8_t boolean;
 	void *reference;
 } adamic_value;
 
@@ -89,7 +89,7 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references);
 // adamic_closure is a function value: its code, and the cells it captured. Every closure is called
 // the same way, its arguments and its result as adamic_value, whatever its types.
 typedef struct adamic_closure adamic_closure;
-typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments);
+typedef adamic_value (*adamic_code)(adamic_closure *self, size_t argument_count, adamic_value *arguments);
 struct adamic_closure {
 	adamic_heap heap;
 	adamic_code code;
@@ -189,7 +189,7 @@ typedef struct adamic_slot_cache {
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
-typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments);
+typedef adamic_value (*adamic_method)(adamic_object *self, size_t argument_count, adamic_value *arguments);
 struct adamic_methods {
 	size_t count;
 	const char *const *names;
@@ -504,6 +504,8 @@ bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number rig
 double adamic_maybe_number_pack(adamic_maybe_number value);
 adamic_maybe_number adamic_maybe_number_unpack(double packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 //
