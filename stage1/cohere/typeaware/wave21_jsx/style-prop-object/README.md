@@ -21,16 +21,19 @@ all three report anchors. The createElement arm stops after the first relevant
 property exactly as Go does. The Go rule and its pragma helpers use no regex.
 
 This is a **prepared-AST core, not a completed native source port**. Shared JSX
-parsing still refuses a real source positive at byte 5: expected
-GreaterThanToken, got Identifier in `<div style="bad" />`. Normal and sanitized
-parser builds reproduce that refusal. Skipping parser.file makes the
-prerequisite mutant exit 0 and is caught by the required refusal assertion;
-this is separate from the rule mutant. The shared node/checker adaptation is
-also absent on this main: the harness/context from `41eb6eab2` is not landed in
-this checkout. The descriptor is a listener declaration, not a complete shared
-registry factory. Source parsing, live checker queries and production
-registration remain unimplemented. No bridge question or registration arm was
-added in this batch; tests use the explicitly separate raw provider below.
+parsing is now present after the rebase onto area/stage1-lint `b46914832`; normal
+and sanitized native parsers accept `<div style="bad" />` and produce a nonempty
+source tree. The prerequisite mutant removes parsing and returns an empty tree,
+which the updated assertion catches separately from the rule mutant.
+
+The shared `stage1/cohere/lint/context.ts` `RuleContext` provides the filename through
+`parser.path`, but no project configuration, live checker program handle, or symbol/declaration
+API. This blocks feeding ordered identifier and shorthand bindings into the
+core through the production driver. The descriptor remains a listener declaration,
+not a completed shared-registry factory. Shared context/generator/harness edits
+are prohibited for this unit; no such file was edited. Live checker adaptation
+and production registration remain unimplemented. No new bridge question was
+added: tests still use the explicitly separate raw provider below.
 
 `oracle.go.txt` is built as an overlay inside cohere and calls the unchanged
 production rule with an independent loader, program views and listener walk.

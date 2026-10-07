@@ -245,3 +245,18 @@ released-handle checks. Shared JSX and source/checker adaptation gaps remain
 explicit. The final 632-origin-ref audit found no unclaimed unported rule,
 including explicit releases with active continuation claims. No further claim
 is taken. Current gate evidence is wave21_jsx/validation/landing-c799/.
+
+
+## Integration-area rebase
+
+Rebased onto area/stage1-lint `b46914832`, which includes current main
+`c7991b900` and the shared harness/finding model. JSX parsing is now supported;
+owned prerequisite checks require nonempty native trees, and the two formerly
+blocked object-constructor JSX controls now require full Go byte parity. The
+keyword-label parser input remains a separately checked gap. React HIR/SSA/capture
+reservations remain parked. The four prepared JSX/style cores still lack
+production source/checker integration: shared RuleContext exposes no project
+configuration or live checker program/binding/type API; its parser does expose
+the source filename. Shared
+context, generator and harness edits are outside this unit. Reservations remain
+retained; no new claim is taken while these shared dependencies remain.

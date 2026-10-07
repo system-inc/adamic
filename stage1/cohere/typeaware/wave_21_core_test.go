@@ -108,12 +108,22 @@ func TestWave21CoreRules(t *testing.T) {
 	for i, path := range jsx {
 		list := h.write(fmt.Sprintf("jsx-%d.manifest", i), path+"\n")
 		want := h.must("jsx-go", exec.Command(oracle, config, list))
-		got := h.run("jsx-native", exec.Command(binary, config, list))
-		code, ok := got.err.(*exec.ExitError)
-		if !ok || code.ExitCode() != 70 || !strings.Contains(string(got.stderr), "adamic: panic: parser slice expected") {
-			t.Fatalf("parser gap changed: %v %s %s", got.err, got.stdout, got.stderr)
+		if strings.HasSuffix(path, ".tsx") {
+			for _, executable := range []string{binary, asan} {
+				got := h.must("jsx-native", exec.Command(executable, config, list))
+				if len(got.stderr) != 0 || !bytes.Equal(got.stdout, want.stdout) {
+					t.Fatalf("JSX finding/fix/suggestion mismatch: %s %s", got.stdout, got.stderr)
+				}
+			}
+			t.Logf("closed JSX parser gap %d: %d identical bytes in native and ASAN", i, len(want.stdout))
+		} else {
+			got := h.run("label-native", exec.Command(binary, config, list))
+			code, ok := got.err.(*exec.ExitError)
+			if !ok || code.ExitCode() != 70 || !strings.Contains(string(got.stderr), "adamic: panic: parser slice expected") {
+				t.Fatalf("keyword-label parser gap changed: %v %s %s", got.err, got.stdout, got.stderr)
+			}
+			t.Logf("remaining keyword-label gap %d: Go %s; native %v: %s", i, summary(want.stdout), got.err, strings.TrimSpace(string(got.stderr)))
 		}
-		t.Logf("shared parser gap %d: Go %s; native %v: %s", i, summary(want.stdout), got.err, strings.TrimSpace(string(got.stderr)))
 	}
 	strictOverlay := h.overlay("reference-suffix-mutant", "bridge/tsgo/checker/reference_node.go", `if question != "reference-node" {`, `if false {`)
 	strict := h.run("reference-suffix-mutant-test", exec.Command("go", "test", "-overlay", strictOverlay, "./bridge/tsgo/checker", "-run", "^TestReferenceNodeFacts$", "-count=1"))

@@ -71,13 +71,7 @@ export declare function useMemo<T>(callback: () => T, deps: unknown[]): T;
 		t.Logf("%s production Go: %s", control.name, summary(truth.stdout))
 		for _, binary := range []struct{ name, path string }{{"normal", probe}, {"asan", asan}} {
 			got := h.run(control.name+"-parser-"+binary.name, exec.Command(binary.path, path))
-			if control.jsx {
-				code, ok := got.err.(*exec.ExitError)
-				if !ok || code.ExitCode() != 70 || !strings.Contains(string(got.stderr), "adamic: panic: parser slice expected") {
-					t.Fatalf("JSX parser prerequisite changed: %v %s", got.err, got.stderr)
-				}
-				t.Logf("%s %s parser refusal: %s", control.name, binary.name, strings.TrimSpace(string(got.stderr)))
-			} else if got.err != nil || string(got.stdout) != "parsed SourceFile\n" || len(got.stderr) > 0 {
+			if got.err != nil || len(got.stderr) != 0 || !strings.HasPrefix(string(got.stdout), "parsed SourceFile ") || string(got.stdout) == "parsed SourceFile 0\n" {
 				t.Fatalf("parser prerequisite: %v %s %s", got.err, got.stdout, got.stderr)
 			}
 		}
@@ -117,16 +111,16 @@ export declare function useMemo<T>(callback: () => T, deps: unknown[]): T;
 	if e != nil {
 		t.Fatal(e)
 	}
-	// Skipping parsing would pretend the unsupported JSX input was accepted.
+	// Skipping parsing loses the nonempty source tree.
 	mutantSource := strings.Replace(string(parserSource), "const root = parser.file();", "const root = 0;", 1)
-	mutantSource = strings.Replace(mutantSource, "console.log(`parsed ${parser.node(root).kind}`);", "console.log('parsed SourceFile');", 1)
+	mutantSource = strings.Replace(mutantSource, "console.log(`parsed ${parser.node(root).kind} ${parser.node(root).children.length}`);", "console.log('parsed SourceFile 0');", 1)
 	mutantSource = strings.ReplaceAll(mutantSource, "'../../../typescript/", "'"+filepath.Join(repository, "stage1/typescript")+"/")
 	mutant := h.build(stage0, "parser-guard-mutant", h.write("parser_guard_mutant.a", mutantSource), archive, false)
 	skipped := h.must("parser-guard-mutant-run", exec.Command(mutant, staticPath))
-	if len(skipped.stderr) != 0 {
-		t.Fatal("parser guard mutant failed outside the refusal assertion")
+	if len(skipped.stderr) != 0 || string(skipped.stdout) != "parsed SourceFile 0\n" {
+		t.Fatal("parser guard mutant failed outside the nonempty-tree assertion")
 	}
-	t.Log("parser guard mutant: exit 0; required JSX refusal disappeared")
+	t.Log("parser guard mutant: exit 0; nonempty parsed-tree assertion catches the missing parse")
 	for _, corpus := range []struct{ name, config, manifest string }{{"compiler", os.Getenv("ADAMIC_WAVE21_COMPILER_CONFIG"), os.Getenv("ADAMIC_WAVE21_COMPILER_MANIFEST")}, {"repository", filepath.Join(repository, "tsconfig.json"), os.Getenv("ADAMIC_WAVE21_REPOSITORY_MANIFEST")}} {
 		if corpus.manifest != "" {
 			got := h.must(corpus.name+"-go", exec.Command(oracle, corpus.config, corpus.manifest))

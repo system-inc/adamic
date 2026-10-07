@@ -8,13 +8,21 @@ by numeric kind and fetches no root node again for another rule. No shared parse
 registration generator, harness, diagnostic model or compiler implementation was
 edited by this batch. New Adamic files use `.a`.
 
-These are **prepared-syntax cores, not completed native source ports**. The shared
-parser still interprets `<` as a type assertion and cannot construct JSX nodes.
-The production shared driver also lacks the prepared-syntax node roles this
-batch needs. Source parsing and live checker-fact population are not connected.
-`parser_prerequisites_test.go` holds three real Go positives against exact native
-parser refusals, under normal and sanitizer builds. It does not count a refusal
-as rule agreement. No subsequent reservations were taken.
+These are **prepared-syntax cores, not completed native source ports**. After
+rebasing onto `origin/area/stage1-lint` at `b46914832`, the shared native parser
+constructs JSX nodes. `parser_prerequisites_test.go` now requires a nonempty tree
+for all three production-Go positives in normal and sanitizer builds. Removing
+parsing produces an empty-tree answer and is caught by that prerequisite check.
+
+The remaining source blocker is the shared `stage1/cohere/lint/context.ts`
+`RuleContext`: it carries source text, syntax indexes and settings, but no source
+configuration/project identity, checker program handle or checker binding/type
+API. The registered syntax driver therefore cannot populate the raw cross-file
+symbol/declaration/signature facts this unit's cores need. Adding those fields
+or changing the shared generator/harness is outside this unit's authorized file
+territory. Existing raw bridge queries do not supply a missing context lifetime
+or project configuration. The source filename is available through `parser.path`. Prepared test-provider facts remain separate from production
+source integration. No subsequent reservations were taken.
 
 ## Decisions and checker data
 
@@ -83,7 +91,7 @@ The released bridge handle exits 70 with exactly
 `adamic: panic: invalid or released checker handle`, normal and ASan. Retaining
 the released registry entry makes the mutant exit 0 and is caught by that
 expectation. Skipping native parsing makes the prerequisite mutant exit 0 and
-violates the required parser refusal; this is a prerequisite mutant, not a rule
+violates the required nonempty parsed tree; this is a prerequisite mutant, not a rule
 mutant. Earlier wave-21 mutants are recorded in the inherited landing reports.
 
 ## Commands and limits

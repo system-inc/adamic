@@ -7,4 +7,4 @@ const source = readTextFile(path);
 if(source.kind === 'Error') { panic(source.message); }
 const parser = new Parser(source.text, path);
 const root = parser.file();
-console.log(`parsed ${parser.node(root).kind}`);
+console.log(`parsed ${parser.node(root).kind} ${parser.node(root).children.length}`);
