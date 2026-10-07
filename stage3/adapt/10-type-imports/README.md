@@ -21,7 +21,11 @@ Without `CENSUS_TYPESCRIPT`, the script uses `require("typescript")`, honoring
 the stock compiler supplied through `NODE_PATH` by `stage3/apply.sh`. It rejects
 every version except 6.0.3. The target checkout's upstream build dependencies
 use 5.9.3 and are not searched for the adaptation dependency.
-The adaptation does not install packages, generate diagnostics, or build tsc.
+The adaptation does not install packages or build tsc. After changing the output
+template, it runs the same upstream diagnostic generator as 00-setup, with the
+same relative input path. It also regenerates a missing artifact or one still
+diagnosed as TS1484/TS1205 when the template was already fixed. A clean second
+run skips regeneration.
 
 The roots are the current `src/compiler/**/*.ts` files, including the generated
 diagnostics source if present for checking. That generated file is excluded from
@@ -72,9 +76,10 @@ specifiers' modifiers and recovers every original source byte.
 The current adaptation also changes **one line in one generator script**:
 `DiagnosticMessage` in the output import template of
 `scripts/processDiagnosticMessages.mjs`. The generated artifact is never directly
-edited. The apply scoreboard is therefore **72 files, 3,719 lines added, 3,719
-lines removed**: 71 compiler sources plus their generator owner. Upstream's build
-then regenerates the annotated diagnostic source itself.
+edited. The apply scoreboard is **73 files, 3,720 lines added, 3,720 lines
+removed**: 71 compiler sources, their generator owner, and its regenerated
+artifact. The artifact is correct before a build and on subsequent upstream
+regeneration.
 
 The generator is parsed as JavaScript. The adapter locates the `result` array in
 `buildInfoFileOutput`, parses its single `./types.js` import string as TypeScript,
@@ -308,10 +313,10 @@ remain the independently caught checks documented above; this follow-up did not
 rerun them. Lint, browser integration, ESLint rule tests, Adamic's uncached gate,
 and native tsc remain outside this default oracle's coverage.
 
-## Generator-owner fix: current pipeline proof
+## Generator-owner fix: previous post-build proof
 
-The generated-file regeneration failure above is resolved at its owner. Apply
-now edits 71 compiler sources plus `scripts/processDiagnosticMessages.mjs` and
+This earlier run fixed upstream build regeneration at its owner, but left a
+stale artifact immediately after apply (resolved in the follow-up below). It edited 71 compiler sources plus `scripts/processDiagnosticMessages.mjs` and
 **does not edit `diagnosticInformationMap.generated.ts` directly**. At apply's
 completion, the existing artifact still contains the old import; upstream's
 ordinary oracle build regenerates it from the newly annotated template.
@@ -367,3 +372,59 @@ provenance comment; the corrected relative-path comparison passed. Logs:
 `/tmp/type-imports-generator-guard-proof.log`, and
 `/tmp/type-imports-generator-guard-runtime.log`. The earlier value-import and
 skipped-import mutants remain documented above; they were not rerun here.
+
+## Apply ordering fix: pre-build proof
+
+Merged `origin/area/stage3` with `git merge --no-edit FETCH_HEAD` (fast-forward
+to `634ef06`, no rebase). Setup generates diagnostics before adaptation 10 runs,
+so changing only the template had left apply's output stale. Adaptation 10 now
+runs `node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json`
+from the checkout after editing the template. It uses the upstream owner rather
+than editing generated source. An already-fixed template with a stale or missing
+artifact also triggers generation; a clean second run does not. Child process
+errors and nonzero exits fail the adaptation.
+
+Ran sequentially on a fresh checkout, measuring before any build:
+
+```sh
+source /workspace/adamic-tools/env.sh
+stage3/apply.sh /workspace/type-imports/ordering-adapted > /tmp/type-imports-ordering-apply.log 2>&1
+go build -o /workspace/type-imports/ordering-census ./stage3/census/tool > /tmp/type-imports-ordering-census-build.log 2>&1
+/workspace/type-imports/ordering-census /workspace/type-imports/ordering-adapted/src/compiler /workspace/type-imports/ordering-census.jsonl > /tmp/type-imports-ordering-census.log 2>&1
+stage3/oracle/run.sh /workspace/type-imports/ordering-adapted /workspace/type-imports/ordering-oracle > /tmp/type-imports-ordering-oracle.log 2>&1
+```
+
+Apply exited 0: 3,718 source imports, one generator import, zero exports/declines,
+`regenerated: true`. Direct writes remain 72 files; the scoreboard also measures
+the owner's regenerated artifact: `| 10-type-imports | 73 | 3720 | 3720 |`.
+The pre-build census exited 0: 81 individual attempts plus the 78-root whole
+program, with **TS1484 = 0 in every attempt**, including the generated file's
+individual entry. The whole-program total is 896 diagnostics. Other adaptations
+merged from area/stage3 account for the reduction from the previous 2,833 total;
+this run does not attribute their changes to adaptation 10.
+
+The default oracle exited 1: **106,366 passing, 1 failing, 0 pending**; install
+and build exited 0. Its only mismatch is `api/typescript.d.ts`, with a
+**48,691-byte nonempty baseline.diff**. All 189 changed lines are exactly
+` | undefined` additions to optional types, matching adaptation 20's documented
+189 public snapshot edits. This integration run therefore does **not** meet
+the requested empty-baseline gate. Adaptation 20 documents accepting a proved
+API snapshot separately, which the shared apply command does not do. No
+reference baselines were accepted by this follow-up.
+
+The read-only adaptation 20 snapshot proof was also attempted with its emitted
+373-owner ledger. It fails on inherited adaptation 40 brand changes (`any` to
+`undefined`), so it cannot independently certify this combined pipeline without
+accounting for adaptation 40. Log: `/tmp/type-imports-ordering-api-proof.log`.
+The oracle's existing reference already contains those 28 brand changes; the
+remaining observed oracle mismatch consists only of the 189 optional additions.
+
+After the oracle finished, a second adaptation 10 run reported no edits and
+`regenerated: false`; SHA256 maps of **82,836 files** (excluding Git metadata
+and dependencies) were byte-identical. An isolated probe removed only the
+artifact's `type DiagnosticMessage` marker while keeping the owner patched. The
+previous adapter from merged HEAD exited 0 but failed the generated-artifact
+byte-equality check. The new adapter reported `regenerated: true` and restored
+the exact expected artifact bytes using upstream generation. Log:
+`/tmp/type-imports-ordering-idempotence.log`. This regression check proves the
+already-patched-owner recovery path, in addition to fresh apply's owner edit.
