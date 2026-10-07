@@ -28,6 +28,9 @@ func (e *emitter) recordCall(c ir.RecordCall) string {
 	args := e.values(c.Arguments)
 	switch c.Method {
 	case "get":
+		if c.OwnOnly {
+			return "((r,k) => Object.hasOwn(r,k) ? r[k] : undefined)(" + args + ")"
+		}
 		return "adamicRecordGet(" + args + ")"
 	case "has":
 		return "adamicRecordHas(" + args + ")"

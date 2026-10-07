@@ -13,7 +13,11 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 	switch call.Method {
 	case "get":
 		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_record_get(%s, %s);", slot, args[0], args[1])
+		lookup := "adamic_record_get"
+		if call.OwnOnly {
+			lookup = "adamic_record_get_own"
+		}
+		e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, args[0], args[1])
 		if call.Returns.IsMaybe() {
 			return e.snapshot(call.Returns, maybeSlot(call.Element, slot))
 		}

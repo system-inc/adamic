@@ -123,11 +123,19 @@ func (l *lowering) recordAccess(node *ast.Node, read bool) (ir.Expression, ir.Ex
 }
 func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error) {
 	if l.recordTarget(node) {
-		r, k, of, err := l.recordAccess(node, true)
+		discarded := l.recordReadDiscarded(node)
+		guarded := l.recordReadOwnGuarded(node)
+		r, k, of, err := l.recordAccess(node, !discarded && !guarded)
 		if err != nil {
 			return nil, true, err
 		}
 		var read ir.Expression = ir.RecordCall{Method: "get", Arguments: []ir.Expression{r, k}, Element: of, Returns: ir.Maybe(of)}
+		if discarded {
+			return l.recordOwnRead(r, k, of), true, nil
+		}
+		if guarded {
+			read = l.recordOwnRead(r, k, of)
+		}
 		here := l.checker.GetTypeAtLocation(node)
 		if !l.includesUndefined(here) && !comparedWithUndefined(node) {
 			if narrowed, known := l.representation(here); known && read.Type().IsMaybe() && !narrowed.IsMaybe() {
@@ -146,6 +154,9 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 	if node.Kind == ast.KindDeleteExpression && l.recordTarget(node.AsDeleteExpression().Expression) {
 		r, k, of, err := l.recordAccess(node.AsDeleteExpression().Expression, false)
 		return ir.RecordCall{Method: "delete", Arguments: []ir.Expression{r, k}, Element: of, Returns: ir.Boolean}, true, err
+	}
+	if value, handled, err := l.recordScalarComparison(node); handled {
+		return value, true, err
 	}
 	if node.Kind != ast.KindBinaryExpression {
 		return nil, false, nil
@@ -394,7 +405,7 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 
 // Catch literal reads before method/builtin dispatch can bypass ordinary value lowering.
 func (l *lowering) recordLiteralRead(node *ast.Node) error {
-	if !l.recordTarget(node) {
+	if !l.recordTarget(node) || l.recordReadDiscarded(node) || l.recordReadOwnGuarded(node) {
 		return nil
 	}
 	at := node
@@ -410,6 +421,18 @@ func (l *lowering) recordLiteralRead(node *ast.Node) error {
 			if b.Left == at && b.OperatorToken.Kind == ast.KindEqualsToken {
 				return nil
 			}
+		}
+	}
+	if parent := at.Parent; parent != nil && parent.Kind == ast.KindBinaryExpression {
+		// The scalar comparison owns the read and proves its inherited value unobservable.
+		b := parent.AsBinaryExpression()
+		other := b.Right
+		if b.Right == at {
+			other = b.Left
+		}
+		t := l.checker.GetTypeAtLocation(other)
+		if (b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken || b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken) && t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) != 0 && !l.includesUndefined(t) {
+			return nil
 		}
 	}
 	var name string
