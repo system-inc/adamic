@@ -1,0 +1,864 @@
+file	/workspace/wave-27-scratch/f801-third/rest-000.a
+17	26	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-001.a
+17	26	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-002.a
+17	26	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-003.a
+17	26	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-004.a
+34	43	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-005.a
+33	42	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-006.a
+file	/workspace/wave-27-scratch/f801-third/rest-007.a
+file	/workspace/wave-27-scratch/f801-third/rest-008.a
+file	/workspace/wave-27-scratch/f801-third/rest-009.a
+file	/workspace/wave-27-scratch/f801-third/rest-010.a
+file	/workspace/wave-27-scratch/f801-third/rest-011.a
+file	/workspace/wave-27-scratch/f801-third/rest-012.a
+file	/workspace/wave-27-scratch/f801-third/rest-013.a
+file	/workspace/wave-27-scratch/f801-third/rest-014.a
+file	/workspace/wave-27-scratch/f801-third/rest-015.a
+file	/workspace/wave-27-scratch/f801-third/rest-016.a
+file	/workspace/wave-27-scratch/f801-third/rest-017.a
+47	56	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-018.a
+36	45	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-019.a
+16	25	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-020.a
+16	25	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-021.a
+19	28	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+46	55	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-022.a
+32	41	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-023.a
+45	47	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-024.a
+46	74	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-025.a
+46	72	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-026.a
+121	123	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-027.a
+118	120	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo?.bar.baz].	0
+file	/workspace/wave-27-scratch/f801-third/rest-028.a
+119	121	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo?.bar?.baz].	0
+file	/workspace/wave-27-scratch/f801-third/rest-029.a
+125	127	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo?.bar].	0
+file	/workspace/wave-27-scratch/f801-third/rest-030.a
+134	136	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-032.a
+124	126	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-033.a
+129	131	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-034.a
+107	143	react-hooks/exhaustive-deps	exhaustiveDepsUselessWithoutDependencies	useMemo and useCallback exist to reuse a value across renders, and they decide whether to reuse by comparing a dependency array. Called with only a callback there is nothing to compare, so the value is rebuilt every render and the Hook does nothing. Pass a dependency array.	0	0
+54	84	react-hooks/exhaustive-deps	exhaustiveDepsUselessWithoutDependencies	useMemo and useCallback exist to reuse a value across renders, and they decide whether to reuse by comparing a dependency array. Called with only a callback there is nothing to compare, so the value is rebuilt every render and the Hook does nothing. Pass a dependency array.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-035.a
+61	73	react-hooks/exhaustive-deps	exhaustiveDepsUselessWithoutDependencies	useMemo and useCallback exist to reuse a value across renders, and they decide whether to reuse by comparing a dependency array. Called with only a callback there is nothing to compare, so the value is rebuilt every render and the Hook does nothing. Pass a dependency array.	0	0
+96	112	react-hooks/exhaustive-deps	exhaustiveDepsUselessWithoutDependencies	useMemo and useCallback exist to reuse a value across renders, and they decide whether to reuse by comparing a dependency array. Called with only a callback there is nothing to compare, so the value is rebuilt every render and the Hook does nothing. Pass a dependency array.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-036.a
+109	118	react-hooks/exhaustive-deps	exhaustiveDepsMissingCallback	This Hook was called with no callback, so there is nothing for it to run. Pass the function the Hook is supposed to invoke.	0	0
+35	46	react-hooks/exhaustive-deps	exhaustiveDepsMissingCallback	This Hook was called with no callback, so there is nothing for it to run. Pass the function the Hook is supposed to invoke.	0	0
+57	74	react-hooks/exhaustive-deps	exhaustiveDepsMissingCallback	This Hook was called with no callback, so there is nothing for it to run. Pass the function the Hook is supposed to invoke.	0	0
+85	98	react-hooks/exhaustive-deps	exhaustiveDepsMissingCallback	This Hook was called with no callback, so there is nothing for it to run. Pass the function the Hook is supposed to invoke.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-037.a
+174	176	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-038.a
+171	173	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-039.a
+194	196	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-040.a
+228	230	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local1, local2].	0
+file	/workspace/wave-27-scratch/f801-third/rest-041.a
+190	198	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local1, local2].	0
+file	/workspace/wave-27-scratch/f801-third/rest-042.a
+155	171	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local1].	0
+file	/workspace/wave-27-scratch/f801-third/rest-043.a
+251	259	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local2].	0
+file	/workspace/wave-27-scratch/f801-third/rest-044.a
+158	160	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-045.a
+158	172	react-hooks/exhaustive-deps	exhaustiveDepsDuplicate	This dependency array names the same value twice. The second copy changes nothing about when the Hook re-runs, so it is noise that will drift out of step with the first. Remove it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-046.a
+57	65	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-047.a
+95	102	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-048.a
+114	116	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [history].	0
+file	/workspace/wave-27-scratch/f801-third/rest-049.a
+212	214	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [history.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-050.a
+140	142	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [history?.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-051.a
+56	61	react-hooks/exhaustive-deps	exhaustiveDepsLiteral	A literal in a dependency array never changes between renders, so it can never cause the Hook to re-run and it is doing nothing. Remove it. If the intent was to depend on a variable of that name, write the variable without quotes.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-052.a
+123	137	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [bar, baz, foo].	0
+124	129	react-hooks/exhaustive-deps	exhaustiveDepsLiteral	A literal in a dependency array never changes between renders, so it can never cause the Hook to re-run and it is doing nothing. Remove it. If the intent was to depend on a variable of that name, write the variable without quotes.	0	0
+131	136	react-hooks/exhaustive-deps	exhaustiveDepsLiteral	A literal in a dependency array never changes between renders, so it can never cause the Hook to re-run and it is doing nothing. Remove it. If the intent was to depend on a variable of that name, write the variable without quotes.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-053.a
+123	140	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [bar, baz, foo].	0
+124	126	react-hooks/exhaustive-deps	exhaustiveDepsLiteral	A literal in a dependency array never changes between renders, so it can never cause the Hook to re-run and it is doing nothing. Remove it. If the intent was to depend on a variable of that name, write the variable without quotes.	0	0
+128	133	react-hooks/exhaustive-deps	exhaustiveDepsLiteral	A literal in a dependency array never changes between renders, so it can never cause the Hook to re-run and it is doing nothing. Remove it. If the intent was to depend on a variable of that name, write the variable without quotes.	0	0
+135	139	react-hooks/exhaustive-deps	exhaustiveDepsLiteral	A literal in a dependency array never changes between renders, so it can never cause the Hook to re-run and it is doing nothing. Remove it. If the intent was to depend on a variable of that name, write the variable without quotes.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-054.a
+90	102	react-hooks/exhaustive-deps	exhaustiveDepsNotArrayLiteral	The dependency argument is not an array written at the call site, so its contents cannot be read here and nothing can cohere them. Pass an array literal.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-055.a
+166	178	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+166	178	react-hooks/exhaustive-deps	exhaustiveDepsNotArrayLiteral	The dependency argument is not an array written at the call site, so its contents cannot be read here and nothing can cohere them. Pass an array literal.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-056.a
+166	183	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+167	182	react-hooks/exhaustive-deps	exhaustiveDepsSpread	A spread in a dependency array hides which values the Hook depends on, so neither React nor this rule can tell whether the list is right. Write the dependencies out one by one.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-057.a
+142	157	react-hooks/exhaustive-deps	exhaustiveDepsSpread	A spread in a dependency array hides which values the Hook depends on, so neither React nor this rule can tell whether the list is right. Write the dependencies out one by one.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-058.a
+126	150	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+127	149	react-hooks/exhaustive-deps	exhaustiveDepsComplexExpression	A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-059.a
+112	128	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.items].	0
+113	127	react-hooks/exhaustive-deps	exhaustiveDepsComplexExpression	A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-060.a
+126	140	react-hooks/exhaustive-deps	exhaustiveDepsComplexExpression	A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-061.a
+110	120	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [items].	0
+111	119	react-hooks/exhaustive-deps	exhaustiveDepsComplexExpression	A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-062.a
+118	126	react-hooks/exhaustive-deps	exhaustiveDepsComplexExpression	A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-063.a
+173	191	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-064.a
+173	191	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-065.a
+173	175	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.bar, props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-066.a
+138	149	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-067.a
+147	162	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-068.a
+169	184	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [foo, props.foo.bar].	0
+file	/workspace/wave-27-scratch/f801-third/rest-069.a
+132	142	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local, local.id].	0
+file	/workspace/wave-27-scratch/f801-third/rest-070.a
+145	155	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-071.a
+145	162	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-072.a
+128	130	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo.bar.baz].	0
+file	/workspace/wave-27-scratch/f801-third/rest-073.a
+185	215	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [color, props.foo.bar.baz].	0
+file	/workspace/wave-27-scratch/f801-third/rest-074.a
+128	158	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-075.a
+174	176	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo.bar.baz, props.foo.fizz.bizz].	0
+file	/workspace/wave-27-scratch/f801-third/rest-076.a
+124	143	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo.bar].	0
+file	/workspace/wave-27-scratch/f801-third/rest-077.a
+154	173	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-078.a
+126	140	react-hooks/exhaustive-deps	exhaustiveDepsDuplicate	This dependency array names the same value twice. The second copy changes nothing about when the Hook re-runs, so it is noise that will drift out of step with the first. Remove it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-079.a
+161	169	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-080.a
+86	94	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-081.a
+107	109	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-082.a
+143	145	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.bar, props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-083.a
+152	161	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [c, a, g, b, e, d, f].	0
+file	/workspace/wave-27-scratch/f801-third/rest-084.a
+152	161	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [a, b, c, d, e, f, g].	0
+file	/workspace/wave-27-scratch/f801-third/rest-085.a
+152	154	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [a, b, c, d, e, f, g].	0
+file	/workspace/wave-27-scratch/f801-third/rest-086.a
+203	205	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local, props.bar, props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-087.a
+203	210	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local, props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-088.a
+107	109	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+191	193	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+271	273	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+359	361	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+449	451	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+535	537	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-089.a
+195	197	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+283	285	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-090.a
+126	141	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+127	140	react-hooks/exhaustive-deps	exhaustiveDepsComplexExpression	A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-091.a
+126	138	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+127	137	react-hooks/exhaustive-deps	exhaustiveDepsComplexExpression	A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-092.a
+61	86	react-hooks/exhaustive-deps	exhaustiveDepsComplexExpression	A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-093.a
+61	75	react-hooks/exhaustive-deps	exhaustiveDepsComplexExpression	A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-094.a
+209	211	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [state].	0
+file	/workspace/wave-27-scratch/f801-third/rest-095.a
+209	214	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [ref, state].	0
+file	/workspace/wave-27-scratch/f801-third/rest-096.a
+312	314	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.color, props.someOtherRefs].	0
+file	/workspace/wave-27-scratch/f801-third/rest-097.a
+312	374	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.someOtherRefs, props.color].	0
+file	/workspace/wave-27-scratch/f801-third/rest-098.a
+316	380	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.someOtherRefs, props.color].	0
+file	/workspace/wave-27-scratch/f801-third/rest-099.a
+136	149	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-100.a
+225	264	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [activeTab].	0
+file	/workspace/wave-27-scratch/f801-third/rest-101.a
+253	299	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [initY].	0
+file	/workspace/wave-27-scratch/f801-third/rest-102.a
+136	154	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [ref].	0
+file	/workspace/wave-27-scratch/f801-third/rest-103.a
+151	153	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-104.a
+153	155	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-105.a
+221	223	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-106.a
+159	161	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-107.a
+189	191	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-108.a
+225	278	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [skillsCount, props.isEditMode, props.toggleEditMode, props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-109.a
+225	227	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props, skillsCount].	0
+file	/workspace/wave-27-scratch/f801-third/rest-110.a
+134	136	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-111.a
+134	136	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-112.a
+318	334	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local1, local3, local4].	0
+file	/workspace/wave-27-scratch/f801-third/rest-113.a
+101	109	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-114.a
+153	173	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-115.a
+297	357	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo, x, y].	0
+file	/workspace/wave-27-scratch/f801-third/rest-116.a
+235	295	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo, x, y].	0
+file	/workspace/wave-27-scratch/f801-third/rest-117.a
+248	308	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-118.a
+248	311	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-119.a
+679	681	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [handleNext1].	0
+780	782	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [handleNext2].	0
+873	875	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [handleNext3].	0
+file	/workspace/wave-27-scratch/f801-third/rest-120.a
+738	740	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [handleNext1].	0
+839	841	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [handleNext2].	0
+932	934	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [handleNext3].	0
+file	/workspace/wave-27-scratch/f801-third/rest-121.a
+742	744	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [handleNext1].	0
+843	845	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [handleNext2].	0
+936	938	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [handleNext3].	0
+file	/workspace/wave-27-scratch/f801-third/rest-122.a
+82	151	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-123.a
+88	154	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-125.a
+127	194	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+210	282	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+40	110	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-126.a
+127	194	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+210	282	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+40	110	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-128.a
+125	195	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+125	195	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+46	113	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+46	113	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-129.a
+44	110	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-130.a
+115	259	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-139.a
+92	94	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [podcasts].	0
+file	/workspace/wave-27-scratch/f801-third/rest-140.a
+189	193	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [fetchPodcasts, id].	0
+file	/workspace/wave-27-scratch/f801-third/rest-141.a
+198	202	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [fetchPodcasts, id].	0
+file	/workspace/wave-27-scratch/f801-third/rest-142.a
+337	341	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [fetchPodcasts, fetchPodcasts2, id].	0
+file	/workspace/wave-27-scratch/f801-third/rest-143.a
+229	233	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [fetchPodcasts, id].	0
+file	/workspace/wave-27-scratch/f801-third/rest-144.a
+231	235	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [fetchPodcasts, id].	0
+file	/workspace/wave-27-scratch/f801-third/rest-145.a
+78	134	react-hooks/exhaustive-deps	exhaustiveDepsSetStateNoDependencies	This effect sets state and has no dependency array, so it runs after every render, and the state it sets causes the next render. That is a loop with no exit. Pass a dependency array saying what the effect actually depends on.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-146.a
+76	143	react-hooks/exhaustive-deps	exhaustiveDepsSetStateNoDependencies	This effect sets state and has no dependency array, so it runs after every render, and the state it sets causes the next render. That is a loop with no exit. Pass a dependency array saying what the effect actually depends on.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-147.a
+87	163	react-hooks/exhaustive-deps	exhaustiveDepsSetStateNoDependencies	This effect sets state and has no dependency array, so it runs after every render, and the state it sets causes the next render. That is a loop with no exit. Pass a dependency array saying what the effect actually depends on.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-148.a
+94	194	react-hooks/exhaustive-deps	exhaustiveDepsSetStateNoDependencies	This effect sets state and has no dependency array, so it runs after every render, and the state it sets causes the next render. That is a loop with no exit. Pass a dependency array saying what the effect actually depends on.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-149.a
+39	53	react-hooks/exhaustive-deps	exhaustiveDepsAsyncEffect	An async effect callback returns a promise, and React expects the return value to be a cleanup function, so the cleanup never runs and overlapping runs race. Keep the callback synchronous and declare the async function inside it.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-150.a
+39	53	react-hooks/exhaustive-deps	exhaustiveDepsAsyncEffect	An async effect callback returns a promise, and React expects the return value to be a cleanup function, so the cleanup never runs and overlapping runs race. Keep the callback synchronous and declare the async function inside it.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-151.a
+113	118	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [prop].	0
+file	/workspace/wave-27-scratch/f801-third/rest-152.a
+159	161	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-153.a
+163	165	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-154.a
+168	170	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-155.a
+239	241	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [otherThing].	0
+file	/workspace/wave-27-scratch/f801-third/rest-156.a
+181	183	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-157.a
+180	187	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-158.a
+45	68	react-hooks/exhaustive-deps	exhaustiveDepsUnknownDependencies	The callback is not written at the call site, so what it reads cannot be seen here and the dependency array cannot be checked against it. Pass an inline function.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-159.a
+63	146	react-hooks/exhaustive-deps	exhaustiveDepsUnknownDependencies	The callback is not written at the call site, so what it reads cannot be seen here and the dependency array cannot be checked against it. Pass an inline function.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-160.a
+126	128	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-161.a
+159	161	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [foo.bar, props.foo.bar].	0
+file	/workspace/wave-27-scratch/f801-third/rest-162.a
+39	47	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-163.a
+39	47	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-164.a
+39	53	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-165.a
+39	61	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-166.a
+39	53	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-167.a
+39	63	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-168.a
+39	54	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-169.a
+39	54	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-170.a
+39	54	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-171.a
+39	73	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-172.a
+37	45	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-173.a
+37	45	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-174.a
+39	47	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-175.a
+39	47	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-176.a
+39	47	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-177.a
+39	47	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-178.a
+40	85	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-179.a
+40	48	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-182.a
+33	47	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-183.a
+33	56	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-184.a
+33	50	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-185.a
+33	44	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-186.a
+27	39	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-187.a
+33	41	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+33	41	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-188.a
+230	232	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [log].	0
+file	/workspace/wave-27-scratch/f801-third/rest-189.a
+199	206	react-hooks/exhaustive-deps	exhaustiveDepsEffectEvent	A function from useEffectEvent always sees the latest render's values, which is the whole reason it exists, so listing it as a dependency re-runs the effect for a change that could never have gone stale. Remove it from the array.	0	0
+281	288	react-hooks/exhaustive-deps	exhaustiveDepsEffectEvent	A function from useEffectEvent always sees the latest render's values, which is the whole reason it exists, so listing it as a dependency re-runs the effect for a change that could never have gone stale. Remove it from the array.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-190.a
+134	136	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.value].	0
+file	/workspace/wave-27-scratch/f801-third/rest-191.a
+89	104	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [myRef].	0
+file	/workspace/wave-27-scratch/f801-third/rest-192.a
+90	92	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [myRef].	0
+file	/workspace/wave-27-scratch/f801-third/rest-193.a
+173	175	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [flag, obj.a, obj.b].	0
+file	/workspace/wave-27-scratch/f801-third/rest-194.a
+231	253	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [context].	0
+file	/workspace/wave-27-scratch/f801-third/rest-195.a
+171	193	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo, props.bar, props].	0
+file	/workspace/wave-27-scratch/f801-third/rest-196.a
+140	155	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo, props.foo.bar].	0
+file	/workspace/wave-27-scratch/f801-third/rest-197.a
+145	156	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props, props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-198.a
+110	124	react-hooks/exhaustive-deps	exhaustiveDepsUnnecessary	This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [].	0
+file	/workspace/wave-27-scratch/f801-third/rest-199.a
+file	/workspace/wave-27-scratch/f801-third/rest-200.a
+file	/workspace/wave-27-scratch/f801-third/rest-201.a
+file	/workspace/wave-27-scratch/f801-third/rest-202.a
+file	/workspace/wave-27-scratch/f801-third/rest-203.a
+file	/workspace/wave-27-scratch/f801-third/rest-204.a
+file	/workspace/wave-27-scratch/f801-third/rest-205.a
+file	/workspace/wave-27-scratch/f801-third/rest-206.a
+file	/workspace/wave-27-scratch/f801-third/rest-207.a
+file	/workspace/wave-27-scratch/f801-third/rest-208.a
+file	/workspace/wave-27-scratch/f801-third/rest-209.a
+file	/workspace/wave-27-scratch/f801-third/rest-210.a
+file	/workspace/wave-27-scratch/f801-third/rest-211.a
+file	/workspace/wave-27-scratch/f801-third/rest-212.a
+file	/workspace/wave-27-scratch/f801-third/rest-213.a
+file	/workspace/wave-27-scratch/f801-third/rest-214.a
+file	/workspace/wave-27-scratch/f801-third/rest-215.a
+file	/workspace/wave-27-scratch/f801-third/rest-216.a
+file	/workspace/wave-27-scratch/f801-third/rest-217.a
+file	/workspace/wave-27-scratch/f801-third/rest-218.a
+file	/workspace/wave-27-scratch/f801-third/rest-219.a
+file	/workspace/wave-27-scratch/f801-third/rest-220.a
+file	/workspace/wave-27-scratch/f801-third/rest-221.a
+file	/workspace/wave-27-scratch/f801-third/rest-222.a
+file	/workspace/wave-27-scratch/f801-third/rest-223.a
+file	/workspace/wave-27-scratch/f801-third/rest-224.a
+file	/workspace/wave-27-scratch/f801-third/rest-225.a
+file	/workspace/wave-27-scratch/f801-third/rest-226.a
+file	/workspace/wave-27-scratch/f801-third/rest-227.a
+file	/workspace/wave-27-scratch/f801-third/rest-228.a
+file	/workspace/wave-27-scratch/f801-third/rest-229.a
+file	/workspace/wave-27-scratch/f801-third/rest-230.a
+file	/workspace/wave-27-scratch/f801-third/rest-231.a
+file	/workspace/wave-27-scratch/f801-third/rest-232.a
+file	/workspace/wave-27-scratch/f801-third/rest-233.a
+file	/workspace/wave-27-scratch/f801-third/rest-234.a
+file	/workspace/wave-27-scratch/f801-third/rest-235.a
+file	/workspace/wave-27-scratch/f801-third/rest-236.a
+file	/workspace/wave-27-scratch/f801-third/rest-237.a
+file	/workspace/wave-27-scratch/f801-third/rest-238.a
+file	/workspace/wave-27-scratch/f801-third/rest-239.a
+file	/workspace/wave-27-scratch/f801-third/rest-240.a
+file	/workspace/wave-27-scratch/f801-third/rest-241.a
+file	/workspace/wave-27-scratch/f801-third/rest-242.a
+file	/workspace/wave-27-scratch/f801-third/rest-243.a
+file	/workspace/wave-27-scratch/f801-third/rest-244.a
+file	/workspace/wave-27-scratch/f801-third/rest-245.a
+file	/workspace/wave-27-scratch/f801-third/rest-246.a
+file	/workspace/wave-27-scratch/f801-third/rest-247.a
+file	/workspace/wave-27-scratch/f801-third/rest-248.a
+file	/workspace/wave-27-scratch/f801-third/rest-249.a
+file	/workspace/wave-27-scratch/f801-third/rest-250.a
+file	/workspace/wave-27-scratch/f801-third/rest-251.a
+file	/workspace/wave-27-scratch/f801-third/rest-252.a
+file	/workspace/wave-27-scratch/f801-third/rest-253.a
+file	/workspace/wave-27-scratch/f801-third/rest-254.a
+file	/workspace/wave-27-scratch/f801-third/rest-255.a
+file	/workspace/wave-27-scratch/f801-third/rest-258.a
+file	/workspace/wave-27-scratch/f801-third/rest-261.a
+file	/workspace/wave-27-scratch/f801-third/rest-264.a
+file	/workspace/wave-27-scratch/f801-third/rest-265.a
+file	/workspace/wave-27-scratch/f801-third/rest-266.a
+file	/workspace/wave-27-scratch/f801-third/rest-267.a
+file	/workspace/wave-27-scratch/f801-third/rest-268.a
+file	/workspace/wave-27-scratch/f801-third/rest-269.a
+file	/workspace/wave-27-scratch/f801-third/rest-270.a
+file	/workspace/wave-27-scratch/f801-third/rest-271.a
+file	/workspace/wave-27-scratch/f801-third/rest-272.a
+file	/workspace/wave-27-scratch/f801-third/rest-273.a
+file	/workspace/wave-27-scratch/f801-third/rest-279.a
+file	/workspace/wave-27-scratch/f801-third/rest-280.a
+file	/workspace/wave-27-scratch/f801-third/rest-281.a
+file	/workspace/wave-27-scratch/f801-third/rest-287.a
+file	/workspace/wave-27-scratch/f801-third/rest-288.a
+61	70	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-289.a
+95	104	prefer-rest-params	preferRestParams	This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-290.a
+file	/workspace/wave-27-scratch/f801-third/rest-291.a
+file	/workspace/wave-27-scratch/f801-third/rest-292.a
+file	/workspace/wave-27-scratch/f801-third/rest-293.a
+file	/workspace/wave-27-scratch/f801-third/rest-294.a
+file	/workspace/wave-27-scratch/f801-third/rest-295.a
+file	/workspace/wave-27-scratch/f801-third/rest-296.a
+file	/workspace/wave-27-scratch/f801-third/rest-297.a
+file	/workspace/wave-27-scratch/f801-third/rest-298.a
+file	/workspace/wave-27-scratch/f801-third/rest-299.a
+file	/workspace/wave-27-scratch/f801-third/rest-300.a
+file	/workspace/wave-27-scratch/f801-third/rest-301.a
+file	/workspace/wave-27-scratch/f801-third/rest-302.a
+file	/workspace/wave-27-scratch/f801-third/rest-303.a
+file	/workspace/wave-27-scratch/f801-third/rest-304.a
+file	/workspace/wave-27-scratch/f801-third/rest-305.a
+file	/workspace/wave-27-scratch/f801-third/rest-306.a
+file	/workspace/wave-27-scratch/f801-third/rest-307.a
+file	/workspace/wave-27-scratch/f801-third/rest-308.a
+file	/workspace/wave-27-scratch/f801-third/rest-309.a
+file	/workspace/wave-27-scratch/f801-third/rest-310.a
+file	/workspace/wave-27-scratch/f801-third/rest-311.a
+file	/workspace/wave-27-scratch/f801-third/rest-312.a
+file	/workspace/wave-27-scratch/f801-third/rest-313.a
+file	/workspace/wave-27-scratch/f801-third/rest-314.a
+file	/workspace/wave-27-scratch/f801-third/rest-315.a
+file	/workspace/wave-27-scratch/f801-third/rest-316.a
+file	/workspace/wave-27-scratch/f801-third/rest-317.a
+file	/workspace/wave-27-scratch/f801-third/rest-318.a
+file	/workspace/wave-27-scratch/f801-third/rest-319.a
+file	/workspace/wave-27-scratch/f801-third/rest-320.a
+file	/workspace/wave-27-scratch/f801-third/rest-321.a
+file	/workspace/wave-27-scratch/f801-third/rest-322.a
+file	/workspace/wave-27-scratch/f801-third/rest-323.a
+472	474	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [asyncValue, value, value2, value3, value4].	0
+file	/workspace/wave-27-scratch/f801-third/rest-324.a
+381	404	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [asyncValue, value, value2, value3].	0
+file	/workspace/wave-27-scratch/f801-third/rest-328.a
+file	/workspace/wave-27-scratch/f801-third/rest-329.a
+file	/workspace/wave-27-scratch/f801-third/rest-330.a
+file	/workspace/wave-27-scratch/f801-third/rest-331.a
+65	67	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-332.a
+65	67	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-333.a
+73	75	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo.bar.baz].	0
+file	/workspace/wave-27-scratch/f801-third/rest-334.a
+70	72	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo?.bar].	0
+file	/workspace/wave-27-scratch/f801-third/rest-335.a
+74	76	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo?.bar.baz].	0
+file	/workspace/wave-27-scratch/f801-third/rest-336.a
+81	99	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.a, props.b, props.c].	0
+file	/workspace/wave-27-scratch/f801-third/rest-337.a
+81	99	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.b, props.a, props.c].	0
+file	/workspace/wave-27-scratch/f801-third/rest-338.a
+88	96	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.a].	0
+file	/workspace/wave-27-scratch/f801-third/rest-339.a
+87	89	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.a].	0
+file	/workspace/wave-27-scratch/f801-third/rest-340.a
+65	67	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-341.a
+21	42	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-342.a
+21	42	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-343.a
+file	/workspace/wave-27-scratch/f801-third/rest-344.a
+21	32	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-345.a
+65	67	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.foo].	0
+file	/workspace/wave-27-scratch/f801-third/rest-346.a
+77	80	react-hooks/exhaustive-deps	exhaustiveDepsLiteral	A literal in a dependency array never changes between renders, so it can never cause the Hook to re-run and it is doing nothing. Remove it. If the intent was to depend on a variable of that name, write the variable without quotes.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-347.a
+21	27	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-348.a
+79	97	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.c, props.b, props.a].	0
+file	/workspace/wave-27-scratch/f801-third/rest-349.a
+83	95	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.b, props.a].	0
+file	/workspace/wave-27-scratch/f801-third/rest-350.a
+79	97	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.b, props.c, props.a].	0
+file	/workspace/wave-27-scratch/f801-third/rest-351.a
+81	99	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.c, props.b, props.a].	0
+file	/workspace/wave-27-scratch/f801-third/rest-352.a
+96	108	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.b, props.a].	0
+file	/workspace/wave-27-scratch/f801-third/rest-353.a
+94	106	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.a, props.b, u].	0
+file	/workspace/wave-27-scratch/f801-third/rest-354.a
+92	104	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [props.a, props.b].	0
+file	/workspace/wave-27-scratch/f801-third/rest-355.a
+file	/workspace/wave-27-scratch/f801-third/rest-356.a
+file	/workspace/wave-27-scratch/f801-third/rest-357.a
+file	/workspace/wave-27-scratch/f801-third/rest-358.a
+30	54	react-hooks/exhaustive-deps	exhaustiveDepsUselessWithoutDependencies	useMemo and useCallback exist to reuse a value across renders, and they decide whether to reuse by comparing a dependency array. Called with only a callback there is nothing to compare, so the value is rebuilt every render and the Hook does nothing. Pass a dependency array.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-361.a
+84	86	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [local].	0
+file	/workspace/wave-27-scratch/f801-third/rest-362.a
+31	41	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-363.a
+85	87	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-364.a
+file	/workspace/wave-27-scratch/f801-third/rest-365.a
+62	94	react-hooks/exhaustive-deps	exhaustiveDepsSetStateNoDependencies	This effect sets state and has no dependency array, so it runs after every render, and the state it sets causes the next render. That is a loop with no exit. Pass a dependency array saying what the effect actually depends on.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-366.a
+file	/workspace/wave-27-scratch/f801-third/rest-367.a
+100	107	react-hooks/exhaustive-deps	exhaustiveDepsEffectEvent	A function from useEffectEvent always sees the latest render's values, which is the whole reason it exists, so listing it as a dependency re-runs the effect for a change that could never have gone stale. Remove it from the array.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-368.a
+file	/workspace/wave-27-scratch/f801-third/rest-369.a
+31	48	react-hooks/exhaustive-deps	exhaustiveDepsConstruction	This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-370.a
+40	61	react-hooks/exhaustive-deps	exhaustiveDepsUselessWithoutDependencies	useMemo and useCallback exist to reuse a value across renders, and they decide whether to reuse by comparing a dependency array. Called with only a callback there is nothing to compare, so the value is rebuilt every render and the Hook does nothing. Pass a dependency array.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-371.a
+file	/workspace/wave-27-scratch/f801-third/rest-372.a
+file	/workspace/wave-27-scratch/f801-third/rest-373.a
+file	/workspace/wave-27-scratch/f801-third/rest-374.a
+file	/workspace/wave-27-scratch/f801-third/rest-375.a
+file	/workspace/wave-27-scratch/f801-third/rest-376.a
+file	/workspace/wave-27-scratch/f801-third/rest-377.a
+file	/workspace/wave-27-scratch/f801-third/rest-378.a
+file	/workspace/wave-27-scratch/f801-third/rest-379.a
+file	/workspace/wave-27-scratch/f801-third/rest-380.a
+file	/workspace/wave-27-scratch/f801-third/rest-381.a
+file	/workspace/wave-27-scratch/f801-third/rest-382.a
+file	/workspace/wave-27-scratch/f801-third/rest-383.a
+file	/workspace/wave-27-scratch/f801-third/rest-384.a
+file	/workspace/wave-27-scratch/f801-third/rest-385.a
+file	/workspace/wave-27-scratch/f801-third/rest-386.a
+file	/workspace/wave-27-scratch/f801-third/rest-387.a
+file	/workspace/wave-27-scratch/f801-third/rest-388.a
+file	/workspace/wave-27-scratch/f801-third/rest-389.a
+file	/workspace/wave-27-scratch/f801-third/rest-390.a
+file	/workspace/wave-27-scratch/f801-third/rest-391.a
+file	/workspace/wave-27-scratch/f801-third/rest-392.a
+file	/workspace/wave-27-scratch/f801-third/rest-393.a
+file	/workspace/wave-27-scratch/f801-third/rest-394.a
+file	/workspace/wave-27-scratch/f801-third/rest-395.a
+file	/workspace/wave-27-scratch/f801-third/rest-396.a
+file	/workspace/wave-27-scratch/f801-third/rest-397.a
+file	/workspace/wave-27-scratch/f801-third/rest-398.a
+file	/workspace/wave-27-scratch/f801-third/rest-399.a
+file	/workspace/wave-27-scratch/f801-third/rest-400.a
+file	/workspace/wave-27-scratch/f801-third/rest-401.a
+file	/workspace/wave-27-scratch/f801-third/rest-402.a
+file	/workspace/wave-27-scratch/f801-third/rest-403.a
+file	/workspace/wave-27-scratch/f801-third/rest-404.a
+0	25	prefer-regex-literals	unexpectedRegExp	This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.	0	1	replaceWithLiteral	Replace with an equivalent regular expression literal.	1	0	25	/a/g
+file	/workspace/wave-27-scratch/f801-third/rest-405.a
+0	21	prefer-regex-literals	unexpectedRegExp	This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.	0	1	replaceWithLiteral	Replace with an equivalent regular expression literal.	1	0	21	/a/g
+file	/workspace/wave-27-scratch/f801-third/rest-406.a
+0	25	prefer-regex-literals	unexpectedRegExp	This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.	0	1	replaceWithLiteral	Replace with an equivalent regular expression literal.	1	0	25	/a/g
+file	/workspace/wave-27-scratch/f801-third/rest-407.a
+0	21	prefer-regex-literals	unexpectedRegExp	This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.	0	1	replaceWithLiteral	Replace with an equivalent regular expression literal.	1	0	21	/a/g
+file	/workspace/wave-27-scratch/f801-third/rest-408.a
+0	55	prefer-regex-literals	unexpectedRegExp	This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.	0	1	replaceWithLiteral	Replace with an equivalent regular expression literal.	1	0	55	/a/g
+file	/workspace/wave-27-scratch/f801-third/rest-409.a
+0	51	prefer-regex-literals	unexpectedRegExp	This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.	0	1	replaceWithLiteral	Replace with an equivalent regular expression literal.	1	0	51	/a/g
+file	/workspace/wave-27-scratch/f801-third/rest-410.a
+file	/workspace/wave-27-scratch/f801-third/rest-411.a
+file	/workspace/wave-27-scratch/f801-third/rest-412.a
+file	/workspace/wave-27-scratch/f801-third/rest-413.a
+file	/workspace/wave-27-scratch/f801-third/rest-414.a
+file	/workspace/wave-27-scratch/f801-third/rest-415.a
+file	/workspace/wave-27-scratch/f801-third/rest-416.a
+file	/workspace/wave-27-scratch/f801-third/rest-417.a
+file	/workspace/wave-27-scratch/f801-third/rest-418.a
+file	/workspace/wave-27-scratch/f801-third/rest-419.a
+file	/workspace/wave-27-scratch/f801-third/rest-420.a
+file	/workspace/wave-27-scratch/f801-third/rest-421.a
+file	/workspace/wave-27-scratch/f801-third/rest-422.a
+file	/workspace/wave-27-scratch/f801-third/rest-423.a
+file	/workspace/wave-27-scratch/f801-third/rest-424.a
+file	/workspace/wave-27-scratch/f801-third/rest-425.a
+file	/workspace/wave-27-scratch/f801-third/rest-426.a
+file	/workspace/wave-27-scratch/f801-third/rest-427.a
+file	/workspace/wave-27-scratch/f801-third/rest-428.a
+file	/workspace/wave-27-scratch/f801-third/rest-429.a
+file	/workspace/wave-27-scratch/f801-third/rest-430.a
+file	/workspace/wave-27-scratch/f801-third/rest-431.a
+file	/workspace/wave-27-scratch/f801-third/rest-432.a
+file	/workspace/wave-27-scratch/f801-third/rest-433.a
+file	/workspace/wave-27-scratch/f801-third/rest-434.a
+file	/workspace/wave-27-scratch/f801-third/rest-435.a
+file	/workspace/wave-27-scratch/f801-third/rest-436.a
+file	/workspace/wave-27-scratch/f801-third/rest-437.a
+file	/workspace/wave-27-scratch/f801-third/rest-438.a
+file	/workspace/wave-27-scratch/f801-third/rest-439.a
+file	/workspace/wave-27-scratch/f801-third/rest-440.a
+file	/workspace/wave-27-scratch/f801-third/rest-441.a
+file	/workspace/wave-27-scratch/f801-third/rest-442.a
+file	/workspace/wave-27-scratch/f801-third/rest-443.a
+file	/workspace/wave-27-scratch/f801-third/rest-444.a
+file	/workspace/wave-27-scratch/f801-third/rest-445.a
+file	/workspace/wave-27-scratch/f801-third/rest-446.a
+file	/workspace/wave-27-scratch/f801-third/rest-447.a
+file	/workspace/wave-27-scratch/f801-third/rest-448.a
+file	/workspace/wave-27-scratch/f801-third/rest-449.a
+file	/workspace/wave-27-scratch/f801-third/rest-450.a
+file	/workspace/wave-27-scratch/f801-third/rest-451.a
+file	/workspace/wave-27-scratch/f801-third/rest-452.a
+file	/workspace/wave-27-scratch/f801-third/rest-453.a
+file	/workspace/wave-27-scratch/f801-third/rest-454.a
+file	/workspace/wave-27-scratch/f801-third/rest-455.a
+file	/workspace/wave-27-scratch/f801-third/rest-456.a
+file	/workspace/wave-27-scratch/f801-third/rest-457.a
+file	/workspace/wave-27-scratch/f801-third/rest-458.a
+file	/workspace/wave-27-scratch/f801-third/rest-459.a
+file	/workspace/wave-27-scratch/f801-third/rest-460.a
+file	/workspace/wave-27-scratch/f801-third/rest-461.a
+file	/workspace/wave-27-scratch/f801-third/rest-462.a
+file	/workspace/wave-27-scratch/f801-third/rest-463.a
+file	/workspace/wave-27-scratch/f801-third/rest-464.a
+file	/workspace/wave-27-scratch/f801-third/rest-465.a
+file	/workspace/wave-27-scratch/f801-third/rest-466.a
+file	/workspace/wave-27-scratch/f801-third/rest-467.a
+file	/workspace/wave-27-scratch/f801-third/rest-468.a
+file	/workspace/wave-27-scratch/f801-third/rest-469.a
+file	/workspace/wave-27-scratch/f801-third/rest-470.a
+file	/workspace/wave-27-scratch/f801-third/rest-471.a
+file	/workspace/wave-27-scratch/f801-third/rest-472.a
+file	/workspace/wave-27-scratch/f801-third/rest-473.a
+file	/workspace/wave-27-scratch/f801-third/rest-474.a
+file	/workspace/wave-27-scratch/f801-third/rest-475.a
+file	/workspace/wave-27-scratch/f801-third/rest-476.a
+file	/workspace/wave-27-scratch/f801-third/rest-477.a
+file	/workspace/wave-27-scratch/f801-third/rest-478.a
+file	/workspace/wave-27-scratch/f801-third/rest-479.a
+file	/workspace/wave-27-scratch/f801-third/rest-480.a
+file	/workspace/wave-27-scratch/f801-third/rest-481.a
+file	/workspace/wave-27-scratch/f801-third/rest-482.a
+file	/workspace/wave-27-scratch/f801-third/rest-483.a
+file	/workspace/wave-27-scratch/f801-third/rest-484.a
+file	/workspace/wave-27-scratch/f801-third/rest-485.a
+file	/workspace/wave-27-scratch/f801-third/rest-486.a
+file	/workspace/wave-27-scratch/f801-third/rest-487.a
+file	/workspace/wave-27-scratch/f801-third/rest-488.a
+file	/workspace/wave-27-scratch/f801-third/rest-489.a
+file	/workspace/wave-27-scratch/f801-third/rest-490.a
+file	/workspace/wave-27-scratch/f801-third/rest-491.a
+file	/workspace/wave-27-scratch/f801-third/rest-492.a
+file	/workspace/wave-27-scratch/f801-third/rest-493.a
+file	/workspace/wave-27-scratch/f801-third/rest-494.a
+file	/workspace/wave-27-scratch/f801-third/rest-495.a
+file	/workspace/wave-27-scratch/f801-third/rest-496.a
+file	/workspace/wave-27-scratch/f801-third/rest-497.a
+file	/workspace/wave-27-scratch/f801-third/rest-498.a
+file	/workspace/wave-27-scratch/f801-third/rest-499.a
+file	/workspace/wave-27-scratch/f801-third/rest-500.a
+file	/workspace/wave-27-scratch/f801-third/rest-501.a
+file	/workspace/wave-27-scratch/f801-third/rest-502.a
+file	/workspace/wave-27-scratch/f801-third/rest-503.a
+file	/workspace/wave-27-scratch/f801-third/rest-504.a
+file	/workspace/wave-27-scratch/f801-third/rest-505.a
+file	/workspace/wave-27-scratch/f801-third/rest-506.a
+file	/workspace/wave-27-scratch/f801-third/rest-507.a
+file	/workspace/wave-27-scratch/f801-third/rest-508.a
+file	/workspace/wave-27-scratch/f801-third/rest-509.a
+file	/workspace/wave-27-scratch/f801-third/rest-510.a
+file	/workspace/wave-27-scratch/f801-third/rest-511.a
+file	/workspace/wave-27-scratch/f801-third/rest-512.a
+file	/workspace/wave-27-scratch/f801-third/rest-513.a
+file	/workspace/wave-27-scratch/f801-third/rest-514.a
+file	/workspace/wave-27-scratch/f801-third/rest-515.a
+file	/workspace/wave-27-scratch/f801-third/rest-516.a
+file	/workspace/wave-27-scratch/f801-third/rest-517.a
+file	/workspace/wave-27-scratch/f801-third/rest-518.a
+file	/workspace/wave-27-scratch/f801-third/rest-519.a
+file	/workspace/wave-27-scratch/f801-third/rest-520.a
+file	/workspace/wave-27-scratch/f801-third/rest-521.a
+file	/workspace/wave-27-scratch/f801-third/rest-522.a
+file	/workspace/wave-27-scratch/f801-third/rest-523.a
+file	/workspace/wave-27-scratch/f801-third/rest-524.a
+file	/workspace/wave-27-scratch/f801-third/rest-525.a
+file	/workspace/wave-27-scratch/f801-third/rest-526.a
+file	/workspace/wave-27-scratch/f801-third/rest-527.a
+file	/workspace/wave-27-scratch/f801-third/rest-528.a
+file	/workspace/wave-27-scratch/f801-third/rest-529.a
+file	/workspace/wave-27-scratch/f801-third/rest-530.a
+file	/workspace/wave-27-scratch/f801-third/rest-531.a
+file	/workspace/wave-27-scratch/f801-third/rest-532.a
+file	/workspace/wave-27-scratch/f801-third/rest-533.a
+file	/workspace/wave-27-scratch/f801-third/rest-534.a
+file	/workspace/wave-27-scratch/f801-third/rest-535.a
+file	/workspace/wave-27-scratch/f801-third/rest-536.a
+file	/workspace/wave-27-scratch/f801-third/rest-537.a
+file	/workspace/wave-27-scratch/f801-third/rest-538.a
+file	/workspace/wave-27-scratch/f801-third/rest-539.a
+file	/workspace/wave-27-scratch/f801-third/rest-540.a
+file	/workspace/wave-27-scratch/f801-third/rest-541.a
+file	/workspace/wave-27-scratch/f801-third/rest-542.a
+file	/workspace/wave-27-scratch/f801-third/rest-543.a
+file	/workspace/wave-27-scratch/f801-third/rest-544.a
+file	/workspace/wave-27-scratch/f801-third/rest-545.a
+file	/workspace/wave-27-scratch/f801-third/rest-546.a
+file	/workspace/wave-27-scratch/f801-third/rest-547.a
+file	/workspace/wave-27-scratch/f801-third/rest-548.a
+file	/workspace/wave-27-scratch/f801-third/rest-549.a
+file	/workspace/wave-27-scratch/f801-third/rest-550.a
+file	/workspace/wave-27-scratch/f801-third/rest-551.a
+file	/workspace/wave-27-scratch/f801-third/rest-552.a
+file	/workspace/wave-27-scratch/f801-third/rest-553.a
+file	/workspace/wave-27-scratch/f801-third/rest-554.a
+file	/workspace/wave-27-scratch/f801-third/rest-555.a
+file	/workspace/wave-27-scratch/f801-third/rest-556.a
+file	/workspace/wave-27-scratch/f801-third/rest-557.a
+file	/workspace/wave-27-scratch/f801-third/rest-558.a
+file	/workspace/wave-27-scratch/f801-third/rest-559.a
+file	/workspace/wave-27-scratch/f801-third/rest-560.a
+file	/workspace/wave-27-scratch/f801-third/rest-561.a
+file	/workspace/wave-27-scratch/f801-third/rest-562.a
+file	/workspace/wave-27-scratch/f801-third/rest-563.a
+file	/workspace/wave-27-scratch/f801-third/rest-564.a
+file	/workspace/wave-27-scratch/f801-third/rest-565.a
+file	/workspace/wave-27-scratch/f801-third/rest-566.a
+file	/workspace/wave-27-scratch/f801-third/rest-567.a
+file	/workspace/wave-27-scratch/f801-third/rest-568.a
+file	/workspace/wave-27-scratch/f801-third/rest-569.a
+file	/workspace/wave-27-scratch/f801-third/rest-570.a
+file	/workspace/wave-27-scratch/f801-third/rest-571.a
+file	/workspace/wave-27-scratch/f801-third/rest-572.a
+file	/workspace/wave-27-scratch/f801-third/rest-573.a
+file	/workspace/wave-27-scratch/f801-third/rest-574.a
+file	/workspace/wave-27-scratch/f801-third/rest-575.a
+file	/workspace/wave-27-scratch/f801-third/rest-576.a
+file	/workspace/wave-27-scratch/f801-third/rest-577.a
+file	/workspace/wave-27-scratch/f801-third/rest-578.a
+file	/workspace/wave-27-scratch/f801-third/rest-579.a
+file	/workspace/wave-27-scratch/f801-third/rest-580.a
+file	/workspace/wave-27-scratch/f801-third/rest-581.a
+file	/workspace/wave-27-scratch/f801-third/rest-582.a
+file	/workspace/wave-27-scratch/f801-third/rest-583.a
+file	/workspace/wave-27-scratch/f801-third/rest-584.a
+file	/workspace/wave-27-scratch/f801-third/rest-585.a
+file	/workspace/wave-27-scratch/f801-third/rest-586.a
+file	/workspace/wave-27-scratch/f801-third/rest-587.a
+file	/workspace/wave-27-scratch/f801-third/rest-588.a
+file	/workspace/wave-27-scratch/f801-third/rest-589.a
+file	/workspace/wave-27-scratch/f801-third/rest-590.a
+file	/workspace/wave-27-scratch/f801-third/rest-591.a
+file	/workspace/wave-27-scratch/f801-third/rest-592.a
+file	/workspace/wave-27-scratch/f801-third/rest-593.a
+file	/workspace/wave-27-scratch/f801-third/rest-594.a
+file	/workspace/wave-27-scratch/f801-third/rest-595.a
+file	/workspace/wave-27-scratch/f801-third/rest-596.a
+file	/workspace/wave-27-scratch/f801-third/rest-597.a
+file	/workspace/wave-27-scratch/f801-third/rest-598.a
+file	/workspace/wave-27-scratch/f801-third/rest-599.a
+file	/workspace/wave-27-scratch/f801-third/rest-600.a
+file	/workspace/wave-27-scratch/f801-third/rest-601.a
+file	/workspace/wave-27-scratch/f801-third/rest-602.a
+file	/workspace/wave-27-scratch/f801-third/rest-603.a
+file	/workspace/wave-27-scratch/f801-third/rest-604.a
+file	/workspace/wave-27-scratch/f801-third/rest-605.a
+file	/workspace/wave-27-scratch/f801-third/rest-606.a
+file	/workspace/wave-27-scratch/f801-third/rest-607.a
+file	/workspace/wave-27-scratch/f801-third/rest-608.a
+file	/workspace/wave-27-scratch/f801-third/rest-609.a
+file	/workspace/wave-27-scratch/f801-third/rest-610.a
+file	/workspace/wave-27-scratch/f801-third/rest-611.a
+file	/workspace/wave-27-scratch/f801-third/rest-612.a
+file	/workspace/wave-27-scratch/f801-third/rest-613.a
+file	/workspace/wave-27-scratch/f801-third/rest-614.a
+file	/workspace/wave-27-scratch/f801-third/rest-615.a
+file	/workspace/wave-27-scratch/f801-third/rest-616.a
+file	/workspace/wave-27-scratch/f801-third/rest-617.a
+file	/workspace/wave-27-scratch/f801-third/rest-618.a
+file	/workspace/wave-27-scratch/f801-third/rest-619.a
+file	/workspace/wave-27-scratch/f801-third/rest-620.a
+file	/workspace/wave-27-scratch/f801-third/rest-621.a
+file	/workspace/wave-27-scratch/f801-third/rest-622.a
+file	/workspace/wave-27-scratch/f801-third/rest-623.a
+file	/workspace/wave-27-scratch/f801-third/rest-624.a
+file	/workspace/wave-27-scratch/f801-third/rest-625.a
+file	/workspace/wave-27-scratch/f801-third/rest-626.a
+file	/workspace/wave-27-scratch/f801-third/rest-627.a
+file	/workspace/wave-27-scratch/f801-third/rest-628.a
+file	/workspace/wave-27-scratch/f801-third/rest-629.a
+file	/workspace/wave-27-scratch/f801-third/rest-630.a
+file	/workspace/wave-27-scratch/f801-third/rest-631.a
+file	/workspace/wave-27-scratch/f801-third/rest-632.a
+file	/workspace/wave-27-scratch/f801-third/rest-633.a
+68	70	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [setS].	0
+file	/workspace/wave-27-scratch/f801-third/rest-634.a
+file	/workspace/wave-27-scratch/f801-third/rest-635.a
+54	76	react-hooks/exhaustive-deps	exhaustiveDepsSetStateNoDependencies	This effect sets state and has no dependency array, so it runs after every render, and the state it sets causes the next render. That is a loop with no exit. Pass a dependency array saying what the effect actually depends on.	0	0
+file	/workspace/wave-27-scratch/f801-third/rest-636.a
+file	/workspace/wave-27-scratch/f801-third/rest-637.a
+60	62	react-hooks/exhaustive-deps	exhaustiveDepsMissing	This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.	0	1	exhaustiveDepsUpdateArray	Update the dependency array to [p].	0
+file	/workspace/wave-27-scratch/f801-third/rest-638.a
+findings 258
