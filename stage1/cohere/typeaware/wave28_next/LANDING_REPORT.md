@@ -10,7 +10,7 @@ Only `codex/typeaware-wave-28` has been pushed by this unit. It is rebased onto 
 
 The rebased port commits are `b1a488fc` (original three), `9e4b1982` (Nexus three), and `1584d875` (core three). `5fa46b0e` repairs the private Nexus mutant graph. Original historical SHAs in previous reports are retained as historical evidence, not current branch tips.
 
-The production rules did not need behavior changes. The updated compiler refuses a mutant importing two separately declared nominal classes: the runner instantiated the copied NoProcessExitAfterOutput while RequireBlockingStandardStreams still expected the original class. The owned checks_test.go now copies that dependent module with its behavior unchanged, replacing only its import so both clients refer to one nominal class declaration. No interface/cast bypass was added. The initial refusal is retained in `landing_validation/nominal-mutant-refusal.log`; the final exit mutant compiles, exits 0 with empty stderr, and is caught solely by its finding bytes.
+The production rules did not need behavior changes. The updated compiler refuses a mutant importing two separately declared nominal classes: the runner instantiated the copied NoProcessExitAfterOutput while RequireBlockingStandardStreams still expected the original class. The owned checks_test.go now copies that dependent module with its behavior unchanged, replacing only its import so both clients refer to one nominal class declaration. No interface/cast bypass was added. The initial refusal is retained in `landing_validation/nominal-mutant-refusal.log.gz`; the final exit mutant compiles, exits 0 with empty stderr, and is caught solely by its finding bytes.
 
 No shared registration generator, shared harness or protected compiler file was edited. `git diff origin/main...HEAD` for internal/native/emit.go, internal/lower/lower.go, internal/native/native.go and internal/oracle/oracle_test.go is empty. Rebase brought main's compiler changes through its parent, not as unit edits. The bridge dependency commit is rebased as `9b9427d9`.
 
@@ -85,7 +85,7 @@ gofmt -l cmd internal bridge/tsgo stage1/cohere/typeaware >/tmp/wave-28-latest-g
 ADAMIC_WAVE28_STAGE0=/workspace/wave-28-latest-third/adamic ADAMIC_WAVE28_FOURTH_ARTIFACTS=/workspace/wave-28-latest-fourth go test ./stage1/cohere/typeaware/wave28_fourth -count=1 -timeout=10m -v >/tmp/wave-28-latest-fourth.log 2>&1
 ```
 
-The earlier full inherited gate used ADAMIC_COVERAGE_COMPILER_MANIFEST and ADAMIC_TYPESCRIPT_SOURCE as well. The isolated timings run /tmp/wave-28-latest-timing.py after every gate finishes, with three alternating process rounds and full-output comparisons. Logs, paired canonical streams, stream hashes, mutants, root hashes and timings are retained in landing_validation. Streams are compressed losslessly with deterministic gzip to preserve intentional trailing spaces in fixes.
+The earlier full inherited gate used ADAMIC_COVERAGE_COMPILER_MANIFEST and ADAMIC_TYPESCRIPT_SOURCE as well. The isolated timings run /tmp/wave-28-latest-timing.py after every gate finishes, with three alternating process rounds and full-output comparisons. Logs, paired canonical streams, stream hashes, mutants, root hashes and timings are retained in landing_validation. Streams are compressed losslessly with deterministic gzip to preserve intentional trailing spaces in fixes. The initial refusal log is also compressed because its diagnostic output contains a whitespace-only line; its bytes and hash are preserved.
 
 ## Remaining claims
 
