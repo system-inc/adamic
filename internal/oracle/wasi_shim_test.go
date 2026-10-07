@@ -19,7 +19,7 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
-	ran, skipped := 0, 0
+	ran, agreed, skipped := 0, 0, 0
 	for _, fixture := range fixtures {
 		t.Run(fixture.path, func(t *testing.T) {
 			if !fixture.lowers {
@@ -62,13 +62,59 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 			if difference := disagreement(reference, actual); difference != "" {
 				t.Errorf("shim vs node:wasi: %s\nreference: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q", difference, reference.exitCode, reference.stdout, reference.stderr, actual.exitCode, actual.stdout, actual.stderr)
 			}
-			source := onNode(t, path)
-			if difference := disagreement(source, actual); difference != "" {
-				t.Errorf("shim vs source: %s\nsource: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q", difference, source.exitCode, source.stdout, source.stderr, actual.exitCode, actual.stdout, actual.stderr)
+			expected := onNode(t, path)
+			if fixture.checked {
+				expected = onJavaScriptBackend(t, program)
+			}
+			if difference := disagreement(expected, actual); difference != "" {
+				t.Errorf("shim vs expected witness: %s\nwitness: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
+			}
+			if disagreement(reference, actual) == "" && disagreement(expected, actual) == "" {
+				agreed++
 			}
 		})
 	}
-	t.Logf("SHIM COUNTS run=%d skipped=%d", ran, skipped)
+	t.Logf("SHIM COUNTS run=%d agreed=%d skipped=%d", ran, agreed, skipped)
+}
+
+// Comparing this checked fixture to source instead of the backend is a wrong-witness mutant.
+func TestWASIShimCheckedWitnessControl(t *testing.T) {
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	const fixturePath = "internal/oracle/testdata/writes_past_end.a"
+	checked := false
+	for _, fixture := range fixtures {
+		if fixture.path == fixturePath {
+			checked = fixture.checked
+		}
+	}
+	if !checked {
+		t.Fatal("control must remain a checked fixture")
+	}
+	path, err := filepath.Abs(filepath.Join(repository, fixturePath))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "program.wasm")
+	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+		t.Fatal(err)
+	}
+	actual := execute(t, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
+	backend := onJavaScriptBackend(t, program)
+	if difference := disagreement(backend, actual); difference != "" {
+		t.Fatalf("checked backend control: %s", difference)
+	}
+	source := onNode(t, path)
+	if difference := disagreement(source, actual); difference != "exit codes differ" || source.exitCode != 0 || actual.exitCode != 70 {
+		t.Fatalf("wrong source witness must differ: source exit %d, shim exit %d, difference %q", source.exitCode, actual.exitCode, difference)
+	}
+	t.Log("wrong source witness caught: writes_past_end.a source exits 0, backend and shim exit 70")
 }
 
 func TestWASIShimContractsAndMutants(t *testing.T) {
