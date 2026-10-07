@@ -1,3 +1,5 @@
+Current status: the multifix blocker is resolved and all requested checks pass. See [the updated report](MULTIFIX_REPORT.md). The report below is historical.
+
 Ported @typescript-eslint/no-inferrable-types into its own unified harness descriptor directory.
 Branch starts from area d3a37422c; source port is batch4-typescript 63782c536:stage1/cohere/lint/no_inferrable_types.ts.
 Registry, gofmt and vet pass; TestOwnedWitnesses passes, but TestRulesAgree is blocked by multi-edit automatic fixes.

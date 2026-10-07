@@ -1,0 +1,127 @@
+From https://github.com/system-inc/adamic
+ * [new branch]          apple/holds             -> origin/apple/holds
+ * [new branch]          apple/holds-blocks      -> origin/apple/holds-blocks
+ * [new branch]          apple/leaves            -> origin/apple/leaves
+ * [new branch]          apple/subclass          -> origin/apple/subclass
+   ce477b046..2df88feee  area/developer-tools    -> origin/area/developer-tools
+   fe0e7aa89..53f44e05c  area/library            -> origin/area/library
+   900409b73..5076728dd  area/platforms          -> origin/area/platforms
+   b6b1538b0..62006dea7  area/stage1-format      -> origin/area/stage1-format
+   d3a37422c..b28757f33  area/stage1-lint        -> origin/area/stage1-lint
+   e3431122b..06f89a045  area/stage3             -> origin/area/stage3
+ * [new branch]          cloud/integrate-stack-0430-p2 -> origin/cloud/integrate-stack-0430-p2
+   6aceea544..3d8acdf35  cloud/merge-tree        -> origin/cloud/merge-tree
+   0db045ae0..85c82e653  codex/branch-shape      -> origin/codex/branch-shape
+   8d343579d..33a90f4b0  codex/census-small-families -> origin/codex/census-small-families
+   ec71e2867..040c753a0  codex/dot-a             -> origin/codex/dot-a
+   b38111868..872e252f8  codex/emitter-speed     -> origin/codex/emitter-speed
+ * [new branch]          codex/graph-regions-tsc -> origin/codex/graph-regions-tsc
+   a38287b10..77a34e217  codex/host-buffer-crypto-land -> origin/codex/host-buffer-crypto-land
+   d447586ce..ed9572199  codex/host-fs-directory-land -> origin/codex/host-fs-directory-land
+   776f9d63d..12b84d611  codex/host-process-land -> origin/codex/host-process-land
+ * [new branch]          codex/host-proof-compiler -> origin/codex/host-proof-compiler
+ + f3f80c46d...0fd7214cb codex/lint-helpers-01   -> origin/codex/lint-helpers-01  (forced update)
+ + 6211705b9...a5427bb76 codex/lint-helpers-02   -> origin/codex/lint-helpers-02  (forced update)
+ + 8a54670e2...8e0d98a64 codex/lint-helpers-04   -> origin/codex/lint-helpers-04  (forced update)
+ + f3802ce4e...0e77d7cf5 codex/lint-helpers-05   -> origin/codex/lint-helpers-05  (forced update)
+ + dcf3e28da...22f918c2c codex/lint-helpers-from-codex/lint-wave1-11 -> origin/codex/lint-helpers-from-codex/lint-wave1-11  (forced update)
+ + b3146c74b...aa10be586 codex/lint-helpers-from-codex/lint-wave1-15 -> origin/codex/lint-helpers-from-codex/lint-wave1-15  (forced update)
+ + a1d998524...bdae8bc99 codex/lint-helpers-from-lint-wave1-08 -> origin/codex/lint-helpers-from-lint-wave1-08  (forced update)
+ + 3bd5f279d...e410d07d1 codex/lint-helpers-from-lint-wave1-12 -> origin/codex/lint-helpers-from-lint-wave1-12  (forced update)
+ * [new branch]          codex/lint-port-base-boundary-no-global-container -> origin/codex/lint-port-base-boundary-no-global-container
+ * [new branch]          codex/lint-port-base-consistency-no-hand-built-declared-error -> origin/codex/lint-port-base-consistency-no-hand-built-declared-error
+ * [new branch]          codex/lint-port-base-consistency-require-pagination-argument-name -> origin/codex/lint-port-base-consistency-require-pagination-argument-name
+ * [new branch]          codex/lint-port-max-classes-per-file -> origin/codex/lint-port-max-classes-per-file
+ * [new branch]          codex/lint-port-max-depth -> origin/codex/lint-port-max-depth
+ * [new branch]          codex/lint-port-max-nested-callbacks -> origin/codex/lint-port-max-nested-callbacks
+ * [new branch]          codex/lint-port-nexus-consistency-no-abbreviated-identifier -> origin/codex/lint-port-nexus-consistency-no-abbreviated-identifier
+ * [new branch]          codex/lint-port-nexus-consistency-no-ambiguous-identifier -> origin/codex/lint-port-nexus-consistency-no-ambiguous-identifier
+ * [new branch]          codex/lint-port-nexus-consistency-no-for-in -> origin/codex/lint-port-nexus-consistency-no-for-in
+ * [new branch]          codex/lint-port-nexus-consistency-no-long-line-comment -> origin/codex/lint-port-nexus-consistency-no-long-line-comment
+ * [new branch]          codex/lint-port-nexus-consistency-no-multiline-arrow-function -> origin/codex/lint-port-nexus-consistency-no-multiline-arrow-function
+ * [new branch]          codex/lint-port-nexus-consistency-no-shouting -> origin/codex/lint-port-nexus-consistency-no-shouting
+ * [new branch]          codex/lint-port-nexus-consistency-no-single-line-jsdoc -> origin/codex/lint-port-nexus-consistency-no-single-line-jsdoc
+ * [new branch]          codex/lint-port-nexus-consistency-no-stuttering-name -> origin/codex/lint-port-nexus-consistency-no-stuttering-name
+ * [new branch]          codex/lint-port-nexus-consistency-no-utils-folder -> origin/codex/lint-port-nexus-consistency-no-utils-folder
+ * [new branch]          codex/lint-port-no-caller -> origin/codex/lint-port-no-caller
+ * [new branch]          codex/lint-port-no-empty-character-class -> origin/codex/lint-port-no-empty-character-class
+ * [new branch]          codex/lint-port-no-empty-pattern -> origin/codex/lint-port-no-empty-pattern
+ * [new branch]          codex/lint-port-no-empty-static-block -> origin/codex/lint-port-no-empty-static-block
+ * [new branch]          codex/lint-port-no-ex-assign -> origin/codex/lint-port-no-ex-assign
+ * [new branch]          codex/lint-port-no-iterator -> origin/codex/lint-port-no-iterator
+ * [new branch]          codex/lint-port-no-multi-assign -> origin/codex/lint-port-no-multi-assign
+ * [new branch]          codex/lint-port-no-proto -> origin/codex/lint-port-no-proto
+ * [new branch]          codex/lint-port-no-script-url -> origin/codex/lint-port-no-script-url
+ * [new branch]          codex/lint-port-no-self-compare -> origin/codex/lint-port-no-self-compare
+ * [new branch]          codex/lint-port-no-unsafe-finally -> origin/codex/lint-port-no-unsafe-finally
+ * [new branch]          codex/lint-port-no-useless-catch -> origin/codex/lint-port-no-useless-catch
+ * [new branch]          codex/lint-port-no-useless-concat -> origin/codex/lint-port-no-useless-concat
+ * [new branch]          codex/lint-port-one-var -> origin/codex/lint-port-one-var
+ * [new branch]          codex/lint-port-prefer-destructuring -> origin/codex/lint-port-prefer-destructuring
+ * [new branch]          codex/lint-port-typescript-eslint-adjacent-overload-signatures -> origin/codex/lint-port-typescript-eslint-adjacent-overload-signatures
+ * [new branch]          codex/lint-port-typescript-eslint-consistent-type-definitions -> origin/codex/lint-port-typescript-eslint-consistent-type-definitions
+ * [new branch]          codex/lint-port-typescript-eslint-init-declarations -> origin/codex/lint-port-typescript-eslint-init-declarations
+ * [new branch]          codex/lint-port-typescript-eslint-no-explicit-any -> origin/codex/lint-port-typescript-eslint-no-explicit-any
+ * [new branch]          codex/lint-port-typescript-eslint-no-inferrable-types -> origin/codex/lint-port-typescript-eslint-no-inferrable-types
+   9688a9906..93a4c7ac5  codex/lint-wave1-01     -> origin/codex/lint-wave1-01
+ + f1355db3c...1d3839c9e codex/lint-wave1-02-land -> origin/codex/lint-wave1-02-land  (forced update)
+ * [new branch]          codex/lint-wave1-03-land -> origin/codex/lint-wave1-03-land
+   2055f6f35..98e824dd1  codex/lint-wave1-04     -> origin/codex/lint-wave1-04
+   caad1c7d2..40b127a7d  codex/lint-wave1-05     -> origin/codex/lint-wave1-05
+ * [new branch]          codex/lint-wave1-06-land -> origin/codex/lint-wave1-06-land
+ + c859865f6...75aaa1ef3 codex/lint-wave1-07     -> origin/codex/lint-wave1-07  (forced update)
+ + eff78d579...c1a1303de codex/lint-wave1-08     -> origin/codex/lint-wave1-08  (forced update)
+   317ccb0a2..090782901  codex/lint-wave1-09     -> origin/codex/lint-wave1-09
+   4e6ba6322..04554fd64  codex/lint-wave1-10     -> origin/codex/lint-wave1-10
+ + 8e8c8afcf...bf8f29206 codex/lint-wave1-11     -> origin/codex/lint-wave1-11  (forced update)
+ + dc618cb0d...80c3db343 codex/lint-wave1-12     -> origin/codex/lint-wave1-12  (forced update)
+ + d6290b64c...2fb021bdc codex/lint-wave1-13     -> origin/codex/lint-wave1-13  (forced update)
+ + 2ce7c5703...acfce34e9 codex/lint-wave1-14     -> origin/codex/lint-wave1-14  (forced update)
+ + f46174346...3718daf07 codex/lint-wave1-15     -> origin/codex/lint-wave1-15  (forced update)
+   03d6b83a0..d2d3c77e3  codex/phantom-brands    -> origin/codex/phantom-brands
+   ca71f1deb..dd0f01bec  codex/regex-runtime-compiler -> origin/codex/regex-runtime-compiler
+   95716a5fb..aca418919  codex/stable-emitter-names -> origin/codex/stable-emitter-names
+ * [new branch]          codex/stage3-lane       -> origin/codex/stage3-lane
+   89119e9d7..c72c0c1db  codex/stage3-optional-widening -> origin/codex/stage3-optional-widening
+ * [new branch]          codex/stage3-optional-widening-coverage -> origin/codex/stage3-optional-widening-coverage
+   8331646a3..0b484f8fb  codex/stage3-scanner-proof -> origin/codex/stage3-scanner-proof
+   835080a1b..2e1aa5057  codex/typeaware-wave-01 -> origin/codex/typeaware-wave-01
+   a837598a3..50600dc5c  codex/typeaware-wave-03 -> origin/codex/typeaware-wave-03
+   0b4cd17b3..d81818b52  codex/typeaware-wave-04 -> origin/codex/typeaware-wave-04
+   bb5442228..7a15fe7a1  codex/typeaware-wave-06 -> origin/codex/typeaware-wave-06
+ + fe8c2376e...9381c8ee9 codex/typeaware-wave-08 -> origin/codex/typeaware-wave-08  (forced update)
+   115b0d908..9a01c9e32  codex/typeaware-wave-09 -> origin/codex/typeaware-wave-09
+   668f71363..a2ea9f82a  codex/typeaware-wave-12 -> origin/codex/typeaware-wave-12
+ + 3eb3703d1...b1b3e96a9 codex/typeaware-wave-13 -> origin/codex/typeaware-wave-13  (forced update)
+   c588450d1..94dbdd56d  codex/typeaware-wave-15 -> origin/codex/typeaware-wave-15
+   c81ad43a8..113f4f392  codex/typeaware-wave-16 -> origin/codex/typeaware-wave-16
+ + d9b45cab1...d5c68010e codex/typeaware-wave-18 -> origin/codex/typeaware-wave-18  (forced update)
+   129f3ad46..17f7f4066  codex/typeaware-wave-19 -> origin/codex/typeaware-wave-19
+   0a636686b..1399e92cf  codex/typeaware-wave-20 -> origin/codex/typeaware-wave-20
+   04e1146e1..9e5df8601  codex/typeaware-wave-21 -> origin/codex/typeaware-wave-21
+   5120286ca..e6a3abb70  codex/typeaware-wave-25 -> origin/codex/typeaware-wave-25
+   dd60218c9..d5a9ce299  codex/typeaware-wave-27 -> origin/codex/typeaware-wave-27
+   d8629dc2d..5cc89b852  codex/typeaware-wave-30 -> origin/codex/typeaware-wave-30
+ * [new branch]          compiler/area-main-4e0bfda5 -> origin/compiler/area-main-4e0bfda5
+ * [new branch]          compiler/landing-batch-3 -> origin/compiler/landing-batch-3
+ * [new branch]          devtools/gate-proof-15  -> origin/devtools/gate-proof-15
+   6db3b7a4b..2a017877b  devtools/gate-shards    -> origin/devtools/gate-shards
+ * [new branch]          devtools/merge-main-4e0bfda -> origin/devtools/merge-main-4e0bfda
+ * [new branch]          devtools/metamorphic    -> origin/devtools/metamorphic
+ * [new branch]          devtools/node-pin       -> origin/devtools/node-pin
+   814e46a59..b0ffd286d  devtools/setup-fast     -> origin/devtools/setup-fast
+   e9d2ff371..18ac130cb  library/l1-land         -> origin/library/l1-land
+ * [new branch]          library/merge-host-fs-file -> origin/library/merge-host-fs-file
+   488385016..59451e23e  lint-rules/witness-options -> origin/lint-rules/witness-options
+ + 21794bcc3...55bd1559a locks/area-compiler     -> origin/locks/area-compiler  (forced update)
+ * [new branch]          locks/area-developer-tools -> origin/locks/area-developer-tools
+ * [new branch]          locks/area-runtime      -> origin/locks/area-runtime
+ * [new branch]          locks/area-stage3       -> origin/locks/area-stage3
+   b6b1538b0..71d7e491b  main                    -> origin/main
+ * [new branch]          runtime/area-take-regflow2 -> origin/runtime/area-take-regflow2
+ * [new branch]          runtime/area-take-seat16b -> origin/runtime/area-take-seat16b
+ * [new branch]          stage1-format/estree    -> origin/stage1-format/estree
+ * [new branch]          stage1-format/graphql-printer -> origin/stage1-format/graphql-printer
+ * [new branch]          stage1-format/markdown-blocks -> origin/stage1-format/markdown-blocks
+ * [new branch]          stage1-format/ts-printer-2 -> origin/stage1-format/ts-printer-2
+ * [new branch]          stage1-format/yaml-2    -> origin/stage1-format/yaml-2
