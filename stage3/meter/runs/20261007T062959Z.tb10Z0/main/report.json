@@ -1774,7 +1774,7 @@
       },
       {
         "reason": "a value of type any",
-        "owner": "OWNER BLANK",
+        "owner": "adaptation 40, stage 3",
         "NotYet": 30,
         "Refused": 0,
         "count": 30
@@ -1795,7 +1795,7 @@
       },
       {
         "reason": "a cast the runtime can't check",
-        "owner": "OWNER BLANK",
+        "owner": "01a11410",
         "NotYet": 0,
         "Refused": 23,
         "count": 23
@@ -1809,21 +1809,21 @@
       },
       {
         "reason": "reading ModifierFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 22,
         "Refused": 0,
         "count": 22
       },
       {
         "reason": "reading Extension",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 20,
         "Refused": 0,
         "count": 20
       },
       {
         "reason": "reading NodeFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 20,
         "Refused": 0,
         "count": 20
@@ -1879,14 +1879,14 @@
       },
       {
         "reason": "||=",
-        "owner": "OWNER BLANK",
+        "owner": "01a113e3-a058",
         "NotYet": 0,
         "Refused": 15,
         "count": 15
       },
       {
         "reason": "a string as a condition",
-        "owner": "OWNER BLANK",
+        "owner": "01a113e3-a058",
         "NotYet": 0,
         "Refused": 14,
         "count": 14
@@ -1914,21 +1914,21 @@
       },
       {
         "reason": "reading Comparison",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 12,
         "Refused": 0,
         "count": 12
       },
       {
         "reason": "a boolean | undefined as a condition",
-        "owner": "OWNER BLANK",
+        "owner": "01a113e3-a058",
         "NotYet": 0,
         "Refused": 11,
         "count": 11
       },
       {
         "reason": "a namespace",
-        "owner": "OWNER BLANK",
+        "owner": "codex/namespaces-tsc",
         "NotYet": 0,
         "Refused": 11,
         "count": 11
@@ -1942,7 +1942,7 @@
       },
       {
         "reason": "reading ModuleKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 11,
         "Refused": 0,
         "count": 11
@@ -1984,7 +1984,7 @@
       },
       {
         "reason": "a value of type unknown",
-        "owner": "OWNER BLANK",
+        "owner": "01a114ab",
         "NotYet": 9,
         "Refused": 0,
         "count": 9
@@ -2019,7 +2019,7 @@
       },
       {
         "reason": "an index signature",
-        "owner": "OWNER BLANK",
+        "owner": "01a113e7",
         "NotYet": 0,
         "Refused": 8,
         "count": 8
@@ -2061,14 +2061,14 @@
       },
       {
         "reason": "reading EmitFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 7,
         "Refused": 0,
         "count": 7
       },
       {
         "reason": "reading NodeResolutionFeatures",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 7,
         "Refused": 0,
         "count": 7
@@ -2173,14 +2173,14 @@
       },
       {
         "reason": "reading AssignmentDeclarationKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 6,
         "Refused": 0,
         "count": 6
       },
       {
         "reason": "reading ModuleResolutionKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 6,
         "Refused": 0,
         "count": 6
@@ -2285,28 +2285,28 @@
       },
       {
         "reason": "reading Extensions",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 5,
         "Refused": 0,
         "count": 5
       },
       {
         "reason": "reading ScriptTarget",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 5,
         "Refused": 0,
         "count": 5
       },
       {
         "reason": "reading SymbolFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 5,
         "Refused": 0,
         "count": 5
       },
       {
         "reason": "reading TransformFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 5,
         "Refused": 0,
         "count": 5
@@ -2446,7 +2446,7 @@
       },
       {
         "reason": "reading ScriptKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 4,
         "Refused": 0,
         "count": 4
@@ -2691,28 +2691,28 @@
       },
       {
         "reason": "reading AccessKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 3,
         "Refused": 0,
         "count": 3
       },
       {
         "reason": "reading OuterExpressionKinds",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 3,
         "Refused": 0,
         "count": 3
       },
       {
         "reason": "reading TypeFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 3,
         "Refused": 0,
         "count": 3
       },
       {
         "reason": "reading UsingKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 3,
         "Refused": 0,
         "count": 3
@@ -3328,63 +3328,63 @@
       },
       {
         "reason": "reading BuilderFileEmit",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 2,
         "Refused": 0,
         "count": 2
       },
       {
         "reason": "reading BuilderProgramKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 2,
         "Refused": 0,
         "count": 2
       },
       {
         "reason": "reading DiagnosticCategory",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 2,
         "Refused": 0,
         "count": 2
       },
       {
         "reason": "reading FileWatcherEventKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 2,
         "Refused": 0,
         "count": 2
       },
       {
         "reason": "reading JsxEmit",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 2,
         "Refused": 0,
         "count": 2
       },
       {
         "reason": "reading ModuleInstanceState",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 2,
         "Refused": 0,
         "count": 2
       },
       {
         "reason": "reading NodeFactoryFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 2,
         "Refused": 0,
         "count": 2
       },
       {
         "reason": "reading SignatureFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 2,
         "Refused": 0,
         "count": 2
       },
       {
         "reason": "reading TypePredicateKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 2,
         "Refused": 0,
         "count": 2
@@ -5960,140 +5960,140 @@
       },
       {
         "reason": "reading FileIncludeKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading FlattenLevel",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading ImportsNotUsedAsValues",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading Instruction",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading InternalNodeBuilderFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading IntrinsicTypeKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading IterationTypeKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading JSDocParsingMode",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading ListFormat",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading ModuleDetectionKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading ModuleSpecifierEnding",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading NewLineKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading NodeBuilderFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading PragmaKindFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading RegularExpressionFlags",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading SnippetKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading StatisticType",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading TypeFacts",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading UpToDateStatusType",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "reading WatchFileKind",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
@@ -6248,13 +6248,6 @@
         "count": 30
       },
       {
-        "reason": "a value of type any",
-        "owner": "OWNER BLANK",
-        "NotYet": 30,
-        "Refused": 0,
-        "count": 30
-      },
-      {
         "reason": "a field of type boolean | undefined",
         "owner": "OWNER BLANK",
         "NotYet": 25,
@@ -6262,39 +6255,11 @@
         "count": 25
       },
       {
-        "reason": "a cast the runtime can't check",
-        "owner": "OWNER BLANK",
-        "NotYet": 0,
-        "Refused": 23,
-        "count": 23
-      },
-      {
         "reason": "a parameter that isn't a plain name",
         "owner": "OWNER BLANK",
         "NotYet": 22,
         "Refused": 0,
         "count": 22
-      },
-      {
-        "reason": "reading ModifierFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 22,
-        "Refused": 0,
-        "count": 22
-      },
-      {
-        "reason": "reading Extension",
-        "owner": "OWNER BLANK",
-        "NotYet": 20,
-        "Refused": 0,
-        "count": 20
-      },
-      {
-        "reason": "reading NodeFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 20,
-        "Refused": 0,
-        "count": 20
       },
       {
         "reason": "a value of type Path",
@@ -6332,20 +6297,6 @@
         "count": 16
       },
       {
-        "reason": "||=",
-        "owner": "OWNER BLANK",
-        "NotYet": 0,
-        "Refused": 15,
-        "count": 15
-      },
-      {
-        "reason": "a string as a condition",
-        "owner": "OWNER BLANK",
-        "NotYet": 0,
-        "Refused": 14,
-        "count": 14
-      },
-      {
         "reason": "a generic function as a value",
         "owner": "OWNER BLANK",
         "NotYet": 13,
@@ -6353,35 +6304,7 @@
         "count": 13
       },
       {
-        "reason": "reading Comparison",
-        "owner": "OWNER BLANK",
-        "NotYet": 12,
-        "Refused": 0,
-        "count": 12
-      },
-      {
-        "reason": "a boolean | undefined as a condition",
-        "owner": "OWNER BLANK",
-        "NotYet": 0,
-        "Refused": 11,
-        "count": 11
-      },
-      {
-        "reason": "a namespace",
-        "owner": "OWNER BLANK",
-        "NotYet": 0,
-        "Refused": 11,
-        "count": 11
-      },
-      {
         "reason": "a value of type T | undefined",
-        "owner": "OWNER BLANK",
-        "NotYet": 11,
-        "Refused": 0,
-        "count": 11
-      },
-      {
-        "reason": "reading ModuleKind",
         "owner": "OWNER BLANK",
         "NotYet": 11,
         "Refused": 0,
@@ -6403,13 +6326,6 @@
       },
       {
         "reason": "a call through ?. (an optional call)",
-        "owner": "OWNER BLANK",
-        "NotYet": 9,
-        "Refused": 0,
-        "count": 9
-      },
-      {
-        "reason": "a value of type unknown",
         "owner": "OWNER BLANK",
         "NotYet": 9,
         "Refused": 0,
@@ -6444,13 +6360,6 @@
         "count": 8
       },
       {
-        "reason": "an index signature",
-        "owner": "OWNER BLANK",
-        "NotYet": 0,
-        "Refused": 8,
-        "count": 8
-      },
-      {
         "reason": "new an Identifier",
         "owner": "OWNER BLANK",
         "NotYet": 8,
@@ -6473,20 +6382,6 @@
       },
       {
         "reason": "for...of over an object",
-        "owner": "OWNER BLANK",
-        "NotYet": 7,
-        "Refused": 0,
-        "count": 7
-      },
-      {
-        "reason": "reading EmitFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 7,
-        "Refused": 0,
-        "count": 7
-      },
-      {
-        "reason": "reading NodeResolutionFeatures",
         "owner": "OWNER BLANK",
         "NotYet": 7,
         "Refused": 0,
@@ -6543,20 +6438,6 @@
       },
       {
         "reason": "a value of type ResolvedConfigFileName",
-        "owner": "OWNER BLANK",
-        "NotYet": 6,
-        "Refused": 0,
-        "count": 6
-      },
-      {
-        "reason": "reading AssignmentDeclarationKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 6,
-        "Refused": 0,
-        "count": 6
-      },
-      {
-        "reason": "reading ModuleResolutionKind",
         "owner": "OWNER BLANK",
         "NotYet": 6,
         "Refused": 0,
@@ -6654,34 +6535,6 @@
         "count": 5
       },
       {
-        "reason": "reading Extensions",
-        "owner": "OWNER BLANK",
-        "NotYet": 5,
-        "Refused": 0,
-        "count": 5
-      },
-      {
-        "reason": "reading ScriptTarget",
-        "owner": "OWNER BLANK",
-        "NotYet": 5,
-        "Refused": 0,
-        "count": 5
-      },
-      {
-        "reason": "reading SymbolFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 5,
-        "Refused": 0,
-        "count": 5
-      },
-      {
-        "reason": "reading TransformFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 5,
-        "Refused": 0,
-        "count": 5
-      },
-      {
         "reason": "the comma operator",
         "owner": "OWNER BLANK",
         "NotYet": 0,
@@ -6753,13 +6606,6 @@
       },
       {
         "reason": "a value of type T | Program",
-        "owner": "OWNER BLANK",
-        "NotYet": 4,
-        "Refused": 0,
-        "count": 4
-      },
-      {
-        "reason": "reading ScriptKind",
         "owner": "OWNER BLANK",
         "NotYet": 4,
         "Refused": 0,
@@ -6872,34 +6718,6 @@
       },
       {
         "reason": "an array of U",
-        "owner": "OWNER BLANK",
-        "NotYet": 3,
-        "Refused": 0,
-        "count": 3
-      },
-      {
-        "reason": "reading AccessKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 3,
-        "Refused": 0,
-        "count": 3
-      },
-      {
-        "reason": "reading OuterExpressionKinds",
-        "owner": "OWNER BLANK",
-        "NotYet": 3,
-        "Refused": 0,
-        "count": 3
-      },
-      {
-        "reason": "reading TypeFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 3,
-        "Refused": 0,
-        "count": 3
-      },
-      {
-        "reason": "reading UsingKind",
         "owner": "OWNER BLANK",
         "NotYet": 3,
         "Refused": 0,
@@ -7180,69 +6998,6 @@
       },
       {
         "reason": "new a ParenthesizedExpression",
-        "owner": "OWNER BLANK",
-        "NotYet": 2,
-        "Refused": 0,
-        "count": 2
-      },
-      {
-        "reason": "reading BuilderFileEmit",
-        "owner": "OWNER BLANK",
-        "NotYet": 2,
-        "Refused": 0,
-        "count": 2
-      },
-      {
-        "reason": "reading BuilderProgramKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 2,
-        "Refused": 0,
-        "count": 2
-      },
-      {
-        "reason": "reading DiagnosticCategory",
-        "owner": "OWNER BLANK",
-        "NotYet": 2,
-        "Refused": 0,
-        "count": 2
-      },
-      {
-        "reason": "reading FileWatcherEventKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 2,
-        "Refused": 0,
-        "count": 2
-      },
-      {
-        "reason": "reading JsxEmit",
-        "owner": "OWNER BLANK",
-        "NotYet": 2,
-        "Refused": 0,
-        "count": 2
-      },
-      {
-        "reason": "reading ModuleInstanceState",
-        "owner": "OWNER BLANK",
-        "NotYet": 2,
-        "Refused": 0,
-        "count": 2
-      },
-      {
-        "reason": "reading NodeFactoryFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 2,
-        "Refused": 0,
-        "count": 2
-      },
-      {
-        "reason": "reading SignatureFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 2,
-        "Refused": 0,
-        "count": 2
-      },
-      {
-        "reason": "reading TypePredicateKind",
         "owner": "OWNER BLANK",
         "NotYet": 2,
         "Refused": 0,
@@ -8335,146 +8090,6 @@
       },
       {
         "reason": "reading Error",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading FileIncludeKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading FlattenLevel",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading ImportsNotUsedAsValues",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading Instruction",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading InternalNodeBuilderFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading IntrinsicTypeKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading IterationTypeKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading JSDocParsingMode",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading ListFormat",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading ModuleDetectionKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading ModuleSpecifierEnding",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading NewLineKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading NodeBuilderFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading PragmaKindFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading RegularExpressionFlags",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading SnippetKind",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading StatisticType",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading TypeFacts",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading UpToDateStatusType",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "reading WatchFileKind",
         "owner": "OWNER BLANK",
         "NotYet": 1,
         "Refused": 0,
