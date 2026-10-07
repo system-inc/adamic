@@ -133,3 +133,29 @@ No full repository Go gate, emitted-JavaScript rule comparison, runtime executio
 of repaired programs or fresh rule runtime benchmark was run in this landing
 pass. Prior benchmark results remain historical measurements in the five rule
 reports. Sanitizers instrument native/C code, not the Go heap.
+
+## Landing cap and dependency recheck
+
+A subsequent all-head fetch still found main at e8ba3d5d. This branch's
+published tip was b50cca14, already descended from that main. The only branch
+this unit has pushed is codex/typeaware-wave-16. Comparing implementation
+Go, .a and .ts sources against the tested 69db2dc8 found no changes outside
+stored validation inputs. The passing 421.255s oracle and 69.592s bridge runs
+therefore remain applicable; no unchanged test suite was rerun.
+
+The refreshed prerequisite audit covers 465 origin heads and finds zero
+native declarations of the five known entry points. Its JSON is preserved in
+validation-wave16-landing/dependency-refresh.json. This remains a name-based
+inventory, not an exhaustive proof about differently named implementations.
+Wave 04's a8c569a2 adds refs lattice joins/destructuring kernels, but its current
+report explicitly still lacks source HIR/SSA, capture transfer and sweep.
+Wave 08's 242946b4 records its own rebase and gates, without providing the
+missing frontend. The bridge branch's shared facts.go still has no call to
+this unit's additionalAnswer dispatch hook. These partial kernels and harness
+changes do not unblock the three claimed React source rules.
+
+No new rule is claimed, no shared source is edited, and no push targets main
+or an area branch. The exact remaining blockers and uncovered checks above
+are unchanged. This evidence-only continuation stops under Ahra's instruction
+to report prerequisites outside the owned rule directories rather than edit
+shared files.
