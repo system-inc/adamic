@@ -44,3 +44,16 @@ Continuation completion: all three rules above are implemented in a74cf501,
 with independent Go byte agreement, per-rule mutants, sanitizer runs and released
 handles verified. Evidence is in ../WAVE_30_NEXT_REPORT.md and validation-wave-30-next.
 No further rules were claimed after Ahra's correction.
+
+## Third batch claim
+
+Fetched all origin heads after verifying b64a21b3 was pushed. The first three
+remaining rules in VOLUME_REPORT.md's combined checker ranking, excluding ports
+on origin/main and origin/codex/tsgo-c-library and claims on every origin branch:
+
+- nexus/correctness-no-process-exit-after-output (combined volume 0)
+- nexus/correctness-no-uncleared-race-timeout (combined volume 0)
+- nexus/correctness-require-blocking-standard-streams (combined volume 0)
+
+The ranking contains 197 checker rules, 25 base ports and 98 claim mentions at
+this selection. No implementation precedes this claim commit and push.
