@@ -305,3 +305,45 @@ assignment or capture-analysis parking exception. Imported props and typed
 wrappers remain unfinished local implementation. Handed-node dispatch and
 string-kind removal are also unfinished. The claim remains partial and
 reserved, with no new claims. Final fetch confirms main remains f8013f0b.
+
+## Fourth landing, October 7, current main c01907a7
+
+Rebased all 19 carried commits cleanly onto current origin/main
+c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Tested source tip:
+40733b076d277afb6de3a07c2bdd53fcffb39ef3. Protected compiler files match main.
+The final all-heads fetch confirmed this main base remained current.
+No new claims or source changes were made in this landing unit.
+
+All five wave suites and the three explicit refusal checks passed together
+in 380.246s. Every owned rule mutant was caught only by independent Go byte
+comparison after compiling and exiting 0. Sanitized controls and both corpora
+matched, and released handles refused as required. The inherited ten-rule
+checker suite passed in 518.479s, including its ten byte-only mutants, normal
+and sanitizer comparisons, and registry-lifetime mutants. Its compiler corpus
+again matched 16,589 findings and 7,120,613 serialized bytes.
+
+Bridge checks passed in 59.281s and 0.268s. The filtered uncached Node oracle
+passed in 1.136s with zero cache hits, 25 native misses and 17 Node misses.
+go vet ./... exited 0 with empty output. All 24 rule mutant names and exact
+byte offsets are in the preserved logs under validation-wave-25-landing-fourth.
+The gate scripts there give the exact commands and artifact locations.
+
+Affected React suite whole-process measurements on this base: compiler native
+3.703796166s versus Go 0.359099898s; repository native 0.569746604s versus Go
+0.140196527s. These are single samples with nil boolean options, not medians.
+The full repository gate and new emitted-JavaScript rule comparison were not run.
+
+The shared regex branch is now available at
+071fb012848ce0408428c61aba0857cca472236f. Its boolean-prop-naming rows identify
+both option patterns as dynamic and prescribe new RegExp(pattern, 'u').
+The freshly rebuilt stage-0 compiler still rejects that exact expression:
+line 3, column 28, stage 0 can't lower RegExp with a nonconstant pattern yet.
+The extracted shared rows and current compiler failure are preserved alongside
+the gate logs. No private option-pattern matcher replaces that requirement.
+The shared placeholder-expression row is also preserved; migrating that
+interpolation path remains unfinished, as does the options implementation.
+
+The previously reported partial paths and speed limitations remain: imported
+props, typed wrappers, handed-node dispatch and string-kind removal are not
+complete. These are not IR/SSA/capture blockers eligible for the React parking
+exception. Boolean-prop-naming stays reserved and partial; no next batch claimed.

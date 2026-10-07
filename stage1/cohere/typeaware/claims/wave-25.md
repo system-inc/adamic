@@ -121,3 +121,12 @@ Configured patterns explicitly refuse pending native dynamic RegExp lowering;
 the new RegExp(pattern, 'u') compiler probe demonstrates that exact blocker.
 Imported props and typed wrappers remain unfinished local paths. This claim
 is partial, not parked under the IR/SSA/capture exception. No new rules claimed.
+
+## Fourth landing, October 7
+
+Rebased onto current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06.
+All wave suites, dependency, bridge, sanitizers, lifetime checks, filtered
+uncached Node oracle and vet pass. Evidence is archived under
+validation-wave-25-landing-fourth. The shared regex option row still requires
+dynamic RegExp construction that stage 0 rejects. This claim remains partial,
+with no new claims and no IR/SSA/capture parking classification.

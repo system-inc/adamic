@@ -1,0 +1,43 @@
+[
+  {
+    "rule": "boolean-prop-naming",
+    "file": "react/boolean_prop_naming.go",
+    "line": 93,
+    "call": "Compile",
+    "expression": "options.Rule",
+    "go_pattern": null,
+    "feature": "dynamic",
+    "id": "react/boolean_prop_naming.go:93",
+    "js_constructor": "new RegExp(pattern, 'u')",
+    "js_pattern": null,
+    "js_flags": "u",
+    "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+  },
+  {
+    "rule": "boolean-prop-naming",
+    "file": "react/boolean_prop_naming.go",
+    "line": 182,
+    "call": "Compile",
+    "expression": "settings.Rule",
+    "go_pattern": null,
+    "feature": "dynamic",
+    "id": "react/boolean_prop_naming.go:182",
+    "js_constructor": "new RegExp(pattern, 'u')",
+    "js_pattern": null,
+    "js_flags": "u",
+    "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+  },
+  {
+    "rule": "boolean-prop-naming",
+    "file": "react/boolean_prop_naming.go",
+    "line": 621,
+    "call": "MustCompile",
+    "expression": "`\\{\\{\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*\\}\\}`",
+    "go_pattern": "\\{\\{\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*\\}\\}",
+    "feature": "plain",
+    "id": "react/boolean_prop_naming.go:621",
+    "js_pattern": "\\{\\{[ \\t\\n\\f\\r]*([A-Za-z_][A-Za-z0-9_]*)[ \\t\\n\\f\\r]*\\}\\}",
+    "js_flags": "gu",
+    "status": "candidate, differential gate required"
+  }
+]
