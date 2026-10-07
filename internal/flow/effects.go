@@ -15,8 +15,8 @@ package flow
 // per-operand projection of a whole list of these, computed later by the ranges pass.
 //
 // The declaration order carries no meaning and there is no join over it. Unlike `ValueKind`, which
-// `immutability.go` merges with a real lattice operation, these are not merged at all: an
-// instruction produces a LIST of effects and they are all applied in order. A pass that tried to
+// cohere's React immutability rule merges with a real lattice operation, these are not merged:
+// an instruction produces a LIST of effects and they are all applied in order. A pass that tried to
 // reduce the list to one element would lose the from/into pairing that is the entire content.
 type AliasingEffectKind uint8
 
@@ -142,12 +142,10 @@ type AliasingEffect struct {
 
 // EffectValueKind is the abstract kind a Create effect produces.
 //
-// This is upstream's `ValueKind` and it is deliberately NOT the same type as the six-element
-// lattice `immutability.go` builds for itself. That rule's lattice is a private type with a join
-// (`immutabilityMergeKinds`) tuned to what it reports; this kind also feeds the range graph's phi
-// refinement. Sharing one type across the two would
-// couple a rule's message selection to a substrate enum for no gain, and `immutability.go`'s
-// version carries a reason bitset this one has no use for.
+// This is upstream's `ValueKind`, separate from the private six-element lattice in cohere's
+// internal/lint/rules/react/immutability.go. That rule's join (`immutabilityMergeKinds`) selects
+// findings and carries a reason bitset. This kind feeds Adamic's range graph's phi refinement;
+// Adamic has no immutability.go rule or reason bitset here.
 type EffectValueKind uint8
 
 const (
