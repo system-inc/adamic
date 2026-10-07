@@ -60,6 +60,7 @@ type plan struct {
 	WASI              *wasiRequirement
 	RequiredVariables []string
 	Environment       *environmentRequirement
+	Archive           *archiveRequirement `json:",omitempty"`
 }
 type event struct {
 	Action, Package, Test, Output string
@@ -539,6 +540,9 @@ func makePlan(count int) (plan, error) {
 	}
 	sort.Slice(p.Units, func(i, j int) bool { return p.Units[i].key() < p.Units[j].key() })
 	p.Complements = complements(p)
+	if err := assignArchive(&p, weights); err != nil {
+		return p, err
+	}
 	if err := validateAffinity(p); err != nil {
 		return p, err
 	}
@@ -722,6 +726,9 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		return err
 	}
 
+	if err := archiveReady(p, index); err != nil {
+		return err
+	}
 	if err := environmentReady(p, index); err != nil {
 		return err
 	}

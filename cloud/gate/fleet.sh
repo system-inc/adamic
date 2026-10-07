@@ -19,7 +19,7 @@
 set -euo pipefail
 
 usage() {
-	echo "usage: $0 run <full sha> [count] | merge <full sha> <run> [count] | status <full sha> [run]" >&2
+	echo "usage: $0 run <full sha> [count] | merge <full sha> <run> [count] | status <full sha> [run] | briefs <full sha> <plan.json>" >&2
 	exit 2
 }
 [ "$#" -ge 2 ] || usage
@@ -29,6 +29,12 @@ case "$verb" in
 run)
 	run=$(date -u +%Y%m%dT%H%M%S)
 	count=${3:-8}
+	;;
+briefs)
+	[ "$#" -eq 3 ] || usage
+	run=briefs
+	planFile=$3
+	count=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["Count"])' "$planFile")
 	;;
 merge)
 	[ "$#" -ge 3 ] || usage
@@ -90,12 +96,16 @@ await() {
 # gate's required inputs (--gate-inputs: the pinned TypeScript source, reference libraries and
 # oracles) whenever this tree's setup offers them.
 brief() {
-	local name=$1 command=$2
+	local name=$1 command=$2 index=${3:--1}
+	local archiveStep=""
+	if [ "$index" = "$archiveShard" ]; then
+		archiveStep=' This shard owns TestSplitTSGoAgrees: copy the sourced env.sh to /workspace/gate-inputs-env.sh, run `bash cloud/setup.sh --gate-archive > /workspace/archive-setup.log 2>&1`, source its printed env.sh, then `gateArchivePath=$ADAMIC_CLANG_TSGO_ARCHIVE; source /workspace/gate-inputs-env.sh; export ADAMIC_CLANG_TSGO_ARCHIVE="$gateArchivePath"`. The setup flags are deliberately separate invocations because their combination is rejected; restoring the first env preserves the other required inputs.'
+	fi
 	cat << BRIEF
 Unit: run one part of Adamic's test gate at a fixed commit and return the raw logs. Branch for the logs: $prefix/$name. This is a measured run; do not change any code.
 
 1. In the repository: \`git fetch origin && git checkout --detach $sha\` and confirm \`git rev-parse HEAD\` prints $sha.
-2. Set up with every gate input this tree's setup offers: \`flags=""; grep -q -- --wasi-sdk cloud/setup.sh && flags="\$flags --wasi-sdk"; grep -q -- --gate-inputs cloud/setup.sh && flags="\$flags --gate-inputs"; bash cloud/setup.sh \$flags\`. Source the env file it prints, then \`export ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_COHERE=1\`. Record setup's timing lines, the flags it ran with, and \`nproc\`. A test that skips for a missing input is a gate failure, not a pass.
+2. Set up with every gate input this tree's setup offers: \`flags=""; grep -q -- --wasi-sdk cloud/setup.sh && flags="\$flags --wasi-sdk"; grep -q -- --gate-inputs-no-archive cloud/setup.sh && flags="\$flags --gate-inputs-no-archive"; bash cloud/setup.sh \$flags\`. Source the env file it prints, then \`export ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_COHERE=1\`. Record setup's timing lines, the flags it ran with, and \`nproc\`. A test that skips for a missing input is a gate failure, not a pass.$archiveStep
 3. \`go build -o /workspace/adamic-gate ./cmd/adamic-gate\`, read docs/gate-shards.md, then run, with output to a log file (never piped):
    \`date -u; $command > /workspace/gate-run.log 2>&1; echo exit=\$?; date -u\`
    If the box restarts or the command is interrupted, rerun the same command with \`-resume\` added (same output directory) until it completes. Record each start, end and interruption.
@@ -125,6 +135,52 @@ shards() {
 	echo "$names"
 }
 
+# Read the archive owner from the plan; do not duplicate the packing algorithm in Bash.
+readPlan() {
+	archiveShard=$(python3 - "$planFile" "$sha" "$count" <<'PYPLAN'
+import json,sys
+p=json.load(open(sys.argv[1]))
+if p['Commit'] != sys.argv[2] or p['Count'] != int(sys.argv[3]):
+    raise SystemExit('fleet: plan commit/count differs from requested run')
+unit='github.com/system-inc/adamic/internal/native::TestSplitTSGoAgrees'
+owners=[u['Shard'] for u in p['Units'] if u['Package']+'::'+u['Test']==unit]
+a=p.get('Archive')
+if owners:
+    if len(owners)!=1 or not a or a['Unit']!=unit or a['Variable']!='ADAMIC_CLANG_TSGO_ARCHIVE' or a['Shard']!=owners[0]:
+        raise SystemExit('fleet: TestSplitTSGoAgrees archive declaration differs')
+    print(owners[0])
+else:
+    if a: raise SystemExit('fleet: unexpected archive declaration')
+    print(-1)
+PYPLAN
+)
+}
+
+planBrief() {
+	cat << BRIEF
+Unit: compute Adamic's shard plan at $sha. No code changes. Publish only gate-logs/$short/$run/plan.
+1. Fetch origin and checkout --detach $sha; confirm HEAD.
+2. Run bash cloud/setup.sh --gate-inputs-no-archive > /workspace/setup.log 2>&1, source its printed env.sh. Record setup separately.
+3. Build /workspace/adamic-gate from ./cmd/adamic-gate. Run /workspace/adamic-gate plan -count $count > /workspace/plan.json 2> /workspace/plan.log. Refuse to publish if it fails.
+4. Archive plan.json, plan.log and setup.log as plan.tgz. From a fresh scratch clone, checkout --orphan $prefix/plan, add only plan.tgz, commit and push $prefix/plan. Never push main or any other branch.
+5. Report the plan digest, archive owner shard, setup and planning durations, and log branch tip.
+BRIEF
+}
+
+preparePlan() {
+	if [ -n "${ADAMIC_GATE_PLAN:-}" ]; then
+		planFile=$ADAMIC_GATE_PLAN
+	else
+		planBrief > "$work/plan.md"
+		launch "$fleet-plan" "$work/plan.md"
+		await "${ADAMIC_GATE_PLAN_WAIT:-3600}" plan
+		git show "origin/$prefix/plan:plan.tgz" > "$work/plan.tgz"
+		tar xzf "$work/plan.tgz" -C "$work"
+		planFile=$work/plan.json
+	fi
+	readPlan
+}
+
 runMerge() {
 	local names
 	names=$(shards)
@@ -141,8 +197,9 @@ run)
 	git cat-file -e "$sha^{commit}" 2> /dev/null || git fetch -q origin
 	git cat-file -e "$sha^{commit}" || { echo "fleet: $sha is not a commit on origin" >&2 && exit 1; }
 	started=$(date +%s)
+	preparePlan
 	for index in $(seq 0 $((count - 1))); do
-		brief "shard-$index" "/workspace/adamic-gate shard -index $index -count $count -out /workspace/gate-out" > "$work/shard-$index.md"
+		brief "shard-$index" "/workspace/adamic-gate shard -index $index -count $count -out /workspace/gate-out" "$index" > "$work/shard-$index.md"
 		launch "$fleet-shard-$index" "$work/shard-$index.md"
 	done
 	echo "fleet: run $run, logs on $prefix/"
@@ -164,6 +221,13 @@ run)
 	fi
 	echo "fleet: all $count shard logs arrived after $((($(date +%s) - started) / 60)) minutes"
 	runMerge
+	;;
+briefs)
+	readPlan
+	for index in $(seq 0 $((count - 1))); do
+		brief "shard-$index" "/workspace/adamic-gate shard -index $index -count $count -out /workspace/gate-out" "$index" > "$work/shard-$index.md"
+	done
+	echo "fleet: $count briefs, archive shard $archiveShard, in $work"
 	;;
 merge) runMerge ;;
 status) arrived ;;

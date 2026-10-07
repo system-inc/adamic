@@ -106,7 +106,7 @@ func assignUnits(p *plan, weights map[string]float64) error {
 		items = append(items, item)
 	}
 	for i, u := range p.Units {
-		if grouped[i] {
+		if grouped[i] || u.key() == archiveUnit {
 			continue
 		}
 		_, known := weights[u.key()]
