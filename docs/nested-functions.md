@@ -354,7 +354,7 @@ way to break a captured closure cycle.
 The three unchanged originals retain typed Refused diagnostics:
 
 * 01 scanner frame: first a non-null assertion. It also uses var, truthiness,
-  comma expressions, optional/default signatures, and generic helpers returned
+  comma expressions and generic helpers returned
   as values. Supporting all 24 helpers requires resolving those separate limits.
 * 08 symbol recursion: object truthiness as a condition. An explicit undefined
   comparison is required by Adamic's current language policy.
@@ -610,3 +610,82 @@ cache warm 27s, total 27s, nproc 5 with a four-core quota. Tests source
 fixture count remains 8/11; 01, 08 and 09 still pause on the language decisions
 listed above. No graph-regions changes, escape proof, main/area write, complete
 repository stage1 gate or full native tsc compilation is claimed.
+
+
+### Census follow-up after optional/default support
+
+The independent pinned inventory still reports 5,574 nested declaration sites
+on 5,574 lines in 57 files. It is a syntax inventory, so that number is unchanged.
+The supplementary structural audit now removes optional/default parameters from
+its restriction list. Blocked declaration sites fall from 643 to 184; blocked
+reference sites remain 4,563. Ten of the 57 files clear these structural
+restrictions, up from seven. The additional three are factory/emitHelpers.ts,
+transformers/declarations/diagnostics.ts and utilitiesPublic.ts. This is not
+evidence that any of these complete upstream files passes checking, representation
+or cycle analysis. Generic declarations remain conservatively classified in
+this structural audit; direct generic calls have narrower implementation support.
+
+The current audit is /tmp/adamic-omitted-census.json, checked against the pinned
+independent sites.json. The binder-coordinate deletion mutant was rerun against
+the updated audit and still fails with nested census site mismatch.
+
+### Exact probe and integration preparation
+
+The unchanged probe is preserved at
+internal/oracle/refusals/omitted_scanner_original.a. Its dedicated oracle test
+holds Node to stdout 11, exit 0 and empty stderr, and holds lowering to the
+existing typed non-null assertion refusal. Both backends are checked on the
+normalized executable witness, not misreported as compiling the unchanged one.
+
+The urgent fix was pushed as bdab8c71cfa6eab3fbbf09ee323ff13a235ca216.
+Origin/main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06 is merged into this feature
+branch in 9fbfea162dd1525d99f3dedf08d2e430e03d230d. No push or merge into main
+or any area/ branch occurred. The only merge conflict was in counts.md; both
+sets of fixtures were retained and the table was regenerated. Regeneration
+passed in 22.353s. Compared with that main tip there are 37 added rows, zero
+removed rows and zero changed existing rows. The nine omission fixtures account
+for nine additions; twenty synthetic nested fixtures and eight real-source
+fixtures account for the remaining twenty-eight. Row order follows the registry.
+
+Before merging main, the frozen urgent-fixture uncached oracle passed in 4.094s.
+The initial broad gate started before the former optional-boolean NotYet
+expectations and the mutant path were corrected. Its native, IR, flow and fresh
+packages passed; its lower package failed the obsolete negative expectations,
+and its oracle failed only the relative-path mutant harness. Those initial
+failures are recorded in /tmp/adamic-omitted-gate.log and are not a green gate.
+The corrected lower run passed in 25.770s. The corrected uncached exact-probe
+and zero-padding mutant tests passed in 0.966s after the merge.
+
+
+### Final merged validation and additional mutants
+
+The merged uncached gate passed:
+
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/ir
+./internal/flow ./internal/fresh ./internal/javascript ./internal/oracle
+-count=1 -timeout 30m
+
+Results: lower 41.674s, native 197.799s, IR 12.547s, flow 128.223s,
+fresh 57.167s, complete oracle 185.637s. JavaScript has no standalone tests;
+the oracle holds its emitted programs to Node. The log is
+/tmp/adamic-omitted-merged-gate.log. go vet ./... and gofmt -l cmd internal
+passed without diagnostics, in /tmp/adamic-omitted-merged-{vet,format}.log.
+The entire repository stage1 gate was not run.
+
+Three further independent Go overlays mutate only absent(valueType), leaving
+production sources intact: absent numbers become present zero, absent booleans
+become present false, and absent strings become the empty string. Each corresponding
+omitted_{number,boolean,string}.a fixture compiles and exits 0 with empty stderr,
+no sanitizer failure and no leak. Node output comparison alone rejects it,
+including direct calls and function values called through narrower signatures.
+Logs are /tmp/adamic-omitted-fallback-{number,boolean,string}.log; each test
+command exits 1 on stdout differs. The permanent scanner zero-padding mutant,
+these three fallback mutants, and the updated census coordinate mutant are the
+five mutation proofs run for this follow-up. The earlier named-function cycle
+mutant and existing refusal checks also ran in the full merged oracle gate.
+
+The original real-source fixture count is still 8/11. This follow-up closes
+optional/default signatures in 01 but does not change its earlier policy refusal.
+01, 08 and 09 stay paused on the exact programs and choices already recorded.
+The shared AllocateEnvironment construct, cycle proof and heap placement are
+unchanged. Nothing was built against unmerged graph-regions.

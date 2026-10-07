@@ -1,8 +1,11 @@
 package oracle
 
 import (
+	"errors"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/lower"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -64,4 +67,24 @@ func TestOmittedArgumentZeroMutantIsCaught(t *testing.T) {
 		t.Fatalf("want Node to catch zero padding, got %q", difference)
 	}
 	t.Logf("zero padding caught by Node: native %q, Node 11", native.stdout)
+}
+
+// Preserve the supplied source verbatim: Node confirms the expected output,
+// while this branch's language policy refuses the non-null assertion. The
+// executable normalized witness must not be mistaken for this original.
+func TestOmittedOriginalProbePolicy(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/omitted_scanner_original.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	observed := onNode(t, path)
+	if observed.exitCode != 0 || string(observed.stdout) != "11\n" || len(observed.stderr) != 0 {
+		t.Fatalf("want Node 11, got %+v", observed)
+	}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "non-null assertion") {
+		t.Fatalf("want the unchanged policy refusal, got %v", err)
+	}
 }
