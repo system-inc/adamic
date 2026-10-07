@@ -120,6 +120,13 @@ while IFS= read -r file; do
 		packages+=("./$package")
 	fi
 done <<<"$changed"
+# Other packages walk every oracle program (flow, fresh, lower, native and more), so a changed
+# fixture runs them too; they're found by what their tests read, not listed by hand.
+if [ "${#fixtures[@]}" -gt 0 ]; then
+	while IFS= read -r reader; do
+		[ -n "$reader" ] && [ "$reader" != "internal/oracle" ] && packages+=("./$reader")
+	done < <(git -C "$worktree" grep -l "oracle/testdata" -- '*_test.go' | xargs -n1 dirname | sort -u)
+fi
 if [ "${#packages[@]}" -gt 0 ]; then
 	packages=($(printf '%s\n' "${packages[@]}" | sort -u))
 fi
