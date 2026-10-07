@@ -1,5 +1,5 @@
 Built isLineWidth, isImage and isBackgroundPosition in separate .a files: twelve dependency edges across four rules.
-Commits: claim 9c08c8b6 pushed before source; base c01907a; implementation pending publication on codex/lint-helpers-03 only.
+Commits: claim 9c08c8b6 pushed before source; base c01907a; implementation bb420a1b2e5f4ad78df3dedfe1295c98fdc2f4b6 published on codex/lint-helpers-03 only.
 Commands: focused gate PASS 58.003s, 8,610 verdict/trace lines; full owned gate PASS 458.164s, 3,034,762 comparison lines; shared helpers PASS 71.045s; vet/format clean; six uncached input probes PASS 1.733s.
 Mutants: twenty-three new compiling variants caught; all one hundred thirty-four owned variants, four inherited variants and missing-consumer check caught.
 Not covered: full repository gate, native dependency wiring, whole-rule findings/fixes/suggestions or unavailable live Tailwind/corpora.
