@@ -1,0 +1,16 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:921-932
+// Census reason: overload
+export function append<T extends {}>(to: T[], value: T | undefined): T[];
+/** @internal */
+export function append<T extends {}>(to: T[] | undefined, value: T): T[];
+/** @internal */
+export function append<T extends {}>(to: T[] | undefined, value: T | undefined): T[] | undefined;
+export function append<T extends {}>(to: T[] | undefined, value: T | undefined): T[] | undefined {
+    if (value === undefined) return to;
+    if (to === undefined) return [value];
+    to.push(value);
+    return to;
+}
+console.log(`${JSON.stringify(append([1], 2))}`);
+console.log(`${JSON.stringify(append(undefined, 3))}`);
+console.log(`${JSON.stringify(append(undefined, undefined))}`);

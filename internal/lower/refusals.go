@@ -64,18 +64,42 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	// Validate arguments before visiting their annotations, so a failed contract
+	// names the actual argument and parameter even for an inline arrow.
+	var contractError error
+	var contracts ast.Visitor
+	contracts = func(node *ast.Node) bool {
+		if contractError != nil {
+			return true
+		}
+		if node.Kind == ast.KindCallExpression {
+			contractError = l.predicateArguments(node)
+		}
+		if contractError == nil {
+			node.ForEachChild(contracts)
+		}
+		return contractError != nil
+	}
+	module.AsNode().ForEachChild(contracts)
+	if contractError != nil {
+		return contractError
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
 			return true
 		}
+		if node.Kind == ast.KindTypePredicate {
+			found = l.predicateRefusal(node)
+			return found != nil
+		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
-		if node.Kind == ast.KindTypePredicate {
-			if err := l.provePredicate(node); err != nil {
+		if node.Kind == ast.KindCallExpression {
+			if err := l.predicateArguments(node); err != nil {
 				found = err
 				return true
 			}
