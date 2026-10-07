@@ -66,3 +66,19 @@ WAVE_02_CONTINUATION_2_REPORT.md records all nine completed wave-02 ports across
 the three reservations, canonical byte comparisons, sanitizers and mutants.
 A later fetch found concurrent claims on 17 other branches; the initial tip audit
 contains none of these three names. No further reservation was made.
+
+## Continuation 3 claim
+
+Fetched all origin heads on 2026-10-07 after verifying all nine prior ports
+were pushed through 0a3a176e. The 197-rule combined compiler/repository
+ranking linked by VOLUME_REPORT.md, with descending totals and lexical ties,
+was checked against 355 origin refs and 92 distinct claim blobs. The first
+three rules absent from claims and from native rule sources on origin/main
+and origin/codex/tsgo-c-library are:
+
+- prefer-regex-literals (combined volume 0)
+- prefer-rest-params (combined volume 0)
+- react-hooks/exhaustive-deps (combined volume 0)
+
+These three are reserved for wave 02. No implementation precedes this claim
+commit and push. Base bridge tip: 5afbdb83; main tip: ef3d907e.
