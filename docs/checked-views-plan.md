@@ -265,3 +265,49 @@ Working estimate for lane 1 nullish plus optional: October 8 22:00 UTC (16:00 MD
 with native null/undefined separation and mutation/alias parity still a risk.
 This is an estimate, not a completion claim; each family is pushed only after its
 both-backend oracle and semantic mutants pass.
+
+## Lane 5: callable shape checks (October 7)
+
+Lane 5 owns branch `codex/views-callables`, based on lane 2 parser tip
+`2de6d1ba` (descendant of `c898009b`). The task explicitly authorizes this
+territory entry. Existing lane 2 callable files remain lane 2 territory.
+New lane 5 files: `internal/lower/view_callables_contract.go` and its test;
+`internal/native/view_callables_contract.go` and its test;
+`internal/javascript/view_callables_contract.go` and its test;
+`internal/native/runtime/view_callables_contract.h`;
+`internal/oracle/checked_views_callable_contract_test.go`;
+`stage3/interface-downcasts/lane5/` fixtures, census ranking and reports.
+
+The October 7 ruling supersedes the earlier implementation-only admission
+policy: every reached callable read must check recorded closure signature
+against declared arity, parameter and result representations. A function tag
+alone or a same-name program scan is insufficient. Unsupported unread members
+must not refuse a cast. Missing optional members yield undefined; reserved
+uninitialized slots fail using the existing readiness machinery.
+
+Required owner handoffs, not implemented claims:
+
+- Lane 1/lane 2: have `buildViewCallableContract` delegate signature construction
+  to lane 5's builder; keep registration in its existing owner file. Fill the
+  existing `ViewContract.Parameters` and `Result` fields. Preserve deferred
+  unsupported signatures until a reached read.
+- Closure-convention owner: record the implementation's arity, parameter and
+  result representation descriptor on every created closure and method thunk.
+  Native `adamic_closure` currently has only code and capture cells. JavaScript
+  closures need the same immutable descriptor. Never derive it from the view.
+  Unknown metadata must fail at a viewed callable read.
+- Lane 1 shared read dispatch: after presence/readiness and callable-kind checks,
+  call lane 5's shape helper before storing or calling the read value, including
+  optional present callbacks. Pass evaluated operands and expression text once.
+  Native method tables need signature descriptors too; keep receiver binding.
+- Lane 1 propagation: viewed values reaching shared helpers, generics, callbacks
+  and fields must retain checks; unknown flow cannot authorize trust.
+- Call emission: use the reconciled closure convention after its supplied SHA is
+  merged. No second calling convention is introduced by lane 5.
+
+Working estimate for all 308 pairs / 1,503 potential reads: October 10 at
+18:00 UTC (12:00 MDT), conditional on lazy-read dispatch and recorded closure
+metadata handoffs. This is an estimate, not certified coverage. The ranked
+ledger will retain every pair until both-backend integration and mutants prove
+its read checks. Intrinsic string/map/set members appear in the callable census;
+method contracts require intrinsic implementation signatures, not closure tags.
