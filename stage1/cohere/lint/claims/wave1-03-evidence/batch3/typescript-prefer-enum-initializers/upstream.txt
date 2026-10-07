@@ -1,0 +1,102 @@
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases
+=== RUN   TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite
+=== PAUSE TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite
+=== RUN   TestPreferEnumInitializersReportsAComputedKeyUpstreamCannotParse
+=== PAUSE TestPreferEnumInitializersReportsAComputedKeyUpstreamCannotParse
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case0
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case0
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case1
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case1
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case2
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case2
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case3
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case3
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case0
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case0
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case0
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case1
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case1
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case2
+=== CONT  TestPreferEnumInitializersReportsAComputedKeyUpstreamCannotParse
+=== CONT  TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite
+=== RUN   TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case0
+=== PAUSE TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case0
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases/case0
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases/case0
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases/case1
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases/case1
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases/case2
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases/case2
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases/case3
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases/case3
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case2
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case3
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case3
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case4
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case4
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case5
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case5
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case1
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases/case0
+=== RUN   TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case1
+=== PAUSE TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case1
+=== RUN   TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case2
+=== PAUSE TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case2
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case2
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases/case2
+=== CONT  TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case0
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases/case3
+=== CONT  TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case2
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases/case1
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case3
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case6
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case6
+--- PASS: TestPreferEnumInitializersReportsAComputedKeyUpstreamCannotParse (0.00s)
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case7
+=== CONT  TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case1
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case7
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case8
+--- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case0 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case1 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case2 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case3 (0.00s)
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case8
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case0
+--- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases/case0 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases/case2 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases/case3 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases/case1 (0.00s)
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case5
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case4
+--- PASS: TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case0 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case2 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case1 (0.00s)
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case7
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case6
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case1
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case8
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case3
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case2
+--- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case0 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case4 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case5 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case7 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case1 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case6 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case8 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case3 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case2 (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.007s

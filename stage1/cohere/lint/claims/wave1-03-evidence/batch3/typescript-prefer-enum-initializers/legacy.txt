@@ -1,0 +1,11 @@
+case 0
+/tmp/lint-wave1-03-batch3-published/typescript-prefer-enum-initializers/repair-shape.ts:1:18
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+panic: unexpected suggestion shape
+
+goroutine 1 [running]:
+main.run({0x485bbd54870?, 0x485bbe79040?}, 0x0, 0x485bbe79040)
+	/workspace/adamic/cohere/adamic_shape_oracle.go:70 +0x8f8
+main.main()
+	/workspace/adamic/cohere/adamic_shape_oracle.go:143 +0x2f7
