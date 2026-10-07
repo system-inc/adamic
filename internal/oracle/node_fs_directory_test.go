@@ -178,7 +178,7 @@ func TestNodeFSDirectoryPermissions(t *testing.T) {
 			t.Errorf("%s: %s\nNode %s\ngot %s", name, difference, truth.stdout, result.stdout)
 		}
 	}
-	if leaked := inputLeaks(t, how, program, binary); leaked != "" {
+	if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
 		t.Fatal(leaked)
 	}
 }

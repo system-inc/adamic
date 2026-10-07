@@ -20,6 +20,10 @@ import (
 // retain and a release on every assignment for that simplicity; removing them where they cancel is
 // the memory model's work, measured against this.
 func C(program *ir.Program) string {
+	return cProgram(program, -1)
+}
+
+func cProgram(program *ir.Program, handler int) string {
 	// Borrowed elements first: reuse must see the variables they mark Borrowed.
 	elementBorrows, lending := planElementBorrows(program)
 	emitter := &emitter{program: program, reuse: planReuse(program, lending), regions: planRegions(program), elementBorrows: elementBorrows}
@@ -69,12 +73,18 @@ func C(program *ir.Program) string {
 		}
 	}
 	emitter.inRegion = false
-	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
+	bodies.WriteString("int main(int argc, char **argv) {\n")
+	bodies.WriteString("\tadamic_start(argc, argv);\n")
 	emitter.indent = 1
 	emitter.block(program.Main, nil)
-	emitter.releaseGlobals()
+	if handler < 0 {
+		emitter.releaseGlobals()
+	}
 	bodies.WriteString(emitter.out.String())
 	bodies.WriteString("\treturn adamic_process_status();\n}\n")
+	if handler >= 0 {
+		bodies.WriteString(emitter.requestABI(handler))
+	}
 
 	for index := range program.Functions {
 		for _, inRegion := range emitter.regionVariants(index) {
@@ -171,9 +181,8 @@ type emitter struct {
 	// anything jumps to that label.
 	loops []*loop
 
-	// breakables holds, innermost last, the scope depth of each open loop or switch: what a break
-	// leaves.
-	breakables []int
+	// breakables holds, innermost last, each open loop or switch and its cleanup depth.
+	breakables []*breakable
 
 	// declarations are file-scope lines the bodies need: object shapes and field caches.
 	declarations []string

@@ -1,0 +1,5 @@
+{
+  "name": "enum bitwise option ignored",
+  "from": "this.context.settings.read('allowbitwiseexpressions', 'false') === 'true'",
+  "to": "this.context.settings.read('allowbitwiseexpressions', 'false') === 'false'"
+}

@@ -2,18 +2,25 @@
 import { panic } from 'adamic';
 import { Scanner } from '../scanner/scanner.ts';
 import { Statements } from './statements.ts';
+import { Jsx } from './jsx.ts';
 import { ParseNode } from './nodes.ts';
 import { precedence, reservedKinds } from './grammar.ts';
-import { arrowAhead, typeArgumentsAhead } from './lookahead.ts';
+import { arrowAhead, typeArgumentsAhead, jsxArrowAhead } from './lookahead.ts';
 import type { ParserStateInterface } from './lookahead.ts';
 
 export class Parser {
     readonly scanner: Scanner;
     readonly path: string;
+    readonly jsx: boolean;
+    readonly javascript: boolean;
     readonly nodes: ParseNode[] = [];
     readonly roots: number[] = [];
+    recoveredJsx = false;
     constructor(text: string, path = 'source') {
         this.path = path;
+        this.javascript =
+            path.endsWith('.js') || path.endsWith('.jsx') || path.endsWith('.mjs') || path.endsWith('.cjs');
+        this.jsx = this.javascript || path.endsWith('.tsx');
         this.scanner = new Scanner(text);
         this.next();
     }
@@ -73,6 +80,12 @@ export class Parser {
     primary(): number {
         const pos = this.scanner.fullStart;
         switch(this.kind()) {
+            case 'EndOfFile':
+                if(this.recoveredJsx) {
+                    // Go inserts a zero-width operand after a recovered JSX delimiter.
+                    return this.make('Identifier', pos);
+                }
+                return panic(`parser slice missing expression at ${this.scanner.start} in ${this.path}`);
             case 'NumericLiteral':
             case 'BigIntLiteral':
             case 'StringLiteral':
@@ -163,6 +176,31 @@ export class Parser {
                 panic(`parser slice unsupported primary ${this.kind()} at ${this.scanner.start} in ${this.path}`);
         }
     }
+    jsxParser(): Jsx {
+        return new Jsx({
+            scanner: this.scanner,
+            path: this.path,
+            javascript: this.javascript,
+            kind: () => this.kind(),
+            next: () => {
+                this.next();
+            },
+            expect: (kind) => {
+                this.expect(kind);
+            },
+            node: (index) => this.node(index),
+            make: (kind, pos, children) => this.make(kind, pos, children),
+            identifier: () => this.identifier(),
+            token: () => this.token(),
+            literal: () => this.literal(),
+            expression: () => this.allowInExpression(),
+            typeArguments: () => this.typeArguments(),
+            missingGreater: () => {
+                this.recoveredJsx = true;
+            },
+            typeTrailing: () => this.lastTypeTrailing,
+        });
+    }
     bindingIdentifier(): boolean {
         return (
             this.kind() === 'Identifier' || (this.kind().endsWith('Keyword') && !reservedKinds.includes(this.kind()))
@@ -239,17 +277,21 @@ export class Parser {
         this.rewind(saved);
         return result;
     }
+    lastTypeTrailing = false;
     typeArguments(): number[] {
         const result: number[] = [];
+        let trailing = false;
         this.expect('LessThanToken');
         while(this.kind() !== 'GreaterThanToken') {
             result.push(this.type());
+            trailing = this.kind() === 'CommaToken';
             if(this.kind() !== 'CommaToken') {
                 break;
             }
             this.next();
         }
         this.expect('GreaterThanToken');
+        this.lastTypeTrailing = trailing;
         return result;
     }
     typeParameters(): number[] {
@@ -1423,6 +1465,9 @@ export class Parser {
     unary(): number {
         const pos = this.scanner.fullStart;
         const operator = this.kind();
+        if(operator === 'LessThanToken' && this.jsx) {
+            return this.suffix(this.jsxParser().element(true), true);
+        }
         if(operator === 'LessThanToken') {
             this.next();
             const type = this.type();
@@ -1516,7 +1561,7 @@ export class Parser {
         return left;
     }
     assignment(allowReturn = true): number {
-        if(arrowAhead(this.scanner, allowReturn)) {
+        if((!this.jsx || jsxArrowAhead(this.scanner)) && arrowAhead(this.scanner, allowReturn)) {
             return this.arrow(allowReturn);
         }
         const pos = this.scanner.fullStart;
