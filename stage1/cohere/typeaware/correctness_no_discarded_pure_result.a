@@ -1,0 +1,50 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Frames, header } from './frames.ts';
+import { declarationLineage } from './declaration_lineage.a';
+const stringMethods = ['at', 'charAt', 'charCodeAt', 'codePointAt', 'concat', 'endsWith', 'includes', 'indexOf', 'isWellFormed', 'lastIndexOf', 'match', 'matchAll', 'padEnd', 'padStart', 'replace', 'replaceAll', 'search', 'slice', 'split', 'startsWith', 'substr', 'substring', 'toLocaleLowerCase', 'toLocaleUpperCase', 'toLowerCase', 'toString', 'toUpperCase', 'toWellFormed', 'trim', 'trimEnd', 'trimLeft', 'trimRight', 'trimStart', 'valueOf'];
+const arrayMethods = ['at', 'concat', 'entries', 'flat', 'includes', 'indexOf', 'join', 'keys', 'lastIndexOf', 'slice', 'toReversed', 'toSorted', 'toSpliced', 'values', 'with'];
+export class NoDiscardedPureResult {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    pure(index: number): boolean {
+        const name = this.rules.parser.node(index).text;
+        if(!stringMethods.includes(name) && !arrayMethods.includes(name)) { return false; }
+        const chains = declarationLineage(this.rules, index);
+        return chains.length > 0 && chains.every((chain) => {
+            const declaration = chain.nodes[0]; const owner = chain.nodes[1];
+            return declaration !== undefined && owner !== undefined && declaration.kind === 'MethodSignature' &&
+                owner.kind === 'InterfaceDeclaration' && declaration.declarationFile && declaration.library &&
+                (owner.name === 'String' ? stringMethods.includes(name) :
+                    ['Array', 'ReadonlyArray'].includes(owner.name) && arrayMethods.includes(name));
+        });
+    }
+    callable(index: number): boolean {
+        index = this.rules.skip(index); const node = this.rules.parser.node(index);
+        if(['ArrowFunction', 'FunctionExpression'].includes(node.kind)) { return true; }
+        const facts = types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        if(!facts.present) { return true; }
+        return facts.parts(facts.root()).some((part) => {
+            if((facts.type(part).flags & 3) !== 0) { return true; }
+            const frames = new Frames(this.rules.ask(index, `call-count\n${part}`)); header(frames, 'call-count');
+            const count = frames.natural(); frames.end(); return count > 0;
+        });
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const statement = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0 || statement.kind !== 'ExpressionStatement') { continue; }
+            const callIndex = this.rules.skip(statement.children[0] ?? -1); const call = this.rules.parser.node(callIndex);
+            if(call.kind !== 'CallExpression') { continue; }
+            const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+            if(callee.kind !== 'PropertyAccessExpression') { continue; }
+            const name = callee.children[callee.children.length - 1] ?? -1;
+            if(this.rules.parser.node(name).kind !== 'Identifier' || !this.pure(name)) { continue; }
+            const args: number[] = call.list > 0 ? call.children.slice(call.children.length - call.list) : [];
+            if(args.some((argument) => this.callable(argument))) { continue; }
+            this.rules.findings.push(new Diagnostic('nexus/correctness-no-discarded-pure-result', 'discardedPureResult',
+                "This call computes a new value and changes nothing, and its result is thrown away, so the statement does nothing. Strings are immutable (`name.trim()` returns a trimmed copy and leaves `name` as it was), and these array methods return a new array or a value without touching the original (`list.concat(more)` does not add to `list`). Assign the result (`name = name.trim()`, `list = list.concat(more)`), use the mutating form (`list.push(...more)`), or delete the statement.", this.rules.byte(this.rules.start(call)), this.rules.byte(call.end), ''));
+        }
+    }
+}

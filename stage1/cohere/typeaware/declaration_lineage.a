@@ -1,0 +1,36 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class LineageNode {
+    readonly key: string; readonly kind: string; readonly name: string; readonly path: string;
+    readonly declarationFile: boolean; readonly library: boolean;
+    readonly children: readonly string[]; readonly declaredType: string;
+    constructor(key: string, kind: string, name: string, path: string, declarationFile: boolean,
+        library: boolean, children: readonly string[], declaredType: string) {
+        this.key = key; this.kind = kind; this.name = name; this.path = path;
+        this.declarationFile = declarationFile; this.library = library;
+        this.children = children; this.declaredType = declaredType;
+    }
+}
+export class DeclarationChain {
+    readonly nodes: readonly LineageNode[];
+    constructor(nodes: readonly LineageNode[]) { this.nodes = nodes; }
+}
+export function declarationLineage(rules: Rules, index: number, identity = 0): DeclarationChain[] {
+    const question = identity === 0 ? 'declaration-lineage' : `declaration-lineage\n${identity}`;
+    const frames = new Frames(rules.ask(index, question)); header(frames, 'declaration-lineage');
+    const result: DeclarationChain[] = []; const count = frames.natural();
+    for(let at = 0; at < count; at++) {
+        const length = frames.natural(); const nodes: LineageNode[] = [];
+        for(let n = 0; n < length; n++) {
+            const key = frames.field(); const kind = frames.field(); const name = frames.field();
+            const path = frames.field(); const declarationFile = frames.yes(); const library = frames.yes();
+            const childCount = frames.natural(); const children: string[] = [];
+            for(let c = 0; c < childCount; c++) { children.push(frames.field()); }
+            nodes.push(new LineageNode(key, kind, name, path, declarationFile, library, children, frames.field()));
+        }
+        if(nodes.length === 0) { panic('empty declaration lineage'); }
+        result.push(new DeclarationChain(nodes));
+    }
+    frames.end(); return result;
+}

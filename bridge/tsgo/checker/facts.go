@@ -203,6 +203,10 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "declaration-lineage":
+		return p.declarationLineage(out, c, node, question)
+	case "awaited-type-shape":
+		return p.awaitedTypeShape(out, c, node, question)
 	case "number-index-type":
 		return p.numberIndexType(out, c, question)
 	case "resolved-signature-equal":

@@ -1,0 +1,62 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { declarationLineage } from './declaration_lineage.a';
+import { awaitedType } from './awaited_type_shape.a';
+const names = ['JsonParseOutcomeType', 'JsoncParseOutcomeType', 'JsonFileReadOutcomeType', 'JsonFileWriteOutcomeType', 'PackageJsonReadOutcomeType'];
+const suffixes = ['/nexus/source/structured-text/json/Json.ts', '/nexus/source/structured-text/json/Jsonc.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/system/PackageJson.ts'];
+class OutcomeArms {
+    readonly name: string; readonly count: number; readonly seen: string[] = [];
+    constructor(name: string, count: number) { this.name = name; this.count = count; }
+}
+export class NoDiscardedOutcome {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    typeName(index: number, awaited: boolean): string {
+        const facts = awaited ? awaitedType(this.rules, index) : types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        if(!facts.present) { return ''; }
+        const groups = new Map<string, OutcomeArms>();
+        for(const part of facts.parts(facts.root())) {
+            for(const chain of declarationLineage(this.rules, index, part)) {
+                const nodes = chain.nodes; const declaration = nodes[0];
+                if(declaration === undefined || declaration.kind !== 'TypeLiteral') { continue; }
+                let at = 1;
+                while(nodes[at]?.kind === 'ParenthesizedType') { at++; }
+                const union = nodes[at];
+                if(union === undefined || union.kind !== 'UnionType') { continue; }
+                at++;
+                while(nodes[at]?.kind === 'ParenthesizedType') { at++; }
+                const alias = nodes[at];
+                if(alias === undefined || alias.kind !== 'TypeAliasDeclaration' || nodes[at + 1]?.kind !== 'SourceFile' ||
+                    alias.declaredType !== nodes[at - 1]?.key) { continue; }
+                const known = names.indexOf(alias.name);
+                if(known < 0 || !alias.path.endsWith(suffixes[known] ?? '')) { continue; }
+                if(!groups.has(union.key)) { groups.set(union.key, new OutcomeArms(alias.name, union.children.length)); }
+                const group = groups.get(union.key);
+                if(group !== undefined && !group.seen.includes(declaration.key)) { group.seen.push(declaration.key); }
+            }
+        }
+        for(const name of names) {
+            for(const group of groups.values()) {
+                if(group.name === name && group.seen.length === group.count) { return name; }
+            }
+        }
+        return '';
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if((this.rules.parents[index] ?? -1) < 0 || node.kind !== 'ExpressionStatement') { continue; }
+            let expression = this.rules.skip(node.children[0] ?? -1); let awaited = false;
+            if(this.rules.parser.node(expression).kind === 'AwaitExpression') {
+                expression = this.rules.skip(this.rules.parser.node(expression).children[0] ?? -1); awaited = true;
+            }
+            if(this.rules.parser.node(expression).kind !== 'CallExpression') { continue; }
+            const name = this.typeName(expression, awaited);
+            if(name === '') { continue; }
+            const message = "This call returns a `{{typeName}}` and the statement throws it away, so the arm that says it failed (a write that never landed, a file that would not parse) is never read and the code runs on as if it succeeded. Keep the outcome and handle its failure arm, or return it to a caller that will. If ignoring it is the intent, say so with `void`.".replace('{{typeName}}', name);
+            this.rules.findings.push(new Diagnostic('nexus/correctness-no-discarded-outcome', 'outcomeDiscarded', message,
+                this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+        }
+    }
+}
