@@ -72,13 +72,35 @@ func portDirectory(t *testing.T, applied *mutant) string {
 }
 func askedCases(t *testing.T) (string, string) {
 	t.Helper()
+	fixtures := os.Getenv("ADAMIC_CSS_FIXTURES")
+	if fixtures == "" {
+		t.Skip("ADAMIC_CSS_FIXTURES unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle")
+	}
+	corpus, err := filepath.Abs("testdata/css_corpus.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	manifest, err := os.ReadFile(corpus)
+	if err != nil {
+		t.Fatal(err)
+	}
+	header := strings.SplitN(string(manifest), "\n", 2)[0]
+	const prefix = "# commit "
+	if !strings.HasPrefix(header, prefix) {
+		t.Fatal("CSS corpus has no pinned commit header")
+	}
+	revision := strings.TrimPrefix(header, prefix)
+	checkout := execute(t, nil, "git", "-C", fixtures, "rev-parse", "HEAD")
+	if checkout.exitCode != 0 || len(checkout.stderr) != 0 || strings.TrimSpace(string(checkout.stdout)) != revision {
+		t.Fatalf("ADAMIC_CSS_FIXTURES commit: got %q (%s), want %s", checkout.stdout, checkout.stderr, revision)
+	}
 	directory := t.TempDir()
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
 	side, _ := filepath.Abs("testdata/cohere_side_test.go")
 	packageDirectory := filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
-	request := map[string]any{"cases": cases, "answers": answers, "repository": repo, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")}
+	request := map[string]any{"cases": cases, "answers": answers, "repository": repo, "fixtures": fixtures, "corpus": corpus}
 	encoded, _ := json.Marshal(request)
 	requestPath := filepath.Join(directory, "request.json")
 	if err := os.WriteFile(requestPath, encoded, 0644); err != nil {
@@ -96,7 +118,7 @@ func askedCases(t *testing.T) (string, string) {
 	if err != nil {
 		t.Fatalf("Go oracle: %v\n%s", err, output)
 	}
-	t.Logf("Go oracle: %s", output)
+	t.Logf("%s pinned real-file inputs (both CSS and SCSS modes):\n%s", t.Name(), output)
 	data, err := os.ReadFile(answers)
 	if err != nil {
 		t.Fatal(err)

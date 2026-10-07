@@ -149,6 +149,10 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 
 func TestCSSNumbers(t *testing.T) {
 	t.Parallel()
+	library := os.Getenv("ADAMIC_CSSNUMBERS_LIBRARY")
+	if library == "" {
+		t.Skip("ADAMIC_CSSNUMBERS_LIBRARY unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle")
+	}
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -250,14 +254,11 @@ func TestCSSNumbers(t *testing.T) {
 	if report := leaks(t, program, binary, "--batch", cases); report != "" {
 		t.Fatal(report)
 	}
-	library := os.Getenv("ADAMIC_CSSNUMBERS_LIBRARY")
 	script, _ := filepath.Abs("testdata/library.mjs")
 	if library != "" {
 		answer := execute(t, nil, "node", script, library, cases)
 		clean(t, "Prettier", answer)
 		equal(t, "Prettier", answer.stdout, want.stdout)
-	} else {
-		t.Log("external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY")
 	}
 	// Raw stdout must preserve empty input and terminal newlines, independently of batch escaping.
 	rawTexts := append(append([]string{}, texts[:files]...), "", "a", "a\n", "a\r\n\n", "'😀'", "\"\\'\"")

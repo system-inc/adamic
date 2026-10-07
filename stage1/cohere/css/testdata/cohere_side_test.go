@@ -1,6 +1,7 @@
 package postcss
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -89,7 +90,7 @@ func adamicCohereTexts(t *testing.T) []string {
 }
 
 func TestAdamicPortCases(t *testing.T) {
-	var request struct{ Cases, Answers, Repository, Fixtures string }
+	var request struct{ Cases, Answers, Repository, Fixtures, Corpus string }
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
 	if path == "" {
 		t.Skip("run by Adamic CSS slice")
@@ -108,44 +109,43 @@ func TestAdamicPortCases(t *testing.T) {
 	for _, fixture := range scssParseFixtures {
 		texts = append(texts, fixture.text)
 	}
+	if request.Fixtures == "" {
+		t.Fatal("ADAMIC_CSS_FIXTURES unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle")
+	}
+	manifest, err := os.ReadFile(request.Corpus)
+	if err != nil {
+		t.Fatal(err)
+	}
 	files := map[string]int{}
-	roots := []string{request.Repository}
-	if request.Fixtures != "" {
-		roots = append(roots, request.Fixtures)
-	} else {
-		t.Log("Prettier fixtures absent; set ADAMIC_CSS_FIXTURES")
-	}
-	for _, root := range roots {
-		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			ext := strings.ToLower(filepath.Ext(path))
-			if ext != ".css" && ext != ".scss" && ext != ".less" {
-				return nil
-			}
-			data, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-			if !utf8.Valid(data) {
-				return fmt.Errorf("%s is not UTF-8", path)
-			}
-			texts = append(texts, string(data))
-			files[ext]++
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
+	seen := map[string]bool{}
+	for index, row := range strings.Split(string(manifest), "\n") {
+		if row == "" || strings.HasPrefix(row, "#") {
+			continue
 		}
+		fields := strings.SplitN(row, "\t", 2)
+		if len(fields) != 2 || len(fields[0]) != 64 || !filepath.IsLocal(fields[1]) || seen[fields[1]] {
+			t.Fatalf("invalid CSS corpus row %d: %q", index+1, row)
+		}
+		seen[fields[1]] = true
+		path := filepath.Join(request.Fixtures, filepath.FromSlash(fields[1]))
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatalf("listed CSS fixture %s: %v", fields[1], err)
+		}
+		actual := fmt.Sprintf("%x", sha256.Sum256(data))
+		if actual != fields[0] {
+			t.Fatalf("listed CSS fixture %s: sha256 %s, want %s", fields[1], actual, fields[0])
+		}
+		if !utf8.Valid(data) {
+			t.Fatalf("listed CSS fixture %s is not UTF-8", fields[1])
+		}
+		texts = append(texts, string(data))
+		files[strings.ToLower(filepath.Ext(path))]++
 	}
-	t.Logf("corpus files: %v", files)
+	if len(seen) == 0 {
+		t.Fatal("CSS corpus list is empty")
+	}
+	t.Logf("pinned corpus: %d files; %v; each run in CSS and SCSS modes", len(seen), files)
 	parts := []string{"a", ".a", "#a", "&", "@unknown", "@media screen", "@supports (a:b)", "@a", " ", "\n", "\t", "/*x*/", "/* */", "// a\n", ":", ";", "{", "}", "(", ")", "[", "]", "--x", "b", "c", "!important", "! IMPORTANT", "1px", "#{$x}", "\"a\"", "'x'", "url(x)", "url(a(b))", "a\\:b", "\\e9 ", "😀", "é", ",", "!default"}
 	random := rand.New(rand.NewSource(20261006))
 	for range 6000 {

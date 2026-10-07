@@ -1,0 +1,155 @@
+{
+  "branch": "stage1-format/no-silent-inputs",
+  "base": "97583b3eb7213b8469d5a08f295475c69ab67e76",
+  "landing": "Wait for developer-tools gate inputs to be provisioned on the area; no area/main push.",
+  "fixture_commit": "cb4b33fba24a8428d00e54be85fc886288a374ea",
+  "pinned_counts": {
+    "css": 157,
+    "scss": 90,
+    "less": 43,
+    "total": 290
+  },
+  "count_discrepancy": {
+    "observation": "The exact sparse set contains 290 files. REPORT.md counts 291 by adding one repository CSS file, not 291 plus 43 Less.",
+    "additional_repository_file": "cohere/internal/lint/rules/tailwind/tools/generate_descriptor_base/testdata/independent_theme.css",
+    "additional_repository_file_sha256": "9b05f6c31d21eccfb501e410f39d6b5bfe318dc4b6521f7e83bf7a2f3d57bc36",
+    "treatment": "The manifest follows the addendum requiring paths from the exact fork commit and sparse set. No nonexistent 158th fork CSS file is invented."
+  },
+  "tests": {
+    "TestThePortParsesAsGoCohereDoes": {
+      "variable": "ADAMIC_CSS_FIXTURES",
+      "unset": "SKIP: ADAMIC_CSS_FIXTURES unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle",
+      "set": "PASS",
+      "pinned_files": 290,
+      "cases": 24074
+    },
+    "TestCompositionMatchesGo": {
+      "variable": "ADAMIC_CSS_FIXTURES",
+      "unset": "SKIP: ADAMIC_CSS_FIXTURES unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle",
+      "set": "PASS",
+      "pinned_files": 290,
+      "cases": 24074
+    },
+    "TestCSSPrinterAgreesWithGo": {
+      "variable": "ADAMIC_CSS_FIXTURES",
+      "unset": "SKIP: ADAMIC_CSS_FIXTURES unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle",
+      "set": "PASS",
+      "pinned_files": 290,
+      "cases": 24074
+    },
+    "TestCSSPrinterOptimizedMatchesGo": {
+      "variable": "ADAMIC_CSS_FIXTURES",
+      "unset": "SKIP: ADAMIC_CSS_FIXTURES unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle",
+      "set": "PASS",
+      "pinned_files": 290,
+      "cases": 24074
+    },
+    "TestCSSParserOptimizedMatchesNode": {
+      "variable": "ADAMIC_CSS_FIXTURES",
+      "unset": "SKIP: ADAMIC_CSS_FIXTURES unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle",
+      "set": "PASS",
+      "pinned_files": 290,
+      "cases": 24074
+    },
+    "TestCSSNumbers": {
+      "variable": "ADAMIC_CSSNUMBERS_LIBRARY",
+      "unset": "SKIP: ADAMIC_CSSNUMBERS_LIBRARY unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle",
+      "set": "PASS",
+      "pinned_files": null,
+      "cases": 89786
+    },
+    "TestCSSStrings": {
+      "variable": "ADAMIC_CSSSTRINGS_LIBRARY",
+      "unset": "SKIP: ADAMIC_CSSSTRINGS_LIBRARY unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle",
+      "set": "PASS",
+      "pinned_files": null,
+      "cases": 18674
+    },
+    "TestMarkdownInline": {
+      "variable": "ADAMIC_MARKDOWNINLINE_LIBRARY",
+      "unset": "SKIP: ADAMIC_MARKDOWNINLINE_LIBRARY unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle",
+      "set": "PASS",
+      "pinned_files": null,
+      "cases": 110276
+    }
+  },
+  "overlay_missing_fixtures": "FATAL: ADAMIC_CSS_FIXTURES unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle",
+  "controls": {
+    "missing_file": {
+      "file": "tests/format/css/_errors_/less-syntax.css",
+      "result": "All five CSS tests FAIL naming the absent listed file; package exit 1."
+    },
+    "hash_drift": {
+      "file": "tests/format/css/_errors_/less-syntax.css",
+      "mutation": "Append a CSS comment in the scratch copy.",
+      "result": "All five CSS tests FAIL naming the file and actual/expected SHA256; package exit 1."
+    },
+    "revision": {
+      "actual": "d99223a24fe89bd79dc47991d352c232a88b3eec",
+      "result": "All five CSS tests FAIL naming actual and expected commit; package exit 1."
+    },
+    "unlisted_file": {
+      "file": "unlisted.css",
+      "bytes": "ff756e6c6973746564",
+      "result": "The full CSS gate passes at exactly 290 files; the extra invalid-UTF8 stylesheet is ignored."
+    }
+  },
+  "provisioned": {
+    "ADAMIC_CSS_FIXTURES": "/tmp/no-silent-css-fixtures",
+    "ADAMIC_CSS_LIBRARY": "/tmp/no-silent-css-library (postcss 8.5.16, postcss-scss 4.0.9)",
+    "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/graphql-printer-prettier (prettier 3.9.6)",
+    "ADAMIC_CSSNUMBERS_LIBRARY": "/tmp/graphql-printer-prettier",
+    "ADAMIC_CSSSTRINGS_LIBRARY": "/tmp/graphql-printer-prettier",
+    "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/graphql-printer-prettier/node_modules/prettier"
+  },
+  "unprovisioned": [],
+  "setup": {
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "go_ready_s": 0.045,
+    "node_ready_s": 0.047,
+    "submodules_ready_s": 0.08,
+    "clang_ready_s": 0.325,
+    "markdown_dependencies_ready_s": 0.919,
+    "go_build_ready_s": 30.411,
+    "build_cache_warm_s": 30.649,
+    "total_s": 30.676,
+    "nproc": 5,
+    "cpu_quota": 4
+  },
+  "commands": {
+    "filter": "^Test(ThePortParsesAsGoCohereDoes|CompositionMatchesGo|CSSPrinterAgreesWithGo|CSSPrinterOptimizedMatchesGo|CSSParserOptimizedMatchesNode|CSSNumbers|CSSStrings|MarkdownInline)$",
+    "packages": [
+      "./stage1/cohere/css",
+      "./stage1/cohere/cssnumbers",
+      "./stage1/cohere/cssstrings",
+      "./stage1/cohere/markdowninline"
+    ],
+    "set": "go test -v -count=1 -timeout 30m <packages> -run <filter>, with all provisioned variables exported",
+    "unset": "env -u ADAMIC_CSS_FIXTURES -u ADAMIC_CSSNUMBERS_LIBRARY -u ADAMIC_CSSSTRINGS_LIBRARY -u ADAMIC_MARKDOWNINLINE_LIBRARY go test -v -count=1 <packages> -run <filter>",
+    "controls": "ADAMIC_CSS_FIXTURES=/tmp/no-silent-css-missing go test -v -count=1 ./stage1/cohere/css -run <five CSS test filter>",
+    "logs": [
+      "/tmp/no-silent-unset.log",
+      "/tmp/no-silent-set.log",
+      "/tmp/no-silent-missing.log",
+      "/tmp/no-silent-hash.log",
+      "/tmp/no-silent-revision.log"
+    ]
+  },
+  "package_seconds": {
+    "css": 488.634,
+    "cssnumbers": 33.958,
+    "cssstrings": 19.941,
+    "markdowninline": 466.968
+  },
+  "additional_validation": [
+    "Existing raw/composition/printer/leaf mutants pass.",
+    "go vet on all four touched packages: exit 0, empty output.",
+    "gofmt on all four touched packages: empty output.",
+    "git diff --check: empty output."
+  ],
+  "not_covered": [
+    "Full repository gate",
+    "macOS execution",
+    "One extra repository stylesheet absent from the exact fork sparse set"
+  ]
+}

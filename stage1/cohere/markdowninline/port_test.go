@@ -149,6 +149,10 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 
 func TestMarkdownInline(t *testing.T) {
 	t.Parallel()
+	library := os.Getenv("ADAMIC_MARKDOWNINLINE_LIBRARY")
+	if library == "" {
+		t.Skip("ADAMIC_MARKDOWNINLINE_LIBRARY unset; #xq2ecw6 (setup --gate-inputs) provisions this oracle")
+	}
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -256,14 +260,11 @@ func TestMarkdownInline(t *testing.T) {
 	if report := leaks(t, program, binary, "--batch", cases); report != "" {
 		t.Fatal(report)
 	}
-	library := os.Getenv("ADAMIC_MARKDOWNINLINE_LIBRARY")
 	script, _ := filepath.Abs("testdata/library.mjs")
 	if library != "" {
 		answer := execute(t, nil, "node", script, library, cases)
 		clean(t, "Prettier", answer)
 		equal(t, "Prettier", answer.stdout, want.stdout)
-	} else {
-		t.Log("external library not checked: set ADAMIC_MARKDOWNINLINE_LIBRARY")
 	}
 	t.Logf("Go/native/Node/JavaScript backend/Prettier batch byte parity passed (%d cases)", len(texts)*len(modes))
 	// Independently verify raw stdout preserves every repository text and terminal newlines.
