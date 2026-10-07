@@ -1,4 +1,4 @@
-import { panic } from 'adamic';
+import { SuggestionEdit, Suggestion as SharedSuggestion } from '../../suggestions.a';
 import type { RuleContext } from '../../context.ts';
 
 export class Edit {
@@ -36,17 +36,17 @@ export class Result {
     }
 
 }
-// Keep complete proposals in owned data. Refuse instead of losing them at the
-// current shared bridge. Integration can consume Result when its model expands.
+// Preserve complete edit ranges through the published shared finding model.
 export function publish(context: RuleContext, result: Result): void {
-    if(result.suggestions.length > 0 || result.start !== context.start(result.index) || result.end !== context.node(result.index).end) {
-        panic(`NotYet: shared lint repair serialization for ${result.rule}`);
+    const edits: SuggestionEdit[] = [];
+    for(const edit of result.edits) { edits.push(new SuggestionEdit(edit.start, edit.end, edit.text)); }
+    const suggestions: SharedSuggestion[] = [];
+    for(const suggestion of result.suggestions) {
+        const replacements: SuggestionEdit[] = [];
+        for(const edit of suggestion.edits) { replacements.push(new SuggestionEdit(edit.start, edit.end, edit.text)); }
+        suggestions.push(new SharedSuggestion(suggestion.id, suggestion.message, replacements));
     }
-    const edit = result.edits[0];
-    if(edit !== undefined && (edit.start !== context.start(result.index) || edit.end !== context.node(result.index).end)) {
-        panic(`NotYet: shared lint independent repair range for ${result.rule}`);
-    }
-    context.report(result.index, result.rule, result.id, result.message, edit === undefined ? '' : 'fix', edit === undefined ? '' : edit.text, '');
+    context.reportRange(result.start, result.end, result.rule, result.id, result.message, edits, suggestions);
 }
 
 export function emptyEdits(): Edit[] { const edits: Edit[] = []; return edits; }

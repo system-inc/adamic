@@ -1,6 +1,0 @@
-{
-  "name": "typescript-prefer-as-const_semantic",
-  "file": "rule.a",
-  "from": "node.text === this.context.node(initializer).text",
-  "to": "node.text !== this.context.node(initializer).text"
-}

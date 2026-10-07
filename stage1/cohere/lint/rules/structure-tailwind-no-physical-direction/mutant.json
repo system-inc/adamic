@@ -1,6 +1,0 @@
-{
-  "name": "direction_exemption_removed",
-  "file": "rule.a",
-  "from": "if(directionAware) {",
-  "to": "if(directionAware && false) {"
-}

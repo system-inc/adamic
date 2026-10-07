@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { Edit, Result, emptyResults, publish } from '../typescript-no-unnecessary-type-constraint/results.a';
+import { Edit, Result, emptyResults, publish } from '../no-multi-str/retired-wave15/typescript-no-unnecessary-type-constraint/results.a';
 import { requireCorrectAlias, requireNamespaceImport, requireNodePrefix, render } from './messages.a';
 
 // Numeric SyntaxKind values from the pinned Go parser: ImportDeclaration.

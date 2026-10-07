@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { Result, emptyResults, publish } from '../typescript-no-unnecessary-type-constraint/results.a';
+import { Result, emptyResults, publish } from '../no-multi-str/retired-wave15/typescript-no-unnecessary-type-constraint/results.a';
 import { noArrayWithStringLiteralInvalidateCache, noStringLiteralInvalidateCache, noTemplateLiteralInvalidateCache } from './messages.a';
 
 // Numeric SyntaxKind values from the pinned Go parser: CallExpression.

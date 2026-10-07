@@ -1,6 +1,0 @@
-{
-  "name": "typescript-no-unnecessary-type-constraint_semantic",
-  "file": "rule.a",
-  "from": "kind !== 'AnyKeyword' && kind !== 'UnknownKeyword'",
-  "to": "kind !== 'AnyKeyword' && kind !== 'NeverKeyword'"
-}
