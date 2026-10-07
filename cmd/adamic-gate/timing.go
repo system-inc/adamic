@@ -42,7 +42,7 @@ func median(values []float64) float64 {
 
 // Each input is one shard invocation log. Repeated parents must not overwrite one another.
 func calibrateTimings(paths []string) (map[string]float64, timingCalibration, error) {
-	audit := timingCalibration{Method: "median shard observations; split parents: median residual plus union of child medians; layout: sum member medians less per-member fixture span plus one median fixture span", Observations: map[string][]timingObservation{}}
+	audit := timingCalibration{Method: "median shard observations; split parents: median residual plus union of child medians; layout: measured joint invocation when available, otherwise sum member medians less per-member fixture span plus one median fixture span", Observations: map[string][]timingObservation{}}
 	weights := map[string]float64{}
 	for _, path := range paths {
 		digest, err := fileDigest(path)
@@ -94,6 +94,13 @@ func calibrateTimings(paths []string) (map[string]float64, timingCalibration, er
 				return nil, audit, fmt.Errorf("%s: failed invocation %s", path, key)
 			}
 			if e.Test == "" {
+				if e.Action == "pass" {
+					for _, group := range calibrationAffinities() {
+						if !group.WholePackage && group.Package == e.Package && matchesAffinityInvocation(group, observations) {
+							audit.Observations[group.key()] = append(audit.Observations[group.key()], timingObservation{Log: path, Seconds: e.Elapsed})
+						}
+					}
+				}
 				if e.Action == "start" || e.Action == "pass" || e.Action == "skip" {
 					flush(e.Package)
 				}
@@ -174,18 +181,15 @@ func calibrateTimings(paths []string) (map[string]float64, timingCalibration, er
 		}
 		weights[key] = seconds
 	}
-	groups := knownAffinities()
-	for _, g := range planningAffinities() {
-		if g.Split != "" {
-			groups = append(groups, g)
-		}
-	}
-	for _, g := range groups {
+	for _, g := range calibrationAffinities() {
+		if len(audit.Observations[g.key()]) > 0 {
+			continue
+		} // A joint invocation is stronger evidence than reconstructed parent spans.
 		if g.WholePackage {
 			for key := range weights {
 				if strings.HasPrefix(key, g.Package+"::") {
 					test := strings.TrimPrefix(key, g.Package+"::")
-					if !strings.Contains(test, "/") {
+					if !strings.Contains(test, "/") && !strings.HasPrefix(test, "@") {
 						g.Tests = append(g.Tests, test)
 					}
 				}
@@ -227,4 +231,36 @@ func calibrateTimings(paths []string) (map[string]float64, timingCalibration, er
 	}
 	sort.Strings(audit.Missing)
 	return weights, audit, nil
+}
+
+func matchesAffinityInvocation(group affinity, observations map[string]*timingObservation) bool {
+	members := map[string]bool{}
+	for _, name := range group.Tests {
+		members[name] = true
+	}
+	seen := 0
+	for key := range observations {
+		if !strings.HasPrefix(key, group.Package+"::") {
+			continue
+		}
+		name := strings.TrimPrefix(key, group.Package+"::")
+		if strings.Contains(name, "/") {
+			continue
+		}
+		if !members[name] {
+			return false
+		}
+		seen++
+	}
+	return seen == len(members)
+}
+
+func calibrationAffinities() []affinity {
+	groups := knownAffinities()
+	for _, g := range planningAffinities() {
+		if g.Split != "" {
+			groups = append(groups, g)
+		}
+	}
+	return groups
 }

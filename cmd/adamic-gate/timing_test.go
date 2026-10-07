@@ -118,3 +118,21 @@ func TestTimingsReorderingIsByteIdentical(t *testing.T) {
 		}
 	}
 }
+
+func TestTimingsUseMeasuredHalfSpan(t *testing.T) {
+	half := planningAffinities()[1]
+	events := []event{{Action: "start", Package: half.Package}}
+	for _, name := range half.Tests {
+		events = append(events, event{Action: "pass", Package: half.Package, Test: name, Elapsed: 12})
+	}
+	events = append(events, event{Action: "pass", Package: half.Package, Elapsed: 15})
+	weights, _, err := calibrateTimings([]string{timingLog(t, events...)})
+	if err != nil || weights[half.key()] != 15 {
+		t.Fatal("lost measured joint half span", weights[half.key()], err)
+	}
+	events = append(events[:len(events)-1], event{Action: "pass", Package: half.Package, Test: "TestUnrelated", Elapsed: 5}, event{Action: "pass", Package: half.Package, Elapsed: 20})
+	weights, _, err = calibrateTimings([]string{timingLog(t, events...)})
+	if err != nil || weights[half.key()] != 48 {
+		t.Fatal("unrelated package work treated as joint half", weights[half.key()], err)
+	}
+}

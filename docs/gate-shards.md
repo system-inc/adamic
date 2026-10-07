@@ -1380,3 +1380,11 @@ compare provenance, and vet passed. Five split overlay mutants were caught:
 The compare-provenance implementation remains in commit `be217bbd`; its local
 matching, wrong-commit, wrong-Node, wrong-Go, and legacy-toolchain tests pass
 with the new split. No second provenance implementation is needed.
+
+Completed half logs now calibrate their affinity cost directly from the Go
+package terminal elapsed span when the invocation contains exactly that half's
+parents. Logs with unrelated package work do not qualify; reconstructed costs
+remain the fallback. `TestTimingsUseMeasuredHalfSpan` verifies both cases, and
+an overlay removing joint-span observation fails that test. This sixth split
+mutant prevents overlapping parent elapsed times from inflating the measured
+half cost. The updated focused race tests and vet pass.
