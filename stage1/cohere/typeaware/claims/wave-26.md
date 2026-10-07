@@ -221,3 +221,13 @@ checks passed again. See ../wave_26_react_attributes/LANDING_B8_REPORT.md
 for the exact command ledger, mutant observations and native/Go costs.
 The final all-branch fetch scanned 554 origin refs and again found zero
 unclaimed ranked rules. No new claim was made.
+
+## Area landing re-green, October 7
+
+Rebased onto area/stage1-lint 7481e032, containing current main 39638d9e
+and merged harness 41eb6eab2. All twenty-one rule oracles, mutants, both
+corpora, sanitizers and released-handle checks passed again, along with
+registry and merged harness checks. Exact commands, outputs and costs are
+in ../wave_26_react_attributes/LANDING_AREA_REPORT.md. A final explicit
+all-head fetch with pruning found 433 current origin refs and zero
+unclaimed ranked rules. No further rules were claimed.
