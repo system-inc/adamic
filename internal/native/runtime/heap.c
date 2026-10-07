@@ -315,11 +315,11 @@ static void free_one(void *value) {
 	ADAMIC_COUNT_FREE();
 }
 
-void adamic_release(void *value) {
-	ADAMIC_COUNT_RELEASE();
-	let_go(value);
-	if (freeing_count == 0 || draining) {
-		// Nothing reached its last reference, or an outer release is already draining the list.
+// Keep destruction out of the common release path: null, immortal and still-shared values need
+// no destruction registers or queue access. The list still drains iteratively, including children.
+__attribute__((noinline)) static void release_last(void *value) {
+	list(value);
+	if (draining) {
 		return;
 	}
 	draining = true;
@@ -327,4 +327,13 @@ void adamic_release(void *value) {
 		free_one(freeing[--freeing_count]);
 	}
 	draining = false;
+}
+
+void adamic_release(void *value) {
+	ADAMIC_COUNT_RELEASE();
+	adamic_heap *heap = value;
+	if (heap == NULL || heap->references == 0 || --heap->references != 0) {
+		return;
+	}
+	release_last(value);
 }
