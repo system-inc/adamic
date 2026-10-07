@@ -502,9 +502,9 @@ Concrete handoffs required from the shared owners before source admission:
 
 1. Reconcile lazy-admission `5002bfe0` with this base in cast.go,
    interface_cast.go, readiness.go, view_objects.go and native/view_fields.go.
-   The attempted merge was aborted with all shared code restored. Fix the base
-   checker/submodule pin too: setup currently fails on missing RootedFilePath
-   and changed NewCachedFSCompilerHost arguments.
+   The attempted merge was aborted with all shared code restored. Initial setup
+   failed on checker APIs; restoring both exact submodule checkouts recovered
+   the compiler build without a committed pin or loader change.
 2. Add ViewDictionary to the common contract kinds, with Element referring to
    the shared recursive child registry. Add a viewDictionaryContractHook to
    view_contracts.go after array/callable dispatch, before ordinary object
@@ -534,3 +534,10 @@ October 14 estimate was provisional before inspecting the source representation.
 No unconditional completion date is defensible while shared source probing and
 record compiler lowering are absent. No pair is completed by a ranking or a
 component oracle. Each push records actual source support separately.
+
+Coordination update: consume other lanes only through `codex/views-integration`.
+Both earlier direct merges were aborted. The integration ref was absent at this
+unit's final remote check. Dictionary source admission remains blocked on the
+registry, record compiler operations, source probes and transitive indexed-read
+hooks above. The recovered exact submodule checkout builds successfully; setup
+rerun exits 0 in 24.177s and the existing record package passes in 11.344s.
