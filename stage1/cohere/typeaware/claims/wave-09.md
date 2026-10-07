@@ -68,3 +68,23 @@ ties are reserved on this branch before implementation:
 
 This claim update is pushed before code. No shared harness or registration
 generator edits. New Adamic files use .a.
+
+## Current continuation status
+
+`no-label-var` is implemented and independently compared on 77 compiler and
+287 repository files, plus 34 supported positive/negative controls. One upstream
+`undefined:` label fixture is refused by the shared native parser and is recorded,
+not counted as covered. The new raw scope-symbol question is delivered inside
+wave09_core/label_var/testdata and validated with temporary Go overlays; the
+shared registration files remain untouched.
+
+`no-invalid-regexp` and `no-misleading-character-class` are partial native ports.
+Flag diagnostics and character-sequence judgments match production Go helpers;
+the exact native pattern compiler, class parser, reference tracker and cooked/raw
+mapping remain unresolved. These are not complete ports or full-corpus parity.
+No additional rules are claimed. See ../wave09_core/REPORT.md.
+
+The final origin refresh found a later duplicate reservation on wave 14:
+350d4776 at 01:22:58 UTC. This wave's claim 0a4e2f17 was committed and pushed at
+01:20:27 UTC and absent from all other claims in the immediate second refresh.
+Both reservations and timestamps are saved for Ahra; this earlier claim remains.

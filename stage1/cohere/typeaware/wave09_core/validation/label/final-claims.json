@@ -1,0 +1,26 @@
+{
+  "remote_refs": 342,
+  "claim_blobs": 33,
+  "matches": [
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-09",
+      "file": "stage1/cohere/typeaware/claims/wave-09.md",
+      "blob": "2b167326c79d4c94ecd0400bb44c1c5dfc7b4fbc",
+      "rules": [
+        "no-invalid-regexp",
+        "no-label-var",
+        "no-misleading-character-class"
+      ]
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-14",
+      "file": "stage1/cohere/typeaware/claims/wave-14.md",
+      "blob": "46dd6f64bb6411546eed058db8e8de5e12cc6653",
+      "rules": [
+        "no-invalid-regexp",
+        "no-label-var",
+        "no-misleading-character-class"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+Integration instructions only. No shared generator or harness was edited.
+Copy testdata/scope_value_symbols.go to bridge/tsgo/checker/scope_value_symbols.go.
+Go checker dispatch line:
+case "scope-value-symbols": return scopeValueSymbols(c, node, question)
+The Adamic decoder is scope_value_symbols.a beside no_label_var.a.
+The isolated main.a demonstrates the native registration call:
+new NoLabelVar(linter).run();
+Shared native module/profile registration is owned by codex/lint-harness-dot-a.

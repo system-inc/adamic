@@ -1,0 +1,108 @@
+// Partial port: front-end selection and flags. A native pattern compiler is required.
+import { panic } from 'adamic';
+import type { Rules } from '../../rules.ts';
+import { Diagnostic } from '../../diagnostic.ts';
+import { DeclarationFileFlags } from '../../declaration_file_flags.a';
+
+export class FlagFault {
+    readonly kind: string;
+    readonly flag: string;
+    constructor(kind: string, flag: string) { this.kind = kind; this.flag = flag; }
+}
+function characters(text: string): string[] {
+    const values: string[] = [];
+    for(let at = 0; at < text.length;) {
+        const point = text.codePointAt(at) ?? panic('missing flag code point');
+        const width = point > 65535 ? 2 : 1;
+        values.push(text.slice(at, at + width)); at += width;
+    }
+    return values;
+}
+export function invalidFlags(flags: string, extra: readonly string[]): FlagFault {
+    const known = new Set<string>(['d', 'g', 'i', 'm', 's', 'u', 'v', 'y']);
+    for(const text of extra) { for(const flag of characters(text)) { known.add(flag); } }
+    const struck = new Set<string>();
+    const remaining: string[] = [];
+    for(const flag of characters(flags)) {
+        if(known.has(flag) && !struck.has(flag)) { struck.add(flag); }
+        else { remaining.push(flag); }
+    }
+    if(flags.includes('u') && flags.includes('v')) { return new FlagFault('mutually-exclusive', ''); }
+    for(const flag of remaining) { if(known.has(flag)) { return new FlagFault('duplicate', flag); } }
+    return remaining.length > 0 ? new FlagFault('unknown', remaining[0] ?? '') : new FlagFault('none', '');
+}
+// quoted is the Go-compatible rune spelling supplied by the formatter adapter.
+export function flagsMessage(flags: string, fault: FlagFault, quoted: string): string {
+    if(fault.kind === 'none') { return ''; }
+    const prefix = `Invalid regular expression flags: ${flags}. `;
+    if(fault.kind === 'mutually-exclusive') { return `${prefix}The u and v flags cannot both be set`; }
+    return `${prefix}${fault.kind === 'duplicate' ? 'Duplicate' : 'Unknown'} flag ${quoted}`;
+}
+export class PatternCompileResult {
+    readonly error: string;
+    readonly unsupported: boolean;
+    constructor(error: string, unsupported: boolean) { this.error = error; this.unsupported = unsupported; }
+}
+export function patternMessage(pattern: string, result: PatternCompileResult): string {
+    if(result.error === '') { return ''; }
+    let error = result.error;
+    if(!result.unsupported) {
+        const separator = error.indexOf(': ');
+        if(separator >= 0) { error = error.slice(separator + 2); }
+    }
+    return `Invalid regular expression: /${pattern}/: ${error}`;
+}
+export function compileFlags(flags: string): string {
+    let result = '';
+    for(const flag of ['i', 'm', 's', 'u']) { if(flags.includes(flag)) { result += flag; } }
+    if(!result.includes('u') && flags.includes('v')) { result += 'u'; }
+    return result;
+}
+export class NoInvalidRegExp {
+    readonly rules: Rules;
+    readonly compile: (pattern: string, flags: string) => PatternCompileResult;
+    readonly quote: (flag: string) => string;
+    readonly allowed: readonly string[];
+    constructor(rules: Rules, compile: (pattern: string, flags: string) => PatternCompileResult,
+        quote: (flag: string) => string, allowed: readonly string[]) {
+        this.rules = rules; this.compile = compile; this.quote = quote; this.allowed = allowed;
+    }
+    report(index: number, message: string): void {
+        if(message === '') { return; }
+        const r = this.rules; const node = r.parser.node(index);
+        r.findings.push(new Diagnostic('no-invalid-regexp', 'invalidRegexp', message, r.byte(r.start(node)), r.byte(node.end), ''));
+    }
+    pattern(pattern: string, flags: string): string { return patternMessage(pattern, this.compile(pattern, compileFlags(flags))); }
+    check(index: number): void {
+        const r = this.rules; const node = r.parser.node(index);
+        const callee = r.skip(node.children[0] ?? -1); const target = r.parser.node(callee);
+        if(target.kind !== 'Identifier' || target.text !== 'RegExp') { return; }
+        const origin = new DeclarationFileFlags(r, callee);
+        if(!origin.present || origin.declared.length === 0 || !origin.files.every((present) => present) || !origin.declared.every((declared) => declared)) { return; }
+        if(node.list <= 0) { return; }
+        const args = node.children.slice(node.children.length - node.list);
+        let known = args.length < 2; let flags = '';
+        if(args.length >= 2) { const second = r.parser.node(args[1] ?? -1); known = second.kind === 'StringLiteral'; if(known) { flags = second.text; } }
+        if(known) {
+            const fault = invalidFlags(flags, this.allowed);
+            if(fault.kind !== 'none') { this.report(index, flagsMessage(flags, fault, this.quote(fault.flag))); return; }
+        }
+        const first = r.parser.node(args[0] ?? -1);
+        if(first.kind !== 'StringLiteral') { return; }
+        if(known) {
+            if(!flags.includes('v')) { this.report(index, this.pattern(first.text, flags)); }
+        }
+        else {
+            const unicode = this.pattern(first.text, 'u'); const neither = this.pattern(first.text, '');
+            if(unicode !== '' && neither !== '') { this.report(index, neither); }
+        }
+    }
+    run(): void {
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            if(['CallExpression', 'NewExpression'].includes(this.rules.parser.node(at).kind)) { this.check(at); }
+        }
+    }
+}
+export function requireNativePatternCompiler(): never {
+    panic('no-invalid-regexp requires a native equivalent of cohere esregexp.Compile and its exact error strings');
+}

@@ -1,0 +1,45 @@
+[
+  {
+    "name": "label scope inversion",
+    "expected_sha256": "8c1009b7f512495cfd46957341685a7654dea82d1006ca58eb94e614339c50cf",
+    "mutant_sha256": "007285936a69c791f4c73ce444f14a5e27dc9535276b210ada8ce604c4999405",
+    "first_difference": 43,
+    "normal_exit": 0,
+    "normal_stderr": "empty",
+    "caught_by": "production Go byte comparison"
+  },
+  {
+    "name": "checker Value to Variable mask",
+    "expected_sha256": "8c1009b7f512495cfd46957341685a7654dea82d1006ca58eb94e614339c50cf",
+    "mutant_sha256": "6fb6d2b493ffd5a2b2c3376871d8ab7310e1ee67bdcb2b3b06aa96efb571e09f",
+    "first_difference": 1296,
+    "normal_exit": 0,
+    "normal_stderr": "empty",
+    "caught_by": "production Go byte comparison"
+  },
+  {
+    "name": "u/v priority removal",
+    "expected_sha256": "0ceed81b004809d9208c56e28f18820b9198e21984c0b9bbf3324b5aaca6cfff",
+    "mutant_sha256": "561bde58974adb53bd460403414ac5d255ccffa002604a8b99cac585f58c0d3c",
+    "first_difference": 2,
+    "normal_exit": 0,
+    "normal_stderr": "empty",
+    "caught_by": "production Go byte comparison"
+  },
+  {
+    "name": "emoji modifier lower bound",
+    "expected_sha256": "92c366dec30b988f033ed42222c11eb23db3285e36bc9820bb216f5bcf7925bc",
+    "mutant_sha256": "314a5a946078dbe84ff7889d926a90dd641707d984266d8a962cba880195bdd8",
+    "first_difference": 9310,
+    "normal_exit": 0,
+    "normal_stderr": "empty",
+    "caught_by": "production Go byte comparison"
+  },
+  {
+    "name": "retained released handle",
+    "normal_exit": 0,
+    "expected_exit": 70,
+    "caught_by": "required invalid/released panic",
+    "released_asan_exit": 70
+  }
+]

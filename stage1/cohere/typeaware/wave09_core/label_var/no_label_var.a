@@ -1,0 +1,24 @@
+import type { Rules } from '../../rules.ts';
+import { Diagnostic } from '../../diagnostic.ts';
+import { ScopeValueSymbols } from './scope_value_symbols.a';
+const message = 'This label has the same name as a variable in scope, so the same word means two different things a few lines apart and neither reading is wrong on sight. A reader who sees `break x` has to know whether `x` is the label or the variable before they can say what the statement does. Rename the label.';
+export class NoLabelVar {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    run(): void {
+        const r = this.rules;
+        for(let at = 0; at < r.parser.nodes.length; at++) {
+            const node = r.parser.node(at);
+            if(node.kind !== 'LabeledStatement') { continue; }
+            const nameIndex = node.children[0] ?? -1;
+            if(nameIndex < 0) { continue; }
+            const label = r.parser.node(nameIndex).text;
+            if(label === '') { continue; }
+            const scope = new ScopeValueSymbols(r, at);
+            if(scope.names.includes(label)) {
+                r.findings.push(new Diagnostic('no-label-var', 'identifierClashWithLabel', message,
+                    r.byte(r.start(node)), r.byte(node.end), ''));
+            }
+        }
+    }
+}

@@ -1,0 +1,104 @@
+// Partial port: the sequence detectors consume parsed class members explicitly.
+// Regex class parsing, reference tracking and cooked/raw source mapping remain prerequisites.
+import { panic } from 'adamic';
+import { written } from '../../../../typescript/parser/nodes.ts';
+const messageMisleadingSurrogatePairId = "surrogatePair";
+const messageMisleadingSurrogatePairText = "This character class holds a surrogate pair spelled partly as a code point escape, so what looks like one astral character is two independent class members. The class matches either half on its own and never the character the author wrote, which is a match that silently succeeds on the wrong input rather than an error anybody sees.";
+const messageMisleadingSurrogatePairWithoutUnicodeFlagId = "surrogatePairWithoutUFlag";
+const messageMisleadingSurrogatePairWithoutUnicodeFlagText = "This character class holds an astral character while the pattern has neither the u nor the v flag, so the engine reads it as its two UTF-16 halves and the class matches either half alone. `/[👍]/` matches the two lone surrogates that spell it and never the emoji; adding the flag is what makes the class mean the character it looks like.";
+const messageMisleadingCombiningClassId = "combiningClass";
+const messageMisleadingCombiningClassText = "This character class holds a base character followed by a combining mark, which renders as one glyph and is two code points. The class matches the base or the mark separately, so `/[Á]/` accepts a bare `A` and accepts a stray accent, and rejects the accented letter it appears to name.";
+const messageMisleadingEmojiModifierId = "emojiModifier";
+const messageMisleadingEmojiModifierText = "This character class holds an emoji followed by a skin tone modifier, which is one glyph made of two code points. The class matches the unmodified emoji or the bare modifier, so it accepts inputs nobody meant to accept and rejects the modified emoji itself.";
+const messageMisleadingRegionalIndicatorId = "regionalIndicatorSymbol";
+const messageMisleadingRegionalIndicatorText = "This character class holds a pair of regional indicator symbols, which render as one flag and are two code points. The class matches either letter alone, so a flag class built this way accepts every other flag that shares a letter with it.";
+const messageMisleadingZeroWidthJoinerId = "zwj";
+const messageMisleadingZeroWidthJoinerText = "This character class holds characters spliced by a zero width joiner, which renders as one glyph and is three or more code points. The class matches each piece on its own, so a family emoji written this way matches the individual people in it and never the family.";
+
+export class ClassCharacter {
+    readonly value: number; readonly start: number; readonly end: number;
+    readonly codePointEscape: boolean; readonly escaped: boolean;
+    constructor(value: number, start: number, end: number, codePointEscape: boolean, escaped: boolean) {
+        this.value = value; this.start = start; this.end = end; this.codePointEscape = codePointEscape; this.escaped = escaped;
+    }
+}
+export class MisleadingFinding {
+    readonly start: number; readonly end: number; readonly id: string; readonly message: string; readonly suggest: boolean;
+    constructor(from: ClassCharacter, to: ClassCharacter, id: string, message: string, suggest = false) {
+        this.start = from.start; this.end = to.end; this.id = id; this.message = message; this.suggest = suggest;
+    }
+    written(): string { return `${this.start}\t${this.end}\t${this.id}\t${written(this.message)}\t${this.suggest ? 1 : 0}`; }
+}
+export function combining(value: number): boolean {
+    return (value >= 0x0300 && value <= 0x036f) || (value >= 0x1ab0 && value <= 0x1aff) ||
+        (value >= 0x1dc0 && value <= 0x1dff) || (value >= 0x20d0 && value <= 0x20ff) ||
+        (value >= 0xfe00 && value <= 0xfe0f) || (value >= 0xfe20 && value <= 0xfe2f) ||
+        (value >= 0xe0100 && value <= 0xe01ef);
+}
+export function regional(value: number): boolean { return value >= 0x1f1e6 && value <= 0x1f1ff; }
+export function modifier(value: number): boolean { return value >= 0x1f3fb && value <= 0x1f3ff; }
+export function surrogate(high: number, low: number): boolean { return high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff; }
+export function sequenceFindings(sequence: readonly ClassCharacter[]): MisleadingFinding[] {
+    const found: MisleadingFinding[] = [];
+    for(let at = 1; at < sequence.length; at++) {
+        const previous = sequence[at - 1] ?? panic('missing previous class member');
+        const current = sequence[at] ?? panic('missing current class member');
+        if(!current.escaped && combining(current.value) && !combining(previous.value)) {
+            found.push(new MisleadingFinding(previous, current, messageMisleadingCombiningClassId, messageMisleadingCombiningClassText));
+        }
+        if(previous.escaped || current.escaped) { continue; }
+        if(regional(previous.value) && regional(current.value)) {
+            found.push(new MisleadingFinding(previous, current, messageMisleadingRegionalIndicatorId, messageMisleadingRegionalIndicatorText));
+        }
+        if(modifier(current.value) && !modifier(previous.value)) {
+            found.push(new MisleadingFinding(previous, current, messageMisleadingEmojiModifierId, messageMisleadingEmojiModifierText));
+        }
+    }
+    let joinStart = -1; let joinEnd = -1;
+    for(let at = 1; at + 1 < sequence.length; at++) {
+        const left = sequence[at - 1] ?? panic('missing join left');
+        const center = sequence[at] ?? panic('missing join center');
+        const right = sequence[at + 1] ?? panic('missing join right');
+        if(center.value !== 0x200d || left.escaped || center.escaped || right.escaped || left.value === 0x200d || right.value === 0x200d) { continue; }
+        if(joinStart >= 0 && joinEnd === at - 1) { joinEnd = at + 1; continue; }
+        if(joinStart >= 0) {
+            found.push(new MisleadingFinding(sequence[joinStart] ?? panic('missing join start'), sequence[joinEnd] ?? panic('missing join end'), messageMisleadingZeroWidthJoinerId, messageMisleadingZeroWidthJoinerText));
+        }
+        joinStart = at - 1; joinEnd = at + 1;
+    }
+    if(joinStart >= 0) {
+        found.push(new MisleadingFinding(sequence[joinStart] ?? panic('missing join start'), sequence[joinEnd] ?? panic('missing join end'), messageMisleadingZeroWidthJoinerId, messageMisleadingZeroWidthJoinerText));
+    }
+    for(let at = 1; at < sequence.length; at++) {
+        const previous = sequence[at - 1] ?? panic('missing surrogate high');
+        const current = sequence[at] ?? panic('missing surrogate low');
+        if(previous.escaped || current.escaped || !surrogate(previous.value, current.value)) { continue; }
+        if(previous.codePointEscape || current.codePointEscape) {
+            found.push(new MisleadingFinding(previous, current, messageMisleadingSurrogatePairId, messageMisleadingSurrogatePairText));
+        }
+        else {
+            found.push(new MisleadingFinding(previous, current, messageMisleadingSurrogatePairWithoutUnicodeFlagId, messageMisleadingSurrogatePairWithoutUnicodeFlagText, true));
+        }
+    }
+    return found;
+}
+export function patternMeaningChanges(pattern: string): boolean {
+    const safe = '^$\\.*+?()[]{}|/dDsSwWbBnrtvf0123456789xuck<>=!:,-';
+    for(let at = 0; at < pattern.length; at++) {
+        const character = pattern.slice(at, at + 1);
+        if(character === '{' || character === '}') { return true; }
+        if(character !== '\\' || at + 1 >= pattern.length) { continue; }
+        const next = pattern.slice(at + 1, at + 2);
+        if(next === 'u' && pattern.slice(at + 2, at + 3) === '{') {
+            const closing = pattern.indexOf('}', at + 3);
+            if(closing < 0) { return true; }
+            at = closing; continue;
+        }
+        if(!safe.includes(next)) { return true; }
+        at++;
+    }
+    return false;
+}
+export function requireRegexClassAdapter(): never {
+    panic('no-misleading-character-class requires native regexsyntax class parsing, reference tracking and cooked-to-raw source mapping');
+}
