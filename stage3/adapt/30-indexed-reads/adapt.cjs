@@ -71,7 +71,7 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
     for (const edit of edits.sort((a, b) => b.at - a.at)) {
         text = text.slice(0, edit.at) + edit.text + text.slice(edit.at);
     }
-    const closure = zeroOnly && (file === "scanner.ts" || file === "parser.ts" || file === "utilities.ts") ? { text, edits: 0 } : planWhole(ts, file, text, check);
+    const closure = zeroOnly ? { text, edits: 0 } : planWhole(ts, file, text, check);
     return { text: closure.text, assertions, zeros, declined, closures: closure.edits };
 }
 

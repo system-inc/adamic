@@ -155,5 +155,52 @@
       "TS2345 at utilities.ts:11201:34"
     ],
     "proof": "The only use is stringReplace.call(s, \"*\", replacement), with three string values. String.prototype.replace supports exactly this overload; the annotation selects that truthful call contract and retains the same captured function object and call evaluation point."
+  },
+  {
+    "file": "core.ts",
+    "owner": "createSet.forEach arrayFrom",
+    "line": 1712,
+    "class": "truthful overload type argument",
+    "action": "select TElement | TElement[] yielded map value explicitly",
+    "diagnostics": [
+      "TS2345 at core.ts:1721:28"
+    ],
+    "proof": "multiMap stores exactly TElement | TElement[]; its iterator terminal return is not a yielded value. Explicitly selecting the map value type preserves every iteration and erases on Node."
+  },
+  {
+    "file": "core.ts",
+    "owner": "isNodeLikeSystem host bindings",
+    "line": 2588,
+    "class": "truthful ambient host declarations",
+    "action": "declare optional process shape and unknown require, type-only",
+    "diagnostics": [
+      "TS2591 at core.ts:2591",
+      "TS2591 at core.ts:2592",
+      "TS2591 at core.ts:2593",
+      "TS2591 at core.ts:2594"
+    ],
+    "proof": "Only isNodeLikeSystem reads these host bindings. process may be absent and is tested with typeof before fields; nextTick/browser may be absent and are only tested for truthiness. require is only tested with typeof, so unknown is truthful. Module-local ambient declarations emit no binding and leave Node global lookup unchanged."
+  },
+  {
+    "file": "core.ts",
+    "owner": "addRange repeated guarded read",
+    "line": 992,
+    "class": "U-position, repeated-read contract",
+    "action": "decline",
+    "diagnostics": [
+      "TS2345 at core.ts:992:21"
+    ],
+    "proof": "The first from[i] read deliberately handles absence. A readonly array type alone does not prove the second read stays defined across accessor reads, including to.push lookup; caching/deduplicating or skipping the second read changes Node behavior. A generic ! or cast is unproved."
+  },
+  {
+    "file": "core.ts",
+    "owner": "createSet full ES2024 Set contract",
+    "line": 1637,
+    "class": "non-absence Set contract",
+    "action": "decline",
+    "diagnostics": [
+      "TS2740 at core.ts:1637:11"
+    ],
+    "proof": "The returned custom object lacks seven ES2024 Set operations. An assertion to full Set lies; adding methods changes runtime code. A truthful reduced recursive return/callback contract needs all consumer obligations checked, which is not proven here."
   }
 ]

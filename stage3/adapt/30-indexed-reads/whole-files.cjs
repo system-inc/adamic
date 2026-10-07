@@ -3,6 +3,21 @@ const entries = require("./whole-sites.json");
 function planWhole(ts, file, text, check = false) {
     if (!entries.some(entry => entry.file === file && !entry.action.startsWith("decline"))) return { text, edits: 0 };
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+    if (file === "core.ts") {
+        const before = "for (const elements of arrayFrom(multiMap.values()))";
+        const after = "for (const elements of arrayFrom<TElement | TElement[]>(multiMap.values()))";
+        const newline = text.includes("\r\n") ? "\r\n" : "\n";
+        const marker = newline + "/** @internal */" + newline + "export function isNodeLikeSystem(): boolean {";
+        const host = "declare const process: { nextTick?: unknown; browser?: unknown; } | undefined; declare const require: unknown;" + marker;
+        let edits = 0;
+        for (const [original, adapted] of [[before, after], [marker, host]]) {
+            if (text.split(adapted).length === 2) continue;
+            if (text.split(original).length !== 2) throw new Error("core closure owner drift: " + original);
+            if (check) throw new Error("truthful core declaration missing: " + original);
+            text = text.replace(original, adapted); edits++;
+        }
+        return { text, edits };
+    }
     if (file === "utilities.ts") {
         const repairs = [
             ["return arrayFrom(directivesByLine.entries())", "return arrayFrom<[string, CommentDirective]>(directivesByLine.entries())"],
@@ -25,7 +40,7 @@ function planWhole(ts, file, text, check = false) {
             ["currentNode(position: number): Node;", "currentNode(position: number): Node | undefined;"],
             ['function getNamedPragmaArguments(pragma: PragmaDefinition, text: string | undefined): { [index: string]: string; } | "fail"', 'function getNamedPragmaArguments(pragma: PragmaDefinition, text: string | undefined): { [index: string]: string | undefined; } | "fail"'],
             ["const argMap: { [index: string]: string; } = {};", "const argMap: { [index: string]: string | undefined; } = {};"],
-            ["if (nodeIsMissing(node) || intersectsIncrementalChange(node) || containsParseError(node)) {", "const missingNode = nodeIsMissing(node);" + (text.includes("\r\n") ? "\r\n" : "\n") + "        if (missingNode || node === undefined || intersectsIncrementalChange(node) || containsParseError(node)) {"],
+            ["if (nodeIsMissing(node) || intersectsIncrementalChange(node) || containsParseError(node)) {", "const missingNode = nodeIsMissing(node); if (missingNode || node === undefined || intersectsIncrementalChange(node) || containsParseError(node)) {"],
         ];
         let edits = 0;
         for (const [before, after] of repairs) {
@@ -53,7 +68,7 @@ function planWhole(ts, file, text, check = false) {
         if (check) throw new Error("explicit next-line narrowing missing: scanner.ts:491");
         const at = statements[0].getStart(source), end = statements[0].end;
         const newline = text.includes("\r\n") ? "\r\n" : "\n";
-        return { text: text.slice(0, at) + "const nextLineStart = lineStarts[line + 1];" + newline + "        " + adapted + text.slice(end), edits: 1 };
+        return { text: text.slice(0, at) + "const nextLineStart = lineStarts[line + 1]; " + adapted + text.slice(end), edits: 1 };
     }
     const found = [];
     function visit(node) {

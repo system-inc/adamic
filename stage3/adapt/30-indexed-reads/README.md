@@ -1090,3 +1090,90 @@ the removed local union, exit 1. `whole-utilities-proof.json`, all mutant census
 JSON and `whole-utilities-read-mutant-node.log` retain the observations.
 **utilities.ts is a completed whole-file closure**, 5 -> 0, with all 17 contracts
 and idempotence checks passing. No extra API line or numeric default is added.
+
+
+## Whole-file review: core.ts, two contract declines remain
+
+The all-code census is **7 -> 2**. The createSet.forEach arrayFrom call now
+explicitly selects **TElement | TElement[]**, exactly the multiMap value type.
+The iterator's completion undefined is not yielded by the for-of in arrayFrom.
+This type argument erases and leaves every iteration/callback unchanged.
+
+Four missing-host diagnostics are repaired by module-local **ambient** type
+knowledge for isNodeLikeSystem. process is described as an optional object with
+optional unknown nextTick/browser fields; require is unknown because the code
+only tests its typeof. The existing typeof guard handles an absent process
+before accessing either property, and both properties are only truth-tested.
+The declarations emit no binding, do not change Node global lookup, preserve
+all four reads at their original points, and are kept before the function's
+original @internal comment. Stock JavaScript is **byte-identical** before/after.
+This is not an implementation of native host globals: a native compiler must
+support the guarded absent bindings or refuse them. No native execution or
+acceptance is claimed. The exact 217 public API line proof is still unchanged.
+
+Two sites remain declined and are recorded individually in whole-sites.json:
+
+- **992:21, addRange, U-position repeated-read contract:** the first read tests
+  absence, and the conditional second read is retained. A readonly array type
+  alone does not establish stability across accessors, including to.push lookup.
+  Caching/deduplicating the two reads or skipping a missing second value changes
+  Node behavior. A generic assertion or cast has not been proven truthful.
+- **1637:11, createSet, non-absence contract:** the returned plain custom object
+  lacks seven ES2024 Set methods (union, intersection, difference,
+  symmetricDifference and three relation tests). Claiming full Set via a cast
+  would lie; adding methods changes runtime code. A reduced recursive
+  return/callback contract needs consumer proof not established in this unit.
+
+Core remains **at two**, not counted at zero. Removing the explicit iterator
+type argument or ambient host declarations individually must restore their
+original diagnostics. All 17 contracts/idempotence checks and the required
+default oracle are rerun after these type-only repairs.
+
+
+### Composition rule learned from the whole-file closure
+
+Some downstream adaptations still anchor exact upstream line numbers.
+The fresh full pipeline exposed adaptation 40's scanner diagnostic owner 114
+shifting by one line. Runtime const/guard repairs now share the original line;
+the core ambient declarations replace an existing blank line. This preserves
+**every owned file's original line count**, retaining exact downstream owners
+without editing their partitions or relaxing their checks. Stock emitted
+JavaScript is unchanged by this formatting adjustment. New workers must check
+fresh full apply.sh composition, not only rerun their own adapter on a tree
+where later adaptations have already run. This supplements the earlier rules.
+
+
+Core's iterator removal mutant restores its TS2345 (file total 2 -> 3).
+Removing only the ambient declarations restores all four TS2591 diagnostics
+(total 2 -> 6). The pure type-only repairs leave stock JavaScript byte-identical;
+all 17 contracts and idempotence checks pass. The first core oracle worker
+exited without diagnostics or test counts; its empty baseline diff was **not**
+counted as a pass. A cgroup OOM kill was observed, without a per-process cause
+claim. The retry used NODE_OPTIONS=--max-old-space-size=1536, retained all default
+suites and four workers, and **passed 106,367 tests with an empty baseline diff**.
+Both reports are retained as whole-core-{crashed-oracle,oracle}.json.
+
+The fresh full apply.sh composition now passes all downstream adapters without
+relaxing any owner check. All **17 owned file bytes** match the final composed
+oracle tree and preserve their original line counts. Final hashes are recorded
+in whole-final-source-hashes.json. Reformatting scanner/parser const statements
+to their original lines changes no emitted JavaScript; the 2,660 scanner, 164
+parser and 5,232 decoder Node case proofs and idempotence pass on the fresh tree.
+The final census is recorded in whole-final-census.json, with **all codes**:
+
+| File | Before | Final | Status |
+| --- | ---: | ---: | --- |
+| debug.ts | 1 | 0 | Completed |
+| scanner.ts | 2 | 0 | Completed |
+| parser.ts | 3 | 1 | Partition 32 AMD name owner |
+| factory/emitNode.ts | 2 | 2 | Partition 32 comment owner |
+| factory/nodeFactory.ts | 4 | 4 | Two partition 32 owner sites; two unproved generic writes |
+| utilities.ts | 5 | 0 | Completed |
+| core.ts | 7 | 2 | Unproved repeated-read and Set contracts |
+| **Target totals** | **24** | **9** | **Three completed files** |
+
+No assertion/default/cast is added at any declined site. No outside partition is
+edited, no main push or force-push is made, and the parser slice audit stays on
+hold. No global checker-clean total or native compiler acceptance is claimed.
+
+Final fresh-tree default oracle: **106,367 passing, zero failing/pending, empty baseline diff**, 344.554 seconds, all suites and four workers, with the documented 1,536 MiB Node heap budget. The API proof mechanically accepts exactly 20's 189 and 40's 28 lines; adaptation 70 is absent at this integration pin. All 60,930 other reference baseline files are byte-identical. Final evidence is in whole-final-{proof,oracle,api,census,source-hashes}.json and whole-final-baseline.diff. The final AMD remainder is at original parser.ts:10656. Historical per-file source hashes precede the line-preserving composition adjustment; whole-final-source-hashes.json records the delivered bytes.
