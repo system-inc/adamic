@@ -276,7 +276,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			for _, contextual := range contexts {
 				if element := l.literalArrayElement(contextual); element != nil {
 					if held, known := l.kept(element); known && !slotless(held) {
-						return held, nil
+						return ir.Boolean, nil
 					}
 				}
 			}
