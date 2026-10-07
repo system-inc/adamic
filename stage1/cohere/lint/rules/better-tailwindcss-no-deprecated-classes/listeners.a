@@ -29,7 +29,7 @@ function context(source: string, parser: Parser, root: number, settings: Setting
     for(let index = 0; index < parser.nodes.length; index++) {
         for(const child of parser.node(index).children) { parents[child] = index; }
     }
-    const result = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, settings);
+    const result = new RuleContext(source, parser, new Scanner(source), selected, '', '', false, parents, settings, root);
     const deprecated = new Deprecations(result);
     const duplicate = new Duplicates(result);
     const unknown = new Unknown(result);
