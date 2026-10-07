@@ -1,0 +1,15 @@
+// Scanner stop 1: unconstrained optional callback results.
+function first<U>(callback: () => U | undefined): U | undefined {
+    return callback();
+}
+function optional<T>(value: T | undefined): T | undefined {
+    return first<T | undefined>((): T | undefined => value);
+}
+interface Item { readonly text: string; }
+console.log(`${first<number>(() => 0)} ${first<number>(() => 7)} ${first<number>((): number | undefined => undefined)}`);
+console.log(`${first<string>(() => ''.repeat(1))}|${first<string>(() => 'word'.repeat(2))}|${first<string>((): string | undefined => undefined)}`);
+const item: Item = { text: 'item'.repeat(2) };
+console.log(`${first<Item>(() => item)?.text ?? 'missing'} ${first<Item>((): Item | undefined => undefined)?.text ?? 'missing'}`);
+console.log(`${optional<number>(0)} ${optional<number>(undefined)}`);
+console.log(`${optional<string>('u'.repeat(2))}|${optional<string>(undefined)}`);
+console.log(`${optional<Item>(item)?.text ?? 'missing'} ${optional<Item>(undefined)?.text ?? 'missing'}`);
