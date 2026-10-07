@@ -4,23 +4,32 @@
 # Every cloud environment runs it (Codex's setup and maintenance scripts, Claude's, a plain VM), it's
 # safe to run again, and it prints how long each step took, so time-to-green is a number we watch.
 #
-#   bash cloud/setup.sh            then: source /opt/adamic-tools/env.sh
+#   bash cloud/setup.sh [--warm-tests]   then: source the env.sh path printed below
+#
+# Go checks its own content-addressed action cache before a warming stamp can skip linking.
+# Test binaries are optional because most workers need one package.
 #
 # Nothing here is needed on a Mac: Xcode's clang and leaks already do this job there.
 set -euo pipefail
 
+started=$EPOCHREALTIME
+loadBefore=$(cat /proc/loadavg)
+warmTests=false
 wasiSDK=false
 wasmtime=false
-for option in "$@"; do
- case $option in
-  --wasi-sdk) wasiSDK=true ;;
-  --wasmtime) wasmtime=true ;;
-  *) echo "usage: bash cloud/setup.sh [--wasi-sdk] [--wasmtime]" >&2; exit 2 ;;
- esac
+for argument in "$@"; do
+	case "$argument" in
+		--warm-tests) warmTests=true ;;
+		--wasi-sdk) wasiSDK=true ;;
+		--wasmtime) wasmtime=true ;;
+		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--wasi-sdk] [--wasmtime]" >&2; exit 2 ;;
+	esac
 done
-
-started=$(date +%s)
-step() { echo "setup: $1 ($(($(date +%s) - started))s)"; }
+step() {
+	local elapsed
+	elapsed=$(awk -v start="$started" -v now="$EPOCHREALTIME" 'BEGIN {printf "%.3f", now - start}')
+	echo "setup: $1 (${elapsed}s)"
+}
 
 repository=$(cd "$(dirname "$0")/.." && pwd)
 tools=${ADAMIC_TOOLS:-/opt/adamic-tools}
@@ -29,6 +38,14 @@ gate=/tmp/adamic-gate
 # The input tests drop to uid 65534 when run as root, so everything they touch must be traversable
 # by that user: the temporary directory, and the Node they run.
 install -d -m 1777 "$gate"
+# Serialize installers sharing this tool directory. Children inherit the lock descriptor.
+exec 9> "$tools/setup.lock"
+flock 9
+run=$(mktemp -d "$gate/setup.XXXXXX")
+markdownDependencies="$tools/markdown-width"
+case $(realpath -m "$markdownDependencies") in
+	/root | /root/*) markdownDependencies="$gate/markdown-width-$(printf '%s' "$tools" | sha256sum | cut -d' ' -f1)" ;;
+esac
 case $(uname -m) in
 	x86_64) goArchitecture=amd64 nodeArchitecture=x64 llvmArchitecture=X64 ;;
 	aarch64 | arm64) goArchitecture=arm64 nodeArchitecture=arm64 llvmArchitecture=ARM64 ;;
@@ -38,20 +55,23 @@ esac
 # Go. Any Go from 1.21 on fetches the version go.mod names by itself (GOTOOLCHAIN=auto), so an
 # installed one is enough; otherwise the newest stable release goes in $tools/go.
 export GOTOOLCHAIN=auto
+prepareGo() {
 # Only a go that answers `go version` counts: some images ship an unrelated /usr/bin/go.
 realGo() { "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
-if ! { command -v go > /dev/null 2>&1 && realGo go; } && [ ! -x "$tools/go/bin/go" ]; then
+if ! { command -v go > /dev/null 2>&1 && realGo go; } && ! realGo "$tools/go/bin/go"; then
 	goVersion=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)
 	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar --no-same-owner -xz -C "$tools"
 fi
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 (cd "$repository" && go version)
 step "go ready"
+}
 
 # clang. A candidate counts only if a program that reads past an array, built with AddressSanitizer
 # and UndefinedBehaviorSanitizer, is stopped by the sanitizer: a clang without its sanitizer runtime
 # compiles and links that program, then runs it silently.
-probe=$(mktemp -d)
+prepareClang() {
+probe=$run
 cat > "$probe/overflow.c" << 'C'
 #include <stdlib.h>
 int main(void) { int *values = malloc(4 * sizeof(int)); int read = values[4]; free(values); return read; }
@@ -80,8 +100,10 @@ for tool in clang clang++ llvm-symbolizer; do
 done
 "$clang" --version | head -n 1
 step "clang ready ($clang)"
+}
 
 # Node 24, outside /root.
+prepareNode() {
 if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 	existing=""
 	for candidate in $(command -v node || true) /root/.nvm/versions/node/v24*/bin/node; do
@@ -100,6 +122,32 @@ if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 fi
 "$tools/bin/node" --version
 step "node ready"
+python3 "$repository/cloud/setup-markdown-width.py" "$repository/cloud/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
+cat "$run/markdown.log"
+step "markdown dependencies ready"
+}
+
+prepareSubmodules() {
+# cohere, and typescript-go inside it, over HTTPS (the recorded URL is SSH, which clouds can't use).
+cd "$repository"
+git config submodule.cohere.url https://github.com/system-inc/cohere.git
+git submodule update --init --recursive --depth 1 --filter=blob:none
+step "submodules ready"
+
+}
+
+# Downloads and the sanitizer check do not need each other's results. Build only after all
+# have succeeded; wait for every child even when one fails, so no installer outlives setup.
+prepareGo & goProcess=$!
+prepareClang & clangProcess=$!
+prepareNode & nodeProcess=$!
+prepareSubmodules & submoduleProcess=$!
+failed=0
+for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"; do
+	wait "$process" || failed=1
+done
+[ "$failed" = 0 ] || exit 1
+[ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 
 # Optional WASI SDK 27: native clang remains the default in PATH.
 if "$wasiSDK"; then
@@ -146,6 +194,7 @@ cat > "$tools/env.sh" << ENV
 export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
 export GOTOOLCHAIN=auto
 export TMPDIR=$gate
+export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
 ENV
 if "$wasiSDK"; then
  printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"
@@ -153,18 +202,44 @@ fi
 grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
 # shellcheck disable=SC1091
 source "$tools/env.sh"
-
-# cohere, and typescript-go inside it, over HTTPS (the recorded URL is SSH, which clouds can't use).
 cd "$repository"
-git config submodule.cohere.url https://github.com/system-inc/cohere.git
-git submodule update --init --recursive --depth 1
-step "submodules ready"
 
-# A warm build cache: every package and every test binary compiled once, nothing run.
-go build ./...
-go test -count=1 -run '^$' ./... > "$gate/setup-warm.log" 2>&1 || { cat "$gate/setup-warm.log" && exit 1; }
+# Validate actual dependency actions, including dirty sources, embeds, local replacements and
+# compiler flags, before consulting the stamp. HEAD alone cannot safely replace Go's checks.
+buildArguments=()
+key=""
+stamp="$tools/warm-$(printf '%s' "$repository" | sha256sum | cut -d' ' -f1)-$warmTests"
+if [ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ]; then
+	buildArguments=(-a)
+else
+	listArguments=()
+	"$warmTests" && listArguments=(-test)
+	go list -deps -export "${listArguments[@]}" -json ./... > "$run/packages.json" 2> "$run/list.log" || { cat "$run/list.log"; exit 1; }
+	key=$(python3 "$repository/cloud/setup-key.py" "$repository" "$run/packages.json" "$warmTests") || key=""
+fi
+if [ -n "$key" ] && [ "$(cat "$stamp" 2> /dev/null || true)" = "$key" ]; then
+	step "go build skipped (validated warming stamp)"
+	"$warmTests" && step "test binaries skipped (validated warming stamp)"
+else
+	go build "${buildArguments[@]}" ./... > "$run/build.log" 2>&1 || { cat "$run/build.log"; exit 1; }
+	step "go build ready"
+	if "$warmTests"; then
+		go test "${buildArguments[@]}" -count=1 -run '^$' ./... > "$run/tests.log" 2>&1 || { cat "$run/tests.log"; exit 1; }
+		step "test binaries warm"
+	fi
+	if [ -n "$key" ]; then
+		# Build/link adds cache entries. Publish only the key of the completed cache, atomically.
+		if python3 "$repository/cloud/setup-key.py" "$repository" "$run/packages.json" "$warmTests" > "$run/stamp"; then
+			mv "$run/stamp" "$stamp"
+		fi
+	fi
+fi
+"$warmTests" || step "test binaries deferred (use --warm-tests)"
 step "build cache warm"
 
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
-echo "setup: done in $(($(date +%s) - started))s on $(nproc) processors (cgroup cpu.max: $cpuQuota), $memory"
+echo "setup: build-flags commit=$(git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(go version) clang=$(clang --version | head -n 1) node=$(node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests load-before=$loadBefore load-after=$(cat /proc/loadavg)"
+step "done on $(nproc) processors (cgroup cpu.max: $cpuQuota), $memory"
+echo "setup: source $tools/env.sh"
+echo "setup: logs $run"

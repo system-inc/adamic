@@ -1,0 +1,19 @@
+// Structural getter dispatch can remove an element even when another getter only reads.
+interface Item { readonly label: string; }
+interface View { readonly size: number; }
+class Reader {
+    readonly items: Item[];
+    constructor(items: Item[]) { this.items = items; }
+    get size(): number { return this.items.length; }
+}
+class Remover extends Reader {
+    override get size(): number { this.items.pop(); return this.items.length; }
+}
+function inspect(remove: boolean): void {
+    const items: Item[] = [{ label: `accessor${remove}` }];
+    const view: View = remove ? new Remover(items) : new Reader(items);
+    const first = items[0] ?? { label: `missing${items.length}` };
+    console.log(`${view.size}/${first.label}/${items.length}`);
+}
+inspect(false);
+inspect(true);
