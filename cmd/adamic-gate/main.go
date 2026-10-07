@@ -1196,6 +1196,8 @@ func merge(dirs []string, out string) error {
 		return err
 	}
 	m.Errors = append(m.Errors, compareSubmodules(submodules, summaries)...)
+	_, censusStat := os.Stat(filepath.Join("internal", "skipcensus", "census.go"))
+	censusLanded := !os.IsNotExist(censusStat)
 	seenShard := map[int]bool{}
 	seenTest := map[string]int{}
 	seenRuns := map[string]int{}
@@ -1242,8 +1244,10 @@ func merge(dirs []string, out string) error {
 		if err != nil {
 			return err
 		}
-		m.Errors = append(m.Errors, wasiSkips(expected, s.Index, results)...)
-		m.Errors = append(m.Errors, requiredEnvironmentSkips(expected, s.Index, results)...)
+		if !censusLanded {
+			m.Errors = append(m.Errors, wasiSkips(expected, s.Index, results)...)
+			m.Errors = append(m.Errors, requiredEnvironmentSkips(expected, s.Index, results)...)
+		}
 		m.RawTerminalEvents += raw
 		for _, r := range results {
 			if r.Test != "" && r.Action == "fail" {
@@ -1354,7 +1358,11 @@ func merge(dirs []string, out string) error {
 
 	m.Pass, m.Fail, m.Skip = totals(m.Results)
 	m.TestEvents = m.Pass + m.Fail + m.Skip
-	m.SkipCensus, err = checkSkipCensus(".")
+	censusLogs := []string{}
+	for _, directory := range dirs {
+		censusLogs = append(censusLogs, filepath.Join(directory, "test.jsonl"))
+	}
+	m.SkipCensus, err = checkSkipCensus(".", censusLogs...)
 	if err != nil {
 		m.Errors = append(m.Errors, err.Error())
 	}
@@ -1392,6 +1400,7 @@ func merge(dirs []string, out string) error {
 		verdict = "GREEN"
 	}
 	fmt.Printf("%s pass=%d fail=%d skip=%d test_events=%d raw_terminal_events=%d\n", verdict, m.Pass, m.Fail, m.Skip, m.TestEvents, m.RawTerminalEvents)
+	fmt.Printf("GATE census=%s required_input=%d not_applicable=%q measurement=%q opt_in_lane=%q\n", m.SkipCensus.Status, len(m.SkipCensus.RequiredInput), strings.Join(m.SkipCensus.NotApplicable, ","), strings.Join(m.SkipCensus.Measurement, ","), strings.Join(m.SkipCensus.OptInLane, ","))
 	for _, timing := range m.ShardWallTimes {
 		fmt.Printf("shard %d wall=%.3fs\n%s\n", timing.Index, timing.WallSeconds, timing.BuildFlags)
 	}

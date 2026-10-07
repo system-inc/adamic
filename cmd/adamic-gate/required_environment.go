@@ -12,8 +12,59 @@ import (
 	"strings"
 )
 
-// Until skipcensus lands, this list is the plan's required-input authority.
-var requiredGateVariables = []string{"ADAMIC_TEST_WASI", "ADAMIC_ORACLE_WASI", "ADAMIC_GATE_COHERE"}
+// The census owns required-input classification. Boolean opt-in values are
+// derived from its skip conditions; path inputs remain setup's responsibility.
+func requiredGateVariables(root string) ([]string, error) {
+	rows, _, err := censusDeclarations(root)
+	if err != nil {
+		return nil, err
+	}
+	names := map[string]bool{}
+	for _, row := range rows {
+		if row.Class != "required-input" {
+			continue
+		}
+		expression, err := parser.ParseExpr(row.Condition)
+		if err != nil {
+			continue
+		}
+		comparison, ok := expression.(*ast.BinaryExpr)
+		if !ok || comparison.Op != token.NEQ {
+			continue
+		}
+		literal, ok := comparison.Y.(*ast.BasicLit)
+		if !ok || literal.Value != `"1"` {
+			continue
+		}
+		call, ok := comparison.X.(*ast.CallExpr)
+		if !ok || len(call.Args) != 1 {
+			continue
+		}
+		selector, ok := call.Fun.(*ast.SelectorExpr)
+		if !ok || selector.Sel.Name != "Getenv" {
+			continue
+		}
+		f, err := parser.ParseFile(token.NewFileSet(), filepath.Join(root, row.File), nil, 0)
+		if err != nil {
+			return nil, err
+		}
+		constants, err := packageStringConstants(filepath.Join(root, filepath.Dir(row.File)), f.Name.Name)
+		if err != nil {
+			return nil, err
+		}
+		name, ok := constantString(call.Args[0], constants, map[string]bool{})
+		if !ok {
+			return nil, fmt.Errorf("dynamic required-input gate in census: %s::%s", row.File, row.Test)
+		}
+		names[name] = true
+	}
+	result := []string{}
+	for name := range names {
+		result = append(result, name)
+	}
+	sort.Strings(result)
+	return result, nil
+}
 
 type environmentRequirement struct {
 	Shard     int
