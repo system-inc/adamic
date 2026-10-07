@@ -1,0 +1,6 @@
+import { tsgoInspect } from 'adamic';
+import { Frames, header } from './frames.ts';
+export function sourceParseContext(program: number, path: string, bytes: number): boolean {
+    const frames = new Frames(tsgoInspect(program, path, 0, bytes, 'SourceFile', 'source-parse-context')); header(frames, 'source-parse-context');
+    const module = frames.yes(); frames.end(); return module;
+}

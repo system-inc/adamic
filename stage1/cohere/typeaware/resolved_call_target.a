@@ -1,0 +1,17 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ResolvedCallTarget {
+    readonly present: boolean; readonly returnFlags: number; readonly kind: string; readonly file: string; readonly external: boolean;
+    readonly start: number; readonly end: number; readonly flags: number; readonly source: string; readonly bodyKind: string; readonly bodyStart: number; readonly bodyEnd: number;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'resolved-call-target')); header(frames, 'resolved-call-target');
+        let present = false; let returnFlags = 0; let kind = ''; let file = ''; let external = false; let start = 0; let end = 0; let flags = 0;
+        let source = ''; let bodyKind = ''; let bodyStart = 0; let bodyEnd = 0;
+        if(frames.yes()) { returnFlags = frames.natural(); if(frames.yes()) {
+            kind = frames.field(); file = frames.field(); external = frames.yes(); start = frames.natural(); end = frames.natural(); flags = frames.natural();
+            present = frames.yes(); if(present) { source = frames.field(); bodyKind = frames.field(); bodyStart = frames.natural(); bodyEnd = frames.natural(); }
+        } }
+        frames.end(); this.present = present; this.returnFlags = returnFlags; this.kind = kind; this.file = file; this.external = external;
+        this.start = start; this.end = end; this.flags = flags; this.source = source; this.bodyKind = bodyKind; this.bodyStart = bodyStart; this.bodyEnd = bodyEnd;
+    }
+}

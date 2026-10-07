@@ -203,6 +203,16 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "source-parse-context":
+		return p.sourceParseContext(out, node, question)
+	case "program-module-resolution":
+		return p.programModuleResolution(out, node, question)
+	case "symbol-declaration-paths":
+		return p.symbolDeclarationPaths(out, c, node, question)
+	case "resolved-call-target":
+		return p.resolvedCallTarget(out, c, node, question)
+	case "process-node-fields":
+		return p.processNodeFields(out, node, question)
 	case "type-leaf-facts":
 		return p.typeLeafFacts(out, c, node, question)
 	case "type-declaration-ancestry":

@@ -1,0 +1,374 @@
+// Adapted from cohere's control_flow_graph package, originally web-infra-dev/rslint.
+// MIT licensed. Copyright (c) 2025 Bytedance Inc and its affiliates, and
+// Copyright (c) 2025 typescript-eslint and other contributors.
+// This graph records syntax events. Rule decisions execute in its native consumers.
+import { panic } from 'adamic';
+import type { Bindings } from './bindings.ts';
+import { ProcessNodeFields } from './process_node_fields.a';
+
+export class ProcessFlowEvent {
+    readonly node: number; readonly statement: boolean;
+    constructor(node: number, statement: boolean) { this.node = node; this.statement = statement; }
+}
+export class ProcessFlowBlock {
+    readonly events: ProcessFlowEvent[] = []; readonly successors: number[] = [];
+    incoming = false; reachable = false;
+}
+class ProcessTryFrame {
+    position = 0; readonly hasFinally: boolean;
+    catchEntry = -1; finallyEntry = -1; forked = false; thrown = false; returned = false;
+    constructor(hasFinally: boolean) { this.hasFinally = hasFinally; }
+}
+class ProcessJump {
+    readonly labels: readonly string[]; readonly breakTo: number; readonly continueTo: number; readonly breakable: boolean;
+    constructor(labels: readonly string[], breakTo: number, continueTo: number, breakable: boolean) {
+        this.labels = labels; this.breakTo = breakTo; this.continueTo = continueTo; this.breakable = breakable;
+    }
+}
+export function processIsRoot(bindings: Bindings, index: number): boolean {
+    if(index < 0) { return false; }
+    const kind = bindings.rules.parser.node(index).kind;
+    return bindings.functionKind(kind) || ['SourceFile', 'ClassStaticBlockDeclaration'].includes(kind) ||
+        kind === 'PropertyDeclaration' && new ProcessNodeFields(bindings, index).get(3) >= 0;
+}
+export function processRootOf(bindings: Bindings, index: number): number {
+    const rules = bindings.rules; let previous = index; let decorator = -1;
+    for(let current = bindings.parent(index); current >= 0; current = bindings.parent(current)) {
+        const node = rules.parser.node(current);
+        if(node.kind === 'Decorator') { decorator = current; }
+        if(node.kind === 'SourceFile') { return current; }
+        if(processIsRoot(bindings, current)) {
+            if(node.kind === 'PropertyDeclaration') {
+                if(new ProcessNodeFields(bindings, current).get(3) === previous) { return current; }
+            } else if(node.kind === 'ClassStaticBlockDeclaration') {
+                if(rules.parser.node(previous).kind === 'Block') { return current; }
+            } else if(processDeclarationName(bindings, current) !== previous &&
+                !(decorator >= 0 && [current, previous].includes(bindings.parent(decorator)))) { return current; }
+        }
+        previous = current;
+    }
+    return -1;
+}
+export class ProcessControlFlow {
+    readonly bindings: Bindings; readonly blocks: ProcessFlowBlock[] = [];
+    readonly tries: ProcessTryFrame[] = []; readonly jumps: ProcessJump[] = []; readonly joins: number[] = [];
+    readonly metadata = new Map<number, ProcessNodeFields>();
+    current = 0;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    fields(index: number): ProcessNodeFields {
+        if(!this.metadata.has(index)) { this.metadata.set(index, new ProcessNodeFields(this.bindings, index)); }
+        return this.metadata.get(index) ?? panic('missing process syntax fields');
+    }
+    block(index: number): ProcessFlowBlock { return this.blocks[index] ?? panic('missing process graph block'); }
+    fresh(): number { const index = this.blocks.length; this.blocks.push(new ProcessFlowBlock()); return index; }
+    link(from: number, to: number): void {
+        if(from < 0 || to < 0) { return; }
+        this.block(from).successors.push(to);
+        if(this.block(from).reachable) { this.block(to).incoming = true; }
+    }
+    enter(index: number): void { this.block(index).reachable = this.block(index).incoming; this.current = index; }
+    disconnected(index: number): void { this.block(index).incoming = this.block(index).incoming || this.block(this.current).reachable; this.enter(index); }
+    unreachable(): void { const next = this.fresh(); this.block(this.current).successors.push(next); this.current = next; }
+    throwFrame(): number {
+        for(let at = this.tries.length - 1; at >= 0; at--) {
+            const frame = this.tries[at] ?? panic('missing process try frame');
+            if(frame.position === 0 || frame.hasFinally && frame.position === 1) { return at; }
+        }
+        return -1;
+    }
+    returnFrame(): number {
+        for(let at = this.tries.length - 1; at >= 0; at--) { if(this.tries[at]?.hasFinally === true) { return at; } }
+        return -1;
+    }
+    throwTarget(frame: ProcessTryFrame): number { return frame.position === 0 && frame.catchEntry >= 0 ? frame.catchEntry : frame.finallyEntry; }
+    throwable(): void {
+        if(!this.block(this.current).reachable) { return; }
+        const at = this.throwFrame(); if(at < 0) { return; }
+        const frame = this.tries[at] ?? panic('missing throw frame'); if(frame.forked) { return; }
+        frame.forked = true; frame.thrown = true; this.link(this.current, this.throwTarget(frame));
+        const next = this.fresh(); this.link(this.current, next); this.enter(next);
+    }
+    abrupt(thrown: boolean, suspended = false): void {
+        if(!this.block(this.current).reachable) { return; }
+        const at = thrown ? this.throwFrame() : this.returnFrame();
+        if(at >= 0) {
+            const frame = this.tries[at] ?? panic('missing abrupt frame');
+            if(thrown) { frame.thrown = true; } else { frame.returned = true; }
+            this.link(this.current, thrown ? this.throwTarget(frame) : frame.finallyEntry);
+        }
+        if(!suspended) { this.unreachable(); }
+    }
+    build(root: number): void {
+        this.current = this.fresh(); this.block(this.current).incoming = true; this.block(this.current).reachable = true;
+        const node = this.bindings.rules.parser.node(root);
+        if(node.kind === 'SourceFile') { for(const child of node.children) { if(this.bindings.rules.parser.node(child).kind !== 'EndOfFile') { this.statement(child); } } }
+        else if(node.kind === 'ClassStaticBlockDeclaration') { this.statement(this.fields(root).get(2)); }
+        else if(node.kind === 'PropertyDeclaration') { this.expr(this.fields(root).get(3)); }
+        else {
+            const fields = this.fields(root);
+            for(const parameter of fields.parameters) { const p = this.fields(parameter); this.expr(p.get(1)); this.defaultBind(p.get(0), p.get(3)); }
+            this.expr(fields.get(1)); const body = fields.get(2);
+            if(body >= 0 && this.bindings.rules.parser.node(body).kind === 'Block') { this.statement(body); } else { this.expr(body); }
+        }
+    }
+    statement(index: number): void {
+        if(index < 0) { return; }
+        const rules = this.bindings.rules; const node = rules.parser.node(index); const children = node.children;
+        this.block(this.current).events.push(new ProcessFlowEvent(index, true));
+        if(node.kind === 'Block') { for(const child of children) { this.statement(child); } }
+        else if(node.kind === 'VariableStatement') { for(const child of children) { if(rules.parser.node(child).kind === 'VariableDeclarationList') { this.variables(child); } } }
+        else if(node.kind === 'ExpressionStatement' || node.kind === 'ExportAssignment') { this.expr(children[children.length - 1] ?? -1); }
+        else if(node.kind === 'IfStatement') {
+            const after = this.fresh(); const yes = this.fresh(); const no = children.length > 2 ? this.fresh() : after;
+            this.condition(children[0] ?? -1, yes, no); this.enter(yes); this.statement(children[1] ?? -1); this.link(this.current, after);
+            if(children.length > 2) { this.enter(no); this.statement(children[2] ?? -1); this.link(this.current, after); }
+            this.enter(after);
+        } else if(node.kind === 'WhileStatement' || node.kind === 'ForStatement') { this.loopStatement(index); }
+        else if(node.kind === 'DoStatement') {
+            const body = this.fresh(); this.link(this.current, body); const test = this.fresh(); const after = this.fresh();
+            this.pushJump(index, after, test); this.enter(body); this.statement(children[0] ?? -1); this.link(this.current, test); this.jumps.pop();
+            this.enter(test); this.expr(children[1] ?? -1); this.link(this.current, body); if(!this.truthy(children[1] ?? -1)) { this.link(this.current, after); } this.enter(after);
+        } else if(node.kind === 'ForInStatement' || node.kind === 'ForOfStatement') {
+            const fields = this.fields(index); this.expr(fields.get(7)); const head = this.fresh(); this.link(this.current, head); this.enter(head);
+            const after = this.fresh(); this.link(head, after); const body = this.fresh(); this.link(head, body); this.pushJump(index, after, head); this.enter(body);
+            const initializer = fields.get(3);
+            if(initializer >= 0 && rules.parser.node(initializer).kind === 'VariableDeclarationList') { for(const decl of rules.parser.node(initializer).children) { this.bind(this.fields(decl).get(0)); } }
+            else { this.bind(initializer); }
+            this.statement(fields.get(6)); this.link(this.current, head); this.jumps.pop(); this.enter(after);
+        } else if(node.kind === 'SwitchStatement') { this.switchStatement(index); }
+        else if(node.kind === 'TryStatement') { this.tryStatement(index); }
+        else if(node.kind === 'LabeledStatement') {
+            const body = children[1] ?? -1;
+            if(this.breakable(body)) { this.statement(body); } else {
+                const after = this.fresh(); this.jumps.push(new ProcessJump([rules.parser.node(children[0] ?? -1).text], after, -1, false));
+                this.statement(body); this.jumps.pop(); this.link(this.current, after); this.enter(after);
+            }
+        } else if(node.kind === 'ReturnStatement' || node.kind === 'ThrowStatement') { this.expr(children[0] ?? -1); this.abrupt(node.kind === 'ThrowStatement'); }
+        else if(node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') {
+            if(!this.block(this.current).reachable) { return; }
+            const name = children.length > 0 ? rules.parser.node(children[0] ?? -1).text : '';
+            for(let at = this.jumps.length - 1; at >= 0; at--) {
+                const target = this.jumps[at] ?? panic('missing jump target'); const continuing = node.kind === 'ContinueStatement';
+                if(continuing && target.continueTo < 0 || name === '' && !continuing && !target.breakable || name !== '' && !target.labels.includes(name)) { continue; }
+                this.link(this.current, continuing ? target.continueTo : target.breakTo); break;
+            }
+            this.unreachable();
+        } else if(node.kind === 'WithStatement') { this.expr(children[0] ?? -1); this.statement(children[1] ?? -1); }
+        else if(['EmptyStatement', 'DebuggerStatement', 'ImportDeclaration', 'ImportEqualsDeclaration', 'FunctionDeclaration', 'ExportDeclaration'].includes(node.kind)) { return; }
+        else if(node.kind === 'ClassDeclaration') { this.classLike(index); }
+        else { for(const child of children) { this.unknown(child); } }
+    }
+    variables(index: number): void {
+        const rules = this.bindings.rules;
+        for(const child of rules.parser.node(index).children) {
+            const fields = this.fields(child); const name = fields.get(0); const initializer = fields.get(3); this.expr(fields.get(1));
+            const pattern = name >= 0 && ['ObjectBindingPattern', 'ArrayBindingPattern'].includes(rules.parser.node(name).kind);
+            if(pattern) { this.expr(initializer); this.bind(name); }
+            else { this.readPattern(name); this.expr(initializer); }
+        }
+    }
+    loopStatement(index: number): void {
+        const fields = this.fields(index); const kind = this.bindings.rules.parser.node(index).kind;
+        const initializer = kind === 'ForStatement' ? fields.get(3) : -1;
+        if(initializer >= 0) { if(this.bindings.rules.parser.node(initializer).kind === 'VariableDeclarationList') { this.variables(initializer); } else { this.expr(initializer); } }
+        const condition = kind === 'ForStatement' ? fields.get(4) : fields.get(7); const incrementor = kind === 'ForStatement' ? fields.get(5) : -1;
+        if(kind === 'ForStatement' && condition < 0 && incrementor < 0) {
+            const body = this.fresh(); this.link(this.current, body); const after = this.fresh(); this.pushJump(index, after, body);
+            this.enter(body); this.statement(fields.get(6)); this.link(this.current, body); this.jumps.pop(); this.enter(after); return;
+        }
+        const test = this.fresh(); this.link(this.current, test); this.enter(test); const after = this.fresh(); const body = this.fresh();
+        this.condition(condition, body, condition < 0 || this.truthy(condition) ? -1 : after);
+        let update = test;
+        if(incrementor >= 0) { update = this.fresh(); this.disconnected(update); this.expr(incrementor); this.link(this.current, test); }
+        this.pushJump(index, after, update); this.enter(body); this.statement(fields.get(6)); this.link(this.current, update); this.jumps.pop(); this.enter(after);
+    }
+    switchStatement(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index); this.expr(node.children[0] ?? -1);
+        const after = this.fresh(); const clauses = rules.parser.node(node.children[1] ?? -1).children;
+        if(clauses.length === 0) { this.link(this.current, after); this.enter(after); return; }
+        const bodies = clauses.map(() => this.fresh()); let fallback = -1; let test = this.current;
+        for(let at = 0; at < clauses.length; at++) {
+            const clause = rules.parser.node(clauses[at] ?? -1);
+            if(clause.kind === 'DefaultClause') { fallback = at; continue; }
+            this.current = test; this.expr(clause.children[0] ?? -1); this.link(this.current, bodies[at] ?? -1);
+            const next = this.fresh(); this.link(this.current, next); this.enter(next); test = this.current;
+        }
+        this.link(test, fallback >= 0 ? bodies[fallback] ?? -1 : after); this.pushJump(index, after, -1); let previous = -1;
+        for(let at = 0; at < clauses.length; at++) {
+            this.link(previous, bodies[at] ?? -1); this.enter(bodies[at] ?? -1); const clause = rules.parser.node(clauses[at] ?? -1);
+            for(const child of clause.children.slice(clause.kind === 'CaseClause' ? 1 : 0)) { this.statement(child); } previous = this.current;
+        }
+        this.link(previous, after); this.jumps.pop(); this.enter(after);
+    }
+    tryStatement(index: number): void {
+        const fields = this.fields(index); const hasCatch = fields.get(11) >= 0; const hasFinally = fields.get(12) >= 0;
+        const frame = new ProcessTryFrame(hasFinally); if(hasCatch) { frame.catchEntry = this.fresh(); } if(hasFinally) { frame.finallyEntry = this.fresh(); }
+        this.tries.push(frame); this.statement(fields.get(10)); const normal: number[] = [];
+        if(hasCatch) {
+            this.link(this.current, frame.catchEntry); normal.push(this.current); frame.position = 1; frame.forked = false; this.enter(frame.catchEntry);
+            const clause = this.bindings.rules.parser.node(fields.get(11));
+            for(const child of clause.children) { if(this.bindings.rules.parser.node(child).kind === 'VariableDeclaration') { this.bind(this.fields(child).get(0)); } else { this.statement(child); } }
+        }
+        normal.push(this.current); this.tries.pop(); const after = this.fresh();
+        if(!hasFinally) { for(const end of normal) { this.link(end, after); } this.enter(after); return; }
+        const snapshot = this.tries.map((held) => held.forked); const entry = this.fresh(); for(const end of normal) { this.link(end, entry); }
+        this.enter(entry); this.statement(fields.get(12)); this.link(this.current, after);
+        if(this.block(frame.finallyEntry).incoming) {
+            for(let at = 0; at < snapshot.length; at++) { const held = this.tries[at] ?? panic('missing finally outer frame'); held.forked = snapshot[at] ?? false; }
+            this.enter(frame.finallyEntry); this.statement(fields.get(12));
+            if(this.block(this.current).reachable) {
+                if(frame.returned) { const at = this.returnFrame(); if(at >= 0) { const outer = this.tries[at] ?? panic('missing return outer'); outer.returned = true; this.link(this.current, outer.finallyEntry); } }
+                if(frame.thrown) { const at = this.throwFrame(); if(at >= 0) { const outer = this.tries[at] ?? panic('missing throw outer'); outer.thrown = true; this.link(this.current, this.throwTarget(outer)); } }
+            }
+        }
+        this.enter(after);
+    }
+    breakable(index: number): boolean { return index >= 0 && ['SwitchStatement', 'WhileStatement', 'DoStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement'].includes(this.bindings.rules.parser.node(index).kind); }
+    pushJump(index: number, breakTo: number, continueTo: number): void {
+        const labels: string[] = []; let current = index;
+        while(this.bindings.parent(current) >= 0 && this.bindings.rules.parser.node(this.bindings.parent(current)).kind === 'LabeledStatement') {
+            const parent = this.bindings.parent(current); const node = this.bindings.rules.parser.node(parent);
+            if(node.children[1] !== current) { break; } labels.push(this.bindings.rules.parser.node(node.children[0] ?? -1).text); current = parent;
+        }
+        this.jumps.push(new ProcessJump(labels, breakTo, continueTo, true));
+    }
+    truthy(index: number): boolean {
+        if(index < 0) { return false; } const node = this.bindings.rules.parser.node(this.bindings.rules.skip(index));
+        if(['TrueKeyword', 'RegularExpressionLiteral'].includes(node.kind)) { return true; }
+        if(node.kind === 'StringLiteral') { return node.text !== ''; }
+        if(node.kind === 'NumericLiteral') { return node.text !== '0'; }
+        if(node.kind === 'BigIntLiteral') {
+            const text = node.text.slice(0, -1); const digits = ['0x', '0X', '0b', '0B', '0o', '0O'].includes(text.slice(0, 2)) ? text.slice(2) : text;
+            return digits.replaceAll('0', '').replaceAll('_', '') !== '';
+        }
+        return false;
+    }
+    throwableIdentifier(index: number): boolean {
+        const parent = this.bindings.parent(index); if(parent < 0) { return false; } const rules = this.bindings.rules; const node = rules.parser.node(parent);
+        if(['LabeledStatement', 'BreakStatement', 'ContinueStatement', 'ArrayBindingPattern', 'ImportSpecifier', 'ExportSpecifier', 'ImportClause', 'NamespaceImport', 'NamespaceExport', 'JsxAttribute', 'JsxNamespacedName', 'CatchClause'].includes(node.kind)) { return false; }
+        if(node.kind === 'BindingElement') {
+            if(node.children.some((child) => rules.parser.node(child).kind === 'DotDotDotToken') || this.bindings.shape.name(parent) !== index) { return false; }
+            const owner = this.bindings.parent(parent); return owner >= 0 && rules.parser.node(owner).kind === 'ObjectBindingPattern';
+        }
+        if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'ClassDeclaration', 'ClassExpression', 'VariableDeclaration', 'PropertyAssignment', 'PropertyDeclaration', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'EnumDeclaration', 'ModuleDeclaration', 'InterfaceDeclaration', 'TypeAliasDeclaration'].includes(node.kind)) { return processDeclarationName(this.bindings, parent) !== index; }
+        let current = index;
+        while(this.bindings.parent(current) >= 0 && ['PropertyAccessExpression', 'JsxNamespacedName'].includes(rules.parser.node(this.bindings.parent(current)).kind)) { current = this.bindings.parent(current); }
+        const owner = this.bindings.parent(current);
+        return owner < 0 || !['JsxOpeningElement', 'JsxClosingElement', 'JsxSelfClosingElement'].includes(rules.parser.node(owner).kind) || rules.parser.node(owner).children[0] !== current;
+    }
+    unknown(index: number): void {
+        const kind = this.bindings.rules.parser.node(index).kind;
+        if(kind.endsWith('Statement') || ['Block', 'FunctionDeclaration', 'ClassDeclaration', 'VariableStatement', 'ImportDeclaration', 'ImportEqualsDeclaration', 'ExportDeclaration', 'ExportAssignment', 'InterfaceDeclaration', 'TypeAliasDeclaration', 'EnumDeclaration', 'ModuleDeclaration'].includes(kind)) { this.statement(index); }
+        else { this.expr(index); }
+    }
+    condition(index: number, yes: number, no: number): void {
+        if(index < 0) { this.link(this.current, yes); this.link(this.current, no); return; }
+        const rules = this.bindings.rules; const node = rules.parser.node(index); const c = node.children;
+        if(node.kind === 'ParenthesizedExpression') { this.condition(c[0] ?? -1, yes, no); }
+        else if(node.kind === 'PrefixUnaryExpression' && node.operator === 'ExclamationToken') { this.condition(c[0] ?? -1, no, yes); }
+        else if(node.kind === 'BinaryExpression' && ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(rules.parser.node(c[1] ?? -1).kind)) {
+            const right = this.fresh(); const operator = rules.parser.node(c[1] ?? -1).kind;
+            if(operator === 'AmpersandAmpersandToken') { this.condition(c[0] ?? -1, right, no); }
+            else if(operator === 'BarBarToken') { this.condition(c[0] ?? -1, yes, right); }
+            else { this.expr(c[0] ?? -1); this.link(this.current, yes); this.link(this.current, no); this.link(this.current, right); }
+            this.enter(right); this.condition(c[2] ?? -1, yes, no);
+        } else if(node.kind === 'ConditionalExpression') {
+            const a = this.fresh(); const b = this.fresh(); this.condition(c[0] ?? -1, a, b); this.enter(a); this.condition(c[2] ?? -1, yes, no); this.enter(b); this.condition(c[4] ?? -1, yes, no);
+        } else { this.expr(index); this.link(this.current, yes); this.link(this.current, no); }
+    }
+    expr(index: number): void {
+        if(index < 0) { return; } const rules = this.bindings.rules; const node = rules.parser.node(index); const c = node.children;
+        if(['CallExpression', 'NewExpression', 'TaggedTemplateExpression', 'AwaitExpression'].includes(node.kind)) { this.block(this.current).events.push(new ProcessFlowEvent(index, false)); }
+        if(node.kind === 'Identifier') { if(this.throwableIdentifier(index)) { this.throwable(); } }
+        else if(node.kind === 'ParenthesizedExpression') { this.expr(c[0] ?? -1); }
+        else if(node.kind === 'BinaryExpression') {
+            const operator = rules.parser.node(c[1] ?? -1).kind;
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken', 'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator)) {
+                if(operator.endsWith('EqualsToken')) { this.readPattern(c[0] ?? -1); } else { this.expr(c[0] ?? -1); }
+                const join = this.fresh(); this.link(this.current, join); const right = this.fresh(); this.link(this.current, right); this.enter(right); this.expr(c[2] ?? -1); this.link(this.current, join); this.enter(join);
+            } else if(operator === 'EqualsToken' && ['ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(rules.parser.node(rules.skip(c[0] ?? -1)).kind)) { this.expr(c[2] ?? -1); this.bind(c[0] ?? -1); }
+            else if(operator.endsWith('EqualsToken') && !['EqualsEqualsToken', 'EqualsEqualsEqualsToken', 'ExclamationEqualsToken', 'ExclamationEqualsEqualsToken', 'LessThanEqualsToken', 'GreaterThanEqualsToken'].includes(operator)) { this.readPattern(c[0] ?? -1); this.expr(c[2] ?? -1); }
+            else { this.expr(c[0] ?? -1); this.expr(c[2] ?? -1); }
+        } else if(node.kind === 'ConditionalExpression') {
+            this.expr(c[0] ?? -1); const end = this.current; const join = this.fresh(); const yes = this.fresh(); this.link(end, yes); this.enter(yes); this.expr(c[2] ?? -1); this.link(this.current, join);
+            const no = this.fresh(); this.link(end, no); this.enter(no); this.expr(c[4] ?? -1); this.link(this.current, join); this.enter(join);
+        } else if(node.kind === 'PrefixUnaryExpression' || node.kind === 'PostfixUnaryExpression') {
+            if(node.kind === 'PostfixUnaryExpression' || ['PlusPlusToken', 'MinusMinusToken'].includes(node.operator)) { this.readPattern(c[0] ?? -1); } else { this.expr(c[0] ?? -1); }
+        } else if(['PropertyAccessExpression', 'ElementAccessExpression', 'CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(node.kind)) {
+            const parent = this.bindings.parent(index); const p = parent >= 0 ? rules.parser.node(parent) : node;
+            const outer = node.optional && (parent < 0 || !p.optional || p.children.some((child) => rules.parser.node(child).kind === 'QuestionDotToken') || p.children[0] !== index);
+            if(outer) { this.joins.push(this.fresh()); }
+            this.expr(c[0] ?? -1);
+            if(this.joins.length > 0 && c.some((child) => rules.parser.node(child).kind === 'QuestionDotToken')) {
+                this.link(this.current, this.joins[this.joins.length - 1] ?? -1); const next = this.fresh(); this.link(this.current, next); this.enter(next);
+            }
+            if(node.kind === 'ElementAccessExpression') { this.expr(c[c.length - 1] ?? -1); }
+            else if(['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(node.kind)) { for(const child of c.slice(1)) { if(rules.parser.node(child).kind !== 'QuestionDotToken') { this.expr(child); } } }
+            this.throwable(); if(outer) { const join = this.joins.pop() ?? panic('missing optional join'); this.link(this.current, join); this.enter(join); }
+        } else if(node.kind === 'YieldExpression') {
+            for(const child of c) { this.expr(child); } this.abrupt(false, true); this.abrupt(true, true); const next = this.fresh(); this.link(this.current, next); this.enter(next);
+        } else if(node.kind === 'ClassExpression') { this.classLike(index); }
+        else if(processIsRoot(this.bindings, index)) { this.memberHeader(index); }
+        else { for(const child of c) { this.unknown(child); } }
+    }
+    readPattern(index: number): void {
+        if(index < 0) { return; } const node = this.bindings.rules.parser.node(index);
+        if(node.kind === 'Identifier') { if(this.throwableIdentifier(index)) { this.throwable(); } }
+        else if(['ParenthesizedExpression', 'NonNullExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression'].includes(node.kind)) { this.readPattern(node.children[node.kind === 'TypeAssertionExpression' ? 1 : 0] ?? -1); }
+        else { this.expr(index); }
+    }
+    defaultBind(target: number, fallback: number): void {
+        if(fallback >= 0) { const join = this.fresh(); this.link(this.current, join); const body = this.fresh(); this.link(this.current, body); this.enter(body); this.expr(fallback); this.link(this.current, join); this.enter(join); }
+        this.bind(target);
+    }
+    bind(index: number): void {
+        if(index < 0) { return; } const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind === 'Identifier') { if(this.throwableIdentifier(index)) { this.throwable(); } }
+        else if(node.kind === 'OmittedExpression') { return; }
+        else if(['ParenthesizedExpression', 'NonNullExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'SpreadElement', 'SpreadAssignment'].includes(node.kind)) { this.bind(node.children[node.kind === 'TypeAssertionExpression' ? 1 : 0] ?? -1); }
+        else if(['ObjectBindingPattern', 'ArrayBindingPattern'].includes(node.kind)) {
+            for(const child of node.children) { if(rules.parser.node(child).kind !== 'BindingElement') { continue; }
+                const fields = this.fields(child); for(const part of rules.parser.node(child).children) { if(rules.parser.node(part).kind === 'ComputedPropertyName') { this.expr(rules.parser.node(part).children[0] ?? -1); } }
+                this.defaultBind(fields.get(0), fields.get(3)); }
+        } else if(node.kind === 'ObjectLiteralExpression') {
+            for(const child of node.children) { const property = rules.parser.node(child);
+                if(property.kind === 'PropertyAssignment') { const name = property.children[0] ?? -1; if(rules.parser.node(name).kind === 'ComputedPropertyName') { this.expr(rules.parser.node(name).children[0] ?? -1); } this.bind(property.children[1] ?? -1); }
+                else if(property.kind === 'ShorthandPropertyAssignment') { this.defaultBind(property.children[0] ?? -1, property.children[property.children.length - 1] === property.children[0] ? -1 : property.children[property.children.length - 1] ?? -1); }
+                else if(property.kind === 'SpreadAssignment') { this.bind(property.children[0] ?? -1); }
+            }
+        } else if(node.kind === 'ArrayLiteralExpression') { for(const child of node.children) { this.bind(child); } }
+        else if(node.kind === 'BinaryExpression' && rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken') { this.defaultBind(node.children[0] ?? -1, node.children[2] ?? -1); }
+        else { this.expr(index); }
+    }
+    memberHeader(index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        for(const child of node.children) { if(rules.parser.node(child).kind === 'Decorator') { this.expr(rules.parser.node(child).children[0] ?? -1); }
+            if(rules.parser.node(child).kind === 'Parameter') { for(const part of rules.parser.node(child).children) { if(rules.parser.node(part).kind === 'Decorator') { this.expr(rules.parser.node(part).children[0] ?? -1); } } } }
+        const name = this.fields(index).get(0); if(name >= 0 && rules.parser.node(name).kind === 'ComputedPropertyName') { this.expr(rules.parser.node(name).children[0] ?? -1); }
+        if(node.kind === 'PropertyDeclaration') { this.expr(this.fields(index).get(1)); }
+        if(node.kind === 'IndexSignature') { const fields = this.fields(index); for(const parameter of fields.parameters) { this.expr(this.fields(parameter).get(1)); } this.expr(fields.get(1)); }
+    }
+    classLike(index: number): void {
+        const rules = this.bindings.rules;
+        for(const child of rules.parser.node(index).children) {
+            const kind = rules.parser.node(child).kind;
+            if(kind === 'Decorator') { this.expr(rules.parser.node(child).children[0] ?? -1); }
+            else if(kind === 'HeritageClause') { for(const type of rules.parser.node(child).children) { this.expr(type); } }
+            else if(kind === 'TypeParameter') { for(const part of rules.parser.node(child).children.slice(1)) { this.expr(part); } }
+            else if(['PropertyDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor', 'ClassStaticBlockDeclaration', 'IndexSignature', 'SemicolonClassElement'].includes(kind)) { this.memberHeader(child); }
+        }
+    }
+}
+
+export function processIndexRoots(bindings: Bindings, root: number, roots: number[]): void {
+    if(processIsRoot(bindings, root)) { roots.push(root); }
+    for(const child of bindings.rules.parser.node(root).children) { processIndexRoots(bindings, child, roots); }
+}
+
+export function processDeclarationName(bindings: Bindings, index: number): number {
+    if(['ArrowFunction', 'Constructor', 'ClassStaticBlockDeclaration', 'IndexSignature'].includes(bindings.rules.parser.node(index).kind)) { return -1; }
+    for(const child of bindings.rules.parser.node(index).children) {
+        if(['Identifier', 'ThisKeyword', 'ArrayBindingPattern', 'ObjectBindingPattern', 'ComputedPropertyName', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'NoSubstitutionTemplateLiteral'].includes(bindings.rules.parser.node(child).kind)) { return child; }
+    }
+    return -1;
+}

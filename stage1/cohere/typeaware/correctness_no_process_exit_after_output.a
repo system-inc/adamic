@@ -1,0 +1,66 @@
+import { panic } from 'adamic';
+import type { Bindings } from './bindings.ts';
+import { ProcessControlFlow, processRootOf } from './process_control_flow.a';
+import { ProcessOutputState } from './process_output_state.a';
+import { ProcessOutputCalls, ProcessCallWriters, processCollectCalls } from './process_output_calls.a';
+import { Diagnostic } from './diagnostic.ts';
+const message = "This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.";
+export class ProcessOutputChains {
+    readonly bindings: Bindings; readonly root: number; readonly ids = new Map<number, number>(); readonly chains = new Map<number, string>();
+    constructor(bindings: Bindings, root: number) { this.bindings = bindings; this.root = root; }
+    id(index: number): number { if(!this.ids.has(index)) { this.ids.set(index, this.ids.size); } return this.ids.get(index) ?? panic('missing process try id'); }
+    chain(index: number): string {
+        if(!this.chains.has(index)) {
+            const ids: number[] = []; let previous = index;
+            for(let current = this.bindings.parent(index); current >= 0 && current !== this.root; current = this.bindings.parent(current)) {
+                const node = this.bindings.rules.parser.node(current);
+                if(node.kind === 'TryStatement' && node.children[0] === previous && node.children.some((child) => this.bindings.rules.parser.node(child).kind === 'CatchClause')) { ids.push(this.id(current)); }
+                previous = current;
+            }
+            ids.sort((left, right) => left - right); this.chains.set(index, `,${ids.map((id) => id.toString()).join(',')}${ids.length === 0 ? '' : ','}`);
+        }
+        return this.chains.get(index) ?? panic('missing process output chain');
+    }
+}
+class ProcessExitPosition {
+    readonly block: number; readonly state: ProcessOutputState;
+    constructor(block: number, state: ProcessOutputState) { this.block = block; this.state = state; }
+}
+export class ProcessExitAfterOutput {
+    readonly bindings: Bindings; readonly calls: ProcessOutputCalls; readonly writers: ProcessCallWriters;
+    constructor(bindings: Bindings, calls: ProcessOutputCalls, writers: ProcessCallWriters) { this.bindings = bindings; this.calls = calls; this.writers = writers; }
+    analyze(root: number, exits: readonly number[]): void {
+        const rules = this.bindings.rules; const graph = new ProcessControlFlow(this.bindings); graph.build(root);
+        const recorded = new Set<number>();
+        for(const block of graph.blocks) { for(const event of block.events) { if(!event.statement && rules.parser.node(event.node).kind === 'CallExpression' && !this.calls.inCatchBinding(event.node, root) && this.calls.exit(event.node)) { recorded.add(event.node); } } }
+        if(exits.some((exit) => !recorded.has(exit))) { return; }
+        const chains = new ProcessOutputChains(this.bindings, root); const reported = new Set<number>(); const visited = new Set<string>();
+        const queue: ProcessExitPosition[] = [new ProcessExitPosition(0, new ProcessOutputState())]; visited.add('0:');
+        for(let cursor = 0; cursor < queue.length; cursor++) {
+            const current = queue[cursor] ?? panic('missing process exit position'); const block = graph.block(current.block); let state = current.state; let exited = false;
+            for(const event of block.events) {
+                if(event.statement) {
+                    const parent = this.bindings.parent(event.node);
+                    if(rules.parser.node(event.node).kind === 'Block' && parent >= 0 && rules.parser.node(parent).kind === 'CatchClause') { state = state.entering(chains.id(this.bindings.parent(parent))); }
+                } else if(rules.parser.node(event.node).kind === 'CallExpression' && !this.calls.inCatchBinding(event.node, root)) {
+                    if(this.calls.exit(event.node)) { if(state.chains.length > 0) { reported.add(event.node); } exited = true; break; }
+                    if(this.writers.writes(event.node) && !this.calls.holdsExit(event.node)) { state = state.with(chains.chain(event.node)); }
+                }
+            }
+            if(exited) { continue; }
+            for(const successor of block.successors) {
+                const key = `${successor}:${state.key()}`;
+                if(!graph.block(successor).reachable || visited.has(key)) { continue; } visited.add(key); queue.push(new ProcessExitPosition(successor, state));
+            }
+        }
+        for(const exit of exits) { if(reported.has(exit)) { const node = rules.parser.node(exit); rules.findings.push(new Diagnostic('nexus/correctness-no-process-exit-after-output', 'exitAfterOutput', message, rules.byte(rules.start(node)), rules.byte(node.end), '')); } }
+    }
+    run(root: number): void {
+        const rules = this.bindings.rules; if(!rules.scanner.text.includes('exit')) { return; }
+        const calls: number[] = []; processCollectCalls(this.bindings, root, calls); const roots = new Map<number, number[]>();
+        for(const call of calls) { if(this.calls.exit(call)) { const owner = processRootOf(this.bindings, call); if(owner >= 0) { if(!roots.has(owner)) { roots.set(owner, []); } const exits = roots.get(owner) ?? panic('missing process root exits'); exits.push(call); } } }
+        for(const [owner, exits] of roots) {
+            if(calls.some((call) => processRootOf(this.bindings, call) === owner && this.writers.writes(call))) { this.analyze(owner, exits); }
+        }
+    }
+}

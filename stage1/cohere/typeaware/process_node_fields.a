@@ -1,0 +1,22 @@
+import { panic } from 'adamic';
+import type { Bindings } from './bindings.ts';
+import { Frames, header } from './frames.ts';
+
+export class ProcessNodeFields {
+    readonly slots: readonly number[];
+    readonly parameters: readonly number[];
+    constructor(bindings: Bindings, index: number) {
+        const frames = new Frames(bindings.rules.ask(index, 'process-node-fields')); header(frames, 'process-node-fields');
+        const slots: number[] = [];
+        for(let at = 0; at < 13; at++) { slots.push(processNodeReference(bindings, frames)); }
+        const parameters: number[] = []; const count = frames.natural();
+        for(let at = 0; at < count; at++) { parameters.push(processNodeReference(bindings, frames)); }
+        frames.end(); this.slots = slots; this.parameters = parameters;
+    }
+    get(slot: number): number { return this.slots[slot] ?? -1; }
+}
+function processNodeReference(bindings: Bindings, frames: Frames): number {
+    if(!frames.yes()) { return -1; }
+    const kind = frames.field(); const start = frames.natural(); const end = frames.natural();
+    return bindings.spans.get(`${kind}:${start}:${end}`) ?? panic('process AST field absent from native tree');
+}

@@ -1,0 +1,60 @@
+import { panic } from 'adamic';
+import type { Bindings } from './bindings.ts';
+import { ProgramModuleSource } from './program_module_resolution.a';
+import { ProcessSourceContext } from './process_source_context.a';
+export class BlockingStreamIndex {
+    readonly emptyStrings: readonly string[] = [];
+    readonly program: number; readonly sources: readonly ProgramModuleSource[];
+    readonly files = new Map<string, ProgramModuleSource>(); readonly contexts = new Map<string, ProcessSourceContext>();
+    readonly edges = new Map<string, string[]>(); readonly imported = new Set<string>(); readonly canBlock = new Set<string>();
+    constructor(program: number, sources: readonly ProgramModuleSource[]) { this.program = program; this.sources = sources; }
+    context(file: string): ProcessSourceContext {
+        if(!this.contexts.has(file)) { const source = this.files.get(file) ?? panic('missing stream module source'); this.contexts.set(file, new ProcessSourceContext(this.program, file, source.text)); }
+        return this.contexts.get(file) ?? panic('missing stream source context');
+    }
+    add(file: string, bindings: Bindings, specifier: number): void {
+        if(specifier < 0) { return; } const rules = bindings.rules; const node = rules.parser.node(specifier);
+        if(!['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) { return; }
+        const source = this.files.get(file) ?? panic('missing stream importer source');
+        const target = source.resolutions.get(`${node.kind}:${rules.byte(node.pos)}:${rules.byte(node.end)}`) ?? '';
+        if(target === '' || target === file || !this.files.has(target)) { return; }
+        if(!this.edges.has(file)) { this.edges.set(file, []); } const targets = this.edges.get(file) ?? panic('missing stream edges'); targets.push(target); this.imported.add(target);
+    }
+    dynamic(file: string, bindings: Bindings, index: number, seeds: string[]): void {
+        const node = bindings.rules.parser.node(index);
+        if(node.kind === 'CallExpression') {
+            const callee = bindings.rules.parser.node(node.children[0] ?? -1);
+            if(callee.kind === 'ImportKeyword' || callee.kind === 'Identifier' && callee.text === 'require' && node.list === 1) {
+                const argument = node.list > 0 ? node.children[node.children.length - node.list] ?? -1 : -1;
+                if(argument >= 0 && ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(bindings.rules.parser.node(argument).kind)) { this.add(file, bindings, argument); }
+                else { seeds.push(file); }
+            }
+        }
+        for(const child of node.children) { this.dynamic(file, bindings, child, seeds); }
+    }
+    build(): void {
+        const seeds: string[] = [];
+        for(const source of this.sources) { this.files.set(source.file, source); if(['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'].some((suffix) => source.file.endsWith(suffix))) { seeds.push(source.file); } }
+        for(const source of this.sources) {
+            if(source.declarationFile) { continue; } const context = this.context(source.file); const rules = context.bindings.rules;
+            for(const child of rules.parser.node(context.root).children) {
+                const node = rules.parser.node(child);
+                if(node.kind === 'ImportDeclaration') {
+                    if(node.children.some((part) => rules.parser.node(part).kind === 'ImportClause' && rules.parser.node(part).semantic === 'TypeKeyword')) { continue; }
+                    for(const part of node.children) { if(rules.parser.node(part).kind === 'StringLiteral') { this.add(source.file, context.bindings, part); } }
+                } else if(node.kind === 'ExportDeclaration' && node.semantic !== '1') {
+                    for(const part of node.children) { if(rules.parser.node(part).kind === 'StringLiteral') { this.add(source.file, context.bindings, part); } }
+                } else if(node.kind === 'ImportEqualsDeclaration' && node.semantic !== '1') {
+                    for(const part of node.children) { if(rules.parser.node(part).kind === 'ExternalModuleReference') { this.add(source.file, context.bindings, rules.parser.node(part).children[0] ?? -1); } }
+                }
+            }
+            if(source.text.includes('import(') || source.text.includes('require(')) { this.dynamic(source.file, context.bindings, context.root, seeds); }
+        }
+        const importers = new Map<string, string[]>();
+        for(const [from, targets] of this.edges) { for(const target of targets) { if(!importers.has(target)) { importers.set(target, []); } const held = importers.get(target) ?? panic('missing stream reverse edges'); held.push(from); } }
+        const queue = seeds.slice(); for(const seed of seeds) { this.canBlock.add(seed); }
+        for(let at = 0; at < queue.length; at++) { const current = queue[at] ?? panic('missing stream closure position');
+            for(const importer of importers.get(current) ?? this.emptyStrings) { if(!this.canBlock.has(importer)) { this.canBlock.add(importer); queue.push(importer); } }
+        }
+    }
+}

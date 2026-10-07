@@ -1,0 +1,15 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ProgramModuleSource {
+    readonly file: string; readonly declarationFile: boolean; readonly text: string; readonly resolutions: Map<string, string>;
+    constructor(file: string, declarationFile: boolean, text: string, resolutions: Map<string, string>) { this.file = file; this.declarationFile = declarationFile; this.text = text; this.resolutions = resolutions; }
+}
+export function programModuleResolution(rules: Rules, root: number): ProgramModuleSource[] {
+    const frames = new Frames(rules.ask(root, 'program-module-resolution')); header(frames, 'program-module-resolution'); const sources: ProgramModuleSource[] = []; const count = frames.natural();
+    for(let at = 0; at < count; at++) {
+        const file = frames.field(); const declarationFile = frames.yes(); const text = frames.field(); const length = frames.natural(); const resolutions = new Map<string, string>();
+        for(let module = 0; module < length; module++) { const kind = frames.field(); const start = frames.natural(); const end = frames.natural(); resolutions.set(`${kind}:${start}:${end}`, frames.field()); }
+        sources.push(new ProgramModuleSource(file, declarationFile, text, resolutions));
+    }
+    frames.end(); return sources;
+}

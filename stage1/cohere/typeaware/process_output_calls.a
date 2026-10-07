@@ -1,0 +1,104 @@
+import { panic } from 'adamic';
+import type { Bindings } from './bindings.ts';
+import { SymbolLineage } from './symbol_lineage.a';
+import { symbolDeclarationPaths } from './symbol_declaration_paths.a';
+import { ResolvedCallTarget } from './resolved_call_target.a';
+import { ProcessSourceContext } from './process_source_context.a';
+import { processIsRoot } from './process_control_flow.a';
+
+export class ProcessOutputCalls {
+    readonly bindings: Bindings; readonly exits = new Map<number, boolean>(); readonly writes = new Map<number, boolean>();
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    member(index: number): number {
+        const rules = this.bindings.rules; const node = rules.parser.node(rules.skip(index));
+        if(node.kind === 'Identifier') { return rules.skip(index); }
+        if(node.kind === 'PropertyAccessExpression') { const name = node.children[node.children.length - 1] ?? -1; if(rules.parser.node(name).kind === 'Identifier') { return name; } }
+        return -1;
+    }
+    processMember(index: number): boolean {
+        const declarations = symbolDeclarationPaths(this.bindings.rules, index);
+        return declarations.length > 0 && declarations.every((decl) => decl.declarationFile && ['MethodSignature', 'PropertySignature'].includes(decl.kind) &&
+            decl.kinds[0] === 'InterfaceDeclaration' && decl.names[0] === 'Process' && decl.kinds[1] === 'ModuleBlock' &&
+            decl.kinds[2] === 'ModuleDeclaration' && decl.nameKinds[2] === 'Identifier' && decl.names[2] === 'NodeJS');
+    }
+    exit(index: number): boolean {
+        if(!this.exits.has(index)) {
+            const rules = this.bindings.rules; const name = this.member(rules.parser.node(index).children[0] ?? -1);
+            this.exits.set(index, name >= 0 && rules.parser.node(name).text === 'exit' && this.processMember(name));
+        }
+        return this.exits.get(index) ?? false;
+    }
+    write(index: number): boolean {
+        if(!this.writes.has(index)) { this.writes.set(index, this.directWrite(index)); }
+        return this.writes.get(index) ?? false;
+    }
+    directWrite(index: number): boolean {
+        const rules = this.bindings.rules; const callee = rules.parser.node(rules.skip(rules.parser.node(index).children[0] ?? -1));
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) { return false; }
+        const nameIndex = rules.skip(callee.children[callee.children.length - 1] ?? -1); const name = rules.parser.node(nameIndex);
+        if(callee.kind === 'ElementAccessExpression' && !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(name.kind)) { return false; }
+        const receiverIndex = rules.skip(callee.children[0] ?? -1); const receiver = rules.parser.node(receiverIndex);
+        if(['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(name.text) && receiver.kind === 'Identifier' && receiver.text === 'console') {
+            const declarations = new SymbolLineage(rules, receiverIndex, false).declarations;
+            return declarations.length > 0 && declarations.every((decl) => decl.kind === 'VariableDeclaration' && decl.parentKind === 'VariableDeclarationList' &&
+                decl.kinds[1] === 'VariableStatement' && decl.globalVariable());
+        }
+        if(name.text !== 'write') { return false; } const stream = this.member(receiverIndex);
+        return stream >= 0 && ['stdout', 'stderr'].includes(rules.parser.node(stream).text) && this.processMember(stream);
+    }
+    holdsExit(index: number): boolean {
+        for(const child of this.bindings.rules.parser.node(index).children) {
+            if(processIsRoot(this.bindings, child)) { continue; }
+            if(this.bindings.rules.parser.node(child).kind === 'CallExpression' && this.exit(child) || this.holdsExit(child)) { return true; }
+        }
+        return false;
+    }
+    inCatchBinding(index: number, root: number): boolean {
+        let previous = index;
+        for(let current = this.bindings.parent(index); current >= 0 && current !== root; current = this.bindings.parent(current)) {
+            const node = this.bindings.rules.parser.node(current);
+            if(node.kind === 'CatchClause' && this.bindings.rules.parser.node(previous).kind === 'VariableDeclaration' && node.children[0] === previous) { return true; }
+            previous = current;
+        }
+        return false;
+    }
+    bodyVisit(index: number, calls: number[]): void {
+        if(processIsRoot(this.bindings, index)) { return; }
+        const node = this.bindings.rules.parser.node(index); if(node.kind === 'CallExpression') { calls.push(index); }
+        for(const child of node.children) { this.bodyVisit(child, calls); }
+    }
+    bodyWrites(body: number): boolean {
+        const calls: number[] = []; const node = this.bindings.rules.parser.node(body);
+        if(node.kind === 'Block') { for(const child of node.children) { this.bodyVisit(child, calls); } } else { this.bodyVisit(body, calls); }
+        return !calls.some((call) => this.exit(call)) && calls.some((call) => this.write(call));
+    }
+}
+export class ProcessCallWriters {
+    readonly calls: ProcessOutputCalls; readonly declarations = new Map<string, boolean>(); readonly contexts = new Map<string, ProcessSourceContext>();
+    constructor(calls: ProcessOutputCalls) { this.calls = calls; }
+    awaited(index: number): boolean {
+        const bindings = this.calls.bindings; while(bindings.parent(index) >= 0 && bindings.rules.parser.node(bindings.parent(index)).kind === 'ParenthesizedExpression') { index = bindings.parent(index); }
+        const parent = bindings.parent(index); return parent >= 0 && bindings.rules.parser.node(parent).kind === 'AwaitExpression';
+    }
+    writes(index: number): boolean {
+        if(this.calls.write(index)) { return true; }
+        const bindings = this.calls.bindings; const target = new ResolvedCallTarget(bindings.rules, index);
+        if(!target.present || !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(target.kind) ||
+            target.file !== bindings.rules.path && !target.external || (target.flags & 1) !== 0 || (target.flags & 2) !== 0 && !this.awaited(index) || (target.returnFlags & 262144) !== 0) { return false; }
+        const key = `${target.file}:${target.kind}:${target.start}:${target.end}`;
+        if(!this.declarations.has(key)) {
+            let context = bindings;
+            if(target.file !== bindings.rules.path) {
+                if(!this.contexts.has(target.file)) { this.contexts.set(target.file, new ProcessSourceContext(bindings.rules.program, target.file, target.source)); }
+                context = this.contexts.get(target.file)?.bindings ?? panic('missing followed process source');
+            }
+            const body = context.spans.get(`${target.bodyKind}:${target.bodyStart}:${target.bodyEnd}`) ?? panic('resolved process body absent from native tree');
+            this.declarations.set(key, new ProcessOutputCalls(context).bodyWrites(body));
+        }
+        return this.declarations.get(key) ?? false;
+    }
+}
+export function processCollectCalls(bindings: Bindings, root: number, calls: number[]): void {
+    if(bindings.rules.parser.node(root).kind === 'CallExpression') { calls.push(root); }
+    for(const child of bindings.rules.parser.node(root).children) { processCollectCalls(bindings, child, calls); }
+}

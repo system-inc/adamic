@@ -1,0 +1,24 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class SymbolDeclarationPath {
+    readonly start: number; readonly end: number; readonly flags: number; readonly name: string;
+    readonly file: string; readonly declarationFile: boolean; readonly kind: string;
+    readonly kinds: readonly string[]; readonly nameKinds: readonly string[]; readonly names: readonly string[];
+    constructor(start: number, end: number, flags: number, name: string, file: string, declarationFile: boolean, kind: string, kinds: readonly string[], nameKinds: readonly string[], names: readonly string[]) {
+        this.start = start; this.end = end; this.flags = flags; this.name = name; this.file = file; this.declarationFile = declarationFile; this.kind = kind; this.kinds = kinds; this.nameKinds = nameKinds; this.names = names;
+    }
+}
+export class SymbolDeclarationSet {
+    readonly flags: number; readonly declarations: readonly SymbolDeclarationPath[];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'symbol-declaration-paths')); header(frames, 'symbol-declaration-paths'); const declarations: SymbolDeclarationPath[] = []; let flags = 0;
+        if(frames.yes()) { flags = frames.natural(); const count = frames.natural(); for(let at = 0; at < count; at++) {
+            const file = frames.field(); const declarationFile = frames.yes(); const kind = frames.field(); const start = frames.natural(); const end = frames.natural(); const declarationFlags = frames.natural(); const name = frames.field(); const length = frames.natural();
+            const kinds: string[] = []; const nameKinds: string[] = []; const names: string[] = [];
+            for(let ancestor = 0; ancestor < length; ancestor++) { kinds.push(frames.field()); const named = frames.yes(); nameKinds.push(named ? frames.field() : ''); names.push(named ? frames.field() : ''); }
+            declarations.push(new SymbolDeclarationPath(start, end, declarationFlags, name, file, declarationFile, kind, kinds, nameKinds, names));
+        } }
+        frames.end(); this.flags = flags; this.declarations = declarations;
+    }
+}
+export function symbolDeclarationPaths(rules: Rules, index: number): readonly SymbolDeclarationPath[] { return new SymbolDeclarationSet(rules, index).declarations; }

@@ -1,0 +1,17 @@
+import { Parser } from '../../typescript/parser/parser.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+import { Rules } from './rules.ts';
+import { UnaryMinus, byteOffsets } from './unary_minus.ts';
+import { Bindings } from './bindings.ts';
+import { sourceParseContext } from './source_parse_context.a';
+import { panic } from 'adamic';
+export class ProcessSourceContext {
+    readonly bindings: Bindings; readonly root: number;
+    constructor(program: number, path: string, text: string) {
+        const parser = new Parser(text, path); const scanner = new Scanner(text); const offsets = byteOffsets(text);
+        const unary = new UnaryMinus(program, path, parser, scanner, offsets); const rules = new Rules(program, path, parser, scanner, offsets, unary);
+        parser.awaitContext = sourceParseContext(program, path, offsets[text.length] ?? panic('missing source byte length'));
+        const root = parser.file(); for(let at = 0; at < parser.nodes.length; at++) { rules.parents.push(-1); } rules.links(root, -1);
+        this.bindings = new Bindings(rules); this.root = root;
+    }
+}
