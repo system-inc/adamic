@@ -1,7 +1,7 @@
 import type { Rules } from './rules.ts';
 import { types } from './facts.ts';
 import { Suggestion } from './suggestion.ts';
-import type { Repair } from './repair.ts';
+import { Repair } from './repair.ts';
 
 export class NoArrayDelete {
     readonly rules: Rules;
@@ -26,7 +26,7 @@ export class NoArrayDelete {
         for(let at = 0; at < 3; at++) {
             scanner.pos = at === 0 ? node.pos : at === 1 ? this.rules.parser.node(receiver).end : this.rules.parser.node(argument).end;
             scanner.scan();
-            repairs.push({ start: this.rules.byte(scanner.start), end: this.rules.byte(scanner.pos), text: at === 0 ? '' : at === 1 ? '.splice(' : ', 1)' });
+            repairs.push(new Repair(this.rules.byte(scanner.start), this.rules.byte(scanner.pos), at === 0 ? '' : at === 1 ? '.splice(' : ', 1)'));
         }
         finding.suggestions.push(new Suggestion('useSplice', 'Use `array.splice()` instead.', repairs));
     }

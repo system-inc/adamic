@@ -2,6 +2,7 @@ import { panic } from 'adamic';
 import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { Suggestion } from './suggestion.ts';
+import { Repair } from './repair.ts';
 import { RegexpReferenceTracker } from './regexp_reference_tracker.a';
 import { RegexpConstant } from './regexp_constant.a';
 import { RegexpCookedOffsets } from './regexp_cooked_offsets.a';
@@ -541,7 +542,7 @@ export class NoMisleadingCharacterClass {
                         new Suggestion(
                             'suggestUnicodeFlag',
                             'Add the u flag so the class matches the character rather than its parts. The flag changes how the whole pattern parses, so this is offered rather than applied.',
-                            [{ start: position, end: position, text: 'u' }],
+                            [new Repair(position, position, 'u')],
                         ),
                     );
                 }

@@ -117,3 +117,13 @@ comparison-only mutants and the released-handle mutant are caught; the final
 owned suite passes in 174.233 s. No shared generator/harness/parser or bridge
 code changed. Native pattern validation, undefined labels and real JSX remain
 incomplete, so no further batch is claimed. See ../WAVE_14_CONSTRUCTOR_REPORT.md.
+
+## Landing cap, October 7, 2026
+
+Rebased the existing branch onto origin/main e8ba3d5d, yielding 75caf8c1 before
+the landing adjustments. Two owned rules now construct nominal Repair values
+required by current main. All four owned oracle suites pass again, with nineteen
+semantic comparison mutants, released-handle checks and sanitizer corpus checks.
+The complete bridge packages and filtered uncached Node oracle also pass.
+No new rules are claimed. Native pattern validation, undefined labels and real
+JSX remain incomplete. See ../WAVE_14_LANDING_REPORT.md for current evidence.
