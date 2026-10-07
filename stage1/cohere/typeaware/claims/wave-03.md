@@ -69,3 +69,12 @@ Reserve these three before implementation. The audit is in
 ../validation-wave-03/continuation-2-selection.json. Higher-ranked candidates
 are already ported or claimed. New native files remain .a, and shared harness
 and generator files remain untouched.
+
+Continuation 2 validation complete: the three reserved core rules have native
+.a implementations, 566 controls produce 318 byte-identical findings including
+174 callback fix edits, both callback option runs match, and all 364 frozen
+corpus roots match ordinary and sanitized production Go comparisons. Three
+byte-only rule mutants, five compiler-fact/request mutants and a released-handle
+mutant are caught. The implementation is f8c455b3; timings, evidence and the exact
+external-checker JavaScript integration blocker are in ../wave_03_more/REPORT.md.
+All nine wave-03 claims are implemented and validated. No additional claim made.
