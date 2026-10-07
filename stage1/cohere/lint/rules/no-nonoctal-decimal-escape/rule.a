@@ -1,0 +1,52 @@
+import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../finding.ts';
+import { saveRepairs } from '../typescript-no-unnecessary-type-constraint/repairs.a';
+import type { Suggestion } from '../typescript-no-unnecessary-type-constraint/repairs.a';
+import { description } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const literalStart = this.context.start(index);
+        const raw = this.context.source.slice(literalStart, this.context.node(index).end);
+        let previousNull = false;
+        for(let position = 0; position < raw.length;) {
+            if(raw[position] !== '\\' || position + 1 >= raw.length) {
+                previousNull = false;
+                position++;
+                continue;
+            }
+            const digit = raw.slice(position + 1, position + 2);
+            if(digit === '8' || digit === '9') {
+                const start = literalStart + position;
+                const finish = start + 2;
+                const escape = raw.slice(position, position + 2);
+                const id = 'nonoctalDecimalEscape';
+                const rule = 'no-nonoctal-decimal-escape';
+                const suggestions: Suggestion[] = [];
+                if(previousNull) {
+                    suggestions.push({ id: id,
+                        message: 'Replace `\\0' + escape + '` with `\\u0000' + digit + '`, which matches the same characters without turning the repair into a legacy octal escape.',
+                        edits: [{ start: start - 2, end: finish, text: '\\u0000' + digit }] });
+                    suggestions.push({ id: id,
+                        message: 'Replace `' + escape + '` with `\\u003' + digit + '`, keeping the digit and leaving the null escape before it alone.',
+                        edits: [{ start: start, end: finish, text: '\\u003' + digit }] });
+                }
+                else {
+                    suggestions.push({ id: id,
+                        message: 'Replace `' + escape + '` with `' + digit + '` if the digit is what was meant. The escape already means exactly that, so this changes nothing at runtime.',
+                        edits: [{ start: start, end: finish, text: digit }] });
+                }
+                suggestions.push({ id: id,
+                    message: 'Replace `' + escape + '` with `\\' + escape + '` if a literal backslash before the digit is what was meant. This one does change the string.',
+                    edits: [{ start: start, end: finish, text: '\\' + escape }] });
+                this.context.findings.push(new Finding(rule, id, description, start, finish, '', '', ''));
+                saveRepairs(rule, start, { fixes: [], suggestions: suggestions });
+                previousNull = false;
+            }
+            else { previousNull = digit === '0'; }
+            position += 2;
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
