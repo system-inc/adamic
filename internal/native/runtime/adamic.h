@@ -309,6 +309,7 @@ enum adamic_typed_array_kind {
 	adamic_typed_array_uint8 = 1,
 	adamic_typed_array_int32,
 	adamic_typed_array_float64,
+	adamic_typed_array_uint16,
 };
 typedef struct adamic_typed_array {
 	adamic_heap heap;
