@@ -40,10 +40,6 @@ var targetReaders = map[string]targetReader{
 	"internal/native/emit_expressions.go:evaluate:CallClosure.Closure":                   {"runtime", "emits the call"},
 	"internal/native/emit_functions.go:arguments:Call.Function":                          {"runtime", "emits the call"},
 	"internal/native/emit_functions.go:callThrough:CallClosure.Closure":                  {"runtime", "emits the call"},
-	"internal/native/region.go:feedsRegion:Call.Function":                                {"runtime", "checks call results feeding regions"},
-	"internal/native/region.go:freshValue:Call.Function":                                 {"runtime", "checks allocation region eligibility"},
-	"internal/native/region.go:handRegion:Call.Function":                                 {"runtime", "selects callee region variant"},
-	"internal/native/region.go:regionFor:Call.Function":                                  {"runtime", "selects allocation region for callee"},
 	"internal/native/reuse.go:planReuse:ArraySort.Comparator":                            {"runtime", "plans consumed parameters and argument moves"},
 	"internal/native/reuse.go:planReuse:Call.Function":                                   {"runtime", "plans consumed parameters and argument moves"},
 }

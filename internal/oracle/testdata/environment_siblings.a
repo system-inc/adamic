@@ -1,0 +1,7 @@
+function check(start: number): number {
+ let total = start;
+ function first(value: number): number { total += value; return second(value); }
+ function second(value: number): number { total += value * 2; return total; }
+ return first(3);
+}
+console.log(String(check(2)));

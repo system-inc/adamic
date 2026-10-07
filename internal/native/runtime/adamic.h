@@ -76,13 +76,17 @@ typedef struct adamic_cell {
 	adamic_value value;
 } adamic_cell;
 
-// One counted allocation owns every interior captured slot.
+// One record owns the ordered captured slots. Heap and region records keep them
+// in the same allocation; a frame uses a fixed aggregate with this header.
 typedef struct adamic_environment {
 	adamic_heap heap;
 	size_t count;
-	adamic_cell cells[];
+	adamic_cell *cells;
 } adamic_environment;
 adamic_environment *adamic_environment_new(size_t count);
+void adamic_environment_init(adamic_environment *environment, adamic_cell *cells, size_t count);
+void adamic_environment_free_children(adamic_environment *environment, void (*release)(void *));
+void adamic_environment_end(adamic_environment *environment);
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 
@@ -216,6 +220,7 @@ typedef struct adamic_region {
 } adamic_region;
 #define ADAMIC_REGION {NULL, 0}
 adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape);
+adamic_environment *adamic_environment_new_in(adamic_region *region, size_t count);
 void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.

@@ -58,7 +58,11 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
-	e.allocateEnvironment(function.FrameEnvironment)
+	for index := range function.Body {
+		if _, ok := function.Body[index].(ir.AllocateEnvironment); ok {
+			e.allocateEnvironment(&function.Body[index])
+		}
+	}
 	for _, parameter := range function.Parameters {
 		switch {
 		case e.reuse.consumed[parameter]:

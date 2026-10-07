@@ -295,11 +295,7 @@ static void free_one(void *value) {
 		break;
 	}
 	case adamic_kind_environment: {
-		adamic_environment *environment = value;
-		for (size_t index = 0; index < environment->count; index++) {
-			adamic_cell *cell = &environment->cells[index];
-			if (cell->references) { let_go(cell->value.reference); }
-		}
+		adamic_environment_free_children(value, let_go);
 		break;
 	}
 	case adamic_kind_closure: {
