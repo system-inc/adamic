@@ -1,5 +1,13 @@
 # Scanner blockers
 
+## October 7: adaptation 80 makes the flag return type explicit
+
+getNumericLiteralFlags's arrow now declares : TokenFlags; its AND expression
+is unchanged. Census reason enum-flags, branch flag-enums inference gap.
+Next exact refusal: scanner:538:9, Boolean parameter seen as Boolean | undefined
+(method-signature-style) for reScanJsxToken. Complete 59/80-83 suite passes
+106,367 tests with zero differences; Node tokens match. Evidence native80-*.
+
 ## October 7: adaptation 59 preserves legitimately missing regex operands
 
 `let operand!: string` becomes `let operand: string | undefined`. Malformed

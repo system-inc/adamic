@@ -9,3 +9,8 @@ refusal in a scratch probe, without any runtime change.
 
 Validate the Node token stream and full upstream baseline. Census reason:
 enum-flags; feature branch flag-enums, inference gap still present at its tip.
+
+Validated in the combined 59/80-83 full suite: 106,367 pass, zero baseline
+differences/failures/pending, 230.719 seconds. Node tokens match. Explicit
+return annotation advances to the reScanJsxToken Boolean parameter refusal
+(scanner:538:9); the expression and Scanner interface are unchanged.
