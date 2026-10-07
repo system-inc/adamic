@@ -406,3 +406,21 @@ The incoming shared RuleContext still has no checker program or source-path atta
 These are three alternating whole-process medians under concurrent gate load, not evidence of a performance change.
 
 Post-landing audit: push 69b6932bd was confirmed by ls-remote. The fresh all-head fetch found 609 origin refs, 33 distinct claim blobs and no unclaimed rules among the 197 ranked names (25 existing ranked base ports, 172 claimed names). Main remains 39638d9e2 and the lint integration tip remains d65a8f931; both are ancestors of this green branch. No new claim is made, as instructed when the ranking is exhausted.
+
+## Supplied-input correctness verification
+
+A fresh all-origin fetch leaves main at 39638d9e2 and area/stage1-lint at d65a8f931. Rebase reports the owned branch is up to date. No source implementation changed, so the previous nine-rule byte/sanitizer/released-handle/mutant results on this exact base remain applicable. The fresh audit inspects 616 origin refs and 33 claim blobs; all 197 ranked names are exhausted by 25 existing ranked ports and 172 claimed names. No new rule is claimed.
+
+The user's required-input correction is respected for the selected checks: ADAMIC_TYPESCRIPT_SOURCE points to the already pinned /workspace/wave-10-typescript checkout, and no selected test skips or fails. No gate, input check or shared harness is changed.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-10-typescript go test ./stage1/cohere/lint -run '^(TestRulesAgree|TestOwnedWitnesses|TestCompilerAndStage1Agree|TestMutants|TestRegistrationMutant)$' -count=1 -timeout=30m -v > /tmp/wave10-required-lint.log 2>&1
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-10-typescript go test ./stage1/typescript/parser ./stage1/typescript/scanner -run '^(TestCompilerExpressionsAgree|TestWholeCompilerAgrees|TestScannerAgreesWithTypescriptGo)$' -count=1 -timeout=30m -v > /tmp/wave10-required-typescript.log 2>&1
+```
+
+Lint package PASS 471.785s: rule corpus parity 13044077 bytes across Go, source Node, emitted JavaScript and native; compiler/stage1 parity 394 files and 21138417 bytes; all 15 discovered rule mutants are caught on Node/emitted-JavaScript/native; owned witnesses and registration mutant pass. The captured upstream rule tests retain existing explicitly named recovery refusals: their recovered Go output is logged and native/Node refusal is asserted. Those rows are not claimed as successful recovery parity. No new recovery exclusion or relaxation was added.
+
+Parser package PASS 57.453s: 77 compiler files, 28836875 expression-tree bytes and 44766682 whole-tree bytes match. Scanner PASS 37.150s: 77 compiler files, 280 stage1 files and 18236 generated inputs, 30671195 identical answer bytes. Scanner punctuator != changed to ==, invalid decimal separator accepted, and regex rescan suppressed mutants are all caught by Node and native byte comparison. There are no SKIP or FAIL events in either selected run.
+
+Limits: these are explicitly filtered checks, not the full 17-input correctness gate or full repository go test ./.... External postcss/graphql/prettier package inputs are absent in this workspace; their packages were not run and no green result is claimed for them. These syntax/source-corpus checks do not execute the nine type-aware listeners through the shared registry: RuleContext still lacks their checker/program/source-path attachment. Live-runner emitted-JavaScript certification and the three PARKED React ports remain outside this report. The previous native/Go timings are unchanged observations because no implementation changed.
