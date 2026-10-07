@@ -27,3 +27,7 @@ devtools/o0-experiment	measured, not adopted; kept for the record (developer too
 codex/regex-native-fixes-land	superseded: native-fixes is in area/library (library, Oct 7 04:37)
 codex/regex-v8-divergences	superseded by codex/regex-v8-divergences-land (library, Oct 7 04:37)
 codex/library-array-2	superseded by codex/library-array-2-land (library, Oct 7 04:37)
+codex/typeof-null	superseded by codex/typeof-null-2, on main (compiler, Oct 7 04:43)
+codex/require-builtins	superseded by codex/require-builtins-2 (compiler, Oct 7 04:43)
+codex/optional-widening-refusal	superseded by codex/optional-widening-refusal-2 (compiler, Oct 7 04:43)
+codex/integer-fields	stopped at its measurement gate, 3% under the 5% cutoff; nothing to land (compiler, Oct 7 04:43)
