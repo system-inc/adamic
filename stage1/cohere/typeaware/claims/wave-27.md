@@ -66,8 +66,20 @@ The first three remaining rules, each with combined count zero, are:
 Claim matching includes full, unqualified and underscore spellings. This update
 is pushed before writing the fourth batch's implementation.
 
-Fourth-batch status: pending, blocked before rule implementation. The native
-parser refuses a positive JSX static-components control with panic 70, while
-independent Go cohere reports one finding. See wave_27_fourth/REPORT.md.
-Following Ahra's stop-on-other-blockers instruction, shared parser/harness files
-were left untouched and the two state-update ports were not started.
+Fourth-batch status: parked under Ahra's analysis-dependent React exception.
+These claims count as finished only for the landing-first work-in-progress cap;
+they are not implemented ports and retain their existing independent probes.
+
+- react-hooks/set-state-in-effect: parked on native high-level IR, single-assignment
+  value propagation and translation across captured closure contexts.
+- react-hooks/set-state-in-render: parked on native high-level IR, single-assignment,
+  post-dominance and nested setter propagation through function contexts.
+- react-hooks/static-components: parked on native high-level IR and single-assignment
+  phi/taint propagation; positive JSX input is also refused by the current parser.
+
+Cohere's analysis modules are being ported on #dnv6f2c. JSX support is landing
+through area/stage1-lint; this unit never pushes to that branch. Shared parser,
+analysis, generator and test harness files remain untouched. The native JSX
+probe exits 70 while Go reports one finding; see wave_27_fourth/PARKED.md and
+the historical fourth-batch and landing reports. Earlier pending/stop language
+in those frozen reports describes their earlier status and is superseded here.
