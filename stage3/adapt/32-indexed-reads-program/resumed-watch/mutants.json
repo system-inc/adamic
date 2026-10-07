@@ -1,0 +1,41 @@
+[
+  {
+    "mutant": "remove CompilerHost.getDefaultLibLocation owner union",
+    "guard": {
+      "exit": 1,
+      "error": "watch contract missing: public-method",
+      "all_source_bytes_unchanged": true
+    },
+    "restored_watch_diagnostics": [
+      "/tmp/adapt32-watch-final-mutant-owner/src/compiler/watch.ts:756:11: error TS2375: Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getDefaultLibLocation' are incompatible.\n    Type '(() => string) | undefined' is not assignable to type '() => string'.\n      Type 'undefined' is not assignable to type '() => string'."
+    ]
+  },
+  {
+    "mutant": "required ! replaced by ?? 0",
+    "guard": {
+      "exit": 1,
+      "error": "required read defaulted: watch.ts:313:37",
+      "all_source_bytes_unchanged": true
+    },
+    "emitter": {
+      "exit": 1,
+      "error": "/workspace/adamic/stage3/adapt/32-indexed-reads-program/verify.cjs:24\n        throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)}`);\n        ^\n\nError: unexpected emitted JavaScript change in watch.ts: 4ad8b4bc7e3f4fedf526daaddc3c8cbc67bac2b4b4a08b39c9f96e281e57fdbd != ec778142e8d3fd4622dbbf88917d0ee4cb110214c60450cfc3c8692ec9e3d483\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/32-indexed-reads-program/verify.cjs:24:15)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0"
+    }
+  },
+  {
+    "mutant": "bound host producer replaced by undefined",
+    "guard": {
+      "exit": 1,
+      "error": "host producer invariant drift: createCompilerHostFromProgramHost",
+      "all_source_bytes_unchanged": true
+    }
+  },
+  {
+    "mutant": "remove one erased helper view",
+    "guard": {
+      "exit": 1,
+      "error": "optional helper call view missing",
+      "all_source_bytes_unchanged": true
+    }
+  }
+]

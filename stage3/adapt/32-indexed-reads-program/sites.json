@@ -2555,7 +2555,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2567,7 +2569,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2627,7 +2631,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2639,7 +2645,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2651,7 +2659,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2663,7 +2673,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2675,7 +2687,9 @@
     "total": 1,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "builder.ts",

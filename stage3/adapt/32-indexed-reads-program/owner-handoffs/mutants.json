@@ -1,0 +1,75 @@
+[
+  {
+    "mutant": "restore AmdDependency.name owner",
+    "adapter_exit": 1,
+    "adapter_error": "handoff union missing: AmdDependency.name",
+    "file": "parser.ts",
+    "restored_diagnostics": [
+      "/tmp/adapt32-handoffs-expanded-mutant-AmdDependency-name/src/compiler/parser.ts:10656:17: error TS2322: Type '{ name: string | undefined; path: string; }[]' is not assignable to type 'AmdDependency[]'.\n  Type '{ name: string | undefined; path: string; }' is not assignable to type 'AmdDependency' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'name' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'."
+    ]
+  },
+  {
+    "mutant": "restore AllDecorators.parameters owner",
+    "adapter_exit": 1,
+    "adapter_error": "handoff union missing: AllDecorators.parameters",
+    "file": "transformers/utilities.ts",
+    "restored_diagnostics": [
+      "/tmp/adapt32-handoffs-expanded-mutant-AllDecorators-parameters/src/compiler/transformers/utilities.ts:689:5: error TS2375: Type '{ decorators: readonly Decorator[] | undefined; parameters: (readonly Decorator[] | undefined)[] | undefined; }' is not assignable to type 'AllDecorators' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'parameters' are incompatible.\n    Type '(readonly Decorator[] | undefined)[] | undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.\n      Type 'undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.",
+      "/tmp/adapt32-handoffs-expanded-mutant-AllDecorators-parameters/src/compiler/transformers/utilities.ts:749:5: error TS2375: Type '{ decorators: readonly Decorator[] | undefined; parameters: (readonly Decorator[] | undefined)[] | undefined; getDecorators: readonly Decorator[] | undefined; setDecorators: ... | undefined; }' is not assignable to type 'AllDecorators' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'parameters' are incompatible.\n    Type '(readonly Decorator[] | undefined)[] | undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.\n      Type 'undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.",
+      "/tmp/adapt32-handoffs-expanded-mutant-AllDecorators-parameters/src/compiler/transformers/utilities.ts:773:5: error TS2375: Type '{ decorators: readonly Decorator[] | undefined; parameters: (readonly Decorator[] | undefined)[] | undefined; }' is not assignable to type 'AllDecorators' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'parameters' are incompatible.\n    Type '(readonly Decorator[] | undefined)[] | undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.\n      Type 'undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'."
+    ]
+  },
+  {
+    "mutant": "restore CommentRange.hasTrailingNewLine owner",
+    "adapter_exit": 1,
+    "adapter_error": "handoff union missing: CommentRange.hasTrailingNewLine",
+    "file": "factory/emitNode.ts",
+    "restored_diagnostics": [
+      "/tmp/adapt32-handoffs-expanded-mutant-CommentRange-hasTrailingNewLine/src/compiler/factory/emitNode.ts:205:108: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '{ kind: SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia; pos: -1; end: -1; hasTrailingNewLine: boolean | undefined; text: string; }' is not assignable to parameter of type 'SynthesizedComment' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'hasTrailingNewLine' are incompatible.\n        Type 'boolean | undefined' is not assignable to type 'boolean'.\n          Type 'undefined' is not assignable to type 'boolean'.",
+      "/tmp/adapt32-handoffs-expanded-mutant-CommentRange-hasTrailingNewLine/src/compiler/factory/emitNode.ts:218:110: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '{ kind: SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia; pos: -1; end: -1; hasTrailingNewLine: boolean | undefined; text: string; }' is not assignable to parameter of type 'SynthesizedComment' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'hasTrailingNewLine' are incompatible.\n        Type 'boolean | undefined' is not assignable to type 'boolean'.\n          Type 'undefined' is not assignable to type 'boolean'."
+    ]
+  },
+  {
+    "mutant": "restore AutoGenerateInfo.prefix owner",
+    "adapter_exit": 1,
+    "adapter_error": "handoff union missing: AutoGenerateInfo.prefix",
+    "file": "factory/nodeFactory.ts",
+    "restored_diagnostics": [
+      "/tmp/adapt32-handoffs-expanded-mutant-AutoGenerateInfo-prefix/src/compiler/factory/nodeFactory.ts:1216:9: error TS2412: Type 'undefined' is not assignable to type 'T[\"localSymbol\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'undefined' is assignable to the constraint of type 'T[\"localSymbol\"]', but 'T[\"localSymbol\"]' could be instantiated with a different subtype of constraint 'Symbol | undefined'.\n    Type 'undefined' is not assignable to type 'Symbol'.",
+      "/tmp/adapt32-handoffs-expanded-mutant-AutoGenerateInfo-prefix/src/compiler/factory/nodeFactory.ts:1315:41: error TS2379: Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+      "/tmp/adapt32-handoffs-expanded-mutant-AutoGenerateInfo-prefix/src/compiler/factory/nodeFactory.ts:1403:41: error TS2379: Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+      "/tmp/adapt32-handoffs-expanded-mutant-AutoGenerateInfo-prefix/src/compiler/factory/nodeFactory.ts:5496:9: error TS2412: Type 'JSDocTypeExpression | undefined' is not assignable to type 'T[\"typeExpression\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'JSDocTypeExpression | undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n    Type 'undefined' is not assignable to type 'T[\"typeExpression\"]'.\n      'undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n        Type 'undefined' is not assignable to type 'JSDocTypeExpression'."
+    ]
+  },
+  {
+    "mutant": "restore AutoGenerateInfo.suffix owner",
+    "adapter_exit": 1,
+    "adapter_error": "handoff union missing: AutoGenerateInfo.prefix",
+    "file": "factory/nodeFactory.ts",
+    "restored_diagnostics": [
+      "/tmp/adapt32-handoffs-expanded-mutant-AutoGenerateInfo-suffix/src/compiler/factory/nodeFactory.ts:1216:9: error TS2412: Type 'undefined' is not assignable to type 'T[\"localSymbol\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'undefined' is assignable to the constraint of type 'T[\"localSymbol\"]', but 'T[\"localSymbol\"]' could be instantiated with a different subtype of constraint 'Symbol | undefined'.\n    Type 'undefined' is not assignable to type 'Symbol'.",
+      "/tmp/adapt32-handoffs-expanded-mutant-AutoGenerateInfo-suffix/src/compiler/factory/nodeFactory.ts:1315:41: error TS2379: Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+      "/tmp/adapt32-handoffs-expanded-mutant-AutoGenerateInfo-suffix/src/compiler/factory/nodeFactory.ts:1403:41: error TS2379: Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+      "/tmp/adapt32-handoffs-expanded-mutant-AutoGenerateInfo-suffix/src/compiler/factory/nodeFactory.ts:5496:9: error TS2412: Type 'JSDocTypeExpression | undefined' is not assignable to type 'T[\"typeExpression\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'JSDocTypeExpression | undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n    Type 'undefined' is not assignable to type 'T[\"typeExpression\"]'.\n      'undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n        Type 'undefined' is not assignable to type 'JSDocTypeExpression'."
+    ]
+  },
+  {
+    "mutant": "required watch indexed read ! replaced by ?? 0",
+    "caught": {
+      "emitter": {
+        "exit": 1,
+        "error": "/workspace/adamic/stage3/adapt/32-indexed-reads-program/verify.cjs:24\n        throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)}`);\n        ^\n\nError: unexpected emitted JavaScript change in watch.ts: 4ad8b4bc7e3f4fedf526daaddc3c8cbc67bac2b4b4a08b39c9f96e281e57fdbd != ec778142e8d3fd4622dbbf88917d0ee4cb110214c60450cfc3c8692ec9e3d483\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/32-indexed-reads-program/verify.cjs:24:15)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0"
+      },
+      "ledger": {
+        "exit": 1,
+        "error": "required read defaulted: watch.ts:313:37"
+      }
+    }
+  },
+  {
+    "mutant": "producer invariant hash changed",
+    "exit": 1,
+    "error": "handoff producer runtime drift: processPragmasIntoFields",
+    "all_source_bytes_unchanged": true
+  }
+]
