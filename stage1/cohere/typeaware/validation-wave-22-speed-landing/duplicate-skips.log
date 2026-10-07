@@ -1,0 +1,106 @@
+Skip duplicate 893009cc
+Rebasing (18/31)Auto-merging bridge/tsgo/checker/facts.go
+CONFLICT (content): Merge conflict in bridge/tsgo/checker/facts.go
+error: could not apply 63298efb... Port the three wave 22 type-aware lint rules
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply 63298efb... # Port the three wave 22 type-aware lint rules
+Skip duplicate 63298efb
+Rebasing (19/31)Auto-merging stage1/cohere/typeaware/claims/wave-22.md
+CONFLICT (content): Merge conflict in stage1/cohere/typeaware/claims/wave-22.md
+error: could not apply 463014f1... Claim the next three available type-aware rules
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply 463014f1... # Claim the next three available type-aware rules
+Skip duplicate 463014f1
+Rebasing (20/31)Auto-merging bridge/tsgo/checker/binding_state_test.go
+CONFLICT (add/add): Merge conflict in bridge/tsgo/checker/binding_state_test.go
+Auto-merging bridge/tsgo/checker/facts.go
+CONFLICT (content): Merge conflict in bridge/tsgo/checker/facts.go
+Auto-merging bridge/tsgo/checker/type_operations_test.go
+CONFLICT (add/add): Merge conflict in bridge/tsgo/checker/type_operations_test.go
+Auto-merging stage1/cohere/typeaware/concurrency_no_lost_update.a
+CONFLICT (add/add): Merge conflict in stage1/cohere/typeaware/concurrency_no_lost_update.a
+Auto-merging stage1/cohere/typeaware/lost_update_graph.a
+CONFLICT (add/add): Merge conflict in stage1/cohere/typeaware/lost_update_graph.a
+Auto-merging stage1/cohere/typeaware/wave_22_next_test.go
+CONFLICT (add/add): Merge conflict in stage1/cohere/typeaware/wave_22_next_test.go
+error: could not apply 29e0aa1b... Preserve blocked continuation drafts and validation results
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply 29e0aa1b... # Preserve blocked continuation drafts and validation results
+Skip duplicate 29e0aa1b
+Rebasing (21/31)dropping 6066e31c849b616af885787e7d542f658a55dd94 Record logs for blocked continuation validation -- patch contents already upstream
+Rebasing (22/31)dropping 590f4fa65697636dde3e28479e9c84159bfcf59e Complete the three continuation rules with byte oracle and mutant validation -- patch contents already upstream
+Rebasing (23/31)Auto-merging stage1/cohere/typeaware/claims/wave-22.md
+CONFLICT (content): Merge conflict in stage1/cohere/typeaware/claims/wave-22.md
+error: could not apply 89222643... Claim the next three unclaimed type-aware rules after completing existing ports
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply 89222643... # Claim the next three unclaimed type-aware rules after completing existing ports
+Skip duplicate 89222643
+Rebasing (24/31)Auto-merging stage1/cohere/typeaware/WAVE_22_THIRD_REPORT.md
+CONFLICT (add/add): Merge conflict in stage1/cohere/typeaware/WAVE_22_THIRD_REPORT.md
+error: could not apply e8c0147a... Port three global binding rules with exact Go agreement and mutant evidence
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply e8c0147a... # Port three global binding rules with exact Go agreement and mutant evidence
+Skip duplicate e8c0147a
+Rebasing (25/31)dropping a7e33d0cc5edbb37dce5be96c9ef0e2db7e95e8c Correct the recorded bridge gate duration -- patch contents already upstream
+Rebasing (26/31)Auto-merging stage1/cohere/typeaware/claims/wave-22.md
+CONFLICT (content): Merge conflict in stage1/cohere/typeaware/claims/wave-22.md
+error: could not apply 712cddd7... Claim the next three available preference rules after completing nine ports
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply 712cddd7... # Claim the next three available preference rules after completing nine ports
+Skip duplicate 712cddd7
+Rebasing (27/31)Auto-merging stage1/cohere/typeaware/claims/wave-22.md
+CONFLICT (content): Merge conflict in stage1/cohere/typeaware/claims/wave-22.md
+error: could not apply 7f3b9262... Port three preference rules with exact Go repairs and mutant evidence
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply 7f3b9262... # Port three preference rules with exact Go repairs and mutant evidence
+Skip duplicate 7f3b9262
+Rebasing (28/31)Auto-merging stage1/cohere/typeaware/claims/wave-22.md
+CONFLICT (content): Merge conflict in stage1/cohere/typeaware/claims/wave-22.md
+error: could not apply ba8ac629... Claim three remaining React hook rules after completing twelve ports
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply ba8ac629... # Claim three remaining React hook rules after completing twelve ports
+Skip duplicate ba8ac629
+Rebasing (29/31)Auto-merging stage1/cohere/typeaware/WAVE_22_FIFTH_REPORT.md
+CONFLICT (add/add): Merge conflict in stage1/cohere/typeaware/WAVE_22_FIFTH_REPORT.md
+error: could not apply 5cc0f504... Record JSX parser and native React graph prerequisites for pending claims
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply 5cc0f504... # Record JSX parser and native React graph prerequisites for pending claims
+Skip duplicate 5cc0f504
+Rebasing (30/31)dropping 5b86729daf195f06e18e7983fad72b29c82996e1 Recheck pending React rule prerequisites against updated origin branches -- patch contents already upstream
+Rebasing (31/31)Successfully rebased and updated refs/heads/codex/typeaware-wave-22.
