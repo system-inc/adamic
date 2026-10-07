@@ -1,0 +1,19 @@
+import type { RuleContext } from '../../context.ts';
+import { description } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const children = this.context.node(index).children;
+        const left = children[0] ?? -1;
+        const token = children[1] ?? -1;
+        const right = children[2] ?? -1;
+        if(left < 0 || token < 0 || right < 0) { return; }
+        const operator = this.context.node(token).kind;
+        if(operator !== 'EqualsEqualsToken' && operator !== 'ExclamationEqualsToken') { return; }
+        if(this.context.node(this.context.unwrap(left)).kind !== 'NullKeyword' &&
+            this.context.node(this.context.unwrap(right)).kind !== 'NullKeyword') { return; }
+        this.context.report(index, 'no-eq-null', 'unexpected', description, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,6 @@
+{
+  "name": "null_inequality_only",
+  "file": "rule.a",
+  "from": "operator !== 'EqualsEqualsToken' && ",
+  "to": ""
+}
