@@ -39,6 +39,7 @@ func run() int {
 	print := flag.Bool("print", false, "print the program -seed makes, and stop")
 	verbose := flag.Bool("v", false, "say what each program came to")
 	without := flag.String("without", "", "features to leave out, by name, comma-separated (fuzz.Features), to stay inside what an older stage 0 lowered")
+	with := flag.String("with", "", "opt-in features to put in, by name, comma-separated (fuzz.OptIn): shapes stage 0 is known to get wrong today")
 	try := flag.String("try", "", "run one program file three ways, print what each did, and stop")
 	flag.Parse()
 
@@ -52,8 +53,18 @@ func run() int {
 			}
 		}
 	}
+	var putIn []string
+	if *with != "" {
+		putIn = strings.Split(*with, ",")
+		for _, feature := range putIn {
+			if !slices.Contains(fuzz.OptIn, feature) {
+				fmt.Fprintf(os.Stderr, "adamic-fuzz: no opt-in feature %q; they are %s\n", feature, strings.Join(fuzz.OptIn, ", "))
+				return 2
+			}
+		}
+	}
 	generate := func(seed uint64) *fuzz.Program {
-		return fuzz.GenerateWithout(seed, leftOut)
+		return fuzz.GenerateFeatures(seed, leftOut, putIn)
 	}
 	if *print {
 		fmt.Print(generate(*seed).Source())
@@ -134,7 +145,7 @@ func run() int {
 					})
 					program = shrunk
 				}
-				if err := fuzz.WriteFinding(path, program, programSeed, leftOut, outcome.Key); err != nil {
+				if err := fuzz.WriteFinding(path, program, programSeed, leftOut, putIn, outcome.Key); err != nil {
 					fmt.Fprintln(os.Stderr, err)
 				}
 				mutex.Lock()

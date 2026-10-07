@@ -1,0 +1,27 @@
+Cloning into '/workspace/markdown-fresh-zubr_3s9/repository/cohere'...
+v24.21.0
+setup: node ready (2.606s)
+
+added 3 packages in 616ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.156s
+setup: markdown dependencies ready (3.835s)
+go version go1.27.1 linux/amd64
+setup: go ready (4.076s)
+From https://github.com/system-inc/cohere
+ * branch            715ba94f3608a6500086b1076ce5cb7e51b836db -> FETCH_HEAD
+Submodule path 'cohere': checked out '715ba94f3608a6500086b1076ce5cb7e51b836db'
+Submodule 'TypeScript' (https://github.com/kirkouimet/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/markdown-fresh-zubr_3s9/repository/cohere/TypeScript'...
+From https://github.com/kirkouimet/TypeScript
+ * branch            8d550c837c90bd1805b047b7eeccc2baac2d5e7a -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out '8d550c837c90bd1805b047b7eeccc2baac2d5e7a'
+setup: submodules ready (26.461s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/markdown-fresh-zubr_3s9/tools/llvm/bin/clang) (46.538s)
+setup: go build ready (168.553s)
+setup: test binaries deferred (use --warm-tests) (168.626s)
+setup: build cache warm (168.627s)
+setup: build-flags commit=87a9dbe6e1b91f7893c24bb3d983a1c9a51bc92f nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.21.0 cached=yes warm-tests=false load-before=3.41 3.77 1.85 1/269 69755 load-after=7.34 5.47 2.82 1/291 75256
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (168.656s)
+setup: source /workspace/markdown-fresh-zubr_3s9/tools/env.sh
+setup: logs /tmp/adamic-gate/setup.K17muf
