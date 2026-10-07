@@ -1,0 +1,6 @@
+// From TypeScript 6.0.3, src/compiler/path.ts:120
+// Census reason: an import cycle
+import { endsWith, startsWith, identity } from './_namespaces/ts.a';
+export function fileExtensionIs(path: string, extension: string): boolean {
+    return path.length > extension.length && endsWith(path, extension);
+}
