@@ -6,7 +6,7 @@ func TestKnownAffinitiesStayWhole(t *testing.T) {
 	p := plan{Count: 15}
 	weights := map[string]float64{}
 	groups := knownAffinities()
-	if len(groups) != 3 || !groups[0].WholePackage || len(groups[1].Tests) != 9 || len(groups[2].Tests) != 3 {
+	if len(groups) != 2 || len(groups[0].Tests) != 9 || len(groups[1].Tests) != 3 || groups[0].SetupSeconds <= 0 || groups[1].SetupSeconds <= 0 {
 		t.Fatal("lost fixture inventory", groups)
 	}
 	for _, g := range groups {
@@ -23,7 +23,7 @@ func TestKnownAffinitiesStayWhole(t *testing.T) {
 	if err := assignUnits(&p, weights); err != nil {
 		t.Fatal(err)
 	}
-	if len(p.Affinity) != 3 {
+	if len(p.Affinity) != 2 {
 		t.Fatal("missing affinity in plan")
 	}
 	for _, g := range groups {
@@ -48,7 +48,7 @@ func TestKnownAffinitiesStayWhole(t *testing.T) {
 	for _, s := range predictions {
 		total += s.Seconds
 	}
-	if total != 369 {
+	if total != 246 {
 		t.Fatalf("shared fixture priced more than once: %v", total)
 	}
 	p.Units[0].Shard = (p.Units[0].Shard + 1) % p.Count
@@ -65,29 +65,26 @@ func TestVolumeParentStaysWhole(t *testing.T) {
 }
 
 func TestPartialAffinityRejected(t *testing.T) {
-	g := knownAffinities()[1]
+	g := knownAffinities()[0]
 	p := plan{Count: 2, Units: []unit{{Package: g.Package, Test: g.Tests[0]}}}
 	if assignUnits(&p, nil) == nil {
 		t.Fatal("accepted incomplete fixture inventory")
 	}
 }
 
-func TestWholePackageAffinityOwnsComplements(t *testing.T) {
-	g := knownAffinities()[0]
-	p := plan{Count: 15, Units: []unit{{Package: g.Package, Test: "TestParent/one", RequiredEnvironment: []string{"REQUIRED"}}, {Package: g.Package, Test: "TestParent/two"}, {Package: g.Package, Test: "TestOther"}}}
-	w := map[string]float64{g.key(): 100}
-	if err := assignUnits(&p, w); err != nil {
+func TestOracleMeasuredTestsMaySpread(t *testing.T) {
+	const pkg = "github.com/system-inc/adamic/internal/oracle"
+	for _, g := range knownAffinities() {
+		if g.Package == pkg {
+			t.Fatal("sub-second gateOnce must not pin the oracle", g)
+		}
+	}
+	p := plan{Count: 2, Units: []unit{{Package: pkg, Test: "TestCountsAreRecorded"}, {Package: pkg, Test: "TestLoopCountersAgreeWithNode"}}}
+	weights := map[string]float64{p.Units[0].key(): 311.24, p.Units[1].key(): 79.31}
+	if err := assignUnits(&p, weights); err != nil {
 		t.Fatal(err)
 	}
-	p.Complements = complements(p)
-	if len(p.Complements) != 1 || p.Complements[0].Shard != 14 {
-		t.Fatal("fixture complement moved to another shard", p.Complements)
-	}
-	if err := validateAffinity(p); err != nil {
-		t.Fatal(err)
-	}
-	p.Complements[0].Shard = 13
-	if validateAffinity(p) == nil {
-		t.Fatal("accepted split fixture complement")
+	if p.Units[0].Shard == p.Units[1].Shard {
+		t.Fatal("oracle's independent tests remain pinned")
 	}
 }

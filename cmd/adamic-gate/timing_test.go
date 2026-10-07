@@ -44,7 +44,7 @@ func TestTimingsRetainRepeatedParentSetupOnce(t *testing.T) {
 	}
 }
 func TestTimingsPriceLayoutSetupOnce(t *testing.T) {
-	g := knownAffinities()[1]
+	g := knownAffinities()[0]
 	paths := []string{}
 	start := time.Date(2026, 10, 7, 15, 0, 0, 0, time.UTC)
 	for _, name := range g.Tests {

@@ -13,6 +13,8 @@ import (
 type affinity struct {
 	Package, Fixture string
 	WholePackage     bool
+	SetupSeconds     float64
+	SetupMeasurement string
 	Tests            []string
 	Shard            int
 	Seconds          float64
@@ -23,11 +25,10 @@ func (a affinity) key() string { return a.Package + "::@" + a.Fixture }
 
 func knownAffinities() []affinity {
 	return []affinity{
-		{Package: "github.com/system-inc/adamic/internal/oracle", Fixture: "gateOnce", WholePackage: true},
-		{Package: "github.com/system-inc/adamic/stage1/cohere/markdownblocks", Fixture: "layoutOnce", Tests: []string{
+		{Package: "github.com/system-inc/adamic/stage1/cohere/markdownblocks", Fixture: "layoutOnce", SetupSeconds: 448.889, SetupMeasurement: "33935158 joint rerun: cont to original-oracle agreement; fixture plus controls, uncached", Tests: []string{
 			"TestMarkdownCodeBlockLayout", "TestMarkdownHTMLBlockLayout", "TestMarkdownLeafComposition", "TestMarkdownListLayout", "TestMarkdownQuoteLayout", "TestMarkdownRootLayout", "TestMarkdownStructureLayout", "TestMarkdownTableLayout", "TestMarkdownWhitespaceLayout",
 		}},
-		{Package: "github.com/system-inc/adamic/stage1/cohere/markdownblocks", Fixture: "formatterOnce", Tests: []string{
+		{Package: "github.com/system-inc/adamic/stage1/cohere/markdownblocks", Fixture: "formatterOnce", SetupSeconds: 206.546467590, SetupMeasurement: "1abec4c7: first Go formatter build on prepared box; formatter dependencies cold (warm repeats 7.789 and 5.701 s)", Tests: []string{
 			"TestMarkdownSourceDecoding", "TestMarkdownTextSplitting", "TestMarkdownUnicodeWidths",
 		}},
 	}
