@@ -164,3 +164,30 @@ questions and the completed prepared-HIR byte/mutant/sanitizer proofs are pushed
 through 3c46337e5 on main f8013f0ba. The source pipeline is not completed.
 Cohere's analysis modules are being ported to Adamic on #dnv6f2c; JSX support is
 landing on area/stage1-lint. These claims are parked, not released.
+
+
+## Sixth batch claim, without high-level analysis
+
+Main f8013f0ba is an ancestor of this branch. The owned branch's seven rule
+oracles and inherited bridge/Node/checker checks are green and pushed through
+3c46337e5; the three earlier React analysis claims are explicitly parked above.
+Fetched all 528 origin refs and inspected all 33 distinct Markdown claim blobs.
+Earlier entries with no claim mention are already ported on the bridge base.
+Explicitly released reservations remain available unless another active claim
+reserves them; promises/spread/lost-update and exhaustive-deps have continuation
+reservations and are skipped.
+
+These first three available entries of the 197-rule combined by-volume ranking
+do not use cohere's high-level IR, single-assignment or capture modules:
+
+| Full ranking position | Rule | Combined findings |
+| --- | --- | ---: |
+| 180 | react/jsx-fragments | 0 |
+| 181 | react/jsx-no-constructed-context-values | 0 |
+| 182 | react/jsx-no-undef | 0 |
+
+No native source implementation was found on origin/main or
+origin/codex/tsgo-c-library, and none is mentioned in any origin claim document.
+These three are reserved for codex/typeaware-wave-21. JSX syntax support is a
+shared dependency, separate from the parked high-level analysis modules.
+This claim update is pushed before writing any rule implementation.
