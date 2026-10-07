@@ -1,0 +1,22 @@
+{
+  "node": {
+    "bytes": 35456964,
+    "sha256": "2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5",
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  "mutant": {
+    "bytes": 35456964,
+    "sha256": "8dbdb58ef8125993b36bb93af30b9cfc233786b886489ef2b014002ece466246",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "caught_by": "cmp of complete preorder dump; both Node executions exited zero"
+  },
+  "mutation": {
+    "line": 164,
+    "before": "Identifier 3128 3145 0\tmoduleSpecifiers",
+    "after": "Identifier 3128 3146 0\tmoduleSpecifiers",
+    "changed_lines": 1
+  },
+  "files": 81
+}
