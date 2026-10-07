@@ -16,7 +16,9 @@ import (
 // can't change, no recursion (a function only calls the ones declared before it), and growth that
 // stops (a push only below a length, a string written back cut to a length). Strings are often long
 // enough that a slice can share its owner's bytes, and one function appends to such a slice while
-// that owner is still live.
+// that owner is still live. Ownership scenes hand a narrowed object to a call that reassigns it,
+// borrow an array element and then move the array, spread an object while calling a method on it,
+// and construct an object straight into a call while a closure keeps it.
 //
 // The richest vein is calls with side effects inside expressions: every function writes to the
 // globals and the holder, and calls go everywhere a value can, so the order of reads and calls in
@@ -56,6 +58,7 @@ var Features = []string{
 	"bitwise",           // &, |, ^, ~, <<, >> and >>>
 	"undefined-numbers", // number | undefined and optional numbers across every kind of call (undefined_numbers.go)
 	"shared-slices",     // long strings, slices that share their owner's bytes, and += on those slices
+	"ownership",         // narrowed lends, borrowed elements, spreads that call methods, capturing constructors
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -67,7 +70,7 @@ func GenerateWithout(seed uint64, without []string) *Program {
 // GenerateFeatures makes the program a seed names with some features left out and some of OptIn
 // put in. The same seed and the same features always make the same program.
 func GenerateFeatures(seed uint64, without []string, with []string) *Program {
-	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}, with: map[string]bool{}}
+	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}, with: map[string]bool{}, seed: seed}
 	for _, feature := range without {
 		generator.without[feature] = true
 	}
@@ -86,7 +89,10 @@ type generator struct {
 	random  *rand.Rand
 	without map[string]bool
 	// with is the OptIn features asked for.
-	with  map[string]bool
+	with map[string]bool
+	// seed picks which ownership scene a program runs, on a fixed cadence, so a run reaches every
+	// shape instead of waiting on the random stream to name one.
+	seed  uint64
 	scope *scope
 	// names counts every name made, so each is unique in the program and a shrunk expression that
 	// escapes its scope fails the checker instead of meaning something else.
@@ -247,11 +253,21 @@ func (g *generator) program() *Program {
 		}
 	}
 	// A shared slice lives in a function, not a global: += on a global is never an append in place.
-	// The call sits here so the append runs, with the owner and the other slice still to be printed.
+	// Generate it before the ownership scenes so both draw from the random stream in a fixed order,
+	// but run the scenes first: a share probe that overflows would otherwise be the crash the run
+	// reports, and the scene past it would never be what shrinks.
+	var shareDeclaration, shareCall *Statement
 	if g.allowed("shared-slices") {
-		declaration, call := g.sharedSliceProbe()
-		add(declaration)
-		add(call)
+		shareDeclaration, shareCall = g.sharedSliceProbe()
+	}
+	if g.allowed("ownership") {
+		for _, part := range g.ownershipProgram() {
+			add(part)
+		}
+	}
+	if shareDeclaration != nil {
+		add(shareDeclaration)
+		add(shareCall)
 	}
 
 	for range 6 + g.random.IntN(14) {
