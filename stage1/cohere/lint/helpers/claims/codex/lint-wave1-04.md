@@ -104,3 +104,9 @@ all nine semantic mutants, vet PASS. See from_wave1_04/SCAN_REPORT.md.
    domains, grammar/Unicode boundaries and suffix sets on source Node, emitted
    JavaScript and sanitized native; require compiling semantic mutants.
    One helper per .a file. Push this claim before code.
+
+Delivery 5: numberWithSuffix is implemented and tested. 1,218,564 cases,
+27,938,475 exact Go result/scan-count/argument bytes and all three compiling
+mutants pass on source Node, emitted JavaScript and ASan/UBSan native. Complete
+five-helper gate PASS 91.597s, all twelve semantic mutants; vet PASS.
+See from_wave1_04/SUFFIX_REPORT.md. No further helper is claimed yet.

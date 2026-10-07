@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -17,6 +18,20 @@ func trimOracle(t *testing.T) string {
 	}
 	virtual := filepath.Join(root, "adamic_wave104_trim.go")
 	replacements := map[string]string{virtual: filepath.Join(local, "trim_oracle.go.txt"), filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_wave104_trim_exports.go"): filepath.Join(local, "trim_exports.go.txt")}
+	sourcePath := filepath.Join(root, "internal/lint/rules/tailwind/collapse/data_type.go")
+	source, err := os.ReadFile(sourcePath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sourceAnchor := "func scanNumber(value string) int {"
+	if strings.Count(string(source), sourceAnchor) != 1 {
+		t.Fatal("Go scanner observer anchor changed")
+	}
+	observed := filepath.Join(t.TempDir(), "data_type.go")
+	if err = os.WriteFile(observed, []byte(strings.Replace(string(source), sourceAnchor, sourceAnchor+"\n if wave104ObserveScan { wave104ScanTrace=append(wave104ScanTrace,value) }", 1)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	replacements[sourcePath] = observed
 	data, err := json.Marshal(map[string]any{"Replace": replacements})
 	if err != nil {
 		t.Fatal(err)

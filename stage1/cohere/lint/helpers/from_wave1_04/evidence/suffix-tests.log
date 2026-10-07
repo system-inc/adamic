@@ -1,0 +1,24 @@
+=== RUN   TestNumberWithSuffixMatchesGo
+    suffix_test.go:46: 101547 values x 12 suffix sets = 1218564 actual Go comparisons, four consumer fixture domains
+    suffix_test.go:54: 27938475 exact Go bytes include results, one scanner call and its unchanged argument on all three targets
+--- PASS: TestNumberWithSuffixMatchesGo (17.97s)
+=== RUN   TestNumberWithSuffixMutants
+    suffix_test.go:60: 101547 values x 12 suffix sets = 1218564 actual Go comparisons, four consumer fixture domains
+=== RUN   TestNumberWithSuffixMutants/accept_a_zero-length_numeric_match
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a zero-length numeric match on ASan/UBSan native: line 1 got="0\ttrue\t1\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a zero-length numeric match on source Node: line 1 got="0\ttrue\t1\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a zero-length numeric match on emitted JavaScript: line 1 got="0\ttrue\t1\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+=== RUN   TestNumberWithSuffixMutants/accept_a_suffix_prefix
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a suffix prefix on source Node: line 4155 got="4154\ttrue\t1\t1\\u0000X" Go="4154\tfalse\t1\t1\\u0000X"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a suffix prefix on emitted JavaScript: line 4155 got="4154\ttrue\t1\t1\\u0000X" Go="4154\tfalse\t1\t1\\u0000X"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a suffix prefix on ASan/UBSan native: line 4155 got="4154\ttrue\t1\t1\\u0000X" Go="4154\tfalse\t1\t1\\u0000X"
+=== RUN   TestNumberWithSuffixMutants/scan_twice
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught scan twice on source Node: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught scan twice on emitted JavaScript: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught scan twice on ASan/UBSan native: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+--- PASS: TestNumberWithSuffixMutants (41.39s)
+    --- PASS: TestNumberWithSuffixMutants/accept_a_zero-length_numeric_match (13.05s)
+    --- PASS: TestNumberWithSuffixMutants/accept_a_suffix_prefix (13.62s)
+    --- PASS: TestNumberWithSuffixMutants/scan_twice (13.67s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_04	59.386s

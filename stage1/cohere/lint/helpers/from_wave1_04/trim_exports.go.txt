@@ -21,3 +21,14 @@ func Wave104Digits() []int {
 	}
 	return digits
 }
+
+var wave104ObserveScan bool
+var wave104ScanTrace []string
+
+func Wave104Suffix(value string, suffixes []string) (bool, []string) {
+	wave104ScanTrace = nil
+	wave104ObserveScan = true
+	result := numberWithSuffix(value, suffixes)
+	wave104ObserveScan = false
+	return result, wave104ScanTrace
+}

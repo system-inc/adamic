@@ -22,9 +22,10 @@ type Case struct {
 	Value string
 }
 type Corpus struct {
-	Spaces []int
-	Digits []int
-	Cases  []Case
+	Spaces     []int
+	Digits     []int
+	SuffixSets [][]string
+	Cases      []Case
 }
 
 func written(value string) string {
@@ -42,7 +43,7 @@ func written(value string) string {
 	return b.String()
 }
 func main() {
-	if os.Args[1] == "--generate" || os.Args[1] == "--generate-scan" {
+	if os.Args[1] == "--generate" || (os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix") {
 		data, err := os.ReadFile(os.Args[2])
 		if err != nil {
 			panic(err)
@@ -85,7 +86,7 @@ func main() {
 				continue
 			}
 			prefix := " "
-			if os.Args[1] == "--generate-scan" {
+			if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" {
 				prefix = "1"
 			}
 			corpus.Cases = append(corpus.Cases, Case{Value: prefix + string(point) + "X"})
@@ -94,7 +95,7 @@ func main() {
 			corpus.Cases = append(corpus.Cases, Case{Value: value})
 		}
 
-		if os.Args[1] == "--generate-scan" {
+		if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" {
 			var words func(string, int)
 			words = func(word string, depth int) {
 				corpus.Cases = append(corpus.Cases, Case{Value: word})
@@ -112,6 +113,9 @@ func main() {
 				}
 			}
 		}
+		if os.Args[1] == "--generate-suffix" {
+			corpus.SuffixSets = [][]string{nil, {}, {""}, {"%"}, {"px"}, {"em"}, {"deg", "rad"}, {"", "px", "em", "%"}, {"x", "X"}, {"é", "😀", "\u0000"}, {"PX", "EM"}, {"px", "px"}}
+		}
 		data, err = json.Marshal(corpus)
 		if err != nil {
 			panic(err)
@@ -122,7 +126,7 @@ func main() {
 		return
 	}
 	input := os.Args[1]
-	if input == "--scan" {
+	if input == "--scan" || input == "--suffix" {
 		input = os.Args[2]
 	}
 	data, err := os.ReadFile(input)
@@ -135,6 +139,21 @@ func main() {
 	}
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
+	if os.Args[1] == "--suffix" {
+		ordinal := 0
+		for _, c := range corpus.Cases {
+			for _, suffixes := range corpus.SuffixSets {
+				result, trace := collapse.Wave104Suffix(c.Value, suffixes)
+				argument := ""
+				if len(trace) > 0 {
+					argument = trace[0]
+				}
+				fmt.Fprintf(out, "%d\t%t\t%d\t%s\n", ordinal, result, len(trace), written(argument))
+				ordinal++
+			}
+		}
+		return
+	}
 	for i, c := range corpus.Cases {
 		if os.Args[1] == "--scan" {
 			fmt.Fprintf(out, "%d\t%d\n", i, collapse.Wave104ScanNumber(c.Value))

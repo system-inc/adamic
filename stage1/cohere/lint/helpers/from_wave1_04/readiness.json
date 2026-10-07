@@ -140,7 +140,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -369,7 +370,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArgument",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArguments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionNodes",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSDeclaration",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSString",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseModifier",
@@ -546,7 +546,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -719,7 +720,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArgument",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArguments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionNodes",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSDeclaration",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSString",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseModifier",
@@ -754,7 +754,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -947,7 +948,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArgument",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArguments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionNodes",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSDeclaration",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSString",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseModifier",
@@ -982,7 +982,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -1158,7 +1159,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArgument",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionArguments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.normalizeValueFunctionNodes",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSDeclaration",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseCSSString",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.parseModifier",
@@ -1192,7 +1192,8 @@
     "github.com/system-inc/cohere/internal/lint/rules/tailwind.projectRootOf",
     "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
-    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber"
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
   ],
-  "dependency_removals": 20
+  "dependency_removals": 24
 }

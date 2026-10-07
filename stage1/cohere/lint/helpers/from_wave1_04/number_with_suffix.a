@@ -1,0 +1,8 @@
+// Go's exact remainder membership, with the independently held scanner dependency.
+export function numberWithSuffix(value: string, suffixes: readonly string[], scanNumber: (value: string) => number): boolean {
+    const consumed = scanNumber(value);
+    if(consumed === 0) { return false; }
+    const tail = value.slice(consumed);
+    for(const suffix of suffixes) { if(tail === suffix) { return true; } }
+    return false;
+}
