@@ -1,0 +1,24 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+import { DeclarationContext } from './declaration_context.a';
+
+export class ResolvedSignatureDeclaration {
+    readonly present: boolean; readonly returnFlags: number;
+    readonly declaration: DeclarationContext | undefined; readonly functionFlags: number;
+    readonly hasBody: boolean; readonly bodyStart: number; readonly bodyEnd: number;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'wave04-next-resolved-signature-declaration'));
+        header(frames, 'wave04-next-resolved-signature-declaration'); this.present = frames.yes();
+        let returnFlags = 0; let declaration: DeclarationContext | undefined;
+        let functionFlags = 0; let hasBody = false; let bodyStart = 0; let bodyEnd = 0;
+        if(this.present) {
+            returnFlags = frames.natural();
+            if(frames.yes()) {
+                declaration = new DeclarationContext(frames); functionFlags = frames.natural(); hasBody = frames.yes();
+                if(hasBody) { bodyStart = frames.natural(); bodyEnd = frames.natural(); }
+            }
+        }
+        frames.end(); this.returnFlags = returnFlags; this.declaration = declaration; this.functionFlags = functionFlags;
+        this.hasBody = hasBody; this.bodyStart = bodyStart; this.bodyEnd = bodyEnd;
+    }
+}

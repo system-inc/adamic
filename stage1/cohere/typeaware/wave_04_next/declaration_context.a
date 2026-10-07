@@ -1,0 +1,38 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+
+export class DeclarationAncestor {
+    readonly kind: string; readonly start: number; readonly end: number;
+    readonly flags: number; readonly name: string; readonly globalAugmentation: boolean;
+    constructor(frames: Frames) {
+        this.kind = frames.field(); this.start = frames.natural(); this.end = frames.natural();
+        this.flags = frames.natural(); this.name = frames.field(); this.globalAugmentation = frames.yes();
+    }
+}
+export class DeclarationContext {
+    readonly file: string; readonly declarationFile: boolean;
+    readonly defaultLibrary: boolean; readonly externalModule: boolean;
+    readonly ancestors: readonly DeclarationAncestor[];
+    constructor(frames: Frames) {
+        this.file = frames.field(); this.declarationFile = frames.yes();
+        this.defaultLibrary = frames.yes(); this.externalModule = frames.yes();
+        const ancestors: DeclarationAncestor[] = []; const count = frames.natural();
+        for(let at = 0; at < count; at++) { ancestors.push(new DeclarationAncestor(frames)); }
+        this.ancestors = ancestors;
+    }
+}
+export class SymbolDeclarationContext {
+    readonly present: boolean; readonly identity: number; readonly flags: number;
+    readonly name: string; readonly declarations: readonly DeclarationContext[];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'wave04-next-declaration-context'));
+        header(frames, 'wave04-next-declaration-context'); this.present = frames.yes();
+        let identity = 0; let flags = 0; let name = ''; const declarations: DeclarationContext[] = [];
+        if(this.present) {
+            identity = frames.natural(); flags = frames.natural(); name = frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) { declarations.push(new DeclarationContext(frames)); }
+        }
+        frames.end(); this.identity = identity; this.flags = flags; this.name = name; this.declarations = declarations;
+    }
+}

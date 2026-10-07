@@ -37,3 +37,10 @@ are ported or claimed. The first three available entries are:
 These rules are claimed for the continuation. This claim is committed and
 pushed before any implementation. New code stays in this worker's directories;
 the shared registration generator and existing harness will not be edited.
+
+Continuation status: unfinished. Two raw checker questions and matching `.a`
+decoders are prepared and compile, but public bridge dispatch cannot reach them.
+The required shared registration edits have not been authorized under Ahra's
+correction; no shared files were edited. See
+`../wave_04_next/BLOCKER_REPORT.md` for the positive probe and exact missing lines.
+No continuation rule parity, mutant, sanitizer or runtime result is claimed.

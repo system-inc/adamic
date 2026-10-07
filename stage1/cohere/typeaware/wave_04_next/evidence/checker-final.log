@@ -1,0 +1,24 @@
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.01s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestWave04NextRawFactsAndDispatchGap
+    wave04_next_facts_test.go:68: wave04-next-declaration-context: direct raw facts pass; public dispatch rejects: unsupported checker question: wave04-next-declaration-context
+    wave04_next_facts_test.go:68: wave04-next-resolved-signature-declaration: direct raw facts pass; public dispatch rejects: unsupported checker question: wave04-next-resolved-signature-declaration
+--- PASS: TestWave04NextRawFactsAndDispatchGap (0.01s)
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestShapeAndNameFacts (0.02s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.07s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.08s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.105s
