@@ -10,8 +10,13 @@ scratch = Path('/tmp/stable-emitter-reproduce')
 scratch.mkdir(exist_ok=True)
 probe = root / 'internal/native/unit_changes_probe_test.go'
 assert not probe.exists(), 'remove the scratch measurement probe first'
-probe.write_text((root / 'internal/native/stable_emitter_evidence/unit_changes_probe.go.txt').read_text())
+probe_source = (root / 'internal/native/stable_emitter_evidence/unit_changes_probe.go.txt').read_text()
+if (root / 'internal/native/units.go').exists():
+    # Use developer-tools' landed implementation; do not redeclare its lexer/splitter.
+    probe_source = '\n'.join(['package native', 'import ("context"; "os"; "path/filepath"; "strings"; "testing"; "github.com/system-inc/adamic/internal/load"; "github.com/system-inc/adamic/internal/lower")', probe_source[probe_source.index('// Not parallel:'):]])
+probe.write_text(probe_source)
 mutants = [
+    ('landed-write-guard', 'internal/native/emit_statements.go', '\t\te.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))\n', '', './internal/native', '^TestFieldStoresMatchNode$', 'store lost its frozen guard'),
     ('readability', 'internal/native/names.go', 'text = text[:20] + "_" + text[len(text)-39:]', 'text = text[:60]', './internal/native', '^TestStableIdentifierBoundsAndEscaping$', 'declaration spelling lost'),
     ('accessor-storage', 'internal/native/names.go', 'return "#accessor:" + e.functionName(function)', 'return fmt.Sprintf("#accessor:%d", function)', './internal/native', '^TestSourceNamesDoNotMove$', 'edit moved unrelated module-level code'),
     ('generated-role', 'internal/native/names.go', 'strconv.Quote(source.Role)', 'strconv.Quote("")', './internal/native', '^TestGeneratedRolesDoNotCollide$', 'generated role collided'),

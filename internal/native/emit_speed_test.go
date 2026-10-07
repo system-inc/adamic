@@ -23,6 +23,9 @@ class Counter {
 }
 const counter = new Counter();
 console.log(counter.increment().toString());
+// Keep the descriptor used by the C ABI harness within the proven IR layouts.
+class Payload { static payload = "unused"; }
+console.log(Payload.payload);
 class Base { static inherited = 1; }
 class Derived extends Base {}
 Base.inherited = 2;
@@ -44,7 +47,7 @@ console.log(Base.inherited.toString() + ':' + Derived.inherited.toString());
 		t.Fatal(err)
 	}
 	generated := C(program)
-	if !strings.Contains(generated, "->frozen)") {
+	if !strings.Contains(generated, "adamic_object_check_data_write(") {
 		t.Fatal("store lost its frozen guard")
 	}
 	oracle, err := filepath.Abs("../../oracle/node.mjs")

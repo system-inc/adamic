@@ -2,7 +2,8 @@ Stable emitter identity handoff to developer tools
 
 No splitter or grouping implementation is changed on codex/stable-emitter-names.
 The unchanged splitter at 14e8372816b1d3bf5bcc37ca57336e46d41b7a41 still gives
-18 changed body/state units and 29 effective invalidations for adding a function.
+38 changed body/state units and 53 effective invalidations for adding a function
+on the expanded registry at main 4e0bfda5 (formerly 18/29 on the smaller lint port).
 Both temporary edits now give one changed unit and an unchanged shared header.
 
 Required grouping change:
@@ -52,6 +53,6 @@ Use the three grammar.ts overlays saved in stable_emitter_evidence/unit_changes_
 Assert that each changes only the grammar module unit and leaves other unit inputs
 and preprocessed keys identical. Include added/deleted units and changed headers in
 that count. Reintroduce the whole-program temporary counter: the saved probe's
-function-edit assertion currently fails with 18 changed units. Run Node/output,
+function-edit assertion currently fails with 38 changed units. Run Node/output,
 counted and sanitized oracle parity in split and single-unit modes after changing
 ownership, initialization extraction or dependency headers.
