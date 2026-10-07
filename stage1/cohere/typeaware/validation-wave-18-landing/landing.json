@@ -1,0 +1,51 @@
+{
+  "tested_code": "72cb3b4fe5e3742086b86e9e45065456dd9153eb",
+  "base": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "previous_remote": "72f8444912f2584af5e5d597124868a1ad53fb4e",
+  "cohere": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "passes": [
+    [
+      "TestWave18ConstructorAgreementAndMutants",
+      "103.03"
+    ],
+    [
+      "TestWave18CoreAgreementAndMutants",
+      "80.32"
+    ],
+    [
+      "TestWave18PreferenceAgreementAndMutants",
+      "95.40"
+    ],
+    [
+      "TestWave18AgreementAndMutants",
+      "88.55"
+    ],
+    [
+      "TestWave18TitleWithJsxSlice",
+      "52.79"
+    ]
+  ],
+  "byte_and_registry_mutants": [
+    "wave_18_constructor_test.go:126: new-func mutant: exit 0, empty stderr, Go byte oracle caught byte 1144",
+    "wave_18_constructor_test.go:126: native-nonconstructor mutant: exit 0, empty stderr, Go byte oracle caught byte 11761",
+    "wave_18_constructor_test.go:126: new-wrappers mutant: exit 0, empty stderr, Go byte oracle caught byte 13702",
+    "wave_18_constructor_test.go:169: released registry mutant caught: expected stale handle panic, got <nil>",
+    "wave_18_core_test.go:120: class-assign mutant: exit 0, empty stderr, Go byte oracle caught byte 58",
+    "wave_18_core_test.go:120: const-assign mutant: exit 0, empty stderr, Go byte oracle caught byte 571",
+    "wave_18_core_test.go:120: constant-binary mutant: exit 0, empty stderr, Go byte oracle caught byte 42582",
+    "wave_18_core_test.go:163: released registry mutant caught: expected stale handle panic, got <nil>",
+    "wave_18_preference_test.go:144: promise mutant: exit 0, empty stderr, Go byte oracle caught byte 1923",
+    "wave_18_preference_test.go:144: regex mutant: exit 0, empty stderr, Go byte oracle caught byte 34564",
+    "wave_18_preference_test.go:144: rest mutant: exit 0, empty stderr, Go byte oracle caught byte 23201",
+    "wave_18_preference_test.go:154: regex grammar mutant: exit 0, empty stderr, byte oracle caught byte 34476",
+    "wave_18_preference_test.go:197: released registry mutant caught: expected stale handle panic, got <nil>",
+    "wave_18_test.go:123: await mutant: exit 0, empty stderr, Go byte oracle caught byte 62",
+    "wave_18_test.go:123: class mutant: exit 0, empty stderr, Go byte oracle caught byte 4539",
+    "wave_18_test.go:139: iteration-facts mutant: exit 0, empty stderr, Go byte oracle caught byte 1752",
+    "wave_18_test.go:139: base-facts mutant: exit 0, empty stderr, Go byte oracle caught byte 7962",
+    "wave_18_test.go:195: released registry mutant caught: expected stale handle panic, got <nil>",
+    "wave_18_title_test.go:105: title mutant exit 0 empty stderr: byte oracle caught byte 61"
+  ],
+  "react_reporting_only": true,
+  "full_root_gate": false
+}
