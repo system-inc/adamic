@@ -1,0 +1,24 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ResolvedCallee {
+    readonly present: boolean; readonly returns: number; readonly declared: boolean;
+    readonly file: string; readonly ambient: boolean; readonly module: boolean; readonly kind: string;
+    readonly start: number; readonly end: number; readonly flags: number; readonly body: boolean;
+    readonly bodyKind: string; readonly bodyStart: number; readonly bodyEnd: number; readonly source: string;
+    constructor(present: boolean, returns: number, declared: boolean, file: string, ambient: boolean, module: boolean,
+        kind: string, start: number, end: number, flags: number, body: boolean, bodyKind: string, bodyStart: number, bodyEnd: number, source: string) {
+        this.present = present; this.returns = returns; this.declared = declared; this.file = file; this.ambient = ambient;
+        this.module = module; this.kind = kind; this.start = start; this.end = end; this.flags = flags; this.body = body;
+        this.bodyKind = bodyKind; this.bodyStart = bodyStart; this.bodyEnd = bodyEnd; this.source = source;
+    }
+}
+export function resolvedCallee(rules: Rules, index: number): ResolvedCallee {
+    const frames = new Frames(rules.ask(index, 'resolved-callee')); header(frames, 'resolved-callee');
+    const present = frames.yes(); const returns = present ? frames.natural() : 0; const declared = present && frames.yes();
+    const file = declared ? frames.field() : ''; const ambient = declared && frames.yes(); const module = declared && frames.yes();
+    const kind = declared ? frames.field() : ''; const start = declared ? frames.natural() : 0; const end = declared ? frames.natural() : 0;
+    const flags = declared ? frames.natural() : 0; const body = declared && frames.yes();
+    const bodyKind = body ? frames.field() : ''; const bodyStart = body ? frames.natural() : 0; const bodyEnd = body ? frames.natural() : 0;
+    const source = body ? frames.field() : ''; frames.end();
+    return new ResolvedCallee(present, returns, declared, file, ambient, module, kind, start, end, flags, body, bodyKind, bodyStart, bodyEnd, source);
+}

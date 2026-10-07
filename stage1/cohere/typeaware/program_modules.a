@@ -1,0 +1,27 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ModuleSpecifier {
+    readonly kind: string; readonly typeOnly: boolean; readonly expressionKind: string; readonly text: string; readonly resolved: string;
+    constructor(kind: string, typeOnly: boolean, expressionKind: string, text: string, resolved: string) {
+        this.kind = kind; this.typeOnly = typeOnly; this.expressionKind = expressionKind; this.text = text; this.resolved = resolved;
+    }
+}
+export class ProgramModule {
+    readonly file: string; readonly ambient: boolean; readonly external: boolean; readonly library: boolean; readonly specifiers: ModuleSpecifier[];
+    constructor(file: string, ambient: boolean, external: boolean, library: boolean, specifiers: ModuleSpecifier[]) {
+        this.file = file; this.ambient = ambient; this.external = external; this.library = library; this.specifiers = specifiers;
+    }
+}
+export function programModules(rules: Rules, root: number): ProgramModule[] {
+    const frames = new Frames(rules.ask(root, 'program-modules')); header(frames, 'program-modules');
+    const count = frames.natural(); const modules: ProgramModule[] = [];
+    for(let at = 0; at < count; at++) {
+        const file = frames.field(); const ambient = frames.yes(); const external = frames.yes(); const library = frames.yes();
+        const length = frames.natural(); const specifiers: ModuleSpecifier[] = [];
+        for(let item = 0; item < length; item++) {
+            specifiers.push(new ModuleSpecifier(frames.field(), frames.yes(), frames.field(), frames.field(), frames.field()));
+        }
+        modules.push(new ProgramModule(file, ambient, external, library, specifiers));
+    }
+    frames.end(); return modules;
+}

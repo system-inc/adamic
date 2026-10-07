@@ -1,0 +1,126 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { declarationAncestry } from './declaration_ancestry.a';
+import { nodeSymbolOrigin } from './node_symbol_origin.a';
+
+export class NoUnclearedRaceTimeout {
+    readonly rules: Rules; readonly bindings: Bindings;
+    constructor(rules: Rules) { this.rules = rules; this.bindings = new Bindings(rules); }
+    parent(index: number): number { return this.rules.parents[index] ?? -1; }
+    outer(index: number): number {
+        let current = index;
+        while(this.parent(current) >= 0 && this.rules.parser.node(this.parent(current)).kind === 'ParenthesizedExpression') { current = this.parent(current); }
+        return current;
+    }
+    plainTarget(index: number): boolean {
+        const outer = this.outer(index); const parent = this.rules.parser.node(this.parent(outer));
+        return parent.kind === 'BinaryExpression' && parent.children[0] === outer && this.rules.parser.node(parent.children[1] ?? -1).kind === 'EqualsToken';
+    }
+    neverRead(name: number): boolean {
+        const declared = this.bindings.declarations(name);
+        if(declared.length !== 1) { return false; }
+        const declaration = declared[0] ?? -1;
+        const node = this.rules.parser.node(declaration);
+        if(node.kind !== 'VariableDeclaration') { return false; }
+        const identifier = this.bindings.shape.name(declaration);
+        const text = this.rules.parser.node(identifier).text;
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const reference = this.rules.parser.node(at);
+            if(at === identifier || reference.kind !== 'Identifier' || reference.text !== text || this.parent(at) < 0) { continue; }
+            const resolved = this.bindings.declarations(at);
+            if(resolved.includes(declaration) && !this.plainTarget(at)) { return false; }
+        }
+        return true;
+    }
+    lost(executor: number, call: number): boolean {
+        const outer = this.outer(call); const parentIndex = this.parent(outer); const parent = this.rules.parser.node(parentIndex);
+        if(parentIndex === executor || ['ExpressionStatement', 'VoidExpression'].includes(parent.kind)) { return true; }
+        if(parent.kind === 'VariableDeclaration' && this.bindings.shape.initializer(parentIndex) === outer) {
+            const name = this.bindings.shape.name(parentIndex);
+            return this.rules.parser.node(name).kind === 'Identifier' && this.neverRead(name);
+        }
+        if(parent.kind === 'BinaryExpression' && this.rules.parser.node(parent.children[1] ?? -1).kind === 'EqualsToken' && parent.children[2] === outer) {
+            const target = this.rules.skip(parent.children[0] ?? -1);
+            return this.rules.parser.node(target).kind === 'Identifier' &&
+                this.rules.parser.node(this.parent(this.outer(parentIndex))).kind === 'ExpressionStatement' && this.neverRead(target);
+        }
+        return false;
+    }
+    globalTimer(call: number): boolean {
+        const parser = this.rules.parser; const callee = parser.node(this.rules.skip(parser.node(call).children[0] ?? -1));
+        let name = -1;
+        if(callee.kind === 'Identifier') { name = this.rules.skip(parser.node(call).children[0] ?? -1); }
+        else if(callee.kind === 'PropertyAccessExpression') {
+            const receiver = parser.node(this.rules.skip(callee.children[0] ?? -1));
+            if(receiver.kind !== 'Identifier' || !['globalThis', 'window'].includes(receiver.text)) { return false; }
+            name = callee.children[callee.children.length - 1] ?? -1;
+        }
+        if(name < 0 || parser.node(name).kind !== 'Identifier' || parser.node(name).text !== 'setTimeout') { return false; }
+        const facts = declarationAncestry(this.rules, name);
+        if(!facts.present || facts.declarations.length === 0) { return false; }
+        for(const declaration of facts.declarations) {
+            if(!declaration.ambient) { return false; }
+            const owner = declaration.chain[1];
+            if(owner?.kind === 'SourceFile') { if(declaration.module) { return false; } }
+            else if(owner?.kind === 'ModuleBlock') { if(declaration.chain[2]?.global !== true) { return false; } }
+            else if(owner?.kind !== 'InterfaceDeclaration' || owner.name !== 'WindowOrWorkerGlobalScope' || !declaration.library) { return false; }
+        }
+        return true;
+    }
+    promise(element: number): number {
+        const parser = this.rules.parser; let current = this.rules.skip(element);
+        if(parser.node(current).kind === 'Identifier') {
+            const declared = this.bindings.declarations(current);
+            if(declared.length !== 1) { return -1; }
+            const declaration = declared[0] ?? -1; const list = parser.node(this.parent(declaration));
+            if(parser.node(declaration).kind !== 'VariableDeclaration' || list.kind !== 'VariableDeclarationList' || list.semantic !== '2') { return -1; }
+            const initializer = this.bindings.shape.initializer(declaration);
+            if(initializer < 0) { return -1; }
+            current = this.rules.skip(initializer);
+        }
+        const expression = parser.node(current);
+        if(expression.kind !== 'NewExpression') { return -1; }
+        const constructor = this.rules.skip(expression.children[0] ?? -1);
+        if(parser.node(constructor).kind !== 'Identifier' || parser.node(constructor).text !== 'Promise') { return -1; }
+        const origin = nodeSymbolOrigin(this.rules, constructor);
+        return origin.present && origin.count > 0 && origin.allDefaultLibraries ? current : -1;
+    }
+    visitExecutor(index: number, executor: number): void {
+        const node = this.rules.parser.node(index);
+        if(this.bindings.functionKind(node.kind) || ['ClassDeclaration', 'ClassExpression'].includes(node.kind)) { return; }
+        if(node.kind === 'CallExpression' && this.globalTimer(index) && this.lost(executor, index)) {
+            this.rules.findings.push(new Diagnostic('correctness-no-uncleared-race-timeout', 'unclearedRaceTimeout',
+                'This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.',
+                this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), 'nexus/'));
+        }
+        for(const child of node.children) { this.visitExecutor(child, executor); }
+    }
+    run(): void {
+        const parser = this.rules.parser;
+        for(let at = 0; at < parser.nodes.length; at++) {
+            const node = parser.node(at);
+            if(this.parent(at) < 0 || node.kind !== 'CallExpression' || node.list < 1) { continue; }
+            const callee = parser.node(this.rules.skip(node.children[0] ?? -1));
+            if(callee.kind !== 'PropertyAccessExpression') { continue; }
+            const name = callee.children[callee.children.length - 1] ?? -1;
+            if(parser.node(name).kind !== 'Identifier' || parser.node(name).text !== 'race') { continue; }
+            const facts = declarationAncestry(this.rules, name);
+            if(!facts.present || facts.declarations.length === 0 || facts.declarations.some((declaration) =>
+                !declaration.library || declaration.chain[1]?.kind !== 'InterfaceDeclaration' || declaration.chain[1]?.name !== 'PromiseConstructor')) { continue; }
+            const array = parser.node(this.rules.skip(node.children[node.children.length - node.list] ?? -1));
+            if(array.kind !== 'ArrayLiteralExpression') { continue; }
+            for(const element of array.children) {
+                const promiseIndex = this.promise(element);
+                if(promiseIndex < 0) { continue; }
+                const promise = parser.node(promiseIndex);
+                if(promise.kind !== 'NewExpression' || promise.list < 1) { continue; }
+                const executor = this.rules.skip(promise.children[promise.children.length - promise.list] ?? -1);
+                const functionNode = parser.node(executor);
+                if(!['ArrowFunction', 'FunctionExpression'].includes(functionNode.kind)) { continue; }
+                const body = functionNode.children[functionNode.children.length - 1] ?? -1;
+                this.visitExecutor(body, executor);
+            }
+        }
+    }
+}

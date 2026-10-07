@@ -1,0 +1,40 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class DeclarationAncestor {
+    readonly kind: string; readonly name: string; readonly start: number; readonly end: number;
+    readonly flags: number; readonly global: boolean;
+    constructor(kind: string, name: string, start: number, end: number, flags: number, global: boolean) {
+        this.kind = kind; this.name = name; this.start = start; this.end = end; this.flags = flags; this.global = global;
+    }
+}
+export class AncestorDeclaration {
+    readonly file: string; readonly ambient: boolean; readonly library: boolean; readonly module: boolean;
+    readonly chain: DeclarationAncestor[];
+    constructor(file: string, ambient: boolean, library: boolean, module: boolean, chain: DeclarationAncestor[]) {
+        this.file = file; this.ambient = ambient; this.library = library; this.module = module; this.chain = chain;
+    }
+}
+export class DeclarationAncestry {
+    readonly present: boolean; readonly identity: number; readonly flags: number; readonly declarations: AncestorDeclaration[];
+    constructor(present: boolean, identity: number, flags: number, declarations: AncestorDeclaration[]) {
+        this.present = present; this.identity = identity; this.flags = flags; this.declarations = declarations;
+    }
+}
+export function declarationAncestry(rules: Rules, index: number): DeclarationAncestry {
+    const frames = new Frames(rules.ask(index, 'declaration-ancestry'));
+    header(frames, 'declaration-ancestry');
+    const present = frames.yes(); let identity = 0; let flags = 0;
+    const declarations: AncestorDeclaration[] = [];
+    if(present) {
+        identity = frames.natural(); flags = frames.natural(); const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const file = frames.field(); const ambient = frames.yes(); const library = frames.yes(); const module = frames.yes();
+            const length = frames.natural(); const chain: DeclarationAncestor[] = [];
+            for(let item = 0; item < length; item++) {
+                chain.push(new DeclarationAncestor(frames.field(), frames.field(), frames.natural(), frames.natural(), frames.natural(), frames.yes()));
+            }
+            declarations.push(new AncestorDeclaration(file, ambient, library, module, chain));
+        }
+    }
+    frames.end(); return new DeclarationAncestry(present, identity, flags, declarations);
+}
