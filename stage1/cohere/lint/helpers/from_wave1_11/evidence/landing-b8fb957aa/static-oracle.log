@@ -1,0 +1,29 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestTheOracleCatchesOneByte
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+=== NAME  TestTheOracleCatchesOneByte
+    oracle_test.go:487: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+    oracle_test.go:598: gate cache node miss
+=== NAME  TestTheOracleCatchesOneByte
+    oracle_test.go:653: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+    oracle_test.go:598: gate cache node miss
+--- PASS: TestTheOracleCatchesOneByte (11.91s)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a
+    oracle_test.go:487: gate cache native miss
+    oracle_test.go:480: gate cache native miss
+    oracle_test.go:494: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a (12.23s)
+PASS
+gate cache: native hits=1 misses=3
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.350s
