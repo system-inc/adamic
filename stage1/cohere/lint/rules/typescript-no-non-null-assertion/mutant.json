@@ -1,0 +1,6 @@
+{
+  "name": "non null assertion loses second suggestion edit",
+  "file": "rule.ts",
+  "from": "new Edit(dot, dot + 1, '?.')",
+  "to": "new Edit(dot, dot + 1, '.')"
+}
