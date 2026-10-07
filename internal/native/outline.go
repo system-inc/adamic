@@ -201,6 +201,11 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 				count++
 			}
 		}
+		if len(indexes) > 1 {
+			for chunkIndex, index := range indexes {
+				chunks[index].name = stableName("adamic_initialize_chunk", part.module, fmt.Sprintf("%q/chunk/%d", part.module, chunkIndex))
+			}
+		}
 		modules = append(modules, indexes)
 	}
 	var locals []initializerLocal
@@ -285,7 +290,7 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 		}
 		body.WriteString(chunk.body[position:])
 		signature := initializerSignature(chunk.name, chunk.parameters, types)
-		fmt.Fprintf(&definitions, "// adamic-module %q\nstatic %s%s;\nstatic %s {\n%s\n}\n\n", chunk.module, signature, initializerAttribute, signature, body.String())
+		fmt.Fprintf(&definitions, "static %s%s;\n// adamic-module %q\nstatic %s {\n%s\n}\n\n", signature, initializerAttribute, chunk.module, signature, body.String())
 	}
 	for partIndex, indexes := range modules {
 		if len(indexes) == 0 {
@@ -306,7 +311,7 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 		}
 		name := stableName("adamic_initialize", module, fmt.Sprintf("%q/module", module))
 		signature := initializerSignature(name, parameters, types)
-		fmt.Fprintf(&definitions, "// adamic-module %q\nstatic %s%s;\nstatic %s {\n", module, signature, initializerAttribute, signature)
+		fmt.Fprintf(&definitions, "static %s%s;\n// adamic-module %q\nstatic %s {\n", signature, initializerAttribute, module, signature)
 		// Typed backing arrays avoid thousands of separately described stack
 		// variables in a table initializer's wrapper. Chunks still receive typed
 		// addresses; the slots have exactly the original storage and lifetime.
@@ -340,7 +345,6 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 			fmt.Fprintf(&definitions, "\t%s(%s);\n", chunks[index].name, strings.Join(arguments, ", "))
 		}
 		definitions.WriteString("}\n\n")
-		e.line("// adamic-module %q", module)
 		e.line("%s(%s);", name, initializerArguments(parameters, true))
 	}
 	e.out.WriteString(cleanup)

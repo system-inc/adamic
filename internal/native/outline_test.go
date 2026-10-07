@@ -84,3 +84,60 @@ func TestInitializerFlatBoundaries(t *testing.T) {
 		t.Fatalf("root locals: %+v", locals)
 	}
 }
+
+func TestInitializerUnitOwnership(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	entry := filepath.Join(directory, "main.a")
+	var values []string
+	for i := 0; i < 400; i++ {
+		values = append(values, fmt.Sprint(i))
+	}
+	if err := os.WriteFile(filepath.Join(directory, "table.a"), []byte("export const table = ["+strings.Join(values, ",")+"];"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(entry, []byte("import { table } from './table.a'; console.log(table.length.toString());"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	program := namedProgram(t, entry, nil)
+	_, units, err := splitC(C(program))
+	if err != nil {
+		t.Fatal(err)
+	}
+	placements := 0
+	for _, unit := range units {
+		if strings.Contains(unit.name, "_initialize_") {
+			placements++
+		}
+	}
+	if placements < 2 {
+		t.Fatal("large initializer stayed in its module unit")
+	}
+	names := &emitter{program: program}
+	globalCount := 0
+	for index, local := range program.Locals {
+		if !local.Global || local.Source.Module == "" {
+			continue
+		}
+		globalCount++
+		definition := "\n" + cType(local.Type) + " adamic_unit_" + names.localName(index) + " = "
+		found := false
+		for _, unit := range units {
+			if strings.Contains(unit.source, definition) {
+				found = true
+				if unit.name != moduleUnit(local.Source.Module) {
+					t.Fatalf("initializer global %s owned by %s, want %s", local.Name, unit.name, moduleUnit(local.Source.Module))
+				}
+				if !strings.Contains(unit.source, initializerAttribute) {
+					t.Fatal("module initializer lost noinline prototype")
+				}
+			}
+		}
+		if !found {
+			t.Fatalf("missing initializer global definition %s", local.Name)
+		}
+	}
+	if globalCount == 0 {
+		t.Fatal("fixture has no source-owned globals")
+	}
+}
