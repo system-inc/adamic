@@ -90,8 +90,9 @@ func TestJSONTypesMissingBinary(t *testing.T) {
 	if err := os.WriteFile(path, []byte("console.log('decodeJson');\n"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	for _, binary := range []string{"", filepath.Join(t.TempDir(), "missing-json-types")} {
-		t.Run(binary, func(t *testing.T) {
+	for _, test := range []struct{ name, binary string }{{"unset", ""}, {"missing", filepath.Join(t.TempDir(), "missing-json-types")}} {
+		t.Run(test.name, func(t *testing.T) {
+			binary := test.binary
 			t.Parallel()
 			got := executeWith(t, []string{"ADAMIC_ORACLE_JSON_TYPES=" + binary}, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
 			want := "missing ADAMIC_ORACLE_JSON_TYPES"
