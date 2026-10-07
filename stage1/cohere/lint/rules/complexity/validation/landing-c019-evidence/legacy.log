@@ -1,0 +1,439 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 371 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 15221259 bytes
+--- PASS: TestCompilerAndStage1Agree (96.59s)
+=== RUN   TestMutants
+=== RUN   TestMutants/debugger_fix_suppressed
+    lint_test.go:491: debugger fix suppressed caught on Node: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed829859735/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed829859735/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 		
+    lint_test.go:491: debugger fix suppressed caught on emitted JavaScript: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed829859735/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed829859735/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 		
+    lint_test.go:491: debugger fix suppressed caught on native: case 0 line 5: port "range 0 9 unexpectedDebugger \t\t", Go "range 0 9 unexpectedDebugger fix\t\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed829859735/001/generated-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed829859735/001/generated-0.ts:1:17
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 16 25 unexpectedDebugger 		
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:491: empty function body reported caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:491: empty function body reported caught on emitted JavaScript: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:491: empty function body reported caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported670691739/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:491: suggestion applied as fix caught on Node: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1479175016/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1479175016/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+    lint_test.go:491: suggestion applied as fix caught on emitted JavaScript: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1479175016/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1479175016/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+    lint_test.go:491: suggestion applied as fix caught on native: case 8 line 205: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied."
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 8
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1479175016/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1479175016/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===	
+=== RUN   TestMutants/var_declaration_suppressed
+    lint_test.go:491: var declaration suppressed caught on Node: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:1"
+        Go context:
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 83 85 unexpected fix	!==	
+        fixed	a == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ == null; `a` !== 'b';
+        case 12
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:12
+    lint_test.go:491: var declaration suppressed caught on emitted JavaScript: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:1"
+        Go context:
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 83 85 unexpected fix	!==	
+        fixed	a == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ == null; `a` !== 'b';
+        case 12
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:12
+    lint_test.go:491: var declaration suppressed caught on native: case 12 line 286: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:1"
+        Go context:
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 83 85 unexpected fix	!==	
+        fixed	a == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ == null; `a` !== 'b';
+        case 12
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 		
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed2598113531/004/generated-3.ts:1:12
+=== RUN   TestMutants/duplicate_case_suppressed
+    lint_test.go:491: duplicate case suppressed caught on Node: case 0 line 22: port "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:491: duplicate case suppressed caught on emitted JavaScript: case 0 line 22: port "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:491: duplicate case suppressed caught on native: case 0 line 22: port "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix		
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed744664486/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix		
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/reason_ignored
+    lint_test.go:491: reason ignored caught on Node: case 24 line 526: port "/tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:2:1", Go "/tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:4:1"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 20 missingDescription 		
+        /tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:4:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 112 134 missingDescription 		
+        fixed	/* eslint-disable */\u000a// eslint-disable-next-line -- deliberate exception\u000aconst fake = '// eslint-disable-line';\u000a// cohere-disable-line\u000a
+    lint_test.go:491: reason ignored caught on emitted JavaScript: case 24 line 526: port "/tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:2:1", Go "/tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:4:1"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 20 missingDescription 		
+        /tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:4:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 112 134 missingDescription 		
+        fixed	/* eslint-disable */\u000a// eslint-disable-next-line -- deliberate exception\u000aconst fake = '// eslint-disable-line';\u000a// cohere-disable-line\u000a
+    lint_test.go:491: reason ignored caught on native: case 24 line 526: port "/tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:2:1", Go "/tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:4:1"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:1:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 0 20 missingDescription 		
+        /tmp/adamic-gate/TestMutantsreason_ignored588933428/007/eslint-comments-require-description-0.ts:4:1
+          @eslint-community/eslint-comments/require-description  Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.
+        
+        range 112 134 missingDescription 		
+        fixed	/* eslint-disable */\u000a// eslint-disable-next-line -- deliberate exception\u000aconst fake = '// eslint-disable-line';\u000a// cohere-disable-line\u000a
+=== RUN   TestMutants/parenthesized_chain_missed
+    lint_test.go:491: parenthesized chain missed caught on Node: case 24 line 522: port "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18", Go "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 66 80 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	79:80:	Remove the non-null assertion.
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18
+    lint_test.go:491: parenthesized chain missed caught on emitted JavaScript: case 24 line 522: port "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18", Go "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 66 80 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	79:80:	Remove the non-null assertion.
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18
+    lint_test.go:491: parenthesized chain missed caught on native: case 24 line 522: port "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18", Go "/tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:3:17
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 66 80 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	79:80:	Remove the non-null assertion.
+        /tmp/adamic-gate/TestMutantsparenthesized_chain_missed2604122497/007/typescript-no-non-null-asserted-optional-chain-0.ts:4:18
+=== RUN   TestMutants/postfix_assignment_suggestion
+    lint_test.go:491: postfix assignment suggestion caught on Node: case 24 line 545: port "range 220 229 noNonNull suggestion-edits:suggestOptionalChain\t228:229:|229:230:?.\tUse the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.", Go "range 220 229 noNonNull \t\t"
+        Go context:
+        
+        range 191 200 noNonNull 		
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion4037158888/007/typescript-no-non-null-assertion-0.ts:7:2
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 220 229 noNonNull 		
+        fixed	const emoji = '\ud83d\ude00';\u000aconst \u00e9 = receiver;\u000aconst result = \u00e9!.value;\u000aconst comment = receiver! /* . remains in the comment */ .value;\u000aconst nested = receiver?.value!!;\u000aconst assigned = ({ k: receiver!.value } = other);\u000a(receiver!.value as number)++;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion4037158888/008/typescript-no-non-null-assertion-1.ts:1:1
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+    lint_test.go:491: postfix assignment suggestion caught on emitted JavaScript: case 24 line 545: port "range 220 229 noNonNull suggestion-edits:suggestOptionalChain\t228:229:|229:230:?.\tUse the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.", Go "range 220 229 noNonNull \t\t"
+        Go context:
+        
+        range 191 200 noNonNull 		
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion4037158888/007/typescript-no-non-null-assertion-0.ts:7:2
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 220 229 noNonNull 		
+        fixed	const emoji = '\ud83d\ude00';\u000aconst \u00e9 = receiver;\u000aconst result = \u00e9!.value;\u000aconst comment = receiver! /* . remains in the comment */ .value;\u000aconst nested = receiver?.value!!;\u000aconst assigned = ({ k: receiver!.value } = other);\u000a(receiver!.value as number)++;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion4037158888/008/typescript-no-non-null-assertion-1.ts:1:1
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+    lint_test.go:491: postfix assignment suggestion caught on native: case 24 line 545: port "range 220 229 noNonNull suggestion-edits:suggestOptionalChain\t228:229:|229:230:?.\tUse the optional chain operator `?.`, but only where a missing value is really possible and the code after it handles `undefined`. It reads `undefined` where `!` would throw, so it changes the expression's type rather than repairing the value.", Go "range 220 229 noNonNull \t\t"
+        Go context:
+        
+        range 191 200 noNonNull 		
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion4037158888/007/typescript-no-non-null-assertion-0.ts:7:2
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        
+        range 220 229 noNonNull 		
+        fixed	const emoji = '\ud83d\ude00';\u000aconst \u00e9 = receiver;\u000aconst result = \u00e9!.value;\u000aconst comment = receiver! /* . remains in the comment */ .value;\u000aconst nested = receiver?.value!!;\u000aconst assigned = ({ k: receiver!.value } = other);\u000a(receiver!.value as number)++;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantspostfix_assignment_suggestion4037158888/008/typescript-no-non-null-assertion-1.ts:1:1
+          @typescript-eslint/no-non-null-assertion  A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+=== RUN   TestMutants/compound_this_alias_missed
+    lint_test.go:491: compound this alias missed caught on Node: case 25 line 540: port "/tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:2:7", Go "/tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:1:11"
+        Go context:
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 101 103 thisAssignment 		
+        fixed	const emoji = '\ud83d\ude00';\u000alet \u00e9;\u000a((\u00e9)) = this;\u000a(\u00e9 as unknown) = this;\u000a(\u00e9 satisfies unknown) = this;\u000a(\u00e9!) = this;\u000aconst derived = (this);\u000athis.member = this;\u000aconst { member } = this;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:1:11
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 10 14 thisAssignment 		
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:2:7
+    lint_test.go:491: compound this alias missed caught on emitted JavaScript: case 25 line 540: port "/tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:2:7", Go "/tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:1:11"
+        Go context:
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 101 103 thisAssignment 		
+        fixed	const emoji = '\ud83d\ude00';\u000alet \u00e9;\u000a((\u00e9)) = this;\u000a(\u00e9 as unknown) = this;\u000a(\u00e9 satisfies unknown) = this;\u000a(\u00e9!) = this;\u000aconst derived = (this);\u000athis.member = this;\u000aconst { member } = this;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:1:11
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 10 14 thisAssignment 		
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:2:7
+    lint_test.go:491: compound this alias missed caught on native: case 25 line 540: port "/tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:2:7", Go "/tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:1:11"
+        Go context:
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 101 103 thisAssignment 		
+        fixed	const emoji = '\ud83d\ude00';\u000alet \u00e9;\u000a((\u00e9)) = this;\u000a(\u00e9 as unknown) = this;\u000a(\u00e9 satisfies unknown) = this;\u000a(\u00e9!) = this;\u000aconst derived = (this);\u000athis.member = this;\u000aconst { member } = this;\u000a
+        case 25
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:1:11
+          @typescript-eslint/no-this-alias  This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+        
+        range 10 14 thisAssignment 		
+        /tmp/adamic-gate/TestMutantscompound_this_alias_missed3710795724/008/typescript-no-this-alias-1.ts:2:7
+=== RUN   TestMutants/compound_assignment_omitted
+    lint_test.go:491: compound assignment omitted caught on Node: case 24 line 522: port "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:2:11", Go "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:1:14"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:1:14
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 13 15 condAssign 		
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:2:11
+    lint_test.go:491: compound assignment omitted caught on emitted JavaScript: case 24 line 522: port "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:2:11", Go "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:1:14"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:1:14
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 13 15 condAssign 		
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:2:11
+    lint_test.go:491: compound assignment omitted caught on native: case 24 line 522: port "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:2:11", Go "/tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:1:14"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:1:14
+          no-cond-assign  This condition assigns rather than compares, so it does not test what it reads as testing: it writes the value and then branches on whatever was written, which makes the branch depend on the assigned value rather than on any comparison. It is almost always a `==` or `===` typed as `=`. If the assignment is deliberate, wrap it in its own parentheses to say so.
+        
+        range 13 15 condAssign 		
+        /tmp/adamic-gate/TestMutantscompound_assignment_omitted1561162804/007/no-cond-assign-0.ts:2:11
+=== RUN   TestMutants/rtl_exemption_removed
+    lint_test.go:491: rtl exemption removed caught on Node: case 24 line 530: port "/tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:1:17", Go "/tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:2:22"
+        Go context:
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "md:hover:text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:2:22
+          structure/tailwind-no-physical-direction  The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 73 81 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:2:35
+    lint_test.go:491: rtl exemption removed caught on emitted JavaScript: case 24 line 530: port "/tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:1:17", Go "/tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:2:22"
+        Go context:
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "md:hover:text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:2:22
+          structure/tailwind-no-physical-direction  The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 73 81 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:2:35
+    lint_test.go:491: rtl exemption removed caught on native: case 24 line 530: port "/tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:1:17", Go "/tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:2:22"
+        Go context:
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "md:hover:text-left" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:text-start", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 50 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:2:22
+          structure/tailwind-no-physical-direction  The class "mr-2" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "me-2", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 73 81 useLogicalClass 		
+        /tmp/adamic-gate/TestMutantsrtl_exemption_removed39052668/007/structure-tailwind-no-physical-direction-0.ts:2:35
+--- PASS: TestMutants (145.84s)
+    --- PASS: TestMutants/debugger_fix_suppressed (17.44s)
+    --- PASS: TestMutants/empty_function_body_reported (19.50s)
+    --- PASS: TestMutants/suggestion_applied_as_fix (16.21s)
+    --- PASS: TestMutants/var_declaration_suppressed (10.59s)
+    --- PASS: TestMutants/duplicate_case_suppressed (11.03s)
+    --- PASS: TestMutants/reason_ignored (11.21s)
+    --- PASS: TestMutants/parenthesized_chain_missed (11.06s)
+    --- PASS: TestMutants/postfix_assignment_suggestion (11.93s)
+    --- PASS: TestMutants/compound_this_alias_missed (10.94s)
+    --- PASS: TestMutants/compound_assignment_omitted (11.41s)
+    --- PASS: TestMutants/rtl_exemption_removed (10.86s)
+=== RUN   TestWave05SupportedCorpus
+    lint_test.go:324: cohere cases: 554 unique source/rule/options combinations
+    wave05_first_overlay_test.go:24: JSX outside coverage: /tmp/adamic-gate/TestWave05SupportedCorpus4091603234/001/case-103.tsx	@eslint-community/eslint-comments/require-description			false	{"ignore":null,"additionalDirectives":null}
+    wave05_first_overlay_test.go:22: unterminated comment outside driver contract: /tmp/adamic-gate/TestWave05SupportedCorpus4091603234/001/case-105.tsx	@eslint-community/eslint-comments/require-description			false	{"ignore":null,"additionalDirectives":null}
+    wave05_first_overlay_test.go:24: JSX outside coverage: /tmp/adamic-gate/TestWave05SupportedCorpus4091603234/001/case-540.tsx	structure/tailwind-no-physical-direction			false	null
+    wave05_first_overlay_test.go:28: supported=551 JSX excluded=2 malformed excluded=1
+    wave05_first_overlay_test.go:29: Go, Node, emitted JavaScript, native identical: 204130 bytes
+--- PASS: TestWave05SupportedCorpus (21.40s)
+=== RUN   TestWave05SecondCorpus
+    lint_test.go:324: cohere cases: 554 unique source/rule/options combinations
+    wave05_second_overlay_test.go:25: @typescript-eslint/no-non-null-asserted-optional-chain cases=24
+    wave05_second_overlay_test.go:25: @typescript-eslint/no-non-null-assertion cases=36
+    wave05_second_overlay_test.go:25: @typescript-eslint/no-this-alias cases=40
+    wave05_second_overlay_test.go:27: upstream total=100 exclusions=0
+    wave05_second_overlay_test.go:28: Go, Node, emitted JavaScript, native identical: 67426 bytes
+--- PASS: TestWave05SecondCorpus (19.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	283.113s
