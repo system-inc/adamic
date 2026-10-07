@@ -6,3 +6,25 @@ internal/metamorphic/source.go:439:70: cannot use parseName(path) (value of type
 internal/metamorphic/source.go:439:87: unknown field Path in struct literal of type "github.com/microsoft/TypeScript/tsc/shim/ast".SourceFileParseOptions
 internal/metamorphic/source.go:439:100: undefined: tspath.Path
 
+== github.com/system-inc/adamic/cloud TestRepositoryPassesCohereBaseline
+=== CONT  TestRepositoryPassesCohereBaseline
+    cohere_gate_test.go:27: cohere baseline: exit status 1
+        NEW x1: {"messageId": "implicitReturn", "path": "stage3/census/repro/r09/main.a", "rule": "nexus/correctness-no-implicit-return", "severity": "error", "source": "function read(flag: boolean): number | undefined { if (flag) { return 1; } } console.log(String(read(false)));"}
+        NEW x1: {"messageId": "loadTimeReadInImportCycle", "path": "stage3/drivers/scanner/probes/cyclic-initialized-value/reader.a", "rule": "nexus/correctness-no-import-cycle-load-time-read", "severity": "error", "source": "export const result = Category.Error;"}
+        NEW x1: {"messageId": "loadTimeReadInImportCycle", "path": "stage3/drivers/scanner/probes/cyclic-premature-value/reader.a", "rule": "nexus/correctness-no-import-cycle-load-time-read", "severity": "error", "source": "export const result = Category.Error;"}
+        NEW x1: {"messageId": "noEnum", "path": "docs/verification/enums-open/enums-open-tag-probe.a", "rule": "nexus/consistency-no-enum", "severity": "error", "source": "enum Kind { A, B }"}
+        NEW x1: {"messageId": "noEnum", "path": "stage3/drivers/scanner/probes/cyclic-initialized-enum/types.a", "rule": "nexus/consistency-no-enum", "severity": "error", "source": "export const enum Category { Error = 1 }"}
+        NEW x1: {"messageId": "noInterfaceSuffix", "path": "docs/verification/enums-open/enums-open-tag-probe.a", "rule": "nexus/consistency-require-type-suffix", "severity": "error", "source": "interface A { readonly kind: Kind.A; readonly value: string }"}
+        NEW x1: {"messageId": "noInterfaceSuffix", "path": "docs/verification/enums-open/enums-open-tag-probe.a", "rule": "nexus/consistency-require-type-suffix", "severity": "error", "source": "interface B { readonly kind: Kind.B; readonly value: number }"}
+        NEW x1: {"messageId": "noSingleLetter", "path": "docs/verification/enums-open/enums-open-tag-probe.a", "rule": "nexus/consistency-no-ambiguous-identifier", "severity": "error", "source": "const a: A = { kind: numeric(), value: 'text' };"}
+        NEW x1: {"messageId": "noSingleLetter", "path": "docs/verification/enums-open/enums-open-tag-probe.a", "rule": "nexus/consistency-no-ambiguous-identifier", "severity": "error", "source": "show(a);"}
+        NEW x1: {"messageId": "stutteringName", "path": "docs/verification/enums-open/enums-open-tag-probe.a", "rule": "nexus/consistency-no-stuttering-name", "severity": "error", "source": "if (value.kind === Kind.B) { console.log(`${value.value + 1}`); }"}
+        NEW x1: {"messageId": "would-change", "path": "docs/verification/enums-open/enums-open-tag-probe.a", "rule": "fix", "severity": "error", "source": ""}
+        NEW x1: {"messageId": "would-change", "path": "stage3/drivers/scanner/probes/cyclic-initialized-enum/types.a", "rule": "fix", "severity": "error", "source": ""}
+        cohere gate coverage: 9358 repository files mirrored
+          types: 1744 files in scope
+          lint: 1744 files in scope
+          format: 424 programs checked, 4993 files left out by the ignore patterns
+          config-format: tsconfig.json and CohereSettings.json checked at their real paths
+--- FAIL: TestRepositoryPassesCohereBaseline (353.49s)
+
