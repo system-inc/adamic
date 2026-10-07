@@ -1,4 +1,4 @@
-Built: the three retained helpers rebased cleanly onto landed area/stage1-lint b46914832; no new claims.
+Built: the three retained helpers rebased cleanly onto landed area/stage1-lint d3a37422c; no new claims.
 Commits: this area validation follows previously pushed helper c88a20178; the owned rule rebase also completed cleanly.
 Commands: all three owned helper packages and vet PASS after the area rebase; 4,470 cases and 820,676 Go bytes match again.
 Mutants: all twelve helper semantic mutants compiled and were caught on source Node, emitted JavaScript and sanitized native.
@@ -76,3 +76,11 @@ Area advanced to b46914832d70e00847d82d5d221ab7bb24040c53, migrating the remaini
 All three owned helper packages passed again: 4,470 cases, 820,676 matching Go bytes and twelve compiling semantic mutants caught separately on source Node, emitted JavaScript and sanitized native. Owned helper vet passed with empty output. Logs are evidence/b469-helper-tests.log and evidence/b469-helper-vet.log. No selected correctness test skipped. These remain direct-helper contracts across the same six Tailwind consumer families, removing eighteen dependency occurrences and zero final blockers; complete consuming-rule parity is not asserted.
 
 The owned rule checks are rerunning through the new shared dispatcher with the real pinned compiler inputs supplied. A fresh JSX fixed-source reproduction still exits 70 after emitting the valid return-void fix. No new helper claim follows the recorded frontend and fix-reparse blockers. Historical sections above describe earlier bases.
+
+## Current typeof compiler landing
+
+Fetched all origin heads. Main is b6b1538b0cebc4ba6741ac34f1aedb60293c1d06; area is d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898 and contains main. The complete dedup ledger remains byte-identical. Both owned branches rebased cleanly, retaining upstream typeof lowering and native slot changes without shared edits.
+
+Executed source /workspace/adamic-tools/env.sh, then go test ./stage1/cohere/lint/helpers/from-wave1-13/... -count=1 -v -timeout=10m and go vet over those same packages, with output directly to logs. All three packages pass: 4,470 cases, 820,676 matching Go bytes and twelve semantic mutants caught after clean compilation/execution on source Node, emitted JavaScript and sanitized native. Vet passes with empty output. Logs are evidence/d3a-helper-tests.log and evidence/d3a-helper-vet.log. No selected correctness test skips.
+
+The contracts still remove eighteen helper dependency occurrences across the same six Tailwind rule families, zero final blockers. Full consuming-rule parity and other required correctness packages remain untested. The rule suite freshly reproduces the top-level-await frontend failure; a separate source Node manifest freshly reproduces JSX fixed-source reparsing failure. No new claim or shared harness change is made.
