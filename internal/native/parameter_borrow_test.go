@@ -83,3 +83,31 @@ func TestVisitorLoopsBorrow(t *testing.T) {
 		t.Fatal("visitor has no child binding")
 	}
 }
+
+func TestFieldReturnBorrowPlans(t *testing.T) {
+	t.Parallel()
+	loaded, err := load.Load([]string{"../oracle/testdata/borrow_return.a"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	C(program)
+	found := map[string]bool{}
+	for _, local := range program.Locals {
+		if local.Name == "node" && local.Function >= 0 {
+			name := program.Functions[local.Function].Name
+			found[name] = true
+			if local.Borrowed != (name == "onlyRead") {
+				t.Errorf("%s: borrowed=%v", name, local.Borrowed)
+			}
+		}
+	}
+	for _, name := range []string{"onlyRead", "writesField", "keepsResult"} {
+		if !found[name] {
+			t.Errorf("missing %s", name)
+		}
+	}
+}

@@ -23,6 +23,7 @@ import (
 func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
 	inferParameterBorrows(program)
 	changing := changingFunctions(program)
+	preserving := preservingFunctions(program)
 	borrows := map[*ir.Statement]bool{}
 	lending := map[int]bool{}
 	for index := range program.Functions {
@@ -38,6 +39,13 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
 					program.Locals[loop.Local].Borrowed = true
 					source, _ := variableRead(loop.Iterable)
 					lending[source.Local] = true
+				}
+				if declare, ok := list[position].(ir.Declare); ok {
+					if receiver, ok := borrowableReturn(program, index, declare, assigned, list[position+1:], preserving); ok {
+						borrows[&list[position]] = true
+						program.Locals[declare.Local].Borrowed = true
+						lending[receiver] = true
+					}
 				}
 				if declare, ok := list[position].(ir.Declare); ok && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:]) {
 					borrows[&list[position]] = true
@@ -183,6 +191,10 @@ func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expres
 // a ?? fallback, a missing element gives the fallback, which is fresh: a hidden owner holds it (NULL
 // when the element was there), and the scope lets go of the owner.
 func (e *emitter) borrowElement(declare ir.Declare) {
+	if _, ok := declare.Value.(ir.Call); ok {
+		e.borrowReturnedField(declare)
+		return
+	}
 	local := e.program.Locals[declare.Local]
 	value := declare.Value
 	coalesce, hasFallback := value.(ir.Coalesce)

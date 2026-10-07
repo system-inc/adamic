@@ -382,6 +382,54 @@ The independent mutant was restored; its complete log is
 `/tmp/borrow-step2-mutant.log`. The visitor's borrowed binding and C without its
 retain or release are also held by `TestVisitorLoopsBorrow`.
 
+### Borrowed field returns, October 7, 2026
+
+A method or getter whose complete body returns a direct reference field of its
+borrowed receiver can lend that result. Every possible target must have the same
+field and result type, and be non-throwing and free of other effects. The caller
+must bind it to an unchanged, uncaptured local and only read it. Its borrow is
+bounded by the receiver's lifetime: nothing in the caller's remaining scope may
+write that field or release the receiver while the borrow lives. The present
+proof conservatively rejects *any* reference assignment, field or element write,
+unknown call, or operation that cannot prove field preservation in that scope.
+It protects the receiver local from moves and requires it to be unchanged and
+uncaptured. Keeping, capturing, storing or returning the result selects the
+ordinary owned return instead.
+
+The native caller specializes the proven field-return body to a snapshot of the
+field at the original call point. The getter lowering wrapper keeps its runtime
+accessor lookup and ordinary data-field fallback; its accessor targets undergo
+the same proof. Setter-only descriptors and differing or effectful getter bodies
+refuse specialization. This does not add a second ownership flag: the local's
+existing `Borrowed` flag describes the borrowed result; unselected call sites
+continue using the ordinary owning function.
+
+The visitor's `childNodes()` now borrows its result. Counting four and eight
+rounds gives exactly the same 346 retains and 352 releases, all outside traversal.
+Thus a read-only traversal takes zero retains and releases per visited node.
+Allocations/frees remain 192, peak live 161, and regions 0 throughout all steps.
+
+| Stage | Eight-round retains | Eight-round releases | Retains/node | Releases/node |
+|---|---:|---:|---:|---:|
+| Routing baseline `669210d` | 4299 | 4305 | 3.984127 | 3.984127 |
+| Parameter conventions | 3354 | 3360 | 2.984127 | 2.984127 |
+| Array loop borrowing | 1354 | 1360 | 1 | 1 |
+| Field return borrowing | 346 | 352 | 0 | 0 |
+
+Per-node figures are the eight-minus-four-round difference divided by 504 visits;
+they exclude construction and output. Both outputs agree with Node: 1,872 for
+1,008 visits and 936 for 504 visits. These are counts, not batch-8 timing claims.
+Runtime's separate stage-1 measurement is outside this worker's report.
+
+`borrow_return.a` checks the port's `Parser.node` getter shape: a read-only caller,
+a caller replacing the backing field, and a caller returning the result. The
+plan test requires borrowing only in the first. Removing the remaining-scope
+field-preservation guard borrows across replacement and ASan reports
+heap-use-after-free, recorded in `/tmp/borrow-step3-mutant.log`; the restored
+fixture passes Node, release, ASan/UBSan and leak checks. General computed
+returns, effectful getters, mutable receiver bindings and unknown targets remain
+owned. Borrowing arbitrary inline call expressions is not covered.
+
 ## Cycles: found by the compiler, broken by Weak
 
 Reference counting can't free a cycle, and a garbage collector is refused (no cycle collector, ever: decided by @system_adamic, task #gsz351g). What's known:

@@ -56,6 +56,9 @@ func parameterOnlyRead(program *ir.Program, body []ir.Statement, parameter int) 
 			return derived(expression.Value)
 		case ir.CheckedCast:
 			return derived(expression.Value)
+		case ir.HasAccessor:
+			derived(expression.Object)
+			return false
 		case ir.Call:
 			for position, argument := range expression.Arguments {
 				if derived(argument) && !program.CallBorrows(expression, position) {
@@ -92,7 +95,7 @@ func parameterOnlyRead(program *ir.Program, body []ir.Statement, parameter int) 
 			case ir.Return:
 				// Returning a direct field takes an independent count on the field, not
 				// the receiver. The return can later be lent within the receiver's lifetime.
-				if len(body) == 1 && program.Locals[parameter].Name == "this" {
+				{
 					if field, ok := statement.Value.(ir.Property); ok {
 						if receiver, ok := field.Object.(ir.Read); ok && receiver.Local == parameter && !field.Method && !field.Optional {
 							continue
