@@ -430,7 +430,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return array
 		}
 		e.line("%s(%s, %s, NULL);", sort, array, e.comparator(expression))
-		if e.program.Functions[expression.Comparator].MayThrow {
+		if e.program.ClosureMayThrow(expression) {
 			e.checkThrown()
 		}
 		return array
