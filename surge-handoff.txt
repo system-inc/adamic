@@ -1,0 +1,71 @@
+Surge handoff. Isolated triage base and integration cut base: ef3d907ecdc4c771b016f7d9c52372def057a340.
+
+UNJUDGED: origin/codex/no-optional-widening 0a6a155ea05866ee323b463dfa8e398d9ff7e4fa. Gofmt, vet, lower and whole oracle passed. Main refusal cases fail with nil errors; restoring the real production guard mutant is caught. External hidden-optional probe: Node 1; main ASan SEGV in adamic_retain; branch Refused. Sound fixture agrees with Node. Stage1 run was stopped on user instruction: css, cssnumbers, cssstrings, formatfiles, gitignore, graphql, json and lint passed; markdownblocks was partial; remaining packages not completed. PostCSS reference and Prettier boundary checks passed separately. Partial log: /workspace/triage3/no-optional-widening-stage1-retry.json
+
+Borrowed-element-reads 658dbc4 landed independently on main e011f8f and is included via merge cb1a6ae. Counts merged automatically keeping both sides; Linux regeneration passed with no diff.
+
+origin/codex/override-representation e1b84baf80a29b4180671c0852a9a97216a2ec07: ACTIVE IN SURGE
+Retained current super-call documentation and tests while adding ABI override refusals and their tests.
+
+origin/codex/switch-empty-cases 38f75fd265b8f614446f6cea0ac5f1f7af8c4463: NEEDS AHRA
+Full surge gate fails flow CFG trace coverage; removing this compiler change while retaining the fixture passes the trace.
+
+origin/codex/tuple-length-views 496c2964da695a21c025dffca30c184b5fa81e86: DEFERRED CLEAN
+Retained current readObjectField optional-field helper and added tupleViewLength; kept both counts sides.
+
+origin/codex/generic-maybe-undefined 5da447eda701c56ba2cc01f575ea4778be65e032: NEEDS AHRA
+Generic possibly undefined charCodeAt.call generates C with incompatible string/number helper returns; Node prints 97 and caught.
+
+origin/codex/typeof-null 2b4d9d29090c2f17d6213bf8944e6935cf97120a: NEEDS AHRA
+Newer main typeof dispatch bypasses typeOf for ir.Object; literal null still prints undefined versus Node object; null mutant uncaught.
+
+origin/codex/narrowed-union-member 98e4747e9a944ace9f4f86850a2c212d11edfb46: NEEDS AHRA
+Full surge gate fails flow trace, range and liveness tests because narrowed_union_object_tag.a is a NotYet fixture inside the success corpus.
+
+origin/codex/cycle-iterator-slots 2349605511a6a83c877bd6def0e8d20d482a6f2b: DEFERRED CLEAN
+Kept both counts conflict sides and reordered existing rows to fixture registration order; iterator capture and empty-collection proof mutants caught.
+
+origin/codex/super-early-this 0cf467cdef1fba747a5b0019bf6f2f1b7651d30c: DEFERRED CLEAN
+Retained current path-based unreadyThis checks and receiver-use tracking while adding early closure-capture refusals; updated obsolete gap expectations.
+
+origin/codex/static-methods b30ad136ac32698be913ee6ad4e8e53640c23576: DEFERRED CLEAN
+Preserved current runtime static class objects, alias storage and supported static fields/accessors; erased the explicit TypeScript this parameter without erasing runtime receiver, retained nil/constructor-type and anonymous-method guards, converted closed gaps to passing tests and newer destructuring refusal, kept both counts sides and applied measured Linux rows.
+
+origin/codex/library-map-set-iterators e19114920b5fe4c6ec2bb841a7de3aa84cbaf4e8: ACTIVE IN SURGE
+Kept both counts sides and corrected fixture order; iterator copy refusals and exhaustion, iterator-count, numeric-hash mutants caught.
+
+origin/codex/library-object-prototype 55302e5a87cf189f0f77df5031684155cc355572: NEEDS AHRA
+Includes library-object cdf632b already, no separate parent merge required; newer main Object.keys dispatch bypasses primitive-key implementation, so library_object_keys.a fails with Object.keys on a non-object NotYet and the associated mutants cannot be proven.
+
+origin/codex/regex-native-fixes c962ce239e578a1c7a20ca862bebcda843131567: NEEDS AHRA
+Release native admits a reversed saturated empty quantifier but exceeds a three-second bound with no output while Node prints true immediately.
+
+origin/codex/weak-narrowed-callback 5da0cd9b2005ea2c673d3e9f778a6e70c00990fb: DEFERRED CLEAN
+Kept both counts sides; refused inferred narrowed Weak callback parameter representations and preserved explicitly Weak-annotated controls.
+
+origin/codex/weak-view-methods e017d262dc83871e818d34579a3a9d1e6a6b4e67: DEFERRED CLEAN
+Kept both counts sides; incompatible Weak method and method-parameter views are NotYet, matching annotations retain supported Node behavior.
+
+origin/codex/structural-library-view e92cc4dd8b1880fe9848ef42cbd52b4446626a79: DEFERRED CLEAN
+Kept both counts sides; structural views that promise own storage for library prototype members are NotYet; wrapper and matching controls stay supported.
+
+origin/codex/borrowed-element-reads 658dbc4f32ad85388a8adcc18bd56317965bd695: INCLUDED VIA MAIN e011f8f
+Clean merge from ef3d907; accepted three Linux counts rows, verified virtual store ASan UAF on main and virtual/Error/throw-cleanup mutants.
+
+origin/codex/class-instance-key a787333b4b56a5848f25ccc57194fe2a63dd1b0c: NEEDS AHRA
+Full surge gate fails flow SSA, trace and range tests because generic_instance_key_json.a is a named NotYet fixture inside the success corpus.
+
+origin/codex/narrowed-elements-and-flow f65fc052411d83c01d5ecf83e45f2d8753901b56: ACTIVE IN SURGE
+Clean merge; check invalidated element reads, preserve undefined in observation and accepting argument slots, and fit compatible conditional pairs. All four individual production mutants were caught.
+
+origin/codex/refuse-ts-nocheck 955cfcdc925416ebd27eaf980a705f61b2c2a739: ACTIVE IN SURGE
+Clean merge; refuse every parsed ts-nocheck and ts-check pragma, including overridden directives, while keeping strings, prose and non-directive comments accepted.
+
+origin/codex/no-optional-widening 0a6a155ea05866ee323b463dfa8e398d9ff7e4fa: UNJUDGED
+Every stage1 package still needs completion.
+
+Gate-breaking merges were removed with normal reverts, preserving pushed history: class-instance-key merge 085d891 -> revert a1a917e; narrowed-union-member merge 3b35a0d -> revert 47d0b56; switch-empty-cases merge dee1a05 -> revert 3c8a721. Future corrected landings must reapply the reverted changes. Full attributed first-attempt failures: /workspace/triage3/surge-gate-1-attributed-failures.txt
+
+Pre-main complete gate on 2bf12c0: 3048 pass, 2 fail, 15 skip test events; wall 2181.071s. Failures were missing postcss in selector references and missing emoji-regex in width references. Both pinned reference installations repaired for the full rerun on cb1a6ae. Full failure output: /workspace/triage3/surge-gate-2-gate-failures.txt.
+
+FINAL: 910775112d475ee75322e93db76ef24e74cad692, pushed cloud/integrate-fixes-3. Main e8ba3d5d81de4d3773c723914fccd4c76248b965 merged cleanly at 9107751. Linux counts regeneration passed with no diff after both main merges. Complete uncached all-package gate: 3107 pass, 0 fail, 15 skip Test events, 2376.432531s wall including gofmt and vet. Environment restart interrupted earlier same-head attempt at 1394 passing Test events; one whole rerun completed, no union exception used.

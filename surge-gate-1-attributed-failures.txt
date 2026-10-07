@@ -1,0 +1,76 @@
+MERGE: class-instance-key a787333 (merge 085d891)
+TEST: github.com/system-inc/adamic/internal/flow TestEveryFunctionIsInSingleAssignment
+=== RUN   TestEveryFunctionIsInSingleAssignment
+=== PAUSE TestEveryFunctionIsInSingleAssignment
+=== CONT  TestEveryFunctionIsInSingleAssignment
+    flow_test.go:82: Lower: /workspace/adamic/internal/oracle/testdata/generic_instance_key_json.a:3:72: stage 0 can't lower JSON.stringify unions containing arrays (adamic/json-union-array) yet
+--- FAIL: TestEveryFunctionIsInSingleAssignment (17.55s)
+
+MERGE: class-instance-key a787333 (merge 085d891)
+TEST: github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/generic_instance_key_json.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/generic_instance_key_json.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/generic_instance_key_json.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/generic_instance_key_json.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/generic_instance_key_json.a:3:72: stage 0 can't lower JSON.stringify unions containing arrays (adamic/json-union-array) yet
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/generic_instance_key_json.a (0.28s)
+
+MERGE: narrowed-union-member 98e4747 (merge 3b35a0d)
+TEST: github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/narrowed_union_object_tag.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/narrowed_union_object_tag.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/narrowed_union_object_tag.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/narrowed_union_object_tag.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/narrowed_union_object_tag.a:7:16: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/narrowed_union_object_tag.a (0.04s)
+
+MERGE: parent of attributed failures below
+TEST: github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph
+=== RUN   TestEveryPathNodeTakesIsInTheGraph
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph
+=== CONT  TestEveryPathNodeTakesIsInTheGraph
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.02s)
+
+MERGE: switch-empty-cases 38f75fd (merge dee1a05)
+TEST: github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/93122fa_s2.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/93122fa_s2.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/93122fa_s2.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/93122fa_s2.a
+    trace_test.go:38: function 0 (kind): instruction 4 ran after 1, and no edge from bb1 leads there
+    trace_test.go:50: 13 points walked, 20 events
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/93122fa_s2.a (0.41s)
+
+MERGE: class-instance-key a787333 (merge 085d891)
+TEST: github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/generic_instance_key_json.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/generic_instance_key_json.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/generic_instance_key_json.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/generic_instance_key_json.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/generic_instance_key_json.a:3:72: stage 0 can't lower JSON.stringify unions containing arrays (adamic/json-union-array) yet
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/generic_instance_key_json.a (0.21s)
+
+MERGE: narrowed-union-member 98e4747 (merge 3b35a0d)
+TEST: github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/narrowed_union_object_tag.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/narrowed_union_object_tag.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/narrowed_union_object_tag.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/narrowed_union_object_tag.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/narrowed_union_object_tag.a:7:16: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/narrowed_union_object_tag.a (0.18s)
+
+MERGE: switch-empty-cases 38f75fd (merge dee1a05)
+TEST: github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/switch_empty_neighbors.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/switch_empty_neighbors.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/switch_empty_neighbors.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/switch_empty_neighbors.a
+    trace_test.go:38: function 0 (numeric): instruction 10 ran after 4, and no edge from bb7 leads there
+    trace_test.go:38: function 0 (numeric): instruction 10 ran after 5, and no edge from bb9 leads there
+    trace_test.go:38: function 1 (text): instruction 7 ran after 1, and no edge from bb1 leads there
+    trace_test.go:38: function 1 (text): instruction 7 ran after 2, and no edge from bb4 leads there
+    trace_test.go:50: 144 points walked, 177 events
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/switch_empty_neighbors.a (0.28s)
+
+MERGE: narrowed-union-member 98e4747 (merge 3b35a0d)
+TEST: github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/narrowed_union_object_tag.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/narrowed_union_object_tag.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/narrowed_union_object_tag.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/narrowed_union_object_tag.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/narrowed_union_object_tag.a:7:16: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/narrowed_union_object_tag.a (0.23s)
+
