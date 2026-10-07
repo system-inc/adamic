@@ -1,0 +1,10 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { addWhitespaceAroundMathOperators } from './math_operator_whitespace.a';
+const argumentsList = programArguments();
+const contents = readTextFile(argumentsList[0] ?? panic('cases path'));
+if(contents.kind === 'Error') { panic(contents.message); }
+const reader = new OptionsJson(contents.text);
+const root = reader.parse();
+if(root < 0) { panic(reader.error); }
+for(const child of reader.node(root).children) { console.log(addWhitespaceAroundMathOperators(reader.node(child).text)); }

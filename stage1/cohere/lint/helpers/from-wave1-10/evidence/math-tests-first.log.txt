@@ -1,0 +1,11 @@
+=== RUN   TestMathWhitespace
+    helper_test.go:157: runtime 0 differs: got 810300 bytes Go 873758
+--- FAIL: TestMathWhitespace (6.52s)
+=== RUN   TestMathWhitespaceMutant
+    helper_test.go:190: runtime 0 compiling comma_spacing_disabled mutant caught only by output comparison
+    helper_test.go:190: runtime 1 compiling comma_spacing_disabled mutant caught only by output comparison
+    helper_test.go:190: runtime 2 compiling comma_spacing_disabled mutant caught only by output comparison
+--- PASS: TestMathWhitespaceMutant (3.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-10	9.680s
+FAIL

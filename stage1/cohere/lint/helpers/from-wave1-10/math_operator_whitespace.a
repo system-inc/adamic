@@ -1,0 +1,54 @@
+// Match Go's byte scanner, including string(byte) expanding each UTF-8 byte to a rune.
+import { utf8At, utf8Length } from 'adamic';
+export function addWhitespaceAroundMathOperators(input: string): string {
+    const functions = ['calc', 'min', 'max', 'clamp', 'mod', 'rem', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'atan2', 'pow', 'sqrt', 'hypot', 'log', 'exp', 'round'];
+    let found = false;
+    for(const name of functions) { if(input.includes(name)) { found = true; break; } }
+    if(!found) { return input; }
+    let bytes = '';
+    const byteLength = utf8Length(input);
+    for(let index = 0; index < byteLength; index++) { bytes += String.fromCharCode(utf8At(input, index)); }
+    input = bytes;
+    let result = '';
+    const formattable: boolean[] = [];
+    let valuePosition = -1;
+    let lastValuePosition = -1;
+    for(let index = 0; index < input.length; index++) {
+        const character = input.charAt(index);
+        const code = input.charCodeAt(index);
+        if(code >= 48 && code <= 57) { valuePosition = index; }
+        else if(valuePosition !== -1 && (character === '%' || (code >= 97 && code <= 122) || (code >= 65 && code <= 90))) { valuePosition = index; }
+        else { lastValuePosition = valuePosition; valuePosition = -1; }
+        const active = formattable.length > 0 && formattable[formattable.length - 1] === true;
+        if(character === '(') {
+            result += character;
+            let start = index;
+            for(let back = index - 1; back >= 0; back--) {
+                const inner = input.charCodeAt(back);
+                if((inner >= 48 && inner <= 57) || (inner >= 97 && inner <= 122)) { start = back; }
+                else { break; }
+            }
+            const name = input.slice(start, index);
+            formattable.push(functions.includes(name) || (active && name === ''));
+        }
+        else if(character === ')') { result += character; if(formattable.length > 0) { formattable.pop(); } }
+        else if(character === ',' && active) { result += ', '; }
+        else if(character === ' ' && active && result.endsWith(' ')) { /* Go collapses only ASCII SPACE. */ }
+        else if(isOperator(character) && active) {
+            let tail = result.length;
+            while(tail > 0 && ' \t\n\r\f\v'.includes(result.charAt(tail - 1))) { tail--; }
+            const previous = result.charAt(tail - 1);
+            const previousPrevious = result.charAt(tail - 2);
+            const next = input.charAt(index + 1);
+            if((previous === 'e' || previous === 'E') && isDigit(previousPrevious)) { result += character; }
+            else if(isOperator(previous) || previous === '(' || previous === ',') { result += character; }
+            else if(index > 0 && input.charAt(index - 1) === ' ') { result += character + ' '; }
+            else if(isDigit(previous) || isDigit(next) || previous === ')' || next === '(' || isOperator(next) || (lastValuePosition !== -1 && lastValuePosition === index - 1)) { result += ' ' + character + ' '; }
+            else { result += character; }
+        }
+        else { result += character; }
+    }
+    return result;
+}
+function isDigit(value: string): boolean { return value.length === 1 && value >= '0' && value <= '9'; }
+function isOperator(value: string): boolean { return value === '+' || value === '-' || value === '*' || value === '/'; }

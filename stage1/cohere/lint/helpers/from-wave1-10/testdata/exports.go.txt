@@ -1,0 +1,2 @@
+package tailwind
+func AdamicMathWhitespace(input string) string { return addWhitespaceAroundMathOperators(input) }

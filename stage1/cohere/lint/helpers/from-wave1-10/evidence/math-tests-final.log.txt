@@ -1,0 +1,13 @@
+=== RUN   TestMathWhitespace
+    helper_test.go:159: runtime 0 matched 873758 bytes
+    helper_test.go:159: runtime 1 matched 873758 bytes
+    helper_test.go:159: runtime 2 matched 873758 bytes
+    helper_test.go:161: all six consumers covered; 49162 scanner inputs
+--- PASS: TestMathWhitespace (3.64s)
+=== RUN   TestMathWhitespaceMutant
+    helper_test.go:190: runtime 0 compiling comma_spacing_disabled mutant caught only by output comparison
+    helper_test.go:190: runtime 1 compiling comma_spacing_disabled mutant caught only by output comparison
+    helper_test.go:190: runtime 2 compiling comma_spacing_disabled mutant caught only by output comparison
+--- PASS: TestMathWhitespaceMutant (3.60s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-10	7.253s
