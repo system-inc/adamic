@@ -1,0 +1,56 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { messageUnnecessaryCatch, messageUnnecessaryCatchClause } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        const declaration = node.children[0] ?? -1;
+        if(declaration < 0 || this.context.node(declaration).kind !== 'VariableDeclaration') {
+            return;
+        }
+        const name = this.context.node(declaration).children[0] ?? -1;
+        const block = node.children[1] ?? -1;
+        if(name < 0 || block < 0 || this.context.node(name).kind !== 'Identifier') {
+            return;
+        }
+        const first = this.context.node(block).children[0] ?? -1;
+        if(first < 0 || this.context.node(first).kind !== 'ThrowStatement') {
+            return;
+        }
+        let value = this.context.node(first).children[0] ?? -1;
+        while(
+            value >= 0 &&
+            ['ParenthesizedExpression', 'NonNullExpression', 'AsExpression'].includes(this.context.node(value).kind)
+        ) {
+            value = this.context.node(value).children[0] ?? -1;
+        }
+        if(
+            value < 0 || this.context.node(value).kind !== 'Identifier' ||
+            this.context.node(value).text !== this.context.node(name).text
+        ) {
+            return;
+        }
+        const parent = this.context.parent(index);
+        if(parent < 0 || this.context.node(parent).kind !== 'TryStatement') {
+            return;
+        }
+        const hasFinally = this.context.node(parent).children.length === 3;
+        this.context.report(
+            hasFinally ? index : parent,
+            'no-useless-catch',
+            hasFinally ? 'unnecessaryCatchClause' : 'unnecessaryCatch',
+            hasFinally ? messageUnnecessaryCatchClause : messageUnnecessaryCatch,
+            '',
+            '',
+            '',
+        );
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}
