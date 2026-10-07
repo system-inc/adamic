@@ -1,0 +1,22 @@
+=== RUN   TestWave06AgreementAndMutants
+    wave_06_test.go:136: controls: 34086 identical finding bytes; findings 127
+    wave_06_test.go:142: controls: 165 files
+    wave_06_test.go:148: controls-asan: 34086 identical finding bytes; findings 127
+    wave_06_test.go:159: nominal mutant: exit 0, only Go bytes catch byte 10828
+    wave_06_test.go:159: duplicate mutant: exit 0, only Go bytes catch byte 5049
+    wave_06_test.go:159: return mutant: exit 0, only Go bytes catch byte 282
+    wave_06_test.go:185: compiler: 22060 identical finding bytes; findings 53
+    wave_06_test.go:186: compiler-asan: 22060 identical finding bytes; findings 53
+    wave_06_test.go:195: compiler native 24.991291s Go 3.558624s ratio 7.023; native tsgo: load_ns=353418227 query_ns=9408531229 queries=1121072 first_query_ns=8673674 run_ns=24561611601; Go cohere: load_ns=292248439 rule_ns=3154313790 run_ns=3231721513
+    wave_06_test.go:185: repository: 19880 identical finding bytes; findings 2
+    wave_06_test.go:186: repository-asan: 19880 identical finding bytes; findings 2
+    wave_06_test.go:195: repository native 0.857980s Go 0.282865s ratio 3.033; native tsgo: load_ns=87015410 query_ns=340874840 queries=25287 first_query_ns=224248 run_ns=762906013; Go cohere: load_ns=83060536 rule_ns=123784264 run_ns=182574917
+    wave_06_test.go:209: released-handle query: panic 70, invalid or released checker handle
+    wave_06_test.go:217: released-registry mutant exits 0, caught by required panic 70
+    wave_06_test.go:225: promised-shape mutant survived
+--- FAIL: TestWave06AgreementAndMutants (256.48s)
+=== RUN   TestWave06PinnedFlags
+--- PASS: TestWave06PinnedFlags (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	256.502s
+FAIL

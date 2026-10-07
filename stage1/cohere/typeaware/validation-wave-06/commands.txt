@@ -1,0 +1,14 @@
+All commands run from /workspace/adamic, except the cohere CLI build from cohere/.
+source /workspace/adamic-tools/env.sh
+bash cloud/setup.sh > /tmp/wave-06-setup.log 2>&1
+nproc  # 5; cgroup cpu.max 400000 100000
+
+TMPDIR=/workspace ADAMIC_WAVE06_CORPORA=1 ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-06-typescript ADAMIC_WAVE06_ARTIFACTS=/workspace/wave-06-verified go test ./stage1/cohere/typeaware -run '^TestWave06(AgreementAndMutants|PinnedFlags)$' -count=1 -timeout=30m -v > /tmp/wave-06-verified.log 2>&1
+TMPDIR=/workspace go test ./bridge/tsgo/... -count=1 -timeout=15m -v > /tmp/wave-06-bridge.log 2>&1
+TMPDIR=/workspace go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(maps_and_text|sorting|string_index|lone_surrogates|functions|closures)\.a$' -count=1 -timeout=10m -v > /tmp/wave-06-node.log 2>&1
+TMPDIR=/workspace go vet ./... > /tmp/wave-06-vet.log 2>&1
+gofmt -l cmd internal bridge/tsgo stage1/cohere/typeaware > /tmp/wave-06-gofmt.log
+
+# From cohere/: TMPDIR=/workspace go build -o /workspace/wave-06-cohere ./command/cohere
+/workspace/wave-06-cohere --no-cache --no-fix --no-format --lint stage1/cohere/typeaware/nominal_class.a stage1/cohere/typeaware/no_duplicate_type_constituents.a stage1/cohere/typeaware/no_useless_return.a stage1/cohere/typeaware/promised_shape.a stage1/cohere/typeaware/wave_06_suite.a > /tmp/wave-06-cohere-lint.log 2>&1
+/workspace/wave-06-cohere --no-cache --no-fix --format-only stage1/cohere/typeaware/nominal_class.a stage1/cohere/typeaware/no_duplicate_type_constituents.a stage1/cohere/typeaware/no_useless_return.a stage1/cohere/typeaware/promised_shape.a stage1/cohere/typeaware/wave_06_suite.a > /tmp/wave-06-cohere-format.log 2>&1

@@ -1,0 +1,7 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { types } from './facts.ts';
+
+export function promisedShape(rules: Rules, index: number): Types {
+    return types(rules.ask(index, 'promised-shape'), 'promised-shape');
+}

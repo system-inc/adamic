@@ -1,0 +1,6 @@
+=== RUN   TestWave06AgreementAndMutants
+    wave_06_test.go:137: controls mismatch byte 24562: native "as to check for a reason. Delete it.\t1\t0\t127\t134\t\n39\t46\tno-useless-return\tunnecessaryReturn\tThis `return` ends the function at a point where the function was going to end anyway, so it changes nothing and only adds a line the next reader has to check for a reason. Delete it.\t1\t0\t39\t46\t\nfile\t/workspa" Go "as to check for a reason. Delete it.\t1\t0\t127\t134\t\nfile\t/workspace/wave-06-void-negative/control-099.a\n180\t187\tno-useless-return\tunnecessaryReturn\tThis `return` ends the function at a point where the function was going to end anyway, so it changes nothing and only adds a line the next reader has to c"
+--- FAIL: TestWave06AgreementAndMutants (12.78s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	12.787s
+FAIL

@@ -1,0 +1,70 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Repair } from './repair.ts';
+
+// The production rule compares token text first, then checker object identity.
+export class NoDuplicateTypeConstituents {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    inner(index: number): number { return this.rules.skip(index, 'ParenthesizedType'); }
+    text(index: number): string { return this.rules.text(this.rules.parser.node(this.inner(index))); }
+    report(index: number, parent: number, id: string, message: string): void {
+        const node = this.rules.parser.node(index);
+        const start = this.rules.start(node);
+        const range = this.rules.parser.node(parent);
+        let before = -1;
+        for(let at = start - 1; at >= this.rules.start(range); at--) {
+            if(['|', '&'].includes(this.rules.scanner.text.slice(at, at + 1))) { before = at; break; }
+        }
+        const finding = new Diagnostic('no-duplicate-type-constituents', id, message,
+            this.rules.byte(this.rules.start(this.rules.parser.node(this.inner(index)))), this.rules.byte(node.end));
+        if(before >= 0) {
+            finding.repairs.push(new Repair(this.rules.byte(before), this.rules.byte(before + 1), ''));
+            finding.repairs.push(new Repair(this.rules.byte(start), this.rules.byte(node.end), ''));
+        } else {
+            finding.repairs.push(new Repair(this.rules.byte(start), this.rules.byte(node.end), ''));
+            for(let at = node.end; at < range.end; at++) {
+                if(['|', '&'].includes(this.rules.scanner.text.slice(at, at + 1))) {
+                    finding.repairs.push(new Repair(this.rules.byte(at), this.rules.byte(at + 1), '')); break;
+                }
+            }
+        }
+        this.rules.findings.push(finding);
+    }
+    one(index: number, parent: number, kind: string, optional: boolean, seenText: Map<string, number>, seenType: Map<number, number>): void {
+        const text = this.text(index);
+        let previous = seenText.get(text) ?? -1;
+        if(previous >= 0) { this.duplicate(index, parent, kind, previous); return; }
+        const graph = types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        if(!graph.present || graph.root().error) { return; }
+        const subject = graph.root();
+        previous = seenType.get(subject.id) ?? -1;
+        if(previous >= 0) { this.duplicate(index, parent, kind, previous); return; }
+        if(optional && (subject.flags & 4) !== 0) {
+            this.report(index, parent, 'unnecessary', 'Explicit undefined is unnecessary on an optional parameter.');
+        }
+        seenType.set(subject.id, index); seenText.set(text, index);
+        const inner = this.inner(index);
+        if(this.rules.parser.node(inner).kind === kind) {
+            for(const child of this.rules.parser.node(inner).children) { this.one(child, inner, kind, optional, seenText, seenType); }
+        }
+    }
+    duplicate(index: number, parent: number, kind: string, previous: number): void {
+        this.report(index, parent, 'duplicate', `${kind === 'IntersectionType' ? 'Intersection' : 'Union'} type constituent is duplicated with ${this.text(previous)}.`);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(!['UnionType', 'IntersectionType'].includes(node.kind)) { continue; }
+            let parent = this.rules.parents[index] ?? -1;
+            while(parent >= 0 && this.rules.parser.node(parent).kind === 'ParenthesizedType') { parent = this.rules.parents[parent] ?? -1; }
+            if(parent >= 0 && this.rules.parser.node(parent).kind === node.kind) { continue; }
+            const directParent = this.rules.parents[index] ?? -1;
+            const optional = node.kind === 'UnionType' && directParent >= 0 && this.rules.parser.node(directParent).kind === 'Parameter' &&
+                this.rules.parser.node(directParent).children.some((child) => this.rules.parser.node(child).kind === 'QuestionToken');
+            const seenText = new Map<string, number>(); const seenType = new Map<number, number>();
+            for(const child of node.children) { this.one(child, index, node.kind, optional, seenText, seenType); }
+        }
+    }
+}
