@@ -14,7 +14,7 @@
         "--no-fund"
       ],
       "exit": 0,
-      "seconds": 2.67
+      "seconds": 2.735
     },
     "build": {
       "command": [
@@ -23,7 +23,7 @@
         "build"
       ],
       "exit": 0,
-      "seconds": 1.763
+      "seconds": 1.735
     },
     "tests": {
       "command": [
@@ -34,16 +34,18 @@
         "--lint=false",
         "--no-colors"
       ],
-      "exit": 0,
-      "seconds": 207.517
+      "exit": 1,
+      "seconds": 309.214
     }
   },
-  "status": "pass",
+  "status": "fail",
   "counts": {
-    "passing": 106367,
-    "failing": 0,
+    "passing": 106366,
+    "failing": 1,
     "pending": 0
   },
-  "baseline_diffs": [],
-  "wall_seconds": 211.991
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "wall_seconds": 313.748
 }

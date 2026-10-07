@@ -16,24 +16,22 @@ checks failing specifically on that change. The API validator mutant appends an
 unlisted interface to the emitted declaration file; exact projection rejects it.
 The emitted declaration file was restored byte for byte.
 
-Default oracle: 106366 passing, 1 failing, 0 pending, 313.748 seconds. The only
-baseline diff is api/typescript.d.ts: adaptation 20's 189 optional-property lines
-against adaptation 40's already projected reference. No other baseline differs.
-A read-only stock AST validator proves the complete emitted API equals pristine
-plus exactly 189 adaptation-20 owner lines and 28 inherited adaptation-40 lines
-(27 brand types and ErrorCallback.arg0). No baseline was accepted. The original
-adaptation-20 validator rejects the composed snapshot because it permits only
-its own edits against pristine. No adaptation 70 directory is in 634ef06.
+Default oracle: **106367 passing, 0 failing, 0 pending**, **zero
+baseline differences**, 211.991 seconds. The user provisionally approved
+adaptation 40's 28 inherited API lines alongside adaptation 20's 189 lines.
+check-integrated-api.cjs reconstructs exactly these edits from parsed owners and
+compares every other reference byte plus the complete reference file set. The
+API and extra-reference mutants both fail; source and reference bytes are restored.
+No adaptation 70 is in integration 634ef06, and no additional exception is used.
 
-The user's exception rule names only adaptations 20 and 70. Whether the inherited
-40 reference projection can be retained has been asked explicitly; it remains
-pending. This file is checker-clean but is not presented as oracle-green or
-pushed. Later files have not been started under the one-file-at-a-time rule.
+The first default oracle's sole API failure is retained in initial-oracle files.
+An intervening worker exit occurred during a concurrent Go build (cgroup reported
+an OOM kill); the successful oracle ran without that build competing for memory.
 
-Meter provenance: 176a496, run 0 on integration 634ef06 plus five pinned compiler
-features; meter-input.json contains its one visitorPublic finding. Its private
-preparation resolver fails on an unrecognized internal/lower/enums.go conflict
-when replayed against 634ef06. No resolution was guessed. Direct loader census
-uses the unchanged integration compiler and has stricter style/syntax diagnostics
-elsewhere than that latent configuration; global 36-to-37 progress is therefore
-not claimed. Both configurations agree on visitorPublic's sole input finding.
+The source-only latent loader export matches all 382 published input diagnostics
+exactly. After only the visitorPublic edit, it records 381, with checker-clean
+files **36 -> 37**. latent-provenance.json lists the pinned native feature inputs.
+The complete native scratch merge encountered an unrelated lowering conflict;
+the census uses only its mechanically composed loader. No lowering result is
+claimed. The direct integration loader census is also retained, without filtering
+any codes. Source-only census avoids npm's generated-source/dependency side effects.

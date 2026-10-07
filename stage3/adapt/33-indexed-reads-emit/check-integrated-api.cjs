@@ -86,7 +86,24 @@ const expected = project(() => true);
 assert.equal(fs.readFileSync(path.join(adapted, 'built/local/typescript.d.ts'), 'utf8'), expected, 'unlisted emitted API change');
 const reference = fs.readFileSync(path.join(adapted, relative), 'utf8');
 assert(reference === inherited || reference === expected, 'unlisted API reference change');
-execFileSync('git', ['-C', adapted, 'diff', '--quiet', 'HEAD', '--', 'tests/baselines/reference', ':!tests/baselines/reference/api/typescript.d.ts']);
+function referenceFiles(root) {
+    const names = [];
+    function walk(directory) {
+        for (const entry of fs.readdirSync(directory, {withFileTypes:true})) {
+            const file = path.join(directory, entry.name);
+            if (entry.isDirectory()) walk(file);
+            else { assert(entry.isFile(), 'unexpected reference entry'); names.push(path.relative(root, file)); }
+        }
+    }
+    walk(root); return names.sort();
+}
+const pristineRefs = path.join(pristine, 'tests/baselines/reference');
+const adaptedRefs = path.join(adapted, 'tests/baselines/reference');
+const names = referenceFiles(pristineRefs);
+assert.deepEqual(referenceFiles(adaptedRefs), names, 'reference file set changed');
+for (const name of names) {
+    if (name !== 'api/typescript.d.ts') assert(fs.readFileSync(path.join(pristineRefs, name)).equals(fs.readFileSync(path.join(adaptedRefs, name))), 'unlisted reference change: ' + name);
+}
 if (mode === '--accept-api') fs.writeFileSync(path.join(adapted, relative), expected);
 console.log(JSON.stringify({status:'pass', adaptation20_lines:optional20, inherited_adaptation40_lines:brands40+callback40,
     additional_api_changes:0, other_reference_baselines_identical:true, accepted:mode === '--accept-api'}, null, 2));

@@ -41,8 +41,9 @@ The default oracle includes all integrated adaptations. Adaptation 20's original
 projects 28 reference lines. `check-integrated-api.cjs` independently reconstructs
 exactly those 28 inherited lines plus adaptation 20's 189 owner lines against a
 separately built pristine pinned compiler; it was run without `--accept-api`.
-Integration 634ef06 has no adaptation 70 directory. The user's exception rule
-names only 20 and 70, so baseline acceptance and push remain pending clarification.
+Integration 634ef06 has no adaptation 70 directory. The user provisionally
+authorized the mechanically proven 28 adaptation-40 lines along with the 189
+adaptation-20 lines. The accepted projection permits no other API difference.
 
 ### visitorPublic.ts
 
@@ -53,7 +54,8 @@ ledger decline becomes an assertion at precisely that read. No read is added,
 removed, moved or defaulted. All source CRLF bytes are retained. Proof results
 and reproducible commands are recorded alongside the per-file census.
 
-Visitor closure: census **1 -> 0 across all codes**; stock JavaScript and
-idempotence pass; `! -> ?? 0` mutant caught twice. Default oracle: **106366
-passing, 1 failing**, with only the 189-line API difference. The file is not
-claimed oracle-green. See [the complete proof](proof/whole-files/visitorPublic/README.md).
+Visitor closure: census **1 -> 0 across all codes**; source-only latent clean
+files **36 -> 37**, with the full input matching report 176a496 exactly. Stock
+JavaScript and idempotence pass; `! -> ?? 0` mutant caught twice. Default oracle:
+**106367 passing, zero failing**, **empty baseline diff**, 211.991s.
+See [the complete proof](proof/whole-files/visitorPublic/README.md).
