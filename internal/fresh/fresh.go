@@ -1043,13 +1043,19 @@ func (a *analysis) value(expression ir.Expression) value {
 		// Patterns are compiled constants; the runtime object holds only immutable strings.
 		return a.fresh(anyField, value{})
 	case ir.RegExpCall:
-		// Conservatively expose operands and treat mutable results as outside. Regex methods
-		// change lastIndex and iterator state, but never store user references into them.
-		return a.call(a.operands(expression), expression.Type())
+		return a.regexCall(expression)
 	case ir.RegExpProperty:
-		return a.load(a.value(expression.Array), expression.Name)
+		a.value(expression.Array)
+		if mutable(expression.Type()) {
+			return outsideValue()
+		}
+		return value{}
 	case ir.RegExpGroup:
-		return a.load(a.value(expression.Object), expression.Name)
+		a.value(expression.Object)
+		if mutable(expression.Type()) {
+			return outsideValue()
+		}
+		return value{}
 	case ir.JSONStringify:
 		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
 		a.value(expression.Value)
@@ -1203,11 +1209,18 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.fresh(anyField, value{})
 	case ir.MakeError:
 		a.value(expression.Message)
+		if expression.Name != nil {
+			a.value(expression.Name)
+		}
 		return a.fresh(anyField, value{})
 	case ir.ObjectLiteral:
 		var copied value
 		if expression.Spread != nil {
-			copied = a.everything(a.value(expression.Spread))
+			source := a.value(expression.Spread)
+			if expression.NoReuse {
+				a.state.escape(source)
+			}
+			copied = a.everything(source)
 		}
 		all := append(append([]ir.Field{}, expression.Fields...), expression.Empty...)
 		fields := make([]value, len(all))
@@ -1290,6 +1303,9 @@ func (a *analysis) value(expression ir.Expression) value {
 			elements.merge(a.load(a.value(other), elementKey))
 		}
 		return a.fresh(elementKey, elements)
+	case ir.HasAccessor:
+		a.value(expression.Object)
+		return value{}
 	case ir.Property:
 		return a.load(a.value(expression.Object), expression.Name)
 	case ir.ArrayIndex:

@@ -1,0 +1,206 @@
+let trace = '';
+function mark(value: string): string {
+    trace = `${trace}${value},`;
+    return value;
+}
+class Parent {
+    readonly base = mark('base-field');
+    readonly built = `base${trace.length}`;
+    readonly value: string;
+    constructor(value: string) {
+        mark('base-body');
+        this.value = value;
+    }
+}
+class Child extends Parent {
+    readonly child = mark('child-field');
+    constructor(flag: boolean, nested: boolean) {
+        mark('before');
+        if(flag) {
+            super(mark('left'));
+        }
+        else {
+            if(nested) {
+                super(mark('middle'));
+            }
+            else {
+                super(mark('right'));
+            }
+        }
+        mark('after');
+        console.log(`${this.value}/${this.child}`);
+    }
+}
+const left = new Child(true, false);
+const middle = new Child(false, true);
+const right = new Child(false, false);
+class Choice extends Parent {
+    readonly choice = mark('choice-field');
+    constructor(flag: boolean) {
+        flag ? super(mark('yes')) : super(mark('no'));
+        console.log(`${this.value}/${this.choice}`);
+    }
+}
+const yes = new Choice(true);
+const no = new Choice(false);
+class Optional extends Parent {
+    readonly optional = mark('optional-field');
+    constructor(flag: boolean) {
+        if(flag) {
+            super(mark('optional'));
+        }
+    }
+}
+console.log(new Optional(true).optional);
+try {
+    const missing = new Optional(false);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`${error.name}: ${error.message}`);
+    }
+}
+class Repeated extends Parent {
+    readonly repeated = mark('repeated-field');
+    constructor(flag: boolean) {
+        super(mark('first'));
+        try {
+            if(flag) {
+                super(mark('second'));
+            }
+        }
+        catch(error) {
+            if(error instanceof Error) {
+                console.log(`${error.name}: ${error.message}`);
+            }
+        }
+        console.log(`${this.value}/${this.repeated}`);
+    }
+}
+const repeated = new Repeated(true);
+const single = new Repeated(false);
+class ThrowingParent {
+    readonly text = mark('throwing-field');
+    readonly built = `throwing${trace.length}`;
+    constructor(fail: boolean) {
+        mark('throwing-body');
+        if(fail) {
+            throw new Error('base failed');
+        }
+    }
+}
+class Retried extends ThrowingParent {
+    readonly textAfter = mark('retry-field');
+    constructor() {
+        try {
+            super(true);
+        }
+        catch(error) {
+            super(false);
+        }
+        console.log(this.textAfter);
+    }
+}
+const retried = new Retried();
+class Abrupt extends Parent {
+    readonly after = mark('abrupt-field');
+    constructor(flag: boolean) {
+        if(flag) {
+            super(mark('abrupt'));
+        }
+        else {
+            throw new Error('branch failed');
+        }
+        console.log(`${this.value}/${this.after}`);
+    }
+}
+const abrupt = new Abrupt(true);
+try {
+    const failed = new Abrupt(false);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+console.log(trace);
+class Switched extends Parent {
+    readonly switched = mark('switch-field');
+    constructor(value: number) {
+        switch(value) {
+            case 1:
+                super(mark('case-one'));
+                break;
+            case 2:
+                super(mark('case-two'));
+                break;
+            default:
+                super(mark('case-default'));
+                break;
+        }
+        console.log(`${this.value}/${this.switched}`);
+    }
+}
+const firstCase = new Switched(1);
+const secondCase = new Switched(2);
+const defaultCase = new Switched(3);
+class Once extends Parent {
+    readonly once = mark('once-field');
+    constructor() {
+        do {
+            super(mark('do'));
+        } while(false);
+        console.log(`${this.value}/${this.once}`);
+    }
+}
+const once = new Once();
+class Loop extends Parent {
+    readonly loop = mark('loop-field');
+    constructor(count: number) {
+        for(let index = 0; index < count; index++) {
+            super(mark('loop'));
+        }
+    }
+}
+const loop = new Loop(1);
+console.log(loop.value);
+try {
+    const absent = new Loop(0);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+try {
+    const twice = new Loop(2);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+console.log(trace);
+
+class GenericParent<T> {
+    readonly item: T;
+    constructor(item: T) {
+        this.item = item;
+    }
+    read(): T {
+        return this.item;
+    }
+}
+class GenericChoice<T> extends GenericParent<T> {
+    constructor(flag: boolean, left: T, right: T) {
+        if(flag) {
+            super(left);
+        }
+        else {
+            super(right);
+        }
+    }
+}
+const numeric = new GenericChoice<number>(false, 11, 22);
+const textual = new GenericChoice<string>(true, `left${1}`, `right${2}`);
+console.log(`${numeric.read()}/${textual.read()}`);
