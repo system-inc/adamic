@@ -1,0 +1,1 @@
+Merged area 65017b318 (shared static_single_assignment port). Main remains 48c05d091. No compiler, lint rule, harness, oracle or dedup ledger changes relative to the previously checked area base. Existing 48c parity, full witness and seven owned-mutant evidence remains applicable; no redundant lint tests rerun. This branch preserves the verified inherited JSDoc trim fix.
