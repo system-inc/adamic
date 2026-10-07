@@ -34,7 +34,7 @@ ok  	github.com/system-inc/adamic/stage1/cohere/lint	938.298s
     width_test.go:78: original dependencies exit 1 stderr node:internal/modules/esm/resolve:271
             throw new ERR_MODULE_NOT_FOUND(
                   ^
-        
+
         Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/tmp/adamic-markdown-width/node_modules/emoji-regex/index.js' imported from /workspace/adamic/stage1/cohere/markdownblocks/testdata/width_library.mjs
             at finalizeResolution (node:internal/modules/esm/resolve:271:11)
             at moduleResolve (node:internal/modules/esm/resolve:865:10)
@@ -49,7 +49,7 @@ ok  	github.com/system-inc/adamic/stage1/cohere/lint	938.298s
           code: 'ERR_MODULE_NOT_FOUND',
           url: 'file:///tmp/adamic-markdown-width/node_modules/emoji-regex/index.js'
         }
-        
+
         Node.js v24.19.0
 FAIL
 FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	1734.164s
