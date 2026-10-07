@@ -2,12 +2,13 @@
 // separately; this component never guesses which binding an identifier reads.
 import {panic} from 'adamic';
 import type {ParseNode} from '../../../../typescript/parser/nodes.ts';
+export interface ConstantResult {readonly text:string;readonly string:boolean;readonly known:boolean;}
 export class ConstantValue {
     readonly text:string;readonly string:boolean;readonly known:boolean;
     constructor(text:string,string:boolean,known:boolean){this.text=text;this.string=string;this.known=known;}
 }
 export function unknownConstant():ConstantValue {return new ConstantValue('',false,false);}
-export function constantValue(nodes:readonly ParseNode[],index:number,resolve:(index:number)=>ConstantValue):ConstantValue {
+export function constantValue(nodes:readonly ParseNode[],index:number,resolve:(index:number)=>ConstantResult):ConstantResult {
     if(index<0){return unknownConstant();}
     const node=nodes[index]??panic('constant expression absent from node table');
     if(node.kind==='ParenthesizedExpression'){return constantValue(nodes,node.children[0]??-1,resolve);}
@@ -36,6 +37,6 @@ export function constantValue(nodes:readonly ParseNode[],index:number,resolve:(i
     }
     return unknownConstant();
 }
-export function constantString(nodes:readonly ParseNode[],index:number):ConstantValue {
+export function constantString(nodes:readonly ParseNode[],index:number):ConstantResult {
     return constantValue(nodes,index,(_index):ConstantValue=>unknownConstant());
 }

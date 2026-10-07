@@ -1,0 +1,59 @@
+// Scoped constant reads using raw checker declarations; all eligibility,
+// assignment and expression judgments are native.
+import type {Rules} from '../../rules.ts';
+import {Bindings} from '../../bindings.ts';
+import {Reassign} from '../../reassign.ts';
+import {DeclarationFileFlags} from '../../declaration_file_flags.a';
+import {ConstantValue,constantValue,unknownConstant} from './constant_value.a';
+import type {ConstantResult} from './constant_value.a';
+
+export class ConstantBindings {
+    readonly rules:Rules;readonly bindings:Bindings;readonly writes:Reassign;
+    constructor(rules:Rules){this.rules=rules;this.bindings=new Bindings(rules);this.writes=new Reassign(rules);}
+    initializer(index:number):number {
+        const r=this.rules;index=r.skip(index);
+        if(r.parser.node(index).kind!=='Identifier'){return -1;}
+        const declarations=this.bindings.list(index,'binding-declarations',false);
+        if(declarations.length!==1){return -1;}
+        const declaration=declarations[0]??-1;const node=r.parser.node(declaration);
+        if(node.kind!=='VariableDeclaration'){return -1;}
+        const files=new DeclarationFileFlags(r,index);
+        if(files.declared.length>0&&files.declared.every((value)=>value)){return -1;}
+        const initializer=this.bindings.shape.initializer(declaration);
+        if(initializer<0){return -1;}
+        const list=r.parser.node(this.bindings.parent(declaration));
+        if(list.kind!=='VariableDeclarationList'){return -1;}
+        if((Number(list.semantic)&2)===0){
+            const name=this.bindings.shape.name(declaration);
+            for(let at=0;at<r.parser.nodes.length;at++){
+                const candidate=r.parser.node(at);
+                if(at===name||candidate.kind!=='Identifier'||candidate.text!==r.parser.node(name).text||!this.writes.writes(at)){continue;}
+                if(this.bindings.list(at,'binding-declarations',false).includes(declaration)){return -1;}
+            }
+        }
+        return declaration;
+    }
+    value(index:number,following:readonly number[]=[]):ConstantResult {
+        const r=this.rules;
+        return constantValue(r.parser.nodes,index,(at):ConstantResult=>{
+            const node=r.parser.node(at);
+            if(node.kind==='RegularExpressionLiteral'){return new ConstantValue(node.text,true,true);}
+            const declaration=this.initializer(at);
+            if(declaration<0||following.includes(declaration)){return unknownConstant();}
+            const next=following.slice();next.push(declaration);
+            return this.value(this.bindings.shape.initializer(declaration),next);
+        });
+    }
+    regexp(index:number):boolean {
+        const following:number[]=[];const r=this.rules;
+        while(index>=0){
+            index=r.skip(index);const node=r.parser.node(index);
+            if(node.kind==='RegularExpressionLiteral'){return true;}
+            if(node.kind!=='Identifier'){return false;}
+            const declaration=this.initializer(index);
+            if(declaration<0||following.includes(declaration)){return false;}
+            following.push(declaration);index=this.bindings.shape.initializer(declaration);
+        }
+        return false;
+    }
+}
