@@ -1,0 +1,5 @@
+import { readDirectory, fileStatus } from 'adamic';
+const listing = readDirectory('');
+console.log(listing.kind === 'Error' ? listing.message : 'listed a directory');
+const status = fileStatus('');
+console.log(status.kind === 'Error' ? status.message : status.type);

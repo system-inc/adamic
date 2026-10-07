@@ -5,7 +5,7 @@ static adamic_string *allocate(size_t length) {
 	adamic_string *string = adamic_allocate(sizeof *string + length, adamic_kind_string);
 	string->length = length;
 	string->bytes = (const char *)(string + 1);
-	string->units = 0;
+	string->units = length == 0 ? 1 : 0;
 	string->index = NULL;
 	string->owner = NULL;
 	string->capacity = length;
@@ -21,6 +21,7 @@ adamic_string *adamic_string_from_number(double value) {
 	size_t length = adamic_number_format(value, buffer);
 	adamic_string *string = allocate(length);
 	memcpy((char *)string->bytes, buffer, length);
+	string->units = length + 1;
 	return string;
 }
 
@@ -34,13 +35,14 @@ void adamic_string_check_length(double units) {
 }
 
 adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) {
-	size_t length = 0;
+	size_t length = 0, units = 0;
 	for (size_t index = 0; index < count; index++) {
 		if (parts[index]->length > SIZE_MAX - length) {
 			static const char message[] = "string too long";
 			adamic_panic(message, sizeof message - 1);
 		}
 		length += parts[index]->length;
+		units += adamic_string_units(parts[index]);
 	}
 	// A string's UTF-16 units are never more than its bytes, so only a long one needs counting.
 	if (length > ADAMIC_STRING_MAX_UNITS) {
@@ -51,13 +53,16 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 		adamic_string_check_length(units);
 	}
 	adamic_string *string = allocate(length);
+	// Joining surrogate halves changes bytes, but preserves the number of UTF-16 units.
+	// units == length is also the ASCII flag, without another field in every string header.
+	string->units = units + 1;
 	if (count == 1) {
 		// One piece is a copy, and its bytes may be a builder's (a stack piece, from fromCharCode or
 		// slice), which can hold halves of a pair side by side: every byte is looked at.
 		if (length > 0) {
 			memcpy((char *)string->bytes, parts[0]->bytes, length);
 		}
-		string->length = adamic_string_join_halves((char *)string->bytes, 0, length);
+		string->length = units == length ? length : adamic_string_join_halves((char *)string->bytes, 0, length);
 		return string;
 	}
 	size_t written = 0;
@@ -69,6 +74,16 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 }
 
 size_t adamic_string_put(char *bytes, size_t written, const adamic_string *part) {
+	// A pair can meet only as ED A0..AF xx at the left boundary and ED B0..BF xx
+	// at the right one. Ordinary appends, including ASCII onto Unicode text, need only a copy.
+	if (written < 3 || part->length < 3 || (unsigned char)bytes[written - 3] != 0xed ||
+		((unsigned char)bytes[written - 2] & 0xf0) != 0xa0 || (unsigned char)part->bytes[0] != 0xed ||
+		((unsigned char)part->bytes[1] & 0xf0) != 0xb0) {
+		if (part->length > 0) {
+			memcpy(bytes + written, part->bytes, part->length);
+		}
+		return written + part->length;
+	}
 	// A string's own halves are joined already, so halves of a pair can meet only where two pieces
 	// do: a lone high surrogate the bytes so far end with, and a lone low one the part begins with.
 	// The part's first three bytes go in first, and only those six are looked at.
@@ -109,7 +124,7 @@ int adamic_string_equal(const adamic_string *left, const adamic_string *right) {
 	if (left == NULL || right == NULL) {
 		return left == right;
 	}
-	return left->length == right->length && (left->length == 0 || memcmp(left->bytes, right->bytes, left->length) == 0);
+	return left->length == right->length && (left == right || left->length == 0 || memcmp(left->bytes, right->bytes, left->length) == 0);
 }
 
 adamic_string adamic_string_empty = ADAMIC_STRING("");

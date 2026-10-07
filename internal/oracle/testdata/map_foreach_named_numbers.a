@@ -1,0 +1,59 @@
+// Named callbacks over number keys. Numbers are not counted; the visit is still live.
+let kept: number[] = [];
+
+function filled(): Map<number, number> {
+	const collection = new Map<number, number>();
+	for (let index = 0; index < 4; index += 1) {
+		collection.set(index, index * 10);
+	}
+	return collection;
+}
+
+function deleteLater(item: number, current: number, owner: Map<number, number>): void {
+	if (current === 0) { owner.delete(1); }
+	kept.push(current);
+	kept.push(item);
+	console.log(`later ${current} ${item} ${owner.size}`);
+}
+
+function replace(item: number, current: number, owner: Map<number, number>): void {
+	owner.set(current, item + 100);
+	kept.push(current);
+	kept.push(item);
+	console.log(`replace ${current} ${item}`);
+}
+
+function reassign(item: number, current: number, owner: Map<number, number>): void {
+	owner.delete(current);
+	console.log(`before ${current} ${item}`);
+	current = current + 1000;
+	item = item + 1;
+	kept.push(current);
+	kept.push(item);
+	console.log(`reassigned ${current} ${item}`);
+}
+
+function throwBorrowed(item: number, current: number, owner: Map<number, number>): void {
+	owner.clear();
+	owner.set(9, 90);
+	kept.push(current);
+	kept.push(item);
+	throw new Error(`cleared ${current} ${item}`);
+}
+
+function run(name: string, visit: (item: number, current: number, owner: Map<number, number>) => void): void {
+	kept = [];
+	const collection = filled();
+	try {
+		collection.forEach(visit);
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`${name} kept ${kept.join(",")} remaining ${collection.size}`);
+	collection.forEach((item, current) => { console.log(`${name} after ${current} ${item}`); });
+}
+
+run("later", deleteLater);
+run("replace", replace);
+run("reassign", reassign);
+run("throw", throwBorrowed);

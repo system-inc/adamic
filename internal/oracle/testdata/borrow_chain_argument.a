@@ -1,0 +1,6 @@
+interface Leaf { readonly kind: string; }
+interface Node { readonly parent: Leaf; }
+function size(kind: string): number { return kind.length; }
+function visit(node: Node): number { return size(node.parent.kind); }
+function make(n: number): Node { return { parent: { kind: `argument${n}` } }; }
+console.log(`${visit(make(1))}`);

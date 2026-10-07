@@ -1,0 +1,29 @@
+// The base constructor's slot guard must fall back for a subclass shape.
+class Base {
+    number = 1;
+    text = `base${1}`;
+    write(value: number): string {
+        this.number += value;
+        this.text = `${this.text}:${this.number}`;
+        return this.text;
+    }
+}
+class Child extends Base {
+    extra = 10;
+    override write(value: number): string {
+        this.extra += value;
+        return super.write(this.extra) + `/${this.extra}`;
+    }
+}
+function update(base: Base): string {
+    base.number = base.number + 2;
+    base.text = `${base.text}!`;
+    return base.write(3);
+}
+const base = new Base();
+const child = new Child();
+console.log(update(base));
+console.log(update(child));
+const throughBase: Base = child;
+console.log(throughBase.write(4));
+console.log(`${child.number}/${child.text}/${child.extra}`);
