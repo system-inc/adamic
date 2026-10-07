@@ -392,8 +392,10 @@
           "name": "getAccessibleFileSystemEntries",
           "originalLine": 1838,
           "adaptedLine": 1839,
-          "adaptations": [],
-          "tokens": "function getAccessibleFileSystemEntries(path: string): FileSystemEntries {\n    try {\n        const entries = _fs.readdirSync(path || \".\", { withFileTypes: true });\n        const files: string[] = [];\n        const directories: string[] = [];\n        for (const dirent of entries) {\n            const entry = typeof dirent === \"string\" ? dirent : dirent.name;\n            if (entry === \".\" || entry === \"..\") {\n                continue;\n            }\n            let stat: any;\n            if (typeof dirent === \"string\" || dirent.isSymbolicLink()) {\n                const name = combinePaths(path, entry);\n                stat = statSync(name);\n                if (!stat) {\n                    continue;\n                }\n            }\n            else {\n                stat = dirent;\n            }\n            if (stat.isFile()) {\n                files.push(entry);\n            }\n            else if (stat.isDirectory()) {\n                directories.push(entry);\n            }\n        }\n        files.sort();\n        directories.sort();\n        return { files, directories };\n    }\n    catch {\n        return emptyFileSystemEntries;\n    }\n}"
+          "adaptations": [
+            "40-explicit-any"
+          ],
+          "tokens": "function getAccessibleFileSystemEntries(path: string): FileSystemEntries {\n    try {\n        const entries = _fs.readdirSync(path || \".\", { withFileTypes: true });\n        const files: string[] = [];\n        const directories: string[] = [];\n        for (const dirent of entries) {\n            const entry = typeof dirent === \"string\" ? dirent : dirent.name;\n            if (entry === \".\" || entry === \"..\") {\n                continue;\n            }\n            let stat: import(\"fs\").Stats | import(\"fs\").Dirent | undefined;\n            if (typeof dirent === \"string\" || dirent.isSymbolicLink()) {\n                const name = combinePaths(path, entry);\n                stat = statSync(name);\n                if (!stat) {\n                    continue;\n                }\n            }\n            else {\n                stat = dirent;\n            }\n            if (stat.isFile()) {\n                files.push(entry);\n            }\n            else if (stat.isDirectory()) {\n                directories.push(entry);\n            }\n        }\n        files.sort();\n        directories.sort();\n        return { files, directories };\n    }\n    catch {\n        return emptyFileSystemEntries;\n    }\n}"
         },
         {
           "file": "src/compiler/sys.ts",
@@ -430,8 +432,15 @@
           "adaptations": [
             "40-explicit-any"
           ]
+        },
+        {
+          "name": "getAccessibleFileSystemEntries",
+          "adaptations": [
+            "40-explicit-any"
+          ]
         }
-      ]
+      ],
+      "stage3": "06971f0574b6cd408c6291973c685941ea6457ee"
     },
     {
       "file": "09_realpath.a",
