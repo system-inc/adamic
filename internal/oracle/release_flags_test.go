@@ -14,6 +14,9 @@ import (
 // LTO flags added there apply here without maintaining another flag list. Native observations are
 // always fresh; the existing Node cache has the gate's uncached bypass.
 func TestNativeReleaseFlagsAgreeWithNode(t *testing.T) {
+	if os.Getenv("ADAMIC_RELEASE_LANE") != "1" {
+		t.Skip("set ADAMIC_RELEASE_LANE=1 for the full shipping-build lane")
+	}
 	t.Parallel()
 	releaseFixturesAgreeWithNode(t, false)
 }
@@ -30,7 +33,11 @@ func TestNativeExistingReleaseAgreesWithNode(t *testing.T) {
 
 func releaseFixturesAgreeWithNode(t *testing.T, existing bool) {
 	t.Helper()
-	t.Logf("build-flags: %s", strings.Join(native.Flags(native.Options{}), " "))
+	options := traceReleaseOptions(t, releaseFunction(t, "cmd/adamic", "build"))
+	if existing {
+		options = traceReleaseOptions(t, releaseFunction(t, "internal/oracle", "releasedUncached"))
+	}
+	t.Logf("build-flags: %s", strings.Join(native.Flags(options), " "))
 	for _, fixture := range fixtures {
 		if !fixture.lowers {
 			continue
@@ -58,9 +65,13 @@ func releaseFixturesAgreeWithNode(t *testing.T, existing bool) {
 			if existing {
 				actual = released(t, program)
 			} else {
-				// Reuse the build path, never its cached observation. This calls native.Build
-				// with default release options, including the runtime archive and link flags.
-				actual = releasedUncached(t, program)
+				// Use the options traced from the command, even if the oracle later deliberately
+				// selects different options. Build supplies the runtime archive and link flags.
+				binary := filepath.Join(t.TempDir(), "release")
+				if err := native.Build(native.C(program), binary, options); err != nil {
+					t.Fatal(err)
+				}
+				actual = execute(t, binary)
 			}
 			if difference := disagreement(expected, actual); difference != "" {
 				t.Errorf("shipped release: %s\nNode: exit %d, stdout %q, stderr %q\nrelease: exit %d, stdout %q, stderr %q",
