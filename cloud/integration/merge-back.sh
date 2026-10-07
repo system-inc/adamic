@@ -2,7 +2,7 @@
 # Merges main into every area branch after main moves, so each area keeps building on what landed.
 # It works with git merge-tree and commit-tree, so no worktree or checkout is touched and it can run
 # from any clone. A conflict is reported, never resolved here: the area's owner merges main by hand,
-# keeping both sides' intent. An area whose area-merge.sh lock is held on this machine is skipped
+# keeping both sides' intent. An area whose area-merge.sh lock is held, here or as locks/area-<area> on origin, is skipped
 # and caught up on the next landing, so merge-back never takes a running merge's push from it.
 #
 # usage: cloud/integration/merge-back.sh
@@ -11,6 +11,7 @@ set -euo pipefail
 directory=$(cd "$(dirname "$0")" && pwd)
 git fetch -q origin
 main=$(git rev-parse origin/main)
+remoteLocks=$(git ls-remote origin 'refs/heads/locks/area-*' | sed 's#.*refs/heads/locks/area-##')
 
 grep -v '^#' "$directory/areas.tsv" | while IFS=$'\t' read -r area owner oracle; do
 	[ -n "$area" ] || continue
@@ -19,6 +20,10 @@ grep -v '^#' "$directory/areas.tsv" | while IFS=$'\t' read -r area owner oracle;
 		# An area-merge.sh run holds the area; pushing over it would cost that run its push.
 		# The next landing's merge-back catches the area up.
 		echo "area/$area skipped: a merge into it is running ($lock, since $(date -r "$lock" '+%H:%M'))"
+		continue
+	fi
+	if printf '%s\n' "$remoteLocks" | grep -qx "$area"; then
+		echo "area/$area skipped: a merge into it is running on another machine (locks/area-$area on origin)"
 		continue
 	fi
 	if ! tip=$(git rev-parse -q --verify "refs/remotes/origin/area/$area"); then

@@ -13,7 +13,7 @@
 # (language, memory, concurrency) get a reader before they come here; that's the owner's call.
 #
 # Each area keeps one worktree of its own, under ADAMIC_AREA_WORKTREES (default ~/.adamic-areas),
-# reused across runs and locked while one runs. The script refuses a worktree with local changes.
+# reused across runs and locked while one runs, on this machine and as locks/area-<area> on origin. The script refuses a worktree with local changes.
 #
 # usage: cloud/integration/area-merge.sh <area> <branch> <sha> [--no-push] [test262 filter...]
 #   e.g. cloud/integration/area-merge.sh library codex/library-string-2 e911e46 built-ins/String
@@ -66,7 +66,10 @@ if ! mkdir "$lock" 2>/dev/null; then
 	echo "refused: another merge into area/$area is running ($lock); wait for it" >&2
 	exit 1
 fi
-trap 'rmdir "$lock"' EXIT
+# The same lock on origin, so merge-back run from any machine sees this merge and leaves the area alone.
+remoteLock="refs/heads/locks/area-$area"
+git push -q origin "${areaTip}:${remoteLock}"
+trap 'git push -q origin ":${remoteLock}" 2>/dev/null; rmdir "$lock"' EXIT
 
 if [ -d "$worktree" ]; then
 	if [ -n "$(git -C "$worktree" status --porcelain --untracked-files=no)" ]; then
