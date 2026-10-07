@@ -3,3 +3,14 @@
     wasi_test.go:132: fixture does not lower
 --- FAIL: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.25s)
 
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission
+=== RUN   TestWASIEmission
+--- FAIL: TestWASIEmission (200.76s)
+
+== github.com/system-inc/adamic/internal/oracle TestSlabLaneCatchesRecycledRelease
+=== RUN   TestSlabLaneCatchesRecycledRelease
+=== PAUSE TestSlabLaneCatchesRecycledRelease
+=== CONT  TestSlabLaneCatchesRecycledRelease
+    slabs_test.go:119: mutant insertion points changed
+--- FAIL: TestSlabLaneCatchesRecycledRelease (0.26s)
+
