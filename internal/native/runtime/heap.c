@@ -218,6 +218,9 @@ static void deallocate(adamic_heap *heap) {
 void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
 	if (heap != NULL && heap->references != 0) {
 		heap->references++;
 	}
@@ -249,8 +252,11 @@ static void list(void *value) {
 // let_go drops one reference and lists the value if that was its last.
 static void let_go(void *value) {
 	adamic_heap *heap = value;
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
 	if (heap != NULL && heap->references != 0 && --heap->references == 0) {
-		list(value);
+		list(heap);
 	}
 }
 
@@ -285,6 +291,14 @@ static void free_one(void *value) {
 		adamic_cell *cell = value;
 		if (cell->references) {
 			let_go(cell->value.reference);
+		}
+		break;
+	}
+	case adamic_kind_environment: {
+		adamic_environment *environment = value;
+		for (size_t index = 0; index < environment->count; index++) {
+			adamic_cell *cell = &environment->cells[index];
+			if (cell->references) { let_go(cell->value.reference); }
 		}
 		break;
 	}

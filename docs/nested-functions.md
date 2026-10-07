@@ -157,8 +157,9 @@ only after classifying retained NotYet cases, rather than claiming all 57 clear.
 
 ## Implementation observations
 
-The design was published as b2034215240ebaf36b6ca86d2c288da82638bc7f before
-implementation began. The initial implementation used the closure ABI, hoisted
+The first design was published as b2034215240ebaf36b6ca86d2c288da82638bc7f before
+implementation began. The profile-driven single-record design was published as
+dd43be0c3976a0bce48877f4dbe05a71053fae67 before implementing that revision. The initial implementation used the closure ABI, hoisted
 bindings, shared captured cells, equal sibling layouts, and direct sibling code
 dispatch. No protected emitter, lowering entry point, or oracle registry file was
 edited. No cohere code was copied. Freshness, borrows, regions, and Perceus remain
@@ -166,7 +167,8 @@ enabled. Direct calls still have CallClosure effects; there is no purity shortcu
 
 The executable fixtures are nested_minimal (byte-identical to census r01),
 captures, hoisting, mutual, returned, array, three_levels, tdz, tdz_write, weak,
-destructured, and destructured_tdz. Their original source runs under Node;
+destructured, destructured_tdz, mixed named/arrow captures, and captured
+destructured parameters. Their original source runs under Node;
 the oracle compares native and JavaScript backend output and exit status, runs
 ASan/UBSan, and checks native successful executions for leaks. TDZ aborts exit
 70, so their counts intentionally include allocations not freed at process abort.
@@ -176,12 +178,31 @@ internal/oracle/refusals/nested_cycle.a, and has its own refusal test.
 Counts are recorded in internal/oracle/counts.md. Existing fixture rows do not
 change. Minimal allocates/frees two heap values. Mutual recursion allocates/frees
 ten, retains 46 times and releases 52 times: the current carrier is retained on
-each sibling call. Returned captures allocate/free 23, with peak 13; the array
-fixture allocates/frees 19, with peak 11. These measurements include fixture
-strings and arrays, not solely environment overhead. These counts describe the initial cell-based implementation before the explicit
-environment revision requested from the profile. Final environment counts will
-replace them after revalidation.
+each sibling call. With the single record, read/write captures allocate/free 22
+instead of 24, returned captures 21 instead of 23, and array-stored captures 17
+instead of 19. Peak live values fall from 8 to 7, 13 to 11, and 11 to 9 respectively.
+These measurements include fixture strings and arrays, not solely environments.
+The ABI still carries cell pointers and retains the owning record once per
+captured pointer. This is correct but does not minimize reference-count traffic.
+On this amd64 build sizeof(adamic_cell) is 40 and the environment header is 24
+bytes. The prior standalone cell with readiness but without owner was 32 bytes.
+Fewer allocations do not establish lower total bytes or faster execution.
 No optimization was disabled, so there is no disabled-optimization delta.
+
+The implementation emits AllocateEnvironment once per named-declaration frame
+with captures. FrameEnvironment identifies its ordered slot layout; EnvironmentCell
+marks interior views. heap.c redirects retain/release of an interior view to its
+owner, and environment destruction releases every reference-valued slot. Empty
+layouts allocate nothing. Captured destructured parameters belong to this layout.
+Anonymous closures retaining any slot have their full retained layout expanded
+for cycle analysis. A function reading only count can therefore be refused when
+a disjoint saved slot in the same record holds that function.
+
+Block-local anonymous captures keep their existing per-execution cells; those
+lexical environments can have different instances per iteration. This unit's
+single frame record covers function-body bindings and parameters accessible to
+the supported direct-body named declarations. It does not merge distinct block
+instances or convert the entire anonymous-closure implementation into regions.
 
 ## Refused programs and mutation evidence
 
@@ -194,7 +215,7 @@ refusal probes in internal/lower/nested_functions_test.go:
 * inner(value?: number), inner(value = 1), or inner(...values: number[]).
 * Returning sibling a from b, or storing inner as a value inside inner itself.
 * A third-level function calling a declaration from its grandparent's sibling group.
-* A declaration with a dynamic this parameter or receiver use.
+* A declaration with a dynamic this parameter.
 
 These are conservative implementation limits. Slotless parameter/results and
 other unsupported representations also retain their existing NotYet guards.
@@ -205,18 +226,23 @@ Every requested mutant was run. Production sources were restored afterward.
 
 | Mutant | Observation and catcher |
 | --- | --- |
-| Siblings capture both closure bindings instead of direct dispatch | Node output still agrees; LeakSanitizer detects 416 bytes in 10 allocations. Permanent IR mutant test. |
+| Siblings capture both closure bindings instead of direct dispatch | Node output still agrees; LeakSanitizer detects 512 bytes in 10 allocations. Permanent IR mutant test. |
 | Drop numeric write-through to a captured cell | Node prints updated counters; native prints stale counters. Output comparison fails without a sanitizer or leak failure. |
 | Initialize declarations at their source line | Call-before-declaration fails: native UBSan reports a NULL closure access; JavaScript backend throws TypeError; Node prints 7. |
 | Omit captured-read readiness check | Node exits 70 with ReferenceError; native prints 0 and exits 0. |
 | Omit captured-write readiness check | Node exits 70 with ReferenceError; native prints 5 and exits 0. |
-| Omit nested closure registration in cycle finder | Refusal test fails; accepted program agrees with Node but LeakSanitizer finds 72 bytes in two allocations. |
+| Omit nested closure registration in cycle finder | Refusal test fails; accepted program agrees with Node but LeakSanitizer finds 104 bytes in two allocations. |
+| Drop an interior cell's owner retain | Returned-closure fixture fails under ASan with heap-use-after-free. |
+| Omit AllocateEnvironment | The IR one-site invariant test reports zero allocations instead of one. |
+| Hide disjoint slots retained through the same record | A dedicated cycle refusal test fails, accepting the cycle. |
 | Delete binder.ts:567 from the independent census inventory | Census coordinate audit throws nested census site mismatch. |
 
 Logs are /tmp/adamic-nested-mutant-lost-write.log,
 /tmp/adamic-nested-mutant-no-hoist.log, /tmp/adamic-nested-mutant-no-tdz.log,
 /tmp/adamic-nested-mutant-no-write-tdz.log,
-/tmp/adamic-nested-mutant-unregistered-cycle2.log, and
+/tmp/adamic-nested-mutant-unregistered-cycle-final.log,
+/tmp/adamic-nested-mutant-no-env-retain.log, /tmp/adamic-nested-mutant-no-env-site.log,
+/tmp/adamic-nested-mutant-disjoint-slots.log, and
 /tmp/adamic-nested-census-mutant.log. The first call-only cycle probe did not
 produce a leak report; a surviving conservative root is a possible explanation,
 not an observation. The final global-owner probe clears that owner at exit and
@@ -246,6 +272,8 @@ not certify representations, cycles, upstream checking, or whole-file compilatio
 Seven of the 57 files have no remaining restrictions measured by this audit:
 factory/baseNodeFactory.ts, factory/utilities.ts, performance.ts, tracing.ts,
 transformer.ts, transformers/destructuring.ts, and transformers/utilities.ts.
+The audit finds 643 blocked declaration sites and 4,563 unsupported reference
+sites. These counts overlap by file and are not additive to the old inventory.
 The other 50 retain unsupported declarations or cross-group/value references.
 No claim that seven full tsc files compile is supported by this experiment.
 
@@ -259,4 +287,22 @@ Tool versions are Go 1.27.1, clang 20.1.8, Node 24.19.0. Shell commands source
 The initial full uncached go test -count=1 -timeout 30m ./... gate exposed the
 negative-fixture placement issue in flow corpus scans. Moving that source into
 refusals fixes the layout without suppressing a test or changing flow analysis.
-Final validation commands and results are recorded below after completion.
+The initial full gate was stopped after 21 minutes because unrelated stage1
+suites were still running after that known failure. The final scope is all
+changed packages and the complete oracle package, uncached, plus vet and format.
+No full post-change stage1 gate or native tsc compilation is claimed.
+
+
+| Final command | Result and log |
+| --- | --- |
+| ADAMIC_GATE_UNCACHED=1 go test ./internal/flow ./internal/fresh ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle -count=1 -timeout 20m | flow 124.817s, fresh 55.249s, lower 36.812s, native 186.688s pass; ir/javascript have no standalone tests. Oracle behavior checks pass, but its count-table check fails because the running binary had 13 fixtures while the table gained fixture 14. /tmp/adamic-nested-environment-gate.log |
+| go test ./internal/lower ./internal/oracle -count=1 -timeout 15m | Final frozen 14-fixture registry: lower 19.744s and complete oracle 83.965s pass. Ordinary oracle cache enabled. /tmp/adamic-nested-final-complete-oracle.log |
+| ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNested\|TestNativeAgreesWithNode/internal/oracle/testdata/nested_' -count=1 -timeout 10m | All 14 fixtures plus refusal and sibling-cycle mutant tests pass, 3.610s. /tmp/adamic-nested-final-fourteen.log |
+| go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts | Pass, 32.953s; fourteen added rows, zero existing rows changed. /tmp/adamic-nested-environment-counts-final.log |
+| go vet ./... | Exit 0, no diagnostics. /tmp/adamic-nested-final-vet.log |
+| gofmt -l cmd internal | Exit 0, no files. /tmp/adamic-nested-final-format.log |
+
+The complete post-change stage1 gate remains uncovered. No escape proof, stack or
+region placement, count elision, whole tsc native compilation, or performance
+claim is included. The census's syntax counter is unchanged; seven-file structural
+clearance is the limited supplementary measurement, not successful compiler runs.

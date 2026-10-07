@@ -10,7 +10,10 @@ import (
 
 // statements lowers a list of statements.
 func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
-	lowered := []ir.Statement{}
+	lowered, err := l.nestedDeclarations(nodes)
+	if err != nil {
+		return nil, err
+	}
 	for _, node := range nodes {
 		statements, err := l.statement(node)
 		if err != nil {
@@ -35,7 +38,10 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {
-			return nil, l.notYet(node, "a function inside a function (a closure)")
+			if local, ok := l.locals[l.symbol(node.Name())]; ok && l.result.Locals[local].NestedFunction > 0 {
+				return nil, nil
+			}
+			return nil, l.notYet(node, "a block-scoped nested function declaration")
 		}
 		// Lowered already, by declareModule.
 		return nil, nil

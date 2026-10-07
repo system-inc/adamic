@@ -1,0 +1,10 @@
+function outer(start: number): () => number {
+ let count = start;
+ function middle(): () => number {
+  let step = 2;
+  function inner(): number { count += step; step += 1; return count; }
+  return inner;
+ }
+ return middle();
+}
+const next = outer(10); console.log(`${next()} ${next()} ${next()}`);
