@@ -1,0 +1,112 @@
+{
+  "rounds": [
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "native": {
+        "seconds": 3.3920142259994464,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=372815230 query_ns=242356859 queries=189 first_query_ns=72879 run_ns=2984373137\n"
+      },
+      "go": {
+        "seconds": 0.4760814939982083,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=358532088 rule_ns=58786626 run_ns=93707061\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "go": {
+        "seconds": 0.5246524819995102,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=403982633 rule_ns=67249791 run_ns=105772963\n"
+      },
+      "native": {
+        "seconds": 3.2676473810024618,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=341125740 query_ns=217965034 queries=189 first_query_ns=31059 run_ns=2900726811\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "native": {
+        "seconds": 3.878655181997601,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "tsgo: load_ns=352559679 query_ns=314943424 queries=189 first_query_ns=21997 run_ns=3415371967\n"
+      },
+      "go": {
+        "seconds": 0.4834412429991062,
+        "sha256": "e940d25193f84b9d9a2631c1c83d0a52a5f5b90a7246811d12445a1b08ffebcf",
+        "bytes": 4933,
+        "timing": "cohere: load_ns=350579241 rule_ns=70848940 run_ns=116380972\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "native": {
+        "seconds": 0.5349732849972497,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=124489437 query_ns=23879087 queries=404 first_query_ns=23428 run_ns=399320630\n"
+      },
+      "go": {
+        "seconds": 0.13731358999939403,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=112468495 rule_ns=6247907 run_ns=15290220\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "go": {
+        "seconds": 0.14967939800044405,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=121404623 rule_ns=6804844 run_ns=16370939\n"
+      },
+      "native": {
+        "seconds": 0.6048404630018922,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=119605898 query_ns=28410507 queries=404 first_query_ns=24974 run_ns=476416385\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "native": {
+        "seconds": 0.5379619949999324,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "tsgo: load_ns=131980836 query_ns=19412552 queries=404 first_query_ns=27566 run_ns=397690358\n"
+      },
+      "go": {
+        "seconds": 0.14899862099991878,
+        "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+        "bytes": 18485,
+        "timing": "cohere: load_ns=118355313 rule_ns=8029965 run_ns=19158337\n"
+      }
+    }
+  ],
+  "summary": {
+    "compiler": {
+      "native_median_seconds": 3.3920142259994464,
+      "go_median_seconds": 0.4834412429991062,
+      "ratio": 7.016393977800768
+    },
+    "repository": {
+      "native_median_seconds": 0.5379619949999324,
+      "go_median_seconds": 0.14899862099991878,
+      "ratio": 3.6105166033732994
+    }
+  }
+}

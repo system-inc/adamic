@@ -1,0 +1,112 @@
+{
+  "rounds": [
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "native": {
+        "seconds": 7.403384970999468,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "tsgo: load_ns=558355052 query_ns=1138869047 queries=54960 first_query_ns=152973 run_ns=6805764016\n"
+      },
+      "go": {
+        "seconds": 2.3259170839992294,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "cohere: load_ns=407990894 rule_ns=1809784020 run_ns=1881923540\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "go": {
+        "seconds": 2.333353140998952,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "cohere: load_ns=350727758 rule_ns=1908124370 run_ns=1960506536\n"
+      },
+      "native": {
+        "seconds": 6.166196783997293,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "tsgo: load_ns=357364609 query_ns=962707776 queries=54960 first_query_ns=177428 run_ns=5754355683\n"
+      }
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "native": {
+        "seconds": 7.544345602000249,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "tsgo: load_ns=374139798 query_ns=1144381310 queries=54960 first_query_ns=230460 run_ns=7122097557\n"
+      },
+      "go": {
+        "seconds": 2.426161275998311,
+        "sha256": "334cbb81535b85256bf2b394576cda3f60775bd586c26929f31782f849b0482d",
+        "bytes": 7087,
+        "timing": "cohere: load_ns=483075283 rule_ns=1877637009 run_ns=1918199613\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "native": {
+        "seconds": 0.4691393529974448,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "tsgo: load_ns=151746814 query_ns=14606448 queries=49 first_query_ns=1580037 run_ns=308460886\n"
+      },
+      "go": {
+        "seconds": 0.17428627000117558,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "cohere: load_ns=148359957 rule_ns=1238737 run_ns=12183755\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "go": {
+        "seconds": 0.18835346799824038,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "cohere: load_ns=159410755 rule_ns=3732877 run_ns=15617590\n"
+      },
+      "native": {
+        "seconds": 0.4739695060015947,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "tsgo: load_ns=166421971 query_ns=13282831 queries=49 first_query_ns=624507 run_ns=299881003\n"
+      }
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "native": {
+        "seconds": 0.45434085099986987,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "tsgo: load_ns=125318976 query_ns=18131830 queries=49 first_query_ns=770075 run_ns=314565206\n"
+      },
+      "go": {
+        "seconds": 0.1791867909996654,
+        "sha256": "01f4d00a360e901cb87c8fd43da9141dfdc6c1474764464f3d610b84493e79cb",
+        "bytes": 19144,
+        "timing": "cohere: load_ns=150210184 rule_ns=1916261 run_ns=12279636\n"
+      }
+    }
+  ],
+  "summary": {
+    "compiler": {
+      "native_median_seconds": 7.403384970999468,
+      "go_median_seconds": 2.333353140998952,
+      "ratio": 3.1728523389434065
+    },
+    "repository": {
+      "native_median_seconds": 0.4691393529974448,
+      "go_median_seconds": 0.1791867909996654,
+      "ratio": 2.6181581263895777
+    }
+  }
+}
