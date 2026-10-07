@@ -1,0 +1,328 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/wrap_close_parenthesis_changed
+    lint_test.go:724: wrap close parenthesis changed caught on Node: case 140 line 2620: port "suggestion-edit\t2 2\t]", Go "suggestion-edit\t2 2\t)"
+        Go context:
+        range 0 7 confusingOperator suggestions			0 7
+        suggestion	notNeedInOperator	Remove possibly unnecessary non-null assertion (!) in the left operand of the `in` operator.	1
+        suggestion-edit	1 2	
+        suggestion	wrapUpLeft	Wrap the left-hand side in parentheses to avoid confusion with "in" operator.	2
+        suggestion-edit	0 0	(
+        suggestion-edit	2 2	)
+        fixed	a! in b;\u000a
+    lint_test.go:724: wrap close parenthesis changed caught on emitted JavaScript: case 140 line 2620: port "suggestion-edit\t2 2\t]", Go "suggestion-edit\t2 2\t)"
+        Go context:
+        range 0 7 confusingOperator suggestions			0 7
+        suggestion	notNeedInOperator	Remove possibly unnecessary non-null assertion (!) in the left operand of the `in` operator.	1
+        suggestion-edit	1 2	
+        suggestion	wrapUpLeft	Wrap the left-hand side in parentheses to avoid confusion with "in" operator.	2
+        suggestion-edit	0 0	(
+        suggestion-edit	2 2	)
+        fixed	a! in b;\u000a
+    lint_test.go:724: wrap close parenthesis changed caught on native: case 140 line 2620: port "suggestion-edit\t2 2\t]", Go "suggestion-edit\t2 2\t)"
+        Go context:
+        range 0 7 confusingOperator suggestions			0 7
+        suggestion	notNeedInOperator	Remove possibly unnecessary non-null assertion (!) in the left operand of the `in` operator.	1
+        suggestion-edit	1 2	
+        suggestion	wrapUpLeft	Wrap the left-hand side in parentheses to avoid confusion with "in" operator.	2
+        suggestion-edit	0 0	(
+        suggestion-edit	2 2	)
+        fixed	a! in b;\u000a
+=== RUN   TestMutants/numeric_duplicate_anchor_advances
+    lint_test.go:724: numeric duplicate anchor advances caught on Node: case 140 line 2616: port "/tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:21", Go "/tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:14"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 			13 14
+        /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 			13 14
+        /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:2:14
+    lint_test.go:724: numeric duplicate anchor advances caught on emitted JavaScript: case 140 line 2616: port "/tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:21", Go "/tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:14"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 			13 14
+        /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 			13 14
+        /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:2:14
+    lint_test.go:724: numeric duplicate anchor advances caught on native: case 140 line 2616: port "/tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:21", Go "/tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:14"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 			13 14
+        /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 			13 14
+        /tmp/adamic-gate/TestMutantsnumeric_duplicate_anchor_advances159854334/015/typescript-eslint-no-duplicate-enum-values-0.ts:2:14
+=== RUN   TestMutants/unary_plus_accepted_as_static_key
+    lint_test.go:724: unary plus accepted as static key caught on Node: case 140 line 2612: port "/tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:2:10", Go "/tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:1:10"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:1:10
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 9 11 dynamicDelete 			9 11
+        /tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:2:10
+    lint_test.go:724: unary plus accepted as static key caught on emitted JavaScript: case 140 line 2612: port "/tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:2:10", Go "/tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:1:10"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:1:10
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 9 11 dynamicDelete 			9 11
+        /tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:2:10
+    lint_test.go:724: unary plus accepted as static key caught on native: case 140 line 2612: port "/tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:2:10", Go "/tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:1:10"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:1:10
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 9 11 dynamicDelete 			9 11
+        /tmp/adamic-gate/TestMutantsunary_plus_accepted_as_static_key2036577567/015/typescript-eslint-no-dynamic-delete-0.ts:2:10
+=== RUN   TestMutants/extra_bang_deleted_from_wrong_position
+    lint_test.go:724: extra bang deleted from wrong position caught on Node: case 140 line 2615: port "range 0 4 noExtraNonNullAssertion fix\t\t\t2 4", Go "range 0 4 noExtraNonNullAssertion fix\t\t\t3 4"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsextra_bang_deleted_from_wrong_position1291770225/015/typescript-eslint-no-extra-non-null-assertion-0.ts:1:1
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 0 4 noExtraNonNullAssertion fix			3 4
+        /tmp/adamic-gate/TestMutantsextra_bang_deleted_from_wrong_position1291770225/015/typescript-eslint-no-extra-non-null-assertion-0.ts:1:8
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 7 11 noExtraNonNullAssertion fix			10 11
+    lint_test.go:724: extra bang deleted from wrong position caught on emitted JavaScript: case 140 line 2615: port "range 0 4 noExtraNonNullAssertion fix\t\t\t2 4", Go "range 0 4 noExtraNonNullAssertion fix\t\t\t3 4"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsextra_bang_deleted_from_wrong_position1291770225/015/typescript-eslint-no-extra-non-null-assertion-0.ts:1:1
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 0 4 noExtraNonNullAssertion fix			3 4
+        /tmp/adamic-gate/TestMutantsextra_bang_deleted_from_wrong_position1291770225/015/typescript-eslint-no-extra-non-null-assertion-0.ts:1:8
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 7 11 noExtraNonNullAssertion fix			10 11
+    lint_test.go:724: extra bang deleted from wrong position caught on native: case 140 line 2615: port "range 0 4 noExtraNonNullAssertion fix\t\t\t2 4", Go "range 0 4 noExtraNonNullAssertion fix\t\t\t3 4"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsextra_bang_deleted_from_wrong_position1291770225/015/typescript-eslint-no-extra-non-null-assertion-0.ts:1:1
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 0 4 noExtraNonNullAssertion fix			3 4
+        /tmp/adamic-gate/TestMutantsextra_bang_deleted_from_wrong_position1291770225/015/typescript-eslint-no-extra-non-null-assertion-0.ts:1:8
+          @typescript-eslint/no-extra-non-null-assertion  This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.
+        
+        range 7 11 noExtraNonNullAssertion fix			10 11
+=== RUN   TestMutants/getter_named_new_silently_skipped
+    lint_test.go:724: getter named new silently skipped caught on Node: case 140 line 2612: port "/tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:2:15", Go "/tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:1:32"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:1:32
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 31 34 classNew 			31 34
+        /tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:2:15
+    lint_test.go:724: getter named new silently skipped caught on emitted JavaScript: case 140 line 2612: port "/tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:2:15", Go "/tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:1:32"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:1:32
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 31 34 classNew 			31 34
+        /tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:2:15
+    lint_test.go:724: getter named new silently skipped caught on native: case 140 line 2612: port "/tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:2:15", Go "/tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:1:32"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:1:32
+          @typescript-eslint/no-misused-new  This method is named `new` and declares that it returns the class it belongs to, which reads as a constructor and is not one. Calling it does not construct anything, so the name misleads every reader; a constructor is spelled `constructor`.
+        
+        range 31 34 classNew 			31 34
+        /tmp/adamic-gate/TestMutantsgetter_named_new_silently_skipped1152947335/015/typescript-eslint-no-misused-new-0.ts:2:15
+=== RUN   TestMutants/trailing_semicolon_retained
+    lint_test.go:724: trailing semicolon retained caught on Node: case 140 line 2615: port "range 44 58 unnecessaryAssign suggestion\t\tRemove the unnecessary assignment.\t44 58", Go "range 44 58 unnecessaryAssign suggestion-edits:removeAssignment\t44:59:\tRemove the unnecessary assignment.\t44 58"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantstrailing_semicolon_retained3841632505/015/typescript-eslint-no-unnecessary-parameter-property-assignment-0.ts:1:45
+          @typescript-eslint/no-unnecessary-parameter-property-assignment  A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.
+        
+        range 44 58 unnecessaryAssign suggestion-edits:removeAssignment	44:59:	Remove the unnecessary assignment.	44 58
+        fixed	class C { constructor(public foo: string) { this.foo = foo; } }\u000a
+    lint_test.go:724: trailing semicolon retained caught on emitted JavaScript: case 140 line 2615: port "range 44 58 unnecessaryAssign suggestion\t\tRemove the unnecessary assignment.\t44 58", Go "range 44 58 unnecessaryAssign suggestion-edits:removeAssignment\t44:59:\tRemove the unnecessary assignment.\t44 58"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantstrailing_semicolon_retained3841632505/015/typescript-eslint-no-unnecessary-parameter-property-assignment-0.ts:1:45
+          @typescript-eslint/no-unnecessary-parameter-property-assignment  A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.
+        
+        range 44 58 unnecessaryAssign suggestion-edits:removeAssignment	44:59:	Remove the unnecessary assignment.	44 58
+        fixed	class C { constructor(public foo: string) { this.foo = foo; } }\u000a
+    lint_test.go:724: trailing semicolon retained caught on native: case 140 line 2615: port "range 44 58 unnecessaryAssign suggestion\t\tRemove the unnecessary assignment.\t44 58", Go "range 44 58 unnecessaryAssign suggestion-edits:removeAssignment\t44:59:\tRemove the unnecessary assignment.\t44 58"
+        Go context:
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantstrailing_semicolon_retained3841632505/015/typescript-eslint-no-unnecessary-parameter-property-assignment-0.ts:1:45
+          @typescript-eslint/no-unnecessary-parameter-property-assignment  A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.
+        
+        range 44 58 unnecessaryAssign suggestion-edits:removeAssignment	44:59:	Remove the unnecessary assignment.	44 58
+        fixed	class C { constructor(public foo: string) { this.foo = foo; } }\u000a
+=== RUN   TestMutants/namespace_style_silently_accepted
+    lint_test.go:724: namespace style silently accepted caught on Node: case 140 line 2612: port "/tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:1:8"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:1:8
+          nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
+        
+        range 7 17 requireDefaultStyle 			7 17
+        /tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:2:8
+    lint_test.go:724: namespace style silently accepted caught on emitted JavaScript: case 140 line 2612: port "/tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:1:8"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:1:8
+          nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
+        
+        range 7 17 requireDefaultStyle 			7 17
+        /tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:2:8
+    lint_test.go:724: namespace style silently accepted caught on native: case 140 line 2612: port "/tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:2:8", Go "/tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:1:8"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:1:8
+          nexus/import-require-module-alias  Import "react" as a default import: `import React from 'react'`. A namespace object is frozen and, under esModuleInterop, is not the value the default import yields, so the two forms are not interchangeable.
+        
+        range 7 17 requireDefaultStyle 			7 17
+        /tmp/adamic-gate/TestMutantsnamespace_style_silently_accepted1428592082/015/nexus-import-require-module-alias-0.ts:2:8
+=== RUN   TestMutants/bound_sole_block_exemption_widened
+    lint_test.go:724: bound sole block exemption widened caught on Node: case 140 line 2616: port "fixed\t{ { let x = 1; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened1993599707/015/no-lone-blocks-0.ts:1:3"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened1993599707/015/no-lone-blocks-0.ts:1:1
+          no-lone-blocks  These braces do nothing. A block standing where statements already go creates no scope unless something inside it is block-scoped, so the braces only indent the code and suggest a grouping the language does not enforce. A reader spends attention deciding whether the nesting means something. Delete the braces and keep the statements, or if the grouping was the point, move it into a function whose name says what it groups.
+        
+        range 0 18 redundantBlock 			0 18
+        /tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened1993599707/015/no-lone-blocks-0.ts:1:3
+          no-lone-blocks  These braces do nothing, and they sit directly inside another block, so the nesting reads as two scopes where the language has one. Nothing inside is block-scoped, which means the inner braces neither contain a binding nor limit one. Delete them and keep the statements at the level they already run at.
+        
+        range 2 16 redundantNestedBlock 			2 16
+        fixed	{ { let x = 1; } }\u000a
+    lint_test.go:724: bound sole block exemption widened caught on emitted JavaScript: case 140 line 2616: port "fixed\t{ { let x = 1; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened1993599707/015/no-lone-blocks-0.ts:1:3"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened1993599707/015/no-lone-blocks-0.ts:1:1
+          no-lone-blocks  These braces do nothing. A block standing where statements already go creates no scope unless something inside it is block-scoped, so the braces only indent the code and suggest a grouping the language does not enforce. A reader spends attention deciding whether the nesting means something. Delete the braces and keep the statements, or if the grouping was the point, move it into a function whose name says what it groups.
+        
+        range 0 18 redundantBlock 			0 18
+        /tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened1993599707/015/no-lone-blocks-0.ts:1:3
+          no-lone-blocks  These braces do nothing, and they sit directly inside another block, so the nesting reads as two scopes where the language has one. Nothing inside is block-scoped, which means the inner braces neither contain a binding nor limit one. Delete them and keep the statements at the level they already run at.
+        
+        range 2 16 redundantNestedBlock 			2 16
+        fixed	{ { let x = 1; } }\u000a
+    lint_test.go:724: bound sole block exemption widened caught on native: case 140 line 2616: port "fixed\t{ { let x = 1; } }\\u000a", Go "/tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened1993599707/015/no-lone-blocks-0.ts:1:3"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened1993599707/015/no-lone-blocks-0.ts:1:1
+          no-lone-blocks  These braces do nothing. A block standing where statements already go creates no scope unless something inside it is block-scoped, so the braces only indent the code and suggest a grouping the language does not enforce. A reader spends attention deciding whether the nesting means something. Delete the braces and keep the statements, or if the grouping was the point, move it into a function whose name says what it groups.
+        
+        range 0 18 redundantBlock 			0 18
+        /tmp/adamic-gate/TestMutantsbound_sole_block_exemption_widened1993599707/015/no-lone-blocks-0.ts:1:3
+          no-lone-blocks  These braces do nothing, and they sit directly inside another block, so the nesting reads as two scopes where the language has one. Nothing inside is block-scoped, which means the inner braces neither contain a binding nor limit one. Delete them and keep the statements at the level they already run at.
+        
+        range 2 16 redundantNestedBlock 			2 16
+        fixed	{ { let x = 1; } }\u000a
+=== RUN   TestMutants/normalized_text_hides_lost_precision
+    lint_test.go:724: normalized text hides lost precision caught on Node: case 140 line 2612: port "fixed\tconst a = 0x10000000000000000;\\u000aconst b = 0xffffffffffffffff;\\u000aconst c = 0x40000000000004;\\u000aconst d = 0e9223372036854775807;\\u000aconst e = 0e9223372036854775808;\\u000aconst f = 0e-9223372036854775809;\\u000aconst g = 0x10000000000000000n;\\u000aconst h = 1.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001;\\u000a", Go "/tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2694553518/015/no-loss-of-precision-0.ts:1:11"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2694553518/015/no-loss-of-precision-0.ts:1:11
+          no-loss-of-precision  This number literal does not survive being stored. A JavaScript number is a 64-bit float with 53 bits of significand, so it holds about 15 significant decimal digits and every integer up to 9007199254740991. The digits written here exceed that, and the value the program actually runs with is a different number than the one on the page. Write a value the format can hold, or use a `BigInt` literal such as `9007199254740993n` when the exact integer is the point.
+        
+        range 10 29 noLossOfPrecision 			10 29
+        /tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2694553518/015/no-loss-of-precision-0.ts:2:11
+    lint_test.go:724: normalized text hides lost precision caught on emitted JavaScript: case 140 line 2612: port "fixed\tconst a = 0x10000000000000000;\\u000aconst b = 0xffffffffffffffff;\\u000aconst c = 0x40000000000004;\\u000aconst d = 0e9223372036854775807;\\u000aconst e = 0e9223372036854775808;\\u000aconst f = 0e-9223372036854775809;\\u000aconst g = 0x10000000000000000n;\\u000aconst h = 1.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001;\\u000a", Go "/tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2694553518/015/no-loss-of-precision-0.ts:1:11"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2694553518/015/no-loss-of-precision-0.ts:1:11
+          no-loss-of-precision  This number literal does not survive being stored. A JavaScript number is a 64-bit float with 53 bits of significand, so it holds about 15 significant decimal digits and every integer up to 9007199254740991. The digits written here exceed that, and the value the program actually runs with is a different number than the one on the page. Write a value the format can hold, or use a `BigInt` literal such as `9007199254740993n` when the exact integer is the point.
+        
+        range 10 29 noLossOfPrecision 			10 29
+        /tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2694553518/015/no-loss-of-precision-0.ts:2:11
+    lint_test.go:724: normalized text hides lost precision caught on native: case 140 line 2612: port "fixed\tconst a = 0x10000000000000000;\\u000aconst b = 0xffffffffffffffff;\\u000aconst c = 0x40000000000004;\\u000aconst d = 0e9223372036854775807;\\u000aconst e = 0e9223372036854775808;\\u000aconst f = 0e-9223372036854775809;\\u000aconst g = 0x10000000000000000n;\\u000aconst h = 1.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001;\\u000a", Go "/tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2694553518/015/no-loss-of-precision-0.ts:1:11"
+        Go context:
+        case 138
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 139
+        fixed	async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}
+        case 140
+        /tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2694553518/015/no-loss-of-precision-0.ts:1:11
+          no-loss-of-precision  This number literal does not survive being stored. A JavaScript number is a 64-bit float with 53 bits of significand, so it holds about 15 significant decimal digits and every integer up to 9007199254740991. The digits written here exceed that, and the value the program actually runs with is a different number than the one on the page. Write a value the format can hold, or use a `BigInt` literal such as `9007199254740993n` when the exact integer is the point.
+        
+        range 10 29 noLossOfPrecision 			10 29
+        /tmp/adamic-gate/TestMutantsnormalized_text_hides_lost_precision2694553518/015/no-loss-of-precision-0.ts:2:11
+--- PASS: TestMutants (266.22s)
+    --- PASS: TestMutants/wrap_close_parenthesis_changed (82.85s)
+    --- PASS: TestMutants/numeric_duplicate_anchor_advances (23.81s)
+    --- PASS: TestMutants/unary_plus_accepted_as_static_key (23.49s)
+    --- PASS: TestMutants/extra_bang_deleted_from_wrong_position (21.00s)
+    --- PASS: TestMutants/getter_named_new_silently_skipped (23.30s)
+    --- PASS: TestMutants/trailing_semicolon_retained (20.64s)
+    --- PASS: TestMutants/namespace_style_silently_accepted (21.71s)
+    --- PASS: TestMutants/bound_sole_block_exemption_widened (21.42s)
+    --- PASS: TestMutants/normalized_text_hides_lost_precision (20.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	266.260s

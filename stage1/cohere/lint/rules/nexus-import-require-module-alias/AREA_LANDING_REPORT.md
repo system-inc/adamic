@@ -1,5 +1,9 @@
 # Integrated lint area landing
 
+Current compiler landing: c7991b900; area base b84a9d931. See the final
+compiler-refresh section for rebuilt results. Earlier sections preserve their
+original observations and bases. The branch remains blocked for landing.
+
 Rebased codex/lint-wave1-14 onto area/stage1-lint
  d65a8f931c98655936ae04c6899f38f14862b73e, containing current main
 39638d9e278d38bb5aeae887f46d55a70e47aaad. The remote tips were checked again before
@@ -169,3 +173,56 @@ The rule branch remains blocked and is not declared landing-ready. Per the
 landing cap, no further rule/helper is claimed. Resolving these two failures
 requires the owners of the shared parser and oracle; this unit stops without
 editing their files or weakening either check.
+
+## Compiler landing refresh at c7991b900
+
+Fetched all origin refs and rebased both owned branches onto
+area/stage1-lint b84a9d9314b65d3d0261ee017e233287b4f071da, containing current
+main c7991b900362796aefd111474e65eb5398e91953. DEDUP_LEDGER.md has identical
+content to the already-read prior version; the same ten winners are retained
+and the same three losing directories stay dropped. Compiler changes were
+accepted without touching or reverting unowned files. Remote tips were checked
+again before pushing and have not moved during these validations.
+
+Unlike the preceding unchanged-base refresh, no corpus or mutant evidence was
+reused after this compiler change. Fresh commands use
+source /workspace/adamic-tools/env.sh and write logs under evidence/c799-*:
+
+- ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-14-typescript-pinned go test
+  ./stage1/cohere/lint -run '^TestCompilerAndStage1Agree$' -count=1 -timeout 30m -v:
+  PASS, 368 files, 20,750,769 identical bytes on actual Go, source Node,
+  emitted JavaScript and ASan/UBSan native (185.57s).
+- python3 stage1/cohere/lint/rules/nexus-import-require-module-alias/validate_landing.py:
+  exit 1, nine original-rule groups PASS (579 cases), modified-destructured
+  constructor group FAILS with expected CloseParenToken, got OpenBraceToken at
+  33. The extra-space no-lonely-if mutant freshly compiles and runs cleanly and
+  is caught only by Go comparison on all three backends, over all 32 original
+  cases. The complete probe process finishes in 82.192s.
+- go test ./stage1/cohere/lint -run
+  '^TestMutants$/(wrap_close_parenthesis_changed|numeric_duplicate_anchor_advances|unary_plus_accepted_as_static_key|extra_bang_deleted_from_wrong_position|getter_named_new_silently_skipped|trailing_semicolon_retained|namespace_style_silently_accepted|bound_sole_block_exemption_widened|normalized_text_hides_lost_precision)$'
+  -count=1 -timeout 30m -v: PASS, all nine selected owned mutations freshly
+  compiled and caught only by Go byte comparison on all three backends
+  (266.22s). Together with the probe, all ten owned semantic mutants are fresh.
+- go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -timeout 30m -v:
+  FAIL (23.66s), unchanged shared Go oracle panic on the preserved convergence
+  witness. Its real fixer reaches ten passes without convergence. This check
+  was neither skipped nor weakened; the same checked-in reproducer remains.
+- The correctly filtered inherited-static-field compiler fixture and one-byte
+  oracle control PASS again (21.812s), as does go vet ./....
+- Both retained helper comparisons and their compiling semantic mutants were
+  also rebuilt in full and PASS on Node, emitted JavaScript and sanitized
+  native. Fixed hex: 68,844 records / 2,149,768 bytes. Unicode: 12,935 records /
+  834,966 bytes. All four original consumer suites and targeted leaf calls PASS.
+
+Setup: tools ready 0s each, submodules 0s, build cache warm 149s, total 149s;
+nproc 5, CPU quota 4 cores. Removed only two confirmed inactive scratch Go-build
+directories from earlier failed runs to make room; no source, input or assertion
+was removed. No full repository correctness gate, fresh throughput measurement
+or arbitrary-input parameter-property parity is claimed. The broader seventeen
+required-input checks were not run by this filtered lint/compiler gate.
+
+The separately rebased helper branch is pushed at
+5efb52bac2d03caa5d74d68659b11f9d7650b502. Its eight prerequisites for four
+consumers still remove zero complete blocker sets. The rule branch remains
+blocked on the shared parser and shared oracle, so no new helper or rule is
+claimed. Reproducers above are unchanged. No main or area branch was pushed.
