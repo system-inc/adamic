@@ -1,5 +1,50 @@
 # Scanner blockers
 
+## October 7: checked overloads and direct Debug.fail pass; Array constructor is next
+
+Scratch includes census-small-families 33a90f4, module-init-order 28e366f,
+phantom-brands d2d3c77, and require-builtins-2 6439f4c alongside the previous
+integrated compiler features. Scratch SHA and all pins are recorded in
+`evidence/three-compiler-fixes.json`; none of this compiler merge is pushed.
+
+Unchanged append probe builds natively and prints `[1,2]`, `[3]`, `undefined`.
+Unchanged Debug.fail callable-marker probe builds and prints `ok`. Both match
+Node byte for byte, and a one-byte mutation of each native result is caught.
+Adaptation 87 is retired from the scanner profile. Removing its erased Function
+view emits identical JavaScript; changing the capture argument fails that check.
+No claim is made that an individual branch alone closes the marker relation.
+
+Final slice still has 89 code declarations in eight files. Node matches the
+full-tree expanded reference: 1,369,432 tokens, 466 errors, 108,019,935 bytes,
+SHA-256 `41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc`.
+Its token-end mutant is caught (diff exit 1).
+
+Both split modes and C emission stop at slice core.ts:107:20:
+
+```text
+stage 0 can't lower new an Identifier yet
+```
+
+The expression is `new Array(s2.length + 1)` inside `levenshteinWithMax`, from
+upstream core.ts:2199 (second allocation at 2200). Census reason: this length-form Array NotYet is not separately named in
+REPORT.md; it was discovered by lowering the checker-clean slice. Required feature: length-form Array construction with JavaScript
+holes and observable length, rather than Map/Set/class construction alone.
+Minimal probe: `probes/array-length-constructor.a`; Node prints `4`, and native
+stops at 4:20 with the same NotYet. No stub or adaptation substitutes an array
+with different hole behavior. This requires compiler/library support.
+
+Compiler merge conflicts touched lowering (cast, expressions, record/refusal
+seams and host operations), flow, loading and emission. Resolutions stayed in
+scratch. Focused overload-proof and phantom tests pass. The attempted uncached
+optional-function oracle cannot compile its test package because incoming host
+fixtures pass an inputRun to the newer inputLeaks factory API; this is a separate
+test-harness merge incompatibility, recorded exactly in the evidence.
+
+No scanner C or executable was produced, so clang split/unsplit/warm timings,
+binary size, native user time and the scanner native-output byte mutant could
+not run. nproc is 5; perf is not installed. Earlier native probe mutants and the
+current Node token-end mutant are green; neither is a native scanner proof.
+
 ## October 7: optional function values landed; append overload results are next
 
 Merged census-small-families 8d34357 (including f69bf60) into unpushed scratch

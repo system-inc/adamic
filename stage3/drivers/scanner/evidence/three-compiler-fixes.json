@@ -1,0 +1,114 @@
+{
+  "result": "red: new Array(length) is not lowered",
+  "scratch_commit": "202c0ca521a7266d380fdec64a39ae3259fde5c9",
+  "compiler_pins": {
+    "origin/area/stage3": "abdcf3db31337e3da7e674c1ececa95c35ba7239",
+    "origin/compiler/stage3-front-2": "860a0d5e7c7c44fd50328e0af6d4333cb2190d55",
+    "origin/library/qualified-as-const": "8280fd0873a3d5c425f8a1a342b44af20cf883d9",
+    "origin/codex/records-lowering": "a2572f0b99d76d7d1aef6ec9f20d0a91a623c996",
+    "origin/codex/runtime-records": "754e6667941a52b5a35ca79ef303f6c012f7bf4b",
+    "origin/area/developer-tools": "5794c87661b030d24cee457bbec4900f260e025d",
+    "origin/codex/census-small-families": "33a90f4b0763d797d33ed41eb9db79ef12ff6609",
+    "origin/codex/module-init-order": "28e366fa9ffa8ad5a44e2ee8a0d97a38faf2c916",
+    "origin/codex/phantom-brands": "d2d3c77e308cc26d4af196dedeba92d7d38c4cda",
+    "origin/codex/require-builtins-2": "6439f4cf6a7f2d1d9de86bfc8f941d6f2d9087b3"
+  },
+  "node": {
+    "tokens": 1369432,
+    "errors": 466,
+    "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc",
+    "bytes": 108019935,
+    "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+    "files": 81,
+    "node_exit": 0,
+    "comparison_control_exit": 0,
+    "end_mutant_diff_exit": 1,
+    "native": "blocked at compilation",
+    "build_exit": 1
+  },
+  "split_build_diagnostic": "adamic: /workspace/scratch/scanner-three-fixes-on-run/adapted/src/compiler/core.ts:107:20: stage 0 can't lower new an Identifier yet\n",
+  "unsplit_build_diagnostic": "adamic: /workspace/scratch/scanner-three-fixes-on-run/adapted/src/compiler/core.ts:107:20: stage 0 can't lower new an Identifier yet\n",
+  "c_emission_diagnostic": "adamic: /workspace/scratch/scanner-three-fixes-on-run/adapted/src/compiler/core.ts:107:20: stage 0 can't lower new an Identifier yet\n",
+  "minimal_probe": {
+    "file": "probes/array-length-constructor.a",
+    "node_exit": 0,
+    "node_stdout": "4\n",
+    "native_build_exit": 1,
+    "native_diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/array-length-constructor.a:4:20: stage 0 can't lower new an Identifier yet\n"
+  },
+  "append": {
+    "build_exit": 0,
+    "native_stdout": "[1,2]\n[3]\nundefined\n",
+    "node_diff_exit": 0,
+    "one_byte_mutant_diff_exit": 1
+  },
+  "debug_fail_callable_marker": {
+    "build_exit": 0,
+    "native_stdout": "ok\n",
+    "node_diff_exit": 0,
+    "one_byte_mutant_diff_exit": 1
+  },
+  "retired_adaptation": 87,
+  "retirement_js_proof": {
+    "equal": true,
+    "bytes": 805,
+    "sha256": "2694db22c5088b6adb85a79a981cd282b58574334cc13a6749175663ce0d16af",
+    "changed_capture_argument_mutant_caught": true
+  },
+  "slice_summary": {
+    "typescript": "6.0.3",
+    "tree": "/workspace/scratch/scope-fixed-full",
+    "entries": [
+      "src/compiler/scanner.ts:createScanner",
+      "src/compiler/types.ts:ScriptTarget",
+      "src/compiler/types.ts:SyntaxKind"
+    ],
+    "declarations": 166,
+    "copied_spans": 168,
+    "namespace_wrapper_spans": 2,
+    "value_declarations": 150,
+    "type_declarations": 16,
+    "files": 79,
+    "declaration_files": 8,
+    "code_declarations": 89,
+    "export_facade_records": 77,
+    "evaluation_only_files": 71,
+    "preserves_evaluation": true,
+    "declaration_lines": 7284,
+    "declaration_bytes": 822457,
+    "rewritten_import_lines": 179
+  },
+  "adaptations": [
+    "52-temporary-scanner-indexed-reads",
+    "53-temporary-scanner-diagnostic-optionality",
+    "54-temporary-scanner-debug-runtime",
+    "55-temporary-scanner-stack-marker",
+    "56-temporary-scanner-assert-call-sites",
+    "57-temporary-scanner-initial-text",
+    "59-temporary-scanner-optional-operand",
+    "80-temporary-scanner-error-capture",
+    "81-temporary-scanner-optional-jsx",
+    "82-temporary-scanner-generic-wrappers",
+    "85-temporary-scanner-lexical-locals",
+    "88-temporary-scanner-codepoint-availability"
+  ],
+  "focused_lower_tests": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.454s\n",
+  "optional_uncached_oracle": {
+    "outcome": "test package does not compile after merge",
+    "log": "# github.com/system-inc/adamic/internal/oracle [github.com/system-inc/adamic/internal/oracle.test]\ninternal/oracle/node_fs_directory_layout_test.go:36:29: cannot use how (variable of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/node_fs_directory_test.go:175:29: cannot use how (variable of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/node_fs_file_test.go:137:31: cannot use fsFilePrepare(t, shared, \"leaks\") (value of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/node_path_relative_test.go:46:29: cannot use how (variable of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/node_process_errors_test.go:138:29: cannot use how (variable of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/node_process_test.go:174:29: cannot use how (variable of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/node_require_test.go:45:29: cannot use how (variable of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/node_require_test.go:77:31: cannot use how (variable of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/node_require_test.go:112:31: cannot use how (variable of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/realpath_test.go:49:29: cannot use how (variable of struct type inputRun) as func() inputRun value in argument to inputLeaks\ninternal/oracle/realpath_test.go:49:29: too many errors\nFAIL\tgithub.com/system-inc/adamic/internal/oracle [build failed]\nFAIL\n"
+  },
+  "metrics": {
+    "nproc": 5,
+    "perf_available": false,
+    "c_bytes": null,
+    "c_lines": null,
+    "clang_unsplit_wall_seconds": null,
+    "clang_split_cold_wall_seconds": null,
+    "clang_split_warm_wall_seconds": null,
+    "binary_bytes": null,
+    "native_user_time": null,
+    "reason": "lowering stops before C emission; no scanner binary exists"
+  },
+  "native_output_mutant": "not run: no scanner native output",
+  "merge_resolutions": "Scratch only. Lowering conflicts retained predicate, record, enum, namespace, Error and readiness support; overload proof helpers were isolated from the newer predicate verifier. Phantom casts admitted in castProof; require host APIs adapted to RootedFilePath and three-argument closure ABI. Incoming UTF16 unit cache retained with regex compatibility entry. Generated counts chose existing/incoming tables as logged. No compiler files pushed."
+}
