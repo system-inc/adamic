@@ -1,0 +1,19 @@
+=== RUN   TestFourthWitnesses
+    owned_fourth_test.go:32: Go, Node, emitted JavaScript, native identical: 1459 bytes
+--- PASS: TestFourthWitnesses (18.71s)
+=== RUN   TestNextWitnesses
+    owned_next_test.go:30: Go, Node, emitted JavaScript, native identical: 5377 bytes
+--- PASS: TestNextWitnesses (18.56s)
+=== RUN   TestNextRepairs
+    owned_next_test.go:161: 184 independent-parser upstream cases: findings and every disjoint edit identical on Node: 49634 bytes
+    owned_next_test.go:161: 184 independent-parser upstream cases: findings and every disjoint edit identical on emitted JavaScript: 49634 bytes
+    owned_next_test.go:161: 184 independent-parser upstream cases: findings and every disjoint edit identical on native: 49634 bytes
+--- PASS: TestNextRepairs (9.60s)
+=== RUN   TestOriginalWitnesses
+    owned_original_test.go:35: Go, Node, emitted JavaScript, native identical: 1888 bytes
+--- PASS: TestOriginalWitnesses (17.82s)
+=== RUN   TestWave10Shapes
+    wave10_overlay_test.go:39: Go, Node, emitted JavaScript, native identical: 8804 bytes
+--- PASS: TestWave10Shapes (17.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	82.035s

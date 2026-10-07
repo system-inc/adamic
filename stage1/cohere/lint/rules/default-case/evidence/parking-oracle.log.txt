@@ -1,0 +1,424 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/tslint_directive_disabled
+    lint_test.go:497: tslint_directive_disabled caught on Node: case 24 line 590: port "fixed\t// tslint:disable\\u000aconst x = 1;\\u000a", Go "/tmp/adamic-gate/TestMutantstslint_directive_disabled3483711761/007/typescript-ban-tslint-comment-0.ts:1:1"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantstslint_directive_disabled3483711761/007/typescript-ban-tslint-comment-0.ts:1:1
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 17 commentDetected fix		
+        edit 0 18
+    lint_test.go:497: tslint_directive_disabled caught on emitted JavaScript: case 24 line 590: port "fixed\t// tslint:disable\\u000aconst x = 1;\\u000a", Go "/tmp/adamic-gate/TestMutantstslint_directive_disabled3483711761/007/typescript-ban-tslint-comment-0.ts:1:1"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantstslint_directive_disabled3483711761/007/typescript-ban-tslint-comment-0.ts:1:1
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 17 commentDetected fix		
+        edit 0 18
+    lint_test.go:497: tslint_directive_disabled caught on native: case 24 line 590: port "fixed\t// tslint:disable\\u000aconst x = 1;\\u000a", Go "/tmp/adamic-gate/TestMutantstslint_directive_disabled3483711761/007/typescript-ban-tslint-comment-0.ts:1:1"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantstslint_directive_disabled3483711761/007/typescript-ban-tslint-comment-0.ts:1:1
+          @typescript-eslint/ban-tslint-comment  This file carries the tslint directive // tslint:disable. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.
+        
+        range 0 17 commentDetected fix		
+        edit 0 18
+=== RUN   TestMutants/this_capital_constructor_disabled
+    lint_test.go:497: this_capital_constructor_disabled caught on Node: case 24 line 590: port "/tmp/adamic-gate/TestMutantsthis_capital_constructor_disabled3124305242/007/typescript-no-invalid-this-0.ts:1:18", Go "/tmp/adamic-gate/TestMutantsthis_capital_constructor_disabled3124305242/007/typescript-no-invalid-this-0.ts:1:45"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsthis_capital_constructor_disabled3124305242/007/typescript-no-invalid-this-0.ts:1:45
+          @typescript-eslint/no-invalid-this  This function is called rather than constructed and nothing binds `this` to it, so `this` is `undefined` here and every property read off it throws at runtime. The usual cause is a method that was moved out of a class or an object literal and left its `this.` prefixes behind. Take what it needs as a parameter, give the function a `this` parameter so TypeScript can check the call sites, or make it a method again.
+        
+        range 44 48 unexpectedThis 		
+        fixed	function Foo() { this.x; } function foo() { this.x; }\u000a
+    lint_test.go:497: this_capital_constructor_disabled caught on emitted JavaScript: case 24 line 590: port "/tmp/adamic-gate/TestMutantsthis_capital_constructor_disabled3124305242/007/typescript-no-invalid-this-0.ts:1:18", Go "/tmp/adamic-gate/TestMutantsthis_capital_constructor_disabled3124305242/007/typescript-no-invalid-this-0.ts:1:45"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsthis_capital_constructor_disabled3124305242/007/typescript-no-invalid-this-0.ts:1:45
+          @typescript-eslint/no-invalid-this  This function is called rather than constructed and nothing binds `this` to it, so `this` is `undefined` here and every property read off it throws at runtime. The usual cause is a method that was moved out of a class or an object literal and left its `this.` prefixes behind. Take what it needs as a parameter, give the function a `this` parameter so TypeScript can check the call sites, or make it a method again.
+        
+        range 44 48 unexpectedThis 		
+        fixed	function Foo() { this.x; } function foo() { this.x; }\u000a
+    lint_test.go:497: this_capital_constructor_disabled caught on native: case 24 line 590: port "/tmp/adamic-gate/TestMutantsthis_capital_constructor_disabled3124305242/007/typescript-no-invalid-this-0.ts:1:18", Go "/tmp/adamic-gate/TestMutantsthis_capital_constructor_disabled3124305242/007/typescript-no-invalid-this-0.ts:1:45"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsthis_capital_constructor_disabled3124305242/007/typescript-no-invalid-this-0.ts:1:45
+          @typescript-eslint/no-invalid-this  This function is called rather than constructed and nothing binds `this` to it, so `this` is `undefined` here and every property read off it throws at runtime. The usual cause is a method that was moved out of a class or an object literal and left its `this.` prefixes behind. Take what it needs as a parameter, give the function a `this` parameter so TypeScript can check the call sites, or make it a method again.
+        
+        range 44 48 unexpectedThis 		
+        fixed	function Foo() { this.x; } function foo() { this.x; }\u000a
+=== RUN   TestMutants/unsafe_component_detection_disabled
+    lint_test.go:497: unsafe_component_detection_disabled caught on Node: case 24 line 590: port "fixed\tclass Foo extends React.Component { UNSAFE_componentWillMount() {} }\\u000a", Go "/tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled179479023/007/react-no-unsafe-0.ts:1:37"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled179479023/007/react-no-unsafe-0.ts:1:37
+          react/no-unsafe  `componentWillMount` runs before the first render and is not guaranteed to run exactly once, so work started there can be discarded or repeated when React interrupts the render. Move the work to `componentDidMount`, which runs after the tree is committed and cannot be thrown away.
+        
+        range 36 61 unsafeComponentWillMount 		
+        fixed	class Foo extends React.Component { UNSAFE_componentWillMount() {} }\u000a
+    lint_test.go:497: unsafe_component_detection_disabled caught on emitted JavaScript: case 24 line 590: port "fixed\tclass Foo extends React.Component { UNSAFE_componentWillMount() {} }\\u000a", Go "/tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled179479023/007/react-no-unsafe-0.ts:1:37"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled179479023/007/react-no-unsafe-0.ts:1:37
+          react/no-unsafe  `componentWillMount` runs before the first render and is not guaranteed to run exactly once, so work started there can be discarded or repeated when React interrupts the render. Move the work to `componentDidMount`, which runs after the tree is committed and cannot be thrown away.
+        
+        range 36 61 unsafeComponentWillMount 		
+        fixed	class Foo extends React.Component { UNSAFE_componentWillMount() {} }\u000a
+    lint_test.go:497: unsafe_component_detection_disabled caught on native: case 24 line 590: port "fixed\tclass Foo extends React.Component { UNSAFE_componentWillMount() {} }\\u000a", Go "/tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled179479023/007/react-no-unsafe-0.ts:1:37"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsunsafe_component_detection_disabled179479023/007/react-no-unsafe-0.ts:1:37
+          react/no-unsafe  `componentWillMount` runs before the first render and is not guaranteed to run exactly once, so work started there can be discarded or repeated when React interrupts the render. Move the work to `componentDidMount`, which runs after the tree is committed and cannot be thrown away.
+        
+        range 36 61 unsafeComponentWillMount 		
+        fixed	class Foo extends React.Component { UNSAFE_componentWillMount() {} }\u000a
+=== RUN   TestMutants/sort_vars_comparison_disabled
+    lint_test.go:497: sort_vars_comparison_disabled caught on Node: case 24 line 590: port "fixed\tvar b, a;\\u000a", Go "/tmp/adamic-gate/TestMutantssort_vars_comparison_disabled1793506942/007/sort-vars-0.ts:1:8"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantssort_vars_comparison_disabled1793506942/007/sort-vars-0.ts:1:8
+          sort-vars  A declaration block in a fixed order is one a reader can scan instead of search. Sort the names, or split the block so each declaration stands where it is used.
+        
+        range 7 8 sortVars fix	a, b	
+        edit 4 8
+    lint_test.go:497: sort_vars_comparison_disabled caught on emitted JavaScript: case 24 line 590: port "fixed\tvar b, a;\\u000a", Go "/tmp/adamic-gate/TestMutantssort_vars_comparison_disabled1793506942/007/sort-vars-0.ts:1:8"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantssort_vars_comparison_disabled1793506942/007/sort-vars-0.ts:1:8
+          sort-vars  A declaration block in a fixed order is one a reader can scan instead of search. Sort the names, or split the block so each declaration stands where it is used.
+        
+        range 7 8 sortVars fix	a, b	
+        edit 4 8
+    lint_test.go:497: sort_vars_comparison_disabled caught on native: case 24 line 590: port "fixed\tvar b, a;\\u000a", Go "/tmp/adamic-gate/TestMutantssort_vars_comparison_disabled1793506942/007/sort-vars-0.ts:1:8"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantssort_vars_comparison_disabled1793506942/007/sort-vars-0.ts:1:8
+          sort-vars  A declaration block in a fixed order is one a reader can scan instead of search. Sort the names, or split the block so each declaration stands where it is used.
+        
+        range 7 8 sortVars fix	a, b	
+        edit 4 8
+=== RUN   TestMutants/physical_direction_exemption_removed
+    lint_test.go:497: physical_direction_exemption_removed caught on Node: case 24 line 594: port "/tmp/adamic-gate/TestMutantsphysical_direction_exemption_removed2749957455/007/structure-tailwind-no-physical-direction-0.ts:1:18", Go "fixed\texport const c = 'flex ml-4 rtl:mr-4';\\u000a"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsphysical_direction_exemption_removed2749957455/007/structure-tailwind-no-physical-direction-0.ts:1:18
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 17 37 useLogicalClass 		
+        fixed	export const c = 'flex ml-4 rtl:mr-4';\u000a
+    lint_test.go:497: physical_direction_exemption_removed caught on emitted JavaScript: case 24 line 594: port "/tmp/adamic-gate/TestMutantsphysical_direction_exemption_removed2749957455/007/structure-tailwind-no-physical-direction-0.ts:1:18", Go "fixed\texport const c = 'flex ml-4 rtl:mr-4';\\u000a"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsphysical_direction_exemption_removed2749957455/007/structure-tailwind-no-physical-direction-0.ts:1:18
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 17 37 useLogicalClass 		
+        fixed	export const c = 'flex ml-4 rtl:mr-4';\u000a
+    lint_test.go:497: physical_direction_exemption_removed caught on native: case 24 line 594: port "/tmp/adamic-gate/TestMutantsphysical_direction_exemption_removed2749957455/007/structure-tailwind-no-physical-direction-0.ts:1:18", Go "fixed\texport const c = 'flex ml-4 rtl:mr-4';\\u000a"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsphysical_direction_exemption_removed2749957455/007/structure-tailwind-no-physical-direction-0.ts:1:18
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 17 37 useLogicalClass 		
+        fixed	export const c = 'flex ml-4 rtl:mr-4';\u000a
+--- PASS: TestMutants (74.74s)
+    --- PASS: TestMutants/tslint_directive_disabled (14.34s)
+    --- PASS: TestMutants/this_capital_constructor_disabled (13.69s)
+    --- PASS: TestMutants/unsafe_component_detection_disabled (14.37s)
+    --- PASS: TestMutants/sort_vars_comparison_disabled (14.94s)
+    --- PASS: TestMutants/physical_direction_exemption_removed (15.16s)
+=== RUN   TestFourthWitnesses
+    owned_fourth_test.go:32: Go, Node, emitted JavaScript, native identical: 1459 bytes
+--- PASS: TestFourthWitnesses (18.60s)
+=== RUN   TestFourthCorpus
+    owned_fourth_test.go:101: fourth corpus 250 files / 750 cases; full diagnostic and fix comparison
+    owned_fourth_test.go:102: Go, Node, emitted JavaScript, native identical: 38201590 bytes
+--- PASS: TestFourthCorpus (112.83s)
+=== RUN   TestFourthMutants
+=== RUN   TestFourthMutants/default-case
+    owned_fourth_test.go:118: Go, Node, emitted JavaScript, native identical: 721 bytes
+    owned_fourth_test.go:127: default_case_missing_disabled compiled and caught only by output comparison on Node: case 0 line 2: port "fixed\tswitch (a) { case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsdefault-case3368277155/001/default-case-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsdefault-case3368277155/001/default-case-0.ts:1:1
+          default-case  This `switch` has no `default` case, so a value matching none of its cases falls through silently and the statement does nothing. That is occasionally what the author meant and is far more often an unhandled case that was added to the type later and never added here. The two readings are indistinguishable from the code, which is the problem: a reader cannot tell a deliberate omission from a forgotten branch. Add a `default`, even one that throws, or write a `// no default` comment after the last case to say the omission is intended.
+        
+        range 0 29 missingDefaultCase 		
+        fixed	switch (a) { case 1: break; }\u000a
+    owned_fourth_test.go:127: default_case_missing_disabled compiled and caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tswitch (a) { case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsdefault-case3368277155/001/default-case-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsdefault-case3368277155/001/default-case-0.ts:1:1
+          default-case  This `switch` has no `default` case, so a value matching none of its cases falls through silently and the statement does nothing. That is occasionally what the author meant and is far more often an unhandled case that was added to the type later and never added here. The two readings are indistinguishable from the code, which is the problem: a reader cannot tell a deliberate omission from a forgotten branch. Add a `default`, even one that throws, or write a `// no default` comment after the last case to say the omission is intended.
+        
+        range 0 29 missingDefaultCase 		
+        fixed	switch (a) { case 1: break; }\u000a
+    owned_fourth_test.go:127: default_case_missing_disabled compiled and caught only by output comparison on native: case 0 line 2: port "fixed\tswitch (a) { case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsdefault-case3368277155/001/default-case-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsdefault-case3368277155/001/default-case-0.ts:1:1
+          default-case  This `switch` has no `default` case, so a value matching none of its cases falls through silently and the statement does nothing. That is occasionally what the author meant and is far more often an unhandled case that was added to the type later and never added here. The two readings are indistinguishable from the code, which is the problem: a reader cannot tell a deliberate omission from a forgotten branch. Add a `default`, even one that throws, or write a `// no default` comment after the last case to say the omission is intended.
+        
+        range 0 29 missingDefaultCase 		
+        fixed	switch (a) { case 1: break; }\u000a
+=== RUN   TestFourthMutants/no-extra-label
+    owned_fourth_test.go:118: Go, Node, emitted JavaScript, native identical: 413 bytes
+    owned_fourth_test.go:127: redundant_label_reporting_disabled compiled and caught only by output comparison on Node: case 0 line 2: port "fixed\tA: while (a) { break A; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-extra-label2780803677/001/no-extra-label-0.ts:1:22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-extra-label2780803677/001/no-extra-label-0.ts:1:22
+          no-extra-label  This label is unnecessary. The nearest enclosing breakable statement is already the one this jump targets, so naming it changes nothing and only invites the reader to go looking for the outer statement it appears to reach.
+        
+        range 21 22 unexpected fix		
+        edit 20 22
+    owned_fourth_test.go:127: redundant_label_reporting_disabled compiled and caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tA: while (a) { break A; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-extra-label2780803677/001/no-extra-label-0.ts:1:22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-extra-label2780803677/001/no-extra-label-0.ts:1:22
+          no-extra-label  This label is unnecessary. The nearest enclosing breakable statement is already the one this jump targets, so naming it changes nothing and only invites the reader to go looking for the outer statement it appears to reach.
+        
+        range 21 22 unexpected fix		
+        edit 20 22
+    owned_fourth_test.go:127: redundant_label_reporting_disabled compiled and caught only by output comparison on native: case 0 line 2: port "fixed\tA: while (a) { break A; }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-extra-label2780803677/001/no-extra-label-0.ts:1:22"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-extra-label2780803677/001/no-extra-label-0.ts:1:22
+          no-extra-label  This label is unnecessary. The nearest enclosing breakable statement is already the one this jump targets, so naming it changes nothing and only invites the reader to go looking for the outer statement it appears to reach.
+        
+        range 21 22 unexpected fix		
+        edit 20 22
+=== RUN   TestFourthMutants/no-fallthrough
+    owned_fourth_test.go:118: Go, Node, emitted JavaScript, native identical: 359 bytes
+    owned_fourth_test.go:127: fallthrough_findings_disabled compiled and caught only by output comparison on Node: case 0 line 2: port "fixed\tswitch(a) { case 0: a(); case 1: b(); }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-fallthrough2809610326/001/no-fallthrough-0.ts:1:26"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-fallthrough2809610326/001/no-fallthrough-0.ts:1:26
+          no-fallthrough  Control runs from the previous case into this one, which is almost always a missing break. Add a break, or say the fallthrough is deliberate with a `falls through` comment.
+        
+        range 25 37 case 		
+        fixed	switch(a) { case 0: a(); case 1: b(); }\u000a
+    owned_fourth_test.go:127: fallthrough_findings_disabled compiled and caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tswitch(a) { case 0: a(); case 1: b(); }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-fallthrough2809610326/001/no-fallthrough-0.ts:1:26"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-fallthrough2809610326/001/no-fallthrough-0.ts:1:26
+          no-fallthrough  Control runs from the previous case into this one, which is almost always a missing break. Add a break, or say the fallthrough is deliberate with a `falls through` comment.
+        
+        range 25 37 case 		
+        fixed	switch(a) { case 0: a(); case 1: b(); }\u000a
+    owned_fourth_test.go:127: fallthrough_findings_disabled compiled and caught only by output comparison on native: case 0 line 2: port "fixed\tswitch(a) { case 0: a(); case 1: b(); }\\u000a", Go "/tmp/adamic-gate/TestFourthMutantsno-fallthrough2809610326/001/no-fallthrough-0.ts:1:26"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsno-fallthrough2809610326/001/no-fallthrough-0.ts:1:26
+          no-fallthrough  Control runs from the previous case into this one, which is almost always a missing break. Add a break, or say the fallthrough is deliberate with a `falls through` comment.
+        
+        range 25 37 case 		
+        fixed	switch(a) { case 0: a(); case 1: b(); }\u000a
+--- PASS: TestFourthMutants (93.38s)
+    --- PASS: TestFourthMutants/default-case (30.78s)
+    --- PASS: TestFourthMutants/no-extra-label (30.32s)
+    --- PASS: TestFourthMutants/no-fallthrough (29.91s)
+=== RUN   TestFourthShapes
+    owned_fourth_test.go:221: Go, Node, emitted JavaScript, native identical: 6411 bytes
+--- PASS: TestFourthShapes (16.96s)
+=== RUN   TestFourthPatternRefusal
+    owned_fourth_test.go:275: Node explicit unsupported-regex refusal matches
+    owned_fourth_test.go:275: emitted JavaScript explicit unsupported-regex refusal matches
+    owned_fourth_test.go:275: native explicit unsupported-regex refusal matches
+    owned_fourth_test.go:280: unsupported_pattern_accepted compiled and finished on Node; refusal output comparison catches it: "unsupported pattern accepted\nunsupported pattern accepted: false\n"
+    owned_fourth_test.go:280: unsupported_pattern_accepted compiled and finished on emitted JavaScript; refusal output comparison catches it: "unsupported pattern accepted\nunsupported pattern accepted: false\n"
+    owned_fourth_test.go:280: unsupported_pattern_accepted compiled and finished on native; refusal output comparison catches it: "unsupported pattern accepted\nunsupported pattern accepted: false\n"
+--- PASS: TestFourthPatternRefusal (0.65s)
+=== RUN   TestNextWitnesses
+    owned_next_test.go:30: Go, Node, emitted JavaScript, native identical: 5380 bytes
+--- PASS: TestNextWitnesses (17.27s)
+=== RUN   TestNextCorpus
+    owned_next_test.go:98: next corpus 250 files / 750 cases; two multi-edit rules compare diagnostics only
+    owned_next_test.go:99: Go, Node, emitted JavaScript, native identical: 38031369 bytes
+--- PASS: TestNextCorpus (94.66s)
+=== RUN   TestNextMutants
+=== RUN   TestNextMutants/arrow-body-style
+    owned_next_test.go:115: Go, Node, emitted JavaScript, native identical: 403 bytes
+    owned_next_test.go:124: arrow_findings_suppressed compiled and caught only by output comparison on Node: case 0 line 2: port "fixed\tconst f = () => { return 1; };\\u000a", Go "/tmp/adamic-gate/TestNextMutantsarrow-body-style2457854618/001/arrow-body-style-0.ts:1:17"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestNextMutantsarrow-body-style2457854618/001/arrow-body-style-0.ts:1:17
+          arrow-body-style  This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+        
+        range 16 29 unexpectedSingleBlock 		
+        fixed	const f = () => { return 1; };\u000a
+    owned_next_test.go:124: arrow_findings_suppressed compiled and caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tconst f = () => { return 1; };\\u000a", Go "/tmp/adamic-gate/TestNextMutantsarrow-body-style2457854618/001/arrow-body-style-0.ts:1:17"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestNextMutantsarrow-body-style2457854618/001/arrow-body-style-0.ts:1:17
+          arrow-body-style  This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+        
+        range 16 29 unexpectedSingleBlock 		
+        fixed	const f = () => { return 1; };\u000a
+    owned_next_test.go:124: arrow_findings_suppressed compiled and caught only by output comparison on native: case 0 line 2: port "fixed\tconst f = () => { return 1; };\\u000a", Go "/tmp/adamic-gate/TestNextMutantsarrow-body-style2457854618/001/arrow-body-style-0.ts:1:17"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestNextMutantsarrow-body-style2457854618/001/arrow-body-style-0.ts:1:17
+          arrow-body-style  This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+        
+        range 16 29 unexpectedSingleBlock 		
+        fixed	const f = () => { return 1; };\u000a
+=== RUN   TestNextMutants/max-lines
+    owned_next_test.go:115: Go, Node, emitted JavaScript, native identical: 4335 bytes
+    owned_next_test.go:124: max_lines_findings_suppressed compiled and caught only by output comparison on Node: case 0 line 2: port "fixed\tvoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000a", Go "/tmp/adamic-gate/TestNextMutantsmax-lines1027966797/001/max-lines-0.ts:301:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestNextMutantsmax-lines1027966797/001/max-lines-0.ts:301:1
+          max-lines  File has too many lines (301). Maximum allowed is 300. A file this long holds more than one concern, and a reader has to hold all of them to change any. Split it along a real seam, a concern, a table, a command group, never by line count, and have every caller import the new home directly.
+        
+        range 2400 2408 exceed 		
+        fixed	void 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000a
+    owned_next_test.go:124: max_lines_findings_suppressed compiled and caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tvoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000a", Go "/tmp/adamic-gate/TestNextMutantsmax-lines1027966797/001/max-lines-0.ts:301:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestNextMutantsmax-lines1027966797/001/max-lines-0.ts:301:1
+          max-lines  File has too many lines (301). Maximum allowed is 300. A file this long holds more than one concern, and a reader has to hold all of them to change any. Split it along a real seam, a concern, a table, a command group, never by line count, and have every caller import the new home directly.
+        
+        range 2400 2408 exceed 		
+        fixed	void 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000a
+    owned_next_test.go:124: max_lines_findings_suppressed compiled and caught only by output comparison on native: case 0 line 2: port "fixed\tvoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000avoid 0;\\u000a", Go "/tmp/adamic-gate/TestNextMutantsmax-lines1027966797/001/max-lines-0.ts:301:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestNextMutantsmax-lines1027966797/001/max-lines-0.ts:301:1
+          max-lines  File has too many lines (301). Maximum allowed is 300. A file this long holds more than one concern, and a reader has to hold all of them to change any. Split it along a real seam, a concern, a table, a command group, never by line count, and have every caller import the new home directly.
+        
+        range 2400 2408 exceed 		
+        fixed	void 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000avoid 0;\u000a
+=== RUN   TestNextMutants/no-extra-bind
+    owned_next_test.go:115: Go, Node, emitted JavaScript, native identical: 674 bytes
+    owned_next_test.go:124: bind_argument_count_disabled compiled and caught only by output comparison on Node: case 0 line 2: port "fixed\tconst f = function() { return 1; }.bind(obj);\\u000a", Go "/tmp/adamic-gate/TestNextMutantsno-extra-bind1115040675/001/no-extra-bind-0.ts:1:36"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestNextMutantsno-extra-bind1115040675/001/no-extra-bind-0.ts:1:36
+          no-extra-bind  This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+        
+        range 35 39 unexpected 		
+        fixed	const f = function() { return 1; }.bind(obj);\u000a
+    owned_next_test.go:124: bind_argument_count_disabled compiled and caught only by output comparison on emitted JavaScript: case 0 line 2: port "fixed\tconst f = function() { return 1; }.bind(obj);\\u000a", Go "/tmp/adamic-gate/TestNextMutantsno-extra-bind1115040675/001/no-extra-bind-0.ts:1:36"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestNextMutantsno-extra-bind1115040675/001/no-extra-bind-0.ts:1:36
+          no-extra-bind  This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+        
+        range 35 39 unexpected 		
+        fixed	const f = function() { return 1; }.bind(obj);\u000a
+    owned_next_test.go:124: bind_argument_count_disabled compiled and caught only by output comparison on native: case 0 line 2: port "fixed\tconst f = function() { return 1; }.bind(obj);\\u000a", Go "/tmp/adamic-gate/TestNextMutantsno-extra-bind1115040675/001/no-extra-bind-0.ts:1:36"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestNextMutantsno-extra-bind1115040675/001/no-extra-bind-0.ts:1:36
+          no-extra-bind  This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+        
+        range 35 39 unexpected 		
+        fixed	const f = function() { return 1; }.bind(obj);\u000a
+--- PASS: TestNextMutants (92.03s)
+    --- PASS: TestNextMutants/arrow-body-style (28.74s)
+    --- PASS: TestNextMutants/max-lines (28.13s)
+    --- PASS: TestNextMutants/no-extra-bind (32.87s)
+=== RUN   TestNextRepairs
+    owned_next_test.go:157: node [--disable-warning=ExperimentalWarning /tmp/wave10-park-validation/oracle/node.mjs /tmp/wave10-park-validation/stage1/cohere/lint/rules/arrow-body-style/repairs.a]: exit status 70
+        adamic: panic: parser slice expected semicolon at 39 in repairs.ts
+--- FAIL: TestNextRepairs (9.08s)
+=== RUN   TestOriginalWitnesses
+    owned_original_test.go:35: Go, Node, emitted JavaScript, native identical: 1883 bytes
+--- PASS: TestOriginalWitnesses (17.48s)
+=== RUN   TestOriginalCorpus
+    owned_original_test.go:104: original corpus: 250 files / 750 cases
+    owned_original_test.go:105: Go, Node, emitted JavaScript, native identical: 37990991 bytes
+--- PASS: TestOriginalCorpus (86.99s)
+=== RUN   TestOriginalSelfSnapshots
+    owned_original_test.go:216: 79 self-closing Go AST snapshots identical on Node: 6747 bytes
+    owned_original_test.go:216: 79 self-closing Go AST snapshots identical on emitted JS: 6747 bytes
+    owned_original_test.go:216: 79 self-closing Go AST snapshots identical on native: 6747 bytes
+    owned_original_test.go:221: selfclosing_fix_suppressed caught only by output comparison on Node: case 0 line 2: port "finding 8 13 notSelfClosing \t />\tEmpty components are self-closing", Go "finding 8 13 notSelfClosing fix\t />\tEmpty components are self-closing"
+        Go context:
+        case 0
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+        edit 12 19
+        fixed	var a = <Foo />;
+        case 1
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+    owned_original_test.go:221: selfclosing_fix_suppressed caught only by output comparison on emitted JS: case 0 line 2: port "finding 8 13 notSelfClosing \t />\tEmpty components are self-closing", Go "finding 8 13 notSelfClosing fix\t />\tEmpty components are self-closing"
+        Go context:
+        case 0
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+        edit 12 19
+        fixed	var a = <Foo />;
+        case 1
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+    owned_original_test.go:221: selfclosing_fix_suppressed caught only by output comparison on native: case 0 line 2: port "finding 8 13 notSelfClosing \t />\tEmpty components are self-closing", Go "finding 8 13 notSelfClosing fix\t />\tEmpty components are self-closing"
+        Go context:
+        case 0
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+        edit 12 19
+        fixed	var a = <Foo />;
+        case 1
+        finding 8 13 notSelfClosing fix	 />	Empty components are self-closing
+--- PASS: TestOriginalSelfSnapshots (69.08s)
+=== RUN   TestWave10Shapes
+    wave10_overlay_test.go:39: Go, Node, emitted JavaScript, native identical: 8804 bytes
+--- PASS: TestWave10Shapes (18.80s)
+=== RUN   TestWave10Corpus
+    wave10_overlay_test.go:125: owned rules: 250 files, 750 cases
+    wave10_overlay_test.go:126: Go, Node, emitted JavaScript, native identical: 37985242 bytes
+--- PASS: TestWave10Corpus (118.08s)
+=== RUN   TestWave10Unterminated
+    wave10_overlay_test.go:137: Go, Node, emitted JavaScript, native identical: 81 bytes
+--- PASS: TestWave10Unterminated (18.37s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	859.029s
+FAIL

@@ -1,0 +1,18 @@
+=== RUN   TestFourthCorpus
+    owned_fourth_test.go:101: fourth corpus 250 files / 750 cases; full diagnostic and fix comparison
+    owned_fourth_test.go:102: Go, Node, emitted JavaScript, native identical: 38200720 bytes
+--- PASS: TestFourthCorpus (112.43s)
+=== RUN   TestNextCorpus
+    owned_next_test.go:98: next corpus 250 files / 750 cases; two multi-edit rules compare diagnostics only
+    owned_next_test.go:99: Go, Node, emitted JavaScript, native identical: 38030499 bytes
+--- PASS: TestNextCorpus (98.03s)
+=== RUN   TestOriginalCorpus
+    owned_original_test.go:104: original corpus: 250 files / 750 cases
+    owned_original_test.go:105: Go, Node, emitted JavaScript, native identical: 37990121 bytes
+--- PASS: TestOriginalCorpus (82.70s)
+=== RUN   TestWave10Corpus
+    wave10_overlay_test.go:125: owned rules: 250 files, 750 cases
+    wave10_overlay_test.go:126: Go, Node, emitted JavaScript, native identical: 37984372 bytes
+--- PASS: TestWave10Corpus (113.95s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	407.133s

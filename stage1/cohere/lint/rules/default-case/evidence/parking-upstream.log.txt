@@ -1,0 +1,22 @@
+=== RUN   TestFourthUpstream
+    lint_test.go:327: cohere cases: 1001 unique source/rule/options combinations
+    owned_fourth_test.go:79: fourth upstream counts: map[default-case:27 no-extra-label:38 no-fallthrough:94]; JSX exclusions=1
+    owned_fourth_test.go:80: Go, Node, emitted JavaScript, native identical: 34784 bytes
+--- PASS: TestFourthUpstream (121.53s)
+=== RUN   TestNextUpstream
+    lint_test.go:327: cohere cases: 1001 unique source/rule/options combinations
+    owned_next_test.go:76: next upstream counts: map[arrow-body-style:108 max-lines:15 no-extra-bind:76]; two multi-edit rules compare diagnostics only
+    owned_next_test.go:77: Go, Node, emitted JavaScript, native identical: 569029 bytes
+--- PASS: TestNextUpstream (27.41s)
+=== RUN   TestOriginalUpstream
+    lint_test.go:327: cohere cases: 1001 unique source/rule/options combinations
+    owned_original_test.go:79: original upstream: 122 compared, 0 JSX parser exclusions
+    owned_original_test.go:80: Go, Node, emitted JavaScript, native identical: 36855 bytes
+--- PASS: TestOriginalUpstream (26.87s)
+=== RUN   TestWave10Upstream
+    lint_test.go:327: cohere cases: 1001 unique source/rule/options combinations
+    wave10_overlay_test.go:109: owned upstream: 216 replayed, 5 explicitly excluded
+    wave10_overlay_test.go:110: Go, Node, emitted JavaScript, native identical: 102759 bytes
+--- PASS: TestWave10Upstream (27.89s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	203.716s
