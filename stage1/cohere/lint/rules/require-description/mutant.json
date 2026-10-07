@@ -1,0 +1,6 @@
+{
+  "Name": "accept-empty-description",
+  "File": "rule.a",
+  "From": "if(description !== '') { continue; }",
+  "To": "if(description === '') { continue; }"
+}

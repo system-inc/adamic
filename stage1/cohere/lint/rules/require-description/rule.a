@@ -1,0 +1,87 @@
+import { utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../finding.ts';
+import { forFile } from '../../helpers/comments/for_file.ts';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    space(char: string): boolean { return char !== '' && /[\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]/.test(char); }
+    separator(text: string, start: number): number[] {
+        for(let i = start; i < text.length; i++) {
+            if(!this.space(text.slice(i, i + 1))) { continue; }
+            let end = i + 1;
+            while(text.slice(end, end + 1) === '-') { end++; }
+            if(end >= i + 3 && this.space(text.slice(end, end + 1))) { return [i, end + 1]; }
+        }
+        return [];
+    }
+    kind(text: string, block: boolean, multiline: boolean): string {
+        const additional = this.context.settings.list('additionaldirectives', []);
+        const words = ['eslint', 'eslint-env', 'eslint-enable', 'eslint-disable', 'eslint-disable-line', 'eslint-disable-next-line', 'exported', 'global', 'globals'];
+        let kind = '';
+        for(const word of words) {
+            if(text.startsWith(word) && (text.length === word.length || this.space(text.slice(word.length, word.length + 1)))) { kind = word; break; }
+        }
+        if(kind === '') {
+            for(const word of additional) {
+                if(text.startsWith(word) && (text.length === word.length || this.space(text.slice(word.length, word.length + 1)))) { kind = word; break; }
+            }
+        }
+        if(!block && !['eslint-disable-line', 'eslint-disable-next-line'].includes(kind) && !additional.includes(kind)) { return ''; }
+        if(kind === 'eslint-disable-line' && multiline) { return ''; }
+        return kind;
+    }
+    fallback(interior: string, block: boolean): string {
+        let text = interior;
+        if(block && text.includes('\n')) {
+            const lines = text.split('\n');
+            text = '';
+            for(const line of lines) {
+                const trimmed = line.replace(/^[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+|[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/g, '');
+                text += (text === '' ? '' : ' ') + (trimmed.startsWith('*') ? trimmed.slice(1) : trimmed);
+            }
+        }
+        text = text.replace(/^[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+|[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/g, '');
+        for(const tool of ['cohere', 'verify', 'eslint', 'oxlint']) {
+            for(const suffix of ['disable-next-line', 'disable-line', 'disable', 'enable']) {
+                const word = `${tool}-${suffix}`;
+                if(!text.startsWith(word)) { continue; }
+                const tail = text.slice(word.length);
+                if(tail !== '' && !tail.startsWith(' ') && !tail.startsWith('\t')) { continue; }
+                if(!block && (suffix === 'disable' || suffix === 'enable')) { continue; }
+                return `eslint-${suffix}`;
+            }
+        }
+        return '';
+    }
+    visit(root: number): void {
+        const offsets = new Map<number, number>();
+        let byte = 0;
+        for(let unit = 0; unit <= this.context.source.length;) {
+            offsets.set(byte, unit);
+            if(unit === this.context.source.length) { break; }
+            const width = (this.context.source.codePointAt(unit) ?? 0) > 65535 ? 2 : 1;
+            byte += utf8Length(this.context.source.slice(unit, unit + width));
+            unit += width;
+        }
+        for(const comment of forFile(this.context.parser, root, undefined)) {
+            if(comment.isBlock && (!comment.text.endsWith('*/') || comment.text.length < 4)) { continue; }
+            const interior = comment.isBlock ? comment.text.slice(2, -2) : comment.text.slice(2);
+            const first = this.separator(interior, 0);
+            const text = (first.length > 0 ? interior.slice(0, first[0] ?? 0) : interior).trim();
+            const upstreamKind = this.kind(text, comment.isBlock, comment.startLine !== comment.endLine);
+            const kind = upstreamKind === '' ? this.fallback(interior, comment.isBlock) : upstreamKind;
+            if(kind === '' || this.context.settings.list('ignore', []).includes(kind)) { continue; }
+            if(first.length > 0) {
+                const start = first[1] ?? 0;
+                const next = this.separator(interior, start);
+                const description = interior.slice(start, next.length > 0 ? next[0] ?? interior.length : interior.length).trim();
+                if(description !== '') { continue; }
+            }
+            this.context.findings.push(new Finding('@eslint-community/eslint-comments/require-description',
+                'missingDescription', message, offsets.get(comment.start) ?? 0, offsets.get(comment.end) ?? 0, '', '', ''));
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
