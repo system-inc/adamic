@@ -1,0 +1,78 @@
+{
+  "refs": {
+    "HEAD": "6e2bfe7e3ca918e382da00188da04a7a74661f8c",
+    "origin/main": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "origin/codex/typeaware-wave-13": "6e2bfe7e3ca918e382da00188da04a7a74661f8c"
+  },
+  "cases": [
+    {
+      "case": "53d1c0a9ffc2fefa",
+      "modes": {
+        "go": {
+          "exit": 0,
+          "bytes": 699,
+          "stderr": "cohere: load_ns=22107879 rule_ns=50245 run_ns=204180\n",
+          "sha256": "aafe590523f6db63fff24ef77b050c1ed7feb94df800e0cafa802e63817a2f26"
+        },
+        "native": {
+          "exit": 70,
+          "bytes": 0,
+          "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 5 in /workspace/wave13-more-upstream/controls/53d1c0a9ffc2fefa/repository/source/ObjectConstructor.ts\n",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "native-asan": {
+          "exit": 70,
+          "bytes": 0,
+          "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 5 in /workspace/wave13-more-upstream/controls/53d1c0a9ffc2fefa/repository/source/ObjectConstructor.ts\n",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "aff6ced2ca61fe89",
+      "modes": {
+        "go": {
+          "exit": 0,
+          "bytes": 699,
+          "stderr": "cohere: load_ns=17369357 rule_ns=19914 run_ns=170339\n",
+          "sha256": "805d4644982b0e372af8698095b79085d44153ca4499638de543e462a0ab8652"
+        },
+        "native": {
+          "exit": 70,
+          "bytes": 0,
+          "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 7 in /workspace/wave13-more-upstream/controls/aff6ced2ca61fe89/repository/source/ObjectConstructor.ts\n",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "native-asan": {
+          "exit": 70,
+          "bytes": 0,
+          "stderr": "adamic: panic: parser slice expected GreaterThanToken, got Identifier at 7 in /workspace/wave13-more-upstream/controls/aff6ced2ca61fe89/repository/source/ObjectConstructor.ts\n",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "defcb4c4ce6a2921",
+      "modes": {
+        "go": {
+          "exit": 0,
+          "bytes": 611,
+          "stderr": "cohere: load_ns=13232510 rule_ns=68558 run_ns=120448\n",
+          "sha256": "b38b3118789f36b4f3c385825560d35d0522ad1f24d99076725a2e689926fe6c"
+        },
+        "native": {
+          "exit": 70,
+          "bytes": 0,
+          "stderr": "adamic: panic: parser slice expected semicolon at 37 in /workspace/wave13-more-upstream/controls/defcb4c4ce6a2921/repository/source/ObjectConstructor.ts\n",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "native-asan": {
+          "exit": 70,
+          "bytes": 0,
+          "stderr": "adamic: panic: parser slice expected semicolon at 37 in /workspace/wave13-more-upstream/controls/defcb4c4ce6a2921/repository/source/ObjectConstructor.ts\n",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ]
+}
