@@ -1,0 +1,7 @@
+{
+  "name": "@typescript-eslint/no-require-imports",
+  "kinds": [
+    "CallExpression",
+    "ExternalModuleReference"
+  ]
+}
