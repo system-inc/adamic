@@ -1,0 +1,75 @@
+import { panic } from 'adamic';
+function volume(c: string): boolean {
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+}
+function rootLength(path: string): number {
+    if (path.length === 0) return 0;
+    if (path.startsWith('/')) {
+        if (!path.startsWith('//')) return 1;
+        const end = path.indexOf('/', 2);
+        return end < 0 ? path.length : end + 1;
+    }
+    if (volume(path[0] ?? '') && path[1] === ':') {
+        if (path.length === 2) return 2;
+        if (path[2] === '/') return 3;
+    }
+    if (path.startsWith('^/')) {
+        if (path.startsWith('^/~ts-uri~/')) {
+            const schemeEnd = path.indexOf('/', '^/~ts-uri~/'.length);
+            if (schemeEnd >= 0) {
+                const authorityEnd = path.indexOf('/', schemeEnd + 1);
+                return authorityEnd >= 0 ? authorityEnd + 1 : path.length;
+            }
+        }
+        return 2;
+    }
+    const schemeEnd = path.indexOf('://');
+    if (schemeEnd >= 0) {
+        const authorityStart = schemeEnd + 3;
+        const end = path.indexOf('/', authorityStart);
+        if (end < 0) return path.length;
+        const scheme = path.slice(0, schemeEnd).toLowerCase();
+        const authority = path.slice(authorityStart, end).toLowerCase().split('ſ').join('s');
+        if (scheme === 'file' && (authority === '' || authority === 'localhost') && volume(path[end + 1] ?? '')) {
+            let separator = -1;
+            if (path[end + 2] === ':') separator = end + 3;
+            else if (path.slice(end + 2, end + 5).toLowerCase() === '%3a') separator = end + 5;
+            if (separator === path.length) return separator;
+            if (separator >= 0 && path[separator] === '/') return separator + 1;
+        }
+        return end + 1;
+    }
+    return 0;
+}
+function normalize(path: string): string {
+    const length = rootLength(path);
+    const root = path.slice(0, length);
+    if (path === root && !path.includes('//')) return path;
+    const reduced: string[] = [];
+    for (const component of path.slice(length).split('/')) {
+        if (component === '' || component === '.') continue;
+        if (component === '..') {
+            if (reduced.length > 0 && reduced[reduced.length - 1] !== '..') { reduced.pop(); continue; }
+            if (root !== '') continue;
+        }
+        reduced.push(component);
+    }
+    let result = root;
+    if (result !== '' && !result.endsWith('/')) result += '/';
+    result += reduced.join('/');
+    if (path.endsWith('/') && result !== '' && !result.endsWith('/')) result += '/';
+    return result;
+}
+export function resolveFromFile(file: string, source: string): string {
+    const importing = file.split('\\').join('/');
+    const root = rootLength(importing);
+    let trimmed = importing;
+    if (trimmed.endsWith('/') && trimmed.length > root) trimmed = trimmed.slice(0, -1);
+    const slash = trimmed.lastIndexOf('/');
+    const end = Math.max(root, slash);
+    if (end < 0) panic('negative directory bound');
+    const directory = importing.length === root ? importing : trimmed.slice(0, end);
+    const target = source.split('\\').join('/');
+    const combined = target === '' ? directory : rootLength(target) > 0 || directory === '' ? target : directory + (directory.endsWith('/') ? '' : '/') + target;
+    return normalize(combined);
+}

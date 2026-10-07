@@ -1,0 +1,5 @@
+// Expected shared parser refusal; not a registered rule witness.
+import { Parser } from '../../../../../typescript/parser/parser.ts';
+const parser = new Parser("const loaded = await import('@structure/source/Thing');","/repository/libraries/nexus/code-quality/Thing.ts");
+parser.file();
+console.log('unexpected shared parser support');

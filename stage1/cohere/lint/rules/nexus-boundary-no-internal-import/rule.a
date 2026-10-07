@@ -1,0 +1,30 @@
+import type { RuleContext } from '../../context.ts';
+import { specifier } from './specifier.a';
+import { aliasedInternal, outsideInternal } from './messages.a';
+import { resolveFromFile } from './paths.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly file: string;
+    constructor(context: RuleContext) { this.context = context; this.file = context.parser.path.split('\\').join('/'); }
+    visit(index: number): void {
+        const target = specifier(this.context, index);
+        if (target < 0) return;
+        const source = this.context.node(target).text;
+        if (!source.includes('internal')) return;
+        if (!source.startsWith('.')) {
+            if (source.split('\\').join('/').split('/').includes('internal')) {
+                this.context.report(target, 'nexus/boundary-no-internal-import', 'aliasedInternal', aliasedInternal, '', '', '');
+            }
+            return;
+        }
+        const parts = resolveFromFile(this.file, source).split('/');
+        let internal = -1;
+        for (let i = 0; i < parts.length; i++) if (parts[i] === 'internal') internal = i;
+        if (internal <= 0) return;
+        const owner = parts.slice(0, internal).join('/');
+        if (!this.file.startsWith(owner + '/')) {
+            this.context.report(target, 'nexus/boundary-no-internal-import', 'outsideInternal', outsideInternal, '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

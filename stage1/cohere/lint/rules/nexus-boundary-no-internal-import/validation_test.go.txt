@@ -1,0 +1,301 @@
+package lint
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+	"testing"
+	"time"
+)
+
+func nexusUpstream(t *testing.T) []string {
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	harness := filepath.Join(root, "internal/lint/testing/rule_testing.go")
+	data, err := os.ReadFile(harness)
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
+	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
+	if strings.Count(string(data), original) != 1 {
+		t.Fatal("capture overlay anchor changed")
+	}
+	directory := t.TempDir()
+	side := filepath.Join(directory, "rule_testing.go")
+	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	capture := filepath.Join(directory, "capture")
+	t.Setenv("COHERE_DOCS_CAPTURE", capture)
+	selected := map[string]bool{"nexus/boundary-no-internal-import": true, "nexus/boundary-no-nexus-outside-import": true, "nexus/boundary-no-project-import": true}
+	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/nexus", "-run", "^(TestBoundaryNoInternalImport|TestBoundaryNoNexusOutsideImport|TestBoundaryNoProjectImport)", "-count=1", "-timeout=10m")
+	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	type record struct {
+		Rule, File, Source, Outcome, FixedSource string
+		Options                                  json.RawMessage
+	}
+	unique := map[string]record{}
+	for _, path := range files {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, line := range bytes.Split(data, []byte("\n")) {
+			if len(line) == 0 {
+				continue
+			}
+			var row record
+			if err := json.Unmarshal(line, &row); err != nil {
+				t.Fatal(err)
+			}
+			if !selected[row.Rule] {
+				continue
+			}
+			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
+			unique[key] = row
+		}
+	}
+	var keys []string
+	for key := range unique {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	var rows []string
+	for i, key := range keys {
+		row := unique[key]
+		t.Logf("captured case-%03d %s %s %q", i, row.Rule, row.File, row.Source)
+		if strings.HasSuffix(row.Source, "\\n") || row.Source == "const loaded = await import('@structure/source/Thing');" {
+			t.Logf("shared parser recovery gap, original filename=%s source=%q", row.File, row.Source)
+			continue
+		}
+		path := filepath.Join(directory, fmt.Sprintf("case-%03d", i), strings.TrimPrefix(strings.ReplaceAll(row.File, "\\", "/"), "/"))
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		options := "null"
+		if len(row.Options) > 0 {
+			options = string(row.Options)
+		}
+		rows = append(rows, fmt.Sprintf("%s\t%s\t\t\tfalse\t%s", path, row.Rule, options))
+	}
+	if len(rows) != 42 {
+		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
+	}
+	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
+	return rows
+}
+
+// Not parallel: capture and generated registries share environment state.
+func TestNexusUpstream(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	rows := nexusUpstream(t)
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+// Not parallel: generated registries and compilation are shared within this checkout.
+func TestNexusCorpus(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var paths []string
+	stage1 := os.Getenv("ADAMIC_STAGE1_SOURCE")
+	if stage1 == "" {
+		stage1 = filepath.Join(repository, "stage1")
+	}
+	for _, root := range []string{filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"), stage1} {
+		root, err = filepath.Abs(root)
+		if err != nil {
+			t.Fatal(err)
+		}
+		err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
+			if err == nil && !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) && !strings.Contains(path, "/.generated/") && !strings.Contains(path, "/gaps/") {
+				paths = append(paths, path)
+			}
+			return err
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	sort.Strings(paths)
+	var rows []string
+	for _, path := range paths {
+		for _, name := range []string{"nexus/boundary-no-internal-import", "nexus/boundary-no-nexus-outside-import", "nexus/boundary-no-project-import"} {
+			rows = append(rows, path+"\t"+name+"\t\t\tfalse\t"+`{"libraryDirectory":"/"}`)
+		}
+	}
+	t.Logf("%d source files, %d selected rule cases", len(paths), len(rows))
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+// Not parallel: each mutation builds a copied graph and captured fixtures share an environment.
+func TestNexusMutants(t *testing.T) {
+	rows := nexusUpstream(t)
+	oracle := goOracle(t)
+	for _, slug := range []string{"nexus-boundary-no-internal-import", "nexus-boundary-no-nexus-outside-import", "nexus-boundary-no-project-import"} {
+		t.Run(slug, func(t *testing.T) {
+			var change struct{ Name, File, From, To string }
+			data, err := os.ReadFile(filepath.Join("rules", slug, "mutant.json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := json.Unmarshal(data, &change); err != nil {
+				t.Fatal(err)
+			}
+			path := manifest(t, rows)
+			want := execute(t, "", oracle, "--manifest", path).output
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", slug, change.File))
+			binary := buildPort(t, directory, true)
+			for _, side := range []struct {
+				name   string
+				output []byte
+			}{
+				{"source Node", node(t, directory, path, false).output},
+				{"emitted JavaScript", nexusEmitted(t, directory, path)},
+				{"sanitized native", execute(t, "", binary, "--manifest", path).output},
+			} {
+				if bytes.Equal(side.output, want) {
+					t.Fatalf("%s survived on %s", change.Name, side.name)
+				}
+				t.Logf("%s compiling, successful-exit mutant caught only by output on %s: %s", change.Name, side.name, difference(side.output, want))
+			}
+		})
+	}
+}
+
+func nexusEmitted(t *testing.T, directory, path string) []byte {
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	module := filepath.Join(t.TempDir(), "port.mjs")
+	if err := os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, module, "--manifest", path).output
+}
+
+// Not parallel: generated registries and compiler graphs share this scratch checkout.
+func TestNexusCorners(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	root := t.TempDir()
+	var rows []string
+	source := "const é = 1; import '@base'; import '@project/data' with { type: 'json' }; import '@structure/data' with { type: 'json' }; import('@structure/x', {}); require('@base', 'extra'); require?.('@project'); (require)('@base'); loader.require('@base'); require<string>('@project/x'); import(`@base`); import('x' + '@base'); import { X } from '@basement/x'; import { D } from '../widget/internal/deep/internal/D';\n"
+	for _, path := range []string{filepath.Join(root, "libraries/nexus/Thing.ts"), filepath.Join(root, "libraries/base/Thing.ts"), filepath.Join(root, "source/widget/internal/Thing.ts")} {
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		for _, name := range []string{"nexus/boundary-no-internal-import", "nexus/boundary-no-nexus-outside-import", "nexus/boundary-no-project-import"} {
+			for _, opts := range []string{`null`, `{}`, `{"libraryDirectory":"/libraries/base/","allowed":["@project/ProjectSettings"]}`, `{"libraryDirectory":"/libraries/nexus/","allowed":["@project"]}`, `{"libraryDirectory":null,"allowed":[null]}`, `{"libraryDirectory":"/libraries/nexus/","libraryDirectory":null}`, `{"LibraryDirectory":"/libraries/nexus/","libraryDirectory":null,"allowed":["@project"],"Allowed":null}`, `{"libraryDirectory":"/libraries/nexus/","allowed":["@project"],"allowed":[]}`, `{"libraryDirectory":"/libraries/nexus/","unused":{"deep":true}}`} {
+				rows = append(rows, path+"\t"+name+"\t\t\tfalse\t"+opts)
+			}
+		}
+	}
+	t.Logf("corner cases: %d", len(rows))
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+
+// Not parallel: same compiler graph as the corpus and timed samples.
+func TestNexusThroughput(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	compiler := filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler")
+	for _, subject := range []struct{ name, source, guard string }{
+		{"nexus/boundary-no-internal-import", "import '@structure/widget/internal/Detail';\n", ""},
+		{"nexus/boundary-no-nexus-outside-import", "import '@project/source/Thing';\n", "libraries/nexus"},
+		{"nexus/boundary-no-project-import", "import '@project/source/Thing';\n", "libraries/base"},
+	} {
+		var rows []string
+		filepath.WalkDir(compiler, func(path string, e os.DirEntry, err error) error {
+			if err == nil && !e.IsDir() && strings.HasSuffix(path, ".ts") {
+				rows = append(rows, path+"\t"+subject.name+"\t\t\tfalse\t"+`{"libraryDirectory":"/libraries/base/"}`)
+			}
+			return err
+		})
+		if len(rows) != 77 {
+			t.Fatalf("expected 77 compiler files, got %d", len(rows))
+		}
+		stress := filepath.Join(t.TempDir(), subject.guard, "throughput.ts")
+		os.MkdirAll(filepath.Dir(stress), 0755)
+		os.WriteFile(stress, []byte(strings.Repeat(subject.source, 1000)), 0644)
+		rows = append(rows, stress+"\t"+subject.name+"\t\t\tfalse\t"+`{"libraryDirectory":"/libraries/base/"}`)
+		path := manifest(t, rows)
+		best := map[string]time.Duration{}
+		var want []byte
+		for round := 0; round < 5; round++ {
+			for _, side := range []string{"Go", "native", "Node"} {
+				var result execution
+				if side == "Go" {
+					result = execute(t, "", oracle, "--manifest", path, "--count")
+				} else if side == "native" {
+					result = execute(t, "", binary, "--manifest", path, "--count")
+				} else {
+					result = node(t, directory, path, true)
+				}
+				if want == nil {
+					want = result.output
+				}
+				if !bytes.Equal(want, result.output) {
+					t.Fatalf("count differs %s %s", subject.name, side)
+				}
+				if best[side] == 0 || result.duration < best[side] {
+					best[side] = result.duration
+				}
+				t.Logf("%s round %d %s %.6fs count=%s", subject.name, round+1, side, result.duration.Seconds(), strings.TrimSpace(string(result.output)))
+			}
+		}
+		var count int
+		if _, err := fmt.Sscan(string(want), &count); err != nil || count < 1000 {
+			t.Fatalf("benchmark count %q", want)
+		}
+		for _, side := range []string{"native", "Node", "Go"} {
+			t.Logf("%s %s best of 5 %.2f findings/s %.6fs (%d files %d findings)", subject.name, side, float64(count)/best[side].Seconds(), best[side].Seconds(), len(rows), count)
+		}
+	}
+}
+
+func TestNexusCapture(t *testing.T) { nexusUpstream(t) }

@@ -1,0 +1,20 @@
+import type { RuleContext } from '../../context.ts';
+export function specifier(context: RuleContext, index: number): number {
+    const node = context.node(index);
+    if (node.kind === 'ImportDeclaration') {
+        for (const child of node.children) {
+            const kind = context.node(child).kind;
+            if (kind === 'StringLiteral' || kind === 'NoSubstitutionTemplateLiteral') return child;
+        }
+        return -1;
+    }
+    if (node.kind !== 'CallExpression' || node.list < 1) return -1;
+    const calleeIndex = node.children[0];
+    if (calleeIndex === undefined) return -1;
+    const callee = context.node(calleeIndex);
+    if (callee.kind !== 'ImportKeyword' && !(callee.kind === 'Identifier' && callee.text === 'require' && node.list === 1)) return -1;
+    const argument = node.children[node.children.length - node.list];
+    if (argument === undefined) return -1;
+    const kind = context.node(argument).kind;
+    return kind === 'StringLiteral' || kind === 'NoSubstitutionTemplateLiteral' ? argument : -1;
+}

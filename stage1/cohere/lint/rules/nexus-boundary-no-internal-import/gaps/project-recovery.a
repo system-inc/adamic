@@ -1,0 +1,5 @@
+// Expected shared parser refusal; not a registered rule witness.
+import { Parser } from '../../../../../typescript/parser/parser.ts';
+const parser = new Parser("// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n","/repo/libraries/base/source/Thing.ts");
+parser.file();
+console.log('unexpected shared parser support');

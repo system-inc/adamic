@@ -1,0 +1,6 @@
+{
+  "name": "last_internal_owner",
+  "file": "rule.a",
+  "from": "internal = i;",
+  "to": "if (internal < 0) internal = i;"
+}

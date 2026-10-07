@@ -1,0 +1,28 @@
+[
+  {
+    "name": "internal-recovery",
+    "rule": "nexus/boundary-no-internal-import",
+    "file": "/repo/source/other/Thing.ts",
+    "source": "// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n",
+    "options": null
+  },
+  {
+    "name": "project-recovery",
+    "rule": "nexus/boundary-no-project-import",
+    "file": "/repo/libraries/base/source/Thing.ts",
+    "source": "// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n",
+    "options": {
+      "libraryDirectory": "/libraries/base/",
+      "allowed": [
+        "@project/ProjectSettings"
+      ]
+    }
+  },
+  {
+    "name": "outside-top-level-await",
+    "rule": "nexus/boundary-no-nexus-outside-import",
+    "file": "/repository/libraries/nexus/code-quality/Thing.ts",
+    "source": "const loaded = await import('@structure/source/Thing');",
+    "options": null
+  }
+]

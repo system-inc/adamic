@@ -1,0 +1,3 @@
+package main
+import("encoding/json";"fmt";"os";"strings";"github.com/microsoft/TypeScript/tsc/shim/tspath")
+func main(){data,e:=os.ReadFile(os.Args[1]);if e!=nil{panic(e)};var rows [][2]string;if e=json.Unmarshal(data,&rows);e!=nil{panic(e)};for _,r:=range rows{fmt.Println(tspath.NormalizePath(tspath.ResolvePath(tspath.GetDirectoryPath(strings.ReplaceAll(r[0],"\\","/")),r[1])))}}
