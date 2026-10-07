@@ -79,6 +79,40 @@ internal/metamorphic/source.go:439:100: undefined: tspath.Path
         undeclared skip stage3/fixtures/runner_guard_test.go:TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2 (TestTransformedNodeRunnerGuardHook:13)
 --- FAIL: TestCensus (0.44s)
 
+== github.com/system-inc/adamic/cmd/adamic-gate TestWASICurrentSourceAudit
+=== RUN   TestWASICurrentSourceAudit
+    wasi_test.go:143: skip census table does not match tree: stale metadata stage1/cohere/lint/jsx_integration_test.go:TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf
+        stale metadata stage1/cohere/lint/lint_test.go:TestCompilerAndStage1Agree:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e
+        stale metadata stage1/cohere/lint/lint_test.go:TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf
+        stale metadata stage1/cohere/lint/profile_test.go:TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70
+        stale metadata stage1/cohere/lint/profile_test.go:TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4
+        stale metadata stage1/cohere/mediaquery/mediaquery_test.go:TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc
+        undeclared skip internal/lower/import_cycle_ledger_test.go:TestOriginalCycleLedger:da7324176e508bbe06d88e40d3c1a68ace2387bbb1468c4611df3044e9b9c591 (TestOriginalCycleLedger:31)
+        undeclared skip internal/lower/optional_widening_census_test.go:TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e (TestOptionalWideningCensus:28)
+        undeclared skip internal/oracle/enums_test.go:TestEnumCleanupMutant:1743f5368e290c06ba6735cab080c81df3d75b4eadbff4df11f133275a5beced (TestEnumCleanupMutant:119)
+        undeclared skip stage1/cohere/lint/rule_check_test.go:TestRule:da5c31d098aed527635d2f72b8cae6d04c5a61eec036f59bfe65a10e65da9015 (TestRule:132)
+        undeclared skip stage1/cohere/selector/selector_test.go:TestCorpusKeepsEveryParseableFile:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestCorpusKeepsEveryParseableFile:443)
+        undeclared skip stage3/fixtures/runner_guard_test.go:TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2 (TestTransformedNodeRunnerGuardHook:13)
+--- FAIL: TestWASICurrentSourceAudit (0.53s)
+
+== github.com/system-inc/adamic/cmd/adamic-gate TestCurrentCohereGateIsRequired
+=== RUN   TestCurrentCohereGateIsRequired
+=== PAUSE TestCurrentCohereGateIsRequired
+=== CONT  TestCurrentCohereGateIsRequired
+    required_environment_test.go:178: skip census table does not match tree: stale metadata stage1/cohere/lint/jsx_integration_test.go:TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf
+        stale metadata stage1/cohere/lint/lint_test.go:TestCompilerAndStage1Agree:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e
+        stale metadata stage1/cohere/lint/lint_test.go:TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf
+        stale metadata stage1/cohere/lint/profile_test.go:TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70
+        stale metadata stage1/cohere/lint/profile_test.go:TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4
+        stale metadata stage1/cohere/mediaquery/mediaquery_test.go:TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc
+        undeclared skip internal/lower/import_cycle_ledger_test.go:TestOriginalCycleLedger:da7324176e508bbe06d88e40d3c1a68ace2387bbb1468c4611df3044e9b9c591 (TestOriginalCycleLedger:31)
+        undeclared skip internal/lower/optional_widening_census_test.go:TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e (TestOptionalWideningCensus:28)
+        undeclared skip internal/oracle/enums_test.go:TestEnumCleanupMutant:1743f5368e290c06ba6735cab080c81df3d75b4eadbff4df11f133275a5beced (TestEnumCleanupMutant:119)
+        undeclared skip stage1/cohere/lint/rule_check_test.go:TestRule:da5c31d098aed527635d2f72b8cae6d04c5a61eec036f59bfe65a10e65da9015 (TestRule:132)
+        undeclared skip stage1/cohere/selector/selector_test.go:TestCorpusKeepsEveryParseableFile:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc (TestCorpusKeepsEveryParseableFile:443)
+        undeclared skip stage3/fixtures/runner_guard_test.go:TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2 (TestTransformedNodeRunnerGuardHook:13)
+--- FAIL: TestCurrentCohereGateIsRequired (0.69s)
+
 == github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.077s
 
