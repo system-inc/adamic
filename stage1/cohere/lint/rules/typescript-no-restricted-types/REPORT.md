@@ -23,3 +23,16 @@ GOFLAGS=-overlay=/tmp/wave02-font-retry/overlay.json go test ./stage1/cohere/lin
 Parity passed 24.730s. The combined compiler/mutant/witness command ran those three tests successfully (32.22s, 15.73s, 16.40s) but then failed registration for a temporarily unregistered font directory. The directory was moved under this owned rule. Throughput then passed 5.94s; font adapter compilation initially failed because its Go build path was relative to the wrong directory. Correcting the private path made the font comparison and mutant pass 8.791s. Raw failures and final evidence are preserved, not counted as green runs. No shared generator or test harness was edited.
 
 One run on 1,000 repeated owned witnesses, 5,000 findings: native 63,279.18 findings/s (79.014931ms), Node 29,427.94 (169.906547ms), Go 141,106.39 (35.434256ms). This is synthetic rule workload, not compiler speed. Native correctness runs use ASan/UBSan; timings use optimized native. Setup with the prior owned overlay passed: go/clang/Node/submodules 0s, cache warm 16s, done 16s, nproc 5, cgroup four CPUs. The normal unintegrated harness is not certified. Exhaustive malformed configuration decoding and whitespace-normalized duplicate key ordering are outside this evidence.
+
+## Selected-rule option isolation
+
+The later grouped-accessor-pairs raw positional options exposed an owned
+constructor bug: a disabled restricted-types rule still decoded another rule's
+configuration. Its constructor now loads bans only when its context enables
+this rule. No shared factory or harness changed. The raw options comparison
+initially failed explicitly with exit 70, then passed after this correction.
+The original 52 restricted-type upstream cases plus four configured witnesses
+still match Go on Node, emitted JavaScript and sanitized native: 16,565 bytes,
+PASS in 27.87s. The combined raw-options/restricted regression command passed
+in 50.446s. Log: evidence/option-isolation.log. Raw positional and captured
+exception-map corner cases are also retained in the owned id-length validator.
