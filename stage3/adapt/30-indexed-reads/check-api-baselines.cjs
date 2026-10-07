@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// Derived from adaptation 20: add only the October 7 sanctioned adaptation 40 owners.
-// Adaptation 70 is absent at the pinned integration tip; reject unlisted readonly edits.
+// Derived from adaptation 20: compose exact sanctioned 40 and proved 70 owners.
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
@@ -123,9 +122,37 @@ function project(selected) {
 }
 const edits40 = [...brandEdits, ...callbackEdits];
 const expected40 = project(edits40), expectedBrands = project(brandEdits);
-expected = project([...edits, ...edits40]);
+const expected2040 = project([...edits, ...edits40]);
+const edits70 = [], api70Owners = [];
+if (process.env.TSC_ADAPT_READONLY_REPORT) {
+    const readonly = JSON.parse(fs.readFileSync(process.env.TSC_ADAPT_READONLY_REPORT, 'utf8'));
+    assert.equal(readonly.owners.filter(record => record.public).length, 0, 'unreviewed public readonly field');
+    const publicParameters = readonly.parameters.filter(record => record.public);
+    assert.equal(publicParameters.length, 1, 'reviewed readonly public parameter count');
+    const record = publicParameters[0];
+    assert.equal(record.file, 'src/compiler/factory/utilitiesPublic.ts');
+    assert.equal(record.function, 'setTextRange');
+    assert.equal(record.parameter, 'location');
+    assert.deepEqual(record.writes, []);
+    assert.deepEqual(record.escapes, []);
+    const matches = [];
+    function visit70(node) {
+        if (ts.isParameter(node) && ownerPath(node) === JSON.stringify(['setTextRange', 'location'])) matches.push(node);
+        ts.forEachChild(node, visit70);
+    }
+    visit70(before);
+    assert.equal(matches.length, 1, 'readonly API owner drift');
+    const parameter = matches[0];
+    assert.equal(parameter.type.getText(before), 'TextRange | undefined');
+    const range = parameter.type.types.filter(node => ts.isTypeReferenceNode(node) && node.typeName.getText(before) === 'TextRange');
+    assert.equal(range.length, 1);
+    edits70.push({ at: range[0].getStart(before), text: 'Readonly<' }, { at: range[0].end, text: '>' });
+    api70Owners.push({ path: ['setTextRange', 'location'], line: before.getLineAndCharacterOfPosition(parameter.getStart(before)).line + 1 });
+}
+expected = project([...edits, ...edits40, ...edits70]);
 const lines20 = new Set(edits.map(edit => before.getLineAndCharacterOfPosition(edit.at).line + 1));
 const lines40 = new Set(edits40.map(edit => before.getLineAndCharacterOfPosition(edit.at).line + 1));
+const lines70 = new Set(edits70.map(edit => before.getLineAndCharacterOfPosition(edit.at).line + 1));
 assert.equal(lines20.size, 189);
 assert.equal(lines40.size, 28);
 assert.equal([...lines40].filter(line => lines20.has(line)).length, 0, 'sanctioned line sets overlap');
@@ -143,8 +170,9 @@ const newLines = actual.split('\n');
 assert.equal(newLines.length, oldLines.length, 'API additions must retain existing lines');
 const changedLines = oldLines.flatMap((line, i) => line === newLines[i] ? [] : [i + 1]);
 assert(owners.length && changedLines.length, 'no verified snapshot edits');
-const allowedLines = new Set([...lines20, ...lines40]);
-assert.equal(changedLines.length, 217, 'exact sanctioned public API lines');
+const allowedLines = new Set([...lines20, ...lines40, ...lines70]);
+assert.equal(allowedLines.size, 217 + lines70.size, 'sanctioned line sets overlap');
+assert.equal(changedLines.length, 217 + lines70.size, 'exact sanctioned public API lines');
 assert(changedLines.every(line => allowedLines.has(line)), 'a changed line lies outside its parsed owner type edit');
 function baselineFiles(root) {
     const result = new Map();
@@ -164,9 +192,9 @@ const originals = baselineFiles(path.join(pristine, 'tests/baselines/reference')
 assert.deepEqual([...refs.keys()].sort(), [...originals.keys()].sort(), 'reference baseline file set changed');
 for (const [name, bytes] of refs) {
     if (name === 'api/typescript.d.ts') {
-        assert([original, expected20, expectedBrands, expected40, expected].some(text => bytes.equals(Buffer.from(text))), 'API reference was changed without this proof');
+        assert([original, expected20, expectedBrands, expected40, expected2040, expected].some(text => bytes.equals(Buffer.from(text))), 'API reference was changed without this proof');
     } else assert(bytes.equals(originals.get(name)), `unsanctioned reference baseline edit: ${name}`);
 }
 if (mode === '--accept-api') fs.writeFileSync(path.join(adapted, relative), expected);
-console.log(JSON.stringify({ status: 'pass', snapshot_declarations: owners.length + api40Owners.length, adaptation20_lines: [...lines20], adaptation40_lines: [...lines40], adaptation70_lines: [], changed_lines: changedLines,
-    owners, api40Owners, other_reference_baselines_identical: refs.size - 1, accepted: mode === '--accept-api' }, null, 2));
+console.log(JSON.stringify({ status: 'pass', snapshot_declarations: owners.length + api40Owners.length + api70Owners.length, adaptation20_lines: [...lines20], adaptation40_lines: [...lines40], adaptation70_lines: [...lines70], changed_lines: changedLines,
+    owners, api40Owners, api70Owners, other_reference_baselines_identical: refs.size - 1, accepted: mode === '--accept-api' }, null, 2));

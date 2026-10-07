@@ -1177,3 +1177,68 @@ edited, no main push or force-push is made, and the parser slice audit stays on
 hold. No global checker-clean total or native compiler acceptance is claimed.
 
 Final fresh-tree default oracle: **106,367 passing, zero failing/pending, empty baseline diff**, 344.554 seconds, all suites and four workers, with the documented 1,536 MiB Node heap budget. The API proof mechanically accepts exactly 20's 189 and 40's 28 lines; adaptation 70 is absent at this integration pin. All 60,930 other reference baseline files are byte-identical. Final evidence is in whole-final-{proof,oracle,api,census,source-hashes}.json and whole-final-baseline.diff. The final AMD remainder is at original parser.ts:10656. Historical per-file source hashes precede the line-preserving composition adjustment; whole-final-source-hashes.json records the delivered bytes.
+
+### Continuation on integration e39a299
+
+A truthful `| undefined` at a public owner is sanctioned under adaptation 20's
+discipline. Earlier wording that called AmdDependency.name and
+CommentRange.hasTrailingNewLine outside the sanctioned API changes was wrong.
+Those edits still belong to partition 32, which must contribute the parsed-owner
+proof. The whole-site ledger now says so. AmdDependency.name has been handed to
+32 by the user. The additional owner handoffs are:
+
+| Owner in types.ts (upstream lines) | Truthful change | Diagnostics relieved |
+| --- | --- | --- |
+| CommentRange.hasTrailingNewLine:3873 | `boolean` -> `boolean | undefined` | emitNode.ts:205,218 |
+| AutoGenerateInfo.prefix:1720 | `string | GeneratedNamePart` -> `string | GeneratedNamePart | undefined` | nodeFactory.ts:1315,1403 |
+| AutoGenerateInfo.suffix:1721 | `string` -> `string | undefined` | Same generated-name object stores |
+
+This repository fetches only main by default. Explicitly fetch the integration
+ref before merging it; plain `git fetch origin` can leave origin/area/stage3
+stale. This continuation advanced by fast-forward to e39a299 without rebasing:
+
+```sh
+git fetch origin refs/heads/area/stage3:refs/remotes/origin/area/stage3
+git merge origin/area/stage3
+```
+
+The fresh full apply.sh tree includes all current adaptations, including 70.
+The archived whole-census options are unchanged. Its 79 compiler roots include
+the new hostErrors.ts; the file census has no code filter.
+The exact current totals are **emitNode 2, nodeFactory 4, core 2**. No file newly
+reaches zero and no additional upstream source repair is claimed.
+
+remaining-contracts.cjs executes actual adapted core function bodies on Node.
+A two-read array getter returns 23, then undefined; addRange appends an own
+undefined element after two reads. A getter on to.push deletes an ordinary
+source-array element between the guard and argument evaluation, with the same
+result. Caching the first read changes the result in both witnesses and changes
+the first witness's read count. Its executed --mutant-cache is caught by the
+Node observation assertion, exit 1. A ! at that second read is unproved: a
+native presence check would fail where the unchanged Node function appends
+undefined. These are contract counterexamples, not claims that ordinary tsc
+production arrays are volatile.
+
+The actual custom createSet object lacks all seven ES2024 operations. The
+external caller src/server/session.ts:512 declares Set<DocumentSpan>, so merely
+reducing core's return type needs an outside consumer repair. Adding methods
+changes JavaScript; asserting the full interface lies.
+
+For the generic localSymbol/typeExpression writes, executable mapped-type
+witnesses demonstrate that widening the optional constraint alone is not a
+proof: stock TypeScript accepts the generic call with a narrower required
+member, then Node observes undefined in that member. The stock diagnostics are
+zero, as recorded; this is a witness against the proposed type argument, not a
+claim of a new miscompile in adapted tsc. A closed caller/construction proof
+remains necessary. No cast or undefined assertion is added to suppress it.
+
+The combined API checker now composes the fresh 70 audit: exactly one public
+readonly parameter, setTextRange.location, whose reported writes and escapes
+must both be empty. It reconstructs that exact parsed TextRange owner, together
+with 20's 189 and 40's 28 lines, for 218 changed API lines. It admits no other
+readonly owners. The historical 217-line proof remains valid for its earlier
+integration without 70. All 17 owned files pass stock JavaScript identity
+(with the three previously proved narrowings), site contracts and idempotence
+on this fresh tree; their runtime source repairs have not changed.
+
+Continuation default oracle: **106367 passing, zero failing/pending, empty baseline diff**, 367.373 seconds, all default suites and four workers with the documented 1,536 MiB heap budget. New API mutants removing the readonly view and inserting a write into its owner report both exit 1; the four previous API mutants also exit 1. The restored checker passes. Evidence is in remaining-{proof,census,oracle,api,api-mutants,readonly-owners,counterexamples,source-hashes}.json, remaining-baseline.diff, remaining-verify.log and remaining-cache-mutant.log. No new file reaches zero; these owner handoffs and proved declines complete the review without guessing a source repair.

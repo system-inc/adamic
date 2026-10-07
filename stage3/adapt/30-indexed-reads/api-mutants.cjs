@@ -21,6 +21,26 @@ function killed(name, file, mutate, message) {
 const api = path.join(tree, "built/local/typescript.d.ts");
 killed("public brand token restored to any", api, text => text.replace("__pathBrand: undefined;", "__pathBrand: any;"), /API snapshot differs from parsed owner edits/);
 killed("ErrorCallback payload changed to boolean", api, text => text.replace("arg0?: string | number", "arg0?: boolean"), /API snapshot differs from parsed owner edits/);
+if (process.env.TSC_ADAPT_READONLY_REPORT) {
+    killed("proved readonly parameter restored to mutable", api, text => {
+        const ts = require(process.env.TSC_ADAPT_TYPESCRIPT || "typescript");
+        const source = ts.createSourceFile("api.d.ts", text, ts.ScriptTarget.Latest, true);
+        const found = [];
+        function visit(node) {
+            if (ts.isParameter(node) && node.name.getText(source) === "location" && node.parent.name?.getText(source) === "setTextRange") found.push(node);
+            ts.forEachChild(node, visit);
+        }
+        visit(source); assert.equal(found.length, 1);
+        const range = found[0].type.types.find(node => ts.isTypeReferenceNode(node) && node.typeName.getText(source) === "Readonly");
+        assert(range && range.typeArguments[0].getText(source) === "TextRange");
+        return text.slice(0, range.getStart(source)) + "TextRange" + text.slice(range.end);
+    }, /API snapshot differs from parsed owner edits/);
+    killed("readonly owner report contains a write", process.env.TSC_ADAPT_READONLY_REPORT, text => {
+        const report = JSON.parse(text), record = report.parameters.find(record => record.public);
+        record.writes.push("mutant actual-writing consumer");
+        return JSON.stringify(report);
+    }, /Expected values to be strictly deep-equal/);
+}
 killed("unlisted public API reference declaration", path.join(tree, "tests/baselines/reference/api/typescript.d.ts"), text => text + "\ntype Unreviewed = string;\n", /API reference was changed without this proof/);
 const root = path.join(tree, "tests/baselines/reference");
 function firstOther(directory) {
