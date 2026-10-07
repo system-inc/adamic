@@ -1,0 +1,10 @@
+=== RUN   TestControlFlowBlockPrimitive
+    block_gap_test.go:31: actual Go/source Node 276 allocation/identity/state observations, 6619 identical bytes
+    block_gap_test.go:53: source Node alias mutant exits cleanly; only Go comparison catches row 4
+    block_gap_test.go:59: actual Go/source Node/emitted JavaScript/sanitized native identical
+    block_gap_test.go:64: backend 0 compiles and exits cleanly; only Go comparison catches row 4
+    block_gap_test.go:64: backend 1 compiles and exits cleanly; only Go comparison catches row 4
+    block_gap_test.go:64: backend 2 compiles and exits cleanly; only Go comparison catches row 4
+--- PASS: TestControlFlowBlockPrimitive (1.57s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	1.579s

@@ -1,0 +1,6 @@
+=== RUN   TestControlFlowBlockPrimitive
+    block_gap_test.go:30: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/helpers/wave12/gaps/block_main.a]: exit status 70 stderr adamic: panic: SyntaxError: The requested module './control_flow_new_block.a' does not provide an export named 'BlockBuilder'
+--- FAIL: TestControlFlowBlockPrimitive (3.84s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	3.850s
+FAIL

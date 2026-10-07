@@ -1,0 +1,14 @@
+{
+  "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
+  "consumer_rules": [
+    "array-callback-return",
+    "consistent-return",
+    "no-unreachable-loop",
+    "react-hooks/rules-of-hooks"
+  ],
+  "fixtures": 2119,
+  "observed_distinct_block_counts": 163,
+  "max_count": 163,
+  "cases": 164,
+  "final_blockers_removed": 0
+}

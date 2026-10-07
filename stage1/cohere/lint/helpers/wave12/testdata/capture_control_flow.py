@@ -29,6 +29,23 @@ func normalizeBigIntLiteral(text string) string {
  return result
 }
 ''')
+    block_mode=os.environ.get('ADAMIC_CFG_CAPTURE_HELPER')=='block'
+    if block_mode:
+        cfg=helper.parent/'cfg.go';source=cfg.read_text();anchor='func (b *Builder[E]) newBlock() *Block[E] {';assert source.count(anchor)==1
+        overlay(cfg,source.replace(anchor,'func (b *Builder[E]) adamicOriginalNewBlock() *Block[E] {'))
+        overlay(helper.parent/'adamic_block_capture.go', r'''package control_flow_graph
+import("encoding/json";"os";"sync")
+var adamicBlockCaptureLock sync.Mutex
+func(b *Builder[E]) newBlock() *Block[E] {
+ block:=b.adamicOriginalNewBlock()
+ if path:=os.Getenv("ADAMIC_CFG_CAPTURE");path!=""{
+  adamicBlockCaptureLock.Lock();defer adamicBlockCaptureLock.Unlock()
+  file,err:=os.OpenFile(path,os.O_CREATE|os.O_WRONLY|os.O_APPEND,0644);if err!=nil{panic(err)}
+  if err:=json.NewEncoder(file).Encode(len(b.blocks));err!=nil{panic(err)};file.Close()
+ }
+ return block
+}
+''')
     harness = COHERE / 'internal/lint/testing/rule_testing.go'
     source = harness.read_text()
     anchor = 'return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}'
@@ -41,7 +58,7 @@ func normalizeBigIntLiteral(text string) string {
         for file in files:
             names.extend(re.findall(r'^func (Test\w+)\(', (COHERE/'internal/lint/rules'/package/file).read_text(), re.MULTILINE))
         assert names
-        with (HERE.parent/('evidence/cfg-consumers-'+package+'.log')).open('w') as log:
+        with (HERE.parent/('evidence/cfg-'+('block-' if block_mode else '')+'consumers-'+package+'.log')).open('w') as log:
             subprocess.run(['go','test','-overlay='+str(mapping),'./internal/lint/rules/'+package,'-run','^('+'|'.join(names)+')$','-count=1','-v','-timeout=15m'],cwd=COHERE,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
     fixtures={}
     for file in sorted((scratch/'fixtures').glob('*.jsonl')):
@@ -52,6 +69,14 @@ func normalizeBigIntLiteral(text string) string {
     assert set(row['rule'] for row in rows)==set(CONSUMERS)
     arguments_path=scratch/'arguments.jsonl'
     arguments=sorted(set(json.loads(line) for line in arguments_path.read_text().splitlines())) if arguments_path.exists() else []
+    if block_mode:
+        assert arguments and all(isinstance(count,int) for count in arguments)
+        counts=sorted(set(arguments+[0,1,7,8,9,15,16,17,65]))
+        (HERE/'block_counts.json').write_text(json.dumps(counts)+'\n')
+        metadata={'helper':'github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock','consumer_rules':CONSUMERS,'fixtures':len(rows),'observed_distinct_block_counts':len(arguments),'max_count':max(arguments),'cases':len(counts),'final_blockers_removed':0}
+        (HERE/'block_coverage.json').write_text(json.dumps(metadata,indent=2)+'\n')
+        print(json.dumps(metadata,indent=2))
+        raise SystemExit(0)
     controls=['','n','nn','0n','-0n','+0n','0x0n','0b0n','0o0n','0X_FFn','0_7n','077n','08n','09n','-0x10000000000000000n','0x10000000000000000n','0b'+('1'*257)+'n','0x'+('a'*257)+'n','9'*1024+'n',' 1n','1 n','１n','😀n']
     for base,prefix,alphabet in [(2,'0b','01'),(8,'0o','01234567'),(10,'','0123456789'),(16,'0x','0123456789abcdef')]:
         for value in [0,1,7,8,15,16,2**53-1,2**53,2**64-1,2**64,2**127,2**256-1]:

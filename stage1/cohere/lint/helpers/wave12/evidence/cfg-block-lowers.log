@@ -1,0 +1,8 @@
+=== RUN   TestControlFlowBlockPrimitive
+    block_gap_test.go:34: actual Go/source Node 276 allocation/identity/state observations, 6619 identical bytes
+    block_gap_test.go:56: source Node alias mutant exits cleanly; only Go comparison catches row 4
+    block_gap_test.go:64: primitive now lowers; replace this gap with native/emitted JavaScript parity
+--- FAIL: TestControlFlowBlockPrimitive (0.99s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	0.994s
+FAIL

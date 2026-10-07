@@ -1,0 +1,18 @@
+package control_flow_graph
+
+import "fmt"
+
+func AdamicNewBlockTrace(counts []int) {
+	for _, count := range counts {
+		builder := Builder[string]{}
+		for index := 0; index < count; index++ {
+			block := builder.newBlock()
+			fresh := index == 0 || block != builder.blocks[index-1]
+			fmt.Printf("%d,%d,%d,%d,%t,%d,%d,%t,%t,%t,%t,%t,%d\n", count, block.index, len(builder.blocks), len(builder.blockChunks), block.Reachable, len(block.Events), len(block.Successors), builder.blocks[index] == block, fresh, block.hasIncoming, block.final, block.thrown, len(block.cycleBarrier))
+			block.Events = append(block.Events, fmt.Sprintf("event-%d", index))
+		}
+		for _, block := range builder.blocks {
+			fmt.Printf("stored,%d,%s\n", block.index, block.Events[0])
+		}
+	}
+}

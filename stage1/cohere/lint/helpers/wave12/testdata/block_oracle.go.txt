@@ -1,0 +1,19 @@
+package main
+
+import (
+	"encoding/json"
+	cfg "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph"
+	"os"
+)
+
+func main() {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var counts []int
+	if err := json.Unmarshal(data, &counts); err != nil {
+		panic(err)
+	}
+	cfg.AdamicNewBlockTrace(counts)
+}

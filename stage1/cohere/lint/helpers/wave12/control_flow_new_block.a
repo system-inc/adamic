@@ -1,0 +1,32 @@
+import { panic } from 'adamic';
+export interface ControlFlowBlock<E> {
+    events: E[];
+    successors: ControlFlowBlock<E>[];
+    reachable: boolean;
+    index: number;
+    hasIncoming: boolean;
+    final: boolean;
+    thrown: boolean;
+    cycleBarrier: boolean[];
+}
+export interface BlockBuilder<E> {
+    blocks: ControlFlowBlock<E>[];
+    blockChunks: ControlFlowBlock<E>[][];
+}
+export function newBlock<E>(builder: BlockBuilder<E>): ControlFlowBlock<E> {
+    const index = builder.blocks.length;
+    const chunkIndex = Math.floor(index / 8);
+    if(chunkIndex === builder.blockChunks.length) {
+        const chunk: ControlFlowBlock<E>[] = [];
+        for(let slot = 0; slot < 8; slot++) {
+            chunk.push({ events: [], successors: [], reachable: false, index: 0,
+                hasIncoming: false, final: false, thrown: false, cycleBarrier: [] });
+        }
+        builder.blockChunks.push(chunk);
+    }
+    const chunk = builder.blockChunks[chunkIndex] ?? panic('missing block chunk');
+    const block = chunk[index % 8] ?? panic('missing block');
+    block.index = index;
+    builder.blocks.push(block);
+    return block;
+}

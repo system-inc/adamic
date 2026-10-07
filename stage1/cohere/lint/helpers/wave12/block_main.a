@@ -1,0 +1,23 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { newBlock } from './control_flow_new_block.a';
+import type { BlockBuilder } from './control_flow_new_block.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const item of json.node(root).children) {
+    const count = json.node(item).number;
+    const builder: BlockBuilder<string> = { blocks: [], blockChunks: [] };
+    for(let index = 0; index < count; index++) {
+        const block = newBlock(builder);
+        const fresh = index === 0 || block !== builder.blocks[index - 1];
+        console.log(`${count},${block.index},${builder.blocks.length},${builder.blockChunks.length},${block.reachable},${block.events.length},${block.successors.length},${builder.blocks[index] === block},${fresh},${block.hasIncoming},${block.final},${block.thrown},${block.cycleBarrier.length}`);
+        block.events.push(`event-${index}`);
+    }
+    for(let index = 0; index < count; index++) {
+        const block = builder.blocks[index] ?? panic('missing stored block');
+        console.log(`stored,${block.index},${block.events.join(':')}`);
+    }
+}
