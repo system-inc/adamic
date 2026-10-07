@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_every_key_component (cloud.test_node_setup.NodeSetup.test_every_key_component) (component='version')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_node_setup.py", line 37, in test_every_key_component
+    self.assertNotEqual(before, node.installation_key(**dict(inputs, **{component: 'changed'})), component)
+AssertionError: '98f5fcc1117587419e8fa9c883c035b3da770820da4273b4d2bf420c710d3309' == '98f5fcc1117587419e8fa9c883c035b3da770820da4273b4d2bf420c710d3309' : version
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

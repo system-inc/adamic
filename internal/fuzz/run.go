@@ -17,6 +17,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/boundedrun"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/nodepin"
 )
 
 // Checkout is a compiler under test: a checkout of the repository, with its own adamic command built
@@ -37,6 +38,9 @@ var flags = native.Flags(native.Options{Sanitize: true})
 // Prepare builds a checkout's adamic command into directory and gets its cached runtime library.
 // The cache is shared with native.Build, while another checkout keeps its own runtime bytes.
 func Prepare(root string, directory string) (*Checkout, error) {
+	if _, err := nodepin.Check(); err != nil {
+		return nil, err
+	}
 	root, err := filepath.Abs(root)
 	if err != nil {
 		return nil, err

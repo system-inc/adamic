@@ -35,6 +35,11 @@ Whole functions are kept together; trace extracted files with `git log --follow 
 
 ## The gate
 
+The oracle pins Node v24.19.0 in `internal/nodepin`. `bash cloud/setup.sh` supplies it
+from nodejs.org on Linux and macOS, checking published SHA-256 sums against
+`cloud/node-pin.json`. Source the printed `env.sh` to put it first on PATH. A different
+version fails the oracle before comparisons; test262 and the fuzzer check it too.
+
 ```
 gofmt -l cmd internal
 go vet ./...

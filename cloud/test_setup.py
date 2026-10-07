@@ -124,7 +124,7 @@ class SetupIntegration(unittest.TestCase):
         print("integration logs:", scratch, flush=True)
         repository = scratch / "repository"
         (repository / "cloud").mkdir(parents=True)
-        for name in ["setup.sh", "setup-key.py", "setup-markdown-width.py", "setup-stage3-api.py", "setup-modules.py"]:
+        for name in ["setup.sh", "setup-key.py", "setup-markdown-width.py", "setup-stage3-api.py", "setup-modules.py", "setup-node.py", "node-pin.json"]:
             shutil.copyfile(KEY_MODULE if name == "setup-key.py" else SOURCE / name,
                             repository / "cloud" / name)
         shutil.copytree(SOURCE / "markdown-width", repository / "cloud/markdown-width")

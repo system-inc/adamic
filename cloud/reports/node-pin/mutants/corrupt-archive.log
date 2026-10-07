@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_corrupted_archive_refused_before_install (cloud.test_node_setup.NodeSetup.test_corrupted_archive_refused_before_install)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_node_setup.py", line 92, in test_corrupted_archive_refused_before_install
+    with self.assertRaisesRegex(ValueError, 'SHA-256 mismatch'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)
