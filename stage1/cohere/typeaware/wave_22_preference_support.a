@@ -1,0 +1,102 @@
+import { panic } from 'adamic';
+import type { Bindings } from './bindings.ts';
+import { Frames, header } from './frames.ts';
+import { globalBinding } from './global_binding.a';
+import { globalSource } from './global_source.a';
+import { Diagnostic } from './diagnostic.ts';
+import { Repair } from './repair.ts';
+import { isIdentifierPart, isSpace, isLineBreak } from '../../typescript/scanner/characters.ts';
+
+// All judgments stay native. These adapters use existing raw compiler facts.
+export class PreferenceSupport {
+    readonly bindings: Bindings;
+    readonly javascript: boolean;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.javascript = globalSource(bindings, bindings.rules.parser.nodes.length - 1).javascript; }
+    // The shared native parser accepts type arguments independently of script
+    // kind. Go's parser declines those in JavaScript (tryParseTypeArgumentsInExpression).
+    // Suppress this invented call locally, using the existing source-file fact.
+    call(index: number): boolean {
+        const node = this.bindings.rules.parser.node(index);
+        if(node.kind !== 'CallExpression' || this.bindings.parent(index) < 0) { return false; }
+        if(!this.javascript) { return true; }
+        const extra = node.children.slice(1, node.children.length - node.list);
+        return extra.every((child) => this.kind(child) === 'QuestionDotToken');
+    }
+    kind(index: number): string { return index < 0 ? '' : this.bindings.rules.parser.node(index).kind; }
+    global(index: number): boolean {
+        const origins = globalBinding(this.bindings, index).symbol;
+        if(!origins.present || origins.files.length === 0) { return false; }
+        for(let at = 0; at < origins.files.length; at++) { if(origins.files[at] !== true || origins.declarations[at] !== true) { return false; } }
+        return true;
+    }
+    resolved(index: number, name: string): boolean {
+        const frames = new Frames(this.bindings.rules.ask(index, `resolved-name\n${name}`)); header(frames, 'resolved-name');
+        let global = false;
+        if(frames.yes()) {
+            frames.field(); const count = frames.natural(); global = count > 0;
+            for(let at = 0; at < count; at++) { frames.field(); global = frames.yes() && global; frames.yes(); }
+        }
+        frames.end(); return global;
+    }
+    property(index: number): string {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) { return ''; }
+        const key = rules.skip(node.children[node.children.length - 1] ?? -1); if(key < 0) { return ''; }
+        const name = rules.parser.node(key);
+        if(node.kind === 'PropertyAccessExpression') { return name.text; }
+        return ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(name.kind) ? name.text : '';
+    }
+    report(index: number, rule: string, id: string, message: string): Diagnostic {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        const finding = new Diagnostic(rule, id, message, rules.byte(rules.start(node)), rules.byte(node.end), '');
+        rules.findings.push(finding); return finding;
+    }
+    repair(start: number, end: number, text: string): Repair {
+        const rules = this.bindings.rules; return new Repair(rules.byte(start), rules.byte(end), text);
+    }
+    // Go deliberately tests a source BYTE cast to a rune, rather than a Unicode
+    // code point. Recover that byte so adjacency decisions have the same meaning.
+    identifier(position: number, previous = false): boolean {
+        const text = this.bindings.rules.scanner.text;
+        if(position < 0 || position >= text.length) { return false; }
+        const code = text.charCodeAt(position);
+        if(code < 128) { return isIdentifierPart(code); }
+        let byte = 0;
+        if(previous) {
+            let point = code;
+            if(code >= 56320 && code <= 57343 && position > 0) { point = 65536 + (text.charCodeAt(position - 1) - 55296) * 1024 + code - 56320; }
+            byte = 128 + point % 64;
+        }
+        else { const point = text.codePointAt(position) ?? panic('missing code point'); byte = point < 2048 ? 192 + Math.floor(point / 64) : point < 65536 ? 224 + Math.floor(point / 4096) : 240 + Math.floor(point / 262144); }
+        return isIdentifierPart(byte);
+    }
+    // comments.All anchors on AST trivia boundaries. Never invent a comment
+    // from a slash inside a literal. The empty Object literal's list interior
+    // is the additional anchor needed by the has-own callee.
+    comment(start: number, end: number): boolean {
+        const rules = this.bindings.rules; const text = rules.scanner.text;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(this.bindings.parent(index) < 0 && node.kind !== 'SourceFile') { continue; }
+            if(this.commentAt(node.pos, start, end) || this.commentAt(node.end, start, end)) { return true; }
+            if(node.kind === 'ObjectLiteralExpression' && node.children.length === 0 && this.commentAt(rules.start(node) + 1, start, end)) { return true; }
+        }
+        return false;
+    }
+    commentAt(position: number, start: number, end: number): boolean {
+        const text = this.bindings.rules.scanner.text;
+        while(position < text.length) {
+            const code = text.charCodeAt(position);
+            if(isSpace(code) || isLineBreak(code)) { position++; continue; }
+            if(text[position] !== '/' || !['/', '*'].includes(text[position + 1] ?? '')) { return false; }
+            const begin = position; const block = text[position + 1] === '*'; position += 2;
+            if(block) {
+                while(position + 1 < text.length && !(text[position] === '*' && text[position + 1] === '/')) { position++; }
+                position = position + 1 < text.length ? position + 2 : text.length;
+            }
+            else { while(position < text.length && !isLineBreak(text.charCodeAt(position))) { position++; } }
+            if(begin >= start && position <= end) { return true; }
+        }
+        return false;
+    }
+}
