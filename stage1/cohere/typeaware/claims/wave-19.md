@@ -82,3 +82,17 @@ The later all-head refresh includes wave 16 claim commit 58d204d3 (02:30:09 UTC)
 ## Question name collision correction
 
 A later refresh found incompatible program-modules/resolved-callee implementations on other workers' origin branches. Our prepared facts are now wave19-program-modules and wave19-resolved-callee, in wave19_program_modules.go/.a and wave19_resolved_callee.go/.a. The updated registration patch remains unapplied. All six native algorithms retain independent Go, mutant and sanitizer checks; no new rules are claimed. See wave_19_landing/QUESTION_COLLISION_REPORT.md for current evidence and names.
+
+## Third continuation claim
+
+Landing first: wave-19 is rebased onto origin/main f8013f0baac41ddc340d76f83bddde38536a8f07 and pushed as 55e13c7c7a2ee53fffaef937110f69eb394ebe96. Its six owned oracles passed again in 566.705s, the full bridge gate in 159.659s. No other branch was pushed by this worker. React hook reservations above remain superseded by wave 16, not active work for this worker.
+
+Fetched all origin heads before selection: 529 refs, 197 ranked checker-dependent rules, 26 base ports, 154 rule names mentioned in Markdown claim files. JSON selection inventories in wave 26 list candidates and exclusions and are not reservations; reading those lists as claims would falsely reserve every ranked rule. Existing base/main ports and actual reservations are excluded.
+
+React-family candidates are parked under Ahra's instruction. require-atomic-updates is skipped because it depends on cohere's control_flow_graph plus binding capture and escape analysis (require_atomic_updates_escape.go computeEscape/hasCapturedReference); these native analysis prerequisites belong to #dnv6f2c. The first three remaining candidates in combined-volume descending order with lexical ties are reserved before implementation:
+
+- require-await (compiler 0, repository 0)
+- symbol-description (compiler 0, repository 0)
+- valid-typeof (compiler 0, repository 0)
+
+These rules are reserved for codex/typeaware-wave-19. New modules will be .a, declare rule.json kinds, and consume handed nodes through numeric kind dispatch. Shared parser, registration generator and test harness remain outside this worker's edits.
