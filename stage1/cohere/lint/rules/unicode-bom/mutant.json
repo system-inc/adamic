@@ -1,0 +1,5 @@
+{
+  "name": "bom removes two marks",
+  "from": "new SuggestionEdit(0, 1, '')",
+  "to": "new SuggestionEdit(0, this.context.source.startsWith('\\ufeff\\ufeff') ? 2 : 1, '')"
+}

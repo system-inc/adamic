@@ -1,0 +1,6 @@
+PASS claim: stage1/cohere/lint/claims/codex/lint-wave-trial.json
+PASS origin: 1 fetched heads, no competing claims or ports
+PASS registration: owned directories only, baseline 48ecd9302bf3954a4ddbbd14c28ba09148c1c1a8
+Running parity and mutants; log: /workspace/scratch/lint-wave-worker/.git/lint-wave-check/tmp4u8c10ym.jsonl
+PASS parity and mutants: current commit 4683a33b719ba21196adecf295c7fa79476f6683; receipt /workspace/scratch/lint-wave-worker/.git/lint-wave-check/codex/lint-wave-trial.json
+Ready for this worker's push. Origin was checked as a snapshot; concurrent pushes can still race.

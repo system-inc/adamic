@@ -1,0 +1,6 @@
+export const messageUnexpectedLabel =
+    'This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.';
+export const messageUnexpectedLabelInBreak =
+    'This `break` names a label, so it exits an enclosing block or loop rather than the nearest one. The jump target is not on this line and not adjacent to it, which is what makes the reading cost real: the reader has to find the label before they know what was left. Return from an extracted function, or use a flag the loops already test.';
+export const messageUnexpectedLabelInContinue =
+    'This `continue` names a label, so it resumes an outer loop rather than the one it sits in. Which loop advances is decided by a name written elsewhere, so the iteration a reader traces is not the iteration that runs. Restructure so the inner work is a function that returns, or move the condition out to the loop it belongs to.';

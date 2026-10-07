@@ -1,0 +1,12 @@
+[
+  {
+    "mutant": "split-skip-last",
+    "exit": 1,
+    "log": "/tmp/lint-split-skip-last-mutant.log"
+  },
+  {
+    "mutant": "split-double-decrement",
+    "exit": 1,
+    "log": "/tmp/lint-split-double-decrement-mutant.log"
+  }
+]

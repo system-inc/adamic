@@ -1,0 +1,13 @@
+{
+  "name": "no-labels",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoLabels",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoLabels",
+  "factory": "create",
+  "class": "Rule"
+}
