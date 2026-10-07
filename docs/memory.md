@@ -671,8 +671,8 @@ What's left on `nbody` is one retain and one release per element a variable is g
 
 **The proof: nothing in `v`'s live range can change the array.** `v`'s live range is the rest of the block that declares it, every nested statement included. Every expression and statement there must be one that can't take an element out of any array, through any alias. That's a fixed list, never a guess about what's safe:
 
-- **Allowed:** what `pure` in `borrow.go` allows (reads, arithmetic, field and element reads, string work); a field store into an object (`SetProperty`, which lets go of the field's old value, never an array's slot); declarations and assignments of other variables; a `push` (it adds, and moving the buffer doesn't move the objects); and calls to named functions whose bodies, and everything they call, are made only of allowed things.
-- **A change, which stops the borrow:** a store into an element (`SetIndex`); `pop`, `shift`, `splice` (also discarded, `adamic_array_remove`), `fill`, `sort`, `reverse`; anything reuse could do in place to an array (`map`, a spread of an array, `[...a, x]`); any call through a function value, and every runtime operation that calls one (`map`, `forEach`, `reduce`, `filter`, `find`, a `sort` comparator, `Array.from` with a function); a call to a named function that does any of these, at any depth; and an assignment to `a` itself.
+- **Allowed:** what `pure` in `borrow.go` allows (reads, arithmetic, field and element reads, string work); a field store into an object (`SetProperty`, which lets go of the field's old value, never an array's slot); declarations and assignments of other variables; a `push` (it adds, and moving the buffer doesn't move the objects); an Error allocation, with its message and name expressions checked too; and direct, nonvirtual calls to named functions whose bodies, and everything they call, are made only of allowed things.
+- **A change, which stops the borrow:** a store into an element (`SetIndex`); `pop`, `shift`, `splice` (also discarded, `adamic_array_remove`), `fill`, `sort`, `reverse`; anything reuse could do in place to an array (`map`, a spread of an array, `[...a, x]`); any call through a function value, and every runtime operation that calls one (`map`, `forEach`, `reduce`, `filter`, `find`, a `sort` comparator, `Array.from` with a function); a call to a named function that does any of these, at any depth; every virtual call, whose static signature does not prove what an override does; and an assignment to `a` itself.
 - **A throw.** A throw out of the live range ends `v` without a release. A borrowed `v` has none to give, so a throw path needs nothing. A call that can throw is judged by what it does, like any other.
 
 **What else must know.** A borrowed `v` holds no count, so nothing may treat it as owned:
@@ -717,6 +717,173 @@ In `borrow_element.a`, probes 1 to 6 are refused. Probes 7 and 8 borrow, and are
 On `nbody`, counted: retains 22,000,050 to 7,000,019. Releases stayed at 22,000,054: the fallback's owner is let go of once per declaration, NULL every time here. No other row of the oracle's table moved, and the other benchmarks didn't either. Time, best of 5 interleaved against 4636a33 at load about 2.5: 0.235 s to 0.222 s, small enough that the noise could hide it. The release of an owner that is NULL is the next thing to take out of `nbody`'s loop.
 
 **The owner's release, only when it holds something.** The scope now lets go of a fallback's owner behind a test for NULL (`mostlyNull` in `emit.go`, read by `releaseScopes`, so the throw path does the same). `nbody`, counted: releases 22,000,054 to 7,000,023, now level with its 7,000,019 retains. In the oracle's table only `borrow_element.a` moved: releases 134 to 129, its five owners that stayed NULL. Time, best of 5 interleaved against 73bbae9 at load about 3: 0.237 s to 0.220 s, again inside what the noise could hide. Mutant: the test inverted (`== NULL`), so an owner holding a fallback is never let go of. Caught by the leak check on probe 9.
+
+### Borrowed element reads checked against current main, October 6, 2026
+
+**Observed on `ef3d907`: the indexed reads in `nbody` already borrow.** No condition of
+`borrowable` or `changes` fails for either `body = bodies[i] ?? ...` or
+`other = bodies[j] ?? ...` in `advance`, or for the corresponding declarations in `energy`.
+The indices may be loop variables; the declarations may be inside loop bodies. The locals and
+array parameter are neither captured nor reassigned. `SetProperty` writes the body's fields,
+not the array's slots, and is already allowed. The fallback's constructor is a direct call
+whose body only allocates and writes fields, so its summary is unchanging. `Math.sqrt` is pure.
+`TestNbodyIndexedElementsBorrow` holds all five indexed declarations, including `sun`, to this
+answer and to C without releases of those borrowed locals.
+
+The generated C for the inner loop, with its actual names (arithmetic between the shown parts
+omitted):
+
+```c
+adamic_value *adamic_temporary_54 = adamic_array_at(adamic_local_4_bodies, ((double)adamic_local_23_j));
+adamic_object * adamic_local_24_other = adamic_temporary_54 == NULL ? NULL : (adamic_object *)adamic_temporary_54->reference;
+adamic_object * adamic_local_24_other_owner = NULL;
+if (adamic_local_24_other == NULL) {
+    adamic_object * adamic_temporary_55 = adamic_function_4_Body_new((0x0p+00), (0x0p+00), (0x0p+00), (0x0p+00), (0x0p+00), (0x0p+00), (0x0p+00));
+    adamic_local_24_other_owner = adamic_temporary_55;
+    adamic_local_24_other = adamic_local_24_other_owner;
+}
+/* Field arithmetic and SetProperty stores use body and other without counting them. */
+if (adamic_local_24_other_owner != NULL) {
+    adamic_release(adamic_local_24_other_owner);
+}
+```
+
+In the real run every lookup succeeds, so the owner stays NULL and its release is skipped.
+The outer `body` has the same form.
+
+**The 7,000,019 retains have a different source.** Every one of the million `advance` calls
+contributes five pairs for its `for...of` bindings, one pair for the array that loop's iterator
+holds, and one pair for reading the global `bodies` into the call's temporary. That is exactly
+7,000,000 pairs. The remaining 19 retains are five constructor returns, five array pushes,
+six from `offsetMomentum`'s iterator and bindings, and three global reads for `offsetMomentum`
+and the two `energy` calls. The 23 remaining releases are five constructor-local releases,
+five constructor-result releases after the array pushes, six iterator/binding releases in `offsetMomentum`, three
+argument-temporary releases, two energy-string releases, the final global array release,
+and the release of the initially NULL global array slot when `bodies` is initialized.
+
+The `for...of` path in `emit_statements.go` calls `declareLocal(..., false)` unconditionally;
+`declareLocal` in `emit_locals.go` retains and schedules its reference for release. A `ForOf`
+is not an `ir.Declare`, so this pass cannot select it, and setting `Borrowed` alone would not
+remove that retain or release. Likewise the global argument read is emitted by `read` in
+`emit_locals.go`, not by this pass. Removing these pairs needs work outside this unit's
+territory. `borrow.go`'s pure-consumer rule must not simply call every function pure: a call
+can change a later operand's source. Its consumes list is unchanged.
+
+**Two changes within the territory.** Making an Error (`ir.MakeError`) is now an allowed
+operation; the existing expression walk still checks its message and name. A caught throw
+can therefore sit between a borrow and its last use, and an exceptional exit can end a borrow
+without releasing the array's element. `borrow_element_throw.a` exercises both, a numeric
+field write in an indexed loop, a pop in a catch before the last use (refused borrowing), and
+a pop through a direct call in the Error's message (also refused).
+
+A virtual call now stops borrowing. The old summary used only `Call.Function`, its static
+signature. In `borrow_element_virtual_store.a`, that signature reads only the array's length,
+while the implementation replaces its element. Keeping the array alive, and prohibiting its
+move into a consumed parameter, does not keep an element alive after an explicit replacement.
+The conservative fix checks `Call.Virtual == 0` before consulting the direct-call summary.
+Resolving all possible overrides could recover some borrows later; it is not proven here.
+
+**Mutants actually run.** Each began from the final compiler independently, and the source was
+restored after every run. Oracle mutants ran uncached, against Node, release C and sanitized C;
+each test invocation wrote its complete output to a separate log. No mutant was killed by
+clang's warnings or by a lowering refusal.
+
+| Mutant | Check that caught it |
+|---|---|
+| Drop the `SetIndex` change | ASan heap-use-after-free, `borrow_element.a`, `probe1` |
+| Drop the array-variable assignment exclusion | ASan heap-use-after-free, `borrow_element.a`, `probe5` |
+| Allow `ArrayPop` and `ArraySplice` | ASan heap-use-after-free, `borrow_element.a`, `probe2` |
+| Ignore the direct callee's changing summary | ASan heap-use-after-free, `borrow_element.a`, `probe3`, and `borrow_element_throw.a`, `messageInvalidates` |
+| Allow `CallClosure` | ASan heap-use-after-free, `borrow_element.a`, `probe4` |
+| Drop `Call.Virtual == 0` | ASan heap-use-after-free, `borrow_element_virtual_store.a`, `inspect` |
+| Schedule the borrowed item in `leavesBorrowScope` for scope cleanup | ASan heap-use-after-free, `borrow_element_throw.a`, after its throw and catch |
+| Remove the harmless Error allocation allowance | `TestThrowElementBorrowPlan`: both positive borrows missing |
+| Disable declaration borrowing | `TestNbodyIndexedElementsBorrow`: 0 declarations instead of 5 |
+
+All nine tests exited 1 under their mutant. The first seven reported ASan heap-use-after-free;
+the last two failed their intended assertions. The throw cleanup mutant is deliberately
+restricted to `leavesBorrowScope`, so a normal-path cleanup failure cannot mask the exceptional
+path being tested. The existing overwrite, reassignment, removal, and closure probes are
+separate functions, so one probe's change cannot mask another guard.
+
+**Counts and time.** The final compiler emits exactly the same `nbody` C as `ef3d907`
+(`cmp` exits 0). Both counted runs report 8 allocations, 8 frees, 7,000,019 retains,
+7,000,023 releases, peak 7 and 0 in regions. No nbody count was removed by this unit.
+
+On this Linux 6.18.44 container, AMD EPYC 9V74, clang 20.1.8, Go 1.27.1 and Node 24.19.0,
+`nproc` reports 5 and the cgroup quota is 4 CPUs. `bash cloud/setup.sh` printed: Go ready 0s,
+clang ready 0s, Node ready 0s, submodules ready 0s, build cache warm 104s, done 104s. The
+printed environment file is `/workspace/adamic-tools/env.sh`, sourced for every build/test shell.
+
+Separate `go run ./bench -only nbody -rounds 5` runs gave native bests of 0.704s before
+(load 3.47 to 8.48) and 0.426s after (load 1.64 to 1.54). Setup's cache warming overlapped
+the first run, and its rounds ranged from 0.704s to 2.129s; those two bests cannot establish
+a compiler speedup. With both native binaries built first and then interleaved for five
+rounds, alternating which ran first, bests were **0.451295s before and 0.461960s after**,
+load 1.20 to 1.18 (one-minute load; five-minute 1.79 to 1.78, fifteen-minute 1.04 throughout).
+Both printed `-0.169075164` then `-0.169086185`. The C is identical; the timing difference
+is an observation of run noise, not an optimization result.
+
+The whole oracle counts table was regenerated, not just the borrowing fixtures. Every row
+that differs from `ef3d907` is below, including new rows. All other rows are unchanged.
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |
+|---|---:|---:|---:|---:|---:|---:|
+| `borrow_element_virtual_move.a` before | 26 | 24 | 10 | 22 | 12 | 2 |
+| `borrow_element_virtual_move.a` after | 25 | 23 | 11 | 26 | 11 | 2 |
+| `borrow_element_throw.a` new | 38 | 38 | 34 | 54 | 8 | 0 |
+| `borrow_element_virtual_store.a` new | 13 | 11 | 9 | 15 | 7 | 2 |
+
+Why the existing row moves: both invocations of `go` now retain and release `first`, adding
+2 pairs. Its array no longer lends, so both virtual calls move the array into their consumed
+parameter instead of retaining it, removing 2 retains. In the Mapper invocation, that array
+is now unique: the existing map reuse branch takes the array over, adding 1 retain and
+2 releases for the replaced slots. The net is **1 more retain and 4 more releases**. No
+second array is allocated for the map, so allocations, frees and peak each fall by 1.
+The generated C diff shows the two new element retains, the moves that NULL `items`, and
+the same Mapper code whose uniqueness branch now runs. The two constructor objects in
+regions are unchanged. The new rows count the new throw and virtual-replacement programs;
+they have no earlier row to compare.
+
+**Commands and limits.** The focused native checks and uncached borrowing oracle pass:
+
+```sh
+go test ./internal/native -run 'TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestPassThroughsAreNotConsumers' -count=1 > /tmp/borrowed-native-focused.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element' -count=1 -timeout 30m > /tmp/borrowed-oracle.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/borrowed-counts.log 2>&1
+```
+
+`gofmt -l cmd internal` printed nothing, `git diff --check` printed nothing, and
+`go vet ./... > /tmp/borrowed-vet.log 2>&1` exited 0 with no diagnostics.
+
+The complete gate was also started:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > /tmp/borrowed-gate.log 2>&1
+```
+
+It was stopped using the worker-gate exception after more than eleven minutes, while the
+remaining stage-1 corpus tests were still running (the stopped command's exit was 143).
+Before stopping, it reported `ok` for **all tests in internal/native (251.846s) and all tests
+in internal/oracle (220.546s)**, plus the bridge (510.450s), flow (143.547s), freshness
+(50.080s), lowering (35.021s), loading (1.777s), regexp, fuzz and command test packages.
+The full repository gate is therefore **partial**, not a claimed full pass. The touched
+packages passed uncached, the complete oracle passed uncached, and the separately filtered
+borrowing oracle passed uncached as well. Remaining stage-1 packages were not fully verified
+by this unit. The log preserves the completed package results.
+
+Each wrote to a log: `/tmp/borrowed-native-focused.log`, `/tmp/borrowed-oracle.log`,
+`/tmp/borrowed-counts.log`. The mutant runner (`ADAMIC_GATE_UNCACHED=1 python3 /tmp/borrowed-mutants.py`) wrote
+`/tmp/borrowed-mutants.log` and one
+`/tmp/borrowed-mutant-<name>.log` per mutant in the table. Bench logs are
+`/tmp/borrowed-before-bench.log`, `/tmp/borrowed-after-bench.log` and
+`/tmp/borrowed-paired-bench.log`; full generated benchmark C is
+`/tmp/borrowed-before.c` and `/tmp/borrowed-after.c`.
+
+Not covered by this unit: borrowing `for...of` bindings, avoiding the iterator's own count,
+borrowing global call arguments, or resolving virtual override effects. Those need different
+emission or call-effect proofs. The borrowed declaration rule stays conservative on array
+stores, reassignment, removal, closure calls, callbacks and operations it cannot prove.
 
 ## Strings, specifically
 
