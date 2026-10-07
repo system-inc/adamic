@@ -3,10 +3,11 @@ whole run finished
 exit=1 wall_seconds=5689
 whole test events: pass=5159 fail=2 skip=27
 whole package failures: internal/unicodeproperties; stage1/cohere/json; stage1/cohere/lint (60m timeout); stage1/cohere/markdownblocks (60m timeout)
-solo rerun currently: stage1/cohere/lint
+solo rerun currently: stage1/cohere/markdownblocks
 rerun-json: package=stage1/cohere/json exit=0 wall_seconds=1084; test events pass=18 fail=0 skip=1
-rerun-lint: running; no final result; test events pass=51 fail=0 skip=4
+rerun-lint: package=stage1/cohere/lint exit=0 wall_seconds=3018; test events pass=65 fail=0 skip=5
+rerun-markdownblocks: running; no final result; test events pass=0 fail=0 skip=0
 rerun-unicodeproperties: package=internal/unicodeproperties interrupted=1 completed_pass=1 completed_fail=0 completed_skip=0 wall_seconds=unknown; test events pass=1 fail=0 skip=0
 Unicode solo was interrupted by session cancellation after about 11 minutes; not restarted.
 JSON solo additionally sets ADAMIC_JSON_PRETTIER=/workspace/adamic-gate/reference; whole run omitted this variable.
-Markdownblocks solo has not started.
+Markdownblocks solo started.
