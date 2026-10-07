@@ -1,0 +1,37 @@
+=== RUN   TestBatch21Helpers
+    batch21_test.go:63: /tmp/adamic-gate/TestBatch21Helpers1849604622/003/oracle [/workspace/adamic/stage1/cohere/lint/helpers/slot03/batch21/testdata/sources.jsonl.gz /tmp/adamic-gate/TestBatch21Helpers1849604622/003/cases.json]: exit status 2
+        
+        panic: fileName should be normalized and absolute: "Component.tsx"
+        
+        goroutine 1 [running]:
+        github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewSourceFile(0x28bf9126c710, {{0x28bf9126a6b0, 0xd}, {0x28bf9126a6b0, 0xd}, {0x0, 0x0}}, {0x28bf910b3680, 0x3b}, 0x28bf9129e100, ...)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2528 +0x24e
+        github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSourceFileWorker(0x28bf9126c708)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:449 +0x2a7
+        github.com/microsoft/TypeScript/tsc/internal/parser.ParseSourceFile({{0x28bf9126a6b0, 0xd}, {0x28bf9126a6b0, 0xd}, {0x0, 0x0}}, {0x28bf910b3680, 0x3b}, 0x4)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:143 +0x14b
+        github.com/microsoft/TypeScript/tsc/shim/parser.ParseSourceFile(...)
+        	/workspace/adamic/cohere/TypeScript-shim/parser/shim.go:16
+        main.main()
+        	/workspace/adamic/cohere/adamic_slot03_batch21.go:70 +0x16c
+--- FAIL: TestBatch21Helpers (11.90s)
+=== RUN   TestBatch21Mutants
+    batch21_test.go:76: /tmp/adamic-gate/TestBatch21Mutants1923707785/003/oracle [/workspace/adamic/stage1/cohere/lint/helpers/slot03/batch21/testdata/sources.jsonl.gz /tmp/adamic-gate/TestBatch21Mutants1923707785/003/cases.json]: exit status 2
+        
+        panic: fileName should be normalized and absolute: "Component.tsx"
+        
+        goroutine 1 [running]:
+        github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewSourceFile(0x1ad64aeda710, {{0x1ad64aed86c0, 0xd}, {0x1ad64aed86c0, 0xd}, {0x0, 0x0}}, {0x1ad64ad21680, 0x3b}, 0x1ad64af0c100, ...)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2528 +0x24e
+        github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSourceFileWorker(0x1ad64aeda708)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:449 +0x2a7
+        github.com/microsoft/TypeScript/tsc/internal/parser.ParseSourceFile({{0x1ad64aed86c0, 0xd}, {0x1ad64aed86c0, 0xd}, {0x0, 0x0}}, {0x1ad64ad21680, 0x3b}, 0x4)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:143 +0x14b
+        github.com/microsoft/TypeScript/tsc/shim/parser.ParseSourceFile(...)
+        	/workspace/adamic/cohere/TypeScript-shim/parser/shim.go:16
+        main.main()
+        	/workspace/adamic/cohere/adamic_slot03_batch21.go:70 +0x16c
+--- FAIL: TestBatch21Mutants (2.31s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	14.215s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestUnknownClassFixturesActuallyRan
+=== PAUSE TestUnknownClassFixturesActuallyRan
+=== CONT  TestUnknownClassFixturesActuallyRan
+    no_unknown_classes_test.go:583: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
+--- FAIL: TestUnknownClassFixturesActuallyRan (0.00s)
+FAIL
+FAIL	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.011s
+FAIL

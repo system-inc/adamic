@@ -1,0 +1,28 @@
+=== RUN   TestBatch21Mutants/split_path.a
+    batch21_test.go:132: compiled semantic mutant caught at line 650 byte 0: got "47,//last:47,;" Go "//last:47,;last:;"
+=== RUN   TestBatch21Mutants/split_path.a#01
+    batch21_test.go:132: compiled semantic mutant caught at line 12 byte 0: got "47,0,/0,/last:0,47,0,;last:0,;" Go "0,/0,/last:0,47,0,;last:0,;"
+=== RUN   TestBatch21Mutants/split_path.a#02
+    batch21_test.go:132: compiled semantic mutant caught at line 837 byte 20: got "101,110,46,116,115,/47,95,116,114,97,110,115,108,97,116,105,111,110,115,/last:47,95,116,114,97,110,115,108,97,116,105,111,110,115,47,101,110,46,116,115,;last:47,95,116,114,97,110,115,108,97,116,105,111,110,115,;" Go "101,110,46,116,115,/95,116,114,97,110,115,108,97,116,105,111,110,115,/last:47,95,116,114,97,110,115,108,97,116,105,111,110,115,47,101,110,46,116,115,;last:47,95,116,114,97,110,115,108,97,116,105,111,110,115,;"
+=== RUN   TestBatch21Mutants/split_path.a#03
+    batch21_test.go:132: compiled semantic mutant caught at line 34 byte 183: got "32,32,125,10,9,9,9,32,32,32,32,32,32,32,32,32,32,32,32,125,/47,98,111,100,121,62,10,9,9,9,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,60,/last:10,9,9,9,32,32,32,32,32,32,32,32,32,32,32,32,105,109,112,111,114,116,32,68,111,99,117,1..." Go "32,32,125,10,9,9,9,32,32,32,32,32,32,32,32,32,32,32,32,125,/98,111,100,121,62,10,9,9,9,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,60,/last:10,9,9,9,32,32,32,32,32,32,32,32,32,32,32,32,105,109,112,111,114,116,32,68,111,99,117,109,..."
+=== RUN   TestBatch21Mutants/split_path.a#04
+    batch21_test.go:132: compiled semantic mutant caught at line 12 byte 3: got "0,//last:0,47,0,;last:0,47,0,;" Go "0,/0,/last:0,47,0,;last:0,;"
+=== RUN   TestBatch21Mutants/has_path_segment.a
+    batch21_test.go:132: compiled semantic mutant caught at line 2 byte 0: got "1" Go "0"
+=== RUN   TestBatch21Mutants/has_path_segment.a#01
+    batch21_test.go:132: compiled semantic mutant caught at line 1814 byte 0: got "1" Go "0"
+=== RUN   TestBatch21Mutants/has_path_segment.a#02
+    batch21_test.go:132: compiled semantic mutant caught at line 399 byte 0: got "0" Go "1"
+=== RUN   TestBatch21Mutants/has_path_segment.a#03
+    batch21_test.go:132: compiled semantic mutant caught at line 1709 byte 0: got "0" Go "1"
+=== RUN   TestBatch21Mutants/has_path_segment.a#04
+    batch21_test.go:132: compiled semantic mutant caught at line 17 byte 0: got "1" Go "0"
+=== RUN   TestBatch21Mutants/has_path_segment.a#05
+    batch21_test.go:132: compiled semantic mutant caught at line 399 byte 0: got "0" Go "1"
+=== RUN   TestBatch21Mutants/gap_root_accepts_modifier.a
+    batch21_test.go:132: compiled semantic mutant caught at line 5886 byte 0: got "1" Go "0"
+=== RUN   TestBatch21Mutants/gap_root_accepts_modifier.a#01
+    batch21_test.go:132: compiled semantic mutant caught at line 5886 byte 0: got "1" Go "0"
+=== RUN   TestBatch21Mutants/gap_root_accepts_modifier.a#02
+    batch21_test.go:132: compiled semantic mutant caught at line 5905 byte 0: got "0" Go "1"

@@ -1,0 +1,12 @@
+export type SplitPath = {baseName: readonly number[]; parentName: readonly number[]};
+export function splitPath(filePath: readonly number[], lastSeparator: (path: readonly number[]) => number): SplitPath {
+ let baseName = filePath; let parentName: readonly number[] = [];
+ const index = lastSeparator(filePath);
+ if (index >= 0) {
+  baseName = filePath.slice(index + 1);
+  const parent = filePath.slice(0,index); parentName = parent;
+  const parentIndex = lastSeparator(parent);
+  if (parentIndex >= 0) { parentName = parent.slice(parentIndex + 1); }
+ }
+ return {baseName,parentName};
+}

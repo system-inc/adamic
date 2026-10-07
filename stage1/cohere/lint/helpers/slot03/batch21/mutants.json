@@ -1,0 +1,86 @@
+[
+  {
+    "file": "split_path.a",
+    "old": "index >= 0",
+    "new": "index > 0",
+    "prefix": ""
+  },
+  {
+    "file": "split_path.a",
+    "old": "filePath.slice(index + 1)",
+    "new": "filePath.slice(index)",
+    "prefix": ""
+  },
+  {
+    "file": "split_path.a",
+    "old": "parentIndex >= 0",
+    "new": "parentIndex > 0",
+    "prefix": ""
+  },
+  {
+    "file": "split_path.a",
+    "old": "parent.slice(parentIndex + 1)",
+    "new": "parent.slice(parentIndex)",
+    "prefix": ""
+  },
+  {
+    "file": "split_path.a",
+    "old": "lastSeparator(parent)",
+    "new": "lastSeparator(filePath)",
+    "prefix": ""
+  },
+  {
+    "file": "has_path_segment.a",
+    "old": "segment.length === 0",
+    "new": "false",
+    "prefix": ""
+  },
+  {
+    "file": "has_path_segment.a",
+    "old": "byte === 92",
+    "new": "false",
+    "prefix": ""
+  },
+  {
+    "file": "has_path_segment.a",
+    "old": "byte === 47",
+    "new": "false",
+    "prefix": ""
+  },
+  {
+    "file": "has_path_segment.a",
+    "old": "index <= path.length",
+    "new": "index < path.length",
+    "prefix": ""
+  },
+  {
+    "file": "has_path_segment.a",
+    "old": "equal = false;",
+    "new": "equal = true;",
+    "prefix": ""
+  },
+  {
+    "file": "has_path_segment.a",
+    "old": "start = index + 1",
+    "new": "start = index",
+    "prefix": ""
+  },
+  {
+    "file": "gap_root_accepts_modifier.a",
+    "old": "if (isColor)",
+    "new": "if (!isColor)",
+    "prefix": ""
+  },
+  {
+    "file": "gap_root_accepts_modifier.a",
+    "old": "return false;",
+    "new": "return true;",
+    "prefix": ""
+  },
+  {
+    "file": "gap_root_accepts_modifier.a",
+    "old": "for (const isColor of arms)",
+    "new": "for (const isColor of arms.slice(0,1))",
+    "prefix": ""
+  }
+]

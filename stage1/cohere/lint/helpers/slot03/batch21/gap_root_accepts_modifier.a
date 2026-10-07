@@ -1,0 +1,4 @@
+export function gapRootAcceptsModifierOnArbitrary(arms: readonly boolean[]): boolean {
+ for (const isColor of arms) { if (isColor) { return true; } }
+ return false;
+}

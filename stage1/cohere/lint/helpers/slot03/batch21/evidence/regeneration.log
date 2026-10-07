@@ -1,0 +1,31 @@
+{
+  "symbols": [
+    "nextjs.splitPath",
+    "imports.HasPathSegment",
+    "collapse.gapRootAcceptsModifierOnArbitrary"
+  ],
+  "rules": [
+    "@next/next/no-head-import-in-document",
+    "@next/next/no-page-custom-font",
+    "@next/next/no-styled-jsx-in-document",
+    "better-tailwindcss/enforce-consistent-class-order",
+    "better-tailwindcss/enforce-shorthand-classes",
+    "better-tailwindcss/no-unknown-classes",
+    "nexus/boundary-no-internal-import",
+    "nexus/import-require-path-alias",
+    "nexus/localization-no-untranslated-value"
+  ],
+  "sources": 264,
+  "packages": [
+    "./internal/lint/rules/next",
+    "./internal/lint/rules/nexus",
+    "./internal/lint/rules/tailwind"
+  ],
+  "capture_gate_exit": 1,
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/slot03/batch21/testdata/regenerate.py", line 59, in <module>
+    assert result.returncode==0, "Upstream package gate failed; capture.log records the missing external inputs. Captured data is not a passing package gate."
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: Upstream package gate failed; capture.log records the missing external inputs. Captured data is not a passing package gate.

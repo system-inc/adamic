@@ -1,0 +1,15 @@
+import {panic,readTextFile,programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {lastSeparator} from '../batch20/last_separator.a';
+import {splitPath} from './split_path.a';
+import {hasPathSegment} from './has_path_segment.a';
+import {gapRootAcceptsModifierOnArbitrary} from './gap_root_accepts_modifier.a';
+const file=readTextFile(programArguments()[0]??panic('missing cases'));if(file.kind==='Error'){panic(file.message);}
+const json=new OptionsJson(file.text);const root=json.parse();if(root<0){panic(json.error);}
+function numbers(row:number,key:string):number[]{const out:number[]=[];for(const n of json.node(json.field(row,key)).children){out.push(Number(json.node(n).text));}return out;}
+function units(values:readonly number[]):string{let out='';for(const v of values){out+=`${v},`;}return out;}
+for(const row of json.node(root).children){const op=json.node(json.field(row,'op')).text;
+ if(op==='arm'){const arms:boolean[]=[];for(const n of json.node(json.field(row,'arms')).children){arms.push(json.node(n).text==='true');}console.log(`${gapRootAcceptsModifierOnArbitrary(arms)?1:0}`);}
+ else if(op==='segment'){console.log(`${hasPathSegment(numbers(row,'path'),numbers(row,'segment'))?1:0}`);}
+ else{let trace='';const value=splitPath(numbers(row,'path'),path=>{trace+=`last:${units(path)};`;return lastSeparator(path);});console.log(`${units(value.baseName)}/${units(value.parentName)}/${trace}`);}
+}
