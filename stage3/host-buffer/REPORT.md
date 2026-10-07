@@ -1,12 +1,12 @@
 Catchable crypto errors remain unsupported: Adamic Error has name/message but no Node .code; try around hash operations is rejected.
-Built Buffer encodings, BOM swaps, indexing/length, System wrapper chains and SHA-256 on both backends.
-Implementation commit: 1321859fccc4c7391d1ca3b34eeb1f18b16ba818; branch codex/host-buffer-crypto, based on ef3d907ecdc4c771b016f7d9c52372def057a340.
-Validation: touched-package go test, final uncached Node oracle, go vet and gofmt passed; full gate attempt stopped after finding two corrected proof gaps.
-Mutants: all 15 semantic mutants caught by Node comparison and three proof mutants caught by their guards; require integration, native tsc proof and macOS validation remain outside this unit.
+Built Buffer encodings, BOM swaps, indexing/length, System wrapper chains and SHA-256 on both backends; removed all unit declaration copies and the loader hook.
+Implementation commits: 1321859fccc4c7391d1ca3b34eeb1f18b16ba818 and 4453ba184af55ffba9ac1c1a3b72c801af9fc6e1; branch codex/host-buffer-crypto.
+Current validation: Go compilation, vet, formatting, IR proofs and declaration-independent Node runtime comparison pass; source fixtures need the shared @types/node hook.
+Mutants: prior 15 semantic and three proof mutants caught; one new independent hash mutant caught by Node. Shared hook merge, real sys.ts fixtures, native tsc proof and macOS remain pending.
 
 Scope and references
 
-The contract is origin/codex/tsc-census (429c1177f0130f785c19cf590d1860513b2ddbfc) stage3/census/REPORT.md and its system_contract.json/node_derived_sites.json, using TypeScript sys.ts from v6.0.3 and declarations selected from @types/node 25.3.3. Named node:buffer and node:crypto imports use the embedded declarations. require wiring belongs to the shared TypeScript patch set.
+The contract is origin/codex/tsc-census (429c1177f0130f785c19cf590d1860513b2ddbfc) stage3/census/REPORT.md and its system_contract.json/node_derived_sites.json, using TypeScript sys.ts from v6.0.3 and the lockfile-pinned @types/node 25.3.3. sys.ts will use static node:* imports through the TypeScript patch set; literal require calls later become the same imports. The fs_file worker owns the shared declaration loader. This branch has no unit-owned node_*.d.ts copies or declaration loader hook.
 
 Buffer.from accepts strings with literal utf8/utf-8, utf16le/utf-16le/ucs2/ucs-2, base64 and hex, plus numeric arrays and Buffer copies. toString accepts the same encodings and numeric byte offsets. Numeric writes truncate modulo 256 and ignore invalid indices. The sys.ts UTF-16 big-endian BOM loop is reproduced in a fixture. System base64encode/base64decode and createSHA256Hash are tested as the same wrapper chains; this unit does not modify TypeScript's System interface.
 
@@ -53,11 +53,11 @@ utf8_reprocess: CAUGHT; fixture=utf8; comparisons=stdout differs; log=/tmp/host-
 hash_finalization: CAUGHT; fixture=finalized; comparisons=exit codes differ; log=/tmp/host-buffer-mutants/hash_finalization.log
 ```
 
-Final gate observations
+Earlier gate observations, before the declaration ownership correction
 
 The initial command ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... found two integration gaps: TestEveryWriteIsRecordedAndKnown did not know NodeBufferCall, and TestRuntimeFieldLayoutsAreIncluded lacked Hash's bytes/finalized slots. These are corrected by a unit-owned freshness handler and a runtime-layout entry. The new TestNodeBufferHashUpdateKeepsAlias checks that the analysis preserves Hash.update's receiver alias. The initial run's full oracle passed (205.778s), but the whole gate was stopped with exit 143 after more than ten minutes while unrelated parser audits remained active. It is not a completed passing full gate.
 
-Final commands, on the restored implementation:
+Commands on the initial restored implementation, before removal of its local declarations:
 
 - gofmt -l cmd internal: no output.
 - go vet ./...: exit 0, no output.
@@ -79,3 +79,20 @@ host_cycle_dispatch: CAUGHT by TestEveryWriteIsRecordedAndKnown; log=/tmp/host-b
 The first alias mutant accidentally left an unused Go variable and was rejected as a build failure; it did not count. The corrected mutant explicitly consumes the receiver and returns a distinct fresh object, compiling successfully and failing only the alias assertion. Every mutant restored the exact original source before the final checks.
 
 Small shared hooks are required in the declaration loader, expression dispatch, Buffer type/index handling, exception refusal, flow effects, freshness dispatch and runtime field-layout proof. The four files prohibited by the unit instructions were not edited. No PR is opened.
+
+Declaration ownership correction
+
+The TypeScript seat corrected the integration contract: sys.ts uses static node:* imports, @types/node is exactly 25.3.3 from stage3/api on origin/codex/tsc-census, and codex/host-fs-file owns the shared declaration loader. Removed internal/load/node_buffer.d.ts, node_crypto.d.ts and their embed file. Restored source_fs.go and tsconfig.json to origin/main's declaration loading. No replacement loader was built.
+
+Lowering now recognizes Buffer/Hash and crypto exports from declarations under /@types/node/ inside the actual node:buffer/node:crypto ambient modules. This path convention and behavior against the full upstream declarations must be confirmed when the shared hook SHA arrives. Supported census calls keep their intrinsic lowering. Other Buffer/Hash methods, static members and crypto exports are refused with NotYet containing the member's name. An early read guard prevents inherited Hash stream fields from being mistaken for private runtime slots, including reads through string indices. Added refusal probes for Buffer.alloc, Buffer.byteOffset, Hash.copy, Hash.writable, randomBytes, Hash-as-value and isUtf8. These probes cannot run until the shared hook is merged.
+
+Current checks after removing the local declarations:
+
+- go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/fresh ./internal/flow -run '^$': passed. See [shared-types-build.log](shared-types-build.log).
+- go test ./internal/fresh ./internal/native -run 'Test(NodeBufferHashUpdateKeepsAlias|RuntimeFieldLayoutsAreIncluded)' -count=1: passed, 0.006s per package.
+- go test ./internal/lower -run 'Test(ConsoleLowersToWriteLine|FiveRefused|ReadonlyFieldsAreJudgedByTheirConstructors)' -count=1: passed, 0.106s.
+- go test ./internal/native -run '^TestNodeBufferRuntimeWithoutDeclarations$' -count=1 -v: passed, 0.709s. This direct IR test compares both generated JavaScript and sanitized/release native binaries against independently written source on Node v24.19.0. It covers malformed/truncated UTF-8, base64 padding/whitespace, lone UTF-16 surrogates and odd lengths, plus SHA-256 on 32 deterministic random byte-derived UTF-16 strings. See [independent-runtime.log](independent-runtime.log).
+- New mutant: change JavaScript Hash.digest emission from .digest('hex') to .digest('hex').toUpperCase(). TestNodeBufferRuntimeWithoutDeclarations fails with "JavaScript stdout differs from Node", without a compiler/sanitizer failure. Restore the exact source and rerun: passed. See [independent-mutant.log](independent-mutant.log).
+- gofmt -l cmd internal: no output; go vet ./...: exit 0, no output; git diff --check: no output.
+
+Observed blocker: go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a$' -count=1 fails at Load with TS2591, "Cannot find name 'node:crypto'". See [shared-types-blocked.log](shared-types-blocked.log). Thus the earlier source fixture gates are historical evidence, not a claim that the corrected branch's complete gate currently passes. The source oracle fixtures, new member refusal probes, counts verification and source-based mutant runners require the shared hook. Merge its exact commit when supplied, then rerun those checks and the real sys.ts fixture branch when forwarded. Runtime and IR tests remain runnable now.
