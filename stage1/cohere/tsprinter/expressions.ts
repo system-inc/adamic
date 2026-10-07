@@ -148,6 +148,24 @@ export class Expressions {
         }
         if(parent < 0) return false;
         const outer = this.node(parent);
+        if(node.kind === 'AwaitExpression' || node.kind === 'YieldExpression')
+            return (
+                role === 'tag' ||
+                role === 'object' ||
+                role === 'callee' ||
+                (outer.kind === 'ConditionalExpression' && role === 'test') ||
+                (outer.kind === 'BinaryExpression' && !this.isAssignment(parent)) ||
+                (node.kind === 'YieldExpression' && outer.kind === 'AwaitExpression') ||
+                [
+                    'PrefixUnaryExpression',
+                    'DeleteExpression',
+                    'VoidExpression',
+                    'TypeOfExpression',
+                    'SpreadElement',
+                    'SpreadAssignment',
+                    'NonNullExpression',
+                ].includes(outer.kind)
+            );
         if(node.kind === 'ArrowFunction')
             return (
                 role === 'callee' ||
@@ -162,6 +180,7 @@ export class Expressions {
                     'VoidExpression',
                     'TypeOfExpression',
                     'NonNullExpression',
+                    'AwaitExpression',
                 ].includes(outer.kind)
             );
         if(outer.kind === 'NewExpression' && role === 'callee') {
@@ -171,6 +190,7 @@ export class Expressions {
                     'PropertyAccessExpression',
                     'ElementAccessExpression',
                     'NonNullExpression',
+                    'AwaitExpression',
                     'TaggedTemplateExpression',
                 ].includes(this.node(current).kind)
             )
@@ -233,6 +253,7 @@ export class Expressions {
                     'VoidExpression',
                     'TypeOfExpression',
                     'NonNullExpression',
+                    'AwaitExpression',
                     'SpreadElement',
                     'SpreadAssignment',
                 ].includes(outer.kind)
@@ -263,6 +284,7 @@ export class Expressions {
                     'VoidExpression',
                     'TypeOfExpression',
                     'NonNullExpression',
+                    'AwaitExpression',
                     'SpreadElement',
                     'SpreadAssignment',
                 ].includes(outer.kind)
@@ -503,10 +525,16 @@ export class Expressions {
                 'VoidExpression',
                 'TypeOfExpression',
                 'NonNullExpression',
+                'AwaitExpression',
+                'YieldExpression',
             ].includes(this.node(current).kind) &&
+            !(this.node(current).kind === 'YieldExpression' && this.node(current).children.length === 0) &&
             !['++', '--'].includes(this.operator(current))
         )
-            current = this.child(current, 0);
+            current = this.child(
+                current,
+                this.node(current).kind === 'YieldExpression' ? this.node(current).children.length - 1 : 0,
+            );
         return this.node(current).kind === 'StringLiteral' || this.poorlyBreakable(current);
     }
     assignmentDoc(index: number, parent: number, left: number, right: number): number {
@@ -1750,6 +1778,44 @@ export class Expressions {
                             : this.docs.group(this.docs.indent(this.docs.concat([this.docs.softline(), lookup]))),
                     ]);
                 }
+                break;
+            }
+            case 'AwaitExpression': {
+                result = this.docs.concat([this.docs.text('await '), this.print(this.child(id, 0), id, 'argument')]);
+                if(role === 'callee' || role === 'object') {
+                    result = this.docs.concat([
+                        this.docs.indent(this.docs.concat([this.docs.softline(), result])),
+                        this.docs.softline(),
+                    ]);
+                    let enclosing = -1;
+                    for(let position = this.ancestors.length - 2; position >= 0; position--) {
+                        const ancestor = this.ancestors[position] ?? panic('missing await ancestor');
+                        if(['AwaitExpression', 'Block'].includes(this.node(ancestor).kind)) {
+                            enclosing = ancestor;
+                            break;
+                        }
+                    }
+                    if(
+                        enclosing < 0 ||
+                        this.node(enclosing).kind !== 'AwaitExpression' ||
+                        this.leftmost(this.child(enclosing, 0)) !== id
+                    )
+                        result = this.docs.group(result);
+                }
+                break;
+            }
+            case 'YieldExpression': {
+                const delegated =
+                    node.children.length > 0 &&
+                    this.node(node.children[0] ?? panic('missing yield token')).kind === 'AsteriskToken';
+                const offset = delegated ? 1 : 0;
+                result = this.docs.text(delegated ? 'yield*' : 'yield');
+                if(node.children.length > offset)
+                    result = this.docs.concat([
+                        result,
+                        this.docs.text(' '),
+                        this.print(this.child(id, offset), id, 'argument'),
+                    ]);
                 break;
             }
             case 'TaggedTemplateExpression':

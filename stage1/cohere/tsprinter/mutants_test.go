@@ -10,6 +10,8 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"await loses its keyword", "expressions.ts", "this.docs.text('await ')", "this.docs.text('void ')", "main.ts"},
+	{"yield loses delegation", "expressions.ts", "delegated ? 'yield*' : 'yield'", "delegated ? 'yield' : 'yield'", "main.ts"},
 	{"tagged template loses its tag", "expressions.ts", "this.print(this.child(id, 0), id, 'tag')", "this.docs.text('')", "main.ts"},
 	{"template preview loses optional stopping boundaries", "expressions.ts", "for(const boundary of this.optionalBoundaries) flatPrinter.optionalBoundaries.add(boundary);", "for(const boundary of this.optionalBoundaries) flatPrinter.sequenceBoundaries.add(boundary);", "main.ts"},
 	{"computed key forgets its clean text", "expressions.ts", "const keyText = this.docs.textContent(left);", "const keyText = this.docs.get(left).kind === 'text' ? this.docs.get(left).text : undefined;", "main.ts"},

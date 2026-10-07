@@ -931,3 +931,56 @@ native, then mismatches at line 114199: `` `raw`; `` instead of `` tag`raw`; ``.
 in **271.19 s**, complete command **277.182 s**. This was on the semantically identical source before
 moving the two pure declarations; the tag printer and mutation anchor are unchanged by that move.
 No full-repository gate was run.
+
+### Tagged-template throughput
+
+After both gates ended, the final source was frozen under `/tmp/ts-printer-tag-snapshot` and all
+measurements completed before starting the next native compilation. This isolates source changes
+and build CPU load from the benchmark. The corpus and release binary are from the final tag gate.
+
+```sh
+python3 /tmp/ts-printer-tag-snapshot/stage1/cohere/tsprinter/testdata/measure.py \
+  /tmp/ts-printer-tag-final-corpus /tmp/ts-printer-tag-final-artifacts/port \
+  /tmp/ts-printer-go-oracle /tmp/graphql-printer-prettier \
+  > /tmp/ts-printer-tag-timing.json 2> /tmp/ts-printer-tag-timing.err
+```
+
+Exit 0, empty stderr, three sequential complete-process runs per side, every sample byte-identical
+to Go. On **145,440 texts**, median texts/s: native **34,428**, Node **62,747**, Go **46,886**,
+npm Prettier **3,089**. Native is 0.73x Go and 0.55x Node on this workload, and 11.15x npm Prettier.
+This is a workload result, not a causal performance comparison with earlier corpora or machines.
+Raw samples and source SHA are in `results/tag-timing.json`.
+
+## Contextual await and yield increment
+
+The generator adds 404 async/generator compositions and edge cases: nine operands, six await body
+layouts, five yield layouts, four outer contexts, plus bare/delegated assignments and nested async
+arrows. Context remains the parser's actual async/generator context. A preliminary corpus caught
+60 extra yield-argument parentheses, and a separate valid bare-yield assignment probe caught a
+missing-child panic. Both were fixed in scratch and their inputs retained before native validation.
+The typed-await/cast input replaces the previous bare-await gap; there are still 13 proving inputs.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-await-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-await-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-await-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/(await|yield)' > /tmp/ts-printer-await-mutants.log 2>&1
+```
+
+Both exit 0. Full gate **444.419 s: 145,873 / 145,873** maximal fragments from 199 files, no full-file
+parse failure. Strict Go, npm Prettier and embedded-fork equality holds on source Node, native
+ASan/UBSan, JavaScript backend and native release. The separate leak pass and all 13 exact NotYet
+proofs pass. Coverage is in `results/await-coverage.json`. Source cohere: 276 rules, ten checked,
+100% Adamic-ready. Package vet and whitespace checks pass; no full-repository gate was run.
+
+Both mutants compile and finish normally with exit 0 and empty stderr on Node and native, then
+mismatch only in output. Await becomes `void`: first mismatch line 114228, **286.01 s**.
+Yield delegation disappears: first mismatch line 114260, **284.74 s**. Complete mutant command
+**291.807 s**, exit 0. No internal compiler or parser file changed.

@@ -185,3 +185,10 @@ assignments, arrows, calls, member chains and constructors. Required tag parenth
 chain stopping boundaries are retained. Tagged assignment values follow Go's rule that avoids a
 break after the operator. Jest `each` tables and type arguments are explicit proving gaps.
 Syntax classification is now pure code in `syntax.ts`; document state remains on the concrete printer.
+
+## Await/yield increment
+
+Contextual await, bare yield and delegated yield compose with supported async arrows, named
+functions, generators and object methods. Receiver and callee await groups, nesting, precedence,
+assignments and long operands follow Go. The input parser retains its actual async/generator
+context; the formatter does not force those words into operators globally.

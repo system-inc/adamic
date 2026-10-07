@@ -24,7 +24,7 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | `a +` then a blank line then `b` | `source-trivia` | Preserve source-driven empty-line decisions |
 | `a; b` | `expression-file` | Statement and document composition |
 | String with a backslash-newline continuation | `string-literal-layout` | Multiline raw literal layout |
-| `await value` | `AwaitExpression` | Contextual await and yield |
+| `async x=>await (x as T)` | `AsExpression` | Await composes; cast/type syntax remains a type-printer gap |
 | Numeric array with a whitespace-only blank line | `source-trivia` | Preserve empty lines containing spaces |
 
 Comments are conservatively detected by raw marker substrings. This also declines a marker inside
@@ -263,3 +263,16 @@ is in `testdata/notyet.json`. Typed tag arguments likewise remain a precise `tag
 Embedded-language formatting is outside this printer. Go's template printer explicitly has no
 embed hook; CSS, HTML, GraphQL and Markdown embedding would need independent upstream reports.
 The accepted ordinary-tag corpus has no upstream exceptions.
+
+## Await and yield family
+
+Await/yield compose in async arrows, named async functions and generators. Receiver/callee await
+layout, nested await, precedence and delegated versus bare yield follow Go. A bare yield has no
+argument; a delegation token is not that argument. The scratch prototype initially panicked on
+`x=yield`, so the final generator includes bare and delegated assignment cases. Another scratch
+probe caught extra parentheses around `yield a+b`; yield and await arguments now have their
+separate precedence rules. These corrected prototypes were not counted as green native runs.
+
+Context belongs to the parsed source. The driver does not force every `await` or `yield` token into
+expression syntax: call-like uses outside those contexts retain the parser's interpretation.
+Typed await operands remain the explicit `AsExpression` proving gap. No compiler file changed.

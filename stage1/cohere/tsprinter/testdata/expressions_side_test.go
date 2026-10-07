@@ -30,7 +30,7 @@ func supportedExpression(node *estree.Node) bool {
 	case "Identifier", "PrivateIdentifier", "Literal", "ThisExpression", "Super":
 		return true
 	case "ObjectExpression", "Property", "ConditionalExpression", "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
-	case "TemplateLiteral", "FunctionExpression", "ArrowFunctionExpression", "AssignmentPattern", "RestElement", "BlockStatement", "ExpressionStatement", "ReturnStatement", "ThrowStatement", "EmptyStatement", "DebuggerStatement", "BreakStatement", "ContinueStatement":
+	case "AwaitExpression", "YieldExpression", "TemplateLiteral", "FunctionExpression", "ArrowFunctionExpression", "AssignmentPattern", "RestElement", "BlockStatement", "ExpressionStatement", "ReturnStatement", "ThrowStatement", "EmptyStatement", "DebuggerStatement", "BreakStatement", "ContinueStatement":
 	case "CallExpression", "NewExpression", "TaggedTemplateExpression":
 		if node.Child("typeArguments") != nil {
 			return false
@@ -119,6 +119,23 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
 		}
+	}
+	for _, operand := range []string{"x", "1", "f(x)", "({x:1})", "[1,2]", "a+b", "a?b:c", "veryLongIdentifierAlpha+veryLongIdentifierBeta+veryLongIdentifierGamma", "object.first().second().third()"} {
+		for _, body := range []string{"return await " + operand + ";", "return (await " + operand + ").value;", "return (await " + operand + ")(x);", "return await (await " + operand + ").value;", "return !(await " + operand + ");", "return await " + operand + "+x;"} {
+			value := "async function named(){" + body + "}"
+			for _, context := range []string{"(" + value + ")", "x=" + value, "f(" + value + ")", "({method: " + value + "})"} {
+				add("await-composition", context)
+			}
+		}
+		for _, body := range []string{"yield " + operand + ";", "return yield " + operand + ";", "yield* " + operand + ";", "return (yield " + operand + ").value;", "return (yield " + operand + ")+x;"} {
+			value := "function* named(){" + body + "}"
+			for _, context := range []string{"(" + value + ")", "x=" + value, "f(" + value + ")", "({method: " + value + "})"} {
+				add("yield-composition", context)
+			}
+		}
+	}
+	for _, source := range []string{"(function* named(){yield;})", "(function* named(){x=yield;})", "(function* named(){x=yield*foo;})", "(function* named(){({longProperty:yield*foo});})", "(async function named(){x=await foo;})", "(async function* named(){yield await x;await (yield x);})", "async x=>await x", "async x=>(await f(x)).value"} {
+		add("await-yield-edge", source)
 	}
 	for _, tag := range []string{"tag", "veryLongTagIdentifierAlphaVeryLongTagIdentifierBeta", "object.tag", "factory().tag", "object[key]", "(a+b)", "(!x)", "(a?b:c)", "(x=>x)", "(function named(){})", "(obj?.tag)", "f()"} {
 		for _, template := range []string{"`raw`", "`a${x}b`", "`a\n    ${a+b}\nb`", "`a${(x?.y).z}b`", "`a${veryLongIdentifierAlpha+veryLongIdentifierBeta+veryLongIdentifierGamma}b`", "`a${({method(){return x;}})}b`"} {
@@ -556,6 +573,8 @@ func supportedSyntax(node *ast.Node) bool {
 		return valid
 	case ast.KindEmptyStatement, ast.KindDebuggerStatement:
 		return true
+	case ast.KindAwaitExpression, ast.KindYieldExpression:
+		return supportedSyntax(node.Expression())
 	case ast.KindTaggedTemplateExpression:
 		item := node.AsTaggedTemplateExpression()
 		return item.TypeArguments == nil && !jestSyntaxTag(item.Tag) && supportedSyntax(item.Tag) && supportedSyntax(item.Template)

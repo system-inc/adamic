@@ -342,6 +342,15 @@ export function unsupported(parser: Parser, source: string, index: number): stri
         case 'GetAccessor':
         case 'SetAccessor':
             return functionUnsupported(parser, source, id);
+        case 'AwaitExpression':
+            break;
+        case 'YieldExpression':
+            for(const child of node.children) {
+                if(syntaxNode(parser, child).kind === 'AsteriskToken') continue;
+                const reason = unsupported(parser, source, child);
+                if(reason !== '') return reason;
+            }
+            return '';
         case 'TaggedTemplateExpression':
             if(node.children.length !== 2) return 'tag-type-arguments';
             if(jestTag(parser, syntaxChild(parser, id, 0))) return 'jest-template-table';

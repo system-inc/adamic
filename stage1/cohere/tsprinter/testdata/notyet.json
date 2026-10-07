@@ -28,8 +28,8 @@
     "Reason": "string-literal-layout"
   },
   {
-    "Source": "await value",
-    "Reason": "AwaitExpression"
+    "Source": "async x=>await (x as T)",
+    "Reason": "AsExpression"
   },
   {
     "Source": "[1,\n    \n2]",
