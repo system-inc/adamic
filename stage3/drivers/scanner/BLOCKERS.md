@@ -1,5 +1,48 @@
 # Scanner blockers
 
+## October 7: discovery behind an untracked capture stub
+
+**Found behind a stub. These are not validated adaptations or native proof.**
+Compiler: scratch 32352a2 / scanner-latest-live-adamic. Driver: copied main.a
+and token-names.a, adapted symlink points only at the scratch discovery tree
+/workspace/scratch/scanner-behind-capture. The deliverable slice is unchanged.
+Library owns Error as a value and captureStackTrace: upcoming
+codex/library-error-value (unit 01a114a0), due 06:00 MDT; not yet merged/tested.
+The host-node-types-land 69c71d5 loader and adaptation 40 are another owner's
+work. Capture is removed only in scratch, never as a tracked adaptation.
+
+Observed first diagnostics, in discovery order; all locations refer to scratch
+slice files under src/compiler, not original upstream line numbers:
+
+| Order | Location | Exact diagnostic after stage 0 can't lower | Scratch bypass used to reach the next | Owner / census relation |
+| --- | --- | --- | --- | --- |
+| 1 | debug.ts:13:15 | throwing an Error that isn't made where it's thrown or caught by the catch around it yet | inline new Error at throw; remove local e | Error lowering; library / error-classes candidate, not verified |
+| 2 | diagnosticInformationMap.generated.ts:6:64 | a field from a boolean &#124; undefined variable yet | omit optional diagnostic metadata fields | optional representation; census TS2375-related contract, new lowering finding |
+| 3 | utilities.ts:13:17 | a function returning U &#124; undefined yet | remove forEachEntry and return undefined from getNameOfScriptTarget | generic optional return; generic-maybe-undefined 86ad3eec candidate, not verified |
+| 4 | utilities.ts:51:13 | a declaration directly in a case (wrap the case in a block) yet | wrap the default case in braces | switch lexical declarations; no closing branch demonstrated |
+| 5 | utilities.ts:65:22 | new an Identifier yet | stub parsePseudoBigInt to return its input | Uint16Array construction; library owner, no closure demonstrated |
+| 6 | core.ts:106:20 | new an Identifier yet | stub levenshteinWithMax to return undefined | Array(length) construction; library-array candidate, not verified |
+| 7 | scanner.ts:261:17 | ?? whose sides have different types yet | four dense-index ?? Debug.fail guards become ! | nullish coalescing / never representation; taste / non-null candidate, integrated tips do not close this occurrence |
+| 8 | scanner.ts:609:5 | a function without a body yet | blank two nested error overload declarations, keep implementation | overload declarations; nested-functions tip does not close this occurrence |
+| 9 | scanner.ts:611:48 | a function value with an optional parameter yet | remove error implementation/reporting calls, suppress conflict callbacks | closure optional/default parameters; census a function inside a function (a closure), nested-functions tip does not close it |
+| 10 | scanner.ts:775:79 | a function value with an optional parameter yet | not yet bypassed | checkForIdentifierStartAfterNumericLiteral isScientific?; same closure representation |
+
+The overload-removal stub additionally induced a method-signature-style Refused
+at scanner.ts:1635:67: error taking number seen as number | undefined. Widening
+errPos to number | undefined advanced to order 9. This is a stub-induced
+signature change, not an independent claim about the original slice. Removing
+only the five conflict callback arguments did not close order 9. An initial
+empty-reporting stub spelled undefined as a statement and produced an Identifier
+statement NotYet; corrected to empty blocks, excluded from the blocker count.
+
+Discovery build commands: scanner-latest-live-adamic build SCRATCH_DRIVER/main.a
+-o /tmp/scanner-behind-capture, each redirected to its own log. All listed builds
+exit 1 before native emission. Logs are evidence/behind-capture-01 through
+behind-capture-13. No executable, ownership check, token equality, baseline
+validation or adaptation approval is claimed for this stub tree. Live branch
+names were inspected; candidate owners above are inferences, not green probes.
+
+
 ## October 7: live feature refresh; native compiler blocker
 
 Explicitly fetched feature heads: the configured ordinary origin fetch updates
