@@ -1,0 +1,5 @@
+=== RUN   TestRegExpRemainingTypeScriptAudit
+    regexp_remaining_audit_test.go:88: audited 129 selected programs with stock TypeScript 6.0.3
+--- PASS: TestRegExpRemainingTypeScriptAudit (16.46s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	16.468s
