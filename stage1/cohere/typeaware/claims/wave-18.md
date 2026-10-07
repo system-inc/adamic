@@ -122,3 +122,35 @@ Prepared-HIR continuation: native React validator cores are implemented in
 76e453e7. wave_18_react_partial/CORE_REPORT.md records full prepared-input
 comparisons, sanitizer runs, four byte mutants and the independently reproduced
 Go phi-message ambiguity. Native source integration remains unfinished. No new claims.
+
+## React HIR claims parked
+
+Per Ahra's parking instruction, react-hooks/set-state-in-effect,
+react-hooks/set-state-in-render and react-hooks/static-components are parked.
+Their native reporters and prepared-HIR validator cores are pushed and tested,
+including sanitizers and byte-only mutants. Blockers: native high-level IR
+Lower/Construct, SSA, nested-function capture translation, compilation-unit
+gates and memo shadow analysis. CoHere's analysis modules are being ported on
+#dnv6f2c; JSX support is landing on area/stage1-lint. They count as finished
+for the landing cap and remain reserved, not available to another claimant.
+
+## Sixth batch after landing-ready parking
+
+Landing-ready tip 8cf6bf224 is pushed and contains main f8013f0b; all six
+wave-18 oracle suites pass on that base, as WAVE_18_F801_LANDING_REPORT.md
+records. Reserved before implementation:
+
+1. react/jsx-fragments
+2. react/jsx-no-constructed-context-values
+3. react/jsx-no-undef
+
+Selection audited 529 fetched origin refs and 33 distinct claim Markdown blobs.
+The ranking combines compiler-all.counts and repository-all.counts, descending
+total then lexical rule name, and excludes baseline ports and all claimed names.
+The five higher-volume Adamic/Nexus candidates are already covered by the ten
+ports in COVERAGE_REPORT.md and are skipped. These three selected rules each
+have zero corpus findings, no native named port was found on an origin branch,
+and none requires React HIR/SSA/capture analysis. Native syntax and raw checker
+binding facts are their dependencies. This reservation is pushed before code.
+New rules will declare numeric SyntaxKind listeners in their own rule.json
+and consume the supplied node. Shared harness and parser files are untouched.
