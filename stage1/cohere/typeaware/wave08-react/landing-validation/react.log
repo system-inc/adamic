@@ -1,0 +1,9 @@
+controls native bytes 23175 findings 34
+controls native-asan bytes 23175 findings 34
+compiler native bytes 5780 findings 0
+compiler native-asan bytes 5780 findings 0
+repository native bytes 18485 findings 0
+repository native-asan bytes 18485 findings 0
+Globals mutant compiles, exits 0, empty stderr; byte oracle catches 9252
+SHARED GAP: JSX production oracle reports; native parser refuses before findings: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 44 in /workspace/wave08-landing-latest/react/jsx.tsx
+PASS for non-JSX Globals; full rule parity blocked by shared JSX parser

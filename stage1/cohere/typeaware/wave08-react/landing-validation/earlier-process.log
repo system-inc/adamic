@@ -1,0 +1,8 @@
+all upstream fixture programs agree, normal and ASan/UBSan: 86
+compiler 77 files, byte equality, normal and ASan/UBSan: 5780 findings 0
+repository 287 files, byte equality, normal and ASan/UBSan: 18485 findings 0
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave08-next/validate_process.py", line 79, in <module>
+    assert caught,(name,'production byte oracle did not catch mutant')
+           ^^^^^^
+AssertionError: ('process-callee', 'production byte oracle did not catch mutant')
