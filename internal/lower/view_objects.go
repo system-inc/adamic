@@ -27,6 +27,9 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 		return l.notYet(node, "a dictionary checked view")
 	}
 	for _, property := range l.checker.GetPropertiesOfType(target) {
+		if property.Flags&ast.SymbolFlagsOptional != 0 {
+			l.optionalViewWriteField(property.Name)
+		}
 		declared := l.checker.GetTypeOfSymbol(property)
 		if l.callableViewContract(declared) {
 			return &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}

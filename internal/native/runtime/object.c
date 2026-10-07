@@ -7,13 +7,15 @@
 #include <stdlib.h>
 
 adamic_object *adamic_object_new(const adamic_shape *shape) {
-	adamic_object *object = adamic_allocate(sizeof *object + shape->count * (sizeof object->slots[0] + 2), adamic_kind_object);
+	adamic_object *object = adamic_allocate(adamic_object_size(shape->count), adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->real_type = "record";
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
+	memset(adamic_object_contracts(object), 0, shape->count * sizeof(unsigned int));
 	return object;
 }
 
@@ -28,6 +30,7 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
 		if (accessor == NULL) {
 			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];
 			adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];
+			adamic_object_contracts(object)[index] = adamic_object_contracts(source)[cache.index];
 		}
 		if (shape->references[index] && accessor == NULL) {
 			adamic_retain(object->slots[index].reference);
@@ -240,4 +243,20 @@ adamic_value adamic_object_optional_view(const adamic_object *object, const char
  if (wanted == 9) { result.reference = result.boolean ? &adamic_box_true : &adamic_box_false; }
  if (wanted == 7) { result.number = adamic_maybe_number_pack((adamic_maybe_number){true, result.number}); }
  return result;
+}
+
+// The write is admitted only by the real shape and its declared slot contract,
+// never by the view's type or the old payload's physical representation.
+void adamic_object_checked_write(adamic_object *object, const char *name, adamic_slot_cache *cache, const unsigned int *allowed, size_t count, const char *where) {
+ adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+ if (slot != NULL) {
+  unsigned int contract = adamic_object_contracts(object)[cache->index];
+  for (size_t i = 0; i < count; i++) { if (contract != 0 && allowed[i] == contract) { return; } }
+ }
+ const char *real = object == NULL ? "undefined" : object->real_type;
+ size_t capacity = strlen(name) + strlen(real) + strlen(where) + 100;
+ char *message = malloc(capacity);
+ if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+ int length = snprintf(message, capacity, "field write failed: property '%s' on %s at %s has no compatible declared slot", name, real, where);
+ adamic_panic(message, (size_t)length);
 }

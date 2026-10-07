@@ -10,7 +10,7 @@ import (
 )
 
 func (l *lowering) isNever(node *ast.Node) bool {
-	return l.concrete(l.checker.GetTypeAtLocation(node)).Flags()&checker.TypeFlagsNever != 0
+	return reducedOptionalSource(l.checker, l.concrete(l.checker.GetTypeAtLocation(node))).Flags()&checker.TypeFlagsNever != 0
 }
 
 // A flow type is not an unreachability proof: a call can invalidate a narrowing.
@@ -107,7 +107,7 @@ func (l *lowering) neverExpression(node *ast.Node) (ir.Expression, error) {
 		contextual = l.checker.GetTypeAtLocation(node.Parent)
 	}
 	if contextual != nil {
-		if l.concrete(contextual).Flags()&checker.TypeFlagsNever != 0 {
+		if reducedOptionalSource(l.checker, l.concrete(contextual)).Flags()&checker.TypeFlagsNever != 0 {
 			of = ir.Number
 		} else if representation, known := l.representation(contextual); known {
 			of = representation

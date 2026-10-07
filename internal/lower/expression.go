@@ -449,6 +449,11 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		// typeof observes the runtime tag. Unboxing a flow narrowing first can
+		// read an object's bytes as a boolean after a call invalidates that fact.
+		if narrowed, ok := operand.(ir.Narrow); ok && narrowed.Value.Type() == ir.Union {
+			operand = narrowed.Value
+		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {

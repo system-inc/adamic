@@ -167,4 +167,7 @@ func TestOptionalWideningReducedSource(t *testing.T) {
 	if err := l.refuse(file); err != nil {
 		t.Fatal(err)
 	}
+	if len(l.result.CheckedFields) != 0 {
+		t.Fatalf("reduced inhabited source needs no optional view: %v", l.result.CheckedFields)
+	}
 }

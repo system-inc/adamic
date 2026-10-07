@@ -181,7 +181,9 @@ const (
 
 // Write is one write in the program, and whether it's proven not to close a cycle.
 type Write struct {
-	Kind WriteKind
+	// Unaliased proves the holder has never been stored, captured or passed.
+	Unaliased bool
+	Kind      WriteKind
 
 	// Site is the IR node's Site: which of lowering's writes it is, to find the type written into.
 	Site int
@@ -898,7 +900,8 @@ func (a *analysis) write(kind WriteKind, site int, name string, holder value, he
 	a.writeCount++
 	if a.judging {
 		write := Write{Kind: kind, Site: site, Name: name, Function: a.function, Proven: true}
-		a.proof.record(key, write)
+		recorded := a.proof.record(key, write)
+		recorded.Unaliased = recorded.Unaliased && a.unaliased(holder)
 		a.judge(key, write, holder, held, "", a.state.exposed)
 	}
 	for o := range holder.strong {
@@ -933,6 +936,7 @@ func (proof *freshness) record(key writeKey, write Write) *Write {
 	if recorded == nil {
 		recorded = &write
 		recorded.Proven, recorded.Why = true, ""
+		recorded.Unaliased = true
 		proof.writes[key] = recorded
 	}
 	return recorded
@@ -1877,4 +1881,30 @@ func sortedKeys(set map[int]bool) []int {
 // (whose cells can), a union that may be one, or a Weak. Numbers, booleans and strings can't.
 func mutable(valueType ir.Type) bool {
 	return valueType.IsReference() && valueType != ir.String
+}
+
+// This is the existing escape/identity analysis, with a stricter freshness fact:
+// even a confined local is an alias, so storing a literal ends this proof.
+func (a *analysis) unaliased(holder value) bool {
+	if len(holder.strong) != 1 || len(holder.weak) != 0 {
+		return false
+	}
+	for object := range holder.strong {
+		if object <= 0 || object%2 != 1 || a.state.exposed(object) {
+			return false
+		}
+		for _, held := range a.state.locals {
+			if a.state.reach(held)[object] {
+				return false
+			}
+		}
+		for _, fields := range a.state.heap {
+			for _, held := range fields {
+				if a.state.reach(held)[object] {
+					return false
+				}
+			}
+		}
+	}
+	return true
 }

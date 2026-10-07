@@ -97,6 +97,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		declared := l.checker.GetPropertyOfType(source, property.Name)
 		if declared == nil {
 			if property.Flags&ast.SymbolFlagsOptional != 0 {
+				l.optionalViewWriteField(property.Name)
 				found := &optionalWidening{property: property.Name, source: source, target: target}
 				if !isClassInstance(source) {
 					return found

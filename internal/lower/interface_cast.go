@@ -36,21 +36,8 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 // conservative: aliases and function boundaries cannot lose a checked read.
 // More precise view propagation and erasure can reduce that set without trusting casts.
 func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
-	if l.callableViewContract(target) {
-		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
-	}
-	// Diagnose unreifiable contracts before temporary backend limitations.
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		declared := l.checker.GetTypeOfSymbol(property)
-		if l.callableViewContract(declared) {
-			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
-		}
-	}
-	fields := map[string]bool{}
-	if err := l.viewObjectFields(node, target, fields, map[*checker.Type]bool{}, false); err != nil {
-		return nil, err
-	}
-	if _, err := l.viewContract(node, target); err != nil {
+	fields, err := l.viewSchema(node, target)
+	if err != nil {
 		return nil, err
 	}
 	modules, err := l.moduleOrder(l.program.Files()[0])
@@ -96,9 +83,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 						found = l.notYet(part, "a nullable checked field requiring a distinct null runtime tag")
 					}
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if ast.IsAssignmentTarget(part) && (of == ir.Object || field.Flags&ast.SymbolFlagsOptional != 0) {
-						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
-					}
+
 					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Object) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 					}
@@ -334,4 +319,27 @@ func (l *lowering) callableViewContract(proven *checker.Type) bool {
 		}
 	}
 	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
+}
+
+// viewSchema is the exact contract-admission portion of the shared entry point.
+// Inventories can audit it without claiming program lowering or alias admission.
+func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
+	if l.callableViewContract(target) {
+		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
+	}
+	// Diagnose unreifiable contracts before temporary backend limitations.
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		declared := l.checker.GetTypeOfSymbol(property)
+		if l.callableViewContract(declared) {
+			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+		}
+	}
+	fields := map[string]bool{}
+	if err := l.viewObjectFields(node, target, fields, map[*checker.Type]bool{}, false); err != nil {
+		return nil, err
+	}
+	if _, err := l.viewContract(node, target); err != nil {
+		return nil, err
+	}
+	return fields, nil
 }
