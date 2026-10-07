@@ -18,7 +18,7 @@ adamic_object *adamic_object_copy(const adamic_object *source) {
 	adamic_object *object = adamic_object_new(shape);
 	for (size_t position = 0; position < shape->count; position++) {
 		size_t index = adamic_public_index(shape, position);
-		adamic_slot_cache cache = {NULL, 0};
+		adamic_slot_cache cache = {0};
 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
 		object->slots[index] = accessor == NULL ? *adamic_object_field(source, shape->names[index], &cache) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
 		if (shape->references[index] && accessor == NULL) {
@@ -97,8 +97,10 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 // A field made as undefined alone holds NULL, whereas number | undefined holds a packed number.
 // The shape decides which union member is live; reading NULL's bits as a double would produce 0.
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	adamic_value *own = adamic_object_find(object, name, cache);
+	size_t index = (size_t)(own - object->slots);
 	adamic_value *slot = adamic_object_field(object, name, cache);
-	if (object->shape->references[cache->index]) {
+	if (object->shape->references[index]) {
 		if (slot->reference != NULL) {
 			static const char message[] = "compiler bug: a numeric field holds a reference";
 			adamic_panic(message, sizeof message - 1);
@@ -110,18 +112,18 @@ adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, cons
 
 // Cache absence too, with count as the index, without adding a field to the object's shape.
 adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	if (cache->shape != object->shape) {
-		cache->shape = object->shape;
-		cache->index = object->shape->count;
+	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+	size_t slot = packed >> 48;
+	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)object->shape) {
+		slot = object->shape->count;
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(object->shape->names[index], name) == 0) {
-				cache->index = index;
+				slot = index;
 				break;
 			}
 		}
+		adamic_slot_cache_store(cache, object->shape, slot);
 	}
-	if (cache->index == object->shape->count) {
-		return NULL;
-	}
-	return &((adamic_object *)object)->slots[cache->index];
+	if (slot == object->shape->count) { return NULL; }
+	return &((adamic_object *)object)->slots[slot];
 }
