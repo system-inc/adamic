@@ -1,0 +1,33 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, Edit, Suggestion } from '../typescript-prefer-as-const/records.a';
+export class Rule {
+    readonly context: RuleContext; readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    analyze(index: number): void {
+        const context = this.context; const node = context.node(index);
+        if(node.kind !== 'EnumDeclaration') return;
+        let position = 0;
+        for(const child of node.children) {
+            const member = context.node(child);
+            if(member.kind !== 'EnumMember') continue;
+            if(member.children.length === 1) {
+                const start = context.start(child); const name = context.source.slice(start, member.end);
+                const record = new Diagnostic('@typescript-eslint/prefer-enum-initializers', 'defineInitializer',
+                    `The value of the member '${name}' should be explicitly defined.`, start, member.end);
+                for(const value of [`${position}`, `${position + 1}`, `'${name}'`]) {
+                    const text = name + ' = ' + value;
+                    const suggestion = new Suggestion('defineInitializerSuggestion', 'Can be fixed to ' + text);
+                    suggestion.edits.push(new Edit(start, member.end, text)); record.suggestions.push(suggestion);
+                }
+                this.records.push(record);
+            }
+            position++;
+        }
+    }
+    visit(index: number): void {
+        const previous = this.records.length; this.analyze(index);
+        if(this.records.length !== previous) panic('prefer-enum-initializers requires complete repair renderer');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

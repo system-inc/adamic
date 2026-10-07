@@ -1,0 +1,6 @@
+{
+  "name": "typescript-prefer-enum-initializers-repair-mutant",
+  "file": "rule.a",
+  "from": "`${position + 1}`",
+  "to": "`${position + 2}`"
+}
