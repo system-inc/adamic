@@ -15,8 +15,8 @@ func Catalog() []Entry {
 		{Name: "any", Diagnostic: "any", Bad: "let value: any = 1;", Good: "let value: number = 1;"},
 		{Name: "cast", Diagnostic: "a cast the runtime can't check", Bad: "const value = 1; const cast = value as unknown as {readonly n: number};", Good: "const value = 1; const cast = {n: 1};"},
 		{Name: "non-null", Diagnostic: "the non-null assertion !", Bad: "const value = new Map<string, number>().get('x')!;", Good: "const value = new Map<string, number>().get('x') ?? 0;"},
-		{Name: "type-guard", Diagnostic: "a type predicate", Bad: "function guard(x: number): x is number { return true; }", Good: "function guard(x: number): boolean { return typeof x === 'number'; }", Placement: "module"},
-		{Name: "assertion-guard", Diagnostic: "a type predicate", Bad: "function guard(x: number): asserts x is number {}", Good: "function guard(x: number): void {}", Placement: "module"},
+		{Name: "type-guard", Diagnostic: "a type predicate whose return is not proven (true return narrows to number, not number)", Bad: "function guard(x: number): x is number { return true; }", Good: "function guard(x: number): boolean { return typeof x === 'number'; }", Placement: "module"},
+		{Name: "assertion-guard", Diagnostic: "a type predicate whose return is not proven (normal return has not narrowed x to number)", Bad: "function guard(x: number): asserts x is number {}", Good: "function guard(x: number): void {}", Placement: "module"},
 		{Name: "definite-local", Diagnostic: "a definite assignment assertion !", Bad: "let value!: number; value = 1;", Good: "let value: number; value = 1;"},
 		{Name: "definite-field", Diagnostic: "a definite assignment assertion !", Bad: "class Box { value!: number; constructor() { this.value = 1; } } const box = new Box();", Good: "class Box { value: number; constructor() { this.value = 1; } } const box = new Box();", Placement: "module"},
 		{Name: "ts-ignore", Diagnostic: "@ts-ignore suppression directive", Bad: "// @ts-ignore\nconst value: number = 1;", Good: "const value: number = 1;"},
@@ -64,6 +64,9 @@ func Catalog() []Entry {
 		{Name: "merging", Diagnostic: "declaration merging", Bad: "class Box { n = 1; } interface Box { extra: number; } const box = new Box();", Good: "class Box { n = 1; } const box = new Box();", Placement: "module"},
 		{Name: "constructor-escape", Diagnostic: "this escaping a constructor before every field is set", Bad: "class Box { n: number; constructor() { this.read(); this.n = 1; } read(): number { return this.n; } } const box = new Box();", Good: "class Box { n: number; constructor() { this.n = 1; this.read(); } read(): number { return this.n; } } const box = new Box();", Placement: "module"},
 		{Name: "prototype-read", Diagnostic: "isPrototypeOf", Bad: "const value = {}.isPrototypeOf;", Good: "const value = (n: number): boolean => n === 1;"},
+		// provePredicate refuses a type predicate whose body does not prove it. An arrow predicate is an
+		// expression, so the writer can place it in every surrounding; the neighbor is the proven predicate.
+		{Name: "unproven-predicate", Diagnostic: "a type predicate whose return is not proven (true return narrows to string | undefined, not string)", Bad: "const isText = (x: string | undefined): x is string => true; const word: string | undefined = 'a'; if (isText(word)) { console.log(word); }", Good: "const isText = (x: string | undefined): x is string => x !== undefined; const word: string | undefined = 'a'; if (isText(word)) { console.log(word); }"},
 		{Name: "method-override", Diagnostic: "adamic/contravariant-override", Boundary: "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"},
 		{Name: "parameter-properties", Boundary: "loader erasableSyntaxOnly rejects parameter properties (TS1294)"},
 		{Name: "overloads", Boundary: "implementation signatures are not lowered as overloads; needs a separate diagnostic design"},
