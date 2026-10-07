@@ -343,3 +343,37 @@ are created by this helper. Full event/CFG collection, binding/root/capture fact
 deferral integration and diagnostic rendering remain unfinished. Await and
 symbol native integration remain unfinished. Existing full-rule gates were
 unchanged and not rerun for this isolated helper; no full-rule timing is claimed.
+
+## Atomic finding rendering continuation
+
+Added require_atomic_updates/report.a. Adamic renders both production IDs and
+messages into Diagnostic, using supplied exact assignment spans, symbol names
+and raw left-hand-side text. Both repair and suggestion lists remain empty,
+matching Go. No regex or source reconstruction is used.
+
+The independent Go overlay parses eight controls and invokes unchanged
+reportNonAtomicUpdate with a real assignment AST and source context. It records
+the resulting range, ID and message, plus raw input facts. Native receives only
+input spans/name/target/property, never the expected ID or message. All canonical
+output bytes match. Controls include Unicode prefixes/names, computed targets,
+private targets, whitespace and comments. This validates rendering over Go
+captured spans, not native parser span delivery or full-rule findings.
+
+Native and the property-ID mutant compile and exit zero with empty sanitizer
+stderr. The mutant changes the property ID to the variable ID and fails only
+byte comparison. Exact captures, expected output and streams are preserved in
+validation/atomic-report.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_atomic_report.py /workspace/wave01-atomic-report /workspace/wave-01-fourth-adamic > /tmp/wave01-atomic-report.log 2>&1
+```
+
+Output: PASS 8 Go diagnostics, exact spans/messages/fix and suggestion counts;
+sanitizer-clean property-ID mutant caught by bytes. gofmt and git diff --check
+pass. Current main and area bases are unchanged. No checker handles are created
+by this helper, so no new handle check is claimed. Existing completed-rule gates
+were not repeated. No full-rule timings or compiler/repository replay are claimed
+for this renderer. Full CFG/event collection, binding/capture facts, deferral
+and finding-pass integration remain unfinished, as do await and symbol native
+integration. No shared files were edited and no new claims were taken.
