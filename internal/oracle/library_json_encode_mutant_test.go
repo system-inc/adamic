@@ -17,18 +17,19 @@ func TestJSONEncodeNativeMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	const field = `const adamic_decode_field *field=&type->fields[i];adamic_value child={0};`
+	const field = "const adamic_decode_field *field = &type->fields[i];\n\t\t\tadamic_value child = {0};"
 	cases := []struct{ name, source, from, to string }{
 		{"runtime_order", `interface Pair {readonly first:string;readonly second:number} const v:Pair={second:2,first:'one'};console.log(encodeJson<Pair>(v));`, field, `const adamic_decode_field *field=&type->fields[i];
 if (!tuple) { for (size_t f=0;f<type->field_count;f++) { if (strcmp(type->fields[f].name,object->shape->names[i])==0) {field=&type->fields[f];break;} } }
 adamic_value child={0};`},
 		{"hidden_field", `interface Pair {readonly first:string;readonly second:number} const full={first:'one',second:2,hidden:'secret'.repeat(2)};const v:Pair=full;console.log(encodeJson<Pair>(v));`, field, `adamic_decode_field extra={"hidden",type->fields[0].node,false};
 const adamic_decode_field *field=i<type->field_count?&type->fields[i]:&extra;adamic_value child={0};`},
-		{"negative_zero", `console.log(encodeJson<number>(-0));`, `char bytes[ADAMIC_NUMBER_FORMAT_MAX];size_t length=adamic_number_format(value.number,bytes);`, `if (value.number==0.0 && signbit(value.number)) { ascii(builder,"-0");return; }
+		{"negative_zero", `console.log(encodeJson<number>(-0));`, "char bytes[ADAMIC_NUMBER_FORMAT_MAX];\n\t\tsize_t length = adamic_number_format(value.number, bytes);", `if (value.number==0.0 && signbit(value.number)) { ascii(builder,"-0");return; }
 char bytes[ADAMIC_NUMBER_FORMAT_MAX];size_t length=adamic_number_format(value.number,bytes);`},
-		{"nan", `console.log(encodeJson<number>(NaN));`, `if (!isfinite(value.number)) { ascii(builder,"null");return; }`, `if (isnan(value.number)) { ascii(builder,"NaN");return; }
+		{"nan", `console.log(encodeJson<number>(NaN));`, "if (!isfinite(value.number)) {\n\t\t\tascii(builder, \"null\");\n\t\t\treturn;\n\t\t}", `if (isnan(value.number)) { ascii(builder,"NaN");return; }
 if (!isfinite(value.number)) { ascii(builder,"null");return; }`},
-		{"raw_surrogate", `console.log(encodeJson<string>('x'.repeat(3)+'\ud800'));`, `code < 0x20 || (code >= 0xd800 && code <= 0xdfff)`, `code < 0x20`},
+		{"raw_surrogate", `console.log(encodeJson<string>('x'.repeat(3)+'\ud800'));`, `width == 3 && code == 0xed && here[1] >= 0xa0`, `width == 3 && code == 0xed && here[1] >= 0xa0 && false`},
+		{"split_byte_run", `console.log(encodeJson<string>('ordinary'.repeat(3)));`, `append(w, bytes + run, length - run, units);`, `append(w, bytes + run, length - run > 0 ? length - run - 1 : 0, units);`},
 	}
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
@@ -37,7 +38,7 @@ if (!isfinite(value.number)) { ascii(builder,"null");return; }`},
 				t.Fatal("mutation target missing")
 			}
 			if test.name == "hidden_field" {
-				mutated = strings.Replace(mutated, `for (size_t i=0;i<type->field_count;i++)`, `for (size_t i=0;i<object->shape->count;i++)`, 1)
+				mutated = strings.Replace(mutated, `for (size_t i = 0; i < type->field_count; i++)`, `for (size_t i = 0; i < object->shape->count; i++)`, 1)
 			}
 			path := filepath.Join(t.TempDir(), "mutant.a")
 			if err := os.WriteFile(path, []byte("import {encodeJson} from 'adamic';\n"+test.source), 0600); err != nil {
