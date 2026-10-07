@@ -1,0 +1,8 @@
+export type ControlBlock = {index: number; successors: number[]; cycleBarrier: boolean[]; hasCycleBarrier: boolean; reachable: boolean; hasIncoming: boolean};
+export type CurrentState = {cur: ControlBlock};
+export function makeUnreachable(state: CurrentState, newBlock: () => ControlBlock, appendSuccessor: (from: ControlBlock, to: ControlBlock) => void): void {
+  const next = newBlock();
+  appendSuccessor(state.cur, next);
+  if (state.cur.hasCycleBarrier) { state.cur.cycleBarrier = state.cur.cycleBarrier.concat([false]); }
+  state.cur = next;
+}

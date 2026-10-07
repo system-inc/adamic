@@ -1,0 +1,6 @@
+export type JumpTarget = {labels: string[]; breakTo: number; continueTo: number; loop: number; breakable: boolean; broken: boolean};
+export type JumpState = {jumps: JumpTarget[]};
+// The private builder stack has no externally exposed slice headers.
+export function pushJump(state: JumpState, node: number, breakTo: number, continueTo: number, loop: number, labelsOf: (node: number) => string[]): void {
+  state.jumps = state.jumps.concat([{labels: labelsOf(node), breakTo, continueTo, loop, breakable: true, broken: false}]);
+}

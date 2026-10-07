@@ -1,0 +1,3 @@
+import {popJump} from './pop_jump.a';
+import type {JumpTarget} from './push_jump.a';
+const jumps:JumpTarget[]=[];popJump({jumps});console.log('survived');

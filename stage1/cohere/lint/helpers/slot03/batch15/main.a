@@ -1,0 +1,16 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {pushJump, type JumpTarget} from './push_jump.a';
+import {popJump} from './pop_jump.a';
+import {makeUnreachable, type ControlBlock} from './make_unreachable.a';
+const file=readTextFile(programArguments()[0] ?? panic('missing cases'));if(file.kind==='Error'){panic(file.message);}
+const json=new OptionsJson(file.text);const root=json.parse();if(root<0){panic(json.error);}
+function numberField(node:number,key:string):number{return Number(json.node(json.field(node,key)).text);}
+function boolField(node:number,key:string):boolean{return json.node(json.field(node,key)).text==='true';}
+function block(node:number):ControlBlock {const successors:number[]=[];for(const v of json.node(json.field(node,'successors')).children){successors.push(Number(json.node(v).text));}let cycleBarrier:boolean[]=[];const barriers=json.node(json.field(node,'cycleBarrier'));if(barriers.kind!=='null'){cycleBarrier=[];for(const v of barriers.children){cycleBarrier.push(json.node(v).text==='true');}}return {index:numberField(node,'index'),successors,cycleBarrier,hasCycleBarrier:barriers.kind!=='null',reachable:boolField(node,'reachable'),hasIncoming:boolField(node,'hasIncoming')};}
+const adapter={row:0,trace:''};
+function labelsOf(node:number):string[]{adapter.trace+=`labels:${node};`;const labels:string[]=[];if(node!==numberField(adapter.row,'node')){return labels;}for(const v of json.node(json.field(adapter.row,'labels')).children){labels.push(json.node(v).text);}return labels;}
+function newBlock():ControlBlock{adapter.trace+='new;';return block(json.field(adapter.row,'fresh'));}
+function appendSuccessor(from:ControlBlock,to:ControlBlock):void{adapter.trace+=`append:${from.index}:${to.index};`;from.successors.push(to.index);}
+function blockSummary(b:ControlBlock):string {let s=`${b.index}:${b.reachable}:${b.hasIncoming}/`;for(const v of b.successors){s+=`${v},`;}s+='/';if(!b.hasCycleBarrier){s+='nil';}else{for(const v of b.cycleBarrier){s+=`${v},`;}}return s;}
+for(const row of json.node(root).children){adapter.row=row;adapter.trace='';const op=json.node(json.field(row,'op')).text;if(op==='unreachable'){const old=block(json.field(row,'cur'));const state={cur:old};makeUnreachable(state,()=>newBlock(),(from,to)=>appendSuccessor(from,to));console.log(`${blockSummary(old)}|${blockSummary(state.cur)}`);}else{const jumps:JumpTarget[]=[];for(const j of json.node(json.field(row,'jumps')).children){const labels:string[]=[];for(const v of json.node(json.field(j,'labels')).children){labels.push(json.node(v).text);}jumps.push({labels,breakTo:numberField(j,'breakTo'),continueTo:numberField(j,'continueTo'),loop:numberField(j,'loop'),breakable:boolField(j,'breakable'),broken:boolField(j,'broken')});}const state={jumps};if(op==='push'){pushJump(state,numberField(row,'node'),numberField(row,'breakTo'),numberField(row,'continueTo'),numberField(row,'loop'),node=>labelsOf(node));}else{popJump(state);}let s=`${state.jumps.length}`;for(const j of state.jumps){s+=`/${j.breakTo}:${j.continueTo}:${j.loop}:${j.breakable}:${j.broken}:${j.labels.join(',')}`;}console.log(`${s}/${adapter.trace}`);}}

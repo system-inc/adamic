@@ -1,0 +1,6 @@
+import {panic} from 'adamic';
+import type {JumpState} from './push_jump.a';
+export function popJump(state: JumpState): void {
+  if (state.jumps.length === 0) { panic('popJump requires a nonempty stack'); }
+  state.jumps = state.jumps.slice(0, state.jumps.length - 1);
+}

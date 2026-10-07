@@ -1,0 +1,5 @@
+=== RUN   TestBatch15EmptyStackRefusal
+    batch15_test.go:189: compiled empty-stack guard mutant caught: baseline exit 70, mutant exit 0 and survived
+--- PASS: TestBatch15EmptyStackRefusal (0.73s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	0.743s

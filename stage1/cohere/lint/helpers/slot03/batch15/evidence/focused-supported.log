@@ -1,0 +1,40 @@
+=== RUN   TestBatch15Helpers
+    batch15_test.go:77: 6997 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch15Helpers (7.34s)
+=== RUN   TestBatch15Mutants
+=== RUN   TestBatch15Mutants/push_jump.a
+    batch15_test.go:125: compiled semantic mutant caught at line 90: got "1/2:1:0:false:false:/labels:0;" Go "1/2:1:0:true:false:/labels:0;"
+=== RUN   TestBatch15Mutants/push_jump.a#01
+    batch15_test.go:125: compiled semantic mutant caught at line 90: got "1/2:1:0:true:true:/labels:0;" Go "1/2:1:0:true:false:/labels:0;"
+=== RUN   TestBatch15Mutants/push_jump.a#02
+    batch15_test.go:125: compiled semantic mutant caught at line 90: got "1/2:1:0:true:false:/labels:1;" Go "1/2:1:0:true:false:/labels:0;"
+=== RUN   TestBatch15Mutants/push_jump.a#03
+    batch15_test.go:125: compiled semantic mutant caught at line 90: got "1/1:2:0:true:false:/labels:0;" Go "1/2:1:0:true:false:/labels:0;"
+=== RUN   TestBatch15Mutants/push_jump.a#04
+    batch15_test.go:125: compiled semantic mutant caught at line 90: got "1/2:1:-1:true:false:/labels:0;" Go "1/2:1:0:true:false:/labels:0;"
+=== RUN   TestBatch15Mutants/pop_jump.a
+    batch15_test.go:125: compiled semantic mutant caught at line 125: got "0/" Go "1/2:1:6:true:false:/"
+=== RUN   TestBatch15Mutants/pop_jump.a#01
+    batch15_test.go:125: compiled semantic mutant caught at line 92: got "1/2:1:0:true:false:/" Go "0/"
+=== RUN   TestBatch15Mutants/make_unreachable.a
+    batch15_test.go:125: compiled semantic mutant caught at line 6770: got "0:false:false/1,/true,|1:false:false//nil" Go "0:false:false/1,/false,|1:false:false//nil"
+=== RUN   TestBatch15Mutants/make_unreachable.a#01
+    batch15_test.go:125: compiled semantic mutant caught at line 1: got "2:true:true/2,/nil|3:false:false//nil" Go "2:true:true/3,/nil|3:false:false//nil"
+=== RUN   TestBatch15Mutants/make_unreachable.a#02
+    batch15_test.go:125: compiled semantic mutant caught at line 1: got "2:true:true/3,/nil|2:true:true/3,/nil" Go "2:true:true/3,/nil|3:false:false//nil"
+=== RUN   TestBatch15Mutants/make_unreachable.a#03
+    batch15_test.go:125: compiled semantic mutant caught at line 1: got "2:true:true/3,/nil|3:true:false//nil" Go "2:true:true/3,/nil|3:false:false//nil"
+--- PASS: TestBatch15Mutants (52.05s)
+    --- PASS: TestBatch15Mutants/push_jump.a (4.86s)
+    --- PASS: TestBatch15Mutants/push_jump.a#01 (4.00s)
+    --- PASS: TestBatch15Mutants/push_jump.a#02 (4.15s)
+    --- PASS: TestBatch15Mutants/push_jump.a#03 (4.20s)
+    --- PASS: TestBatch15Mutants/push_jump.a#04 (4.17s)
+    --- PASS: TestBatch15Mutants/pop_jump.a (5.02s)
+    --- PASS: TestBatch15Mutants/pop_jump.a#01 (5.35s)
+    --- PASS: TestBatch15Mutants/make_unreachable.a (4.32s)
+    --- PASS: TestBatch15Mutants/make_unreachable.a#01 (5.13s)
+    --- PASS: TestBatch15Mutants/make_unreachable.a#02 (5.04s)
+    --- PASS: TestBatch15Mutants/make_unreachable.a#03 (4.74s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	59.403s

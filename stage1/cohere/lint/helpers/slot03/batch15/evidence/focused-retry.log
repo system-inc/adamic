@@ -1,0 +1,41 @@
+=== RUN   TestBatch15Helpers
+    batch15_test.go:72: /workspace/adamic/stage1/cohere/lint/helpers/slot03/batch15/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+--- FAIL: TestBatch15Helpers (4.64s)
+=== RUN   TestBatch15Mutants
+=== RUN   TestBatch15Mutants/push_jump.a
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantspush_jump.a1293193726/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/push_jump.a#01
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantspush_jump.a#012016419151/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/push_jump.a#02
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantspush_jump.a#022210202612/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/push_jump.a#03
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantspush_jump.a#033792565354/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/push_jump.a#04
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantspush_jump.a#042724572404/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/pop_jump.a
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantspop_jump.a1381955245/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/pop_jump.a#01
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantspop_jump.a#012691920032/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/make_unreachable.a
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantsmake_unreachable.a4139867264/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/make_unreachable.a#01
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantsmake_unreachable.a#011142620107/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/make_unreachable.a#02
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantsmake_unreachable.a#023580312140/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+=== RUN   TestBatch15Mutants/make_unreachable.a#03
+    batch15_test.go:118: /tmp/adamic-gate/TestBatch15Mutantsmake_unreachable.a#033674975878/001/make_unreachable.a:6:7: stage 0 can't lower a value of type boolean[] | null yet
+--- FAIL: TestBatch15Mutants (1.48s)
+    --- FAIL: TestBatch15Mutants/push_jump.a (0.05s)
+    --- FAIL: TestBatch15Mutants/push_jump.a#01 (0.05s)
+    --- FAIL: TestBatch15Mutants/push_jump.a#02 (0.05s)
+    --- FAIL: TestBatch15Mutants/push_jump.a#03 (0.04s)
+    --- FAIL: TestBatch15Mutants/push_jump.a#04 (0.04s)
+    --- FAIL: TestBatch15Mutants/pop_jump.a (0.04s)
+    --- FAIL: TestBatch15Mutants/pop_jump.a#01 (0.04s)
+    --- FAIL: TestBatch15Mutants/make_unreachable.a (0.04s)
+    --- FAIL: TestBatch15Mutants/make_unreachable.a#01 (0.04s)
+    --- FAIL: TestBatch15Mutants/make_unreachable.a#02 (0.05s)
+    --- FAIL: TestBatch15Mutants/make_unreachable.a#03 (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	6.137s
+FAIL
