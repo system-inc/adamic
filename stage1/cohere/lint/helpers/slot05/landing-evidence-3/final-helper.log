@@ -1,0 +1,37 @@
+=== RUN   TestSlot05ClassAtomWrite
+    helper_test.go:81: 4 consumers, 911 captured strings, 34191 Go queries
+    helper_test.go:91: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:144: class_atom_write.a mutant "atom.kind === 2" -> "atom.kind === 3" caught at verdict 5: mutant "\\u-80000000", Go ""
+    helper_test.go:144: class_atom_write.a mutant "literalRune(atom.hi)" -> "literalRune(atom.lo)" caught at verdict 3: mutant "\\u-80000000-\\u-80000000", Go "\\u-80000000-\\u-001"
+    helper_test.go:144: class_atom_write.a mutant " + '-' + " -> " + ':' + " caught at verdict 3: mutant "\\u-80000000:\\u-001", Go "\\u-80000000-\\u-001"
+--- PASS: TestSlot05ClassAtomWrite (31.62s)
+=== RUN   TestSlot05WordCharacters
+    helper_test.go:81: 4 consumers, 911 captured strings, 16 Go queries
+    helper_test.go:91: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:144: word_characters.a mutant "wordClassAtoms(options)" -> "wordClassAtoms({unicode: false, ignoreCase: false, multiline: false, dotAll: false})" caught at verdict 4: mutant "atoms:false:false:false:false;write:false:false:false:false:false:true;", Go "atoms:false:false:false:true;write:false:false:false:false:false:true;"
+    helper_test.go:144: word_characters.a mutant "), false," -> "), true," caught at verdict 2: mutant "atoms:false:false:false:false;write:false:false:false:false:true:true;", Go "atoms:false:false:false:false;write:false:false:false:false:false:true;"
+    helper_test.go:144: word_characters.a mutant "unicode: false, ignoreCase: false" -> "unicode: true, ignoreCase: false" caught at verdict 2: mutant "atoms:false:false:false:false;write:true:false:false:false:false:true;", Go "atoms:false:false:false:false;write:false:false:false:false:false:true;"
+--- PASS: TestSlot05WordCharacters (2.45s)
+=== RUN   TestSlot05ExpandsOnUppercase
+    helper_test.go:81: 4 consumers, 911 captured strings, 1114242 Go queries
+    helper_test.go:91: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:144: expands_on_uppercase.a mutant "rune <= 0x1f87" -> "rune < 0x1f87" caught at verdict 101: mutant "false", Go "true"
+    helper_test.go:144: expands_on_uppercase.a mutant "rune === 0x1ff3" -> "rune === 0x1ff4" caught at verdict 122: mutant "false", Go "true"
+--- PASS: TestSlot05ExpandsOnUppercase (5.06s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch11	39.137s
