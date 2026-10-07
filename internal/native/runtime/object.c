@@ -149,3 +149,15 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 	(void)adamic_object_field(object, name, &cache);
 	adamic_object_initialized(object)[cache.index] = initialized;
 }
+
+adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	adamic_value *slot = adamic_object_field(object, name, cache);
+	if (object->shape->references[cache->index]) {
+		if (slot->reference != NULL) {
+			static const char message[] = "compiler bug: a boolean field holds a reference";
+			adamic_panic(message, sizeof message - 1);
+		}
+		return (adamic_maybe_boolean){false, false};
+	}
+	return adamic_maybe_boolean_unpack(slot->maybe_boolean);
+}

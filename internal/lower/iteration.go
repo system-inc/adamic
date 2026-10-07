@@ -46,7 +46,7 @@ func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
 // lexical captures still use the existing cycle analysis and reference-counted closure environment.
 func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
 	index := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true})
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: true})
 	this := l.iterationLocal("this", ir.Object, index)
 	l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
 	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})
@@ -427,7 +427,8 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 		if member == nil || !literalMethod(member) {
 			return nil, false, nil
 		}
-		receiverNode = callee.AsPropertyAccessExpression().Expression
+		value, err := l.callClosure(node)
+		return value, true, err
 	default:
 		return nil, false, nil
 	}
@@ -445,7 +446,7 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	proven := l.checker.GetTypeAtLocation(node)
 	result, known := l.representation(proven)
-	void := proven.Flags()&checker.TypeFlagsVoid != 0
+	void := proven.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0
 	if void {
 		result = 0
 	}

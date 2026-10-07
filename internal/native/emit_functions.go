@@ -16,7 +16,7 @@ func (e *emitter) signature(function int) string {
 	if declared.Closure {
 		// Every closure's code is called the same way (adamic_code): its arguments and result as
 		// adamic_value, whatever their types.
-		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments)", e.functionName(function))
+		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments, size_t argument_count)", e.functionName(function))
 	}
 	returns := "void"
 	if declared.Returns != 0 {
@@ -49,9 +49,10 @@ func (e *emitter) functionBody(function ir.Function) {
 	if function.Closure {
 		e.line("(void)self;")
 		e.line("(void)arguments;")
+		e.line("(void)argument_count;")
 		for index, parameter := range function.Parameters {
 			local := e.program.Locals[parameter]
-			value := unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index, member(local.Type)))
+			value := closureArgument(local.Type, index)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
@@ -163,6 +164,10 @@ func (e *emitter) arguments(call ir.Call) []string {
 	handed := []string{}
 	defer func() { e.handedOver(handed) }()
 	for index, argument := range call.Arguments {
+		if index >= len(parameters) {
+			e.value(argument) // Extra arguments still run, before the call.
+			continue
+		}
 		if e.reuse.callConsumes(e.program, call, index) {
 			value := e.handOver(argument)
 			handed = append(handed, value)
@@ -236,9 +241,14 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	call := fmt.Sprintf("adamic_node_performance_invoke(%s, %s, %d, %t)", closure, packed, len(arguments), expression.Returns == 0)
 	if receiver != "" {
 		if closure == "" {
-			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+			call = fmt.Sprintf("%s(%s, %s, %d)", method, receiver, packed, len(arguments))
 		} else {
-			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+			received := "(adamic_value[]){ {.reference = " + receiver + "}"
+			if len(arguments) > 0 {
+				received += ", " + strings.Join(arguments, ", ")
+			}
+			received += "}"
+			call = fmt.Sprintf("(%s != NULL ? adamic_node_performance_invoke(%s, %s->receiver ? %s : %s, %d + (%s->receiver ? 1 : 0), %t) : %s(%s, %s, %d))", closure, closure, closure, received, packed, len(arguments), closure, expression.Returns == 0, method, receiver, packed, len(arguments))
 		}
 	}
 	if expression.Returns == 0 {

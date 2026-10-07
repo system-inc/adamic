@@ -195,7 +195,7 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context) {
 	// JavaScript reads the comparator's result by its sign, and NaN as 0.
 	adamic_closure *compare = context;
-	double result = compare->code(compare, (adamic_value[]){left, right}).number;
+	double result = compare->code(compare, (adamic_value[]){left, right}, 2).number;
 	return result < 0 ? -1 : result > 0 ? 1 : 0;
 }
 
@@ -227,6 +227,14 @@ double adamic_array_index_of(const adamic_array *array, adamic_value value, enum
 		case adamic_equal_strings:
 			equal = adamic_string_equal(element.reference, value.reference);
 			break;
+		case adamic_equal_unions: {
+			const adamic_heap *left = element.reference, *right = value.reference;
+			equal = adamic_union_equal(left, right);
+			if (!equal && same_value_zero && left != NULL && right != NULL && left->kind == adamic_kind_number && right->kind == adamic_kind_number) {
+				equal = isnan(((const adamic_number_box *)left)->number) && isnan(((const adamic_number_box *)right)->number);
+			}
+			break;
+		}
 		case adamic_equal_identity:
 			equal = element.reference == value.reference;
 			break;

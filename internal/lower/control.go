@@ -92,7 +92,7 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{ir.Loop{Condition: condition, Body: loweredBody, CheckAfter: checkAfter}}, nil
 }
 
-// condition applies JavaScript's ToBoolean, with one evaluation of the operand.
+// condition applies JavaScript ToBoolean to one evaluation of its operand.
 func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 	value, err := l.expression(node)
 	if err != nil {

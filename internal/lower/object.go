@@ -69,11 +69,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 {
+			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if slotless(value.Type()) && value.Type() != ir.MaybeBoolean && value.Type() != ir.Union {
+			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
@@ -251,7 +251,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
-	arrayType := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node)))
+	arrayType := l.checker.GetNonNullableType(l.concrete(l.arrayPredicateType(node)))
 	if l.nodeBufferType(arrayType, "Buffer") {
 		return ir.Number, nil
 	}
@@ -474,7 +474,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
 				// Read the declared representation before trusting the narrowing. A call or an
 				// alias write may have restored undefined, just as for a narrowed variable.
-
+				if censusFieldSlotless(stored) {
+					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
+				}
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
 				if l.acceptsUndefined(node) {
 					return read, nil
@@ -490,11 +492,13 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-
-		if of == ir.MaybeNumber {
+		if censusFieldSlotless(of) {
+			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+		}
+		if of.IsMaybe() {
 			// number | undefined, whether the field holds it or ?. makes it: the packed word, or
 			// undefined when the object is.
-			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.MaybeNumber, Optional: optional, Class: l.classOf(node)}), nil
+			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 		}
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
@@ -524,9 +528,9 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		return property
 	}
 	property.Absent = true
-	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.MaybeNumber && property.Of == ir.Number {
-		property.Of = ir.MaybeNumber
-		return fit(property, ir.Number)
+	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared.IsMaybe() && property.Of == declared.Present() {
+		property.Of = declared
+		return fit(property, declared.Present())
 	}
 	return property
 }
@@ -598,6 +602,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if value, known, err := l.processValue(node); known {
 		return value, true, err
+	}
+	if value, known, err := l.arrayIsArray(node); known {
+		return value, known, err
 	}
 	if l.isOptionalJoin(node) {
 		value, err := l.optionalJoin(node)
@@ -938,7 +945,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-			if of := l.result.Locals[local].Type; slotless(of) {
+			if of := l.result.Locals[local].Type; slotless(of) && !(of == ir.Union && l.writable(l.checker.GetTypeAtLocation(binding.Name()))) {
 				return nil, l.notYet(binding, "a tuple element of type "+typeName(of))
 			}
 			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
@@ -1353,7 +1360,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
-	if !valueKnown || slotless(value) {
+	if !valueKnown || (slotless(value) && !(value == ir.Union && l.writable(arguments[1]))) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
@@ -1530,11 +1537,14 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	local, isLocal := l.locals[symbol]
 	if !isLocal {
+		if target, isFunction := l.functions[symbol]; isFunction {
+			return l.functionValue(property, target)
+		}
 		return nil, l.notYet(property, "reading "+property.Name().Text())
 	}
 	l.touch(local)
 	of := l.result.Locals[local].Type
-	if slotless(of) {
+	if censusFieldSlotless(of) {
 		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
 	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
@@ -1949,6 +1959,9 @@ func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type
 			return true
 		}
 		valueParameters, targetParameters := valueSignatures[0].Parameters(), targetSignatures[0].Parameters()
+		if l.censusNeverRestSignature(targetSignatures[0]) {
+			targetParameters = nil
+		}
 		for index := range valueParameters {
 			if index < len(targetParameters) && l.tupleWhereArrayGoes(l.checker.GetTypeOfSymbol(targetParameters[index]), l.checker.GetTypeOfSymbol(valueParameters[index]), depth+1) {
 				return true

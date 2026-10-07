@@ -35,10 +35,12 @@ func cType(valueType ir.Type) string {
 // member is the adamic_value member that holds a value of the type.
 func member(valueType ir.Type) string {
 	switch valueType {
-	case ir.Number, ir.MaybeNumber, ir.MaybeBoolean:
+	case ir.Number, ir.MaybeNumber:
 		return "number"
 	case ir.Boolean:
 		return "boolean"
+	case ir.MaybeBoolean:
+		return "maybe_boolean"
 	}
 	return "reference"
 }

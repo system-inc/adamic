@@ -36,6 +36,9 @@ func (p *predicateProof) refused(node *ast.Node, reason string) error {
 }
 
 func (l *lowering) provePredicate(node *ast.Node) error {
+	if l.censusPredicateMarkerContract(node) {
+		return nil
+	}
 	annotation := node.AsTypePredicateNode()
 	function := node.Parent
 	if !ast.IsFunctionLike(function) || function.Body() == nil || annotation.ParameterName.Kind != ast.KindIdentifier {
@@ -103,6 +106,9 @@ func (l *lowering) provePredicate(node *ast.Node) error {
 }
 
 func (p *predicateProof) narrowed(path predicatePath, initial *checker.Type) *checker.Type {
+	if path.flow.Node != nil && p.l.isArrayPredicateCall(path.flow.Node) && p.reference(ast.SkipParentheses(ast.SkipParentheses(path.flow.Node).AsCallExpression().Arguments.Nodes[0])) {
+		return p.l.arrayPredicateMembers(initial, path.flow.Flags&ast.FlowFlagsTrueCondition != 0)
+	}
 	return predicateFlowType(p.l.checker, p.parameter.Name(), p.declared, initial, p.function, path.flow)
 }
 
@@ -239,6 +245,9 @@ func (p *predicateProof) check(node *ast.Node) bool {
 	}
 	if p.assertion && p.target == predicateTrueType(p.l.checker) && p.reference(node) {
 		return true
+	}
+	if p.l.isArrayPredicateCall(node) {
+		return p.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) && p.l.arrayPredicateDomain(p.declared)
 	}
 	if node.Kind != ast.KindBinaryExpression {
 		return false
