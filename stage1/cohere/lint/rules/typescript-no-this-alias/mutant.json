@@ -1,0 +1,5 @@
+{
+  "name": "this alias exemption inverted",
+  "from": "!this.allowed.includes(this.context.node(target).text)",
+  "to": "this.allowed.includes(this.context.node(target).text)"
+}
