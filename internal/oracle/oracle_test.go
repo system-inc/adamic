@@ -7,7 +7,6 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -18,6 +17,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -657,48 +657,33 @@ func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
 }
 
 // leaks returns a report of everything a finished program never let go of, or "" when it let go of
-// everything. No garbage collector means every reference the compiler hands out has to come back;
-// this is where a missing release shows. Only programs Node finishes with exit 0 are asked.
-//
-// macOS has the leaks tool; Linux has LeakSanitizer, part of ASan there, run on the sanitized binary
-// the comparison already built.
+// everything: the leak check every test of a native program runs (internal/leakcheck), with each
+// command run as the oracle runs its own. Only programs Node finishes with exit 0 are asked.
 func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 	t.Helper()
-	switch runtime.GOOS {
-	case "darwin":
-		return leaksTool(t, program)
-	case "linux":
-		return leakSanitizer(t, sanitized)
-	}
-	t.Fatalf("no leak check for %s: the oracle knows macOS's leaks tool and Linux's LeakSanitizer", runtime.GOOS)
-	return ""
+	return leakChecked(t, native.C(program), sanitized)
 }
 
-// leaksTool builds a lowered program without sanitizers (they and macOS's leaks tool don't mix), runs
-// it under leaks --atExit, and returns its report when anything leaked.
-func leaksTool(t *testing.T, program *ir.Program) string {
+// leakChecked is the leak check for a program's C and the sanitized binary built from it.
+func leakChecked(t *testing.T, code string, sanitized string) string {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	report, err := leakcheck.Check(leakcheck.Program{
+		C:         code,
+		Sanitized: sanitized,
+		Counted:   filepath.Join(t.TempDir(), "counted"),
+		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
+			return leakRun(executeWith(t, environment, name, arguments...))
+		},
+	})
+	if err != nil {
 		t.Fatal(err)
 	}
-	report := execute(t, "leaks", "--atExit", "--", binary)
-	if report.exitCode == 0 {
-		return ""
-	}
-	return string(report.stdout)
+	return report
 }
 
-// leakSanitizer runs a sanitized binary again with leak detection on, and returns LeakSanitizer's
-// report when anything leaked. The program finished with exit 0 on the comparison run, so any other
-// exit here is the sanitizer's.
-func leakSanitizer(t *testing.T, binary string) string {
-	t.Helper()
-	report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
-	if report.exitCode == 0 {
-		return ""
-	}
-	return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+// leakRun is a run as the leak check reads it.
+func leakRun(result run) leakcheck.Run {
+	return leakcheck.Run{Stdout: result.stdout, Stderr: result.stderr, ExitCode: result.exitCode}
 }
 
 // disagreement says how two runs differ, or "" when they don't.
