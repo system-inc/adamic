@@ -20,8 +20,8 @@ export class DeclarationAncestry {
         this.present = present; this.identity = identity; this.flags = flags; this.declarations = declarations;
     }
 }
-export function declarationAncestry(rules: Rules, index: number): DeclarationAncestry {
-    const frames = new Frames(rules.ask(index, 'declaration-ancestry'));
+export function declarationAncestry(rules: Rules, index: number, alias = false): DeclarationAncestry {
+    const frames = new Frames(rules.ask(index, alias ? 'declaration-ancestry\nalias' : 'declaration-ancestry'));
     header(frames, 'declaration-ancestry');
     const present = frames.yes(); let identity = 0; let flags = 0;
     const declarations: AncestorDeclaration[] = [];

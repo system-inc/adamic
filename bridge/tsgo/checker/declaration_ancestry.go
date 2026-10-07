@@ -11,10 +11,13 @@ import (
 // declarationAncestry exposes raw symbol and ancestor metadata, never a lint judgment.
 // Registration is pending in the shared Inspect dispatch; this file is isolated.
 func (p *Program) declarationAncestry(out *fields, c *checker.Checker, node *ast.Node, question string) (string, error) {
-	if question != "declaration-ancestry" || node.Kind != ast.KindIdentifier {
-		return "", fmt.Errorf("declaration-ancestry requires an Identifier and no suffix")
+	if (question != "declaration-ancestry" && question != "declaration-ancestry\nalias") || node.Kind != ast.KindIdentifier {
+		return "", fmt.Errorf("declaration-ancestry requires an Identifier and either no suffix or alias")
 	}
 	symbol := c.GetSymbolAtLocation(node)
+	if question == "declaration-ancestry\nalias" && symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		symbol = c.GetAliasedSymbol(symbol)
+	}
 	out.yes(symbol != nil)
 	if symbol == nil {
 		return out.String(), nil
@@ -39,7 +42,7 @@ func (p *Program) declarationAncestry(out *fields, c *checker.Checker, node *ast
 		for _, ancestor := range chain {
 			out.text(strings.TrimPrefix(ancestor.Kind.String(), "Kind"))
 			name := ""
-			if identifier := ancestor.Name(); identifier != nil {
+			if identifier := ancestor.Name(); identifier != nil && identifier.Kind == ast.KindIdentifier {
 				name = identifier.Text()
 			}
 			out.text(name)

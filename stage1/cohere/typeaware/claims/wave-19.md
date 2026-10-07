@@ -45,3 +45,16 @@ facts and Adamic decoders are prepared and contract-tested. The other two rule
 implementations remain unfinished; no additional rules have been claimed.
 The actual production archive's unsupported-question refusal is now tested.
 See ../WAVE_19_TIMEOUT_REPORT.md for evidence and the unapplied registration patch.
+
+## Stream completion checkpoint
+
+All three continuation algorithms are now written in owned .a files. The timer
+rule remains covered by WAVE_19_TIMEOUT_REPORT.md; both stream rules now have
+native control-flow analysis, independent unchanged-Go comparisons, per-rule
+byte-only mutants and normal/sanitized corpus checks. Raw declaration ancestry
+also supports explicit alias resolution and safely handles binding-pattern names.
+Production integration still requires the three dispatch lines in the unapplied
+wave_19_next_registration.patch. The unmodified archive explicitly refuses each
+question. No shared harness, generator or dispatch file was edited in this
+checkpoint, and no further rules have been claimed. See WAVE_19_STREAM_REPORT.md
+in the parent directory for the final commands, evidence and timing.

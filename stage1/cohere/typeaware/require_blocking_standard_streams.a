@@ -1,0 +1,216 @@
+import { panic, readTextFile } from 'adamic';
+import { Diagnostic } from './diagnostic.ts';
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { declarationAncestry } from './declaration_ancestry.a';
+import { programModules } from './program_modules.a';
+import type { ProgramModule } from './program_modules.a';
+import { StreamGraph } from './stream_graph.a';
+import { NoProcessExitAfterOutput, StreamPosition } from './no_process_exit_after_output.a';
+
+export class StreamIndex {
+    readonly files = new Map<string, ProgramModule>(); readonly imported = new Set<string>();
+    readonly canBlock = new Set<string>(); readonly edges = new Map<string, string[]>();
+    constructor(rules: Rules, root: number) {
+        const modules = programModules(rules, root); const seeds: string[] = [];
+        for(const module of modules) { this.files.set(module.file, module); if(module.file.endsWith('/source/system/StandardStreams.ts') || module.file.endsWith('/source/system/StandardStreams.d.ts')) { seeds.push(module.file); } }
+        for(const module of modules) {
+            if(module.ambient) { continue; } const edges: string[] = [];
+            const source = readTextFile(module.file); if(source.kind === 'Error') { panic(source.message); }
+            const dynamic = source.text.includes('import(') || source.text.includes('require(');
+            for(const specifier of module.specifiers) {
+                if(specifier.typeOnly || (['import', 'require'].includes(specifier.kind) && !dynamic)) { continue; }
+                if(['import', 'require'].includes(specifier.kind) && !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(specifier.expressionKind)) { seeds.push(module.file); continue; }
+                if(specifier.resolved !== '' && specifier.resolved !== module.file && this.files.has(specifier.resolved)) { edges.push(specifier.resolved); this.imported.add(specifier.resolved); }
+            } this.edges.set(module.file, edges);
+        }
+        for(const seed of seeds) { this.canBlock.add(seed); }
+        for(let at = 0; at < seeds.length; at++) { const target = seeds[at] ?? '';
+            for(const [file, edges] of this.edges) { if(edges.includes(target) && !this.canBlock.has(file)) { this.canBlock.add(file); seeds.push(file); } }
+        }
+    }
+    nexus(file: string): boolean { return file.endsWith('/source/system/StandardStreams.ts') || file.endsWith('/source/system/StandardStreams.d.ts'); }
+}
+export class StartedStreams {
+    readonly runs: number[] = []; readonly hands: number[] = [];
+}
+export class ReachedStreams {
+    readonly exits: number[] = []; readonly started: number[] = [];
+}
+export class RequireBlockingStandardStreams {
+    readonly rules: Rules; readonly symbols: NoProcessExitAfterOutput; readonly bindings: Bindings;
+    readonly index: StreamIndex; readonly memo: Map<string, number>; readonly ordered: boolean;
+    constructor(rules: Rules, index: StreamIndex, memo: Map<string, number>, symbols: NoProcessExitAfterOutput, bindings: Bindings) {
+        this.rules = rules; this.symbols = symbols; this.bindings = bindings;
+        this.index = index; this.memo = memo; this.ordered = index.canBlock.has(rules.path);
+    }
+    body(index: number): number { const node = this.rules.parser.node(index); const last = node.children[node.children.length - 1] ?? -1;
+        return last >= 0 && (this.rules.parser.node(last).kind === 'Block' || node.kind === 'ArrowFunction') ? last : -1; }
+    functionBody(index: number): boolean { return this.bindings.functionKind(this.rules.parser.node(index).kind) && this.body(index) >= 0; }
+    callLike(index: number): boolean { return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(this.rules.parser.node(index).kind); }
+    arguments(index: number): number[] {
+        const node = this.rules.parser.node(index); const empty: number[] = [];
+        return node.kind === 'TaggedTemplateExpression' || node.list <= 0 ? empty : node.children.slice(node.children.length - node.list);
+    }
+    context(file: string): Rules {
+        if(file === this.rules.path) { return this.rules; } const source = readTextFile(file); if(source.kind === 'Error') { panic(source.message); }
+        return this.symbols.foreign(file, source.text);
+    }
+    locate(context: Rules, start: number, end: number, kind: string): number {
+        for(let at = 0; at < context.parser.nodes.length; at++) { const node = context.parser.node(at); if(node.kind === kind && context.byte(node.pos) === start && context.byte(node.end) === end) { return at; } } return -1;
+    }
+    symbolMayBlock(name: number, handed = false): boolean {
+        const facts = declarationAncestry(this.rules, name, true);
+        if(handed && (!facts.present || (facts.flags & 16) === 0)) { return false; }
+        if(!facts.present || facts.declarations.length === 0) { return true; }
+        for(const declaration of facts.declarations) {
+            if(!this.index.canBlock.has(declaration.file)) { if(declaration.ambient && this.rules.parser.node(name).text === 'require') { return true; } continue; }
+            const metadata = declaration.chain[0]; if(metadata === undefined) { return true; }
+            if(declaration.ambient || (metadata.kind === 'FunctionDeclaration' && metadata.name === 'blockStandardStreams' && this.index.nexus(declaration.file))) { return true; }
+            const context = this.context(declaration.file); const index = this.locate(context, metadata.start, metadata.end, metadata.kind); if(index < 0) { panic('missing stream declaration'); }
+            const analysis = context === this.rules ? this : streamAnalysis(context, this.index, this.memo);
+            if(['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(metadata.kind)) {
+                if(analysis.body(index) < 0) { if(metadata.kind !== 'FunctionDeclaration' || (metadata.flags & 8388608) !== 0) { return true; } }
+                else if(analysis.mayBlock(index)) { return true; }
+            } else if(metadata.kind === 'VariableDeclaration') {
+                const initializer = analysis.bindings.shape.initializer(index);
+                if(initializer >= 0 && ['FunctionExpression', 'ArrowFunction'].includes(context.parser.node(context.skip(initializer)).kind)) {
+                    if(analysis.mayBlock(context.skip(initializer))) { return true; }
+                } else { return true; }
+            } else if(['ClassDeclaration', 'ClassExpression'].includes(metadata.kind)) { if(analysis.mayBlock(index)) { return true; } }
+            else { return true; }
+        } return false;
+    }
+    handedMayBlock(index: number): boolean {
+        const value = this.rules.skip(index); const kind = this.rules.parser.node(value).kind;
+        if(['FunctionExpression', 'ArrowFunction'].includes(kind)) { return this.mayBlock(value); }
+        return kind === 'Identifier' && this.symbolMayBlock(value, true);
+    }
+    callMayBlock(index: number): boolean {
+        const node = this.rules.parser.node(index); const callee = this.rules.skip(node.children[0] ?? -1); const expression = this.rules.parser.node(callee);
+        if(node.kind === 'CallExpression' && expression.kind === 'ImportKeyword') { return true; }
+        if(this.arguments(index).some((argument) => this.handedMayBlock(argument))) { return true; }
+        if(['FunctionExpression', 'ArrowFunction'].includes(expression.kind)) { return this.mayBlock(callee); }
+        const name = this.symbols.member(callee); return name < 0 || this.symbolMayBlock(name);
+    }
+    mayBlock(index: number): boolean {
+        const key = `${this.rules.path}:${index}`; const known = this.memo.get(key); if(known !== undefined) { return known === 1; }
+        this.memo.set(key, 3); const pending = this.rules.parser.node(index).children.slice(); let blocks = false;
+        while(pending.length > 0) { const child = pending.pop() ?? -1; if(this.callLike(child) && this.callMayBlock(child)) { blocks = true; break; } for(const part of this.rules.parser.node(child).children) { pending.push(part); } }
+        this.memo.set(key, blocks ? 1 : 2); return blocks;
+    }
+    localFunction(index: number): number {
+        const value = this.rules.skip(index); const node = this.rules.parser.node(value);
+        if(['FunctionExpression', 'ArrowFunction'].includes(node.kind)) { return value; } if(node.kind !== 'Identifier') { return -1; }
+        const facts = declarationAncestry(this.rules, value);
+        for(const declaration of facts.declarations) {
+            if(declaration.file !== this.rules.path) { continue; } const metadata = declaration.chain[0]; if(metadata === undefined) { continue; }
+            const found = this.locate(this.rules, metadata.start, metadata.end, metadata.kind); if(found < 0) { continue; }
+            if(metadata.kind === 'FunctionDeclaration' && this.body(found) >= 0) { return found; }
+            const list = declaration.chain[1];
+            if(metadata.kind === 'VariableDeclaration' && list !== undefined && list.kind === 'VariableDeclarationList' && (list.flags & 2) !== 0) {
+                const initializer = this.bindings.shape.initializer(found); if(initializer >= 0 && ['FunctionExpression', 'ArrowFunction'].includes(this.rules.parser.node(this.rules.skip(initializer)).kind)) { return this.rules.skip(initializer); }
+            }
+        } return -1;
+    }
+    started(index: number): StartedStreams {
+        const result = new StartedStreams(); const node = this.rules.parser.node(index);
+        if(node.kind !== 'NewExpression') { const callee = this.localFunction(node.children[0] ?? -1); if(callee >= 0) {
+            if(this.rules.parser.node(callee).children.some((child) => this.rules.parser.node(child).kind === 'AsteriskToken')) { result.hands.push(callee); } else { result.runs.push(callee); }
+        } }
+        for(const argument of this.arguments(index)) { const functionIndex = this.localFunction(argument); if(functionIndex >= 0) { result.hands.push(functionIndex); } } return result;
+    }
+    argumentsBlock(index: number): boolean {
+        const pending = this.arguments(index);
+        while(pending.length > 0) { const child = pending.pop() ?? -1; if(this.functionBody(child)) { continue; }
+            if(this.rules.parser.node(child).kind === 'AwaitExpression' || (this.callLike(child) && this.callMayBlock(child))) { return true; }
+            for(const part of this.rules.parser.node(child).children) { pending.push(part); }
+        } return false;
+    }
+    topLevelBlocks(root: number): boolean {
+        const pending = this.rules.parser.node(root).children.slice();
+        while(pending.length > 0) { const child = pending.pop() ?? -1; if(this.functionBody(child)) { continue; } if(this.callLike(child) && this.callMayBlock(child)) { return true; } for(const part of this.rules.parser.node(child).children) { pending.push(part); } } return false;
+    }
+    importsBlock(): boolean {
+        const empty: string[] = []; const pending = [this.rules.path]; const seen = new Set<string>(); seen.add(this.rules.path);
+        for(let at = 0; at < pending.length; at++) { for(const target of this.index.edges.get(pending[at] ?? '') ?? empty) {
+            if(seen.has(target)) { continue; } seen.add(target); pending.push(target); if(!this.index.canBlock.has(target)) { continue; }
+            if(this.index.files.get(target)?.ambient === true) { return true; }
+            const context = this.context(target); const analysis = streamAnalysis(context, this.index, this.memo);
+            if(analysis.topLevelBlocks(context.parser.nodes.length - 1)) { return true; }
+        } } return false;
+    }
+    analyze(root: number): ReachedStreams {
+        const result = new ReachedStreams(); const graph = new StreamGraph(this.rules, root); const recorded = new Set<number>();
+        for(const block of graph.blocks) { for(const event of block.events) { if(event.expression && !this.symbols.catchBinding(event.node, root)) { recorded.add(event.node); } } }
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at); if(node.kind === 'CallExpression' && graph.rootOf(at) === root && this.symbols.isExit(at) && !recorded.has(at)) { return result; }
+            if(this.ordered && !recorded.has(at) && (node.kind === 'AwaitExpression' || this.callLike(at))) {
+                let inRun = true; let current = this.symbols.parent(at); let held = false;
+                while(current >= 0) { if(current === root) { held = true; break; } if(this.functionBody(current)) { inRun = false; break; } current = this.symbols.parent(current); }
+                if(held && inRun && (node.kind === 'AwaitExpression' || this.callMayBlock(at))) { return result; }
+            }
+        }
+        const visited = new Set<string>(); const initial: string[] = []; const pending = [new StreamPosition(0, initial)]; visited.add('0:'); const started = new Set<number>(); const exits = new Set<number>();
+        for(let at = 0; at < pending.length; at++) {
+            const position = pending[at]; if(position === undefined) { continue; } const block = graph.block(position.block); let state = position.state; let ended = false;
+            for(const event of block.events) {
+                const node = this.rules.parser.node(event.node);
+                if(event.expression && !this.symbols.catchBinding(event.node, root)) {
+                    if(node.kind === 'AwaitExpression') { if(this.ordered) { ended = true; } }
+                    else if(this.callLike(event.node)) {
+                        if(node.kind === 'CallExpression' && this.symbols.isExit(event.node)) { if(state.length > 0) { exits.add(event.node); } ended = true; }
+                        else {
+                            if(node.kind === 'CallExpression' && this.symbols.directWrite(event.node) && !this.symbols.holdsExit(event.node)) { state = this.symbols.withWrite(state, this.symbols.chain(event.node, root)); }
+                            const functions = this.started(event.node);
+                            if(!this.ordered || functions.runs.length === 0 || !this.argumentsBlock(event.node)) { for(const functionIndex of functions.runs) { started.add(functionIndex); } }
+                            if(!this.ordered) { for(const functionIndex of functions.hands) { started.add(functionIndex); } }
+                            if(this.ordered && this.callMayBlock(event.node)) { ended = true; }
+                        }
+                    }
+                } else if(!event.expression) {
+                    if(node.kind === 'Block' && this.symbols.parent(event.node) >= 0 && this.rules.parser.node(this.symbols.parent(event.node)).kind === 'CatchClause') { const id = this.symbols.tryId(this.symbols.parent(this.symbols.parent(event.node))); state = state.filter((held) => !held.includes(`,${id},`)); }
+                    if(this.ordered && ((node.kind === 'ForOfStatement' && node.children.some((child) => this.rules.parser.node(child).kind === 'AwaitKeyword')) ||
+                        (node.kind === 'VariableStatement' && node.children.some((child) => this.rules.parser.node(child).kind === 'VariableDeclarationList' && this.rules.parser.node(child).semantic === '6')))) { ended = true; }
+                }
+                if(ended) { break; }
+            }
+            if(ended) { continue; }
+            for(const successor of block.successors) { if(successor < 0 || !graph.block(successor).reachable) { continue; } const key = `${successor}:${state.join('|')}`;
+                if(!visited.has(key)) { visited.add(key); pending.push(new StreamPosition(successor, state)); }
+            }
+        }
+        for(const exit of exits) { result.exits.push(exit); } for(const functionIndex of started) { result.started.push(functionIndex); } return result;
+    }
+    run(root: number): void {
+        if(!this.rules.scanner.text.startsWith('#!') && this.index.imported.has(this.rules.path)) { return; }
+        if(this.ordered && this.importsBlock()) { return; }
+        const pending = [root]; const queued = new Set<number>(); queued.add(root); const exits = new Set<number>();
+        for(let at = 0; at < pending.length; at++) { const reached = this.analyze(pending[at] ?? -1); for(const exit of reached.exits) { exits.add(exit); }
+            for(const functionIndex of reached.started) { if(!queued.has(functionIndex)) { queued.add(functionIndex); pending.push(functionIndex); } }
+        }
+        const found: number[] = []; for(const exit of exits) { found.push(exit); } found.sort((left, right) => this.rules.parser.node(left).pos - this.rules.parser.node(right).pos);
+        if(found.length === 0) { return; }
+        const reason = this.rules.scanner.text.startsWith('#!') ? 'it starts with `#!`' : 'nothing in the program imports it';
+        const count = found.length > 1 ? `, the first of ${found.length} such exits in this file` : '';
+        const message = `This file runs as a process (${reason}), and this \`process.exit()\` runs after a write to stdout or stderr before the process has called \`blockStandardStreams()\`${count}. Node writes to a pipe asynchronously, and \`process.exit()\` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's \`blockStandardStreams()\` (\`source/system/StandardStreams\`) before anything that can exit: first in the module, or first in the main it runs.`;
+        const node = this.rules.parser.node(found[0] ?? -1); this.rules.findings.push(new Diagnostic('correctness-require-blocking-standard-streams', 'exitBeforeBlockingStandardStreams', message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), 'nexus/'));
+    }
+}
+
+export function streamAnalysis(rules: Rules, index: StreamIndex, memo: Map<string, number>): RequireBlockingStandardStreams {
+    const symbols = new NoProcessExitAfterOutput(rules); const bindings = new Bindings(rules);
+    return new RequireBlockingStandardStreams(rules, index, memo, symbols, bindings);
+}
+
+export function hasStreamCandidate(rules: Rules, root: number): boolean {
+    const symbols = new NoProcessExitAfterOutput(rules); const exits = new Set<number>(); const writes = new Set<number>();
+    let graph: StreamGraph | undefined;
+    for(let at = 0; at < rules.parser.nodes.length; at++) {
+        if(rules.parser.node(at).kind !== 'CallExpression') { continue; }
+        const exit = symbols.isExit(at); const write = !exit && symbols.directWrite(at); if(!exit && !write) { continue; }
+        if(graph === undefined) { graph = new StreamGraph(rules, root); } const owner = graph.rootOf(at);
+        if(exit) { exits.add(owner); } if(write) { writes.add(owner); }
+        if(exits.has(owner) && writes.has(owner)) { return true; }
+    } return false;
+}

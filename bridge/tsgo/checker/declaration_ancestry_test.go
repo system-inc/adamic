@@ -188,3 +188,57 @@ func TestWave19ResolvedCalleeAndProgramModules(t *testing.T) {
 	}
 	t.Log("resolved signature declaration/body and program import targets agree with direct checker APIs")
 }
+
+func TestWave19AncestryAliasAndBindingNames(t *testing.T) {
+	directory := t.TempDir()
+	source := filepath.Join(directory, "input.a")
+	config := filepath.Join(directory, "tsconfig.json")
+	for name, text := range map[string]string{
+		"input.a":         "import { exit as imported } from './dependency';const {exit}= {exit(){}};exit();imported();",
+		"dependency.d.ts": "export declare function exit():never;",
+		"tsconfig.json":   `{"compilerOptions":{"strict":true,"target":"ES2022"},"files":["input.a","dependency.d.ts"]}`,
+	} {
+		if err := os.WriteFile(filepath.Join(directory, name), []byte(text), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	p, err := Open(config, []string{source})
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := p.Compiler.GetSourceFile(source)
+	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), file)
+	defer release()
+	calls := 0
+	var visit func(*ast.Node)
+	visit = func(node *ast.Node) {
+		if node.Kind == ast.KindCallExpression {
+			name := node.AsCallExpression().Expression
+			out := &fields{}
+			out.number(1)
+			out.text("declaration-ancestry")
+			wire, err := p.declarationAncestry(out, c, name, "declaration-ancestry\nalias")
+			if err != nil {
+				t.Fatal(err)
+			}
+			symbol := c.GetSymbolAtLocation(name)
+			if symbol.Flags&ast.SymbolFlagsAlias != 0 {
+				symbol = c.GetAliasedSymbol(symbol)
+			}
+			got := decodedFields(t, wire)
+			if got[2] != "1" || got[3] != strconv.FormatUint(p.symbolID(symbol), 10) || got[4] != strconv.FormatUint(uint64(symbol.Flags), 10) {
+				t.Fatal("wrong alias ancestry")
+			}
+			if name.Text() == "imported" && !strings.Contains(wire, filepath.Join(directory, "dependency.d.ts")) {
+				t.Fatal("alias declaration not followed")
+			}
+			calls++
+		}
+		node.ForEachChild(func(child *ast.Node) bool { visit(child); return false })
+	}
+	visit(file.AsNode())
+	if calls != 2 {
+		t.Fatal("missing alias and binding controls")
+	}
+	t.Log("aliases match the checker and binding-pattern ancestor names do not panic")
+}

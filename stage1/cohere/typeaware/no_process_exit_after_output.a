@@ -1,0 +1,158 @@
+import { Diagnostic } from './diagnostic.ts';
+import type { Rules } from './rules.ts';
+import { Rules as RuleContext } from './rules.ts';
+import { Parser } from '../../typescript/parser/parser.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from './unary_minus.ts';
+import { StreamGraph } from './stream_graph.a';
+import { declarationAncestry } from './declaration_ancestry.a';
+import { resolvedCallee } from './resolved_callee.a';
+
+const message = 'This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.';
+export class StreamPosition {
+    readonly block: number; readonly state: string[];
+    constructor(block: number, state: string[]) { this.block = block; this.state = state; }
+}
+export class NoProcessExitAfterOutput {
+    readonly rules: Rules; readonly exits = new Map<number, boolean>(); readonly writes = new Map<number, boolean>();
+    readonly functions = new Map<string, boolean>(); readonly files = new Map<string, RuleContext>();
+    readonly tries = new Map<number, number>();
+    constructor(rules: Rules) { this.rules = rules; }
+    parent(index: number): number { return this.rules.parents[index] ?? -1; }
+    member(index: number): number {
+        if(index < 0) { return -1; } const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') { return index; }
+        if(node.kind === 'PropertyAccessExpression') {
+            const name = node.children[node.children.length - 1] ?? -1;
+            return name >= 0 && this.rules.parser.node(name).kind === 'Identifier' ? name : -1;
+        } return -1;
+    }
+    processMember(index: number): boolean {
+        const facts = declarationAncestry(this.rules, index, true);
+        if(!facts.present || facts.declarations.length === 0) { return false; }
+        return facts.declarations.every((declaration) => declaration.ambient &&
+            ['MethodSignature', 'PropertySignature'].includes(declaration.chain[0]?.kind ?? '') &&
+            declaration.chain[1]?.kind === 'InterfaceDeclaration' && declaration.chain[1]?.name === 'Process' &&
+            declaration.chain[2]?.kind === 'ModuleBlock' && declaration.chain[3]?.kind === 'ModuleDeclaration' &&
+            declaration.chain[3]?.name === 'NodeJS');
+    }
+    isExit(index: number): boolean {
+        const known = this.exits.get(index); if(known !== undefined) { return known; }
+        const call = this.rules.parser.node(index); const name = this.member(this.rules.skip(call.children[0] ?? -1));
+        const answer = name >= 0 && this.rules.parser.node(name).text === 'exit' && this.processMember(name);
+        this.exits.set(index, answer); return answer;
+    }
+    directWrite(index: number): boolean {
+        const callee = this.rules.parser.node(this.rules.skip(this.rules.parser.node(index).children[0] ?? -1));
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) { return false; }
+        const name = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+        if(!['Identifier', 'StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(name.kind)) { return false; }
+        const receiverIndex = this.rules.skip(callee.children[0] ?? -1); const receiver = this.rules.parser.node(receiverIndex);
+        if(['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(name.text) && receiver.kind === 'Identifier' && receiver.text === 'console') {
+            const facts = declarationAncestry(this.rules, receiverIndex);
+            return facts.present && facts.declarations.length > 0 && facts.declarations.every((declaration) => declaration.ambient &&
+                declaration.chain[0]?.kind === 'VariableDeclaration' && declaration.chain[1]?.kind === 'VariableDeclarationList' &&
+                declaration.chain[2]?.kind === 'VariableStatement' &&
+                ((declaration.chain[3]?.kind === 'SourceFile' && !declaration.module) ||
+                 (declaration.chain[3]?.kind === 'ModuleBlock' && declaration.chain[4]?.global === true)));
+        }
+        const stream = this.member(receiverIndex);
+        return name.text === 'write' && stream >= 0 && ['stdout', 'stderr'].includes(this.rules.parser.node(stream).text) && this.processMember(stream);
+    }
+    foreign(file: string, source: string): RuleContext {
+        const known = this.files.get(file); if(known !== undefined) { return known; }
+        const parser = new Parser(source, file); const scanner = new Scanner(source); const offsets = byteOffsets(source);
+        const unary = new UnaryMinus(this.rules.program, file, parser, scanner, offsets);
+        const context = new RuleContext(this.rules.program, file, parser, scanner, offsets, unary); const root = parser.file();
+        for(let at = 0; at < parser.nodes.length; at++) { context.parents.push(-1); } context.links(root, -1);
+        this.files.set(file, context); return context;
+    }
+    bodyWrites(body: number): boolean {
+        let wrote = false; let exits = false; const pending = [body];
+        while(pending.length > 0) {
+            const index = pending.pop() ?? -1; const node = this.rules.parser.node(index);
+            if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor', 'ClassStaticBlockDeclaration'].includes(node.kind) || node.kind === 'PropertyDeclaration') { continue; }
+            if(node.kind === 'CallExpression') { if(this.isExit(index)) { exits = true; } if(this.directWrite(index)) { wrote = true; } }
+            for(const child of node.children) { pending.push(child); }
+        } return wrote && !exits;
+    }
+    writer(index: number): boolean {
+        const known = this.writes.get(index); if(known !== undefined) { return known; }
+        if(this.directWrite(index)) { this.writes.set(index, true); return true; }
+        const callee = resolvedCallee(this.rules, index); let answer = false;
+        let outer = this.parent(index);
+        while(outer >= 0 && this.rules.parser.node(outer).kind === 'ParenthesizedExpression') { outer = this.parent(outer); }
+        if(callee.body && ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(callee.kind) &&
+            (callee.file === this.rules.path || callee.module) && (callee.flags & 1) === 0 &&
+            ((callee.flags & 2) === 0 || (outer >= 0 && this.rules.parser.node(outer).kind === 'AwaitExpression')) && (callee.returns & 262144) === 0) {
+            const key = `${callee.file}:${callee.start}:${callee.end}`; const remembered = this.functions.get(key);
+            if(remembered !== undefined) { answer = remembered; }
+            else {
+                const context = callee.file === this.rules.path ? this.rules : this.foreign(callee.file, callee.source);
+                const helper = context === this.rules ? this : new NoProcessExitAfterOutput(context);
+                for(let at = 0; at < context.parser.nodes.length; at++) {
+                    const node = context.parser.node(at);
+                    if(node.kind === callee.bodyKind && context.byte(node.pos) === callee.bodyStart && context.byte(node.end) === callee.bodyEnd) { answer = helper.bodyWrites(at); break; }
+                } this.functions.set(key, answer);
+            }
+        } this.writes.set(index, answer); return answer;
+    }
+    holdsExit(index: number): boolean {
+        const pending = this.rules.parser.node(index).children.slice();
+        while(pending.length > 0) { const child = pending.pop() ?? -1; const node = this.rules.parser.node(child);
+            if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor', 'ClassStaticBlockDeclaration', 'PropertyDeclaration'].includes(node.kind)) { continue; }
+            if(node.kind === 'CallExpression' && this.isExit(child)) { return true; }
+            for(const part of node.children) { pending.push(part); }
+        } return false;
+    }
+    catchBinding(index: number, root: number): boolean {
+        let previous = index;
+        for(let current = this.parent(index); current >= 0 && current !== root; current = this.parent(current)) {
+            if(this.rules.parser.node(current).kind === 'CatchClause' && this.rules.parser.node(previous).kind === 'VariableDeclaration') { return true; } previous = current;
+        } return false;
+    }
+    tryId(index: number): number { const known = this.tries.get(index); if(known !== undefined) { return known; } const id = this.tries.size; this.tries.set(index, id); return id; }
+    chain(index: number, root: number): string {
+        const ids: number[] = []; let previous = index;
+        for(let current = this.parent(index); current >= 0 && current !== root; current = this.parent(current)) {
+            const node = this.rules.parser.node(current);
+            if(node.kind === 'TryStatement' && node.children[0] === previous && node.children.some((child) => this.rules.parser.node(child).kind === 'CatchClause')) { ids.push(this.tryId(current)); } previous = current;
+        } ids.sort((left, right) => left - right); return ',' + ids.map((id) => `${id}`).join(',') + (ids.length > 0 ? ',' : '');
+    }
+    chainHolds(outer: string, inner: string): boolean { return inner.split(',').every((id) => id === '' || outer.includes(`,${id},`)); }
+    withWrite(state: string[], chain: string): string[] {
+        if(state.some((held) => this.chainHolds(chain, held))) { return state; }
+        const next = state.filter((held) => !this.chainHolds(held, chain)); next.push(chain); next.sort((left, right) => left < right ? -1 : left > right ? 1 : 0); return next;
+    }
+    analyze(root: number, exits: number[]): void {
+        const graph = new StreamGraph(this.rules, root); const recorded = new Set<number>();
+        for(const block of graph.blocks) { for(const event of block.events) { if(event.expression && this.rules.parser.node(event.node).kind === 'CallExpression' && !this.catchBinding(event.node, root) && this.isExit(event.node)) { recorded.add(event.node); } } }
+        if(exits.some((exit) => !recorded.has(exit))) { return; }
+        const reported = new Set<number>(); const visited = new Set<string>(); const initial: string[] = []; const pending = [new StreamPosition(0, initial)]; visited.add('0:');
+        for(let at = 0; at < pending.length; at++) {
+            const position = pending[at]; if(position === undefined) { continue; } const block = graph.block(position.block); let state = position.state; let exited = false;
+            for(const event of block.events) {
+                const node = this.rules.parser.node(event.node);
+                if(event.expression && node.kind === 'CallExpression' && !this.catchBinding(event.node, root)) {
+                    if(this.isExit(event.node)) { if(state.length > 0) { reported.add(event.node); } exited = true; break; }
+                    if(this.writer(event.node) && !this.holdsExit(event.node)) { state = this.withWrite(state, this.chain(event.node, root)); }
+                } else if(!event.expression && node.kind === 'Block' && this.parent(event.node) >= 0 && this.rules.parser.node(this.parent(event.node)).kind === 'CatchClause') {
+                    const id = this.tryId(this.parent(this.parent(event.node))); state = state.filter((held) => !held.includes(`,${id},`));
+                }
+            }
+            if(exited) { continue; }
+            for(const successor of block.successors) { if(successor < 0 || !graph.block(successor).reachable) { continue; }
+                const key = `${successor}:${state.join('|')}`; if(visited.has(key)) { continue; } visited.add(key); pending.push(new StreamPosition(successor, state));
+            }
+        }
+        for(const exit of exits) { if(reported.has(exit)) { const node = this.rules.parser.node(exit); this.rules.findings.push(new Diagnostic('correctness-no-process-exit-after-output', 'exitAfterOutput', message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), 'nexus/')); } }
+    }
+    run(): void {
+        const roots = new Map<number, number[]>(); let locator: StreamGraph | undefined;
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) { if(this.rules.parser.node(at).kind !== 'CallExpression' || !this.isExit(at)) { continue; }
+            if(locator === undefined) { locator = new StreamGraph(this.rules, this.rules.parser.nodes.length - 1); }
+            const root = locator.rootOf(at); if(root < 0) { continue; } const empty: number[] = []; const exits = roots.get(root) ?? empty; exits.push(at); roots.set(root, exits);
+        }
+        for(const [root, exits] of roots) { this.analyze(root, exits); }
+    }
+}
