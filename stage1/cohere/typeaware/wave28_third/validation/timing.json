@@ -1,0 +1,42 @@
+{
+  "repository": [
+    {
+      "native_s": 0.656203082000502,
+      "native_stdout": "/workspace/wave-28-third-validation/isolated-repository-0-native.stdout",
+      "go_s": 0.2859126039993498,
+      "go_stdout": "/workspace/wave-28-third-validation/isolated-repository-0-go.stdout"
+    },
+    {
+      "go_s": 0.36828795800010994,
+      "go_stdout": "/workspace/wave-28-third-validation/isolated-repository-1-go.stdout",
+      "native_s": 0.4343790809998609,
+      "native_stdout": "/workspace/wave-28-third-validation/isolated-repository-1-native.stdout"
+    },
+    {
+      "native_s": 0.4338614959997358,
+      "native_stdout": "/workspace/wave-28-third-validation/isolated-repository-2-native.stdout",
+      "go_s": 0.2875741130001188,
+      "go_stdout": "/workspace/wave-28-third-validation/isolated-repository-2-go.stdout"
+    }
+  ],
+  "compiler": [
+    {
+      "native_s": 3.8234427960005632,
+      "native_stdout": "/workspace/wave-28-third-validation/isolated-compiler-0-native.stdout",
+      "go_s": 0.5895074879999811,
+      "go_stdout": "/workspace/wave-28-third-validation/isolated-compiler-0-go.stdout"
+    },
+    {
+      "go_s": 0.6216557779998766,
+      "go_stdout": "/workspace/wave-28-third-validation/isolated-compiler-1-go.stdout",
+      "native_s": 2.9037735739993877,
+      "native_stdout": "/workspace/wave-28-third-validation/isolated-compiler-1-native.stdout"
+    },
+    {
+      "native_s": 2.7249147869997614,
+      "native_stdout": "/workspace/wave-28-third-validation/isolated-compiler-2-native.stdout",
+      "go_s": 0.48127588799980003,
+      "go_stdout": "/workspace/wave-28-third-validation/isolated-compiler-2-go.stdout"
+    }
+  ]
+}

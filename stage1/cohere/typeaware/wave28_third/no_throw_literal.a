@@ -1,0 +1,25 @@
+import { Tree } from '../wave28_next/tree.a';
+import { Diagnostic } from '../diagnostic.ts';
+export class NoThrowLiteral {
+ readonly tree: Tree;
+ constructor(tree: Tree){this.tree=tree;}
+ could(index: number): boolean{
+  const tree=this.tree;const kind=tree.kind(index);
+  if(['Identifier','CallExpression','NewExpression','PropertyAccessExpression','ElementAccessExpression','TaggedTemplateExpression','YieldExpression','AwaitExpression'].includes(kind)){return true;}
+  if(kind==='BinaryExpression'){const op=tree.operator(index);if(['EqualsToken','AmpersandAmpersandEqualsToken','AmpersandAmpersandToken','CommaToken'].includes(op)){return this.could(tree.last(index));}if(['BarBarEqualsToken','QuestionQuestionEqualsToken','BarBarToken','QuestionQuestionToken'].includes(op)){return this.could(tree.child(index,0)) || this.could(tree.last(index));}}
+  if(kind==='ConditionalExpression'){return this.could(tree.child(index,2)) || this.could(tree.last(index));}
+  return false;
+ }
+ run(): void{
+  const tree=this.tree;
+  for(let at=0;at<tree.rules.parser.nodes.length;at++){
+   if(tree.parent(at)<0 || tree.kind(at)!=='ThrowStatement'){continue;}const argument=tree.child(at,0);if(argument<0){continue;}
+   let id='';if(!this.could(argument)){id='object';}else if(tree.kind(argument)==='Identifier' && tree.rules.parser.node(argument).text==='undefined'){
+    const symbol=tree.symbols.facts(argument)[0];if(symbol===undefined || !symbol.declarations.some((decl)=>!decl.declarationFile)){id='undef';}
+   }
+   if(id!==''){const node=tree.rules.parser.node(at);tree.rules.findings.push(new Diagnostic('no-throw-literal',id,id==='undef'?UNDEF:OBJECT,tree.rules.byte(tree.rules.start(node)),tree.rules.byte(node.end),''));}
+  }
+ }
+}
+const OBJECT='This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead.';
+const UNDEF='This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.';

@@ -1,0 +1,65 @@
+import { panic } from 'adamic';
+export class RegexNode {readonly kind: string;readonly negative: boolean;constructor(kind: string,negative=false){this.kind=kind;this.negative=negative;}}
+export class Group {readonly name: string;readonly start: number;end=0;readonly path: number[];constructor(name: string,start: number,path: number[]){this.name=name;this.start=start;this.path=path;}}
+export class Backreference {readonly index: number;readonly name: string;readonly start: number;readonly end: number;readonly path: number[];constructor(index: number,name: string,start: number,end: number,path: number[]){this.index=index;this.name=name;this.start=start;this.end=end;this.path=path;}}
+export class RegexStructure {
+ readonly pattern: string;readonly uv: boolean;readonly sets: boolean;readonly nodes: RegexNode[]=[];readonly groups: Group[]=[];readonly references: Backreference[]=[];readonly stack: number[]=[];readonly groupStack: number[]=[];
+ constructor(pattern: string,flags: string){this.pattern=pattern;this.uv=flags.includes('u') || flags.includes('v');this.sets=flags.includes('v');}
+ hex(text: string): boolean{return text!=='' && text.split('').every((char)=>'0123456789abcdefABCDEF'.includes(char));}
+ escape(index: number): number{
+  const p=this.pattern;if(index+1>=p.length){return -1;}const next=p[index+1];
+  if(next==='x'){return index+3<p.length && this.hex(p.slice(index+2,index+4))?4:2;}
+  if(next==='u'){
+   if(p[index+2]==='{'){if(!this.uv){return 2;}const end=p.indexOf('}',index+3);return end<0?2:end-index+1;}
+   return index+5<p.length && this.hex(p.slice(index+2,index+6))?6:2;
+  }
+  if(next==='c'){return index+2<p.length?3:2;}
+  if(['p','P','q'].includes(next??'') && this.uv && p[index+2]==='{'){const end=p.indexOf('}',index+3);if(end>=0){return end-index+1;}}
+  const code=p.charCodeAt(index+1);return code>=55296 && code<=56319 && index+2<p.length && p.charCodeAt(index+2)>=56320 && p.charCodeAt(index+2)<=57343?3:2;
+ }
+ classEnd(index: number): number{const p=this.pattern;let depth=1;let at=index+1;if(p[at]==='^'){at++;}while(at<p.length){const char=p[at];if(char==='\\'){const step=this.escape(at);if(step<0){return -1;}at+=step;}else if(char==='[' && this.sets){depth++;at++;}else if(char===']'){depth--;at++;if(depth===0){return at;}}else{at++;}}return -1;}
+ push(kind: string,negative=false): void{this.nodes.push(new RegexNode(kind,negative));this.stack.push(this.nodes.length-1);}
+ open(index: number): number{
+  const p=this.pattern;let kind='capture';let negative=false;let name='';let next=index+1;
+  if(p[next]==='?'){
+   if(p[next+1]===':'){kind='group';next+=2;}else if(p[next+1]==='='){kind='ahead';next+=2;}else if(p[next+1]==='!'){kind='ahead';negative=true;next+=2;}
+   else if(p[next+1]==='<' && ['=','!'].includes(p[next+2]??'')){kind='behind';negative=p[next+2]==='!';next+=3;}
+   else if(p[next+1]==='<'){const end=p.indexOf('>',next+2);if(end<0){kind='group';next+=2;}else{name=p.slice(next+2,end);next=end+1;}}
+   else{kind='group';next+=2;}
+  }
+  this.push(kind,negative);if(kind==='capture'){this.groups.push(new Group(name,index,this.stack.slice()));this.groupStack.push(this.groups.length-1);}else{this.groupStack.push(-1);}this.push('alternative');return next;
+ }
+ read(index: number): number{
+  const p=this.pattern;if(index+1>=p.length){return -1;}
+  if('123456789'.includes(p[index+1]??'')){let end=index+1;let value=0;while(end<p.length && '0123456789'.includes(p[end]??'')){value=value*10+'0123456789'.indexOf(p[end]??'');end++;}this.references.push(new Backreference(value,'',index,end,this.stack.slice()));return end-index;}
+  if(p[index+1]==='k' && p[index+2]==='<'){const end=p.indexOf('>',index+3);if(end>=0){this.references.push(new Backreference(0,p.slice(index+3,end),index,end+1,this.stack.slice()));return end-index+1;}}
+  return this.escape(index);
+ }
+ scan(): boolean{
+  const p=this.pattern;this.push('group');this.push('alternative');
+  for(let at=0;at<p.length;){const char=p[at];if(char==='\\'){const step=this.read(at);if(step<0){return false;}at+=step;}
+   else if(char==='['){const end=this.classEnd(at);if(end<0){return false;}at=end;}
+   else if(char==='('){at=this.open(at);}
+   else if(char===')'){if(this.groupStack.length===0){return false;}this.stack.pop();const group=this.groupStack.pop()??-1;if(group>=0){(this.groups[group]??panic('missing capturing group')).end=at+1;}this.stack.pop();at++;}
+   else if(char==='|'){this.stack.pop();this.push('alternative');at++;}else{at++;}
+  }
+  return this.groupStack.length===0;
+ }
+ quantifier(index: number): boolean{const p=this.pattern;let at=index+1;const start=at;while(at<p.length && '0123456789'.includes(p[at]??'')){at++;}if(at===start){return false;}if(p[at]===','){at++;while(at<p.length && '0123456789'.includes(p[at]??'')){at++;}}return p[at]==='}';}
+ wellFormed(): boolean{
+  const named=this.groups.some((group)=>group.name!=='');
+  for(const ref of this.references){if(ref.name!==''){if(!this.groups.some((group)=>group.name===ref.name) && (named || this.uv)){return false;}}else if(this.uv && ref.index>this.groups.length){return false;}}
+  if(this.uv){for(let at=0;at<this.pattern.length;){const char=this.pattern[at];if(char==='\\'){const step=this.escape(at);if(step<0){return false;}at+=step;}else if(char==='['){const end=this.classEnd(at);if(end<0){return false;}at=end;}else{if(char==='{' && !this.quantifier(at)){return false;}at++;}}}
+  return true;
+ }
+ resolve(ref: Backreference): Group[]{return ref.name!==''?this.groups.filter((group)=>group.name===ref.name):ref.index>=1 && ref.index<=this.groups.length?this.groups.slice(ref.index-1,ref.index):EMPTY;}
+ classify(ref: Backreference,group: Group): string{
+  if(group.start<=ref.start && ref.end<=group.end){return 'nested';}let common=1;while(common<ref.path.length && common<group.path.length && ref.path[common]===group.path[common]){common++;}
+  const cut=group.path.slice(common);let backwards=false;for(let at=common-1;at>=0;at--){const node=this.nodes[ref.path[at]??-1]??panic('missing regex common ancestor');if(['ahead','behind'].includes(node.kind)){backwards=node.kind==='behind';break;}}
+  if(cut.length>0 && this.nodes[cut[0]??-1]?.kind==='alternative'){return 'disjunctive';}
+  if(!backwards && ref.end<=group.start){return 'forward';}if(backwards && group.end<=ref.start){return 'backward';}
+  if(cut.some((index)=>{const node=this.nodes[index]??panic('missing regex ancestor');return node.negative && ['ahead','behind'].includes(node.kind);})){return 'intoNegativeLookaround';}return '';
+ }
+}
+
+const EMPTY: Group[]=[];
