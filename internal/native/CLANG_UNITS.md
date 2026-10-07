@@ -4,6 +4,40 @@ Commands, raw timings, traces and output-parity evidence are saved beside this r
 Flags-key and duplicated-state mutants fail on executed behavior; literal-rewrite and unit-order mutants prove preservation checks can fail.
 Not covered: general one-module rebuilds when emitter numbering/header declarations change, the complete pinned TypeScript corpus, or a default TSGo dispatcher.
 
+## System-header portability correction
+
+The original measurements below are historical, at commit 61075f2. They predate this correction and were not remeasured. The macOS Apple clang 21 failure was reported by integration; this worker verified the analogous failure on Linux clang 20.1.8, not on macOS.
+
+The old `clang -E -P` snapshot discarded system-header line markers. Compiling that snapshot under `-pedantic -Werror` treats platform extensions, including stdio.h's `_Nullable` function pointers, as user-code extensions. The fix removes `-P`, retaining clang's `# ... "header" ... 3` system-header flag. Object compilation accepts only clang's generated line-marker syntax with `-Wno-gnu-line-marker`; nullability and other pedantic warnings remain errors in user code. The same preprocessed snapshot is hashed and compiled, preserving transitive header contents and provenance without reopening headers. Ordered build flags and the compiler path/full clang version remain in the key. The cache format advances to `adamic-units-v2` so previous entries cannot be reused.
+
+`TestUnitSystemHeaderProvenance` plants `_Nullable` in a header marked with `#pragma clang system_header`, with `-Wno-system-headers`, native.Flags and `-pedantic -Werror`. It compiles successfully, observes an unchanged-header cache hit, changes a header macro from 1 to 2, and observes output `2` for cached and uncached builds. Removing the system pragma makes the same extension fail with `-Wnullability-extension`; no blanket diagnostic suppression is allowed.
+
+Correction commands (test output always saved to logs):
+
+```bash
+source /workspace/adamic-tools/env.sh
+go test ./internal/native -run 'TestUnitSystemHeaderProvenance|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokens' -count=1 -v > /tmp/adamic-clang-system-header.log 2>&1
+ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=5 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout=30m > /tmp/adamic-header-oracle.log 2>&1
+go test ./internal/native -count=1 -timeout=30m > /tmp/adamic-header-native.log 2>&1
+go vet ./... > /tmp/adamic-header-vet.log 2>&1
+# Each saved correction mutant is mapped over internal/native/units.go with a Go overlay:
+go test -overlay=/tmp/adamic-header-flatten-overlay.json ./internal/native -run '^TestUnitSystemHeaderProvenance$' -count=1 > /tmp/adamic-header-flatten-mutant.log 2>&1
+go test -overlay=/tmp/adamic-header-header-key-overlay.json ./internal/native -run '^TestUnitSystemHeaderProvenance$' -count=1 > /tmp/adamic-header-header-key-mutant.log 2>&1
+go test -overlay=/tmp/adamic-header-flags-overlay.json ./internal/native -run '^TestUnitCacheFlagsHoldSanitizer$' -count=1 > /tmp/adamic-header-flags-mutant.log 2>&1
+go test -overlay=/tmp/adamic-header-blanket-warning-overlay.json ./internal/native -run '^TestUnitSystemHeaderProvenance$' -count=1 > /tmp/adamic-header-blanket-warning-mutant.log 2>&1
+```
+
+Run `bash internal/native/clang_units_evidence/run-system-header-mutants.sh` to recreate all four correction overlays from this checkout; the runner requires the expected diagnostic/output failure, not merely a nonzero exit.
+
+Mutant observations:
+
+- Reintroduce `-P`: the planted system-header extension fails with `-Werror,-Wnullability-extension`. This regression deliberately proves compiler acceptance of a platform header; this diagnostic is the requested observation, rather than a behavioral miscompile mutant.
+- Hash only the original unit source instead of the preprocessed snapshot: compilation/linking succeed, but after changing the header the cached program prints `1` instead of `2`. The header-dependency check catches wrong objects on executed behavior.
+- Drop ordered flags from the v2 key: release objects are reused after a sanitized build request; the signed-overflow probe no longer traps and the sanitizer check fails.
+- Add blanket `-Wno-nullability-extension`: the ordinary-header negative control incorrectly compiles and fails with `user-header extension must be rejected: <nil>`.
+
+Correction status: **PASS** focused provenance/shared-state/sanitizer checks; **PASS** full internal/native; **PASS** full uncached split internal/oracle; **PASS** go vet ./...; **PASS** reproduction runner (all four expected mutant failures). Correction evidence uses the `system-header-` filename prefix. Saved correction logs and mutant bodies accompany this report. The default single-file path and all emit*.go files remain unchanged. Only devtools/clang-units is pushed; integration owns main.
+
 ## Scope and source inventory
 
 The splitter runs after the existing emitter. It emits one shared declaration header, one state/data translation unit, main, and groups of sixteen consecutive functions. It does not recover source-module boundaries. All former top-level static identifiers get an `adamic_unit_` prefix and external linkage; runtime header inline functions retain their existing linkage. Initialized state is defined once, preserving class/shape identity, initialization order and main cleanup. Function groups and link order are deterministic. Unknown declaration syntax fails before clang. No emit*.go output was changed.
@@ -167,7 +201,7 @@ clang -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-
 
 ## Correctness and cache
 
-The object key hashes the exact preprocessed snapshot and unit filename, all ordered native.Flags, compiler path and full --version, platform (GOOS/GOARCH via runtimeKey), and a cache-format domain. Source and shared/runtime headers are snapshotted; clang -E -P observes transitive system/ambient include dependencies on every lookup. The same preprocessed bytes are then compiled, so dependencies are not reopened between key creation and compilation. Macro flags remain in the key but are omitted from cpp-output compilation because they already took effect. A stable debug-prefix mapping removes random temporary directories from emitted debug paths. Runtime flags and checker ABI/header remain in the existing runtime cache key. Linking is never cached; checker/archive contents are read again for each link.
+The object key hashes the exact preprocessed snapshot and unit filename, all ordered native.Flags, compiler path and full --version, platform (GOOS/GOARCH via runtimeKey), and a cache-format domain. Source and shared/runtime headers are snapshotted; clang -E observes transitive system/ambient include dependencies on every lookup and preserves system-header line markers. The same preprocessed bytes are then compiled, so dependencies are not reopened between key creation and compilation. Macro flags remain in the key but are omitted from cpp-output compilation because they already took effect. A stable debug-prefix mapping removes random temporary directories from emitted debug paths. Runtime flags and checker ABI/header remain in the existing runtime cache key. Linking is never cached; checker/archive contents are read again for each link.
 
 Cache publication uses a temporary directory on the cache filesystem and atomic rename. Per-key in-process locks avoid duplicate work; competing processes publish complete entries. ADAMIC_GATE_UNCACHED=1 bypasses all new object-cache hits and publication. It does not change the preexisting runtime archive cache contract. Cache-vs-uncached equality means executed output, not ELF bytes/debug paths. Cached objects are not authenticated against a hostile cache writer, matching the existing local-cache trust model.
 

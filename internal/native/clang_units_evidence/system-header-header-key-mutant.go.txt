@@ -305,7 +305,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	if err != nil {
 		return "", fmt.Errorf("native: preprocessing unit %s: %w\n%s", unit.name, err, &diagnostic)
 	}
-	key := unitKey([]runtimeFile{{unit.name, preprocessed}}, flags, compiler, version)
+	key := unitKey([]runtimeFile{{unit.name, []byte(unit.source)}}, flags, compiler, version)
 	entry := filepath.Join(cache, key)
 	object := filepath.Join(entry, "unit.o")
 	value, _ := unitBuilds.LoadOrStore(entry, &sync.Mutex{})

@@ -96,3 +96,61 @@ func TestSplitTokensDoNotRewriteLiterals(t *testing.T) {
 		t.Fatal("reference not rewritten")
 	}
 }
+
+// Not parallel: this check deliberately mutates a header between cache lookups.
+func TestUnitSystemHeaderProvenance(t *testing.T) {
+	compiler, err := exec.LookPath("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := t.TempDir()
+	cache := filepath.Join(directory, "cache")
+	// Clang accepts this extension in a system header, including when compiling cpp-output
+	// with line markers. -P exposes it as user code and -pedantic -Werror must reject it.
+	header := "#pragma clang system_header\nstruct probe_file { int (* _Nullable close)(void *); };\n#define PROBE_VALUE 1\n"
+	unit := compilationUnit{"probe.c", "#include \"probe-system.h\"\nint adamic_probe(void) { return PROBE_VALUE; }\n"}
+	flags := append(Flags(Options{}), "-Wno-system-headers")
+	compile := func(header string, uncached bool) string {
+		t.Helper()
+		files := []runtimeFile{{unit.name, []byte(unit.source)}, {"probe-system.h", []byte(header)}}
+		object, err := compileUnit(unit, files, flags, compiler, string(version), cache, directory, uncached)
+		if err != nil {
+			t.Fatalf("system-header provenance lost: %v", err)
+		}
+		return object
+	}
+	observe := func(object string, expected string) {
+		t.Helper()
+		main := filepath.Join(directory, "main.c")
+		if err := os.WriteFile(main, []byte("#include <stdio.h>\nint adamic_probe(void); int main(void) { printf(\"%d\\n\", adamic_probe()); return 0; }\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		binary := filepath.Join(directory, "probe")
+		if output, err := exec.Command(compiler, append(append([]string{}, flags...), main, object, "-o", binary)...).CombinedOutput(); err != nil {
+			t.Fatalf("link: %v\n%s", err, output)
+		}
+		if output, err := exec.Command(binary).CombinedOutput(); err != nil || string(output) != expected {
+			t.Fatalf("header observation: exit=%v output=%q want=%q", err, output, expected)
+		}
+	}
+	first := compile(header, false)
+	observe(first, "1\n")
+	if second := compile(header, false); second != first {
+		t.Fatal("unchanged header missed cache")
+	}
+	header = strings.Replace(header, "PROBE_VALUE 1", "PROBE_VALUE 2", 1)
+	observe(compile(header, false), "2\n")
+	observe(compile(header, true), "2\n")
+	// The same extension must remain an error outside a system header. This prevents fixing
+	// provenance by disabling nullability or pedantic diagnostics for the whole unit.
+	userHeader := strings.TrimPrefix(header, "#pragma clang system_header\n")
+	files := []runtimeFile{{unit.name, []byte(unit.source)}, {"probe-system.h", []byte(userHeader)}}
+	if _, err := compileUnit(unit, files, flags, compiler, string(version), cache, directory, true); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
+		t.Fatalf("user-header extension must be rejected: %v", err)
+	}
+	t.Log("system-header extension accepted; changed header observed cached and uncached; user-header extension rejected")
+}

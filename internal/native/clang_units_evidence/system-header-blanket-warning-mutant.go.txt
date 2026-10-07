@@ -330,7 +330,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	}
 	// Clang emits GNU line-marker syntax even for C11. Accept only that generated syntax;
 	// keep all other pedantic diagnostics, including extensions outside system headers.
-	arguments := append(append([]string{}, compileFlags...), "-Wno-gnu-line-marker", "-fdebug-prefix-map="+temporary+"=/adamic-units", "-x", "cpp-output", "-c", unit.name, "-o", "unit.o")
+	arguments := append(append([]string{}, compileFlags...), "-Wno-gnu-line-marker", "-Wno-nullability-extension", "-fdebug-prefix-map="+temporary+"=/adamic-units", "-x", "cpp-output", "-c", unit.name, "-o", "unit.o")
 	command := exec.Command(compiler, arguments...)
 	command.Dir = temporary
 	if output, err := command.CombinedOutput(); err != nil {
