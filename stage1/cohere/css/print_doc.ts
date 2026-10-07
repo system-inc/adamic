@@ -14,7 +14,12 @@ export function stringWidth(text: string): number {
     let mapped = '';
     for(let i = 0; i < text.length; i++) {
         const c = text.charCodeAt(i);
-        mapped += String.fromCodePoint(c >= 0xd800 && c <= 0xdfff ? 0x100000 + c - 0xd800 : c);
+        // Encode the surrogate sentinel as UTF-16 units. Its range is 0x100000..0x1007ff;
+        // fromCharCode preserves that mapping without adding a fallible call under format's try.
+        if(c >= 0xd800 && c <= 0xdfff) {
+            const sentinel = c - 0xd800;
+            mapped += String.fromCharCode(0xdbc0 + Math.floor(sentinel / 0x400), 0xdc00 + sentinel % 0x400);
+        } else mapped += String.fromCharCode(c);
     }
     let width = 0;
     let rest = ''; let start = 0; emojis.lastIndex = 0;
