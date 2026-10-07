@@ -9,10 +9,12 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestOptionalWideningRefused(t *testing.T) {
+func TestOptionalWideningViews(t *testing.T) {
 	t.Parallel()
 	paths, err := filepath.Glob("testdata/optional_widening/*.a")
 	if err != nil || len(paths) == 0 {
@@ -34,34 +36,12 @@ func TestOptionalWideningRefused(t *testing.T) {
 			}
 			_, err = Lower(context.Background(), program)
 			var refused *Refused
-			property := "y"
-			if filepath.Base(path) == "spread_other_missing.a" {
-				property = "z"
+			// Unsupported view families remain explicit. The old unconditional refusal
+			// must not survive admission of a runtime-checkable optional relation.
+			if errors.As(err, &refused) && strings.Contains(refused.Fix, "adamic/no-optional-widening") {
+				t.Fatalf("old refusal: %v", err)
 			}
-			cast := filepath.Base(path) == "cast.a"
-			if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-optional-widening") || (!cast && !strings.Contains(refused.What, "optional property "+property)) || (cast && !strings.Contains(refused.What, "an unproven relation")) {
-				t.Fatalf("want optional-property refusal, got %v", err)
-			}
-			// Casts reach main's proven-relation refusal first. Other positions must retain
-			// the optional-widening diagnostic. Pin every complete message independently.
-			want, readErr := os.ReadFile(strings.TrimSuffix(path, ".a") + ".refused")
-			if readErr != nil {
-				t.Fatal(readErr)
-			}
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			got := strings.ReplaceAll(refused.Error(), absolute, path)
-			if got != strings.TrimSpace(string(want)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(want)))
-			}
-			if filepath.Base(path) == "initializer.a" {
-				want := "testdata/optional_widening/initializer.a:3:42: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source { x: number; }, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
-				if !strings.HasSuffix(refused.Error(), want) {
-					t.Errorf("got %q, want %q", refused.Error(), want)
-				}
-			}
+
 		})
 	}
 }
@@ -98,7 +78,7 @@ func TestOptionalWideningSpreadOverwrite(t *testing.T) {
 	file := program.Files()[0]
 	checker, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{checker: checker, program: program}
+	l := &lowering{checker: checker, program: program, result: &ir.Program{}}
 	if err := l.refuse(file); err != nil {
 		t.Fatal(err)
 	}
@@ -143,13 +123,32 @@ func TestOptionalWideningWholeProgram(t *testing.T) {
 				file := program.Files()[0]
 				checker, release := program.Checker(context.Background(), file)
 				defer release()
-				l := &lowering{checker: checker, program: program}
+				l := &lowering{checker: checker, program: program, result: &ir.Program{}}
 				err = l.refuse(file)
 			}
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.What, "subclass Derived declares y") || !strings.Contains(refused.What, "derived.a:1:") {
-				t.Fatalf("want imported subclass refusal, got %v", err)
+			if err != nil {
+				t.Fatal(err)
 			}
+			// Inspect the relation itself: the whole-program subclass conflict is now
+			// a reason to keep a checked read rather than to refuse the view.
+			file := program.Files()[0]
+			checker, release := program.Checker(context.Background(), file)
+			defer release()
+			l := &lowering{checker: checker, program: program, result: &ir.Program{}}
+			var conflict bool
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if found := l.optionalAtSite(node); found != nil && found.conflict != nil {
+					conflict = true
+				}
+				node.ForEachChild(visit)
+				return false
+			}
+			file.AsNode().ForEachChild(visit)
+			if !conflict {
+				t.Fatal("whole-program subclass conflict was erased")
+			}
+
 		})
 	}
 }
@@ -164,7 +163,7 @@ func TestOptionalWideningReducedSource(t *testing.T) {
 	file := program.Files()[0]
 	checker, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{checker: checker, program: program}
+	l := &lowering{checker: checker, program: program, result: &ir.Program{}}
 	if err := l.refuse(file); err != nil {
 		t.Fatal(err)
 	}

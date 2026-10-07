@@ -81,16 +81,25 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				}
 			}
 		}
+		if part.Kind == ast.KindPropertyAssignment && part.Name() != nil && fields[part.Name().Text()] {
+			value := ast.SkipParentheses(part.AsPropertyAssignment().Initializer)
+			if value.Kind != ast.KindNullKeyword && l.includesNull(l.checker.GetTypeAtLocation(value)) {
+				found = l.notYet(part, "a nullable hidden field requiring a distinct null runtime tag")
+			}
+		}
 		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
+					if l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+						found = l.notYet(part, "a nullable checked field requiring a distinct null runtime tag")
+					}
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if of == ir.Object && ast.IsAssignmentTarget(part) {
+					if ast.IsAssignmentTarget(part) && (of == ir.Object || field.Flags&ast.SymbolFlagsOptional != 0) {
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
-					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.Object || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
+					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Object) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 					}
 				}
@@ -125,7 +134,7 @@ func interfaceScalar(proven *checker.Type) bool {
 		}
 		return true
 	}
-	return proven.Flags()&(checker.TypeFlagsString|checker.TypeFlagsStringLiteral|checker.TypeFlagsNumber|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0 && proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsIntersection|checker.TypeFlagsTypeParameter) == 0
+	return proven.Flags()&checker.TypeFlagsUndefined != 0 || proven.Flags()&(checker.TypeFlagsString|checker.TypeFlagsStringLiteral|checker.TypeFlagsNumber|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0 && proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsIntersection|checker.TypeFlagsTypeParameter) == 0
 }
 
 func (l *lowering) interfaceScalarShape(proven *checker.Type) bool {
@@ -298,6 +307,9 @@ func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+				continue
+			}
 			values := l.viewLiterals(member)
 			if len(values) == 0 {
 				return nil

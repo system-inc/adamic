@@ -17,10 +17,11 @@ const adamicReadField = (object, name, expression, optional = false, allowAbsent
     return object[name];
 };
 const adamicViewTypeNames = Object.freeze({1: "number", 2: "boolean", 3: "string", 4: "object", 5: "array", 6: "Map"});
-const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = []) => {
-    const value = adamicReadField(object, name, expression, false, false, expected);
-    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
-    if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? "nullish" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
+const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = [], absent = false, optional = false) => {
+    const value = adamicReadField(object, name, expression, optional, absent, expected);
+    if (value === undefined && (absent || optional || type === 7 || type === 9)) return undefined;
+    const valid = (type === 1 || type === 7) ? typeof value === "number" : (type === 2 || type === 9) ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
+    if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? (absent ? "null" : "nullish") : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;
 };

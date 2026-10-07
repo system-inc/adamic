@@ -21,7 +21,7 @@ func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
 		{"unused bad factory", `function bad(): Node { return { kind: 'identifier', pos: 0 }; } console.log(identifier({ kind: 'identifier', pos: 0, name: 'ok' } as Identifier).name);`, ""},
 		{"different tag", `const node: Node = { kind: 'number', pos: 0 }; console.log(identifier(node).name);`, ""},
 		{"dynamic complete", `function make(kind: Node['kind']): Node { const raw = { kind, pos: 0, name: 'ok' }; return raw; } console.log(identifier(make('identifier')).name);`, ""},
-		{"optional target", `interface Optional extends Node { readonly kind: 'identifier'; readonly name?: string; } function opt(node: Node): Optional { return node as Optional; }`, "checked view field"},
+		{"optional target", `interface Optional extends Node { readonly kind: 'identifier'; readonly name?: string; } function opt(node: Node): Optional { return node as Optional; }`, ""},
 		{"spread", `const raw = { kind: 'identifier' as const, pos: 0, name: 'ok' }; const node: Node = { ...raw }; console.log(identifier(node).name);`, ""},
 		{"reflection alias", `const raw = { kind: 'identifier' as const, pos: 0, name: 'ok' }; const O = Object; O.assign(raw, { name: 'changed' }); console.log(identifier(raw).name);`, "Object as a value"},
 		{"generic", `function make<T extends string>(name: T): Node { const raw = { kind: 'identifier' as const, pos: 0, name }; return raw; } console.log(identifier(make('ok')).name);`, ""},

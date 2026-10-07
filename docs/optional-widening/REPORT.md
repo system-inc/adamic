@@ -340,3 +340,7 @@ The historical 415-site census contained 144 selected constituents printed as ne
 The final contract is checked reads and checked writes, with proof-based erasure. Runtime writes must validate the actual class or record shape and slot contract, naming the property, real type and write location on exit 70. This remains unimplemented: origin/codex/interface-downcasts is still 6b50efe0 and has not published the required transitive-view entry point. Structural optional refusal stays active meanwhile. Function-typed developer programs remain assigned to codex/refusal-pass-rulings and are skipped.
 
 Reduction commit: 6b3f285e. Final restored command `ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./stage3/fixtures ./internal/oracle -count=1 -timeout 30m` passed: lower 49.747s, fixtures 37.896s, whole Node oracle 236.513s. Focused executable reduction probe passed 1.834s. Vet and diff checks are clean. Mutant runner and logs are retained in evidence/. Setup took 231s (Go 1s, clang 2s, Node 2s, submodules 3s, cache 231s); nproc is 5, quota 4.
+
+## Shared views published and checked reads built
+
+Lane 1 published 609ed39 and was merged at 3ececcf13a077a1760303d527a001bc293bb1855. This supersedes the preceding dependency-blocked status. Supported widenings now use checked reads; writes remain conservatively fenced at this read checkpoint. See [CHECKED.md](CHECKED.md) for the current behavior, observations, mutants, limitations and validation. The earlier refusal reports remain historical evidence.

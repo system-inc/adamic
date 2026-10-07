@@ -32,15 +32,15 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 			return &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
 		}
 		of, known := l.representation(declared)
-		if property.Flags&ast.SymbolFlagsOptional != 0 || !viewDataType(declared) || !known || of < ir.Number || of > ir.Object {
+		if !viewDataType(declared) || !known || (of < ir.Number || of > ir.Object) && of != ir.MaybeNumber && of != ir.MaybeBoolean {
 			return l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))
 		}
 		fields[property.Name] = true
 		if of == ir.Object {
-			if len(l.checker.GetPropertiesOfType(declared)) == 0 {
+			if len(l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(declared))) == 0 {
 				return l.notYet(node, "an empty structural object field in a checked view")
 			}
-			if err := l.viewObjectFields(node, declared, fields, seen, true); err != nil {
+			if err := l.viewObjectFields(node, l.checker.GetNonNullableType(declared), fields, seen, true); err != nil {
 				return err
 			}
 		}
@@ -57,7 +57,7 @@ func viewDataType(target *checker.Type) bool {
 		}
 		return true
 	}
-	return interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
+	return target.Flags()&checker.TypeFlagsUndefined != 0 || interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
 }
 
 func viewInterfaceType(target *checker.Type) bool {

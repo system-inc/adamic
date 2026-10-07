@@ -202,7 +202,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
-		e.line("adamic_object_field_types(%s)[%s - %s->slots] = %d;", object, slot, object, statement.Value.Type())
+		e.line("adamic_object_field_types(%s)[%s - %s->slots] = %d;", object, slot, object, fieldRepresentation(statement.Value))
 		if converted {
 			e.line("}")
 		}

@@ -88,7 +88,7 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 // ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
 	expression = ast.SkipParentheses(expression)
-	if l.isNever(expression) && !l.isPanicCall(expression) {
+	if l.isNever(expression) && !l.isPanicCall(expression) && !(expression.Kind == ast.KindBinaryExpression && ast.IsAssignmentOperator(expression.AsBinaryExpression().OperatorToken.Kind)) {
 		value, err := l.expression(expression)
 		if err != nil {
 			return nil, err

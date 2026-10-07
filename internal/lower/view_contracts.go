@@ -35,6 +35,12 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		}
 		return viewCallableContractHook(l, node, target, build)
 	}
+	if l.includesUndefined(target) {
+		present := l.checker.GetNonNullableType(target)
+		if of, known := l.representation(present); known && of == ir.Object {
+			return build(present)
+		}
+	}
 	of, known := l.representation(target)
 	if !known {
 		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))

@@ -184,7 +184,7 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : adamic_kind_map;
 		if (reference != NULL && reference->kind == kind) { return *slot; }
 	}
-	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : actual == 4 ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : "unsupported representation";
+	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : actual == 4 ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : actual == 12 ? "null" : actual == 13 ? "nullish" : "unsupported representation";
 	if (actual >= 3 && actual <= 6 && slot->reference == NULL) { found = "nullish"; }
 	if (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) { found = "nullish"; }
 	if (actual == 10) {
@@ -220,4 +220,24 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);
+}
+
+// Optional views share the required-field validator after proving presence. An
+// absent slot or undefined payload must never be interpreted as numeric bits.
+adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional) {
+ adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+ bool missing = slot == NULL && (absent || optional);
+ if (slot != NULL && adamic_object_initialized(object)[cache->index]) {
+  unsigned char actual = adamic_object_field_types(object)[cache->index];
+  missing = actual == 13 || (actual >= 3 && actual <= 6 && slot->reference == NULL) || (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) || (actual == 10 && slot->reference == NULL);
+ }
+ if (missing) {
+  if (wanted == 7) { return (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){false, 0.0})}; }
+  return (adamic_value){.reference = NULL};
+ }
+ unsigned char base = wanted == 7 ? 1 : wanted == 9 ? 2 : wanted;
+ adamic_value result = adamic_object_view(object, name, cache, base, type, expression);
+ if (wanted == 9) { result.reference = result.boolean ? &adamic_box_true : &adamic_box_false; }
+ if (wanted == 7) { result.number = adamic_maybe_number_pack((adamic_maybe_number){true, result.number}); }
+ return result;
 }

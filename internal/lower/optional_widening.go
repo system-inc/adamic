@@ -376,16 +376,8 @@ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
 	if found == nil {
 		return nil
 	}
-	if found.conflict != nil {
-		where := ""
-		if found.declaration != nil {
-			where = " at " + l.program.Where(found.declaration)
-		}
-		return &Refused{Where: l.program.Where(node),
-			What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from class source " + l.checker.TypeToString(found.source) + ", but subclass " + l.checker.TypeToString(found.conflict) + " declares " + found.property + where + " with an incompatible type",
-			Fix:  "make the subclass property assignable to the target, or build a fresh object with known fields (adamic/no-optional-widening)"}
-	}
-	return &Refused{Where: l.program.Where(node),
-		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
-		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+	// The same view machinery used by interface downcasts preserves checks through
+	// aliases and descendant fields. A class conflict now requires a view, too.
+	_, err := l.view(node, nil, found.target)
+	return err
 }
