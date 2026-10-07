@@ -25,16 +25,19 @@ func TestConstantPortability(t *testing.T) {
 				t.Skip(err)
 			}
 			directory := t.TempDir()
-			header, err := runtime.ReadFile("runtime/adamic.h")
+			headers, err := runtime.ReadDir("runtime")
 			if err != nil {
 				t.Fatal(err)
 			}
-			regexHeader, err := runtime.ReadFile("runtime/regexp.h")
-			if err != nil {
-				t.Fatal(err)
-			}
-			for name, data := range map[string][]byte{"adamic.h": header, "regexp.h": regexHeader} {
-				if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
+			for _, header := range headers {
+				if !strings.HasSuffix(header.Name(), ".h") {
+					continue
+				}
+				data, err := runtime.ReadFile("runtime/" + header.Name())
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(filepath.Join(directory, header.Name()), data, 0644); err != nil {
 					t.Fatal(err)
 				}
 			}

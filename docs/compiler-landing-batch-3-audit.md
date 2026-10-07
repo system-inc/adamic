@@ -240,3 +240,9 @@ Exact merge attempted and aborted with 19 conflicted files. Incoming closed nume
 ### Item 16 and checkpoint
 
 Exact multi-root 48a1a6ada merge reports Already up to date; it is an ancestor. Checkpoint 16 passed uncached: oracle 384.571s, flow 248.305s, lower 109.301s, native 294.549s, stage3 fixtures 45.228s. No new failures or record changes. Log: /tmp/landing-batch-3-checkpoint-16.log.
+
+### Item 17: c-portability
+
+Retained both absent and zeroInitializer helpers; counts regenerated on Linux (75.809s). Incoming portability test omitted the node_fs_file.h dependency introduced by unknown-narrowing; changed its scratch include set to every embedded runtime header. GCC catches signed bytes with 4200 warnings, static optional number and boolean compound literals with one warning each; Clang and GCC accept baseline (0.506s). Whole uncached native 156.400s and oracle 231.740s passed; vet passed. No output disagreement or stage3 record change. Logs: /tmp/landing-batch-3-17-*.log.
+
+Markdown baseline: after installing documented pinned scratch dependencies emoji-regex 10.6.0, get-east-asian-width 1.6.0 and narrow-emojis 0.0.3, TestMarkdownUnicodeWidths passed 426.694s for 1277427 inputs, including native/source Node/JavaScript, leaks, release and regeneration. East Asian width, narrow emoji and ASCII DEL mutants were caught by observable width output. The generated width program also independently ran the full corpus to file output with exit 0 and empty stderr. The reported JavaScript exit 70 did not reproduce. A post-c-1 run is still required.
