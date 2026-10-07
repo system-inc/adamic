@@ -250,6 +250,17 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
 // adamic_object_has is object.hasOwnProperty(name).
 bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 
+// Runtime scalar tags for fixed program shapes. Host reference slots already carry heap tags.
+typedef struct adamic_shape_types {
+	const adamic_shape *shape;
+	const int *types;
+	struct adamic_shape_types *next;
+} adamic_shape_types;
+extern adamic_heap adamic_null;
+void adamic_register_shape_types(adamic_shape_types *metadata);
+bool adamic_has_property(const adamic_heap *object, const char *name);
+adamic_heap *adamic_dynamic_property(adamic_heap *object, const char *name);
+
 // adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.

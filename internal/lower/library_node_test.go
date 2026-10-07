@@ -77,8 +77,10 @@ func TestNodeLibraryDistinguishesReceiverOwners(t *testing.T) {
 // refuseWidening, which once read a QualifiedName's Text and panicked. A cast the relation proves
 // lowers; a downcast that claims optional fields Error lacks is refused, with its reason, not a crash.
 func TestNodeLibraryQualifiedTypeAssertion(t *testing.T) {
-	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const make = (): NodeJS.ErrnoException => ({ name: 'E', message: 'm' }); const error = make() as NodeJS.ErrnoException; console.log(error === error ? 'checked' : 'no');`); err != nil {
-		t.Fatal(err)
+	_, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
+		t.Fatalf("want the qualified name checked without inventing optional fields, got %v", err)
 	}
 	_, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`)
 	if err == nil || !strings.Contains(err.Error(), "unproven relation from Error to ErrnoException") {
