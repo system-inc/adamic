@@ -1,0 +1,7 @@
+import type { Weak } from 'adamic';
+class A { value: number = 1; read(): number { return this.value; } }
+const object: { value: number; read: () => number } = { value: 2, read: () => 9 };
+const weak: Weak<A> = object;
+object.value = 3;
+function read(value: Weak<A>): number { return value === undefined ? -1 : value.read(); }
+console.log(`${read(weak)}`);

@@ -182,7 +182,7 @@ func TestGenericIteratorViewsPreserveNativeArguments(t *testing.T) {
  const source:Sequence<number|undefined>=new Sequence([1]);for(const value of source){break;}`
 	_, err := lowerSource(t, source)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "nominal ancestry") {
+	if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/nominal-class") {
 		t.Fatalf("got %v, want the earlier nominal generic-view refusal", err)
 	}
 }

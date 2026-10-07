@@ -35,4 +35,31 @@ require (
 	github.com/microsoft/TypeScript/tsc/shim/vfs v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs v0.0.0
+	github.com/system-inc/cohere v0.0.0
 )
+
+require (
+	github.com/Microsoft/go-winio v0.6.2 // indirect
+	github.com/dlclark/regexp2/v2 v2.5.2 // indirect
+	github.com/klauspost/compress v1.20.0 // indirect
+	github.com/klauspost/cpuid/v2 v2.2.10 // indirect
+	github.com/microsoft/TypeScript/tsc v0.0.0 // indirect
+	github.com/system-inc/cohere/mutation_aliasing v0.0.0 // indirect
+	github.com/system-inc/cohere/static_single_assignment v0.0.0 // indirect
+	github.com/zeebo/xxh3 v1.1.0 // indirect
+	golang.org/x/sync v0.23.0 // indirect
+	golang.org/x/sys v0.48.0 // indirect
+	golang.org/x/text v0.42.0 // indirect
+)
+
+replace github.com/system-inc/cohere => ./cohere
+
+replace github.com/system-inc/cohere/static_single_assignment => ./cohere/static_single_assignment
+
+replace github.com/system-inc/cohere/mutation_aliasing => ./cohere/mutation_aliasing
+
+replace github.com/microsoft/TypeScript/tsc/shim/format => ./cohere/TypeScript-shim/format
+
+replace github.com/microsoft/TypeScript/tsc/shim/incremental => ./cohere/TypeScript-shim/incremental
+
+replace github.com/microsoft/TypeScript/tsc => ./cohere/TypeScript/tsc

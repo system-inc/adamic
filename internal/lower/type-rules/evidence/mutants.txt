@@ -1,0 +1,6 @@
+cohere-invariant: caught by want adamic/invariant-mutable, got <nil>; exit=1
+cohere-nominal: caught by want cohere nominal refusal, got <nil>; exit=1
+constraint-source: caught by AddressSanitizer: heap-buffer-overflow; exit=1
+weak-nominal: caught by stdout differs; exit=1
+union-nominal: caught by stdout differs; exit=1
+5 independent mutants caught; all files restored

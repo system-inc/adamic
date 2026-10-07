@@ -1,0 +1,4 @@
+class A { value(): number { return 1; } }
+class B { value(): number { return 2; } }
+const value: A | B = { value: () => 3 };
+console.log('accepted');

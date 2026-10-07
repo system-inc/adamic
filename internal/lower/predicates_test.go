@@ -40,6 +40,13 @@ func TestUnprovenPredicateReturnsAreRefused(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
 			var refusal *Refused
+			if probe.name == "aliased discriminant write" {
+				if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "adamic/invariant-mutable") {
+					t.Fatalf("want the earlier unsafe-view refusal, got %v", err)
+				}
+				return
+			}
+
 			if !errors.As(err, &refusal) || !strings.Contains(refusal.What, "return is not proven") || !strings.Contains(refusal.What, probe.reason) || !strings.Contains(refusal.Fix, "return a discriminant comparison") {
 				t.Fatalf("got %v, want a predicate refusal naming %q and its rewrite", err, probe.reason)
 			}

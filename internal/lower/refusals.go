@@ -46,6 +46,22 @@ var refusedOperators = map[ast.Kind]refusal{
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	readOnlySites := l.readOnlyIntrinsicSites(module)
+	for _, name := range []string{"adamic/invariant-mutable", "adamic/nominal-class"} {
+		findings, err := l.program.RuleFindings(l.checker, []*ast.SourceFile{module}, name)
+		if err != nil {
+			return err
+		}
+		for _, finding := range findings {
+			// String.raw's declaration permits writes that the intrinsic never makes.
+			// Preserve the existing exemption only at its first argument, not at a store.
+			if name == "adamic/invariant-mutable" && readOnlySites[[2]int{finding.Line, finding.Column}] {
+				continue
+			}
+			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), finding.Line, finding.Column), What: strings.Join(strings.Fields(finding.Message), " "), Fix: "prove the relation or use a readonly structural view (" + finding.Rule + ")"}
+		}
+	}
+
 	// Use the parser's directives, which also recognize the block forms honored by the checker.
 	// Text in a string or a prose comment never enters this list.
 	if len(module.CommentDirectives) > 0 {
@@ -65,6 +81,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	retainedNominalTargets := map[*checker.Type]bool{}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -161,10 +178,11 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if err := l.classViewRefusal(node); err != nil {
+		if err := l.classViewRefusal(node, retainedNominalTargets); err != nil {
 			found = err
 			return true
 		}
+
 		node.ForEachChild(visit)
 		return false
 	}
@@ -187,4 +205,20 @@ func scannedText(node *ast.Node) string {
 		return "this"
 	}
 	return node.Text()
+}
+
+// Collect source sites once. A file may have many findings, and rescanning its
+// entire tree for each one would make rule ports needlessly expensive.
+func (l *lowering) readOnlyIntrinsicSites(module *ast.SourceFile) map[[2]int]bool {
+	sites := map[[2]int]bool{}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if l.stringReadOnlyArgument(node) {
+			row, col := scanner.GetLineAndCharacterOfPosition(module, scanner.GetTokenPosOfNode(node, module, false))
+			sites[[2]int{row + 1, col + 1}] = true
+		}
+		return node.ForEachChild(visit)
+	}
+	module.AsNode().ForEachChild(visit)
+	return sites
 }

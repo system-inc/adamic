@@ -1,0 +1,6 @@
+=== RUN   TestCohereNominalInvocation
+    type_rules_test.go:13: want cohere nominal refusal, got <nil>
+--- FAIL: TestCohereNominalInvocation (0.25s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.315s
+FAIL

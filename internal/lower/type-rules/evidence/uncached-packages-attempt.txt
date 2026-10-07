@@ -1,0 +1,10 @@
+ok  	github.com/system-inc/adamic/internal/lower	25.635s
+ok  	github.com/system-inc/adamic/internal/load	1.326s
+--- FAIL: TestArrowBlockStructuralViewRefused (0.84s)
+    arrow_block_view_site_test.go:42: want "a value without nominal ancestry seen as Box", got "`{ id: box.id + 1 }` is a '{ id: number; }', accepted here as the class 'Box', and it is not an instance of that class. tsc compares classes by shape, and it compares a method's parameters in both directions, so a method that takes only a narrower type passes as one that takes any of the wider type, and fails at runtime when it gets one. In Adamic a class type means an instance of that class. Pass an instance of 'Box', or type the slot as an interface whose members are written property-style (`readonly admit: (animal: Animal) => string`), which tsc checks strictly." (/workspace/adamic/internal/oracle/testdata/arrow_block_structural.a:5:42: Adamic 0.1 refuses `{ id: box.id + 1 }` is a '{ id: number; }', accepted here as the class 'Box', and it is not an instance of that class. tsc compares classes by shape, and it compares a method's parameters in both directions, so a method that takes only a narrower type passes as one that takes any of the wider type, and fails at runtime when it gets one. In Adamic a class type means an instance of that class. Pass an instance of 'Box', or type the slot as an interface whose members are written property-style (`readonly admit: (animal: Animal) => string`), which tsc checks strictly.; prove the relation or use a readonly structural view (adamic/nominal-class))
+FAIL
+gate cache: native hits=0 misses=1712
+gate cache: node hits=0 misses=950
+gate cache: probe hits=0 misses=25
+FAIL	github.com/system-inc/adamic/internal/oracle	337.710s
+FAIL

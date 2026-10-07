@@ -169,7 +169,7 @@ func TestInheritanceRefusesFalseNominalViews(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
 			var refusal *Refused
-			if !errors.As(err, &refusal) || (!strings.Contains(err.Error(), "nominal-class") && !strings.Contains(err.Error(), "contravariant-override")) {
+			if !errors.As(err, &refusal) || (!strings.Contains(err.Error(), "nominal-class") && !strings.Contains(err.Error(), "native-nominal-view") && !strings.Contains(err.Error(), "contravariant-override")) {
 				t.Fatalf("want nominal class refusal, got %v", err)
 			}
 		})

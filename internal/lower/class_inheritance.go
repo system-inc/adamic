@@ -499,7 +499,7 @@ func (l *lowering) noteInheritance(modules []*ast.SourceFile) {
 
 // A class view needs nominal ancestry, even when TypeScript's structural relation accepts two
 // unrelated classes or a plain object. Otherwise a virtual call would trust a table that isn't there.
-func (l *lowering) classViewRefusal(node *ast.Node) error {
+func (l *lowering) classViewRefusal(node *ast.Node, retained map[*checker.Type]bool) error {
 	if !viewSite(node) || node.Kind == ast.KindParenthesizedExpression {
 		return nil
 	}
@@ -510,6 +510,23 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 	if target == nil {
 		return nil
 	}
+	source := l.checker.GetTypeAtLocation(node)
+	if source == target {
+		return nil
+	}
+
+	// Weak erases the nominal target and a union literal bypasses the upstream
+	// nominal walk. Generic class arguments can be structurally identical while
+	// carrying different nominal identities and method layouts.
+	keep, known := retained[target]
+	if !known {
+		keep = l.retainedNominalTarget(target, map[*checker.Type]bool{})
+		retained[target] = keep
+	}
+	if !keep {
+		return nil
+	}
+
 	// Fresh literals are built as their contextual type; their explicit values are
 	// checked at their own sites. Spreads still need the whole inherited shape checked.
 	if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindArrayLiteralExpression {
@@ -523,13 +540,12 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 			return nil
 		}
 	}
-	source := l.checker.GetTypeAtLocation(node)
 	mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{})
 	if mismatch == nil {
 		return nil
 	}
 	target = mismatch
-	return &Refused{Where: l.program.Where(node), What: "a value without nominal ancestry seen as " + l.checker.TypeToString(target), Fix: "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"}
+	return &Refused{Where: l.program.Where(node), What: "a value without nominal ancestry seen as " + l.checker.TypeToString(target), Fix: "construct that class or a subclass; use an interface for structural values (adamic/native-nominal-view)"}
 }
 
 func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
@@ -894,6 +910,34 @@ func (l *lowering) nominalLiteralTarget(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range proven.Types() {
 			if l.nominalLiteralTarget(member) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func (l *lowering) retainedNominalTarget(proven *checker.Type, seen map[*checker.Type]bool) bool {
+	if proven == nil || seen[proven] {
+		return false
+	}
+	seen[proven] = true
+	if l.weakTarget(proven) != nil || l.isStaticType(proven) {
+		return true
+	}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if isClassInstance(member) || l.retainedNominalTarget(member, seen) {
+				return true
+			}
+		}
+	}
+	if isClassInstance(proven) && len(l.checker.GetTypeArguments(proven)) > 0 {
+		return true
+	}
+	if l.structured(proven) {
+		for _, property := range l.checker.GetPropertiesOfType(proven) {
+			if property.Flags&ast.SymbolFlagsMethod == 0 && l.retainedNominalTarget(l.checker.GetTypeOfSymbol(property), seen) {
 				return true
 			}
 		}

@@ -1,0 +1,58 @@
+=== RUN   TestArrowBlockStructuralViewRefused
+=== PAUSE TestArrowBlockStructuralViewRefused
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestTypeRuleProbesStayRefused
+=== RUN   TestTypeRuleProbesStayRefused/conditional_copy
+    type_rules_test.go:61: Node stdout "1\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_conditional_copy.a:4:27: Adamic 0.1 refuses 'Dog[]' is seen here as 'Animal[]', and `dogs.length > 5 ? dogs.slice() : [][]` is mutable. Through the wider type anything that is a 'Animal' can be written there, and the original, still typed 'Dog', then holds it: TypeScript accepts this, and it is a TypeError at runtime. Make the slot read-only in the target type (`readonly T[]`, a `readonly` property, `ReadonlyMap`), so the narrower value is only read through it, or copy the value ([...items], { ...record }).; prove the relation or use a readonly structural view (adamic/invariant-mutable)
+=== RUN   TestTypeRuleProbesStayRefused/parameter_min
+    type_rules_test.go:61: Node stdout "accepted\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_parameter_min.a:4:9: Adamic 0.1 refuses a value of type Pack seen as Animal[], which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-constraint-view)
+=== RUN   TestTypeRuleProbesStayRefused/parameter_array
+    type_rules_test.go:61: Node stdout "undefined\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_parameter_array.a:4:28: Adamic 0.1 refuses a value of type Pack seen as Animal[], which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-constraint-view)
+=== RUN   TestTypeRuleProbesStayRefused/parameter_map
+    type_rules_test.go:61: Node stdout "undefined\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_parameter_map.a:4:39: Adamic 0.1 refuses a value of type Pack seen as Map<string, Animal>, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-constraint-view)
+=== RUN   TestTypeRuleProbesStayRefused/parameter_field
+    type_rules_test.go:61: Node stdout "undefined\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_parameter_field.a:4:35: Adamic 0.1 refuses a value of type Pack seen as { pet: Animal; }, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-constraint-view)
+=== RUN   TestTypeRuleProbesStayRefused/weak_min
+    type_rules_test.go:61: Node stdout "accepted\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_weak_min.a:3:23: Adamic 0.1 refuses a value without nominal ancestry seen as A; construct that class or a subclass; use an interface for structural values (adamic/native-nominal-view)
+=== RUN   TestTypeRuleProbesStayRefused/weak_field
+    type_rules_test.go:61: Node stdout "3\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_weak_field.a:4:23: Adamic 0.1 refuses a value without nominal ancestry seen as A; construct that class or a subclass; use an interface for structural values (adamic/native-nominal-view)
+=== RUN   TestTypeRuleProbesStayRefused/weak_method
+    type_rules_test.go:61: Node stdout "9\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_weak_method.a:4:23: Adamic 0.1 refuses a value without nominal ancestry seen as A; construct that class or a subclass; use an interface for structural values (adamic/native-nominal-view)
+=== RUN   TestTypeRuleProbesStayRefused/weak_callback
+    type_rules_test.go:61: Node stdout "8\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_weak_callback.a:4:45: Adamic 0.1 refuses a value without nominal ancestry seen as A; construct that class or a subclass; use an interface for structural values (adamic/native-nominal-view)
+=== RUN   TestTypeRuleProbesStayRefused/union_min
+    type_rules_test.go:61: Node stdout "accepted\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_union_min.a:3:22: Adamic 0.1 refuses a value without nominal ancestry seen as B; construct that class or a subclass; use an interface for structural values (adamic/native-nominal-view)
+=== RUN   TestTypeRuleProbesStayRefused/union_field
+    type_rules_test.go:61: Node stdout "4\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_union_field.a:3:21: Adamic 0.1 refuses a value without nominal ancestry seen as B; construct that class or a subclass; use an interface for structural values (adamic/native-nominal-view)
+=== RUN   TestTypeRuleProbesStayRefused/union_method
+    type_rules_test.go:61: Node stdout "9\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_union_method.a:3:21: Adamic 0.1 refuses a value without nominal ancestry seen as B; construct that class or a subclass; use an interface for structural values (adamic/native-nominal-view)
+=== RUN   TestTypeRuleProbesStayRefused/union_callback
+    type_rules_test.go:61: Node stdout "4\n"; refused: /workspace/adamic/internal/oracle/testdata/type_rules_union_callback.a:3:21: Adamic 0.1 refuses a value without nominal ancestry seen as B; construct that class or a subclass; use an interface for structural values (adamic/native-nominal-view)
+--- PASS: TestTypeRuleProbesStayRefused (7.47s)
+    --- PASS: TestTypeRuleProbesStayRefused/conditional_copy (1.00s)
+    --- PASS: TestTypeRuleProbesStayRefused/parameter_min (0.37s)
+    --- PASS: TestTypeRuleProbesStayRefused/parameter_array (0.60s)
+    --- PASS: TestTypeRuleProbesStayRefused/parameter_map (0.36s)
+    --- PASS: TestTypeRuleProbesStayRefused/parameter_field (0.53s)
+    --- PASS: TestTypeRuleProbesStayRefused/weak_min (0.67s)
+    --- PASS: TestTypeRuleProbesStayRefused/weak_field (0.52s)
+    --- PASS: TestTypeRuleProbesStayRefused/weak_method (0.56s)
+    --- PASS: TestTypeRuleProbesStayRefused/weak_callback (0.45s)
+    --- PASS: TestTypeRuleProbesStayRefused/union_min (0.70s)
+    --- PASS: TestTypeRuleProbesStayRefused/union_field (0.53s)
+    --- PASS: TestTypeRuleProbesStayRefused/union_method (0.74s)
+    --- PASS: TestTypeRuleProbesStayRefused/union_callback (0.43s)
+=== CONT  TestArrowBlockStructuralViewRefused
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_controls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_controls.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_controls.a
+--- PASS: TestArrowBlockStructuralViewRefused (0.82s)
+--- PASS: TestNativeAgreesWithNode (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_controls.a (4.00s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.693s

@@ -1,0 +1,31 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_callback.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_callback.a
+    oracle_test.go:750: stdout differs
+        node:   exit 0, stdout "4\n", stderr ""
+        native: exit 0, stdout "2\n", stderr ""
+    oracle_test.go:756: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "4\n", stderr ""
+        backend: exit 70, stdout "", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'methods')\n"
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a
+    oracle_test.go:750: stdout differs
+        node:   exit 0, stdout "9\n", stderr ""
+        native: exit 0, stdout "4\n", stderr ""
+    oracle_test.go:756: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "9\n", stderr ""
+        backend: exit 70, stdout "", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'methods')\n"
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_callback.a (0.86s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a (0.87s)
+FAIL
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.910s
+FAIL

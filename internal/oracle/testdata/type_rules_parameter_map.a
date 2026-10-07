@@ -1,0 +1,9 @@
+interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: string; }
+function store<Pack extends Map<string, Dog>>(dogs: Pack): void {
+ const animals: Map<string, Animal> = dogs;
+ animals.set('pet', { name: 'cat' });
+}
+const dogs = new Map<string, Dog>([['pet', { name: 'old', bark: 'woof' }]]);
+store(dogs);
+for (const dog of dogs.values()) { console.log(dog.bark); }

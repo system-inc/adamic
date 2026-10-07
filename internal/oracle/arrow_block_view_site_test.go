@@ -3,6 +3,7 @@ package oracle
 import (
 	"errors"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/lower"
@@ -37,14 +38,10 @@ func TestArrowBlockStructuralViewRefused(t *testing.T) {
 	if !errors.As(err, &refusal) {
 		t.Fatalf("want nominal refusal, got %v", err)
 	}
-	const want = "a value without nominal ancestry seen as Box"
-	if refusal.What != want {
-		t.Fatalf("want %q, got %q (%v)", want, refusal.What, err)
+	if !strings.Contains(refusal.What, "accepted here as the class 'Box'") || !strings.Contains(refusal.What, "not an instance of that class") || !strings.Contains(refusal.Fix, "adamic/nominal-class") {
+		t.Fatalf("want cohere's nominal Box refusal, got %v", err)
 	}
-	const fix = "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"
-	if refusal.Fix != fix {
-		t.Fatalf("want fix %q, got %q", fix, refusal.Fix)
-	}
+
 	if refusal.Where != path+":5:42" {
 		t.Fatalf("unexpected refusal site: %s", refusal.Where)
 	}

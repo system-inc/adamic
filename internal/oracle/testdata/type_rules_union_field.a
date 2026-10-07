@@ -1,0 +1,6 @@
+class A { value: number = 1; }
+class B { value: number = 2; }
+const view: A | B = { value: 3 };
+const object: { value: number } = view;
+object.value = 4;
+console.log(`${view.value}`);

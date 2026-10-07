@@ -1,0 +1,6 @@
+interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: string; }
+const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.length > 5 ? dogs.slice() : [];
+animals.push({ name: 'Tom' });
+console.log(`${animals.length}`);

@@ -1,0 +1,10 @@
+class A { read(): number { return 1; } }
+class B { read(): number { return 2; } }
+const view: A | B = { read: () => 3 };
+const object: { read: () => number } = view;
+object.read = () => 4;
+function read(value: A | B): number {
+ if (value instanceof A) { return value.read(); }
+ return value.read();
+}
+console.log(`${read(view)}`);

@@ -1,0 +1,13 @@
+ok  	github.com/system-inc/adamic/internal/lower	96.430s
+ok  	github.com/system-inc/adamic/internal/load	5.434s
+ok  	github.com/system-inc/adamic/internal/fuzz	84.866s
+--- FAIL: TestASignalLeavesWhatWasPrinted (0.00s)
+    --- FAIL: TestASignalLeavesWhatWasPrinted/interrupt (5.21s)
+        output_test.go:299: gate cache probe miss
+        output_test.go:326: want Node killed by interrupt after its line, got killed by interrupt, stderr "", stdout ""
+FAIL
+gate cache: native hits=400 misses=1312
+gate cache: node hits=62 misses=888
+gate cache: probe hits=0 misses=25
+FAIL	github.com/system-inc/adamic/internal/oracle	554.619s
+FAIL

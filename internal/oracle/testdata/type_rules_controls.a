@@ -1,0 +1,23 @@
+import type { Weak } from 'adamic';
+interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: string; }
+function view<Pack extends readonly Dog[]>(dogs: Pack): readonly Animal[] { return dogs; }
+const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+console.log(view(dogs)[0]?.name ?? 'missing');
+const copy: Animal[] = dogs.slice();
+copy.push({ name: 'Tom' });
+console.log(`${copy.length} ${dogs.length}`);
+class A { value: number = 1; read(): number { return this.value; } }
+class B { value: number = 2; read(): number { return this.value; } }
+const strong = new A();
+const weak: Weak<A> = strong;
+function readWeak(value: Weak<A>): number { return value === undefined ? -1 : value.read(); }
+strong.value = 3;
+console.log(`${readWeak(weak)}`);
+function readUnion(value: A | B): number {
+ if (value instanceof A) { return value.read(); }
+ return value.read();
+}
+const other = new B();
+other.value = 4;
+console.log(`${readUnion(other)}`);

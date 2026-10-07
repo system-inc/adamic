@@ -1,0 +1,256 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_min.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_min.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_map.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_min.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_min.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_method.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_method.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_callback.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_min.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_min.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_callback.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_min.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_method.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_callback.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_field.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_method.a
+    oracle_test.go:750: stdout differs
+        node:   exit 0, stdout "9\n", stderr ""
+        native: exit 0, stdout "3\n", stderr ""
+    oracle_test.go:756: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "9\n", stderr ""
+        backend: exit 70, stdout "", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'methods')\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_min.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_callback.a
+    oracle_test.go:750: stdout differs
+        node:   exit 0, stdout "4\n", stderr ""
+        native: exit 0, stdout "2\n", stderr ""
+    oracle_test.go:756: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "4\n", stderr ""
+        backend: exit 70, stdout "", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'methods')\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_callback.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_field.a
+    oracle_test.go:734: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "=================================================================\n==5507==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7bf74cbe0080 at pc 0x55852ae7bd05 bp 0x7ffdc1ce4410 sp 0x7ffdc1ce4408\nREAD of size 8 at 0x7bf74cbe0080 thread T0\n    #0 0x55852ae7bd04 in adamic_function_0_store_0 /tmp/adamic-gate/adamic-build-1414063276/main.c:41:104\n    #1 0x55852ae7bd04 in main /tmp/adamic-gate/adamic-build-1414063276/main.c:54:2\n    #2 0x7fb74db01ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7fb74db01d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x55852ad95430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdatatype_rules_par3252174008/002/program+0x4d430)\n\n0x7bf74cbe0080 is located 0 bytes after 48-byte region [0x7bf74cbe0050,0x7bf74cbe0080)\nallocated by thread T0 here:\n    #0 0x55852ae38244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55852ae8dd9f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3540845984/heap.c:196:10\n    #2 0x7fb74db01ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-1414063276/main.c:41:104 in adamic_function_0_store_0\nShadow bytes around the buggy address:\n  0x7bf74cbdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bf74cbdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bf74cbdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bf74cbdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bf74cbe0000: fa fa 00 00 00 00 00 00 fa fa 00 00 00 00 00 00\n=>0x7bf74cbe0080:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==5507==ABORTING\n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:750: exit codes differ
+        node:   exit 0, stdout "undefined\n", stderr ""
+        native: exit 1, stdout "", stderr "=================================================================\n==5507==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7bf74cbe0080 at pc 0x55852ae7bd05 bp 0x7ffdc1ce4410 sp 0x7ffdc1ce4408\nREAD of size 8 at 0x7bf74cbe0080 thread T0\n    #0 0x55852ae7bd04 in adamic_function_0_store_0 /tmp/adamic-gate/adamic-build-1414063276/main.c:41:104\n    #1 0x55852ae7bd04 in main /tmp/adamic-gate/adamic-build-1414063276/main.c:54:2\n    #2 0x7fb74db01ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7fb74db01d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x55852ad95430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdatatype_rules_par3252174008/002/program+0x4d430)\n\n0x7bf74cbe0080 is located 0 bytes after 48-byte region [0x7bf74cbe0050,0x7bf74cbe0080)\nallocated by thread T0 here:\n    #0 0x55852ae38244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55852ae8dd9f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3540845984/heap.c:196:10\n    #2 0x7fb74db01ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-1414063276/main.c:41:104 in adamic_function_0_store_0\nShadow bytes around the buggy address:\n  0x7bf74cbdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bf74cbdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bf74cbdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bf74cbdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bf74cbe0000: fa fa 00 00 00 00 00 00 fa fa 00 00 00 00 00 00\n=>0x7bf74cbe0080:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bf74cbe0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==5507==ABORTING\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_map.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_field.a
+    oracle_test.go:763: leaks:
+        exit 1
+        =================================================================
+        ==5545==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b777e5e0080 at pc 0x5568e0056d05 bp 0x7fff80216af0 sp 0x7fff80216ae8
+        READ of size 8 at 0x7b777e5e0080 thread T0
+            #0 0x5568e0056d04 in adamic_function_0_store_0 /tmp/adamic-gate/adamic-build-1414063276/main.c:41:104
+            #1 0x5568e0056d04 in main /tmp/adamic-gate/adamic-build-1414063276/main.c:54:2
+            #2 0x7f377f491ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #3 0x7f377f491d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #4 0x5568dff70430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdatatype_rules_par3252174008/002/program+0x4d430)
+        
+        0x7b777e5e0080 is located 0 bytes after 48-byte region [0x7b777e5e0050,0x7b777e5e0080)
+        allocated by thread T0 here:
+            #0 0x5568e0013244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x5568e0068d9f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3540845984/heap.c:196:10
+            #2 0x7f377f491ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+        
+        SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-1414063276/main.c:41:104 in adamic_function_0_store_0
+        Shadow bytes around the buggy address:
+          0x7b777e5dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7b777e5dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7b777e5dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7b777e5dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7b777e5e0000: fa fa 00 00 00 00 00 00 fa fa 00 00 00 00 00 00
+        =>0x7b777e5e0080:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7b777e5e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7b777e5e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7b777e5e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7b777e5e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7b777e5e0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+        Shadow byte legend (one shadow byte represents 8 application bytes):
+          Addressable:           00
+          Partially addressable: 01 02 03 04 05 06 07 
+          Heap left redzone:       fa
+          Freed heap region:       fd
+          Stack left redzone:      f1
+          Stack mid redzone:       f2
+          Stack right redzone:     f3
+          Stack after return:      f5
+          Stack use after scope:   f8
+          Global redzone:          f9
+          Global init order:       f6
+          Poisoned by user:        f7
+          Container overflow:      fc
+          Array cookie:            ac
+          Intra object redzone:    bb
+          ASan internal:           fe
+          Left alloca redzone:     ca
+          Right alloca redzone:    cb
+        ==5545==ABORTING
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_map.a
+    oracle_test.go:734: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "=================================================================\n==5638==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c0b07fe0040 at pc 0x55966c5cdd05 bp 0x7ffdac8c83b0 sp 0x7ffdac8c83a8\nREAD of size 8 at 0x7c0b07fe0040 thread T0\n    #0 0x55966c5cdd04 in main /tmp/adamic-gate/adamic-build-3379380866/main.c:59:109\n    #1 0x7fcb08df0ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #2 0x7fcb08df0d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x55966c4e7430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdatatype_rules_par2722290357/002/program+0x4d430)\n\n0x7c0b07fe0040 is located 0 bytes after 48-byte region [0x7c0b07fe0010,0x7c0b07fe0040)\nallocated by thread T0 here:\n    #0 0x55966c58a244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55966c5dfdbf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3540845984/heap.c:196:10\n    #2 0x7fcb08df0ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-3379380866/main.c:59:109 in main\nShadow bytes around the buggy address:\n  0x7c0b07fdfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b07fdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b07fdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b07fdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b07fdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7c0b07fe0000: fa fa 00 00 00 00 00 00[fa]fa 00 00 00 00 00 fa\n  0x7c0b07fe0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b07fe0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b07fe0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b07fe0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b07fe0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==5638==ABORTING\n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:750: exit codes differ
+        node:   exit 0, stdout "undefined\n", stderr ""
+        native: exit 1, stdout "", stderr "=================================================================\n==5638==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c0b07fe0040 at pc 0x55966c5cdd05 bp 0x7ffdac8c83b0 sp 0x7ffdac8c83a8\nREAD of size 8 at 0x7c0b07fe0040 thread T0\n    #0 0x55966c5cdd04 in main /tmp/adamic-gate/adamic-build-3379380866/main.c:59:109\n    #1 0x7fcb08df0ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #2 0x7fcb08df0d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x55966c4e7430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdatatype_rules_par2722290357/002/program+0x4d430)\n\n0x7c0b07fe0040 is located 0 bytes after 48-byte region [0x7c0b07fe0010,0x7c0b07fe0040)\nallocated by thread T0 here:\n    #0 0x55966c58a244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55966c5dfdbf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3540845984/heap.c:196:10\n    #2 0x7fcb08df0ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-3379380866/main.c:59:109 in main\nShadow bytes around the buggy address:\n  0x7c0b07fdfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b07fdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b07fdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b07fdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b07fdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7c0b07fe0000: fa fa 00 00 00 00 00 00[fa]fa 00 00 00 00 00 fa\n  0x7c0b07fe0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b07fe0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b07fe0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b07fe0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b07fe0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==5638==ABORTING\n"
+    oracle_test.go:763: leaks:
+        exit 1
+        =================================================================
+        ==5655==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b692d5e0040 at pc 0x55f145babd05 bp 0x7fff875a8510 sp 0x7fff875a8508
+        READ of size 8 at 0x7b692d5e0040 thread T0
+            #0 0x55f145babd04 in main /tmp/adamic-gate/adamic-build-3379380866/main.c:59:109
+            #1 0x7f292e444ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #2 0x7f292e444d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #3 0x55f145ac5430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdatatype_rules_par2722290357/002/program+0x4d430)
+        
+        0x7b692d5e0040 is located 0 bytes after 48-byte region [0x7b692d5e0010,0x7b692d5e0040)
+        allocated by thread T0 here:
+            #0 0x55f145b68244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55f145bbddbf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3540845984/heap.c:196:10
+            #2 0x7f292e444ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+        
+        SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-3379380866/main.c:59:109 in main
+        Shadow bytes around the buggy address:
+          0x7b692d5dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7b692d5dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7b692d5dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7b692d5dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7b692d5dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+        =>0x7b692d5e0000: fa fa 00 00 00 00 00 00[fa]fa 00 00 00 00 00 fa
+          0x7b692d5e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7b692d5e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7b692d5e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7b692d5e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7b692d5e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+        Shadow byte legend (one shadow byte represents 8 application bytes):
+          Addressable:           00
+          Partially addressable: 01 02 03 04 05 06 07 
+          Heap left redzone:       fa
+          Freed heap region:       fd
+          Stack left redzone:      f1
+          Stack mid redzone:       f2
+          Stack right redzone:     f3
+          Stack after return:      f5
+          Stack use after scope:   f8
+          Global redzone:          f9
+          Global init order:       f6
+          Poisoned by user:        f7
+          Container overflow:      fc
+          Array cookie:            ac
+          Intra object redzone:    bb
+          ASan internal:           fe
+          Left alloca redzone:     ca
+          Right alloca redzone:    cb
+        ==5655==ABORTING
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_min.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_callback.a
+    oracle_test.go:750: stdout differs
+        node:   exit 0, stdout "8\n", stderr ""
+        native: exit 0, stdout "2\n", stderr ""
+    oracle_test.go:756: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "8\n", stderr ""
+        backend: exit 70, stdout "", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'methods')\n"
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_array.a
+    oracle_test.go:734: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "=================================================================\n==5645==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c2600fe0040 at pc 0x565070bc5c97 bp 0x7ffd328a4ef0 sp 0x7ffd328a4ee8\nREAD of size 8 at 0x7c2600fe0040 thread T0\n    #0 0x565070bc5c96 in main /tmp/adamic-gate/adamic-build-1319721268/main.c:55:109\n    #1 0x7fe601eecca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #2 0x7fe601eecd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x565070adf430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdatatype_rules_par632662868/002/program+0x4d430)\n\n0x7c2600fe0040 is located 0 bytes after 48-byte region [0x7c2600fe0010,0x7c2600fe0040)\nallocated by thread T0 here:\n    #0 0x565070b82244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x565070bd7d6f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3540845984/heap.c:196:10\n    #2 0x7fe601eecca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-1319721268/main.c:55:109 in main\nShadow bytes around the buggy address:\n  0x7c2600fdfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2600fdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2600fdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2600fdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2600fdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7c2600fe0000: fa fa 00 00 00 00 00 00[fa]fa fa fa fa fa fa fa\n  0x7c2600fe0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2600fe0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2600fe0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2600fe0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2600fe0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==5645==ABORTING\n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:750: exit codes differ
+        node:   exit 0, stdout "undefined\n", stderr ""
+        native: exit 1, stdout "", stderr "=================================================================\n==5645==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c2600fe0040 at pc 0x565070bc5c97 bp 0x7ffd328a4ef0 sp 0x7ffd328a4ee8\nREAD of size 8 at 0x7c2600fe0040 thread T0\n    #0 0x565070bc5c96 in main /tmp/adamic-gate/adamic-build-1319721268/main.c:55:109\n    #1 0x7fe601eecca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #2 0x7fe601eecd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x565070adf430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdatatype_rules_par632662868/002/program+0x4d430)\n\n0x7c2600fe0040 is located 0 bytes after 48-byte region [0x7c2600fe0010,0x7c2600fe0040)\nallocated by thread T0 here:\n    #0 0x565070b82244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x565070bd7d6f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3540845984/heap.c:196:10\n    #2 0x7fe601eecca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-1319721268/main.c:55:109 in main\nShadow bytes around the buggy address:\n  0x7c2600fdfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2600fdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2600fdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2600fdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2600fdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7c2600fe0000: fa fa 00 00 00 00 00 00[fa]fa fa fa fa fa fa fa\n  0x7c2600fe0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2600fe0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2600fe0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2600fe0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2600fe0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==5645==ABORTING\n"
+    oracle_test.go:763: leaks:
+        exit 1
+        =================================================================
+        ==5687==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7bf8fafe0040 at pc 0x560831e74c97 bp 0x7ffe281ac430 sp 0x7ffe281ac428
+        READ of size 8 at 0x7bf8fafe0040 thread T0
+            #0 0x560831e74c96 in main /tmp/adamic-gate/adamic-build-1319721268/main.c:55:109
+            #1 0x7fb8fbf65ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #2 0x7fb8fbf65d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #3 0x560831d8e430 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodeinternaloracletestdatatype_rules_par632662868/002/program+0x4d430)
+        
+        0x7bf8fafe0040 is located 0 bytes after 48-byte region [0x7bf8fafe0010,0x7bf8fafe0040)
+        allocated by thread T0 here:
+            #0 0x560831e31244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x560831e86d6f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3540845984/heap.c:196:10
+            #2 0x7fb8fbf65ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+        
+        SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-1319721268/main.c:55:109 in main
+        Shadow bytes around the buggy address:
+          0x7bf8fafdfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bf8fafdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bf8fafdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bf8fafdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bf8fafdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+        =>0x7bf8fafe0000: fa fa 00 00 00 00 00 00[fa]fa fa fa fa fa fa fa
+          0x7bf8fafe0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7bf8fafe0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7bf8fafe0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7bf8fafe0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7bf8fafe0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+        Shadow byte legend (one shadow byte represents 8 application bytes):
+          Addressable:           00
+          Partially addressable: 01 02 03 04 05 06 07 
+          Heap left redzone:       fa
+          Freed heap region:       fd
+          Stack left redzone:      f1
+          Stack mid redzone:       f2
+          Stack right redzone:     f3
+          Stack after return:      f5
+          Stack use after scope:   f8
+          Global redzone:          f9
+          Global init order:       f6
+          Poisoned by user:        f7
+          Container overflow:      fc
+          Array cookie:            ac
+          Intra object redzone:    bb
+          ASan internal:           fe
+          Left alloca redzone:     ca
+          Right alloca redzone:    cb
+        ==5687==ABORTING
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a
+    oracle_test.go:750: stdout differs
+        node:   exit 0, stdout "9\n", stderr ""
+        native: exit 0, stdout "4\n", stderr ""
+    oracle_test.go:756: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "9\n", stderr ""
+        backend: exit 70, stdout "", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'methods')\n"
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_method.a (0.80s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_callback.a (0.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_min.a (0.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_field.a (0.96s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_field.a (0.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_min.a (0.80s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_map.a (0.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_field.a (0.80s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_callback.a (0.87s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_parameter_array.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_weak_min.a (0.54s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/type_rules_union_method.a (0.63s)
+FAIL
+gate cache: native hits=0 misses=36
+gate cache: node hits=0 misses=24
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.259s
+FAIL

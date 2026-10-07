@@ -1,0 +1,6 @@
+interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: string; }
+function view<Pack extends Dog[]>(dogs: Pack): Animal[] {
+ return dogs;
+}
+console.log('accepted');

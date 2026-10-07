@@ -1,0 +1,9 @@
+interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: string; }
+function store<Pack extends Dog[]>(dogs: Pack): void {
+ const animals: Animal[] = dogs;
+ animals[0] = { name: 'cat' };
+}
+const dogs: Dog[] = [{ name: 'old', bark: 'woof' }];
+store(dogs);
+for (const dog of dogs) { console.log(dog.bark); }

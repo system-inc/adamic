@@ -1,0 +1,6 @@
+import type { Weak } from 'adamic';
+class A { value: number = 1; }
+const object: { value: number } = { value: 2 };
+const weak: Weak<A> = object;
+object.value = 3;
+if (weak !== undefined) { console.log(`${weak.value}`); }

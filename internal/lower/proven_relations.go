@@ -17,11 +17,12 @@ func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.T
 		return refuse("the source is not assignable to the target", "use a compatible type or narrow the value before using it")
 	}
 	if found := l.freshOrWidened(expression, source, target); found != nil {
-		return l.wideningRefusal(where, source, target, found)
+		return localRelationRefusal(l.wideningRefusal(where, source, target, found), "adamic/proven-relation")
 	}
 	if mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{}); mismatch != nil {
-		return refuse("nominal ancestry for "+l.checker.TypeToString(mismatch), "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)")
+		return refuse("nominal ancestry for "+l.checker.TypeToString(mismatch), "construct that class or a subclass; use an interface for structural values (adamic/proven-relation)")
 	}
+
 	if field := l.optionalRelationFailure(source, target, expression, map[[2]*checker.Type]bool{}); field != "" {
 		return refuse("optional field "+field+" has no proven compatible presence/type", "keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)")
 	}

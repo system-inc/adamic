@@ -18,7 +18,7 @@ func TestLibraryStringRefusals(t *testing.T) {
 		{"collation", "console.log(`${'Z'.localeCompare('a')}`);\n", "locale collation"},
 		{"loose inequality", "function different(left: string, right: string): boolean { return left != right; }\nconsole.log(`${different('a', 'b')}`);\n", "refuses !="},
 		{"first class constructor", "const convert = String;\nconsole.log(convert(42));\n", "String as a value outside equality or typeof"},
-		{"raw wider view", "const template = { raw: ['a'] };\nfunction change(value: { raw: ArrayLike<string> | readonly string[] }): void { value.raw = { length: 0 }; }\nchange(template);\n", "which can write"},
+		{"raw wider view", "const template = { raw: ['a'] };\nfunction change(value: { raw: ArrayLike<string> | readonly string[] }): void { value.raw = { length: 0 }; }\nchange(template);\n", "adamic/invariant-mutable"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

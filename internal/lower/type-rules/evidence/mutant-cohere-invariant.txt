@@ -1,0 +1,11 @@
+=== RUN   TestTypeRuleProbesStayRefused
+=== RUN   TestTypeRuleProbesStayRefused/conditional_copy
+    type_rules_test.go:59: want adamic/invariant-mutable, got <nil>
+--- FAIL: TestTypeRuleProbesStayRefused (2.03s)
+    --- FAIL: TestTypeRuleProbesStayRefused/conditional_copy (2.03s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.098s
+FAIL

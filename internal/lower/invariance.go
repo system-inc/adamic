@@ -1,31 +1,19 @@
 package lower
 
 import (
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
 )
 
-// Mutable locations are invariant in 0.1 (docs/0.1.md, adamic/invariant-mutable): tsc relates an
-// array's elements, a property and a map's values covariantly, so a Dog[] is accepted as an Animal[],
-// and the wider name can then write a cat where the dogs are read. Stage 0 doesn't run cohere's lint,
-// so it refuses the same views itself, before lowering: every place a value goes into a typed slot
-// (an initializer, an assignment, an argument, a return, a literal's property or element), the value's
-// type is walked against the slot's, all the way down, as the Weak view check walks them.
-//
-// At each mutable slot the wider side can write, what it writes must be something the narrower side
-// can read: the slot's type in the target must be assignable to its type in the source. tsc proved
-// the other direction when it accepted the site, so together the slot is invariant. A readonly slot
-// only reads, and stays covariant.
-//
-// Two shapes reach a mutable array where tsc's relation can't be walked part by part, and each is
-// judged as cohere's rule judges it (cohere 838c6516):
-//   - A type parameter target (const pack: Pack = narrow, Narrow extends Pack extends Animal[]): what
-//     Pack holds is no type to compare against until it's instantiated, so a type parameter whose
-//     constraint can be written is one mutable slot, and only the parameter itself (or it narrowed,
-//     as T & {}) fills it.
-//   - An intersection with an array (Dog[] & { tag } into Animal[] & { tag }): its array, tuple and
-//     container members are paired member by member, as well as its properties.
+// Cohere's rules own ordinary type relations. This pair proof remains for
+// constrained sources, inferred joins, explicit satisfies proofs, instantiated
+// generic writes and override ABI checks. The oracle probes show that removing
+// the constrained-source proof reads an undefined value as a declared string.
+// RunRule exposes file rules, not a pair-relation API, so these callers cannot
+// delegate their concrete or representation-specific pairs to it yet.
 
 // widening is a view refused: the parts of the source and the target at the slot where the target can
 // write what the source can't read.
@@ -375,12 +363,11 @@ func viewSite(node *ast.Node) bool {
 	return false
 }
 
-// refuseWidening refuses a value seen through a type that can write what it can't hold.
+// Cohere owns ordinary views. These witnesses still require an Adamic proof:
+// source constraints and inferred joins that the upstream walker does not relate.
 func (l *lowering) refuseWidening(node *ast.Node) error {
-	var own, contextual *checker.Type
-	var found *widening
-	switch {
-	case node.Kind == ast.KindAsExpression:
+	switch node.Kind {
+	case ast.KindAsExpression:
 		as := node.AsAsExpression()
 		if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return nil
@@ -389,75 +376,49 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
 			return l.provenRelation(node, as.Expression, target)
 		}
-		// Preserve the existing checks on downcasts; their lowering belongs to cast.go.
-		own, contextual = source, target
-		found = l.freshOrWidened(as.Expression, own, contextual)
-	case node.Kind == ast.KindSatisfiesExpression:
+		if found := l.freshOrWidened(as.Expression, source, target); found != nil {
+			return localRelationRefusal(l.wideningRefusal(node, source, target, found), "adamic/proven-relation")
+		}
+		return nil
+	case ast.KindSatisfiesExpression:
 		satisfies := node.AsSatisfiesExpression()
 		return l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type))
-	case node.Kind == ast.KindShorthandPropertyAssignment:
-		// { pets } is { pets: pets }: the variable seen as the literal's property.
-		literal := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
-		if literal == nil {
-			return nil
-		}
-		property := l.checker.GetPropertyOfType(literal, node.Name().Text())
-		if property == nil {
-			return nil
-		}
-		own, contextual = l.checker.GetTypeAtLocation(node.Name()), l.checker.GetTypeOfSymbol(property)
-		found = l.widened(own, contextual, map[[2]*checker.Type]bool{})
-	case node.Kind == ast.KindSpreadAssignment:
-		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
-		// it is kennel's value seen as the literal's field.
-		literal := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
-		if literal == nil {
-			return nil
-		}
-		skip := map[string]bool{}
-		after := false
-		for _, property := range node.Parent.AsObjectLiteralExpression().Properties.Nodes {
-			if property == node {
-				after = true
-			} else if after && property.Name() != nil {
-				skip[property.Name().Text()] = true
-			}
-		}
-		own, contextual = l.checker.GetTypeAtLocation(node.AsSpreadAssignment().Expression), literal
-		found = l.widenedProperties(own, literal, skip, true, map[[2]*checker.Type]bool{})
-	default:
-		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
-			return nil
-		}
-		if l.genericFunction(node) {
-			// same<Item> written where a (value: number) => number goes is instantiated to exactly
-			// that type, Item = number, so there's no wider view of it to judge.
-			return nil
-		}
-		if pattern := destructuringTarget(node); pattern != nil {
-			// [a, b] = tuple keeps nothing of the pattern: each element is read out and stored into
-			// its name, so each element is the view, seen as its name's type, and the pattern isn't one.
-			return l.refuseElementWidening(node, pattern)
-		}
-		if viewSite(node) {
-			contextual = l.checker.GetContextualType(node, checker.ContextFlagsNone)
-		}
-		if contextual == nil {
-			// With no type written for it, a value can still be taken into a wider one tsc made: the
-			// union of a conditional's branches reduced to the wider (flag ? dogs : animals is an
-			// Animal[]), a literal's elements likewise, a function's returns likewise.
-			contextual = l.impliedTarget(node)
-		}
-		if contextual == nil {
-			return nil
-		}
-		own = l.checker.GetTypeAtLocation(node)
-		found = l.freshOrWidened(node, own, contextual)
 	}
-	if found == nil {
+	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || l.genericFunction(node) {
 		return nil
 	}
-	return l.wideningRefusal(node, own, contextual, found)
+	own := l.checker.GetTypeAtLocation(node)
+	var target *checker.Type
+	if viewSite(node) {
+		target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	}
+	inferred := l.impliedTarget(node)
+	constrained := own.Flags()&checker.TypeFlagsTypeParameter != 0
+	if inferred == nil && !constrained {
+		return nil
+	}
+	if target == nil {
+		target = inferred
+	}
+	if target == nil {
+		return nil
+	}
+	if found := l.freshOrWidened(node, own, target); found != nil {
+		id := "adamic/invariant-inferred-view"
+		if constrained {
+			id = "adamic/invariant-constraint-view"
+		}
+		return localRelationRefusal(l.wideningRefusal(node, own, target, found), id)
+	}
+	return nil
+}
+
+func localRelationRefusal(err error, id string) error {
+	if refused, ok := err.(*Refused); ok {
+		refused.Fix = strings.ReplaceAll(refused.Fix, "adamic/invariant-mutable", id)
+		refused.Fix = strings.ReplaceAll(refused.Fix, "adamic/nominal-class", id)
+	}
+	return err
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
@@ -584,48 +545,6 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 			return nil
 		}
 		return l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(function))
-	}
-	return nil
-}
-
-// destructuringTarget is the array pattern a value is assigned into, [a, b] = value, or nil.
-func destructuringTarget(node *ast.Node) *ast.Node {
-	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
-		node = node.Parent
-	}
-	if parent := node.Parent; parent != nil && parent.Kind == ast.KindBinaryExpression {
-		binary := parent.AsBinaryExpression()
-		if binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node && binary.Left.Kind == ast.KindArrayLiteralExpression {
-			return binary.Left
-		}
-	}
-	return nil
-}
-
-// refuseElementWidening refuses [a, b] = tuple when an element is seen through its name's type as
-// a view that can write what the element can't hold: [animals] = [dogs] puts a Dog[] in an
-// Animal[]. A value that isn't a tuple is judged whole, as anywhere.
-func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) error {
-	own := l.checker.GetTypeAtLocation(node)
-	if !checker.IsTupleType(own) {
-		contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
-		if contextual == nil {
-			return nil
-		}
-		if found := l.widened(own, contextual, map[[2]*checker.Type]bool{}); found != nil {
-			return &Refused{Where: l.program.Where(node), What: "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
-		}
-		return nil
-	}
-	elements := l.checker.GetTypeArguments(own)
-	for index, target := range pattern.AsArrayLiteralExpression().Elements.Nodes {
-		if index >= len(elements) || target.Kind == ast.KindOmittedExpression {
-			continue
-		}
-		to := l.checker.GetTypeAtLocation(target)
-		if found := l.widened(elements[index], to, map[[2]*checker.Type]bool{}); found != nil {
-			return &Refused{Where: l.program.Where(target), What: "a value of type " + l.checker.TypeToString(elements[index]) + " seen as " + l.checker.TypeToString(to) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read", Fix: "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"}
-		}
 	}
 	return nil
 }
