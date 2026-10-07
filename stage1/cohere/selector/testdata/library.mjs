@@ -1,7 +1,7 @@
 // Independent oracle: the exact upstream release cohere follows.
 import { createRequire } from 'node:module';
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { join, sep } from 'node:path';
+import { join, relative } from 'node:path';
 const [directory, mode, root, destination, testTexts] = process.argv.slice(2);
 const require = createRequire(join(directory, 'package.json'));
 if(require('postcss-selector-parser/package.json').version !== '2.2.3') {
@@ -36,6 +36,22 @@ function dump(value, text) {
     return out;
 }
 const loops = 'postcss-selector-parser 2.2.3 never returns on this selector: a namespace bar it does not consume';
+// cohere f46be797 vendored these fixtures. Go's selector oracle and PostCSS both reject them.
+// Exact paths keep every other file in the comparison; a newly parseable exclusion must fail.
+const expectedCSSErrors = new Set([
+    'internal/format/css/testdata/prettier/css/_errors_/less-syntax.css',
+    'internal/format/css/testdata/prettier/css/_errors_/scss-syntax.css',
+    'internal/format/css/testdata/prettier/css/front-matter/custom-parser.css',
+    'internal/format/css/testdata/prettier/css/front-matter/embedded-language-formatting/yaml.css',
+    'internal/format/css/testdata/prettier/css/range/issue2267.css',
+    'internal/format/css/testdata/prettier/css/yaml/comment_after.css',
+    'internal/format/css/testdata/prettier/css/yaml/dirty.css',
+    'internal/format/css/testdata/prettier/css/yaml/ignore.css',
+    'internal/format/css/testdata/prettier/css/yaml/malformed-2.css',
+    'internal/format/css/testdata/prettier/css/yaml/with_comments.css',
+    'internal/format/css/testdata/prettier/css/yaml/without-newline-after.css',
+    'internal/format/css/testdata/prettier/css/yaml/yaml.css',
+]);
 if(mode === 'corpus') {
     let files = 0,
         expectedErrors = 0;
@@ -74,13 +90,13 @@ if(mode === 'corpus') {
             }
             if(!entry.name.endsWith('.css')) continue;
             files++;
-            // cohere f46be797 vendored fixtures whose CSS is deliberately malformed.
-            // Keep every file that parses, even under _errors_; other failures are fatal.
+            const expectedError = expectedCSSErrors.has(relative(root, file).split('\\').join('/'));
             try {
                 extract(readFileSync(file, 'utf8'), file);
+                if(expectedError) throw new Error(`expected CSS error became parseable: ${file}`);
             }
             catch(error) {
-                if(error.name !== 'CssSyntaxError' || !file.split(sep).includes('_errors_')) throw error;
+                if(error.name !== 'CssSyntaxError' || !expectedError) throw error;
                 expectedErrors++;
                 console.log(`expected CSS error: ${file}: ${error.reason}`);
             }
