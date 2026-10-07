@@ -23,7 +23,8 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 		path := filepath.Join(widthDependencies, "node_modules", module, "index.js")
 		if _, err := os.Stat(path); err != nil {
 			t.Fatalf("missing Markdown width oracle module %s at %s: %v; run bash cloud/setup.sh and source its env.sh", module, path, err)
-		}	}
+		}
+	}
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)
