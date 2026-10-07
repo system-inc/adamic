@@ -1,0 +1,3 @@
+Rebased cleanly onto area bb2ece564 and main 4e0bfda50. Dedup ledger unchanged; retained winning lineage and retired losing descriptors remain unchanged. No shared-file conflict hunks or new shared edits.
+
+Ran `go test ./stage1/cohere/lint -run '^TestMutants/debugger_fix_suppressed$' -count=1` with the configured environment. FAIL in 2.466s before mutant execution: Go restricted-types adapter rejects foreign `allowLoop` from the shared generated all-rule options row. See adjacent log. No mutant credit, no full gate rerun, no new helper claims. Stop under the existing instruction for a different shared blocker.
