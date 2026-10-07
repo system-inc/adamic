@@ -60,6 +60,12 @@ export class ReactBooleanPropNaming {
                 this.rules.parser.node(this.rules.skip(n.children[0] ?? -1)).kind === 'Identifier')
         );
     }
+    messageSpace(code: number): boolean {
+        return [9, 10, 12, 13, 32].includes(code);
+    }
+    messageLetter(code: number): boolean {
+        return code === 95 || (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
+    }
     interpolate(template: string, name: string): string {
         let out = '';
         let at = 0;
@@ -67,16 +73,32 @@ export class ReactBooleanPropNaming {
             const first = template.indexOf('{{', at);
             if(first < 0) return out + template.slice(at);
             out += template.slice(at, first);
-            const end = template.indexOf('}}', first + 2);
-            if(end < 0) return out + template.slice(first);
-            const key = template.slice(first + 2, end).trim();
-            out +=
-                key === 'propName' || key === 'component'
-                    ? name
-                    : key === 'pattern'
-                      ? this.options.pattern
-                      : template.slice(first, end + 2);
-            at = end + 2;
+            let cursor = first + 2;
+            while(cursor < template.length && this.messageSpace(template.charCodeAt(cursor))) cursor++;
+            const keyStart = cursor;
+            if(this.messageLetter(template.charCodeAt(cursor))) {
+                cursor++;
+                while(
+                    cursor < template.length &&
+                    (this.messageLetter(template.charCodeAt(cursor)) ||
+                        (template.charCodeAt(cursor) >= 48 && template.charCodeAt(cursor) <= 57))
+                )
+                    cursor++;
+                const key = template.slice(keyStart, cursor);
+                while(cursor < template.length && this.messageSpace(template.charCodeAt(cursor))) cursor++;
+                if(template.slice(cursor, cursor + 2) === '}}') {
+                    out +=
+                        key === 'propName' || key === 'component'
+                            ? name
+                            : key === 'pattern'
+                              ? this.options.pattern
+                              : template.slice(first, cursor + 2);
+                    at = cursor + 2;
+                    continue;
+                }
+            }
+            out += template.slice(first, first + 1);
+            at = first + 1;
         }
         return out;
     }

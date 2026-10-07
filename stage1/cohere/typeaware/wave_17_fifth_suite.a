@@ -54,7 +54,14 @@ for(const path of paths) {
             facts,
             bindings,
             fourth,
-            new BooleanPropNamingOptions('^(is|has)[A-Z]([A-Za-z0-9]?)+', ['bool'], args.includes('--nested'), ''),
+            new BooleanPropNamingOptions(
+                '^(is|has)[A-Z]([A-Za-z0-9]?)+',
+                ['bool'],
+                args.includes('--nested'),
+                args.includes('--message-test')
+                    ? 'outer {{ {{propName}} / {{ pattern }} / {{component}} / {{ unknown }} / {{\u00a0propName}}'
+                    : '',
+            ),
             defaultBooleanPropPattern,
         ).run();
     for(const finding of linter.findings) {

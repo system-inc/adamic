@@ -150,7 +150,7 @@ func TestWave17FifthAgreementAndMutants(t *testing.T) {
 		}
 		t.Logf("%s mutant exits 0, empty stderr; Go byte oracle catches byte %d", m.name, firstDifference(got.stdout, truth.stdout))
 	}
-	for _, flags := range [][]string{{"--boolean-props", "--nested"}} {
+	for _, flags := range [][]string{{"--boolean-props", "--nested"}, {"--boolean-props", "--message-test"}, {"--boolean-props", "--nested", "--message-test"}} {
 		commands := append([]string{config, manifest}, flags...)
 		want := h.must("options-go", exec.Command(oracle, commands...))
 		got := h.must("options-native", exec.Command(asan, commands...))

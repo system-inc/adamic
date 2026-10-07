@@ -179,6 +179,9 @@ func main() {
 			if subject.Name == "react/boolean-prop-naming" && slices.Contains(args[2:], "--boolean-props") {
 				settings := react_rules.DefaultBooleanPropNamingOptions()
 				settings.ValidateNested = slices.Contains(args[2:], "--nested")
+				if slices.Contains(args[2:], "--message-test") {
+					settings.Message = "outer {{ {{propName}} / {{ pattern }} / {{component}} / {{ unknown }} / {{\u00a0propName}}"
+				}
 				options = settings
 			}
 			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, options)
