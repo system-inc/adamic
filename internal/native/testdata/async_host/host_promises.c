@@ -186,9 +186,14 @@ static void *fixture(void *argument) {
         assert(adamic_host_resolve(request, bytes, sizeof bytes, 201.5));
     }
     if (strcmp(mode, "direct") == 0) {
-        /* Real loop-side state reads concurrent with the mutant's forbidden
-         * worker-side settlement. The control worker never writes the promise. */
-        while (!atomic_load(&work.done)) { volatile bool settled = promise->settled; (void)settled; }
+        /* Read the promise and its plain count while forbidden worker-side
+         * settlement retains it. Volatile source loads prevent hoisting; they
+         * add no synchronization. The control worker never touches the value. */
+        while (!atomic_load(&work.done)) {
+            bool settled = *(volatile bool *)&promise->settled;
+            size_t references = *(volatile size_t *)&promise->heap.references;
+            (void)settled; (void)references;
+        }
     }
     adamic_release(promise);
     if (exit_pending) adamic_async_teardown();

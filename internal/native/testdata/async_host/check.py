@@ -35,7 +35,7 @@ def main():
         label = 'asan' if sanitizer.startswith('address') else 'tsan'
         flags = FLAGS + ['-fsanitize=' + sanitizer, '-fno-sanitize-recover=all']
         environment = dict(os.environ, ASAN_OPTIONS='detect_leaks=1:halt_on_error=1',
-                           UBSAN_OPTIONS='halt_on_error=1', TSAN_OPTIONS='halt_on_error=1:exitcode=66')
+                           UBSAN_OPTIONS='halt_on_error=1', TSAN_OPTIONS='halt_on_error=1:exitcode=66:history_size=4:report_atomic_races=1')
         common = []
         for source in sorted(RUNTIME.glob('*.c')):
             if source.name == 'async.c':
@@ -96,13 +96,14 @@ def main():
                       ('exit-cycle', 'ADAMIC_ASYNC_EXIT_CYCLE_MUTANT', 'exit', b'LeakSanitizer: detected memory leaks')]
         for name, macro, mode, diagnostic in mutants:
             binary = build(name, macro)
-            result = run([binary, mode], label + '-' + name + '-mutant', environment, timeout=3 if diagnostic is None else 30)
-            if diagnostic is None:
-                assert result[0] == 'timeout', (name, result)
-                print('mutant', name, 'caught by bounded timeout (3s)', flush=True)
-            else:
-                assert result[0] not in [0, 'timeout'] and diagnostic in result[2], (name, result)
-                print('mutant', name, 'caught by', diagnostic.decode(), flush=True)
+            for attempt in range(3 if label == 'tsan' else 1):
+                result = run([binary, mode], label + '-' + name + '-mutant-' + str(attempt), environment, timeout=3 if diagnostic is None else 30)
+                if diagnostic is None:
+                    assert result[0] == 'timeout', (name, result)
+                    print('mutant', name, 'caught by bounded timeout (3s)', flush=True)
+                else:
+                    assert result[0] not in [0, 'timeout'] and diagnostic in result[2], (name, result)
+                    print('mutant', name, 'attempt', attempt + 1, 'caught by', diagnostic.decode(), flush=True)
         if label == 'asan':
             for name, mode, old, new in [
                 ('payload-copy', 'resolve', 'memcpy(entry->bytes, bytes, length);', "memset(entry->bytes, 'x', length);"),
