@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"testing"
@@ -35,11 +36,17 @@ func TestLongArgumentsLeaveTheStackItsLimit(t *testing.T) {
 		{"arguments", []string{long, long, long}, nil, false, 0},
 		{"arguments alone", []string{long, long, long}, nil, true, 0},
 		{"environment", nil, []string{"ADAMIC_LONG_1=" + long, "ADAMIC_LONG_2=" + long, "ADAMIC_LONG_3=" + long}, false, 0},
-		{"a 1 MiB stack and 400 KB of arguments", []string{strings.Repeat("x", 136_000), strings.Repeat("x", 136_000), strings.Repeat("x", 136_000)}, nil, false, 1024},
-		{"a 2 MiB stack and 900 KB of arguments", []string{strings.Repeat("x", 307_000), strings.Repeat("x", 307_000), strings.Repeat("x", 307_000)}, nil, false, 2048},
+		{"a 1 MiB stack and 400 KB of arguments", pieces(4), nil, false, 1024},
+		{"a 2 MiB stack and 900 KB of arguments", pieces(9), nil, false, 2048},
 	} {
 		t.Run(setting.name, func(t *testing.T) {
 			t.Parallel()
+			if setting.stack > 0 && runtime.GOOS == "linux" {
+				// Linux lets arguments and environment take a quarter of the stack and no more, so a
+				// lowered stack with more arguments than that can't be started there: the case is
+				// macOS's, whose ARG_MAX doesn't shrink with the stack.
+				t.Skip("Linux refuses arguments over a quarter of the stack, so this can't arise there")
+			}
 			cacheProbe(t, "internal/oracle/testdata/stack_over.a", nil, "", func() {
 
 				path, binary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
@@ -144,4 +151,13 @@ func TestSmallStacksStillPanic(t *testing.T) {
 			})
 		})
 	}
+}
+
+// pieces is count arguments of 100 KB, under the 128 KiB Linux allows any one argument string.
+func pieces(count int) []string {
+	arguments := make([]string, count)
+	for index := range arguments {
+		arguments[index] = strings.Repeat("x", 100_000)
+	}
+	return arguments
 }
