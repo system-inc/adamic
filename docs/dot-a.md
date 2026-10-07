@@ -92,7 +92,7 @@ Branches adding new `.ts` Adamic files must rename them at merge with
 
 Main advanced during verification to `71d7e49`, the pinned stage 3 stack merge.
 This branch merges it with `b06f366`. The current committed
-[dry run](../cloud/dot-a-dry-run.txt) contains **337 files, 1,875 reference rewrites
+[dry run](../cloud/dot-a-dry-run.txt) contains **337 files, 1,876 reference rewrites
 in 346 files**. The additional 88 renamed files are stage 1 lint registry code.
 The exact integration command remains `go run ./cmd/adamic-rename-dot-a --apply .`.
 The merge was conflict-free and retains the shared loader's transform mode.
@@ -122,8 +122,19 @@ inventory and registry packages. Lint ran for 1,678.960 seconds and reported two
 suggestion-test failures: the rename changed an obsolete removal of `rule.ts`
 into removal of the newly installed `rule.a`. The codemod now removes that parsed
 Go cleanup block. Its executed regression passes and the mutant is caught by
-loss of the installed module. The two suggestion tests are being rerun; the
-remaining stage 1 packages are still running.
+loss of the installed module. Both suggestion tests passed their targeted rerun in 142.224 seconds. All 19
+other tested stage 1 packages passed except Markdown; three generator packages
+have no test files. Type-aware passed in 1,181.645 seconds. Markdown's full
+package exceeded 30 minutes and also exposed a stale generated import in the
+width-table regeneration. Go literal fragments are now parsed as TypeScript,
+with a synthetic import opener for the split identifier-list fragment. The
+emitted import is rewritten and ordinary embedded source strings stay unchanged.
+That adds one edit, giving the final count of 1,876.
+All 20 ordinary Markdown tests are being run individually by two workers,
+`go test -count=1 -timeout 30m -parallel 2 ./stage1/cohere/markdownblocks -run
+'^<test-name>$'`. Every name and log is retained under
+`/tmp/dot-a-stack-markdown-individual/`; a targeted exhaustive width rerun is
+also logged at `/tmp/dot-a-stack-width-rerun.log`.
 The final command was also run literally in a second clean main snapshot,
 `/tmp/dot-a-stack-inventory`: apply exited 0 and printed
 `TOTAL files=337 references=1875 reference_files=346`; its immediate repeat exited
@@ -133,7 +144,8 @@ Logs are `/tmp/dot-a-stack-final-{apply,repeat,equivalence}.log`.
 The first stack apply had one extra edit to the stale `.ts` ambiguity witness;
 the protected-witness fix and regression test remove that edit. The final lint
 cleanup fix replaces a path rewrite with deletion of one parsed conditional
-block; the final edit count remains 1,875. Earlier main
+block; the cleanup edit count remains 1,875; the generated import adds one, yielding
+1,876. Earlier main
 verification below is historical evidence, not a claim about this stack's gate.
 
 ## October 7 refresh
@@ -207,7 +219,7 @@ setup: build cache warm (118s)
 setup: done in 118s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
 ```
 
-Seventeen new mutants were caught, each by a test failure with exit 1:
+Nineteen new mutants were caught, each by a test failure with exit 1:
 
 | Mutant | What caught it |
 | --- | --- |
@@ -228,6 +240,8 @@ Seventeen new mutants were caught, each by a test failure with exit 1:
 | Omit the prelude validation seed | Same test: stock tsc config has no seed input |
 | Rewrite the deliberately stale TypeScript module | `TestRegistryRenameWitness`: ambiguity witness acquires an unwanted edit |
 | Keep the obsolete suggestion-module cleanup | `TestSerializationTransition`: executed Go helper deletes the installed `.a` module |
+| Omit the split generated-import fragment | `TestGeneratedImportTemplates`: emitted Go output still imports `.ts` |
+| Rewrite ordinary source strings in generator literals | Same test: the embedded ordinary string acquires an unwanted rewrite |
 
 Mutant logs are `/tmp/dot-a-refresh-mutant-*.log`. An earlier attempt that removed
 only stage 3's suffix fallback survived: that fixture's local path already

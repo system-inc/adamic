@@ -463,6 +463,25 @@ func sourceFilterEdits(name, source string, renames map[string]string) ([]edit, 
 				if err == nil && strings.HasSuffix(value, ".ts") && !strings.HasSuffix(value, ".d.ts") && !strings.Contains(value, "*") {
 					start, end := positions.Position(literal.Pos()).Offset, positions.Position(literal.End()).Offset
 					edits = append(edits, edit{start, end, source[start:end], strconv.Quote(strings.TrimSuffix(value, ".ts") + ".a")})
+				} else if err == nil && strings.Contains(value, ".ts") {
+					// A builder may split an import around a computed identifier list.
+					// Parse the literal, with a synthetic opener for its closing fragment.
+					generatedName := filepath.Join(filepath.Dir(filepath.Dir(filepath.Dir(name))), "__generated.ts")
+					for _, prefix := range []string{"", "import { __dot_a_generated"} {
+						embedded, parseError := sourceEdits(generatedName, prefix+value, renames)
+						if parseError != nil || len(embedded) == 0 {
+							continue
+						}
+						updated := value
+						for index := len(embedded) - 1; index >= 0; index-- {
+							part := embedded[index]
+							start, end := part.start-len(prefix), part.end-len(prefix)
+							updated = updated[:start] + part.after + updated[end:]
+						}
+						start, end := positions.Position(literal.Pos()).Offset, positions.Position(literal.End()).Offset
+						edits = append(edits, edit{start, end, source[start:end], strconv.Quote(updated)})
+						break
+					}
 				}
 			}
 		}

@@ -332,3 +332,42 @@ func main(){ directory:=os.Args[1]; if err:=serializationPort(directory);err!=ni
 		t.Fatalf("transition repeat: %+v", repeat)
 	}
 }
+
+func TestGeneratedImportTemplates(t *testing.T) {
+	t.Parallel()
+	source := `package main
+import "fmt"
+const output = "stage1/cohere/markdownblocks/widthTables.ts"
+const ordinary = "const note='./widthRuneRanges.ts';"
+func main(){names:="x";fmt.Print("import { "+names+" } from './widthRuneRanges.ts';\n")}
+`
+	root := repository(t, map[string]string{
+		"stage1/cohere/markdownblocks/widthTables.ts":               "export const table=1;",
+		"stage1/cohere/markdownblocks/widthRuneRanges.ts":           "export const x=1;",
+		"stage1/cohere/markdownblocks/tools/generate_width/main.go": source,
+	})
+	p, err := prepare(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if err := p.apply(root); err != nil {
+		t.Fatal(err)
+	}
+	program := filepath.Join(root, "stage1/cohere/markdownblocks/tools/generate_width/main.go")
+	data, err := os.ReadFile(program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(data), `const note='./widthRuneRanges.ts';`) {
+		t.Fatalf("ordinary string changed: %s", data)
+	}
+	output, err := exec.Command("go", "run", program).CombinedOutput()
+	if err != nil || string(output) != "import { x } from './widthRuneRanges.a';\n" {
+		t.Fatalf("generated import: %v %s", err, output)
+	}
+	again, err := prepare(root)
+	if err != nil || len(again.renames) != 0 || len(again.changes) != 0 {
+		t.Fatalf("template repeat: %+v %v", again, err)
+	}
+}

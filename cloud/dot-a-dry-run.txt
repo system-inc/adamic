@@ -1636,6 +1636,7 @@ EDIT stage1/cohere/markdownblocks/text_test.go:142 byte 5211: "testdata/text_pro
 EDIT stage1/cohere/markdownblocks/tools/generate_classes/main.go:19 byte 358: "\"stage1/cohere/markdownblocks/textClasses.ts\"" -> "\"stage1/cohere/markdownblocks/textClasses.a\""
 EDIT stage1/cohere/markdownblocks/tools/generate_entities/main.go:86 byte 2597: "\".ts\"" -> "\".a\""
 EDIT stage1/cohere/markdownblocks/tools/generate_width/main.go:23 byte 418: "\"stage1/cohere/markdownblocks/widthTables.ts\"" -> "\"stage1/cohere/markdownblocks/widthTables.a\""
+EDIT stage1/cohere/markdownblocks/tools/generate_width/main.go:175 byte 5332: "\" } from './widthRuneRanges.ts';\\n\"" -> "\" } from './widthRuneRanges.a';\\n\""
 EDIT stage1/cohere/markdownblocks/tools/generate_width/main.go:179 byte 5502: "\"widthRuneRanges.ts\"" -> "\"widthRuneRanges.a\""
 EDIT stage1/cohere/markdownblocks/whitespace.ts:3 byte 157: ".ts" -> ".a"
 EDIT stage1/cohere/markdownblocks/whitespaceCodec.ts:3 byte 139: ".ts" -> ".a"
@@ -2220,4 +2221,4 @@ EDIT verify/catalog/catalog.json:383 byte 16654: "internal/fresh/testdata/regexp
 EDIT verify/catalog/catalog.json:384 byte 16704: "internal/load/testdata/0.1/compile/09_tree.ts" -> "internal/load/testdata/0.1/compile/09_tree.a"
 EDIT verify/catalog/catalog.json:429 byte 18921: "internal/fresh/testdata/regexp_tree.ts" -> "internal/fresh/testdata/regexp_tree.a"
 EDIT verify/catalog/catalog.json:430 byte 18971: "internal/load/testdata/0.1/compile/09_tree.ts" -> "internal/load/testdata/0.1/compile/09_tree.a"
-TOTAL files=337 references=1875 reference_files=346
+TOTAL files=337 references=1876 reference_files=346
