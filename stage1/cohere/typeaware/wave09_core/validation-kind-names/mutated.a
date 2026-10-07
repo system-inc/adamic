@@ -1,4 +1,0 @@
-// Listener kind names from the pinned production Go listener maps.
-// Relevance dispatch belongs to the shared driver.
-export const ruleName = "radix";
-export const syntaxKinds:readonly string[] = ["NewExpression"];
