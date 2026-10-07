@@ -1,5 +1,5 @@
 Built: a verified mixed-union census and transactional union member-graph hook; runtime admission is unfinished.
-Commits: bc83664c (territory/hooks), e9b5dce8 (census), dc5a6b8b (metadata/probes), on codex/views-mixed-unions.
+Commits: bc83664c (territory/hooks), e9b5dce8 (census), dc5a6b8b (metadata/probes), ba8464fa (hook/report), on codex/views-mixed-unions.
 Validation: focused contract tests, checked-view oracle and vet pass; the full lower package fails an independently reproduced inherited test.
 Mutants: omit-member, accept-unknown and keep-failed-graph were caught by metadata assertions; the three requested runtime mutants remain unrun.
 Uncovered: backend union selection/conversion, runtime exit-70 pins, branded intersections, dictionaries and current-main landing.
@@ -28,7 +28,8 @@ census-summary.json for expanded members and exact witnesses.
 | bc83664c, territory | 0 | 2,868 |
 | e9b5dce8, census | 0 | 2,868 |
 | dc5a6b8b, metadata and source probes | 0 | 2,868 |
-| Final hook/report checkpoint | 0 | 2,868 |
+| ba8464fa, hook/report | 0 | 2,868 |
+| Final evidence packaging checkpoint | 0 | 2,868 |
 
 The remaining-family arrays are preserved in census-sites.json. Merging array
 helpers does not prove that every recursively encountered array contract is now
@@ -148,7 +149,8 @@ Landing was attempted against current origin/main
 `docs/escape-hatches.md`, `internal/lower/cast.go`,
 `internal/lower/expression.go` and `internal/lower/refusals.go`. They are outside
 lane 4 territory. The merge was aborted; logs/main-merge.log and
-main-merge-conflicts.patch preserve the exact conflicts for their owners.
+main-merge-conflicts.patch.gz preserve the exact conflicts for their owners. The patch is compressed to keep
+its significant diff-prefix whitespace out of source whitespace checks.
 This checkpoint is pushed, but not landed or fully green.
 
 There is no defensible completion date for the exact five ranked shapes until
