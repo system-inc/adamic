@@ -1,0 +1,12 @@
+=== RUN   TestTypeParametersMatchesGo
+    type_parameters_test.go:71: /tmp/adamic-gate/TestTypeParametersMatchesGo4277077911/003/go-oracle [--adapt /tmp/adamic-gate/TestTypeParametersMatchesGo4277077911/004/fixtures.json]: exit status 2 stderr panic: interface conversion: ast.nodeData is *ast.Identifier, not *ast.TypeParameterDeclaration
+        
+        goroutine 1 [running]:
+        github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).AsTypeParameterDeclaration(...)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9791
+        main.main()
+        	/workspace/adamic/cohere/adamic_wave12_type_parameters_oracle.go:47 +0xbbd
+--- FAIL: TestTypeParametersMatchesGo (3.72s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	3.727s
+FAIL

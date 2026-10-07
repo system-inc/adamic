@@ -1,0 +1,16 @@
+=== RUN   TestTypeParametersMatchesGo
+    type_parameters_test.go:75: actual Go consumer coverage [AST nodes, delegated expressions]: {"array-callback-return":[269,0],"consistent-return":[92,0],"no-unreachable-loop":[639,0],"react-hooks/rules-of-hooks":[279,0],"type-parameter-controls":[13,32]}
+    type_parameters_test.go:83: 1292 consumer AST and type-parameter-order controls, 2655 identical Go/source Node/emitted JS/sanitized native bytes
+=== RUN   TestTypeParametersMatchesGo/drop-constraint
+    type_parameters_test.go:110: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 1280
+    type_parameters_test.go:110: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 1280
+    type_parameters_test.go:110: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 1280
+=== RUN   TestTypeParametersMatchesGo/swap-constraint-default
+    type_parameters_test.go:110: backend 0 compiles and exits cleanly; Go comparison catches mutant at row 1281
+    type_parameters_test.go:110: backend 1 compiles and exits cleanly; Go comparison catches mutant at row 1281
+    type_parameters_test.go:110: backend 2 compiles and exits cleanly; Go comparison catches mutant at row 1281
+--- PASS: TestTypeParametersMatchesGo (6.67s)
+    --- PASS: TestTypeParametersMatchesGo/drop-constraint (0.78s)
+    --- PASS: TestTypeParametersMatchesGo/swap-constraint-default (0.75s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	6.677s

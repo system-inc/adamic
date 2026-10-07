@@ -6,7 +6,8 @@
     "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
     "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
     "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
-    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators"
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators",
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters"
   ],
   "final_blockers_removed": 0,
   "consumers": [
@@ -18,7 +19,8 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].accessOrCall",
@@ -69,7 +71,6 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].tryStatement",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeArguments",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].updateExpression",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclaration",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclarationList",
@@ -92,7 +93,8 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.HasValue",
@@ -156,7 +158,6 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].tryStatement",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeArguments",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].updateExpression",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclaration",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclarationList",
@@ -180,7 +181,8 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].Current",
@@ -232,7 +234,6 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].tryStatement",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeArguments",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].updateExpression",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclaration",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclarationList",
@@ -257,7 +258,8 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators"
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Block[E].Index",
@@ -310,7 +312,6 @@
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].tryStatement",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeArguments",
-        "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].updateExpression",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclaration",
         "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclarationList",

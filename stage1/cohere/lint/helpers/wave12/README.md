@@ -59,3 +59,5 @@ Additional supplied-node CFG helpers are now delivered: [constant truthiness](TR
 The effective-now regex instruction is applied to the earlier normalizer: its hand-written equivalents are replaced by literal translations from codex/lint-regex. Actual Go/source Node/emitted JS/sanitized native still match 9,364 cases, with all three compiling semantic mutants caught. See [REGEX-MIGRATION.md](REGEX-MIGRATION.md) for provenance and final scoped verification.
 
 Ordered decorator expression delegation is delivered in [DECORATORS.md](DECORATORS.md), with exact actual-Go coverage boundaries and two compiling mutants. Full owned suite PASS 123.469s, vet clean.
+
+Constraint/default delegation is delivered in [TYPE-PARAMETERS.md](TYPE-PARAMETERS.md). Actual Go parity is restricted to the parser-supported node domain; malformed internal AST cast behavior is documented. Focused suite PASS 6.677s, final vet clean.

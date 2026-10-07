@@ -1,0 +1,53 @@
+package main
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "strings"
+ "path"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+ "github.com/microsoft/TypeScript/tsc/shim/tspath"
+ cfg "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph"
+)
+func main() {
+ data, err := os.ReadFile(os.Args[2]); if err != nil { panic(err) }
+ var inputs []struct{ File, Source, Rule string }
+ if err := json.Unmarshal(data, &inputs); err != nil { panic(err) }
+ type parameterFact struct { Constraint int `json:"constraint"`; DefaultType int `json:"defaultType"` }
+ facts := [][]parameterFact{}
+ coverage := map[string][]int{}
+ for _, row := range inputs {
+  kind := core.ScriptKindTS
+  if strings.HasSuffix(row.File,".tsx") { kind = core.ScriptKindTSX } else if strings.HasSuffix(row.File,".jsx") { kind = core.ScriptKindJSX } else if strings.HasSuffix(row.File,".js") { kind = core.ScriptKindJS }
+  name := path.Clean("/corpus/"+row.File)
+  source := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:name,Path:tspath.Path(name)}, row.Source,kind)
+  nodes := []*ast.Node{}
+  ids := map[*ast.Node]int{nil:0}
+  var visit func(*ast.Node)
+  visit = func(node *ast.Node) { nodes=append(nodes,node); ids[node]=len(nodes); node.ForEachChild(func(child *ast.Node) bool {visit(child); return false}) }
+  visit(source.AsNode())
+  for _, node := range nodes {
+   supported:=node.FunctionLikeData()!=nil
+   switch node.Kind { case ast.KindClassDeclaration,ast.KindClassExpression,ast.KindInterfaceDeclaration,ast.KindTypeAliasDeclaration,ast.KindJSTypeAliasDeclaration,ast.KindJSDocTemplateTag: supported=true }
+   if !supported {continue}
+
+   if os.Args[1] == "--coverage" { counts := coverage[row.Rule]; if len(counts)==0 { counts=[]int{0,0} }; counts[0]++; counts[1]+=len(cfg.AdamicTypeParameterCalls(node));coverage[row.Rule]=counts;continue }
+   if os.Args[1] == "--want" {
+    calls:=cfg.AdamicTypeParameterCalls(node)
+    fmt.Print(len(calls)); for _, call := range calls {fmt.Printf("|%d",ids[call])};fmt.Println()
+   } else {
+    expressions:=[]parameterFact{}
+    for _, typeNode:=range node.TypeParameters() {
+     param:=typeNode.AsTypeParameterDeclaration()
+     if param==nil {continue}
+     expressions=append(expressions,parameterFact{ids[param.Constraint],ids[param.DefaultType]})
+    }
+    facts=append(facts,expressions)
+   }
+  }
+ }
+ if os.Args[1] == "--coverage" { if err:=json.NewEncoder(os.Stdout).Encode(coverage);err!=nil {panic(err)};return }
+ if os.Args[1] != "--want" { if err:=json.NewEncoder(os.Stdout).Encode(facts);err!=nil {panic(err)} }
+}

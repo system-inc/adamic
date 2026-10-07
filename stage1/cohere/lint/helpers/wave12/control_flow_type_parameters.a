@@ -1,0 +1,12 @@
+// Go Builder.typeParameters delegates constraint then default, including absent expressions.
+export interface TypeParameter<E> {
+    readonly constraint: E;
+    readonly defaultType: E;
+}
+export interface TypeParameterizedNode<E> { readonly typeParameters: readonly TypeParameter<E>[]; }
+export function typeParameters<E>(node: TypeParameterizedNode<E>, visitExpression: (expression: E) => void): void {
+    for(const parameter of node.typeParameters) {
+        visitExpression(parameter.constraint);
+        visitExpression(parameter.defaultType);
+    }
+}

@@ -1,0 +1,20 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { typeParameters, type TypeParameter } from './control_flow_type_parameters.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const item of json.node(root).children) {
+    const entries: TypeParameter<number>[] = [];
+    for(const parameter of json.node(item).children) {
+        entries.push({constraint: json.node(json.field(parameter, 'constraint')).number,
+            defaultType: json.node(json.field(parameter, 'defaultType')).number});
+    }
+    const observed: number[] = [];
+    typeParameters({typeParameters: entries}, (expression: number): void => { observed.push(expression); });
+    let line = `${observed.length}`;
+    for(const expression of observed) { line += `|${expression}`; }
+    console.log(line);
+}
