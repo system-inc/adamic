@@ -18,15 +18,19 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return value, nil
 	}
 	source := l.checker.GetTypeAtLocation(as.Expression)
 	target := l.checker.GetTypeAtLocation(node)
 	// An object literal's type is fresh, and a fresh type is held to excess properties, so { name, age }
 	// as Named would read as not assignable. Its widened type isn't fresh; its own keeps the literal
-	// fields a discriminated union needs. Either one assignable makes the cast an upcast.
+	// fields a discriminated union needs. Either assignable makes an upcast candidate; the sound
+	// relation below still has to prove its writable slots, function views and nominal ancestry.
 	if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+		if err := l.provenRelation(node, as.Expression, target); err != nil {
+			return nil, err
+		}
 		return value, nil
 	}
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: "narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"}

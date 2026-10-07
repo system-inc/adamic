@@ -37,6 +37,7 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
@@ -217,6 +218,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_positions.a", true, false},
 	{"internal/oracle/testdata/long_literals.a", true, false},
 	{"internal/oracle/testdata/class_layouts.a", true, false},
+	{"internal/oracle/testdata/inherited_static_field_read.a", true, false},
 	{"internal/oracle/testdata/ascii_scan.a", true, false},
 	{"internal/oracle/testdata/size_class_churn.a", true, false},
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands

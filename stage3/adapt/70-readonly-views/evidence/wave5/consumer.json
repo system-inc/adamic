@@ -1,0 +1,16 @@
+{
+  "consumer": "import type * as ts from './published';\ntype View = NonNullable<Parameters<typeof ts.setTextRange>[1]>;\nfunction adjust(view: View): void { view.pos = 1; view.end = 2; }\nvoid adjust;\n",
+  "before": [],
+  "after": [
+    {
+      "code": 2540,
+      "where": "consumer.ts:3:42",
+      "message": "Cannot assign to 'pos' because it is a read-only property."
+    },
+    {
+      "code": 2540,
+      "where": "consumer.ts:3:56",
+      "message": "Cannot assign to 'end' because it is a read-only property."
+    }
+  ]
+}
