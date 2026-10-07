@@ -20,6 +20,7 @@ type Case struct {
 	Rule  string `json:",omitempty"`
 	File  string `json:",omitempty"`
 	Value string
+	Math  bool `json:",omitempty"`
 }
 type Corpus struct {
 	Spaces     []int
@@ -43,7 +44,7 @@ func written(value string) string {
 	return b.String()
 }
 func main() {
-	if os.Args[1] == "--generate" || (os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" || os.Args[1] == "--generate-vector") {
+	if os.Args[1] == "--generate" || (os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" || os.Args[1] == "--generate-vector" || os.Args[1] == "--generate-fraction") {
 		data, err := os.ReadFile(os.Args[2])
 		if err != nil {
 			panic(err)
@@ -86,7 +87,7 @@ func main() {
 				continue
 			}
 			prefix := " "
-			if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" || os.Args[1] == "--generate-vector" {
+			if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" || os.Args[1] == "--generate-vector" || os.Args[1] == "--generate-fraction" {
 				prefix = "1"
 			}
 			corpus.Cases = append(corpus.Cases, Case{Value: prefix + string(point) + "X"})
@@ -95,7 +96,7 @@ func main() {
 			corpus.Cases = append(corpus.Cases, Case{Value: value})
 		}
 
-		if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" || os.Args[1] == "--generate-vector" {
+		if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" || os.Args[1] == "--generate-vector" || os.Args[1] == "--generate-fraction" {
 			var words func(string, int)
 			words = func(word string, depth int) {
 				corpus.Cases = append(corpus.Cases, Case{Value: word})
@@ -134,6 +135,38 @@ func main() {
 				corpus.Cases = append(corpus.Cases, Case{Value: value})
 			}
 		}
+		if os.Args[1] == "--generate-fraction" {
+			for point := rune(0); point <= 65535; point++ {
+				if point >= 0xd800 && point <= 0xdfff {
+					continue
+				}
+				corpus.Cases = append(corpus.Cases, Case{Value: "1" + string(point) + "/2"}, Case{Value: "1/" + string(point) + "2"})
+			}
+			numbers := []string{"0", "1", "-1", "+.5", ".5", "5.", "1e", "1e+", "1e2", "1e-2", "é"}
+			for _, a := range numbers {
+				for _, b := range numbers {
+					for _, before := range []string{"", " ", "\t", "\ufeff", "\u00a0", "\u200b"} {
+						for _, after := range []string{"", " ", "\t", "\ufeff", "\u00a0", "\u200b"} {
+							corpus.Cases = append(corpus.Cases, Case{Value: a + before + "/" + after + b})
+						}
+					}
+				}
+			}
+			for _, function := range collapse.Wave104MathFunctions() {
+				for _, prefix := range []string{"", "1/2 ", "X"} {
+					for _, suffix := range []string{"(", "(1)", "(1)/"} {
+						corpus.Cases = append(corpus.Cases, Case{Value: prefix + function + suffix})
+					}
+				}
+				corpus.Cases = append(corpus.Cases, Case{Value: strings.ToUpper(function) + "(1)"})
+			}
+			for _, value := range []string{"1/", "/2", "1/2", " 1/2", "1/2 ", "1/2px", "1/2\x00", "1/2😀", "1/2\n", "1/2e+"} {
+				corpus.Cases = append(corpus.Cases, Case{Value: value})
+			}
+			for i := range corpus.Cases {
+				corpus.Cases[i].Math = collapse.Wave104Math(corpus.Cases[i].Value)
+			}
+		}
 		if os.Args[1] == "--generate-suffix" {
 			corpus.SuffixSets = [][]string{nil, {}, {""}, {"%"}, {"px"}, {"em"}, {"deg", "rad"}, {"", "px", "em", "%"}, {"x", "X"}, {"é", "😀", "\u0000"}, {"PX", "EM"}, {"px", "px"}}
 		}
@@ -147,7 +180,7 @@ func main() {
 		return
 	}
 	input := os.Args[1]
-	if input == "--scan" || input == "--suffix" || input == "--vector" {
+	if input == "--scan" || input == "--suffix" || input == "--vector" || input == "--fraction" {
 		input = os.Args[2]
 	}
 	data, err := os.ReadFile(input)
@@ -160,6 +193,20 @@ func main() {
 	}
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
+	if os.Args[1] == "--fraction" {
+		for i, c := range corpus.Cases {
+			result, trace := collapse.Wave104Fraction(c.Value)
+			fmt.Fprintf(out, "%d\t%t\t%d\t", i, result, len(trace))
+			for j, arg := range trace {
+				if j > 0 {
+					fmt.Fprint(out, "\t")
+				}
+				fmt.Fprint(out, written(arg))
+			}
+			fmt.Fprintln(out)
+		}
+		return
+	}
 	if os.Args[1] == "--vector" {
 		for i, c := range corpus.Cases {
 			result, trace := collapse.Wave104Vector(c.Value)

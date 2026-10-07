@@ -142,7 +142,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -334,7 +335,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFamilyName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFollowedByWhitespace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFontStretchPercentage",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isGenericName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
@@ -548,7 +548,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -686,7 +687,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFamilyName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFollowedByWhitespace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFontStretchPercentage",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isGenericName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
@@ -756,7 +756,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -916,7 +917,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isEscapeTerminator",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFamilyName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFollowedByWhitespace",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isGenericName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
@@ -984,7 +984,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -1125,7 +1126,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFamilyName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFollowedByWhitespace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFontStretchPercentage",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isGenericName",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isIgnoredThemeKey",
@@ -1194,7 +1194,8 @@
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
-    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction"
   ],
-  "dependency_removals": 28
+  "dependency_removals": 32
 }

@@ -1,0 +1,13 @@
+// Go's anchored ratio grammar, including its math-function short circuit.
+// Numeric prefixes are ASCII; trim and math recognition are explicit dependencies.
+export function isFraction(value: string, hasMathFunction: (value: string) => boolean, scanNumber: (value: string) => number, trimLeadingJavaScriptSpace: (value: string) => string): boolean {
+    if(hasMathFunction(value)) { return true; }
+    const consumed = scanNumber(value);
+    if(consumed === 0) { return false; }
+    let rest = value.slice(consumed);
+    rest = trimLeadingJavaScriptSpace(rest);
+    if(!rest.startsWith('/')) { return false; }
+    rest = trimLeadingJavaScriptSpace(rest.slice(1));
+    const denominator = scanNumber(rest);
+    return denominator > 0 && denominator === rest.length;
+}

@@ -102,9 +102,13 @@ func buildHelper(t *testing.T, helper, main, from, to string) (string, string, s
 			nodes := filepath.Join(repository(t), "stage1/typescript/parser/nodes.ts")
 			text = strings.Replace(text, "../options_json.ts", filepath.ToSlash(options), 1)
 			text = strings.Replace(text, "../../../../typescript/parser/nodes.ts", filepath.ToSlash(nodes), 1)
-			if main == "suffix_main.a" || main == "vector_main.a" {
+			if main == "suffix_main.a" || main == "vector_main.a" || main == "fraction_main.a" {
 				scanner := filepath.Join(repository(t), "stage1/cohere/lint/helpers/from_wave1_04/scan_number.a")
 				text = strings.Replace(text, "./scan_number.a", filepath.ToSlash(scanner), 1)
+			}
+			if main == "fraction_main.a" {
+				trimmer := filepath.Join(repository(t), "stage1/cohere/lint/helpers/from_wave1_04/trim_leading_javascript_space.a")
+				text = strings.Replace(text, "./trim_leading_javascript_space.a", filepath.ToSlash(trimmer), 1)
 			}
 		}
 		if err = os.WriteFile(filepath.Join(folder, file), []byte(text), 0644); err != nil {

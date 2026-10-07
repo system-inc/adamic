@@ -1,0 +1,29 @@
+=== RUN   TestFractionMatchesGo
+    fraction_test.go:46: 233079 actual Go comparisons across four consumer fixture domains, numeric ratios and all BMP scalar slash-adjacent points
+    fraction_test.go:54: 12044898 exact Go bytes include result and ordered math, scanner and trim calls on three targets
+--- PASS: TestFractionMatchesGo (13.77s)
+=== RUN   TestFractionMutants
+    fraction_test.go:60: 233079 actual Go comparisons across four consumer fixture domains, numeric ratios and all BMP scalar slash-adjacent points
+=== RUN   TestFractionMutants/ignore_math_functions
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught ignore math functions on source Node: line 1 got="0\tfalse\t1\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught ignore math functions on emitted JavaScript: line 1 got="0\tfalse\t1\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught ignore math functions on ASan/UBSan native: line 1 got="0\tfalse\t1\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+=== RUN   TestFractionMutants/accept_an_empty_denominator
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught accept an empty denominator on source Node: line 233070 got="233069\ttrue\t5\tM:1/\tN:1/\tT:/\tT:\tN:" Go="233069\tfalse\t5\tM:1/\tN:1/\tT:/\tT:\tN:"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught accept an empty denominator on emitted JavaScript: line 233070 got="233069\ttrue\t5\tM:1/\tN:1/\tT:/\tT:\tN:" Go="233069\tfalse\t5\tM:1/\tN:1/\tT:/\tT:\tN:"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught accept an empty denominator on ASan/UBSan native: line 233070 got="233069\ttrue\t5\tM:1/\tN:1/\tT:/\tT:\tN:" Go="233069\tfalse\t5\tM:1/\tN:1/\tT:/\tT:\tN:"
+=== RUN   TestFractionMutants/omit_numerator_whitespace_trim
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught omit numerator whitespace trim on ASan/UBSan native: line 347 got="346\tfalse\t2\tM:1\\u0000X\tN:1\\u0000X" Go="346\tfalse\t3\tM:1\\u0000X\tN:1\\u0000X\tT:\\u0000X"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught omit numerator whitespace trim on source Node: line 347 got="346\tfalse\t2\tM:1\\u0000X\tN:1\\u0000X" Go="346\tfalse\t3\tM:1\\u0000X\tN:1\\u0000X\tT:\\u0000X"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught omit numerator whitespace trim on emitted JavaScript: line 347 got="346\tfalse\t2\tM:1\\u0000X\tN:1\\u0000X" Go="346\tfalse\t3\tM:1\\u0000X\tN:1\\u0000X\tT:\\u0000X"
+=== RUN   TestFractionMutants/scan_before_the_math_short_circuit
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught scan before the math short circuit on source Node: line 1 got="0\tfalse\t3\tN:items-center\\u000a    flex\\u000a    gap-2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught scan before the math short circuit on emitted JavaScript: line 1 got="0\tfalse\t3\tN:items-center\\u000a    flex\\u000a    gap-2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught scan before the math short circuit on ASan/UBSan native: line 1 got="0\tfalse\t3\tN:items-center\\u000a    flex\\u000a    gap-2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+--- PASS: TestFractionMutants (50.42s)
+    --- PASS: TestFractionMutants/ignore_math_functions (10.91s)
+    --- PASS: TestFractionMutants/accept_an_empty_denominator (12.39s)
+    --- PASS: TestFractionMutants/omit_numerator_whitespace_trim (11.47s)
+    --- PASS: TestFractionMutants/scan_before_the_math_short_circuit (14.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_04	64.204s

@@ -1,0 +1,36 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { scanNumber } from './scan_number.a';
+import { isFraction } from './is_fraction.a';
+import { trimLeadingJavaScriptSpace } from './trim_leading_javascript_space.a';
+const args = programArguments();
+const data = readTextFile(args[0] ?? panic('usage: cases.json'));
+if(data.kind === 'Error') { panic(data.message); }
+const json = new OptionsJson(data.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+const digits: number[] = [];
+for(const node of json.node(json.field(root,'Digits')).children) { digits.push(Number(json.node(node).text)); }
+const isDigit = (point: number): boolean => {
+    for(const digit of digits) { if(point === digit) { return true; } }
+    return false;
+};
+const spaces: number[] = [];
+for(const node of json.node(json.field(root,'Spaces')).children) { spaces.push(Number(json.node(node).text)); }
+const isJavaScriptSpace = (point: number): boolean => {
+    for(const space of spaces) { if(point === space) { return true; } }
+    return false;
+};
+let ordinal = 0;
+for(const row of json.node(json.field(root,'Cases')).children) {
+    const value = json.node(json.field(row,'Value')).text;
+    const trace: string[] = [];
+    const scanner = (input: string): number => { trace.push('N:' + input); return scanNumber(input,isDigit); };
+    const math = (input: string): boolean => { trace.push('M:' + input); const fact = json.field(row,'Math'); return fact >= 0 && json.node(fact).text === 'true'; };
+    const trim = (input: string): string => { trace.push('T:' + input); return trimLeadingJavaScriptSpace(input,isJavaScriptSpace); };
+    const result = isFraction(value,math,scanner,trim);
+    const argumentsWritten: string[] = [];
+    for(const input of trace) { argumentsWritten.push(written(input)); }
+    console.log(`${ordinal}\t${result}\t${trace.length}\t${argumentsWritten.join('\t')}`);
+    ordinal++;
+}

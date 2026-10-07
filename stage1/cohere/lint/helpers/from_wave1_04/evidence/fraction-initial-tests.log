@@ -1,0 +1,24 @@
+=== RUN   TestFractionMatchesGo
+    fraction_test.go:46: 233079 actual Go comparisons across four consumer fixture domains, numeric ratios and all BMP scalar slash-adjacent points
+    fraction_test.go:49: node: exit status 70 stderr=adamic: panic: missing option value
+--- FAIL: TestFractionMatchesGo (5.71s)
+=== RUN   TestFractionMutants
+    fraction_test.go:60: 233079 actual Go comparisons across four consumer fixture domains, numeric ratios and all BMP scalar slash-adjacent points
+=== RUN   TestFractionMutants/ignore_math_functions
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught ignore math functions on source Node: line 1 got="0\tfalse\t1\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught ignore math functions on emitted JavaScript: line 1 got="0\tfalse\t1\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught ignore math functions on ASan/UBSan native: line 1 got="0\tfalse\t1\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+=== RUN   TestFractionMutants/accept_an_empty_denominator
+    fraction_test.go:70: node: exit status 70 stderr=adamic: panic: missing option value
+=== RUN   TestFractionMutants/omit_numerator_whitespace_trim
+    fraction_test.go:70: node: exit status 70 stderr=adamic: panic: missing option value
+=== RUN   TestFractionMutants/scan_before_the_math_short_circuit
+    fraction_test.go:70: node: exit status 70 stderr=adamic: panic: missing option value
+--- FAIL: TestFractionMutants (15.39s)
+    --- PASS: TestFractionMutants/ignore_math_functions (11.17s)
+    --- FAIL: TestFractionMutants/accept_an_empty_denominator (1.04s)
+    --- FAIL: TestFractionMutants/omit_numerator_whitespace_trim (1.07s)
+    --- FAIL: TestFractionMutants/scan_before_the_math_short_circuit (1.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_04	21.116s
+FAIL

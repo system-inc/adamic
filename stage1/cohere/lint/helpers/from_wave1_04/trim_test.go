@@ -28,10 +28,30 @@ func trimOracle(t *testing.T) string {
 		t.Fatal("Go scanner observer anchor changed")
 	}
 	observed := filepath.Join(t.TempDir(), "data_type.go")
-	if err = os.WriteFile(observed, []byte(strings.Replace(string(source), sourceAnchor, sourceAnchor+"\n if wave104ObserveScan { wave104ScanTrace=append(wave104ScanTrace,value) }", 1)), 0644); err != nil {
+	if err = os.WriteFile(observed, []byte(strings.Replace(string(source), sourceAnchor, sourceAnchor+"\n if wave104ObserveScan { wave104ScanTrace=append(wave104ScanTrace,value) }; if wave104ObserveFraction { wave104FractionTrace=append(wave104FractionTrace,\"N:\"+value) }", 1)), 0644); err != nil {
 		t.Fatal(err)
 	}
 	replacements[sourcePath] = observed
+	segmentPath := filepath.Join(root, "internal/lint/rules/tailwind/collapse/segment.go")
+	segment, err := os.ReadFile(segmentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	segmentText := string(segment)
+	for _, hook := range []struct{ anchor, body string }{
+		{"func hasMathFunction(input string) bool {", `if wave104ObserveFraction {wave104FractionTrace=append(wave104FractionTrace,"M:"+input)}`},
+		{"func trimLeadingJavaScriptSpace(value string) string {", `if wave104ObserveFraction {wave104FractionTrace=append(wave104FractionTrace,"T:"+value)}`},
+	} {
+		if strings.Count(segmentText, hook.anchor) != 1 {
+			t.Fatal("Go dependency observer anchor changed")
+		}
+		segmentText = strings.Replace(segmentText, hook.anchor, hook.anchor+"\n"+hook.body, 1)
+	}
+	observedSegment := filepath.Join(t.TempDir(), "segment.go")
+	if err = os.WriteFile(observedSegment, []byte(segmentText), 0644); err != nil {
+		t.Fatal(err)
+	}
+	replacements[segmentPath] = observedSegment
 	data, err := json.Marshal(map[string]any{"Replace": replacements})
 	if err != nil {
 		t.Fatal(err)

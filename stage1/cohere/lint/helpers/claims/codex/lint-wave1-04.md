@@ -142,3 +142,5 @@ Delivery 6: isVector implemented and tested. 170,369 cases, 4,378,863 exact Go r
    four consumer fixture domains, Unicode and numeric grammar boundaries on Node,
    emitted JavaScript and sanitized native, with compiling semantic mutants.
    One helper per .a file. This claim is pushed before code.
+
+Delivery 7: isFraction implemented and tested. 233,079 cases, 12,044,898 exact Go result/dependency-order bytes, four compiling mutants caught on three targets. Complete seven-helper gate PASS 191.497s, all twenty mutants; vet PASS. See from_wave1_04/FRACTION_REPORT.md. No additional helper is claimed.

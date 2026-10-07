@@ -40,3 +40,16 @@ func Wave104Vector(value string) (bool, []string) {
 	wave104ObserveScan = false
 	return result, wave104ScanTrace
 }
+
+var wave104ObserveFraction bool
+var wave104FractionTrace []string
+
+func Wave104Fraction(value string) (bool, []string) {
+	wave104FractionTrace = nil
+	wave104ObserveFraction = true
+	result := isFraction(value)
+	wave104ObserveFraction = false
+	return result, wave104FractionTrace
+}
+func Wave104Math(value string) bool  { return hasMathFunction(value) }
+func Wave104MathFunctions() []string { return append([]string(nil), mathFunctions...) }
