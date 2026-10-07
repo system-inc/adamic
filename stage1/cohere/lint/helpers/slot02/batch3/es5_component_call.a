@@ -1,0 +1,29 @@
+import { panic } from 'adamic';
+import type { HelperNode } from '../../slot02_ast.a';
+import { isCreateClassName } from './create_class_name.a';
+
+export function isEs5ComponentCall(nodes: readonly HelperNode[], node: number,
+    isIdentifierNamed: (node: number, name: string) => boolean): boolean {
+    if (node === -1) { return false; }
+    const call = nodes[node] ?? panic('missing call node');
+    if (call.kind !== 'CallExpression') { return false; }
+    let callee = call.expression;
+    let steps = 0;
+    while (callee !== -1) {
+        const current = nodes[callee] ?? panic('missing callee');
+        if (current.kind !== 'ParenthesizedExpression') { break; }
+        callee = current.expression;
+        steps++;
+        if (steps > nodes.length) { panic('cyclic callee projection'); }
+    }
+    // Go SkipParentheses also panics on a missing expression. Valid parser
+    // call expressions provide a callee; malformed projections must not decline.
+    if (callee === -1) { panic('missing call expression'); }
+    const expression = nodes[callee] ?? panic('missing callee');
+    if (expression.kind === 'Identifier') { return isCreateClassName(expression.text); }
+    if (expression.kind !== 'PropertyAccessExpression') { return false; }
+    if (!isIdentifierNamed(expression.expression, 'React')) { return false; }
+    if (expression.name === -1) { return false; }
+    const name = nodes[expression.name] ?? panic('missing factory name');
+    return name.kind === 'Identifier' && isCreateClassName(name.text);
+}

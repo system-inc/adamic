@@ -1,0 +1,12 @@
+// Exact list in Go collapse/segment.go, in the same order. This is membership,
+// not the broader hasMathFunction substring probe.
+const mathFunctions: readonly string[] = [
+    'calc', 'min', 'max', 'clamp', 'mod', 'rem', 'sin', 'cos', 'tan',
+    'asin', 'acos', 'atan', 'atan2', 'pow', 'sqrt', 'hypot', 'log', 'exp', 'round',
+];
+export function isMathFunctionName(name: string): boolean {
+    for (const functionName of mathFunctions) {
+        if (functionName === name) { return true; }
+    }
+    return false;
+}

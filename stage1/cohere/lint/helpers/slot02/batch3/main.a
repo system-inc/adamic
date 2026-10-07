@@ -1,0 +1,38 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { HelperNode } from '../../slot02_ast.a';
+interface FactoryNode extends HelperNode { readonly reactIdentifier: boolean; }
+import { isCreateClassName } from './create_class_name.a';
+import { isEs5ComponentCall } from './es5_component_call.a';
+import { isMathFunctionName } from './math_function_name.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus path'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function number(index: number, field: string): number { return json.node(json.field(index, field)).number; }
+const nodes: FactoryNode[] = [];
+for (const index of json.node(json.field(root, 'Nodes')).children) {
+    nodes.push({kind: text(index, 'Kind'), text: text(index, 'Text'), expression: number(index, 'Expression'), name: number(index, 'Name'), reactIdentifier: json.node(json.field(index, 'ReactIdentifier')).text === 'true'});
+}
+for (const index of json.node(json.field(root, 'Names')).children) { console.log(`name:${isCreateClassName(json.node(index).text)}`); }
+let identifierCalls = 0;
+let identifierNode = -1;
+let identifierWanted = '';
+function isIdentifierNamed(node: number, wanted: string): boolean {
+    identifierCalls++;
+    identifierNode = node;
+    identifierWanted = wanted;
+    if (node === -1) { panic('missing namespace receiver'); }
+    return wanted === 'React' && (nodes[node] ?? panic('receiver projection')).reactIdentifier;
+}
+for (let id = -1; id < nodes.length; id++) {
+    identifierCalls = 0;
+    identifierNode = -1;
+    identifierWanted = '';
+    const answer = isEs5ComponentCall(nodes, id, isIdentifierNamed);
+    console.log(`call:${answer}:${identifierCalls}:${identifierNode}:${identifierWanted}`);
+}
+for (const index of json.node(json.field(root, 'MathNames')).children) { console.log(`math:${isMathFunctionName(json.node(index).text)}`); }
