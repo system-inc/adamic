@@ -361,6 +361,18 @@ static void free_one(void *value) {
 		free(array->elements);
 		break;
 	}
+	case adamic_kind_typed_array: {
+		adamic_typed_array *array = value;
+		if (array->owner != NULL) {
+			let_go(array->owner);
+		} else {
+			free(array->data);
+		}
+		break;
+	}
+	case adamic_kind_typed_array_iterator:
+		let_go(((adamic_typed_array_iterator *)value)->array);
+		break;
 	case adamic_kind_map:
 		adamic_map_free_children(value, let_go);
 		break;

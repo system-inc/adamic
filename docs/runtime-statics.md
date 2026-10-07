@@ -265,6 +265,7 @@ A newly added runtime C source or header requires review even when it introduces
 - `runtime-file:tsan_test.h`
 - `runtime-file:tsgo.c`
 - `runtime-file:tsgo_runtime.h`
+- `runtime-file:typed_array.c`
 - `runtime-file:union.c`
 - `runtime-file:utf8.c`
 - `runtime-file:weak.c`
@@ -417,3 +418,13 @@ slab_quarantine.c compiles its storage only in a sanitized build with ADAMIC_SLA
 |---|---:|---|---|
 | `slab_quarantine.c:held:1` | 49 | The thread's ring of held slots, calloc'd on its first slab free; adamic_slab_quarantine writes entries, adamic_slab_quarantine_drain gives them back and frees the ring at thread end | Thread-local; only the owning thread reads or writes it, and the slots it names are on no free list or remote list until given back |
 | `slab_quarantine.c:next:1` | 50 | Index of the oldest held slot and of the next entry; written by adamic_slab_quarantine, reset by adamic_slab_quarantine_drain | Thread-local |
+
+## Typed arrays, October 7, 2026
+
+typed_array.c adds no mutable static runtime storage. Uint16Array uses the existing
+counted typed-array header and owner pattern, with a two-byte `uint16_t` buffer
+allocated per owning array. A subarray retains its ultimate owner and points
+into that buffer. The generic iterator retains the array. Existing heap freeing
+releases owners, buffers and iterators; no new global cache or static counter is
+introduced. This entry records this extension, not an inventory of earlier units.
+
