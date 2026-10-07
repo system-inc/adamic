@@ -40,7 +40,9 @@ func TestGraphAllocationClassificationGapIsLeakOnly(t *testing.T) {
 			if difference := disagreement(node, normal); difference != "" {
 				t.Fatalf("ASan/UBSan: %s: %d %s", difference, normal.exitCode, normal.stderr)
 			}
-			report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+			// All source frames have dropped their owners. Ignore stale machine
+			// stack/register words that can conservatively hide these known leaks.
+			report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1", "LSAN_OPTIONS=use_stacks=0:use_registers=0"}, binary)
 			diagnostics := string(report.stderr)
 			if report.exitCode == 0 || !strings.Contains(diagnostics, "LeakSanitizer: detected memory leaks") || strings.Contains(diagnostics, "heap-use-after-free") || strings.Contains(diagnostics, "runtime error:") || string(report.stdout) != string(node.stdout) {
 				t.Fatalf("want leak only, got %d %s", report.exitCode, diagnostics)

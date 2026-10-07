@@ -390,8 +390,17 @@ __attribute__((noinline)) static void release_last(void *value) {
 void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
+	// A member reaching zero does not mean its region is unowned. The slow
+	// destruction path must only receive the region's last outside release.
+	if (adamic_graph_is(heap)) {
+		if (adamic_graph_release_last(heap)) { release_last(heap); }
+		return;
+	}
 	if (heap == NULL || heap->references == 0 || --heap->references != 0) {
 		return;
 	}
-	release_last(value);
+	release_last(heap);
 }

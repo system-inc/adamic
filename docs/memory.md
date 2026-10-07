@@ -1156,6 +1156,133 @@ fresh 82.054s. The merged vet and review formatting logs are empty, and
 `git diff --check` passed. These are the completed scoped gates; the full
 repository gate remains the separate timed-out attempt described above.
 
+### Allocation classification gap found in c3074cc
+
+The initial allocation decision can miss a graph view that the cycle finder
+later selects. Three accepted, checked-in witnesses establish the gap:
+
+| Shape under internal/oracle/testdata/graph_regions | What happens | Counts before flow classification | LeakSanitizer observed |
+|---|---|---|---|
+| classification_return.a | An inferred function returns a literal; its caller uses Link and writes a self edge | 3 allocations, 1 free | 56 bytes, 1 allocation |
+| classification_conditional.a | A conditional chooses one literal; a Link view writes a self edge | 3 allocations, 1 free | 122 bytes, 2 allocations |
+| classification_mixed.a | A returned counted literal and an explicitly graph-allocated Link point both ways | 8 allocations, 4 frees | 260 bytes, 4 allocations |
+
+Each builder returns an outside-held node to another frame, which reads it after
+the builder's locals have gone. Source on Node and the JavaScript backend agree
+with native. With ASan leak detection disabled and UBSan stopping on error, all
+three exit zero with no diagnostic. Enabling LeakSanitizer reports only leaks.
+The lower test inspects the allocation IR: the returned literal and both
+conditional branches lack a selected allocation identity; the mixed witness
+has one counted literal and one graph literal. This is a real classification
+miss, not a mutant. The standalone known-gap tests deliberately are not in the
+ordinary leak-clean oracle fixture registry until flow classification fixes them.
+LeakSanitizer can conservatively retain a string reachable through a stale stack
+word; allocation/free counts independently show the unfreed values.
+
+With the runtime dispatch invariant restored below, these shapes cannot free
+early. A counted self edge retains the ordinary object, so dropping outside
+locals leaves its own edge's count. In the mixed case, counted-to-graph stores
+retain the actual graph member's outside count, while graph-to-counted stores
+retain the counted member. Both counts therefore stay positive after the
+builder and reader drop their locals. The graph side cannot enter its outside
+release pass while that boundary reference exists. Every actual graph-to-graph
+edge first merges regions and carries no count; all other strong edges carry a
+count decided from the actual header, independent of the structural view.
+The final-reference guard also refuses destruction with a nonzero region count.
+This is a lifetime argument under those ownership invariants, not a universal
+proof that the static classifier cannot miss another shape.
+
+The compiler selected flow-based classification for the next build. Allocation
+sites will be followed through returns, conditionals and assignments into graph
+slots and made graph before publication. Runtime promotion of an aliased
+counted allocation is not being implemented. That continuation is preserved
+separately while this urgent area release repair lands.
+
+### Area runtime release repair on 14504c7
+
+Merging graph regions through c3074cc onto area/runtime 14504c7 reproduced all
+five named runtime failures. The wrong path was public adamic_release in
+heap.c: the area's noinline destruction optimization decremented the object's
+own count and called release_last directly. It neither decremented the region's
+outside count nor resolved an interior cell to its owning environment. free_one
+correctly recognized the graph header and its region-free guard then panicked
+with `compiler bug: freeing a graph still owned outside`.
+
+The repair restores owner resolution and adamic_graph_release_last before
+entering the noinline helper, and queues the resolved owner. The helper still
+runs only on a true final release; its iterative drain and empty-drain saving
+remain. The fetched 14504c7 adamic.h declares adamic_release; it has no inline
+retain/release implementation to repair. Header inline field/index accessors
+perform no reference-count updates.
+
+The ownership-path audit found these routes:
+
+| Path | Dispatch and lifetime decision |
+|---|---|
+| Public retain | Resolves interior cell owner, then graph retain or ordinary count |
+| Public release, repaired | Resolves owner, then region last-release decision or ordinary count |
+| release_last | Receives only a proven final owner, queues and drains iteratively |
+| Child releases through let_go | Resolves owner and uses region last-release before queuing |
+| Queue destruction through free_one | Graph free with outside-release pass, or counted children then storage |
+| Graph storage free | Removes the graph prefix only after region destruction; slab flag is masked |
+| String views and parent release | View creation retains its owner; string destruction releases parent through let_go |
+| Closure cells and environment release | Interior cells resolve to environment; environment children use let_go or the graph outside pass |
+| Weak | Handle counting remains ordinary; target is hidden and never retained |
+
+The graph-check mutant disables only the repaired public-release graph branch;
+all five TestGraph tests fail with the original panic. The cell-owner mutant
+disables only public-release owner resolution; TestGraphClosureEnvironment
+reports two allocations and zero frees instead of two and two. Both mutants
+were restored. Runner: /tmp/graph-regions-area-mutants.py; outputs:
+/tmp/graph-regions-area-mutants-results.log and the per-mutant
+/tmp/graph-regions-area-mutant-graph-check.log and
+/tmp/graph-regions-area-mutant-cell-owner.log. No compiler emission file changed
+in this repair.
+
+The pre-repair runtime test command failed in 12.586s; after repair the same
+command passed in 30.733s, including ASan, leak checks, counted teardown and the
+million-node runtime measurement. Logs and commands:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native -run '^TestGraph' -count=1 -v > /tmp/graph-regions-area-before.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native -run '^TestGraph' -count=1 -v > /tmp/graph-regions-area-fixed.log 2>&1
+python3 /tmp/graph-regions-area-mutants.py > /tmp/graph-regions-area-mutants-results.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-area-counts-update.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(regions|weak|fresh|nested|string_views)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestGraphAllocationClassificationGapIsLeakOnly|TestWeakRegionReview|TestNested.*' -count=1 -v -timeout 30m > /tmp/graph-regions-area-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-area-packages.log 2>&1
+go vet ./... > /tmp/graph-regions-area-vet.log 2>&1
+```
+
+The counts update passed in 124.418s. Against the graph branch for graph/fresh
+rows and the area branch for ordinary rows, 38 rows changed and every changed
+number dropped; no column rose. Ten graph fixture rows drop retains/releases;
+22 fresh probes, three nested fixtures and three proven-relation fixtures also
+drop them. Allocations, frees, peak live values and graph region/merge counts
+are unchanged for those rows. Full per-row evidence is
+/tmp/graph-regions-area-counts-comparison.json. Other apparent differences from
+the older graph branch's ordinary string counts belong to the area's preexisting
+string-view and borrowing optimizations, so the area table is their baseline.
+Canonical fixture ordering accounts for the remaining counts-table diff.
+
+The first merged filtered oracle failed ten stale graph counts rows, all with
+lower retains/releases, and two known-gap LeakSanitizer expectations. Those two
+still had three allocations and one free, but stale stack/register words hid
+the allocations from conservative leak roots in the new release layout. Only
+these intentionally leaking probes now use
+`LSAN_OPTIONS=use_stacks=0:use_registers=0` at exit, after all source owners are
+dropped. Their ASan/UBSan comparison run is unchanged, and allocation counts
+independently require the leak. With these exit roots the return and conditional
+cases each report 122 leaked bytes in two allocations; the mixed case reports
+260 in four. The ordinary leak-clean oracle keeps its normal root policy.
+
+The final repaired area oracle passed in 96.279s with native hits 0, misses
+921 and Node hits 0, misses 244. It includes all graph sources, all 43 fresh
+probes, string-view and nested ownership regressions, the three known-gap
+probes, and the complete regenerated counts table. The final format and vet
+logs are empty and git diff --check passed. The full required-package command
+is an additional running check at this repair checkpoint; lower has passed
+in 85.138s. No full repository gate pass is claimed here.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
