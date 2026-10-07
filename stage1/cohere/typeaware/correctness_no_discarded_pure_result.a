@@ -1,0 +1,48 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { types } from './facts.ts';
+import { nodeDeclarations, report } from './wave_21_next_facts.a';
+const stringMethods = "at charAt charCodeAt codePointAt concat endsWith includes indexOf isWellFormed lastIndexOf match matchAll padEnd padStart replace replaceAll search slice split startsWith substr substring toLocaleLowerCase toLocaleUpperCase toLowerCase toString toUpperCase toWellFormed trim trimEnd trimLeft trimRight trimStart valueOf".split(' ');
+const arrayMethods = "at concat entries flat includes indexOf join keys lastIndexOf slice toReversed toSorted toSpliced values with".split(' ');
+const message = "This call computes a new value and changes nothing, and its result is thrown away, so the statement does nothing. Strings are immutable (`name.trim()` returns a trimmed copy and leaves `name` as it was), and these array methods return a new array or a value without touching the original (`list.concat(more)` does not add to `list`). Assign the result (`name = name.trim()`, `list = list.concat(more)`), use the mutating form (`list.push(...more)`), or delete the statement.";
+export class NoDiscardedPureResult {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    pure(index: number): boolean {
+        const name = this.rules.parser.node(index).text;
+        const declarations = nodeDeclarations(this.rules, index);
+        return declarations.length > 0 && declarations.every((d) => d.kind === 'MethodSignature' && d.owner === 'InterfaceDeclaration' && d.library &&
+            (d.ownerName === 'String' ? stringMethods.includes(name) : (d.ownerName === 'Array' || d.ownerName === 'ReadonlyArray') && arrayMethods.includes(name)));
+    }
+    callable(index: number): boolean {
+        const value = this.rules.skip(index);
+        const kind = this.rules.parser.node(value).kind;
+        if(kind === 'ArrowFunction' || kind === 'FunctionExpression') { return true; }
+        const facts = types(this.rules.ask(value, 'raw-shape'), 'raw-shape');
+        if(!facts.present || facts.roots.length === 0) { return true; }
+        for(const id of facts.parts(facts.root())) {
+            if((facts.type(id).flags & 3) !== 0) { return true; }
+            const f = new Frames(this.rules.ask(value, `call-count\n${id}`)); header(f, 'call-count');
+            const count = f.natural(); f.end(); if(count > 0) { return true; }
+        }
+        return false;
+    }
+    visit(index: number): void {
+        const call = this.rules.skip(this.rules.parser.node(index).children[0] ?? -1);
+        const node = this.rules.parser.node(call);
+        if(node.kind !== 'CallExpression') { return; }
+        const callee = this.rules.parser.node(this.rules.skip(node.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') { return; }
+        const name = callee.children[callee.children.length - 1] ?? -1;
+        if(this.rules.parser.node(name).kind !== 'Identifier' || !this.pure(name)) { return; }
+        for(const argument of node.children.slice(node.children.length - node.list)) {
+            if(this.callable(argument)) { return; }
+        }
+        report(this.rules, 'correctness-no-discarded-pure-result', 'discardedPureResult', message, call);
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            if(this.rules.parser.node(i).kind === 'ExpressionStatement') { this.visit(i); }
+        }
+    }
+}

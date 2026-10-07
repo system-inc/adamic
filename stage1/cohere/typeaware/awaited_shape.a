@@ -1,0 +1,6 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { types } from './facts.ts';
+export function awaitedShape(rules: Rules, index: number): Types {
+    return types(rules.ask(index, 'awaited-shape'), 'awaited-shape');
+}

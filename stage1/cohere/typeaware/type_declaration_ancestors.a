@@ -1,0 +1,34 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class AncestorFact {
+    readonly kind: string;
+    readonly path: string;
+    readonly pos: number;
+    readonly end: number;
+    readonly name: string;
+    readonly children: number;
+    readonly annotationKind: string;
+    readonly annotationPos: number;
+    readonly annotationEnd: number;
+    constructor(kind: string, path: string, pos: number, end: number, name: string, children: number, annotationKind: string, annotationPos: number, annotationEnd: number) {
+        this.kind = kind; this.path = path; this.pos = pos; this.end = end; this.name = name; this.children = children;
+        this.annotationKind = annotationKind; this.annotationPos = annotationPos; this.annotationEnd = annotationEnd;
+    }
+    identity(): string { return `${this.path}:${this.pos}:${this.end}`; }
+}
+export function typeDeclarationAncestors(rules: Rules, index: number, id: number): AncestorFact[][] {
+    const f = new Frames(rules.ask(index, `type-declaration-ancestors\n${id}`)); header(f, 'type-declaration-ancestors');
+    const result: AncestorFact[][] = []; const count = f.natural();
+    for(let i = 0; i < count; i++) {
+        const chain: AncestorFact[] = []; const length = f.natural();
+        for(let j = 0; j < length; j++) {
+            const kind = f.field(); const path = f.field(); const pos = f.natural(); const end = f.natural();
+            const name = f.field(); const children = f.natural(); const annotated = f.yes();
+            let annotationKind = ''; let annotationPos = 0; let annotationEnd = 0;
+            if(annotated) { annotationKind = f.field(); annotationPos = f.natural(); annotationEnd = f.natural(); }
+            chain.push(new AncestorFact(kind, path, pos, end, name, children, annotationKind, annotationPos, annotationEnd));
+        }
+        result.push(chain);
+    }
+    f.end(); return result;
+}

@@ -1,0 +1,49 @@
+// Raw metadata decoders shared by the three continuation rules.
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { Diagnostic } from './diagnostic.ts';
+export class DeclarationFact {
+    readonly kind: string;
+    readonly owner: string;
+    readonly ownerName: string;
+    readonly library: boolean;
+    constructor(kind: string, owner: string, name: string, library: boolean) {
+        this.kind = kind; this.owner = owner; this.ownerName = name; this.library = library;
+    }
+}
+export function nodeDeclarations(rules: Rules, index: number): DeclarationFact[] {
+    const f = new Frames(rules.ask(index, 'node-symbol-details'));
+    header(f, 'node-symbol-details');
+    const result: DeclarationFact[] = [];
+    if(f.yes()) {
+        f.natural(); f.natural(); f.field();
+        const count = f.natural();
+        for(let i = 0; i < count; i++) {
+            f.field(); const kind = f.field(); f.natural(); f.natural(); f.yes();
+            const library = f.yes(); const owner = f.field(); const name = f.field(); f.natural(); f.natural();
+            const tags = f.natural();
+            for(let j = 0; j < tags; j++) { f.field(); f.field(); f.natural(); f.natural(); f.field(); }
+            const parameters = f.natural();
+            for(let j = 0; j < parameters; j++) { f.field(); }
+            result.push(new DeclarationFact(kind, owner, name, library));
+        }
+    }
+    f.end(); return result;
+}
+export function libraryType(rules: Rules, index: number, id: number, names: readonly string[]): boolean {
+    const f = new Frames(rules.ask(index, `type-origin\n${id}`)); header(f, 'type-origin');
+    let answer = false;
+    if(f.yes()) {
+        const name = f.field(); const count = f.natural();
+        for(let i = 0; i < count; i++) { f.field(); f.yes(); if(f.yes() && names.includes(name)) { answer = true; } }
+    }
+    f.end(); return answer;
+}
+export function literal(rules: Rules, index: number, id: number): string {
+    const f = new Frames(rules.ask(index, `literal-value\n${id}`)); header(f, 'literal-value');
+    f.field(); const value = f.field(); f.end(); return value;
+}
+export function report(rules: Rules, rule: string, id: string, message: string, index: number): void {
+    const node = rules.parser.node(index);
+    rules.findings.push(new Diagnostic(`nexus/${rule}`, id, message, rules.byte(rules.start(node)), rules.byte(node.end), ''));
+}

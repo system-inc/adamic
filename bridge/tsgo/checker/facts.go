@@ -203,6 +203,10 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "awaited-shape":
+		return p.awaitedShape(out, c, node, question)
+	case "type-declaration-ancestors":
+		return p.typeDeclarationAncestors(out, c, node, question)
 	case "enum-declarations":
 		return p.enumDeclarations(out, c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":

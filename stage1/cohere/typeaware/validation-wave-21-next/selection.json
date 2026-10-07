@@ -1,0 +1,1461 @@
+{
+  "origin_refs_fetched": 320,
+  "claims_before_selection": [
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-01",
+      "path": "stage1/cohere/typeaware/claims/wave-01.md",
+      "text": "# Type-aware wave 01\n\nBranch: codex/typeaware-wave-01.\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6.\n\nClaimed checker-dependent rules, in descending combined volume after excluding\nall 26 existing ports:\n\n1. nexus/correctness-no-implicit-return: 251 compiler, 0 repository.\n2. @typescript-eslint/no-deprecated: 238 compiler, 0 repository.\n3. no-else-return: 202 compiler, 0 repository.\n\nSelection uses VOLUME_REPORT.md's full checker-dependent counts in\nvalidation-volume/compiler-all.counts and repository-all.counts.\nAll origin branches were fetched and inspected for typeaware claims and existing\nstage1 implementations of these rule names. None were found; no candidate skipped.\nNo rule implementation was written before this claim commit was pushed.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-02",
+      "path": "stage1/cohere/typeaware/claims/wave-02.md",
+      "text": "# Type-aware wave 02\n\nBranch: `codex/typeaware-wave-02`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed rules, positions 4, 5 and 6 after excluding the 26 existing ports from\nVOLUME_REPORT.md's combined checker-dependent counts:\n\n| Position | Rule | Compiler | Repository | Total |\n| --- | --- | ---: | ---: | ---: |\n| 4 | logical-assignment-operators | 143 | 0 | 143 |\n| 5 | @typescript-eslint/no-unsafe-return | 126 | 0 | 126 |\n| 6 | nexus/correctness-no-nullish-stripping-assertion | 97 | 0 | 97 |\n\nFetched all origin heads and inspected stage1/cohere claim files and named rule\nport files before claiming. No existing claim or named port for these rules was\nfound. No rule was skipped.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-03",
+      "path": "stage1/cohere/typeaware/claims/wave-03.md",
+      "text": "# Type-aware wave 03\n\nBranch: `codex/typeaware-wave-03`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nReserved rules at positions 7, 8 and 9 after excluding the 26 base ports from\nVOLUME_REPORT.md's linked all-family counts, sorted by descending combined\ncompiler and repository findings with lexical ties:\n\n| Position | Rule | Compiler | Repository | Total |\n| --- | --- | ---: | ---: | ---: |\n| 7 | @typescript-eslint/no-unsafe-call | 91 | 4 | 95 |\n| 8 | @typescript-eslint/consistent-type-imports | 83 | 2 | 85 |\n| 9 | @typescript-eslint/no-unnecessary-template-expression | 4 | 80 | 84 |\n\nFetched all origin heads and inspected claims and named stage1/cohere port files\non 276 origin refs. No existing claim or named port was found. No rule skipped.\nNew Adamic sources use .a. Production Go cohere is the independent byte oracle.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-04",
+      "path": "stage1/cohere/typeaware/claims/wave-04.md",
+      "text": "# Type-aware wave 04\n\nBranch: `codex/typeaware-wave-04`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed rules, positions 10, 11 and 12 after excluding the 26 base ports\nfrom the combined compiler/repository ranking referenced by VOLUME_REPORT.md:\n\n| Position | Rule | Combined findings |\n| --- | --- | ---: |\n| 10 | nexus/consistency-require-constant-casing | 84 |\n| 11 | nexus/consistency-require-matching-return-type | 74 |\n| 12 | @typescript-eslint/strict-void-return | 56 |\n\nCounts come from validation-volume/compiler-all.counts and repository-all.counts,\nsorted by descending combined count with lexical ties. Both oracle suites define\nthe excluded base ports. All origin heads were fetched and inspected before\nthis claim. Matches in inventories and count logs are not implementations.\nNo existing port or claim was found for these three rules. No rules were skipped.\n\nNew Adamic source files use `.a`. Checker extensions, if needed, have separate\nfiles per question, with only one-line registration changes in shared files.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-05",
+      "path": "stage1/cohere/typeaware/claims/wave-05.md",
+      "text": "# Type-aware wave 05\n\nBranch: `codex/typeaware-wave-05`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed rules, positions 13, 14 and 15 after excluding the 26 existing ports\nfrom the combined checker-dependent ranking recorded by VOLUME_REPORT.md:\n\n| Position | Rule | Compiler | Repository | Total |\n| --- | --- | ---: | ---: | ---: |\n| 13 | @typescript-eslint/no-unnecessary-type-parameters | 30 | 1 | 31 |\n| 14 | no-useless-assignment | 17 | 12 | 29 |\n| 15 | @typescript-eslint/restrict-template-expressions | 23 | 0 | 23 |\n\nSelection uses `validation-volume/compiler-all.counts` and\n`validation-volume/repository-all.counts`, descending combined count with lexical\nties. The 16 volume-suite and 10 coverage-suite ports are excluded before\nindexing. All origin heads were fetched and searched for matching port filenames\nand claim contents before this commit. No matching port or claim was found;\nconfiguration references are not implementations. No rules were skipped.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-06",
+      "path": "stage1/cohere/typeaware/claims/wave-06.md",
+      "text": "# Type-aware wave 06 claim\n\nBranch: `codex/typeaware-wave-06`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed rules, positions 16, 17 and 18 after excluding the base branch's\n26 ports from VOLUME_REPORT.md's combined checker-dependent volume counts:\n\n| Position | Rule | Compiler | Repository | Total |\n| --- | --- | ---: | ---: | ---: |\n| 16 | adamic/nominal-class | 18 | 2 | 20 |\n| 17 | @typescript-eslint/no-duplicate-type-constituents | 19 | 0 | 19 |\n| 18 | no-useless-return | 16 | 0 | 16 |\n\nChecked all 268 fetched origin references, including claim paths and native\nrule source mentions, before implementation. No prior port or claim found.\nConfig set strings and inventory/count records are not implementations.\nNo rules skipped.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-07",
+      "path": "stage1/cohere/typeaware/claims/wave-07.md",
+      "text": "# Type-aware wave 07\n\nBranch: `codex/typeaware-wave-07`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed rules, positions 19, 20 and 21 after excluding the 26 existing ports\nfrom VOLUME_REPORT.md's combined compiler and repository checker-dependent\nranking (`validation-volume/compiler-all.counts` and `repository-all.counts`):\n\n| Position | Rule | Combined findings |\n| --- | --- | ---: |\n| 19 | no-undef-init | 15 |\n| 20 | @typescript-eslint/prefer-for-of | 13 |\n| 21 | @typescript-eslint/consistent-indexed-object-style | 12 |\n\nAll origin heads were fetched before selection. No matching rule port filenames\nor claims were found under stage1 on those heads. No rule was skipped.\nNew Adamic sources will use `.a`.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-08",
+      "path": "stage1/cohere/typeaware/claims/wave-08.md",
+      "text": "# Type-aware lint wave 08\n\nBranch: codex/typeaware-wave-08.\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6.\n\nPositions 22, 23 and 24 in the combined by-volume ranking referenced by\nVOLUME_REPORT.md, excluding the 26 rules already ported on the base:\n\n22. no-loop-func (compiler 9, repository 2, combined 11)\n23. nexus/correctness-no-import-cycle-load-time-read (compiler 10, repository 0, combined 10)\n24. @typescript-eslint/no-require-imports (compiler 9, repository 0, combined 9)\n\nAll fetched origin stage1 trees were checked for corresponding implementation\nfilenames and claim Markdown containing these names. No match was found.\nNo rule is skipped. This claim is committed and pushed before implementation.\nNew Adamic files use .a.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-09",
+      "path": "stage1/cohere/typeaware/claims/wave-09.md",
+      "text": "# Type-aware wave 09\n\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6.\nBranch: codex/typeaware-wave-09.\n\nClaimed rules, positions 25 through 27 in descending combined compiler and\nrepository counts from VOLUME_REPORT.md's validation-volume tables, excluding\nthe 26 rules already ported on the base, with lexical ties:\n\n| Position | Rule | Compiler | Repository | Total |\n| --- | --- | ---: | ---: | ---: |\n| 25 | prefer-const | 6 | 1 | 7 |\n| 26 | radix | 4 | 3 | 7 |\n| 27 | @typescript-eslint/non-nullable-type-assertion-style | 4 | 0 | 4 |\n\nAll fetched origin branches were inspected for ports and claims before this\ncommit. None of these three has an existing stage 1 port or claim. Inventory\nentries and config set names are not implementations. No rules were skipped.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-10",
+      "path": "stage1/cohere/typeaware/claims/wave-10.md",
+      "text": "# Type-aware wave 10 claim\n\nBranch: `codex/typeaware-wave-10`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nPositions use the combined compiler and repository counts linked by\nVOLUME_REPORT.md, sorted by descending count with lexical ties, excluding the\n26 rules already ported on the base branch.\n\n| Remaining position | Rule | Compiler | Repository | Total |\n| --- | --- | ---: | ---: | ---: |\n| 28 | no-unmodified-loop-condition | 4 | 0 | 4 |\n| 29 | @typescript-eslint/no-redundant-type-constituents | 3 | 0 | 3 |\n| 30 | @typescript-eslint/prefer-includes | 2 | 1 | 3 |\n\nAll origin branches were fetched and their distinct stage1 trees searched before\nthis claim. No implementation or claim for these three rules was found. Existing\ninventory entries, count registrations, configuration and skip-types evidence do\nnot constitute ports. No rule was skipped.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-11",
+      "path": "stage1/cohere/typeaware/claims/wave-11.md",
+      "text": "# Type-aware wave 11\n\nBranch: `codex/typeaware-wave-11`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed rules, positions in the combined descending finding-volume ranking\nfrom VOLUME_REPORT.md's validation-volume counts, lexical ties, excluding the\n26 rules already ported on the base:\n\n| Position | Rule | Compiler | Repository |\n| --- | --- | ---: | ---: |\n| 31 | @typescript-eslint/prefer-regexp-exec | 3 | 0 |\n| 32 | nexus/correctness-no-identical-branches | 0 | 3 |\n| 33 | @typescript-eslint/no-for-in-array | 2 | 0 |\n\nAudited all 263 distinct fetched origin trees on October 7, 2026 for ports\nand typeaware claims. None of these rules was ported or claimed. Existing\ncount tables, message catalogs and configuration references are not ports.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-12",
+      "path": "stage1/cohere/typeaware/claims/wave-12.md",
+      "text": "# Type-aware wave 12\n\nBranch: `codex/typeaware-wave-12`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaims, positions 34, 35 and 36 after excluding the 26 existing ports:\n\n| Position | Rule | Compiler | Repository | Total |\n| --- | --- | ---: | ---: | ---: |\n| 34 | @typescript-eslint/no-redeclare | 2 | 0 | 2 |\n| 35 | nexus/correctness-no-test-on-global-regex | 2 | 0 | 2 |\n| 36 | nexus/correctness-no-write-only-collection | 1 | 1 | 2 |\n\nSelection sums VOLUME_REPORT.md's linked validation-volume/compiler-all.counts\nand repository-all.counts, sorts by descending total then lexical rule name,\nand excludes the sixteen volume-suite and ten coverage-suite ports.\nFetched every origin branch and checked stage1 claim files and matching port\nfilenames before this commit. No competing claim or port was found.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-13",
+      "path": "stage1/cohere/typeaware/claims/wave-13.md",
+      "text": "# Type-aware wave 13\n\nBranch: codex/typeaware-wave-13.\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6.\n\nSelected from VOLUME_REPORT.md's linked compiler-all.counts and\nrepository-all.counts, descending combined volume with lexical ties, excluding\nthe 26 rules already ported on the base:\n\n| Remaining position | Rule | Combined findings |\n| --- | --- | ---: |\n| 37 | no-unassigned-vars | 2 |\n| 38 | preserve-caught-error | 2 |\n| 39 | @typescript-eslint/consistent-type-exports | 1 |\n\nChecked implementation filenames and Markdown claims under stage1/cohere on\nall 273 fetched origin refs. No matching ports or claims were found; no rule\nis skipped. Claim pushed before implementation. New Adamic files use .a.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-14",
+      "path": "stage1/cohere/typeaware/claims/wave-14.md",
+      "text": "# Type-aware lint wave 14\n\nBranch: `codex/typeaware-wave-14`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed rules, positions 40, 41 and 42 after excluding the 26 existing ports:\n\n1. `@typescript-eslint/no-array-delete`\n2. `@typescript-eslint/no-base-to-string`\n3. `@typescript-eslint/no-extraneous-class`\n\nSelection uses the combined compiler and repository checker-dependent counts\nlinked by VOLUME_REPORT.md in validation-volume, descending total with lexical\nrule-name ties. Each selected rule has compiler 1, repository 0, total 1.\nAll fetched origin branch trees were checked for matching claims and rule-named\nport files before this claim. No selected rule was found claimed or ported.\nNo rules were skipped.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-15",
+      "path": "stage1/cohere/typeaware/claims/wave-15.md",
+      "text": "# Type-aware wave 15\n\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6.\nBranch: codex/typeaware-wave-15.\n\nReserved rules, positions 43, 44 and 45 in the combined VOLUME_REPORT\nchecker-dependent counts, excluding the 26 ports on the base and sorting ties\nlexically by full rule name:\n\n- @typescript-eslint/no-useless-default-assignment (compiler 0, repository 1)\n- @typescript-eslint/prefer-find (compiler 1, repository 0)\n- @typescript-eslint/require-array-sort-compare (compiler 1, repository 0)\n\nAll origin heads fetched before selection. No existing claim or implementation\nwas found for these names. Count logs and inventory descriptors are evidence of\nselection, not implementations. New Adamic sources will use .a.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-16",
+      "path": "stage1/cohere/typeaware/claims/wave-16.md",
+      "text": "# Type-aware wave 16\n\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6.\nBranch: codex/typeaware-wave-16.\n\nClaimed rules, positions after excluding the base's 26 ports from the combined\ncompiler and repository by-volume ranking linked by VOLUME_REPORT.md, descending\ncombined count with lexical ties:\n\n| Position | Rule | Compiler | Repository |\n| --- | --- | ---: | ---: |\n| 46 | no-import-assign | 1 | 0 |\n| 47 | prefer-exponentiation-operator | 0 | 1 |\n| 48 | use-isnan | 0 | 1 |\n\nAll origin heads were fetched before selection. Searches of origin branches'\nAdamic sources and claim files found no existing port or claim for these names.\nNo rules were skipped. Selection uses validation-volume/compiler-all.counts and\nvalidation-volume/repository-all.counts and excludes the sixteen oracle_volume\nsubjects and ten validation-coverage/selection.json subjects. No lint code was\nwritten before this claim commit.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-17",
+      "path": "stage1/cohere/typeaware/claims/wave-17.md",
+      "text": "# Type-aware wave 17\n\nBranch: `codex/typeaware-wave-17`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nPositions 49, 50 and 51 after excluding the base branch's 26 ports from the\ncombined compiler plus repository counts linked by VOLUME_REPORT.md, sorted by\nvolume descending and rule name ascending:\n\n- 49: `@next/next/no-async-client-component` (0 findings)\n- 50: `@next/next/no-duplicate-head` (0 findings)\n- 51: `@next/next/no-script-component-in-head` (0 findings)\n\nAll origin branch tips were fetched and their stage1 source and claims inspected\nbefore this claim. None of these three rules was already ported or claimed.\nThe nextjs syntax claim on origin/codex/stage1-nextjs-lint names other rules.\n\nThe shared parser's JSX boundary affects the two Head rules. Any unsupported\ninput must be reported explicitly rather than counted as silent agreement.\n\n## Validated status\n\nThe non-JSX async rule is implemented in dd5481bc. Both Head rules remain\nunimplemented, and async components containing JSX are also unsupported by the\nshared native parser. Positive Go witnesses and explicit native parser failures\nare recorded in [the wave report](../WAVE_17_REPORT.md). This is a partial unit,\nnot three completed ports. No rule was skipped for an existing claim or port.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-18",
+      "path": "stage1/cohere/typeaware/claims/wave-18.md",
+      "text": "# Type-aware wave 18\n\nBranch: codex/typeaware-wave-18\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6\n\nClaimed rules, positions 52, 53 and 54 among the unported checker-dependent\nrules in VOLUME_REPORT.md's validation-volume counts:\n\n1. @next/next/no-title-in-document-head\n2. @typescript-eslint/await-thenable\n3. @typescript-eslint/class-literal-property-style\n\nSelection combines compiler-all.counts and repository-all.counts, excludes the\nsix original, ten volume and ten coverage ports, and sorts by descending combined\ncount then lexical rule name. All three selected rules have zero corpus findings.\nThe inventory ranking in validation-coverage is a different population and is\nnot used for this wave's positions.\n\nFetched every origin branch before claiming. No matching claim or named native\nport file was found under stage1/cohere on those refs. No rule was skipped.\n\nImplementation status: await-thenable and class-literal-property-style default\nports are complete in adea6fbe. The Next rule remains blocked on absent native\nJSX parsing; WAVE_18_REPORT.md records a Go-positive native-refusal measurement.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-19",
+      "path": "stage1/cohere/typeaware/claims/wave-19.md",
+      "text": "# Type-aware wave 19\n\nBase: 0d540f413625f016f20fea39761c7b184f335de6.\n\nSelected from VOLUME_REPORT.md's linked all-family count tables, sorted by\ncombined compiler and repository volume descending, with lexical ties, excluding\nthe 26 rules already ported on the base:\n\n| Remaining position | Rule | Combined findings |\n| --- | --- | ---: |\n| 55 | @typescript-eslint/consistent-generic-constructors | 0 |\n| 56 | @typescript-eslint/dot-notation | 0 |\n| 57 | @typescript-eslint/no-array-constructor | 0 |\n\nThese rules are reserved for codex/typeaware-wave-19. No matching claim files\nor named ports were found on fetched origin branches before this claim.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-20",
+      "path": "stage1/cohere/typeaware/claims/wave-20.md",
+      "text": "# Type-aware wave 20\n\nBranch: `codex/typeaware-wave-20`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaims, using descending compiler plus repository counts and lexical ties from\nVOLUME_REPORT.md's `validation-volume/*-all.counts`, excluding the 26 ports:\n\n| Remaining position | Rule | Combined findings |\n| --- | --- | ---: |\n| 58 | @typescript-eslint/no-floating-promises | 0 |\n| 59 | @typescript-eslint/no-implied-eval | 0 |\n| 60 | @typescript-eslint/no-meaningless-void-operator | 0 |\n\nChecked 268 fetched origin refs for claims and native source ports before claiming.\nNo conflicting claim or native port found. The checker-dependent count inventory\ncontains 197 rules; method-signature-style is one of the 26 ports but is not in\nthat checker-dependent count inventory, leaving 172 ranked candidates.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-21",
+      "path": "stage1/cohere/typeaware/claims/wave-21.md",
+      "text": "# Type-aware wave 21\n\nBase: 0d540f413625f016f20fea39761c7b184f335de6.\n\nSelected from VOLUME_REPORT.md's linked all-family count tables, sorted by\ncombined compiler and repository volume descending, with lexical ties, excluding\nthe 26 rules already ported on the base:\n\n| Remaining position | Rule | Combined findings |\n| --- | --- | ---: |\n| 61 | @typescript-eslint/no-misused-promises | 0 |\n| 62 | @typescript-eslint/no-misused-spread | 0 |\n| 63 | @typescript-eslint/no-mixed-enums | 0 |\n\nThese rules are reserved for codex/typeaware-wave-21. No claim files or named\nports were found on fetched origin branches before this claim.\n\n## Final status\n\n`@typescript-eslint/no-mixed-enums` is implemented and verified in 63746b1e.\n`@typescript-eslint/no-misused-promises` and `@typescript-eslint/no-misused-spread`\nare unimplemented. Their reservations are released for reassignment.\nThis wave is incomplete; see ../WAVE_21_REPORT.md.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-22",
+      "path": "stage1/cohere/typeaware/claims/wave-22.md",
+      "text": "# Type-aware lint wave 22\n\nBranch: `codex/typeaware-wave-22`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed rules, positions 64, 65 and 66 (one based):\n\n1. `@typescript-eslint/no-non-null-asserted-nullish-coalescing`\n2. `@typescript-eslint/no-unnecessary-qualifier`\n3. `@typescript-eslint/no-unused-private-class-members`\n\nRanking uses VOLUME_REPORT.md's referenced compiler-all.counts and\nrepository-all.counts, combined descending volume with lexical ties, excluding\nall 26 rules already ported on the base. The registry count table contains 197\nchecker-dependent rules; method-signature-style is one of the 26 ports but is\nabsent from that checker-dependent table. All three selected rules have zero\nrecorded findings on both corpora.\n\nBefore this claim, all origin branch refs were fetched and inspected for claims\nand type-aware implementations of these names. None was claimed or ported; no\nrule was skipped. New Adamic implementation files will use `.a`.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-23",
+      "path": "stage1/cohere/typeaware/claims/wave-23.md",
+      "text": "# Type-aware wave 23\n\nBase: origin/codex/tsgo-c-library, 0d540f4.\n\nReserved rules, positions 67, 68 and 69 of the combined descending volume\nranking from VOLUME_REPORT.md's compiler-all.counts and repository-all.counts,\nexcluding the 26 existing ports and breaking ties lexically:\n\n- @typescript-eslint/only-throw-error (0 compiler, 0 repository)\n- @typescript-eslint/prefer-promise-reject-errors (0 compiler, 0 repository)\n- @typescript-eslint/prefer-reduce-type-parameter (0 compiler, 0 repository)\n\nChecked all 268 fetched origin refs for typeaware claim files and files named\nfor these rules. No existing claim or named port found. No rule skipped.\n\nNew native sources use .a. Each rule gets its own file. Go cohere is the\nindependent byte oracle for findings, fixes and suggestions.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-24",
+      "path": "stage1/cohere/typeaware/claims/wave-24.md",
+      "text": "# Type-aware wave 24\n\nBranch: `codex/typeaware-wave-24`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed checker-dependent rules, positions 70, 71 and 72 after excluding\nall 26 rules already ported on the base:\n\n1. `@typescript-eslint/prefer-return-this-type`\n2. `@typescript-eslint/return-await`\n3. `@typescript-eslint/use-unknown-in-catch-callback-variable`\n\nSelection uses the combined compiler and repository counts linked from\nVOLUME_REPORT.md in `validation-volume/*-all.counts`, descending combined\nvolume with lexical ties. Each selected rule has zero recorded findings in\nboth populations. The inventory ranking includes non-checker rules and is\nnot the checker-only selection used here.\n\nChecked 268 origin refs after fetching all branch refs on October 7, 2026.\nNo competing claim or named type-aware port for these rules was found.\nThis claim precedes implementation; it does not assert completed ports.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-25",
+      "path": "stage1/cohere/typeaware/claims/wave-25.md",
+      "text": "# Type-aware wave 25\n\nBranch: codex/typeaware-wave-25\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6.\n\nSelection combines validation-volume/compiler-all.counts and\nvalidation-volume/repository-all.counts, descending total then lexical rule name,\nexcluding the 26 rules documented in README.md and COVERAGE_REPORT.md.\nThe method-signature-style baseline port is absent from the 197 checker registry\nrows and therefore does not remove a row from this ranking.\n\n| Remaining position | Rule | Status |\n| --- | --- | --- |\n| 73 | accessor-pairs | Skipped: already ported on origin/codex/stage1-lint-batch4 at stage1/cohere/lint/grouped_accessor_pairs.ts |\n| 74 | base/correctness-require-graphql-nullable-parity | Claimed by wave 25 |\n| 75 | base/correctness-require-matching-inject-type | Claimed by wave 25 |\n\nAll three have zero findings on both recorded populations. No replacement is\nselected for the skipped rule. All origin branch tips were fetched and distinct\nstage1/cohere source and claim blobs checked before this claim.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-26",
+      "path": "stage1/cohere/typeaware/claims/wave-26.md",
+      "text": "# Type-aware wave 26\n\nBase: 0d540f413625f016f20fea39761c7b184f335de6.\n\nThe VOLUME_REPORT.md linked all-family compiler and repository count tables are\nsorted by combined volume descending, with lexical ties, excluding the 26 rules\nalready ported on the base.\n\n| Remaining position | Rule | Combined findings |\n| --- | --- | ---: |\n| 76 | base/correctness-require-matching-operation-context | 0 |\n| 77 | base/correctness-require-matching-provider-return | 0 |\n| 78 | base/correctness-require-optional-relation | 0 |\n\nReserved for codex/typeaware-wave-26. No claim or named port for these rules was\nfound across fetched origin branches before this claim. Zero corpus findings\nrequire positive generated controls and independent byte-oracle mutants.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-27",
+      "path": "stage1/cohere/typeaware/claims/wave-27.md",
+      "text": "# Type-aware wave 27\n\nBranch: codex/typeaware-wave-27.\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6.\n\nClaimed rules, positions 79 through 81 after excluding existing ports:\n\n- base/correctness-require-orm-column-nullable-parity\n- base/correctness-require-serializable-nullable-parity\n- base/correctness-require-verify-array-parity\n\nRanking reconstructed from VOLUME_REPORT.md's linked compiler-all.counts and\nrepository-all.counts, descending combined count with lexical ties. All three\nhave zero compiler and repository findings. The 26 existing ports exclude 25\nentries from this 197-rule checker ranking; method-signature-style is outside\nthat checker-only table. No matching port file or claim was found in stage1\non any fetched origin branch before this claim. No rules were skipped.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-28",
+      "path": "stage1/cohere/typeaware/claims/wave-28.md",
+      "text": "# Type-aware wave 28 claim\n\nBranch: `codex/typeaware-wave-28`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nThe VOLUME_REPORT.md all-family counts in validation-volume are ranked by\ncombined compiler and repository volume descending, with lexical ties. Excluding\nall 26 ports on the base leaves 172 checker-dependent candidates.\n\n| Remaining position | Rule | Compiler | Repository |\n| --- | --- | ---: | ---: |\n| 82 | base/correctness-require-verify-optional-parity | 0 | 0 |\n| 83 | block-scoped-var | 0 | 0 |\n| 84 | getter-return | 0 | 0 |\n\nAll three are claimed here before implementation. No matching rule source or\nclaim was found across 268 fetched origin refs (64 distinct stage1 trees).\nCounts, catalogs and configuration references are not implementations.\nNo rule was skipped. Zero-volume corpora require positive controls and mutants.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-29",
+      "path": "stage1/cohere/typeaware/claims/wave-29.md",
+      "text": "# Type-aware wave 29\n\nBranch: `codex/typeaware-wave-29`.\nBase: `origin/codex/tsgo-c-library`, `0d540f413625f016f20fea39761c7b184f335de6`.\n\nClaimed rules, positions in the remaining checker-dependent by-volume ranking:\n\n| Position | Rule | Compiler | Repository |\n| --- | --- | ---: | ---: |\n| 85 | id-denylist | 0 | 0 |\n| 86 | id-match | 0 | 0 |\n| 87 | nexus/concurrency-no-check-then-write | 0 | 0 |\n\nSelection combines `validation-volume/compiler-all.counts` and\n`validation-volume/repository-all.counts`, sorts by descending combined count\nthen lexical rule name, and excludes the 26 rules documented in README.md and\nCOVERAGE_REPORT.md. VOLUME_REPORT.md references these full count tables; its\ninline table contains only the ten earlier additions. The separate coverage\ninventory has 204 entries and is not the 197 checker-dependent population used\nhere.\n\nFetched all origin heads and checked stage1 source blobs and claim documents.\nNo implementation or claim for these rules was found. Config set membership is\nnot an implementation. No rule was skipped.\n"
+    },
+    {
+      "ref": "refs/remotes/origin/codex/typeaware-wave-30",
+      "path": "stage1/cohere/typeaware/claims/wave-30.md",
+      "text": "# Type-aware lint wave 30\n\nBase: origin/codex/tsgo-c-library, 0d540f413625f016f20fea39761c7b184f335de6.\n\nAssigned positions in the combined compiler plus repository ranking linked by\nVOLUME_REPORT.md, descending count with lexical ties, excluding the 26 existing\nports before counting positions:\n\n| Position | Rule | Combined findings |\n| --- | --- | ---: |\n| 88 | nexus/concurrency-no-lost-update | 0 |\n| 89 | nexus/consistency-no-iso-string-date-cut | 0 |\n| 90 | nexus/correctness-no-callback-in-parse-try | 0 |\n\nThe volume counter has 197 entries. Twenty-five of the existing ports occur in\nthat counter; method-signature-style is not checker-dependent in the registry\nand does not occur there. This leaves 172 ranked candidates.\n\nFetched all origin heads and checked stage1 source paths and claim documents\nbefore this claim. No conflicting port or claim was found for these rules.\nNo implementation was written before this claim commit.\n\nCompletion status: the ISO-date-cut and callback-in-parse-try rules are implemented.\nThe lost-update rule is unimplemented and its claim is released for reassignment.\nSee ../WAVE_30_REPORT.md for evidence and limits.\n"
+    }
+  ],
+  "base_ports_excluded": [
+    "@typescript-eslint/consistent-return",
+    "@typescript-eslint/method-signature-style",
+    "@typescript-eslint/no-confusing-void-expression",
+    "@typescript-eslint/no-shadow",
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+    "@typescript-eslint/no-unsafe-argument",
+    "@typescript-eslint/no-unsafe-assignment",
+    "@typescript-eslint/no-unsafe-declaration-merging",
+    "@typescript-eslint/no-unsafe-enum-comparison",
+    "@typescript-eslint/no-unsafe-member-access",
+    "@typescript-eslint/no-unsafe-type-assertion",
+    "@typescript-eslint/no-unsafe-unary-minus",
+    "@typescript-eslint/no-unused-vars",
+    "@typescript-eslint/prefer-nullish-coalescing",
+    "@typescript-eslint/related-getter-setter-pairs",
+    "@typescript-eslint/restrict-plus-operands",
+    "@typescript-eslint/switch-exhaustiveness-check",
+    "@typescript-eslint/unbound-method",
+    "adamic/invariant-mutable",
+    "adamic/no-optional-widening",
+    "adamic/no-unchecked-cast",
+    "nexus/consistency-no-property-alias",
+    "nexus/correctness-no-caller-data-mutation",
+    "no-implicit-coercion",
+    "no-param-reassign",
+    "no-use-before-define"
+  ],
+  "remaining_ranking": [
+    {
+      "remaining_position": 1,
+      "rule": "nexus/correctness-no-implicit-return",
+      "volume": 251,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-01"
+      ]
+    },
+    {
+      "remaining_position": 2,
+      "rule": "@typescript-eslint/no-deprecated",
+      "volume": 238,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-01"
+      ]
+    },
+    {
+      "remaining_position": 3,
+      "rule": "no-else-return",
+      "volume": 202,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-01"
+      ]
+    },
+    {
+      "remaining_position": 4,
+      "rule": "logical-assignment-operators",
+      "volume": 143,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-02"
+      ]
+    },
+    {
+      "remaining_position": 5,
+      "rule": "@typescript-eslint/no-unsafe-return",
+      "volume": 126,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-02"
+      ]
+    },
+    {
+      "remaining_position": 6,
+      "rule": "nexus/correctness-no-nullish-stripping-assertion",
+      "volume": 97,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-02"
+      ]
+    },
+    {
+      "remaining_position": 7,
+      "rule": "@typescript-eslint/no-unsafe-call",
+      "volume": 95,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-03"
+      ]
+    },
+    {
+      "remaining_position": 8,
+      "rule": "@typescript-eslint/consistent-type-imports",
+      "volume": 85,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-03"
+      ]
+    },
+    {
+      "remaining_position": 9,
+      "rule": "@typescript-eslint/no-unnecessary-template-expression",
+      "volume": 84,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-03"
+      ]
+    },
+    {
+      "remaining_position": 10,
+      "rule": "nexus/consistency-require-constant-casing",
+      "volume": 84,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-04"
+      ]
+    },
+    {
+      "remaining_position": 11,
+      "rule": "nexus/consistency-require-matching-return-type",
+      "volume": 74,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-04"
+      ]
+    },
+    {
+      "remaining_position": 12,
+      "rule": "@typescript-eslint/strict-void-return",
+      "volume": 56,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-04"
+      ]
+    },
+    {
+      "remaining_position": 13,
+      "rule": "@typescript-eslint/no-unnecessary-type-parameters",
+      "volume": 31,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-05"
+      ]
+    },
+    {
+      "remaining_position": 14,
+      "rule": "no-useless-assignment",
+      "volume": 29,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-05"
+      ]
+    },
+    {
+      "remaining_position": 15,
+      "rule": "@typescript-eslint/restrict-template-expressions",
+      "volume": 23,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-05"
+      ]
+    },
+    {
+      "remaining_position": 16,
+      "rule": "adamic/nominal-class",
+      "volume": 20,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-06"
+      ]
+    },
+    {
+      "remaining_position": 17,
+      "rule": "@typescript-eslint/no-duplicate-type-constituents",
+      "volume": 19,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-06"
+      ]
+    },
+    {
+      "remaining_position": 18,
+      "rule": "no-useless-return",
+      "volume": 16,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-06"
+      ]
+    },
+    {
+      "remaining_position": 19,
+      "rule": "no-undef-init",
+      "volume": 15,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-07"
+      ]
+    },
+    {
+      "remaining_position": 20,
+      "rule": "@typescript-eslint/prefer-for-of",
+      "volume": 13,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-07"
+      ]
+    },
+    {
+      "remaining_position": 21,
+      "rule": "@typescript-eslint/consistent-indexed-object-style",
+      "volume": 12,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-07"
+      ]
+    },
+    {
+      "remaining_position": 22,
+      "rule": "no-loop-func",
+      "volume": 11,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-08"
+      ]
+    },
+    {
+      "remaining_position": 23,
+      "rule": "nexus/correctness-no-import-cycle-load-time-read",
+      "volume": 10,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-08"
+      ]
+    },
+    {
+      "remaining_position": 24,
+      "rule": "@typescript-eslint/no-require-imports",
+      "volume": 9,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-08"
+      ]
+    },
+    {
+      "remaining_position": 25,
+      "rule": "prefer-const",
+      "volume": 7,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-09"
+      ]
+    },
+    {
+      "remaining_position": 26,
+      "rule": "radix",
+      "volume": 7,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-09"
+      ]
+    },
+    {
+      "remaining_position": 27,
+      "rule": "@typescript-eslint/non-nullable-type-assertion-style",
+      "volume": 4,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-09"
+      ]
+    },
+    {
+      "remaining_position": 28,
+      "rule": "no-unmodified-loop-condition",
+      "volume": 4,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-10"
+      ]
+    },
+    {
+      "remaining_position": 29,
+      "rule": "@typescript-eslint/no-redundant-type-constituents",
+      "volume": 3,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-10"
+      ]
+    },
+    {
+      "remaining_position": 30,
+      "rule": "@typescript-eslint/prefer-includes",
+      "volume": 3,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-10"
+      ]
+    },
+    {
+      "remaining_position": 31,
+      "rule": "@typescript-eslint/prefer-regexp-exec",
+      "volume": 3,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-11"
+      ]
+    },
+    {
+      "remaining_position": 32,
+      "rule": "nexus/correctness-no-identical-branches",
+      "volume": 3,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-11"
+      ]
+    },
+    {
+      "remaining_position": 33,
+      "rule": "@typescript-eslint/no-for-in-array",
+      "volume": 2,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-11"
+      ]
+    },
+    {
+      "remaining_position": 34,
+      "rule": "@typescript-eslint/no-redeclare",
+      "volume": 2,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-12"
+      ]
+    },
+    {
+      "remaining_position": 35,
+      "rule": "nexus/correctness-no-test-on-global-regex",
+      "volume": 2,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-12"
+      ]
+    },
+    {
+      "remaining_position": 36,
+      "rule": "nexus/correctness-no-write-only-collection",
+      "volume": 2,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-12"
+      ]
+    },
+    {
+      "remaining_position": 37,
+      "rule": "no-unassigned-vars",
+      "volume": 2,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-13"
+      ]
+    },
+    {
+      "remaining_position": 38,
+      "rule": "preserve-caught-error",
+      "volume": 2,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-13"
+      ]
+    },
+    {
+      "remaining_position": 39,
+      "rule": "@typescript-eslint/consistent-type-exports",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-13"
+      ]
+    },
+    {
+      "remaining_position": 40,
+      "rule": "@typescript-eslint/no-array-delete",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-14"
+      ]
+    },
+    {
+      "remaining_position": 41,
+      "rule": "@typescript-eslint/no-base-to-string",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-14"
+      ]
+    },
+    {
+      "remaining_position": 42,
+      "rule": "@typescript-eslint/no-extraneous-class",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-14"
+      ]
+    },
+    {
+      "remaining_position": 43,
+      "rule": "@typescript-eslint/no-useless-default-assignment",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-15"
+      ]
+    },
+    {
+      "remaining_position": 44,
+      "rule": "@typescript-eslint/prefer-find",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-15"
+      ]
+    },
+    {
+      "remaining_position": 45,
+      "rule": "@typescript-eslint/require-array-sort-compare",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-15"
+      ]
+    },
+    {
+      "remaining_position": 46,
+      "rule": "no-import-assign",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-16"
+      ]
+    },
+    {
+      "remaining_position": 47,
+      "rule": "prefer-exponentiation-operator",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-16"
+      ]
+    },
+    {
+      "remaining_position": 48,
+      "rule": "use-isnan",
+      "volume": 1,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-16"
+      ]
+    },
+    {
+      "remaining_position": 49,
+      "rule": "@next/next/no-async-client-component",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-17"
+      ]
+    },
+    {
+      "remaining_position": 50,
+      "rule": "@next/next/no-duplicate-head",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-17"
+      ]
+    },
+    {
+      "remaining_position": 51,
+      "rule": "@next/next/no-script-component-in-head",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-17"
+      ]
+    },
+    {
+      "remaining_position": 52,
+      "rule": "@next/next/no-title-in-document-head",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-18"
+      ]
+    },
+    {
+      "remaining_position": 53,
+      "rule": "@typescript-eslint/await-thenable",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-18"
+      ]
+    },
+    {
+      "remaining_position": 54,
+      "rule": "@typescript-eslint/class-literal-property-style",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-18"
+      ]
+    },
+    {
+      "remaining_position": 55,
+      "rule": "@typescript-eslint/consistent-generic-constructors",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-19"
+      ]
+    },
+    {
+      "remaining_position": 56,
+      "rule": "@typescript-eslint/dot-notation",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-19"
+      ]
+    },
+    {
+      "remaining_position": 57,
+      "rule": "@typescript-eslint/no-array-constructor",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-19"
+      ]
+    },
+    {
+      "remaining_position": 58,
+      "rule": "@typescript-eslint/no-floating-promises",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-20"
+      ]
+    },
+    {
+      "remaining_position": 59,
+      "rule": "@typescript-eslint/no-implied-eval",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-20"
+      ]
+    },
+    {
+      "remaining_position": 60,
+      "rule": "@typescript-eslint/no-meaningless-void-operator",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-20"
+      ]
+    },
+    {
+      "remaining_position": 61,
+      "rule": "@typescript-eslint/no-misused-promises",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-21"
+      ]
+    },
+    {
+      "remaining_position": 62,
+      "rule": "@typescript-eslint/no-misused-spread",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-21"
+      ]
+    },
+    {
+      "remaining_position": 63,
+      "rule": "@typescript-eslint/no-mixed-enums",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-21"
+      ]
+    },
+    {
+      "remaining_position": 64,
+      "rule": "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-22"
+      ]
+    },
+    {
+      "remaining_position": 65,
+      "rule": "@typescript-eslint/no-unnecessary-qualifier",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-22"
+      ]
+    },
+    {
+      "remaining_position": 66,
+      "rule": "@typescript-eslint/no-unused-private-class-members",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-22"
+      ]
+    },
+    {
+      "remaining_position": 67,
+      "rule": "@typescript-eslint/only-throw-error",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-23"
+      ]
+    },
+    {
+      "remaining_position": 68,
+      "rule": "@typescript-eslint/prefer-promise-reject-errors",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-23"
+      ]
+    },
+    {
+      "remaining_position": 69,
+      "rule": "@typescript-eslint/prefer-reduce-type-parameter",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-23"
+      ]
+    },
+    {
+      "remaining_position": 70,
+      "rule": "@typescript-eslint/prefer-return-this-type",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-24"
+      ]
+    },
+    {
+      "remaining_position": 71,
+      "rule": "@typescript-eslint/return-await",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-24"
+      ]
+    },
+    {
+      "remaining_position": 72,
+      "rule": "@typescript-eslint/use-unknown-in-catch-callback-variable",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-24"
+      ]
+    },
+    {
+      "remaining_position": 73,
+      "rule": "accessor-pairs",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-25"
+      ]
+    },
+    {
+      "remaining_position": 74,
+      "rule": "base/correctness-require-graphql-nullable-parity",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-25"
+      ]
+    },
+    {
+      "remaining_position": 75,
+      "rule": "base/correctness-require-matching-inject-type",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-25"
+      ]
+    },
+    {
+      "remaining_position": 76,
+      "rule": "base/correctness-require-matching-operation-context",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-26"
+      ]
+    },
+    {
+      "remaining_position": 77,
+      "rule": "base/correctness-require-matching-provider-return",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-26"
+      ]
+    },
+    {
+      "remaining_position": 78,
+      "rule": "base/correctness-require-optional-relation",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-26"
+      ]
+    },
+    {
+      "remaining_position": 79,
+      "rule": "base/correctness-require-orm-column-nullable-parity",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-27"
+      ]
+    },
+    {
+      "remaining_position": 80,
+      "rule": "base/correctness-require-serializable-nullable-parity",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-27"
+      ]
+    },
+    {
+      "remaining_position": 81,
+      "rule": "base/correctness-require-verify-array-parity",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-27"
+      ]
+    },
+    {
+      "remaining_position": 82,
+      "rule": "base/correctness-require-verify-optional-parity",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-28"
+      ]
+    },
+    {
+      "remaining_position": 83,
+      "rule": "block-scoped-var",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-28"
+      ]
+    },
+    {
+      "remaining_position": 84,
+      "rule": "getter-return",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-28"
+      ]
+    },
+    {
+      "remaining_position": 85,
+      "rule": "id-denylist",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-29"
+      ]
+    },
+    {
+      "remaining_position": 86,
+      "rule": "id-match",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-29"
+      ]
+    },
+    {
+      "remaining_position": 87,
+      "rule": "nexus/concurrency-no-check-then-write",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-29"
+      ]
+    },
+    {
+      "remaining_position": 88,
+      "rule": "nexus/concurrency-no-lost-update",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-30"
+      ]
+    },
+    {
+      "remaining_position": 89,
+      "rule": "nexus/consistency-no-iso-string-date-cut",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-30"
+      ]
+    },
+    {
+      "remaining_position": 90,
+      "rule": "nexus/correctness-no-callback-in-parse-try",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-30"
+      ]
+    },
+    {
+      "remaining_position": 91,
+      "rule": "nexus/correctness-no-collection-misuse",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 92,
+      "rule": "nexus/correctness-no-discarded-outcome",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 93,
+      "rule": "nexus/correctness-no-discarded-pure-result",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 94,
+      "rule": "nexus/correctness-no-global-listener-target-assertion",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 95,
+      "rule": "nexus/correctness-no-leaked-number-render",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 96,
+      "rule": "nexus/correctness-no-mock-on-module-namespace",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 97,
+      "rule": "nexus/correctness-no-process-exit-after-output",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 98,
+      "rule": "nexus/correctness-no-uncleared-race-timeout",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 99,
+      "rule": "nexus/correctness-require-blocking-standard-streams",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 100,
+      "rule": "nexus/correctness-require-child-process-error-listener",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 101,
+      "rule": "nexus/correctness-require-response-status-check",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 102,
+      "rule": "nexus/performance-no-independent-await-in-loop",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 103,
+      "rule": "nexus/security-no-interpolated-shell-command",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 104,
+      "rule": "nexus/security-no-interpolated-sql-string",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 105,
+      "rule": "no-alert",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 106,
+      "rule": "no-class-assign",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 107,
+      "rule": "no-const-assign",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 108,
+      "rule": "no-constant-binary-expression",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 109,
+      "rule": "no-eval",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 110,
+      "rule": "no-extend-native",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 111,
+      "rule": "no-func-assign",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 112,
+      "rule": "no-global-assign",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 113,
+      "rule": "no-implicit-globals",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 114,
+      "rule": "no-implied-eval",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-20"
+      ]
+    },
+    {
+      "remaining_position": 115,
+      "rule": "no-invalid-regexp",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 116,
+      "rule": "no-label-var",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 117,
+      "rule": "no-misleading-character-class",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 118,
+      "rule": "no-new-func",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 119,
+      "rule": "no-new-native-nonconstructor",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 120,
+      "rule": "no-new-wrappers",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 121,
+      "rule": "no-obj-calls",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 122,
+      "rule": "no-object-constructor",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 123,
+      "rule": "no-promise-executor-return",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 124,
+      "rule": "no-restricted-globals",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 125,
+      "rule": "no-setter-return",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 126,
+      "rule": "no-shadow-restricted-names",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 127,
+      "rule": "no-throw-literal",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 128,
+      "rule": "no-useless-backreference",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 129,
+      "rule": "prefer-arrow-callback",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 130,
+      "rule": "prefer-numeric-literals",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 131,
+      "rule": "prefer-object-has-own",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 132,
+      "rule": "prefer-object-spread",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 133,
+      "rule": "prefer-promise-reject-errors",
+      "volume": 0,
+      "prior_claim_refs": [
+        "refs/remotes/origin/codex/typeaware-wave-23"
+      ]
+    },
+    {
+      "remaining_position": 134,
+      "rule": "prefer-regex-literals",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 135,
+      "rule": "prefer-rest-params",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 136,
+      "rule": "react-hooks/exhaustive-deps",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 137,
+      "rule": "react-hooks/globals",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 138,
+      "rule": "react-hooks/immutability",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 139,
+      "rule": "react-hooks/no-deriving-state-in-effects",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 140,
+      "rule": "react-hooks/preserve-manual-memoization",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 141,
+      "rule": "react-hooks/purity",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 142,
+      "rule": "react-hooks/refs",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 143,
+      "rule": "react-hooks/set-state-in-effect",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 144,
+      "rule": "react-hooks/set-state-in-render",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 145,
+      "rule": "react-hooks/static-components",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 146,
+      "rule": "react-hooks/unsupported-syntax",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 147,
+      "rule": "react-hooks/use-memo",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 148,
+      "rule": "react/boolean-prop-naming",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 149,
+      "rule": "react/button-has-type",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 150,
+      "rule": "react/checked-requires-onchange-or-readonly",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 151,
+      "rule": "react/display-name",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 152,
+      "rule": "react/forbid-elements",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 153,
+      "rule": "react/forbid-prop-types",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 154,
+      "rule": "react/iframe-missing-sandbox",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 155,
+      "rule": "react/jsx-fragments",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 156,
+      "rule": "react/jsx-no-constructed-context-values",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 157,
+      "rule": "react/jsx-no-undef",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 158,
+      "rule": "react/no-adjacent-inline-elements",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 159,
+      "rule": "react/no-array-index-key",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 160,
+      "rule": "react/no-danger-with-children",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 161,
+      "rule": "react/no-multi-comp",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 162,
+      "rule": "react/no-namespace",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 163,
+      "rule": "react/no-object-type-as-default-prop",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 164,
+      "rule": "react/no-unstable-nested-components",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 165,
+      "rule": "react/sort-default-props",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 166,
+      "rule": "react/static-property-placement",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 167,
+      "rule": "react/style-prop-object",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 168,
+      "rule": "require-atomic-updates",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 169,
+      "rule": "require-await",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 170,
+      "rule": "structure/react-hook-no-any-type",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 171,
+      "rule": "symbol-description",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 172,
+      "rule": "valid-typeof",
+      "volume": 0,
+      "prior_claim_refs": []
+    }
+  ],
+  "selected": [
+    {
+      "remaining_position": 91,
+      "rule": "nexus/correctness-no-collection-misuse",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 92,
+      "rule": "nexus/correctness-no-discarded-outcome",
+      "volume": 0,
+      "prior_claim_refs": []
+    },
+    {
+      "remaining_position": 93,
+      "rule": "nexus/correctness-no-discarded-pure-result",
+      "volume": 0,
+      "prior_claim_refs": []
+    }
+  ],
+  "port_checks": [
+    {
+      "ref": "origin/main",
+      "sha": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+      "rule": "nexus/correctness-no-collection-misuse",
+      "native_source_matches": []
+    },
+    {
+      "ref": "origin/main",
+      "sha": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+      "rule": "nexus/correctness-no-discarded-outcome",
+      "native_source_matches": []
+    },
+    {
+      "ref": "origin/main",
+      "sha": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+      "rule": "nexus/correctness-no-discarded-pure-result",
+      "native_source_matches": []
+    },
+    {
+      "ref": "origin/codex/tsgo-c-library",
+      "sha": "5afbdb83da2ed7ad9815657cd3f6ececd5294bf6",
+      "rule": "nexus/correctness-no-collection-misuse",
+      "native_source_matches": []
+    },
+    {
+      "ref": "origin/codex/tsgo-c-library",
+      "sha": "5afbdb83da2ed7ad9815657cd3f6ececd5294bf6",
+      "rule": "nexus/correctness-no-discarded-outcome",
+      "native_source_matches": []
+    },
+    {
+      "ref": "origin/codex/tsgo-c-library",
+      "sha": "5afbdb83da2ed7ad9815657cd3f6ececd5294bf6",
+      "rule": "nexus/correctness-no-discarded-pure-result",
+      "native_source_matches": []
+    }
+  ],
+  "claim_commit": "4fe9e445",
+  "interpretation": "Skip every rule named in any prior claim, including released reservations; assumption stated before claim."
+}

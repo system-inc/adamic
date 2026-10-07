@@ -1,0 +1,72 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { types } from './facts.ts';
+import { awaitedShape } from './awaited_shape.a';
+import { typeDeclarationAncestors, AncestorFact } from './type_declaration_ancestors.a';
+import { report } from './wave_21_next_facts.a';
+const names = ['JsonParseOutcomeType', 'JsoncParseOutcomeType', 'JsonFileReadOutcomeType', 'JsonFileWriteOutcomeType', 'PackageJsonReadOutcomeType'];
+const suffixes = ['/nexus/source/structured-text/json/Json.ts', '/nexus/source/structured-text/json/Jsonc.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/system/PackageJson.ts'];
+const message = "This call returns a `{{typeName}}` and the statement throws it away, so the arm that says it failed (a write that never landed, a file that would not parse) is never read and the code runs on as if it succeeded. Keep the outcome and handle its failure arm, or return it to a caller that will. If ignoring it is the intent, say so with `void`.";
+export class OutcomeUnion {
+    readonly identity: string;
+    readonly name: string;
+    readonly count: number;
+    readonly seen: string[] = [];
+    constructor(union: AncestorFact, name: string) { this.identity = union.identity(); this.name = name; this.count = union.children; }
+}
+export class NoDiscardedOutcome {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    unionAt(chain: readonly AncestorFact[]): number {
+        if(chain.length === 0 || (chain[0]?.kind ?? '') !== 'TypeLiteral') { return -1; }
+        let at = 1;
+        while((chain[at]?.kind ?? '') === 'ParenthesizedType') { at++; }
+        return (chain[at]?.kind ?? '') === 'UnionType' ? at : -1;
+    }
+    aliasName(chain: readonly AncestorFact[], at: number): string {
+        const union = chain[at]; if(union === undefined) { return ''; }
+        at++;
+        while((chain[at]?.kind ?? '') === 'ParenthesizedType') { at++; }
+        const alias = chain[at];
+        if(alias === undefined || alias.kind !== 'TypeAliasDeclaration' || (chain[at+1]?.kind ?? '') !== 'SourceFile' || alias.annotationKind !== 'UnionType' || alias.annotationPos !== union.pos || alias.annotationEnd !== union.end) { return ''; }
+        for(let i = 0; i < names.length; i++) {
+            if(alias.name === names[i] && alias.path.endsWith(suffixes[i] ?? '')) { return alias.name; }
+        }
+        return '';
+    }
+    outcome(index: number, facts: Types): string {
+        if(!facts.present || facts.roots.length === 0) { return ''; }
+        const groups: OutcomeUnion[] = [];
+        for(const id of facts.parts(facts.root())) {
+            for(const chain of typeDeclarationAncestors(this.rules, index, id)) {
+                const at = this.unionAt(chain); if(at < 0) { continue; }
+                const name = this.aliasName(chain, at); if(name === '') { continue; }
+                const union = chain[at]; const declaration = chain[0];
+                if(union === undefined || declaration === undefined) { continue; }
+                let group = groups.find((g) => g.identity === union.identity());
+                if(group === undefined) { group = new OutcomeUnion(union, name); groups.push(group); }
+                const identity = declaration.identity(); if(!group.seen.includes(identity)) { group.seen.push(identity); }
+            }
+        }
+        for(const name of names) {
+            if(groups.some((g) => g.name === name && g.seen.length === g.count)) { return name; }
+        }
+        return '';
+    }
+    visit(index: number): void {
+        let expression = this.rules.skip(this.rules.parser.node(index).children[0] ?? -1);
+        let awaited = false;
+        if(this.rules.parser.node(expression).kind === 'AwaitExpression') {
+            expression = this.rules.skip(this.rules.parser.node(expression).children[0] ?? -1); awaited = true;
+        }
+        if(this.rules.parser.node(expression).kind !== 'CallExpression') { return; }
+        const facts = awaited ? awaitedShape(this.rules, expression) : types(this.rules.ask(expression, 'raw-shape'), 'raw-shape');
+        const name = this.outcome(expression, facts);
+        if(name !== '') { report(this.rules, 'correctness-no-discarded-outcome', 'outcomeDiscarded', message.replace('{{typeName}}', name), index); }
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            if(this.rules.parser.node(i).kind === 'ExpressionStatement') { this.visit(i); }
+        }
+    }
+}

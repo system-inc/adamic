@@ -1,0 +1,129 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { types } from './facts.ts';
+import { stringLike, numberLike, booleanLike, bigintLike } from './flags.ts';
+import { libraryType, literal, nodeDeclarations, report } from './wave_21_next_facts.a';
+const collections = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet', 'WeakMap', 'WeakSet'];
+const sized = ['Map', 'ReadonlyMap', 'Set', 'ReadonlySet'];
+const typedArrays = ['Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float16Array', 'Float32Array', 'Float64Array', 'BigInt64Array', 'BigUint64Array'];
+const inOnArray = "This uses `in` to look for a value in an array. `in` asks whether the array has a property or index of that name, never whether it holds that element, and this name is neither, so the test is always false. Use `.includes()` for membership.";
+const impossibleSizeComparison = "This compares a `.length` or `.size` against a value it can never be on the other side of. A length or size is never negative, so the comparison has the same answer every time: always false (`< 0`, `=== -1`) or always true (`>= 0`, `!== -1`). Compare against `0` for empty, or `> 0` for not empty.";
+const bracketAccessOnCollection = "This reads or writes a Map or Set with brackets. Brackets reach the object's own properties, not its entries, so a read finds nothing that `.set()` or `.add()` stored and a write stores nothing `.get()` or `.has()` will see. Use `.get()`, `.set()`, `.has()` or `.add()`.";
+const objectMethodOnCollection = "This hands a Map or Set to an `Object` method that lists own properties. Entries are not properties, so the result is always empty. Use the collection's own `.keys()`, `.values()` or `.entries()`, or `Array.from(...)` around one of them.";
+function arrayIndex(name: string): boolean {
+    if(name === '' || (name.length > 1 && name.charCodeAt(0) === 48)) { return false; }
+    let value = 0;
+    for(let i = 0; i < name.length; i++) {
+        const digit = name.charCodeAt(i) - 48;
+        if(digit < 0 || digit > 9) { return false; }
+        value = value * 10 + digit;
+        if(value >= 4294967295) { return false; }
+    }
+    return true;
+}
+function mirror(op: string): string {
+    if(op === 'LessThanToken') { return 'GreaterThanToken'; }
+    if(op === 'GreaterThanToken') { return 'LessThanToken'; }
+    if(op === 'LessThanEqualsToken') { return 'GreaterThanEqualsToken'; }
+    if(op === 'GreaterThanEqualsToken') { return 'LessThanEqualsToken'; }
+    return op;
+}
+function decided(op: string, value: number): boolean {
+    if(op === 'LessThanToken' || op === 'GreaterThanEqualsToken') { return value <= 0; }
+    return ['LessThanEqualsToken', 'GreaterThanToken', 'EqualsEqualsEqualsToken', 'EqualsEqualsToken', 'ExclamationEqualsEqualsToken', 'ExclamationEqualsToken'].includes(op) && value < 0;
+}
+export class NoCollectionMisuse {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    shape(index: number, raw = false): Types {
+        const mode = raw ? 'raw-shape' : 'type-shape';
+        return types(this.rules.ask(index, mode), mode);
+    }
+    property(index: number, id: number, name: string): boolean {
+        return types(this.rules.ask(index, `property-shape\n${id}\n${name}`), 'property-shape').present;
+    }
+    collection(index: number): boolean {
+        const f = this.shape(index);
+        return f.roots.length > 0 && f.parts(f.root()).length > 0 && f.parts(f.root()).every((id) => libraryType(this.rules, index, id, collections));
+    }
+    inArray(left: number, right: number): boolean {
+        const arrays = this.shape(right);
+        if(arrays.roots.length === 0 || arrays.parts(arrays.root()).length === 0 || !arrays.parts(arrays.root()).every((id) => arrays.type(id).array || arrays.type(id).tuple >= 0)) { return false; }
+        const names = this.shape(left);
+        if(names.roots.length === 0 || names.parts(names.root()).length === 0) { return false; }
+        for(const id of names.parts(names.root())) {
+            if((names.type(id).flags & 1024) === 0) { return false; }
+            const name = literal(this.rules, left, id);
+            if(arrayIndex(name) || arrays.parts(arrays.root()).some((array) => this.property(right, array, name))) { return false; }
+        }
+        return true;
+    }
+    size(index: number): boolean {
+        const node = this.rules.parser.node(this.rules.skip(index));
+        if(node.kind !== 'PropertyAccessExpression') { return false; }
+        const receiver = node.children[0] ?? -1;
+        const name = this.rules.parser.node(node.children[node.children.length - 1] ?? -1);
+        if(name.kind !== 'Identifier' || (name.text !== 'length' && name.text !== 'size')) { return false; }
+        const f = this.shape(receiver);
+        if(f.roots.length === 0 || f.parts(f.root()).length === 0) { return false; }
+        return f.parts(f.root()).every((id) => name.text === 'size' ? libraryType(this.rules, receiver, id, sized) :
+            f.type(id).array || f.type(id).tuple >= 0 || (f.type(id).flags & stringLike) !== 0 || libraryType(this.rules, receiver, id, typedArrays));
+    }
+    comparison(index: number, op: string): boolean {
+        let inner = this.rules.skip(index);
+        let sign = 1;
+        let node = this.rules.parser.node(inner);
+        if(node.kind === 'PrefixUnaryExpression') {
+            if(node.operator !== 'MinusToken') { return false; }
+            sign = -1; inner = this.rules.skip(node.children[0] ?? -1); node = this.rules.parser.node(inner);
+        }
+        if(node.kind !== 'NumericLiteral') { return false; }
+        return decided(op, sign * Number.parseFloat(node.text));
+    }
+    keyMisses(receiver: number, key: number): boolean {
+        const keys = this.shape(key, true);
+        const receivers = this.shape(receiver);
+        if(keys.roots.length === 0) { return false; }
+        for(const id of keys.parts(keys.root())) {
+            const flags = keys.type(id).flags;
+            if((flags & 1024) !== 0) {
+                const name = literal(this.rules, key, id);
+                if(receivers.parts(receivers.root()).some((part) => this.property(receiver, part, name))) { return false; }
+            }
+            else if((flags & (numberLike | booleanLike | bigintLike | 4 | 8)) === 0) { return false; }
+        }
+        return true;
+    }
+    objectCall(index: number): boolean {
+        const call = this.rules.parser.node(index);
+        if(call.list === 0) { return false; }
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') { return false; }
+        const object = this.rules.skip(callee.children[0] ?? -1);
+        const name = callee.children[callee.children.length - 1] ?? -1;
+        const objectNode = this.rules.parser.node(object); const nameNode = this.rules.parser.node(name);
+        if(objectNode.kind !== 'Identifier' || objectNode.text !== 'Object' || nameNode.kind !== 'Identifier' || !['keys', 'values', 'entries', 'getOwnPropertyNames'].includes(nameNode.text)) { return false; }
+        if(!nodeDeclarations(this.rules, object).some((d) => d.library) || !nodeDeclarations(this.rules, name).some((d) => d.library)) { return false; }
+        return this.collection(call.children[call.children.length - call.list] ?? -1);
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const node = this.rules.parser.node(i);
+            if(node.kind === 'BinaryExpression') {
+                const left = node.children[0] ?? -1; const right = node.children[2] ?? -1;
+                const op = this.rules.parser.node(node.children[1] ?? -1).kind;
+                if(op === 'InKeyword') {
+                    if(this.inArray(left, right)) { report(this.rules, 'correctness-no-collection-misuse', 'inOnArray', inOnArray, i); }
+                }
+                else if(this.size(left) ? this.comparison(right, op) : this.size(right) && this.comparison(left, mirror(op))) {
+                    report(this.rules, 'correctness-no-collection-misuse', 'impossibleSizeComparison', impossibleSizeComparison, i);
+                }
+            }
+            else if(node.kind === 'ElementAccessExpression') {
+                const receiver = node.children[0] ?? -1; const key = node.children[node.children.length - 1] ?? -1;
+                if(node.children.length > 1 && this.collection(receiver) && this.keyMisses(receiver, key)) { report(this.rules, 'correctness-no-collection-misuse', 'bracketAccessOnCollection', bracketAccessOnCollection, i); }
+            }
+            else if(node.kind === 'CallExpression' && this.objectCall(i)) { report(this.rules, 'correctness-no-collection-misuse', 'objectMethodOnCollection', objectMethodOnCollection, i); }
+        }
+    }
+}
