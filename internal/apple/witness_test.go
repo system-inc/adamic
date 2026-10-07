@@ -24,8 +24,13 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// stackJSON is what the test's server serves at /stack.json, for the programs that fetch.
-const stackJSON = `[{"identifier":"magnesium","name":"Magnesium","milligrams":200,"timing":"Evening"},{"identifier":"vitamin-d","name":"Vitamin D","milligrams":0.05,"timing":"Morning"}]`
+// served is what the test's server serves, by path, for the programs that fetch: a stack, the
+// supplements app's list (with a field its type doesn't name), and the list drifted from its type.
+var served = map[string]string{
+	"/stack.json":       `[{"identifier":"magnesium","name":"Magnesium","milligrams":200,"timing":"Evening"},{"identifier":"vitamin-d","name":"Vitamin D","milligrams":0.05,"timing":"Morning"}]`,
+	"/supplements.json": `[{"name":"Creatine","dose":"5 g","symbol":"bolt.fill","timing":"Morning","brand":"dropped"},{"name":"Vitamin D","dose":"2000 IU","symbol":"sun.max.fill","timing":"Morning"},{"name":"Magnesium","dose":"400 mg","symbol":"moon.fill","timing":"Evening"}]`,
+	"/drifted.json":     `[{"name":"Creatine","dose":"5 g","symbol":"bolt.fill","timing":"Noon"}]`,
+}
 
 // TestProgramsAgreeWithTheirWitnesses builds each program and its witness under the address and
 // undefined-behavior sanitizers, and holds the program to the witness: the same stdout, byte for
@@ -42,12 +47,13 @@ func TestProgramsAgreeWithTheirWitnesses(t *testing.T) {
 	// Every program and witness is given the address of a server of the test's own as its first
 	// argument; those that don't fetch ignore it.
 	server := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		if request.URL.Path != "/stack.json" {
+		body, found := served[request.URL.Path]
+		if !found {
 			http.NotFound(writer, request)
 			return
 		}
 		writer.Header().Set("Content-Type", "application/json")
-		_, _ = writer.Write([]byte(stackJSON))
+		_, _ = writer.Write([]byte(body))
 	}))
 	t.Cleanup(server.Close)
 	address := server.URL
