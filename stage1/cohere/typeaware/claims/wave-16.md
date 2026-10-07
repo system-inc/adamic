@@ -112,3 +112,23 @@ incomplete, not completed ports. Independent reference runs also reproduce
 non-deterministic static-components creation-site message bytes; see
 WAVE16_REACT_REFERENCE_REPORT.md. No duplicate core implementation or new
 reservation was added in this continuation.
+
+## React claims parked under the analysis-module instruction
+
+The following retained claims are now **parked**, and count as finished for
+landing-first scheduling under Ahra's explicit instruction. They remain partial
+source work, not completed native source ports:
+
+| Rule | Parked blocker |
+| --- | --- |
+| react-hooks/set-state-in-effect | Native source-to-HIR lowering, single-assignment construction, capture translation, memo erasure/inlining and control dominators |
+| react-hooks/set-state-in-render | Native source-to-HIR lowering, single-assignment construction, capture translation and exact compilation-unit/memo gates |
+| react-hooks/static-components | Native source-to-HIR lowering, single-assignment phis and source/capture correspondence; independently observed Go creator-message nondeterminism |
+
+Cohere's analysis modules are being ported on #dnv6f2c; JSX support is landing
+on area/stage1-lint. Existing prerequisite and independent Go reference evidence
+is pushed, with native prepared-HIR validators available on wave 21. No Go
+lowering/verdict shortcut or empty native finding implementation was added here.
+The completed fifteen ports were rebased onto main f8013f0ba and re-greened
+before push 2bd4efb74: oracle 425.666s, bridge 66.168s. Main is still f8013f0ba.
+This status update changes no native implementation or harness.
