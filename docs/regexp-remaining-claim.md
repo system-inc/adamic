@@ -214,7 +214,7 @@ Classification: library (runtime compiler dependency).
 
 Classification: library metadata / language detached methods.
 
-Language handoff (detached receiver): `const fn = /a/.toString; fn.call(/a/, "a");`
+Language handoff (detached receiver): `const fn = /a/.toString; fn.call(/a/);`
 
 - built-ins/RegExp/prototype/15.10.6.js
 - built-ins/RegExp/prototype/toString/S15.10.6.4_A11.js
@@ -357,7 +357,7 @@ Language handoff reproducer: `console.log(/a/.exec('a') instanceof Array);`
 
 Classification: language.
 
-Language handoff reproducer: `if (/a/.exec('a')!.index) console.log('nonzero');`
+Language handoff reproducer: `const m = /a/.exec('a'); if (m !== null && m.index) console.log('nonzero');`
 
 - built-ins/RegExp/prototype/exec/S15.10.6.2_A3_T2.js
 - built-ins/RegExp/prototype/exec/S15.10.6.2_A3_T3.js

@@ -148,6 +148,9 @@ func joinPatternStrings(left, right string) string {
 }
 
 func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.regexMethodMetadataCall(node); known {
+		return value, true, err
+	}
 	if value, known, err := l.regexProtocol(node); known {
 		return value, true, err
 	}
@@ -167,6 +170,10 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	result := ir.Type(0)
 	switch {
 	case l.isLibraryType(proven, "RegExp"):
+		if name == "compile" {
+			value, err := l.regexCompile(node, receiver, args)
+			return value, true, err
+		}
 		if name == "test" {
 			result = ir.Boolean
 		} else if name == "exec" {

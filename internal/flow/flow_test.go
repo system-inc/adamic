@@ -44,6 +44,13 @@ func programs(t *testing.T) []string {
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
 	// and operator shapes here, and the oracle still runs the full sweep.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
+		switch filepath.Base(path) {
+		case "regexp_surrogate_limit_refused.a", "regexp_surrogate_nested_limit_refused.a",
+			"regexp_compile_source_refused.a", "regexp_native_write_groups_compound_missing.a":
+			// These are registered NotYet oracle fixtures, not lowered programs.
+			// The oracle verifies their refusal; a flow graph must not exist.
+			return true
+		}
 		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
 	})
 	if len(paths) < 60 {

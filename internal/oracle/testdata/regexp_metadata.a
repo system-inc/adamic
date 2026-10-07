@@ -1,0 +1,4 @@
+console.log(`${RegExp.prototype.exec.length}:${RegExp.prototype.test.length}:${RegExp.prototype.toString.length}:${RegExp.prototype.compile.length}`);
+console.log(`${RegExp.prototype.exec.name}:${RegExp.prototype.test.name}:${RegExp.prototype.toString.name}`);
+console.log(`${RegExp.prototype.exec.prototype === undefined}:${RegExp.prototype.test.prototype === undefined}`);
+console.log(`${RegExp.prototype.toString.hasOwnProperty('length')}:${RegExp.prototype.toString.hasOwnProperty('prototype')}:${RegExp.prototype.exec.propertyIsEnumerable('length')}`);

@@ -34,8 +34,8 @@ func (l *lowering) constantUndefined(node *ast.Node, depth int) bool {
 	return l.constantUndefined(d.AsVariableDeclaration().Initializer, depth+1)
 }
 
-// Resolve a RegExp's immutable source and flags, while construction still
-// evaluates its input object at runtime and starts the new lastIndex at zero.
+// Resolve source and flags only when no compile call can mutate the object.
+// Construction still evaluates its input at runtime and starts lastIndex at zero.
 func (l *lowering) constantRegExp(node *ast.Node, depth int) (string, string, bool) {
 	if depth > 32 {
 		return "", "", false
@@ -92,6 +92,9 @@ func (l *lowering) constantRegExp(node *ast.Node, depth int) (string, string, bo
 		}
 	}
 	if ast.IsIdentifier(node) {
+		if l.regexCompileMayMutate() {
+			return "", "", false
+		}
 		symbol := l.symbol(node)
 		if symbol != nil && len(symbol.Declarations) == 1 {
 			d := symbol.Declarations[0]

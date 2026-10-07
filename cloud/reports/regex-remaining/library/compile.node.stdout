@@ -1,0 +1,11 @@
+true:true:0:(?<part>a)(b)?:dy
+false:false:true:true
+0:a:a:undefined:a
+0:1
+true:4:(?<part>a)(b)?:dy
+true:4:dy
+true:0:z:g
+true:1
+true:0:(?:):
+receiver
+true:true

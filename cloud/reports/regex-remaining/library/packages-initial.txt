@@ -1,0 +1,37 @@
+ok  	github.com/system-inc/adamic/internal/lower	129.412s
+ok  	github.com/system-inc/adamic/internal/fresh	219.370s
+--- FAIL: TestEveryFunctionIsInSingleAssignment (160.37s)
+    flow_test.go:82: Lower: /workspace/adamic/internal/oracle/testdata/regexp_compile_source_refused.a:4:27: stage 0 can't lower RegExp with a nonconstant RegExp source yet
+--- FAIL: TestEveryMutationIsInItsRange (406.61s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.08s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/regexp_surrogate_nested_limit_refused.a (0.44s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a:2:13: stage 0 can't lower RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/regexp_surrogate_limit_refused.a (0.42s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/regexp_surrogate_limit_refused.a:2:13: stage 0 can't lower RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/regexp_native_write_groups_compound_missing.a (0.38s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a:4:3: stage 0 can't lower overriding a RegExp or iterator property yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/regexp_compile_source_refused.a (0.38s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/regexp_compile_source_refused.a:4:27: stage 0 can't lower RegExp with a nonconstant RegExp source yet
+    ranges_test.go:78: 77907 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestLivenessHoldsOnEveryPath (406.61s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.12s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/regexp_surrogate_nested_limit_refused.a (0.36s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a:2:13: stage 0 can't lower RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/regexp_surrogate_limit_refused.a (0.38s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/regexp_surrogate_limit_refused.a:2:13: stage 0 can't lower RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/regexp_native_write_groups_compound_missing.a (0.33s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a:4:3: stage 0 can't lower overriding a RegExp or iterator property yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/regexp_compile_source_refused.a (0.63s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/regexp_compile_source_refused.a:4:27: stage 0 can't lower RegExp with a nonconstant RegExp source yet
+    trace_test.go:426: 19848546 variable-and-point pairs checked
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.27s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/regexp_surrogate_nested_limit_refused.a (0.11s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a:2:13: stage 0 can't lower RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/regexp_surrogate_limit_refused.a (0.55s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/regexp_surrogate_limit_refused.a:2:13: stage 0 can't lower RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/regexp_native_write_groups_compound_missing.a (1.71s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/regexp_native_write_groups_compound_missing.a:4:3: stage 0 can't lower overriding a RegExp or iterator property yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/regexp_compile_source_refused.a (0.25s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/regexp_compile_source_refused.a:4:27: stage 0 can't lower RegExp with a nonconstant RegExp source yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	407.686s

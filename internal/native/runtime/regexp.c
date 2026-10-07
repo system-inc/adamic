@@ -441,6 +441,22 @@ adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_stri
 	result->slots[7].boolean = (program->flags & 4) != 0 && !(program->flags & 64);
 	return result;
 }
+// Annex B RegExp.prototype.compile: same object, newly initialized matcher and +0 lastIndex.
+// Argument construction has already succeeded, so exceptions cannot partially
+// update the receiver. Retain first: compile(re) may use the receiver itself.
+adamic_object *adamic_regex_compile(adamic_object *regex, adamic_object *replacement) {
+	void *source = adamic_retain(replacement->slots[2].reference);
+	void *flags = adamic_retain(replacement->slots[3].reference);
+	adamic_release(regex->slots[2].reference);
+	adamic_release(regex->slots[3].reference);
+	regex->slots[0] = replacement->slots[0];
+	regex->slots[1].number = 0;
+	regex->slots[2].reference = source;
+	regex->slots[3].reference = flags;
+	for (size_t k = 4; k < 12; k++)
+		regex->slots[k] = replacement->slots[k];
+	return adamic_retain(regex);
+}
 static const adamic_regex_program *regex_program(adamic_object *regex) {
 	return regex->slots[0].reference;
 }
@@ -1111,7 +1127,7 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 	return result;
 }
 
-// The proven intrinsic object has immutable source/flags and no custom hooks.
+// The proven intrinsic object has current source/flags and no custom hooks.
 adamic_string *adamic_regex_to_string(adamic_object *regex) {
 	static adamic_string slash = ADAMIC_STRING("/");
 	return adamic_string_concat(4, (adamic_string *const[]){

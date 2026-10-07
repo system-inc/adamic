@@ -1,0 +1,10 @@
+=== RUN   TestMatcherRandomNode
+    matcher_oracle_test.go:228: execution totals: 10000 cases, 10000 compared, 0 property stand-in unavailable
+    matcher_oracle_test.go:228: three modes: budgeted VM, regular with recovery, unlimited VM; 7369 eligible executions
+--- PASS: TestMatcherRandomNode (9.85s)
+=== RUN   TestMatcherTest262Executions
+    matcher_oracle_test.go:248: execution totals: 127369 cases, 127369 compared, 0 property stand-in unavailable
+    matcher_oracle_test.go:248: three modes: budgeted VM, regular with recovery, unlimited VM; 127018 eligible executions
+--- PASS: TestMatcherTest262Executions (11.51s)
+PASS
+ok  	github.com/system-inc/adamic/internal/regexp	21.410s

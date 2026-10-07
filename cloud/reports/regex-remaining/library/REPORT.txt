@@ -1,0 +1,27 @@
+Node v24.19.0, V8 13.6.233.17-node.51, Linux x64; nproc 5.
+Claim: 394a34f. Baseline after merging all requested branches: 931 pass / 247 refused / 258 not-typescript / 753 skipped, 2189 total, zero fail/crash.
+This step removes the obsolete constructor admission guard (the prelude already checks exact immutable constructor identity), models Symbol protocols and toString without an unknown Function escape, and gives callbacks ordinary escape/clobber effects.
+Annex B compile accepts constant string syntax through the existing Go bytecode compiler, returns the same object, resets lastIndex, replaces all metadata, and leaves the receiver unchanged on SyntaxError. Whole-module source inference conservatively declines identifier-based source proofs if any .compile call occurs, covering aliases and closures. Direct literals remain provable. Runtime syntax/flags remain explicitly refused; no helper process stands in for a native compiler.
+Intrinsic exec/test/toString/compile name, length and absent prototype observations, and literal-key hasOwnProperty/propertyIsEnumerable, are lowered only for direct library prototype methods. Detached functions, for-in, prototypes and evaluated metadata keys retain explicit refusals. Stock TypeScript rejects compile(RegExp) and compile() under its declared API; those are not counted as native coverage.
+The expanded surrogate fixture covers both assertions under u and v for all eight matcher entry points. Omitted, undefined, small literal and large literal split limits distinguish V8's two split paths. The unproved hidden numeric representation remains refused for sensitive u patterns, including nested negative assertions.
+Four explicitly registered refusal .a fixtures are excluded by exact name from flow's accepted-program glob. The oracle still proves their refusal; no flow semantics changed.
+A full counting run refreshed stale merge rows as well as this unit's fixtures. Surrogate row was refreshed after adding the u negative assertion. Every new accepted .a fixture has its counts recorded.
+Seven isolated C mutants were run. Each normal binary equals Node; each mutant exits 0 with empty sanitizer stderr and differs only in stdout. See mutants.py and the paired *.stdout artifacts. Families: exception constructors, Symbol search, regex string conversion, callback replacement, compile lastIndex, intrinsic method metadata, surrogate split.
+
+Commands (test stdout/stderr redirected directly to the corresponding files):
+source /workspace/adamic-tools/env.sh
+export PATH=/tmp/regex-remaining-typescript/node_modules/.bin:$PATH
+go test ./cmd/adamic-test262 ./internal/fresh -count=1 [harness-effects.txt: PASS, 95.404s / 21.896s]
+go test ./internal/lower ./internal/fresh ./internal/flow ./cmd/adamic-test262 -count=1 [packages-initial.txt: lower/fresh PASS; flow initially failed only on four expected-refusal fixtures; environment restart interrupted the remaining runner]
+go test ./internal/fresh -count=1 [fresh.txt: PASS 225.357s, including callback operand and compile receiver-alias cycle checks]
+go test ./internal/flow -timeout 30m -count=1 [flow.txt: PASS 195.640s after fixture inventory correction]
+go test ./cmd/adamic-test262 -timeout 30m -count=1 [runner.txt: PASS 108.391s]
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts [counts.txt: PASS 83.185s]
+go test ./internal/oracle -run TestRegExpSurrogateCounts -count=1 -v -args -update-regexp-surrogate-counts [surrogate-counts.txt: PASS]
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(regexp|sweeps/regexp)' -timeout 30m -count=1 -v [all-regex-fixtures.txt: PASS 89.938s, sanitizer/release/JavaScript, including timing and Linux leak probes]
+go test ./internal/regexp ./internal/native -run 'TestMatcher(Test262Executions|RandomNode)|TestRegExpBytecode(Test262|RandomNode|V8Node)' -count=1 -v [go-core.txt: Go corpus 127369 and seeded 10000 PASS in three modes; restart interrupted native checks, not counted]
+go test ./internal/native -run 'TestRegExpBytecode(Test262|RandomNode|V8Node)' -timeout 30m -count=1 -v [native-core.txt: PASS 140.553s, three modes; 127369 corpus, 9911/10000 seeded accepted plus 89 explicit refusals, 2659 V8 cases; zero disagreements]
+go vet ./internal/lower ./internal/fresh ./internal/native ./cmd/adamic-test262 [vet.txt: exit 0]
+ADAMIC_REGEX_MUTANT_COMPILER=/tmp/regex-remaining-adamic ADAMIC_REGEX_MUTANT_OBJECTS=/tmp/regex-remaining-before-0/runtime ADAMIC_REGEX_MUTANT_WORK=/tmp/regex-remaining-family-mutants python3 cloud/reports/regex-remaining/mutants.py [mutants.txt: all seven caught solely by Node comparison]
+
+The full uncached go test ./... gate was not run. Touched packages, full flow checks, all regex oracle fixtures, and the full matcher corpus were run instead. The complete official after survey is recorded in the following evidence commit; no partial total is claimed here.

@@ -53,7 +53,7 @@ func (e *emitter) regexCall(call ir.RegExpCall) string {
 		name = strings.TrimPrefix(name, "symbol:")
 		arguments[0], arguments[1] = arguments[1], arguments[0]
 	}
-	method := map[string]string{"test": "test", "exec": "exec", "toString": "to_string", "match": "match", "matchAll": "match_all", "next": "next", "replace": "replace", "replaceAll": "replace", "replaceCallback": "replace_callback", "replaceAllCallback": "replace_callback", "split": "split", "search": "search"}[name]
+	method := map[string]string{"compile": "compile", "test": "test", "exec": "exec", "toString": "to_string", "match": "match", "matchAll": "match_all", "next": "next", "replace": "replace", "replaceAll": "replace", "replaceCallback": "replace_callback", "replaceAllCallback": "replace_callback", "split": "split", "search": "search"}[name]
 	if symbol && name == "matchAll" {
 		method = "symbol_match_all"
 	}

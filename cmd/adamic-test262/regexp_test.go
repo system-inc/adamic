@@ -94,6 +94,12 @@ func TestRegExpRunnerNode(t *testing.T) {
 	if got := e.attempt(one); got.Kind != outcomeFail || !strings.Contains(got.Reason, "original Node") {
 		t.Fatalf("false pass accepted: %+v", got)
 	}
+	// Exact constructor assertions are now admissible, but still validated by
+	// both executions and the untouched upstream Node harness.
+	one = classify("built-ins/RegExp/exact-constructor.js", `assert.throws(SyntaxError, () => { new RegExp("("); });`, true)
+	if got := e.attempt(one); got.Kind != outcomePass {
+		t.Fatalf("exact constructor refused: %+v", got)
+	}
 	// Upstream Node succeeds here, but the old shared harness would accept
 	// an Error where the test requires TypeError. That is not a sound pass.
 	one = classify("built-ins/RegExp/wrong-constructor.js", `assert.throws(TypeError, () => { throw new TypeError("type"); });`, true)

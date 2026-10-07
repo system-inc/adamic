@@ -1,0 +1,36 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_metadata.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_metadata.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile_source_refused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile_source_refused.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile_source_refused.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_metadata.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile_source_refused.a
+    oracle_test.go:584: not yet: /workspace/adamic/internal/oracle/testdata/regexp_compile_source_refused.a:4:27: stage 0 can't lower RegExp with a nonconstant RegExp source yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_metadata.a
+    oracle_test.go:590: gate cache node hit
+    oracle_test.go:590: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile.a
+    oracle_test.go:590: gate cache node hit
+    oracle_test.go:590: gate cache node hit
+    oracle_test.go:479: gate cache native hit
+    oracle_test.go:472: gate cache native hit
+    oracle_test.go:486: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_metadata.a
+    oracle_test.go:479: gate cache native miss
+    oracle_test.go:472: gate cache native miss
+    oracle_test.go:486: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile_source_refused.a (0.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_compile.a (0.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_metadata.a (0.57s)
+PASS
+gate cache: native hits=4 misses=2
+gate cache: node hits=3 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.609s

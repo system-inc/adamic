@@ -1,0 +1,86 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_methods.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_limit_refused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_limit_refused.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_methods.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_limit_refused.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_limit_refused.a
+    oracle_test.go:584: not yet: /workspace/adamic/internal/oracle/testdata/regexp_surrogate_limit_refused.a:2:13: stage 0 can't lower RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+    oracle_test.go:590: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+    oracle_test.go:590: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_methods.a
+    oracle_test.go:590: gate cache node hit
+    oracle_test.go:590: gate cache node hit
+    oracle_test.go:479: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+    oracle_test.go:590: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_methods.a
+    oracle_test.go:472: gate cache native hit
+    oracle_test.go:486: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+    oracle_test.go:590: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a
+    oracle_test.go:584: not yet: /workspace/adamic/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a:2:13: stage 0 can't lower RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+    oracle_test.go:590: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+    oracle_test.go:590: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+    oracle_test.go:479: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+    oracle_test.go:590: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+    oracle_test.go:479: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+    oracle_test.go:479: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+    oracle_test.go:590: gate cache node miss
+    oracle_test.go:479: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+    oracle_test.go:472: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+    oracle_test.go:472: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+    oracle_test.go:472: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+    oracle_test.go:486: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a
+    oracle_test.go:486: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a
+    oracle_test.go:486: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+    oracle_test.go:472: gate cache native miss
+    oracle_test.go:486: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_limit_refused.a (0.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_methods.a (0.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_surrogate_nested_limit_refused.a (0.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a (1.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_string.a (2.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_protocol.a (2.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a (2.18s)
+PASS
+gate cache: native hits=7 misses=8
+gate cache: node hits=2 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.579s

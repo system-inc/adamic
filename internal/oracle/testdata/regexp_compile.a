@@ -1,0 +1,26 @@
+const r = /original/ig;
+const alias = r;
+r.lastIndex = 9;
+const returned = r.compile('(?<part>a)(b)?', 'dy');
+console.log(`${returned === r}:${alias === r}:${r.lastIndex}:${r.source}:${r.flags}`);
+console.log(`${r.global}:${r.ignoreCase}:${r.hasIndices}:${r.sticky}`);
+const m = alias.exec('a');
+if (m !== null) {
+ console.log(`${m.index}:${m[0]}:${m[1]}:${m[2]}:${m.groups?.part}`);
+ const indices = m.indices;
+ if(indices !== undefined) { const pair=indices[1]; if(pair !== undefined) console.log(`${pair[0]}:${pair[1]}`); }
+}
+r.lastIndex = 4;
+try { r.compile('(', 'u'); } catch(error) {
+ if(error instanceof Error) console.log(`${error.constructor === SyntaxError}:${r.lastIndex}:${r.source}:${r.flags}`);
+}
+try { r.compile('a', 'gg'); } catch(error) {
+ if(error instanceof Error) console.log(`${error.constructor === SyntaxError}:${r.lastIndex}:${r.flags}`);
+}
+console.log(`${r.compile('z', 'g') === r}:${r.lastIndex}:${r.source}:${r.flags}`);
+console.log(`${r.test('z')}:${r.lastIndex}`);
+console.log(`${r.compile('') === r}:${r.lastIndex}:${r.source}:${r.flags}`);
+function receiver(): RegExp { console.log('receiver'); return r; }
+function pattern(): string { console.log('pattern'); return 'q'; }
+// The pattern's value is runtime-only, so keep explicit refusal in another fixture.
+console.log(`${receiver().compile('q') === r}:${r.test('q')}`);

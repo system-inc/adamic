@@ -1,0 +1,4 @@
+const original = /a/;
+const alias = original;
+alias.compile('b');
+console.log(`${new RegExp(original).test('b')}`);

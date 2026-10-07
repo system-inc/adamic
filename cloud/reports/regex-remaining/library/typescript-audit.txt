@@ -1,0 +1,5 @@
+=== RUN   TestRegExpRemainingTypeScriptAudit
+    regexp_remaining_audit_test.go:66: audited 247 refusals with stock TypeScript 6.0.3
+--- PASS: TestRegExpRemainingTypeScriptAudit (18.49s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	18.495s
