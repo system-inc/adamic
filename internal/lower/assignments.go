@@ -48,6 +48,10 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		// Its type is unknown, so anything could be written to it, and it holds only undefined.
 		return nil, l.notYet(target, "assigning to a parameter that only ever receives undefined")
 	}
+	if !isCompound && l.uninitializedInitializer(binary.Right) {
+		l.result.Locals[local].Uninitialized = true
+		return []ir.Statement{ir.Assign{Local: local, Value: uninitializedValue(l.result.Locals[local].Type), Uninitialized: true}}, nil
+	}
 	value, err := l.expression(binary.Right)
 	if err != nil {
 		return nil, err

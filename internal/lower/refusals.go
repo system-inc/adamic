@@ -29,7 +29,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
-	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
@@ -91,19 +90,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
-		}
-		var assertion *ast.Node
-		if node.Kind == ast.KindPropertyDeclaration {
-			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
-				assertion = token
-			}
-		}
-		if node.Kind == ast.KindVariableDeclaration {
-			assertion = node.AsVariableDeclaration().ExclamationToken
-		}
-		if assertion != nil {
-			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
-			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
 			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {

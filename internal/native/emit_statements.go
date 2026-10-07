@@ -81,10 +81,20 @@ func (e *emitter) statement(statement ir.Statement) {
 		owned := e.taken(value)
 		if local.Global {
 			e.store(statement.Local, value, owned)
-			e.line("%s = true;", readyName(statement.Local))
+			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			if local.Uninitialized {
+				e.line("%s_declared = true;", readyName(statement.Local))
+			}
 			e.initialized = append(e.initialized, statement.Local)
 		} else {
 			e.declareLocal(statement.Local, value, owned)
+			if local.Uninitialized {
+				if local.Captured {
+					e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+				} else {
+					e.line("bool %s = %t; (void)%s;", readyName(statement.Local), !statement.Uninitialized, readyName(statement.Local))
+				}
+			}
 		}
 		e.end()
 	case ir.Assign:
@@ -109,6 +119,12 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		value := e.value(statement.Value)
+		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
+			e.line("if (!%s_declared) {", readyName(statement.Local))
+			message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
+			e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
+			e.line("}")
+		}
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			e.checkReady(statement.Local)
@@ -116,6 +132,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		// The store is the statement's last write: nothing after it can assign the variable again
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
+		if e.program.Locals[statement.Local].Uninitialized {
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+		}
 		e.end()
 	case ir.Evaluate:
 		if splice, isSplice := statement.Value.(ir.ArraySplice); isSplice {
@@ -169,6 +188,9 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("if (%s != NULL) adamic_release(%s);", old, old)
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
+		}
+		if statement.Uninitialized {
+			e.line("adamic_object_set_initialized(%s, %s, false);", object, cString(statement.Name))
 		}
 		e.end()
 	case ir.Panic:
@@ -273,6 +295,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		cell := e.cellName(local)
 		fresh := e.temporary()
 		e.line("adamic_cell *%s = adamic_cell_new(%s->value, %s->references);", fresh, cell, cell)
+		e.line("%s->ready = %s->ready;", fresh, cell)
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
