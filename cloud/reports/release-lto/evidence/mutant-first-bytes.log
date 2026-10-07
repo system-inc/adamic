@@ -1,0 +1,6 @@
+ast-mutant.stdout
+actual b'case 0\nfile\n0 XourceFile 0 111 0 0 -1 0 0\t\t\t\t\n1 ExportDeclaration 0 109 0 0 -1 0'
+expected b'case 0\nfile\n0 SourceFile 0 111 0 0 -1 0 0\t\t\t\t\n1 ExportDeclaration 0 109 0 0 -1 0'
+service-mutant.stdout
+actual b'{"status":201,"service":"orders"}\n{"status":200,"products":["bread","coffee","te'
+expected b'{"status":200,"service":"orders"}\n{"status":200,"products":["bread","coffee","te'

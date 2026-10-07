@@ -1,0 +1,38 @@
+{
+  "baseline": {
+    "runtime_seconds": 2.631956529999968,
+    "archive_bytes": 511640,
+    "workloads": {
+      "parse": {
+        "cold_seconds": 5.136880287999986,
+        "first_link_seconds": 2.504923758000018,
+        "cached_seconds": 2.4588196979999566,
+        "binary_bytes": 971936
+      },
+      "service": {
+        "cold_seconds": 2.8412123339999766,
+        "first_link_seconds": 0.20925580400000854,
+        "cached_seconds": 0.19665474299995367,
+        "binary_bytes": 406816
+      }
+    }
+  },
+  "thin": {
+    "runtime_seconds": 1.7037252239999816,
+    "archive_bytes": 667544,
+    "workloads": {
+      "parse": {
+        "cold_seconds": 17.574521239999967,
+        "first_link_seconds": 15.870796015999986,
+        "cached_seconds": 17.429908850999993,
+        "binary_bytes": 1339432
+      },
+      "service": {
+        "cold_seconds": 2.388523231000022,
+        "first_link_seconds": 0.6847980070000403,
+        "cached_seconds": 0.4947544689999859,
+        "binary_bytes": 163056
+      }
+    }
+  }
+}

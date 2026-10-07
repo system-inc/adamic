@@ -1,0 +1,14 @@
+==5711== Callgrind, a call-graph generating cache profiler
+==5711== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==5711== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==5711== Command: /workspace/scratch/release-lto/thin/parse --manifest /workspace/scratch/release-lto/compiler.txt --count
+==5711== 
+==5711== For interactive control, run 'callgrind_control -h'.
+==5711== brk segment overflow in thread #1: can't grow to 0x4838000
+==5711== (see section Limitations in user manual)
+==5711== NOTE: further instances of this message will not be shown
+==5711== 
+==5711== Events    : Ir
+==5711== Collected : 5908993714
+==5711== 
+==5711== I   refs:      5,908,993,714

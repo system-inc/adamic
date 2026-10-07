@@ -1,0 +1,14 @@
+==4048== Callgrind, a call-graph generating cache profiler
+==4048== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==4048== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==4048== Command: /workspace/scratch/release-lto/baseline/parse --manifest /workspace/scratch/release-lto/compiler.txt --count
+==4048== 
+==4048== For interactive control, run 'callgrind_control -h'.
+==4048== brk segment overflow in thread #1: can't grow to 0x4838000
+==4048== (see section Limitations in user manual)
+==4048== NOTE: further instances of this message will not be shown
+==4048== 
+==4048== Events    : Ir
+==4048== Collected : 6503615880
+==4048== 
+==4048== I   refs:      6,503,615,880

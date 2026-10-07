@@ -1,0 +1,4 @@
+Benchmark 1: taskset -c 3 /workspace/scratch/release-lto/go-parse --manifest /workspace/scratch/release-lto/compiler.txt --count
+0
+  Time (abs ≡):        191.5 ms               [User: 155.4 ms, System: 35.0 ms]
+ 

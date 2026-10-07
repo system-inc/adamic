@@ -1,0 +1,16 @@
+==22419== Callgrind, a call-graph generating cache profiler
+==22419== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==22419== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==22419== Command: /workspace/scratch/release-lto/thin/service /tmp/wasm-requests-profile/requests.jsonl run
+==22419== 
+==22419== For interactive control, run 'callgrind_control -h'.
+==22419== brk segment overflow in thread #1: can't grow to 0x483c000
+==22419== (see section Limitations in user manual)
+==22419== NOTE: further instances of this message will not be shown
+serve:start
+serve:stop
+==22419== 
+==22419== Events    : Ir
+==22419== Collected : 127147493270
+==22419== 
+==22419== I   refs:      127,147,493,270
