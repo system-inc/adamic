@@ -66,3 +66,12 @@ claimed here before implementation:
 - @typescript-eslint/no-unnecessary-type-constraint
 - @typescript-eslint/prefer-as-const
 - @typescript-eslint/prefer-enum-initializers
+
+### Fourth-batch outcome
+
+All three remain claimed but blocked by the shared repair contract. Independent
+Go probes first count one valid finding and then refuse serialization: constraint
+removal has a distinct suggestion range, as-const annotations have two fix edits,
+and enum initializers have three ordered suggestions. No partial port is registered.
+The complete original Go tests pass. Reproduction and exact limits are recorded
+in wave1-14-fourth-report.md and wave1-14-fourth-evidence/.

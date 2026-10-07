@@ -1,0 +1,770 @@
+=== RUN   TestNoUnnecessaryTypeConstraintFires
+=== PAUSE TestNoUnnecessaryTypeConstraintFires
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== RUN   TestPreferAsConstFires
+=== PAUSE TestPreferAsConstFires
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim
+=== RUN   TestPreferAsConstReportsTheDestructuringCaseWithoutARepair
+=== PAUSE TestPreferAsConstReportsTheDestructuringCaseWithoutARepair
+=== RUN   TestPreferAsConstPointsAtTheLiteralType
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType
+=== RUN   TestPreferAsConstStaysSilent
+=== PAUSE TestPreferAsConstStaysSilent
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings
+=== RUN   TestPreferAsConstReportsOnceWhenBothArmsCouldApply
+=== PAUSE TestPreferAsConstReportsOnceWhenBothArmsCouldApply
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases
+=== RUN   TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite
+=== PAUSE TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite
+=== RUN   TestPreferEnumInitializersReportsAComputedKeyUpstreamCannotParse
+=== PAUSE TestPreferEnumInitializersReportsAComputedKeyUpstreamCannotParse
+=== CONT  TestNoUnnecessaryTypeConstraintFires
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== CONT  TestPreferAsConstStaysSilent
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_1
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_1
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim
+=== RUN   TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== CONT  TestPreferAsConstReportsTheDestructuringCaseWithoutARepair
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_2
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_2
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_3
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_3
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_4
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_4
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_5
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_5
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_6
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_6
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_array_binding_pattern
+=== PAUSE TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_array_binding_pattern
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_object_binding_pattern
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== PAUSE TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_object_binding_pattern
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== RUN   TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== CONT  TestPreferAsConstPointsAtTheLiteralType
+=== RUN   TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim
+=== RUN   TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_7
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_7
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_8
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_8
+=== PAUSE TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_1
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_1
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_2
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_9
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_2
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_9
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_10
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_10
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_11
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_11
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_12
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_12
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_3
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_13
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_13
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_3
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases/case0
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_4
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases/case0
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_14
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_14
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_4
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_15
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_5
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_5
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_6
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_6
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_7
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases/case1
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_7
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases/case1
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_8
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_8
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases/case2
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_9
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_9
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_15
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_10
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_10
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_16
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_11
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases/case2
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_16
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_11
+=== RUN   TestPreferEnumInitializersFiresOnUpstreamFailCases/case3
+=== PAUSE TestPreferEnumInitializersFiresOnUpstreamFailCases/case3
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_12
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_17
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_17
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_12
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_18
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_18
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/a_variable_annotation
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/a_variable_annotation
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/a_numeric_variable_annotation
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/a_numeric_variable_annotation
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/quote_styles_differ_between_type_and_value
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/quote_styles_differ_between_type_and_value
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/an_as_expression
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/an_as_expression
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/a_class_property
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/a_class_property
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/a_binding_pattern
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/a_binding_pattern
+=== CONT  TestPreferEnumInitializersReportsAComputedKeyUpstreamCannotParse
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_13
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_19
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_19
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_20
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_20
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_21
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_21
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_22
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_22
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_13
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_14
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_14
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/a_plain_class_property_is_fixed_too
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/a_plain_class_property_is_fixed_too
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/whitespace_before_the_colon_survives_the_delete
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/whitespace_before_the_colon_survives_the_delete
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/a_comment_after_the_type_survives_the_delete
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/a_comment_after_the_type_survives_the_delete
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/the_insert_precedes_trailing_trivia
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/the_insert_precedes_trailing_trivia
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_23
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_23
+=== CONT  TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_24
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_24
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case0
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_25
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case0
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_25
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case0
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_26
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case1
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_26
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== RUN   TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case1
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case2
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case2
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case3
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case3
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case4
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case4
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case5
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case5
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case6
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case6
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case7
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case7
+=== RUN   TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case8
+=== PAUSE TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case8
+--- PASS: TestPreferEnumInitializersReportsAComputedKeyUpstreamCannotParse (0.00s)
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_27
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_27
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_28
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_28
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_29
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_29
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_30
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_30
+=== RUN   TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion
+=== PAUSE TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion
+=== RUN   TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#01
+=== PAUSE TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#01
+=== RUN   TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#02
+=== PAUSE TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#02
+=== RUN   TestPreferAsConstStaysSilent/a_parameter_default
+=== PAUSE TestPreferAsConstStaysSilent/a_parameter_default
+=== RUN   TestPreferAsConstStaysSilent/a_generic_type_argument
+=== PAUSE TestPreferAsConstStaysSilent/a_generic_type_argument
+=== RUN   TestPreferAsConstStaysSilent/a_parenthesized_literal_type
+=== PAUSE TestPreferAsConstStaysSilent/a_parenthesized_literal_type
+=== RUN   TestPreferAsConstStaysSilent/a_boolean_literal_type
+=== PAUSE TestPreferAsConstStaysSilent/a_boolean_literal_type
+=== RUN   TestPreferAsConstStaysSilent/a_bigint_literal_type
+=== PAUSE TestPreferAsConstStaysSilent/a_bigint_literal_type
+=== RUN   TestPreferAsConstStaysSilent/a_negated_numeric_literal_type
+=== PAUSE TestPreferAsConstStaysSilent/a_negated_numeric_literal_type
+=== CONT  TestPreferAsConstReportsOnceWhenBothArmsCouldApply
+--- PASS: TestPreferAsConstReportsOnceWhenBothArmsCouldApply (0.00s)
+=== CONT  TestPreferAsConstFires
+=== RUN   TestPreferAsConstFires/upstream_fail_1
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases
+=== PAUSE TestPreferAsConstFires/upstream_fail_1
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case0
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case0
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case1
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case1
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case2
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case2
+=== RUN   TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case3
+=== PAUSE TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case3
+=== RUN   TestPreferAsConstFires/upstream_fail_2
+=== PAUSE TestPreferAsConstFires/upstream_fail_2
+=== RUN   TestPreferAsConstFires/upstream_fail_3
+=== PAUSE TestPreferAsConstFires/upstream_fail_3
+=== RUN   TestPreferAsConstFires/upstream_fail_4
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{}
+=== PAUSE TestPreferAsConstFires/upstream_fail_4
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings
+=== PAUSE TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case0
+=== RUN   TestPreferAsConstFires/upstream_fail_5
+=== RUN   TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case1
+=== PAUSE TestPreferAsConstFires/upstream_fail_5
+=== PAUSE TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case1
+=== RUN   TestPreferAsConstFires/upstream_fail_6
+=== RUN   TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case2
+=== PAUSE TestPreferAsConstFires/upstream_fail_6
+=== PAUSE TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case2
+=== RUN   TestPreferAsConstFires/upstream_fail_7
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings/a_hexadecimal_type_against_a_decimal_value
+=== PAUSE TestPreferAsConstFires/upstream_fail_7
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings/a_hexadecimal_type_against_a_decimal_value
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings/a_trailing_zero
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings/a_trailing_zero
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings/a_numeric_separator
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings/a_numeric_separator
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings/exponent_notation
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings/exponent_notation
+=== RUN   TestPreferAsConstStaysSilent/a_definite_assignment_with_an_initializer
+=== PAUSE TestPreferAsConstStaysSilent/a_definite_assignment_with_an_initializer
+=== RUN   TestPreferAsConstFires/upstream_fail_8
+=== PAUSE TestPreferAsConstFires/upstream_fail_8
+=== RUN   TestPreferAsConstStaysSilent/a_definite_assignment_property_with_an_initializer
+=== PAUSE TestPreferAsConstStaysSilent/a_definite_assignment_property_with_an_initializer
+=== RUN   TestPreferAsConstFires/upstream_fail_9
+=== PAUSE TestPreferAsConstFires/upstream_fail_9
+=== RUN   TestPreferAsConstStaysSilent/a_numeric_type_against_a_string_value
+=== RUN   TestPreferAsConstFires/upstream_fail_10
+=== PAUSE TestPreferAsConstStaysSilent/a_numeric_type_against_a_string_value
+=== PAUSE TestPreferAsConstFires/upstream_fail_10
+=== RUN   TestPreferAsConstStaysSilent/a_string_type_against_a_numeric_value
+=== PAUSE TestPreferAsConstStaysSilent/a_string_type_against_a_numeric_value
+=== RUN   TestPreferAsConstFires/upstream_fail_11
+=== PAUSE TestPreferAsConstFires/upstream_fail_11
+=== CONT  TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_array_binding_pattern
+=== RUN   TestPreferAsConstFires/upstream_fail_12
+=== PAUSE TestPreferAsConstFires/upstream_fail_12
+=== RUN   TestPreferAsConstFires/upstream_fail_13
+=== PAUSE TestPreferAsConstFires/upstream_fail_13
+=== RUN   TestPreferAsConstFires/upstream_fail_14
+=== PAUSE TestPreferAsConstFires/upstream_fail_14
+=== CONT  TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_object_binding_pattern
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{}
+=== RUN   TestPreferAsConstFires/upstream_fail_15
+=== PAUSE TestPreferAsConstFires/upstream_fail_15
+=== RUN   TestPreferAsConstFires/upstream_fail_16
+=== PAUSE TestPreferAsConstFires/upstream_fail_16
+=== RUN   TestPreferAsConstFires/upstream_fail_17
+--- PASS: TestPreferAsConstReportsTheDestructuringCaseWithoutARepair (0.00s)
+    --- PASS: TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_array_binding_pattern (0.00s)
+    --- PASS: TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_object_binding_pattern (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{}
+=== PAUSE TestPreferAsConstFires/upstream_fail_17
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{};
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{}
+--- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/function_data<T,_U_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<Element_extends_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintPointsAtTheParameterName/const_data_=_<T_extends_any,_U_extends_any>()_=>_{}; (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{}
+--- PASS: TestNoUnnecessaryTypeConstraintFires (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/type_Data<T_extends_unknown>_=_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_Data_=_class_{_member<T_extends_unknown>()_{}_}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/interface_Data<T_extends_unknown>_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_Data_=_class<T_extends_unknown>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/class_Data<T_extends_unknown>_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{};#01 (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_unknown>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_=_unknown>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any_,>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_U_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U_extends_T>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T,_U_extends_any>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/const_data_=_<T_extends_any>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/function_data<T_extends_any,_U>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintFires/class_Data_{_member<T_extends_unknown>()_{}_} (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{};
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{}
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{}
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases/case0
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases/case3
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{}
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases/case1
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/a_variable_annotation
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/an_as_expression
+=== CONT  TestPreferEnumInitializersFiresOnUpstreamFailCases/case2
+--- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases/case0 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases/case3 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases/case1 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnUpstreamFailCases/case2 (0.00s)
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/a_binding_pattern
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/a_class_property
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/quote_styles_differ_between_type_and_value
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_1
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_10
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/the_insert_precedes_trailing_trivia
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/a_numeric_variable_annotation
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/whitespace_before_the_colon_survives_the_delete
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/a_plain_class_property_is_fixed_too
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_14
+--- PASS: TestPreferAsConstPointsAtTheLiteralType (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/a_variable_annotation (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/an_as_expression (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/a_binding_pattern (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/a_class_property (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/quote_styles_differ_between_type_and_value (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/a_numeric_variable_annotation (0.00s)
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/a_comment_after_the_type_survives_the_delete
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_12
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_5
+=== CONT  TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{};
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_3
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_8
+--- PASS: TestNoUnnecessaryTypeConstraintStaysSilent (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(unknown)>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_void>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_object>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_{}>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_U>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T,_>()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_(any)>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/type_X_=_any;_function_data<T_extends_X>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_any_|_number>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_()_=>_{}; (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T,_U>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number_|_string>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_number>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/function_data<T_extends_never>()_{} (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintStaysSilent/const_data_=_<T_extends_number_|_string>()_=>_{}; (0.00s)
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_11
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_4
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_7
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_6
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_2
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case0
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_13
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_9
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx
+--- PASS: TestPreferAsConstFixesWriteWhatTheyClaim (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_1 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_10 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/the_insert_precedes_trailing_trivia (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/whitespace_before_the_colon_survives_the_delete (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_14 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/a_plain_class_property_is_fixed_too (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/a_comment_after_the_type_survives_the_delete (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_12 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_5 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_3 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_8 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_4 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_7 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_6 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_2 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_11 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_13 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_9 (0.00s)
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case8
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case4
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case7
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case5
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case2
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case3
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case0
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case1
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case2
+=== CONT  TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx
+=== CONT  TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case6
+=== CONT  TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case0
+--- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/interface_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data_{_member<T_extends_unknown>()_{}_}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class_{_member<T_extends_unknown>()_{}_};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/type_Data<T_extends_unknown>_=_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/class_Data<T_extends_unknown>_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.cts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_/*_comment_*/>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.mts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.ts (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_unknown>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_=_unknown>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_U_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,_>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U_extends_T>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T,_U_extends_any>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/function_data<T_extends_any,_U>()_{}_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_Data_=_class<T_extends_unknown>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+    --- PASS: TestNoUnnecessaryTypeConstraintSuggestionsWriteWhatTheyClaim/const_data_=_<T_extends_any_,>()_=>_{};_in_/repository/source/no_unnecessary_type_constraint.tsx (0.00s)
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case1
+=== CONT  TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case1
+=== CONT  TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case2
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings/a_hexadecimal_type_against_a_decimal_value
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings/a_numeric_separator
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings/a_trailing_zero
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_1
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_23
+=== CONT  TestPreferAsConstStaysSilent/a_parameter_default
+=== CONT  TestPreferAsConstStaysSilent/a_string_type_against_a_numeric_value
+=== CONT  TestPreferAsConstStaysSilent/a_numeric_type_against_a_string_value
+=== CONT  TestPreferAsConstStaysSilent/a_definite_assignment_property_with_an_initializer
+=== CONT  TestPreferAsConstStaysSilent/a_definite_assignment_with_an_initializer
+=== CONT  TestPreferAsConstStaysSilent/a_negated_numeric_literal_type
+--- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case0 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case8 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case4 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case7 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case2 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case5 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case1 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case3 (0.00s)
+    --- PASS: TestPreferEnumInitializersFiresOnShapesTheCorpusDoesNotWrite/case6 (0.00s)
+=== CONT  TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case3
+=== CONT  TestPreferAsConstStaysSilent/a_boolean_literal_type
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings/exponent_notation
+--- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case0 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case2 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case1 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnUpstreamPassCases/case3 (0.00s)
+=== CONT  TestPreferAsConstStaysSilent/a_generic_type_argument
+=== CONT  TestPreferAsConstStaysSilent/a_parenthesized_literal_type
+--- PASS: TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case0 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case1 (0.00s)
+    --- PASS: TestPreferEnumInitializersStaysSilentOnShapesTheCorpusDoesNotWrite/case2 (0.00s)
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_12
+--- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings (0.00s)
+    --- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings/a_hexadecimal_type_against_a_decimal_value (0.00s)
+    --- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings/a_numeric_separator (0.00s)
+    --- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings/a_trailing_zero (0.00s)
+    --- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings/exponent_notation (0.00s)
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_21
+=== CONT  TestPreferAsConstStaysSilent/a_bigint_literal_type
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_22
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_20
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_19
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_18
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_17
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_16
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_15
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_14
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_13
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_6
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_11
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_9
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_10
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_8
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_7
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_28
+=== CONT  TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#02
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_27
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_26
+=== CONT  TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#01
+=== CONT  TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_25
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_30
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_29
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_24
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_3
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_5
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_4
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_2
+=== CONT  TestPreferAsConstFires/upstream_fail_1
+=== CONT  TestPreferAsConstFires/upstream_fail_16
+=== CONT  TestPreferAsConstFires/upstream_fail_17
+=== CONT  TestPreferAsConstFires/upstream_fail_15
+=== CONT  TestPreferAsConstFires/upstream_fail_14
+=== CONT  TestPreferAsConstFires/upstream_fail_13
+=== CONT  TestPreferAsConstFires/upstream_fail_12
+=== CONT  TestPreferAsConstFires/upstream_fail_11
+=== CONT  TestPreferAsConstFires/upstream_fail_10
+=== CONT  TestPreferAsConstFires/upstream_fail_9
+=== CONT  TestPreferAsConstFires/upstream_fail_8
+=== CONT  TestPreferAsConstFires/upstream_fail_7
+=== CONT  TestPreferAsConstFires/upstream_fail_6
+=== CONT  TestPreferAsConstFires/upstream_fail_5
+=== CONT  TestPreferAsConstFires/upstream_fail_3
+=== CONT  TestPreferAsConstFires/upstream_fail_4
+=== CONT  TestPreferAsConstFires/upstream_fail_2
+--- PASS: TestPreferAsConstStaysSilent (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_1 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_parameter_default (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_string_type_against_a_numeric_value (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_numeric_type_against_a_string_value (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_definite_assignment_property_with_an_initializer (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_definite_assignment_with_an_initializer (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_negated_numeric_literal_type (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_boolean_literal_type (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_parenthesized_literal_type (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_generic_type_argument (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_12 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_22 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_21 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_20 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_bigint_literal_type (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_18 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_17 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_19 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_16 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_14 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_15 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_13 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_11 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_6 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_9 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_8 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_28 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_10 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_7 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#02 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_27 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_26 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#01 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_25 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_24 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_30 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_29 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_3 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_5 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_4 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_2 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_23 (0.00s)
+--- PASS: TestPreferAsConstFires (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_16 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_15 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_1 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_17 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_14 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_13 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_12 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_10 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_11 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_8 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_9 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_7 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_6 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_3 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_5 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_4 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_2 (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.015s

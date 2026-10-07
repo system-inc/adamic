@@ -1,0 +1,42 @@
+package lint
+
+import ("bytes"; "encoding/json"; "fmt"; "os"; "os/exec"; "path/filepath"; "testing")
+
+// Not parallel: builds are kept serial with timing and sanitizer checks.
+func TestWave14FourthRepairBlockers(t *testing.T) {
+ root,err:=filepath.Abs(filepath.Join(repository,"cohere"));if err!=nil {t.Fatal(err)}
+ source,err:=filepath.Abs("testdata/oracle.go");if err!=nil {t.Fatal(err)}
+ for _,subject:=range []struct { name,variable,input,panicText string }{
+  {"@typescript-eslint/no-unnecessary-type-constraint","NoUnnecessaryTypeConstraint","function f<T extends any>() {}","panic: unexpected suggestion shape"},
+  {"@typescript-eslint/prefer-as-const","PreferAsConst","let foo: 'bar' = 'bar';","panic: unexpected fix shape"},
+  {"@typescript-eslint/prefer-enum-initializers","PreferEnumInitializers","enum E { A }","panic: unexpected suggestion shape"},
+ } {
+  t.Run(subject.variable,func(t *testing.T) {
+   directory:=t.TempDir();selection:=filepath.Join(directory,"selection.go")
+   text:=fmt.Sprintf(`package main
+import (
+ "github.com/system-inc/cohere/internal/lint/rule"
+ rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
+)
+type registeredRule struct { subject rule.Rule; options func([]string) any }
+func registeredRules() []registeredRule { return []registeredRule{{rules.%s, func(fields []string) any { return nil }}} }
+`,subject.variable)
+   if err:=os.WriteFile(selection,[]byte(text),0644);err!=nil {t.Fatal(err)}
+   virtualSource:=filepath.Join(root,"wave14_third_oracle.go");virtualSelection:=filepath.Join(root,"wave14_third_selection.go")
+   overlay,_:=json.Marshal(map[string]any{"Replace":map[string]string{virtualSource:source,virtualSelection:selection}})
+   overlayPath:=filepath.Join(directory,"overlay.json");if err:=os.WriteFile(overlayPath,overlay,0644);err!=nil {t.Fatal(err)}
+   binary:=filepath.Join(directory,"oracle");execute(t,root,"go","build","-overlay="+overlayPath,"-o",binary,virtualSource,virtualSelection)
+   probe:=filepath.Join(directory,"probe.ts");if err:=os.WriteFile(probe,[]byte(subject.input),0644);err!=nil {t.Fatal(err)}
+   path:=manifest(t,[]string{probe+"\t"+subject.name})
+   // Count succeeds, proving the source and listener are valid before serialization.
+   count:=execute(t,"",binary,"--manifest",path,"--count");if string(count.output)!="1\n" {t.Fatalf("unexpected findings: %s",count.output)}
+   command:=exec.Command(binary,"--manifest",path)
+   output,err:=os.Create(filepath.Join(directory,"probe.log"));if err!=nil {t.Fatal(err)}
+   command.Stdout,command.Stderr=output,output;runErr:=command.Run();output.Close()
+   data,err:=os.ReadFile(output.Name());if err!=nil {t.Fatal(err)}
+   exit,ok:=runErr.(*exec.ExitError)
+   if !ok||exit.ExitCode()!=2||!bytes.Contains(data,[]byte(subject.panicText)) {t.Fatalf("blocker changed: %v %s",runErr,data)}
+   t.Logf("%q: upstream counts 1 finding; independent serializer exits 2: %s",subject.input,subject.panicText)
+  })
+ }
+}

@@ -1,0 +1,13 @@
+=== RUN   TestWave14FourthRepairBlockers
+=== RUN   TestWave14FourthRepairBlockers/NoUnnecessaryTypeConstraint
+    wave1_14_next_test.go:39: "function f<T extends any>() {}": upstream counts 1 finding; independent serializer exits 2: panic: unexpected suggestion shape
+=== RUN   TestWave14FourthRepairBlockers/PreferAsConst
+    wave1_14_next_test.go:39: "let foo: 'bar' = 'bar';": upstream counts 1 finding; independent serializer exits 2: panic: unexpected fix shape
+=== RUN   TestWave14FourthRepairBlockers/PreferEnumInitializers
+    wave1_14_next_test.go:39: "enum E { A }": upstream counts 1 finding; independent serializer exits 2: panic: unexpected suggestion shape
+--- PASS: TestWave14FourthRepairBlockers (15.04s)
+    --- PASS: TestWave14FourthRepairBlockers/NoUnnecessaryTypeConstraint (5.43s)
+    --- PASS: TestWave14FourthRepairBlockers/PreferAsConst (4.79s)
+    --- PASS: TestWave14FourthRepairBlockers/PreferEnumInitializers (4.82s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	15.048s
