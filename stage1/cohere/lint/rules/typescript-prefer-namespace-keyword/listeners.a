@@ -1,0 +1,5 @@
+// Numeric SyntaxKind values from pinned Go cohere 715ba94f.
+// Mirrors the current entry listeners; this does not certify node-local traversal.
+export const listenerKinds: readonly number[] = [
+    268, // ModuleDeclaration
+];

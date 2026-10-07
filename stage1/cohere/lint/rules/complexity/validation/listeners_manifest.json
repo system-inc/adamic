@@ -1,0 +1,156 @@
+[
+  {
+    "directory": "boundaries-dependencies",
+    "rule": "boundaries/dependencies",
+    "kinds": [
+      "SourceFile"
+    ],
+    "numericKinds": [
+      307
+    ]
+  },
+  {
+    "directory": "complexity",
+    "rule": "complexity",
+    "kinds": [
+      "SourceFile"
+    ],
+    "numericKinds": [
+      307
+    ]
+  },
+  {
+    "directory": "eslint-comments-require-description",
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "kinds": [
+      "SourceFile"
+    ],
+    "numericKinds": [
+      307
+    ]
+  },
+  {
+    "directory": "next-google-font-display",
+    "rule": "@next/next/google-font-display",
+    "kinds": [
+      "JsxOpeningElement",
+      "JsxSelfClosingElement"
+    ],
+    "numericKinds": [
+      287,
+      286
+    ]
+  },
+  {
+    "directory": "no-cond-assign",
+    "rule": "no-cond-assign",
+    "kinds": [
+      "BinaryExpression",
+      "IfStatement",
+      "WhileStatement",
+      "DoStatement",
+      "ForStatement",
+      "ConditionalExpression"
+    ],
+    "numericKinds": [
+      227,
+      246,
+      248,
+      247,
+      249,
+      228
+    ]
+  },
+  {
+    "directory": "structure-tailwind-no-physical-direction",
+    "rule": "structure/tailwind-no-physical-direction",
+    "kinds": [
+      "StringLiteral",
+      "NoSubstitutionTemplateLiteral",
+      "TemplateExpression"
+    ],
+    "numericKinds": [
+      10,
+      14,
+      229
+    ]
+  },
+  {
+    "directory": "tailwind-no-unnecessary-whitespace",
+    "rule": "better-tailwindcss/no-unnecessary-whitespace",
+    "kinds": [
+      "JsxAttribute",
+      "CallExpression",
+      "VariableDeclaration"
+    ],
+    "numericKinds": [
+      292,
+      214,
+      261
+    ]
+  },
+  {
+    "directory": "typescript-no-non-null-asserted-optional-chain",
+    "rule": "@typescript-eslint/no-non-null-asserted-optional-chain",
+    "kinds": [
+      "NonNullExpression"
+    ],
+    "numericKinds": [
+      236
+    ]
+  },
+  {
+    "directory": "typescript-no-non-null-assertion",
+    "rule": "@typescript-eslint/no-non-null-assertion",
+    "kinds": [
+      "NonNullExpression"
+    ],
+    "numericKinds": [
+      236
+    ]
+  },
+  {
+    "directory": "typescript-no-this-alias",
+    "rule": "@typescript-eslint/no-this-alias",
+    "kinds": [
+      "VariableDeclaration",
+      "BinaryExpression"
+    ],
+    "numericKinds": [
+      261,
+      227
+    ]
+  },
+  {
+    "directory": "typescript-prefer-function-type",
+    "rule": "@typescript-eslint/prefer-function-type",
+    "kinds": [
+      "InterfaceDeclaration",
+      "TypeLiteral"
+    ],
+    "numericKinds": [
+      265,
+      188
+    ]
+  },
+  {
+    "directory": "typescript-prefer-namespace-keyword",
+    "rule": "@typescript-eslint/prefer-namespace-keyword",
+    "kinds": [
+      "ModuleDeclaration"
+    ],
+    "numericKinds": [
+      268
+    ]
+  },
+  {
+    "directory": "typescript-triple-slash-reference",
+    "rule": "@typescript-eslint/triple-slash-reference",
+    "kinds": [
+      "SourceFile"
+    ],
+    "numericKinds": [
+      307
+    ]
+  }
+]

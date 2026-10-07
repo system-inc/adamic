@@ -1,0 +1,17 @@
+package main
+import("fmt";"strconv";"github.com/microsoft/TypeScript/tsc/shim/ast")
+func main(){
+fmt.Println("boundaries/dependencies\t" + strconv.Itoa(int(ast.KindSourceFile)))
+fmt.Println("complexity\t" + strconv.Itoa(int(ast.KindSourceFile)))
+fmt.Println("@eslint-community/eslint-comments/require-description\t" + strconv.Itoa(int(ast.KindSourceFile)))
+fmt.Println("@next/next/google-font-display\t" + strconv.Itoa(int(ast.KindJsxOpeningElement)) + "," + strconv.Itoa(int(ast.KindJsxSelfClosingElement)))
+fmt.Println("no-cond-assign\t" + strconv.Itoa(int(ast.KindBinaryExpression)) + "," + strconv.Itoa(int(ast.KindIfStatement)) + "," + strconv.Itoa(int(ast.KindWhileStatement)) + "," + strconv.Itoa(int(ast.KindDoStatement)) + "," + strconv.Itoa(int(ast.KindForStatement)) + "," + strconv.Itoa(int(ast.KindConditionalExpression)))
+fmt.Println("structure/tailwind-no-physical-direction\t" + strconv.Itoa(int(ast.KindStringLiteral)) + "," + strconv.Itoa(int(ast.KindNoSubstitutionTemplateLiteral)) + "," + strconv.Itoa(int(ast.KindTemplateExpression)))
+fmt.Println("better-tailwindcss/no-unnecessary-whitespace\t" + strconv.Itoa(int(ast.KindJsxAttribute)) + "," + strconv.Itoa(int(ast.KindCallExpression)) + "," + strconv.Itoa(int(ast.KindVariableDeclaration)))
+fmt.Println("@typescript-eslint/no-non-null-asserted-optional-chain\t" + strconv.Itoa(int(ast.KindNonNullExpression)))
+fmt.Println("@typescript-eslint/no-non-null-assertion\t" + strconv.Itoa(int(ast.KindNonNullExpression)))
+fmt.Println("@typescript-eslint/no-this-alias\t" + strconv.Itoa(int(ast.KindVariableDeclaration)) + "," + strconv.Itoa(int(ast.KindBinaryExpression)))
+fmt.Println("@typescript-eslint/prefer-function-type\t" + strconv.Itoa(int(ast.KindInterfaceDeclaration)) + "," + strconv.Itoa(int(ast.KindTypeLiteral)))
+fmt.Println("@typescript-eslint/prefer-namespace-keyword\t" + strconv.Itoa(int(ast.KindModuleDeclaration)))
+fmt.Println("@typescript-eslint/triple-slash-reference\t" + strconv.Itoa(int(ast.KindSourceFile)))
+}
