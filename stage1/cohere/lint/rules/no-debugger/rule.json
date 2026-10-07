@@ -1,0 +1,14 @@
+{
+  "name": "no-debugger",
+  "order": 1,
+  "kinds": [
+    "DebuggerStatement"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoDebugger",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoDebugger",
+  "factory": "create",
+  "class": "Rule",
+  "parent": true
+}

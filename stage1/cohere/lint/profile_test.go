@@ -29,16 +29,16 @@ func TestProfileArtifacts(t *testing.T) {
 	if strings.TrimSpace(string(pin.output)) != compilerCommit {
 		t.Fatal("compiler checkout has the wrong pin")
 	}
-	for _, name := range portFiles {
+	prepareRegistry(t, ".")
+	for _, name := range portFiles(t) {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
 		}
-		typescript, err := filepath.Abs("../../typescript")
-		if err != nil {
+		text := rewritePortImports(t, name, string(data))
+		if err := os.MkdirAll(filepath.Dir(filepath.Join(directory, name)), 0755); err != nil {
 			t.Fatal(err)
 		}
-		text := strings.ReplaceAll(string(data), "../../typescript/", typescript+"/")
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(text), 0644); err != nil {
 			t.Fatal(err)
 		}

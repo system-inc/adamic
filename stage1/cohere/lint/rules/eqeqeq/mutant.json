@@ -1,0 +1,5 @@
+{
+  "name": "suggestion applied as fix",
+  "from": "hasTypeOf || sameType ? 'fix' : 'suggestion'",
+  "to": "hasTypeOf || sameType ? 'fix' : 'fix'"
+}
