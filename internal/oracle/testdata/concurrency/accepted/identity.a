@@ -1,0 +1,5 @@
+import { parallelMap } from 'adamic';
+const items: readonly number[] = [1, 2, 3];
+const work = function identity(item: number): (item: number) => unknown { return identity; };
+const result = parallelMap(items, work);
+for (const item of result) { console.log(`${item === work}`); }
