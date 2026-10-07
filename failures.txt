@@ -1,0 +1,37 @@
+package: github.com/system-inc/adamic/internal/oracle
+test: TestASignalLeavesWhatWasPrinted/hangup
+=== RUN   TestASignalLeavesWhatWasPrinted/hangup
+=== PAUSE TestASignalLeavesWhatWasPrinted/hangup
+=== CONT  TestASignalLeavesWhatWasPrinted/hangup
+    output_test.go:331: program: killed by killed, stderr "", stdout ""; Node: killed by hangup, stderr "", stdout "started, about to work for a long time\n"
+--- FAIL: TestASignalLeavesWhatWasPrinted/hangup (64.63s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: TestASignalLeavesWhatWasPrinted
+=== RUN   TestASignalLeavesWhatWasPrinted
+=== PAUSE TestASignalLeavesWhatWasPrinted
+=== CONT  TestASignalLeavesWhatWasPrinted
+--- FAIL: TestASignalLeavesWhatWasPrinted (0.00s)
+
+package: github.com/system-inc/adamic/internal/oracle
+test: (package)
+--- PASS: TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a (0.87s)
+=== CONT  TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a
+--- PASS: TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a (0.98s)
+=== CONT  TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a
+--- PASS: TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a (0.89s)
+--- PASS: TestClosedStdoutEndsAsOnNode (0.00s)
+--- PASS: TestCountsAreRecorded/fixtures (0.02s)
+--- PASS: TestCountsAreRecorded (265.48s)
+--- PASS: TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a (0.91s)
+--- PASS: TestFileWritesLandInNodesOrder (0.00s)
+--- PASS: TestASignalLeavesWhatWasPrinted/terminated (6.67s)
+--- PASS: TestASignalLeavesWhatWasPrinted/interrupt (6.42s)
+    output_test.go:331: program: killed by killed, stderr "", stdout ""; Node: killed by hangup, stderr "", stdout "started, about to work for a long time\n"
+--- FAIL: TestASignalLeavesWhatWasPrinted/hangup (64.63s)
+--- FAIL: TestASignalLeavesWhatWasPrinted (0.00s)
+FAIL
+gate cache: native hits=0 misses=2035
+gate cache: node hits=0 misses=1693
+gate cache: probe hits=0 misses=25
+FAIL	github.com/system-inc/adamic/internal/oracle	1186.248s
