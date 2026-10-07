@@ -738,11 +738,7 @@ func TestMutants(t *testing.T) {
 		}
 		t.Run(change.Name, func(t *testing.T) {
 			rows := generated(t)
-			var witnesses []string
-			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
-				witnesses = append(witnesses, source+"\t"+descriptor.Name)
-			}
-			rows = append(rows, recoveryRows(t, oracle, witnesses)...)
+			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
 			if change.File == "" {
