@@ -65,3 +65,17 @@ All three remain claimed and blocked on the shared repair contract. The exact
 upstream diagnostics and current serializer refusals are reproduced by the
 owned Go probes; no incomplete rule is registered. See wave1-15-third-report.md
 for commands, shape evidence, Go-only probe mutants and untested backend scope.
+
+## Fourth batch
+
+Fetched all 341 origin refs on 2026-10-07 after pushing all nine owned rule
+implementations and their comparison evidence. Checked all 52 distinct origin
+claim Markdown blobs and main production registrations against the original
+46 helper-ready rules followed by the inventory syntax-ready wave. Claim:
+
+- no-multi-str
+- no-nonoctal-decimal-escape
+- no-octal
+
+These are the first three remaining eligible entries. This update is pushed
+before implementation. Only owned rule directories will be changed.
