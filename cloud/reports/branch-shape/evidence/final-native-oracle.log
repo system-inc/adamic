@@ -1,0 +1,9 @@
+ok  	github.com/system-inc/adamic/internal/native	125.111s
+--- FAIL: TestCountsAreRecorded (119.99s)
+    counts_test.go:200: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):
+FAIL
+gate cache: native hits=0 misses=1287
+gate cache: node hits=0 misses=720
+gate cache: probe hits=0 misses=24
+FAIL	github.com/system-inc/adamic/internal/oracle	125.688s
+FAIL

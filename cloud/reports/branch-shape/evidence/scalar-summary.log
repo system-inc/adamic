@@ -1,0 +1,58 @@
+{'Ir': 9246776218, 'Dr': 2648889107, 'Dw': 1587723807, 'I1mr': 54010770, 'D1mr': 16553516, 'D1mw': 5609065, 'ILmr': 6467, 'DLmr': 57979, 'DLmw': 1528407, 'Bc': 1305692876, 'Bcm': 42964113, 'Bi': 29383639, 'Bim': 4063107}
+{'function': 'adamic_release', 'costs': [1344432179, 464051237, 419486667, 462890, 2383625, 145579, 20, 1, 34069, 215452607, 8011196, 4936640, 2944837]}
+{'function': 'adamic_object_free_children', 'costs': [158854761, 65666203, 7364540, 459829, 2268363, 74, 3, 11, 0, 43487758, 7220748, 1913100, 2]}
+{'function': 'adamic_retain', 'costs': [363315534, 90000656, 24156619, 1, 1979433, 0, 1, 0, 0, 90000656, 5257222, 0, 0]}
+{'function': 'adamic_string_equal', 'costs': [335614089, 86780078, 7674212, 3, 2059193, 7566, 2, 0, 3, 54018827, 3667123, 3837106, 18]}
+{'function': 'adamic_function_33_Scanner_scan', 'costs': [524045918, 125355685, 66761072, 2039782, 33876, 76212, 132, 9, 17, 70277058, 2550007, 0, 0]}
+{'function': 'adamic_function_1_isIdentifierStart', 'costs': [191664461, 56091343, 20491524, 258634, 279, 2, 4, 1, 0, 20201662, 2148262, 0, 0]}
+{'function': 'find', 'costs': [103719412, 25970181, 7857454, 103977, 935844, 15475, 9, 41, 6, 15710554, 1506269, 0, 0]}
+{'function': '0x00000000001623e0', 'costs': [76243037, 17147188, 0, 119809, 310215, 0, 10, 4872, 0, 16795001, 1432794, 0, 0]}
+{'function': 'adamic_allocate', 'costs': [135951493, 39440414, 33993817, 57639, 314207, 548327, 10, 3, 162744, 14394734, 1106727, 3030, 6]}
+{'function': "adamic_function_62_Context_mapParents'2", 'costs': [50523684, 15072926, 15086738, 77, 1402574, 0, 1, 0, 0, 2658574, 899439, 0, 0]}
+{'function': 'adamic_function_34_Scanner_punctuation', 'costs': [23560742, 5875096, 2937548, 932173, 30066, 0, 32, 4, 0, 1610682, 32957, 640789, 537457]}
+{'function': 'adamic_function_11_precedence', 'costs': [34824750, 1525458, 7288761, 1136281, 27730, 0, 13, 2, 0, 6059960, 539477, 0, 0]}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ed1e', 'line': 252, 'costs': [41064797, 0, 0, 0, 0, 0, 0, 0, 0, 41064797, 341920, 0, 0], 'taken': 3529}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ed26', 'line': 252, 'costs': [41061268, 0, 0, 0, 0, 0, 0, 0, 0, 41061268, 6261521, 0, 0], 'taken': 16386567}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ed2e', 'line': 252, 'costs': [24674701, 0, 0, 0, 0, 0, 0, 0, 0, 24674701, 944633, 0, 0], 'taken': 960535}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ed3b', 'line': 323, 'costs': [40104262, 0, 0, 2, 0, 0, 1, 0, 0, 40104262, 19731, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ed52', 'line': 328, 'costs': [41064797, 0, 0, 0, 0, 0, 0, 0, 0, 41064797, 1242, 0, 0], 'taken': 40104262}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ed73', 'line': 212, 'costs': [3782, 1891, 1891, 2, 19, 0, 0, 0, 0, 0, 0, 1891, 956], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ed82', 'line': 328, 'costs': [3377171, 0, 0, 0, 0, 0, 0, 0, 0, 3377171, 276983, 0, 0], 'taken': 960535}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6eda8', 'line': 259, 'costs': [3377171, 0, 0, 0, 0, 0, 0, 0, 0, 3377171, 240, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6edb5', 'line': 259, 'costs': [3377171, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3377171, 2714418], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6edc6', 'line': 252, 'costs': [693374, 0, 0, 0, 0, 0, 0, 0, 0, 693374, 4179, 0, 0], 'taken': 692333}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6edd2', 'line': 252, 'costs': [1041, 0, 0, 0, 0, 0, 0, 0, 0, 1041, 1025, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6edde', 'line': 252, 'costs': [1041, 0, 0, 0, 0, 0, 0, 0, 0, 1041, 764, 0, 0], 'taken': 1041}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ee4b', 'line': 293, 'costs': [34750, 0, 0, 0, 0, 0, 0, 0, 0, 34750, 3, 0, 0], 'taken': 154}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ee87', 'line': 293, 'costs': [34596, 0, 0, 0, 0, 0, 0, 0, 0, 34596, 429, 0, 0], 'taken': 34596}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ee95', 'line': 252, 'costs': [34596, 0, 0, 0, 0, 0, 0, 0, 0, 34596, 2, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ee9d', 'line': 252, 'costs': [34596, 0, 0, 0, 0, 0, 0, 0, 0, 34596, 0, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6eea5', 'line': 252, 'costs': [34596, 0, 0, 0, 0, 0, 0, 0, 0, 34596, 1121, 0, 0], 'taken': 33480}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6eeaa', 'line': 236, 'costs': [1116, 0, 0, 0, 0, 0, 0, 0, 0, 1116, 2, 0, 0], 'taken': 1116}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ef1d', 'line': 272, 'costs': [1557564, 0, 0, 0, 0, 0, 0, 0, 0, 1557564, 22330, 0, 0], 'taken': 1537542}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ef2a', 'line': 273, 'costs': [20022, 0, 0, 0, 0, 0, 0, 0, 0, 20022, 954, 0, 0], 'taken': 1105}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ef58', 'line': 286, 'costs': [1116, 0, 0, 0, 0, 0, 0, 0, 0, 1116, 0, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ef65', 'line': 252, 'costs': [1116, 0, 0, 0, 0, 0, 0, 0, 0, 1116, 1, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ef71', 'line': 252, 'costs': [1116, 0, 0, 0, 0, 0, 0, 0, 0, 1116, 376, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6ef7d', 'line': 252, 'costs': [1116, 0, 0, 926, 0, 0, 1, 0, 0, 1116, 4, 0, 0], 'taken': 1116}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f006', 'line': 273, 'costs': [929269, 0, 0, 0, 0, 0, 0, 0, 0, 929269, 13280, 0, 0], 'taken': 18917}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f013', 'line': 252, 'costs': [929269, 0, 0, 0, 0, 0, 0, 0, 0, 929269, 150, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f01b', 'line': 252, 'costs': [929269, 0, 0, 0, 0, 0, 0, 0, 0, 929269, 8410, 0, 0], 'taken': 20033}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f023', 'line': 252, 'costs': [909236, 0, 0, 0, 0, 0, 0, 0, 0, 909236, 4294, 0, 0], 'taken': 12122}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f028', 'line': 236, 'costs': [897114, 0, 0, 0, 0, 0, 0, 0, 0, 897114, 203, 0, 0], 'taken': 897101}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f049', 'line': 238, 'costs': [26, 13, 13, 0, 11, 9, 0, 0, 0, 0, 0, 13, 3], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f051', 'line': 239, 'costs': [13, 0, 0, 0, 0, 0, 0, 0, 0, 13, 2, 0, 0], 'taken': 13}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f05f', 'line': 252, 'costs': [1557564, 0, 0, 0, 0, 0, 0, 0, 0, 1557564, 138, 0, 0], 'taken': 1557564}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f0c8', 'line': 278, 'costs': [3115128, 1557564, 1557564, 33561, 898, 67, 0, 0, 0, 0, 0, 1557564, 229460], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f14e', 'line': 211, 'costs': [3377171, 0, 0, 0, 0, 0, 0, 0, 0, 3377171, 62929, 0, 0], 'taken': 1891}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f17f', 'line': 174, 'costs': [3375280, 0, 0, 2214, 0, 0, 1, 0, 0, 3375280, 35663, 0, 0], 'taken': 3309870}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f19a', 'line': 87, 'costs': [65410, 0, 0, 0, 0, 0, 0, 0, 0, 65410, 724, 0, 0], 'taken': 654}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f1b1', 'line': 177, 'costs': [3375280, 0, 0, 0, 0, 0, 0, 0, 0, 3375280, 6410, 0, 0], 'taken': 3370760}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f1cc', 'line': 177, 'costs': [4520, 0, 0, 0, 0, 0, 0, 0, 0, 4520, 426, 0, 0], 'taken': 1411}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f1d8', 'line': 95, 'costs': [3109, 0, 0, 0, 0, 0, 0, 0, 0, 3109, 748, 0, 0], 'taken': 2316}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f1e1', 'line': 100, 'costs': [793, 0, 0, 0, 0, 0, 0, 0, 0, 793, 93, 0, 0], 'taken': 87}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f20f', 'line': 100, 'costs': [2316, 0, 0, 0, 0, 0, 0, 0, 0, 2316, 8, 0, 0], 'taken': 2316}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f23e', 'line': 236, 'costs': [960535, 0, 0, 0, 0, 0, 0, 0, 0, 960535, 176, 0, 0], 'taken': 960534}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f25f', 'line': 238, 'costs': [2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f267', 'line': 239, 'costs': [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0], 'taken': 0}
+{'function': 'adamic_release', 'source': '/workspace/adamic/internal/native/runtime/heap.c', 'address': '0x6f290', 'line': 323, 'costs': [960535, 0, 0, 0, 0, 0, 0, 0, 0, 960535, 82, 0, 0], 'taken': 960535}

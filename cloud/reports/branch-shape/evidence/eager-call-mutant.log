@@ -1,0 +1,5 @@
+--- FAIL: TestScalarLogicalMatchesNode (0.21s)
+    branch_shape_test.go:126: sanitize false: native "false\ntrue\nfalse\ntrue\ntrue\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\nfalse\nfalse\nfalse\ntrue\nfalse\ntrue\nfalse\nfalse\ntrue\ntrue\nfalse\ntrue\n2\ntrue\n3\nfalse\n"; Node "false\ntrue\nfalse\ntrue\ntrue\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\nfalse\nfalse\nfalse\ntrue\nfalse\ntrue\nfalse\nfalse\ntrue\ntrue\nfalse\ntrue\n0\ntrue\n1\nfalse\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.219s
+FAIL

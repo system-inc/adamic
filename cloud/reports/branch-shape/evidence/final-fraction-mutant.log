@@ -1,0 +1,5 @@
+--- FAIL: TestNumericSwitchMatchesNode (0.18s)
+    branch_shape_test.go:70: sanitize false: native "other\nzero\nzero\none\ntwo\nthree\nmaximum\nother\none\nother\nother\nother\nother\nother\nother\nother\naxxbc\n"; Node "other\nzero\nzero\none\ntwo\nthree\nmaximum\nother\nother\nother\nother\nother\nother\nother\nother\nother\naxxbc\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.186s
+FAIL

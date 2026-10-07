@@ -1,0 +1,7 @@
+--- FAIL: TestNumericSwitchMatchesNode (0.99s)
+    branch_shape_test.go:69: /tmp/adamic-gate/TestNumericSwitchMatchesNode3119036675/001/switch: exit status 1
+        /tmp/adamic-gate/adamic-build-895498742/main.c:34:33: runtime error: nan is outside the range of representable values of type 'long'
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-895498742/main.c:34:33 
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.000s
+FAIL
