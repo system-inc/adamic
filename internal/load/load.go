@@ -61,7 +61,7 @@ func compilerOptions() *core.CompilerOptions {
 		ExactOptionalPropertyTypes: core.TSTrue,
 		NoImplicitReturns:          core.TSTrue,
 		NoFallthroughCasesInSwitch: core.TSTrue,
-		ErasableSyntaxOnly:         core.TSTrue,
+		ErasableSyntaxOnly:         core.TSFalse,
 		VerbatimModuleSyntax:       core.TSTrue,
 		AllowImportingTsExtensions: core.TSTrue,
 		NoEmit:                     core.TSTrue,

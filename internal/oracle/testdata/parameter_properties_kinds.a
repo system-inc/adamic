@@ -1,0 +1,46 @@
+import type { Weak } from 'adamic';
+
+interface Note { readonly text: string; }
+
+class Hold<T> {
+    constructor(public readonly item: T, public readonly spare?: T) {}
+    first(): T { return this.item; }
+}
+
+function word(index: number): string { return `word${index}`; }
+
+const numbers = new Hold<number>(7);
+const text = new Hold<string>(word(1), word(2));
+const note: Note = { text: word(3) };
+const object = new Hold<Note>(note);
+const values = [4, 5];
+const list = new Hold<number[]>(values);
+values.push(6);
+console.log(`${numbers.first()} ${text.first()} ${text.spare ?? 'none'} ${object.first().text} ${list.first().join(',')}`);
+
+class Pair<T> extends Hold<T> {
+    constructor(item: T, public readonly other: T) { super(item); }
+}
+const pair = new Pair<Note>({ text: word(8) }, { text: word(9) });
+console.log(`${pair.first().text} ${pair.other.text}`);
+
+class Parent {
+    constructor(public readonly name: string) {}
+}
+class Child {
+    constructor(private readonly name: string, private readonly parent: Weak<Parent>, public readonly rank: number) {}
+    show(): string {
+        const parent = this.parent;
+        const found = parent === undefined ? 'missing' : parent.name;
+        return `${this.name} ${found} ${this.rank}`;
+    }
+}
+const kept: Parent[] = [];
+function link(index: number): Child {
+    const parent = new Parent(`parent${index}`);
+    kept.push(parent);
+    return new Child(`child${index}`, parent, index);
+}
+for (let index = 0; index < 3; index += 1) {
+    console.log(link(index).show());
+}

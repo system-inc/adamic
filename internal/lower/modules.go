@@ -59,6 +59,7 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 // call knows what the function it calls returns wherever that function is declared, and two
 // functions can call each other. Then each body is lowered.
 func (l *lowering) declareModule(statements []*ast.Node) error {
+	statements = namespaceDeclarations(statements)
 	declarations := []*ast.Node{}
 	for _, statement := range statements {
 		switch statement.Kind {

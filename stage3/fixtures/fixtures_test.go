@@ -124,10 +124,13 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 		t.Fatal(err)
 	}
 	text := string(source)
-	if strings.Count(text, "stripTypeScriptTypes(source)") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
+	plain := "stripTypeScriptTypes(source)"
+	transform := "stripTypeScriptTypes(source, { mode: 'transform' })"
+	// Parameter properties may already require transform mode in the source oracle.
+	if strings.Count(text, plain)+strings.Count(text, transform) != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
 		t.Fatal("source Node runner changed: review the transform-mode hook")
 	}
-	text = strings.Replace(text, "stripTypeScriptTypes(source)", "stripTypeScriptTypes(source, { mode: 'transform' })", 1)
+	text = strings.Replace(text, plain, transform, 1)
 	oracleURL := (&url.URL{Scheme: "file", Path: filepath.ToSlash(path)}).String()
 	text = strings.Replace(text, "new URL('./adamic.mjs', import.meta.url)", fmt.Sprintf("new URL('./adamic.mjs', %q)", oracleURL), 1)
 	transformed := filepath.Join(t.TempDir(), "node-transform.mjs")
