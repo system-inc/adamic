@@ -3,8 +3,32 @@
 The complete Adamic YAML formatting slice is implemented at Go cohere's default options.
 Go, sanitized native, source Node and emitted JavaScript compare all 36 repository files and generated cases.
 Original Prettier 3.9.6 is compared independently, with 42 proved upstream binary/minification differences.
-Thirty successful wrong-output port mutants are caught; eleven compiler refusals and one runtime bug have proving programs.
+Thirty successful wrong-output port mutants are caught; eleven compiler refusals have proving programs; the former runtime bug has a parity regression test.
 Final throughput: native 11,504, source Node 13,819, Go 15,190 texts/s; native is 4.10 times its original baseline.
+
+## Main integration follow-up
+
+On Linux, after merging main, the shared-slice append gap is closed and its
+flow-folding workaround is removed. The proving program is retained as
+`TestSharedSliceAppendMatchesNode`, covering release and sanitized native
+execution at both offsets with `ASAN_OPTIONS=detect_leaks=1`.
+
+The complete package passed in 250.076s with no skips and all 30 wrong-output
+mutants caught. Comparisons retain their exact byte checks and named upstream
+Prettier differences. The single npm prefix contains yaml 2.9.0, Prettier 3.9.6
+and yaml-unist-parser 3.2.0; this package does not require the TypeScript source
+oracle. Vet and gofmt are clean; cohere lint and formatting pass for the changed
+source. [Full package log](audit/yaml-2-suite.log).
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=30m ./stage1/cohere/yaml
+go vet ./stage1/cohere/yaml
+gofmt -l stage1/cohere/yaml
+```
+
+The initial cold-cache run failed because the strict empty-stderr check saw Go
+oracle dependency download messages. After caching the dependencies, the full
+package was rerun successfully without changing that check.
 
 ## Speed follow-up
 
@@ -274,21 +298,19 @@ Additional compiler gap programs, held by `TestLexerGaps`:
 | [valueConjunction.ts](gaps/valueConjunction.ts) | `true` | `a BinaryExpression with a value and a boolean` | Separate presence and value branches |
 | [multiplePush.ts](gaps/multiplePush.ts) | `2` | `push with other than one value` | Push one value per call |
 
-### Native runtime gap
+### Closed native runtime gap
 
-[sharedSliceAppend.ts](gaps/sharedSliceAppend.ts) is a successful compilation
-with wrong behavior, not a refusal. Node prints `a\nx\n`; release native prints
-`x\nx\n`. A second argument selects a slice ending at its owner's end, and
-ASan reports `heap-buffer-overflow`. `TestSharedSliceAppendGap` holds both
-observations. The initial scalar comparison independently caught the overflow.
+[sharedSliceAppend.ts](gaps/sharedSliceAppend.ts) previously printed `x\nx\n`
+on release native instead of Node's `a\nx\n`; the end-of-owner slice also
+triggered an ASan heap-buffer-overflow. Main now preserves the owner and safely
+appends to both slices. `TestSharedSliceAppendMatchesNode` retains the proving
+program as a regression test, requiring exact Node bytes and clean sanitized
+execution for offsets 0 and 48, with leak detection enabled.
 
-Observation: a local append to a long shared string slice modifies the owner's
-bytes. Inspection suggests `string_append.c` subtracts the slice length from
-its zero capacity before checking available capacity, allowing unsigned
-underflow. No compiler or runtime file was edited. The port avoids this path:
-flow folding collects string pieces in an owned array and joins them once.
-The full scalar comparison passes with that workaround. Updating main's runtime
-should close the proving test and allow reconsidering the workaround.
+The flow-folding workaround (collecting pieces in an array and joining once)
+is removed from `scalarText.ts`; folding now appends directly to its initial
+string slice. This gap is closed; no compiler or runtime implementation is
+changed by the YAML follow-up.
 
 ### Scalar driver throughput
 

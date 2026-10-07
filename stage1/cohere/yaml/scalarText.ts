@@ -14,7 +14,7 @@ function lineEnd(source: string, from: number, newline: number): number {
 export function foldLines(source: string): string {
     const first = source.indexOf('\n');
     if(first < 0) return source;
-    const parts: string[] = [source.slice(0, lineEnd(source, 0, first))];
+    let result = source.slice(0, lineEnd(source, 0, first));
     let separator = ' ';
     let position = first + 1;
     while(true) {
@@ -24,20 +24,20 @@ export function foldLines(source: string): string {
         if(newline < 0) break;
         const match = source.slice(start, lineEnd(source, start, newline));
         if(match === '') {
-            if(separator === '\n') parts.push(separator);
+            if(separator === '\n') result += separator;
             else separator = '\n';
         }
         else {
-            parts.push(separator);
-            parts.push(match);
+            result += separator;
+            result += match;
             separator = ' ';
         }
         position = newline + 1;
     }
     while(position < source.length && whitespace(char(source, position))) position++;
-    parts.push(separator);
-    parts.push(source.slice(position));
-    return parts.join('');
+    result += separator;
+    result += source.slice(position);
+    return result;
 }
 export function escapeCode(character: string): string {
     switch(character) {
