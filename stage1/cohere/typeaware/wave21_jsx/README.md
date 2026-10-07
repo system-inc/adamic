@@ -175,3 +175,19 @@ ASan/UBSan/LSan, named metadata, Unicode and released-handle contracts. Executio
 sums: prepared-input native **0.137763 s**, full Go **1.702417 s**, raw Go fixture
 preparation **1.890935 s**. These are distinct pipelines. The full repository
 test gate and native JSX source throughput remain uncovered.
+
+The subsequent main `39638d9e2` added only Stage 3 files and a velocity row. The
+branch was rebased again. Exact Git tree identities in
+`validation/landing-3963/unchanged-source-trees.json` prove that cmd, internal,
+bridge, Stage 1, cohere, oracle and go.mod are unchanged from b8fb957aa. A fresh
+production Go oracle replays all 66 control batches and both corpora against
+normal and sanitized native binaries; all three native mutants again exit 0
+and differ only in the expected byte comparison. `replay.py` is private to this
+unit and is used only with this unchanged-source proof. No shared harness changed.
+
+Fresh native syntax/lifetime contracts PASS 30.270 s; JSX source prerequisites
+PASS 12.029 s; checker PASS 0.121 s; filtered Node oracle PASS 0.248 s; vet clean.
+The prerequisite test without its artifact variable skipped initially; the
+explicit artifact-backed command then reran it successfully. The seven previous
+wave-21 suites were rebuilt again; their complete result is in
+`validation/landing-3963/owned.log`. The core/source coverage limits remain.
