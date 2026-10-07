@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import tempfile
 import time
 
 
@@ -113,27 +114,39 @@ def run_set(names, kind, state, state_path, packages, root, destination, environ
             if hashlib.sha256(Path(result["events"]).read_bytes()).hexdigest() != result["event_hash"]:
                 raise RuntimeError("saved proof events changed: " + package)
     pending = [name for name in names if name not in phase["packages"]]
+    if not pending:
+        return
+    # A restart may leave uncheckpointed output. Keep it and use new paths.
+    if phase.get("sessions"):
+        destination = Path(tempfile.mkdtemp(prefix="resume-", dir=destination))
     metadata = timing_metadata(root, environment, ["run_set", kind, *pending])
+    metadata["build_flags"] = "go test -c; -test.v=test2json -test.timeout=60m; four workers, markdownblocks last and alone"
     phase.setdefault("sessions", []).append(metadata)
     prior = phase["wall_seconds"]
     started = time.monotonic()
+    isolated = [name for name in pending if name.endswith("/stage1/cohere/markdownblocks")]
+    parallel = [name for name in pending if name not in isolated]
+
+    def save(name, result):
+        if kind == "skipped_run":
+            expected = canonical_events(reference["Packages"][name]["Events"])
+            actual = canonical_events(result["events"])
+            result["identical"] = expected == actual
+            if expected != actual:
+                atomic_json(destination / (name.replace("/", "_") + ".difference.json"),
+                            {"reference": expected, "branch": actual})
+        phase["packages"][name] = result
+        phase["wall_seconds"] = prior + time.monotonic() - started
+        atomic_json(state_path, state)
+        print(kind, name, result["exit"], result.get("identical", ""), flush=True)
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as workers:
         futures = {workers.submit(run_package, name, packages[name]["Dir"], root,
-                                  destination, environment): name for name in pending}
+                                  destination, environment): name for name in parallel}
         for future in concurrent.futures.as_completed(futures):
-            name = futures[future]
-            result = future.result()
-            if kind == "skipped_run":
-                expected = canonical_events(reference["Packages"][name]["Events"])
-                actual = canonical_events(result["events"])
-                result["identical"] = expected == actual
-                if expected != actual:
-                    atomic_json(destination / (name.replace("/", "_") + ".difference.json"),
-                                {"reference": expected, "branch": actual})
-            phase["packages"][name] = result
-            phase["wall_seconds"] = prior + time.monotonic() - started
-            atomic_json(state_path, state)
-            print(kind, name, result["exit"], result.get("identical", ""), flush=True)
+            save(futures[future], future.result())
+    for name in isolated:
+        save(name, run_package(name, packages[name]["Dir"], root, destination, environment))
     phase["wall_seconds"] = prior + time.monotonic() - started
     metadata["load_after"] = Path("/proc/loadavg").read_text().strip()
     metadata["ended"] = time.time()
@@ -142,6 +155,8 @@ def run_set(names, kind, state, state_path, packages, root, destination, environ
 
 
 def mutant_matrix(state, state_path, root, destination, environment, record, binary, tool_mutant):
+    if "mutants" in state:
+        return
     matrix = {}
     for kind in ("observed", "directories", "toolchain"):
         mutated = json.loads(json.dumps(record))
@@ -326,14 +341,19 @@ def main():
     output(["git", "checkout", "--detach", record["Commit"]], args.root, environment)
     if not all(report["skipped_pass_and_identical"] for report in reports.values()):
         raise RuntimeError("skipped-package proof failed; inspect saved differences")
-    if not all(report["selected_pass"] for report in reports.values()):
-        raise RuntimeError("selected packages failed; inspect saved logs")
     if not any(report["mutants"]["observed"]["caught_by"] for report in reports.values()):
         raise RuntimeError("observed-input mutant was not caught by a branch shape")
     if not reports["oracle"]["mutants"]["directories"].get("new_fixture_probe", {}).get("caught_by"):
         raise RuntimeError("directory-input mutant was not caught by the new oracle fixture")
     if not any(report["mutants"]["toolchain"]["caught_by"] for report in reports.values()):
         raise RuntimeError("toolchain-input mutant was not caught by a branch shape")
+    atomic_json(args.output / "verified-skips-and-mutants.json", {
+        "reference_hash": record_hash, "skipped_events_identical": True,
+        "three_mutants_caught": True,
+        "selected_pass": {shape: report["selected_pass"] for shape, report in reports.items()},
+    })
+    if not all(report["selected_pass"] for report in reports.values()):
+        raise RuntimeError("selected packages failed; skips and mutants verified; inspect saved logs")
 
 
 if __name__ == "__main__":

@@ -64,6 +64,38 @@ class EventComparisonTest(unittest.TestCase):
             self.assertEqual(saved["skipped"], ["probe"])
             self.assertTrue(saved["skipped_run"]["packages"]["probe"]["identical"])
 
+    def test_resume_retains_unfinished_logs_and_isolates_markdown(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            logs = root / "events"
+            logs.mkdir()
+            unfinished = logs / "pending.jsonl"
+            unfinished.write_text("interrupted attempt")
+            markdown = "github.com/system-inc/adamic/stage1/cohere/markdownblocks"
+            calls = []
+
+            def run(name, package_dir, checkout, destination, environment):
+                calls.append(name)
+                (destination / "pending.jsonl").write_text("new attempt")
+                return {"exit": 0, "events": ""}
+
+            state = {"selected_run": {"packages": {}, "wall_seconds": 1,
+                                      "sessions": [{}]}}
+            with patch("proof.run_package", side_effect=run), \
+                 patch("proof.timing_metadata", return_value={}):
+                run_set([markdown, "probe"], "selected_run", state,
+                        root / "state.json", {name: {"Dir": str(root)}
+                                              for name in (markdown, "probe")},
+                        root, logs, {}, {})
+                self.assertEqual(calls, ["probe", markdown])
+                self.assertEqual(unfinished.read_text(), "interrupted attempt")
+                calls.clear()
+                run_set([markdown, "probe"], "selected_run", state,
+                        root / "state.json", {name: {"Dir": str(root)}
+                                              for name in (markdown, "probe")},
+                        root, logs, {}, {})
+                self.assertEqual(calls, [])
+
 
 if __name__ == "__main__":
     unittest.main()
