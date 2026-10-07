@@ -1,8 +1,8 @@
-Rebased all 13 wave-25 commits onto main e011f8f6, preserving every patch; no new rules claimed.
-Original pushed tip 16a717e8 became f0cfe281; this accompanying commit preserves the first landing gate and evidence.
-Wave gate PASS 408.470s: 840 valid controls, 527 findings, 117 fixes; dependency PASS 542.007s over controls and both corpora, with sanitizers and released handles.
-All 14 wave mutants and ten dependency mutants are caught by Go bytes; bridge fault injections and the uncached Node one-byte mutant also pass.
-Main advanced to e8ba3d5d during validation; another rebase and gate are required before pushing. Boolean naming is still partial; no new claims.
+Rebased all wave-25 work onto main e8ba3d5d; no new rules claimed, and every carried patch is preserved.
+Original pushed tip 16a717e8 is preserved through the rebases; final tested head a0da5a43 plus this accompanying evidence commit is pushed on codex/typeaware-wave-25.
+Second wave gate PASS 394.989s; dependency PASS 534.513s; 876 control files plus both frozen corpora match Go findings, fixes and suggestions under sanitizers.
+All 24 rule mutants are caught only by independent Go bytes; bridge fault injections, released-handle mutants and the uncached Node one-byte mutant pass.
+Incomplete: boolean regex options, cross-file props and typed wrappers; full repository gate, options matrix, shared profile/JS rule comparison and CLI fixes. No additional claims.
 
 ## First landing attempt
 
@@ -63,3 +63,111 @@ The completed first gate does not establish agreement with that compiler.
 It is preserved here while the branch is rebased and revalidated again.
 Not covered: full repository gate, nondefault option matrix, full shared-profile
 integration, emitted-JavaScript comparison of these rule ports and CLI fixes.
+
+
+## Second landing run
+
+Main e8ba3d5d81de4d3773c723914fccd4c76248b965 carries the call-target and
+devirtualization compiler changes. The second rebase completed without
+conflicts. Its range-diff preserves all 14 carried commits exactly, including
+the first evidence commit. Original port tip 16a717e8 becomes 5b8bec33;
+the tested second head is a0da5a43357af8dc3246d5a836c9dddac5e4d08b. The final
+accompanying commit changes reports, evidence packaging and claim status only.
+No native rule or compiler-question implementation changed during landing.
+
+Every suite was rebuilt against this compiler. Complete independent production
+Go streams match, including fixes, suggestions and duplicates.
+
+| Batch | Valid controls | Findings | Fixes | Suggestions | Identical control bytes |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| original | 66 | 24 | 0 | 0 | 8192 |
+| next | 60 | 57 | 0 | 0 | 29320 |
+| third | 108 | 96 | 0 | 0 | 64321 |
+| fourth | 364 | 209 | 117 | 0 | 85488 |
+| fifth | 242 | 141 | 0 | 0 | 61122 |
+| dependency | 36 | 53 | 6 | 10 | 24346 |
+
+All wave batches compare the same frozen repository 287 roots and compiler 77
+roots, normally and sanitized: zero findings, 18,485 repository bytes and
+5,010 compiler bytes in each suite. The dependency compares 180 repository
+findings in 85,151 bytes and 16,589 compiler findings in 7,120,613 bytes, with
+2,222 fixes and 152 suggestions in the compiler. Every normal and sanitized
+stream matches. The fifth nil-options control also matches 84 findings.
+
+The second bridge suite passes in 67.071s, checker in 0.246s; the uncached
+filtered Node oracle passes in 1.410s on eight fixtures and the one-byte
+mutant, with zero cache hits. Go vet and diff checks pass. Released handles
+refuse exactly with panic 70; retaining them in the registry makes the
+mutants exit 0 and fails the required-panic expectation.
+
+## Every rule mutant in the second run
+
+Each builds, exits 0, emits empty stderr, and differs from its independent
+Go truth stream. No compiler refusal or clang warning kills these mutants.
+
+| Batch | Mutation | First differing byte | Catcher |
+| --- | --- | ---: | --- |
+| wave-25 | eval-library | 70 | Go findings/fix bytes |
+| wave-25 | memo-inline | 19756 | Go findings/fix bytes |
+| wave-25 | boolean-capital | 44875 | Go findings/fix bytes |
+| wave-25 | throw-conditional | 1330 | Go findings/fix bytes |
+| wave-25 | regex-forward | 10035 | Go findings/fix bytes |
+| wave-25 | arrow-fix | 58859 | Go findings/fix bytes |
+| wave-25 | collection-zero | 1474 | Go findings/fix bytes |
+| wave-25 | outcome-incomplete | 17407 | Go findings/fix bytes |
+| wave-25 | pure-callback | 26439 | Go findings/fix bytes |
+| wave-25 | graphql-mask | 992 | Go findings/fix bytes |
+| wave-25 | inject-strip | 5727 | Go findings/fix bytes |
+| wave-25 | exit-state | 117 | Go findings/fix bytes |
+| wave-25 | race-drop | 19461 | Go findings/fix bytes |
+| wave-25 | blocking-count | 26456 | Go findings/fix bytes |
+| dependency | before | 65 | Go findings/fix/suggestion bytes |
+| dependency | cast | 1592 | Go findings/fix/suggestion bytes |
+| dependency | methods | 2266 | Go findings/fix/suggestion bytes |
+| dependency | coercion | 1189 | Go findings/fix/suggestion bytes |
+| dependency | caller | 10374 | Go findings/fix/suggestion bytes |
+| dependency | parameter | 377 | Go findings/fix/suggestion bytes |
+| dependency | invariant | 12930 | Go findings/fix/suggestion bytes |
+| dependency | optional | 15729 | Go findings/fix/suggestion bytes |
+| dependency | alias | 16223 | Go findings/fix/suggestion bytes |
+| dependency | unused | 17067 | Go findings/fix/suggestion bytes |
+
+Bridge foundation mutants independently prove input/output bounds via ASan,
+missing buffer frees and heap region allocation via LSan, stale handles via
+assertions, wrong source position via oracle bytes, and removed link opt-in
+via refusal. TestTheOracleCatchesOneByte proves external Node disagreement
+is detectable. Full logs retain each observation.
+
+## Commands and final measurements
+
+```sh
+bash /workspace/wave-25-validation/landing-second-gate.sh
+bash /workspace/wave-25-validation/landing-second-dependency-gate.sh
+python3 /workspace/wave-25-validation/landing-second-benchmark.py
+```
+
+These scripts record the exact Go test filters and environments; every test
+run redirects output directly to its log. Setup and toolchain are the same
+as the first run above. No build or test competes with the timing samples.
+Three interleaved Go/native full-output samples match byte for byte. These
+measure the fifth suite with nil boolean options, not enabled boolean naming.
+
+| Population | Native median | Go median | Native / Go |
+| --- | ---: | ---: | ---: |
+| compiler | 3.963835s | 0.362370s | 10.939 |
+| repository | 0.557283s | 0.131633s | 4.234 |
+
+Native is slower in both measured populations. Samples and counters are
+observations; no causal performance improvement is claimed.
+
+The second full evidence package is validation-wave-25-landing-second.
+The first remains validation-wave-25-landing, with metadata pinned to its
+actual tested base and head rather than the main tip observed afterward.
+
+Boolean naming remains partial. Runtime regex patterns require compiler
+support; cross-file props and typed wrapper detection still need port work.
+Its three explicit refusal controls continue to exit 70 before findings.
+This landing unit does not complete those paths and does not claim more
+rules. Its claim remains reserved. Nondefault options, shared-profile
+integration, emitted-JavaScript comparison of the rule ports, CLI fixes and
+the complete repository test gate remain outside this validation.

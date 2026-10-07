@@ -1,0 +1,1 @@
+const expression = new RegExp('^is'); console.log(`${expression.test('isEnabled')}`);

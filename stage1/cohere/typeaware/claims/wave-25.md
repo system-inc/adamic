@@ -96,3 +96,11 @@ Boolean-prop-naming remains partial: arbitrary regex, cross-file annotations
 and typed memo/forwardRef wrapper paths refuse explicitly. The tested partial
 implementation and evidence are committed together; this claim remains reserved.
 No additional rules are claimed. See WAVE_25_FIFTH_REPORT.md.
+
+## Landing unit, October 7
+
+Rebased all work onto origin/main at e8ba3d5d81de4d3773c723914fccd4c76248b965.
+All five wave suites and the carried ten-rule bridge dependency are rebuilt
+and green against independent Go bytes, mutants, sanitizers and released
+handles. The report and evidence are in WAVE_25_LANDING_REPORT.md.
+Boolean-prop-naming remains partial and reserved; no new rules are claimed.

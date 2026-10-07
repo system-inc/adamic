@@ -1,0 +1,4 @@
+import { programArguments } from 'adamic';
+const args = programArguments();
+const expression = new RegExp(args[0] ?? '^is');
+console.log(`${expression.test('isEnabled')}`);

@@ -5,7 +5,7 @@ logs=Path('/workspace/wave-25-validation')
 scratch=Path('/workspace/wave-25-landing')
 out=root/'stage1/cohere/typeaware/validation-wave-25-landing'
 out.mkdir(exist_ok=True)
-results={'base':subprocess.check_output(['git','rev-parse','origin/main'],cwd=root,text=True).strip(),'tested_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'populations':{},'artifacts':{}}
+results={'base':'e011f8f60899586d6373a5ccb07335ad82cfbf3c','tested_head':'f0cfe2811ea3ce6043c5e117b822bb247c7d1520','populations':{},'artifacts':{}}
 inputs={}
 for batch in ['original','next','third','fourth','fifth','refusals','dependency']:
  directory=scratch/batch

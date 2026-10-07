@@ -1,0 +1,39 @@
+from pathlib import Path
+import collections,gzip,hashlib,json,shutil,subprocess
+root=Path('/workspace/adamic')
+logs=Path('/workspace/wave-25-validation')
+scratch=Path('/workspace/wave-25-landing-second')
+out=root/'stage1/cohere/typeaware/validation-wave-25-landing-second'
+out.mkdir(exist_ok=True)
+results={'base':'e8ba3d5d81de4d3773c723914fccd4c76248b965','tested_head':'a0da5a43357af8dc3246d5a836c9dddac5e4d08b','populations':{},'artifacts':{}}
+inputs={}
+for batch in ['original','next','third','fourth','fifth','refusals','dependency']:
+ directory=scratch/batch
+ target=out/batch
+ target.mkdir(exist_ok=True)
+ for file in directory.iterdir():
+  if not file.is_file() or file.is_symlink() or file.suffix not in ['.stdout','.stderr','.manifest','.json']:
+   continue
+  data=file.read_bytes()
+  if file.suffix in ['.stdout','.stderr']:
+   with gzip.GzipFile(filename=str(target/(file.name+'.gz')),mode='wb',mtime=0) as stream:stream.write(data)
+  else:shutil.copyfile(file,target/file.name)
+  results['artifacts'][batch+'/'+file.name]={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
+  if file.name.endswith('-go.stdout') and file.name.split('-',1)[1] in ['controls-go.stdout','controls-no-options-go.stdout','repository-go.stdout','compiler-go.stdout']:
+   rows=[line.split('\t') for line in data.decode().splitlines() if line and line[0].isdigit()]
+   results['populations'][batch+'/'+file.name]={'findings':len(rows),'rule_counts':dict(collections.Counter(row[2] for row in rows)),'fixes':sum(int(row[5]) for row in rows),'suggestions':sum(int(row[6]) for row in rows),'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
+ manifest=directory/'controls.manifest'
+ if manifest.exists():
+  valid=directory/'controls-valid.manifest'
+  accepted=set((valid if valid.exists() else manifest).read_text().splitlines())
+  inputs[batch]=[{'path':name,'parse_valid':name in accepted,'sha256':hashlib.sha256(Path(name).read_bytes()).hexdigest(),'source':Path(name).read_text()} for name in manifest.read_text().splitlines()]
+for name in ['landing-second-fetch.log','landing-second-final-fetch.log','landing-second-rebase.log','landing-second-range-diff.log','landing-setup.log','landing-second-rules.log','landing-second-bridge.log','landing-second-node.log','landing-second-vet.log','landing-second-dependency.log','landing-second-benchmark.log','landing-dynamic-regexp.log','landing-constant-regexp.log','landing-constant-regexp.stdout','landing-constant-regexp.stderr']:
+ with gzip.GzipFile(filename=str(out/(name+'.gz')),mode='wb',mtime=0) as stream:stream.write((logs/name).read_bytes())
+for name in ['landing-second-gate.sh','landing-second-dependency-gate.sh','landing-second-benchmark.py','landing-second-package.py','landing-second-bench.json']:
+ shutil.copyfile(logs/name,out/name)
+with gzip.GzipFile(filename=str(out/'inputs.json.gz'),mode='wb',mtime=0) as stream:stream.write(json.dumps(inputs,ensure_ascii=False,indent=2).encode())
+(out/'results.json').write_text(json.dumps(results,indent=2)+'\n')
+print(json.dumps(results['populations'],indent=2))
+
+shutil.copyfile(logs/'landing-dynamic-regexp.a',out/'dynamic-regexp-probe.a')
+shutil.copyfile(logs/'fifth-regexp-probe.a',out/'constant-regexp-probe.a')
