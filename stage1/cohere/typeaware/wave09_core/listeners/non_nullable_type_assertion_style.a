@@ -1,0 +1,4 @@
+// Listener contract from pinned Go parser SyntaxKind values.
+// Shared native parser/driver numeric kinds remain unavailable.
+export const ruleName = "@typescript-eslint/non-nullable-type-assertion-style";
+export const syntaxKinds:readonly number[] = [217, 235];

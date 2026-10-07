@@ -1,0 +1,4 @@
+// Listener contract from pinned Go parser SyntaxKind values.
+// Shared native parser/driver numeric kinds remain unavailable.
+export const ruleName = "no-invalid-regexp";
+export const syntaxKinds:readonly number[] = [214, 215];

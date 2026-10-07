@@ -1,0 +1,4 @@
+// Listener contract from pinned Go parser SyntaxKind values.
+// Shared native parser/driver numeric kinds remain unavailable.
+export const ruleName = "prefer-const";
+export const syntaxKinds:readonly number[] = [262];
