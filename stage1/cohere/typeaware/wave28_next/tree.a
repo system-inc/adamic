@@ -1,0 +1,62 @@
+import { StreamFile } from './stream_file.a';
+import { panic, readTextFile } from 'adamic';
+import { Rules } from '../rules.ts';
+import { Bindings } from '../bindings.ts';
+import { Shadow } from '../shadow.ts';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { Symbols } from './stream_symbol.a';
+export class Tree {
+    readonly rules: Rules;readonly bindings: Bindings;readonly shape: Shadow;readonly symbols: Symbols;
+    constructor(rules: Rules){const bindings=new Bindings(rules);this.rules=rules;this.bindings=bindings;this.shape=bindings.shape;this.symbols=new Symbols(rules);}
+    skip(index: number): number{return index<0?-1:this.rules.skip(index);}
+    kind(index: number): string{return index<0?'':this.rules.parser.node(index).kind;}
+    parent(index: number): number{return this.rules.parents[index]??-1;}
+    child(index: number,at: number): number{return index<0?-1:this.rules.parser.node(index).children[at]??-1;}
+    last(index: number): number{if(index<0){return -1;}const children=this.rules.parser.node(index).children;return children[children.length-1]??-1;}
+    operator(index: number): string{return this.kind(index)==='BinaryExpression'?this.kind(this.child(index,1)):this.rules.parser.node(index).operator;}
+    initializer(index: number): number{return index<0?-1:this.shape.initializer(index);}
+    name(index: number): number{if(index<0){return -1;}if(['MethodDeclaration','GetAccessor','SetAccessor','PropertyDeclaration','PropertySignature','MethodSignature','PropertyAssignment'].includes(this.kind(index))){return this.rules.parser.node(index).children.find((child)=>['Identifier','ComputedPropertyName','StringLiteral','NumericLiteral','PrivateIdentifier'].includes(this.kind(child)))??-1;}return this.shape.name(index);}
+    body(index: number): number{if(this.kind(index)==='ArrowFunction'){return this.last(index);}return index<0?-1:this.rules.parser.node(index).children.find((child)=>this.kind(child)==='Block')??-1;}
+    up(index: number): number{let at=index;while(this.kind(this.parent(at))==='ParenthesizedExpression'){at=this.parent(at);}return at;}
+    args(index: number): number[]{const node=this.rules.parser.node(index);const empty: number[]=[];return node.list>0?node.children.slice(node.children.length-node.list):empty;}
+    function(index: number): boolean{return this.bindings.functionKind(this.kind(index));}
+    root(index: number): boolean{return this.function(index) || ['SourceFile','ClassStaticBlockDeclaration'].includes(this.kind(index)) || this.kind(index)==='PropertyDeclaration' && this.initializer(index)>=0;}
+    rootOf(index: number): number{
+        let previous=index;let decorator=-1;
+        for(let at=this.parent(index);at>=0;at=this.parent(at)){
+            const kind=this.kind(at);if(kind==='Decorator'){decorator=at;}
+            if(kind==='SourceFile'){return at;}
+            if(this.root(at)){
+                if(kind==='PropertyDeclaration'){if(this.initializer(at)===previous){return at;}}
+                else if(kind==='ClassStaticBlockDeclaration'){if(this.body(at)===previous){return at;}}
+                else if(this.name(at)!==previous && !(decorator>=0 && [at,previous].includes(this.parent(decorator)))){return at;}
+            }
+            previous=at;
+        }
+        return -1;
+    }
+    at(kind: string,pos: number,end: number): number{return this.bindings.spans.get(`${kind}:${pos}:${end}`)??panic('stream declaration missing from Adamic tree');}
+    catchBinding(index: number,root: number): boolean{let previous=index;for(let at=this.parent(index);at>=0 && at!==root;at=this.parent(at)){if(this.kind(at)==='CatchClause' && this.child(at,0)===previous && this.kind(previous)!=='Block'){return true;}previous=at;}return false;}
+    truthy(index: number): boolean{
+        if(index<0){return false;}const node=this.rules.parser.node(this.rules.skip(index));
+        if(['TrueKeyword','RegularExpressionLiteral'].includes(node.kind)){return true;}
+        if(node.kind==='StringLiteral'){return node.text!=='';}
+        if(node.kind==='NumericLiteral'){return node.text!=='0';}
+        if(node.kind==='BigIntLiteral'){const digits=node.text.slice(0,-1).replaceAll('_','');const content=['0x','0o','0b'].includes(digits.slice(0,2).toLowerCase())?digits.slice(2):digits;return content.split('').some((digit)=>digit!=='0');}
+        return false;
+    }
+}
+export class World {
+    readonly program: number;readonly trees=new Map<string,Tree>();
+    constructor(tree: Tree){this.program=tree.rules.program;this.trees.set(tree.rules.path,tree);}
+    get(path: string): Tree{
+        if(!this.trees.has(path)){
+            const source=readTextFile(path);if(source.kind==='Error'){panic(source.message);}
+            const parser=new Parser(source.text,path);const scanner=new Scanner(source.text);const offsets=byteOffsets(source.text);const unary=new UnaryMinus(this.program,path,parser,scanner,offsets);
+            const rules=new Rules(this.program,path,parser,scanner,offsets,unary);const metadata=new StreamFile(this.program,path,offsets[source.text.length]??panic('missing source end'));parser.awaitContext=metadata.external;const root=parser.file();for(let at=0;at<parser.nodes.length;at++){rules.parents.push(-1);}rules.links(root,-1);this.trees.set(path,new Tree(rules));
+        }
+        return this.trees.get(path)??panic('missing stream tree');
+    }
+}

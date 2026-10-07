@@ -1,0 +1,112 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { Tree, World } from './tree.a';
+import { Signature } from './stream_signature.a';
+import { Event, Graph, buildGraph } from './graph.a';
+class Position {
+    readonly block: number;readonly state: string[];
+    constructor(block: number,state: string[]){this.block=block;this.state=state;}
+}
+export class Walk {
+    readonly exits: number[]=[];readonly started: number[]=[];
+    constructor(tree: Tree,root: number,graph: Graph,ordered: boolean=false){
+        const queue=[new Position(0,[])];const visited=new Set<string>();visited.add('0:');const exits=new Set<number>();const started=new Set<number>();
+        for(let at=0;at<queue.length;at++){
+            const position=queue[at]??panic('missing stream position');let state=position.state;let ended=false;
+            for(const event of graph.block(position.block).events){
+                if(event.kind==='write'){state=this.with(state,this.chain(tree,root,event.node));}
+                else if(event.kind==='catch'){state=state.filter((held)=>!held.includes(`,${event.node},`));}
+                else if(event.kind==='call'){
+                    if(!event.argumentsBlock){for(const run of event.runs){if(!started.has(run)){started.add(run);this.started.push(run);}}}
+                    if(!ordered){for(const hand of event.hands){if(!started.has(hand)){started.add(hand);this.started.push(hand);}}}
+                }else if(event.kind==='exit'){
+                    if(state.length>0){exits.add(event.node);}ended=true;
+                }else if(event.kind==='block'){ended=true;}
+                if(ended){break;}
+            }
+            if(ended){continue;}
+            for(const next of graph.block(position.block).successors){if(!graph.block(next).reachable){continue;}const key=`${next}:${state.join('|')}`;if(!visited.has(key)){visited.add(key);queue.push(new Position(next,state));}}
+        }
+        for(const index of exits.values()){this.exits.push(index);}
+    }
+    holds(outer: string,inner: string): boolean{return inner.split(',').every((id)=>id==='' || outer.includes(`,${id},`));}
+    with(state: string[],chain: string): string[]{const next: string[]=[];for(const held of state){if(this.holds(chain,held)){return state;}if(!this.holds(held,chain)){next.push(held);}}next.push(chain);next.sort((a,b)=>a<b?-1:a>b?1:0);return next;}
+    chain(tree: Tree,root: number,index: number): string{
+        const tries: number[]=[];let previous=index;
+        for(let at=tree.parent(index);at>=0 && at!==root;at=tree.parent(at)){
+            if(tree.kind(at)==='TryStatement' && tree.child(at,0)===previous && tree.rules.parser.node(at).children.some((child)=>tree.kind(child)==='CatchClause')){tries.push(at);}previous=at;
+        }
+        tries.sort((a,b)=>a-b);return ','+tries.map((id)=>`${id},`).join('');
+    }
+}
+export class NoProcessExitAfterOutput {
+    readonly tree: Tree;readonly world: World;readonly exitCache=new Map<number,boolean>();readonly writeCache=new Map<number,boolean>();readonly writerCache=new Map<string,boolean>();
+    constructor(rules: Rules){const tree=new Tree(rules);this.tree=tree;this.world=new World(tree);}
+    member(tree: Tree,index: number): number{const at=tree.skip(index);if(tree.kind(at)==='Identifier'){return at;}if(tree.kind(at)==='PropertyAccessExpression'){const name=tree.last(at);return tree.kind(name)==='Identifier'?name:-1;}return -1;}
+    process(tree: Tree,index: number): boolean{
+        const symbol=tree.symbols.facts(index)[1];if(symbol===undefined || symbol.declarations.length===0){return false;}
+        return symbol.declarations.every((decl)=>decl.declarationFile && ['MethodSignature','PropertySignature'].includes(decl.ancestors[0]?.kind??'') && decl.ancestors[1]?.kind==='InterfaceDeclaration' && decl.ancestors[1]?.name==='Process' && decl.ancestors[2]?.kind==='ModuleBlock' && decl.ancestors[3]?.kind==='ModuleDeclaration' && decl.ancestors[3]?.name==='NodeJS');
+    }
+    exit(tree: Tree,index: number): boolean{
+        if(tree===this.tree && this.exitCache.has(index)){return this.exitCache.get(index)??false;}
+        const name=this.member(tree,tree.child(index,0));const result=name>=0 && tree.rules.parser.node(name).text==='exit' && this.process(tree,name);
+        if(tree===this.tree){this.exitCache.set(index,result);}return result;
+    }
+    globalConsole(tree: Tree,index: number): boolean{
+        const symbol=tree.symbols.facts(index)[0];if(symbol===undefined || symbol.declarations.length===0){return false;}
+        return symbol.declarations.every((decl)=>{
+            if(!decl.declarationFile || decl.ancestors[0]?.kind!=='VariableDeclaration' || decl.ancestors[1]?.kind!=='VariableDeclarationList' || decl.ancestors[2]?.kind!=='VariableStatement'){return false;}
+            const container=decl.ancestors[3];return container?.kind==='SourceFile'?!decl.external:container?.kind==='ModuleBlock' && decl.ancestors[4]?.augmentation===true;
+        });
+    }
+    write(tree: Tree,index: number): boolean{
+        const callee=tree.skip(tree.child(index,0));const kind=tree.kind(callee);if(!['PropertyAccessExpression','ElementAccessExpression'].includes(kind)){return false;}
+        const name=tree.last(callee);const nameKind=tree.kind(name);if(kind==='ElementAccessExpression' && !['StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral'].includes(nameKind)){return false;}
+        const member=tree.rules.parser.node(name).text;const receiver=tree.skip(tree.child(callee,0));
+        if(['log','info','debug','warn','error','trace','table','dir','dirxml'].includes(member) && tree.kind(receiver)==='Identifier' && tree.rules.parser.node(receiver).text==='console'){return this.globalConsole(tree,receiver);}
+        if(member!=='write'){return false;}const stream=this.member(tree,receiver);return stream>=0 && ['stdout','stderr'].includes(tree.rules.parser.node(stream).text) && this.process(tree,stream);
+    }
+    holdsExit(tree: Tree,index: number): boolean{for(const child of tree.rules.parser.node(index).children){if(tree.root(child)){continue;}if(tree.kind(child)==='CallExpression' && this.exit(tree,child) || this.holdsExit(tree,child)){return true;}}return false;}
+    bodyWrites(tree: Tree,index: number): boolean{
+        if(index<0 || tree.root(index)){return false;}
+        if(tree.kind(index)==='CallExpression' && this.exit(tree,index)){return false;}
+        return tree.kind(index)==='CallExpression' && this.write(tree,index) || tree.rules.parser.node(index).children.some((child)=>this.bodyWrites(tree,child));
+    }
+    bodyExits(tree: Tree,index: number): boolean{
+        if(index<0 || tree.root(index)){return false;}
+        return tree.kind(index)==='CallExpression' && this.exit(tree,index) || tree.rules.parser.node(index).children.some((child)=>this.bodyExits(tree,child));
+    }
+    writes(index: number): boolean{
+        if(this.writeCache.has(index)){return this.writeCache.get(index)??false;}let result=this.write(this.tree,index);
+        if(!result){
+            const signature=new Signature(this.tree.rules,index);
+            if(signature.present && signature.body && ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration'].includes(signature.kind) && (signature.path===this.tree.rules.path || signature.external) && !signature.generator && (!signature.async || this.tree.kind(this.tree.parent(this.tree.up(index)))==='AwaitExpression') && (signature.returns & 262144)===0){
+                const key=`${signature.path}:${signature.pos}:${signature.end}`;
+                if(!this.writerCache.has(key)){const tree=this.world.get(signature.path);const declaration=tree.at(signature.kind,signature.pos,signature.end);const body=tree.body(declaration);this.writerCache.set(key,this.bodyWrites(tree,body) && !this.bodyExits(tree,body));}
+                result=this.writerCache.get(key)??false;
+            }
+        }
+        this.writeCache.set(index,result);return result;
+    }
+    events(root: number,index: number,statement: boolean): Event[]{
+        const tree=this.tree;const events: Event[]=[];
+        if(statement){if(tree.kind(index)==='Block' && tree.kind(tree.parent(index))==='CatchClause'){events.push(new Event('catch',tree.parent(tree.parent(index))));}return events;}
+        if(tree.kind(index)!=='CallExpression' || tree.catchBinding(index,root)){return events;}
+        if(this.exit(tree,index)){events.push(new Event('exit',index));}
+        else if(this.writes(index) && !this.holdsExit(tree,index)){events.push(new Event('write',index));}
+        return events;
+    }
+    run(): void{
+        const tree=this.tree;const roots=new Map<number,number[]>();
+        for(let at=0;at<tree.rules.parser.nodes.length;at++){if(tree.parent(at)<0 || tree.kind(at)!=='CallExpression' || !this.exit(tree,at)){continue;}const root=tree.rootOf(at);if(root<0){continue;}if(!roots.has(root)){roots.set(root,[]);}(roots.get(root)??panic('missing exit root')).push(at);}
+        for(const [root,exits] of roots.entries()){
+            let writes=false;for(let at=0;at<tree.rules.parser.nodes.length;at++){if(tree.parent(at)>=0 && tree.kind(at)==='CallExpression' && tree.rootOf(at)===root && this.writes(at)){writes=true;break;}}if(!writes){continue;}
+            const graph=buildGraph(tree,root,(index,statement)=>this.events(root,index,statement));
+            const recorded=new Set<number>();for(const block of graph.blocks){for(const event of block.events){if(event.kind==='exit'){recorded.add(event.node);}}}if(exits.some((exit)=>!recorded.has(exit))){continue;}
+            const walk=new Walk(tree,root,graph);
+            for(const exit of exits){if(walk.exits.includes(exit)){const node=tree.rules.parser.node(exit);tree.rules.findings.push(new Diagnostic('nexus/correctness-no-process-exit-after-output','exitAfterOutput',MESSAGE,tree.rules.byte(tree.rules.start(node)),tree.rules.byte(node.end),''));}}
+        }
+    }
+}
+const MESSAGE="This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.";

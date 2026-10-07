@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class Ancestor {
+    readonly kind: string; readonly pos: number; readonly end: number; readonly flags: number; readonly name: string; readonly augmentation: boolean;
+    constructor(frames: Frames) { this.kind=frames.field();this.pos=frames.natural();this.end=frames.natural();this.flags=frames.natural();this.name=frames.field();this.augmentation=frames.yes(); }
+}
+export class Declaration {
+    readonly path: string; readonly declarationFile: boolean; readonly library: boolean; readonly external: boolean; readonly ancestors: Ancestor[]=[];
+    constructor(frames: Frames) { this.path=frames.field();this.declarationFile=frames.yes();this.library=frames.yes();this.external=frames.yes();const count=frames.natural();for(let at=0;at<count;at++){this.ancestors.push(new Ancestor(frames));} }
+}
+export class SymbolFact {
+    readonly present: boolean; readonly id: number; readonly flags: number; readonly name: string; readonly declarations: Declaration[]=[];
+    constructor(frames: Frames) {this.present=frames.yes();this.id=this.present?frames.natural():0;this.flags=this.present?frames.natural():0;this.name=this.present?frames.field():'';const count=this.present?frames.natural():0;for(let at=0;at<count;at++){this.declarations.push(new Declaration(frames));} }
+}
+export class Symbols {
+    readonly rules: Rules; readonly cache=new Map<number,SymbolFact[]>();
+    constructor(rules: Rules){this.rules=rules;}
+    facts(index: number): SymbolFact[] {if(!this.cache.has(index)){const frames=new Frames(this.rules.ask(index,'stream-symbol'));header(frames,'stream-symbol');const own=new SymbolFact(frames);const alias=new SymbolFact(frames);frames.end();this.cache.set(index,[own,alias]);}return this.cache.get(index)??panic('missing symbol facts');}
+}

@@ -695,7 +695,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 		}
 		g.write(out)
 	default:
-		return "", fmt.Errorf("unsupported checker question: %s", question)
+		return p.streamSymbol(out, c, node, source, question)
 	}
 	return out.String(), nil
 }

@@ -1,0 +1,92 @@
+{
+  "controls-go": {
+    "bytes": 67395,
+    "sha256": "26834c370bb5892acb4450db1f7a585a4e15aed75285d4afd409eed4ec454a89",
+    "stderr_bytes": 58
+  },
+  "controls-native": {
+    "bytes": 67395,
+    "sha256": "26834c370bb5892acb4450db1f7a585a4e15aed75285d4afd409eed4ec454a89",
+    "stderr_bytes": 0
+  },
+  "dom-controls-go": {
+    "bytes": 8672,
+    "sha256": "db03e098fe23a345b6dcfae68eb4f30ab607fd1e1d1644defd83d1bc2fca31d2",
+    "stderr_bytes": 56
+  },
+  "dom-controls-native": {
+    "bytes": 8672,
+    "sha256": "db03e098fe23a345b6dcfae68eb4f30ab607fd1e1d1644defd83d1bc2fca31d2",
+    "stderr_bytes": 0
+  },
+  "controls-asan-native": {
+    "bytes": 8672,
+    "sha256": "db03e098fe23a345b6dcfae68eb4f30ab607fd1e1d1644defd83d1bc2fca31d2",
+    "stderr_bytes": 0
+  },
+  "repository-go": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr_bytes": 57
+  },
+  "repository-native": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr_bytes": 0
+  },
+  "repository-asan-native": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "stderr_bytes": 0
+  },
+  "compiler-go": {
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "stderr_bytes": 59
+  },
+  "compiler-native": {
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "stderr_bytes": 0
+  },
+  "compiler-asan-native": {
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "stderr_bytes": 0
+  },
+  "mutant-exit-run": {
+    "bytes": 10247,
+    "sha256": "546d63226ef78c7d61b3849d80ebc870e80334231e56b38c55f9a7c303d4e336",
+    "stderr_bytes": 0
+  },
+  "mutant-timeout-run": {
+    "bytes": 8672,
+    "sha256": "8ee5705ca9caec11dd2e97eedb4860022022101abb5a105bdc7ce2d049eb2e89",
+    "stderr_bytes": 0
+  },
+  "mutant-blocking-run": {
+    "bytes": 8047,
+    "sha256": "32ca479398fd258fc451078ac97b9be40d19e955d51f34e5385fad0e10510348",
+    "stderr_bytes": 0
+  },
+  "released-run": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 50
+  },
+  "released-asan-run": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 50
+  },
+  "released-mutant-run": {
+    "bytes": 26,
+    "sha256": "3808255a544559d4c3ca43da5ce20604a0d7ecc4bb07b4cfa63cf7952dc17cec",
+    "stderr_bytes": 0
+  },
+  "expanded-controls-asan-native": {
+    "bytes": 67395,
+    "sha256": "26834c370bb5892acb4450db1f7a585a4e15aed75285d4afd409eed4ec454a89",
+    "stderr_bytes": 0
+  }
+}

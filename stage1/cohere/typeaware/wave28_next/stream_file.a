@@ -1,0 +1,6 @@
+import { tsgoInspect } from 'adamic';
+import { Frames, header } from '../frames.ts';
+export class StreamFile {
+    readonly external: boolean;readonly declaration: boolean;
+    constructor(program: number,path: string,end: number){const frames=new Frames(tsgoInspect(program,path,0,end,'SourceFile','stream-file'));header(frames,'stream-file');this.external=frames.yes();this.declaration=frames.yes();frames.end();}
+}

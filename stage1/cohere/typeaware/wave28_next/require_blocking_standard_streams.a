@@ -1,0 +1,123 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../diagnostic.ts';
+import { Declaration, SymbolFact } from './stream_symbol.a';
+import { StreamProgram, streamProgram } from './stream_program.a';
+import { Tree } from './tree.a';
+import { Event, Graph, buildGraph } from './graph.a';
+import { NoProcessExitAfterOutput, Walk } from './no_process_exit_after_output.a';
+export class RequireBlockingStandardStreams {
+    readonly std: NoProcessExitAfterOutput;readonly tree: Tree;index: StreamProgram|undefined;ordered=false;readonly mayBlockMemo=new Map<string,number>();
+    constructor(std: NoProcessExitAfterOutput){this.std=std;this.tree=std.tree;}
+    program(): StreamProgram{return this.index??panic('stream index not loaded');}
+    callLike(tree: Tree,index: number): boolean{return ['CallExpression','NewExpression','TaggedTemplateExpression'].includes(tree.kind(index));}
+    local(tree: Tree,index: number): number{
+        const at=tree.skip(index);if(['FunctionExpression','ArrowFunction'].includes(tree.kind(at))){return at;}if(tree.kind(at)!=='Identifier'){return -1;}
+        const symbol=tree.symbols.facts(at)[0];if(symbol===undefined){return -1;}
+        for(const decl of symbol.declarations){if(decl.path!==tree.rules.path){continue;}const loc=decl.ancestors[0];if(loc===undefined){continue;}
+            if(loc.kind==='FunctionDeclaration'){const binding=tree.at(loc.kind,loc.pos,loc.end);if(tree.body(binding)>=0){return binding;}}
+            if(loc.kind==='VariableDeclaration' && decl.ancestors[1]?.kind==='VariableDeclarationList'){
+                const binding=tree.at(loc.kind,loc.pos,loc.end);if(tree.rules.parser.node(tree.parent(binding)).semantic!=='2'){continue;}const initializer=tree.skip(tree.initializer(binding));if(['FunctionExpression','ArrowFunction'].includes(tree.kind(initializer))){return initializer;}
+            }
+        }
+        return -1;
+    }
+    generator(tree: Tree,index: number): boolean{return tree.rules.parser.node(index).children.some((child)=>tree.kind(child)==='AsteriskToken');}
+    started(index: number): Event{
+        const tree=this.tree;const kind=tree.kind(index);const runs: number[]=[];const hands: number[]=[];
+        if(kind!=='NewExpression'){
+            const local=this.local(tree,tree.child(index,0));if(local>=0){if(this.generator(tree,local)){hands.push(local);}else{runs.push(local);}}
+        }
+        if(['CallExpression','NewExpression'].includes(kind)){for(const argument of tree.args(index)){const local=this.local(tree,argument);if(local>=0){hands.push(local);}}}
+        return new Event('call',index,runs,hands,this.ordered && runs.length>0 && this.argumentsBlock(index));
+    }
+    argumentVisit(at: number): boolean{
+        if(this.tree.function(at) && this.tree.body(at)>=0){return false;}
+        return this.tree.kind(at)==='AwaitExpression' || this.callLike(this.tree,at) && this.callBlock(this.tree,at) || this.tree.rules.parser.node(at).children.some((child)=>this.argumentVisit(child));
+    }
+    argumentsBlock(index: number): boolean{return this.tree.args(index).some((argument)=>this.argumentVisit(argument));}
+    anyCallBlock(tree: Tree,at: number): boolean{return this.callLike(tree,at) && this.callBlock(tree,at) || tree.rules.parser.node(at).children.some((child)=>this.anyCallBlock(tree,child));}
+    functionBlock(tree: Tree,index: number): boolean{
+        const key=`${tree.rules.path}:${index}`;const known=this.mayBlockMemo.get(key)??0;if(known!==0){return known===1;}this.mayBlockMemo.set(key,3);
+        const result=tree.rules.parser.node(index).children.some((child)=>this.anyCallBlock(tree,child));this.mayBlockMemo.set(key,result?1:2);return result;
+    }
+    declarationBlock(decl: Declaration,name: string): boolean{
+        if(!this.program().canBlock.has(decl.path)){return decl.declarationFile && name==='require';}
+        const loc=decl.ancestors[0];if(loc===undefined){return true;}
+        if(decl.declarationFile || loc.kind==='FunctionDeclaration' && loc.name==='blockStandardStreams' && this.program().nexus(decl.path)){return true;}
+        const tree=this.std.world.get(decl.path);const binding=tree.at(loc.kind,loc.pos,loc.end);
+        if(['FunctionDeclaration','MethodDeclaration','Constructor','GetAccessor','SetAccessor'].includes(loc.kind)){
+            if(tree.body(binding)<0){return loc.kind!=='FunctionDeclaration' || (loc.flags & 8388608)!==0;}return this.functionBlock(tree,binding);
+        }
+        if(loc.kind==='VariableDeclaration'){
+            const initializer=tree.skip(tree.initializer(binding));if(['FunctionExpression','ArrowFunction'].includes(tree.kind(initializer))){return this.functionBlock(tree,initializer);}
+        }
+        if(['ClassDeclaration','ClassExpression'].includes(loc.kind)){return this.functionBlock(tree,binding);}
+        return true;
+    }
+    symbolBlock(symbol: SymbolFact|undefined,name: string): boolean{return symbol===undefined || symbol.declarations.length===0 || symbol.declarations.some((decl)=>this.declarationBlock(decl,name));}
+    handedBlock(tree: Tree,index: number): boolean{
+        const at=tree.skip(index);if(['FunctionExpression','ArrowFunction'].includes(tree.kind(at))){return this.functionBlock(tree,at);}if(tree.kind(at)!=='Identifier'){return false;}
+        const symbol=tree.symbols.facts(at)[1];return symbol!==undefined && (symbol.flags & 16)!==0 && this.symbolBlock(symbol,tree.rules.parser.node(at).text);
+    }
+    callBlock(tree: Tree,index: number): boolean{
+        const kind=tree.kind(index);if(kind==='CallExpression' && tree.kind(tree.child(index,0))==='ImportKeyword'){return true;}
+        if(['CallExpression','NewExpression'].includes(kind) && tree.args(index).some((argument)=>this.handedBlock(tree,argument))){return true;}
+        const callee=tree.skip(tree.child(index,0));if(['FunctionExpression','ArrowFunction'].includes(tree.kind(callee))){return this.functionBlock(tree,callee);}
+        const name=this.std.member(tree,callee);if(name<0){return true;}return this.symbolBlock(tree.symbols.facts(name)[1],tree.rules.parser.node(name).text);
+    }
+    topLevelVisit(tree: Tree,at: number): boolean{
+        if(tree.function(at) && tree.body(at)>=0){return false;}
+        return this.callLike(tree,at) && this.callBlock(tree,at) || tree.rules.parser.node(at).children.some((child)=>this.topLevelVisit(tree,child));
+    }
+    topLevelBlock(tree: Tree): boolean{const root=tree.rules.parser.nodes.length-1;return tree.rules.parser.node(root).children.some((child)=>this.topLevelVisit(tree,child));}
+    importsBlock(): boolean{
+        const program=this.program();const entry=this.tree.rules.path;const seen=new Set<string>();seen.add(entry);const queue=[entry];
+        for(let at=0;at<queue.length;at++){const path=queue[at]??panic('missing stream import');const edges=program.edges.get(path);if(edges===undefined){continue;}
+            for(const next of edges){if(seen.has(next)){continue;}seen.add(next);queue.push(next);if(!program.canBlock.has(next)){continue;}const file=program.files.get(next);if(file===undefined || file.declaration || this.topLevelBlock(this.std.world.get(next))){return true;}}
+        }
+        return false;
+    }
+    events(root: number,index: number,statement: boolean): Event[]{
+        const tree=this.tree;const events: Event[]=[];
+        if(statement){
+            if(tree.kind(index)==='Block' && tree.kind(tree.parent(index))==='CatchClause'){events.push(new Event('catch',tree.parent(tree.parent(index))));}
+            if(this.ordered && ((tree.kind(index)==='ForOfStatement' && tree.rules.parser.node(index).children.some((child)=>tree.kind(child)==='AwaitKeyword')) || tree.kind(index)==='VariableStatement' && tree.rules.parser.node(index).children.some((child)=>tree.kind(child)==='VariableDeclarationList' && tree.rules.parser.node(child).semantic==='6'))){events.push(new Event('block',index));}return events;
+        }
+        const kind=tree.kind(index);if(!this.callLike(tree,index) && kind!=='AwaitExpression' || tree.catchBinding(index,root)){return events;}
+        if(kind==='AwaitExpression'){if(this.ordered){events.push(new Event('block',index));}return events;}
+        if(kind==='CallExpression' && this.std.exit(tree,index)){events.push(new Event('exit',index));return events;}
+        if(kind==='CallExpression' && this.std.write(tree,index) && !this.std.holdsExit(tree,index)){events.push(new Event('write',index));}
+        const started=this.started(index);if(started.runs.length>0 || started.hands.length>0){events.push(started);}
+        if(this.ordered && this.callBlock(tree,index)){events.push(new Event('block',index));}return events;
+    }
+    inRun(index: number,root: number): boolean{for(let at=this.tree.parent(index);at>=0 && at!==root;at=this.tree.parent(at)){if(this.tree.function(at) && this.tree.body(at)>=0){return false;}}return true;}
+    unrecorded(at: number,root: number,recorded: Set<number>): boolean{
+        if(this.tree.kind(at)==='CallExpression' && this.tree.rootOf(at)===root && this.std.exit(this.tree,at) && !recorded.has(at)){return true;}
+        if(this.ordered && !recorded.has(at) && this.inRun(at,root) && (this.tree.kind(at)==='AwaitExpression' || this.callLike(this.tree,at) && this.callBlock(this.tree,at))){return true;}
+        return this.tree.rules.parser.node(at).children.some((child)=>this.unrecorded(child,root,recorded));
+    }
+    analyze(root: number): Walk{
+        const graph=buildGraph(this.tree,root,(index,statement)=>this.events(root,index,statement));const recorded=new Set<number>();
+        for(const block of graph.blocks){for(const event of block.events){if(['exit','block'].includes(event.kind)){recorded.add(event.node);}}}
+        if(this.tree.rules.parser.node(root).children.some((child)=>this.unrecorded(child,root,recorded))){const empty=buildGraph(this.tree,root,(_index,_statement)=>{const events: Event[]=[];return events;});return new Walk(this.tree,root,empty,this.ordered);}
+        return new Walk(this.tree,root,graph,this.ordered);
+    }
+    candidate(): boolean{
+        const exits=new Set<number>();const writes=new Set<number>();
+        for(let at=0;at<this.tree.rules.parser.nodes.length;at++){if(this.tree.parent(at)<0 || this.tree.kind(at)!=='CallExpression'){continue;}const root=this.tree.rootOf(at);
+            if(this.std.exit(this.tree,at)){exits.add(root);if(writes.has(root)){return true;}}else if(this.std.write(this.tree,at)){writes.add(root);if(exits.has(root)){return true;}}
+        }
+        return false;
+    }
+    run(): void{
+        if(!this.tree.rules.scanner.text.includes('exit') || !this.candidate()){return;}this.index=streamProgram(this.tree);const program=this.program();const shebang=this.tree.rules.scanner.text.startsWith('#!');if(!shebang && program.imported.has(this.tree.rules.path)){return;}
+        this.ordered=program.canBlock.has(this.tree.rules.path);if(this.ordered && this.importsBlock()){return;}
+        const queued=new Set<number>();const root=this.tree.rules.parser.nodes.length-1;const queue=[root];queued.add(root);const exits=new Set<number>();
+        for(let at=0;at<queue.length;at++){const root=queue[at]??panic('missing started root');const walk=this.analyze(root);for(const exit of walk.exits){exits.add(exit);}for(const started of walk.started){if(!queued.has(started)){queued.add(started);queue.push(started);}}}
+        const found: number[]=[];for(const exit of exits.values()){found.push(exit);}if(found.length===0){return;}found.sort((a,b)=>this.tree.rules.parser.node(a).pos-this.tree.rules.parser.node(b).pos);const node=this.tree.rules.parser.node(found[0]??-1);
+        const reason=shebang?'it starts with `#!`':'nothing in the program imports it';const count=found.length===1?'':`, the first of ${found.length} such exits in this file`;
+        const message=MESSAGE.replace('<<processReason>>',reason).replace('<<exitCount>>',count);
+        this.tree.rules.findings.push(new Diagnostic('nexus/correctness-require-blocking-standard-streams','exitBeforeBlockingStandardStreams',message,this.tree.rules.byte(this.tree.rules.start(node)),this.tree.rules.byte(node.end),''));
+    }
+}
+const MESSAGE="This file runs as a process (<<processReason>>), and this `process.exit()` runs after a write to stdout or stderr before the process has called `blockStandardStreams()`<<exitCount>>. Node writes to a pipe asynchronously, and `process.exit()` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's `blockStandardStreams()` (`source/system/StandardStreams`) before anything that can exit: first in the module, or first in the main it runs.";

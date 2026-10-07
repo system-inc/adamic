@@ -1,0 +1,11 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class Signature {
+    readonly present: boolean;readonly path: string;readonly kind: string;readonly pos: number;readonly end: number;
+    readonly external: boolean;readonly body: boolean;readonly generator: boolean;readonly async: boolean;readonly returns: number;
+    constructor(rules: Rules,index: number){
+        const frames=new Frames(rules.ask(index,'stream-signature'));header(frames,'stream-signature');this.present=frames.yes();
+        this.path=this.present?frames.field():'';this.kind=this.present?frames.field():'';this.pos=this.present?frames.natural():0;this.end=this.present?frames.natural():0;
+        this.external=this.present?frames.yes():false;this.body=this.present?frames.yes():false;this.generator=this.present?frames.yes():false;this.async=this.present?frames.yes():false;this.returns=this.present?frames.natural():0;frames.end();
+    }
+}

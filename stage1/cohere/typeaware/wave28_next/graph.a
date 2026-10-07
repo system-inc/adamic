@@ -1,0 +1,215 @@
+// Mirrors the production CFG's evaluation order, reachability and handler routing.
+// Graph construction carries AST locations only; lint events come from native consumers.
+import { panic } from 'adamic';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { Tree } from './tree.a';
+export class Event {
+    readonly kind: string;readonly node: number;readonly runs: number[];readonly hands: number[];readonly argumentsBlock: boolean;
+    constructor(kind: string,node: number,runs: number[]=[],hands: number[]=[],argumentsBlock: boolean=false){this.kind=kind;this.node=node;this.runs=runs;this.hands=hands;this.argumentsBlock=argumentsBlock;}
+}
+export class Block {
+    readonly events: Event[]=[];readonly successors: number[]=[];incoming=false;reachable=false;
+}
+class TryFrame {
+    position=0;readonly catcher: number;readonly final: number;forked=false;thrown=false;returned=false;readonly implicit: number[]=[];
+    constructor(catcher: number,final: number){this.catcher=catcher;this.final=final;}
+}
+class Jump {
+    readonly labels: string[];readonly exit: number;readonly next: number;readonly breakable: boolean;
+    constructor(labels: string[],exit: number,next: number,breakable: boolean){this.labels=labels;this.exit=exit;this.next=next;this.breakable=breakable;}
+}
+export class Graph {
+    readonly tree: Tree;readonly blocks: Block[]=[];readonly eventsFor: (index: number,statement: boolean)=>Event[];
+    readonly tries: TryFrame[]=[];readonly jumps: Jump[]=[];readonly chains: number[]=[];current=0;
+    constructor(tree: Tree,root: number,eventsFor: (index: number,statement: boolean)=>Event[]){
+        this.tree=tree;this.eventsFor=eventsFor;
+    }
+    build(root: number): void{
+        const tree=this.tree;this.add();this.block(0).incoming=true;this.block(0).reachable=true;
+        if(tree.kind(root)==='SourceFile'){this.statements(tree.rules.parser.node(root).children);}
+        else if(tree.kind(root)==='PropertyDeclaration'){this.expr(tree.initializer(root));}
+        else if(tree.kind(root)==='ClassStaticBlockDeclaration'){this.statement(tree.body(root));}
+        else{
+            for(const child of tree.rules.parser.node(root).children){if(tree.kind(child)==='Parameter'){this.expr(this.annotation(child));this.bindDefault(tree.name(child),tree.initializer(child));}}
+            const body=tree.body(root);this.expr(this.annotation(root));if(tree.kind(body)==='Block'){this.statement(body);}else{this.expr(body);}
+        }
+    }
+    block(index: number): Block{return this.blocks[index]??panic('missing flow block');}
+    add(): number{this.blocks.push(new Block());return this.blocks.length-1;}
+    link(from: number,to: number): void{if(from<0 || to<0){return;}this.block(from).successors.push(to);if(this.block(from).reachable){this.block(to).incoming=true;}}
+    enter(index: number): void{this.block(index).reachable=this.block(index).incoming;this.current=index;}
+    unreachable(): void{const next=this.add();this.block(this.current).successors.push(next);this.current=next;}
+    emit(index: number,statement: boolean): void{for(const event of this.eventsFor(index,statement)){this.block(this.current).events.push(event);}}
+    annotation(index: number): number{
+        const name=this.tree.name(index);const initializer=this.tree.initializer(index);const body=this.tree.body(index);
+        return this.tree.rules.parser.node(index).children.find((child)=>child!==name && child!==initializer && child!==body && !['Decorator','Parameter','TypeParameter','QuestionToken','ExclamationToken'].includes(this.tree.kind(child)) && !this.tree.kind(child).endsWith('Keyword'))??-1;
+    }
+    throwFrame(): number{for(let at=this.tries.length-1;at>=0;at--){const frame=this.tries[at]??panic('missing try');if(frame.position===0 || frame.final>=0){return at;}}return -1;}
+    returnFrame(): number{for(let at=this.tries.length-1;at>=0;at--){if((this.tries[at]?.final??-1)>=0){return at;}}return -1;}
+    handler(frame: TryFrame): number{return frame.position===0 && frame.catcher>=0?frame.catcher:frame.final;}
+    forkThrow(): void{
+        if(!this.block(this.current).reachable){return;}const at=this.throwFrame();if(at<0){return;}const frame=this.tries[at]??panic('missing try');if(frame.forked){return;}
+        frame.forked=true;frame.thrown=true;this.link(this.current,this.handler(frame));const next=this.add();this.link(this.current,next);this.enter(next);
+    }
+    throwable(index: number): boolean{
+        const parent=this.tree.parent(index);const kind=this.tree.kind(parent);
+        if(['LabeledStatement','BreakStatement','ContinueStatement','ArrayBindingPattern','ImportSpecifier','ExportSpecifier','ImportClause','NamespaceImport','NamespaceExport','JsxAttribute','JsxNamespacedName','CatchClause'].includes(kind)){return false;}
+        if(kind==='BindingElement'){return this.tree.kind(this.tree.parent(parent))==='ObjectBindingPattern' && this.tree.child(parent,0)!==index && !this.tree.rules.parser.node(parent).children.some((child)=>this.tree.kind(child)==='DotDotDotToken');}
+        if(this.tree.function(parent) || ['ClassDeclaration','ClassExpression','VariableDeclaration','PropertyAssignment','PropertyDeclaration','EnumDeclaration','ModuleDeclaration','InterfaceDeclaration','TypeAliasDeclaration'].includes(kind)){return this.tree.name(parent)!==index;}
+        return parent>=0;
+    }
+    expr(index: number): void{
+        if(index<0){return;}this.emit(index,false);const node=this.tree.rules.parser.node(index);const kind=node.kind;
+        if(kind==='Identifier'){if(this.throwable(index)){this.forkThrow();}return;}
+        if(kind==='ParenthesizedExpression'){this.expr(this.tree.child(index,0));return;}
+        if(kind==='BinaryExpression'){
+            const left=this.tree.child(index,0);const right=this.tree.last(index);const operator=this.tree.operator(index);
+            if(['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken','AmpersandAmpersandEqualsToken','BarBarEqualsToken','QuestionQuestionEqualsToken'].includes(operator)){
+                this.expr(left);const join=this.add();this.link(this.current,join);const arm=this.add();this.link(this.current,arm);this.enter(arm);this.expr(right);this.link(this.current,join);this.enter(join);return;
+            }
+            if(operator==='EqualsToken' && ['ObjectLiteralExpression','ArrayLiteralExpression'].includes(this.tree.kind(this.tree.skip(left)))){this.expr(right);this.pattern(left);return;}
+            this.expr(left);this.expr(right);return;
+        }
+        if(kind==='ConditionalExpression'){
+            this.expr(this.tree.child(index,0));const from=this.current;const join=this.add();const yes=this.add();this.link(from,yes);this.enter(yes);this.expr(this.tree.child(index,2));this.link(this.current,join);
+            const no=this.add();this.link(from,no);this.enter(no);this.expr(this.tree.last(index));this.link(this.current,join);this.enter(join);return;
+        }
+        if(['CallExpression','NewExpression','PropertyAccessExpression','ElementAccessExpression','TaggedTemplateExpression'].includes(kind)){
+            const optional=node.optional;let outer=false;
+            if(optional){const parent=this.tree.parent(index);outer=parent<0 || !this.tree.rules.parser.node(parent).optional || this.tree.child(parent,0)!==index;if(outer){this.chains.push(this.add());}}
+            this.expr(this.tree.child(index,0));
+            if(node.children.some((child)=>this.tree.kind(child)==='QuestionDotToken') && this.chains.length>0){const join=this.chains[this.chains.length-1]??-1;this.link(this.current,join);const next=this.add();this.link(this.current,next);this.enter(next);}
+            if(kind==='ElementAccessExpression'){this.expr(this.tree.last(index));}
+            if(['CallExpression','NewExpression'].includes(kind)){for(const child of node.children.slice(1)){if(!['QuestionDotToken'].includes(this.tree.kind(child))){this.expr(child);}}}
+            if(kind==='TaggedTemplateExpression'){for(const child of node.children.slice(1)){this.expr(child);}}
+            this.forkThrow();if(outer){const join=this.chains.pop()??panic('missing optional join');this.link(this.current,join);this.enter(join);}return;
+        }
+        if(kind==='YieldExpression'){
+            for(const child of node.children){this.expr(child);}this.routeReturn(false);this.routeThrow(false);const next=this.add();this.link(this.current,next);this.enter(next);return;
+        }
+        if(this.tree.root(index)){this.member(index);return;}
+        if(['ClassDeclaration','ClassExpression'].includes(kind)){for(const child of node.children){if(this.tree.kind(child)==='HeritageClause' || this.tree.kind(child)==='Decorator'){this.expr(child);}else{this.member(child);}}return;}
+        for(const child of node.children){if(this.tree.kind(child).endsWith('Statement') || this.tree.kind(child)==='Block'){this.statement(child);}else{this.expr(child);}}
+    }
+    member(index: number): void{
+        for(const child of this.tree.rules.parser.node(index).children){
+            const kind=this.tree.kind(child);if(['Decorator','ComputedPropertyName'].includes(kind)){this.expr(child);}
+            if(kind==='Parameter'){for(const decorator of this.tree.rules.parser.node(child).children){if(this.tree.kind(decorator)==='Decorator'){this.expr(decorator);}}}
+        }
+        if(this.tree.kind(index)==='PropertyDeclaration'){this.expr(this.annotation(index));}
+    }
+    condition(index: number,yes: number,no: number): void{
+        const kind=this.tree.kind(index);
+        if(kind==='ParenthesizedExpression'){this.emit(index,false);this.condition(this.tree.child(index,0),yes,no);return;}
+        if(kind==='PrefixUnaryExpression' && this.tree.operator(index)==='ExclamationToken'){this.emit(index,false);this.condition(this.tree.last(index),no,yes);return;}
+        if(kind==='BinaryExpression'){
+            const op=this.tree.operator(index);if(['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(op)){
+                this.emit(index,false);const right=this.add();
+                if(op==='AmpersandAmpersandToken'){this.condition(this.tree.child(index,0),right,no);}else if(op==='BarBarToken'){this.condition(this.tree.child(index,0),yes,right);}else{this.expr(this.tree.child(index,0));this.link(this.current,yes);this.link(this.current,no);this.link(this.current,right);}
+                this.enter(right);this.condition(this.tree.last(index),yes,no);return;
+            }
+        }
+        if(kind==='ConditionalExpression'){
+            this.emit(index,false);const a=this.add();const b=this.add();this.condition(this.tree.child(index,0),a,b);this.enter(a);this.condition(this.tree.child(index,2),yes,no);this.enter(b);this.condition(this.tree.last(index),yes,no);return;
+        }
+        this.expr(index);this.link(this.current,yes);this.link(this.current,no);
+    }
+    bindDefault(target: number,fallback: number): void{
+        if(fallback>=0){const join=this.add();const arm=this.add();this.link(this.current,join);this.link(this.current,arm);this.enter(arm);this.expr(fallback);this.link(this.current,join);this.enter(join);}this.pattern(target);
+    }
+    pattern(index: number): void{
+        if(index<0){return;}const kind=this.tree.kind(index);const children=this.tree.rules.parser.node(index).children;
+        if(kind==='Identifier'){if(this.throwable(index)){this.forkThrow();}return;}
+        if(kind==='OmittedExpression'){return;}
+        if(['ParenthesizedExpression','NonNullExpression','AsExpression','SatisfiesExpression','TypeAssertionExpression'].includes(kind)){this.pattern(this.tree.child(index,0));return;}
+        if(['ObjectBindingPattern','ArrayBindingPattern'].includes(kind)){
+            for(const child of children){if(this.tree.kind(child)==='BindingElement'){const property=this.tree.child(child,0);if(this.tree.kind(property)==='ComputedPropertyName'){this.expr(this.tree.child(property,0));}this.bindDefault(this.tree.name(child),this.tree.initializer(child));}}return;
+        }
+        if(kind==='ObjectLiteralExpression'){
+            for(const child of children){const k=this.tree.kind(child);if(k==='PropertyAssignment'){if(this.tree.kind(this.tree.child(child,0))==='ComputedPropertyName'){this.expr(this.tree.child(this.tree.child(child,0),0));}this.pattern(this.tree.last(child));}else if(k==='ShorthandPropertyAssignment'){this.bindDefault(this.tree.child(child,0),this.tree.child(child,1));}else if(k==='SpreadAssignment'){this.pattern(this.tree.last(child));}}return;
+        }
+        if(kind==='ArrayLiteralExpression'){for(const child of children){this.pattern(child);}return;}
+        if(kind==='SpreadElement'){this.pattern(this.tree.last(index));return;}
+        if(kind==='BinaryExpression' && this.tree.operator(index)==='EqualsToken'){this.bindDefault(this.tree.child(index,0),this.tree.last(index));return;}
+        this.expr(index);
+    }
+    variable(index: number): void{
+        this.expr(this.annotation(index));const name=this.tree.name(index);const value=this.tree.initializer(index);
+        if(['ArrayBindingPattern','ObjectBindingPattern'].includes(this.tree.kind(name))){this.expr(value);this.pattern(name);}else{this.expr(name);this.expr(value);}
+    }
+    statements(indices: readonly number[]): void{for(const index of indices){this.statement(index);}}
+    statement(index: number): void{
+        if(index<0){return;}this.emit(index,true);const node=this.tree.rules.parser.node(index);const kind=node.kind;const children=node.children;
+        if(['Block','SourceFile'].includes(kind)){this.statements(children);return;}
+        if(kind==='VariableStatement'){const list=children.find((child)=>this.tree.kind(child)==='VariableDeclarationList')??-1;if(list>=0){for(const decl of this.tree.rules.parser.node(list).children){this.variable(decl);}}return;}
+        if(kind==='ExpressionStatement' || kind==='ExportAssignment'){this.expr(this.tree.last(index));return;}
+        if(kind==='IfStatement'){
+            const after=this.add();const yes=this.add();const otherwise=children[2]??-1;const no=otherwise>=0?this.add():after;
+            this.condition(children[0]??-1,yes,no);this.enter(yes);this.statement(children[1]??-1);this.link(this.current,after);
+            if(otherwise>=0){this.enter(no);this.statement(otherwise);this.link(this.current,after);}this.enter(after);return;
+        }
+        if(['WhileStatement','DoStatement','ForStatement','ForInStatement','ForOfStatement'].includes(kind)){this.loop(index);return;}
+        if(kind==='SwitchStatement'){this.switch(index);return;}
+        if(kind==='TryStatement'){this.try(index);return;}
+        if(kind==='LabeledStatement'){
+            const body=this.tree.last(index);if(['WhileStatement','DoStatement','ForStatement','ForInStatement','ForOfStatement','SwitchStatement'].includes(this.tree.kind(body))){this.statement(body);return;}
+            const after=this.add();const label=this.tree.rules.parser.node(this.tree.child(index,0)).text;this.jumps.push(new Jump([label],after,-1,false));this.statement(body);this.jumps.pop();this.link(this.current,after);this.enter(after);return;
+        }
+        if(kind==='ReturnStatement'){this.expr(children[0]??-1);this.routeReturn(true);return;}
+        if(kind==='ThrowStatement'){this.expr(children[0]??-1);this.routeThrow(true);return;}
+        if(kind==='BreakStatement' || kind==='ContinueStatement'){
+            if(!this.block(this.current).reachable){return;}const label=children[0]??-1;const name=label<0?'':this.tree.rules.parser.node(label).text;
+            for(let at=this.jumps.length-1;at>=0;at--){const jump=this.jumps[at]??panic('missing jump');if(kind==='BreakStatement'?(name===''?!jump.breakable:!jump.labels.includes(name)):(jump.next<0 || name!=='' && !jump.labels.includes(name))){continue;}this.link(this.current,kind==='BreakStatement'?jump.exit:jump.next);break;}this.unreachable();return;
+        }
+        if(['EmptyStatement','DebuggerStatement','ImportDeclaration','ImportEqualsDeclaration','FunctionDeclaration','ExportDeclaration'].includes(kind)){return;}
+        if(kind==='ClassDeclaration'){this.expr(index);return;}
+        for(const child of children){if(this.tree.kind(child).endsWith('Statement') || this.tree.kind(child)==='Block'){this.statement(child);}else{this.expr(child);}}
+    }
+    labels(index: number): string[]{const labels: string[]=[];let at=index;while(this.tree.kind(this.tree.parent(at))==='LabeledStatement'){const parent=this.tree.parent(at);if(this.tree.last(parent)!==at){break;}labels.push(this.tree.rules.parser.node(this.tree.child(parent,0)).text);at=parent;}return labels;}
+    forParts(index: number): number[]{
+        const scanner=new Scanner(this.tree.rules.scanner.text);scanner.pos=this.tree.rules.start(this.tree.rules.parser.node(index));
+        while(true){scanner.scan();if(['OpenParenToken'].includes(scanner.kind)){break;}if(scanner.kind==='EndOfFileToken'){panic('missing for header');}}
+        const semis: number[]=[];let depth=0;
+        while(true){scanner.scan();if(scanner.kind==='EndOfFileToken'){panic('unterminated for header');}if(scanner.kind==='CloseParenToken' && depth===0){break;}
+            if(['OpenParenToken','OpenBraceToken','OpenBracketToken'].includes(scanner.kind)){depth++;}else if(['CloseParenToken','CloseBraceToken','CloseBracketToken'].includes(scanner.kind)){depth--;}
+            if(scanner.kind==='SemicolonToken' && depth===0){semis.push(scanner.start);}
+        }
+        const parts=[-1,-1,-1];const body=this.tree.last(index);for(const child of this.tree.rules.parser.node(index).children){if(child===body){continue;}const start=this.tree.rules.start(this.tree.rules.parser.node(child));const slot=start<(semis[0]??-1)?0:start<(semis[1]??-1)?1:2;parts[slot]=child;}return parts;
+    }
+    loop(index: number): void{
+        const kind=this.tree.kind(index);const children=this.tree.rules.parser.node(index).children;const body=this.tree.last(index);
+        if(['ForInStatement','ForOfStatement'].includes(kind)){
+            const useful=children.filter((child)=>this.tree.kind(child)!=='AwaitKeyword');this.expr(useful[1]??-1);const head=this.add();this.link(this.current,head);this.enter(head);const after=this.add();const arm=this.add();this.link(head,after);this.link(head,arm);
+            this.jumps.push(new Jump(this.labels(index),after,head,true));this.enter(arm);const init=useful[0]??-1;if(this.tree.kind(init)==='VariableDeclarationList'){for(const decl of this.tree.rules.parser.node(init).children){this.pattern(this.tree.name(decl));}}else{this.pattern(init);}this.statement(body);this.link(this.current,head);this.jumps.pop();this.enter(after);return;
+        }
+        if(kind==='DoStatement'){
+            const arm=this.add();this.link(this.current,arm);const test=this.add();const after=this.add();this.jumps.push(new Jump(this.labels(index),after,test,true));this.enter(arm);this.statement(children[0]??-1);this.link(this.current,test);this.jumps.pop();this.enter(test);const condition=children[1]??-1;this.expr(condition);this.link(this.current,arm);if(!this.tree.truthy(condition)){this.link(this.current,after);}this.enter(after);return;
+        }
+        let condition=children[0]??-1;let increment=-1;
+        if(kind==='ForStatement'){const parts=this.forParts(index);const init=parts[0]??-1;condition=parts[1]??-1;increment=parts[2]??-1;if(this.tree.kind(init)==='VariableDeclarationList'){for(const decl of this.tree.rules.parser.node(init).children){this.variable(decl);}}else{this.expr(init);}}
+        const test=this.add();this.link(this.current,test);this.enter(test);const after=this.add();const arm=this.add();this.condition(condition,arm,condition<0 || this.tree.truthy(condition)?-1:after);
+        let update=test;if(increment>=0){update=this.add();this.block(update).incoming=this.block(update).incoming || this.block(this.current).reachable;this.enter(update);this.expr(increment);this.link(this.current,test);}
+        this.jumps.push(new Jump(this.labels(index),after,update,true));this.enter(arm);this.statement(body);this.link(this.current,update);this.jumps.pop();this.enter(after);
+    }
+    switch(index: number): void{
+        this.expr(this.tree.child(index,0));const after=this.add();const block=this.tree.rules.parser.node(index).children.find((child)=>this.tree.kind(child)==='CaseBlock')??-1;
+        const empty: number[]=[];const clauses=block<0?empty:this.tree.rules.parser.node(block).children;const bodies: number[]=[];for(const clause of clauses){bodies.push(this.add());}
+        let fallback=-1;for(let at=0;at<clauses.length;at++){const clause=clauses[at]??-1;if(this.tree.kind(clause)==='DefaultClause'){fallback=at;continue;}this.expr(this.tree.child(clause,0));this.link(this.current,bodies[at]??-1);const next=this.add();this.link(this.current,next);this.enter(next);}
+        this.link(this.current,fallback<0?after:bodies[fallback]??-1);this.jumps.push(new Jump(this.labels(index),after,-1,true));let previous=-1;
+        for(let at=0;at<clauses.length;at++){const clause=clauses[at]??-1;this.link(previous,bodies[at]??-1);this.enter(bodies[at]??-1);const statements=this.tree.rules.parser.node(clause).children;this.statements(this.tree.kind(clause)==='CaseClause'?statements.slice(1):statements);previous=this.current;}
+        this.link(previous,after);this.jumps.pop();this.enter(after);
+    }
+    routeReturn(end: boolean): void{if(!this.block(this.current).reachable){return;}const at=this.returnFrame();if(at>=0){const frame=this.tries[at]??panic('missing return handler');frame.returned=true;this.link(this.current,frame.final);}if(end){this.unreachable();}}
+    routeThrow(end: boolean): void{if(!this.block(this.current).reachable){return;}const at=this.throwFrame();if(at>=0){const frame=this.tries[at]??panic('missing throw handler');frame.thrown=true;this.link(this.current,this.handler(frame));}if(end){this.unreachable();}}
+    try(index: number): void{
+        const children=this.tree.rules.parser.node(index).children;const attempt=children[0]??-1;const catcher=children.find((child)=>this.tree.kind(child)==='CatchClause')??-1;const final=children.find((child)=>child!==attempt && this.tree.kind(child)==='Block')??-1;
+        const frame=new TryFrame(catcher<0?-1:this.add(),final<0?-1:this.add());this.tries.push(frame);this.statement(attempt);const ends: number[]=[];
+        if(catcher>=0){this.link(this.current,frame.catcher);ends.push(this.current);frame.position=1;frame.forked=false;this.enter(frame.catcher);const binding=this.tree.child(catcher,0);if(this.tree.kind(binding)==='VariableDeclaration'){this.pattern(this.tree.name(binding));}this.statement(this.tree.last(catcher));}
+        ends.push(this.current);this.tries.pop();const after=this.add();if(final<0){for(const end of ends){this.link(end,after);}this.enter(after);return;}
+        const snapshot=this.tries.map((held)=>held.forked);const normal=this.add();for(const end of ends){this.link(end,normal);}for(const implicit of frame.implicit){this.link(implicit,normal);}this.enter(normal);this.statement(final);this.link(this.current,after);
+        if(this.block(frame.final).incoming){for(let at=0;at<snapshot.length;at++){const held=this.tries[at];if(held!==undefined){held.forked=snapshot[at]??false;}}this.enter(frame.final);this.statement(final);if(frame.returned){this.routeReturn(false);}if(frame.thrown){this.routeThrow(false);}}
+        this.enter(after);
+    }
+}
+
+export function buildGraph(tree: Tree,root: number,eventsFor: (index: number,statement: boolean)=>Event[]): Graph{const graph=new Graph(tree,root,eventsFor);graph.build(root);return graph;}

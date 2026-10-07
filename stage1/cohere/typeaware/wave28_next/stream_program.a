@@ -1,0 +1,33 @@
+import { panic } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import { Tree } from './tree.a';
+export class ImportFact {
+    readonly kind: string;readonly typeOnly: boolean;readonly literal: boolean;readonly value: string;readonly target: string;
+    constructor(frames: Frames){this.kind=frames.field();this.typeOnly=frames.yes();this.literal=frames.yes();this.value=frames.field();this.target=frames.field();}
+}
+export class FileFact {
+    readonly path: string;readonly declaration: boolean;readonly text: string;readonly imports: ImportFact[]=[];
+    constructor(frames: Frames){this.path=frames.field();this.declaration=frames.yes();this.text=frames.field();const count=frames.natural();for(let at=0;at<count;at++){this.imports.push(new ImportFact(frames));}}
+}
+export class StreamProgram {
+    readonly files=new Map<string,FileFact>();readonly imported=new Set<string>();readonly canBlock=new Set<string>();readonly edges=new Map<string,string[]>();
+    constructor(tree: Tree){
+        const root=tree.rules.parser.nodes.length-1;const frames=new Frames(tree.rules.ask(root,'stream-program'));header(frames,'stream-program');const count=frames.natural();const queue: string[]=[];
+        for(let at=0;at<count;at++){const file=new FileFact(frames);this.files.set(file.path,file);if(this.nexus(file.path)){queue.push(file.path);}}frames.end();
+        for(const file of this.files.values()){
+            if(file.declaration){continue;}const edges: string[]=[];this.edges.set(file.path,edges);
+            for(const record of file.imports){
+                if(record.kind==='CallExpression'){
+                    if(!file.text.includes('import(') && !file.text.includes('require(')){continue;}
+                    if(!record.literal){queue.push(file.path);continue;}
+                }else if(record.typeOnly){continue;}
+                if(record.target!=='' && record.target!==file.path && this.files.has(record.target)){edges.push(record.target);this.imported.add(record.target);}
+            }
+        }
+        for(const seed of queue){this.canBlock.add(seed);}
+        for(let at=0;at<queue.length;at++){const next=queue[at]??panic('missing import target');for(const [from,targets] of this.edges.entries()){if(targets.includes(next) && !this.canBlock.has(from)){this.canBlock.add(from);queue.push(from);}}}
+    }
+    nexus(path: string): boolean{return ['/source/system/StandardStreams.ts','/source/system/StandardStreams.d.ts'].some((suffix)=>path.endsWith(suffix));}
+}
+const cached=new Map<number,StreamProgram>();
+export function streamProgram(tree: Tree): StreamProgram{const handle=tree.rules.program;if(!cached.has(handle)){cached.set(handle,new StreamProgram(tree));}return cached.get(handle)??panic('missing stream program');}
