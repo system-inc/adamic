@@ -1,4 +1,5 @@
 import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { messageWith } from './messages.ts';
 
 export class Rule {
@@ -6,13 +7,10 @@ export class Rule {
     constructor(context: RuleContext) {
         this.context = context;
     }
-    visit(index: number): void {
-        const node = this.context.node(index);
-        if(node.kind === 'WithStatement') {
-            // Upstream underlines the `with` keyword alone, not the statement.
-            const start = this.context.start(index);
-            this.context.reportRange(start, start + 4, 'no-with', 'noWith', messageWith);
-        }
+    visit(node: ParseNode, index: number): void {
+        // Upstream underlines the `with` keyword alone, not the statement up to node.end.
+        const start = this.context.start(index);
+        this.context.reportRange(start, start + 4, 'no-with', 'noWith', messageWith);
     }
 }
 

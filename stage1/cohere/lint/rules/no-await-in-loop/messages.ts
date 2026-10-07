@@ -1,0 +1,2 @@
+export const messageAwait =
+    'This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs.';

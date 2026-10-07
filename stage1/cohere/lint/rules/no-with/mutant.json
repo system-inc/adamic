@@ -1,5 +1,5 @@
 {
   "name": "with statement underlined whole",
   "from": "start + 4",
-  "to": "this.context.node(index).end"
+  "to": "node.end"
 }

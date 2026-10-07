@@ -4,6 +4,7 @@
     "WithStatement"
   ],
   "visit": "visit",
+  "node": true,
   "oracle": "oracleNoWith",
   "upstreamPackage": "core",
   "upstreamTest": "TestNoWith",

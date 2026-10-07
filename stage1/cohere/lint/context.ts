@@ -29,6 +29,22 @@ function lineStartsOf(source: string): number[] {
     return starts;
 }
 
+// isFunctionKind is a hot kind test, so it switches rather than allocating a lookup array.
+export function isFunctionKind(kind: string): boolean {
+    switch(kind) {
+        case 'FunctionDeclaration':
+        case 'FunctionExpression':
+        case 'ArrowFunction':
+        case 'MethodDeclaration':
+        case 'Constructor':
+        case 'GetAccessor':
+        case 'SetAccessor':
+            return true;
+        default:
+            return false;
+    }
+}
+
 export function space(character: string): boolean {
     return character === ' ' || character === '\t' || character === '\r' || character === '\n';
 }
@@ -170,6 +186,9 @@ export class RuleContext {
     // comparison rather than a guard.
     kind(index: number): string {
         return index < 0 ? '' : this.node(index).kind;
+    }
+    functionLike(index: number): boolean {
+        return isFunctionKind(this.node(index).kind);
     }
     children(index: number, kind: string): number[] {
         return this.node(index).children.filter((child) => this.kind(child) === kind);

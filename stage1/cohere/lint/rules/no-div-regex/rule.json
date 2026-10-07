@@ -1,13 +1,13 @@
 {
-  "name": "no-continue",
+  "name": "no-div-regex",
   "kinds": [
-    "ContinueStatement"
+    "RegularExpressionLiteral"
   ],
   "visit": "visit",
   "node": true,
-  "oracle": "oracleNoContinue",
+  "oracle": "oracleNoDivRegex",
   "upstreamPackage": "core",
-  "upstreamTest": "TestNoContinue",
+  "upstreamTest": "TestNoDivRegex",
   "factory": "create",
   "class": "Rule"
 }

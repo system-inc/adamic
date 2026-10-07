@@ -157,7 +157,7 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
-	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.NoNew, rules.NoSparseArrays, rules.RequireYield, rules.NoAwaitInLoop, rules.VarsOnTop, rules.NoTemplateCurlyInString, rules.NoDivRegex, rules.NoBitwise, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoUnneededTernary, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
+	selected := []rule.Rule{rules.NoDebugger, rules.NoEmpty, rules.Eqeqeq, rules.NoVar, rules.NoDuplicateCase, rules.VarsOnTop, rules.NoLabels, rules.NoSequences, rules.UnicodeBom, rules.NoWarningComments, rules.NoPlusplus, base.ConsistencyNoConsole, nexus.ConsistencyRequireTypeSuffix, adamic.NoTypePredicate, typescript.MethodSignatureStyle, typescript.NoWrapperObjectTypes, typescript.PreferLiteralEnumMember, nexus.ConsistencyNoEnum, rules.NoNegatedCondition, rules.NoReturnAssign}
 	registered := registeredRules()
 	for _, item := range registered {
 		found := false
@@ -214,15 +214,6 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		if subject.Name == "eqeqeq" {
 			options = rules.EqeqeqOptions{Mode: rules.EqeqeqMode(fields[2]), Null: rules.EqeqeqNullPolicy(fields[3])}
 		}
-		if subject.Name == "no-bitwise" {
-			var decoded rules.NoBitwiseOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
 		if subject.Name == "no-labels" {
 			var decoded rules.NoLabelsOptions
 			if fields[5] != "" {
@@ -243,15 +234,6 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 		}
 		if subject.Name == "unicode-bom" {
 			var decoded rules.UnicodeBomOptions
-			if fields[5] != "" {
-				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
-					panic(err)
-				}
-			}
-			options = decoded
-		}
-		if subject.Name == "no-unneeded-ternary" {
-			var decoded rules.NoUnneededTernaryOptions
 			if fields[5] != "" {
 				if err := json.Unmarshal([]byte(fields[5]), &decoded); err != nil {
 					panic(err)

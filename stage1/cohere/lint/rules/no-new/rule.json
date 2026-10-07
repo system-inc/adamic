@@ -1,13 +1,13 @@
 {
-  "name": "no-continue",
+  "name": "no-new",
   "kinds": [
-    "ContinueStatement"
+    "ExpressionStatement"
   ],
   "visit": "visit",
   "node": true,
-  "oracle": "oracleNoContinue",
+  "oracle": "oracleNoNew",
   "upstreamPackage": "core",
-  "upstreamTest": "TestNoContinue",
+  "upstreamTest": "TestNoNew",
   "factory": "create",
   "class": "Rule"
 }
