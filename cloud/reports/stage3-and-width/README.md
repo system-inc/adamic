@@ -70,3 +70,5 @@ PASS: 1,264,328 width observations, 998 repository files, plus the existing thre
 `ADAMIC_TOOLS=/workspace/adamic-tools ADAMIC_SETUP_INTEGRATION=1 python3 cloud/test_setup.py`: all five tests pass when run serially. The first concurrent attempt conservatively rebuilt Go rather than meeting the integration test's expected warm skip; its failure log is retained as setup-two-integration.log. No incorrect cache hit was observed. The serial rerun is setup-two-integration-final.log. `go vet ./...`, `bash -n cloud/setup.sh`, Python compilation and `git diff --check` pass. Test output was written directly to logs.
 
 Uncovered: full repository gate and ARM; fresh VM provisioning and snapshot behavior; reported 30-minute timeout. No setup snapshot boundary is observable from this process. Scratch trees model absent npm dependencies, with installed toolchains and a warm Go cache. Only cloud files and the minimal cohere test harness are committed.
+
+Retained log whitespace-only lines are normalized to satisfy git diff --check; diagnostics and observations are unchanged.
