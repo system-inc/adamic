@@ -3,7 +3,6 @@ package lower
 import (
 	"slices"
 	"strconv"
-	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -553,11 +552,11 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
 	}
 	if source.Symbol() == target.Symbol() {
 		from, to := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
-		if len(from) != len(to) {
+		if !l.sameClassArguments(from, to) {
 			return false
 		}
 		for index := range from {
-			if !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
+			if !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
 				return false
 			}
 		}
@@ -610,7 +609,7 @@ func (l *lowering) fieldName(name *ast.Node) string {
 			if l.instance != nil && l.classNode != nil && l.classNode.Parent == class {
 				return name.Text() + "@" + strconv.Itoa(l.instance.class)
 			}
-			if instance := l.instances[l.program.Where(class)+":"+class.Name().Text()]; instance != nil {
+			if instance := l.instances[l.classInstanceKey(class, nil)]; instance != nil {
 				return name.Text() + "@" + strconv.Itoa(instance.class)
 			}
 			return l.program.Where(class) + ":" + name.Text()
@@ -789,9 +788,8 @@ func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string
 			return written == memberKey(name, lowered.class)
 		}
 	}
-	prefix := l.program.Where(class) + ":" + class.Name().Text()
 	for key, instance := range l.instances {
-		if key != prefix && !strings.HasPrefix(key, prefix+",") {
+		if !l.classKeyMatches(key, class) {
 			continue
 		}
 		if written == name.Text()+"@"+strconv.Itoa(instance.class) {
@@ -813,9 +811,8 @@ func (l *lowering) cycleFieldName(field *ast.Symbol) string {
 // All monomorphizations of a source class have one erased identity. An identity-only
 // descriptor lets instanceof name a generic class before any concrete instance is made.
 func (l *lowering) classDefinition(declaration *ast.Node) int {
-	prefix := l.program.Where(declaration) + ":" + declaration.Name().Text()
 	for key, instance := range l.instances {
-		if key == prefix || strings.HasPrefix(key, prefix+",") {
+		if l.classKeyMatches(key, declaration) {
 			return l.result.Classes[instance.class-1].Definition
 		}
 	}
@@ -834,7 +831,7 @@ func (l *lowering) classIdentity(declaration *ast.Node) int {
 	if l.instances == nil {
 		l.instances = map[string]*instance{}
 	}
-	key := l.program.Where(declaration) + ":" + declaration.Name().Text() + ",identity"
+	key := l.classKeyPrefix(declaration) + ",identity"
 	l.instances[key] = &instance{class: identity, constructor: -1, initializer: -1}
 	return identity
 }

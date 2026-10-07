@@ -234,6 +234,15 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	if err != nil {
 		return err
 	}
+	if body.Kind == ast.KindBlock && declaration.Kind != ast.KindConstructor && declaration.Flags&ast.NodeFlagsHasImplicitReturn != 0 && l.permitsImplicitReturn(declaration) {
+		// The checker permits an end that is reachable only when the result can be undefined
+		// (or void). Put that exit in the IR so every backend and ownership pass sees it.
+		returned := ir.Return{}
+		if function.Returns != 0 {
+			returned.Value = fit(ir.Undefined{}, function.Returns)
+		}
+		lowered = append(lowered, returned)
+	}
 	// The environment may have grown while the body was lowered (captures are found as they're
 	// read), so it's taken from what's recorded, not from this copy.
 	function.Environment = l.result.Functions[index].Environment
@@ -241,4 +250,11 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	function.Body = append(function.Body, lowered...)
 	l.result.Functions[index] = function
 	return nil
+}
+
+// The binder marks a syntactic end even for a switch the checker proved exhaustive. Only the
+// checker's result type can authorize returning undefined at that end.
+func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
+	result := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration))
+	return result.Flags()&checker.TypeFlagsVoid != 0 || l.includesUndefined(result)
 }

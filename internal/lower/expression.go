@@ -13,6 +13,14 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
+		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
+			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
+				return stored, nil
+			}
+		}
+		return ir.Number, nil
+	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
@@ -366,6 +374,17 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+	if identity := l.enumNeverIdentity(node, map[*ast.Node]bool{}); identity != nil {
+		value, err := l.enumNeverValue(node)
+		if err != nil {
+			return nil, err
+		}
+		return l.enumNeverCheck(node, value, identity), nil
+	}
+	return l.enumNeverValue(node)
+}
+
+func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
@@ -413,7 +432,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		return l.localRead(node, local), nil
+		return l.localRead(node, local)
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:

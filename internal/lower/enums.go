@@ -11,11 +11,13 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Enum values retain their checker identity until lowering. Their machine representation is the
-// member's number or string; no arithmetic result acquires that identity merely by being numeric.
+// Numeric enums are numbers with named constants. String enums retain declaration identity.
 func (l *lowering) enumAssignable(from, to *checker.Type) bool {
 	if target := enumObjectSymbol(to); target != nil && from.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsNever) == 0 {
 		return enumObjectSymbol(from) == target
+	}
+	if to.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(from) && !l.openNumericEnumType(to) {
+		return false
 	}
 	if to.Flags()&checker.TypeFlagsEnumLike == 0 {
 		return true
@@ -28,7 +30,54 @@ func (l *lowering) enumAssignable(from, to *checker.Type) bool {
 		}
 		return true
 	}
+	if l.numericEnum(l.enumIdentity(to)) {
+		if !l.openNumericEnumType(to) {
+			return !l.openNumericEnumType(from) && from.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.checker.IsTypeAssignableTo(from, to)
+		}
+		return from.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsNever) != 0
+	}
 	return from.Flags()&checker.TypeFlagsEnumLike != 0 && l.enumIdentity(from) == l.enumIdentity(to) && l.checker.IsTypeAssignableTo(from, to)
+}
+
+// The whole declaration is open; a member-specific literal is a smaller promise.
+func (l *lowering) openNumericEnumType(proven *checker.Type) bool {
+	proven = l.checker.GetNonNullableType(proven)
+	identity := l.enumIdentity(proven)
+	if !l.numericEnum(identity) {
+		return false
+	}
+	whole := l.checker.GetTypeAtLocation(identity.ValueDeclaration.Name())
+	if proven == whole {
+		return true
+	}
+	if proven.Flags()&checker.TypeFlagsUnion == 0 || whole.Flags()&checker.TypeFlagsUnion == 0 || len(proven.Types()) != len(whole.Types()) {
+		return false
+	}
+	for _, member := range whole.Types() {
+		found := false
+		for _, part := range proven.Types() {
+			if part == member {
+				found = true
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
+}
+
+func (l *lowering) numericEnum(symbol *ast.Symbol) bool {
+	if symbol == nil || symbol.ValueDeclaration == nil || symbol.ValueDeclaration.Kind != ast.KindEnumDeclaration {
+		return false
+	}
+	for _, member := range symbol.ValueDeclaration.AsEnumDeclaration().Members.Nodes {
+		constant := l.checker.GetConstantValue(member)
+		if constant == nil || reflect.TypeOf(constant).Kind() != reflect.Float64 {
+			return false
+		}
+	}
+	return true
 }
 
 // typeof E names the actual enum object and its aliases. Structural copies can omit reverse
@@ -299,8 +348,43 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func (l *lowering) enumRefusal(node *ast.Node) error {
+	if l.isExpression(node) {
+		if symbol := l.flagValueSymbol(node); symbol != nil {
+			declared := l.checker.GetTypeOfSymbol(symbol)
+			observed := l.checker.GetTypeAtLocation(node)
+			objectMembers := 0
+			if declared.Flags()&checker.TypeFlagsUnion != 0 {
+				for _, member := range declared.Types() {
+					if member.Flags()&checker.TypeFlagsObject != 0 {
+						objectMembers++
+					}
+				}
+			}
+			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
+				for _, member := range declared.Types() {
+					for _, field := range l.checker.GetPropertiesOfType(member) {
+						tag := l.checker.GetTypeOfSymbol(field)
+						if l.openNumericEnumType(tag) {
+							return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	if err := l.enumObjectView(node); err != nil {
 		return err
+	}
+	if node.Kind == ast.KindCallExpression {
+		call := node.AsCallExpression()
+		callee := ast.SkipParentheses(call.Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression && len(call.Arguments.Nodes) > 0 {
+			access := callee.AsPropertyAccessExpression()
+			if access.Name().Text() == "assign" && l.isLibraryGlobal(access.Expression, "Object") && l.enumObject(call.Arguments.Nodes[0]) != nil {
+				return &Refused{Where: l.program.Where(node), What: "a write into an enum runtime object; named constants and reverse lookup must stay consistent", Fix: "copy the enum into an ordinary object before writing it (adamic/enum-object)"}
+			}
+		}
 	}
 	if node.Kind == ast.KindEnumDeclaration {
 		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock {
@@ -313,6 +397,7 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		if ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
 			return l.notYet(node, "an ambient enum without a runtime definition")
 		}
+		// Signed masks, including 1 << 31, are ordinary numeric enum constants.
 		_, err := l.enumFields(node)
 		return err
 	}
@@ -331,7 +416,13 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 			updated = binary.Left
 		}
 	}
-	if updated != nil && l.checker.GetTypeAtLocation(updated).Flags()&checker.TypeFlagsEnumLike != 0 {
+	if updated != nil && l.checker.GetTypeAtLocation(updated).Flags()&checker.TypeFlagsEnumLike != 0 && !l.numericEnum(l.enumIdentity(l.checker.GetTypeAtLocation(updated))) {
+		if l.flagUpdate(node, updated) {
+			return nil
+		}
+		if l.flagEnum(l.enumIdentity(l.checker.GetTypeAtLocation(updated))) {
+			return l.flagWriteRefusal(node, l.checker.GetTypeAtLocation(updated))
+		}
 		return &Refused{Where: l.program.Where(node), What: "arithmetic assigned back into an enum; the result need not be one of its members", Fix: "assign a declared member, or keep arithmetic results in a number (adamic/enum-members)"}
 	}
 	return nil
@@ -342,7 +433,7 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 func (l *lowering) enumSwitch(node *ast.Node) error {
 	statement := node.AsSwitchStatement()
 	proven := l.checker.GetTypeAtLocation(statement.Expression)
-	if proven.Flags()&checker.TypeFlagsEnumLike == 0 {
+	if proven.Flags()&checker.TypeFlagsEnumLike == 0 || l.numericEnum(l.enumIdentity(proven)) {
 		return nil
 	}
 	covered := map[any]bool{}
@@ -357,6 +448,9 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
 			covered[value.AsLiteralType().Value()] = true
 		}
 	}
+	if l.flagEnum(l.enumIdentity(proven)) {
+		return &Refused{Where: l.program.Where(node), What: "a flag-enum switch without a default", Fix: "add a default for combinations and zero (adamic/enum-flags)"}
+	}
 	members := []*checker.Type{proven}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		members = proven.Types()
@@ -370,4 +464,42 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
 		}
 	}
 	return nil
+}
+
+// A numeric enum default is unreachable only with a member origin proof and full coverage.
+// This permits the never-default idiom without inventing a machine representation for never.
+func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
+	statement := node.AsSwitchStatement()
+	proven := l.checker.GetTypeAtLocation(statement.Expression)
+	return l.enumSwitchCovered(node) && (!l.numericEnum(l.enumIdentity(proven)) || l.enumMemberOrigin(statement.Expression, l.enumIdentity(proven), map[*ast.Node]bool{}))
+}
+
+func (l *lowering) enumSwitchCovered(node *ast.Node) bool {
+	statement := node.AsSwitchStatement()
+	proven := l.checker.GetTypeAtLocation(statement.Expression)
+	if proven.Flags()&checker.TypeFlagsEnumLike == 0 {
+		return false
+	}
+	covered := map[any]bool{}
+	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
+		if clause.Kind == ast.KindDefaultClause {
+			continue
+		}
+		test := clause.AsCaseOrDefaultClause().Expression
+		if member := l.enumMember(test); member != nil {
+			covered[l.checker.GetConstantValue(member)] = true
+		} else if value := l.checker.GetTypeAtLocation(test); value.Flags()&checker.TypeFlagsLiteral != 0 {
+			covered[value.AsLiteralType().Value()] = true
+		}
+	}
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsLiteral == 0 || !covered[member.AsLiteralType().Value()] {
+			return false
+		}
+	}
+	return true
 }

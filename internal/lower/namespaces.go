@@ -95,7 +95,8 @@ func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, err
 		return value, true, err
 	}
 	if local, found := l.local(node); found {
-		return l.localRead(node, local), true, nil
+		value, err := l.localRead(node, local)
+		return value, true, err
 	}
 	return nil, true, l.notYet(node, "a namespace member without a lowered binding")
 }

@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
-	"strings"
 )
 
 // statements lowers a list of statements.
@@ -29,11 +28,11 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
-	case ast.KindImportDeclaration:
+	case ast.KindImportDeclaration, ast.KindExportDeclaration:
 		// What an import brings in is resolved through the checker at each use, and the module it
 		// names runs first (moduleOrder).
 		return nil, nil
-	case ast.KindExportDeclaration, ast.KindExportAssignment:
+	case ast.KindExportAssignment:
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {
@@ -72,9 +71,21 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return l.forOf(node)
 	case ast.KindSwitchStatement:
 		return l.switchStatement(node)
+	case ast.KindLabeledStatement:
+		statement := node.AsLabeledStatement().Statement
+		for statement.Kind == ast.KindLabeledStatement {
+			statement = statement.AsLabeledStatement().Statement
+		}
+		if statement.Kind != ast.KindSwitchStatement && !ast.IsIterationStatement(statement, false) {
+			return nil, l.notYet(node, "a label on a statement other than a loop or switch")
+		}
+		return l.statement(node.AsLabeledStatement().Statement)
 	case ast.KindBreakStatement, ast.KindContinueStatement:
 		if node.Label() != nil {
-			return nil, l.notYet(node, "a labeled "+strings.ToLower(strings.TrimSuffix(strings.TrimPrefix(node.Kind.String(), "Kind"), "Statement")))
+			if node.Kind == ast.KindContinueStatement {
+				return nil, l.notYet(node, "a labeled continue")
+			}
+			return l.labeledBreak(node)
 		}
 		if node.Kind == ast.KindBreakStatement {
 			return []ir.Statement{ir.Break{}}, nil
@@ -149,7 +160,11 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	}
 	expression := node.AsReturnStatement().Expression
 	if expression == nil {
-		return []ir.Statement{ir.Return{}}, nil
+		returned := ir.Return{}
+		if l.function.Returns != 0 {
+			returned.Value = fit(ir.Undefined{}, l.function.Returns)
+		}
+		return []ir.Statement{returned}, nil
 	}
 	if l.isPanicCall(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
