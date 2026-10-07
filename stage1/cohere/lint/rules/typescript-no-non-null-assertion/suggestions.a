@@ -1,0 +1,32 @@
+import { panic } from 'adamic';
+import { Finding } from '../../finding.ts';
+import type { RuleContext } from '../../context.ts';
+
+export class Fix {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    constructor(start: number, end: number, text: string) {
+        this.start = start; this.end = end; this.text = text;
+    }
+}
+export class Suggestion {
+    readonly id: string;
+    readonly message: string;
+    readonly fixes: readonly Fix[];
+    constructor(id: string, message: string, fixes: readonly Fix[]) {
+        this.id = id; this.message = message; this.fixes = fixes;
+    }
+}
+export class SuggestedFinding extends Finding {
+    readonly suggestions: readonly Suggestion[];
+    constructor(rule: string, id: string, message: string, start: number, end: number, suggestions: readonly Suggestion[]) {
+        super(rule, id, message, start, end, '', '', '');
+        this.suggestions = suggestions;
+    }
+}
+let detailedReporting = false;
+export function enableDetailedReporting(): void { detailedReporting = true; }
+export function requireDetailedReporting(context: RuleContext, name: string): void {
+    if(context.enabled(name) && !detailedReporting) panic('non-null rules require a driver that reports complete suggestion edits');
+}

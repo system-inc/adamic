@@ -1,0 +1,10 @@
+=== RUN   TestThirdWitnesses
+    lint_test.go:762: Go, Node, emitted JavaScript, native identical: 15111 bytes
+--- PASS: TestThirdWitnesses (14.53s)
+=== RUN   TestThirdUpstream
+    lint_test.go:325: cohere cases: 524 unique source/rule/options combinations
+    lint_test.go:771: new rule upstream cases: 145
+    lint_test.go:773: Go, Node, emitted JavaScript, native identical: 103034 bytes
+--- PASS: TestThirdUpstream (27.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	41.836s

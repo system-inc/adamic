@@ -1,0 +1,76 @@
+=== RUN   TestDeterministicRegeneration
+=== PAUSE TestDeterministicRegeneration
+=== RUN   TestDescriptorRejections
+=== PAUSE TestDescriptorRejections
+=== RUN   TestDuplicateOracleAdapter
+=== PAUSE TestDuplicateOracleAdapter
+=== CONT  TestDeterministicRegeneration
+=== CONT  TestDuplicateOracleAdapter
+=== CONT  TestDescriptorRejections
+=== RUN   TestDescriptorRejections/duplicate_public_name
+=== PAUSE TestDescriptorRejections/duplicate_public_name
+=== RUN   TestDescriptorRejections/unknown_field
+=== PAUSE TestDescriptorRejections/unknown_field
+=== RUN   TestDescriptorRejections/missing_named_export
+=== PAUSE TestDescriptorRejections/missing_named_export
+=== RUN   TestDescriptorRejections/bad_kind
+=== PAUSE TestDescriptorRejections/bad_kind
+=== RUN   TestDescriptorRejections/missing_oracle_export
+=== PAUSE TestDescriptorRejections/missing_oracle_export
+=== RUN   TestDescriptorRejections/no_listener
+=== PAUSE TestDescriptorRejections/no_listener
+=== RUN   TestDescriptorRejections/missing_factory
+=== PAUSE TestDescriptorRejections/missing_factory
+=== RUN   TestDescriptorRejections/missing_class
+=== PAUSE TestDescriptorRejections/missing_class
+=== RUN   TestDescriptorRejections/missing_finish_hook
+=== PAUSE TestDescriptorRejections/missing_finish_hook
+=== RUN   TestDescriptorRejections/unsafe_public_name
+=== PAUSE TestDescriptorRejections/unsafe_public_name
+=== CONT  TestDescriptorRejections/duplicate_public_name
+=== CONT  TestDescriptorRejections/no_listener
+=== CONT  TestDescriptorRejections/missing_finish_hook
+=== NAME  TestDescriptorRejections/no_listener
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsno_listener1861406233/001/rules/no-debugger/rule.json: visit and kinds required
+=== NAME  TestDescriptorRejections/duplicate_public_name
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsduplicate_public_name1838867263/001/rules/no-empty/rule.json: invalid or duplicate rule name "no-empty"
+=== CONT  TestDescriptorRejections/missing_oracle_export
+=== NAME  TestDescriptorRejections/missing_finish_hook
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_finish_hook2077864098/001/rules/no-debugger/rule.json: missing named hook "missing"
+=== CONT  TestDescriptorRejections/bad_kind
+=== NAME  TestDuplicateOracleAdapter
+    registry_test.go:147: mutant rejected: /tmp/adamic-gate/TestDuplicateOracleAdapter481202461/001/rules/no-empty/rule.json: duplicate oracle adapter "oracleNoDebugger"
+=== CONT  TestDescriptorRejections/missing_named_export
+--- PASS: TestDuplicateOracleAdapter (0.01s)
+=== CONT  TestDescriptorRejections/unknown_field
+=== NAME  TestDescriptorRejections/bad_kind
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsbad_kind1014867605/001/rules/no-debugger/rule.json: invalid or duplicate kind "NotARealNode"
+=== CONT  TestDescriptorRejections/missing_class
+=== NAME  TestDescriptorRejections/missing_named_export
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_named_export4198898427/001/rules/no-debugger/rule.json: missing named hook "missing"
+=== CONT  TestDescriptorRejections/missing_factory
+=== NAME  TestDescriptorRejections/unknown_field
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsunknown_field1216479191/001/rules/no-debugger/rule.json: json: unknown field "vist"
+=== NAME  TestDescriptorRejections/missing_class
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_class871443580/001/rules/no-debugger/rule.json: missing named factory or class
+=== NAME  TestDescriptorRejections/missing_oracle_export
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_oracle_export4001387676/001/rules/no-debugger/rule.json: missing oracle adapter exports
+=== CONT  TestDescriptorRejections/unsafe_public_name
+=== NAME  TestDescriptorRejections/missing_factory
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsmissing_factory775599822/001/rules/no-debugger/rule.json: missing named factory or class
+--- PASS: TestDeterministicRegeneration (0.02s)
+=== NAME  TestDescriptorRejections/unsafe_public_name
+    registry_test.go:119: mutant rejected: /tmp/adamic-gate/TestDescriptorRejectionsunsafe_public_name1545916177/001/rules/no-debugger/rule.json: invalid or duplicate rule name "bad\\name"
+--- PASS: TestDescriptorRejections (0.00s)
+    --- PASS: TestDescriptorRejections/no_listener (0.00s)
+    --- PASS: TestDescriptorRejections/duplicate_public_name (0.00s)
+    --- PASS: TestDescriptorRejections/missing_finish_hook (0.00s)
+    --- PASS: TestDescriptorRejections/bad_kind (0.00s)
+    --- PASS: TestDescriptorRejections/missing_named_export (0.00s)
+    --- PASS: TestDescriptorRejections/missing_class (0.01s)
+    --- PASS: TestDescriptorRejections/unknown_field (0.01s)
+    --- PASS: TestDescriptorRejections/missing_oracle_export (0.01s)
+    --- PASS: TestDescriptorRejections/missing_factory (0.01s)
+    --- PASS: TestDescriptorRejections/unsafe_public_name (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.025s
