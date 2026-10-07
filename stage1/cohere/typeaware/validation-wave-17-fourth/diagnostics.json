@@ -1,0 +1,19 @@
+{
+  "bytes": 72000,
+  "sha256": "088a57c24cb67f4615b8b4b85ab95371249215ed0aa645e86690f0f032fe4f5c",
+  "findings": {
+    "prefer-arrow-callback": 64,
+    "no-useless-backreference": 111,
+    "no-throw-literal": 22
+  },
+  "fix_edits": {
+    "prefer-arrow-callback": 124,
+    "no-useless-backreference": 0,
+    "no-throw-literal": 0
+  },
+  "suggestions": {
+    "prefer-arrow-callback": 0,
+    "no-useless-backreference": 0,
+    "no-throw-literal": 0
+  }
+}

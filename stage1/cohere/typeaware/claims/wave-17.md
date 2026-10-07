@@ -106,3 +106,13 @@ Earlier entries were skipped because they are ported or claimed elsewhere.
 These three are neither ported on the requested bases nor named in an origin
 claim. The complete scan is in validation-wave-17-fourth/selection.json.
 This claim is pushed before implementation, on codex/typeaware-wave-17.
+
+## Fourth batch validated status
+
+All three ports are implemented in b2a0bc72. The final 335 controls, exact fix
+serialization, both option flags, frozen compiler and repository corpora,
+ASan/UBSan, four comparison-only mutants and two released-handle probes pass.
+No new checker question or shared-file edit was needed. Complete evidence and
+native versus Go timings are in [the fourth report](../WAVE_17_FOURTH_REPORT.md).
+The previously documented shared unknown-request mutant and JSX parser gaps
+remain; no rule in this batch is blocked by them.
