@@ -1,0 +1,15 @@
+=== RUN   TestRulesAgree
+    lint_test.go:322: go [test -overlay=/tmp/adamic-gate/TestRulesAgree3918911173/019/overlay.json ./internal/lint/rules/adamic -run ^(TestNoTypePredicate) -count=1 -timeout=10m]: exit status 1
+        # github.com/system-inc/cohere/internal/lint/rules/adamic.test
+        /workspace/adamic-tools/go/pkg/tool/linux_amd64/link: mapping output file failed: no space left on device
+--- FAIL: TestRulesAgree (108.03s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:514: compiler and stage1: 403 files
+    lint_test.go:515: Go, Node, emitted JavaScript, native identical: 20608431 bytes
+--- PASS: TestCompilerAndStage1Agree (95.14s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 97690 bytes
+--- PASS: TestOwnedWitnesses (41.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	244.467s
+FAIL

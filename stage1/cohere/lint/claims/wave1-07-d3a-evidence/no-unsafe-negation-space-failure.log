@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/validate.py", line 61, in <module>
+    compare('compiler-stage1',paths)
+  File "/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/validate.py", line 39, in compare
+    answers={side:run(command) for side,command in commands(baseline,owned/'profile.a',manifest).items()}
+                  ^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/validate.py", line 22, in run
+    raise RuntimeError('execution failed: '+repr(command))
+RuntimeError: execution failed: ['/tmp/wave07-d3a/no-unsafe-negation/baseline/native', '/tmp/wave07-d3a/no-unsafe-negation/compiler-stage1-manifest.txt']
