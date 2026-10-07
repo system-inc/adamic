@@ -1,0 +1,90 @@
+=== RUN   TestWave13StringsCorpusAndBackends
+    lint_test.go:297: independent upstream core: ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.075s
+    lint_test.go:297: independent upstream next: ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.005s
+    lint_test.go:297: independent upstream nexus: ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.011s
+    lint_test.go:297: independent upstream tailwind: ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.011s
+    lint_test.go:297: independent upstream typescript: ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.015s
+    lint_test.go:337: EXPLICIT GAP: JSX case from /repository/source/ConsistencyNoReturnVoid.tsx for nexus/consistency-no-return-void; upstream Go test passed but stage1 parser has no JSX adapter
+    lint_test.go:353: cohere cases: 868 unique source/rule/options combinations
+    lint_test.go:677: no-multi-str: 21 upstream cases and 244 compiler/stage1 files (.ts and .a)
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3140946411/007/case-727.tsx source="var a = <div attr='Line 1 \\\n Line 2' />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3140946411/007/case-728.tsx source="var a = <div attr={'Line 1 \\\n Line 2'} />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3140946411/007/case-729.tsx source="var a = <div {...'Line 1 \\\n Line 2'} />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3140946411/007/case-730.tsx source="var a = <div {...{a: 'Line 1 \\\n Line 2'}} />;"
+    lint_test.go:843: supported 262 rows; explicit parser gaps 4
+    lint_test.go:680: Node: case 16 line 66: port "/tmp/adamic-gate/TestWave13StringsCorpusAndBackends3140946411/007/case-732.tsx:1:15", Go "fixed\tvar a = <div>{'Line 1 \\u005c\\u000a Line 2'}</div>;"
+        Go context:
+        range 8 26 multilineString
+        fixed	var a = 'Line 1 \u005c\u000a Line 2';
+        case 15
+        fixed	var a = <div>\u000a<h1>Wat</h1>\u000a</div>;
+        case 16
+        fixed	var a = <div>{'Line 1 \u005c\u000a Line 2'}</div>;
+        case 17
+        /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3140946411/013/no-multi-str-0.ts:1:14
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+--- FAIL: TestWave13StringsCorpusAndBackends (66.71s)
+=== RUN   TestWave13StringsMutants
+=== RUN   TestWave13StringsMutants/no-multi-str-semantic-mutant
+    lint_test.go:766: no-multi-str-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tconst text = 'one\\u005c\\u2029two';\\u000a", Go "/tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant732302119/001/no-multi-str-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant732302119/001/no-multi-str-0.ts:1:14
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 13 25 multilineString
+        fixed	const text = 'one\u005c\u2029two';\u000a
+    lint_test.go:766: no-multi-str-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tconst text = 'one\\u005c\\u2029two';\\u000a", Go "/tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant732302119/001/no-multi-str-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant732302119/001/no-multi-str-0.ts:1:14
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 13 25 multilineString
+        fixed	const text = 'one\u005c\u2029two';\u000a
+    lint_test.go:766: no-multi-str-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tconst text = 'one\\u005c\\u2029two';\\u000a", Go "/tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant732302119/001/no-multi-str-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant732302119/001/no-multi-str-0.ts:1:14
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 13 25 multilineString
+        fixed	const text = 'one\u005c\u2029two';\u000a
+=== RUN   TestWave13StringsMutants/no-nonoctal-decimal-escape-semantic-mutant
+    lint_test.go:741: /tmp/adamic-gate/TestWave13StringsMutants1726376790/001/oracle [--manifest /tmp/adamic-gate/TestWave13StringsMutantsno-nonoctal-decimal-escape-semantic-mut396535411/002/manifest.txt]: exit status 2
+        panic: fix failed: /tmp/adamic-gate/TestWave13StringsMutantsno-nonoctal-decimal-escape-semantic-mut396535411/001/no-nonoctal-decimal-escape-0.ts does not parse before any fix is applied (TS1488: Escape sequence '\8' is not allowed.) {FileName:/tmp/adamic-gate/TestWave13StringsMutantsno-nonoctal-decimal-escape-semantic-mut396535411/001/no-nonoctal-decimal-escape-0.ts Text:const text = '\0\8';
+        	 Changed:false Passes:0 Applied:[] Rejected:[] Converged:false UnconvergedRules:[] Transformed:false TransformSkipped:false TransformSkipReason: Failed:false}
+        
+        goroutine 1 [running]:
+        main.run({0x217496efe000?, 0x21749710e840?}, 0x0, 0x21749710e840)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:66 +0xa94
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:126 +0x2f7
+=== RUN   TestWave13StringsMutants/no-octal-semantic-mutant
+    lint_test.go:741: /tmp/adamic-gate/TestWave13StringsMutants1726376790/001/oracle [--manifest /tmp/adamic-gate/TestWave13StringsMutantsno-octal-semantic-mutant3674925432/002/manifest.txt]: exit status 2
+        panic: fix failed: /tmp/adamic-gate/TestWave13StringsMutantsno-octal-semantic-mutant3674925432/001/no-octal-0.ts does not parse before any fix is applied (TS1489: Decimals with leading zeros are not allowed.) {FileName:/tmp/adamic-gate/TestWave13StringsMutantsno-octal-semantic-mutant3674925432/001/no-octal-0.ts Text:const mode = 08;
+        	 Changed:false Passes:0 Applied:[] Rejected:[] Converged:false UnconvergedRules:[] Transformed:false TransformSkipped:false TransformSkipReason: Failed:false}
+        
+        goroutine 1 [running]:
+        main.run({0x31a5587861c0?, 0x31a558c6a000?}, 0x0, 0x31a558c6a000)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:66 +0xa94
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:126 +0x2f7
+--- FAIL: TestWave13StringsMutants (12.97s)
+    --- PASS: TestWave13StringsMutants/no-multi-str-semantic-mutant (10.90s)
+    --- FAIL: TestWave13StringsMutants/no-nonoctal-decimal-escape-semantic-mutant (0.01s)
+    --- FAIL: TestWave13StringsMutants/no-octal-semantic-mutant (0.01s)
+=== RUN   TestWave13StringsExtra
+    lint_test.go:914: /tmp/adamic-gate/TestWave13StringsExtra3218499133/001/oracle [--manifest /tmp/adamic-gate/TestWave13StringsExtra3218499133/007/manifest.txt]: exit status 2
+        panic: fix failed: /tmp/adamic-gate/TestWave13StringsExtra3218499133/005/no-nonoctal-decimal-escape-0.ts does not parse before any fix is applied (TS1488: Escape sequence '\8' is not allowed.) {FileName:/tmp/adamic-gate/TestWave13StringsExtra3218499133/005/no-nonoctal-decimal-escape-0.ts Text:const text = '\0\8';
+        	 Changed:false Passes:0 Applied:[] Rejected:[] Converged:false UnconvergedRules:[] Transformed:false TransformSkipped:false TransformSkipReason: Failed:false}
+        
+        goroutine 1 [running]:
+        main.run({0xa331308c175?, 0xa3313432140?}, 0x0, 0xa3313432140)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:66 +0xa94
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:126 +0x2f7
+--- FAIL: TestWave13StringsExtra (12.97s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	92.659s
+FAIL

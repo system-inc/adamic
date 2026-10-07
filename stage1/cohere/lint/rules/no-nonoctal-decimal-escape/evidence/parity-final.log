@@ -1,0 +1,177 @@
+=== RUN   TestWave13StringsCorpusAndBackends
+    lint_test.go:297: independent upstream core: ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.065s
+    lint_test.go:297: independent upstream next: ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.005s
+    lint_test.go:297: independent upstream nexus: ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.011s
+    lint_test.go:297: independent upstream tailwind: ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.010s
+    lint_test.go:297: independent upstream typescript: ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.014s
+    lint_test.go:337: EXPLICIT GAP: JSX case from /repository/source/ConsistencyNoReturnVoid.tsx for nexus/consistency-no-return-void; upstream Go test passed but stage1 parser has no JSX adapter
+    lint_test.go:353: cohere cases: 868 unique source/rule/options combinations
+    lint_test.go:677: no-multi-str: 21 upstream cases and 244 compiler/stage1 files (.ts and .a)
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3315378072/007/case-727.tsx source="var a = <div attr='Line 1 \\\n Line 2' />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3315378072/007/case-728.tsx source="var a = <div attr={'Line 1 \\\n Line 2'} />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3315378072/007/case-729.tsx source="var a = <div {...'Line 1 \\\n Line 2'} />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3315378072/007/case-730.tsx source="var a = <div {...{a: 'Line 1 \\\n Line 2'}} />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice has no JSX string ancestry adapter source="var a = <div>{'Line 1 \\\n Line 2'}</div>;"
+    lint_test.go:843: supported 261 rows; explicit parser gaps 5
+    lint_test.go:680: Go, Node, native identical: 12406975 bytes
+    lint_test.go:685: no-multi-str emitted JavaScript identical: 12406975 bytes
+    lint_test.go:708: no-multi-str round 1 Go 0.226903s findings=9
+    lint_test.go:708: no-multi-str round 1 native 1.233983s findings=9
+    lint_test.go:708: no-multi-str round 1 Node 0.874628s findings=9
+    lint_test.go:708: no-multi-str round 2 Go 0.212455s findings=9
+    lint_test.go:708: no-multi-str round 2 native 1.190998s findings=9
+    lint_test.go:708: no-multi-str round 2 Node 0.928990s findings=9
+    lint_test.go:708: no-multi-str round 3 Go 0.219758s findings=9
+    lint_test.go:708: no-multi-str round 3 native 1.160178s findings=9
+    lint_test.go:708: no-multi-str round 3 Node 0.853341s findings=9
+    lint_test.go:716: no-multi-str Go 42.36 findings/s (9 findings, 0.212455s)
+    lint_test.go:716: no-multi-str native 7.76 findings/s (9 findings, 1.160178s)
+    lint_test.go:716: no-multi-str Node 10.55 findings/s (9 findings, 0.853341s)
+    lint_test.go:677: no-nonoctal-decimal-escape: 31 upstream cases and 244 compiler/stage1 files (.ts and .a)
+    lint_test.go:843: supported 276 rows; explicit parser gaps 0
+    lint_test.go:680: Go, Node, native identical: 12419504 bytes
+    lint_test.go:685: no-nonoctal-decimal-escape emitted JavaScript identical: 12419504 bytes
+    lint_test.go:708: no-nonoctal-decimal-escape round 1 Go 0.246684s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 1 native 1.248412s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 1 Node 1.044922s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 2 Go 0.220700s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 2 native 1.173471s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 2 Node 0.981711s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 3 Go 0.213497s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 3 native 1.202450s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 3 Node 1.001612s findings=18
+    lint_test.go:716: no-nonoctal-decimal-escape Go 84.31 findings/s (18 findings, 0.213497s)
+    lint_test.go:716: no-nonoctal-decimal-escape native 15.34 findings/s (18 findings, 1.173471s)
+    lint_test.go:716: no-nonoctal-decimal-escape Node 18.34 findings/s (18 findings, 0.981711s)
+    lint_test.go:677: no-octal: 31 upstream cases and 244 compiler/stage1 files (.ts and .a)
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected semicolon at 10 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3315378072/007/case-773.ts source="var a = 01.5;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected semicolon at 12 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3315378072/007/case-778.ts source="var a = 0755n;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected semicolon at 12 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends3315378072/007/case-779.ts source="var a = 0777.5;"
+    lint_test.go:843: supported 273 rows; explicit parser gaps 3
+    lint_test.go:680: Go, Node, native identical: 12409902 bytes
+    lint_test.go:685: no-octal emitted JavaScript identical: 12409902 bytes
+    lint_test.go:708: no-octal round 1 Go 0.216498s findings=13
+    lint_test.go:708: no-octal round 1 native 1.246544s findings=13
+    lint_test.go:708: no-octal round 1 Node 0.895248s findings=13
+    lint_test.go:708: no-octal round 2 Go 0.215070s findings=13
+    lint_test.go:708: no-octal round 2 native 1.185844s findings=13
+    lint_test.go:708: no-octal round 2 Node 0.871927s findings=13
+    lint_test.go:708: no-octal round 3 Go 0.210552s findings=13
+    lint_test.go:708: no-octal round 3 native 1.198831s findings=13
+    lint_test.go:708: no-octal round 3 Node 0.804036s findings=13
+    lint_test.go:716: no-octal Go 61.74 findings/s (13 findings, 0.210552s)
+    lint_test.go:716: no-octal native 10.96 findings/s (13 findings, 1.185844s)
+    lint_test.go:716: no-octal Node 16.17 findings/s (13 findings, 0.804036s)
+--- PASS: TestWave13StringsCorpusAndBackends (182.46s)
+=== RUN   TestWave13StringsMutants
+=== RUN   TestWave13StringsMutants/no-multi-str-semantic-mutant
+    lint_test.go:766: no-multi-str-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tconst text = 'one\\u005c\\u2029two';\\u000a", Go "/tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant356765722/001/no-multi-str-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant356765722/001/no-multi-str-0.ts:1:14
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 13 25 multilineString
+        fixed	const text = 'one\u005c\u2029two';\u000a
+    lint_test.go:766: no-multi-str-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tconst text = 'one\\u005c\\u2029two';\\u000a", Go "/tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant356765722/001/no-multi-str-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant356765722/001/no-multi-str-0.ts:1:14
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 13 25 multilineString
+        fixed	const text = 'one\u005c\u2029two';\u000a
+    lint_test.go:766: no-multi-str-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tconst text = 'one\\u005c\\u2029two';\\u000a", Go "/tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant356765722/001/no-multi-str-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13StringsMutantsno-multi-str-semantic-mutant356765722/001/no-multi-str-0.ts:1:14
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 13 25 multilineString
+        fixed	const text = 'one\u005c\u2029two';\u000a
+=== RUN   TestWave13StringsMutants/no-nonoctal-decimal-escape-semantic-mutant
+    lint_test.go:766: no-nonoctal-decimal-escape-semantic-mutant caught only by comparison on Node: case 0 line 11: port "edit 16 18\t/\\u005c8", Go "edit 16 18\t\\u005c\\u005c8"
+        Go context:
+        suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c8` with `\u005cu00008`, which matches the same characters without turning the repair into a legacy octal escape.
+        edit 14 18	\u005cu00008
+        suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005cu0038`, keeping the digit and leaving the null escape before it alone.
+        edit 16 18	\u005cu0038
+        suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+        edit 16 18	\u005c\u005c8
+        fixed	const text = '\u005c0\u005c8';\u000a
+    lint_test.go:766: no-nonoctal-decimal-escape-semantic-mutant caught only by comparison on native: case 0 line 11: port "edit 16 18\t/\\u005c8", Go "edit 16 18\t\\u005c\\u005c8"
+        Go context:
+        suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c8` with `\u005cu00008`, which matches the same characters without turning the repair into a legacy octal escape.
+        edit 14 18	\u005cu00008
+        suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005cu0038`, keeping the digit and leaving the null escape before it alone.
+        edit 16 18	\u005cu0038
+        suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+        edit 16 18	\u005c\u005c8
+        fixed	const text = '\u005c0\u005c8';\u000a
+    lint_test.go:766: no-nonoctal-decimal-escape-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 11: port "edit 16 18\t/\\u005c8", Go "edit 16 18\t\\u005c\\u005c8"
+        Go context:
+        suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c8` with `\u005cu00008`, which matches the same characters without turning the repair into a legacy octal escape.
+        edit 14 18	\u005cu00008
+        suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005cu0038`, keeping the digit and leaving the null escape before it alone.
+        edit 16 18	\u005cu0038
+        suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+        edit 16 18	\u005c\u005c8
+        fixed	const text = '\u005c0\u005c8';\u000a
+=== RUN   TestWave13StringsMutants/no-octal-semantic-mutant
+    lint_test.go:766: no-octal-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tconst mode = 08;\\u000a", Go "/tmp/adamic-gate/TestWave13StringsMutantsno-octal-semantic-mutant1615158480/001/no-octal-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13StringsMutantsno-octal-semantic-mutant1615158480/001/no-octal-0.ts:1:14
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 13 15 noOctal
+        fixed	const mode = 08;\u000a
+    lint_test.go:766: no-octal-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tconst mode = 08;\\u000a", Go "/tmp/adamic-gate/TestWave13StringsMutantsno-octal-semantic-mutant1615158480/001/no-octal-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13StringsMutantsno-octal-semantic-mutant1615158480/001/no-octal-0.ts:1:14
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 13 15 noOctal
+        fixed	const mode = 08;\u000a
+    lint_test.go:766: no-octal-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tconst mode = 08;\\u000a", Go "/tmp/adamic-gate/TestWave13StringsMutantsno-octal-semantic-mutant1615158480/001/no-octal-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13StringsMutantsno-octal-semantic-mutant1615158480/001/no-octal-0.ts:1:14
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 13 15 noOctal
+        fixed	const mode = 08;\u000a
+--- PASS: TestWave13StringsMutants (35.30s)
+    --- PASS: TestWave13StringsMutants/no-multi-str-semantic-mutant (11.34s)
+    --- PASS: TestWave13StringsMutants/no-nonoctal-decimal-escape-semantic-mutant (10.96s)
+    --- PASS: TestWave13StringsMutants/no-octal-semantic-mutant (11.05s)
+=== RUN   TestWave13StringsExtra
+    lint_test.go:915: external Go witness output: case 0
+        /tmp/adamic-gate/TestWave13StringsExtra439240284/004/no-multi-str-0.ts:1:14
+          no-multi-str  This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard.
+        
+        range 13 25 multilineString
+        fixed	const text = 'one\u005c\u2029two';\u000a
+        case 1
+        /tmp/adamic-gate/TestWave13StringsExtra439240284/005/no-nonoctal-decimal-escape-0.ts:1:17
+          no-nonoctal-decimal-escape  This is a `\8` or `\9` escape, which the language only still accepts as a legacy web-compatibility feature. It means the bare digit, so the backslash does nothing, and in strict mode or a module it is a syntax error rather than a quiet no-op. Whichever was intended, the digit or a literal backslash, saying it directly is the version that keeps meaning the same thing everywhere.
+        
+        range 16 18 nonoctalDecimalEscape
+        suggestion nonoctalDecimalEscape	Replace `\u005c0\u005c8` with `\u005cu00008`, which matches the same characters without turning the repair into a legacy octal escape.
+        edit 14 18	\u005cu00008
+        suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005cu0038`, keeping the digit and leaving the null escape before it alone.
+        edit 16 18	\u005cu0038
+        suggestion nonoctalDecimalEscape	Replace `\u005c8` with `\u005c\u005c8` if a literal backslash before the digit is what was meant. This one does change the string.
+        edit 16 18	\u005c\u005c8
+        fixed	const text = '\u005c0\u005c8';\u000a
+        case 2
+        /tmp/adamic-gate/TestWave13StringsExtra439240284/006/no-octal-0.ts:1:14
+          no-octal  This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not.
+        
+        range 13 15 noOctal
+        fixed	const mode = 08;\u000a
+    lint_test.go:916: Go, Node, native identical: 2341 bytes
+--- PASS: TestWave13StringsExtra (12.83s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	230.598s
