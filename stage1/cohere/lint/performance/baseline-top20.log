@@ -1,0 +1,48 @@
+
+Top 20 inclusive instructions (same-name inline records collapsed):
+38,559,323,748 100.00% main
+38,542,204,801  99.96% adamic_function_50_run
+37,829,625,289  98.11% adamic_function_167_Linter_run
+31,755,401,905  82.35% adamic_function_180_Linter_walk
+30,107,682,523  78.08% adamic_function_187_Linter_additional
+27,566,479,223  71.49% adamic_function_198_Linter_warnings
+17,549,131,384  45.51% find
+14,325,736,465  37.15% adamic_function_130_Statements_statement'2
+12,688,359,186  32.91% adamic_map_get
+10,265,553,333  26.62% adamic_function_197_Linter_commentAnchors
+10,265,217,929  26.62% adamic_function_197_Linter_commentAnchors'2
+ 8,545,395,290  22.16% adamic_function_112_Statements_block'2
+ 7,412,478,806  19.22% adamic_function_38_fold
+ 6,067,692,216  15.74% adamic_map_set
+ 6,030,950,885  15.64% adamic_function_107_Parser_file
+ 6,029,824,794  15.64% adamic_function_130_Statements_statement
+ 5,251,487,167  13.62% adamic_function_125_Statements_functionDeclaration
+ 5,053,503,671  13.11% adamic_function_112_Statements_block
+ 4,648,204,059  12.05% adamic_function_125_Statements_functionDeclaration'2
+ 4,207,107,650  10.91% adamic_release
+
+Top 20 self instructions (same-name inline records collapsed):
+17,515,650,254  45.42% find
+ 3,657,053,349   9.48% adamic_release
+ 1,599,934,210   4.15% adamic_string_equal
+ 1,184,845,782   3.07% adamic_function_198_Linter_warnings
+ 1,132,261,690   2.94% adamic_string_locate
+ 1,039,519,344   2.70% adamic_map_set
+   919,570,267   2.38% adamic_retain
+   795,854,329   2.06% adamic_function_21_Scanner_code
+   753,685,754   1.95% adamic_array_index_of
+   612,540,077   1.59% adamic_array_push
+   601,635,118   1.56% adamic_function_32_Scanner_scan
+   534,582,963   1.39% adamic_string_char_code
+   488,805,618   1.27% free
+   470,693,280   1.22% adamic_function_54_Parser_node
+   425,731,134   1.10% adamic_allocate
+   409,300,729   1.06% adamic_function_197_Linter_commentAnchors'2
+   401,908,110   1.04% adamic_function_169_Linter_enabled
+   370,808,392   0.96% usable
+   337,160,718   0.87% adamic_function_187_Linter_additional
+   296,601,126   0.77% malloc
+
+{
+  "instructions": 38559511949
+}

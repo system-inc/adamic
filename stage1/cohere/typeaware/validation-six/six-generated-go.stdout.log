@@ -1,0 +1,595 @@
+file	/tmp/tsgo-six-final-full/suite-case-000.ts
+28	31	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-001.ts
+file	/tmp/tsgo-six-final-full/suite-case-002.ts
+72	75	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-003.ts
+file	/tmp/tsgo-six-final-full/suite-case-004.ts
+file	/tmp/tsgo-six-final-full/suite-case-005.ts
+file	/tmp/tsgo-six-final-full/suite-case-006.ts
+file	/tmp/tsgo-six-final-full/suite-case-007.ts
+file	/tmp/tsgo-six-final-full/suite-case-008.ts
+file	/tmp/tsgo-six-final-full/suite-case-009.ts
+file	/tmp/tsgo-six-final-full/suite-case-010.ts
+23	26	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-011.ts
+38	68	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	38	68	!(x instanceof Error)
+file	/tmp/tsgo-six-final-full/suite-case-012.ts
+38	68	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	38	68	!(x instanceof Error)
+file	/tmp/tsgo-six-final-full/suite-case-013.ts
+38	68	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	38	68	!(x instanceof Error)
+file	/tmp/tsgo-six-final-full/suite-case-014.ts
+38	69	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	38	69	!(typeof x === 'string')
+file	/tmp/tsgo-six-final-full/suite-case-015.ts
+38	68	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	38	68	!(x instanceof Error)
+file	/tmp/tsgo-six-final-full/suite-case-016.ts
+file	/tmp/tsgo-six-final-full/suite-case-017.ts
+file	/tmp/tsgo-six-final-full/suite-case-018.ts
+file	/tmp/tsgo-six-final-full/suite-case-019.ts
+file	/tmp/tsgo-six-final-full/suite-case-020.ts
+32	39	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-021.ts
+file	/tmp/tsgo-six-final-full/suite-case-022.ts
+file	/tmp/tsgo-six-final-full/suite-case-023.ts
+58	59	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `unique symbol`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-024.ts
+file	/tmp/tsgo-six-final-full/suite-case-025.ts
+file	/tmp/tsgo-six-final-full/suite-case-026.ts
+file	/tmp/tsgo-six-final-full/suite-case-027.ts
+34	35	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `[]`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-028.ts
+file	/tmp/tsgo-six-final-full/suite-case-029.ts
+file	/tmp/tsgo-six-final-full/suite-case-030.ts
+file	/tmp/tsgo-six-final-full/suite-case-031.ts
+file	/tmp/tsgo-six-final-full/suite-case-032.ts
+file	/tmp/tsgo-six-final-full/suite-case-033.ts
+39	40	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `unknown`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-034.ts
+41	42	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `RegExp`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-035.ts
+file	/tmp/tsgo-six-final-full/suite-case-036.ts
+file	/tmp/tsgo-six-final-full/suite-case-037.ts
+file	/tmp/tsgo-six-final-full/suite-case-038.ts
+file	/tmp/tsgo-six-final-full/suite-case-039.ts
+file	/tmp/tsgo-six-final-full/suite-case-040.ts
+file	/tmp/tsgo-six-final-full/suite-case-041.ts
+file	/tmp/tsgo-six-final-full/suite-case-042.ts
+88	121	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	86	122	!(someCondition ?? true)
+file	/tmp/tsgo-six-final-full/suite-case-043.ts
+88	111	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	86	112	!someCondition
+file	/tmp/tsgo-six-final-full/suite-case-044.ts
+86	108	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	86	108	someCondition
+file	/tmp/tsgo-six-final-full/suite-case-045.ts
+file	/tmp/tsgo-six-final-full/suite-case-046.ts
+file	/tmp/tsgo-six-final-full/suite-case-047.ts
+file	/tmp/tsgo-six-final-full/suite-case-048.ts
+file	/tmp/tsgo-six-final-full/suite-case-049.ts
+file	/tmp/tsgo-six-final-full/suite-case-050.ts
+file	/tmp/tsgo-six-final-full/suite-case-051.ts
+file	/tmp/tsgo-six-final-full/suite-case-052.ts
+61	62	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Symbol`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-053.ts
+file	/tmp/tsgo-six-final-full/suite-case-054.ts
+file	/tmp/tsgo-six-final-full/suite-case-055.ts
+file	/tmp/tsgo-six-final-full/suite-case-056.ts
+file	/tmp/tsgo-six-final-full/suite-case-057.ts
+file	/tmp/tsgo-six-final-full/suite-case-058.ts
+71	72	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-059.ts
+79	96	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	79	96	(a || b)
+file	/tmp/tsgo-six-final-full/suite-case-060.ts
+69	70	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-061.ts
+60	61	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-062.ts
+60	61	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-063.ts
+file	/tmp/tsgo-six-final-full/suite-case-064.ts
+file	/tmp/tsgo-six-final-full/suite-case-065.ts
+61	62	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `symbol`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-066.ts
+68	69	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `unique symbol`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-067.ts
+file	/tmp/tsgo-six-final-full/suite-case-068.ts
+file	/tmp/tsgo-six-final-full/suite-case-069.ts
+file	/tmp/tsgo-six-final-full/suite-case-070.ts
+74	75	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `{ a: 1; } & { b: 2; }`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-071.ts
+74	75	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `{ a: 1; } & { b: 2; }`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-072.ts
+74	75	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `{ a: 1; } & { b: 2; }`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-073.ts
+file	/tmp/tsgo-six-final-full/suite-case-074.ts
+file	/tmp/tsgo-six-final-full/suite-case-075.ts
+file	/tmp/tsgo-six-final-full/suite-case-076.ts
+file	/tmp/tsgo-six-final-full/suite-case-077.ts
+file	/tmp/tsgo-six-final-full/suite-case-078.ts
+file	/tmp/tsgo-six-final-full/suite-case-079.ts
+42	73	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	40	74	!(varBoolean ?? false)
+file	/tmp/tsgo-six-final-full/suite-case-080.ts
+42	73	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	40	74	varBoolean ?? false
+file	/tmp/tsgo-six-final-full/suite-case-081.ts
+42	72	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	40	73	!(varBoolean ?? true)
+file	/tmp/tsgo-six-final-full/suite-case-082.ts
+42	62	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	40	63	!varBoolean
+file	/tmp/tsgo-six-final-full/suite-case-083.ts
+42	62	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	40	63	varBoolean
+file	/tmp/tsgo-six-final-full/suite-case-084.ts
+42	78	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	40	79	varBoolean instanceof Event
+file	/tmp/tsgo-six-final-full/suite-case-085.ts
+40	60	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	40	60	varBoolean
+file	/tmp/tsgo-six-final-full/suite-case-086.ts
+40	59	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	40	59	!varBoolean
+file	/tmp/tsgo-six-final-full/suite-case-087.ts
+40	60	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	40	60	varBoolean
+file	/tmp/tsgo-six-final-full/suite-case-088.ts
+40	76	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	40	76	!(varBoolean instanceof Event)
+file	/tmp/tsgo-six-final-full/suite-case-089.ts
+file	/tmp/tsgo-six-final-full/suite-case-090.ts
+file	/tmp/tsgo-six-final-full/suite-case-091.ts
+file	/tmp/tsgo-six-final-full/suite-case-092.ts
+file	/tmp/tsgo-six-final-full/suite-case-093.ts
+file	/tmp/tsgo-six-final-full/suite-case-094.ts
+file	/tmp/tsgo-six-final-full/suite-case-095.ts
+file	/tmp/tsgo-six-final-full/suite-case-096.ts
+file	/tmp/tsgo-six-final-full/suite-case-097.ts
+file	/tmp/tsgo-six-final-full/suite-case-098.ts
+file	/tmp/tsgo-six-final-full/suite-case-099.ts
+file	/tmp/tsgo-six-final-full/suite-case-100.ts
+file	/tmp/tsgo-six-final-full/suite-case-101.ts
+file	/tmp/tsgo-six-final-full/suite-case-102.ts
+34	50	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	34	50	!varTrue
+file	/tmp/tsgo-six-final-full/suite-case-103.ts
+file	/tmp/tsgo-six-final-full/suite-case-104.ts
+file	/tmp/tsgo-six-final-full/suite-case-105.ts
+file	/tmp/tsgo-six-final-full/suite-case-106.ts
+file	/tmp/tsgo-six-final-full/suite-case-107.ts
+file	/tmp/tsgo-six-final-full/suite-case-108.ts
+file	/tmp/tsgo-six-final-full/suite-case-109.ts
+file	/tmp/tsgo-six-final-full/suite-case-110.ts
+file	/tmp/tsgo-six-final-full/suite-case-111.ts
+file	/tmp/tsgo-six-final-full/suite-case-112.ts
+file	/tmp/tsgo-six-final-full/suite-case-113.ts
+file	/tmp/tsgo-six-final-full/suite-case-114.ts
+file	/tmp/tsgo-six-final-full/suite-case-115.ts
+file	/tmp/tsgo-six-final-full/suite-case-116.ts
+file	/tmp/tsgo-six-final-full/suite-case-117.ts
+file	/tmp/tsgo-six-final-full/suite-case-118.ts
+file	/tmp/tsgo-six-final-full/suite-case-119.ts
+file	/tmp/tsgo-six-final-full/suite-case-120.ts
+file	/tmp/tsgo-six-final-full/suite-case-121.ts
+file	/tmp/tsgo-six-final-full/suite-case-122.ts
+file	/tmp/tsgo-six-final-full/suite-case-123.ts
+file	/tmp/tsgo-six-final-full/suite-case-124.ts
+22	50	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	22	50	!(x instanceof Error)
+file	/tmp/tsgo-six-final-full/suite-case-125.ts
+file	/tmp/tsgo-six-final-full/suite-case-126.ts
+file	/tmp/tsgo-six-final-full/suite-case-127.ts
+file	/tmp/tsgo-six-final-full/suite-case-128.ts
+file	/tmp/tsgo-six-final-full/suite-case-129.ts
+file	/tmp/tsgo-six-final-full/suite-case-130.ts
+file	/tmp/tsgo-six-final-full/suite-case-131.ts
+file	/tmp/tsgo-six-final-full/suite-case-132.ts
+file	/tmp/tsgo-six-final-full/suite-case-133.ts
+file	/tmp/tsgo-six-final-full/suite-case-134.ts
+file	/tmp/tsgo-six-final-full/suite-case-135.ts
+file	/tmp/tsgo-six-final-full/suite-case-136.ts
+80	81	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `A`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-137.ts
+116	117	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `A2`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-138.ts
+file	/tmp/tsgo-six-final-full/suite-case-139.ts
+36	42	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-140.ts
+file	/tmp/tsgo-six-final-full/suite-case-141.ts
+file	/tmp/tsgo-six-final-full/suite-case-142.ts
+36	54	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-143.ts
+file	/tmp/tsgo-six-final-full/suite-case-144.ts
+file	/tmp/tsgo-six-final-full/suite-case-145.ts
+file	/tmp/tsgo-six-final-full/suite-case-146.ts
+file	/tmp/tsgo-six-final-full/suite-case-147.ts
+file	/tmp/tsgo-six-final-full/suite-case-148.ts
+file	/tmp/tsgo-six-final-full/suite-case-149.ts
+file	/tmp/tsgo-six-final-full/suite-case-150.ts
+14	22	@typescript-eslint/restrict-plus-operands	bigintAndNumber	Numeric '+' operations must either be both bigints or both numbers. Got `number` + `bigint`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-151.ts
+15	22	@typescript-eslint/restrict-plus-operands	bigintAndNumber	Numeric '+' operations must either be both bigints or both numbers. Got `bigint` + `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-152.ts
+file	/tmp/tsgo-six-final-full/suite-case-153.ts
+file	/tmp/tsgo-six-final-full/suite-case-154.ts
+file	/tmp/tsgo-six-final-full/suite-case-155.ts
+file	/tmp/tsgo-six-final-full/suite-case-156.ts
+file	/tmp/tsgo-six-final-full/suite-case-157.ts
+file	/tmp/tsgo-six-final-full/suite-case-158.ts
+file	/tmp/tsgo-six-final-full/suite-case-159.ts
+file	/tmp/tsgo-six-final-full/suite-case-160.ts
+file	/tmp/tsgo-six-final-full/suite-case-161.ts
+50	54	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `{ first: number; second: string; }`.	0	0
+57	61	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `{ first: number; second: string; }`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-162.ts
+file	/tmp/tsgo-six-final-full/suite-case-163.ts
+file	/tmp/tsgo-six-final-full/suite-case-164.ts
+file	/tmp/tsgo-six-final-full/suite-case-165.ts
+file	/tmp/tsgo-six-final-full/suite-case-166.ts
+file	/tmp/tsgo-six-final-full/suite-case-167.ts
+26	28	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `{}`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-168.ts
+file	/tmp/tsgo-six-final-full/suite-case-169.ts
+file	/tmp/tsgo-six-final-full/suite-case-170.ts
+file	/tmp/tsgo-six-final-full/suite-case-171.ts
+25	27	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never[]`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-172.ts
+86	87	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `A`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-173.ts
+file	/tmp/tsgo-six-final-full/suite-case-174.ts
+33	39	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-175.ts
+file	/tmp/tsgo-six-final-full/suite-case-176.ts
+file	/tmp/tsgo-six-final-full/suite-case-177.ts
+74	81	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-178.ts
+105	112	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-179.ts
+111	118	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-180.ts
+83	88	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `Valued`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-181.ts
+file	/tmp/tsgo-six-final-full/suite-case-182.ts
+file	/tmp/tsgo-six-final-full/suite-case-183.ts
+file	/tmp/tsgo-six-final-full/suite-case-184.ts
+file	/tmp/tsgo-six-final-full/suite-case-185.ts
+file	/tmp/tsgo-six-final-full/suite-case-186.ts
+file	/tmp/tsgo-six-final-full/suite-case-187.ts
+file	/tmp/tsgo-six-final-full/suite-case-188.ts
+33	35	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is string instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-189.ts
+24	26	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is string instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-190.ts
+file	/tmp/tsgo-six-final-full/suite-case-191.ts
+17	19	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is number[] instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-192.ts
+file	/tmp/tsgo-six-final-full/suite-case-193.ts
+file	/tmp/tsgo-six-final-full/suite-case-194.ts
+file	/tmp/tsgo-six-final-full/suite-case-195.ts
+file	/tmp/tsgo-six-final-full/suite-case-196.ts
+17	19	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is string instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-197.ts
+15	17	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is string instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-198.ts
+file	/tmp/tsgo-six-final-full/suite-case-199.ts
+16	18	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is unknown instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-200.ts
+13	15	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is void instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-201.ts
+file	/tmp/tsgo-six-final-full/suite-case-202.ts
+22	24	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is { x: number; } instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-203.ts
+file	/tmp/tsgo-six-final-full/suite-case-204.ts
+11	13	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is {} instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-205.ts
+file	/tmp/tsgo-six-final-full/suite-case-206.ts
+0	8	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is "hello" instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-207.ts
+file	/tmp/tsgo-six-final-full/suite-case-208.ts
+file	/tmp/tsgo-six-final-full/suite-case-209.ts
+0	8	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is "hello" instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-210.ts
+113	114	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `"\ud83c\udf0d"`.	0	0
+29	31	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-211.ts
+25	27	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is unknown instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-212.ts
+37	39	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is string instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-213.ts
+file	/tmp/tsgo-six-final-full/suite-case-214.ts
+29	31	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is unknown instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-215.ts
+file	/tmp/tsgo-six-final-full/suite-case-216.ts
+14	16	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is T instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-219.ts
+file	/tmp/tsgo-six-final-full/suite-case-220.ts
+file	/tmp/tsgo-six-final-full/suite-case-221.ts
+file	/tmp/tsgo-six-final-full/suite-case-222.ts
+file	/tmp/tsgo-six-final-full/suite-case-223.ts
+6	9	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-224.ts
+26	32	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-225.ts
+file	/tmp/tsgo-six-final-full/suite-case-226.ts
+27	33	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-227.ts
+22	28	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-228.ts
+37	43	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-229.ts
+37	43	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-230.ts
+21	27	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+75	82	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-231.ts
+file	/tmp/tsgo-six-final-full/suite-case-232.ts
+file	/tmp/tsgo-six-final-full/suite-case-233.ts
+25	31	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-234.ts
+25	31	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-235.ts
+file	/tmp/tsgo-six-final-full/suite-case-236.ts
+file	/tmp/tsgo-six-final-full/suite-case-237.ts
+file	/tmp/tsgo-six-final-full/suite-case-238.ts
+25	31	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-239.ts
+file	/tmp/tsgo-six-final-full/suite-case-240.ts
+25	31	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-241.ts
+62	68	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-242.ts
+file	/tmp/tsgo-six-final-full/suite-case-243.ts
+32	38	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-244.ts
+file	/tmp/tsgo-six-final-full/suite-case-245.ts
+6	9	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-246.ts
+6	9	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+6	9	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-247.ts
+file	/tmp/tsgo-six-final-full/suite-case-248.ts
+109	116	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+25	31	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-249.ts
+file	/tmp/tsgo-six-final-full/suite-case-250.ts
+33	39	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-251.ts
+file	/tmp/tsgo-six-final-full/suite-case-252.ts
+file	/tmp/tsgo-six-final-full/suite-case-253.ts
+file	/tmp/tsgo-six-final-full/suite-case-254.ts
+file	/tmp/tsgo-six-final-full/suite-case-255.ts
+file	/tmp/tsgo-six-final-full/suite-case-256.ts
+file	/tmp/tsgo-six-final-full/suite-case-258.ts
+file	/tmp/tsgo-six-final-full/suite-case-260.ts
+file	/tmp/tsgo-six-final-full/suite-case-262.ts
+10	13	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `number[]`.	0	0
+16	19	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `number[]`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-263.ts
+file	/tmp/tsgo-six-final-full/suite-case-264.ts
+file	/tmp/tsgo-six-final-full/suite-case-265.ts
+file	/tmp/tsgo-six-final-full/suite-case-266.ts
+10	23	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	10	23	true
+file	/tmp/tsgo-six-final-full/suite-case-267.ts
+33	39	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-268.ts
+88	105	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	88	105	(a || c)
+file	/tmp/tsgo-six-final-full/suite-case-269.ts
+34	35	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never`.	0	0
+38	39	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-270.ts
+36	37	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `unknown`.	0	0
+40	41	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `unknown`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-271.ts
+file	/tmp/tsgo-six-final-full/suite-case-272.ts
+file	/tmp/tsgo-six-final-full/suite-case-273.ts
+file	/tmp/tsgo-six-final-full/suite-case-274.ts
+file	/tmp/tsgo-six-final-full/suite-case-275.ts
+file	/tmp/tsgo-six-final-full/suite-case-276.ts
+48	59	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	48	59	b!
+file	/tmp/tsgo-six-final-full/suite-case-277.ts
+26	28	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is false instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-278.ts
+36	50	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	36	50	b
+file	/tmp/tsgo-six-final-full/suite-case-279.ts
+36	66	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	36	66	b satisfies boolean
+file	/tmp/tsgo-six-final-full/suite-case-280.ts
+44	54	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	44	54	b
+file	/tmp/tsgo-six-final-full/suite-case-281.ts
+36	45	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	36	45	b
+file	/tmp/tsgo-six-final-full/suite-case-282.ts
+file	/tmp/tsgo-six-final-full/suite-case-283.ts
+36	46	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	36	46	b
+file	/tmp/tsgo-six-final-full/suite-case-284.ts
+62	74	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	62	74	b
+file	/tmp/tsgo-six-final-full/suite-case-285.ts
+31	41	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	31	41	b
+file	/tmp/tsgo-six-final-full/suite-case-286.ts
+file	/tmp/tsgo-six-final-full/suite-case-287.ts
+25	33	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	25	33	b
+37	46	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	35	47	!b
+49	63	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	49	63	!(b||b)
+file	/tmp/tsgo-six-final-full/suite-case-288.ts
+file	/tmp/tsgo-six-final-full/suite-case-289.ts
+48	54	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-290.ts
+48	54	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-291.ts
+file	/tmp/tsgo-six-final-full/suite-case-292.ts
+file	/tmp/tsgo-six-final-full/suite-case-293.ts
+25	27	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is BigInt instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-294.ts
+25	27	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is Number instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-295.ts
+41	56	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	41	56	o[`b`]
+file	/tmp/tsgo-six-final-full/suite-case-296.ts
+file	/tmp/tsgo-six-final-full/suite-case-297.ts
+file	/tmp/tsgo-six-final-full/suite-case-298.ts
+23	25	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is null instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-299.ts
+file	/tmp/tsgo-six-final-full/suite-case-300.ts
+28	30	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is undefined instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-301.ts
+36	61	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	36	61	x as boolean
+file	/tmp/tsgo-six-final-full/suite-case-302.ts
+63	64	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `string | symbol`.	0	0
+68	73	@typescript-eslint/restrict-plus-operands	bigintAndNumber	Numeric '+' operations must either be both bigints or both numbers. Got `number | bigint` + `number | bigint`.	0	0
+75	78	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `RegExp`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-303.ts
+file	/tmp/tsgo-six-final-full/suite-case-304.ts
+125	126	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-305.ts
+44	64	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	44	64	f<string>()
+file	/tmp/tsgo-six-final-full/suite-case-306.ts
+file	/tmp/tsgo-six-final-full/suite-case-307.ts
+file	/tmp/tsgo-six-final-full/suite-case-308.ts
+59	67	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-309.ts
+75	83	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-310.ts
+116	124	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-311.ts
+file	/tmp/tsgo-six-final-full/suite-case-312.ts
+66	74	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `number`.	0	0
+76	86	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-313.ts
+file	/tmp/tsgo-six-final-full/suite-case-314.ts
+file	/tmp/tsgo-six-final-full/suite-case-315.ts
+87	95	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-316.ts
+file	/tmp/tsgo-six-final-full/suite-case-317.ts
+file	/tmp/tsgo-six-final-full/suite-case-318.ts
+124	138	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `Set<any>` assigned to a parameter of type `Set<string>`.	0	0
+140	144	@typescript-eslint/no-unsafe-argument	unsafeTupleSpread	Unsafe spread of a tuple type. The argument is of type `Map<any, string>` and is assigned to a parameter of type `Map<string, string>`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-319.ts
+file	/tmp/tsgo-six-final-full/suite-case-320.ts
+63	71	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-321.ts
+97	101	@typescript-eslint/no-unsafe-argument	unsafeTupleSpread	Unsafe spread of a tuple type. The argument is of type `any` and is assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-322.ts
+94	98	@typescript-eslint/no-unsafe-argument	unsafeTupleSpread	Unsafe spread of a tuple type. The argument is error typed and is assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-323.ts
+93	102	@typescript-eslint/no-unsafe-argument	unsafeArraySpread	Unsafe spread of an error array type.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-324.ts
+61	74	@typescript-eslint/no-unsafe-argument	unsafeSpread	Unsafe spread of an `any` type.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-325.ts
+61	76	@typescript-eslint/no-unsafe-argument	unsafeArraySpread	Unsafe spread of an `any[]` array type.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-326.ts
+60	103	@typescript-eslint/no-unsafe-argument	unsafeTupleSpread	Unsafe spread of a tuple type. The argument is of type `any` and is assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-327.ts
+134	142	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-328.ts
+110	118	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-329.ts
+file	/tmp/tsgo-six-final-full/suite-case-330.ts
+file	/tmp/tsgo-six-final-full/suite-case-331.ts
+file	/tmp/tsgo-six-final-full/suite-case-332.ts
+file	/tmp/tsgo-six-final-full/suite-case-333.ts
+45	53	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-334.ts
+file	/tmp/tsgo-six-final-full/suite-case-335.ts
+45	50	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type error typed assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-336.ts
+file	/tmp/tsgo-six-final-full/suite-case-337.ts
+file	/tmp/tsgo-six-final-full/suite-case-338.ts
+63	71	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+73	81	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-339.ts
+file	/tmp/tsgo-six-final-full/suite-case-340.ts
+87	95	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `number`.	0	0
+97	107	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-341.ts
+file	/tmp/tsgo-six-final-full/suite-case-342.ts
+53	85	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	53	85	g<string,number>("a",1)
+file	/tmp/tsgo-six-final-full/suite-case-343.ts
+92	93	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-344.ts
+file	/tmp/tsgo-six-final-full/suite-case-345.ts
+file	/tmp/tsgo-six-final-full/suite-case-346.ts
+file	/tmp/tsgo-six-final-full/suite-case-347.ts
+file	/tmp/tsgo-six-final-full/suite-case-348.ts
+file	/tmp/tsgo-six-final-full/suite-case-349.ts
+39	41	@typescript-eslint/no-unsafe-unary-minus	unaryMinus	Argument of unary negation should be assignable to number | bigint but is S instead.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-350.ts
+13	16	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-351.ts
+17	20	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-352.ts
+17	20	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-353.ts
+0	14	@typescript-eslint/no-unnecessary-boolean-literal-compare	negated	This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.	1	0	0	14	!false
+file	/tmp/tsgo-six-final-full/suite-case-354.ts
+29	35	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-355.ts
+45	55	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	45	55	b
+file	/tmp/tsgo-six-final-full/suite-case-356.ts
+file	/tmp/tsgo-six-final-full/suite-case-357.ts
+137	140	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `number`.	0	0
+149	152	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `string`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-358.ts
+file	/tmp/tsgo-six-final-full/suite-case-359.ts
+file	/tmp/tsgo-six-final-full/suite-case-360.ts
+file	/tmp/tsgo-six-final-full/suite-case-361.ts
+92	95	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-362.ts
+file	/tmp/tsgo-six-final-full/suite-case-363.ts
+132	138	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-364.ts
+10	11	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+39	40	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+39	40	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-365.ts
+10	13	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-366.ts
+10	13	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-367.ts
+10	13	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-368.ts
+file	/tmp/tsgo-six-final-full/suite-case-369.ts
+10	13	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-370.ts
+file	/tmp/tsgo-six-final-full/suite-case-371.ts
+file	/tmp/tsgo-six-final-full/suite-case-372.ts
+30	36	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-373.ts
+file	/tmp/tsgo-six-final-full/suite-case-374.ts
+29	35	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-375.ts
+29	49	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-376.ts
+38	44	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-377.ts
+53	59	@typescript-eslint/related-getter-setter-pairs	mismatch	A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-378.ts
+file	/tmp/tsgo-six-final-full/suite-case-379.ts
+file	/tmp/tsgo-six-final-full/suite-case-380.ts
+file	/tmp/tsgo-six-final-full/suite-case-381.ts
+file	/tmp/tsgo-six-final-full/suite-case-382.ts
+16	18	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `{}`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-383.ts
+file	/tmp/tsgo-six-final-full/suite-case-384.ts
+file	/tmp/tsgo-six-final-full/suite-case-385.ts
+file	/tmp/tsgo-six-final-full/suite-case-386.ts
+10	16	@typescript-eslint/restrict-plus-operands	bigintAndNumber	Numeric '+' operations must either be both bigints or both numbers. Got `number` + `bigint`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-387.ts
+10	16	@typescript-eslint/restrict-plus-operands	bigintAndNumber	Numeric '+' operations must either be both bigints or both numbers. Got `bigint` + `number`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-388.ts
+file	/tmp/tsgo-six-final-full/suite-case-389.ts
+file	/tmp/tsgo-six-final-full/suite-case-390.ts
+file	/tmp/tsgo-six-final-full/suite-case-391.ts
+14	17	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `number[]`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-392.ts
+file	/tmp/tsgo-six-final-full/suite-case-393.ts
+file	/tmp/tsgo-six-final-full/suite-case-394.ts
+10	12	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never[]`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-395.ts
+10	12	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never[]`.	0	0
+15	17	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never[]`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-396.ts
+10	12	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `never[]`.	0	0
+15	17	@typescript-eslint/restrict-plus-operands	invalid	Invalid operand for a '+' operation. Operands must each be a number or string, allowing a string + any of: `any`, `boolean`, `null`, `RegExp`, `undefined`. Got `{}`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-397.ts
+file	/tmp/tsgo-six-final-full/suite-case-398.ts
+file	/tmp/tsgo-six-final-full/suite-case-399.ts
+file	/tmp/tsgo-six-final-full/suite-case-400.ts
+file	/tmp/tsgo-six-final-full/suite-case-403.ts
+file	/tmp/tsgo-six-final-full/suite-case-404.ts
+file	/tmp/tsgo-six-final-full/suite-case-405.ts
+file	/tmp/tsgo-six-final-full/suite-case-406.ts
+file	/tmp/tsgo-six-final-full/suite-case-407.ts
+file	/tmp/tsgo-six-final-full/suite-case-408.ts
+0	13	@typescript-eslint/no-unnecessary-boolean-literal-compare	direct	This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.	1	0	0	13	true
+file	/tmp/tsgo-six-final-full/suite-case-409.ts
+file	/tmp/tsgo-six-final-full/suite-case-410.ts
+file	/tmp/tsgo-six-final-full/suite-case-411.ts
+file	/tmp/tsgo-six-final-full/suite-case-412.ts
+82	90	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `T`.	0	0
+file	/tmp/tsgo-six-final-full/suite-case-413.ts
+111	114	@typescript-eslint/no-unsafe-argument	unsafeArgument	Unsafe argument of type `any` assigned to a parameter of type `T`.	0	0
+file	/tmp/tsgo-six-final-full/empty.ts
+findings 186
