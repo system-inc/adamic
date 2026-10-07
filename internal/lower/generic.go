@@ -27,7 +27,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	if resolved == nil || target == nil {
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
 	}
-	concreteTypes := map[*checker.Type]*checker.Type{}
+	concreteTypes := l.genericReturnTypes(resolved, declaration)
 	// Class-generic calls supply this callee's resolved mapper. Ordinary recursive
 	// calls must infer their own arguments: the outer mapper can still describe the
 	// same declaration's previous instantiation, as nest<T>([item], depth - 1) does.

@@ -1,0 +1,19 @@
+// TypeScript 6.0.3 core.ts:1083 and 1116. Bodies preserved.
+function firstOrUndefined<T>(array: readonly T[] | undefined): T | undefined {
+    return array === undefined || array.length === 0 ? undefined : array[0];
+}
+
+function lastOrUndefined<T>(array: readonly T[] | undefined): T | undefined {
+    return array === undefined || array.length === 0 ? undefined : array[array.length - 1];
+}
+
+const numbers: readonly number[] = [0, 7];
+const emptyNumbers: readonly number[] = [];
+console.log(`${firstOrUndefined(numbers)} ${lastOrUndefined(numbers)} ${firstOrUndefined(emptyNumbers)} ${lastOrUndefined<number>(undefined)}`);
+const strings: readonly string[] = [''.repeat(1), 'word'.repeat(2)];
+const emptyStrings: readonly string[] = [];
+console.log(`${firstOrUndefined(strings)}|${lastOrUndefined(strings)}|${firstOrUndefined(emptyStrings)}|${lastOrUndefined<string>(undefined)}`);
+interface Item { readonly text: string; }
+const objects: readonly Item[] = [{ text: 'item'.repeat(2) }];
+const emptyObjects: readonly Item[] = [];
+console.log(`${firstOrUndefined(objects)?.text ?? 'missing'} ${lastOrUndefined(emptyObjects)?.text ?? 'missing'}`);
