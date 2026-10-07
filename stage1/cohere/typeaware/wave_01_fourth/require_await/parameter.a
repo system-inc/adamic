@@ -1,0 +1,7 @@
+// Zero denotes an absent checker type; parameters preserve signature order.
+export function awaitParameterType(parameters: readonly number[], rest: boolean, restElement: number, index: number): number {
+    if(rest && index >= parameters.length - 1) {
+        return restElement;
+    }
+    return parameters[index] ?? 0;
+}

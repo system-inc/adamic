@@ -774,3 +774,32 @@ bridge question/handle was introduced. Three claims remain partial, with
 atomic CFG/event collection and native integration also pending. No new
 claims. Full gate, the 17 external comparisons and new native/Go timings
 were not run for this isolated helper and are not claimed green.
+
+## Generic parameter position lookup
+
+Landing refs main b6b1538b and area d3a37422 remained unchanged ancestors.
+Added require_await/parameter.a for ordinary signature parameter selection
+and numeric index-type selection at and after a rest parameter.
+Zero represents absent checker type. No shared file or bridge question was
+added; native input delivery and handle checks are outside this helper.
+
+After sourcing /workspace/adamic-tools/env.sh, ran python3
+stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_parameter.py
+/workspace/wave01-await-parameter /workspace/wave-01-fourth-adamic, output
+logged in /tmp/wave01-await-parameter.log and validation/await-parameter.
+PASS 17 real-signature parameter positions; sanitizer-clean rest-boundary
+mutant caught by bytes. Independent checker facts capture parameter type
+IDs and the rest numeric index type; unchanged requireAwaitParameterTypeAt
+supplies expected IDs. Cases cover empty, normal/optional, generic rest
+and tuple rest signatures, including three positions beyond each signature.
+The first test expected 21 positions in error; real signature arities
+produce 17 and the count was corrected before comparison. Changing the
+rest boundary from >= to > exits zero with empty sanitizer stderr but
+fails byte comparison.
+
+This is helper parity, not full rule or native frontend parity. Generic
+ancestor collection and replay, native checker-fact delivery, atomic
+CFG/event collection and full integration remain pending. Three claims
+remain partial and no new claims were made. Full gate, the 17 external
+checks and fresh native/Go timings were not run for this isolated helper
+or represented as green.
