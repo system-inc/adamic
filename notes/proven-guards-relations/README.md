@@ -292,7 +292,17 @@ the entire oracle is rerun on the final eleven and regenerated counts separately
   mutant-restored.log. internal/lower has no remaining diff.
 - Formatting, vet and git diff --check pass with empty logs.
 
-The broader full repository gate is still in progress at this observation point.
+The broad uncached repository gate completed with one failure: the unrelated
+TestMarkdownUnicodeWidths could not import its absent pinned npm scratch
+dependencies from /tmp/adamic-markdown-width. Every other package passed. After
+installing the three documented pinned dependencies, the exact failing test was
+rerun uncached and passed, including its mutation checks. The original broad
+run is preserved as full-gate.log; the successful retry is width-recheck.log.
+
+```sh
+npm install --prefix /tmp/adamic-markdown-width --ignore-scripts --no-audit --no-fund emoji-regex@10.6.0 get-east-asian-width@1.6.0 narrow-emojis@0.0.3 > /tmp/proven-width-install.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/markdownblocks -run '^TestMarkdownUnicodeWidths$' -count=1 -timeout 30m -v > /tmp/proven-width-recheck.log 2>&1
+```
 
 ## Observed disagreement
 
