@@ -141,3 +141,12 @@ func TestNumericEnumObjectRemainderWideKeepsUnion(t *testing.T) {
 		t.Fatalf("wide remainder must keep the full union: %v", err)
 	}
 }
+
+func TestNumericEnumComputedMemberSlotStaysLoud(t *testing.T) {
+	_, err := lowerSource(t, "enum Kind { A } function numeric(): number { return 42; } const value: { readonly kind: Kind.A } = { ['kind']: numeric() };")
+	var notYet *NotYet
+	var refused *Refused
+	if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+		t.Fatalf("want explicit computed/member-slot boundary, got %v", err)
+	}
+}

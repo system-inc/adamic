@@ -221,7 +221,11 @@ func (l *lowering) enumMemberSlot(node *ast.Node) *ast.Node {
 		annotation = parent.Type()
 	case ast.KindPropertyAssignment:
 		if target := l.checker.GetContextualType(parent.Parent, checker.ContextFlagsNone); target != nil {
-			if field := l.checker.GetPropertyOfType(target, parent.Name().Text()); field != nil && len(field.Declarations) > 0 {
+			name, known := l.methodName(parent)
+			if !known {
+				return nil
+			}
+			if field := l.checker.GetPropertyOfType(target, name); field != nil && len(field.Declarations) > 0 {
 				annotation = field.Declarations[0].Type()
 			}
 		}
