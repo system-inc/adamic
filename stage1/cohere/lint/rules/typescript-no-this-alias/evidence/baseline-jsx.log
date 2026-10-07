@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/validate.py", line 107, in <module>
+    observed,_,_=run(commands[backend]+[str(manifest)],slug+'-cases-'+backend)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/validate.py", line 31, in run
+    raise RuntimeError(f'{label}: exit {result.returncode}\n{error.read_text()}\n{output.read_text()[-2000:]}')
+RuntimeError: react-no-invalid-html-attribute-cases-Node: exit 70
+adamic: panic: parser slice expected GreaterThanToken, got Identifier at 5 in /repository/source/NoInvalidHtmlAttribute.tsx
+
+case 0
+fixed	\u000a        React.createElement('a', {\u000a          ...rest,\u000a          href: to,\u000a        })\u000a      
+case 1
+
