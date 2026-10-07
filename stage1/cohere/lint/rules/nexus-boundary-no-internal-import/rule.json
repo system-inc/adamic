@@ -9,5 +9,6 @@
   "class": "Rule",
   "oracle": "oracleNexusInternalImport",
   "upstreamPackage": "nexus",
-  "upstreamTest": "TestBoundaryNoInternalImport"
+  "upstreamTest": "TestBoundaryNoInternalImport",
+  "node": true
 }

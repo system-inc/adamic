@@ -1,6 +1,6 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
-export function specifier(context: RuleContext, index: number): number {
-    const node = context.node(index);
+export function specifier(context: RuleContext, node: ParseNode): number {
     if (node.kind === 'ImportDeclaration') {
         for (const child of node.children) {
             const kind = context.node(child).kind;
@@ -8,7 +8,7 @@ export function specifier(context: RuleContext, index: number): number {
         }
         return -1;
     }
-    if (node.kind !== 'CallExpression' || node.list < 1) return -1;
+    if (node.list < 1) return -1;
     const calleeIndex = node.children[0];
     if (calleeIndex === undefined) return -1;
     const callee = context.node(calleeIndex);

@@ -9,5 +9,6 @@
   "class": "Rule",
   "oracle": "oracleNexusProjectImport",
   "upstreamPackage": "nexus",
-  "upstreamTest": "TestBoundaryNoProjectImport"
+  "upstreamTest": "TestBoundaryNoProjectImport",
+  "node": true
 }

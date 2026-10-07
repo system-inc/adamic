@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 // Port of Go cohere's property listener. Decorator order determines the message.
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
@@ -6,9 +7,9 @@ import { message } from './messages.a';
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) { this.context = context; }
-    visit(index: number): void {
+    visit(node: ParseNode, index: number): void {
         const context = this.context;
-        const children = context.node(index).children;
+        const children = node.children;
         if(children.some(child => context.node(child).kind === 'DeclareKeyword')) { return; }
         let decorator = '';
         let key = -1;

@@ -8,5 +8,6 @@
   "class": "Rule",
   "oracle": "oracleOrmColumnDeclare",
   "upstreamPackage": "base",
-  "upstreamTest": "TestOrmColumnRequiresDeclare"
+  "upstreamTest": "TestOrmColumnRequiresDeclare",
+  "node": true
 }

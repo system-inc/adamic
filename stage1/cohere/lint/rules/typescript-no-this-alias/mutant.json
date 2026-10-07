@@ -1,6 +1,0 @@
-{
-  "name": "this_alias_allowed_name_ignored",
-  "file": "rule.ts",
-  "from": "this.allowed.includes(this.context.node(target).text)",
-  "to": "!this.allowed.includes(this.context.node(target).text)"
-}

@@ -11,7 +11,6 @@ import (
 	"github.com/system-inc/cohere/internal/lint/rules/next"
 	"github.com/system-inc/cohere/internal/lint/rules/nexus"
 	"github.com/system-inc/cohere/internal/lint/rules/tailwind"
-	"github.com/system-inc/cohere/internal/lint/rules/typescript"
 	"sort"
 	"strings"
 )
@@ -33,9 +32,6 @@ func main() {
 		{"next-no-before-interactive-script-outside-document", next.NoBeforeInteractiveScriptOutsideDocument, nil},
 		{"next-no-css-tags", next.NoCssTags, nil},
 		{"next-no-document-import-in-page", next.NoDocumentImportInPage, nil},
-		{"typescript-no-non-null-asserted-optional-chain", typescript.NoNonNullAssertedOptionalChain, nil},
-		{"typescript-no-this-alias", typescript.NoThisAlias, nil},
-		{"typescript-no-unnecessary-type-constraint", typescript.NoUnnecessaryTypeConstraint, nil},
 		{"better-tailwindcss-enforce-shorthand-classes", tailwind.EnforceShorthandClasses, nil},
 		{"better-tailwindcss-no-concatenated-classes", tailwind.NoConcatenatedClasses, nil},
 		{"better-tailwindcss-no-conflicting-classes", tailwind.NoConflictingClasses, nil},

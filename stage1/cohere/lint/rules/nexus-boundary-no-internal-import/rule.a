@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
 import { specifier } from './specifier.a';
 import { aliasedInternal, outsideInternal } from './messages.a';
@@ -6,8 +7,8 @@ export class Rule {
     readonly context: RuleContext;
     readonly file: string;
     constructor(context: RuleContext) { this.context = context; this.file = context.parser.path.split('\\').join('/'); }
-    visit(index: number): void {
-        const target = specifier(this.context, index);
+    visit(node: ParseNode, index: number): void {
+        const target = specifier(this.context, node);
         if (target < 0) return;
         const source = this.context.node(target).text;
         if (!source.includes('internal')) return;

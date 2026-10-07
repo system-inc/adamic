@@ -61,7 +61,7 @@ func outputs(t *testing.T, root, probe string) [][]byte {
 
 // Only extracted decision contracts are certified; not a complete registered rule.
 func TestTailwindDecisions(t *testing.T) {
-	root, err := filepath.Abs("../../../../..")
+	root, err := filepath.Abs("../../../../../../..")
 	if err != nil {
 		t.Fatal(err)
 	}

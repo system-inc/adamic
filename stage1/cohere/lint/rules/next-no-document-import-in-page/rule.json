@@ -8,5 +8,6 @@
   "class": "Rule",
   "oracle": "oracleNextDocumentImport",
   "upstreamPackage": "next",
-  "upstreamTest": "TestNoDocumentImportInPage"
+  "upstreamTest": "TestNoDocumentImportInPage",
+  "node": true
 }

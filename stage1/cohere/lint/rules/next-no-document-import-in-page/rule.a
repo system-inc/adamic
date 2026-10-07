@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { RuleContext } from '../../context.ts';
 import { message } from './messages.a';
 export class Rule {
@@ -10,10 +11,10 @@ export class Rule {
         const page = last < 0 ? path : path.slice(last + 5);
         this.document = page.startsWith('/_document') || page.startsWith('\\_document');
     }
-    visit(index: number): void {
+    visit(node: ParseNode, index: number): void {
         if(this.document) { return; }
         const context = this.context;
-        for(const child of context.node(index).children) {
+        for(const child of node.children) {
             const node = context.node(child);
             if(node.kind === 'StringLiteral' && node.text === 'next/document') {
                 context.report(index, '@next/next/no-document-import-in-page', 'noDocumentImportInPage', message, '', '', '');

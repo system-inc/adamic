@@ -1,6 +1,0 @@
-=== RUN   TestCompletedUpstream
-    wave12_test.go:93: cohere cases: 67 unique source/rule/options combinations
-    wave12_test.go:100: Go, Node, emitted JavaScript, native identical: 28022 bytes
---- PASS: TestCompletedUpstream (272.39s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint	272.411s

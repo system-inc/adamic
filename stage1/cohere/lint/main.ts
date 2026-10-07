@@ -16,17 +16,14 @@ function run(row: string, countOnly: boolean): number {
     const scanner = new Scanner(source.text);
     const settings = new Settings();
     settings.load(fields[5] ?? '');
-    const mode = settings.read('mode', fields[2] ?? '');
-    const nullPolicy = settings.read('null', fields[3] ?? '');
-    const allowCatch = settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true';
     const linter = new Linter(
         source.text,
         parser,
         scanner,
         fields[1] ?? 'all',
-        mode,
-        nullPolicy,
-        allowCatch,
+        settings.read('mode', fields[2] ?? ''),
+        settings.read('null', fields[3] ?? ''),
+        settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true',
         settings,
     );
     linter.run();

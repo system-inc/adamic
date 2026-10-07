@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-// Not parallel: sequential sanitized builds bound compiler memory across 17 controls.
+// Not parallel: sequential sanitized builds bound compiler memory across 14 controls.
 func TestNamedListenerDeclarations(t *testing.T) {
 	root, err := filepath.Abs("../../../../..")
 	if err != nil {
@@ -43,15 +43,15 @@ func TestNamedListenerDeclarations(t *testing.T) {
 	run(t, cohere, "go", "build", "-overlay="+overlayPath, "-o", oracle, virtual)
 	want := run(t, "", oracle)
 	rows := strings.Split(strings.TrimSpace(string(want)), "\n")
-	if len(rows) != 17 {
-		t.Fatalf("expected 17 observed rules, got %d", len(rows))
+	if len(rows) != 14 {
+		t.Fatalf("expected 14 observed rules, got %d", len(rows))
 	}
 	for side, got := range outputs(t, root, filepath.Join(owned, "listeners-main.a")) {
 		if !bytes.Equal(got, want) {
 			t.Fatalf("named listener domain differs from actual Go rule listeners on backend %d: got %s, want %s", side, got, want)
 		}
 	}
-	t.Logf("17 named listener declarations, %d bytes, match actual Go listener keys on source Node, emitted JavaScript and ASan/UBSan native", len(want))
+	t.Logf("14 named listener declarations, %d bytes, match actual Go listener keys on source Node, emitted JavaScript and ASan/UBSan native", len(want))
 	entry, err := os.ReadFile(filepath.Join(owned, "listeners-main.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -85,7 +85,11 @@ func TestNamedListenerDeclarations(t *testing.T) {
 				if err := os.Mkdir(target, 0755); err != nil {
 					t.Fatal(err)
 				}
-				source, err := os.ReadFile(filepath.Join(owned, "..", name, "listener.a"))
+				sourcePath := filepath.Join(owned, "..", name, "listener.a")
+				if _, err := os.Stat(sourcePath); os.IsNotExist(err) {
+					sourcePath = filepath.Join(owned, "gaps", name, "listener.a")
+				}
+				source, err := os.ReadFile(sourcePath)
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -104,6 +108,7 @@ func TestNamedListenerDeclarations(t *testing.T) {
 			}
 			rewritten := strings.ReplaceAll(string(entry), "'./listener.a'", "'./"+filepath.Base(owned)+"/listener.a'")
 			rewritten = strings.ReplaceAll(rewritten, "'../", "'./")
+			rewritten = strings.ReplaceAll(rewritten, "'./gaps/", "'./")
 			main := filepath.Join(mutation, "main.a")
 			if err := os.WriteFile(main, []byte(rewritten), 0644); err != nil {
 				t.Fatal(err)

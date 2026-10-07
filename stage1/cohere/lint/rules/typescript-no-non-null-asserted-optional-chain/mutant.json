@@ -1,6 +1,0 @@
-{
-  "name": "optional_assertion_removes_operand_byte",
-  "file": "rule.a",
-  "from": "node.end - 1, node.end",
-  "to": "node.end - 2, node.end"
-}

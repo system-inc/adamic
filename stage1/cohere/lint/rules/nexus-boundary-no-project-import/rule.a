@@ -1,3 +1,4 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import { specifier } from './specifier.a';
@@ -12,9 +13,9 @@ export class Rule {
         this.allowed = allowed;
         this.enabled = directory !== '' && context.parser.path.split('\\').join('/').includes(directory);
     }
-    visit(index: number): void {
+    visit(node: ParseNode, index: number): void {
         if (!this.enabled) return;
-        const target = specifier(this.context, index);
+        const target = specifier(this.context, node);
         if (target < 0) return;
         const source = this.context.node(target).text;
         if ((source === '@project' || source.startsWith('@project/')) && !this.allowed.includes(source)) {

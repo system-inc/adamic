@@ -1,9 +1,9 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 // Go cohere's envelope test, including first-name order and last duplicate value.
 import { panic } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import { OptionsJson } from '../../helpers/options_json.ts';
-import { StrictOptions } from '../../helpers/strict_options.ts';
-import { message, targetDescriptor } from './messages.a';
+import { message } from './messages.a';
 // Shared table nexus/consistency_no_boolean_outcome.go:48.
 const roleSuffixes = /(Interface|Type|Result|Response|Properties)+(?![\s\S])/gu;
 
@@ -29,9 +29,8 @@ export class Rule {
         const type = children[children.length - 1] ?? -1;
         return type >= 0 && this.context.node(type).kind === 'BooleanKeyword';
     }
-    visit(index: number): void {
+    visit(node: ParseNode, index: number): void {
         const context = this.context;
-        const node = context.node(index);
         let name = '';
         for(const child of node.children) {
             if(context.node(child).kind === 'Identifier') { name = context.node(child).text; break; }
@@ -72,18 +71,41 @@ export class Rule {
     }
 }
 export function create(context: RuleContext): Rule {
-    const allowed: string[] = [];
+    let allowed: string[] = [];
     if(!context.enabled('nexus/consistency-no-boolean-outcome')) { return new Rule(context, allowed); }
-    const raw = context.settings.text === '' ? 'null' : context.settings.text;
-    const target = new StrictOptions(targetDescriptor);
-    const verdict = target.check(raw);
-    if(verdict !== 'valid') { panic(`invalid boolean-outcome options: ${verdict}`); }
-    const json = new OptionsJson(raw);
+    const json = new OptionsJson(context.settings.text === '' ? 'null' : context.settings.text);
     const root = json.parse();
     if(root < 0) { panic(`invalid boolean-outcome options: ${json.error}`); }
-    const values = json.field(root, 'allowedTypeNames');
-    if(values >= 0 && json.node(values).kind === 'array') {
-        for(const child of json.node(values).children) { allowed.push(json.node(child).text); }
+    const object = json.node(root);
+    if(object.kind === 'null') { return new Rule(context, allowed); }
+    if(object.kind !== 'object') { panic('boolean-outcome options must be an object'); }
+    // encoding/json ignores unknown fields, folds names, and applies duplicates in source order.
+    json.position = 0;
+    json.skip();
+    json.position++;
+    json.skip();
+    while(json.source.slice(json.position, json.position + 1) !== '}') {
+        const key = json.string().toLowerCase();
+        json.skip();
+        json.position++;
+        const valueIndex = json.value(1);
+        if(valueIndex < 0 || json.error !== '') { panic('invalid boolean-outcome option value'); }
+        const value = json.node(valueIndex);
+        if(key === 'allowedtypenames') {
+            allowed = [];
+            if(value.kind !== 'null' && value.kind !== 'array') { panic('allowedTypeNames must be a string array'); }
+            for(const child of value.children) {
+                const name = json.node(child);
+                if(name.kind !== 'string' && name.kind !== 'null') { panic('allowedTypeNames item must be a string'); }
+                allowed.push(name.kind === 'null' ? '' : name.text);
+            }
+        }
+        json.skip();
+        const separator = json.source.slice(json.position, json.position + 1);
+        if(separator === '}') { break; }
+        if(separator !== ',') { panic('invalid boolean-outcome option separator'); }
+        json.position++;
+        json.skip();
     }
     return new Rule(context, allowed);
 }

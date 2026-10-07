@@ -9,5 +9,6 @@
   "class": "Rule",
   "oracle": "oracleBooleanOutcome",
   "upstreamPackage": "nexus",
-  "upstreamTest": "TestConsistencyNoBooleanOutcome"
+  "upstreamTest": "TestConsistencyNoBooleanOutcome",
+  "node": true
 }

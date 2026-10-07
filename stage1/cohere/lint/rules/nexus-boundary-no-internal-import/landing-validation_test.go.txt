@@ -105,12 +105,10 @@ func TestLandingExistingCandidates(t *testing.T) {
 		t.Fatal(err)
 	}
 	rows := landingInitialUpstream(t)
-	rows = append(rows, aliasUpstream(t)...)
-	rows = append(rows, completedUpstream(t)...)
 	rows = append(rows, nexusUpstream(t)...)
 	var slugs = []string{
 		"base-correctness-require-orm-column-declare", "nexus-consistency-no-boolean-outcome",
-		"next-no-document-import-in-page", "typescript-no-this-alias", "typescript-no-non-null-asserted-optional-chain", "typescript-no-unnecessary-type-constraint",
+		"next-no-document-import-in-page",
 		"nexus-boundary-no-internal-import", "nexus-boundary-no-nexus-outside-import", "nexus-boundary-no-project-import",
 	}
 	for _, slug := range slugs {
@@ -137,6 +135,12 @@ func TestLandingExistingCandidates(t *testing.T) {
 			t.Fatal(err)
 		}
 		rows = append(rows, path+"\t@next/next/no-document-import-in-page")
+	}
+	// Option controls include JSON decoding behavior that the integration comparison exposed.
+	optionPath := filepath.Join(witnesses, "boolean-options.ts")
+	if err := os.WriteFile(optionPath, []byte("interface ClaudeCallResultInterface { success: boolean; error: string }"), 0644); err != nil { t.Fatal(err) }
+	for _, option := range []string{`{"unknown":true}`, `{"ALLOWEDTYPENAMES":["ClaudeCallResultInterface"]}`, `{"allowedTypeNames":[null]}`, `{"allowedTypeNames":["ClaudeCallResultInterface"],"allowedTypeNames":null}`, `{"allowedTypeNames":null,"allowedTypeNames":["ClaudeCallResultInterface"]}`} {
+		rows = append(rows, optionPath+"\tnexus/consistency-no-boolean-outcome\t\t\tfalse\t"+option)
 	}
 	mutationRows := append([]string(nil), rows...)
 	var paths []string
@@ -175,7 +179,7 @@ func TestLandingExistingCandidates(t *testing.T) {
 			rows = append(rows, row)
 		}
 	}
-	t.Logf("%d compiler/stage1 source files across 9 registered candidates; %d total fixture, witness, path and corpus cases", len(paths), len(rows))
+	t.Logf("%d compiler/stage1 source files across 6 registered candidates; %d total fixture, witness, path and corpus cases", len(paths), len(rows))
 	oracle := goOracle(t)
 	path := manifest(t, rows)
 	compare(t, oracle, buildPort(t, directory, true), directory, path)

@@ -61,7 +61,7 @@ func outputs(t *testing.T, root, probe string) [][]byte {
 
 // Not parallel: variants are compiled sequentially to bound compiler memory.
 func TestExtractedDecisions(t *testing.T) {
-	root, err := filepath.Abs("../../../../..")
+	root, err := filepath.Abs("../../../../../../..")
 	if err != nil {
 		t.Fatal(err)
 	}

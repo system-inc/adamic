@@ -1,2 +1,0 @@
-// Listener kind names from pinned Go cohere, matching rule.json and the registry.
-export const syntaxKinds: readonly string[] = ["BinaryExpression", "VariableDeclaration"];
