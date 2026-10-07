@@ -89,7 +89,12 @@ proof. The seven search mutants and two source-write guard mutants all fail thei
 native-array mutants remain recorded under native-array-logs.
 
 The lead now assigns all inter-lane merges/conflicts to codex/views-integration.
-This lane stops merging Lane 1 directly. The integrator has now published lazy
-admission at f1c91970, without the bf544d5c native-array checkpoint. Publish this
-lane's search tip, then attempt that integration SHA; leave any conflicts to the
-integrator and report the exact boundary. No cast conflict is resolved locally.
+This lane stops merging Lane 1 directly. Search and source-write guards are pushed
+at 12482f1ff9cb45c7984471ee3ce99c0ea554d440. Integrator lazy admission at
+f1c919701ec9b42b78e104fe9cc1ce96db9d7d09 does not contain the native-array
+checkpoint. Merging it conflicts in docs/checked-views-plan.md and
+internal/native/emit_expressions.go. The merge was aborted without resolving
+either hunk; integration-conflicts.log and integration-merge.log preserve the
+boundary for the integrator. Further array-like interface and optional receiver
+work waits for a reconciled integration SHA, as the lead requested. No successful
+merged-branch validation or additional unlocked sites are claimed.
