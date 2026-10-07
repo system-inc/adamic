@@ -1,0 +1,18 @@
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /workspace/css-input-cost-_3h9ul9b/2/css-fixtures-nheu1x9m/checkout/.git/
+From https://github.com/system-inc/prettier
+ * branch            cb4b33fba24a8428d00e54be85fc886288a374ea -> FETCH_HEAD
+HEAD is now at cb4b33f The publish step needs --ignore-scripts, and the reason is worth stating
+installed (exact commit, sparse checkout, Git integrity and counts verified: {'.css': 157, '.scss': 90, '.less': 43})

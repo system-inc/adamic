@@ -1,0 +1,8 @@
+TestCSSParserOptimizedMatchesNode PASS exit 0 30.196s ['adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]']
+TestCSSPrinterOptimizedMatchesGo PASS exit 0 19.870s ['adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]']
+TestCompositionMatchesGo PASS exit 0 78.334s ['adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]']
+TestThePortParsesAsGoCohereDoes PASS exit 0 42.194s ['adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]']
+TestCSSNumbers PASS exit 0 31.754s ['port_test.go:354: corpus: 1 repository/submodule files, 44892 generated texts, 89786 preference cases; all byte-identical']
+TestCSSStrings PASS exit 0 12.881s ['port_test.go:329: corpus: 1 repository/submodule files, 9336 generated texts, 18674 preference cases; all byte-identical']
+TestCSSPrinterAgreesWithGo PASS exit 0 371.829s ['adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]']
+TestMarkdownInline PASS exit 0 454.292s ['port_test.go:348: corpus: 1112 repository/submodule files, 4702 generated texts, 110466 leaf/context cases; all byte-identical']

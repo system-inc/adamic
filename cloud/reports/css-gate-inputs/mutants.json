@@ -1,0 +1,77 @@
+[
+  {
+    "mutant": "drop-commit",
+    "test": "test_every_fixture_key_component",
+    "exit": 1
+  },
+  {
+    "mutant": "drop-url",
+    "test": "test_every_fixture_key_component",
+    "exit": 1
+  },
+  {
+    "mutant": "drop-sparse",
+    "test": "test_every_fixture_key_component",
+    "exit": 1
+  },
+  {
+    "mutant": "drop-counts",
+    "test": "test_every_fixture_key_component",
+    "exit": 1
+  },
+  {
+    "mutant": "drop-helper",
+    "test": "test_every_fixture_key_component",
+    "exit": 1
+  },
+  {
+    "mutant": "degraded-counts",
+    "test": "test_counts_reject_degraded_corpus",
+    "exit": 1
+  },
+  {
+    "mutant": "wrong-head",
+    "test": "test_checkout_commit_and_sparse_checks",
+    "exit": 1
+  },
+  {
+    "mutant": "wrong-sparse",
+    "test": "test_checkout_commit_and_sparse_checks",
+    "exit": 1
+  },
+  {
+    "mutant": "skip-checkout-bytes",
+    "test": "test_local_sparse_cache_repair_and_uncached_equality",
+    "exit": 1
+  },
+  {
+    "mutant": "skip-prefix-prettier-version",
+    "test": "test_shared_prettier_version_is_verified",
+    "exit": 1
+  },
+  {
+    "mutant": "skip-package-prettier-version",
+    "test": "test_shared_prettier_version_is_verified",
+    "exit": 1
+  },
+  {
+    "mutant": "missing-ADAMIC_CSS_FIXTURES",
+    "test": "test_exports_and_ordinary_unset",
+    "exit": 1
+  },
+  {
+    "mutant": "missing-ADAMIC_CSSNUMBERS_LIBRARY",
+    "test": "test_exports_and_ordinary_unset",
+    "exit": 1
+  },
+  {
+    "mutant": "missing-ADAMIC_CSSSTRINGS_LIBRARY",
+    "test": "test_exports_and_ordinary_unset",
+    "exit": 1
+  },
+  {
+    "mutant": "missing-ADAMIC_MARKDOWNINLINE_LIBRARY",
+    "test": "test_exports_and_ordinary_unset",
+    "exit": 1
+  }
+]

@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_every_fixture_key_component (test_css_gate_inputs.CSSInputs.test_every_fixture_key_component) (name='CSS_COMMIT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 44, in test_every_fixture_key_component
+    self.assertNotEqual(before, gate.css_fixture_key(), name)
+AssertionError: 'c6f73539af307169f5a82ac3326cdb09373c7d96d4be6cb6f136c02e2b7dc8a7' == 'c6f73539af307169f5a82ac3326cdb09373c7d96d4be6cb6f136c02e2b7dc8a7' : CSS_COMMIT
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

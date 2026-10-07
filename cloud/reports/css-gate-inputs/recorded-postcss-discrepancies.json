@@ -1,0 +1,26 @@
+{
+  "source": "cohere/internal/format/css/selector/oracle_test.go:265",
+  "input": "\\\ud83d\ude00|a",
+  "case_indices": [
+    3114,
+    3115
+  ],
+  "go": {
+    "endColumn": 4,
+    "endOffset": 5,
+    "reason": "Unknown word \\\ud83d\ude00"
+  },
+  "postcss": {
+    "endColumn": 3,
+    "endOffset": 4,
+    "reason": "Unknown word \\\ud83d"
+  },
+  "go_answer": "error {\"column\":1,\"endColumn\":4,\"endLine\":1,\"endOffset\":5,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \\\\\ud83d\ude00\"}",
+  "postcss_answer": "error {\"column\":1,\"endColumn\":3,\"endLine\":1,\"endOffset\":4,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \\\\\\ud83d\"}",
+  "first_difference": {
+    "answer_line": 1,
+    "byte": 31,
+    "go": "error {\"column\":1,\"endColumn\":4,\"endLine\":1,\"endOffset\":5,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \\\\\ud83d\ude00\"}",
+    "postcss": "error {\"column\":1,\"endColumn\":3,\"endLine\":1,\"endOffset\":4,\"line\":1,\"name\":\"CssSyntaxError\",\"offset\":0,\"reason\":\"Unknown word \\\\\\ud83d\"}"
+  }
+}

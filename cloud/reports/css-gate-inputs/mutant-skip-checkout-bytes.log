@@ -1,0 +1,32 @@
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /tmp/adamic-gate/tmpwc0fygu2/inputs/css-fixtures-2nciqkx7/checkout/.git/
+warning: filtering not recognized by server, ignoring
+From /tmp/adamic-gate/tmpwc0fygu2/source
+ * branch            6d3a9dfb0ea735e94e0bcce2406411d89f563efc -> FETCH_HEAD
+HEAD is now at 6d3a9df First
+F
+======================================================================
+FAIL: test_local_sparse_cache_repair_and_uncached_equality (test_css_gate_inputs.CSSInputs.test_local_sparse_cache_repair_and_uncached_equality)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 103, in test_local_sparse_cache_repair_and_uncached_equality
+    self.assertIn('installed', gate.css_fixtures(inputs));self.assertEqual(file.read_text(), 'first\n')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'installed' not found in 'skipped (validated exact commit, sparse set, counts and checkout bytes)'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.073s
+
+FAILED (failures=1)
