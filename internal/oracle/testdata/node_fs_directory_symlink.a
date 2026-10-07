@@ -1,9 +1,11 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 import { programArguments } from 'adamic';
 import { symlinkSync, unlinkSync, statSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 const root = programArguments()[0] ?? '';
 function failure(error: Error): void {
-    const errno: NodeJS.ErrnoException = error;
-    console.log(`${errno.code ?? ''}: ${error.message.replace(root, '<dir>')}`);
+    console.log(`${errorCode(error) ?? ''}: ${error.message.replace(root, '<dir>')}`);
 }
 writeFileSync(root + '/target', 'héllo 🌍');
 mkdirSync(root + '/directory');

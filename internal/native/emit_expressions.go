@@ -12,6 +12,12 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.HasProperty:
+		value := e.value(expression.Object)
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_has_property(%s, %s)", value, cString(expression.Name)))
+	case ir.DynamicProperty:
+		value := e.value(expression.Object)
+		return e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property(%s, %s)", value, cString(expression.Name)))
 	case ir.NodeFSFile:
 		return e.nodeFSFile(expression)
 	case ir.NodeBufferCall:
@@ -39,6 +45,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.AlwaysFalse {
 			e.value(expression.Value)
 			return "false"
+		}
+		if expression.Value.Type() == ir.Union {
+			return fmt.Sprintf("(%s == &adamic_null)", e.value(expression.Value))
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
@@ -93,6 +102,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.MethodPresence:
+		return e.methodPresence(expression)
 	case ir.HasAccessor:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_accessor_find(%s, %s) != NULL", e.value(expression.Object), cString(expression.Name)))
 	case ir.InstanceOf:

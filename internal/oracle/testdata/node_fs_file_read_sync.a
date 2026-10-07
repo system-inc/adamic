@@ -1,10 +1,12 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 import { programArguments } from 'adamic';
 import { Buffer } from 'node:buffer';
 import { openSync, readSync, closeSync } from 'node:fs';
 const root = programArguments()[0] ?? '';
 function failure(error: Error): void {
-    const errno: NodeJS.ErrnoException = error;
-    console.log(`${error.name}: ${errno.code ?? ''}: ${error.message}`);
+    console.log(`${error.name}: ${errorCode(error) ?? ''}: ${error.message}`);
 }
 const buffer = Buffer.from([0,0,0,0]);
 const fd = openSync(root + '/file','r');
