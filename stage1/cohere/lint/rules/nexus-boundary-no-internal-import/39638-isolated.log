@@ -1,0 +1,108 @@
+=== RUN   TestLandingExistingCandidates
+    wave12_landing_test.go:97: cohere cases: 22 unique source/rule/options combinations
+    wave12_alias_test.go:93: cohere cases: 40 unique source/rule/options combinations
+    wave12_completed_test.go:97: cohere cases: 67 unique source/rule/options combinations
+    wave12_nexus_test.go:85: captured case-000 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { Detail } from '@structure/source/widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-001 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { format } from '@structure/source/internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-002 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/source/other/Thing.ts source="// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:85: captured case-003 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-004 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import(somePath);\n"
+    wave12_nexus_test.go:85: captured case-005 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = require('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-006 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Detail } from '../widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-007 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Thing } from '../widget/Thing';\n"
+    wave12_nexus_test.go:85: captured case-008 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { format } from '../internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-009 nexus/boundary-no-internal-import /repo/source/widget/Thing.ts "import { Detail } from './internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-010 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './Detail';\n"
+    wave12_nexus_test.go:85: captured case-011 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './deep/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-012 nexus/boundary-no-internal-import /repo/source/widget/nested/Thing.ts "import { Detail } from '../internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-013 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus-template/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-014 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repository/libraries/nexus/code-quality/Thing.ts source="const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-015 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = require('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-016 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const thing = require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-017 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "declare const loader: { require(name: string): unknown };\nconst thing = loader.require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-018 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-019 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load(name: string) {\n    return await import(name);\n}\n"
+    wave12_nexus_test.go:85: captured case-020 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import '@base';\n"
+    wave12_nexus_test.go:85: captured case-021 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import * as NodePath from 'node:path';\n"
+    wave12_nexus_test.go:85: captured case-022 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import Thing from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-023 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import {\n  Thing,\n  Other,\n} from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-024 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '../Thing';\n"
+    wave12_nexus_test.go:85: captured case-025 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-026 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@basement/Thing';\n"
+    wave12_nexus_test.go:85: captured case-027 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@nexus/code-quality/Thing';\n"
+    wave12_nexus_test.go:85: captured case-028 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@projections/Thing';\n"
+    wave12_nexus_test.go:85: captured case-029 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-030 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-031 nexus/boundary-no-nexus-outside-import /repository/libraries/structure/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-032 nexus/boundary-no-nexus-outside-import /repository/source/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-033 nexus/boundary-no-project-import /repo/application/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-034 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-035 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-036 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/libraries/base/source/Thing.ts source="// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:85: captured case-037 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = import('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-038 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = require('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-039 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-040 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@projector/Thing';\n"
+    wave12_nexus_test.go:85: captured case-041 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-042 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-043 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { secret } from '@project/ProjectSettingsSecret';\n"
+    wave12_nexus_test.go:85: captured case-044 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { settings } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:106: cohere cases: 42 unique source/rule/options combinations
+    wave12_landing_test.go:178: 314 compiler/stage1 source files across 9 registered candidates; 3016 total fixture, witness, path and corpus cases
+    wave12_landing_test.go:181: Go, Node, emitted JavaScript, native identical: 118907067 bytes
+=== RUN   TestLandingExistingCandidates/base-correctness-require-orm-column-declare
+    wave12_landing_test.go:213: orm_bare_decorator_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: orm_bare_decorator_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: orm_bare_decorator_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-consistency-no-boolean-outcome
+    wave12_landing_test.go:213: boolean_outcome_companion_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: boolean_outcome_companion_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: boolean_outcome_companion_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/next-no-document-import-in-page
+    wave12_landing_test.go:213: next_document_import_path_exemption_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: next_document_import_path_exemption_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: next_document_import_path_exemption_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/typescript-no-this-alias
+    wave12_landing_test.go:213: this_alias_allowed_name_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: this_alias_allowed_name_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: this_alias_allowed_name_ignored compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/typescript-no-non-null-asserted-optional-chain
+    wave12_landing_test.go:213: optional_assertion_removes_operand_byte compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: optional_assertion_removes_operand_byte compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: optional_assertion_removes_operand_byte compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/typescript-no-unnecessary-type-constraint
+    wave12_landing_test.go:213: constraint_suggestion_deletes_name compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: constraint_suggestion_deletes_name compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: constraint_suggestion_deletes_name compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-boundary-no-internal-import
+    wave12_landing_test.go:213: last_internal_owner compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: last_internal_owner compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: last_internal_owner compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-boundary-no-nexus-outside-import
+    wave12_landing_test.go:213: alias_prefix_boundary compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: alias_prefix_boundary compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: alias_prefix_boundary compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-boundary-no-project-import
+    wave12_landing_test.go:213: whitelist_widened compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: whitelist_widened compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: whitelist_widened compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+=== RUN   TestLandingExistingCandidates/nexus-consistency-no-boolean-outcome#01
+    wave12_landing_test.go:213: role-suffix regex disabled compiles and exits cleanly; only Go findings/fixes comparison catches it on source Node
+    wave12_landing_test.go:213: role-suffix regex disabled compiles and exits cleanly; only Go findings/fixes comparison catches it on emitted JavaScript
+    wave12_landing_test.go:213: role-suffix regex disabled compiles and exits cleanly; only Go findings/fixes comparison catches it on sanitized native
+--- PASS: TestLandingExistingCandidates (520.46s)
+    --- PASS: TestLandingExistingCandidates/base-correctness-require-orm-column-declare (21.67s)
+    --- PASS: TestLandingExistingCandidates/nexus-consistency-no-boolean-outcome (19.60s)
+    --- PASS: TestLandingExistingCandidates/next-no-document-import-in-page (28.96s)
+    --- PASS: TestLandingExistingCandidates/typescript-no-this-alias (31.83s)
+    --- PASS: TestLandingExistingCandidates/typescript-no-non-null-asserted-optional-chain (20.83s)
+    --- PASS: TestLandingExistingCandidates/typescript-no-unnecessary-type-constraint (20.46s)
+    --- PASS: TestLandingExistingCandidates/nexus-boundary-no-internal-import (20.70s)
+    --- PASS: TestLandingExistingCandidates/nexus-boundary-no-nexus-outside-import (21.11s)
+    --- PASS: TestLandingExistingCandidates/nexus-boundary-no-project-import (20.09s)
+    --- PASS: TestLandingExistingCandidates/nexus-consistency-no-boolean-outcome#01 (20.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	520.492s

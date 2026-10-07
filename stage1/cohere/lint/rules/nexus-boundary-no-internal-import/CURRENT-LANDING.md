@@ -1,3 +1,28 @@
+Rebased the owned rule branch onto current origin/main 39638d9e278d38bb5aeae887f46d55a70e47aaad, preserving all owned source bytes and existing foundation merge resolution.
+Pre-rebase pushed tip c485ad2cbeeca456afa2d11cb49888952915d2db; rebased implementation 72635a73e04dfaba2f523e0c054e180c4f7e882b; sibling helpers freshly green and pushed at 77e7f673f.
+Owned package PASS 45.425s, vet clean; aggregate PASS 520.492s: 3,016 supported cases on 314 compiler/stage1 files, 118,907,067 identical Go/source Node/emitted JS/sanitized-native finding/fix bytes.
+All ten compiling aggregate mutants and all 17 named-listener mutations caught only by actual-Go comparison on every backend; resolved-path mutant also compiles and is caught on all three.
+Uncovered: eight partial unregistered adapters and prior parser/JSX/filename exclusions; default shared gate still fails at profile_test.go:32:23, no full-repository gate or fresh throughput claim.
+
+Current-main changes from b8fb957aa affect stage3 and landing documentation, not lint, compiler or oracle files. The six foundation merge conflicts preserve the already-reviewed existing resolution; no new shared-harness logic was introduced. All owned rule content was byte-equal to its previous pushed tip before adding this evidence. Compatibility validation uses isolated scratch harness f4d98cab, with current-main internal/, cmd/adamic and oracle/node.mjs restored and verified equal. No scratch compatibility edits are committed or pushed. Shared test compilation still refuses: cannot range over portFiles, a func(t *testing.T) []string; the exact default-gate log is preserved.
+
+Commands, with /workspace/adamic-tools/env.sh sourced:
+```
+go test ./stage1/cohere/lint/rules/nexus-boundary-no-internal-import -count=1 -v -timeout=15m > /tmp/wave12-39638-rules.log 2>&1
+go vet ./stage1/cohere/lint/rules/nexus-boundary-no-internal-import > /tmp/wave12-39638-rule-vet.log 2>&1
+go test ./stage1/cohere/lint -run '^TestRulesAgree$' -count=1 -timeout=15m > /tmp/wave12-39638-default.log 2>&1
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 ADAMIC_STAGE1_SOURCE=/workspace/scratch/wave12-landing-rules/stage1 ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -run '^TestLandingExistingCandidates$' -count=1 -v -timeout=25m > /tmp/wave12-39638-isolated.log 2>&1
+```
+The last command runs only in isolated scratch compatibility worktree. All original and supported-corpus inputs use the pinned actual Go oracle. Historical parser and option/filename boundaries from B8FB-LANDING.md remain; green observations never include the eight unregistered partial rules as completed finding ports.
+
+Ten aggregate mutants: orm_bare_decorator_ignored, boolean_outcome_companion_ignored, next_document_import_path_exemption_ignored, this_alias_allowed_name_ignored, optional_assertion_removes_operand_byte, constraint_suggestion_deletes_name, last_internal_owner, alias_prefix_boundary, whitelist_widened, role-suffix regex disabled. Every named declaration first kind changes to valid Unknown, compiling and exiting cleanly before real-Go listener comparison catches it. Prior valid descriptor mutation evidence is preserved, not claimed newly rerun here. Path resolution mutant drops directory resolution and is caught by actual-Go comparison. No mutant is credited for compilation or sanitizer failure.
+
+Harness 41eb6eab2 and its DEDUP_LEDGER.md were read before future harness integration. It is not yet an ancestor of current main. When rebasing onto it, retire this branch's no-this-alias, no-non-null-asserted-optional-chain and no-unnecessary-type-constraint copies in favor of wave1-07, wave1-05 and wave1-08 respectively. Keep the named winning Next document-import and ORM copies. No batch-only rule is assigned specifically to wave1-12. No shared compiler/harness/generator file is edited for these helpers. Neither main nor area branches is pushed.
+
+Setup Go/clang/Node/submodules ready 0s, cache warm and total 122s, nproc 5 (four-core quota). Rebase initially failed because the workspace disk was full; deleting only regenerable Go cache artifacts recovered 2.6 GB, and both rebases then succeeded. Helper suite fresh PASS 125.005s and final vet clean, all nine delivered helpers and 24 controls. Four CFG consumers each lose two new dependencies, zero final blockers. Exact counter remains blocked at bigint-return lowering; other unclaimed helpers remain.
+
+---
+
 Built: named listener declarations and literal boolean-outcome suffix regex retained, with the rule branch rebased onto current origin/main b8fb957aa839a9e8cb0b54279dd9864fa317bd30.
 Commits: previous pushed rule 0ea61b9af7aede044c6d8f82eea96cd177ca32de; rebased implementation 79ed6a17bc1a17f445cb4daad5c56471dbd73eb7 before this evidence commit; helper sibling pushed 876616bf89a7019967b817bf135cafb66cd08a86.
 Checks: owned rule package PASS 56.795s and vet clean; supported-domain aggregate PASS 519.733s, 3,016 cases over 314 compiler/stage1 sources, 118,907,067 identical actual Go/source Node/emitted JS/sanitized-native finding/fix bytes.

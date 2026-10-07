@@ -1,3 +1,5 @@
+Current parking base: origin/main 39638d9e278d38bb5aeae887f46d55a70e47aaad. Supported-domain aggregate and owned package freshly green; default shared harness remains blocked by profile_test.go:32:23 function/slice mismatch. See 39638-LANDING.md. Harness 41eb6eab2 not on main; ledger winners read and recorded for its future rebase.
+
 Parked under the explicit October 7 instruction from @system_adamic.
 
 Branch: codex/lint-wave1-12. Current main: b8fb957aa839a9e8cb0b54279dd9864fa317bd30. Earlier oracle evidence tip: 0fd6e03841db65fc43ba2122d6d4b72986b99308. The branch is now rebased onto c01907a7 and rechecked: independent owned packages pass, the aggregate supported-domain comparison passes in 457.911s with all nine semantic mutants caught again. CURRENT-LANDING.md and c019-*.log hold the fresh evidence. Compiler, lint implementation and pinned cohere inputs remain unchanged across this main advance. No code change is made by this parking note.
