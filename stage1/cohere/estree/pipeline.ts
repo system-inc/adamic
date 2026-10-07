@@ -1,3 +1,4 @@
+import { referenceError } from './sourceReferences.ts';
 import { syntaxError } from './sourceValidation.ts';
 import { externalModule } from './sourceModules.ts';
 import { panic } from 'adamic';
@@ -51,6 +52,10 @@ export function answer(path: string, text: string): string {
         }
     }
     const comments = mergeComments(converter.arena, collectComments(converter, root));
+    const reference = referenceError(convertedText, converter.arena, comments);
+    if(reference !== '') {
+        return panic(`ESTree parser: ${reference}`);
+    }
     if(babel) {
         for(const id of comments) {
             const comment = converter.arena.node(id);

@@ -71,7 +71,7 @@ one second on source Node and sanitized native. That observation concerns the
 shared dependency, not the local driver. The original modifier, cooked surrogate
 and JSX refusals are repaired and held to Go on all three builds. The baseline
 92 output mismatches are also resolved. Current frozen-corpus acceptance still
-differs on 20 files, including missing parser diagnostics, unrepresented
+differs on 8 files, including missing parser diagnostics, unrepresented
 recovery and raw input loss. Every disposition is retained; whole-checkout
 success is not claimed. See FOLLOWUP.md for checkpoint commands and counts.
 
@@ -140,3 +140,23 @@ library test holds those acceptance differences; generated and repository byte
 checks hold their exact Go AST and range. No blanket allowance is made for
 other library disagreements. Primitive implements is accepted by the original
 library and matches Go in both raw and postprocessed trees.
+
+## Go recovery differs from typescript-estree grammar checks
+
+Go accepts `interface I {x:number=5;}`. Pinned typescript-estree refuses with
+“A property signature cannot have an initializer.” The actual-driver proving
+program is gaps/typeMemberInitializer.ts. TestTypeMemberLibraryGap requires Go's
+acceptance and the pinned library's refusal; the generated native/Node/JS agreement
+cases include this recovery. The port follows Go, including recovered mapped-type
+members and accessor bodies that later TypeScript grammar checks would reject.
+
+## Compiler gap: interface dispatch to a defaulted method
+
+The 13-line gaps/interfaceTypeMethod.ts supplies both arguments when calling a
+concrete `type(minimum = 0, conditional = true)` through an interface. Source Node
+and emitted JS print 1. Sanitized native explicitly panics: “compiler bug: a
+method the checker proved is there is missing.” Removing the concrete defaults,
+without changing either supplied argument, yields 1 on all three builds. This is
+an observation; the compiler cause has not been diagnosed. TestInterfaceTypeMethodGap
+requires both outcomes. The port uses direct calls and pure helpers instead.
+This differs from the earlier fewer-arguments interfaceDefault sanitizer gap.

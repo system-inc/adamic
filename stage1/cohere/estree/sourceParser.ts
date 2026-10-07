@@ -1,3 +1,4 @@
+import { assertionRank, bindsBeforeAssertion } from './sourceBinary.ts';
 // ESTree-local extension of the parser at main 5d4c801. Original dependency stays unchanged.
 import { readJsx } from './jsxParser.ts';
 // Expression descent follows cohere/TypeScript/tsc/internal/parser/parser.go.
@@ -8,6 +9,9 @@ import { ParseNode } from '../../typescript/parser/nodes.ts';
 import { modifierKinds, precedence, reservedKinds, tokenSpelling, expressionKinds } from './sourceGrammar.ts';
 import {
     arrowAhead,
+    functionTypeAhead,
+    tupleNameAhead,
+    sameLineAfter,
     leftHandSide,
     accessorAhead,
     heritageElementAhead,
@@ -269,6 +273,10 @@ export class Parser {
         return id;
     }
     expect(kind: string): boolean {
+        if(kind === 'LessThanToken' && this.kind() === 'LessThanLessThanToken') {
+            this.scanner.kind = 'LessThanToken';
+            this.scanner.pos = this.scanner.start + 1;
+        }
         if(this.kind() !== kind) {
             this.error(1005, `'${tokenSpelling(kind)}' expected.`);
             return false;
@@ -484,19 +492,6 @@ export class Parser {
         this.roots.splice(state.roots);
         this.diagnostics.splice(state.diagnostics);
     }
-    tupleNameAhead(): boolean {
-        if(!this.bindingIdentifier()) {
-            return false;
-        }
-        const saved = this.mark();
-        this.next();
-        if(this.kind() === 'QuestionToken') {
-            this.next();
-        }
-        const result = this.kind() === 'ColonToken';
-        this.rewind(saved);
-        return result;
-    }
     typeArguments(): number[] {
         const result: number[] = [];
         const emptyStart = this.scanner.start;
@@ -599,7 +594,7 @@ export class Parser {
             this.next();
             children.push(this.entityName());
         }
-        if(this.kind() === 'LessThanToken') {
+        if(this.kind() === 'LessThanToken' || this.kind() === 'LessThanLessThanToken') {
             for(const type of this.typeArguments()) {
                 children.push(type);
             }
@@ -611,38 +606,14 @@ export class Parser {
         return id;
     }
     functionTypeAhead(): boolean {
-        if(this.kind() === 'LessThanToken') {
-            return true;
-        }
         const saved = this.mark();
-        this.next();
-        let result = this.kind() === 'CloseParenToken' || this.kind() === 'DotDotDotToken';
-        if(!result) {
-            while(
-                ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'OverrideKeyword'].includes(
-                    this.kind(),
-                ) &&
-                this.nextIdentifierSameLine()
-            ) {
-                this.next();
-            }
-            let parameter = false;
-            if(this.bindingIdentifier() || this.kind() === 'ThisKeyword') {
-                this.next();
-                parameter = true;
-            }
-            else if(this.kind() === 'OpenBracketToken' || this.kind() === 'OpenBraceToken') {
-                this.bindingName();
-                parameter = this.diagnostics.length === saved.diagnostics;
-            }
-            if(parameter) {
-                result = ['ColonToken', 'CommaToken', 'QuestionToken', 'EqualsToken'].includes(this.kind());
-                if(this.kind() === 'CloseParenToken') {
-                    this.next();
-                    result = this.kind() === 'EqualsGreaterThanToken';
-                }
-            }
-        }
+        const result = functionTypeAhead(
+            this.scanner,
+            () => this.bindingIdentifier(),
+            () => this.nextIdentifierSameLine(),
+            () => this.bindingName(),
+            () => this.diagnostics.length,
+        );
         this.rewind(saved);
         return result;
     }
@@ -728,7 +699,10 @@ export class Parser {
             if(this.expressionDepth === 0) {
                 this.roots.push(name);
             }
-            if(this.kind() === 'LessThanToken') {
+            if(
+                (this.kind() === 'LessThanToken' || this.kind() === 'LessThanLessThanToken') &&
+                (this.scanner.flags & 1) === 0
+            ) {
                 for(const type of this.typeArguments()) {
                     children.push(type);
                 }
@@ -780,7 +754,7 @@ export class Parser {
             while(this.kind() !== 'EndOfFile' && this.kind() !== 'CloseBracketToken') {
                 const start = this.scanner.fullStart;
                 const rest = this.kind() === 'DotDotDotToken' ? this.token() : -1;
-                if(this.tupleNameAhead()) {
+                if(tupleNameAhead(this.scanner)) {
                     const parts: number[] = [];
                     if(rest >= 0) {
                         parts.push(rest);
@@ -849,7 +823,7 @@ export class Parser {
         ) {
             if(this.kind() !== 'VoidKeyword' && this.peek() === 'DotToken') {
                 const children = [this.entityName()];
-                if(this.kind() === 'LessThanToken') {
+                if(this.kind() === 'LessThanToken' || this.kind() === 'LessThanLessThanToken') {
                     for(const type of this.typeArguments()) {
                         children.push(type);
                     }
@@ -860,7 +834,10 @@ export class Parser {
                 left = this.token();
             }
         }
-        else if(this.kind() === 'AssertsKeyword' && this.nextIdentifierSameLine()) {
+        else if(
+            this.kind() === 'AssertsKeyword' &&
+            (this.nextIdentifierSameLine() || (this.peek() === 'ThisKeyword' && sameLineAfter(this.scanner, 0)))
+        ) {
             left = this.returnType();
         }
         else if(this.kind() === 'ThisKeyword') {
@@ -877,7 +854,10 @@ export class Parser {
                     ? this.entityName()
                     : this.missingIdentifier(1110, 'Type expected.');
             const children = [name];
-            if(this.kind() === 'LessThanToken' && (this.scanner.flags & 1) === 0) {
+            if(
+                (this.kind() === 'LessThanToken' || this.kind() === 'LessThanLessThanToken') &&
+                (this.scanner.flags & 1) === 0
+            ) {
                 for(const type of this.typeArguments()) {
                     children.push(type);
                 }
@@ -987,15 +967,23 @@ export class Parser {
         if(this.kind() === 'SemicolonToken') {
             this.next();
         }
+        const memberStart = this.scanner.fullStart;
+        const members = this.typeMembers();
+        children.push(this.make('MappedMembers', memberStart, members));
         this.expect('CloseBraceToken');
         return this.make('MappedType', pos, children);
     }
     typeLiteral(): number {
         const pos = this.scanner.fullStart;
-        const members: number[] = [];
         if(!this.expect('OpenBraceToken')) {
-            return this.make('TypeLiteral', pos, members);
+            return this.make('TypeLiteral', pos);
         }
+        const members = this.typeMembers();
+        this.expect('CloseBraceToken');
+        return this.make('TypeLiteral', pos, members);
+    }
+    typeMembers(): number[] {
+        const members: number[] = [];
         this.beginList('members');
         while(!this.listTerminator('members')) {
             if(!this.listElement('members')) {
@@ -1057,6 +1045,15 @@ export class Parser {
                 this.next();
                 children.push(this.returnType());
             }
+            if(kind === 'PropertySignature' && this.kind() === 'EqualsToken') {
+                this.next();
+                children.push(this.rootAssignment());
+            }
+            if(['GetAccessor', 'SetAccessor'].includes(kind) && this.kind() === 'OpenBraceToken') {
+                children.push(this.statements().block());
+                members.push(this.make(kind, start, children));
+                continue;
+            }
             if(this.kind() === 'CommaToken') {
                 this.next();
             }
@@ -1068,9 +1065,8 @@ export class Parser {
                 panic('ESTree parser stopped advancing in type members');
             }
         }
-        this.expect('CloseBraceToken');
         this.endList('members');
-        return this.make('TypeLiteral', pos, members);
+        return members;
     }
     parameters(): number[] {
         if(!this.expect('OpenParenToken')) {
@@ -1263,10 +1259,15 @@ export class Parser {
         if(this.kind() === 'AssertsKeyword') {
             children.push(this.token());
         }
-        if((this.kind() === 'Identifier' || this.kind().endsWith('Keyword')) && this.peek() === 'IsKeyword') {
+        if(
+            (this.kind() === 'Identifier' || this.kind().endsWith('Keyword')) &&
+            this.peek() === 'IsKeyword' &&
+            sameLineAfter(this.scanner, 0)
+        ) {
             if(this.kind() === 'ThisKeyword') {
+                const start = this.scanner.fullStart;
                 this.next();
-                children.push(this.make('ThisType', pos));
+                children.push(this.make('ThisType', start));
             }
             else {
                 children.push(this.identifier());
@@ -1276,7 +1277,14 @@ export class Parser {
             return this.make('TypePredicate', pos, children);
         }
         if(children.length > 0) {
-            children.push(this.identifier());
+            if(this.kind() === 'ThisKeyword') {
+                const start = this.scanner.fullStart;
+                this.next();
+                children.push(this.make('ThisType', start));
+            }
+            else {
+                children.push(this.identifier());
+            }
             return this.make('TypePredicate', pos, children);
         }
         return this.type();
@@ -1453,7 +1461,10 @@ export class Parser {
         let left = expression;
         const pos = this.node(left).pos;
         while(true) {
-            if(this.kind() === 'LessThanToken' && typeArgumentsAhead(this.scanner)) {
+            if(
+                (this.kind() === 'LessThanToken' || this.kind() === 'LessThanLessThanToken') &&
+                typeArgumentsAhead(this.scanner)
+            ) {
                 const types = this.typeArguments();
                 const children = [left];
                 for(const type of types) {
@@ -1855,6 +1866,7 @@ export class Parser {
     binary(minimum: number): number {
         const pos = this.scanner.fullStart;
         let left = this.unary();
+        let last = left;
         while(true) {
             this.scanner.rescanGreater();
             const operator = this.kind();
@@ -1872,11 +1884,16 @@ export class Parser {
                 this.next();
                 const type = this.type();
                 left = this.make(operator === 'AsKeyword' ? 'AsExpression' : 'SatisfiesExpression', pos, [left, type]);
+                this.scanner.rescanGreater();
+                if(bindsBeforeAssertion(this.kind(), assertionRank(this.nodes, last))) {
+                    break;
+                }
                 continue;
             }
             const token = this.token();
             const right = this.binary(rank);
             left = this.make('BinaryExpression', pos, [left, token, right]);
+            last = left;
         }
         return left;
     }

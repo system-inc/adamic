@@ -1002,7 +1002,11 @@ export class Converter {
         this.set(result, 'nameType', this.converted(name));
         this.set(result, 'optional', optional);
         this.set(result, 'readonly', readonly);
-        this.set(result, 'typeAnnotation', this.converted(children[index] ?? -1));
+        this.set(
+            result,
+            'typeAnnotation',
+            this.converted(this.kind(children[index] ?? -1) === 'MappedMembers' ? -1 : (children[index] ?? -1)),
+        );
         return result;
     }
     forNode(id: number): number {

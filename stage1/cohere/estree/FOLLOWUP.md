@@ -1,6 +1,6 @@
 Follow-up on codex/stage1-estree, baseline 80f1ded.
-The frozen source census has 15,635 matches and zero output mismatches.
-Acceptance disagreements fall from 984 to 20; this remains incomplete.
+The frozen source census has 15,644 matches and zero output mismatches.
+Acceptance disagreements fall from 984 to 8; this remains incomplete.
 UTF-8 loss and parser stalls have separate pushed commits and proving programs.
 No shared parser, compiler or runtime files were edited.
 
@@ -249,3 +249,42 @@ Final acceptance gate: `go test -count=1 -v ./stage1/cohere/estree -run
 `ADAMIC_ESTREE_CORPUS=/tmp/estree-acceptance-rescued go test -count=1 -v
 ./stage1/cohere/estree -run '^TestRepositoryAgreement$|^TestRecoveredGrammar$'
 passes in 46.223s. Cohere passes with 31/31 Adamic-ready sources.
+
+### Remaining grammar checkpoint
+
+Acceptance checkpoint 8e88b7b was pushed. The new actual-driver census is 15,644
+identical / eight refused Go answers / zero accepted Go refusals / zero different /
+11,717 both refused. No old matching file regresses. Five remaining refusals are
+the documented raw-input limitation; three are deep binary-expression stack
+limits, addressed in the next checkpoint.
+
+Generic openings now split << in type contexts while preserving ordinary shifts.
+Go permits initializers and accessor bodies in type members, and trailing members
+in mapped types; conversion preserves the same omission of mapped members.
+Type-query generics and type predicates respect line breaks. Assertion predicates
+accept this. Binary as/satisfies parsing stops when erasure would change operator
+precedence. Leading reference pragmas use Go's attribute parsing and do not inspect
+strings, block comments or comments after the first code token.
+
+The native interface-based binary helper explicitly panicked; it was discarded.
+Direct parser calls plus pure precedence helpers avoid that path. Scanner-only
+speculation moves to the existing lookahead helper. A malformed generated accessor
+case exposed an erroneous semicolon requirement after a body; it was fixed before
+the final gate. Failed trial logs are not credited as green.
+
+`ADAMIC_ESTREE_LIBRARY=/workspace/scratch/estree-library
+ADAMIC_ESTREE_CORPUS=/tmp/estree-syntax-rescued go test -count=1 -v
+./stage1/cohere/estree -run '^TestSyntax|^TestRepositoryAgreement$|
+^TestInterfaceTypeMethodGap$' > /tmp/estree-syntax-final-checkpoint.log 2>&1`
+passes in 143.574s. Nine recovered files match 146,391 bytes in all three builds;
+nine generated cases match 15,547 bytes. Four original-library cases agree both
+raw and postprocessed. Three explicit Go refusals give empty stdout on all builds.
+The mapped-constraint mutant differs at line 324 on Node/native; disabled erasure
+precedence and reference checks accept Go-refused inputs on both builds.
+
+The new 13-line interfaceTypeMethod program proves a separate compiler gap even
+with both arguments supplied. Node/emitted JS print 1; sanitized native explicitly
+panics. Removing concrete defaults is the control: all builds print 1. Compiler
+files remain unedited. TestTypeMemberLibraryGap separately passes in 0.954s and
+proves the original library refuses an interface initializer accepted by Go.
+Cohere passes, 33/33 Adamic-ready sources. Logs and the frozen census are retained.

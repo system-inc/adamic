@@ -252,6 +252,9 @@ export function typeArgumentsAhead(scanner: Scanner): boolean {
         if(kind(scanner) === 'LessThanToken') {
             depth++;
         }
+        if(kind(scanner) === 'LessThanLessThanToken') {
+            depth += 2;
+        }
         if(kind(scanner) === 'GreaterThanToken') {
             if(depth === 1) {
                 scanner.rescanGreater();
@@ -812,4 +815,61 @@ export function leftHandSide(nodeKind: string): boolean {
         'ImportKeyword',
         'MissingDeclaration',
     ].includes(nodeKind);
+}
+
+export function functionTypeAhead(
+    scanner: Scanner,
+    identifier: () => boolean,
+    nextIdentifier: () => boolean,
+    binding: () => number,
+    diagnostics: () => number,
+): boolean {
+    if(kind(scanner) === 'LessThanToken') {
+        return true;
+    }
+    const savedDiagnostics = diagnostics();
+    scanner.scan();
+    let result = kind(scanner) === 'CloseParenToken' || kind(scanner) === 'DotDotDotToken';
+    if(!result) {
+        while(
+            ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'OverrideKeyword'].includes(
+                kind(scanner),
+            ) &&
+            nextIdentifier()
+        ) {
+            scanner.scan();
+        }
+        let parameter = false;
+        if(identifier() || kind(scanner) === 'ThisKeyword') {
+            scanner.scan();
+            parameter = true;
+        }
+        else if(kind(scanner) === 'OpenBracketToken' || kind(scanner) === 'OpenBraceToken') {
+            binding();
+            parameter = diagnostics() === savedDiagnostics;
+        }
+        if(parameter) {
+            result = ['ColonToken', 'CommaToken', 'QuestionToken', 'EqualsToken'].includes(kind(scanner));
+            if(kind(scanner) === 'CloseParenToken') {
+                scanner.scan();
+                result = kind(scanner) === 'EqualsGreaterThanToken';
+            }
+        }
+    }
+    return result;
+}
+
+export function tupleNameAhead(scanner: Scanner): boolean {
+    const current = kind(scanner);
+    if(current !== 'Identifier' && (!current.endsWith('Keyword') || reservedKinds.includes(current))) {
+        return false;
+    }
+    const state = new Speculation(scanner);
+    state.next();
+    if(kind(scanner) === 'QuestionToken') {
+        state.next();
+    }
+    const result = kind(scanner) === 'ColonToken';
+    state.restore();
+    return result;
 }
