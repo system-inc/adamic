@@ -1,7 +1,7 @@
 Built: member-specific tag filtering, selected-contract preservation and structural fallback components; no source admission.
-Commits: territory 6c321f8a; lane 4 refresh d15b4206; selector checkpoint recorded in Git history.
+Commits: territory 6c321f8a; lane 4 refresh d15b4206; selector 566aad67; mutant checkpoint recorded in Git history.
 Commands: focused lower/oracle passed (0.006s/3.470s); counted absent controls passed (1.299s); touched-package vet passed.
-Mutants: six component defects were caught; independent runner and logs are the next checkpoint.
+Mutants: skip check, accept wrong shape, drop nested check, separately in native and JavaScript; all six caught by semantic output/exit pins.
 Uncovered: all 84 pairs and 186 reads remain; full compiler interfaces, lazy read dispatch and transitive propagation are pending.
 
 Working date for the whole family: October 12, 2026 UTC, conditional on the lazy
@@ -88,3 +88,39 @@ remote check the integration branch had not yet been published (ls-remote
 returned no ref). Further direct lane merges were stopped. This unit is blocked
 on that shared integration/lazy read dispatch and can rest after pushing its
 component checkpoint. The user will wake it when lazy admission lands.
+
+
+Final touched-package result: native passed all tests in 123.992s; JavaScript
+passed all tests in 1.093s; lower failed in 16.774s only at the inherited
+TestSharedArrayContractAdapter/readonly_(number_|_string)[] disagreement.
+The new lower tests passed in the focused run. The package gate therefore exits
+1 and is not reported as green. Focused oracle validation and touched-package
+vet are green. The full repository gate and full oracle package were not run.
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/javascript ./internal/native -count=1 -timeout 30m
+python3 stage3/interface-downcasts/untagged/run-mutants.py
+```
+
+Each mutation is made independently and restored in a finally block. Logs
+include the semantic mismatch and a successfully executed release binary;
+none is killed by clang or a sanitizer. The mutants and their catchers are:
+
+| Mutant | Catcher |
+| --- | --- |
+| skip-check-native | nested binding-name input exits 0 instead of pinned 70 |
+| skip-check-javascript | nested binding-name input exits 0 instead of pinned 70 |
+| accept-wrong-shape-native | wrong binding-name kind accepted, exits 0 |
+| accept-wrong-shape-javascript | wrong binding-name kind accepted, exits 0 |
+| drop-transitive-native | component nested boolean label accepted, exits 0 |
+| drop-transitive-javascript | component nested boolean label accepted, exits 0 |
+
+The nested mutations modify the component adapter in the oracle harness, whose
+complete matcher is a required future shared hook. They do not claim a mutant
+of production compiler-wide transitive propagation. Selector mutations modify
+this unit's runtime files. Source-frontier pins should be replaced with true
+source admission tests once the shared integration implements the hooks.
+
+After every push: 84 pairs and 186 reads remain. No pair is reduced based on
+these components. All files and mutation sources are restored. Branch publication
+uses only codex/views-untagged-object-unions and opens no pull request.

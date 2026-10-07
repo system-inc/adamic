@@ -1,0 +1,17 @@
+=== RUN   TestCheckedViewUntaggedSelection
+=== RUN   TestCheckedViewUntaggedSelection/binding-name
+    checked_views_untagged_unions_test.go:64: nested: exit codes differ; got oracle.run{stdout:[]uint8{0x32, 0x3a, 0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+=== RUN   TestCheckedViewUntaggedSelection/option-element
+    checked_views_untagged_unions_test.go:64: nested: exit codes differ; got oracle.run{stdout:[]uint8{0x32, 0x3a, 0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+=== RUN   TestCheckedViewUntaggedSelection/structural
+    checked_views_untagged_unions_test.go:40: stdout differs; got oracle.run{stdout:[]uint8{0x31, 0x3a, 0x6e, 0x61, 0x6d, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewUntaggedSelection (11.63s)
+    --- FAIL: TestCheckedViewUntaggedSelection/binding-name (3.17s)
+    --- FAIL: TestCheckedViewUntaggedSelection/option-element (0.38s)
+    --- FAIL: TestCheckedViewUntaggedSelection/structural (0.13s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	11.640s
+FAIL
