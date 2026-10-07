@@ -4,6 +4,8 @@ Results: 299/299 emitted C units compile for wasm32; baseline execution oracle 0
 Mutants: six native option/flag mutants, four CLI mutants, standalone Wasm stdout and exit mutants, and the existing native byte mutant were caught.
 Not covered: merged-runtime execution, Wasm leaks or sanitizers, the complete repository gate, Workers hosting and the future adamic_request export.
 
+October 7 follow-up: [request-report.md](request-report.md) records the available runtime, handler integration and new merged measurements. The blocked-runtime result and 8 MiB stack below are historical.
+
 The agreed command is `adamic build --target wasm32-wasi <file> -o <out.wasm>`. Native stays the default. The target also works after `-o <out>`, alongside the existing build flags. Unknown or repeated targets are usage errors. WASI sanitizers, native CPU selection and tsgo archives are refused. A missing or nonexistent WASI_SYSROOT produces an explicit diagnostic.
 
 Compilation uses `--target=wasm32-wasi --sysroot=$WASI_SYSROOT -DADAMIC_TARGET_WASI=1 -mno-atomics -O2`. The existing floating-point contraction and sibling-call restrictions remain. Linking selects `-mexec-model=command` and `-Wl,-z,stack-size=8388608`, with whole-archive runtime loading and libm. There is no pthread link flag. `main` remains the entry in generated C; the SDK supplies `_start`. The compiler prefers the SDK's bin/clang beside share/wasi-sysroot, otherwise clang on PATH. Archiving prefers llvm-ar beside the selected compiler. The runtime cache key includes target flags, sysroot path, compiler path/version and runtime source bytes.
