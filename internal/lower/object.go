@@ -1291,6 +1291,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.nodeFSFileDate(node); found {
+		return value, err
+	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)
 	}

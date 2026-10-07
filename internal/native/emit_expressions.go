@@ -14,6 +14,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.NodeHostCall:
 		return e.nodeHostCall(expression)
+	case ir.NodeFSFile:
+		return e.nodeFSFile(expression)
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)

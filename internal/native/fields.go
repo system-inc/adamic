@@ -42,6 +42,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	for _, names := range [][]string{
 		// The Node directory host and the existing realPath result are created in C.
 		{"kind", "path"}, {"name", "message", "code"}, {"name", "type"},
+		{"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode"},
 		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
