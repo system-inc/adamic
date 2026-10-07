@@ -1,0 +1,12 @@
+// next/no_html_link_for_pages_routes.go:142; `^layout\.[jt]sx?$`
+import { observe } from '../observe.a';
+const pattern = "^layout\\.[jt]sx?(?![\\s\\S])";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "layout.js", 4);
+observe(regex, "xlayout.js", 5);
+observe(regex, "layout.js\n", 6);

@@ -1,0 +1,12 @@
+// tailwind/no_deprecated_classes.go:93; `^bg-left-top$`
+import { observe } from '../observe.a';
+const pattern = "^bg-left-top(?![\\s\\S])";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "bg-left-top", 4);
+observe(regex, "xbg-left-top", 5);
+observe(regex, "bg-left-top\n", 6);

@@ -1,0 +1,12 @@
+// tailwind/no_deprecated_classes.go:97; `^object-left-top$`
+import { observe } from '../observe.a';
+const pattern = "^object-left-top(?![\\s\\S])";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "object-left-top", 4);
+observe(regex, "xobject-left-top", 5);
+observe(regex, "object-left-top\n", 6);

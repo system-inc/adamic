@@ -1,0 +1,14 @@
+// next/no_html_link_for_pages_routes.go:141; `^page\.[jt]sx?$`
+import { observe } from '../observe.a';
+import { programArguments } from 'adamic';
+const argumentsList = programArguments();
+const pattern = argumentsList[0] ?? '';
+const flags = argumentsList[1] ?? '';
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "page.js", 4);
+observe(regex, "xpage.js", 5);
+observe(regex, "page.js\n", 6);

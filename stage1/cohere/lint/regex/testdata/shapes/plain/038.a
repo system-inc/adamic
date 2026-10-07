@@ -1,0 +1,15 @@
+// nexus/shouting.go:121; `[0-9_]`
+import { observe } from '../observe.a';
+const pattern = "[0-9_]";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "0", 4);
+observe(regex, "x0", 5);
+observe(regex, "0\n", 6);
+observe(regex, "var a = 1; // TODO: later", 7);
+observe(regex, "className=\"flex-grow-2\"", 8);
+observe(regex, "__String", 9);

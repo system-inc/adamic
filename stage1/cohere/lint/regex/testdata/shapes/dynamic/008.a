@@ -1,0 +1,13 @@
+// core/no_inline_comments.go:102; resolved.IgnorePattern
+import { observe } from '../observe.a';
+const pattern = "TODO";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "TODO", 4);
+observe(regex, "xTODO", 5);
+observe(regex, "🌍TODO", 6);
+observe(regex, "TODO🌍", 7);

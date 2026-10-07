@@ -1,0 +1,12 @@
+// core/object_shorthand.go:140; *wire.MethodsIgnorePattern
+import { observe } from '../observe.a';
+const pattern = "^ignore";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "ignore", 4);
+observe(regex, "xignore", 5);
+observe(regex, "ignore\n", 6);

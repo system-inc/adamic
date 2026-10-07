@@ -1,0 +1,12 @@
+// next/no_html_link_for_pages_routes.go:140; `^index\.[jt]sx?$`
+import { observe } from '../observe.a';
+const pattern = "^index\\.[jt]sx?(?![\\s\\S])";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "index.js", 4);
+observe(regex, "xindex.js", 5);
+observe(regex, "index.js\n", 6);

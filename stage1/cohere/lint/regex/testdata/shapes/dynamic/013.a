@@ -1,0 +1,13 @@
+// core/no_warning_comments.go:354; "(?i)" + prefix + escaped + suffix
+import { observe } from '../observe.a';
+const pattern = "^[ \\t\\n\\f\\r*]*todo\\b";
+const flags = "gui";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "TODO", 4);
+observe(regex, "xTODO", 5);
+observe(regex, "todo", 6);
+observe(regex, "TODO🌍", 7);

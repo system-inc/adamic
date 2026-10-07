@@ -1,0 +1,12 @@
+// tailwind/no_deprecated_classes.go:66; `^inset-shadow$`
+import { observe } from '../observe.a';
+const pattern = "^inset-shadow(?![\\s\\S])";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "inset-shadow", 4);
+observe(regex, "xinset-shadow", 5);
+observe(regex, "inset-shadow\n", 6);

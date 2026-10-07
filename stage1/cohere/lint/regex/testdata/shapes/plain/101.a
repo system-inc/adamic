@@ -1,0 +1,13 @@
+// tailwind/tools/generate_variant/main.go:221; `(?:class|className)\s*=\s*"([^"\n{}$]+)"`
+import { observe } from '../observe.a';
+const pattern = "(?:class|className)[ \\t\\n\\f\\r]*=[ \\t\\n\\f\\r]*\"([^\"\\n{}$]+)\"";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "class=\"A\"", 4);
+observe(regex, "xclass=\"A\"", 5);
+observe(regex, "class=\"A\"\n", 6);
+observe(regex, "className=\"flex-grow-2\"", 7);

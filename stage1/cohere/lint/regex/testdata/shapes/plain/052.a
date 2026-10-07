@@ -1,0 +1,15 @@
+// nexus/shouting.go:464; `s\s+c`
+import { observe } from '../observe.a';
+const pattern = "s[ \\t\\n\\f\\r]+c";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "s\tc", 4);
+observe(regex, "xs\tc", 5);
+observe(regex, "s\tc\n", 6);
+observe(regex, "// 4. Export alias declarations pointing at only uninstantiated modules or things uninstantiated modules contain", 7);
+observe(regex, "// child is const enum only - record state and continue searching", 8);
+observe(regex, "// since they're ambiguous. This is consistent with", 9);
