@@ -153,3 +153,11 @@ construction and memo/escape native analysis, validated at 47e48bb178ebd0020cba8
 three released queries pass. All three JSX source analyses are now tested.
 Shared checker-context registration remains blocked; these AST/checker rules
 are not parked HIR/SSA rules. See the owned constructed-context ANALYSIS_REPORT.md.
+
+Final continuation audit after the fifth-batch source push: 626 origin refs,
+33 distinct Markdown claim blobs, 197 ranked rules, 172 claimed and 25 baseline
+checker-dependent ports. No unclaimed rules remain; no sixth batch was claimed.
+Skipped the three apparent colon-delimited entries already reserved by wave 01:
+nexus/correctness-no-implicit-return, @typescript-eslint/no-deprecated and
+no-else-return. Full selection evidence is in the owned constructed-context
+validation/remaining-selection.json.gz. Shared typed registration remains blocked.

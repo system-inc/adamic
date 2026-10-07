@@ -123,3 +123,20 @@ KILLED helper-escape case-136 compiled, exit 0, empty stderr; only Go finding by
 KILLED factory-identity case-146 compiled, exit 0, empty stderr; only Go finding bytes differ
 PASS four compiling memo/escape mutants
 ```
+
+## No unclaimed work remains
+
+After pushing all three JSX source analyses, fetched all origin heads again.
+Main 39638d9e2 and lint d65a8f931 are unchanged and remain ancestors. The audit
+inspected 626 origin refs and 33 distinct Markdown claim blobs. The by-volume
+inventory has 197 rules: 172 claimed names and 25 baseline checker-dependent
+ports. No unported, unclaimed entry remains. No new claim was made.
+
+An initial boundary regex incorrectly treated the colon after a rule name as
+part of the name. Manual inspection of wave-01.md caught all three apparent
+candidates before any claim: nexus/correctness-no-implicit-return,
+@typescript-eslint/no-deprecated, and no-else-return. Their list entries end in
+colons before the finding counts. Corrected matching retains slash and hyphen
+boundaries (so core names are not confused with namespaced rules) and admits
+colon punctuation. All three are skipped as already claimed. Compressed full
+selection evidence is beside the oracle outputs. Only the own branch was pushed.
