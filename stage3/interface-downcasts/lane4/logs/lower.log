@@ -1,0 +1,6 @@
+--- FAIL: TestSharedArrayContractAdapter (0.29s)
+    --- FAIL: TestSharedArrayContractAdapter/type_Target_=_readonly_(number_|_string)[]; (0.09s)
+        view_array_adapter_test.go:45: /tmp/adamic-gate/TestSharedArrayContractAdaptertype_Target_=_readonly_(number__877543871/001/contract.a:1:1: stage 0 can't lower an array checked view with mixed or optional boolean elements yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	29.306s
+FAIL

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/interface-downcasts/lane4/audit-read-demand.py", line 16, in <module>
+    if 'shared_graph' in r: assert r['shared_graph']['retain_check'], 'Unknown receiver lost its read check'
+                                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: Unknown receiver lost its read check
+PASS: trust-Unknown shared-helper measurement mutant caught by guard policy assertion

@@ -1127,12 +1127,8 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		}
 		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
 	}
-	if symbol != nil {
-		for _, declaration := range symbol.Declarations {
-			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
-				return nil, l.notYet(node, "an overloaded function as a value")
-			}
-		}
+	if err := l.overloadedValue(node); err != nil {
+		return nil, err
 	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil

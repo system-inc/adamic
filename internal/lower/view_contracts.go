@@ -68,11 +68,15 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			contract.NominalBases = l.viewNominalBases(target, map[*checker.Type]bool{})
 		}
 	}
+	scalar := target
+	if base := l.phantomBase(target); base != nil {
+		scalar = base
+	}
 	if target.Flags()&checker.TypeFlagsUndefined != 0 {
 		contract.Kind = ir.ViewUndefined
-	} else if interfaceScalar(target) && of != ir.Union {
+	} else if interfaceScalar(scalar) && of != ir.Union {
 		contract.Kind = ir.ViewScalar
-		contract.Allowed = l.viewContractLiterals(target)
+		contract.Allowed = l.viewContractLiterals(scalar)
 	} else {
 		contract.Kind = ir.ViewObject
 	}
@@ -124,6 +128,9 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 }
 
 func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
+	if base := l.phantomBase(target); base != nil {
+		return l.viewContractLiterals(base)
+	}
 	// A whole numeric enum admits numbers outside its declared members.
 	if l.openNumericEnumType(target) {
 		return nil

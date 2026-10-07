@@ -42,7 +42,7 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 			continue
 		}
 		of, known := l.representation(declared)
-		if !viewDataType(declared) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean {
+		if !l.viewDataType(declared) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean {
 			return l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))
 		}
 		fields[property.Name] = true
@@ -58,10 +58,13 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 	return nil
 }
 
-func viewDataType(target *checker.Type) bool {
+func (l *lowering) viewDataType(target *checker.Type) bool {
+	if base := l.phantomBase(target); base != nil {
+		return interfaceScalar(base)
+	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
-			if !viewDataType(member) {
+			if !l.viewDataType(member) {
 				return false
 			}
 		}

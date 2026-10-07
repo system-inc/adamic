@@ -44,3 +44,46 @@ concurrent cold gate attempts were interrupted and not counted as evidence.
 
 Existing carried evidence has whitespace errors; historical logs and raw
 fixture evidence are preserved. No cohere code was copied.
+
+## Lane 4 reconciliation
+
+Merged tip 9a385606. Eleven conflict hunks across eight files were reviewed
+individually. No whole-file selection or merge strategy was used.
+
+| File | Hunk choice and evidence |
+| --- | --- |
+| docs/checked-views-blockers.md | Keep both distinct dated demand inventories and their limits. |
+| docs/checked-views-plan.md | Keep lazy/callable handoffs and lane-4 scope rulings; latest primitive-brand ruling supersedes earlier runtime-brand requirement. |
+| internal/lower/expression.go | Keep owner resolved-result path; retain shorthand symbol resolution and lane-4 overloaded-value refusal. Phantom overload and owner result-stop fixtures prove both boundaries. |
+| internal/lower/functions.go | Keep owner implementation resolution and generic overload proof; incorporate approved phantom-result exception in shared census proof. |
+| internal/lower/modules.go | Keep owner bodyless-header skip and registration-time overload proofs, including unused-result refusals. |
+| internal/lower/interface_cast.go | Both read hunks retain owner optional/nullish/accessor policies and named lazy refusals while using receiver-aware primitive-brand recognition. Literal hunk retains both phantom-base recursion and open numeric enums. |
+| internal/lower/view_contracts.go | Retain undefined, nominal, recursive and lazy metadata; classify only approved phantom bases as scalar and retain their finite literals. |
+| internal/lower/view_objects.go | Keep owner MaybeNumber/MaybeBoolean support and optional write registration, plus lane-4 brand-aware data predicate. |
+
+The shared overload proof keeps generic alpha-renaming, strict parameters,
+nullable result checks and predicate result handling. Only the existing
+phantomOverloadResult proof admits a phantom result difference; nongeneric
+invalid results use lane-4 refusal diagnostics. Incoming argument fitting is
+applied before the owner's resolved-result conversion, so undefined checks are
+not bypassed by premature fitting. One parameter test now pins the owner's
+more specific diagnostic, keeping the same unsafe mutable-parameter source.
+The acceptance-all-results Go overlay mutant is held to the branded-literal
+refusal pin. This does not introduce a second flow graph or callable convention.
+
+Brand-string-good/wrong and brand-string-literal-good/wrong match positive Node
+controls and retain both backend exit-70 checks on malformed payloads. Their
+valid-release read-removal mutants run as part of the checked-view oracle.
+General intersections remain deferred; only phantomBase-approved primitive
+intersections bypass that unsupported-family classification. Standalone mixed
+selectors remain components; complete source union admission is not claimed.
+
+A complete IR-package run exposed the inherited emitter-name allowlist mismatch
+and the two overload readers. Both overload helpers now use Program.CallTargets;
+the two permanent emitter allowlist keys name evaluateWithoutViewArrays, matching
+lane 2's rename without broadening the allowlist. The complete IR rerun passes.
+Focused lower/native, full IR, the filtered oracle with the same baseline skip,
+and vet are the lane-4 gates. Owner overload result-stop/append controls are
+included beyond the view filter. The all-results covariance mutant is caught
+with a valid build: TestPhantomOverloadBrandLiteralConstraintRefused sees nil
+instead of the required branded-literal refusal.

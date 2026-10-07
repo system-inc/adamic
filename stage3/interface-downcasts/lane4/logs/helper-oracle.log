@@ -1,0 +1,16 @@
+=== RUN   TestCheckedViewLane4HelperReads
+=== RUN   TestCheckedViewLane4HelperReads/helper-good
+=== RUN   TestCheckedViewLane4HelperReads/helper-wrong
+    checked_views_mixed_unions_test.go:47: unchecked helper mutant caught: exit 0 stdout "true\nfalse\n"
+    checked_views_mixed_unions_test.go:47: unchecked helper mutant caught: exit 0 stdout "true\n42\n"
+--- PASS: TestCheckedViewLane4HelperReads (2.60s)
+    --- PASS: TestCheckedViewLane4HelperReads/helper-good (0.97s)
+    --- PASS: TestCheckedViewLane4HelperReads/helper-wrong (1.63s)
+=== RUN   TestCheckedViewLane4UnsupportedHelper
+    checked_views_mixed_unions_test.go:70: current eager compile refusal: /workspace/adamic/stage3/interface-downcasts/lane4/read-fixtures/helper-unsupported.a:3:56: stage 0 can't lower a field of type string | number yet
+--- PASS: TestCheckedViewLane4UnsupportedHelper (0.52s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.142s
