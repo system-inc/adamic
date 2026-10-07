@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record or verify the exact Node and current-main stage-0 observations."""
+"""Record or verify the exact Node and selected compiler stage-0 observations."""
 import argparse
 import copy
 import json
@@ -12,14 +12,16 @@ repo = bucket.parents[2]
 parser = argparse.ArgumentParser()
 parser.add_argument('--record', type=Path, help='metadata array with file, tsc and reason')
 parser.add_argument('--mutants', action='store_true')
+parser.add_argument('--mutants-only', action='store_true')
+parser.add_argument('--compiler-repo', type=Path, default=repo)
 parser.add_argument('--logs', type=Path, required=True)
 args = parser.parse_args()
 args.logs.mkdir(parents=True, exist_ok=True)
 status = json.loads((args.record or bucket / 'status.json').read_text())
 
 
-def run(command, label):
-    result = subprocess.run(command, cwd=repo, capture_output=True)
+def run(command, label, cwd=repo):
+    result = subprocess.run(command, cwd=cwd, capture_output=True)
     (args.logs / (label + '.stdout')).write_bytes(result.stdout)
     (args.logs / (label + '.stderr')).write_bytes(result.stderr)
     (args.logs / (label + '.exit')).write_text(str(result.returncode) + '\n')
@@ -36,15 +38,17 @@ def compare(observation, expected, label):
 
 
 with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
-    for row in status:
+    for row in ([] if args.mutants_only else status):
         file = bucket / row['file']
         observed = node(file.relative_to(repo), row['file'] + '.node')
         # A fixture must not silently record a crash as its intended Node behavior.
         assert observed['stderr'] == '', (row['file'], observed)
         assert observed['exit'] == ({'18_exit_0.a': 0, '19_exit_1.a': 1, '20_exit_2.a': 2}.get(row['file'], 0))
         binary = Path(scratch) / row['file'].replace('.a', '')
-        built = run(['go', 'run', './cmd/adamic', 'build', str(file.relative_to(repo)), '-o', str(binary)], row['file'] + '.stage0')
+        built = run(['go', 'run', './cmd/adamic', 'build', str(file), '-o', str(binary)], row['file'] + '.stage0', args.compiler_repo)
         diagnostic = built['stdout'] + built['stderr']
+        diagnostic = diagnostic.removeprefix('adamic: ').removesuffix('exit status 1\n').rstrip('\n')
+        diagnostic = diagnostic.replace(str(bucket) + '/', 'stage3/fixtures/host/').replace(str(args.compiler_repo.resolve()) + '/', '')
         if built['exit'] != 0:
             assert any(marker in diagnostic for marker in ["stage 0 can't lower", 'Adamic 0.1 refuses', ': error TS']), ('unexpected build failure', diagnostic)
         outcome = 'Compiles' if built['exit'] == 0 else 'NotYet' if "stage 0 can't lower" in diagnostic else 'Refused' if 'Adamic 0.1 refuses' in diagnostic else 'Checker'
@@ -61,11 +65,11 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
         print(row['file'] + ': Node exit=' + str(observed['exit']) + ', stage0=' + outcome)
     if args.record:
         (bucket / 'status.json').write_text(json.dumps(status, ensure_ascii=False, indent=2) + '\n')
-    if args.mutants:
+    if args.mutants or args.mutants_only:
         mutations = [
             ('return buffer.toString("utf8", 3);', 'return buffer.toString("utf8", 0);'),
-            ('if (len >= 2 && buffer[0] === 0xFF && buffer[1] === 0xFE)', 'if (false)'),
-            ('buffer[i] = buffer[i + 1];', 'buffer[i] = temp;'),
+            ('if (len >= 2 && buffer[0]! === 0xFF && buffer[1]! === 0xFE)', 'if (false)'),
+            ('buffer[i] = buffer[i + 1]!;', 'buffer[i] = temp;'),
             ('return undefined;', 'return "";'),
             ('data = byteOrderMarkIndicator + data;', 'data = data;'),
             ('return stat.isFile();', 'return stat.isDirectory();'),

@@ -1,7 +1,8 @@
 # tsc Node host fixtures
 
 25 standalone programs cover the 19 requested System members as TypeScript
-6.0.3's getNodeSystem implements them. The census declares 44 System members;
+6.0.3's adapted getNodeSystem implements them. See [ADAPTED.md](ADAPTED.md)
+for source pins, per-fixture changes and current loader results. The census declares 44 System members;
 33 are reached at 196 sites. Its separate Node-derived ledger has 126 accesses.
 These populations overlap and must not be added. In the two measured noEmit
 workloads, readFile runs 53 times each, fileExists and directoryExists twice,
@@ -39,7 +40,8 @@ scratch directories before exiting.
 
 The hardest case is 25. Its matcher, glob/path helpers and Debug assertion
 functions are copied from upstream rather than replaced by a different walker.
-A source audit checks 124 function/method spans against the pinned source using
+A source audit checks 164 declarations, including 126 function/method spans,
+against the actual stage3/apply.sh output using
 canonical parsed syntax. Function statements retain their original operators,
 control flow, calls and literals. Removing the outer scope, indentation and
 CRLF formatting does not change them. Interfaces and helper types are included
@@ -51,20 +53,20 @@ explicitly reject the active-session case in their scaffolding. The executing
 filename and case-probe platform are controlled driver inputs.
 
 `status.json` has the requested schema and records Node stdout, stderr and exit,
-plus the exact output of `go run ./cmd/adamic build` at current main ef3d907.
-All 25 are Checker: current main has no declarations for these node: modules.
-Other checker findings, including upstream helper contracts outside the sound
-library, are retained verbatim. No fixture reaches native execution, so this is
-not evidence of native host correctness and no silent native miscompile was
-observed. The check runs a native binary and compares all three observations
-if any future fixture builds. It never treats a generic build/tool failure as
-Checker. A later library/compiler revision should rerecord its own outcomes.
+plus canonical stage 0 diagnostics under the library loader pinned in ADAPTED.md.
+All 25 Node observations are unchanged. Current results are 1 Checker,
+8 Refused, 15 NotYet and 1 Compiles. Stock tsc agrees with the sole checker
+diagnostic; other rows name the compiler's refusal or missing lowering rule.
+Fixture 11 passed native byte comparison, sanitizer checks and the Linux leak
+check. source-spans.json preserves the precise adapted-source provenance.
+Historical validation.md describes the initial pristine-source recording;
+ADAPTED.md supersedes its source and stage 0 results.
 
 After sourcing the setup environment, reproduce from the Adamic root:
 
 ```sh
-python3 stage3/fixtures/host/check.py --mutants --logs /tmp/host-fixture-check > /tmp/host-fixture-check.log 2>&1
-NODE_PATH=<stock-typescript-6.0.3-node_modules> node stage3/fixtures/host/source-audit.cjs <upstream-v6.0.3-tree> > /tmp/host-source-audit.log 2>&1
+python3 stage3/fixtures/host/check.py --compiler-repo <scratch-stage3-library-merge> --mutants --logs /tmp/host-fixture-check > /tmp/host-fixture-check.log 2>&1
+NODE_PATH=<stock-typescript-6.0.3-node_modules> node stage3/fixtures/host/source-audit.cjs <stage3-apply-output> > /tmp/host-source-audit.log 2>&1
 ```
 
 The first command independently invokes
