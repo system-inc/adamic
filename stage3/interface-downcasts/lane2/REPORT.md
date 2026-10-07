@@ -1,111 +1,138 @@
-Built standalone array-contract and callable-admission hooks, JavaScript read/call helpers, and seven source witnesses; compiler dispatch integration is incomplete.
-Implementation: 8346b28c; dependency merge: 832e6082 from lane 1 tip 00d6006a, including current main 71d7e49.
-Commands: touched-package tests, vet, focused Node helper tests, and the existing checked-view oracle pass; source witnesses still fail compiler admission.
-Mutants: array kind, selected element validation, callable kind, and unproven signature acceptance each fail a semantic assertion, with no build-warning kill.
-Not covered: native array metadata/emission, shared dispatch/IR wiring, implementation certificates, tuples, iteration/callback/mutator integration, and whole-corpus lowering.
+Built integrated array and callable checked views in lowering, native C and JavaScript, including the unchanged sameMap generic array probe.
+Commits: dependency merge ea68e9b5 from lane 1 609ed395; implementation 9fc5c01ab850d92b24b66d2a6782f2a820bdb929.
+Commands: complete lower/JavaScript/native package tests, focused checked-view oracles on both backends, Node controls and vet pass; timing details below.
+Mutants: integrated array kind, element kind and opaque signature acceptance are caught by semantic assertions; helper callable-kind mutant also caught.
+Not covered: full TypeScript compiler lowering census, lane 3 erasure, tuples, mixed scalar unions, array callable elements, opaque signatures and unsupported array consumers.
 
-## Observations
+## Implemented behavior
 
-The lane plan at `4dbf3b6a` reserves shared IR, dispatch, readiness, runtime headers,
-object runtime and counts for lane 1. Its proposed `ir.ViewContractID` and
-`internal/ir/views.go` do not exist on that tip. This branch adds no edits in those
-territories. Helpers are intentionally not enabled by the current compiler.
+Both array families use lane 1's contract registry and `view()` entry point.
+Reading an array field checks presence, initialization and array kind without
+walking its elements. Selected indexed, `.at`, loop and callback reads validate
+the declared element representation and literal contract. Object elements use
+lane 1's transitive field contracts and tagged object-union checks. Aliases retain
+identity: the alias-mutation fixture succeeds once and then fails after a write.
+Out-of-range indexes return undefined; a present undefined element fails a
+required number contract. Bad reads stop with exit 70 and expression, expected
+contract and found category. No check erasure is claimed.
 
-`viewArrayContract(node, target, buildElement)` identifies mutable/readonly arrays
-and delegates their element type to the shared recursive builder exactly once.
-Nested builder errors propagate. Tuples return NotYet because positional,
-optional and rest contracts need a descriptor that this hook cannot yet express.
-The callback currently returns error only; lane 1 can capture its interned ID in
-an adapter without assigning a second ID namespace here.
+`map`, `forEach`, `filter`, `some`, `every`, `find`, `findIndex`, `reduce`, `slice`,
+`at`, `pop`, `push`, indexed writes and `for..of` have named read/storage hooks.
+Consumers requiring another conversion path, including join, sort, concat and
+spreads, fail closed in a program containing array views. The policy is
+conservative and program-wide, including reads outside the immediate cast path.
+Optional/nullish contracts remain subject to lane 1's unsupported-contract rules.
 
-JavaScript `emitViewArrayFieldRead` uses shared presence/readiness state, then
-checks array kind without scanning. `emitViewArrayRead` calls the supplied
-contract checker for the selected value on every read. That checker returns the
-value or corresponding transitive view. No proxy, copy, or cached element proof
-hides writes by another alias. Missing indexes pass undefined to the contract
-checker so an optional element contract can preserve undefined semantics.
+Callable field reads and calls check presence, readiness and function kind.
+A closed-program census of same-named implementations supplies conservative
+signature evidence: strict parameter variance, result variance, physical
+representations, nominal ancestry and mutable-slot relations must agree.
+Bodies must be visible; generic/rest/optional/overloaded signatures and opaque
+implementations are not certified. Escaping member reads require that same proof
+so a captured alias cannot bypass call admission. A discarded read can use only
+the presence/kind checks. This is an overapproximation, not lane 3's allocation
+flow. Compatible tagged class constructions preserve existing free method
+dispatch after the tag check; unknown class identity keeps the refusal.
 
-Callable reads check readiness and function kind, including AdamicClosure's
-backend representation. Method lookup preserves the backend's explicit receiver
-convention; field closures use adamicCall. `viewCallableCall` refuses an
-unproven signature, naming the member and explaining that runtime checking cannot
-establish it. Its boolean evidence input must be supplied by the implementation
-certificate, not an asserted type or typeof-function test. These helpers do not
-produce that certificate. A class method test verifies calling convention only,
-not class-tag proof erasure or free compiler emission.
+Opaque calls pin this message:
 
-Tests execute the helper runtime on Node. Positive selected reads, object element
-identity, closures and methods also have plain Node controls. Negative cases pin
-exit 70 and stderr. They cover lazy malformed second elements, readonly access
-with a mutable alias, sparse elements, optional absent indexes, nested malformed
-payload, single evaluation, missing/uninitialized array fields and callables, and
-non-function/non-array kinds. They are helper tests, not end-to-end new compiler
-oracles. No count rows are supplied because the witnesses do not lower yet.
+    Adamic 0.1 refuses a checked view call to member Runner.run; its signature cannot be checked at runtime and no compatible implementation is proven;
 
-## Integration handoff
+## Authorized shared hooks and metadata
 
-1. In the common contract builder, route arrays to viewArrayContract and capture
-   the recursive element contract ID. Add positional tuple descriptors separately.
-2. Carry element contracts and source expression text through field reads, aliases,
-   parameters, returns, captures, element reads, iteration and callback dispatch.
-   Include viewArraysRuntime/viewCallablesRuntime with fieldReadinessRuntime.
-   Wire the emitViewArrayFieldRead/Read and emitViewCallableRead/Call helpers.
-3. Native arrays currently have untagged adamic_value elements and a boolean
-   references flag. That cannot distinguish number from boolean, or certify a
-   per-element union discriminant. Shared semantic metadata must describe element
-   storage and conversion before lane 2 can implement a sound native check.
-   A references-only guard must not be advertised as an element type check.
-   Metadata must survive stores, mutation, copying and alias effects.
-4. Supply class/closure/intrinsic implementation certificates. Do not pass true
-   to viewCallableCall based on a function tag or asserted signature. Proven
-   class methods can keep existing direct dispatch; opaque callbacks stay refused.
-5. Promote the seven .a witnesses to lane-owned end-to-end oracle tests after
-   admission is wired; shared count regeneration remains lane 1's responsibility.
+The October 7 approval covers the small dispatch and IR integration edits:
 
-The direct merge of origin/main (71d7e49) conflicted in lane 1 files and was
-aborted. A final dependency fetch found lane 1 tip 00d6006a, which includes its
-current-main conflict resolutions. Merging that tip succeeded as 832e6082.
-Current origin/main is an ancestor of this branch; no shared files were manually
-edited here. Shared contract IDs/adapters are still absent at the updated tip.
+- Lower dispatch: `viewArrayCast`, `viewProvenClassCast`, `viewArrayFields`,
+  `viewCallableFieldUses`; registration through `viewArrayContractHook` and
+  `viewCallableContractHook` from the two lane-owned files.
+- Read lowering/finalization: `markViewArrayRead`, `viewArrayUse`,
+  `markProgramViewArrayRead`, `markProgramViewArrayUse`; readiness retains
+  callable reads and resolves contracts lowered after earlier reads.
+- IR: `HasArrayViews` and operand-free `ArrayViewRead`; array index carries
+  contract/type IDs, literals, source text, required-read and undefined facts.
+  Loop/map/visit/reduce/pop operations carry that metadata separately from their
+  executable expressions, preserving existing CFG and ownership traversal.
+- Native: `evaluate` wraps existing `evaluateWithoutViewArrays` to stamp
+  allocations, `emitViewArrayRead`, `viewArrayElementSlot`, `viewArrayMutation`,
+  `emitViewArrayPop`, and `emitViewCallableRead` connect existing dispatches.
+- JavaScript: `value` wraps `valueWithoutViewArrays`; `emitViewArrayRead`,
+  `viewArrayElementCheck`, `viewArrayChecker`, `emitViewCallableProperty` connect
+  existing read/call/loop/array-operation dispatches.
+- Shared runtime/header: include the new array/callable headers, recognize closure
+  kind in checked object reads, and preserve storage metadata in array copies.
+  Array-field writes without a source-slot certificate remain refused.
 
-## Site share
+`internal/native/runtime/view_arrays.h` adds one physical-storage byte embedded
+in every native array after its heap header. It describes actual allocation
+storage, never an asserted target type; zero is uncertified scalar storage.
+It survives slice/copy paths and aliases. Selected reads inspect reference heap
+kinds and safely unbox numeric/boolean values, or unpack maybe-numbers. They do
+not reinterpret unproven scalar bits. Runtime helpers and metadata live in new
+`view_arrays.c/.h`; callable method/closure lookup lives in `view_callables.c/.h`.
+No new allocation or garbage collector is introduced by this metadata.
 
-The unchanged per-site audit has 2,936 entries: 1,758 tagged and 1,178 untagged,
-all undecidable. The plan's primary lane 2 partition is 25 tagged + 1,046 untagged
-= 1,071. Untagged dependencies include 1,010 arrays and 71 callable contracts,
-with 35 overlapping. No shared dispatch behavior changes, so this checkpoint
-unlocks **zero additional sites**. Before and after successful-lowering totals
-were not remeasured over the TypeScript compiler corpus. Contract eligibility is
-not substituted for that measurement; certified conformance remains zero in the
-unchanged audit. No erasure or speedup is claimed.
+Protected emit.go, lower.go, native.go and oracle_test.go were not edited.
+No code was copied from cohere. Shared counts.md and the original audit are not
+rewritten by this lane.
 
-## Validation
+## sameMap and the 2,936-site audit
 
-All commands source /workspace/adamic-tools/env.sh and set
-GOPROXY='https://proxy.golang.org|direct'. nproc reports 5, cpu.max 400000/100000.
-Final setup reports Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s,
-build cache warm 253s, done 253s. Go 1.27.1, Node 24.19.0, clang 20.1.8.
+The exact probe from origin/codex/stage3-parser-proof at 2179dd8 is retained as
+`native-generic-array-cast.a`. Its parser BLOCKERS row 2 is core.ts:195; its
+original stock-source audit row is core.ts:356:37:
 
-The initial setup overlapped my checkout and failed cache warming: it reported
-missing internal/fuzz/overrides.go, undefined l.interfaceCast/l.view, missing
-CheckedFields/Uninitialized IR fields and readiness helpers, then too many errors.
-I reran setup on the stable branch; it completed. This was an invalid setup run,
-not evidence of a stable branch build defect.
+    array.slice(0, i) as unknown[] as U[]
 
-- go test ./internal/lower ./internal/javascript -count=1 -timeout 30m:
-  after dependency merge: lower 19.704s, javascript 1.328s, both pass.
-- go vet ./internal/lower ./internal/javascript: exit 0, no output.
-- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
-  TestDefaultTaggedSourceViews -count=1 -timeout 30m: after merge pass, 24.974s.
-- Focused helper tests and mutants: see committed logs. Mutant array-kind fails
-  TestViewArraysNode/kind; element fails TestViewArraysNode/second; signature fails
-  TestViewCallableSignature; callable-kind fails TestViewCallablesNode/kind.
-  Each mutation is restored in a finally block.
-- Source Node runs all seven witnesses, exit 0: array field 2, selected element 7,
-  object element ok, class method 10, function field 8, non-array undefined,
-  opaque signature 7. Compiler probes reach array NotYet, class-cast refusal,
-  and callable-field refusal. These are unresolved integration blockers.
+Before integration the parser report records adamic/no-unchecked-cast and Node
+stdout `1`. After integration the unchanged `prefix<number, number>` probe
+lowers and executes on native debug, native release and JavaScript with stdout
+`1`, exactly matching Node. A `prefix<number, string>` witness stops when its
+number element is read as string, proving that a resolved type parameter uses
+the same lazy element rule. Its Node control prints `1` because Node erases types.
 
-No full gate, native lane 2 test, updated audit lowering census, or benchmark ran.
-Logs are in this directory's logs/ subtree. The reproducible mutant runner writes
-its individual logs under /tmp/adamic-view-lane2-mutants/.
+One corrected implementation finding matters: an early array hook compared the
+mutable relation backwards and reported this probe blocked. Comparing source to
+target is the correct write-safety relation and admits the unchanged concrete
+probe. The final tests replace that earlier observation; failure logs are retained
+as development evidence, not final acceptance results.
+
+The original audit still has 2,936 undecidable shape-conformance rows. Lane 2's
+primary partition remains 1,071: 25 tagged and 1,046 untagged. Its untagged
+families include 1,010 arrays and 71 callables with 35 overlapping. Verified
+reduced witnesses tied to original sites increase from zero to one, the sameMap
+row above. The other 1,070 primary-partition sites were not remeasured. Whole-file
+corpus lowering successes are not measured; no eligibility tally is presented as
+whole-program lowering, and no additional conformance certificates are claimed.
+
+## Validation and limits
+
+All Go commands source /workspace/adamic-tools/env.sh and set
+GOPROXY='https://proxy.golang.org|direct'. Setup succeeded: Node 0.041s, Go 0.056s,
+submodule 0.180s, markdown 0.184s, clang 0.508s, build 57.019s, warm 57.205s,
+done 57.259s. nproc=5, cpu.max=400000/100000. Go 1.27.1, clang 20.1.8,
+Node 24.19.0.
+
+- Complete touched packages: `go test ./internal/lower ./internal/javascript
+  ./internal/native -count=1 -timeout 30m`: lower 27.903s, JavaScript 0.897s,
+  native 229.906s, pass. Final complete lower/JavaScript tests pass in
+  19.131s and 0.806s respectively. Subsequent final changes are covered by the focused
+  oracle and final complete lower/JavaScript run; no repeated full native gate.
+- Final focused command: `go test ./internal/lower ./internal/javascript
+  ./internal/oracle -run 'TestCheckedView|TestView|TestDefaultTaggedSourceViews'
+  -count=1 -timeout 30m`: lower 0.656s, JavaScript 0.699s, oracle 24.883s, pass.
+  Positive outputs match Node; deliberate malformed views pin exit 70 and stderr
+  on native debug, native release and JavaScript. Node controls for all 26 source
+  fixtures are saved separately in node-controls.json.
+- `go vet ./internal/lower ./internal/javascript ./internal/native`: pass.
+- Integrated mutants, restored in finally blocks: dropping array kind fails
+  TestCheckedViewArrays/array-length-kind; dropping selected element kind fails
+  TestCheckedViewArrays/array-second; accepting an opaque signature fails
+  TestCheckedViewOpaqueSignature. The read mutants produce executable debug and
+  release C and fail semantic output/exit assertions, not clang warnings.
+- The helper mutation runner additionally drops callable kind and is caught by
+  TestViewCallablesNode/kind, alongside its array/element/signature mutants.
+
+Logs in logs/integration-* record final commands, Node observations and mutant
+failures. The full gate, original-source TypeScript corpus build and benchmarks
+were not run. Unsupported families stop explicitly. Current origin/main
+71d7e491 is already an ancestor through the lane 1 dependency merge.

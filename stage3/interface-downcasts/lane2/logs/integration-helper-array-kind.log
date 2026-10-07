@@ -1,0 +1,6 @@
+--- FAIL: TestViewArraysNode (0.17s)
+    --- FAIL: TestViewArraysNode/kind (0.06s)
+        view_arrays_test.go:60: exit 0, stdout "", stderr ""; want 70, "", "adamic: panic: field read failed: node.items expected number[], found object\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/javascript	0.170s
+FAIL
