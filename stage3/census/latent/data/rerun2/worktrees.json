@@ -1,0 +1,46 @@
+[
+  {
+    "name": "cumulative-2",
+    "tree": "/tmp/latent2-cumulative",
+    "main": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "features": [
+      "codex/stage3-optional-declarations",
+      "codex/stage3-indexed-reads",
+      "codex/stage3-regex-captures",
+      "codex/fallthrough-and-implicit-returns",
+      "codex/flag-enums"
+    ],
+    "pinned_commits": {
+      "origin/main": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "origin/codex/stage3-optional-declarations": "b7e379e054fc245b5a7d002d5abc62ec5ea42b20",
+      "origin/codex/stage3-indexed-reads": "ebae9b2f9e58f2ff42264ba8e075b9f117729d4c",
+      "origin/codex/stage3-regex-captures": "347b594807eba1e37b00a4566921846d1a2b7bb1",
+      "origin/codex/fallthrough-and-implicit-returns": "5f77d3315f3a6472ee2a6cc28e23e2f7cb1eb8ff",
+      "origin/codex/flag-enums": "246ecc073993de6a5f1bcb64346cde7938deec43"
+    },
+    "head": "5d6cac54cc4a5165a178c1f5ec4bc3147559edb0"
+  },
+  {
+    "name": "cumulative-2-nested",
+    "tree": "/tmp/latent2-nested",
+    "main": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "features": [
+      "codex/stage3-optional-declarations",
+      "codex/stage3-indexed-reads",
+      "codex/stage3-regex-captures",
+      "codex/fallthrough-and-implicit-returns",
+      "codex/flag-enums",
+      "codex/nested-functions"
+    ],
+    "pinned_commits": {
+      "origin/main": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "origin/codex/stage3-optional-declarations": "b7e379e054fc245b5a7d002d5abc62ec5ea42b20",
+      "origin/codex/stage3-indexed-reads": "ebae9b2f9e58f2ff42264ba8e075b9f117729d4c",
+      "origin/codex/stage3-regex-captures": "347b594807eba1e37b00a4566921846d1a2b7bb1",
+      "origin/codex/fallthrough-and-implicit-returns": "5f77d3315f3a6472ee2a6cc28e23e2f7cb1eb8ff",
+      "origin/codex/flag-enums": "246ecc073993de6a5f1bcb64346cde7938deec43",
+      "origin/codex/nested-functions": "59fe216b148efb2d1bc01b9e080541cad1d53198"
+    },
+    "head": "8231a3258298ba59b21c60dbe265162ff8621869"
+  }
+]
