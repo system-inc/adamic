@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/workspace/wave-06-landing2-react/effect.tsx",
+    "source": "type Dispatch<S>=(value:S)=>void;declare function useState(v:number):[number,Dispatch<number>];declare function useEffect(fn:()=>void):void;declare function useMemo(fn:()=>number):number;function Component(){const[x,setX]=useState(0);useEffect(()=>{setX(1)});return x;}\nexport {};\n",
+    "sha256": "2fe91d8f842cf74a728972213ae960088db9a76ea598e918c0f5714e8a8edf5d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-react/render.tsx",
+    "source": "type Dispatch<S>=(value:S)=>void;declare function useState(v:number):[number,Dispatch<number>];declare function useEffect(fn:()=>void):void;declare function useMemo(fn:()=>number):number;function Component(){const[x,setX]=useState(0);setX(1);return x;}\nexport {};\n",
+    "sha256": "47182a3911968e461852da7a121e2bd911c0d3874a256692962790ac51e42295"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-react/static.tsx",
+    "source": "function Component(){const Inner = () => null;return <Inner/>;}\nexport {};\n",
+    "sha256": "bac385ff1046adf559df9c1eb8f04e4f26fa5875fe4a12442ff5350df5ef77d2"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-react/memo.tsx",
+    "source": "type Dispatch<S>=(value:S)=>void;declare function useState(v:number):[number,Dispatch<number>];declare function useEffect(fn:()=>void):void;declare function useMemo(fn:()=>number):number;function Component(){const[x,setX]=useState(0);useMemo(()=>{setX(1);return 1;});return x;}\nexport {};\n",
+    "sha256": "7551931b6f2bf88b498301ddf0da090e9e9160b0510cb7f87c4e9c1466b7d032"
+  }
+]

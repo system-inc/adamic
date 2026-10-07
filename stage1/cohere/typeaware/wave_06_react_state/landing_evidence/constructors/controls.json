@@ -1,0 +1,547 @@
+[
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-0.a",
+    "source": "declare const foo:any;declare const method:string;new Function(\"return 1\");\nexport {};",
+    "sha256": "dafa083ec15b1cf80845e0949a81ff5d7803e1a51f31cba42ead230ce49dff4c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-1.a",
+    "source": "declare const foo:any;declare const method:string;Function(\"return 1\");\nexport {};",
+    "sha256": "e9347961e7ac35bd25180eb46b7b6d90eb5ad657def2fc6d7c32b6ba86cef48e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-2.a",
+    "source": "declare const foo:any;declare const method:string;(Function)(\"return 1\");\nexport {};",
+    "sha256": "7113c2a56da547ab9cac90b8635ec7c4ff1c0511fb923fb68631612de3bc1f05"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-3.a",
+    "source": "declare const foo:any;declare const method:string;new ((Function))(\"return 1\");\nexport {};",
+    "sha256": "46b4413cbfa1096ee1ec79562afd3c78f5bc0fb06b9ff12e5e7aa79460c38799"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-4.a",
+    "source": "declare const foo:any;declare const method:string;Function.call(null,\"return 1\");\nexport {};",
+    "sha256": "abf4e962d623da30631ee7fcde4232ce40a12c70107613eb445fffc64079d411"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-5.a",
+    "source": "declare const foo:any;declare const method:string;Function.apply(null,[\"return 1\"]);\nexport {};",
+    "sha256": "c4ab1ba5c79ea71900a05c930deb8a49b536eef6694bc5884417927f73f575ce"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-6.a",
+    "source": "declare const foo:any;declare const method:string;Function.bind(null,\"return 1\")();\nexport {};",
+    "sha256": "3242a4be8ea084b1373efdaa6ebb18a605f0b9026fe83605bd7c90b093d8f927"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-7.a",
+    "source": "declare const foo:any;declare const method:string;Function[\"call\"](null,\"return 1\");\nexport {};",
+    "sha256": "d893a8fd6bdddbd0cd2fd7ae2e771adf76fad501c8d28e171d8e7e0dd0e5c2d2"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-8.a",
+    "source": "declare const foo:any;declare const method:string;Function[`bind`](null,\"return 1\");\nexport {};",
+    "sha256": "95b21e969a2f1d22a426a581daf1ead601993e7ad0be730986663e10948fb182"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-9.a",
+    "source": "declare const foo:any;declare const method:string;(Function?.call)(null,\"return 1\");\nexport {};",
+    "sha256": "150ae257787801c3e2b7f54fc19e087e763fcfc3e5d76c7461c062847911aa0d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-10.a",
+    "source": "declare const foo:any;declare const method:string;Function?.(\"return 1\");\nexport {};",
+    "sha256": "c88dbf0c09038414e2e220979617dc081d0b16c4306f675f16f7ef20289cdaff"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-11.a",
+    "source": "declare const foo:any;declare const method:string;Function[(\"call\")](null,\"return 1\");\nexport {};",
+    "sha256": "0bf80de2d51873805f300475e7e0acd987e20ac294fa20da4920b5c24d76b58b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-12.a",
+    "source": "declare const foo:any;declare const method:string;Function.toString();\nexport {};",
+    "sha256": "e1131d8db85cd1c34e88d8249184225b70f89835b23e325c06439b5f452b2d09"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-13.a",
+    "source": "declare const foo:any;declare const method:string;Function.bind;\nexport {};",
+    "sha256": "7ba063414d376f4a6b2e114c975ec12f475c39ade5e599371c0232a81c923c94"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-14.a",
+    "source": "declare const foo:any;declare const method:string;foo.Function.call(null);\nexport {};",
+    "sha256": "b4fff0987568a7353cc64b239adf9e12ab29a635f1526ce58a0a1c21c42dff32"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-15.a",
+    "source": "declare const foo:any;declare const method:string;(foo,Function).call(null);\nexport {};",
+    "sha256": "a9311f616d9134202d230f0afad03b3f340080cbdbcf0a4ec142619e8fc59cf9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-16.a",
+    "source": "declare const foo:any;declare const method:string;Function.Function.call(null);\nexport {};",
+    "sha256": "82fcaf4df95cb0124599bcbbd40b758647dde88a9814b2c7bfdd13b016005fc0"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-17.a",
+    "source": "declare const foo:any;declare const method:string;foo().Function.call(null);\nexport {};",
+    "sha256": "54697443cacde73d249b929b71cdaa3527abef14a559ba39285772a0f07eb8fb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-18.a",
+    "source": "declare const foo:any;declare const method:string;Function[method](null);\nexport {};",
+    "sha256": "5aa673f189442e8f0669f9a6f8bd5504de07b07affc33e07e3c8ff60d0cd5a2d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-19.a",
+    "source": "declare const foo:any;declare const method:string;Function[\"ca\"+\"ll\"](null);\nexport {};",
+    "sha256": "e77ddff28ad321c7e94b72ed57d3d85fb7ec905b60c9d0a378cca75d82a85189"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-20.a",
+    "source": "declare const foo:any;declare const method:string;new Function;;\nexport {};",
+    "sha256": "b2b6a0048aba56dbd658b079957720bb30ad890c6c7278d289038a35ce5c3eba"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-21.a",
+    "source": "declare const foo:any;declare const method:string;class Function{};new Function();\nexport {};",
+    "sha256": "3e205724d2e7ba07457bc66412b01111becaa42c63cea6b7ecb77a09878e889e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-22.a",
+    "source": "declare const foo:any;declare const method:string;function f(Function:any){Function(\"x\")};\nexport {};",
+    "sha256": "80d66d4388092d86f501d38b02b50b080644397347e5d0ad8ae52697645d3c33"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-23.a",
+    "source": "declare const foo:any;declare const method:string;function f(){class Function{}};new Function(\"x\");\nexport {};",
+    "sha256": "438a61aeadd78217b2f3f3a1051d491d392bb15e6919785e3a59fb5ac99a372f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-24.a",
+    "source": "declare const foo:any;declare const method:string;const alias=Function;new alias(\"x\");\nexport {};",
+    "sha256": "99012d1d9319e79c29ee445eb184708476bc41b84fbef496d86907e5ddc5d249"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-25.a",
+    "source": "declare const foo:any;declare const method:string;function Function(){};Function(\"x\");\nexport {};",
+    "sha256": "da1f25b523ce70b286d2c180c8061243527b96f0b36070d67a76bac01276cb5a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-26.a",
+    "source": "declare const foo:any;declare const method:string;const Function=foo;Function.call(null);\nexport {};",
+    "sha256": "cdaf541f7d5ab153388fc3c4700c1f8e95ef6d1853270ad3dddf5185f4b48663"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-27.a",
+    "source": "declare const foo:any;declare const method:string;import {Function} from \"./helpers.a\";new Function(\"x\");\nexport {};",
+    "sha256": "a1f1b6016ae8934c4af1c235af6a689b559d1e4028df17ee74687a6461c3efd9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-28.a",
+    "source": "declare const foo:any;declare const method:string;new Symbol(1);\nexport {};",
+    "sha256": "010db7af81a0c95e1985fc8a139a3a2db20add7079150225a499a0c93642e6d1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-29.a",
+    "source": "declare const foo:any;declare const method:string;new (Symbol)(1);\nexport {};",
+    "sha256": "4a63b57ed05124441bca36196e6df206c2c5ae4339636e4fe46f5e552a8fe701"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-30.a",
+    "source": "declare const foo:any;declare const method:string;new ((Symbol))(1);\nexport {};",
+    "sha256": "0794180dc53abc4f6b8e542b79a146928ddf3461dd0b67ac65227b71692f3413"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-31.a",
+    "source": "declare const foo:any;declare const method:string;Symbol(1);\nexport {};",
+    "sha256": "7402cfcf58582111e47fe6ef2c0e637cb72a368dde1c029d594cfe31b9efaa84"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-32.a",
+    "source": "declare const foo:any;declare const method:string;new Symbol;\nexport {};",
+    "sha256": "67723bd0a38f2e0ac7ba1594477287f241c97e78da25eb6ca60c5c9a0ce60d3f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-33.a",
+    "source": "declare const foo:any;declare const method:string;function f(Symbol:any){return new Symbol(1)};\nexport {};",
+    "sha256": "f86728273b2223592665d19039b0d299d05bde5824698eef56fbc1e7352f4d3d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-34.a",
+    "source": "declare const foo:any;declare const method:string;class Symbol{};new Symbol(1);\nexport {};",
+    "sha256": "5d014e5a4b43eff794605c958f2f687c2c513d03b10aa3fb5b7f0be3ecccd557"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-35.a",
+    "source": "declare const foo:any;declare const method:string;function f(){class Symbol{}};new Symbol(1);\nexport {};",
+    "sha256": "df4c5da0a15d1969797262d3c683f4215bf0bea8ed03b3d0676e706b7107b1d8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-36.a",
+    "source": "declare const foo:any;declare const method:string;new globalThis.Symbol(1);\nexport {};",
+    "sha256": "c6725a7538aabc57a59515aacf6c78fb006069635a41e739151b2219f79c17d8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-37.a",
+    "source": "declare const foo:any;declare const method:string;const Symbol=foo;new Symbol(1);\nexport {};",
+    "sha256": "7b12d0f4ed80a3c1d07b0d60b67c7d97aef1deb691ebe1db17ca08f8ca4745c6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-38.a",
+    "source": "declare const foo:any;declare const method:string;import {Symbol} from \"./helpers.a\";new Symbol(1);\nexport {};",
+    "sha256": "8c7ea224d0a1713cd4553de56b18d85d6ab466225f15f15c9d2949550004516b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-39.a",
+    "source": "declare const foo:any;declare const method:string;{const Symbol=foo;new Symbol(1)}new Symbol(1);\nexport {};",
+    "sha256": "022450410b2b26847e16eaf5b3b6656d44872823b1baf2a59ebbcda68574a0c7"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-40.a",
+    "source": "declare const foo:any;declare const method:string;if(foo){new Symbol(1)}else{var Symbol=foo};\nexport {};",
+    "sha256": "789e2941bad39eaf19dfb9e9b76e0957b76d12b9433aa93075ad5e70e2166f34"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-41.a",
+    "source": "declare const foo:any;declare const method:string;new foo(Symbol);\nexport {};",
+    "sha256": "57275f4a4df697edb81f74289b74ee36773e7d367e3113562f5eaa12754b23a5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-42.a",
+    "source": "declare const foo:any;declare const method:string;new BigInt(1);\nexport {};",
+    "sha256": "9bebb3f1dc30243924aa49cc8d6ee8f55086f30f7bc31d196717785006bd9fd9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-43.a",
+    "source": "declare const foo:any;declare const method:string;new (BigInt)(1);\nexport {};",
+    "sha256": "f71339f80ba26f87d3e43c7d112cd196a7eb05fe748d3de672e3678c41748b8b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-44.a",
+    "source": "declare const foo:any;declare const method:string;new ((BigInt))(1);\nexport {};",
+    "sha256": "16c3a82ce89934995eec08d2c5693aa3741363e26524ffaefef65819cf5a0baa"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-45.a",
+    "source": "declare const foo:any;declare const method:string;BigInt(1);\nexport {};",
+    "sha256": "c9287a82d036f97803c0c5860fa9c8ae5e5a180cb91458cbcf61990aeb2bd92c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-46.a",
+    "source": "declare const foo:any;declare const method:string;new BigInt;\nexport {};",
+    "sha256": "31784c6f99c2ecc3ff0468f77c8b2d61ff057dbb680eb3f73f80e5f001632194"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-47.a",
+    "source": "declare const foo:any;declare const method:string;function f(BigInt:any){return new BigInt(1)};\nexport {};",
+    "sha256": "9588e47ae4eb7f68e9500c7b1239201e89990983476c9673a273e6c8d08b37ef"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-48.a",
+    "source": "declare const foo:any;declare const method:string;class BigInt{};new BigInt(1);\nexport {};",
+    "sha256": "8ead64054ca6adb4e17eea9159d70c04ad692e8c673fd9e7e967a6da2269a7bb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-49.a",
+    "source": "declare const foo:any;declare const method:string;function f(){class BigInt{}};new BigInt(1);\nexport {};",
+    "sha256": "348373794afb90811eed3edbedf38826e3f40c21824d24865c0e9c12b702bd32"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-50.a",
+    "source": "declare const foo:any;declare const method:string;new globalThis.BigInt(1);\nexport {};",
+    "sha256": "8d7e641991248ab42bc2cc5c4a60cdcfdbadbc10463f169352bfefc7882178c0"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-51.a",
+    "source": "declare const foo:any;declare const method:string;const BigInt=foo;new BigInt(1);\nexport {};",
+    "sha256": "8acc36697e3883488ae86b94bc290efea922797ef082849f0306627c12c64d0e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-52.a",
+    "source": "declare const foo:any;declare const method:string;import {BigInt} from \"./helpers.a\";new BigInt(1);\nexport {};",
+    "sha256": "22b2062225980e320a7f46cd350da9e754552f6eb7067f0bbd508a39309e90cc"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-53.a",
+    "source": "declare const foo:any;declare const method:string;{const BigInt=foo;new BigInt(1)}new BigInt(1);\nexport {};",
+    "sha256": "fbea51a5e65ce3fa86e5f3fb4e02c04b1e0c76ed7ce364b5fb335093abbbdcde"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-54.a",
+    "source": "declare const foo:any;declare const method:string;if(foo){new BigInt(1)}else{var BigInt=foo};\nexport {};",
+    "sha256": "e17f3dcf9879c6cced752f779a13e1bf8147e83ad8c1319b837a0a99eeb7a428"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-55.a",
+    "source": "declare const foo:any;declare const method:string;new foo(BigInt);\nexport {};",
+    "sha256": "55f1febdf1c7799a12a1bd6dc8618749d1c466e3ccbdfc5a41101f8b92a4a38e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-56.a",
+    "source": "declare const foo:any;declare const method:string;new String(1);\nexport {};",
+    "sha256": "584c1731f2d2a0bf87452dad60cd1a17da434aa7ca3614420858d400c70288f0"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-57.a",
+    "source": "declare const foo:any;declare const method:string;new (String)(1);\nexport {};",
+    "sha256": "77bfe9ea739856a1f10df05df475674b660f56d98decf62f6c62355c332cdff4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-58.a",
+    "source": "declare const foo:any;declare const method:string;new ((String))(1);\nexport {};",
+    "sha256": "13e949c5cd5a9eb9e921a63fe8f2c44f3676561906f8c5856184fbba42b26b3e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-59.a",
+    "source": "declare const foo:any;declare const method:string;String(1);\nexport {};",
+    "sha256": "ab877f403e80ee1195e01b722ac4fba024d1aa40b8b0331e4cf9f1bbeb826b49"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-60.a",
+    "source": "declare const foo:any;declare const method:string;new String;\nexport {};",
+    "sha256": "ca038df8db2f4821a992457a1836988ad68b0225a3a4a26bd0c5f3585007fff9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-61.a",
+    "source": "declare const foo:any;declare const method:string;function f(String:any){return new String(1)};\nexport {};",
+    "sha256": "885831aed81a3879e799bd1317d8f8648889e51922517b78c1219bfd5fa8a211"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-62.a",
+    "source": "declare const foo:any;declare const method:string;class String{};new String(1);\nexport {};",
+    "sha256": "d64e92ce73d474e1c8256ee504b46ea2f6db946ed775fa9e314c7bfb06189af7"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-63.a",
+    "source": "declare const foo:any;declare const method:string;function f(){class String{}};new String(1);\nexport {};",
+    "sha256": "36a49194dc2691064a0b5973b0514eb91bd4bfdd7bfcff9ff97878c066fdc4d0"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-64.a",
+    "source": "declare const foo:any;declare const method:string;new globalThis.String(1);\nexport {};",
+    "sha256": "4e585a60152c647e26d0ac302e783edd73a4d717b7f0fac23926ad4c286a390a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-65.a",
+    "source": "declare const foo:any;declare const method:string;const String=foo;new String(1);\nexport {};",
+    "sha256": "8d2e432d650abf3078ecdb35d2c2652ca8838bf5e88aa1fde11385f7dcebde87"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-66.a",
+    "source": "declare const foo:any;declare const method:string;import {String} from \"./helpers.a\";new String(1);\nexport {};",
+    "sha256": "b47e55c6332e91c29a6c0ee425564ba6def1032b098f6ad13f62c6c782f6558f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-67.a",
+    "source": "declare const foo:any;declare const method:string;{const String=foo;new String(1)}new String(1);\nexport {};",
+    "sha256": "c9877e94f726ee1ea6fa7b3192fca8d97ebe89ab66e5d8e0fe117fb9b2dd76c6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-68.a",
+    "source": "declare const foo:any;declare const method:string;if(foo){new String(1)}else{var String=foo};\nexport {};",
+    "sha256": "72ec834795be154dedc01e68ccd29111999e3ccba160a88043f1018024ea8942"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-69.a",
+    "source": "declare const foo:any;declare const method:string;new foo(String);\nexport {};",
+    "sha256": "05a4e08cde1e54f71744c9bb2f946bde5190cf9257c50089d50dfc75a169602c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-70.a",
+    "source": "declare const foo:any;declare const method:string;new Number(1);\nexport {};",
+    "sha256": "f156d68e90a63bbaf36e3909c9752e67717bef435f9e9b526ef854037ab911f2"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-71.a",
+    "source": "declare const foo:any;declare const method:string;new (Number)(1);\nexport {};",
+    "sha256": "2ee4c37c2522a4fa5dcd09c2e0244cd6f4e74fb472bf3ad7dd1435781236df38"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-72.a",
+    "source": "declare const foo:any;declare const method:string;new ((Number))(1);\nexport {};",
+    "sha256": "467913b83e1610bdb081973dd5087dd1d6a82e38734f71c03cb46fdb98ee0fce"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-73.a",
+    "source": "declare const foo:any;declare const method:string;Number(1);\nexport {};",
+    "sha256": "bd69d4a2e470c9d737894d92152e0f18d3cfcfc5950f6e97236899bc00c67d32"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-74.a",
+    "source": "declare const foo:any;declare const method:string;new Number;\nexport {};",
+    "sha256": "6287865245b6afb686c0c7476521147d6ef140949ab44ae12bfbc7d27fb94ce8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-75.a",
+    "source": "declare const foo:any;declare const method:string;function f(Number:any){return new Number(1)};\nexport {};",
+    "sha256": "fd669363d67b083d3293f50920e9f15c98f12f2b1ebbc11dfd45050591f905e5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-76.a",
+    "source": "declare const foo:any;declare const method:string;class Number{};new Number(1);\nexport {};",
+    "sha256": "858498eb083cbc24f501208e7f68b4e600c17bf25258ad7620bcf4a82ae46b3a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-77.a",
+    "source": "declare const foo:any;declare const method:string;function f(){class Number{}};new Number(1);\nexport {};",
+    "sha256": "16a1390a8bd847334e0b56cb9298b012c5cfcf6dc8196068377c11f3824bacd5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-78.a",
+    "source": "declare const foo:any;declare const method:string;new globalThis.Number(1);\nexport {};",
+    "sha256": "415f6d72417295ddc0179fe0245a46ba935e79f423ab98a300497f6a013f4c17"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-79.a",
+    "source": "declare const foo:any;declare const method:string;const Number=foo;new Number(1);\nexport {};",
+    "sha256": "9b390492b6648217a63898edb253dc7cafd807218c4032bad39e4c402cae3eca"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-80.a",
+    "source": "declare const foo:any;declare const method:string;import {Number} from \"./helpers.a\";new Number(1);\nexport {};",
+    "sha256": "412076142588b101ee24149b94dc53a3d85e9fe266fdc0b6a175a067a6eeb355"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-81.a",
+    "source": "declare const foo:any;declare const method:string;{const Number=foo;new Number(1)}new Number(1);\nexport {};",
+    "sha256": "dd65a470f3f55d4b3a230193df667c32613911d673a95c721cfbf4e7ff2d0db5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-82.a",
+    "source": "declare const foo:any;declare const method:string;if(foo){new Number(1)}else{var Number=foo};\nexport {};",
+    "sha256": "c11fc0cb15d8ab95af9de07ffcbe75230ca3decd8ea2d08db09bb9467ad9dfcc"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-83.a",
+    "source": "declare const foo:any;declare const method:string;new foo(Number);\nexport {};",
+    "sha256": "09a744662922af9b6c71deff4c80068d7160034069b79370fd8a8ec06ede5460"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-84.a",
+    "source": "declare const foo:any;declare const method:string;new Boolean(1);\nexport {};",
+    "sha256": "7f5be9bf40dac6c25988c3f02ebdf9f1eb88b61a42e68985d5441e91fc022a53"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-85.a",
+    "source": "declare const foo:any;declare const method:string;new (Boolean)(1);\nexport {};",
+    "sha256": "d07d575e1e10d9d1799a98a194a5393cfd2d6a3bdcf7eb53de4a7c037540146c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-86.a",
+    "source": "declare const foo:any;declare const method:string;new ((Boolean))(1);\nexport {};",
+    "sha256": "ad1c26f53b9b947d3acbaa24a9b54df2358a517ce1116cf03928ff1bc8cd84aa"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-87.a",
+    "source": "declare const foo:any;declare const method:string;Boolean(1);\nexport {};",
+    "sha256": "a64f676a3a6ec84c9e30e6f81f51c9dc404af6c0111ae2f9ec564932b140af6c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-88.a",
+    "source": "declare const foo:any;declare const method:string;new Boolean;\nexport {};",
+    "sha256": "1667a6802e2c2981de0837743e7a14e97dbe94df7e9b7e645ca73e1085a0aab7"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-89.a",
+    "source": "declare const foo:any;declare const method:string;function f(Boolean:any){return new Boolean(1)};\nexport {};",
+    "sha256": "be4d9f6e00e15d56ffb7e3b0d47dfcf06adaa9ee198ff94775ec9e6a72cdbd30"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-90.a",
+    "source": "declare const foo:any;declare const method:string;class Boolean{};new Boolean(1);\nexport {};",
+    "sha256": "6250b03f9c0f4c8fa9e2be7cc905d06874e3da34dc1b23616ac36292d0e8d6aa"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-91.a",
+    "source": "declare const foo:any;declare const method:string;function f(){class Boolean{}};new Boolean(1);\nexport {};",
+    "sha256": "92401fbecc56402562658c88574655e8d90cab7242eccd65fc312ceae13c7c4c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-92.a",
+    "source": "declare const foo:any;declare const method:string;new globalThis.Boolean(1);\nexport {};",
+    "sha256": "4790aa5b5a1938eebe326f39d99fd8a3c5201f54f176ecbdf6914c30f57875eb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-93.a",
+    "source": "declare const foo:any;declare const method:string;const Boolean=foo;new Boolean(1);\nexport {};",
+    "sha256": "86737744dba4da2c0b41ce55cf19511efab4e07e9f9eb951a633dd79eec54e06"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-94.a",
+    "source": "declare const foo:any;declare const method:string;import {Boolean} from \"./helpers.a\";new Boolean(1);\nexport {};",
+    "sha256": "148a797a2739c62bfb00056c3fb9e41ff676ec01c5345fe0839cf7911fa594e4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-95.a",
+    "source": "declare const foo:any;declare const method:string;{const Boolean=foo;new Boolean(1)}new Boolean(1);\nexport {};",
+    "sha256": "5ffa21421046ce211f719c5e115232caf1097d1092977cca73ab7d9f334ff833"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-96.a",
+    "source": "declare const foo:any;declare const method:string;if(foo){new Boolean(1)}else{var Boolean=foo};\nexport {};",
+    "sha256": "f0f1517389cd3c5403471a2537660052303369d0298055aaed3599d80bf53131"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-97.a",
+    "source": "declare const foo:any;declare const method:string;new foo(Boolean);\nexport {};",
+    "sha256": "2c3fccd15ad563e8cba12a6f4f23b53f435c52bca1d6f52d97790bcb5a1caec9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-98.a",
+    "source": "declare const foo:any;declare const method:string;/* global Boolean:off */ new Boolean(false);\nexport {};",
+    "sha256": "8a8610781a4e258a609deee08ea2c4dedaf591028b90ba9ce47c16fd0ce494f4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-99.a",
+    "source": "declare const foo:any;declare const method:string;new Number(1);new Boolean(0);new String(\"x\");;\nexport {};",
+    "sha256": "d06e16cc74f5d3f56e537f371582e47f4e753f3f77d9456d6b98ce6487f9ac4f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-100.a",
+    "source": "declare const foo:any;declare const method:string;// \u03c0\ud83d\ude00\nnew String(\"\u00e9\")\nnew Symbol(\"\u03bc\");;\nexport {};",
+    "sha256": "5b02fe4d79981beaf6535229100d3932e605a0fce00f4a30c7175bbabc9426dc"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-101.a",
+    "source": "declare const foo:any;declare const method:string;(Function!)(\"return 1\");\nexport {};",
+    "sha256": "d3b777a5e6a0850afb3e52b68217d24d833ae7331a16f61cff55b54d0c64cfd3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-102.a",
+    "source": "declare const foo:any;declare const method:string;(Function as any)(\"return 1\");\nexport {};",
+    "sha256": "4d224f9d640629981db93dc9950c26e399310c0ddb34151b1ebc03e81e775347"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-103.a",
+    "source": "declare const foo:any;declare const method:string;Function[(\"call\" as const)](null,\"return 1\");\nexport {};",
+    "sha256": "15c54f583bf0268c4a786d2674d2bd27ebe9a85b9ea0057595636ed4fb920a5f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-104.a",
+    "source": "declare const foo:any;declare const method:string;Function?.['call'](null,'x');\nexport {};",
+    "sha256": "ca2ccb7f7b674d200dbc744041868c8198248656d9fa23d66ec5c8b66db77943"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-105.a",
+    "source": "declare const foo:any;declare const method:string;Function?.[(\"call\")](null,'x');\nexport {};",
+    "sha256": "01cb63a578927e28cfd63b14a5f11ab974ff04de25b986a4ea17968398705761"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-106.a",
+    "source": "declare const foo:any;declare const method:string;new \\u0053tring('x');\nexport {};",
+    "sha256": "fc094d8dfa7dbafbaf4ddd83bf6ff0ba026a75b96d9c1d4abc9b82a6f2375e27"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-107.a",
+    "source": "declare const foo:any;declare const method:string;\\u0046unction('x');\nexport {};",
+    "sha256": "2614df80db31d7a1dddde46bd1bb5950a08efd20e879c8407b0d62036160ba07"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-constructors/control-108.a",
+    "source": "declare const foo:any;declare const method:string;Function['c\\x61ll'](null,'x');\nexport {};",
+    "sha256": "deced2c99f873ca6c63154c1153cd657af50671bdc5843dabde6f6a0081013f3"
+  }
+]

@@ -1,0 +1,281 @@
+[
+  {
+    "name": "stage0-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/wave-06-landing2-react/adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 1.8646888889998081
+  },
+  {
+    "name": "oracle-build",
+    "command": [
+      "go",
+      "-C",
+      "/workspace/adamic/cohere",
+      "build",
+      "-overlay",
+      "/workspace/wave-06-landing2-react/overlay.json",
+      "-o",
+      "/workspace/wave-06-landing2-react/oracle",
+      "/workspace/adamic/cohere/adamic_wave06reactoracle.go"
+    ],
+    "exit": 0,
+    "seconds": 2.7913248329987255
+  },
+  {
+    "name": "go-controls",
+    "command": [
+      "/workspace/wave-06-landing2-react/oracle",
+      "/workspace/wave-06-landing2-react/tsconfig.json",
+      "/workspace/wave-06-landing2-react/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.06729748199904861
+  },
+  {
+    "name": "reporting-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/reporting_probe.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/reporting"
+    ],
+    "exit": 0,
+    "seconds": 0.16443414199966355
+  },
+  {
+    "name": "reporting-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/reporting"
+    ],
+    "exit": 0,
+    "seconds": 0.0014809730000706622
+  },
+  {
+    "name": "asan-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/reporting_probe.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/reporting-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 0.3399520119983208
+  },
+  {
+    "name": "asan-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/reporting-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.009096088999285712
+  },
+  {
+    "name": "set_state_in_effect-mutant-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/set_state_in_effect-report.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/set_state_in_effect-mutant"
+    ],
+    "exit": 0,
+    "seconds": 0.1646787690006022
+  },
+  {
+    "name": "set_state_in_effect-mutant-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/set_state_in_effect-mutant"
+    ],
+    "exit": 0,
+    "seconds": 0.0016246010000031674
+  },
+  {
+    "name": "set_state_in_effect-refusal-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/set_state_in_effect-refusal.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/set_state_in_effect-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.15087562699955015
+  },
+  {
+    "name": "set_state_in_effect-refusal-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/set_state_in_effect-refusal"
+    ],
+    "exit": 70,
+    "seconds": 0.0014129259998298949
+  },
+  {
+    "name": "set_state_in_effect-no-refusal-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/set_state_in_effect-no-refusal-probe.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/set_state_in_effect-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.15041028999985429
+  },
+  {
+    "name": "set_state_in_effect-no-refusal-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/set_state_in_effect-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.0012457240009098314
+  },
+  {
+    "name": "set_state_in_render-mutant-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/set_state_in_render-report.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/set_state_in_render-mutant"
+    ],
+    "exit": 0,
+    "seconds": 0.16180408499894838
+  },
+  {
+    "name": "set_state_in_render-mutant-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/set_state_in_render-mutant"
+    ],
+    "exit": 0,
+    "seconds": 0.0014495149989670608
+  },
+  {
+    "name": "set_state_in_render-refusal-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/set_state_in_render-refusal.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/set_state_in_render-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.14966522800023085
+  },
+  {
+    "name": "set_state_in_render-refusal-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/set_state_in_render-refusal"
+    ],
+    "exit": 70,
+    "seconds": 0.0012457240009098314
+  },
+  {
+    "name": "set_state_in_render-no-refusal-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/set_state_in_render-no-refusal-probe.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/set_state_in_render-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.14980454799842846
+  },
+  {
+    "name": "set_state_in_render-no-refusal-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/set_state_in_render-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.0013631109995912993
+  },
+  {
+    "name": "static_components-mutant-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/static_components-report.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/static_components-mutant"
+    ],
+    "exit": 0,
+    "seconds": 0.16400811699895712
+  },
+  {
+    "name": "static_components-mutant-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/static_components-mutant"
+    ],
+    "exit": 0,
+    "seconds": 0.0013000149992876686
+  },
+  {
+    "name": "static_components-refusal-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/static_components-refusal.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/static_components-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.15206720199967094
+  },
+  {
+    "name": "static_components-refusal-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/static_components-refusal"
+    ],
+    "exit": 70,
+    "seconds": 0.0010144230000150856
+  },
+  {
+    "name": "static_components-no-refusal-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/wave-06-landing2-react/static_components-no-refusal-probe.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/static_components-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.15038738600014767
+  },
+  {
+    "name": "static_components-no-refusal-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/static_components-no-refusal"
+    ],
+    "exit": 0,
+    "seconds": 0.000990728000033414
+  },
+  {
+    "name": "parser-build",
+    "command": [
+      "/workspace/wave-06-landing2-react/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state/parser_probe.a",
+      "-o",
+      "/workspace/wave-06-landing2-react/parser-probe"
+    ],
+    "exit": 0,
+    "seconds": 2.6769225879997975
+  },
+  {
+    "name": "parser-run",
+    "command": [
+      "/workspace/wave-06-landing2-react/parser-probe"
+    ],
+    "exit": 70,
+    "seconds": 0.001318740998613066
+  }
+]

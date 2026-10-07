@@ -1,0 +1,186 @@
+[
+  {
+    "suite": "original",
+    "population": "compiler",
+    "commands": {
+      "native": [
+        "/workspace/wave-06-landing2-original/wave06",
+        "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+        "/workspace/wave-06-landing2-original/compiler.manifest"
+      ],
+      "go": [
+        "/workspace/wave-06-landing2-original/wave06-oracle",
+        "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+        "/workspace/wave-06-landing2-original/compiler.manifest"
+      ]
+    },
+    "seconds": {
+      "native": 24.87646739199954,
+      "go": 3.392107517000113
+    },
+    "ratio": 7.333631751743414,
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "suite": "original",
+    "population": "repository",
+    "commands": {
+      "native": [
+        "/workspace/wave-06-landing2-original/wave06",
+        "/workspace/adamic/tsconfig.json",
+        "/workspace/wave-06-landing2-original/repository.manifest"
+      ],
+      "go": [
+        "/workspace/wave-06-landing2-original/wave06-oracle",
+        "/workspace/adamic/tsconfig.json",
+        "/workspace/wave-06-landing2-original/repository.manifest"
+      ]
+    },
+    "seconds": {
+      "native": 0.9480169880007452,
+      "go": 0.29269631399984064
+    },
+    "ratio": 3.238909896218445,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "suite": "next",
+    "population": "compiler",
+    "commands": {
+      "native": [
+        "/workspace/wave-06-landing2-next/native",
+        "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+        "/workspace/wave-06-landing2-next/compiler.manifest"
+      ],
+      "go": [
+        "/workspace/wave-06-landing2-next/oracle",
+        "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+        "/workspace/wave-06-landing2-next/compiler.manifest"
+      ]
+    },
+    "seconds": {
+      "native": 5.143037091998849,
+      "go": 1.7528584459996637
+    },
+    "ratio": 2.934085809231304,
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "suite": "next",
+    "population": "repository",
+    "commands": {
+      "native": [
+        "/workspace/wave-06-landing2-next/native",
+        "/workspace/adamic/tsconfig.json",
+        "/workspace/wave-06-landing2-next/repository.manifest"
+      ],
+      "go": [
+        "/workspace/wave-06-landing2-next/oracle",
+        "/workspace/adamic/tsconfig.json",
+        "/workspace/wave-06-landing2-next/repository.manifest"
+      ]
+    },
+    "seconds": {
+      "native": 0.6659134239998821,
+      "go": 0.26353504299913766
+    },
+    "ratio": 2.5268496228111155,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "suite": "constructors",
+    "population": "compiler",
+    "commands": {
+      "native": [
+        "/workspace/wave-06-landing2-constructors/native",
+        "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+        "/workspace/wave-06-landing2-constructors/compiler.manifest"
+      ],
+      "go": [
+        "/workspace/wave-06-landing2-constructors/oracle",
+        "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+        "/workspace/wave-06-landing2-constructors/compiler.manifest"
+      ]
+    },
+    "seconds": {
+      "native": 1.911879573999613,
+      "go": 0.3899375510009122
+    },
+    "ratio": 4.903040420426553,
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "suite": "constructors",
+    "population": "repository",
+    "commands": {
+      "native": [
+        "/workspace/wave-06-landing2-constructors/native",
+        "/workspace/adamic/tsconfig.json",
+        "/workspace/wave-06-landing2-constructors/repository.manifest"
+      ],
+      "go": [
+        "/workspace/wave-06-landing2-constructors/oracle",
+        "/workspace/adamic/tsconfig.json",
+        "/workspace/wave-06-landing2-constructors/repository.manifest"
+      ]
+    },
+    "seconds": {
+      "native": 0.3226867769990349,
+      "go": 0.1638134690001607
+    },
+    "ratio": 1.96984276670631,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "suite": "callbacks",
+    "population": "compiler",
+    "commands": {
+      "native": [
+        "/workspace/wave-06-landing2-callbacks/native",
+        "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+        "/workspace/wave-06-landing2-callbacks/compiler.manifest"
+      ],
+      "go": [
+        "/workspace/wave-06-landing2-callbacks/oracle",
+        "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+        "/workspace/wave-06-landing2-callbacks/compiler.manifest"
+      ]
+    },
+    "seconds": {
+      "native": 2.9843257230004383,
+      "go": 0.4894279620002635
+    },
+    "ratio": 6.09757912237722,
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "suite": "callbacks",
+    "population": "repository",
+    "commands": {
+      "native": [
+        "/workspace/wave-06-landing2-callbacks/native",
+        "/workspace/adamic/tsconfig.json",
+        "/workspace/wave-06-landing2-callbacks/repository.manifest"
+      ],
+      "go": [
+        "/workspace/wave-06-landing2-callbacks/oracle",
+        "/workspace/adamic/tsconfig.json",
+        "/workspace/wave-06-landing2-callbacks/repository.manifest"
+      ]
+    },
+    "seconds": {
+      "native": 0.4582679470004223,
+      "go": 0.15519783600029768
+    },
+    "ratio": 2.9527985622141233,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  }
+]

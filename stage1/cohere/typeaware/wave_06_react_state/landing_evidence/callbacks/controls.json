@@ -1,0 +1,1052 @@
+[
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-0.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw \"x\";};\nexport {};",
+    "sha256": "437a2a80af8c598354d33edce333c1dc3fa7417a5b42309677ea31d809f1888b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-1.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw 1;};\nexport {};",
+    "sha256": "f3b2a278abb3f6b83b5a0be0daa59d09bc6d68c0f0b629a350181197786fd0bb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-2.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw true;};\nexport {};",
+    "sha256": "e75249c100a857a2b45480e3a62f8490afbfbbc33be5257da91acf4eb1bccce4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-3.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw null;};\nexport {};",
+    "sha256": "1df137ff5dcde133b88bd3d27366f7d763cadcba430fc499d9e6d7bc85adc2f2"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-4.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw undefined;};\nexport {};",
+    "sha256": "50e79862c702e536035c4c35a1bed314e7ca1204803ee4ed99bd038e2fd5e6e6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-5.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw new Error();};\nexport {};",
+    "sha256": "9b80d39e19cbfdd5c733cf9168186e2c4a5a3c79aaba884d58af91c62d69f213"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-6.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e;};\nexport {};",
+    "sha256": "ff76030ddf625b4e77ab934e70d15efb8da56c44a1dacfdf37f559515c938389"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-7.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw flag ? \"a\" : \"b\";};\nexport {};",
+    "sha256": "bae45332dbfeb61fb12da1ab08a8da8b5b8d36de01d3a98bad44ccf131c1d0a3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-8.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw flag ? new Error() : \"a\";};\nexport {};",
+    "sha256": "9aeefab4008f49752c931edba9df3cba70b1f94d95404a6bc34c754046141c54"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-9.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e && \"a\";};\nexport {};",
+    "sha256": "615193d7b5b7cac018317149f5ef91bc9168892f02c65364f90e3700cbc12b4c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-10.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw \"a\" && new Error();};\nexport {};",
+    "sha256": "c832be606ee0fb8b82945cea282262697e3f7faba3f0228fa4d3579de5f4776a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-11.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e || \"a\";};\nexport {};",
+    "sha256": "1744e19c01f6255dec0e20d06f79d7acf932694ca5c335fce00d7bb1e9d1df71"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-12.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e ?? \"a\";};\nexport {};",
+    "sha256": "11148a0ca041df24800deca5b31540c45b6c63cd35a3a1b38c377d01d0ed8e28"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-13.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e = new Error();};\nexport {};",
+    "sha256": "59cefb31c534a6e64722b7bccc6fefb080350231dac6ba7b22de18db7ff1c56c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-14.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e += new Error();};\nexport {};",
+    "sha256": "a5eba0bb093c93810d8b211b19d7f17fbf1ba5a309840e3ed6b6d957f093104f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-15.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e &&= \"a\";};\nexport {};",
+    "sha256": "5ab606de76c3cb4740186bb94e2fae86e6f05030c40787aeea1ba4166912e6af"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-16.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e ||= \"a\";};\nexport {};",
+    "sha256": "38abb5b8d42e2c57370fa557dd0986502918e7695ef49277953b0a43e55e793e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-17.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw new Error(),1,2;};\nexport {};",
+    "sha256": "ad3b84a03c0270cd72ee35c8373b6f4c4224757f5ba9c8941d92bb626f9c0568"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-18.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw 1,new Error();};\nexport {};",
+    "sha256": "ee33b045a84892e4e7f957b71dba6a9702147885c55363b09aa4c214245f36a8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-19.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw (new Error());};\nexport {};",
+    "sha256": "b892d49c282746455c8144cf01f1cb67387611e1288ab96194a46557f1fdc6b5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-20.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw (undefined);};\nexport {};",
+    "sha256": "3d94663e71c2c1b8de59bd5a39f481bf4ff02fd0c205b6c5c00bf4e7f747eefe"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-21.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw {};};\nexport {};",
+    "sha256": "66c70794c030b98d2a250d945bdf99e63005fe135bc17fbb8c5a46727b0a5257"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-22.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw [];};\nexport {};",
+    "sha256": "1256f0ab604af05a16badd667cf7c78ec8e072e5dd24053882d6b1ec965d48c2"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-23.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw void e;};\nexport {};",
+    "sha256": "cd31197fef8439343822303a72fd8340b37183e61fbcc7da66977dd6a317cfbd"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-24.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw await getError();};\nexport {};",
+    "sha256": "17f43f32ba5bdc7c2e0fe17889d833112d8a2ab32eb7d10bd715774de4075986"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-25.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw getError();};\nexport {};",
+    "sha256": "f5d9fdf07b6a3eefa31f8c17e04b74e598ba7b6c2beba1bdf0ab23fb2b9737e9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-26.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw obj.error;};\nexport {};",
+    "sha256": "f9383b63d7feb212a2483d5642494a448a461650c92c666a367a20d6cf1017a9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-27.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw obj?.error;};\nexport {};",
+    "sha256": "645209c1c899bb4aebddfd8a9b45ff6fab08cf22b5ac2a2c461157b27c6f8eab"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-28.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw obj[\"error\"];};\nexport {};",
+    "sha256": "7ba1b647c8a25d985d21c6a8c5073d2a185c702dc1bc87deafd44c1c60088123"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-29.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw tag`x`;};\nexport {};",
+    "sha256": "4bcb41f8188248859ccbaace067fe0c72aa4c053528ed5de3ca4dcdcb8119460"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-30.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){function f(undefined:any){throw undefined;};};\nexport {};",
+    "sha256": "4399a3e75dde8bab4488a316990e625c00cd61fa5f5441b7b0ee5f87ae752c35"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-31.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){const undefined=1;throw undefined;};\nexport {};",
+    "sha256": "d9337f0100b30f2ed91ae0b049d3d9eccb0dd5ca5bf2899dbab986b5744a1411"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-32.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e === new Error();};\nexport {};",
+    "sha256": "cff0727d243ceb9bb2cecdc42ed3645ca739bee0e3a717bd541897070627255b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-33.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw flag ? \"a\" : getError();};\nexport {};",
+    "sha256": "9514deaa8cb5dbbf3a9ea090f45a87c1cf602a6324088b7e19546e6b369b1406"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-34.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e &&= new Error();};\nexport {};",
+    "sha256": "7042dce840854c2e0d4d66fdeda2515e11ad473c756d5b44c8ced59472c56b70"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-35.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const flag:boolean;declare let e:any;declare const obj:any;declare function getError():Promise<Error>;declare function tag(s:TemplateStringsArray):Error;async function test(){throw e ??= \"a\";};\nexport {};",
+    "sha256": "77384599ead35e1ce0288570bde15630c8ce0fc3df5be070a44350c55b5fde33"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-36.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){});;\nexport {};",
+    "sha256": "92ceabf6989fdffdc751bf4c5bb885589fab981fc2f0d7aac3c16c71aa970b15"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-37.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function named(){});;\nexport {};",
+    "sha256": "4e3e631e971bbbbcae450c6788c04d0e7d6d7f9793447a6eab73c7701a71b31f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-38.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function named(){named()});;\nexport {};",
+    "sha256": "36afacd8953667098d888fed0357b935535cf6906fac73d00b9a938480a380f5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-39.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function named(){function named(){};named()});;\nexport {};",
+    "sha256": "a56e317c086e6c00dbb5cab11f06e98bad80df7521fcf8e5fa69a54340db929a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-40.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){arguments});;\nexport {};",
+    "sha256": "df273ac7a8fdc5a3d5b933737a8bbac31691109bdb08297edaef237753011451"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-41.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(arguments:any){arguments});;\nexport {};",
+    "sha256": "d4c2dc91b1b91f35bfb9e6d288c1b5b7438d460ab352419c0ee9744611c1c3fa"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-42.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){function inner(){arguments}});;\nexport {};",
+    "sha256": "d8a1cc374b569aeef951aad7e91d994af35646dbdae442e6ad905db313fc977d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-43.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){()=>arguments});;\nexport {};",
+    "sha256": "16289326511387100f64632fab9624392e0fdc2d97c73f07c77875ff5c6b2ab5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-44.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){this.x});;\nexport {};",
+    "sha256": "8da5088a04d2b63bff087be8770831f5d47260e0555c340fe8d29215979f1cfe"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-45.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){()=>this.x});;\nexport {};",
+    "sha256": "50b01cd1f62a4f8a9b59ad098e93187035e555efe0b8f82f7b156417c32b6272"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-46.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){this.x}.bind(this));;\nexport {};",
+    "sha256": "3ab1ce8d3610b5dd7b221577562a3aa75c1283b1618f8e37dfd681d6d520b162"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-47.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){}.bind(this));;\nexport {};",
+    "sha256": "f3e5c916c8ad7eecd794df962caf3b05ba1a11b8beb18114fdc8994452e44f28"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-48.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo((function(){this.x}).bind(this));;\nexport {};",
+    "sha256": "f24752083c936b0d10c8f1c726a3cb9d6653c56b348be4a2778eeece145d0fdd"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-49.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo((function(){this.x}?.bind)(this));;\nexport {};",
+    "sha256": "c9426190c7653d21f08a91d429fac1aea191373d8b6969f6d4b54516d63a338c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-50.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){}.bind(other));;\nexport {};",
+    "sha256": "f2306f32a03490c4bf715f852f84736ca990b8ad41464b911bcaa68541d6bdc9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-51.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function*(){yield 1});;\nexport {};",
+    "sha256": "b745fb9f479923fe1c26ffa78e48bf75a028e91c71bdd34f419eafe1f17e856e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-52.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;new Foo(function(){});;\nexport {};",
+    "sha256": "9de554c42edde817d0a824c3cf9100dfb64fb21fc6c9571a1826621a52dccb18"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-53.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(flag ? function(){} : function(){});;\nexport {};",
+    "sha256": "df317df9fcd7cd86df39ff2399b5c5bbbb87bd1817563bccf7bbe78861286634"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-54.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(nativeCb || function(){});;\nexport {};",
+    "sha256": "5f549c711e2e18311b600de4706113368563cc8df2b0ffcde588ad953260438c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-55.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){} || nativeCb);;\nexport {};",
+    "sha256": "cd33ee159b017fb6c7feadffcd603c5a9c635acee212ed65e1cae20a27f59355"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-56.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;(function(){})();;\nexport {};",
+    "sha256": "04b704a0130966dee162ac75edb383e76ec72d9995ec1389a4494f442204897b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-57.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;const cb=function(){};;\nexport {};",
+    "sha256": "8ed3de70c4b681b367075680f2b0ec942eda4d1de2ba55a116a890ea45f09773"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-58.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(async function(){});;\nexport {};",
+    "sha256": "99f1e0737dfc41bfd03954b9c7cb15a563524adeed1055407bcc52736e4ad8db"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-59.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(async function\n(){});;\nexport {};",
+    "sha256": "dc370fedd8eeeeb40956fe2153f8082a0756fabe89f028b10ea97fb054b373d1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-60.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(a,a){});;\nexport {};",
+    "sha256": "185ac85718fa981ad98154675d9dc410913ce11e5353c9a5cc60c7cc158acb6e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-61.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(this:any){});;\nexport {};",
+    "sha256": "49d78712d399834502055010b13ae34aba8c0fc0d429547f7262b6b985551383"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-62.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function /*keep*/ named(){});;\nexport {};",
+    "sha256": "0315782818a4e27dafb0bd8280352f2d2dc1e1033f3bd47721593464ff278cf8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-63.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function /*keep*/(){});;\nexport {};",
+    "sha256": "3f1e691df81bcfbbf4a2cc92e33ae8ae60c41ca18187c579d6c65a65b133ef8a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-64.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){}.bind(/*keep*/this));;\nexport {};",
+    "sha256": "d30ab3bad2cbb095ff3aff707a3a79d43b63340d526f1fbb1d4c36b19ff65224"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-65.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){new.target});;\nexport {};",
+    "sha256": "ab7387f8fc49a99cceb5d06a3f8e18f463cf2c0f09747fce994f2e79177c1fe4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-66.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){class C{method(){this.x}}});;\nexport {};",
+    "sha256": "07880d7f4674143bc488e0b5bdf49e4b81a3d6b68cc475b4afcb72c6ee270c77"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-67.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){const arguments=1;arguments});;\nexport {};",
+    "sha256": "86ccc6ec22e37eae628dcf9efde47489f4b035e17485f38e4fa19e0de14f38c1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-68.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){arguments.length});;\nexport {};",
+    "sha256": "e2b47055f05d2b9d24ed53739ea171a3035dda42ba3ee4e4ec0fabca4ec121a9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-69.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function named(){()=>named()});;\nexport {};",
+    "sha256": "5b65d380037ed5704c0c4110b9aa935d1c23f6ff0cacb817dd05c3163d1d5108"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-70.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function named(){const named=1;named});;\nexport {};",
+    "sha256": "7f75a9c963de1f107980be9be1e2a9d75a74d0066ebd136fab9a51cb7bf260a6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-71.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo((function(){}));;\nexport {};",
+    "sha256": "b3a1ad4024f7f93729482fcfa1c513810e0c7c567be88982fd401b88715694e4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-72.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(a:number):number{return a});;\nexport {};",
+    "sha256": "204e8f0e19bf2eda012e1b6a64250e5adbbd7689c455ff0702637aedcd094c85"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-73.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){}.bind(this).bind(other));;\nexport {};",
+    "sha256": "70a3caf156458748ca6b159592f48e436ae7bdb495535fd1d048c697f535bc5f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-74.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo(function(){}.bind(other).bind(this));;\nexport {};",
+    "sha256": "081690352a53253ab818fd8401fa6fb4edd214f005abfffdae0d394bed912603"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-75.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const Foo:any;declare const flag:boolean;declare const other:any;declare const nativeCb:any;foo((nativeCb || function(){}).bind(this));;\nexport {};",
+    "sha256": "740500921becd83c115a67d5fc89a0d9a45dea77f34b438cc39b34be47f8a8e6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-76.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(a)\\1/;;\nexport {};",
+    "sha256": "92fa90dc42aeed494f4baa954246748a524963cd8605abd2ba23bc823380dc1b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-77.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(a)\\\\1\");;\nexport {};",
+    "sha256": "4ade1d6b6d566fdb6edad8664fdccbcf431d9eb325ea130d9247957e33af6f12"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-78.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(a)\\\\1\",\"u\");;\nexport {};",
+    "sha256": "d1b5911fd44b5383b70a12e7538eb99f9030dd9cb6528b50e9db1b5d602151e8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-79.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\1(a)/;;\nexport {};",
+    "sha256": "f07f3704b8b6c8b5963f0f848804abc5c79a67549cb07140bf8b441c99058a21"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-80.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "d2adc3a375f83a8daa7691651521319aba6fde68c94ce263f5defa6dab627bca"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-81.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\1(a)\",\"u\");;\nexport {};",
+    "sha256": "0526d267be0bda6c8d2d2e436f8b66741256593c3a8a9986aa80c09a8791c698"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-82.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(a\\1)/;;\nexport {};",
+    "sha256": "881cc412282bb3eeb36166cccc286dd5567774a60bdd3a22581ab89d28d9dd44"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-83.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(a\\\\1)\");;\nexport {};",
+    "sha256": "3f1a356bc722706b88b07ac17cd1587d21bfd8610d703a7e2be9072c4922f801"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-84.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(a\\\\1)\",\"u\");;\nexport {};",
+    "sha256": "ffe8ab668b9292f2e2a460beba3c0c9e940a15ec2e63bb3d7d17af1d2869b333"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-85.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(a|\\1b)/;;\nexport {};",
+    "sha256": "fbedf0903c92175039d4040b025e1eb8caf9d5196f265573f861ec6f736a2c83"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-86.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(a|\\\\1b)\");;\nexport {};",
+    "sha256": "8cb7444327e850bf85de07fdb58278f193ce961fc711d01cea9885f00d295048"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-87.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(a|\\\\1b)\",\"u\");;\nexport {};",
+    "sha256": "e269eb11e43906b843b300e3e832a555b489bebb7c16d3be4cc370f08f45bf08"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-88.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\1(?!(a))/;;\nexport {};",
+    "sha256": "ffc6bbdac957367376b24c67ab1aacf18e2bc4153eee7b2a2d21306cc553b198"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-89.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\1(?!(a))\");;\nexport {};",
+    "sha256": "2fc9960c3628263455faf841612adc3af8509774a6015cebc43daac8b5c3b748"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-90.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\1(?!(a))\",\"u\");;\nexport {};",
+    "sha256": "77d5145716265b7dfedc47ea7b58930d9711f4bdb9855708f2259435cbb465f5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-91.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?<=(a)\\1)b/;;\nexport {};",
+    "sha256": "ad255b6d9f340d21af7fa9f46e35a1bf80245ca0d328a188b106e29cd488572e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-92.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(?<=(a)\\\\1)b\");;\nexport {};",
+    "sha256": "adc6f78480ee84a04fe583a3a8a296e70317254545bb4665e6bdae2bf9210c82"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-93.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(?<=(a)\\\\1)b\",\"u\");;\nexport {};",
+    "sha256": "247d01034cd0e518d734d3815171cb77083a7bc4d6a7b42a4bf7baed19db7f10"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-94.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?<=\\1(a))b/;;\nexport {};",
+    "sha256": "dafa433b7947f18ab9fafe75aa9948e6c1e3a21ca33b4c2a7b21fd1d10af28ee"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-95.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(?<=\\\\1(a))b\");;\nexport {};",
+    "sha256": "038d256356abbf81120e6b52e82fc7925c69b31f0b211a0c3c29707b27d237fc"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-96.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(?<=\\\\1(a))b\",\"u\");;\nexport {};",
+    "sha256": "3f4d5ce4ef42319c56035f8d1b220147307ee9a3830e6287ca86005127279649"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-97.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?:a|(b))\\1/;;\nexport {};",
+    "sha256": "0bd224ddd0c4890bc46fe0e019d9326a739b2261e9ab70213a17c373b244f1f2"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-98.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(?:a|(b))\\\\1\");;\nexport {};",
+    "sha256": "502c81fcd40a413979e05c55f4551596b2d6f71af29750e54d4aed1d9710f7ad"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-99.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(?:a|(b))\\\\1\",\"u\");;\nexport {};",
+    "sha256": "df53b339b2154daaa4691c2d0f1fd37ba74d0af34f3a37b872783dde799f5fd7"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-100.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?<foo>a)\\k<foo>/;;\nexport {};",
+    "sha256": "88e2eccc98448d27954d75cbd5d4c994b071ad9ef4a18efb4c1ade465aca50a6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-101.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(?<foo>a)\\\\k<foo>\");;\nexport {};",
+    "sha256": "f027218e6671a54853b426cd2d4ce66a7fabe22cc917314ff25150942ecdbaf1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-102.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(?<foo>a)\\\\k<foo>\",\"u\");;\nexport {};",
+    "sha256": "dc6d2b3e4d4939af09414973751cb59bc4c214f6e8ae4eb20d97349bd7ce9e15"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-103.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\k<foo>(?<foo>a)/;;\nexport {};",
+    "sha256": "07b7699c7aa42cc073d929468eb4efac0e790c114e1a990db186b67264fb4e91"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-104.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\k<foo>(?<foo>a)\");;\nexport {};",
+    "sha256": "8b4ff740b3bc1c8e364ac1051ebd052b3691f4c5553452c70e3b5c815f888e48"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-105.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\k<foo>(?<foo>a)\",\"u\");;\nexport {};",
+    "sha256": "cba9af613d244bbc00374f01d4b115fecceb1fd6f0e73b83593ed0c7dce80bba"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-106.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?<foo>a\\k<foo>)/;;\nexport {};",
+    "sha256": "dfcd50a03e31076bee9cd6dbdf11d50569b4b171fe05f42dad8bec8360e663cc"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-107.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(?<foo>a\\\\k<foo>)\");;\nexport {};",
+    "sha256": "2eb4cdc740cd9e7631aa833d51aebe93192a51582cb79acf35f0b6922957d87e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-108.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(?<foo>a\\\\k<foo>)\",\"u\");;\nexport {};",
+    "sha256": "7efd5b2827dece94ef19f6ab76a609ff3ef154b0e371bece58fdd0bb6e21bdd6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-109.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?<foo>a)|\\k<foo>/;;\nexport {};",
+    "sha256": "b73e20bcc84b6472be3b0cabb0e5c4d834a804b21fab6b561a965452690d96d4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-110.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(?<foo>a)|\\\\k<foo>\");;\nexport {};",
+    "sha256": "19d52a7f850e998cd5638dbb0e67c7d42d12f21ca961167f02eb2366ce63808a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-111.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(?<foo>a)|\\\\k<foo>\",\"u\");;\nexport {};",
+    "sha256": "41c83d4b12cd6f69678be23082dba71fc0f7ff68172d1d6a12044dda1da99bc3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-112.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?!(a))\\1/;;\nexport {};",
+    "sha256": "3db63842cb1e8fb2c02abd2f14527a7839a26b438b031960d65dac555ec61958"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-113.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(?!(a))\\\\1\");;\nexport {};",
+    "sha256": "fa19443c3563fd02018c4e24691625b3c3330a584be78b87a008f66db4d457f3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-114.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(?!(a))\\\\1\",\"u\");;\nexport {};",
+    "sha256": "bf3c1c4c199e9d227733c7cf84239f8f264b3bd671a889cf61932bb520fcc563"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-115.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?<=(a))b\\1/;;\nexport {};",
+    "sha256": "613a5948ec507d36defa4c184a0bc906806fe14116dae3472cb8082ac755764c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-116.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(?<=(a))b\\\\1\");;\nexport {};",
+    "sha256": "92c861567217159d1acecc98666e25fceb6938901cbccd211fcf7d8b249b82be"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-117.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(?<=(a))b\\\\1\",\"u\");;\nexport {};",
+    "sha256": "2194489b60f5aca831621da31efb3997c05b390b6a1f50fb6fcc39d2c99c7554"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-118.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\2(a)/;;\nexport {};",
+    "sha256": "b7f08e5ae8881bc7afac888a2b7b6c1464f28b0b54d51a430406a8d91ac45eff"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-119.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\2(a)\");;\nexport {};",
+    "sha256": "b525af455d8885bd50382b63237487a440d71cf0c2f3e4af691b479a9c20a5ef"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-120.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\2(a)\",\"u\");;\nexport {};",
+    "sha256": "cbd3dc8ae16d43225e7cf6e8b015a351c4526d028c9abcde4157d1023ba8f17a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-121.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\11(a)/;;\nexport {};",
+    "sha256": "c29a1941006ac33f6a25759775045c0c26a1f6f4f94d328a369153a32e20f9fa"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-122.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\11(a)\");;\nexport {};",
+    "sha256": "044e7897b32baeeb1d18620b4b667cddf271563abdbfe683aa1eb59b36d7f797"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-123.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\11(a)\",\"u\");;\nexport {};",
+    "sha256": "e8b22fcabb550fbaf62759bfc3b07c512513237e735687b490efd05cb57a7b06"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-124.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\1/;;\nexport {};",
+    "sha256": "58e0d80947f40ea88bd39d0a47d01ebd27959a9f8bba986ecf394dd5a7685169"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-125.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\1\");;\nexport {};",
+    "sha256": "70fde6f8f42d7e7a8ca67d2528733acef46bd004e933970b91f2053e98667c3a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-126.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\1\",\"u\");;\nexport {};",
+    "sha256": "2e0e1ce0cd50eb12eb3fae01a5863577b8dce98c3d7508b95dc91ad0e776d550"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-127.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/[\\1](a)/;;\nexport {};",
+    "sha256": "1363e637c5ed8692d4f20feb55745a3165f22088e022f55e24ef70c9f1a73d9a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-128.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"[\\\\1](a)\");;\nexport {};",
+    "sha256": "0cf6e8e849e365c35ac39649d1b31ec3d24e1de81511b5b93893ea0b5a489c09"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-129.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"[\\\\1](a)\",\"u\");;\nexport {};",
+    "sha256": "0e6501a87dbac89750d5ba2479d2967d5a6a6629afebe8fc5629e4a29bc0237f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-130.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\1(a)\\2/;;\nexport {};",
+    "sha256": "1c956b7924210fa13d632d42ee1c7559a1365dcca3ace2626664210e050d5d14"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-131.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\1(a)\\\\2\");;\nexport {};",
+    "sha256": "c5f4de5d742ecc3126938edc3732b71dd36fea3e068dc591070541d5d23baede"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-132.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\1(a)\\\\2\",\"u\");;\nexport {};",
+    "sha256": "68538ee349ad90f753d06642c541b8dd08631162a8fe9277b6f2a88c2f5e4468"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-133.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\1(a){/;;\nexport {};",
+    "sha256": "5a5f53b4fd737ec7fe3254be88596daa0aef053e9cb8d0f4a8e7c88130658b47"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-134.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\1(a){\");;\nexport {};",
+    "sha256": "83c0e94a24d77afdbc48d5ef01bd599761a821f7891752afc2b1caa37350d545"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-135.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\1(a){\",\"u\");;\nexport {};",
+    "sha256": "1187852b57ed16a0cc5cf7c07528b248be4718e0a78a5ec1b7dd931d5d582636"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-136.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\k<foo>(?<foo>a)\\k<bar>/;;\nexport {};",
+    "sha256": "b4f6a682d06735035d9c6e53f96b200f24d66653d9ea1627bea5d03dd2b6cd6a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-137.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\k<foo>(?<foo>a)\\\\k<bar>\");;\nexport {};",
+    "sha256": "a49a4a31a066168161c21806b64d9d93badd99563b37d5c8d4064e86007662eb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-138.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\k<foo>(?<foo>a)\\\\k<bar>\",\"u\");;\nexport {};",
+    "sha256": "480414114329d795e14f919a5470c6ac44d19d45ead2f5831c126a1719ddf849"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-139.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/((?<foo>a)\\k<foo>|(?<foo>b))/;;\nexport {};",
+    "sha256": "0e9bfcac4f2c49d4794f5b0a8e441676e8114f6a11472ec8805f8ec2eba777fc"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-140.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"((?<foo>a)\\\\k<foo>|(?<foo>b))\");;\nexport {};",
+    "sha256": "4d3c0cd39a075088e1ce0c1a0d288a053c9efbc3a6e0437549c371a4a4e993f3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-141.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"((?<foo>a)\\\\k<foo>|(?<foo>b))\",\"u\");;\nexport {};",
+    "sha256": "0a199263bc5da77e42dc5e21ea764f56186b90a024bda663f5e80ed9a89fcc04"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-142.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\k<foo>(?:(?<foo>a)|(?<foo>b))/;;\nexport {};",
+    "sha256": "2e0089da5b3f7c62da3351fdb7da7b4301a04ea95d1048f0e13210226f272d21"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-143.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\k<foo>(?:(?<foo>a)|(?<foo>b))\");;\nexport {};",
+    "sha256": "5d75e687ce2b4222af5d243cefb5a882a026cf58e7d04df0bafe9a910be68ba2"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-144.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\k<foo>(?:(?<foo>a)|(?<foo>b))\",\"u\");;\nexport {};",
+    "sha256": "bf3f2501a0f20d6ba0428667487c30acb6b1ea51c61440d887b89804b02ee0ca"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-145.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\k<foo>(?:(?<foo>a)|(?<foo>b)|(?<foo>c))/;;\nexport {};",
+    "sha256": "07aff1f04151a7dc255b937d69e27ed98cbda0aba5f7bdef0352435a3eb01dc6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-146.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\k<foo>(?:(?<foo>a)|(?<foo>b)|(?<foo>c))\");;\nexport {};",
+    "sha256": "802353d01d081b319a59769f4a71c1542ce597626da970f3dcbfc2a3555df111"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-147.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\k<foo>(?:(?<foo>a)|(?<foo>b)|(?<foo>c))\",\"u\");;\nexport {};",
+    "sha256": "47ed27477ee0cfff0fc465eb188e5eac8e0812c291bef0ea89122bb213c74090"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-148.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(a)\\1\\2(b)/;;\nexport {};",
+    "sha256": "f80484dd0326813640785a4cb21206fc6496a66c4b5f50dcbd669a36da8d0cd5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-149.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(a)\\\\1\\\\2(b)\");;\nexport {};",
+    "sha256": "7b28559660f17c9627831445d93bfe62df75f592c833c7be0320d5d88fbb5b63"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-150.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(a)\\\\1\\\\2(b)\",\"u\");;\nexport {};",
+    "sha256": "fd91c8a6e616c11d44dd874ccd306c84cfcad82abe7531367bfdaf25d819fe67"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-151.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\1(a){2}/;;\nexport {};",
+    "sha256": "68f34a6c13bede0909d8daf0582f927554c14d2e515794736e69e1a4465ee309"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-152.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\1(a){2}\");;\nexport {};",
+    "sha256": "a0211795ae30e8cd3aba60a0b2ad3dba0fc233035cb352fa65955ebf0c32d80b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-153.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\1(a){2}\",\"u\");;\nexport {};",
+    "sha256": "d8aec0c03f8b6f3c5f5d055f78d2c8471311a3ea2f03e70cdc653e4e2b92a040"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-154.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\u{28}\\1(a)/;;\nexport {};",
+    "sha256": "201de76a85f9e051d1dacd4dae06c00b74259f104ad7ce4a1142a11975fab359"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-155.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\u{28}\\\\1(a)\");;\nexport {};",
+    "sha256": "74abb1dba7128e71c25aa77e2a7faf9c2049eded13e01057bbeff2c2e1613115"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-156.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\u{28}\\\\1(a)\",\"u\");;\nexport {};",
+    "sha256": "6ceed46030bb8a630e871c8c17ded549a2c7e45cfe3baa80fad1b0f5d39e7689"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-157.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/[[]\\1](a)/;;\nexport {};",
+    "sha256": "f70be573d311ac6cc4effd4ea75850ebfab1da7bfde55d747f49806fe800f641"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-158.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"[[]\\\\1](a)\");;\nexport {};",
+    "sha256": "79903aaa281d1922649331f959b40d92de30f1a3f42f974254c52c67597c4017"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-159.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"[[]\\\\1](a)\",\"u\");;\nexport {};",
+    "sha256": "f14382980bcb4ca5595d963ed36d150475528e729fe775715e795924ec91b466"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-160.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/[\\q{]}]\\1(a)/;;\nexport {};",
+    "sha256": "fa3910f74b1391612b54fceaae8c259d8caa2404c0ee703f2bb45f451db1450b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-161.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"[\\\\q{]}]\\\\1(a)\");;\nexport {};",
+    "sha256": "fcadb78b2db82e75aa503cbbd8157b2e56fc349cd0435491a6b8ab98d3a3641b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-162.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"[\\\\q{]}]\\\\1(a)\",\"u\");;\nexport {};",
+    "sha256": "04b734d2b5edbe3c21e09691d9e86f043d41e558b0e20653b1162d6d9bf0d559"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-163.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\1(a|b)/;;\nexport {};",
+    "sha256": "f904c085dfba36d341616b08a7fe12291f25e4f2fcb2f5e5d89f1bca942aa855"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-164.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\1(a|b)\");;\nexport {};",
+    "sha256": "548e4c5960cd9bb0e532e72533b5f2ae1a227a70a05cdcd26f5d866d69b9a6d9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-165.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"\\\\1(a|b)\",\"u\");;\nexport {};",
+    "sha256": "c58fe3b4df05bad4dfd843092f24ac460eb30ceacd01bec8a4d6af8fe8254dfd"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-166.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?!(a|b))\\1/;;\nexport {};",
+    "sha256": "b2bc577917edc20debf7aafbaba977e6aea739f761439bd80a5249bc43a65eec"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-167.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"(?!(a|b))\\\\1\");;\nexport {};",
+    "sha256": "d0d59efc01400f47b068adbc239f21aee17066502828ba67507db632d422c8a1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-168.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp(\"(?!(a|b))\\\\1\",\"u\");;\nexport {};",
+    "sha256": "c8304b83c84509a0fbb890dca2816b6f97383f03d627ac5f18263c5d41a428af"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-169.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const r=RegExp;new r(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "8ba87aeed9178a78e8b9d181b0cbb88017a3a9b8fe60410fac7835d45fbab3bf"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-170.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const r=flag?RegExp:other;r(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "43679a9b1f68f027a055ea0d789ee6ac8eecdf4fa9a3970d9fc307142bc3ac1e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-171.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;globalThis.RegExp(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "d3917e76e54ce12f5e3b6bb069cff81ecfb9daf8ac573a4ce2e4956be20b15d6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-172.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const {RegExp:r}=globalThis;r(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "d3bc1a6e5f287f06f644af4dbbc5150905532087844955b1b9df3de4f4e28dc0"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-173.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const p=\"\\\\1\"+\"(a)\";RegExp(p);;\nexport {};",
+    "sha256": "aa6eb2e1a8aa48e930a3f1fe6825cf37b97691cd3c0700730cfbae5ddbb253a5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-174.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;let p=\"\\\\1(a)\";p=\"x\";RegExp(p);;\nexport {};",
+    "sha256": "77ae7699960ada13f3c269ff3f1a53be0d5f472baadf2c120b492fef99ed9227"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-175.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;function f(RegExp:any){RegExp(\"\\\\1(a)\")};\nexport {};",
+    "sha256": "43241d88c06f28b524c37120a755ec3095acebb2d8f962e4ffa8694c13b732a3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-176.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp=other;RegExp(\"\\\\1(a)\");\nexport {};",
+    "sha256": "a5c1ba67118dfc89198fa6684901a725f4ed7ebef8ff9a13baa1bf6a710cd7e5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-177.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const root=globalThis;root[\"Reg\"+\"Exp\"](\"\\\\1(a)\");\nexport {};",
+    "sha256": "e62b029f16458adc760cbf28e0583d6ade57657f95a5b6e63c05e2101cc8247f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-178.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"[[]\\\\1](a)\",\"v\");\nexport {};",
+    "sha256": "cf7b74b14ec10af3dbe42d9258944ce5fc5c48a9a219c407a126db6b7643f500"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-179.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"[\\\\q{]}]\\\\1(a)\",\"v\");\nexport {};",
+    "sha256": "ef1f490d41382aaac645582e43f1116a62f5e63f9a2c6c135a64a821e0848578"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-180.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(\"\\\\1(a){\",flags);\nexport {};",
+    "sha256": "5857990bd5b057a8cbbe6d069a01ea2876d11b134c37c21f5f8a0c754364fdea"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-181.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const p=\"\\\\1(a)\";const f=\"u\";RegExp(p,f);\nexport {};",
+    "sha256": "94bb1ca3915aabb7ada56fd2d1e772396ed087da4f9ca29d06ab784ffdc7d404"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-182.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(/\\1(a)/);\nexport {};",
+    "sha256": "0f41481c9252de7969e6d74194ceb32768020e5e4fab06aa67d6b344fd48d8bb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-183.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;new RegExp(`\\\\1${\"(a)\"}`);\nexport {};",
+    "sha256": "b35c5a7a9d23e28d20e7866b602eee82c4443dc9bacfb8bf45b2f5a50a91f427"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-184.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;let r;r=RegExp;r(\"\\\\1(a)\");\nexport {};",
+    "sha256": "3eed0b8a468f8da192639eeaa6f259fd69cc4a16cb777e26cae529093745b0bc"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-185.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;let r;r+=RegExp;r(\"\\\\1(a)\");\nexport {};",
+    "sha256": "2e0665b027cc38a71d5b9c32c8212e74fdc96b6bb295f37765ff41219fdd1264"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-186.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const {RegExp}=globalThis;RegExp(\"\\\\1(a)\");\nexport {};",
+    "sha256": "15044b8150df766beb0355cae5008d549bc0efce8961f4299e00e7c103edeed9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-187.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;globalThis=other;globalThis.RegExp(\"\\\\1(a)\");\nexport {};",
+    "sha256": "e3c58fd008d000732cd4d9e445fc598301cfef46a12ff2210db9977fda501469"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-188.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp((\"\\\\1(a)\"));\nexport {};",
+    "sha256": "639457661055fedcee34617a41256c9b52db68f401c5d328074ebcf462f1dcb8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-189.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;// \u03c0\ud83d\ude00\\nfoo(function(){return \"\u00e9\"});;\nexport {};",
+    "sha256": "8cb6755deb526743d29251240016bbf880646ab9f651265907958b14e1f5dd5f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-190.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;declare const obj:any;foo(function(){obj.arguments});;\nexport {};",
+    "sha256": "5e47a29088dbd50a098ee906c4bd705cc5d17ab946378f3acd5d8d621a44a470"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-191.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;foo(function(){const obj={arguments:1};obj.arguments});;\nexport {};",
+    "sha256": "69ba3682eb30f5a09d677e91dd38b469feccd30bddb87e188655e5a69786ea03"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-192.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;// \u03c0\ud83d\ude00\nfoo(function named(a:number){return '\u00e9'});;\nexport {};",
+    "sha256": "8dce8d69e1af6c4206f38217d6f98f425c307ab5972a7242cf1bc67c608c0231"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-193.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;foo(async function /* \u03c0 */ named(a:number){return a});;\nexport {};",
+    "sha256": "f022747053807ebae7d34b6d26bb7d658133c39d57370301a428e42f7e474115"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-194.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;foo(function named({x}:any){return x});;\nexport {};",
+    "sha256": "43924e15e9cfa1b5b55940303c785c4dd1ef10c5af23600fdbd79297a276eca8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-195.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;foo(function named(x:any=1){return x});;\nexport {};",
+    "sha256": "b8ae7a734ec7d64e319baf444c0e76caf580b24da536ae21486f24b09d27a3fa"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-196.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;declare const foo:any;foo((function(){}?.bind)(this));;\nexport {};",
+    "sha256": "5ff3d5d66edecca63139a1ceaa08902f486f6fa825a99860e2c544afffdd9144"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-197.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/\\k<\u03c0>(?<\u03c0>\u00e9)/;;\nexport {};",
+    "sha256": "4784f30fae1a3c0a90b70351f8b4b0774df0e82647c492cdfe1be58ef4d2bf24"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-198.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;/(?<\u03c0>\u00e9\\k<\u03c0>)/;;\nexport {};",
+    "sha256": "6a4cbe3d1f21bb05eae5094b78b973fd36bcd5061ae17bdd1a0f3277d874a982"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-199.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const r=RegExp;const r2=r;r2(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "4878e5186cc66e3a15bf452d27f489292354682826a938c37fd121fc4e40885b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-200.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const {RegExp:r=other}=globalThis;r(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "2747540a48c7612b786d6d761bb2ec3eb497bbc169cb119258cb267c52315e06"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-201.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;({RegExp:r}=globalThis);r(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "04d77ab8b824a71c4349c320746dd958fe386e631b95646540b0b2daa564f5b5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-202.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const root=globalThis;const {RegExp:r}=root;r(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "db62df3e5cdc4232041ede0597fce248a440d6a233307edb1a4693b5411e40d3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-203.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const p=\"\\\\1(a)\";const q=`${p}`;RegExp(q);;\nexport {};",
+    "sha256": "1629b800d1da9aca752e55913eef3f87849f58ef8fa6adc8b96c27de7b62de21"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-204.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;let r=RegExp;r=other;r(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "c7775d4e84d8bfbc6188ec5f246489292a3590a9b1cba6ae68699428ec4d18f8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-205.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;(r=RegExp)(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "be96d246b29887ffe82a545f546556d462e9a15316dc27e960329d1e2c048e01"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-206.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;(flag?RegExp:RegExp)(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "198aed5655b20e0d99f78bd045635aaf94e940de9887c944ceba9bb54323219f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-207.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;const RegExp=other;RegExp(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "8349ae8bba67c08e9e7e9e5f2eb60488a0cdbceecc6ca88bb81ea03a63734e15"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-208.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;RegExp! (\"\\\\1(a)\");;\nexport {};",
+    "sha256": "50f79b9fe70de8095b7e8a8c7ccaf3635b152742497c414971371948d15e107b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-callbacks/control-209.a",
+    "source": "declare const flag:boolean;declare const other:any;declare const flags:string;(RegExp as any)(\"\\\\1(a)\");;\nexport {};",
+    "sha256": "ccccfd1d6d92c1119541b946b56c2c44a6e861f404b3f2aecae779c2fd06c0bd"
+  }
+]

@@ -1,0 +1,832 @@
+[
+  {
+    "path": "/workspace/wave-06-landing2-original/control-000.a",
+    "source": "\n              function foo() {\n                  if (something) {\n                      try {\n                          bar();\n                          return;\n                      } catch (err) {}\n                  }\n              }\n            \nexport {};\n",
+    "sha256": "a65b5a67c7e61614bd0dc30b86502494bb41e84b8d31010067347e21576f1921"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-001.a",
+    "source": "\n              function foo() {\n                  try {\n                      return;\n                  } finally {\n                      bar();\n                  }\n              }\n            \nexport {};\n",
+    "sha256": "7ac2c8ceec6bdb91e9c161e3b024b6eb31c503a9e780881d489f07fc553a1ca6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-002.a",
+    "source": "\n              function foo() {\n                for (var foo of bar) return;\n              }\n            \nexport {};\n",
+    "sha256": "3fb270a9aa5b2721e5cde53afa8c88a0467e1c94a6b7bf334eef25fa63d7779e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-003.a",
+    "source": "\n              function foo() {\n                if (foo) {\n                  return;\n                }\n                return;\n              }\n            \nexport {};\n",
+    "sha256": "04ae790fc1a72fc377bb6b96e0efb8640c0def3051363e93816bcf26547c9092"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-004.a",
+    "source": "\n              function foo() {\n                switch (bar) {\n                  case 1:\n                    doSomething();\n                  default:\n                    doSomethingElse();\n                    return;\n                }\n              }\n            \nexport {};\n",
+    "sha256": "9b89c2fed96902644db6b454623bb65304cd5fa68c891c1288235338dfe43821"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-005.a",
+    "source": "\n              function foo() {\n                switch (bar) {\n                  case 1:\n                    if (a) {\n                      doSomething();\n                      return;\n                    }\n                    break;\n                  default:\n                    doSomethingElse();\n                }\n              }\n            \nexport {};\n",
+    "sha256": "303077112c3261eb3eaf2a6572e62bd8f9bd8bfd7adb7d59e1b649ec74d7975c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-006.a",
+    "source": "\n              function foo() {\n                switch (bar) {\n                  case 1:\n                    if (a) {\n                      doSomething();\n                      return;\n                    }\n                  default:\n                }\n              }\n            \nexport {};\n",
+    "sha256": "09db0f4a98e48879666b72596536c6696c6197e3cf86f1bf670e8e8d7ec9b37d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-007.a",
+    "source": "\n              function foo() {\n                switch (bar) {\n                  case 1:\n                    if (a) {\n                      doSomething();\n                      return;\n                    } else {\n                      doSomething();\n                    }\n                    break;\n                  default:\n                    doSomethingElse();\n                }\n              }\n            \nexport {};\n",
+    "sha256": "398d507155757da8108d33c5a4c55771b20f0dfa939294af39cbd45f244da5f7"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-008.a",
+    "source": "\n              function foo() {\n                switch (bar) {\n                  default:\n                    doSomething();\n                  case 1:\n                    doSomething();\n                    return;\n                }\n              }\n            \nexport {};\n",
+    "sha256": "ada6fabde796b1c59397e42d0492da6831a91bc4e0e62d702bab00275381d735"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-009.a",
+    "source": "\n              function foo() {\n                try {\n                  bar();\n                } catch (e) {\n                  try {\n                    baz();\n                    return;\n                  } catch (e) {\n                    qux();\n                  }\n                }\n              }\n            \nexport {};\n",
+    "sha256": "67b0a4676921d9b78bde8a7f38ea20d18a09d0efe9384f08a6f08caa598a001c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-010.a",
+    "source": "\n              function foo() {\n                try {\n                  foo();\n                  return;\n                } catch (err) {\n                  return 5;\n                }\n              }\n            \nexport {};\n",
+    "sha256": "b1fca27251395ad1616039d058d61c37d6c151080e24a209a963e468e18346dd"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-011.a",
+    "source": "\n              function foo() {\n                try {\n                  return 5;\n                } finally {\n                  function bar() {\n                    return;\n                  }\n                }\n              }\n            \nexport {};\n",
+    "sha256": "98f9ef8ccecde9f91ecad78cec81da999f5efe7532b692c507e3dcabaabf3720"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-012.a",
+    "source": "\n              function foo() {\n                try {\n                  return;\n                } catch (err) {\n                  foo();\n                }\n              }\n            \nexport {};\n",
+    "sha256": "621f316e347d753185867df9af46e184cf5e1b4fd8c588a8c821d1980574ff7d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-013.a",
+    "source": "\n              function foo() {\n                try {} catch (err) { return; }\n              }\n            \nexport {};\n",
+    "sha256": "c107b9464649c31ab68b60395ec1f9ae670484c36bfa210eea6ad9516190e78b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-014.a",
+    "source": "\n              function foo() {\n                try {} finally {}\n                return;\n              }\n            \nexport {};\n",
+    "sha256": "bc817d82a267f97743611f62c4c585fff4a974400c9f860d073c1006e972a59d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-015.a",
+    "source": "\n          function foo() {\n              if (something) {\n                  try {\n                      bar();\n                      return;\n                  } catch (err) {}\n              }\n              baz();\n          }\n        \nexport {};\n",
+    "sha256": "fd4cf5a8884b212355e65f948f4782cfd039ffb69fad7835cb4f4bd5944487ca"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-016.a",
+    "source": "\n          function foo() {\n            for (var foo = 0; foo < 10; foo++) {\n              return;\n            }\n          }\n        \nexport {};\n",
+    "sha256": "9cff1db059bb01bea410b6e3b40d3abaf7eb129cf7197a64cb01b034307c14fa"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-017.a",
+    "source": "\n          function foo() {\n            for (var foo in bar) {\n              return;\n            }\n          }\n        \nexport {};\n",
+    "sha256": "ed59adef9bde6c100cf24bd0cb2e89e7cb4c4896c03ea351779e583e78f83a66"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-018.a",
+    "source": "\n          function foo() {\n            if (bar) baz();\n            else return;\n            return 5;\n          }\n        \nexport {};\n",
+    "sha256": "ad098065d3eca48f00c604b5b9ac3c423e83b9494af038edd49de8f2d15d59c8"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-019.a",
+    "source": "\n          function foo() {\n            if (bar) return;\n            return baz;\n          }\n        \nexport {};\n",
+    "sha256": "c795fc2899820bce1645296becff6f566e1ae56faa6861e65e8b67eefc954b22"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-020.a",
+    "source": "\n          function foo() {\n            if (bar) {\n              doSomething();\n              return;\n            } else {\n              doSomethingElse();\n            }\n            qux();\n          }\n        \nexport {};\n",
+    "sha256": "6a4b837c96aa4efa2bdc0da2976cf8e4f814825eb03055bb8151fc3fdc05d47f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-021.a",
+    "source": "\n          function foo() {\n            if (bar) {\n              return;\n            }\n            return baz;\n          }\n        \nexport {};\n",
+    "sha256": "a622470b2569ce106064bdd045af8c2335a20db9d6cae5be950124227374fc80"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-022.a",
+    "source": "\n          function foo() {\n            return;\n            doSomething();\n          }\n        \nexport {};\n",
+    "sha256": "f45b477d32d2df4277d1a60867074f679e913fcce2a1b781c635783bdccb06a7"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-023.a",
+    "source": "\n          function foo() {\n            return;\n            while (foo) return;\n            foo;\n          }\n        \nexport {};\n",
+    "sha256": "cf1e6a7f8c3b66d4fe9487641cc553464d2c3135b9b969b1c9f6b7e38ea12bbe"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-024.a",
+    "source": "\n          function foo() {\n            switch (bar) {\n              case 1:\n                doSomething();\n                return;\n              default:\n                doSomethingElse();\n            }\n          }\n        \nexport {};\n",
+    "sha256": "eb726b1c06b340b035ee611eb1e331f72132716eaa508205f97761c41034db96"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-025.a",
+    "source": "\n          function foo() {\n            switch (bar) {\n              case 1:\n                if (a) {\n                  doSomething();\n                  return;\n                } else {\n                  doSomething();\n                  return;\n                }\n              default:\n                doSomethingElse();\n            }\n          }\n        \nexport {};\n",
+    "sha256": "72aa73e273fe08f33ec968a46107895a5a73edf0004e0fb6df48e1af3e0a0fd9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-026.a",
+    "source": "\n          function foo() {\n            switch (bar) {\n              default:\n                doSomething();\n                return;\n              case 1:\n                doSomethingElse();\n            }\n          }\n        \nexport {};\n",
+    "sha256": "2c1d574beea0998112963e3e1a1f253597dc90161c238597ae7c794ae05207d1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-027.a",
+    "source": "\n          function foo() {\n            try {\n              bar();\n              return;\n            } catch (err) {}\n            baz();\n          }\n        \nexport {};\n",
+    "sha256": "8469053897aff7346f49e64a27f251445be23cd4e2a756d5c521add904347646"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-028.a",
+    "source": "\n          function foo() {\n            try {\n              return 5;\n            } finally {\n              return; // This is allowed because it can override the returned value of 5\n            }\n          }\n        \nexport {};\n",
+    "sha256": "598aba91a909f56818f115ead8537d95ae8a80fba9101542d6c2673f44f3aa00"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-029.a",
+    "source": "\n          function foo(arg) {\n            throw new Error(\"Debugging...\");\n            if (!arg) {\n              return;\n            }\n            console.log(arg);\n          }\n        \nexport {};\n",
+    "sha256": "18cafa9868c2692a7234487ceb4b39798de7e11e36020bde71a401d34ade2c37"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-030.a",
+    "source": "\n          try {\n            throw new Error('foo');\n            while (false);\n          } catch (err) {}\n        \nexport {};\n",
+    "sha256": "3706f74d405698ba2da60d95e2396220cba6218a122b93c850cf2f054639b27a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-031.a",
+    "source": "\n        function foo() {\n          try {\n              bar();\n              return;\n          } finally {\n              baz();\n          }\n          qux();\n        }\n        \nexport {};\n",
+    "sha256": "652776c9db499fa6ca5c893301a99bac0a9eeb3e6721960341cb079a3bc83a17"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-032.a",
+    "source": "\nabstract class cc {\n  abstract f(a?: string | undefined): void;\n}\n      \nexport {};\n",
+    "sha256": "159d826244f82508222eb3f7572d93b1c65efb698b67b3e31fa0d4e62b996ff1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-033.a",
+    "source": "\ndeclare class bb {\n  f(a?: string | undefined): void;\n}\n      \nexport {};\n",
+    "sha256": "ab69d887a6c763b6aabd7a732e116aa36bbad34ca1c8476ff12ef30729a58b95"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-034.a",
+    "source": "\ninterface F {\n  (a?: string | undefined): void;\n}\n      \nexport {};\n",
+    "sha256": "3b657df37cf616cee5ad47e5758b7e1a168d58ff68e43730b14cb6ea4a7fd505"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-035.a",
+    "source": "\ninterface ee {\n  f(a?: string | undefined): void;\n}\n      \nexport {};\n",
+    "sha256": "83676ef4a16a912eaf524ecfe95a9765d22e9f7f939bca6289d76b6a58230642"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-036.a",
+    "source": "\ninterface ee {\n  new (a?: string | undefined): void;\n}\n      \nexport {};\n",
+    "sha256": "7b3bf7c26c9e926f2737d31173473104c48e4e5bffb399a5b6fdac20bf017b88"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-037.a",
+    "source": "\ntype A = 'A';\nconst a: A | A = 'A';\n      \nexport {};\n",
+    "sha256": "886f6f9494b2258a8f1b15b3344ebefaeb72a611dee6d608a582eb9853c7a9f1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-038.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\nconst a: A | B = 'A';\n      \nexport {};\n",
+    "sha256": "70b8398fed157bcc329c11f02b7bbf1d6f6ffaba75ff3e7039dfc03e3057e6b9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-039.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype D = 'D';\ntype F = (A | B) | (A | B) | ((C | D) & (A | B)) | (A | B);\n      \nexport {};\n",
+    "sha256": "09d1de5b77c16b9f8cb65639619350cbcf9c69aeda203e5e658f5b30ccbf3c8f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-040.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype D = 'D';\ntype T = (A | B) | (C | D);\n      \nexport {};\n",
+    "sha256": "6207b8ff868e0be357e730ab880f0905dd61469ec3961c20875c0ce34897b42b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-041.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype T = A | B | A | C;\n      \nexport {};\n",
+    "sha256": "a76007a9dd3782837510178f7d397bac41f2dcf488bb2cf97fb126365d29ef34"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-042.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype C = 'C';\ntype T = A | B | C;\n      \nexport {};\n",
+    "sha256": "9f48e2c435055952d0728f0d23a0344b052b322cd570d2e826a92e1ffb0b7ff3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-043.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype C = (A | B) | A | B | (A | B);\n      \nexport {};\n",
+    "sha256": "78363c686dde468bf3d2044a68371ce8b1513152561d1d1e5e650ec86fedd3bb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-044.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype T = 'A' | 'B';\n      \nexport {};\n",
+    "sha256": "1444663b406c2f31f4c04e411c6ed7b43197f94c7a91b9c9a36d08871db0db0a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-045.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype T = (A | B) | (A & B);\n      \nexport {};\n",
+    "sha256": "7a8d84578cadfa13192db1475d002a50260ea7319098b54a430040b913cea87d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-046.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype T = (A | B) | (A | B);\n      \nexport {};\n",
+    "sha256": "c0004e0e213645e33da0e2b427278f048c076ee24f9dc48df92a8214cd7be120"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-047.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype T = A | /* comment */ B;\n      \nexport {};\n",
+    "sha256": "d55795c9382741ef8130f1234bd2c1c29f93be3579af0d7d50388042ad8222f4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-048.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype T = A | B | A | A;\n      \nexport {};\n",
+    "sha256": "8e3a0fb2580ae3502a5c451f4ccaa279d4e5f52ad2a4c1c77251589ccf2259b9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-049.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype T = A | B | A | B;\n      \nexport {};\n",
+    "sha256": "0fded7f01a30826792e4ba62d5883cc5609897b1a8b15aa5eec21d55392c71e9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-050.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype T = A | B | A;\n      \nexport {};\n",
+    "sha256": "642d7fed42ee323e7ea1b0b9ba33d942b933c4d45ebe5684a45e556e016b599e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-051.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype T = A | B;\n      \nexport {};\n",
+    "sha256": "51c710233f114821571d7d7240b25b12a79be8322dcc45c5f2ea30e60d20e8ca"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-052.a",
+    "source": "\ntype A = 'A';\ntype B = 'B';\ntype T = Record<string, A | B>;\n      \nexport {};\n",
+    "sha256": "85451174d473c0b57ee801347b7292688a2b1e551890173adc41055bb808127c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-053.a",
+    "source": "\ntype A = 'A';\ntype T = A | (A | A);\n      \nexport {};\n",
+    "sha256": "dec7e13b76a93ca6323e10fea2304886d621fc3255b38eeccca8c141e0d5a9de"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-054.a",
+    "source": "\ntype A = 'A';\ntype T = A | /* comment */ A;\n      \nexport {};\n",
+    "sha256": "adfc13ee19c75f8da6adf6f0ebc6ee303579a6ba66beac4a014c3daf4c207229"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-055.a",
+    "source": "\ntype A = 'A';\ntype T = A | A;\n      \nexport {};\n",
+    "sha256": "6b5b7c36bc9fc526df8d1ad04519f1a79679d1e0028e9e352bfd7b34094ad792"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-056.a",
+    "source": "\ntype A = 'A';\ntype T = Record<string, A | A>;\n      \nexport {};\n",
+    "sha256": "412f2512e1e43a45235caf7c92a7c201308bbe9d0f0d4b5dbccec9bc54852f91"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-057.a",
+    "source": "\ntype A1 = 'A';\ntype A2 = 'A';\ntype A3 = 'A';\ntype T = A1 | A2 | A3;\n      \nexport {};\n",
+    "sha256": "ea7907136effb863f9581cb7ad76ba02b6035424ec9f28760e87f0d494adf3d0"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-058.a",
+    "source": "\ntype IsArray<T> = T extends any[] ? true : false;\ntype ActuallyDuplicated = IsArray<number> | IsArray<string>;\n      \nexport {};\n",
+    "sha256": "81275d3096c3ffd4166fa600c48595e5e4726a62318469373e41a3845b911377"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-059.a",
+    "source": "\ntype T = undefined;\n(arg?: T | string) => {};\n      \nexport {};\n",
+    "sha256": "1bd0adf61cca92d2c6b275cea92422ca41cefb557c89aa4ac09dc80f1bf49323"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-060.a",
+    "source": "() => 5\nexport {};\n",
+    "sha256": "d6f8fe2e3606ed8a3ad6bb2b07bebac30ad56514337a725c7a4f629cdb27e3f1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-061.a",
+    "source": "() => { if (foo) return; bar(); }\nexport {};\n",
+    "sha256": "076fcb4d0736599c382c756bc5ac7969684624dffe0cb27b02f20ae1ca61b9e6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-062.a",
+    "source": "() => { return; doSomething(); }\nexport {};\n",
+    "sha256": "69cde4ff0c97f0c820f90ec84a86d5d56ad5652b8241ebbd5ebca210b20a9bb0"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-063.a",
+    "source": "() => { return; }\nexport {};\n",
+    "sha256": "13abc141b90417e30847aa920312c7360dfad70b8a6c838cbb406df2c40b38ec"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-064.a",
+    "source": "(a: string | undefined) => {};\nexport {};\n",
+    "sha256": "c2bad8bce01d252cc3fa822b63e0fff1a87b356daea9dcae8090f13fdb4be64d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-065.a",
+    "source": "(a?: string | undefined) => {};\nexport {};\n",
+    "sha256": "9bb128712b1ae022a30aab1b22ce465f6d7bc0b6639d9b56eab7fd134fb58185"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-066.a",
+    "source": "/* \u4e16\u754c \ud83c\udf0d */\ntype T='\u00e9'|'\u00e9';function f(){/*keep*/return/*why*/;}\n\nexport {};\n",
+    "sha256": "c37716abc8721900c22b6dd88172eb9b2a58cf94bd4891f3b1d30d04c8699bb3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-067.a",
+    "source": "class A {x=1}; class B {x=1};const a:A=new B();const plain:A={x:1};\nexport {};\n",
+    "sha256": "d91a5f47fcb491601811f7669c7ceee70711d0456498fc2636738b925f739761"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-068.a",
+    "source": "class A{x=1};class B{x=1};declare const holder:{readonly value:B};const wide:{readonly value:A}=holder;declare const rows:B[];const list:A[]=rows;\nexport {};\n",
+    "sha256": "a6a3662bdc9bb91773bab0390b44847d0e7fe2383a56d9a97f07a674fc39185d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-069.a",
+    "source": "class A{x=1};class B{x=1};declare const rows:Map<string,B>;const wide:Map<string,A>=rows;\nexport {};\n",
+    "sha256": "ea3290003025426fdcba207b32427deafea9fca6b9c23c041af22a4be4f5eb39"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-070.a",
+    "source": "class A{x=1};class B{x=1};declare const x:A|B;const a:A=x;declare const y:B;const t:A|{x:number}=y;\nexport {};\n",
+    "sha256": "205a132d8f8eb1f2d48a7b001d66398f2fdfb2fc202ae860c4786d542395cf4b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-071.a",
+    "source": "class A{x=1};class B{x=1};declare const x:B&{tag:string};const a:A=x;declare const anyValue:any;const ok:A=anyValue;\nexport {};\n",
+    "sha256": "61a84df2c8e1a745a9c66ee5438e35c3ac42eb9eb6a2950f4bc1681ddd0ffa16"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-072.a",
+    "source": "class A{x=1};class B{x=1};declare const x:{p:B};declare const f:(a:A)=>B;const h:(a:B)=>A=f;\nexport {};\n",
+    "sha256": "d72c30849dd1a6f0ae7f363210fb9f7e2779f272e3156539f59e00f64836220c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-073.a",
+    "source": "class A{x=1};class B{x=1};function f<T extends B>(x:T):A{return x};function g(x:A=new B()):A{return new B()};\nexport {};\n",
+    "sha256": "f807a57cb4c1d6686bb0def9159bce85e7c8a4f1792e73502bf2822b69cd2ed5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-074.a",
+    "source": "class Base{x=1};class Derived extends Base{y=1};const b:Base=new Derived();class Chain{next():Chain{return this;}}\nexport {};\n",
+    "sha256": "3cfcc37f3baf975302c4aa47d375bf78d0150974a6d1ccc24660630b19ac29eb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-075.a",
+    "source": "class Box<T>{value:T;constructor(value:T){this.value=value} put(value:T){this.value=value}};declare const box:Box<string>;const wider:Box<string|number>=box;\nexport {};\n",
+    "sha256": "80f2b4e2fca48c3f57a4086c4ebad90f0607ac78a16e4eb07ca335ede2867f99"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-076.a",
+    "source": "class Empty{};const x:Empty=42;class A{x=1};const fresh:A=true?{x:1}:{x:2};\nexport {};\n",
+    "sha256": "6e83742b81a2028b792381494f6a6469cc238e7c746268472655991b21338ebf"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-077.a",
+    "source": "class Getter{get value():number|undefined{return;}};function* generator():Generator<number,undefined>{return;}\nexport {};\n",
+    "sha256": "73b86132c269a0a637664824a975c4e2486a2cfe0a0c7b48040c4d08fbad5fda"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-078.a",
+    "source": "class K { m(a?: string | undefined): void {} }\nexport {};\n",
+    "sha256": "8caaab1a704161990311641d99b0377e13d42bd5f0c1401b1869aeb6e23c2c8d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-079.a",
+    "source": "declare function f(a?: A | undefined): void;\nexport {};\n",
+    "sha256": "4bdfd85eb06981f5096a57a283e5e34f7724c10fe1bf7625200721c057b29280"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-080.a",
+    "source": "declare function f(a?: string | undefined): void;\nexport {};\n",
+    "sha256": "112c2f3dafdd88707d914874e265b590311bc2042a43f15f28a379731d4c3b97"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-081.a",
+    "source": "f = function (a?: string | undefined) {};\nexport {};\n",
+    "sha256": "109371205461cb0d51c56090559ddf17d1d677cfbe6f406cf1834efd769288c2"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-082.a",
+    "source": "function branch(x:boolean){if(x){return;}else{console.log(x);}}function dead(){throw 1;return;}function double(){return;return;}\nexport {};\n",
+    "sha256": "60b0d91a1f8882aa5c279dc4a5b92e7642f1fb5c08c4f6a57ed99fa95195c3f9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-083.a",
+    "source": "function f(){try{if(true)return;console.log('same try')}catch{console.log('catch')}}\nexport {};\n",
+    "sha256": "c28ef5f4e32f05c6d068c73ec24642203238ffb406c49dc5e7b1db8ab28b6b89"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-084.a",
+    "source": "function f(a?: string | undefined) {}\nexport {};\n",
+    "sha256": "795c2715122236341b95caf31dd8117c3784de54f1229a697a26f52a6d60323a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-085.a",
+    "source": "function f(a?: string | undefined, b?: number) {}\nexport {};\n",
+    "sha256": "5e89836805900b4851471bbd984e3d3114d5c8dfc9d637b97421c8d09d5b832a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-086.a",
+    "source": "function f(x:boolean){label:{if(x)return;break label;}console.log('later')}\nexport {};\n",
+    "sha256": "3113a8d52e49076e0e6092c56bf83d9be256f98de7580787772a50a3142dec70"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-087.a",
+    "source": "function foo() { bar(); return/**/; }\nexport {};\n",
+    "sha256": "6788e6cb337f4dd8a73c0277563b377c780c6b86436423ca2381ea2e2e74ecf5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-088.a",
+    "source": "function foo() { bar(); return//\n; }\nexport {};\n",
+    "sha256": "8590e2e702fd5252635c4b1bb14694321cfd81ba0543be23b0c21e4b8d2c721c"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-089.a",
+    "source": "function foo() { doSomething(); return; }\nexport {};\n",
+    "sha256": "c3c72e180a080d82b1c207c262394e104b5ee4fb18125533a7e2874047539317"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-090.a",
+    "source": "function foo() { if (condition) { bar(); return; } else { baz(); } }\nexport {};\n",
+    "sha256": "9898329f8dd28a370a762d25f9ad1e8b0b304d07399c7778b5610e1f6a8bbcdb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-091.a",
+    "source": "function foo() { if (foo) return; }\nexport {};\n",
+    "sha256": "04b6ee7a8685727be089bbe37395f97e400377cd83db5d7397a7e07ee94a6903"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-092.a",
+    "source": "function foo() { return 5; }\nexport {};\n",
+    "sha256": "a69d73662abeb41efb31052b7da92b3a8e7903f584082c0ac9c0fdf935041cc4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-093.a",
+    "source": "function foo() { return doSomething(); }\nexport {};\n",
+    "sha256": "d5b8dc30890c2b8a47ba152739076b3d8368fa755c6fc1b7958da3961ad81723"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-094.a",
+    "source": "function foo() { return null; }\nexport {};\n",
+    "sha256": "77753da4daecf1f2ef310d9e09be52e4ad0536289240557ce274ecb4d2fd3bbb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-095.a",
+    "source": "function foo() { return; return; }\nexport {};\n",
+    "sha256": "08b7665ae9c80d5065b6aeb52c0972270b55f7bfbbcd6d8b3acb0c0090d83152"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-096.a",
+    "source": "function foo() { return; }\nexport {};\n",
+    "sha256": "dde4439796d652382f6cd09bf261f7167c51e78de2a3e3acd9c204c7e066e60b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-097.a",
+    "source": "function loop(){while(true){} return;} function skip(){while(false){return;} return;}\nexport {};\n",
+    "sha256": "0107df99ef8d9f0f143978b8a2c76b9aaa9a0f756038a2ec54af1cdc1e476f75"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-098.a",
+    "source": "function promiseObject():Promise<void>{return;} function embeddedVoid():{f:()=>void}{return;} function voidUnion():string|void{return;}\nexport {};\n",
+    "sha256": "b5bb615a1a1b25ba77daaec2e9d95511bd198b5c5c58b499ee9cc0a2be6db785"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-099.a",
+    "source": "function required():unknown{return;} function allowed():void{return;} async function asyncRequired():Promise<string|undefined>{return;} async function asyncAllowed():Promise<void>{return;} async function asyncUndefined():Promise<undefined>{return;}\nexport {};\n",
+    "sha256": "13e1d50f5833110db46a133caf872496f19a9b2ea00969923157fa5140ba4bb4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-100.a",
+    "source": "function trial(){try{return;}finally{console.log('x')}}function rescued(){try{return;}finally{console.log('x')}console.log('after')}\nexport {};\n",
+    "sha256": "07bbd5b23a0eaad575a8c70a8ad386c35c8a28c6521bf38084408d81e55bd97d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-101.a",
+    "source": "function wrapper() { foo(); return; }\nexport {};\n",
+    "sha256": "4f51955880a74cc359fd9ec6e07f0b269f3370b717e767ebb5b584d2cc0482b1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-102.a",
+    "source": "function wrapper() { if (foo) { bar(); return; } else { baz(); } }\nexport {};\n",
+    "sha256": "98c5ca0123403a3b74b3ff9eae302bc8f81f8fd2b3983d1edb49a97f4bbcc4f9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-103.a",
+    "source": "function wrapper() { if (foo) { return; } doSomething(); }\nexport {};\n",
+    "sha256": "db984df369cfc1d23fa93773db417972d2f4c67a2f8bb8571741427d52402b27"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-104.a",
+    "source": "interface I { a: string | string; }\nexport {};\n",
+    "sha256": "168add9838dfbfe0cdba180b8c3c7169e155dc4226fe381f1f47565743e720bf"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-105.a",
+    "source": "let x: string | string = 'a';\nexport {};\n",
+    "sha256": "78420f61ebbe8b80b4d01ac28857a8d23a7181ef1318955e16811327078cb555"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-106.a",
+    "source": "type A = (number & string) & number & string;\nexport {};\n",
+    "sha256": "4549e1caaa49479bfb14e801ce980432f71f3939d98f532c5b747e54ac7412b5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-107.a",
+    "source": "type A = (number | (string | null)) | (string | (null | number));\nexport {};\n",
+    "sha256": "17053b0d8b7a6fd3288948e274699cdb0708fd7197b39a9ba62ff9d0c094524a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-108.a",
+    "source": "type A = (number | string) | number | string;\nexport {};\n",
+    "sha256": "3d643d43f6b7afc837e3c9cd0eb1520d5f793088fee09a3ff9359b61ad90b978"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-109.a",
+    "source": "type A = number & string & (number & string);\nexport {};\n",
+    "sha256": "28898730706e7fc5e35562d5ee230167178625c1abc442561be7cf431b2d70a3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-110.a",
+    "source": "type G<T> = T | T;\nexport {};\n",
+    "sha256": "757c8f595d7904efd063c2ce6f4af9aa3437db84c25d8399c54072cd1f3ff410"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-111.a",
+    "source": "type T = 'A' | 'A';\nexport {};\n",
+    "sha256": "cf56c6fab60235b1aecf341fef3877bd44fb4746c79af790ba3ba4419b166d10"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-112.a",
+    "source": "type T = 'A' | string[];\nexport {};\n",
+    "sha256": "0dcf37cfda03208a802230aa8afa8d7947ee22fa7115fd7c96eeae1607ada4be"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-113.a",
+    "source": "type T = (() => string) | (() => void);\nexport {};\n",
+    "sha256": "6f918f4968266de86ea79127d31bd32ee3cb341c19490bab7adacf793d4b28b7"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-114.a",
+    "source": "type T = (() => void) | (() => void);\nexport {};\n",
+    "sha256": "3e487a824082390c9abcb3db52ee0949dd07b08e2a07f14c5d3bfc9e43637dc4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-115.a",
+    "source": "type T = () => null | null;\nexport {};\n",
+    "sha256": "78f33eb20c8cc88e1375c38137bf4ff9e4b0b94bfd8f2b7eed6577b400d3e67b"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-116.a",
+    "source": "type T = () => null | undefined;\nexport {};\n",
+    "sha256": "2133471bca4d8f2ef40da3096beecf0b3b80646daa1dbace31949bd878ea453a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-117.a",
+    "source": "type T = () => string | string;\nexport {};\n",
+    "sha256": "01d2845504552cfe6fe87a998dbc81e4354392941c0e91876634b6ce7b5f8dff"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-118.a",
+    "source": "type T = () => string | void;\nexport {};\n",
+    "sha256": "8ba443326543f5285318882682f246a97cdc5b1934c6efd281b7deff84f2cc93"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-119.a",
+    "source": "type T = (arg: string | number) => void;\nexport {};\n",
+    "sha256": "4c0b1037abfb38ab2c8ad83b282e0c9f3ea4f2bae48c531cd15f050be9a34b33"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-120.a",
+    "source": "type T = (arg: string | string) => void;\nexport {};\n",
+    "sha256": "125019c89be370af71aaf8846a1994c8f57cb7a1a89c6c09cf4967207b7e3db4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-121.a",
+    "source": "type T = 1 | '1';\nexport {};\n",
+    "sha256": "40e39df64d51d94b8990939dc751d3965a1c0c60576af602071e4f93c6a9be16"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-122.a",
+    "source": "type T = 1 | 1;\nexport {};\n",
+    "sha256": "e3bd2cffebf44cad1efc15d45073cf5c480264dfcce9285508c4a546371921f4"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-123.a",
+    "source": "type T = 1 | 2;\nexport {};\n",
+    "sha256": "5cf848697ff089f2e3c977f2d8194ca104a8812c2be793da7a458c058a9a52e5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-124.a",
+    "source": "type T = A & A;\nexport {};\n",
+    "sha256": "b0a932748a3dbcee7556917dcdc7347100c83707d5a7560796c2451d035e96b9"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-125.a",
+    "source": "type T = A extends B ? C : D | D;\ntype A=1;type B=1;type C=1;type D=1;\nexport {};\n",
+    "sha256": "fd5f690b48db7aab83d1f520ab6d6a8c2a14f4f65edf315b34cf3a2fd6967151"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-126.a",
+    "source": "type T = A | A | string | string;\nexport {};\n",
+    "sha256": "f11d6373285ba38395e6e7899db2279f254d516192c3bf9a1954241ec188a92e"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-127.a",
+    "source": "type T = A | A | string;\nexport {};\n",
+    "sha256": "3e138fd0707822dc550c3676f4e77aeb0d439c55c69bf0893967850458e565bc"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-128.a",
+    "source": "type T = A | A;\nexport {};\n",
+    "sha256": "a2d180c52668d225b516e194e480c0f23a38378207c8b5ba59a8e1cca3a2f560"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-129.a",
+    "source": "type T = A[] | A[];\ntype A = string;\nexport {};\n",
+    "sha256": "1ae4e86dc18805dcf1411b56cda31979234f912182102bc84f842d25ff833356"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-130.a",
+    "source": "type T = Class<string> | Class<number>;\nexport {};\n",
+    "sha256": "192e9bfc415a210e44efffc56aa3225ef09fd59dde835410c45440a8b6027abf"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-131.a",
+    "source": "type T = Class<string> | Class<string>;\nexport {};\n",
+    "sha256": "08638763cc0da45a58a12dc55f0734c2c7a7e323b8d7740c5ad2ad4096469f2f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-132.a",
+    "source": "type T = Set<string> | Set<number>;\nexport {};\n",
+    "sha256": "77f72f3167ba189223395e81f8c0d7bea8cd32dafc15e1ddc4d349d3109e0fed"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-133.a",
+    "source": "type T = Set<string> | Set<string>;\nexport {};\n",
+    "sha256": "6d5e0fbeb9a259b5cabb930e63239624aa370d1d6966fb9a232e0149c48468d3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-134.a",
+    "source": "type T = [1, 2, 3] | [1, 2, 3, 4];\nexport {};\n",
+    "sha256": "5238fba01177516a9bb585e8eeb68064313eeeb7238eb009d76f9e87ae64d2dd"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-135.a",
+    "source": "type T = [1, 2, 3] | [1, 2, 3];\nexport {};\n",
+    "sha256": "f7f9fdd2afd291cf988a939ae6d5837bac2449254a5a7c385448340fed148b71"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-136.a",
+    "source": "type T = [1, 2, 3] | [1, 2, 4];\nexport {};\n",
+    "sha256": "aa15de88ca30a29091922994df98c99fbf26f3f411b878213ff5329434432b84"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-137.a",
+    "source": "type T = `a${string}` | `a${string}`;\nexport {};\n",
+    "sha256": "dfd2ff45331608c437479701d9f7e5a893ce62675a5752c59fa3b445199233d7"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-138.a",
+    "source": "type T = any | any;\nexport {};\n",
+    "sha256": "dd01cd44a619e6399ae2cabd70f1de7f041d4bc50b2a7d05228860ed6bb729f3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-139.a",
+    "source": "type T = any | unknown;\nexport {};\n",
+    "sha256": "970efc48e488e88b60f65ac9bbb7471e10a009f9578e75f92b5767a9aa42fd75"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-140.a",
+    "source": "type T = import('x').A | import('x').A;\nexport {};\n",
+    "sha256": "de2899a8a6eb718fb94af6e4a65e3889733445845202b4c37188a5c8301e0300"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-141.a",
+    "source": "type T = keyof A | keyof A;\ntype A = {a:1};\nexport {};\n",
+    "sha256": "d9f1ace61f581ee767bee222adadd91d93d20f3c645fe140585d2183eefcc2b6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-142.a",
+    "source": "type T = null | null;\nexport {};\n",
+    "sha256": "cd7167b839a1914b784bac0dea4b80d9fe6963e7ce25164bb7032b1dc7c74b91"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-143.a",
+    "source": "type T = null | undefined;\nexport {};\n",
+    "sha256": "24b78682b2b28a3c1b88f103a437459b5b96027f493cd47f962d450a8c40832f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-144.a",
+    "source": "type T = readonly string[] | readonly string[];\nexport {};\n",
+    "sha256": "94d3f4699ad2f540de5bae32aa7e1201069da9fa47411c37835ceb1c0e44d4dc"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-145.a",
+    "source": "type T = readonly string[] | string[];\nexport {};\n",
+    "sha256": "dc5d692be2175163c5bca76dc48bb426a5118ef66999fc0d4463ce4e02df6fd5"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-146.a",
+    "source": "type T = string | string | string;\nexport {};\n",
+    "sha256": "b870524f5c1f43cc463986c47edf34952859e076e4ef089f6880d4beedfa8140"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-147.a",
+    "source": "type T = string[] | number[];\nexport {};\n",
+    "sha256": "3f0a49c92b0c503868cd1254577ce5c672c189f5519cb9b1f4c77de8bad0dc3f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-148.a",
+    "source": "type T = string[] | string[];\nexport {};\n",
+    "sha256": "612239977a14bbd3ac2f1f9af6f4f229d99957f4f7f2bde45a3bffe69981a48d"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-149.a",
+    "source": "type T = string[][] | string[];\nexport {};\n",
+    "sha256": "6e329a13e0d5c800f051676082c0bc37e148b4af1e096bad1a6113ac869db60f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-150.a",
+    "source": "type T = string[][] | string[][];\nexport {};\n",
+    "sha256": "aad8db76245049f5dfca31e94ce8df0d9f1e09142a0ea78b4b61edba540c51f1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-151.a",
+    "source": "type T = true & boolean;\nexport {};\n",
+    "sha256": "c346d015c64717f9eeb9fcd20b43a8bef6cd10a88f3a73b10975e56313df6dbf"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-152.a",
+    "source": "type T = true & true;\nexport {};\n",
+    "sha256": "0e3008d1abdd93132041b671e8e8cab2281a07678623be9a9b2764ed0c6926d2"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-153.a",
+    "source": "type T = { a: string | number };\nexport {};\n",
+    "sha256": "acf9ab5924ed5ea56b7c6886c3a157d894391864f1d8cac78b983a8f33dbb7da"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-154.a",
+    "source": "type T = { a: string | string };\nexport {};\n",
+    "sha256": "b2084b86bda4f005400275dfdc2f87546f15187a0c91f71bb2ff8020df1339e6"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-155.a",
+    "source": "type T = { a: string } | { a: string };\nexport {};\n",
+    "sha256": "c4d36440cde5b931cc3dde0a094b8fe5fe453f78295f80b2ca83f3b972a15ca1"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-156.a",
+    "source": "type T = { a: string } | { b: string };\nexport {};\n",
+    "sha256": "51f925f1d26c9a3af8914325eea4a0bd7bdd81a73fd8409ad89f0ec1b3138830"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-157.a",
+    "source": "type T = { a: string; b: number } | { a: string; b: number };\nexport {};\n",
+    "sha256": "84d785752e2ce368bffcc60c842e6936646a0f06150b7afbda9380675fc8ab75"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-158.a",
+    "source": "type T = { a: string; b: number } | { b: number; a: string };\nexport {};\n",
+    "sha256": "506c12b88b48f7420007cb4f0b18849244228025996004fef94d778827eb9018"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-159.a",
+    "source": "type T = { readonly a: 1 } | { readonly a: 1 };\nexport {};\n",
+    "sha256": "380b1aa114ee0e9feff435ade2b897c8c7e2dc729c298443a5ec9a1166f16e5a"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-160.a",
+    "source": "type T={a:1}|{a:1};type A='a';type B=A;type U=A|B|('b'|A);type I=number&string&(number&string);\nexport {};\n",
+    "sha256": "9aac8f774ea76f5cdd95e8657a5ebc80c9add5cf23052c8b00b9f45bfdbd8c5f"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-161.a",
+    "source": "type U=undefined;function optional(p?:string|U|undefined){};type T=number|number;\nexport {};\n",
+    "sha256": "1396060cecb863f7d0779ff22956c8280cb969e8a46bb84d0f0114f63292a851"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-162.a",
+    "source": "type fn = (a?: (undefined | number) | string) => void;\nexport {};\n",
+    "sha256": "fc2e13d275534bf7d9cbcb5486343c1185eb22892e61166daa85ba92f7aa01b3"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-163.a",
+    "source": "type fn = (a?: string | (undefined | number)) => void;\nexport {};\n",
+    "sha256": "892734471973855e6fd552aba0d60a44d7c8a8c3bf8278c089ab18398b57eafb"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-164.a",
+    "source": "type fn = (a?: string | undefined) => void;\nexport {};\n",
+    "sha256": "74038f85eb27272a9a512276f6f6b7e7e6ef8d5e8d49eac83a32a8e95252c123"
+  },
+  {
+    "path": "/workspace/wave-06-landing2-original/control-165.a",
+    "source": "type fn = new (a?: string | undefined) => void;\nexport {};\n",
+    "sha256": "bbd76d496f2ac4b500d2ba6b39764112282e4f2149b3b7dc602aa9f4e8acbf5b"
+  }
+]

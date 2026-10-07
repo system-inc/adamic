@@ -1,0 +1,1977 @@
+[
+  {
+    "file": "original/001-stage0.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/001-stage0.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/002-checker.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/002-checker.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/003-wave06.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/003-wave06.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/004-wave06-oracle-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/004-wave06-oracle-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/005-controls-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "a7e63785af2fefb9af2b78f1db1d13e495de70f059488e34793ac2a12a872ae9"
+  },
+  {
+    "file": "original/005-controls-go.stdout.gz",
+    "bytes": 36604,
+    "sha256": "6980e0dbd4cfe20f77b9fefe6f04206c0b5160f743e921cdee97c0ea0fdcd050"
+  },
+  {
+    "file": "original/006-controls-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/006-controls-native.stdout.gz",
+    "bytes": 36604,
+    "sha256": "6980e0dbd4cfe20f77b9fefe6f04206c0b5160f743e921cdee97c0ea0fdcd050"
+  },
+  {
+    "file": "original/007-checker-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/007-checker-asan.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/008-wave06-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/008-wave06-asan.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/009-controls-asan-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "f6a2126ca1f1bbc4af4065e7d0f491ce4b20c5f12ea83e7177855b3694af09ef"
+  },
+  {
+    "file": "original/009-controls-asan-go.stdout.gz",
+    "bytes": 36604,
+    "sha256": "6980e0dbd4cfe20f77b9fefe6f04206c0b5160f743e921cdee97c0ea0fdcd050"
+  },
+  {
+    "file": "original/010-controls-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/010-controls-asan-native.stdout.gz",
+    "bytes": 36604,
+    "sha256": "6980e0dbd4cfe20f77b9fefe6f04206c0b5160f743e921cdee97c0ea0fdcd050"
+  },
+  {
+    "file": "original/011-nominal.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/011-nominal.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/012-nominal-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/012-nominal-run.stdout.gz",
+    "bytes": 31529,
+    "sha256": "771cd210aeb47860578d6db4bf9b318ada4cde55e2eb61bdbc0c1e74d86dfd39"
+  },
+  {
+    "file": "original/013-duplicate.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/013-duplicate.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/014-duplicate-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/014-duplicate-run.stdout.gz",
+    "bytes": 36604,
+    "sha256": "cc6e054cc4d44473531340cc11176b437064d89f04d5875a9cc790ba0b55f66d"
+  },
+  {
+    "file": "original/015-return.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/015-return.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/016-return-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/016-return-run.stdout.gz",
+    "bytes": 36604,
+    "sha256": "e558dc167f23186713257bc8895568bf64ea9e8a00cd288a55dcf0d446f76b9f"
+  },
+  {
+    "file": "original/017-compiler-pin.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/017-compiler-pin.stdout.gz",
+    "bytes": 41,
+    "sha256": "7cb2242d5cf864397302e7b7ae000bad28f457f9b02a0d6e543e5231ca436035"
+  },
+  {
+    "file": "original/018-compiler-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "b1b1b7beef3a71fb149610abe4716b22a2cf85d61b96250146446f9f26115c9e"
+  },
+  {
+    "file": "original/018-compiler-go.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "file": "original/019-compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/019-compiler-native.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "file": "original/020-compiler-asan-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "bc895edf515962ebbf0b4a9c1fecd3ff53ab5802def5bcf17901bfc20fe769af"
+  },
+  {
+    "file": "original/020-compiler-asan-go.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "file": "original/021-compiler-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/021-compiler-asan-native.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "file": "original/022-compiler-timed-native.stderr.gz",
+    "bytes": 102,
+    "sha256": "b31dfb94189140511108201727d64ae616e9531ee2df836ce4a571ecdc386a88"
+  },
+  {
+    "file": "original/022-compiler-timed-native.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "file": "original/023-compiler-timed-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "bea97d4875143941f8ab2f80328a99412e6e8caaab5e6689381d505d228663cb"
+  },
+  {
+    "file": "original/023-compiler-timed-go.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "file": "original/024-repository-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "143edea1c81567165d90933eefe559f6275272618bafddcb91d7791e10319f02"
+  },
+  {
+    "file": "original/024-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "original/025-repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/025-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "original/026-repository-asan-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "8e980803a56c2c0c55b636d48b64ae84c66d69fc4b323315daa5fdfd28df34ba"
+  },
+  {
+    "file": "original/026-repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "original/027-repository-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/027-repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "original/028-repository-timed-native.stderr.gz",
+    "bytes": 96,
+    "sha256": "94afd134687f87ad1d6f57c51da47159f53a4788f15cddb2ab67753f7f002373"
+  },
+  {
+    "file": "original/028-repository-timed-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "original/029-repository-timed-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "a3cd8b8881ae291f0effcc464d4ef1794a755e4a6d66b27b1555d3921de93a49"
+  },
+  {
+    "file": "original/029-repository-timed-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "original/030-released.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/030-released.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/031-released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "file": "original/031-released-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/032-released-registry.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/032-released-registry.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/033-released-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/033-released-mutant.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/034-released-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/034-released-mutant-run.stdout.gz",
+    "bytes": 73,
+    "sha256": "9dcb8ef0dfe3a25eae9dcf9015b05832db1d27c05bd82902cfc854764c13e808"
+  },
+  {
+    "file": "original/035-promised-question.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/035-promised-question.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/036-promised-question-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/036-promised-question-native.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/037-promised-question-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "original/037-promised-question-run.stdout.gz",
+    "bytes": 36122,
+    "sha256": "9df3be9d7df31746029cbb9ba3884d8dfd18bbbb1faab806a3134375b694379c"
+  },
+  {
+    "file": "original/compiler.manifest",
+    "bytes": 4922,
+    "sha256": "85fc2f05610391770cfdcad8cce9a0b79ec6550b513d9c0707aa777389245fee"
+  },
+  {
+    "file": "original/controls.manifest",
+    "bytes": 8466,
+    "sha256": "8449639f8ee89e84a26d2cb79dd9466e2074d79f7ca3ac11bf167e07e066a029"
+  },
+  {
+    "file": "original/repository.manifest",
+    "bytes": 17039,
+    "sha256": "54821646b689b3819ba1a15e3f1e4fa130feb7590ac42ca9d2ccb621d0e96199"
+  },
+  {
+    "file": "next/archive-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/archive-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/archive-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/archive-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/child_process_error_listener-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/child_process_error_listener-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/child_process_error_listener-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/child_process_error_listener-mutant-run.stdout.gz",
+    "bytes": 28780,
+    "sha256": "6bac12b93137de0a1038a4b8c2519b20c5c0bff009e1d4b7701fc5170fd2f0a9"
+  },
+  {
+    "file": "next/compiler-asan-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "da7cb3df9c68bce3d4edf0bd4fb18a73a8d41cc3ad81d765a06c23c85ebb915c"
+  },
+  {
+    "file": "next/compiler-asan-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "next/compiler-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/compiler-asan-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "next/compiler-go.stderr.gz",
+    "bytes": 64,
+    "sha256": "a32c39e035eb5bb05b95e242c2e5d70bbfc125b8a21ebfe31b4c9b2ef401addf"
+  },
+  {
+    "file": "next/compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "next/compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "next/compiler-timed-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "7462de8ff8a31dc7f8c0fe59e6695ffefeb8525e135d596bc12d7d464385a17f"
+  },
+  {
+    "file": "next/compiler-timed-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "next/compiler-timed-native.stderr.gz",
+    "bytes": 99,
+    "sha256": "b283712c5d367566fa30644bac4b63274ab66060dacf840ce244c0fda5fc2448"
+  },
+  {
+    "file": "next/compiler-timed-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "next/compiler.manifest",
+    "bytes": 4922,
+    "sha256": "85fc2f05610391770cfdcad8cce9a0b79ec6550b513d9c0707aa777389245fee"
+  },
+  {
+    "file": "next/controls-asan-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "72c18e35555b28e8551c2159eb48bb4541a382f36186e01194df421023e2659c"
+  },
+  {
+    "file": "next/controls-asan-go.stdout.gz",
+    "bytes": 28696,
+    "sha256": "76c29187704f9bc27add8a7f1eb34fc7451b8ba8aae15b6aa4139c9f2c016581"
+  },
+  {
+    "file": "next/controls-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/controls-asan-native.stdout.gz",
+    "bytes": 28696,
+    "sha256": "76c29187704f9bc27add8a7f1eb34fc7451b8ba8aae15b6aa4139c9f2c016581"
+  },
+  {
+    "file": "next/controls-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "111b4cb5697a390f9396b151924ff1be5aa7c43af6f96e33940824d522dc32d0"
+  },
+  {
+    "file": "next/controls-go.stdout.gz",
+    "bytes": 28696,
+    "sha256": "76c29187704f9bc27add8a7f1eb34fc7451b8ba8aae15b6aa4139c9f2c016581"
+  },
+  {
+    "file": "next/controls-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/controls-native.stdout.gz",
+    "bytes": 28696,
+    "sha256": "76c29187704f9bc27add8a7f1eb34fc7451b8ba8aae15b6aa4139c9f2c016581"
+  },
+  {
+    "file": "next/controls.manifest",
+    "bytes": 3722,
+    "sha256": "4667455b19c2c45a8d1e522a9386ec04894f39b604c366fc438cdd49e40ab846"
+  },
+  {
+    "file": "next/independent_await_in_loop-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/independent_await_in_loop-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/independent_await_in_loop-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/independent_await_in_loop-mutant-run.stdout.gz",
+    "bytes": 28780,
+    "sha256": "dac82c6ad6995775e68cccc99c6063de8fa3028cc0535433688ed9d1310c88b3"
+  },
+  {
+    "file": "next/native-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/native-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/native-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/native-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/oracle-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/oracle-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/question-mutant-archive.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/question-mutant-archive.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/question-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/question-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/question-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/question-mutant-run.stdout.gz",
+    "bytes": 20828,
+    "sha256": "569b4ad53a363db19f4edff4f1716f4d39d168d170593d9a6d907f40d57140ee"
+  },
+  {
+    "file": "next/released-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/released-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "file": "next/released-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/repository-asan-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "379a7c56891eeaf8449cd5916ee112fce601d23bd1457c1813b1670e6f86c9bf"
+  },
+  {
+    "file": "next/repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "next/repository-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "next/repository-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "da319c18f57d180d4d0e9dd47cd30ad19da6d8cce54cf27af94812b524e33a13"
+  },
+  {
+    "file": "next/repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "next/repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "next/repository-timed-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "2ed9c602793d8c2a2f7bf517f3678c895ae2745cab03a41fa712992a9e37f812"
+  },
+  {
+    "file": "next/repository-timed-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "next/repository-timed-native.stderr.gz",
+    "bytes": 94,
+    "sha256": "235e82c784ae6396b52937012ba91d19a4985528abc62e838c8c0933ad555c53"
+  },
+  {
+    "file": "next/repository-timed-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "next/repository.manifest",
+    "bytes": 17039,
+    "sha256": "54821646b689b3819ba1a15e3f1e4fa130feb7590ac42ca9d2ccb621d0e96199"
+  },
+  {
+    "file": "next/response_status_check-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/response_status_check-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/response_status_check-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/response_status_check-mutant-run.stdout.gz",
+    "bytes": 28768,
+    "sha256": "fa58f12a0bbe68b31dc44c3914a9c740008f92ab14fec2f31e09fedc9b178ae6"
+  },
+  {
+    "file": "next/runs.json",
+    "bytes": 10347,
+    "sha256": "26e14d5e18b287f38a171488def8ead1a43575ce527f185e422176fa34a13cbd"
+  },
+  {
+    "file": "next/stage0-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "next/stage0-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/archive-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/archive-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/archive-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/archive-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/compiler-asan-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "88b15dd51bb27589226ea80d896e80c9863398c29a531aed0164653eb49d2287"
+  },
+  {
+    "file": "constructors/compiler-asan-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "constructors/compiler-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/compiler-asan-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "constructors/compiler-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "a041444a1846069ee948ef0498cd74bd1117c79d1399a128c168a31b16e08a5d"
+  },
+  {
+    "file": "constructors/compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "constructors/compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "constructors/compiler-timed-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "79a3f78ecdc050359b3ebb23850234c440683494408948f072780823272223be"
+  },
+  {
+    "file": "constructors/compiler-timed-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "constructors/compiler-timed-native.stderr.gz",
+    "bytes": 93,
+    "sha256": "32649ef14b53c215703e491df013c531f8ac99a1c6658ed094ae0d660ecbc7bb"
+  },
+  {
+    "file": "constructors/compiler-timed-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "constructors/compiler.manifest",
+    "bytes": 4922,
+    "sha256": "85fc2f05610391770cfdcad8cce9a0b79ec6550b513d9c0707aa777389245fee"
+  },
+  {
+    "file": "constructors/controls-asan-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "4c99aed2aac225d04b776d8f3eb108ac737a2a5ccd3c681d55fa1a97b4d760e5"
+  },
+  {
+    "file": "constructors/controls-asan-go.stdout.gz",
+    "bytes": 23338,
+    "sha256": "9d1bbf7f6c1be297c0ebd709d80bec9d37f0d0e8a7fda1cf3a28d64f178f21c4"
+  },
+  {
+    "file": "constructors/controls-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/controls-asan-native.stdout.gz",
+    "bytes": 23338,
+    "sha256": "9d1bbf7f6c1be297c0ebd709d80bec9d37f0d0e8a7fda1cf3a28d64f178f21c4"
+  },
+  {
+    "file": "constructors/controls-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "9f1857d51012ad228fa1790fb8ba036ffcbf965e69b334bad06828761d2ba1ba"
+  },
+  {
+    "file": "constructors/controls-go.stdout.gz",
+    "bytes": 23338,
+    "sha256": "9d1bbf7f6c1be297c0ebd709d80bec9d37f0d0e8a7fda1cf3a28d64f178f21c4"
+  },
+  {
+    "file": "constructors/controls-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/controls-native.stdout.gz",
+    "bytes": 23338,
+    "sha256": "9d1bbf7f6c1be297c0ebd709d80bec9d37f0d0e8a7fda1cf3a28d64f178f21c4"
+  },
+  {
+    "file": "constructors/controls.manifest",
+    "bytes": 5885,
+    "sha256": "54b90d9ea95031110f8471948498b13bf0a44dd74f8abda9f3eab7430d8c299c"
+  },
+  {
+    "file": "constructors/native-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/native-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/native-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/native-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_func-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_func-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_func-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_func-mutant-run.stdout.gz",
+    "bytes": 25534,
+    "sha256": "1a3f3ad480130323f542be71938aeac4802be5bd199e3cc4430901cdbe73d9ab"
+  },
+  {
+    "file": "constructors/no_new_native_nonconstructor-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_native_nonconstructor-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_native_nonconstructor-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_native_nonconstructor-mutant-run.stdout.gz",
+    "bytes": 23338,
+    "sha256": "d24a9378095a0dbd66954dd5e28faf6bbfbcd765b932b8b3f3b1d129dbf5f9b4"
+  },
+  {
+    "file": "constructors/no_new_wrappers-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_wrappers-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_wrappers-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/no_new_wrappers-mutant-run.stdout.gz",
+    "bytes": 21670,
+    "sha256": "7c8dce610dd4f64d9d439709ba1a70ff4ed6e93faf373c0e043749bcc2aef66c"
+  },
+  {
+    "file": "constructors/oracle-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/oracle-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/question-mutant-archive.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/question-mutant-archive.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/question-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/question-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/question-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/question-mutant-run.stdout.gz",
+    "bytes": 16739,
+    "sha256": "956323c749e4c20ccb5bcebeca7fc8e58cc82748a6406b99a9744d675aadf434"
+  },
+  {
+    "file": "constructors/released-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/released-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "file": "constructors/released-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/repository-asan-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "d221c3ca78d729a5755c530ccf10486aadaf7135556e00eda2aa07e001cc3a50"
+  },
+  {
+    "file": "constructors/repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "constructors/repository-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "constructors/repository-go.stderr.gz",
+    "bytes": 59,
+    "sha256": "5a0d0d6b454a0561d3d21a94149e0490a2825102812145172b40eb42de038d54"
+  },
+  {
+    "file": "constructors/repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "constructors/repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "constructors/repository-timed-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "0674f44f19d1e2f74f4a76a1254a7ad1782babaedd6b5aa72e8b36af9bfd545c"
+  },
+  {
+    "file": "constructors/repository-timed-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "constructors/repository-timed-native.stderr.gz",
+    "bytes": 78,
+    "sha256": "f011008ad0c69ed71db4e9a7ab467dcf7315678b921c066f630ae2c6e36f28e0"
+  },
+  {
+    "file": "constructors/repository-timed-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "constructors/repository.manifest",
+    "bytes": 17039,
+    "sha256": "54821646b689b3819ba1a15e3f1e4fa130feb7590ac42ca9d2ccb621d0e96199"
+  },
+  {
+    "file": "constructors/runs.json",
+    "bytes": 10943,
+    "sha256": "692d46bf3163f2a6a3f04774efe56907b6b0619bd7534cc61c4fcae7414831d0"
+  },
+  {
+    "file": "constructors/stage0-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "constructors/stage0-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/archive-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/archive-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/archive-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/archive-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/compiler-asan-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "60f4402e21fe0b6811b7473f18125e8c79a7b8ebc63b4b849d7824ebf9a36300"
+  },
+  {
+    "file": "callbacks/compiler-asan-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "callbacks/compiler-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/compiler-asan-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "callbacks/compiler-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "faa8feb2f82bc509a7d9b93ab15c60bd218a941239d6bdc1b4a47c3f4f412788"
+  },
+  {
+    "file": "callbacks/compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "callbacks/compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "callbacks/compiler-timed-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "da4842d8876684f0e11437bd261e38909a4867c810f1cc4a160a1c1bd9694899"
+  },
+  {
+    "file": "callbacks/compiler-timed-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "callbacks/compiler-timed-native.stderr.gz",
+    "bytes": 96,
+    "sha256": "d99a331597730560a2aca8f8f58bdd0b8f7024bdd94c64a6646a58dc0bc7cd04"
+  },
+  {
+    "file": "callbacks/compiler-timed-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "callbacks/compiler.manifest",
+    "bytes": 4922,
+    "sha256": "85fc2f05610391770cfdcad8cce9a0b79ec6550b513d9c0707aa777389245fee"
+  },
+  {
+    "file": "callbacks/controls-asan-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "2af7f763025861452ae9680a01ab2557aa7d2a0b17ac03cce0f6b18371680a1a"
+  },
+  {
+    "file": "callbacks/controls-asan-go.stdout.gz",
+    "bytes": 51544,
+    "sha256": "336aec3f9069e846c1edf2b131c596f2ce35a35f50fb2c85929f314fd57fe7d9"
+  },
+  {
+    "file": "callbacks/controls-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/controls-asan-native.stdout.gz",
+    "bytes": 51544,
+    "sha256": "336aec3f9069e846c1edf2b131c596f2ce35a35f50fb2c85929f314fd57fe7d9"
+  },
+  {
+    "file": "callbacks/controls-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "67f3ea76b770742f0e3df84fb4fe053b3677bd9b0043c8007414c8ff7933355d"
+  },
+  {
+    "file": "callbacks/controls-go.stdout.gz",
+    "bytes": 51544,
+    "sha256": "336aec3f9069e846c1edf2b131c596f2ce35a35f50fb2c85929f314fd57fe7d9"
+  },
+  {
+    "file": "callbacks/controls-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/controls-native.stdout.gz",
+    "bytes": 51544,
+    "sha256": "336aec3f9069e846c1edf2b131c596f2ce35a35f50fb2c85929f314fd57fe7d9"
+  },
+  {
+    "file": "callbacks/controls.manifest",
+    "bytes": 10810,
+    "sha256": "943aaea74aecd2c7e7fc2b8953a22481fc3bf237c4d992b1fd7bcc1c98a0cb2f"
+  },
+  {
+    "file": "callbacks/native-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/native-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/native-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/native-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/no_throw_literal-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/no_throw_literal-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/no_throw_literal-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/no_throw_literal-mutant-run.stdout.gz",
+    "bytes": 53370,
+    "sha256": "f5c6ac81b16d450f24ab11e88e00ae6a1474efd42a9eb547c6bafa5361fb032e"
+  },
+  {
+    "file": "callbacks/no_useless_backreference-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/no_useless_backreference-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/no_useless_backreference-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/no_useless_backreference-mutant-run.stdout.gz",
+    "bytes": 35911,
+    "sha256": "f3cfeac845faf1179a6c079697db0d8b58a73be5bab1db37b5f258ab0567a462"
+  },
+  {
+    "file": "callbacks/oracle-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/oracle-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/prefer_arrow_callback-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/prefer_arrow_callback-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/prefer_arrow_callback-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/prefer_arrow_callback-mutant-run.stdout.gz",
+    "bytes": 51712,
+    "sha256": "9740e70eeca5ddf500830cd0d78cf9dfa95cdc81675682412c992af0096eaf2a"
+  },
+  {
+    "file": "callbacks/question-mutant-archive.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/question-mutant-archive.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/question-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/question-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/question-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/question-mutant-run.stdout.gz",
+    "bytes": 36982,
+    "sha256": "786e51119eb763cbcca8c4381c5b45f244814f10c08382f1151db695153af703"
+  },
+  {
+    "file": "callbacks/released-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/released-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "file": "callbacks/released-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/repository-asan-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "e7cb516c8a51aa9066594c052d1ff6b0070f33c4c75dfaaa481f9bc12ec95ca6"
+  },
+  {
+    "file": "callbacks/repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "callbacks/repository-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "callbacks/repository-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "044d3d18e7985542e772b19173fc246bf139be4b15434c20ecca7d8eedd2f47d"
+  },
+  {
+    "file": "callbacks/repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "callbacks/repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "callbacks/repository-timed-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "4ce4cfb3025d15e53985a56be8ba8b6de15eea6f06c4e0b02ce2fac8f387ec24"
+  },
+  {
+    "file": "callbacks/repository-timed-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "callbacks/repository-timed-native.stderr.gz",
+    "bytes": 78,
+    "sha256": "329fafe1435d2a7e20c55e41133e82cd81f5b6e770162f0fe74a111805dd412b"
+  },
+  {
+    "file": "callbacks/repository-timed-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "callbacks/repository.manifest",
+    "bytes": 17039,
+    "sha256": "54821646b689b3819ba1a15e3f1e4fa130feb7590ac42ca9d2ccb621d0e96199"
+  },
+  {
+    "file": "callbacks/runs.json",
+    "bytes": 10724,
+    "sha256": "722008d24ad7490cce0e1abbd859dd85748ada583dcce84a5b56c77408858089"
+  },
+  {
+    "file": "callbacks/stage0-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "callbacks/stage0-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/asan-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/asan-run.stdout.gz",
+    "bytes": 2367,
+    "sha256": "1895fc2165b1c287c9ea0fb0b3488b617653d79a8f30386c975b167a021c31c3"
+  },
+  {
+    "file": "react/controls.manifest",
+    "bytes": 178,
+    "sha256": "c702aa209889505623861ac7742c0cd768a479e9bc2549c59a4c3a4618326557"
+  },
+  {
+    "file": "react/go-controls.stderr.gz",
+    "bytes": 55,
+    "sha256": "0e59e4f7f950b848deb7635cf31f86261eb553b6a1525c990e9aaada2e1ce868"
+  },
+  {
+    "file": "react/go-controls.stdout.gz",
+    "bytes": 2367,
+    "sha256": "1895fc2165b1c287c9ea0fb0b3488b617653d79a8f30386c975b167a021c31c3"
+  },
+  {
+    "file": "react/oracle-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/oracle-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/parser-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/parser-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/parser-run.stderr.gz",
+    "bytes": 91,
+    "sha256": "83b31c5a34de38db51bfb3b66caa61744e8771882a799fe2ab38e5d2bb28dc63"
+  },
+  {
+    "file": "react/parser-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/reporting-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/reporting-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/reporting-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/reporting-run.stdout.gz",
+    "bytes": 2367,
+    "sha256": "1895fc2165b1c287c9ea0fb0b3488b617653d79a8f30386c975b167a021c31c3"
+  },
+  {
+    "file": "react/runs.json",
+    "bytes": 7337,
+    "sha256": "9afa9e17ae5097b52295b00d2a2e8ff24ef98e1a043b13d4953b7c82320829ff"
+  },
+  {
+    "file": "react/set_state_in_effect-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_effect-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_effect-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_effect-mutant-run.stdout.gz",
+    "bytes": 2373,
+    "sha256": "708cd109f036b8b92d4c015faebf531b72439d29b48b2e4cbe6232f6e46eb46c"
+  },
+  {
+    "file": "react/set_state_in_effect-no-refusal-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_effect-no-refusal-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_effect-no-refusal-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_effect-no-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_effect-refusal-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_effect-refusal-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_effect-refusal-run.stderr.gz",
+    "bytes": 153,
+    "sha256": "45438d1c8092ca1d36556d965c24b6047d2a44b0e4a114a198c8587d94c1b499"
+  },
+  {
+    "file": "react/set_state_in_effect-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-mutant-run.stdout.gz",
+    "bytes": 2373,
+    "sha256": "17e6cfa1917ec565139d081936004ad665d85209bf4f110dcbb25fc48931c3ed"
+  },
+  {
+    "file": "react/set_state_in_render-no-refusal-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-no-refusal-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-no-refusal-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-no-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-refusal-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-refusal-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/set_state_in_render-refusal-run.stderr.gz",
+    "bytes": 138,
+    "sha256": "1a62d2931e5a6478c7953f85afff2067df8e26e2ddbb272d6e13a4f561036884"
+  },
+  {
+    "file": "react/set_state_in_render-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/stage0-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/stage0-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-mutant-run.stdout.gz",
+    "bytes": 2373,
+    "sha256": "b0fd1287d76a7b9a1fd6869a46d1a6a13e1c6f4ba881539d3a37255096ad93d3"
+  },
+  {
+    "file": "react/static_components-no-refusal-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-no-refusal-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-no-refusal-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-no-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-refusal-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-refusal-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "react/static_components-refusal-run.stderr.gz",
+    "bytes": 131,
+    "sha256": "53ba33afd28297a2f49ba1fdcac0207800ddc24adf1bd9ccf0896b567bfefa1f"
+  },
+  {
+    "file": "react/static_components-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "gate/callbacks-compiler-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "ef8afe10ffcbbf18ccec73c395ebd942d57b6937a69b08d386bdea66bf98c383"
+  },
+  {
+    "file": "gate/callbacks-compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "gate/callbacks-compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "gate/callbacks-compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "gate/callbacks-repository-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "088243e9521d551f11a45fa2616416701b4b16af252f40d6728c5ed88499ffd7"
+  },
+  {
+    "file": "gate/callbacks-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "gate/callbacks-repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "gate/callbacks-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "gate/constructors-compiler-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "e977f9c7ec53e69be37b31e18770cfb1f52bfe5d141d9ab36faca29cc83a6590"
+  },
+  {
+    "file": "gate/constructors-compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "gate/constructors-compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "gate/constructors-compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "gate/constructors-repository-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "e93047e8770213339ee1f4e7add5b0c35a625638f7e004628d82dc21379ee282"
+  },
+  {
+    "file": "gate/constructors-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "gate/constructors-repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "gate/constructors-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "gate/isolated-times.json",
+    "bytes": 5751,
+    "sha256": "446e64bea2fe47c952305d1d5de36e09b19e43c639b187f3175513cb101caf48"
+  },
+  {
+    "file": "gate/next-compiler-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "6803764cd63e32118efc5d1b13ca0cd4ba65264c867e20fa0a5d92410e487b2c"
+  },
+  {
+    "file": "gate/next-compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "gate/next-compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "gate/next-compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "file": "gate/next-repository-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "835b3f4b872130833061a565a39d00a4efdff62c275d0201e5e02adc9ab9b66d"
+  },
+  {
+    "file": "gate/next-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "gate/next-repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "gate/next-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "gate/original-compiler-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "439bf3e0f37761932267765deda17304f621aee17aeac020d26d9b9614d4a1ee"
+  },
+  {
+    "file": "gate/original-compiler-go.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "file": "gate/original-compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "gate/original-compiler-native.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "file": "gate/original-repository-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "7fdab66c5543c6c198046d7d53a6efc70e18be83ca298fb019d0cb7640752c93"
+  },
+  {
+    "file": "gate/original-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "gate/original-repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "gate/original-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "file": "logs/wave-06-landing2-bridge.log.gz",
+    "bytes": 3089,
+    "sha256": "cda6623396dbb3f712bb5b062b5ef2804b42882fc6e01234e5f92bb89725fe70"
+  },
+  {
+    "file": "logs/wave-06-landing2-callbacks.log.gz",
+    "bytes": 715,
+    "sha256": "4e622c44c20124871c7b34c4d422015f7ce7dd81b79d54b0c8628fcdda2fba5d"
+  },
+  {
+    "file": "logs/wave-06-landing2-constructors.log.gz",
+    "bytes": 706,
+    "sha256": "041f6b74d8b4df4559ae0017ee40f8d1c2b433b0d591b6bc7966b01c13675d1d"
+  },
+  {
+    "file": "logs/wave-06-landing2-diff.log.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/wave-06-landing2-format.log.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/wave-06-landing2-next.log.gz",
+    "bytes": 698,
+    "sha256": "3a2cba9f8bc41536da7978048d7c3a0d38977b60f4d58ab801f46f8953612c40"
+  },
+  {
+    "file": "logs/wave-06-landing2-node.log.gz",
+    "bytes": 3318,
+    "sha256": "e634a887cf9b8583dbf49f085a52975804e86df9c77193048f7af776eda385da"
+  },
+  {
+    "file": "logs/wave-06-landing2-original.log.gz",
+    "bytes": 1779,
+    "sha256": "ce6bd50536da04519effb12245806d14bb977dcac9dd6996d58258e55bdb3e36"
+  },
+  {
+    "file": "logs/wave-06-landing2-package.log.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/wave-06-landing2-react.log.gz",
+    "bytes": 557,
+    "sha256": "93eb8320c2ab2e66cc0402fafb2d94904f7af2edd577a9c78968ee75c043ff58"
+  },
+  {
+    "file": "logs/wave-06-landing2-timing.log.gz",
+    "bytes": 845,
+    "sha256": "cf73e554df31114bc3e0a9d6de9c2cc0cc082765b80162429e9699652ba07789"
+  },
+  {
+    "file": "logs/wave-06-landing2-vet.log.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "logs/wave-06-landing-fetch.log.gz",
+    "bytes": 5979,
+    "sha256": "b457b54ffac38c82659d833458be69b5813251509e40b27f15f276a6aa9f384e"
+  },
+  {
+    "file": "logs/wave-06-rebase.log.gz",
+    "bytes": 247,
+    "sha256": "4a1018edf44cb0c3024f52d9d5488d9a320267eef5eb5996eeb197c0045b5f0d"
+  },
+  {
+    "file": "logs/wave-06-landing-setup.log.gz",
+    "bytes": 388,
+    "sha256": "e07e780bd1f31eb5264fab80c2624d0fef6fc6611b21fb557f0fde3e991f2cbb"
+  },
+  {
+    "file": "logs/wave-06-landing-main-refresh.log.gz",
+    "bytes": 139,
+    "sha256": "9e8074fa608137a8029fece1e5b3f73b3c2ff8753692f6a675b51e27e367f375"
+  },
+  {
+    "file": "logs/wave-06-landing-rebase-2.log.gz",
+    "bytes": 247,
+    "sha256": "4a1018edf44cb0c3024f52d9d5488d9a320267eef5eb5996eeb197c0045b5f0d"
+  },
+  {
+    "file": "gate/origin-refs.txt",
+    "bytes": 36711,
+    "sha256": "eae3e8c177f3d232fd2117d2def8e40f1758dc9cf857d6e722ccc185bac440fb"
+  },
+  {
+    "file": "gate/substrate-refresh.json",
+    "bytes": 143,
+    "sha256": "33346af58b92fbd247e933d599274c24531db671beff1d53b22885e535c85e11"
+  }
+]
