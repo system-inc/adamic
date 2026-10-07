@@ -85,3 +85,12 @@ or context file was changed. The JSX fragment and constructed-context source
 analyses remain unfinished; jsx-no-undef has a tested private native analysis.
 These syntax/checker rules are not parked HIR/SSA rules. No further claims were
 made. The current landing report records revalidation against main b8fb957aa.
+
+## Source analysis completed on integrated lint
+
+The construction and memo/dependency/escape analysis is now implemented in .a
+and independently checked against unchanged Go: 171 controls/97 findings, both
+corpora, sanitizers, five semantic mutants and all three released questions PASS.
+This supersedes the unfinished-source statements above. Shared RuleContext still
+has no checker program/lease, configuration or root manifest, so shared typed
+registration remains blocked. No shared files were changed. See ANALYSIS_REPORT.md.

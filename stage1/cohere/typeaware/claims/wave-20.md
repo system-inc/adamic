@@ -97,7 +97,7 @@ The first three eligible rules, each with combined volume zero, are:
 | Rule | Status |
 | --- | --- |
 | react/jsx-fragments | Native analysis tested; shared registration blocked |
-| react/jsx-no-constructed-context-values | Claimed |
+| react/jsx-no-constructed-context-values | Native analysis tested; shared registration blocked |
 | react/jsx-no-undef | Native analysis tested; shared registration blocked |
 
 These rules use AST and checker facts, not the parked native React HIR/SSA
@@ -146,3 +146,10 @@ source 26f1d659f: all eleven implemented analyses, all mutants and released
 checks green again. Shared typed registration and constructed-context-values
 source remain unfinished; no new claims. See
 react-jsx-fragments/LANDING_AREA_D65A8F931_REPORT.md.
+
+Fifth-batch source completion: constructed-context-values now has the full
+construction and memo/escape native analysis, validated at 47e48bb178ebd0020cba80346d8cafef9259c6cb.
+171 controls/97 findings, both corpora, sanitizer, five semantic mutants and
+three released queries pass. All three JSX source analyses are now tested.
+Shared checker-context registration remains blocked; these AST/checker rules
+are not parked HIR/SSA rules. See the owned constructed-context ANALYSIS_REPORT.md.
