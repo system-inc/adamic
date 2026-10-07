@@ -1,0 +1,19 @@
+{
+  "adamic_base": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "cohere": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "typescript_go": "8d550c837c90bd1805b047b7eeccc2baac2d5e7a",
+  "typescript_tag": "v6.0.3",
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "node": "v24.19.0",
+  "go": "go1.27.1",
+  "clang": "20.1.8",
+  "nproc": 5,
+  "cpu_quota": 4,
+  "setup_seconds": 177,
+  "profiles": {
+    "stock": "unmodified Adamic fixed options and prelude, untouched 77-source checkout",
+    "upstream": "scratch loader config overlay, full upstream project roots and Node declarations, regex adapter retained",
+    "stock-library-entry": "counterfactual: upstream overlay with only regex adapter removed; no code emitted",
+    "policy-repros": "counterfactual: stock Adamic except erasableSyntaxOnly disabled; no code emitted"
+  }
+}

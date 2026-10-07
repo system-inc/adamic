@@ -1,0 +1,22 @@
+{
+  "command": [
+    "go",
+    "run",
+    "./cmd/adamic",
+    "build",
+    "stage3/fixtures/assertions/08_optional_start.a",
+    "-o",
+    "/tmp/adamic-gate/assertions-observe-18fowr2x/program"
+  ],
+  "build": {
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/assertions/08_optional_start.a:11:52: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\nexit status 1\n",
+    "exit": 1
+  },
+  "node": {
+    "stdout": "0:2:abc\n0:4:name\n0:0:\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "native": null
+}

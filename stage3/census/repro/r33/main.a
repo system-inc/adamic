@@ -1,0 +1,1 @@
+class Value { count!: number; } console.log(String(new Value().count));
