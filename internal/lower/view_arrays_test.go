@@ -12,6 +12,7 @@ import (
 )
 
 func TestViewArrayContract(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct {
 		declaration, element string
 		array, unsupported   bool

@@ -1,7 +1,7 @@
 Built standalone array-contract and callable-admission hooks, JavaScript read/call helpers, and seven source witnesses; compiler dispatch integration is incomplete.
-Base: 4dbf3b6a; this report and its implementation are committed together on codex/views-arrays-callables.
+Implementation: 8346b28c; dependency merge: 832e6082 from lane 1 tip 00d6006a, including current main 71d7e49.
 Commands: touched-package tests, vet, focused Node helper tests, and the existing checked-view oracle pass; source witnesses still fail compiler admission.
-Mutants: array kind, selected element validation, and unproven signature acceptance each fail a semantic assertion, with no build-warning kill.
+Mutants: array kind, selected element validation, callable kind, and unproven signature acceptance each fail a semantic assertion, with no build-warning kill.
 Not covered: native array metadata/emission, shared dispatch/IR wiring, implementation certificates, tuples, iteration/callback/mutator integration, and whole-corpus lowering.
 
 ## Observations
@@ -62,9 +62,11 @@ oracles. No count rows are supplied because the witnesses do not lower yet.
 5. Promote the seven .a witnesses to lane-owned end-to-end oracle tests after
    admission is wired; shared count regeneration remains lane 1's responsibility.
 
-The required merge of origin/main (71d7e49) was attempted and aborted. It conflicts
-in internal/native/emit_statements.go and internal/oracle/counts.md, both reserved
-for lane 1. This branch is not claimed to have landed on current main.
+The direct merge of origin/main (71d7e49) conflicted in lane 1 files and was
+aborted. A final dependency fetch found lane 1 tip 00d6006a, which includes its
+current-main conflict resolutions. Merging that tip succeeded as 832e6082.
+Current origin/main is an ancestor of this branch; no shared files were manually
+edited here. Shared contract IDs/adapters are still absent at the updated tip.
 
 ## Site share
 
@@ -91,13 +93,14 @@ I reran setup on the stable branch; it completed. This was an invalid setup run,
 not evidence of a stable branch build defect.
 
 - go test ./internal/lower ./internal/javascript -count=1 -timeout 30m:
-  lower 26.044s, javascript 0.993s, both pass.
+  after dependency merge: lower 19.704s, javascript 1.328s, both pass.
 - go vet ./internal/lower ./internal/javascript: exit 0, no output.
 - ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
-  TestDefaultTaggedSourceViews -count=1 -timeout 30m: pass, 23.416s.
+  TestDefaultTaggedSourceViews -count=1 -timeout 30m: after merge pass, 24.974s.
 - Focused helper tests and mutants: see committed logs. Mutant array-kind fails
   TestViewArraysNode/kind; element fails TestViewArraysNode/second; signature fails
-  TestViewCallableSignature. Each mutation is restored in a finally block.
+  TestViewCallableSignature; callable-kind fails TestViewCallablesNode/kind.
+  Each mutation is restored in a finally block.
 - Source Node runs all seven witnesses, exit 0: array field 2, selected element 7,
   object element ok, class method 10, function field 8, non-array undefined,
   opaque signature 7. Compiler probes reach array NotYet, class-cast refusal,

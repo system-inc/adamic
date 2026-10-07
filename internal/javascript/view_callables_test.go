@@ -3,6 +3,7 @@ package javascript
 import "testing"
 
 func TestViewCallablesNode(t *testing.T) {
+	t.Parallel()
 	runtime := viewTestRuntime + fieldReadinessRuntime + viewCallablesRuntime
 	for _, test := range []struct {
 		name, source, out, err string

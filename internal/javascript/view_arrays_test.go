@@ -41,6 +41,7 @@ const viewNumberCheck = `const numberCheck = (value, expression) => {
 `
 
 func TestViewArraysNode(t *testing.T) {
+	t.Parallel()
 	runtime := viewTestRuntime + fieldReadinessRuntime + viewArraysRuntime + viewNumberCheck
 	for _, test := range []struct {
 		name, source, out, err string
@@ -64,6 +65,7 @@ func TestViewArraysNode(t *testing.T) {
 }
 
 func TestViewArrayFieldPresence(t *testing.T) {
+	t.Parallel()
 	runtime := viewTestRuntime + fieldReadinessRuntime + viewArraysRuntime
 	read := emitViewArrayFieldRead("object", "values", "node.values", "readonly number[]")
 	runViewNode(t, runtime+`const object = {values: [7]}; console.log(`+read+`.length);`, "1\n", "", 0)

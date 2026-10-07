@@ -3,6 +3,7 @@ package lower
 import "testing"
 
 func TestViewCallableSignature(t *testing.T) {
+	t.Parallel()
 	if err := checkViewCallableSignature("fixture.a:1", "run", true); err != nil {
 		t.Fatal(err)
 	}
