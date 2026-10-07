@@ -1,0 +1,63 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {binaryExpression, type BinaryView, type FlowDependencies} from './binary_expression.a';
+import {classLike, type ClassView, type HeritageView} from './class_like.a';
+import {ifStatement, type IfView} from './if_statement.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if (file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text); const root = json.parse();
+if (root < 0) { panic(json.error); }
+function num(row: number, key: string): number { return Number(json.node(json.field(row, key)).text); }
+function bool(row: number, key: string): boolean { return json.node(json.field(row, key)).text === 'true'; }
+function numbers(row: number, key: string): number[] {
+  const values: number[] = [];
+  for (const node of json.node(json.field(row, key)).children) { values.push(Number(json.node(node).text)); }
+  return values;
+}
+const state = {cur: 0};
+const initialEvents: readonly number[] = [];
+const replay = {events: initialEvents, index: 0, trace: ''};
+function event(kind: string, a: number, b: number, c: number): number {
+  const before = state.cur;
+  const item = replay.events[replay.index]; replay.index++;
+  let value = -1;
+  if (item !== undefined) { state.cur = num(item, 'cur'); value = num(item, 'value'); }
+  replay.trace += `${kind}:${a}:${b}:${c}:${before}>${state.cur}:${value};`;
+  return value;
+}
+const dependencies: FlowDependencies = {
+  expr: node => { event('expr', node, -1, -1); },
+  newBlock: () => event('new', -1, -1, -1),
+  link: (from, to) => { event('link', from, to, -1); },
+  enter: block => { event('enter', block, -1, -1); },
+  patternBind: node => { event('bind', node, -1, -1); },
+  patternReads: node => { event('reads', node, -1, -1); },
+  patternWrites: node => { event('writes', node, -1, -1); },
+  isDestructuringTarget: node => event('destructure', node, -1, -1) === 1,
+  decorators: node => { event('decorators', node, -1, -1); },
+  typeParameters: node => { event('typeParameters', node, -1, -1); },
+  memberHeader: node => { event('memberHeader', node, -1, -1); },
+  condition: (node, whenTrue, whenFalse) => { event('condition', node, whenTrue, whenFalse); },
+  statement: node => { event('statement', node, -1, -1); },
+};
+for (const row of json.node(root).children) {
+  state.cur = num(row, 'cur');
+  replay.events = json.node(json.field(row, 'events')).children;
+  replay.index = 0; replay.trace = '';
+  const op = json.node(json.field(row, 'op')).text;
+  if (op === 'binary') {
+    const node = json.field(row, 'binary');
+    const binary: BinaryView = {left: num(node, 'left'), right: num(node, 'right'), shortCircuit: bool(node, 'shortCircuit'), logicalAssignment: bool(node, 'logicalAssignment'), equals: bool(node, 'equals'), assignment: bool(node, 'assignment')};
+    binaryExpression(state, binary, dependencies);
+  } else if (op === 'class') {
+    const node = json.field(row, 'class'); const heritages: HeritageView[] = [];
+    for (const h of json.node(json.field(node, 'heritages')).children) { heritages.push({present: bool(h, 'present'), typesPresent: bool(h, 'typesPresent'), types: numbers(h, 'types')}); }
+    const view: ClassView = {node: num(node, 'node'), present: bool(node, 'present'), heritagePresent: bool(node, 'heritagePresent'), heritages, membersPresent: bool(node, 'membersPresent'), members: numbers(node, 'members')};
+    classLike(view, dependencies);
+  } else {
+    const node = json.field(row, 'if');
+    const view: IfView = {expression: num(node, 'expression'), thenStatement: num(node, 'thenStatement'), elseStatement: num(node, 'elseStatement')};
+    ifStatement(state, view, dependencies);
+  }
+  console.log(`${state.cur}/${replay.trace}`);
+}

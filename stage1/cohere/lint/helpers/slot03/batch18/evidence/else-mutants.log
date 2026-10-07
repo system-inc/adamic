@@ -1,0 +1,14 @@
+=== RUN   TestBatch18Mutants
+    batch18_test.go:97: real helper observations: {"control_calls":27,"live":{"array-callback-return":{"binary":16,"if":30},"consistent-return":{"class":18,"if":66},"no-unreachable-loop":{"binary":492,"class":2,"if":371},"react-hooks/rules-of-hooks":{"binary":32,"class":11,"if":88}},"live_calls":1126,"total_calls":1153}
+=== RUN   TestBatch18Mutants/if_statement.a#04
+    batch18_test.go:150: compiled semantic mutant caught at line 17: got "5/new:-1:-1:-1:0>0:1;new:-1:-1:-1:0>0:2;condition:113:2:1:0>0:3;enter:2:-1:-1:0>0:-1;statement:114:-1:-1:0>2:-1;link:2:1:-1:2>4:-1;enter:1:-1:-1:4>4:-1;statement:115:-1:-1:4>3:-1;link:3:1:-1:3>5:-1;enter:1:-1:-1:5>5:-1;" Go "1/new:-1:-1:-1:0>0:1;new:-1:-1:-1:0>0:2;new:-1:-1:-1:0>0:3;condition:113:2:3:0>0:-1;enter:2:-1:-1:0>2:-1;statement:114:-1:-1:2>4:-1;link:4:1:-1:4>4:-1;enter:3:-1:-1:4>3:-1;statement:115:-1:-1:3>5:-1;link:5:1:-1:5>5:-1;enter:1:-1:-1:5>1:-1;"
+=== RUN   TestBatch18Mutants/if_statement.a#05
+    batch18_test.go:150: compiled semantic mutant caught at line 17: got "3/new:-1:-1:-1:0>0:1;new:-1:-1:-1:0>0:2;new:-1:-1:-1:0>0:3;condition:113:2:3:0>0:-1;enter:2:-1:-1:0>2:-1;statement:114:-1:-1:2>4:-1;link:4:1:-1:4>4:-1;enter:1:-1:-1:4>3:-1;" Go "1/new:-1:-1:-1:0>0:1;new:-1:-1:-1:0>0:2;new:-1:-1:-1:0>0:3;condition:113:2:3:0>0:-1;enter:2:-1:-1:0>2:-1;statement:114:-1:-1:2>4:-1;link:4:1:-1:4>4:-1;enter:3:-1:-1:4>3:-1;statement:115:-1:-1:3>5:-1;link:5:1:-1:5>5:-1;enter:1:-1:-1:5>1:-1;"
+=== RUN   TestBatch18Mutants/if_statement.a#06
+    batch18_test.go:150: compiled semantic mutant caught at line 1: got "1/new:-1:-1:-1:0>0:1;new:-1:-1:-1:0>0:2;condition:4:2:1:0>0:-1;enter:2:-1:-1:0>2:-1;statement:5:-1:-1:2>3:-1;link:3:1:-1:3>3:-1;enter:1:-1:-1:3>1:-1;statement:-1:-1:-1:1>1:-1;link:1:1:-1:1>1:-1;enter:1:-1:-1:1>1:-1;" Go "1/new:-1:-1:-1:0>0:1;new:-1:-1:-1:0>0:2;condition:4:2:1:0>0:-1;enter:2:-1:-1:0>2:-1;statement:5:-1:-1:2>3:-1;link:3:1:-1:3>3:-1;enter:1:-1:-1:3>1:-1;"
+--- PASS: TestBatch18Mutants (11.70s)
+    --- PASS: TestBatch18Mutants/if_statement.a#04 (3.83s)
+    --- PASS: TestBatch18Mutants/if_statement.a#05 (2.95s)
+    --- PASS: TestBatch18Mutants/if_statement.a#06 (3.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	11.710s

@@ -1,0 +1,18 @@
+import {type Cursor, type FlowDependencies} from './binary_expression.a';
+export type IfView = {expression: number; thenStatement: number; elseStatement: number};
+export function ifStatement(state: Cursor, statement: IfView, dependencies: FlowDependencies): void {
+  const after = dependencies.newBlock();
+  const thenEntry = dependencies.newBlock();
+  let elseEntry = after;
+  if (statement.elseStatement >= 0) { elseEntry = dependencies.newBlock(); }
+  dependencies.condition(statement.expression, thenEntry, elseEntry);
+  dependencies.enter(thenEntry);
+  dependencies.statement(statement.thenStatement);
+  dependencies.link(state.cur, after);
+  if (statement.elseStatement >= 0) {
+    dependencies.enter(elseEntry);
+    dependencies.statement(statement.elseStatement);
+    dependencies.link(state.cur, after);
+  }
+  dependencies.enter(after);
+}

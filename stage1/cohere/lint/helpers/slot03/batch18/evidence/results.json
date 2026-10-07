@@ -1,0 +1,42 @@
+{
+  "claim": "5ec90184",
+  "base_main": "c7991b900362796aefd111474e65eb5398e91953",
+  "base_area": "b84a9d9314b65d3d0261ee017e233287b4f071da",
+  "prior_helpers": 51,
+  "owned_helpers": 54,
+  "new_comparison_lines": 1153,
+  "new_mutants": 21,
+  "selected_helper_seconds": 80.495,
+  "additional_else_mutants_seconds": 11.71,
+  "uncached_input_seconds": 2.417,
+  "observations": {
+    "control_calls": 27,
+    "live": {
+      "array-callback-return": {
+        "binary": 16,
+        "if": 30
+      },
+      "consistent-return": {
+        "class": 18,
+        "if": 66
+      },
+      "no-unreachable-loop": {
+        "binary": 492,
+        "class": 2,
+        "if": 371
+      },
+      "react-hooks/rules-of-hooks": {
+        "binary": 32,
+        "class": 11,
+        "if": 88
+      }
+    },
+    "live_calls": 1126,
+    "total_calls": 1153
+  },
+  "full_owned_seconds": 875.662,
+  "full_shared_seconds": 93.618,
+  "owned_comparison_lines": 3046326,
+  "owned_mutants": 203,
+  "inherited_mutants": 4
+}

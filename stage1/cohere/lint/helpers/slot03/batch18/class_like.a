@@ -1,0 +1,17 @@
+import {type FlowDependencies} from './binary_expression.a';
+export type HeritageView = {present: boolean; typesPresent: boolean; types: number[]};
+export type ClassView = {node: number; present: boolean; heritagePresent: boolean; heritages: HeritageView[]; membersPresent: boolean; members: number[]};
+export function classLike(view: ClassView, dependencies: FlowDependencies): void {
+  if (!view.present) { return; }
+  dependencies.decorators(view.node);
+  dependencies.typeParameters(view.node);
+  if (view.heritagePresent) {
+    for (const heritage of view.heritages) {
+      if (!heritage.present || !heritage.typesPresent) { continue; }
+      for (const typeNode of heritage.types) { dependencies.expr(typeNode); }
+    }
+  }
+  if (view.membersPresent) {
+    for (const member of view.members) { dependencies.memberHeader(member); }
+  }
+}

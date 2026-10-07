@@ -1,0 +1,37 @@
+=== RUN   TestBatch18Helpers
+    batch18_test.go:84: /tmp/adamic-gate/TestBatch18Helpers1786448961/003/oracle [/workspace/adamic/stage1/cohere/lint/helpers/slot03/batch18/testdata/sources.jsonl.gz /tmp/adamic-gate/TestBatch18Helpers1786448961/003/cases.json]: exit status 2
+        
+        panic: interface conversion: ast.nodeData is *ast.SourceFile, not *ast.HeritageClause
+        
+        goroutine 1 [running]:
+        github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).AsHeritageClause(...)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9183
+        github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.adamicClassView(0x15efc14b58c0)
+        	/workspace/adamic/cohere/internal/lint/ecmascript/control_flow_graph/adamic_slot03_batch18.go:273 +0x61e
+        github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.(*Builder[...]).classLike(0x7a6640, 0x15efc14b58c0)
+        	/workspace/adamic/cohere/internal/lint/ecmascript/control_flow_graph/adamic_slot03_batch18.go:295 +0x3d
+        github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.AdamicClassControls(0x15efc18a3888)
+        	/workspace/adamic/cohere/internal/lint/ecmascript/control_flow_graph/adamic_slot03_batch18.go:341 +0x565
+        main.main()
+        	/workspace/adamic/cohere/adamic_slot03_batch18.go:72 +0x46a
+--- FAIL: TestBatch18Helpers (10.83s)
+=== RUN   TestBatch18Mutants
+    batch18_test.go:97: /tmp/adamic-gate/TestBatch18Mutants3030701565/003/oracle [/workspace/adamic/stage1/cohere/lint/helpers/slot03/batch18/testdata/sources.jsonl.gz /tmp/adamic-gate/TestBatch18Mutants3030701565/003/cases.json]: exit status 2
+        
+        panic: interface conversion: ast.nodeData is *ast.SourceFile, not *ast.HeritageClause
+        
+        goroutine 1 [running]:
+        github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).AsHeritageClause(...)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9183
+        github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.adamicClassView(0x360f83ea58c0)
+        	/workspace/adamic/cohere/internal/lint/ecmascript/control_flow_graph/adamic_slot03_batch18.go:273 +0x61e
+        github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.(*Builder[...]).classLike(0x7a6640, 0x360f83ea58c0)
+        	/workspace/adamic/cohere/internal/lint/ecmascript/control_flow_graph/adamic_slot03_batch18.go:295 +0x3d
+        github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.AdamicClassControls(0x360f84125c08)
+        	/workspace/adamic/cohere/internal/lint/ecmascript/control_flow_graph/adamic_slot03_batch18.go:341 +0x565
+        main.main()
+        	/workspace/adamic/cohere/adamic_slot03_batch18.go:72 +0x46a
+--- FAIL: TestBatch18Mutants (1.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	12.095s
+FAIL

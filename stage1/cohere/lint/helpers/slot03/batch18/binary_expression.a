@@ -1,0 +1,43 @@
+export type Cursor = {cur: number};
+export type FlowDependencies = {expr: (node: number) => void; newBlock: () => number; link: (from: number, to: number) => void; enter: (block: number) => void; patternReads: (node: number) => void; patternWrites: (node: number) => void; patternBind: (node: number) => void; isDestructuringTarget: (node: number) => boolean; decorators: (node: number) => void; typeParameters: (node: number) => void; memberHeader: (node: number) => void; condition: (node: number, whenTrue: number, whenFalse: number) => void; statement: (node: number) => void};
+export type BinaryView = {left: number; right: number; shortCircuit: boolean; logicalAssignment: boolean; equals: boolean; assignment: boolean};
+export function binaryExpression(state: Cursor, binary: BinaryView, dependencies: FlowDependencies): void {
+  if (binary.shortCircuit) {
+    dependencies.expr(binary.left);
+    const join = dependencies.newBlock();
+    dependencies.link(state.cur, join);
+    const right = dependencies.newBlock();
+    dependencies.link(state.cur, right);
+    dependencies.enter(right);
+    dependencies.expr(binary.right);
+    dependencies.link(state.cur, join);
+    dependencies.enter(join);
+  } else if (binary.logicalAssignment) {
+    dependencies.patternReads(binary.left);
+    const join = dependencies.newBlock();
+    dependencies.link(state.cur, join);
+    const right = dependencies.newBlock();
+    dependencies.link(state.cur, right);
+    dependencies.enter(right);
+    dependencies.expr(binary.right);
+    dependencies.patternWrites(binary.left);
+    dependencies.link(state.cur, join);
+    dependencies.enter(join);
+  } else if (binary.equals) {
+    if (dependencies.isDestructuringTarget(binary.left)) {
+      dependencies.expr(binary.right);
+      dependencies.patternBind(binary.left);
+      return;
+    }
+    dependencies.patternReads(binary.left);
+    dependencies.expr(binary.right);
+    dependencies.patternWrites(binary.left);
+  } else if (binary.assignment) {
+    dependencies.patternReads(binary.left);
+    dependencies.expr(binary.right);
+    dependencies.patternWrites(binary.left);
+  } else {
+    dependencies.expr(binary.left);
+    dependencies.expr(binary.right);
+  }
+}
