@@ -932,6 +932,13 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // the parameters the function declares, so one with a parameter that may be left out isn't made yet:
 // a function value is called with the arguments its caller has, and no more.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if symbol := l.symbol(node); symbol != nil {
+		for _, declaration := range symbol.Declarations {
+			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
+				return nil, l.notYet(node, "an overloaded function as a value")
+			}
+		}
+	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}

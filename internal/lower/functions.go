@@ -42,6 +42,9 @@ type patterned struct {
 // It works on a copy and writes it back by index: lowering a body can instantiate a class, which
 // appends functions, and a pointer into the slice would be left pointing at the old one.
 func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
+	if implementation := l.censusImplementation(declaration); implementation != nil {
+		declaration = implementation
+	}
 	if _, isSigned := l.signed[index]; !isSigned {
 		if err := l.signature(index, declaration, this); err != nil {
 			return err
@@ -55,6 +58,12 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 // signature writes the function at index's parameters and result, from the checker, without lowering
 // its body, so a call to it lowers whether or not its body has been. this is as for lowerFunction.
 func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
+	if implementation := l.censusImplementation(declaration); implementation != nil {
+		declaration = implementation
+	}
+	if err := l.censusOverloads(declaration); err != nil {
+		return err
+	}
 	function := l.result.Functions[index]
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
