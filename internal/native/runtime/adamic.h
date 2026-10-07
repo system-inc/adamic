@@ -110,6 +110,20 @@ typedef struct adamic_string {
 	size_t capacity;
 } adamic_string;
 
+struct adamic_string_index {
+	// The last code point found: its first unit, and its byte offset.
+	size_t cursor_unit;
+	size_t cursor_offset;
+	// checkpoints[k] is where unit k * STEP is: the byte offset of the code point holding it, shifted
+	// left once, and 1 when that unit is the low half of a surrogate pair, whose code point starts a
+	// unit earlier.
+	size_t count;
+	// Each UTF-16 unit, including both halves of supplementary points and lone surrogates.
+	// The byte checkpoints still serve slices and searches.
+	uint16_t *view;
+	uint32_t checkpoints[];
+};
+
 // ADAMIC_LITERAL_INDEX marks a constant's index as not yet built: a constant lives as long as the
 // program, so a long one can have an index that does too (string_index.c). Only a constant of static
 // storage may carry it.
@@ -500,7 +514,7 @@ bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean 
 // length is the count of units, once it's been made, inline; and charCodeAt of an ASCII string (its
 // units are its bytes) at an index inside it is that byte, inline, which is what a scanner's loop
 // does. NaN, a negative, past the end, a non-ASCII string (through its index, string_index.c) and a
-// length not yet counted go to adamic_string_char_code, out of line. A position from 0 up to the
+// length not yet counted or an index not yet built go to adamic_string_char_code, out of line. A position from 0 up to the
 // length truncates to its index as (size_t) does.
 size_t adamic_string_units(const adamic_string *string);
 double adamic_string_char_code(const adamic_string *string, double position);
@@ -510,6 +524,11 @@ static inline double adamic_string_length(const adamic_string *string) {
 static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
 	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
 		return (double)(unsigned char)string->bytes[(size_t)position];
+	}
+	// A built index has a direct UTF-16 view, including supplementary halves. The range
+	// comparisons reject NaN and infinities before conversion; a fraction truncates as JS does.
+	if (string->index != NULL && string->index != ADAMIC_LITERAL_INDEX && position >= 0 && position < (double)(string->units - 1)) {
+		return (double)string->index->view[(size_t)position];
 	}
 	return adamic_string_char_code(string, position);
 }

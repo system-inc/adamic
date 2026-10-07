@@ -96,6 +96,7 @@ var fixtures = []struct {
 	{"internal/load/testdata/0.1/compile/09_tree.ts", true, false},
 	{"internal/load/testdata/0.1/compile/10_unicode.ts", true, false},
 	{"internal/oracle/testdata/strings.a", true, false},
+	{"internal/oracle/testdata/string_build_caches.a", true, false},
 	{"internal/oracle/testdata/numbers.a", true, false},
 	{"internal/oracle/testdata/bitwise_sweep.a", true, false},
 	{"internal/oracle/testdata/loops.a", true, false},
