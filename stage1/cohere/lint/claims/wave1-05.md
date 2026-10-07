@@ -64,3 +64,19 @@ The first three eligible syntax-only inventory entries are now reserved here:
 
 This claim is pushed before implementation. The .ts fallback explicitly granted
 by Ahra remains in effect while the shared .a harness branch is unavailable.
+
+## Fourth continuation claim, October 7
+
+All earlier owned implementations and evidence are pushed through 022fcef4.
+Fetched every origin head explicitly with refs/heads/*:refs/remotes/origin/*,
+then checked all 341 origin refs and 52 unique recursive claim Markdown blobs,
+as well as main's lint sources and descriptors. No helper-ready rule remains
+eligible. The first three eligible syntax-only inventory entries are reserved:
+
+1. better-tailwindcss/no-unnecessary-whitespace
+2. boundaries/dependencies
+3. complexity
+
+This claim is committed and pushed before implementation. The current checkout's
+shared harness still needs its owner's published .a/profile/edit integration;
+Adamic sources may use Ahra's explicit .ts fallback while that is pending.
