@@ -128,6 +128,18 @@
         oracle: options=native.Options{Compiler:"", Release:false, Target:"", Request:false, Split:false, Jobs:0, Sanitize:false, ThreadSanitize:false, Count:false, Coverage:false, cpu:"", Slabs:false, Malloc:false} flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-pthread" "-O2"] runtime-key=791cfbc99fd42b6cb146c5765aed3a29a078177960e5673f28441354618bfb4d
 --- FAIL: TestReleaseBuildConfigurationAgrees (0.02s)
 
+== github.com/system-inc/adamic/internal/native TestRuntimeStaticsProtectionMutants/normalization_pairs
+=== RUN   TestRuntimeStaticsProtectionMutants/normalization_pairs
+    runtime_statics_parallel_test.go:69: SUMMARY: ThreadSanitizer: data race /workspace/adamic-gate-tmp/TestRuntimeStaticsProtectionMutantsnormalization_pairs2847137245/001/normalize.c:114:25 in composite
+    runtime_statics_parallel_test.go:69: race mutant was not caught (attempt 2): <nil>
+        adamic: counts: allocations 16387 frees 16387 retains 0 releases 16387 peak 11 regions 0
+        runtime statics clean
+--- FAIL: TestRuntimeStaticsProtectionMutants/normalization_pairs (17.07s)
+
+== github.com/system-inc/adamic/internal/native TestRuntimeStaticsProtectionMutants
+=== RUN   TestRuntimeStaticsProtectionMutants
+--- FAIL: TestRuntimeStaticsProtectionMutants (175.42s)
+
 == github.com/system-inc/adamic/stage1/cohere/lint (failed outside a test)
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.136s
 
