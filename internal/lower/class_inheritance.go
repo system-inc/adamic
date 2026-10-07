@@ -679,7 +679,11 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
-		for index, parameter := range toSignatures[0].Parameters() {
+		parameters := toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			parameters = nil
+		}
+		for index, parameter := range parameters {
 			if index >= len(fromSignatures[0].Parameters()) {
 				break
 			}
