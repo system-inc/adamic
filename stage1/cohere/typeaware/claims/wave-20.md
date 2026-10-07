@@ -139,3 +139,10 @@ Latest-main landing: main advanced to 39638d9e2 during the push verification.
 Own commits were rebased onto a base containing that main and harness 41eb6eab2.
 Fragment source is now 4e4d58063; validated landing source is 5dc1ba68f.
 No new rules claimed. See react-jsx-fragments/LANDING_39638D9E2_REPORT.md.
+
+Integrated-lint landing: rebased onto origin/area/stage1-lint d65a8f931,
+including main 39638d9e2 and the requested 50a5f105 integration. Validated
+source 26f1d659f: all eleven implemented analyses, all mutants and released
+checks green again. Shared typed registration and constructed-context-values
+source remain unfinished; no new claims. See
+react-jsx-fragments/LANDING_AREA_D65A8F931_REPORT.md.
