@@ -1,0 +1,20 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:1891
+// Census reason: the non-null assertion !
+// Support types and driver are reduced scaffolding; the upstream function is unchanged.
+
+export function memoize<T>(callback: () => T): () => T {
+    let value: T;
+    return () => {
+        if (callback) {
+            value = callback();
+            callback = undefined!;
+        }
+        return value;
+    };
+}
+
+let calls = 0;
+const read = memoize(() => { calls++; return 42; });
+console.log(String(read()));
+console.log(String(read()));
+console.log(String(calls));

@@ -1,0 +1,1 @@
+function outer(): number { class Value { count = 1; } return new Value().count; } console.log(String(outer()));
