@@ -1,0 +1,241 @@
+import { panic } from 'adamic';
+import { ProcessFacts } from './process_facts.a';
+
+export class PathState {
+    readonly writes: readonly string[]; readonly completion: string;
+    constructor(writes: readonly string[], completion = '') { this.writes = writes; this.completion = completion; }
+    key(): string { return `${this.completion};${this.writes.join('|')}`; }
+}
+export class ThrowFork {
+    first = -1; readonly states: PathState[] = [];
+    constructor() {}
+}
+export class ProcessFlow {
+    readonly facts: ProcessFacts; readonly root: number; readonly written: (call: number) => boolean;
+    readonly forks: ThrowFork[] = []; readonly started: (call: number) => boolean; readonly reported = new Set<number>();
+    constructor(facts: ProcessFacts, root: number, written: (call: number) => boolean, started: (call: number) => boolean) {
+        this.facts = facts; this.root = root; this.written = written; this.started = started;
+    }
+    throwable(index: number, states: readonly PathState[]): void {
+        const fork = this.forks[this.forks.length - 1]; if(fork === undefined) { return; }
+        if(fork.first < 0) { fork.first = index; }
+        if(fork.first !== index) { return; }
+        for(const state of states) { if(state.completion === '') { fork.states.push(state); } }
+    }
+    unique(states: readonly PathState[]): PathState[] {
+        const keys = new Set<string>(); const result: PathState[] = [];
+        for(const state of states) { const key = state.key(); if(!keys.has(key)) { keys.add(key); result.push(state); } }
+        return result;
+    }
+    write(state: PathState, chain: string): PathState {
+        const writes = state.writes.slice();
+        if(!writes.includes(chain)) { writes.push(chain); writes.sort((left, right) => left < right ? -1 : left > right ? 1 : 0); }
+        return new PathState(writes);
+    }
+    truth(index: number): number {
+        const rules = this.facts.bindings.rules; const node = rules.parser.node(rules.skip(index));
+        if(['TrueKeyword', 'RegularExpressionLiteral'].includes(node.kind)) { return 1; }
+        if(node.kind === 'BigIntLiteral') {
+            const first = ['0x', '0X', '0b', '0B', '0o', '0O'].includes(node.text.slice(0, 2)) ? 2 : 0;
+            for(let at = first; at < node.text.length - 1; at++) { if(!['0', '_'].includes(node.text.slice(at, at + 1))) { return 1; } }
+            return 0;
+        }
+        if(['FalseKeyword', 'NullKeyword'].includes(node.kind)) { return 0; }
+        if(node.kind === 'NumericLiteral') { return node.text === '0' ? 0 : 1; }
+        if(node.kind === 'StringLiteral') { return node.text === '' ? 0 : 1; }
+        return -1;
+    }
+    sequence(children: readonly number[], states: readonly PathState[], chain: string): PathState[] {
+        let result = states.slice(); for(const child of children) { result = this.walk(child, result, chain); } return result;
+    }
+    condition(index: number, states: readonly PathState[], chain: string, positive: boolean): PathState[] {
+        const rules = this.facts.bindings.rules; const at = rules.skip(index); const node = rules.parser.node(at);
+        if(node.kind === 'PrefixUnaryExpression' && node.operator === 'ExclamationToken') { return this.condition(node.children[0] ?? -1, states, chain, !positive); }
+        if(node.kind === 'BinaryExpression') {
+            const operator = rules.parser.node(node.children[1] ?? -1).kind;
+            if(operator === 'AmpersandAmpersandToken') {
+                const right = this.condition(node.children[2] ?? -1, this.condition(node.children[0] ?? -1, states, chain, true), chain, positive);
+                return positive ? right : this.unique(this.condition(node.children[0] ?? -1, states, chain, false).concat(right));
+            }
+            if(operator === 'BarBarToken') {
+                const right = this.condition(node.children[2] ?? -1, this.condition(node.children[0] ?? -1, states, chain, false), chain, positive);
+                return positive ? this.unique(this.condition(node.children[0] ?? -1, states, chain, true).concat(right)) : right;
+            }
+            if(operator === 'QuestionQuestionToken') {
+                const left = this.walk(node.children[0] ?? -1, states, chain);
+                return this.unique(left.concat(this.condition(node.children[2] ?? -1, left, chain, positive)));
+            }
+        }
+        if(node.kind === 'ConditionalExpression') {
+            const yes = this.condition(node.children[2] ?? -1, this.condition(node.children[0] ?? -1, states, chain, true), chain, positive);
+            const no = this.condition(node.children[4] ?? -1, this.condition(node.children[0] ?? -1, states, chain, false), chain, positive);
+            return this.unique(yes.concat(no));
+        }
+        // The production CFG forks both ways even for a literal condition.
+        return this.walk(at, states, chain);
+    }
+    expression(index: number, states: readonly PathState[], chain: string): PathState[] {
+        const rules = this.facts.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind === 'ConditionalExpression') {
+            const yes = this.walk(node.children[2] ?? -1, this.condition(node.children[0] ?? -1, states, chain, true), chain);
+            const no = this.walk(node.children[4] ?? -1, this.condition(node.children[0] ?? -1, states, chain, false), chain);
+            return this.unique(yes.concat(no));
+        }
+        if(node.kind === 'BinaryExpression') {
+            const operator = rules.parser.node(node.children[1] ?? -1).kind;
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken', 'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator)) {
+                const input = this.walk(node.children[0] ?? -1, states, chain);
+                return this.unique(input.concat(this.walk(node.children[2] ?? -1, input, chain)));
+            }
+        }
+        return this.sequence(node.children, states, chain);
+    }
+    forParts(index: number): number[] {
+        const rules = this.facts.bindings.rules; const node = rules.parser.node(index); const scanner = rules.scanner;
+        const parts = [-1, -1, -1, node.children[node.children.length - 1] ?? -1];
+        scanner.pos = node.pos; scanner.scan(); scanner.scan();
+        if(!['OpenParenToken'].includes(scanner.kind)) { panic('for header absent'); }
+        scanner.scan(); let slot = 0; let nesting = 0;
+        while(scanner.kind !== 'EndOfFileToken') {
+            if(nesting === 0 && scanner.kind === 'CloseParenToken') { break; }
+            if(nesting === 0 && scanner.kind === 'SemicolonToken') { slot++; }
+            if(['OpenParenToken', 'OpenBracketToken', 'OpenBraceToken'].includes(scanner.kind)) { nesting++; }
+            else if(['CloseParenToken', 'CloseBracketToken', 'CloseBraceToken'].includes(scanner.kind)) { nesting--; }
+            for(const child of node.children.slice(0, -1)) { const part = rules.parser.node(child); if(scanner.start >= part.pos && scanner.start < part.end) { parts[slot] = child; } }
+            scanner.scan();
+        }
+        return parts;
+    }
+    loop(body: number, condition: number, increment: number, states: readonly PathState[], chain: string, first: boolean, label: string): PathState[] {
+        const result: PathState[] = []; const seen = new Set<string>(); let queue = states.slice(); let turn = 0;
+        while(queue.length > 0) {
+            let input: PathState[] = [];
+            for(const state of queue) { const key = state.key(); if(!seen.has(key)) { seen.add(key); input.push(state); } }
+            if(input.length === 0) { break; }
+            const tested = first && turn === 0 ? input : condition >= 0 ? this.condition(condition, input, chain, true) : input;
+            const truth = condition >= 0 ? this.truth(condition) : 1;
+            if(!first || turn > 0) { if(truth !== 1) { for(const state of condition >= 0 ? this.condition(condition, input, chain, false) : tested) { result.push(state); } } }
+            const output = this.walk(body, tested, chain); queue = [];
+            for(const state of output) {
+                if(state.completion === 'break:' || state.completion === `break:${label}`) { result.push(new PathState(state.writes)); }
+                else if(state.completion === '' || state.completion === 'continue:' || state.completion === `continue:${label}`) { queue.push(new PathState(state.writes)); }
+                else { result.push(state); }
+            }
+            if(increment >= 0) { queue = this.walk(increment, queue, chain); }
+            turn++;
+        }
+        return this.unique(result);
+    }
+    active(index: number, states: readonly PathState[], chain: string, label = ''): PathState[] {
+        const rules = this.facts.bindings.rules; const node = rules.parser.node(index); const children = node.children;
+        if(this.facts.bindings.functionKind(node.kind) || ['ClassDeclaration', 'ClassExpression', 'InterfaceDeclaration', 'TypeAliasDeclaration', 'ImportDeclaration', 'ExportDeclaration'].includes(node.kind)) { return states.slice(); }
+        if(['VariableDeclaration', 'Parameter', 'BindingElement'].includes(node.kind)) {
+            const initializer = this.facts.bindings.shape.initializer(index); const name = this.facts.bindings.shape.name(index);
+            let output = states.slice();
+            if(initializer >= 0) {
+                const evaluated = this.walk(initializer, states, chain);
+                output = node.kind === 'VariableDeclaration' ? evaluated : this.unique(output.concat(evaluated));
+            }
+            if(name >= 0) { output = this.walk(name, output, chain); }
+            return output;
+        }
+        if(node.kind === 'IfStatement') {
+            const yes = this.walk(children[1] ?? -1, this.condition(children[0] ?? -1, states, chain, true), chain);
+            const input = this.condition(children[0] ?? -1, states, chain, false);
+            const no = children.length > 2 ? this.walk(children[2] ?? -1, input, chain) : input;
+            return this.unique(yes.concat(no));
+        }
+        if(node.kind === 'LabeledStatement') {
+            const name = rules.parser.node(children[0] ?? -1).text; const output = this.active(children[1] ?? -1, states, chain, name);
+            return output.map((state) => state.completion === `break:${name}` ? new PathState(state.writes) : state);
+        }
+        if(['BreakStatement', 'ContinueStatement'].includes(node.kind)) {
+            const target = children.length > 0 ? rules.parser.node(children[0] ?? -1).text : '';
+            return states.map((state) => new PathState(state.writes, `${node.kind === 'BreakStatement' ? 'break' : 'continue'}:${target}`));
+        }
+        if(node.kind === 'WhileStatement') { return this.loop(children[1] ?? -1, children[0] ?? -1, -1, states, chain, false, label); }
+        if(node.kind === 'DoStatement') { return this.loop(children[0] ?? -1, children[1] ?? -1, -1, states, chain, true, label); }
+        if(node.kind === 'ForStatement') {
+            const parts = this.forParts(index); const initializer = parts[0] ?? -1;
+            return this.loop(parts[3] ?? -1, parts[1] ?? -1, parts[2] ?? -1, initializer >= 0 ? this.walk(initializer, states, chain) : states, chain, false, label);
+        }
+        if(node.kind === 'ForOfStatement' && this.started(index)) { return states.map((state) => new PathState(state.writes, 'blocked')); }
+        if(['ForInStatement', 'ForOfStatement'].includes(node.kind)) {
+            const body = children[children.length - 1] ?? -1; const input = this.sequence(children.slice(0, -1), states, chain);
+            // Enumeration can finish before the first or after any subsequent turn.
+            const repeated = this.loop(body, -1, -1, input, chain, false, label);
+            const once = this.walk(body, input, chain).filter((state) => state.completion === '' || state.completion.startsWith('break:') || state.completion.startsWith('continue:')).map((state) => new PathState(state.writes));
+            return this.unique(input.concat(repeated, once));
+        }
+        if(node.kind === 'TryStatement') {
+            const clause = children.find((child) => rules.parser.node(child).kind === 'CatchClause');
+            const inner = clause === undefined ? chain : `${chain}${index}/`;
+            const fork = new ThrowFork(); this.forks.push(fork);
+            const tried = this.walk(children[0] ?? -1, states, inner); this.forks.pop(); let output = tried;
+            if(clause !== undefined) {
+                const body = rules.parser.node(clause).children.slice(-1)[0] ?? -1;
+                const caught = this.unique(fork.states.concat(tried.filter((state) => state.completion === '' || state.completion === 'throw')).map((state) => new PathState(state.writes.filter((write) => !write.includes(`/${index}/`)))));
+                output = tried.filter((state) => state.completion !== 'throw').concat(this.walk(body, caught, chain));
+            }
+            const final = children.length > 1 && rules.parser.node(children[children.length - 1] ?? -1).kind === 'Block' ? children[children.length - 1] ?? -1 : -1;
+            if(final >= 0) {
+                const completed: PathState[] = [];
+                for(const state of output) {
+                    if(state.completion === 'exit') { completed.push(state); continue; }
+                    for(const after of this.walk(final, [new PathState(state.writes)], chain)) { completed.push(new PathState(after.writes, after.completion === '' ? state.completion : after.completion)); }
+                }
+                output = completed;
+            }
+            return this.unique(output);
+        }
+        if(node.kind === 'SwitchStatement') {
+            const input = this.walk(children[0] ?? -1, states, chain); const clauses = rules.parser.node(children[1] ?? -1).children;
+            const output: PathState[] = []; let hasDefault = false;
+            for(let start = 0; start < clauses.length; start++) {
+                let path = input.slice();
+                for(let at = start; at < clauses.length; at++) {
+                    const clause = rules.parser.node(clauses[at] ?? -1); hasDefault = hasDefault || clause.kind === 'DefaultClause';
+                    path = this.sequence(clause.children, path, chain);
+                }
+                for(const state of path) { output.push(state.completion === 'break:' ? new PathState(state.writes) : state); }
+            }
+            if(!hasDefault) { for(const state of input) { output.push(state); } } return this.unique(output);
+        }
+        if(node.kind === 'ReturnStatement' || node.kind === 'ThrowStatement') {
+            return this.sequence(children, states, chain).map((state) => state.completion === '' ? new PathState(state.writes, node.kind === 'ReturnStatement' ? 'return' : 'throw') : state);
+        }
+        if((node.kind === 'AwaitExpression' || node.kind === 'ForOfStatement' || node.kind === 'VariableStatement') && this.started(index)) { return states.map((state) => new PathState(state.writes, 'blocked')); }
+        if(['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(node.kind)) {
+            let output = states.slice();
+            if(node.kind === 'CallExpression' && this.facts.exit(index)) {
+                for(const state of output) { if(state.writes.length > 0) { this.reported.add(index); } }
+                const ended = output.map((state) => new PathState(state.writes, 'exit')); this.throwable(index, ended); return ended;
+            }
+            if(node.kind === 'CallExpression' && this.written(index) && !this.facts.holdsExit(index)) { output = output.map((state) => this.write(state, chain)); }
+            if(this.started(index)) { return output.map((state) => new PathState(state.writes, 'blocked')); }
+            const evaluated = this.expression(index, output, chain); this.throwable(index, evaluated); return evaluated;
+        }
+        const evaluated = this.expression(index, states, chain);
+        if((node.kind === 'Identifier' && !this.facts.bindings.declaring(index)) || ['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) { this.throwable(index, evaluated); }
+        return evaluated;
+    }
+    walk(index: number, states: readonly PathState[], chain: string): PathState[] {
+        const completed = states.filter((state) => state.completion !== ''); const active = states.filter((state) => state.completion === '');
+        return this.unique(completed.concat(active.length === 0 ? completed.slice(0, 0) : this.active(index, active, chain)));
+    }
+    analyze(): readonly number[] {
+        const rules = this.facts.bindings.rules; const root = rules.parser.node(this.root);
+        for(let at = 0; at < rules.parser.nodes.length; at++) {
+            if(rules.parser.node(at).kind === 'CallExpression' && this.facts.root(at) === this.root && this.facts.exit(at) && this.facts.catchBinding(at, this.root)) { return []; }
+        }
+        const body = this.facts.bindings.functionKind(root.kind) ? this.facts.body(this.root) : this.root;
+        const empty: string[] = [];
+        let states = [new PathState(empty)];
+        if(this.facts.bindings.functionKind(root.kind)) {
+            for(const parameter of root.children) { if(rules.parser.node(parameter).kind === 'Parameter') { states = this.walk(parameter, states, '/'); } }
+        }
+        if(body >= 0) { this.walk(body, states, '/'); }
+        const reported: number[] = []; for(const index of this.reported) { reported.push(index); }
+        return reported.sort((a, b) => rules.parser.node(a).pos - rules.parser.node(b).pos);
+    }
+}

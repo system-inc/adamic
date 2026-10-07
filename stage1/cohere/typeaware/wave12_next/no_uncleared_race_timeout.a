@@ -1,0 +1,100 @@
+import { Bindings } from '../bindings.ts';
+import { Wave12Symbols } from '../wave_12_symbols.a';
+import { Diagnostic } from '../diagnostic.ts';
+import { Ancestry } from './symbol_ancestry.a';
+
+export class NoUnclearedRaceTimeout {
+    readonly bindings: Bindings; readonly symbols: Wave12Symbols; readonly ancestry: Ancestry;
+    constructor(bindings: Bindings) { this.bindings = bindings; this.symbols = new Wave12Symbols(bindings); this.ancestry = new Ancestry(bindings); }
+    libraryMember(name: number): boolean {
+        const origins = this.ancestry.origins(name);
+        return origins.length > 0 && origins.every((origin) => origin.library && origin.ancestors[1]?.kind === 'InterfaceDeclaration' && origin.ancestors[1]?.name === 'PromiseConstructor');
+    }
+    promise(element: number): number {
+        const rules = this.bindings.rules; let at = rules.skip(element);
+        if(rules.parser.node(at).kind === 'Identifier') {
+            const origins = this.symbols.nodeSymbol(at).declarations;
+            if(origins.length !== 1 || origins[0]?.file !== rules.path || origins[0]?.kind !== 'VariableDeclaration') { return -1; }
+            const declaration = this.bindings.declarations(at)[0] ?? -1; const list = this.bindings.parent(declaration);
+            if(list < 0 || rules.parser.node(list).semantic !== '2') { return -1; }
+            at = this.bindings.shape.initializer(declaration); if(at < 0) { return -1; } at = rules.skip(at);
+        }
+        const node = rules.parser.node(at); if(node.kind !== 'NewExpression') { return -1; }
+        const name = rules.skip(node.children[0] ?? -1); const constructor = rules.parser.node(name);
+        if(constructor.kind !== 'Identifier' || constructor.text !== 'Promise') { return -1; }
+        const origins = this.ancestry.origins(name);
+        return constructor.kind === 'Identifier' && constructor.text === 'Promise' && origins.length > 0 && origins.every((origin) => origin.library) ? at : -1;
+    }
+    timer(call: number): boolean {
+        const rules = this.bindings.rules; const callee = rules.skip(rules.parser.node(call).children[0] ?? -1); const node = rules.parser.node(callee); let name = callee;
+        if(node.kind === 'PropertyAccessExpression') {
+            const receiver = rules.parser.node(rules.skip(node.children[0] ?? -1));
+            if(receiver.kind !== 'Identifier' || !['globalThis', 'window'].includes(receiver.text)) { return false; }
+            name = node.children[node.children.length - 1] ?? -1;
+        } else if(node.kind !== 'Identifier') { return false; }
+        if(rules.parser.node(name).text !== 'setTimeout') { return false; }
+        const origins = this.ancestry.origins(name);
+        return origins.length > 0 && origins.every((origin) => origin.declarationFile && (this.ancestry.global(origin, 1) ||
+            (origin.library && origin.ancestors[1]?.kind === 'InterfaceDeclaration' && origin.ancestors[1]?.name === 'WindowOrWorkerGlobalScope')));
+    }
+    outer(index: number): number {
+        let outer = index; let parent = this.bindings.parent(outer);
+        while(parent >= 0 && this.bindings.rules.parser.node(parent).kind === 'ParenthesizedExpression') { outer = parent; parent = this.bindings.parent(outer); }
+        return outer;
+    }
+    target(index: number): boolean {
+        const rules = this.bindings.rules; const outer = this.outer(index); const parent = this.bindings.parent(outer);
+        if(parent < 0) { return false; } const node = rules.parser.node(parent);
+        return node.kind === 'BinaryExpression' && node.children[0] === outer && rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken';
+    }
+    read(index: number, declared: number, identity: number): boolean {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(index !== declared && node.kind === 'Identifier' && node.text === rules.parser.node(declared).text && this.symbols.identity(index) === identity && !this.target(index)) { return true; }
+        return node.children.some((child) => this.read(child, declared, identity));
+    }
+    neverRead(name: number): boolean {
+        const rules = this.bindings.rules; const symbol = this.symbols.nodeSymbol(name);
+        const declaration = symbol.declarations[0];
+        if(symbol.declarations.length !== 1 || declaration === undefined || declaration.file !== rules.path || declaration.kind !== 'VariableDeclaration') { return false; }
+        const index = this.bindings.declarations(name)[0] ?? -1; const declared = this.bindings.shape.name(index);
+        return declared >= 0 && !this.read(rules.parser.nodes.length - 1, declared, symbol.identity);
+    }
+    lost(executor: number, call: number): boolean {
+        const rules = this.bindings.rules; const outer = this.outer(call); const parent = this.bindings.parent(outer); if(parent < 0) { return false; }
+        const node = rules.parser.node(parent);
+        if(parent === executor || ['ExpressionStatement', 'VoidExpression'].includes(node.kind)) { return true; }
+        if(node.kind === 'VariableDeclaration' && this.bindings.shape.initializer(parent) === outer) {
+            const name = this.bindings.shape.name(parent); return name >= 0 && rules.parser.node(name).kind === 'Identifier' && this.neverRead(name);
+        }
+        if(node.kind !== 'BinaryExpression' || node.children[2] !== outer || rules.parser.node(node.children[1] ?? -1).kind !== 'EqualsToken') { return false; }
+        const target = rules.skip(node.children[0] ?? -1); const statement = this.bindings.parent(this.outer(parent));
+        return rules.parser.node(target).kind === 'Identifier' && statement >= 0 && rules.parser.node(statement).kind === 'ExpressionStatement' && this.neverRead(target);
+    }
+    visit(executor: number, index: number): void {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(this.bindings.functionKind(node.kind) || ['ClassDeclaration', 'ClassExpression'].includes(node.kind)) { return; }
+        if(node.kind === 'CallExpression' && this.timer(index) && this.lost(executor, index)) {
+            rules.findings.push(new Diagnostic('nexus/correctness-no-uncleared-race-timeout', 'unclearedRaceTimeout', MESSAGE, rules.byte(rules.start(node)), rules.byte(node.end), ''));
+        }
+        for(const child of node.children) { this.visit(executor, child); }
+    }
+    run(): void {
+        const rules = this.bindings.rules;
+        for(let at = 0; at < rules.parser.nodes.length; at++) {
+            const call = rules.parser.node(at); if(call.kind !== 'CallExpression') { continue; }
+            const callee = rules.parser.node(rules.skip(call.children[0] ?? -1)); if(callee.kind !== 'PropertyAccessExpression') { continue; }
+            const name = callee.children[callee.children.length - 1] ?? -1;
+            if(rules.parser.node(name).text !== 'race' || !this.libraryMember(name)) { continue; }
+            if(call.list < 1) { continue; }
+            const array = rules.parser.node(rules.skip(call.children[call.children.length - call.list] ?? -1)); if(array.kind !== 'ArrayLiteralExpression') { continue; }
+            for(const element of array.children) {
+                const promise = this.promise(element); if(promise < 0) { continue; }
+                const construction = rules.parser.node(promise); if(construction.list < 1) { continue; }
+                const executor = rules.skip(construction.children[construction.children.length - construction.list] ?? -1); const node = rules.parser.node(executor);
+                if(!['ArrowFunction', 'FunctionExpression'].includes(node.kind)) { continue; }
+                const body = node.children[node.children.length - 1] ?? -1; if(body >= 0) { this.visit(executor, body); }
+            }
+        }
+    }
+}
+const MESSAGE = "This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.";

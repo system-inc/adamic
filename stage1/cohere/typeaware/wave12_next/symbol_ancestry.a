@@ -1,0 +1,36 @@
+import { Bindings } from '../bindings.ts';
+import { Frames, header } from '../frames.ts';
+
+export class Ancestor {
+    readonly kind: string; readonly start: number; readonly end: number; readonly flags: number; readonly name: string; readonly keyword: string;
+    constructor(kind: string, start: number, end: number, flags: number, keyword: string, name: string) {
+        this.kind = kind; this.start = start; this.end = end; this.flags = flags; this.keyword = keyword; this.name = name;
+    }
+}
+export class Origin {
+    readonly file: string; readonly declarationFile: boolean; readonly library: boolean; readonly external: boolean; readonly ancestors: readonly Ancestor[];
+    constructor(file: string, declarationFile: boolean, library: boolean, external: boolean, ancestors: readonly Ancestor[]) {
+        this.file = file; this.declarationFile = declarationFile; this.library = library; this.external = external; this.ancestors = ancestors;
+    }
+}
+export class Ancestry {
+    readonly bindings: Bindings; readonly cache = new Map<number, readonly Origin[]>();
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    origins(index: number): readonly Origin[] {
+        const cached = this.cache.get(index); if(cached !== undefined) { return cached; }
+        const frames = new Frames(this.bindings.rules.ask(index, 'symbol-ancestry')); header(frames, 'symbol-ancestry');
+        frames.natural(); const count = frames.natural(); const result: Origin[] = [];
+        for(let at = 0; at < count; at++) {
+            const file = frames.field(); const declarationFile = frames.yes(); const library = frames.yes(); const external = frames.yes();
+            const length = frames.natural(); const ancestors: Ancestor[] = [];
+            for(let n = 0; n < length; n++) { ancestors.push(new Ancestor(frames.field(), frames.natural(), frames.natural(), frames.natural(), frames.field(), frames.field())); }
+            result.push(new Origin(file, declarationFile, library, external, ancestors));
+        }
+        frames.end(); this.cache.set(index, result); return result;
+    }
+    global(origin: Origin, offset: number): boolean {
+        const container = origin.ancestors[offset];
+        return container !== undefined && ((container.kind === 'SourceFile' && !origin.external) ||
+            (container.kind === 'ModuleBlock' && origin.ancestors[offset + 1]?.keyword === 'GlobalKeyword'));
+    }
+}

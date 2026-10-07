@@ -1,0 +1,110 @@
+import { panic } from 'adamic';
+import { Bindings } from '../bindings.ts';
+import { Frames, header } from '../frames.ts';
+import { Ancestry } from './symbol_ancestry.a';
+import { SourceFiles } from './source_files.a';
+
+export class ProcessFacts {
+    readonly bindings: Bindings; readonly ancestry: Ancestry; readonly files: SourceFiles;
+    readonly exits = new Map<number, boolean>(); readonly writes = new Map<number, boolean>(); readonly helpers = new Map<string, boolean>();
+    constructor(bindings: Bindings, files: SourceFiles) { this.bindings = bindings; this.ancestry = new Ancestry(bindings); this.files = files; }
+    member(index: number): number {
+        const rules = this.bindings.rules; const at = rules.skip(index); const node = rules.parser.node(at);
+        if(node.kind === 'Identifier') { return at; }
+        if(node.kind === 'PropertyAccessExpression') {
+            const name = node.children[node.children.length - 1] ?? -1;
+            return name >= 0 && rules.parser.node(name).kind === 'Identifier' ? name : -1;
+        }
+        return -1;
+    }
+    processMember(name: number): boolean {
+        const origins = this.ancestry.origins(name);
+        return origins.length > 0 && origins.every((origin) => origin.declarationFile &&
+            ['MethodSignature', 'PropertySignature'].includes(origin.ancestors[0]?.kind ?? '') &&
+            origin.ancestors[1]?.kind === 'InterfaceDeclaration' && origin.ancestors[1]?.name === 'Process' &&
+            origin.ancestors[2]?.kind === 'ModuleBlock' && origin.ancestors[3]?.kind === 'ModuleDeclaration' && origin.ancestors[3]?.name === 'NodeJS');
+    }
+    exit(call: number): boolean {
+        const cached = this.exits.get(call); if(cached !== undefined) { return cached; }
+        const name = this.member(this.bindings.rules.parser.node(call).children[0] ?? -1);
+        const result = name >= 0 && this.bindings.rules.parser.node(name).text === 'exit' && this.processMember(name);
+        this.exits.set(call, result); return result;
+    }
+    directWrite(call: number): boolean {
+        const cached = this.writes.get(call); if(cached !== undefined) { return cached; }
+        const rules = this.bindings.rules; const callee = rules.parser.node(rules.skip(rules.parser.node(call).children[0] ?? -1));
+        let result = false;
+        if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) {
+            const name = callee.children[callee.children.length - 1] ?? -1; const node = rules.parser.node(name);
+            const receiverIndex = rules.skip(callee.children[0] ?? -1); const receiver = rules.parser.node(receiverIndex);
+            const member = callee.kind === 'PropertyAccessExpression' || node.kind === 'StringLiteral' ? node.text : '';
+            if(['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(member) && receiver.kind === 'Identifier' && receiver.text === 'console') {
+                const origins = this.ancestry.origins(receiverIndex);
+                result = origins.length > 0 && origins.every((origin) => origin.declarationFile && origin.ancestors[0]?.kind === 'VariableDeclaration' &&
+                    origin.ancestors[1]?.kind === 'VariableDeclarationList' && origin.ancestors[2]?.kind === 'VariableStatement' && this.ancestry.global(origin, 3));
+            } else if(member === 'write') {
+                const stream = this.member(receiverIndex);
+                result = stream >= 0 && ['stdout', 'stderr'].includes(rules.parser.node(stream).text) && this.processMember(stream);
+            }
+        }
+        this.writes.set(call, result); return result;
+    }
+    root(index: number): number {
+        const rules = this.bindings.rules; let child = index; let at = this.bindings.parent(index);
+        while(at >= 0) {
+            const node = rules.parser.node(at);
+            if(node.kind === 'SourceFile' || node.kind === 'ClassStaticBlockDeclaration') { return at; }
+            if(node.kind === 'PropertyDeclaration' && this.bindings.shape.initializer(at) === child) { return at; }
+            if(this.bindings.functionKind(node.kind) && this.bindings.shape.name(at) !== child && rules.parser.node(child).kind !== 'Decorator') { return at; }
+            child = at; at = this.bindings.parent(at);
+        }
+        return -1;
+    }
+    body(functionIndex: number): number {
+        const node = this.bindings.rules.parser.node(functionIndex); const child = node.children[node.children.length - 1] ?? -1;
+        if(child < 0) { return -1; }
+        return this.bindings.rules.parser.node(child).kind === 'Block' || node.kind === 'ArrowFunction' ? child : -1;
+    }
+    holdsExit(index: number): boolean {
+        const rules = this.bindings.rules;
+        for(const child of rules.parser.node(index).children) {
+            const kind = rules.parser.node(child).kind;
+            if(this.bindings.functionKind(kind) || ['ClassStaticBlockDeclaration', 'PropertyDeclaration'].includes(kind)) { continue; }
+            if((kind === 'CallExpression' && this.exit(child)) || this.holdsExit(child)) { return true; }
+        }
+        return false;
+    }
+    catchBinding(index: number, root: number): boolean {
+        const rules = this.bindings.rules; let previous = index; let at = this.bindings.parent(index);
+        while(at >= 0 && at !== root) {
+            const node = rules.parser.node(at);
+            if(node.kind === 'CatchClause' && node.children[0] === previous && rules.parser.node(previous).kind === 'VariableDeclaration') { return true; }
+            previous = at; at = this.bindings.parent(at);
+        }
+        return false;
+    }
+    bodyEvents(index: number): number {
+        const rules = this.bindings.rules; const node = rules.parser.node(index);
+        if(this.bindings.functionKind(node.kind) || ['ClassStaticBlockDeclaration', 'PropertyDeclaration'].includes(node.kind)) { return 0; }
+        let result = node.kind === 'CallExpression' ? (this.exit(index) ? 2 : this.directWrite(index) ? 1 : 0) : 0;
+        for(const child of node.children) { result |= this.bodyEvents(child); }
+        return result;
+    }
+    write(call: number): boolean {
+        if(this.directWrite(call)) { return true; }
+        const rules = this.bindings.rules; const frames = new Frames(rules.ask(call, 'call-declaration')); header(frames, 'call-declaration');
+        if(!frames.yes()) { frames.end(); return false; }
+        const file = frames.field(); const kind = frames.field(); const start = frames.natural(); const end = frames.natural();
+        const external = frames.yes(); const body = frames.yes(); const generator = frames.yes(); const async = frames.yes(); const flags = frames.natural(); frames.end();
+        if(!body || !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(kind) || generator || (flags & 262144) !== 0 || (file !== rules.path && !external)) { return false; }
+        if(async) {
+            let parent = this.bindings.parent(call);
+            while(parent >= 0 && rules.parser.node(parent).kind === 'ParenthesizedExpression') { parent = this.bindings.parent(parent); }
+            if(parent < 0 || rules.parser.node(parent).kind !== 'AwaitExpression') { return false; }
+        }
+        const key = `${file}:${kind}:${start}:${end}`; const cached = this.helpers.get(key); if(cached !== undefined) { return cached; }
+        const bindings = this.files.file(file); const index = bindings.spans.get(`${kind}:${start}:${end}`) ?? panic('callee absent from native parser');
+        const facts = new ProcessFacts(bindings, this.files); const functionBody = facts.body(index); const result = functionBody >= 0 && facts.bodyEvents(functionBody) === 1;
+        this.helpers.set(key, result); return result;
+    }
+}

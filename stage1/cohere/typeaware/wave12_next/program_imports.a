@@ -1,0 +1,25 @@
+import { Bindings } from '../bindings.ts';
+import { Frames, header } from '../frames.ts';
+
+export class ProgramImports {
+    readonly edges = new Map<string, readonly string[]>(); readonly imported = new Set<string>(); readonly canBlock = new Set<string>(); readonly declarationFiles = new Set<string>();
+    constructor(bindings: Bindings) {
+        const frames = new Frames(bindings.rules.ask(bindings.rules.parser.nodes.length - 1, 'program-imports')); header(frames, 'program-imports');
+        const empty: string[] = []; const count = frames.natural(); const seeds: string[] = []; const reverse = new Map<string, string[]>();
+        for(let at = 0; at < count; at++) {
+            const file = frames.field(); const declaration = frames.yes(); if(declaration) { this.declarationFiles.add(file); }
+            if(file.endsWith('/source/system/StandardStreams.ts') || file.endsWith('/source/system/StandardStreams.d.ts')) { seeds.push(file); }
+            const imports = frames.natural(); const edges: string[] = [];
+            for(let n = 0; n < imports; n++) {
+                const kind = frames.field(); const typeOnly = frames.yes(); const literal = frames.yes(); const target = frames.field();
+                if(declaration || typeOnly) { continue; }
+                if(kind === 'CallExpression' && !literal) { seeds.push(file); }
+                if(target === '' || target === file) { continue; }
+                edges.push(target); this.imported.add(target); const held = reverse.get(target) ?? empty; held.push(file); reverse.set(target, held);
+            }
+            this.edges.set(file, edges);
+        }
+        frames.end();
+        for(let at = 0; at < seeds.length; at++) { const file = seeds[at] ?? ''; if(this.canBlock.has(file)) { continue; } this.canBlock.add(file); for(const importer of reverse.get(file) ?? empty) { seeds.push(importer); } }
+    }
+}

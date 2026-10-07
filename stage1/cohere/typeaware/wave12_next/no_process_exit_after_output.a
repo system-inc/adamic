@@ -1,0 +1,23 @@
+import { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { SourceFiles } from './source_files.a';
+import { ProcessFacts } from './process_facts.a';
+import { ProcessFlow } from './process_flow.a';
+
+export class NoProcessExitAfterOutput {
+    readonly facts: ProcessFacts;
+    constructor(bindings: Bindings, files: SourceFiles) { this.facts = new ProcessFacts(bindings, files); }
+    run(): void {
+        const facts = this.facts; const rules = facts.bindings.rules; const roots = new Set<number>();
+        for(let at = 0; at < rules.parser.nodes.length; at++) { if(rules.parser.node(at).kind === 'CallExpression' && facts.exit(at)) { roots.add(facts.root(at)); } }
+        for(const root of roots) {
+            if(root < 0) { continue; }
+            const flow = new ProcessFlow(facts, root, (call) => facts.write(call), (_call) => false);
+            for(const exit of flow.analyze()) {
+                const node = rules.parser.node(exit);
+                rules.findings.push(new Diagnostic('nexus/correctness-no-process-exit-after-output', 'exitAfterOutput', MESSAGE, rules.byte(rules.start(node)), rules.byte(node.end), ''));
+            }
+        }
+    }
+}
+const MESSAGE = "This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.";

@@ -1,0 +1,148 @@
+import { Bindings } from '../bindings.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { SourceFiles } from './source_files.a';
+import { ProcessFacts } from './process_facts.a';
+import { ProcessFlow } from './process_flow.a';
+import { ProgramImports } from './program_imports.a';
+
+export class RequireBlockingStandardStreams {
+    readonly facts: ProcessFacts; readonly imports: ProgramImports; readonly files: SourceFiles; readonly ordered: boolean;
+    readonly memo = new Map<string, number>(); readonly queued = new Set<number>(); readonly queue: number[] = [];
+    constructor(bindings: Bindings, files: SourceFiles, imports: ProgramImports) {
+        this.facts = new ProcessFacts(bindings, files); this.imports = imports; this.files = files; this.ordered = imports.canBlock.has(bindings.rules.path);
+    }
+    localFunction(expression: number): number {
+        const facts = this.facts; const rules = facts.bindings.rules; const at = rules.skip(expression); const node = rules.parser.node(at);
+        if(['ArrowFunction', 'FunctionExpression'].includes(node.kind)) { return at; }
+        if(node.kind !== 'Identifier') { return -1; }
+        for(const origin of facts.ancestry.origins(at)) {
+            const declaration = origin.ancestors[0]; if(origin.file !== rules.path || declaration === undefined) { continue; }
+            const index = facts.bindings.spans.get(`${declaration.kind}:${declaration.start}:${declaration.end}`) ?? -1;
+            if(index < 0) { continue; }
+            if(declaration.kind === 'FunctionDeclaration' && facts.body(index) >= 0) { return index; }
+            if(declaration.kind === 'VariableDeclaration') {
+                const list = facts.bindings.parent(index); const initializer = facts.bindings.shape.initializer(index);
+                if(list >= 0 && rules.parser.node(list).semantic === '2' && initializer >= 0) {
+                    const value = rules.skip(initializer); if(['ArrowFunction', 'FunctionExpression'].includes(rules.parser.node(value).kind)) { return value; }
+                }
+            }
+        }
+        return -1;
+    }
+    callLike(kind: string): boolean { return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(kind); }
+    generator(bindings: Bindings, index: number): boolean { return bindings.rules.parser.node(index).children.some((child) => bindings.rules.parser.node(child).kind === 'AsteriskToken'); }
+    mayRun(facts: ProcessFacts, index: number): boolean {
+        const key = `${facts.bindings.rules.path}:${index}`; const cached = this.memo.get(key);
+        if(cached !== undefined) { return cached === 1; }
+        this.memo.set(key, 3); const answer = this.insideMayBlock(facts, index, false); this.memo.set(key, answer ? 1 : 2); return answer;
+    }
+    insideMayBlock(facts: ProcessFacts, index: number, skipFunctions: boolean): boolean {
+        const node = facts.bindings.rules.parser.node(index);
+        if(skipFunctions && facts.bindings.functionKind(node.kind) && facts.body(index) >= 0) { return false; }
+        if(this.callLike(node.kind) && this.mayBlock(facts, index)) { return true; }
+        return node.children.some((child) => this.insideMayBlock(facts, child, skipFunctions));
+    }
+    handsOn(facts: ProcessFacts, index: number): boolean {
+        const rules = facts.bindings.rules; const at = rules.skip(index); const node = rules.parser.node(at);
+        if(['ArrowFunction', 'FunctionExpression'].includes(node.kind)) { return this.mayRun(facts, at); }
+        if(node.kind !== 'Identifier') { return false; }
+        const origins = facts.ancestry.origins(at);
+        if(!origins.some((origin) => origin.ancestors[0]?.kind === 'FunctionDeclaration')) { return false; }
+        return this.symbolMayBlock(facts, at);
+    }
+    symbolMayBlock(facts: ProcessFacts, name: number): boolean {
+        const rules = facts.bindings.rules; const origins = facts.ancestry.origins(name); if(origins.length === 0) { return true; }
+        for(const origin of origins) {
+            const declaration = origin.ancestors[0]; if(declaration === undefined) { return true; }
+            if(!this.imports.canBlock.has(origin.file)) { if(origin.declarationFile && rules.parser.node(name).text === 'require') { return true; } continue; }
+            if(origin.declarationFile || (declaration.kind === 'FunctionDeclaration' && declaration.name === 'blockStandardStreams' && origin.file.endsWith('/source/system/StandardStreams.ts'))) { return true; }
+            const bindings = this.files.file(origin.file); const index = bindings.spans.get(`${declaration.kind}:${declaration.start}:${declaration.end}`) ?? -1;
+            if(index < 0) { return true; } const other = new ProcessFacts(bindings, this.files);
+            if(['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(declaration.kind)) {
+                if(other.body(index) < 0) { if(declaration.kind !== 'FunctionDeclaration' || (declaration.flags & 8388608) !== 0) { return true; } continue; }
+                if(this.mayRun(other, index)) { return true; } continue;
+            }
+            if(declaration.kind === 'VariableDeclaration') {
+                const initializer = bindings.shape.initializer(index);
+                if(initializer >= 0) { const value = rules === bindings.rules ? rules.skip(initializer) : bindings.rules.skip(initializer); if(['FunctionExpression', 'ArrowFunction'].includes(bindings.rules.parser.node(value).kind)) { if(this.mayRun(other, value)) { return true; } continue; } }
+            }
+            if(['ClassDeclaration', 'ClassExpression'].includes(declaration.kind)) { if(this.mayRun(other, index)) { return true; } continue; }
+            return true;
+        }
+        return false;
+    }
+    mayBlock(facts: ProcessFacts, call: number): boolean {
+        const rules = facts.bindings.rules; const node = rules.parser.node(call); const callee = rules.skip(node.children[0] ?? -1); const value = rules.parser.node(callee);
+        if(node.kind === 'CallExpression' && value.kind === 'ImportKeyword') { return true; }
+        const empty: number[] = []; const args = node.list > 0 ? node.children.slice(node.children.length - node.list) : empty;
+        if(args.some((argument) => this.handsOn(facts, argument))) { return true; }
+        if(['FunctionExpression', 'ArrowFunction'].includes(value.kind)) { return this.mayRun(facts, callee); }
+        const name = facts.member(callee); return name < 0 || this.symbolMayBlock(facts, name);
+    }
+    argumentBlocks(index: number): boolean {
+        const facts = this.facts; const rules = facts.bindings.rules; const node = rules.parser.node(index);
+        const empty: number[] = []; const args = node.list > 0 ? node.children.slice(node.children.length - node.list) : empty;
+        return args.some((argument) => this.argumentBlock(argument));
+    }
+    argumentBlock(index: number): boolean {
+        const facts = this.facts; const node = facts.bindings.rules.parser.node(index);
+        if(facts.bindings.functionKind(node.kind) && facts.body(index) >= 0) { return false; }
+        return node.kind === 'AwaitExpression' || (this.callLike(node.kind) && this.mayBlock(facts, index)) || node.children.some((child) => this.argumentBlock(child));
+    }
+    start(index: number): void { if(index >= 0 && !this.queued.has(index)) { this.queued.add(index); this.queue.push(index); } }
+    started(index: number): boolean {
+        const facts = this.facts; const rules = facts.bindings.rules; const node = rules.parser.node(index);
+        if(node.kind === 'AwaitExpression' || (node.kind === 'ForOfStatement' && node.children.some((child) => rules.parser.node(child).kind === 'AwaitKeyword')) || (node.kind === 'VariableStatement' && rules.parser.node(node.children[0] ?? -1).semantic === '6')) { return this.ordered; }
+        if(!this.callLike(node.kind)) { return false; }
+        if(['CallExpression', 'TaggedTemplateExpression'].includes(node.kind)) {
+            const functionIndex = this.localFunction(node.children[0] ?? -1);
+            if(functionIndex >= 0) {
+                const generator = this.generator(facts.bindings, functionIndex);
+                if((!generator && (!this.ordered || !this.argumentBlocks(index))) || (generator && !this.ordered)) { this.start(functionIndex); }
+            }
+        }
+        if(!this.ordered && node.list > 0) { for(const argument of node.children.slice(node.children.length - node.list)) { this.start(this.localFunction(argument)); } }
+        return this.ordered && this.mayBlock(facts, index);
+    }
+    importsBlock(): boolean {
+        const empty: string[] = []; const seen = new Set<string>(); const queue = [this.facts.bindings.rules.path];
+        for(let at = 0; at < queue.length; at++) {
+            const file = queue[at] ?? ''; seen.add(file);
+            for(const next of this.imports.edges.get(file) ?? empty) {
+                if(seen.has(next)) { continue; } seen.add(next); queue.push(next);
+                if(!this.imports.canBlock.has(next)) { continue; }
+                if(this.imports.declarationFiles.has(next)) { return true; }
+                const facts = new ProcessFacts(this.files.file(next), this.files); const root = facts.bindings.rules.parser.nodes.length - 1;
+                if(this.insideMayBlock(facts, root, true)) { return true; }
+            }
+        }
+        return false;
+    }
+    hiddenBlocking(index: number, root: number): boolean {
+        const facts = this.facts; const rules = facts.bindings.rules; const node = rules.parser.node(index);
+        if(index !== root && facts.bindings.functionKind(node.kind) && facts.body(index) >= 0) { return false; }
+        if(facts.catchBinding(index, root) && (node.kind === 'AwaitExpression' || (this.callLike(node.kind) && this.mayBlock(facts, index)))) { return true; }
+        if(node.kind === 'ClassStaticBlockDeclaration') { return this.argumentBlock(index); }
+        if(node.kind === 'PropertyDeclaration') {
+            const initializer = facts.bindings.shape.initializer(index);
+            if(initializer >= 0 && this.argumentBlock(initializer)) { return true; }
+        }
+        return node.children.some((child) => this.hiddenBlocking(child, root));
+    }
+    run(): void {
+        const facts = this.facts; const rules = facts.bindings.rules;
+        if(!rules.scanner.text.includes('exit')) { return; }
+        const shebang = rules.scanner.text.startsWith('#!'); if(!shebang && this.imports.imported.has(rules.path)) { return; }
+        if(this.ordered && this.importsBlock()) { return; }
+        this.start(rules.parser.nodes.length - 1); const exits = new Set<number>();
+        for(let at = 0; at < this.queue.length; at++) {
+            const root = this.queue[at] ?? -1; if(this.ordered && this.hiddenBlocking(root, root)) { continue; } const flow = new ProcessFlow(facts, root, (call) => facts.directWrite(call), (call) => this.started(call));
+            for(const exit of flow.analyze()) { exits.add(exit); }
+        }
+        const reported: number[] = []; for(const index of exits) { reported.push(index); }
+        const ordered = reported.sort((a, b) => rules.parser.node(a).pos - rules.parser.node(b).pos); const exit = ordered[0]; if(exit === undefined) { return; }
+        const reason = shebang ? 'it starts with `#!`' : 'nothing in the program imports it'; const count = ordered.length > 1 ? `, the first of ${ordered.length} such exits in this file` : '';
+        const message = `This file runs as a process (${reason}), and this \`process.exit()\` runs after a write to stdout or stderr before the process has called \`blockStandardStreams()\`${count}. Node writes to a pipe asynchronously, and \`process.exit()\` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's \`blockStandardStreams()\` (\`source/system/StandardStreams\`) before anything that can exit: first in the module, or first in the main it runs.`;
+        const node = rules.parser.node(exit); rules.findings.push(new Diagnostic('nexus/correctness-require-blocking-standard-streams', 'exitBeforeBlockingStandardStreams', message, rules.byte(rules.start(node)), rules.byte(node.end), ''));
+    }
+}
