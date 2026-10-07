@@ -616,7 +616,7 @@ static regex_node *regex_parse_disjunction(regex_parser *p, unsigned char stop) 
         if (alternative == NULL) return NULL;
         *alternatives_tail = alternative; alternatives_tail = &alternative->next;
         regex_node **tail = &alternative->children;
-        while (!regex_parse_done(p) && regex_parse_peek(p) != '|' && regex_parse_peek(p) != stop) {
+        while (!regex_parse_done(p) && regex_parse_peek(p) != '|' && (stop == 0 || regex_parse_peek(p) != stop)) {
             if (regex_parse_peek(p) == ')' && stop == 0) return regex_parse_fail(p, p->position, "unmatched closing parenthesis", "Unmatched ')'");
             bool quantifiable;
             regex_node *term = regex_parse_term(p, &quantifiable);

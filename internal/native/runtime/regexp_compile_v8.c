@@ -118,8 +118,7 @@ bool adamic_regex_compile_v8_check(regex_context *result) {
     return regex_v8_visit(&state,result->body,result->flags);
 }
 adamic_regex_program *adamic_regex_compile_checked(regex_context *result) {
-    adamic_regex_program *program=adamic_regex_compile_bytecode(result);
-    if(program==NULL || !adamic_regex_compile_v8_check(result))return NULL;
-    return program;
+    if(!adamic_regex_compile_v8_check(result))return NULL;
+    return adamic_regex_compile_bytecode(result);
 }
 #endif

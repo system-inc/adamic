@@ -38,6 +38,7 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	cases, _ := runtimeRegexCompilerCases(t)
 	checked := strings.HasPrefix(mutant, "v8")
 	if checked {
+		cases = append(cases, []string{`[\q{a}]{18446744073709551616}`, "iv"})
 		for _, prefix := range []string{"", "(?i:^)", "(?-i:^)", "(?i:^)(?:)", "(?i:^)(?-i:)"} {
 			for _, atom := range []string{`[b]`, `[a-z]`, `[0-9]`, `\w`, `[\w]`, `\W`, `[\W]`, `[\w\W]`, `[^\w]`, `[^\W]`, `[^b]`, `\p{Lowercase_Letter}`, `[\q{a}]`, `[a\q{a}]`, `[\q{AB}]`, `[\q{ab}]`, `[\q{Ss|x}]`, `[[\q{a}]&&[A]]`, `[[A]--[\q{a}]]`, `[\q{ab|a|}]`} {
 				for _, flags := range []string{"u", "iu", "v", "iv"} {
@@ -155,11 +156,11 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		old := []byte("program==NULL || !adamic_regex_compile_v8_check(result)")
+		old := []byte("!adamic_regex_compile_v8_check(result)")
 		if bytes.Count(data, old) != 1 {
 			t.Fatal("v8 mutant site moved")
 		}
-		data = bytes.Replace(data, old, []byte("program==NULL"), 1)
+		data = bytes.Replace(data, old, []byte("false"), 1)
 		v8 = filepath.Join(dir, "v8-mutant.c")
 		if err := os.WriteFile(v8, data, 0600); err != nil {
 			t.Fatal(err)

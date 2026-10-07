@@ -195,3 +195,10 @@ on sanitized Linux and wasm32-wasi. Bypassing the compatibility walk is caught
 by `[\q{a}]/iv` at case 10,676. Combined compiler/property/parser identities,
 all C mutants and the statics guard pass in 37.392s; touched-package vet passes.
 The checked compilation entry point is mandatory for dynamic construction.
+
+Reference followup: embedded NUL is a literal character, including at the top
+level. Node and the specification agree; Go's stop-byte sentinel was the bug.
+Corrected Go/C and added two counted NUL probes. Restoring the sentinel is caught
+by the Node test. All six reference mutants pass in 4.20s. Raw bytecode identity
+now compares 7,432 programs and 3,195 rejections. V8 compatibility checks precede
+native counter-width refusal, matching Go even when both refusals apply.

@@ -17,7 +17,7 @@ func TestRuntimeReferenceNode(t *testing.T) {
 		Pattern, Flags string
 		Valid          bool
 	}{
-		{"(?<℘>a)", "u", true}, {"(?<a·>a)", "u", true},
+		{"a\x00b", "u", true}, {"\x00", "", true}, {"(?<℘>a)", "u", true}, {"(?<a·>a)", "u", true},
 		{`(?<\u2118>a)`, "u", true}, {`(?<a\u00b7>a)`, "u", true},
 		{`\u{10000000000000000000000}`, "u", false},
 		{`\u{ffffffffffffffffffffffff}`, "u", false},
@@ -77,6 +77,7 @@ func TestRuntimeReferenceMutants(t *testing.T) {
 		t.Fatal("missing divergence return")
 	}
 	mutants := []struct{ name, old, new string }{
+		{"stop on embedded NUL", "(stop == 0 || p.peek() != stop)", "p.peek() != stop"},
 		{"drop Other_ID_Start", ", unicode.Other_ID_Start", ""},
 		{"drop Other_ID_Continue", ", unicode.Other_ID_Continue", ""},
 		{"wrap oversized Unicode escape", "d < 0 || n > (utf8.MaxRune-d)/16", "d < 0"},

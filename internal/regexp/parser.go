@@ -142,7 +142,7 @@ func (p *parser) disjunction(stop byte) (*Disjunction, error) {
 
 func (p *parser) alternative(stop byte) (*Alternative, error) {
 	a := &Alternative{}
-	for !p.done() && p.peek() != '|' && p.peek() != stop {
+	for !p.done() && p.peek() != '|' && (stop == 0 || p.peek() != stop) {
 		if p.peek() == ')' && stop == 0 {
 			return nil, p.fail("unmatched closing parenthesis")
 		}

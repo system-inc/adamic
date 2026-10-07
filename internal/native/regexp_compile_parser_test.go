@@ -101,7 +101,7 @@ func runtimeParserAcceptance(t *testing.T, wasi bool) {
 	if disagreements != 0 {
 		t.Fatalf("%d reference versus Node disagreements", disagreements)
 	}
-	t.Logf("%d test262 + %d cohere + 4000 seeded + 4 ruling probes agree on acceptance, complete Node SyntaxError messages and Go divergence reasons (WASI=%v)", corpus-cohereCount, cohereCount, wasi)
+	t.Logf("%d test262 + %d cohere + 4000 seeded + 6 ruling probes agree on acceptance, complete Node SyntaxError messages and Go divergence reasons (WASI=%v)", corpus-cohereCount, cohereCount, wasi)
 }
 
 func runtimeRegexCompilerCases(t *testing.T) ([][]string, int) {
@@ -127,7 +127,7 @@ func runtimeRegexCompilerCases(t *testing.T) ([][]string, int) {
 		t.Fatalf("cohere count %d", len(cohere))
 	}
 	cases = append(cases, cohere...)
-	cases = append(cases, [][]string{{"(?<℘>a)", "u", "Other_ID_Start"}, {"(?<a·>a)", "u", "Other_ID_Continue"}, {`\u{10000000000000000000000}`, "u", "overflow"}, {"a{2147483648,2147483647}", "", "clamp"}}...)
+	cases = append(cases, [][]string{{"a\x00b", "u", "embedded NUL"}, {"\x00", "", "embedded NUL"}, {"(?<℘>a)", "u", "Other_ID_Start"}, {"(?<a·>a)", "u", "Other_ID_Continue"}, {`\u{10000000000000000000000}`, "u", "overflow"}, {"a{2147483648,2147483647}", "", "clamp"}}...)
 	corpus += len(cohere)
 	rng := rand.New(rand.NewSource(0xEC2025))
 	atoms := []string{"a", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", `\d`, `\p{Letter}`, "[", "(", `\k<x>`, "(?<x>a)", "[a&&b]", `[\q{ab|}]`}
