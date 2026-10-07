@@ -1,0 +1,1 @@
+{"command": ["rg", "-n", "-g", "*.a", "-g", "*.ts", "ControlDominators|AsCompilationUnit|UnconditionalBlocks|ForFunctionWithoutManualMemoization", "stage1/cohere", "stage1/typescript"], "exit": 1}

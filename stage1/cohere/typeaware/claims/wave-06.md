@@ -90,3 +90,10 @@ entries in descending combined volume with lexical ties are reserved before code
 
 Implementations and evidence belong in `wave_06_react_state/`. No additional
 rules are reserved by this claim.
+
+The fourth continuation is **unfinished and remains claimed**. Portable reporting
+portions, explicit analysis refusal and independent probe evidence are pushed
+under `wave_06_react_state/`. Native React HIR/SSA/capture/memoization and
+control/post-dominance support block all three source analyses; the base native
+parser also refuses JSX. See `wave_06_react_state/REPORT.md`. No further claims
+will be taken until these three analyses are complete.

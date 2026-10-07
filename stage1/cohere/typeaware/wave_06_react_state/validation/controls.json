@@ -1,0 +1,6 @@
+{
+  "static.tsx": "function Component(){const Inner = () => null;return <Inner/>;}\nexport {};\n",
+  "memo.tsx": "type Dispatch<S>=(value:S)=>void;declare function useState(v:number):[number,Dispatch<number>];declare function useEffect(fn:()=>void):void;declare function useMemo(fn:()=>number):number;function Component(){const[x,setX]=useState(0);useMemo(()=>{setX(1);return 1;});return x;}\nexport {};\n",
+  "render.tsx": "type Dispatch<S>=(value:S)=>void;declare function useState(v:number):[number,Dispatch<number>];declare function useEffect(fn:()=>void):void;declare function useMemo(fn:()=>number):number;function Component(){const[x,setX]=useState(0);setX(1);return x;}\nexport {};\n",
+  "effect.tsx": "type Dispatch<S>=(value:S)=>void;declare function useState(v:number):[number,Dispatch<number>];declare function useEffect(fn:()=>void):void;declare function useMemo(fn:()=>number):number;function Component(){const[x,setX]=useState(0);useEffect(()=>{setX(1)});return x;}\nexport {};\n"
+}
