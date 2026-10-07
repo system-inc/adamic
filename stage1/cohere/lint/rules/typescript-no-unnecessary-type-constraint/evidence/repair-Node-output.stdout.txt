@@ -1,0 +1,873 @@
+case 0
+/tmp/lint-wave1-03-full-final/case-0.cts:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+fixed	const data = <T extends any>() => {};
+case 1
+/tmp/lint-wave1-03-full-final/case-1.mts:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+fixed	const data = <T extends any>() => {};
+case 2
+/tmp/lint-wave1-03-full-final/case-2.ts:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	const data = <T extends any>() => {};
+case 3
+/tmp/lint-wave1-03-full-final/case-3.tsx:1:21
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 20 21 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 21 37	
+fixed	class Data { member<T extends unknown>() {} }
+case 4
+/tmp/lint-wave1-03-full-final/case-4.tsx:1:12
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 11 12 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 12 28	
+fixed	class Data<T extends unknown> {}
+case 5
+/tmp/lint-wave1-03-full-final/case-5.tsx:1:29
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 28 29 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 29 45	
+fixed	const Data = class { member<T extends unknown>() {} };
+case 6
+/tmp/lint-wave1-03-full-final/case-6.tsx:1:20
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 19 20 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 20 36	
+fixed	const Data = class<T extends unknown> {};
+case 7
+fixed	const data = () => {};
+case 8
+/tmp/lint-wave1-03-full-final/case-8.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 21 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 21 37	,
+fixed	const data = <Element extends unknown>() => {};
+case 9
+/tmp/lint-wave1-03-full-final/case-9.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	const data = <T extends any , >() => {};
+case 10
+/tmp/lint-wave1-03-full-final/case-10.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	const data = <T extends any ,>() => {};
+case 11
+/tmp/lint-wave1-03-full-final/case-11.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	const data = <T extends any /* comment */,>() => {};
+case 12
+/tmp/lint-wave1-03-full-final/case-12.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+fixed	const data = <T extends any /* comment */>() => {};
+case 13
+/tmp/lint-wave1-03-full-final/case-13.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	const data = <T extends any = unknown>() => {};
+case 14
+/tmp/lint-wave1-03-full-final/case-14.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	const data = <T extends any, >() => {};
+case 15
+/tmp/lint-wave1-03-full-final/case-15.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+/tmp/lint-wave1-03-full-final/case-15.tsx:1:30
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 29 30 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 30 42	
+fixed	const data = <T extends any, U extends any>() => {};
+case 16
+/tmp/lint-wave1-03-full-final/case-16.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	const data = <T extends any,>() => {};
+case 17
+/tmp/lint-wave1-03-full-final/case-17.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	,
+fixed	const data = <T extends any>() => {};
+case 18
+fixed	const data = <T extends number | string>() => {};
+case 19
+fixed	const data = <T extends number>() => {};
+case 20
+/tmp/lint-wave1-03-full-final/case-20.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	,
+fixed	const data = <T extends unknown>() => {};
+case 21
+fixed	const data = <T, >() => {};
+case 22
+fixed	const data = <T, U>() => {};
+case 23
+fixed	function data() {}
+case 24
+fixed	function data<T extends (any)>() {}
+case 25
+fixed	function data<T extends (unknown)>() {}
+case 26
+fixed	function data<T extends any | number>() {}
+case 27
+/tmp/lint-wave1-03-full-final/case-27.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	function data<T extends any, U extends T>() {}
+case 28
+/tmp/lint-wave1-03-full-final/case-28.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	function data<T extends any, U>() {}
+case 29
+/tmp/lint-wave1-03-full-final/case-29.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	function data<T extends any>() {}
+case 30
+fixed	function data<T extends never>() {}
+case 31
+fixed	function data<T extends number | string>() {}
+case 32
+fixed	function data<T extends number>() {}
+case 33
+fixed	function data<T extends object>() {}
+case 34
+/tmp/lint-wave1-03-full-final/case-34.tsx:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 31	
+fixed	function data<T extends unknown>() {}
+case 35
+fixed	function data<T extends void>() {}
+case 36
+fixed	function data<T extends {}>() {}
+case 37
+/tmp/lint-wave1-03-full-final/case-37.tsx:1:18
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 17 18 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 18 30	
+fixed	function data<T, U extends any>() {}
+case 38
+fixed	function data<T, U>() {}
+case 39
+fixed	function data<T>() {}
+case 40
+/tmp/lint-wave1-03-full-final/case-40.tsx:1:16
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 15 16 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 16 32	
+fixed	interface Data<T extends unknown> {}
+case 41
+/tmp/lint-wave1-03-full-final/case-41.tsx:1:11
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 10 11 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 11 27	
+fixed	type Data<T extends unknown> = {};
+case 42
+fixed	type X = any; function data<T extends X>() {}
+case 43
+fixed	\u000a                  class foo {\u000a                    bar = 'baz' as const;\u000a                  }\u000a                
+case 44
+fixed	\u000a                  class foo {\u000a                    bar = 'baz';\u000a                  }\u000a                
+case 45
+fixed	\u000a                  class foo {\u000a                    bar = () => 'bar' as const;\u000a                  }\u000a                
+case 46
+fixed	\u000a                  class foo {\u000a                    bar = 2 as const;\u000a                  }\u000a                
+case 47
+fixed	\u000a                  class foo {\u000a                    bar(): void {}\u000a                  }\u000a                
+case 48
+fixed	\u000a                  class foo {\u000a                    bar: 'baz';\u000a                  }\u000a                
+case 49
+fixed	\u000a                  class foo {\u000a                    bar: number = 1;\u000a                  }\u000a                
+case 50
+fixed	\u000a                  class foo {\u000a                    bar: string = 'baz';\u000a                  }\u000a                
+case 51
+fixed	\u000a                  class foo {\u000a                    bar;\u000a                  }\u000a                
+case 52
+fixed	\u000a                  class foo {\u000a                    get bar(): 'bar' {}\u000a                    set bar(bar: 'bar') {}\u000a                  }\u000a                
+case 53
+fixed	\u000a                  type BazFunction = () => 'baz';\u000a                  class foo {\u000a                    bar: BazFunction = () => 'bar';\u000a                  }\u000a                
+case 54
+/tmp/lint-wave1-03-full-final/case-54.ts:3:20
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 44 49 preferAsConst fixes=2 suggestions=0
+fix 42 49	
+fix 57 57	 as const
+fixed	\u000a            class foo {\u000a              bar = 'baz' as const;\u000a            }\u000a                  
+case 55
+/tmp/lint-wave1-03-full-final/case-55.ts:3:20
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 44 45 preferAsConst fixes=2 suggestions=0
+fix 42 45	
+fix 49 49	 as const
+fixed	\u000a            class foo {\u000a              bar = 2 as const;\u000a            }\u000a                  
+case 56
+/tmp/lint-wave1-03-full-final/case-56.ts:3:30
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 54 59 preferAsConst fixes=1 suggestions=0
+fix 54 59	const
+fixed	\u000a            class foo {\u000a              foo = 'bar' as const;\u000a            }\u000a                  
+case 57
+/tmp/lint-wave1-03-full-final/case-57.ts:3:26
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 50 51 preferAsConst fixes=1 suggestions=0
+fix 50 51	const
+fixed	\u000a            class foo {\u000a              foo = 5 as const;\u000a            }\u000a                  
+case 58
+fixed	\u000a            class foo {\u000a              foo = <'bar'>'bar';\u000a            }\u000a                  
+case 59
+/tmp/lint-wave1-03-full-final/case-59.ts:3:29
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 53 58 preferAsConst fixes=2 suggestions=0
+fix 51 58	
+fix 66 66	 as const
+fixed	\u000a            class foo {\u000a              readonly bar = 'baz' as const;\u000a            }\u000a                  
+case 60
+/tmp/lint-wave1-03-full-final/case-60.ts:3:27
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 51 52 preferAsConst fixes=2 suggestions=0
+fix 49 52	
+fix 56 56	 as const
+fixed	\u000a            class foo {\u000a              static bar = 2 as const;\u000a            }\u000a                  
+case 61
+fixed	class C { p!: 'baz' = 'baz'; }
+case 62
+/tmp/lint-wave1-03-full-final/case-62.ts:2:8
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 19 24 preferAsConst fixes=2 suggestions=0
+fix 17 24	
+fix 32 32	 as const
+fixed	class foo {\u000a  bar = 'baz' as const;\u000a}\u000a
+case 63
+/tmp/lint-wave1-03-full-final/case-63.ts:1:16
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 15 22 preferAsConst fixes=2 suggestions=0
+fix 13 22	
+fix 32 32	 as const
+fixed	const example = 'hello' as const;
+case 64
+/tmp/lint-wave1-03-full-final/case-64.ts:1:12
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 11 12 preferAsConst fixes=2 suggestions=0
+fix 9 12	
+fix 16 16	 as const
+fixed	const foo = 2 as const;
+case 65
+fixed	declare function g<T>(x: T): T;\u000aconst r = g<'bar'>('bar');
+case 66
+fixed	function f(p: 'bar' = 'bar') {}
+case 67
+/tmp/lint-wave1-03-full-final/case-67.ts:1:9
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 8 13 preferAsConst fixes=0 suggestions=0
+fixed	let []: 'bar' = 'bar';
+case 68
+/tmp/lint-wave1-03-full-final/case-68.ts:1:11
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 10 15 preferAsConst fixes=2 suggestions=0
+fix 7 15	
+fix 23 23	 as const
+fixed	let a   = 'bar' as const;\u000a
+case 69
+fixed	let a!: 'bar' = 'bar';
+case 70
+fixed	let a: '2' = 2;
+case 71
+/tmp/lint-wave1-03-full-final/case-71.ts:1:8
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 7 12 preferAsConst fixes=2 suggestions=0
+fix 5 12	
+fix 26 26	 as const
+fixed	let a /*c*/ = 'bar' as const;\u000a
+case 72
+/tmp/lint-wave1-03-full-final/case-72.ts:1:8
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 7 12 preferAsConst fixes=2 suggestions=0
+fix 5 12	
+fix 20 20	 as const
+fixed	let a = 'bar' as const /*t*/;\u000a
+case 73
+fixed	let a: ('bar') = 'bar';
+case 74
+fixed	let a: -2 = -2;
+case 75
+/tmp/lint-wave1-03-full-final/case-75.ts:1:8
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 7 11 preferAsConst fixes=2 suggestions=0
+fix 5 11	
+fix 16 16	 as const
+fixed	let a = 16 as const;
+case 76
+/tmp/lint-wave1-03-full-final/case-76.ts:1:8
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 7 10 preferAsConst fixes=2 suggestions=0
+fix 5 10	
+fix 15 15	 as const
+fixed	let a = 10 as const;
+case 77
+/tmp/lint-wave1-03-full-final/case-77.ts:1:8
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 7 10 preferAsConst fixes=2 suggestions=0
+fix 5 10	
+fix 16 16	 as const
+fixed	let a = 100 as const;
+case 78
+fixed	let a: 2 = '2';
+case 79
+/tmp/lint-wave1-03-full-final/case-79.ts:1:8
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 7 8 preferAsConst fixes=2 suggestions=0
+fix 5 8	
+fix 14 14	 as const
+fixed	let a = 2.0 as const;
+case 80
+fixed	let a: 2n = 2n;
+case 81
+fixed	let a: true = true;
+case 82
+/tmp/lint-wave1-03-full-final/case-82.ts:1:20
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 19 24 preferAsConst fixes=1 suggestions=0
+fix 19 24	const
+fixed	let foo = 'bar' as const;
+case 83
+fixed	let foo = 'bar' as string;
+case 84
+fixed	let foo = 'bar';
+case 85
+fixed	let foo = 'baz' as const;
+case 86
+fixed	let foo = 1 as const;
+case 87
+/tmp/lint-wave1-03-full-final/case-87.ts:1:16
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 15 16 preferAsConst fixes=1 suggestions=0
+fix 15 16	const
+fixed	let foo = 5 as const;
+case 88
+fixed	let foo = <'bar'>'bar';
+case 89
+fixed	let foo = <4>4;
+case 90
+fixed	let foo = `bar` as 'bar';
+case 91
+fixed	let foo = `bar` as `bar`;
+case 92
+fixed	let foo = `bar` as `foo`;
+case 93
+fixed	let foo = { bar };
+case 94
+/tmp/lint-wave1-03-full-final/case-94.ts:1:27
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 26 31 preferAsConst fixes=1 suggestions=0
+fix 26 31	const
+fixed	let foo = { bar: 'baz' as const };
+case 95
+fixed	let foo = { bar: 'baz' as const };
+case 96
+fixed	let foo = { bar: 'baz' };
+case 97
+/tmp/lint-wave1-03-full-final/case-97.ts:1:23
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 22 23 preferAsConst fixes=1 suggestions=0
+fix 22 23	const
+fixed	let foo = { bar: 1 as const };
+case 98
+fixed	let foo = { bar: 1 as const };
+case 99
+fixed	let foo = { bar: 2 };
+case 100
+/tmp/lint-wave1-03-full-final/case-100.ts:1:10
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 9 14 preferAsConst fixes=2 suggestions=0
+fix 7 14	
+fix 22 22	 as const
+fixed	let foo = "bar" as const;
+case 101
+/tmp/lint-wave1-03-full-final/case-101.ts:1:27
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 26 31 preferAsConst fixes=1 suggestions=0
+fix 26 31	const
+fixed	let foo: 'bar' = 'bar' as const;
+case 102
+/tmp/lint-wave1-03-full-final/case-102.ts:1:10
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 9 14 preferAsConst fixes=2 suggestions=0
+fix 7 14	
+fix 22 22	 as const
+fixed	let foo = 'bar' as const;
+case 103
+fixed	let foo: 'bar' = 'baz';
+case 104
+fixed	let foo: 'bar' = baz;
+case 105
+fixed	let foo: 'bar';
+case 106
+fixed	let foo: 'baz' = 'baz' as const;
+case 107
+/tmp/lint-wave1-03-full-final/case-107.ts:1:10
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 9 10 preferAsConst fixes=2 suggestions=0
+fix 7 10	
+fix 14 14	 as const
+fixed	let foo = 2 as const;
+case 108
+fixed	let foo: 2 = 3;
+case 109
+fixed	let foo: number = 1;
+case 110
+fixed	let foo: string = 'bar';
+case 111
+/tmp/lint-wave1-03-full-final/case-111.ts:1:9
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 8 13 preferAsConst fixes=0 suggestions=0
+fixed	let {}: 'bar' = 'bar';
+case 112
+fixed	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}\u000a    
+case 113
+/tmp/lint-wave1-03-full-final/case-113.ts:4:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Down' should be explicitly defined.
+
+shape 33 37 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Down = 1
+edit 33 37	Down = 1
+suggestion defineInitializerSuggestion	Can be fixed to Down = 2
+edit 33 37	Down = 2
+suggestion defineInitializerSuggestion	Can be fixed to Down = 'Down'
+edit 33 37	Down = 'Down'
+fixed	\u000aenum Direction {\u000a  Up = 'Up',\u000a  Down,\u000a}\u000a      
+case 114
+fixed	\u000aenum Direction {\u000a  Up = 1,\u000a  Down = 2,\u000a}\u000a    
+case 115
+fixed	\u000aenum Direction {\u000a  Up = 1,\u000a}\u000a    
+case 116
+/tmp/lint-wave1-03-full-final/case-116.ts:3:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 20 22 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 20 22	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 20 22	Up = 1
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 20 22	Up = 'Up'
+fixed	\u000aenum Direction {\u000a  Up,\u000a  Down = 'Down',\u000a}\u000a      
+case 117
+/tmp/lint-wave1-03-full-final/case-117.ts:3:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 20 22 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 20 22	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 20 22	Up = 1
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 20 22	Up = 'Up'
+/tmp/lint-wave1-03-full-final/case-117.ts:4:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Down' should be explicitly defined.
+
+shape 26 30 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Down = 1
+edit 26 30	Down = 1
+suggestion defineInitializerSuggestion	Can be fixed to Down = 2
+edit 26 30	Down = 2
+suggestion defineInitializerSuggestion	Can be fixed to Down = 'Down'
+edit 26 30	Down = 'Down'
+fixed	\u000aenum Direction {\u000a  Up,\u000a  Down,\u000a}\u000a      
+case 118
+/tmp/lint-wave1-03-full-final/case-118.ts:3:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 20 22 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 20 22	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 20 22	Up = 1
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 20 22	Up = 'Up'
+fixed	\u000aenum Direction {\u000a  Up,\u000a}\u000a      
+case 119
+fixed	\u000aenum Direction {}\u000a    
+case 120
+/tmp/lint-wave1-03-full-final/case-120.ts:2:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 17 19 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 17 19	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 17 19	Up = 1
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 17 19	Up = 'Up'
+fixed	const enum D {\u000a  Up,\u000a}
+case 121
+/tmp/lint-wave1-03-full-final/case-121.ts:2:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 19 21 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 19 21	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 19 21	Up = 1
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 19 21	Up = 'Up'
+fixed	declare enum D {\u000a  Up,\u000a}
+case 122
+/tmp/lint-wave1-03-full-final/case-122.ts:2:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member ''quoted'' should be explicitly defined.
+
+shape 11 19 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 0
+edit 11 19	'quoted' = 0
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 1
+edit 11 19	'quoted' = 1
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = ''quoted''
+edit 11 19	'quoted' = ''quoted''
+fixed	enum D {\u000a  'quoted',\u000a}
+case 123
+fixed	enum D {\u000a  A = 'a'.length,\u000a}
+case 124
+fixed	enum D {\u000a  A = 1 << 0,\u000a}
+case 125
+/tmp/lint-wave1-03-full-final/case-125.ts:3:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'B' should be explicitly defined.
+
+shape 20 21 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to B = 1
+edit 20 21	B = 1
+suggestion defineInitializerSuggestion	Can be fixed to B = 2
+edit 20 21	B = 2
+suggestion defineInitializerSuggestion	Can be fixed to B = 'B'
+edit 20 21	B = 'B'
+/tmp/lint-wave1-03-full-final/case-125.ts:4:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'C' should be explicitly defined.
+
+shape 25 26 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to C = 2
+edit 25 26	C = 2
+suggestion defineInitializerSuggestion	Can be fixed to C = 3
+edit 25 26	C = 3
+suggestion defineInitializerSuggestion	Can be fixed to C = 'C'
+edit 25 26	C = 'C'
+fixed	enum D {\u000a  A = 1,\u000a  B,\u000a  C,\u000a}
+case 126
+/tmp/lint-wave1-03-full-final/case-126.ts:2:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'A' should be explicitly defined.
+
+shape 11 12 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to A = 0
+edit 11 12	A = 0
+suggestion defineInitializerSuggestion	Can be fixed to A = 1
+edit 11 12	A = 1
+suggestion defineInitializerSuggestion	Can be fixed to A = 'A'
+edit 11 12	A = 'A'
+/tmp/lint-wave1-03-full-final/case-126.ts:4:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'C' should be explicitly defined.
+
+shape 25 26 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to C = 2
+edit 25 26	C = 2
+suggestion defineInitializerSuggestion	Can be fixed to C = 3
+edit 25 26	C = 3
+suggestion defineInitializerSuggestion	Can be fixed to C = 'C'
+edit 25 26	C = 'C'
+fixed	enum D {\u000a  A,\u000a  B = 1,\u000a  C,\u000a}
+case 127
+/tmp/lint-wave1-03-full-final/case-127.ts:2:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'A' should be explicitly defined.
+
+shape 11 12 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to A = 0
+edit 11 12	A = 0
+suggestion defineInitializerSuggestion	Can be fixed to A = 1
+edit 11 12	A = 1
+suggestion defineInitializerSuggestion	Can be fixed to A = 'A'
+edit 11 12	A = 'A'
+/tmp/lint-wave1-03-full-final/case-127.ts:3:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'B' should be explicitly defined.
+
+shape 16 17 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to B = 1
+edit 16 17	B = 1
+suggestion defineInitializerSuggestion	Can be fixed to B = 2
+edit 16 17	B = 2
+suggestion defineInitializerSuggestion	Can be fixed to B = 'B'
+edit 16 17	B = 'B'
+/tmp/lint-wave1-03-full-final/case-127.ts:4:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'C' should be explicitly defined.
+
+shape 21 22 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to C = 2
+edit 21 22	C = 2
+suggestion defineInitializerSuggestion	Can be fixed to C = 3
+edit 21 22	C = 3
+suggestion defineInitializerSuggestion	Can be fixed to C = 'C'
+edit 21 22	C = 'C'
+/tmp/lint-wave1-03-full-final/case-127.ts:5:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'D2' should be explicitly defined.
+
+shape 26 28 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to D2 = 3
+edit 26 28	D2 = 3
+suggestion defineInitializerSuggestion	Can be fixed to D2 = 4
+edit 26 28	D2 = 4
+suggestion defineInitializerSuggestion	Can be fixed to D2 = 'D2'
+edit 26 28	D2 = 'D2'
+fixed	enum D {\u000a  A,\u000a  B,\u000a  C,\u000a  D2,\u000a}
+case 128
+fixed	enum D {\u000a  Up = 'Up',\u000a  Down = 'Down',\u000a}
+case 129
+/tmp/lint-wave1-03-full-final/case-129.ts:2:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member '['computed']' should be explicitly defined.
+
+shape 11 23 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to ['computed'] = 0
+edit 11 23	['computed'] = 0
+suggestion defineInitializerSuggestion	Can be fixed to ['computed'] = 1
+edit 11 23	['computed'] = 1
+suggestion defineInitializerSuggestion	Can be fixed to ['computed'] = '['computed']'
+edit 11 23	['computed'] = '['computed']'
+fixed	enum D {\u000a  ['computed'],\u000a}
+case 130
+/tmp/lint-wave1-03-full-final/case-130.ts:1:10
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 9 11 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 9 11	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 9 11	Up = 1
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 9 11	Up = 'Up'
+fixed	enum D { Up }
+case 131
+/tmp/lint-wave1-03-full-final/case-131.ts:2:3
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 18 20 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 18 20	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 18 20	Up = 1
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 18 20	Up = 'Up'
+fixed	export enum D {\u000a  Up,\u000a}
+case 132
+/tmp/lint-wave1-03-full-final/case-132.ts:3:5
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 29 31 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 29 31	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 29 31	Up = 1
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 29 31	Up = 'Up'
+fixed	namespace N {\u000a  enum D {\u000a    Up,\u000a  }\u000a}
+case 133
+/tmp/lint-wave1-03-full-final/typescript-no-unnecessary-type-constraint-witness.ts:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	function data<T extends any>() {}\u000a
+case 134
+/tmp/lint-wave1-03-full-final/typescript-prefer-as-const-witness.ts:1:10
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 9 14 preferAsConst fixes=2 suggestions=0
+fix 7 14	
+fix 22 22	 as const
+fixed	let foo = 'bar' as const;\u000a
+case 135
+/tmp/lint-wave1-03-full-final/typescript-prefer-enum-initializers-witness.ts:1:18
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 17 19 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 17 19	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 1
+edit 17 19	Up = 1
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 17 19	Up = 'Up'
+fixed	enum Direction { Up }\u000a
+case 136
+/tmp/lint-wave1-03-full-final/corner-136.tsx:1:12
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 11 12 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 12 24	,
+fixed	const f = <T extends any /* , */>() => {};\u000a
+case 137
+/tmp/lint-wave1-03-full-final/corner-137.mts:1:12
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 11 12 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 12 28	,
+fixed	const f = <T extends unknown>() => {};\u000a
+case 138
+/tmp/lint-wave1-03-full-final/corner-138.cts:1:12
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 11 12 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 12 24	
+fixed	const f = <T extends any = unknown>() => {};\u000a
+case 139
+/tmp/lint-wave1-03-full-final/corner-139.tsx:1:12
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 11 12 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 12 24	
+fixed	const f = <T extends any,>() => {};\u000a
+case 140
+/tmp/lint-wave1-03-full-final/corner-140.ts:1:30
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 29 33 preferAsConst fixes=2 suggestions=0
+fix 27 33	
+fix 40 40	 as const
+/tmp/lint-wave1-03-full-final/corner-140.ts:1:65
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 64 68 preferAsConst fixes=2 suggestions=0
+fix 62 68	
+fix 73 73	 as const
+fixed	const emoji = "\ud83d\ude00"; let a = "\u00e9" as const; class C { readonly x = 16 as const; }\u000a
+case 141
+/tmp/lint-wave1-03-full-final/corner-141.ts:1:18
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'B' should be explicitly defined.
+
+shape 17 18 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to B = 1
+edit 17 18	B = 1
+suggestion defineInitializerSuggestion	Can be fixed to B = 2
+edit 17 18	B = 2
+suggestion defineInitializerSuggestion	Can be fixed to B = 'B'
+edit 17 18	B = 'B'
+/tmp/lint-wave1-03-full-final/corner-141.ts:1:21
+  @typescript-eslint/prefer-enum-initializers  The value of the member ''quoted'' should be explicitly defined.
+
+shape 20 28 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 2
+edit 20 28	'quoted' = 2
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = 3
+edit 20 28	'quoted' = 3
+suggestion defineInitializerSuggestion	Can be fixed to 'quoted' = ''quoted''
+edit 20 28	'quoted' = ''quoted''
+/tmp/lint-wave1-03-full-final/corner-141.ts:1:31
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'é' should be explicitly defined.
+
+shape 30 32 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to \u00e9 = 3
+edit 30 32	\u00e9 = 3
+suggestion defineInitializerSuggestion	Can be fixed to \u00e9 = 4
+edit 30 32	\u00e9 = 4
+suggestion defineInitializerSuggestion	Can be fixed to \u00e9 = '\u00e9'
+edit 30 32	\u00e9 = '\u00e9'
+fixed	enum D { A = 10, B, 'quoted', \u00e9 }\u000a

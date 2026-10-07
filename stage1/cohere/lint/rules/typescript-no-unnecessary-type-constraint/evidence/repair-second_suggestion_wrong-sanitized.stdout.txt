@@ -1,0 +1,12 @@
+case 0
+/tmp/lint-wave1-03-full-final/typescript-prefer-enum-initializers-witness.ts:1:18
+  @typescript-eslint/prefer-enum-initializers  The value of the member 'Up' should be explicitly defined.
+
+shape 17 19 defineInitializer fixes=0 suggestions=3
+suggestion defineInitializerSuggestion	Can be fixed to Up = 0
+edit 17 19	Up = 0
+suggestion defineInitializerSuggestion	Can be fixed to Up = 2
+edit 17 19	Up = 2
+suggestion defineInitializerSuggestion	Can be fixed to Up = 'Up'
+edit 17 19	Up = 'Up'
+fixed	enum Direction { Up }\u000a

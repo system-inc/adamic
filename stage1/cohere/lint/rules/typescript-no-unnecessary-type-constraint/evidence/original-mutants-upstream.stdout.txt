@@ -1,0 +1,1040 @@
+=== RUN   TestUnifiedSignaturesValid
+=== PAUSE TestUnifiedSignaturesValid
+=== RUN   TestUnifiedSignaturesInvalid
+=== PAUSE TestUnifiedSignaturesInvalid
+=== RUN   TestUnifiedSignaturesOptionsArriveThroughTheDecoder
+=== PAUSE TestUnifiedSignaturesOptionsArriveThroughTheDecoder
+=== CONT  TestUnifiedSignaturesValid
+=== CONT  TestUnifiedSignaturesOptionsArriveThroughTheDecoder
+=== CONT  TestUnifiedSignaturesInvalid
+=== RUN   TestUnifiedSignaturesOptionsArriveThroughTheDecoder/ignoreDifferentlyNamedParameters
+=== PAUSE TestUnifiedSignaturesOptionsArriveThroughTheDecoder/ignoreDifferentlyNamedParameters
+=== RUN   TestUnifiedSignaturesOptionsArriveThroughTheDecoder/ignoreOverloadsWithDifferentJSDoc
+=== PAUSE TestUnifiedSignaturesOptionsArriveThroughTheDecoder/ignoreOverloadsWithDifferentJSDoc
+=== CONT  TestUnifiedSignaturesOptionsArriveThroughTheDecoder/ignoreDifferentlyNamedParameters
+=== CONT  TestUnifiedSignaturesOptionsArriveThroughTheDecoder/ignoreOverloadsWithDifferentJSDoc
+--- PASS: TestUnifiedSignaturesOptionsArriveThroughTheDecoder (0.00s)
+    --- PASS: TestUnifiedSignaturesOptionsArriveThroughTheDecoder/ignoreOverloadsWithDifferentJSDoc (0.00s)
+    --- PASS: TestUnifiedSignaturesOptionsArriveThroughTheDecoder/ignoreDifferentlyNamedParameters (0.00s)
+--- PASS: TestUnifiedSignaturesInvalid (0.01s)
+--- PASS: TestUnifiedSignaturesValid (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.014s
+=== RUN   TestClassMethodsUseThisFires
+=== PAUSE TestClassMethodsUseThisFires
+=== RUN   TestClassMethodsUseThisStaysSilent
+=== PAUSE TestClassMethodsUseThisStaysSilent
+=== RUN   TestClassMethodsUseThisSkipsBodilessMembers
+=== PAUSE TestClassMethodsUseThisSkipsBodilessMembers
+=== RUN   TestNoUnusedExpressionsFires
+=== PAUSE TestNoUnusedExpressionsFires
+=== RUN   TestNoUnusedExpressionsStaysSilent
+=== PAUSE TestNoUnusedExpressionsStaysSilent
+=== RUN   TestNoUnusedExpressionsUnderOptions
+=== PAUSE TestNoUnusedExpressionsUnderOptions
+=== RUN   TestNoUnusedExpressionsReportsTwiceInAClassStaticBlock
+=== PAUSE TestNoUnusedExpressionsReportsTwiceInAClassStaticBlock
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators
+=== RUN   TestNoUnusedExpressionsTreatsNullishAsShortCircuit
+=== PAUSE TestNoUnusedExpressionsTreatsNullishAsShortCircuit
+=== RUN   TestNoUnusedExpressionsRecursesThroughAllowedForms
+=== PAUSE TestNoUnusedExpressionsRecursesThroughAllowedForms
+=== RUN   TestNoUnusedExpressionsChecksBothTernaryBranches
+=== PAUSE TestNoUnusedExpressionsChecksBothTernaryBranches
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers
+=== RUN   TestNoUnusedExpressionsDivergesFromOxcOnSatisfies
+=== PAUSE TestNoUnusedExpressionsDivergesFromOxcOnSatisfies
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues
+=== RUN   TestNoUnusedExpressionsIgnoreDirectivesIsInertHere
+=== PAUSE TestNoUnusedExpressionsIgnoreDirectivesIsInertHere
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind
+=== RUN   TestNoUnusedExpressionsLeavesUnrecognisedFormsAlone
+=== PAUSE TestNoUnusedExpressionsLeavesUnrecognisedFormsAlone
+=== RUN   TestNoUnusedExpressionsReadsOptionsFromJSON
+=== PAUSE TestNoUnusedExpressionsReadsOptionsFromJSON
+=== CONT  TestClassMethodsUseThisFires
+=== RUN   TestClassMethodsUseThisFires/invalid-0
+=== PAUSE TestClassMethodsUseThisFires/invalid-0
+=== RUN   TestClassMethodsUseThisFires/invalid-1
+=== PAUSE TestClassMethodsUseThisFires/invalid-1
+=== RUN   TestClassMethodsUseThisFires/invalid-2
+=== PAUSE TestClassMethodsUseThisFires/invalid-2
+=== CONT  TestNoUnusedExpressionsReadsOptionsFromJSON
+=== CONT  TestNoUnusedExpressionsStaysSilent
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_function_declaration_is_not_an_expression_statement
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_function_declaration_is_not_an_expression_statement
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_assignment
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_assignment
+=== CONT  TestNoUnusedExpressionsUnderOptions
+=== RUN   TestClassMethodsUseThisFires/invalid-3
+=== PAUSE TestClassMethodsUseThisFires/invalid-3
+--- PASS: TestNoUnusedExpressionsReadsOptionsFromJSON (0.00s)
+=== CONT  TestNoUnusedExpressionsRecursesThroughAllowedForms
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_construction
+=== RUN   TestClassMethodsUseThisFires/invalid-4
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_construction
+=== PAUSE TestClassMethodsUseThisFires/invalid-4
+=== RUN   TestClassMethodsUseThisFires/invalid-5
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_a_call
+=== PAUSE TestClassMethodsUseThisFires/invalid-5
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_empty_block
+=== CONT  TestNoUnusedExpressionsFires
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_a_call
+=== RUN   TestNoUnusedExpressionsFires/a_bare_number
+=== PAUSE TestNoUnusedExpressionsFires/a_bare_number
+=== RUN   TestClassMethodsUseThisFires/invalid-6
+=== PAUSE TestClassMethodsUseThisFires/invalid-6
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_empty_block
+=== RUN   TestNoUnusedExpressionsStaysSilent/two_calls
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_assignment
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_assignment
+=== PAUSE TestNoUnusedExpressionsStaysSilent/two_calls
+=== RUN   TestNoUnusedExpressionsFires/a_bare_identifier
+=== PAUSE TestNoUnusedExpressionsFires/a_bare_identifier
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_increment
+=== RUN   TestNoUnusedExpressionsFires/a_sequence_whose_tail_is_a_literal
+=== PAUSE TestNoUnusedExpressionsFires/a_sequence_whose_tail_is_a_literal
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_increment
+--- PASS: TestNoUnusedExpressionsRecursesThroughAllowedForms (0.00s)
+=== RUN   TestNoUnusedExpressionsFires/a_literal_inside_a_block
+=== PAUSE TestNoUnusedExpressionsFires/a_literal_inside_a_block
+=== RUN   TestNoUnusedExpressionsFires/an_array_literal
+=== PAUSE TestNoUnusedExpressionsFires/an_array_literal
+=== RUN   TestNoUnusedExpressionsFires/a_short_circuit_onto_a_call,_unallowed
+=== PAUSE TestNoUnusedExpressionsFires/a_short_circuit_onto_a_call,_unallowed
+=== CONT  TestClassMethodsUseThisSkipsBodilessMembers
+=== RUN   TestNoUnusedExpressionsFires/a_short_circuit_onto_a_literal
+=== PAUSE TestNoUnusedExpressionsFires/a_short_circuit_onto_a_literal
+=== RUN   TestClassMethodsUseThisSkipsBodilessMembers/abstract-method-is-not-judged
+=== PAUSE TestClassMethodsUseThisSkipsBodilessMembers/abstract-method-is-not-judged
+=== RUN   TestClassMethodsUseThisSkipsBodilessMembers/overload-signatures-are-not-judged
+=== PAUSE TestClassMethodsUseThisSkipsBodilessMembers/overload-signatures-are-not-judged
+=== RUN   TestClassMethodsUseThisSkipsBodilessMembers/control-an-ordinary-method-still-reports
+=== PAUSE TestClassMethodsUseThisSkipsBodilessMembers/control-an-ordinary-method-still-reports
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_call
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_call
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_delete
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_delete
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_void
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_void
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_file
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_file
+=== RUN   TestNoUnusedExpressionsStaysSilent/two_directives_then_a_call
+=== PAUSE TestNoUnusedExpressionsStaysSilent/two_directives_then_a_call
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_function_body
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_function_body
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_an_arrow_body
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_an_arrow_body
+=== RUN   TestNoUnusedExpressionsStaysSilent/two_directives_in_a_function_body
+=== PAUSE TestNoUnusedExpressionsStaysSilent/two_directives_in_a_function_body
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_string_used_as_an_initialiser
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_string_used_as_an_initialiser
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_yield
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_yield
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_await_of_a_literal
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_await_of_a_literal
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_await_of_a_member_access
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_await_of_a_member_access
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_dynamic_import
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_dynamic_import
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_optional_call
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_optional_call
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_optional_member_call
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_optional_member_call
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_self-closing_element_with_no_option
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_self-closing_element_with_no_option
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_fragment_with_no_option
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_fragment_with_no_option
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_element_used_as_an_initialiser
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_element_used_as_an_initialiser
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_optional_call_as_a_statement
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_optional_call_as_a_statement
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_parenthesised_optional_access_used_as_an_initialiser
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_parenthesised_optional_access_used_as_an_initialiser
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_optional_element_access_used_as_an_initialiser
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_optional_element_access_used_as_an_initialiser
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_chained_optional_access_used_as_an_initialiser
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_chained_optional_access_used_as_an_initialiser
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_chained_optional_call_as_a_statement
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_chained_optional_call_as_a_statement
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_optional_element_access_then_an_optional_call
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_optional_element_access_then_an_optional_call
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_module_block
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_module_block
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_namespace
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_namespace
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_function
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_function
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_dynamic_import_as_a_statement
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_dynamic_import_as_a_statement
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_dynamic_import_then_a_call
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_dynamic_import_then_a_call
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_construction_with_type_arguments
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_construction_with_type_arguments
+=== RUN   TestNoUnusedExpressionsStaysSilent/an_arrow_with_an_expression_body_is_no_statement_at_all
+=== PAUSE TestNoUnusedExpressionsStaysSilent/an_arrow_with_an_expression_body_is_no_statement_at_all
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_satisfies_expression_in_a_switch_default
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_satisfies_expression_in_a_switch_default
+=== RUN   TestNoUnusedExpressionsStaysSilent/a_bare_satisfies_expression
+=== PAUSE TestNoUnusedExpressionsStaysSilent/a_bare_satisfies_expression
+=== RUN   TestNoUnusedExpressionsFires/a_short_circuit_onto_an_assignment,_unallowed
+=== PAUSE TestNoUnusedExpressionsFires/a_short_circuit_onto_an_assignment,_unallowed
+=== RUN   TestNoUnusedExpressionsFires/a_ternary_onto_a_short_circuit,_unallowed
+=== PAUSE TestNoUnusedExpressionsFires/a_ternary_onto_a_short_circuit,_unallowed
+=== RUN   TestNoUnusedExpressionsFires/an_untagged_template
+=== PAUSE TestNoUnusedExpressionsFires/an_untagged_template
+=== RUN   TestNoUnusedExpressionsFires/a_tagged_template,_unallowed
+=== PAUSE TestNoUnusedExpressionsFires/a_tagged_template,_unallowed
+=== RUN   TestNoUnusedExpressionsFires/a_member_access
+=== PAUSE TestNoUnusedExpressionsFires/a_member_access
+=== RUN   TestNoUnusedExpressionsFires/a_logical_negation
+=== PAUSE TestNoUnusedExpressionsFires/a_logical_negation
+=== RUN   TestNoUnusedExpressionsFires/a_unary_plus
+=== PAUSE TestNoUnusedExpressionsFires/a_unary_plus
+=== RUN   TestNoUnusedExpressionsFires/a_string_after_a_call_is_no_longer_a_prologue
+=== PAUSE TestNoUnusedExpressionsFires/a_string_after_a_call_is_no_longer_a_prologue
+=== RUN   TestNoUnusedExpressionsFires/the_same_inside_a_function_body
+=== PAUSE TestNoUnusedExpressionsFires/the_same_inside_a_function_body
+=== RUN   TestNoUnusedExpressionsFires/a_string_inside_an_if_block,_which_has_no_prologue
+=== PAUSE TestNoUnusedExpressionsFires/a_string_inside_an_if_block,_which_has_no_prologue
+=== RUN   TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_function_body
+=== PAUSE TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_function_body
+=== RUN   TestNoUnusedExpressionsFires/the_same_inside_an_arrow_body
+=== PAUSE TestNoUnusedExpressionsFires/the_same_inside_an_arrow_body
+=== RUN   TestNoUnusedExpressionsFires/an_optional_member_access
+=== PAUSE TestNoUnusedExpressionsFires/an_optional_member_access
+=== RUN   TestNoUnusedExpressionsFires/an_optional_access_continued
+=== PAUSE TestNoUnusedExpressionsFires/an_optional_access_continued
+=== RUN   TestNoUnusedExpressionsFires/an_optional_call_whose_result_is_then_read
+=== PAUSE TestNoUnusedExpressionsFires/an_optional_call_whose_result_is_then_read
+=== RUN   TestNoUnusedExpressionsFires/a_class_static_block_has_no_directive_prologue
+=== PAUSE TestNoUnusedExpressionsFires/a_class_static_block_has_no_directive_prologue
+=== RUN   TestNoUnusedExpressionsFires/a_literal_as_an_if_consequent
+=== PAUSE TestNoUnusedExpressionsFires/a_literal_as_an_if_consequent
+=== RUN   TestNoUnusedExpressionsFires/a_sequence_whose_tail_is_an_object
+=== PAUSE TestNoUnusedExpressionsFires/a_sequence_whose_tail_is_an_object
+=== RUN   TestNoUnusedExpressionsFires/a_sequence_whose_head_is_an_identifier
+=== PAUSE TestNoUnusedExpressionsFires/a_sequence_whose_head_is_an_identifier
+=== RUN   TestNoUnusedExpressionsFires/a_short_circuit_onto_a_named_function_expression
+=== PAUSE TestNoUnusedExpressionsFires/a_short_circuit_onto_a_named_function_expression
+=== RUN   TestNoUnusedExpressionsFires/an_optional_access
+=== PAUSE TestNoUnusedExpressionsFires/an_optional_access
+=== RUN   TestNoUnusedExpressionsFires/a_parenthesised_optional_access,_then_read
+=== PAUSE TestNoUnusedExpressionsFires/a_parenthesised_optional_access,_then_read
+=== RUN   TestNoUnusedExpressionsFires/an_optional_element_access
+=== PAUSE TestNoUnusedExpressionsFires/an_optional_element_access
+=== RUN   TestNoUnusedExpressionsFires/a_parenthesised_optional_element_access,_then_read
+=== PAUSE TestNoUnusedExpressionsFires/a_parenthesised_optional_element_access,_then_read
+=== RUN   TestNoUnusedExpressionsFires/an_optional_call_whose_result_is_read_optionally
+=== PAUSE TestNoUnusedExpressionsFires/an_optional_call_whose_result_is_read_optionally
+=== RUN   TestNoUnusedExpressionsFires/a_parenthesised_optional_call,_then_read
+=== PAUSE TestNoUnusedExpressionsFires/a_parenthesised_optional_call,_then_read
+=== RUN   TestNoUnusedExpressionsFires/a_chained_optional_element_access
+=== PAUSE TestNoUnusedExpressionsFires/a_chained_optional_element_access
+=== RUN   TestNoUnusedExpressionsFires/a_chained_optional_member_access
+=== PAUSE TestNoUnusedExpressionsFires/a_chained_optional_member_access
+=== RUN   TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_module_block
+=== PAUSE TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_module_block
+=== RUN   TestNoUnusedExpressionsFires/a_string_after_declarations_in_a_namespace
+=== PAUSE TestNoUnusedExpressionsFires/a_string_after_declarations_in_a_namespace
+=== RUN   TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_function
+=== PAUSE TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_function
+=== RUN   TestNoUnusedExpressionsFires/a_parenthesised_string_is_not_a_directive
+=== PAUSE TestNoUnusedExpressionsFires/a_parenthesised_string_is_not_a_directive
+=== RUN   TestNoUnusedExpressionsFires/a_type_instantiation_of_a_class
+=== PAUSE TestNoUnusedExpressionsFires/a_type_instantiation_of_a_class
+=== RUN   TestNoUnusedExpressionsFires/a_bare_type_instantiation
+=== PAUSE TestNoUnusedExpressionsFires/a_bare_type_instantiation
+=== RUN   TestNoUnusedExpressionsFires/a_declared_identifier
+=== PAUSE TestNoUnusedExpressionsFires/a_declared_identifier
+=== RUN   TestNoUnusedExpressionsFires/an_as-expression_over_an_identifier
+=== PAUSE TestNoUnusedExpressionsFires/an_as-expression_over_an_identifier
+=== RUN   TestNoUnusedExpressionsFires/a_non-null_assertion_over_an_identifier
+=== PAUSE TestNoUnusedExpressionsFires/a_non-null_assertion_over_an_identifier
+=== RUN   TestNoUnusedExpressionsFires/an_arrow_with_a_block_body_holding_a_bare_expression
+=== PAUSE TestNoUnusedExpressionsFires/an_arrow_with_a_block_body_holding_a_bare_expression
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/'use_client';_export_const_a_=_1;
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/'use_client';_export_const_a_=_1;
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/function_f()_{_'use_strict';_return_1;_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/function_f()_{_'use_strict';_return_1;_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/const_f_=_function_()_{_'use_strict';_return_1;_};
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/const_f_=_function_()_{_'use_strict';_return_1;_};
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/const_f_=_()_=>_{_'use_strict';_return_1;_};
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/const_f_=_()_=>_{_'use_strict';_return_1;_};
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_m()_{_'use_strict';_return_1;_}_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_m()_{_'use_strict';_return_1;_}_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_get_m()_{_'use_strict';_return_1;_}_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_get_m()_{_'use_strict';_return_1;_}_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_constructor()_{_'use_strict';_}_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_constructor()_{_'use_strict';_}_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/namespace_N_{_'use_strict';_export_const_a_=_1;_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/namespace_N_{_'use_strict';_export_const_a_=_1;_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/'a';_'b';_'c';_f();
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/'a';_'b';_'c';_f();
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/{_'use_strict';_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/{_'use_strict';_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/if_(a)_{_'use_strict';_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/if_(a)_{_'use_strict';_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/for_(;;)_{_'use_strict';_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/for_(;;)_{_'use_strict';_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/while_(a)_{_'use_strict';_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/while_(a)_{_'use_strict';_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/try_{_'use_strict';_}_catch_{}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/try_{_'use_strict';_}_catch_{}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/label:_{_'use_strict';_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/label:_{_'use_strict';_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/switch_(a)_{_case_1:_'use_strict';_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/switch_(a)_{_case_1:_'use_strict';_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_static_{_'use_strict';_}_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_static_{_'use_strict';_}_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/function_f()_{_`use_strict`;_return_1;_}
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/function_f()_{_`use_strict`;_return_1;_}
+=== RUN   TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/0;_'use_strict';
+=== PAUSE TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/0;_'use_strict';
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_await
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_await
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_optional_call
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_optional_call
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_a_dynamic_import
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_a_dynamic_import
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_identifier
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_identifier
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_identifier,_left_used
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_identifier,_left_used
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_optional_access
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_optional_access
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_ternary_under_the_short-circuit_option_only
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_ternary_under_the_short-circuit_option_only
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_calls
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_calls
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_awaits
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_awaits
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_dynamic_imports
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_dynamic_imports
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_ternary_with_a_literal_alternate
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_ternary_with_a_literal_alternate
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_ternary_with_an_identifier_consequent
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_ternary_with_an_identifier_consequent
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_ternary_onto_an_optional_access
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_ternary_onto_an_optional_access
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_short_circuit_under_the_ternary_option_only
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_short_circuit_under_the_ternary_option_only
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_ternary_onto_a_short_circuit_onto_an_assignment
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_ternary_onto_a_short_circuit_onto_an_assignment
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_tagged_template
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_tagged_template
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_call_is_unaffected_by_the_tagged-template_option
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_call_is_unaffected_by_the_tagged-template_option
+=== RUN   TestNoUnusedExpressionsUnderOptions/an_untagged_template_is_unaffected
+=== PAUSE TestNoUnusedExpressionsUnderOptions/an_untagged_template_is_unaffected
+=== RUN   TestNoUnusedExpressionsUnderOptions/an_untagged_template_with_the_option_off
+=== PAUSE TestNoUnusedExpressionsUnderOptions/an_untagged_template_with_the_option_off
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_tagged_template_with_the_option_off
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_tagged_template_with_the_option_off
+=== RUN   TestNoUnusedExpressionsUnderOptions/an_element_used_as_an_initialiser_is_still_not_a_statement
+=== PAUSE TestNoUnusedExpressionsUnderOptions/an_element_used_as_an_initialiser_is_still_not_a_statement
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_fragment_used_as_an_initialiser
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_fragment_used_as_an_initialiser
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_self-closing_element_as_a_statement
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_self-closing_element_as_a_statement
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_fragment_as_a_statement
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_fragment_as_a_statement
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_directive_under_the_option
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_directive_under_the_option
+=== RUN   TestNoUnusedExpressionsUnderOptions/two_directives_then_a_call,_under_the_option
+=== PAUSE TestNoUnusedExpressionsUnderOptions/two_directives_then_a_call,_under_the_option
+=== RUN   TestNoUnusedExpressionsUnderOptions/a_function-body_directive_under_the_option
+=== PAUSE TestNoUnusedExpressionsUnderOptions/a_function-body_directive_under_the_option
+=== RUN   TestNoUnusedExpressionsUnderOptions/two_function-body_directives_under_the_option
+=== PAUSE TestNoUnusedExpressionsUnderOptions/two_function-body_directives_under_the_option
+=== RUN   TestNoUnusedExpressionsUnderOptions/an_identifier_is_not_a_directive
+=== PAUSE TestNoUnusedExpressionsUnderOptions/an_identifier_is_not_a_directive
+=== CONT  TestNoUnusedExpressionsLeavesUnrecognisedFormsAlone
+--- PASS: TestNoUnusedExpressionsLeavesUnrecognisedFormsAlone (0.00s)
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_+=_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_+=_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_&&=_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_&&=_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_||=_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_||=_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_??=_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_??=_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_**=_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_**=_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_>>>=_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_>>>=_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_??_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_??_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_**_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_**_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_>>>_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_>>>_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_in_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_in_b;
+=== RUN   TestNoUnusedExpressionsSeparatesBinaryOperators/a_instanceof_b;
+=== PAUSE TestNoUnusedExpressionsSeparatesBinaryOperators/a_instanceof_b;
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/typeof_a;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/typeof_a;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/!a;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/!a;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/+a;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/+a;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/-a;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/-a;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/~a;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/~a;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/void_0;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/void_0;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/delete_a.b;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/delete_a.b;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/++a;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/++a;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/--a;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/--a;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/a++;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/a++;
+=== RUN   TestNoUnusedExpressionsSeparatesUnaryFormsByKind/a--;
+=== PAUSE TestNoUnusedExpressionsSeparatesUnaryFormsByKind/a--;
+=== RUN   TestClassMethodsUseThisFires/invalid-7
+=== PAUSE TestClassMethodsUseThisFires/invalid-7
+=== RUN   TestClassMethodsUseThisFires/invalid-8
+=== PAUSE TestClassMethodsUseThisFires/invalid-8
+=== RUN   TestClassMethodsUseThisFires/invalid-9
+=== PAUSE TestClassMethodsUseThisFires/invalid-9
+=== RUN   TestClassMethodsUseThisFires/invalid-10
+=== PAUSE TestClassMethodsUseThisFires/invalid-10
+=== RUN   TestClassMethodsUseThisFires/invalid-11
+=== PAUSE TestClassMethodsUseThisFires/invalid-11
+=== RUN   TestClassMethodsUseThisFires/invalid-12
+=== PAUSE TestClassMethodsUseThisFires/invalid-12
+=== RUN   TestClassMethodsUseThisFires/invalid-13
+=== PAUSE TestClassMethodsUseThisFires/invalid-13
+=== RUN   TestClassMethodsUseThisFires/invalid-14
+=== PAUSE TestClassMethodsUseThisFires/invalid-14
+=== RUN   TestClassMethodsUseThisFires/invalid-15
+=== PAUSE TestClassMethodsUseThisFires/invalid-15
+=== RUN   TestClassMethodsUseThisFires/invalid-16
+=== PAUSE TestClassMethodsUseThisFires/invalid-16
+=== RUN   TestClassMethodsUseThisFires/invalid-17
+=== PAUSE TestClassMethodsUseThisFires/invalid-17
+=== RUN   TestClassMethodsUseThisFires/invalid-18
+=== PAUSE TestClassMethodsUseThisFires/invalid-18
+=== RUN   TestClassMethodsUseThisFires/invalid-19
+=== PAUSE TestClassMethodsUseThisFires/invalid-19
+=== RUN   TestClassMethodsUseThisFires/invalid-20
+=== PAUSE TestClassMethodsUseThisFires/invalid-20
+=== RUN   TestClassMethodsUseThisFires/invalid-21
+=== PAUSE TestClassMethodsUseThisFires/invalid-21
+=== CONT  TestNoUnusedExpressionsIgnoreDirectivesIsInertHere
+=== RUN   TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/"use_strict";
+=== PAUSE TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/"use_strict";
+=== RUN   TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/"directive_one";_f();_"directive_two";
+=== PAUSE TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/"directive_one";_f();_"directive_two";
+=== RUN   TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/function_foo()_{_var_foo_=_true;_"use_strict";_}
+=== PAUSE TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/function_foo()_{_var_foo_=_true;_"use_strict";_}
+=== RUN   TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/class_C_{_static_{_'use_strict';_}_}
+=== PAUSE TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/class_C_{_static_{_'use_strict';_}_}
+=== RUN   TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/namespace_N_{_'use_strict';_}
+=== PAUSE TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/namespace_N_{_'use_strict';_}
+=== RUN   TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/{_'use_strict';_}
+=== PAUSE TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/{_'use_strict';_}
+=== RUN   TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/foo;
+=== PAUSE TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/foo;
+=== RUN   TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/0;
+=== PAUSE TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/0;
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()_as_any;
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()_as_any;
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()!;
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()!;
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a()_as_any)!;
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a()_as_any)!;
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()_satisfies_unknown;
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()_satisfies_unknown;
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a());
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a());
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a)!;
+=== CONT  TestNoUnusedExpressionsTreatsNullishAsShortCircuit
+=== CONT  TestNoUnusedExpressionsDivergesFromOxcOnSatisfies
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a)!;
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a_as_any)!;
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a_as_any)!;
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a);
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a);
+=== RUN   TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/((a));
+=== PAUSE TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/((a));
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/a_whole_statement_including_its_semicolon
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/a_whole_statement_including_its_semicolon
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/a_statement_with_no_semicolon
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/a_statement_with_no_semicolon
+=== CONT  TestClassMethodsUseThisStaysSilent
+=== CONT  TestNoUnusedExpressionsReportsTwiceInAClassStaticBlock
+--- PASS: TestNoUnusedExpressionsDivergesFromOxcOnSatisfies (0.00s)
+=== CONT  TestNoUnusedExpressionsChecksBothTernaryBranches
+=== RUN   TestNoUnusedExpressionsChecksBothTernaryBranches/a_?_b()_:_c;
+=== PAUSE TestNoUnusedExpressionsChecksBothTernaryBranches/a_?_b()_:_c;
+=== RUN   TestNoUnusedExpressionsChecksBothTernaryBranches/a_?_b_:_c();
+=== PAUSE TestNoUnusedExpressionsChecksBothTernaryBranches/a_?_b_:_c();
+=== CONT  TestClassMethodsUseThisSkipsBodilessMembers/abstract-method-is-not-judged
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/the_literal_inside_a_block,_not_the_block
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-0
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/the_literal_inside_a_block,_not_the_block
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/the_whole_sequence
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/the_whole_sequence
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/the_trailing_string_only,_with_no_leading_space
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/the_trailing_string_only,_with_no_leading_space
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/the_string_inside_the_if_block_only
+=== CONT  TestClassMethodsUseThisSkipsBodilessMembers/overload-signatures-are-not-judged
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/the_string_inside_the_if_block_only
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/the_string_after_the_declaration_only
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/the_string_after_the_declaration_only
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/both_strings_in_a_static_block,_each_on_its_own
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/both_strings_in_a_static_block,_each_on_its_own
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/the_parenthesised_string_including_its_parentheses
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/the_parenthesised_string_including_its_parentheses
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-0
+=== CONT  TestClassMethodsUseThisSkipsBodilessMembers/control-an-ordinary-method-still-reports
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/the_whole_optional_chain
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/the_whole_optional_chain
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/the_whole_type_instantiation
+--- PASS: TestNoUnusedExpressionsTreatsNullishAsShortCircuit (0.00s)
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_function_declaration_is_not_an_expression_statement
+--- PASS: TestNoUnusedExpressionsReportsTwiceInAClassStaticBlock (0.00s)
+=== CONT  TestNoUnusedExpressionsFires/a_bare_number
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/the_whole_type_instantiation
+=== RUN   TestNoUnusedExpressionsPointsAtTheStatement/the_consequent_of_the_if,_not_the_if
+=== PAUSE TestNoUnusedExpressionsPointsAtTheStatement/the_consequent_of_the_if,_not_the_if
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/'use_client';_export_const_a_=_1;
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_satisfies_expression_in_a_switch_default
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-1
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-1
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-2
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-2
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-3
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-3
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-4
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-4
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_bare_satisfies_expression
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-5
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_dynamic_import_as_a_statement
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_arrow_with_an_expression_body_is_no_statement_at_all
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_function
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_construction_with_type_arguments
+--- PASS: TestClassMethodsUseThisSkipsBodilessMembers (0.00s)
+    --- PASS: TestClassMethodsUseThisSkipsBodilessMembers/abstract-method-is-not-judged (0.00s)
+    --- PASS: TestClassMethodsUseThisSkipsBodilessMembers/overload-signatures-are-not-judged (0.00s)
+    --- PASS: TestClassMethodsUseThisSkipsBodilessMembers/control-an-ordinary-method-still-reports (0.00s)
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_dynamic_import_then_a_call
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_module_block
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_optional_element_access_then_an_optional_call
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_chained_optional_call_as_a_statement
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_chained_optional_access_used_as_an_initialiser
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_optional_element_access_used_as_an_initialiser
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-5
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_parenthesised_optional_access_used_as_an_initialiser
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-6
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-6
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_element_used_as_an_initialiser
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_fragment_with_no_option
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_namespace
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_optional_member_call
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_self-closing_element_with_no_option
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-7
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-7
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-8
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-8
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-9
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-9
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_dynamic_import
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-10
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-10
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-11
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-11
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_optional_call
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-12
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-12
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-13
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-13
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_await_of_a_member_access
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-14
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-14
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-15
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_await_of_a_literal
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_optional_call_as_a_statement
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-15
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_yield
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_an_arrow_body
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-16
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-16
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_function_body
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-17
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-17
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-18
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-18
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-19
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-19
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-20
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-20
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-21
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-21
+=== CONT  TestNoUnusedExpressionsStaysSilent/two_directives_then_a_call
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_file
+=== RUN   TestClassMethodsUseThisStaysSilent/valid-22
+=== PAUSE TestClassMethodsUseThisStaysSilent/valid-22
+=== CONT  TestNoUnusedExpressionsStaysSilent/two_directives_in_a_function_body
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_delete
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_call
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_void
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_increment
+=== CONT  TestNoUnusedExpressionsStaysSilent/two_calls
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_empty_block
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_construction
+=== CONT  TestNoUnusedExpressionsStaysSilent/a_string_used_as_an_initialiser
+=== CONT  TestNoUnusedExpressionsStaysSilent/an_assignment
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_a_call
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_+=_b;
+=== CONT  TestNoUnusedExpressionsFires/an_arrow_with_a_block_body_holding_a_bare_expression
+=== CONT  TestNoUnusedExpressionsFires/a_non-null_assertion_over_an_identifier
+=== CONT  TestNoUnusedExpressionsFires/an_as-expression_over_an_identifier
+=== CONT  TestNoUnusedExpressionsFires/a_declared_identifier
+=== CONT  TestNoUnusedExpressionsFires/a_bare_type_instantiation
+=== CONT  TestNoUnusedExpressionsFires/a_type_instantiation_of_a_class
+=== CONT  TestNoUnusedExpressionsFires/a_parenthesised_string_is_not_a_directive
+=== CONT  TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_function
+=== CONT  TestNoUnusedExpressionsFires/a_string_after_declarations_in_a_namespace
+=== CONT  TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_module_block
+=== CONT  TestNoUnusedExpressionsFires/a_chained_optional_member_access
+=== CONT  TestNoUnusedExpressionsFires/a_chained_optional_element_access
+=== CONT  TestNoUnusedExpressionsFires/a_parenthesised_optional_call,_then_read
+=== CONT  TestNoUnusedExpressionsFires/an_optional_call_whose_result_is_read_optionally
+=== CONT  TestNoUnusedExpressionsFires/an_optional_element_access
+=== CONT  TestNoUnusedExpressionsFires/a_parenthesised_optional_access,_then_read
+=== CONT  TestNoUnusedExpressionsFires/a_parenthesised_optional_element_access,_then_read
+=== CONT  TestNoUnusedExpressionsFires/an_optional_access
+=== CONT  TestNoUnusedExpressionsFires/a_short_circuit_onto_a_named_function_expression
+=== CONT  TestNoUnusedExpressionsFires/a_sequence_whose_head_is_an_identifier
+=== CONT  TestNoUnusedExpressionsFires/a_sequence_whose_tail_is_an_object
+=== CONT  TestNoUnusedExpressionsFires/a_literal_as_an_if_consequent
+=== CONT  TestNoUnusedExpressionsFires/a_class_static_block_has_no_directive_prologue
+=== CONT  TestNoUnusedExpressionsFires/an_optional_call_whose_result_is_then_read
+=== CONT  TestNoUnusedExpressionsFires/an_optional_access_continued
+=== CONT  TestNoUnusedExpressionsFires/an_optional_member_access
+=== CONT  TestNoUnusedExpressionsFires/the_same_inside_an_arrow_body
+=== CONT  TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_function_body
+=== CONT  TestNoUnusedExpressionsFires/a_string_inside_an_if_block,_which_has_no_prologue
+=== CONT  TestNoUnusedExpressionsFires/the_same_inside_a_function_body
+=== CONT  TestNoUnusedExpressionsFires/a_string_after_a_call_is_no_longer_a_prologue
+=== CONT  TestNoUnusedExpressionsFires/a_unary_plus
+=== CONT  TestNoUnusedExpressionsFires/a_logical_negation
+=== CONT  TestNoUnusedExpressionsFires/a_member_access
+=== CONT  TestNoUnusedExpressionsFires/a_tagged_template,_unallowed
+=== CONT  TestNoUnusedExpressionsFires/an_untagged_template
+=== CONT  TestNoUnusedExpressionsFires/a_ternary_onto_a_short_circuit,_unallowed
+=== CONT  TestNoUnusedExpressionsFires/a_short_circuit_onto_an_assignment,_unallowed
+=== CONT  TestNoUnusedExpressionsFires/a_short_circuit_onto_a_literal
+=== CONT  TestNoUnusedExpressionsFires/an_array_literal
+=== CONT  TestNoUnusedExpressionsFires/a_short_circuit_onto_a_call,_unallowed
+=== CONT  TestNoUnusedExpressionsFires/a_literal_inside_a_block
+=== CONT  TestNoUnusedExpressionsFires/a_sequence_whose_tail_is_a_literal
+=== CONT  TestNoUnusedExpressionsFires/a_bare_identifier
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/typeof_a;
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/0;_'use_strict';
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/function_f()_{_`use_strict`;_return_1;_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/switch_(a)_{_case_1:_'use_strict';_}
+--- PASS: TestNoUnusedExpressionsFires (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_bare_number (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_arrow_with_a_block_body_holding_a_bare_expression (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_non-null_assertion_over_an_identifier (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_as-expression_over_an_identifier (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_declared_identifier (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_bare_type_instantiation (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_parenthesised_string_is_not_a_directive (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_function (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_type_instantiation_of_a_class (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_string_after_declarations_in_a_namespace (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_chained_optional_member_access (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_module_block (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_chained_optional_element_access (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_parenthesised_optional_call,_then_read (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_optional_call_whose_result_is_read_optionally (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_optional_element_access (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_parenthesised_optional_access,_then_read (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_parenthesised_optional_element_access,_then_read (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_optional_access (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_short_circuit_onto_a_named_function_expression (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_sequence_whose_tail_is_an_object (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_literal_as_an_if_consequent (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_class_static_block_has_no_directive_prologue (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_optional_call_whose_result_is_then_read (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_optional_access_continued (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_optional_member_access (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_string_after_a_declaration_in_a_function_body (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_string_inside_an_if_block,_which_has_no_prologue (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_sequence_whose_head_is_an_identifier (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/the_same_inside_an_arrow_body (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/the_same_inside_a_function_body (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_string_after_a_call_is_no_longer_a_prologue (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_unary_plus (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_logical_negation (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_member_access (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_tagged_template,_unallowed (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_ternary_onto_a_short_circuit,_unallowed (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_untagged_template (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_short_circuit_onto_an_assignment,_unallowed (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_short_circuit_onto_a_literal (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_short_circuit_onto_a_call,_unallowed (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/an_array_literal (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_literal_inside_a_block (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_sequence_whose_tail_is_a_literal (0.00s)
+    --- PASS: TestNoUnusedExpressionsFires/a_bare_identifier (0.00s)
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/label:_{_'use_strict';_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_static_{_'use_strict';_}_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/try_{_'use_strict';_}_catch_{}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/while_(a)_{_'use_strict';_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/for_(;;)_{_'use_strict';_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/if_(a)_{_'use_strict';_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/{_'use_strict';_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/'a';_'b';_'c';_f();
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/namespace_N_{_'use_strict';_export_const_a_=_1;_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_constructor()_{_'use_strict';_}_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_get_m()_{_'use_strict';_return_1;_}_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_m()_{_'use_strict';_return_1;_}_}
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/const_f_=_function_()_{_'use_strict';_return_1;_};
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/function_f()_{_'use_strict';_return_1;_}
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_identifier
+=== CONT  TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/const_f_=_()_=>_{_'use_strict';_return_1;_};
+=== CONT  TestNoUnusedExpressionsUnderOptions/an_identifier_is_not_a_directive
+=== CONT  TestNoUnusedExpressionsUnderOptions/two_function-body_directives_under_the_option
+--- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/'use_client';_export_const_a_=_1; (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/0;_'use_strict'; (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/function_f()_{_`use_strict`;_return_1;_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/switch_(a)_{_case_1:_'use_strict';_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/try_{_'use_strict';_}_catch_{} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_static_{_'use_strict';_}_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/label:_{_'use_strict';_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/while_(a)_{_'use_strict';_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/for_(;;)_{_'use_strict';_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/if_(a)_{_'use_strict';_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/{_'use_strict';_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/'a';_'b';_'c';_f(); (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/namespace_N_{_'use_strict';_export_const_a_=_1;_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_m()_{_'use_strict';_return_1;_}_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_constructor()_{_'use_strict';_}_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/class_C_{_get_m()_{_'use_strict';_return_1;_}_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/const_f_=_function_()_{_'use_strict';_return_1;_}; (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/function_f()_{_'use_strict';_return_1;_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsCarvesOutOnlyRealDirectivePrologues/const_f_=_()_=>_{_'use_strict';_return_1;_}; (0.00s)
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_function-body_directive_under_the_option
+=== CONT  TestNoUnusedExpressionsUnderOptions/two_directives_then_a_call,_under_the_option
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_directive_under_the_option
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_fragment_as_a_statement
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_self-closing_element_as_a_statement
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_fragment_used_as_an_initialiser
+=== CONT  TestNoUnusedExpressionsUnderOptions/an_element_used_as_an_initialiser_is_still_not_a_statement
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_tagged_template_with_the_option_off
+=== CONT  TestNoUnusedExpressionsUnderOptions/an_untagged_template_with_the_option_off
+=== CONT  TestNoUnusedExpressionsUnderOptions/an_untagged_template_is_unaffected
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_call_is_unaffected_by_the_tagged-template_option
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_tagged_template
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_ternary_onto_a_short_circuit_onto_an_assignment
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_short_circuit_under_the_ternary_option_only
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_ternary_onto_an_optional_access
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_ternary_with_an_identifier_consequent
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_ternary_with_a_literal_alternate
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_dynamic_imports
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_calls
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_awaits
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_ternary_under_the_short-circuit_option_only
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_optional_access
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_identifier,_left_used
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_||=_b;
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_a_dynamic_import
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_optional_call
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_await
+=== CONT  TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_assignment
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_instanceof_b;
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_in_b;
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_>>>_b;
+--- PASS: TestNoUnusedExpressionsUnderOptions (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_a_call (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_identifier (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/an_identifier_is_not_a_directive (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/two_function-body_directives_under_the_option (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_function-body_directive_under_the_option (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_directive_under_the_option (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/two_directives_then_a_call,_under_the_option (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_fragment_as_a_statement (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_fragment_used_as_an_initialiser (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/an_element_used_as_an_initialiser_is_still_not_a_statement (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_tagged_template_with_the_option_off (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_self-closing_element_as_a_statement (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/an_untagged_template_with_the_option_off (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/an_untagged_template_is_unaffected (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_call_is_unaffected_by_the_tagged-template_option (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_tagged_template (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_ternary_onto_a_short_circuit_onto_an_assignment (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_short_circuit_under_the_ternary_option_only (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_ternary_onto_an_optional_access (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_ternary_with_an_identifier_consequent (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_ternary_with_a_literal_alternate (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_dynamic_imports (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_calls (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_ternary_onto_two_awaits (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_ternary_under_the_short-circuit_option_only (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_optional_access (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_identifier,_left_used (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_a_dynamic_import (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_optional_call (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_await (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnderOptions/a_short_circuit_onto_an_assignment (0.00s)
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_??_b;
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_**_b;
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_>>>=_b;
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_**=_b;
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_??=_b;
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/delete_a.b;
+=== CONT  TestNoUnusedExpressionsSeparatesBinaryOperators/a_&&=_b;
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/a++;
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/a--;
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/--a;
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/++a;
+--- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_+=_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_||=_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_instanceof_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_in_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_>>>=_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_>>>_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_??_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_??=_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_**_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_**=_b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesBinaryOperators/a_&&=_b; (0.00s)
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/-a;
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/void_0;
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/~a;
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/!a;
+=== CONT  TestClassMethodsUseThisFires/invalid-0
+=== CONT  TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/"use_strict";
+=== CONT  TestNoUnusedExpressionsSeparatesUnaryFormsByKind/+a;
+=== CONT  TestClassMethodsUseThisFires/invalid-7
+--- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/typeof_a; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/delete_a.b; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/a++; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/--a; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/++a; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/void_0; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/-a; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/a--; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/~a; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/!a; (0.00s)
+    --- PASS: TestNoUnusedExpressionsSeparatesUnaryFormsByKind/+a; (0.00s)
+=== CONT  TestClassMethodsUseThisFires/invalid-20
+=== CONT  TestClassMethodsUseThisFires/invalid-19
+=== CONT  TestClassMethodsUseThisFires/invalid-21
+=== CONT  TestClassMethodsUseThisFires/invalid-18
+=== CONT  TestClassMethodsUseThisFires/invalid-17
+=== CONT  TestClassMethodsUseThisFires/invalid-16
+=== CONT  TestClassMethodsUseThisFires/invalid-15
+=== CONT  TestClassMethodsUseThisFires/invalid-14
+=== CONT  TestClassMethodsUseThisFires/invalid-13
+=== CONT  TestClassMethodsUseThisFires/invalid-12
+=== CONT  TestClassMethodsUseThisFires/invalid-11
+=== CONT  TestClassMethodsUseThisFires/invalid-10
+=== CONT  TestClassMethodsUseThisFires/invalid-9
+=== CONT  TestClassMethodsUseThisFires/invalid-8
+--- PASS: TestNoUnusedExpressionsStaysSilent (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_function_declaration_is_not_an_expression_statement (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_satisfies_expression_in_a_switch_default (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_bare_satisfies_expression (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_dynamic_import_as_a_statement (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_function (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_arrow_with_an_expression_body_is_no_statement_at_all (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_construction_with_type_arguments (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_module_block (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_optional_element_access_then_an_optional_call (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_dynamic_import_then_a_call (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_chained_optional_access_used_as_an_initialiser (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_chained_optional_call_as_a_statement (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_parenthesised_optional_access_used_as_an_initialiser (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_optional_element_access_used_as_an_initialiser (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_element_used_as_an_initialiser (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_fragment_with_no_option (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_optional_member_call (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_self-closing_element_with_no_option (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_dynamic_import (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_optional_call (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_await_of_a_member_access (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_optional_call_as_a_statement (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_await_of_a_literal (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_namespace (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_yield (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_function_body (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_an_arrow_body (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_directive_at_the_top_of_a_file (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/two_directives_then_a_call (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/two_directives_in_a_function_body (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_increment (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_delete (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/two_calls (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_construction (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_string_used_as_an_initialiser (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_assignment (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_call (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/a_void (0.00s)
+    --- PASS: TestNoUnusedExpressionsStaysSilent/an_empty_block (0.00s)
+=== CONT  TestClassMethodsUseThisFires/invalid-6
+=== CONT  TestClassMethodsUseThisFires/invalid-5
+=== CONT  TestClassMethodsUseThisFires/invalid-4
+=== CONT  TestClassMethodsUseThisFires/invalid-3
+=== CONT  TestClassMethodsUseThisFires/invalid-2
+=== CONT  TestClassMethodsUseThisFires/invalid-1
+=== CONT  TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/namespace_N_{_'use_strict';_}
+=== CONT  TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/0;
+=== CONT  TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/{_'use_strict';_}
+=== CONT  TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/function_foo()_{_var_foo_=_true;_"use_strict";_}
+=== CONT  TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/class_C_{_static_{_'use_strict';_}_}
+=== CONT  TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/foo;
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()_as_any;
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a)!;
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/((a));
+--- PASS: TestClassMethodsUseThisFires (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-0 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-20 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-19 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-21 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-7 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-18 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-17 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-16 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-15 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-14 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-13 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-12 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-8 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-6 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-5 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-11 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-9 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-4 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-2 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-1 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-10 (0.00s)
+    --- PASS: TestClassMethodsUseThisFires/invalid-3 (0.00s)
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a_as_any)!;
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()_satisfies_unknown;
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a());
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a);
+=== CONT  TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/"directive_one";_f();_"directive_two";
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a()_as_any)!;
+--- PASS: TestNoUnusedExpressionsIgnoreDirectivesIsInertHere (0.00s)
+    --- PASS: TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/"use_strict"; (0.00s)
+    --- PASS: TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/namespace_N_{_'use_strict';_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/{_'use_strict';_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/0; (0.00s)
+    --- PASS: TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/foo; (0.00s)
+    --- PASS: TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/function_foo()_{_var_foo_=_true;_"use_strict";_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/class_C_{_static_{_'use_strict';_}_} (0.00s)
+    --- PASS: TestNoUnusedExpressionsIgnoreDirectivesIsInertHere/"directive_one";_f();_"directive_two"; (0.00s)
+=== CONT  TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()!;
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/a_whole_statement_including_its_semicolon
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/both_strings_in_a_static_block,_each_on_its_own
+--- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()_as_any; (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a)!; (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/((a)); (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()_satisfies_unknown; (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a_as_any)!; (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a); (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a()); (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/(a()_as_any)!; (0.00s)
+    --- PASS: TestNoUnusedExpressionsUnwrapsTypeOnlyWrappers/a()!; (0.00s)
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/the_whole_type_instantiation
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/the_whole_optional_chain
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/the_parenthesised_string_including_its_parentheses
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/the_string_after_the_declaration_only
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/the_literal_inside_a_block,_not_the_block
+=== CONT  TestNoUnusedExpressionsChecksBothTernaryBranches/a_?_b_:_c();
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/the_whole_sequence
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/the_trailing_string_only,_with_no_leading_space
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/the_consequent_of_the_if,_not_the_if
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/a_statement_with_no_semicolon
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-0
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-12
+=== CONT  TestNoUnusedExpressionsChecksBothTernaryBranches/a_?_b()_:_c;
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-21
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-20
+--- PASS: TestNoUnusedExpressionsChecksBothTernaryBranches (0.00s)
+    --- PASS: TestNoUnusedExpressionsChecksBothTernaryBranches/a_?_b_:_c(); (0.00s)
+    --- PASS: TestNoUnusedExpressionsChecksBothTernaryBranches/a_?_b()_:_c; (0.00s)
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-22
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-18
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-17
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-16
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-15
+=== CONT  TestNoUnusedExpressionsPointsAtTheStatement/the_string_inside_the_if_block_only
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-13
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-11
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-19
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-10
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-9
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-8
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-14
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-3
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-5
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-7
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-4
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-6
+--- PASS: TestNoUnusedExpressionsPointsAtTheStatement (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/a_whole_statement_including_its_semicolon (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/the_whole_type_instantiation (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/both_strings_in_a_static_block,_each_on_its_own (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/the_whole_optional_chain (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/the_parenthesised_string_including_its_parentheses (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/the_string_after_the_declaration_only (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/the_literal_inside_a_block,_not_the_block (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/the_whole_sequence (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/the_trailing_string_only,_with_no_leading_space (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/the_consequent_of_the_if,_not_the_if (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/a_statement_with_no_semicolon (0.00s)
+    --- PASS: TestNoUnusedExpressionsPointsAtTheStatement/the_string_inside_the_if_block_only (0.00s)
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-1
+=== CONT  TestClassMethodsUseThisStaysSilent/valid-2
+--- PASS: TestClassMethodsUseThisStaysSilent (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-0 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-12 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-20 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-22 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-21 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-17 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-18 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-16 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-15 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-13 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-19 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-11 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-9 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-10 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-14 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-5 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-3 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-7 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-8 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-1 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-4 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-6 (0.00s)
+    --- PASS: TestClassMethodsUseThisStaysSilent/valid-2 (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.019s

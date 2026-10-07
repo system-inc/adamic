@@ -1,0 +1,1524 @@
+case 0
+fixed	\u000a                  a?.['b']?.c();\u000a                
+case 1
+fixed	\u000a                  class Foo<T> {}\u000a                  new Foo<string>();\u000a                
+case 2
+fixed	\u000a                  function foo() {\u000a                    'use strict';\u000a\u000a                    return null;\u000a                  }\u000a                
+case 3
+fixed	\u000a                  import('./foo').then(() => {});\u000a                
+case 4
+fixed	\u000a                  import('./foo');\u000a                
+case 5
+fixed	\u000a                  let a = (a?.b).c;\u000a                
+case 6
+fixed	\u000a                  let b = a?.['b'];\u000a                
+case 7
+fixed	\u000a                  let c = one[2]?.[3][4];\u000a                
+case 8
+fixed	\u000a                  module Foo {\u000a                    'use strict';\u000a                  }\u000a                
+case 9
+fixed	\u000a                  namespace Foo {\u000a                    'use strict';\u000a\u000a                    export class Foo {}\u000a                    export class Bar {}\u000a                  }\u000a                
+case 10
+fixed	\u000a                  one[2]?.[3][4]?.();\u000a                
+case 11
+fixed	\u000a                  test.age?.toLocaleString();\u000a                
+case 12
+/tmp/lint-wave1-03-original-final/case-12.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 26 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            (a?.['b']).c;\u000a                  
+case 13
+/tmp/lint-wave1-03-original-final/case-13.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 24 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            (a?.b()).c;\u000a                  
+case 14
+/tmp/lint-wave1-03-original-final/case-14.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 22 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            (a?.b).c;\u000a                  
+case 15
+/tmp/lint-wave1-03-original-final/case-15.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 117 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            a() &&\u000a              function namedFunctionInExpressionContext() {\u000a                f();\u000a              };\u000a                  
+case 16
+/tmp/lint-wave1-03-original-final/case-16.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 20 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            a, b();\u000a                  
+case 17
+/tmp/lint-wave1-03-original-final/case-17.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 22 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            a?.['b'];\u000a                  
+case 18
+/tmp/lint-wave1-03-original-final/case-18.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 23 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            a?.b()?.c;\u000a                  
+case 19
+/tmp/lint-wave1-03-original-final/case-19.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 18 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            a?.b;\u000a                  
+case 20
+/tmp/lint-wave1-03-original-final/case-20.tsx:3:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 41 53 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            class Foo<T> {}\u000a            Foo<string>;\u000a                  
+case 21
+/tmp/lint-wave1-03-original-final/case-21.tsx:3:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 64 75 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            declare const foo: number | undefined;\u000a            foo as any;\u000a                  
+case 22
+/tmp/lint-wave1-03-original-final/case-22.tsx:3:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 64 69 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            declare const foo: number | undefined;\u000a            foo!;\u000a                  
+case 23
+/tmp/lint-wave1-03-original-final/case-23.tsx:3:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 64 68 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            declare const foo: number | undefined;\u000a            foo;\u000a                  
+case 24
+/tmp/lint-wave1-03-original-final/case-24.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 22 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            f(0), {};\u000a                  
+case 25
+/tmp/lint-wave1-03-original-final/case-25.tsx:5:15
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 77 90 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            function foo() {\u000a              const foo = true;\u000a\u000a              'use strict';\u000a            }\u000a                  
+case 26
+/tmp/lint-wave1-03-original-final/case-26.tsx:2:20
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 20 22 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            if (0) 0;\u000a                  
+case 27
+/tmp/lint-wave1-03-original-final/case-27.tsx:4:15
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 72 85 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            module Foo {\u000a              const foo = true;\u000a              'use strict';\u000a            }\u000a                  
+case 28
+/tmp/lint-wave1-03-original-final/case-28.tsx:6:15
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 112 125 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            namespace Foo {\u000a              export class Foo {}\u000a              export class Bar {}\u000a\u000a              'use strict';\u000a            }\u000a                  
+case 29
+/tmp/lint-wave1-03-original-final/case-29.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 33 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            one.two?.three.four;\u000a                  
+case 30
+/tmp/lint-wave1-03-original-final/case-30.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 13 28 unusedExpression fixes=0 suggestions=0
+fixed	\u000a            one[2]?.[3][4];\u000a                  
+case 31
+fixed	\u000a            type FooBarBaz = 'foo' | 'bar' | 'baz';\u000a            export function satisfiesTest(c: FooBarBaz): string {\u000a                switch(c) {\u000a                    case 'foo':\u000a                        return 'foo';\u000a                    case 'bar':\u000a                        return 'bar';\u000a                    default:\u000a                        c satisfies never;\u000a                        return '';\u000a                }\u000a            }\u000a                
+case 32
+/tmp/lint-wave1-03-original-final/case-32.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 2 unusedExpression fixes=0 suggestions=0
+fixed	!a
+case 33
+/tmp/lint-wave1-03-original-final/case-33.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 3 unusedExpression fixes=0 suggestions=0
+fixed	!a;
+case 34
+fixed	"directive one"; "directive two"; f();
+case 35
+fixed	"directive one"; "directive two"; f();
+case 36
+/tmp/lint-wave1-03-original-final/case-36.tsx:1:23
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 22 38 unusedExpression fixes=0 suggestions=0
+fixed	"directive one"; f(); "directive two";
+case 37
+/tmp/lint-wave1-03-original-final/case-37.tsx:1:23
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 22 38 unusedExpression fixes=0 suggestions=0
+fixed	"directive one"; f(); "directive two";
+case 38
+/tmp/lint-wave1-03-original-final/case-38.tsx:1:23
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 22 38 unusedExpression fixes=0 suggestions=0
+fixed	"directive one"; f(); "directive two";
+case 39
+fixed	"use strict";
+case 40
+fixed	"use strict";
+case 41
+fixed	"use strict";
+case 42
+fixed	#x;
+case 43
+fixed	'a';\u000a'b';\u000a'c';\u000af();
+case 44
+fixed	'use client';\u000aexport const a = 1;
+case 45
+/tmp/lint-wave1-03-original-final/case-45.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 6 unusedExpression fixes=0 suggestions=0
+fixed	((a));
+case 46
+/tmp/lint-wave1-03-original-final/case-46.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 12 unusedExpression fixes=0 suggestions=0
+fixed	(a as any)!;
+case 47
+fixed	(a() as any)!;
+case 48
+fixed	(a());
+case 49
+/tmp/lint-wave1-03-original-final/case-49.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 5 unusedExpression fixes=0 suggestions=0
+fixed	(a)!;
+case 50
+/tmp/lint-wave1-03-original-final/case-50.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 4 unusedExpression fixes=0 suggestions=0
+fixed	(a);
+case 51
+fixed	++a;
+case 52
+/tmp/lint-wave1-03-original-final/case-52.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 2 unusedExpression fixes=0 suggestions=0
+fixed	+a
+case 53
+/tmp/lint-wave1-03-original-final/case-53.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 3 unusedExpression fixes=0 suggestions=0
+fixed	+a;
+case 54
+fixed	--a;
+case 55
+/tmp/lint-wave1-03-original-final/case-55.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 3 unusedExpression fixes=0 suggestions=0
+fixed	-a;
+case 56
+/tmp/lint-wave1-03-original-final/case-56.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 1 unusedExpression fixes=0 suggestions=0
+fixed	0
+case 57
+fixed	0 satisfies number;
+case 58
+/tmp/lint-wave1-03-original-final/case-58.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 2 unusedExpression fixes=0 suggestions=0
+fixed	0;
+case 59
+/tmp/lint-wave1-03-original-final/case-59.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 2 unusedExpression fixes=0 suggestions=0
+fixed	0;
+case 60
+/tmp/lint-wave1-03-original-final/case-60.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 2 unusedExpression fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-60.tsx:2:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 3 16 unusedExpression fixes=0 suggestions=0
+fixed	0;\u000a'use strict';
+case 61
+/tmp/lint-wave1-03-original-final/case-65.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 20 unusedExpression fixes=0 suggestions=0
+fixed	Map<string, string>;
+case 62
+/tmp/lint-wave1-03-original-final/case-66.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 2 unusedExpression fixes=0 suggestions=0
+fixed	[]
+case 63
+/tmp/lint-wave1-03-original-final/case-67.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 27 unusedExpression fixes=0 suggestions=0
+fixed	`untagged template literal`
+case 64
+/tmp/lint-wave1-03-original-final/case-68.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 27 unusedExpression fixes=0 suggestions=0
+fixed	`untagged template literal`
+case 65
+/tmp/lint-wave1-03-original-final/case-69.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 27 unusedExpression fixes=0 suggestions=0
+fixed	`untagged template literal`
+case 66
+/tmp/lint-wave1-03-original-final/case-70.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 1 unusedExpression fixes=0 suggestions=0
+fixed	a
+case 67
+fixed	a && a()
+case 68
+fixed	a && b && c();
+case 69
+/tmp/lint-wave1-03-original-final/case-73.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 12 unusedExpression fixes=0 suggestions=0
+fixed	a && b && c;
+case 70
+/tmp/lint-wave1-03-original-final/case-74.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 8 unusedExpression fixes=0 suggestions=0
+fixed	a && b()
+case 71
+/tmp/lint-wave1-03-original-final/case-75.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 9 unusedExpression fixes=0 suggestions=0
+fixed	a && b();
+case 72
+fixed	a &&= b;
+case 73
+/tmp/lint-wave1-03-original-final/case-77.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 7 unusedExpression fixes=0 suggestions=0
+fixed	a ** b;
+case 74
+fixed	a **= b;
+case 75
+fixed	a += b;
+case 76
+fixed	a = b
+case 77
+/tmp/lint-wave1-03-original-final/case-81.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 8 unusedExpression fixes=0 suggestions=0
+fixed	a >>> b;
+case 78
+fixed	a >>>= b;
+case 79
+fixed	a ? b && c() : d();
+case 80
+/tmp/lint-wave1-03-original-final/case-84.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 9 unusedExpression fixes=0 suggestions=0
+fixed	a ? b : 0
+case 81
+/tmp/lint-wave1-03-original-final/case-85.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 11 unusedExpression fixes=0 suggestions=0
+fixed	a ? b : c()
+case 82
+/tmp/lint-wave1-03-original-final/case-86.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 12 unusedExpression fixes=0 suggestions=0
+fixed	a ? b : c();
+case 83
+/tmp/lint-wave1-03-original-final/case-87.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 22 unusedExpression fixes=0 suggestions=0
+fixed	a ? b ? c() : d : e();
+case 84
+fixed	a ? b ? c() : d() : e();
+case 85
+fixed	a ? b() : c()
+case 86
+/tmp/lint-wave1-03-original-final/case-90.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 13 unusedExpression fixes=0 suggestions=0
+fixed	a ? b() : c()
+case 87
+/tmp/lint-wave1-03-original-final/case-91.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 12 unusedExpression fixes=0 suggestions=0
+fixed	a ? b() : c;
+case 88
+/tmp/lint-wave1-03-original-final/case-92.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 22 unusedExpression fixes=0 suggestions=0
+fixed	a ? b() || (c = d) : e
+case 89
+fixed	a ? b() || (c = d) : e()
+case 90
+fixed	a ?? b();
+case 91
+/tmp/lint-wave1-03-original-final/case-95.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 7 unusedExpression fixes=0 suggestions=0
+fixed	a ?? b;
+case 92
+/tmp/lint-wave1-03-original-final/case-96.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 7 unusedExpression fixes=0 suggestions=0
+fixed	a ?? b;
+case 93
+fixed	a ??= b;
+case 94
+/tmp/lint-wave1-03-original-final/case-98.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 7 unusedExpression fixes=0 suggestions=0
+fixed	a in b;
+case 95
+/tmp/lint-wave1-03-original-final/case-99.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 15 unusedExpression fixes=0 suggestions=0
+fixed	a instanceof b;
+case 96
+/tmp/lint-wave1-03-original-final/case-100.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 12 unusedExpression fixes=0 suggestions=0
+fixed	a || (b = c)
+case 97
+/tmp/lint-wave1-03-original-final/case-101.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 6 unusedExpression fixes=0 suggestions=0
+fixed	a || b
+case 98
+fixed	a ||= b;
+case 99
+fixed	a()
+case 100
+/tmp/lint-wave1-03-original-final/case-104.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 8 unusedExpression fixes=0 suggestions=0
+fixed	a() && b
+case 101
+fixed	a() as any;
+case 102
+fixed	a() satisfies unknown;
+case 103
+fixed	a() || (b = c)
+case 104
+/tmp/lint-wave1-03-original-final/case-108.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 12 unusedExpression fixes=0 suggestions=0
+fixed	a() || false
+case 105
+fixed	a()!;
+case 106
+fixed	a++;
+case 107
+fixed	a--;
+case 108
+fixed	async function foo() { await 5; }
+case 109
+fixed	async function foo() { await foo.bar; }
+case 110
+fixed	async function foo() { bar && await baz; }
+case 111
+fixed	async function foo() { foo ? await bar : await baz; }
+case 112
+fixed	class C { constructor() { 'use strict'; } }
+case 113
+fixed	class C { get m() { 'use strict'; return 1; } }
+case 114
+fixed	class C { m() { 'use strict'; return 1; } }
+case 115
+/tmp/lint-wave1-03-original-final/case-119.tsx:2:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 31 36 unusedExpression fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-119.tsx:3:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 49 54 unusedExpression fixes=0 suggestions=0
+fixed	class C { static {\u000a            'foo'\u000a            'bar'\u000a             } }
+case 116
+/tmp/lint-wave1-03-original-final/case-120.tsx:1:20
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 19 32 unusedExpression fixes=0 suggestions=0
+fixed	class C { static { 'use strict'; } }
+case 117
+/tmp/lint-wave1-03-original-final/case-121.tsx:1:20
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 19 32 unusedExpression fixes=0 suggestions=0
+fixed	class C { static { 'use strict'; } }
+case 118
+/tmp/lint-wave1-03-original-final/case-122.tsx:1:20
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 19 32 unusedExpression fixes=0 suggestions=0
+fixed	class C { static { 'use strict'; } }
+case 119
+fixed	const _func = (value: number) => value + 1;
+case 120
+/tmp/lint-wave1-03-original-final/case-124.tsx:1:36
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 35 45 unusedExpression fixes=0 suggestions=0
+fixed	const _func = (value: number) => { value + 1; }
+case 121
+fixed	const f = () => { 'use strict'; return 1; };
+case 122
+fixed	const f = function () { 'use strict'; return 1; };
+case 123
+fixed	delete a.b;
+case 124
+fixed	delete foo.bar
+case 125
+/tmp/lint-wave1-03-original-final/case-129.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 6 unusedExpression fixes=0 suggestions=0
+fixed	f(), 0
+case 126
+fixed	f(); g()
+case 127
+fixed	foo && foo?.();
+case 128
+/tmp/lint-wave1-03-original-final/case-132.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 16 unusedExpression fixes=0 suggestions=0
+fixed	foo && foo?.bar;
+case 129
+fixed	foo && import('./foo');
+case 130
+/tmp/lint-wave1-03-original-final/case-134.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 25 unusedExpression fixes=0 suggestions=0
+fixed	foo ? foo?.bar : bar.baz;
+case 131
+fixed	foo ? import('./foo') : import('./bar');
+case 132
+/tmp/lint-wave1-03-original-final/case-136.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 8 unusedExpression fixes=0 suggestions=0
+fixed	foo.bar;
+case 133
+/tmp/lint-wave1-03-original-final/case-137.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 4 unusedExpression fixes=0 suggestions=0
+fixed	foo;
+case 134
+/tmp/lint-wave1-03-original-final/case-138.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 4 unusedExpression fixes=0 suggestions=0
+fixed	foo;
+case 135
+/tmp/lint-wave1-03-original-final/case-139.tsx:1:12
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 11 24 unusedExpression fixes=0 suggestions=0
+fixed	for (;;) { 'use strict'; }
+case 136
+fixed	func?.("foo")
+case 137
+fixed	function f() { 'use strict'; return 1; }
+case 138
+/tmp/lint-wave1-03-original-final/case-142.tsx:1:16
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 15 28 unusedExpression fixes=0 suggestions=0
+fixed	function f() { `use strict`; return 1; }
+case 139
+fixed	function f(){}
+case 140
+/tmp/lint-wave1-03-original-final/case-144.tsx:3:15
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 63 78 unusedExpression fixes=0 suggestions=0
+fixed	function foo() {\u000a              const foo = true;\u000a              ('use strict');\u000a            }
+case 141
+fixed	function foo() { var foo = "use strict"; return true; }
+case 142
+/tmp/lint-wave1-03-original-final/case-146.tsx:1:34
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 33 46 unusedExpression fixes=0 suggestions=0
+fixed	function foo() { var foo = true; "use strict"; }
+case 143
+/tmp/lint-wave1-03-original-final/case-147.tsx:1:34
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 33 46 unusedExpression fixes=0 suggestions=0
+fixed	function foo() { var foo = true; "use strict"; }
+case 144
+/tmp/lint-wave1-03-original-final/case-148.tsx:1:34
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 33 46 unusedExpression fixes=0 suggestions=0
+fixed	function foo() { var foo = true; "use strict"; }
+case 145
+fixed	function foo() {"directive one"; "directive two"; f(); }
+case 146
+fixed	function foo() {"directive one"; "directive two"; f(); }
+case 147
+/tmp/lint-wave1-03-original-final/case-151.tsx:1:39
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 38 54 unusedExpression fixes=0 suggestions=0
+fixed	function foo() {"directive one"; f(); "directive two"; }
+case 148
+fixed	function foo() {"use strict"; return true; }
+case 149
+fixed	function foo() {"use strict"; return true; }
+case 150
+fixed	function* foo(){ yield 0; }
+case 151
+fixed	i++
+case 152
+/tmp/lint-wave1-03-original-final/case-156.tsx:1:8
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 7 9 unusedExpression fixes=0 suggestions=0
+fixed	if (0) 0;
+case 153
+/tmp/lint-wave1-03-original-final/case-157.tsx:1:10
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 9 27 unusedExpression fixes=0 suggestions=0
+fixed	if (0) { "not a directive"; f(); }
+case 154
+/tmp/lint-wave1-03-original-final/case-158.tsx:1:10
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 9 22 unusedExpression fixes=0 suggestions=0
+fixed	if (a) { 'use strict'; }
+case 155
+fixed	import("foo")
+case 156
+/tmp/lint-wave1-03-original-final/case-160.tsx:1:10
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 9 22 unusedExpression fixes=0 suggestions=0
+fixed	label: { 'use strict'; }
+case 157
+fixed	namespace N { 'use strict'; export const a = 1; }
+case 158
+fixed	namespace N { 'use strict'; }
+case 159
+fixed	namespace N { 'use strict'; }
+case 160
+fixed	new a
+case 161
+/tmp/lint-wave1-03-original-final/case-165.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 8 unusedExpression fixes=0 suggestions=0
+fixed	obj?.foo
+case 162
+fixed	obj?.foo("bar")
+case 163
+/tmp/lint-wave1-03-original-final/case-167.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 14 unusedExpression fixes=0 suggestions=0
+fixed	obj?.foo().bar
+case 164
+/tmp/lint-wave1-03-original-final/case-168.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 12 unusedExpression fixes=0 suggestions=0
+fixed	obj?.foo.bar
+case 165
+fixed	shouldNotBeAffectedByAllowTemplateTagsOption()
+case 166
+/tmp/lint-wave1-03-original-final/case-170.tsx:1:22
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 21 34 unusedExpression fixes=0 suggestions=0
+fixed	switch (a) { case 1: 'use strict'; }
+case 167
+/tmp/lint-wave1-03-original-final/case-171.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 28 unusedExpression fixes=0 suggestions=0
+fixed	tag`tagged template literal`
+case 168
+/tmp/lint-wave1-03-original-final/case-172.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 28 unusedExpression fixes=0 suggestions=0
+fixed	tag`tagged template literal`
+case 169
+fixed	tag`tagged template literal`
+case 170
+/tmp/lint-wave1-03-original-final/case-174.tsx:1:7
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 6 19 unusedExpression fixes=0 suggestions=0
+fixed	try { 'use strict'; } catch {}
+case 171
+/tmp/lint-wave1-03-original-final/case-175.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 9 unusedExpression fixes=0 suggestions=0
+fixed	typeof a;
+case 172
+fixed	value satisfies number;
+case 173
+/tmp/lint-wave1-03-original-final/case-177.tsx:1:35
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 34 47 unusedExpression fixes=0 suggestions=0
+fixed	var foo = () => { var foo = true; "use strict"; }
+case 174
+fixed	var foo = () => {"use strict"; return true; }
+case 175
+fixed	void 0;
+case 176
+fixed	void new C
+case 177
+/tmp/lint-wave1-03-original-final/case-184.tsx:1:13
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 12 25 unusedExpression fixes=0 suggestions=0
+fixed	while (a) { 'use strict'; }
+case 178
+/tmp/lint-wave1-03-original-final/case-185.tsx:1:3
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 2 15 unusedExpression fixes=0 suggestions=0
+fixed	{ 'use strict'; }
+case 179
+/tmp/lint-wave1-03-original-final/case-186.tsx:1:3
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 2 15 unusedExpression fixes=0 suggestions=0
+fixed	{ 'use strict'; }
+case 180
+/tmp/lint-wave1-03-original-final/case-187.tsx:1:3
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 2 15 unusedExpression fixes=0 suggestions=0
+fixed	{ 'use strict'; }
+case 181
+/tmp/lint-wave1-03-original-final/case-188.tsx:1:2
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 1 2 unusedExpression fixes=0 suggestions=0
+fixed	{0}
+case 182
+fixed	{}
+case 183
+/tmp/lint-wave1-03-original-final/case-190.tsx:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 3 unusedExpression fixes=0 suggestions=0
+fixed	~a;
+case 184
+fixed	/*\u000a * This signature does something.\u000a */\u000adeclare function f(x: number): unknown;\u000adeclare function f(x: boolean): unknown;\u000a
+case 185
+fixed	/* @deprecated */\u000adeclare function f(x: number): unknown;\u000adeclare function f(x: boolean): unknown;\u000a
+case 186
+fixed	/**\u000a * @deprecate\u000a */\u000adeclare function f(x: string): void;\u000a/**\u000a * @async\u000a */\u000adeclare function f(x: boolean): void;\u000adeclare function f(x: number): void;\u000a
+case 187
+/tmp/lint-wave1-03-original-final/case-194.ts:8:20
+  @typescript-eslint/unified-signatures  This overload and the one on line 4 can be combined into one signature taking `string | number`.
+
+shape 100 109 singleParameterDifference fixes=0 suggestions=0
+fixed	/**\u000a * @deprecate\u000a */\u000adeclare function f(x: string): void;\u000a/**\u000a * @deprecate\u000a */\u000adeclare function f(x: number): void;\u000adeclare function f(x: boolean): void;\u000a
+case 188
+/tmp/lint-wave1-03-original-final/case-195.ts:6:20
+  @typescript-eslint/unified-signatures  This overload and the one on line 5 can be combined into one signature taking `number | boolean`.
+
+shape 115 125 singleParameterDifference fixes=0 suggestions=0
+fixed	/**\u000a * @deprecate\u000a */\u000adeclare function f(x: string): void;\u000adeclare function f(x: number): void;\u000adeclare function f(x: boolean): void;\u000a
+case 189
+fixed	/**\u000a * This signature does something.\u000a **/\u000adeclare function f(x: number): unknown;\u000adeclare function f(x: boolean): unknown;\u000a
+case 190
+/tmp/lint-wave1-03-original-final/case-197.ts:13:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 178 187 singleParameterDifference fixes=0 suggestions=0
+fixed	/**\u000a * This signature does something.\u000a */\u000a\u000a/**\u000a * This signature does something else.\u000a */\u000afunction f(x: number): void;\u000a\u000a/**\u000a * This signature does something else.\u000a */\u000afunction f(x: string): void;\u000a
+case 191
+fixed	/**\u000a * This signature does something.\u000a */\u000a\u000a// some other comment\u000aexport function f(x: number): void;\u000a\u000a/**\u000a * This signature does something else.\u000a */\u000aexport function f(x: string): void;\u000a
+case 192
+fixed	/**\u000a * This signature does something.\u000a */\u000adeclare function f(x: number): void;\u000a\u000a/**\u000a * This signature does something else.\u000a */\u000adeclare function f(x: string): void;\u000a
+case 193
+/tmp/lint-wave1-03-original-final/case-200.ts:3:20
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | boolean`.
+
+shape 78 88 singleParameterDifference fixes=0 suggestions=0
+fixed	/** @deprecated */\u000adeclare function f(x: number): unknown;\u000adeclare function f(x: boolean): unknown;\u000a
+case 194
+fixed	/** @deprecated */\u000adeclare function f(x: number): unknown;\u000adeclare function f(x: boolean): unknown;\u000a
+case 195
+fixed	/** @deprecated */\u000aexport function f(x: number): unknown;\u000aexport function f(x: boolean): unknown;\u000a
+case 196
+/tmp/lint-wave1-03-original-final/case-203.ts:3:20
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | boolean`.
+
+shape 77 87 singleParameterDifference fixes=0 suggestions=0
+fixed	// a line comment\u000adeclare function f(x: number): unknown;\u000adeclare function f(x: boolean): unknown;\u000a
+case 197
+/tmp/lint-wave1-03-original-final/case-204.ts:6:5
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number`.
+
+shape 73 82 singleParameterDifference fixes=0 suggestions=0
+fixed	abstract class C {\u000a  a(b: string): void;\u000a  /**\u000a   * @deprecate\u000a   */\u000a  a(b: number): void;\u000a}\u000a
+case 198
+fixed	abstract class Foo {\u000a  abstract get bar();\u000a  abstract set bar(a: unknown);\u000a}\u000a
+case 199
+/tmp/lint-wave1-03-original-final/case-206.ts:3:21
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 79 88 singleParameterDifference fixes=0 suggestions=0
+fixed	abstract class Foo {\u000a  public abstract f(x: number): void;\u000a  public abstract f(x: string): void;\u000a}\u000a
+case 200
+/tmp/lint-wave1-03-original-final/case-207.ts:3:4
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with identical parameters.
+
+shape 35 53 allParametersAreSame fixes=0 suggestions=0
+fixed	class A {\u000a  f(a: number): void;\u000a  f(a: number): void;\u000a  f(a: number): void {}\u000a}\u000a
+case 201
+fixed	class C {\u000a  a(b: string): void;\u000a  /**\u000a   * @deprecate\u000a   */\u000a  a(b: number): void;\u000a}\u000a
+case 202
+fixed	class C {\u000a  constructor();\u000a  constructor(a: number, b: number);\u000a  constructor(a?: number, b?: number) {}\u000a\u000a  a(): void;\u000a  a(a: number, b: number): void;\u000a  a(a?: number, b?: number): void {}\u000a}\u000a
+case 203
+fixed	class C {\u000a  constructor();\u000a  constructor(a: number, b: number);\u000a  constructor(c?: number, b?: number) {}\u000a\u000a  a(): void;\u000a  a(a: number, b: number): void;\u000a  a(a?: number, d?: number): void {}\u000a}\u000a
+case 204
+/tmp/lint-wave1-03-original-final/case-211.ts:3:15
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 49 58 omittingSingleParameter fixes=0 suggestions=0
+fixed	declare class C {\u000a  constructor();\u000a  constructor(x: number);\u000a}\u000a
+case 205
+fixed	declare class D {\u000a  static a();\u000a  a(x: number);\u000a}\u000a
+case 206
+/tmp/lint-wave1-03-original-final/case-213.ts:3:29
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 87 97 omittingSingleParameter fixes=0 suggestions=0
+fixed	declare class Example {\u000a  #privateMethod(a: number): void;\u000a  #privateMethod(a: number, b?: string): void;\u000a}\u000a
+case 207
+fixed	declare class Example {\u000a  #privateMethod1(a: number): void;\u000a  #privateMethod2(a: number, b?: string): void;\u000a}\u000a
+case 208
+fixed	declare class Example {\u000a  privateMethod(a: number): void;\u000a  #privateMethod(a: number, b?: string): void;\u000a}\u000a
+case 209
+fixed	declare class Foo {\u000a  get bar();\u000a  set bar(x: number);\u000a}\u000a
+case 210
+/tmp/lint-wave1-03-original-final/case-217.ts:2:1
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with identical parameters.
+
+shape 37 73 allParametersAreSame fixes=0 suggestions=0
+fixed	declare function f(a: number): void;\u000adeclare function f(a: number): void;\u000a
+case 211
+/tmp/lint-wave1-03-original-final/case-218.ts:2:1
+  @typescript-eslint/unified-signatures  This overload and the one on line 1 can be combined into one signature with identical parameters.
+
+shape 37 73 allParametersAreSame fixes=0 suggestions=0
+fixed	declare function f(a: number): void;\u000adeclare function f(a: number): void;\u000adeclare function f(a: string): string;\u000a
+case 212
+fixed	declare function f(x: number): unknown;\u000a/** @deprecated */\u000adeclare function f(x: boolean): unknown;\u000a
+case 213
+fixed	declare function f(x: number): unknown;\u000a/** @deprecated */ declare function f(x: boolean): unknown;\u000a
+case 214
+fixed	declare function f(x: string): void;\u000a/**\u000a * @async\u000a */\u000adeclare function f(x: boolean): void;\u000a/**\u000a * @deprecate\u000a */\u000adeclare function f(x: number): void;\u000a
+case 215
+/tmp/lint-wave1-03-original-final/case-222.ts:9:20
+  @typescript-eslint/unified-signatures  This overload and the one on line 5 can be combined into one signature taking `number | boolean`.
+
+shape 137 147 singleParameterDifference fixes=0 suggestions=0
+fixed	declare function f(x: string): void;\u000a/**\u000a * @deprecate\u000a */\u000adeclare function f(x: number): void;\u000a/**\u000a * @deprecate\u000a */\u000adeclare function f(x: boolean): void;\u000a
+case 216
+/tmp/lint-wave1-03-original-final/case-223.ts:2:21
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 58 94 singleParameterDifference fixes=0 suggestions=0
+fixed	declare function fn(a: number): void;\u000adeclare function fn(a: (/* before */ string /* after */)): void;\u000a
+case 217
+/tmp/lint-wave1-03-original-final/case-224.ts:2:35
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 78 96 omittingSingleParameter fixes=0 suggestions=0
+fixed	declare function foo(line: number): number;\u000aexport function foo(line: number, character?: number): number;\u000a
+case 218
+fixed	declare function foo(n: number): number;\u000a\u000adeclare module 'hello' {\u000a  function foo(n: number, s: string): number;\u000a}\u000a
+case 219
+/tmp/lint-wave1-03-original-final/case-226.ts:3:41
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 114 126 omittingSingleParameter fixes=0 suggestions=0
+fixed	declare module 'foo' {\u000a  export default function (foo: number): string[];\u000a  export default function (foo: number, bar?: string): string[];\u000a}\u000a
+case 220
+fixed	declare module 'foo' {\u000a  export default function (foo: number): string[];\u000a}\u000a
+case 221
+/tmp/lint-wave1-03-original-final/case-228.ts:7:15
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number`.
+
+shape 99 108 singleParameterDifference fixes=0 suggestions=0
+fixed	enum Enum {\u000a  Func = 'function',\u000a}\u000a\u000ainterface IFoo {\u000a  [Enum.Func](x: string): void;\u000a  [Enum.Func](x: number): void;\u000a}\u000a
+case 222
+fixed	export default function (foo: number): string[];\u000a
+case 223
+/tmp/lint-wave1-03-original-final/case-230.ts:2:39
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 87 99 omittingSingleParameter fixes=0 suggestions=0
+fixed	export default function (foo: number): string[];\u000aexport default function (foo: number, bar?: string): string[];\u000a
+case 224
+/tmp/lint-wave1-03-original-final/case-231.ts:9:19
+  @typescript-eslint/unified-signatures  This overload and the one on line 5 can be combined into one signature taking `number | boolean`.
+
+shape 134 144 singleParameterDifference fixes=0 suggestions=0
+fixed	export function f(x: string): void;\u000a/**\u000a * @deprecate\u000a */\u000aexport function f(x: number): void;\u000a/**\u000a * @deprecate\u000a */\u000aexport function f(x: boolean): void;\u000a
+case 225
+/tmp/lint-wave1-03-original-final/case-232.ts:2:35
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 77 95 omittingSingleParameter fixes=0 suggestions=0
+fixed	export function foo(line: number): number;\u000aexport function foo(line: number, character?: number): number;\u000a
+case 226
+fixed	export interface Foo {\u000a  bar(baz: string): number[];\u000a  bar(): string[];\u000a}\u000a
+case 227
+fixed	function f(): void;\u000afunction f(this: {}): void;\u000afunction f(this: void | {}): void {}\u000a
+case 228
+fixed	function f(a: boolean): void;\u000afunction f(this: {}, a: boolean): void;\u000afunction f(this: void | {}, a: boolean): void {}\u000a
+case 229
+fixed	function f(a: boolean, ...c: number[]): void;\u000afunction f(a: boolean, ...d: string[]): void;\u000afunction f(a: boolean, ...c: (number | string)[]): void {}\u000a
+case 230
+/tmp/lint-wave1-03-original-final/case-237.ts:2:1
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with identical parameters.
+
+shape 29 57 allParametersAreSame fixes=0 suggestions=0
+fixed	function f(a: number): void;\u000afunction f(a: number): void;\u000afunction f(a: number): void {}\u000a
+case 231
+/tmp/lint-wave1-03-original-final/case-238.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 40 49 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(a: number): void;\u000afunction f(b: string): void;\u000afunction f(a: number | string): void {}\u000a
+case 232
+/tmp/lint-wave1-03-original-final/case-239.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 40 49 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(a: number): void;\u000afunction f(b: string): void;\u000afunction f(a: number | string): void {}\u000a
+case 233
+fixed	function f(a: number): void;\u000afunction f(b: string): void;\u000afunction f(a: number | string): void {}\u000a
+case 234
+fixed	function f(m: number): void;\u000afunction f(v: number, u: string): void;\u000afunction f(v: number, u?: string): void {}\u000a
+case 235
+/tmp/lint-wave1-03-original-final/case-242.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number`.
+
+shape 43 55 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(this: string): void;\u000afunction f(this: number): void;\u000afunction f(this: string | number): void {}\u000a
+case 236
+/tmp/lint-wave1-03-original-final/case-243.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number`.
+
+shape 55 67 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(this: string, a: boolean): void;\u000afunction f(this: number, a: boolean): void;\u000afunction f(this: string | number, a: boolean): void {}\u000a
+case 237
+fixed	function f(this: void, a: boolean): void;\u000afunction f(this: {}, a: boolean): void;\u000afunction f(this: void | {}, a: boolean): void {}\u000a
+case 238
+/tmp/lint-wave1-03-original-final/case-245.ts:2:22
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 49 58 omittingSingleParameter fixes=0 suggestions=0
+fixed	function f(this: {}): void;\u000afunction f(this: {}, a: string): void;\u000afunction f(this: {}, a?: string): void {}\u000a
+case 239
+/tmp/lint-wave1-03-original-final/case-246.ts:2:22
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `boolean | string`.
+
+shape 61 70 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(this: {}, a: boolean): void;\u000afunction f(this: {}, a: string): void;\u000afunction f(this: {}, a: boolean | string): void {}\u000a
+case 240
+fixed	function f(v: boolean): number;\u000afunction f(): string;\u000a
+case 241
+fixed	function f(v: boolean, u: boolean): number;\u000afunction f(v: boolean): string;\u000a
+case 242
+fixed	function f(v: number, u?: string): void {}\u000afunction f(v: number): void;\u000afunction f(): string;\u000a
+case 243
+/tmp/lint-wave1-03-original-final/case-250.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string`.
+
+shape 36 49 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(value): void;\u000afunction f(value: string): void;\u000a
+case 244
+/tmp/lint-wave1-03-original-final/case-251.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string`.
+
+shape 44 49 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(value: string): void;\u000afunction f(value): void;\u000a
+case 245
+/tmp/lint-wave1-03-original-final/case-252.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `'a' | 'b' | 'c'`.
+
+shape 43 55 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: 'a' | 'b'): void;\u000afunction f(x: 'b' | 'c'): void;\u000a
+case 246
+/tmp/lint-wave1-03-original-final/case-253.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `'a|b' | string`.
+
+shape 39 56 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: 'a|b'): void;\u000afunction f(x: 'a|b' | string): void;\u000a
+case 247
+/tmp/lint-wave1-03-original-final/case-254.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `Array<string> | boolean | Array<number>`.
+
+shape 57 83 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: Array<string> | boolean): void;\u000afunction f(x: Array<number> | boolean): void;\u000a
+case 248
+/tmp/lint-wave1-03-original-final/case-255.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `Promise | boolean | Promise<string>`.
+
+shape 51 79 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: Promise | boolean): void;\u000afunction f(x: Promise<string> | boolean): void;\u000a
+case 249
+/tmp/lint-wave1-03-original-final/case-256.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 40 49 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: number): void;\u000afunction f(x: string): void;\u000afunction f(x: any): any {\u000a  return x;\u000a}\u000a
+case 250
+/tmp/lint-wave1-03-original-final/case-257.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 40 49 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: number): void;\u000afunction f(x: string): void;\u000afunction f(x: any): any {\u000a  return x;\u000a}\u000a
+case 251
+/tmp/lint-wave1-03-original-final/case-258.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string & { brand: true } | number | string & /* brand */ { brand: true }`.
+
+shape 58 106 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: string & { brand: true }): void;\u000afunction f(x: number | string & /* brand */ { brand: true }): void;\u000a
+case 252
+/tmp/lint-wave1-03-original-final/case-259.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string & { brand: true } | number`.
+
+shape 58 94 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: string & { brand: true }): void;\u000afunction f(x: number | string & { brand: true }): void;\u000a
+case 253
+/tmp/lint-wave1-03-original-final/case-260.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number`.
+
+shape 61 92 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: string /* first */ | number): void;\u000afunction f(x: number | /* second */ string): void;\u000a
+case 254
+/tmp/lint-wave1-03-original-final/case-261.ts:2:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number | boolean`.
+
+shape 49 68 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(x: string | number): void;\u000afunction f(x: number | boolean): void;\u000a
+case 255
+/tmp/lint-wave1-03-original-final/case-262.ts:2:30
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `T[] | T`.
+
+shape 73 77 singleParameterDifference fixes=0 suggestions=0
+fixed	function f<T extends number>(x: T[]): void;\u000afunction f<T extends number>(x: T): void;\u000a
+case 256
+fixed	function f<T extends number>(x: T[]): void;\u000afunction f<T extends string>(x: T): void;\u000a
+case 257
+/tmp/lint-wave1-03-original-final/case-264.ts:2:18
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `(() => void) | (T extends U ? string : number)`.
+
+shape 56 88 singleParameterDifference fixes=0 suggestions=0
+fixed	function f<T, U>(x: () => void): void;\u000afunction f<T, U>(x: T extends U ? string : number): void;\u000a
+case 258
+/tmp/lint-wave1-03-original-final/case-265.ts:2:15
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `T | string`.
+
+shape 41 54 singleParameterDifference fixes=0 suggestions=0
+fixed	function f<T>(x: T): void;\u000afunction f<T>(x: T | string): void;\u000a
+case 259
+/tmp/lint-wave1-03-original-final/case-266.ts:2:15
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `T[] | T`.
+
+shape 43 47 singleParameterDifference fixes=0 suggestions=0
+fixed	function f<T>(x: T[]): void;\u000afunction f<T>(x: T): void;\u000a
+case 260
+fixed	function g(): void;\u000afunction g(a: number, b: number): void;\u000afunction g(a?: number, b?: number): void {}\u000a
+case 261
+/tmp/lint-wave1-03-original-final/case-268.ts:2:28
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 62 71 omittingSingleParameter fixes=0 suggestions=0
+fixed	function opt(xs?: number[]): void;\u000afunction opt(xs: number[], y: string): void;\u000afunction opt(...args: any[]) {}\u000a
+case 262
+fixed	function p(key: string): Promise<string | undefined>;\u000afunction p(key: string, defaultValue: string): Promise<string>;\u000afunction p(key: string, defaultValue?: string): Promise<string | undefined> {\u000a  const obj: Record<string, string> = {};\u000a  return obj[key] || defaultValue;\u000a}\u000a
+case 263
+fixed	function rest(...xs: number[]): Promise<number[]>;\u000afunction rest(xs: number[], y: string): Promise<string>;\u000aasync function rest(...args: any[], y?: string): Promise<number[] | string> {\u000a  return y || args;\u000a}\u000a
+case 264
+fixed	function rest(...xs: number[]): void;\u000afunction rest(xs: number[], y: string): void;\u000afunction rest(...args: any[]) {}\u000a
+case 265
+/tmp/lint-wave1-03-original-final/case-272.ts:3:7
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number`.
+
+shape 46 55 singleParameterDifference fixes=0 suggestions=0
+fixed	interface Foo {\u000a  'f'(x: string): void;\u000a  'f'(x: number): void;\u000a}\u000a
+case 266
+fixed	interface Foo {\u000a  get bar();\u000a  set bar(x: number);\u000a}\u000a
+case 267
+/tmp/lint-wave1-03-original-final/case-274.ts:3:8
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number`.
+
+shape 47 56 singleParameterDifference fixes=0 suggestions=0
+fixed	interface Foo {\u000a  new (x: string): Foo;\u000a  new (x: number): Foo;\u000a}\u000a
+case 268
+fixed	interface Generic<T> {\u000a  x(): void;\u000a  x(x: T[]): void;\u000a}\u000a
+case 269
+/tmp/lint-wave1-03-original-final/case-276.ts:3:5
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `T[] | T`.
+
+shape 46 50 singleParameterDifference fixes=0 suggestions=0
+fixed	interface Generic<T> {\u000a  y(x: T[]): void;\u000a  y(x: T): void;\u000a}\u000a
+case 270
+fixed	interface I {\u000a  /**\u000a   * This signature does something else.\u000a   */\u000a  f(x: number): void;\u000a  f(x: string): void;\u000a}\u000a
+case 271
+/tmp/lint-wave1-03-original-final/case-278.ts:3:9
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 48 57 singleParameterDifference fixes=0 suggestions=0
+fixed	interface I {\u000a  [`a`](x: number): void;\u000a  [`a`](x: string): void;\u000a}\u000a
+case 272
+fixed	interface I {\u000a  [`a`](x: number): void;\u000a  a(x: string): void;\u000a}\u000a
+case 273
+/tmp/lint-wave1-03-original-final/case-280.ts:3:5
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 40 49 singleParameterDifference fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-280.ts:5:5
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 84 93 singleParameterDifference fixes=0 suggestions=0
+fixed	interface I {\u000a  a(x: number): void;\u000a  a(x: string): void;\u000a  b(y: number): void;\u000a  b(y: string): void;\u000a}\u000a
+case 274
+/tmp/lint-wave1-03-original-final/case-281.ts:4:6
+  @typescript-eslint/unified-signatures  This overload and the one on line 2 can be combined into one signature with an optional parameter.
+
+shape 58 67 omittingSingleParameter fixes=0 suggestions=0
+fixed	interface I {\u000a  a0(): void;\u000a  a0(x: string): string;\u000a  a0(x: number): void;\u000a}\u000a
+case 275
+/tmp/lint-wave1-03-original-final/case-282.ts:4:6
+  @typescript-eslint/unified-signatures  This overload and the one on line 2 can be combined into one signature with an optional parameter.
+
+shape 58 67 omittingSingleParameter fixes=0 suggestions=0
+fixed	interface I {\u000a  a0(): void;\u000a  a0(x: string): string;\u000a  a0(x: number): void;\u000a}\u000a
+case 276
+/tmp/lint-wave1-03-original-final/case-283.ts:3:6
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 33 42 omittingSingleParameter fixes=0 suggestions=0
+fixed	interface I {\u000a  a1(): void;\u000a  a1(x: number): void;\u000a}\u000a
+case 277
+fixed	interface I {\u000a  a2(): void;\u000a  a2(x: number, y: number): void;\u000a}\u000a
+case 278
+/tmp/lint-wave1-03-original-final/case-285.ts:3:29
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with a rest parameter.
+
+shape 56 70 omittingRestParameter fixes=0 suggestions=0
+fixed	interface I {\u000a  a3(): void;\u000a  a3(x: number, y?: number, ...z: number[]): void;\u000a}\u000a
+case 279
+fixed	interface I {\u000a  a4(): void;\u000a  a4(x: number): number;\u000a}\u000a
+case 280
+fixed	interface I {\u000a  a5<T>(x: T): T;\u000a  a5(x: number): number;\u000a}\u000a
+case 281
+/tmp/lint-wave1-03-original-final/case-288.ts:2:30
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 43 52 singleParameterDifference fixes=0 suggestions=0
+fixed	interface I {\u000a  a: { f(x: number): void; f(x: string): void };\u000a}\u000a
+case 282
+/tmp/lint-wave1-03-original-final/case-289.ts:3:5
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with a rest parameter.
+
+shape 31 45 omittingRestParameter fixes=0 suggestions=0
+fixed	interface I {\u000a  b(): void;\u000a  b(...x: number[]): void;\u000a}\u000a
+case 283
+fixed	interface I {\u000a  b2(x: string): void;\u000a  b2(...x: number[]): void;\u000a}\u000a
+case 284
+fixed	interface I {\u000a  b3(...x: number[]): void;\u000a  b3(...x: string[]): void;\u000a}\u000a
+case 285
+/tmp/lint-wave1-03-original-final/case-292.ts:3:5
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 31 41 omittingSingleParameter fixes=0 suggestions=0
+fixed	interface I {\u000a  c(): void;\u000a  c(x?: number): void;\u000a}\u000a
+case 286
+/tmp/lint-wave1-03-original-final/case-293.ts:3:6
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 43 53 singleParameterDifference fixes=0 suggestions=0
+fixed	interface I {\u000a  c2(x?: number): void;\u000a  c2(x?: string): void;\u000a}\u000a
+case 287
+fixed	interface I {\u000a  c3(x: number): void;\u000a  c3(x?: string): void;\u000a}\u000a
+case 288
+/tmp/lint-wave1-03-original-final/case-295.ts:3:5
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string`.
+
+shape 40 49 singleParameterDifference fixes=0 suggestions=0
+fixed	interface I {\u000a  d(x: number): void;\u000a  d(x: string): void;\u000a}\u000a
+case 289
+fixed	interface I {\u000a  d2(x: string, y: number): void;\u000a  d2(x: number, y: string): void;\u000a}\u000a
+case 290
+fixed	interface I {\u000a  f(x1: number): void;\u000a  f(x1: boolean, x2?: number): void;\u000a}\u000a
+case 291
+fixed	interface I {\u000a  f(x: number): void;\u000a  a: { f(x: string): void };\u000a}\u000a
+case 292
+/tmp/lint-wave1-03-original-final/case-299.ts:3:5
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | [string, boolean]`.
+
+shape 34 54 singleParameterDifference fixes=0 suggestions=0
+fixed	interface I {\u000a  f(x: number);\u000a  f(x: [string, boolean]);\u000a}\u000a
+case 293
+/tmp/lint-wave1-03-original-final/case-300.ts:3:5
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `number | string | boolean`.
+
+shape 34 53 singleParameterDifference fixes=0 suggestions=0
+fixed	interface I {\u000a  f(x: number);\u000a  f(x: string | boolean);\u000a}\u000a
+case 294
+/tmp/lint-wave1-03-original-final/case-301.ts:3:5
+  @typescript-eslint/unified-signatures  This overload and the one on line 2 can be combined into one signature taking `string | number | boolean`.
+
+shape 49 68 singleParameterDifference fixes=0 suggestions=0
+fixed	interface I {\u000a  f(x: string | number): void;\u000a  f(x: number | boolean): void;\u000a  f(x: symbol): string;\u000a}\u000a
+case 295
+/tmp/lint-wave1-03-original-final/case-302.ts:10:5
+  @typescript-eslint/unified-signatures  This overload and the one on line 6 can be combined into one signature taking `number | boolean`.
+
+shape 118 128 singleParameterDifference fixes=0 suggestions=0
+fixed	interface I {\u000a  f(x: string): void;\u000a  /**\u000a   * @deprecate\u000a   */\u000a  f(x: number): void;\u000a  /**\u000a   * @deprecate\u000a   */\u000a  f(x: boolean): void;\u000a}\u000a
+case 296
+fixed	interface I {\u000a  p<T>(x: T): Promise<T>;\u000a  p(x: number): Promise<number>;\u000a}\u000a
+case 297
+/tmp/lint-wave1-03-original-final/case-304.ts:3:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `(new () => Value) | string`.
+
+shape 68 77 singleParameterDifference fixes=0 suggestions=0
+fixed	interface Value {}\u000afunction f(x: new () => Value): void;\u000afunction f(x: string): void;\u000a
+case 298
+/tmp/lint-wave1-03-original-final/case-305.ts:5:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `Namespace.Value | string`.
+
+shape 103 130 singleParameterDifference fixes=0 suggestions=0
+fixed	namespace Namespace {\u000a  export type Value = string;\u000a}\u000afunction f(x: Namespace.Value): void;\u000afunction f(x: Namespace.Value | string): void;\u000a
+case 299
+/tmp/lint-wave1-03-original-final/case-306.ts:3:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `Alias | number`.
+
+shape 60 77 singleParameterDifference fixes=0 suggestions=0
+fixed	type Alias = string;\u000afunction f(x: Alias): void;\u000afunction f(x: Alias | number): void;\u000a
+case 300
+/tmp/lint-wave1-03-original-final/case-307.ts:3:12
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `Name | string`.
+
+shape 58 74 singleParameterDifference fixes=0 suggestions=0
+fixed	type Name = string;\u000afunction f(x: Name): void;\u000afunction f(x: string | Name): void;\u000a
+case 301
+/tmp/lint-wave1-03-original-final/case-308.ts:3:4
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature with an optional parameter.
+
+shape 26 35 omittingSingleParameter fixes=0 suggestions=0
+fixed	type T = {\u000a  (): void;\u000a  (x: number): void;\u000a};\u000a
+case 302
+fixed	{\u000a  function block(): number;\u000a  function block(n: number): number;\u000a  function block(n?: number): number {\u000a    return 3;\u000a  }\u000a}\u000a
+case 303
+fixed	({ a(){} });
+case 304
+fixed	({ a: function () {} });
+case 305
+fixed	abstract class A {\u000a  abstract parse(value: unknown): string;\u000a}\u000a
+case 306
+fixed	class A extends B { foo() {super.foo();} }
+case 307
+/tmp/lint-wave1-03-original-final/case-314.ts:4:3
+  class-methods-use-this  Expected `this` to be used by class method 'is'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 58 60 missingThis fixes=0 suggestions=0
+fixed	class A {\u000a  is(a: string): this;\u000a  is(a: number): this;\u000a  is(a: unknown): unknown { return 1; }\u000a}\u000a
+case 308
+/tmp/lint-wave1-03-original-final/case-315.ts:2:3
+  class-methods-use-this  Expected `this` to be used by class method 'parse'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 12 17 missingThis fixes=0 suggestions=0
+fixed	class A {\u000a  parse(value: unknown): string { return String(value); }\u000a}\u000a
+case 309
+fixed	class A { "foo"() { } }
+case 310
+fixed	class A { #bar() {} }
+case 311
+/tmp/lint-wave1-03-original-final/case-318.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class private method #foo. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 14 missingThis fixes=0 suggestions=0
+fixed	class A { #foo = () => {} }
+case 312
+/tmp/lint-wave1-03-original-final/case-319.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class private method #foo. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 14 missingThis fixes=0 suggestions=0
+fixed	class A { #foo = function() {} }
+case 313
+/tmp/lint-wave1-03-original-final/case-320.ts:1:22
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 21 24 missingThis fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-320.ts:1:31
+  class-methods-use-this  Expected `this` to be used by class private method #bar. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 30 34 missingThis fixes=0 suggestions=0
+fixed	class A { #foo() { } foo() {} #bar() {} }
+case 314
+/tmp/lint-wave1-03-original-final/case-321.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class private method #foo. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 14 missingThis fixes=0 suggestions=0
+fixed	class A { #foo() {} }
+case 315
+fixed	class A { 42() { } }
+case 316
+/tmp/lint-wave1-03-original-final/case-323.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 15 missingThis fixes=0 suggestions=0
+fixed	class A { [foo]() {} }
+case 317
+fixed	class A { constructor() {} }
+case 318
+/tmp/lint-wave1-03-original-final/case-325.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo () { return class { foo = this }; } }
+case 319
+/tmp/lint-wave1-03-original-final/case-326.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo () { return class { static { this; } } } }
+case 320
+/tmp/lint-wave1-03-original-final/case-327.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo () { return function () { foo = this }; } }
+case 321
+fixed	class A { foo = () => {super.toString} }
+case 322
+fixed	class A { foo = () => {this} }
+case 323
+fixed	class A { foo = () => {} }
+case 324
+/tmp/lint-wave1-03-original-final/case-331.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo = () => {} }
+case 325
+fixed	class A { foo = function () {} }
+case 326
+fixed	class A { foo = function() {this} }
+case 327
+/tmp/lint-wave1-03-original-final/case-334.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo = function() {} }
+case 328
+fixed	class A { foo() { () => this; } }
+case 329
+/tmp/lint-wave1-03-original-final/case-336.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo() { () => undefined; } }
+case 330
+fixed	class A { foo() { if(true) { return this; } } }
+case 331
+fixed	class A { foo() { return class { [this.foo] = 1 }; } }
+case 332
+/tmp/lint-wave1-03-original-final/case-339.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo() {/**this**/} }
+case 333
+fixed	class A { foo() {bar(this);} }
+case 334
+/tmp/lint-wave1-03-original-final/case-341.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo() {that.this = 'this';} }
+case 335
+fixed	class A { foo() {this.bar = 'bar';} }
+case 336
+fixed	class A { foo() {this} bar() {} }
+case 337
+fixed	class A { foo() {this} }
+case 338
+/tmp/lint-wave1-03-original-final/case-345.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo() {var a = function () {this};} }
+case 339
+/tmp/lint-wave1-03-original-final/case-346.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo() {var a = function () {var b = function(){this}};} }
+case 340
+/tmp/lint-wave1-03-original-final/case-347.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo() {window.this} }
+case 341
+/tmp/lint-wave1-03-original-final/case-348.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo() {} bar() {} }
+case 342
+/tmp/lint-wave1-03-original-final/case-349.ts:1:20
+  class-methods-use-this  Expected `this` to be used by class method 'hasOwnProperty'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 19 33 missingThis fixes=0 suggestions=0
+fixed	class A { foo() {} hasOwnProperty() {} }
+case 343
+/tmp/lint-wave1-03-original-final/case-350.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo() {} }
+case 344
+/tmp/lint-wave1-03-original-final/case-351.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-351.ts:1:19
+  class-methods-use-this  Expected `this` to be used by class method 'bar'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 18 23 missingThis fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-351.ts:1:29
+  class-methods-use-this  Expected `this` to be used by class method '123'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 28 31 missingThis fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-351.ts:1:37
+  class-methods-use-this  Expected `this` to be used by class method. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 36 43 missingThis fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-351.ts:1:49
+  class-methods-use-this  Expected `this` to be used by class method. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 48 51 missingThis fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-351.ts:1:57
+  class-methods-use-this  Expected `this` to be used by class method. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 56 62 missingThis fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-351.ts:1:72
+  class-methods-use-this  Expected `this` to be used by class getter 'quux'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 71 75 missingThis fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-351.ts:1:84
+  class-methods-use-this  Expected `this` to be used by class setter. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 83 86 missingThis fixes=0 suggestions=0
+/tmp/lint-wave1-03-original-final/case-351.ts:1:94
+  class-methods-use-this  Expected `this` to be used by class generator method 'quuux'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 93 98 missingThis fixes=0 suggestions=0
+fixed	class A { foo(){} 'bar'(){} 123(){} [`baz`](){} [a](){} [f(a)](){} get quux(){} set[a](b){} *quuux(){} }
+case 345
+/tmp/lint-wave1-03-original-final/case-352.ts:1:15
+  class-methods-use-this  Expected `this` to be used by class private getter #foo. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 14 18 missingThis fixes=0 suggestions=0
+fixed	class A { get #foo() {} }
+case 346
+/tmp/lint-wave1-03-original-final/case-353.ts:1:15
+  class-methods-use-this  Expected `this` to be used by class private setter #foo. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 14 18 missingThis fixes=0 suggestions=0
+fixed	class A { set #foo(x) {} }
+case 347
+fixed	class A { static foo = () => {} }
+case 348
+fixed	class A { static foo = function() {} }
+case 349
+fixed	class A { static foo() {} }
+case 350
+fixed	class A { static {} }
+case 351
+/tmp/lint-wave1-03-original-final/typescript-no-unused-expressions-witness.ts:1:1
+  @typescript-eslint/no-unused-expressions  This expression is evaluated and then thrown away. Reading a property, comparing two values, or naming a variable on a line of its own computes something the program immediately forgets, so the line cannot affect what the code does and is almost always a typo for something that would: a missing call, a missing `await`, or an assignment whose left side was dropped. Use the value or delete the line.
+
+shape 0 4 unusedExpression fixes=0 suggestions=0
+fixed	foo;\u000a
+case 352
+/tmp/lint-wave1-03-original-final/typescript-unified-signatures-witness.ts:1:41
+  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number`.
+
+shape 40 49 singleParameterDifference fixes=0 suggestions=0
+fixed	function f(a: string): void; function f(a: number): void;\u000a
+case 353
+/tmp/lint-wave1-03-original-final/class-methods-use-this-witness.ts:1:11
+  class-methods-use-this  Expected `this` to be used by class method 'foo'. A method that never touches the instance is not really a method: it is a plain function that has been given privileged access it does not use, and every caller now needs an instance to reach it. Either use the instance, make it `static`, or move it out of the class entirely so its independence is visible at the call site.
+
+shape 10 13 missingThis fixes=0 suggestions=0
+fixed	class A { foo() {} }\u000a

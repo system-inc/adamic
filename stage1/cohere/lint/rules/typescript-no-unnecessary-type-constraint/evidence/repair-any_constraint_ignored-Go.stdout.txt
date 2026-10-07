@@ -1,0 +1,8 @@
+case 0
+/tmp/lint-wave1-03-full-final/typescript-no-unnecessary-type-constraint-witness.ts:1:15
+  @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+
+shape 14 15 noUnnecessaryTypeConstraint fixes=0 suggestions=1
+suggestion removeTheConstraint	Remove the constraint that does nothing.
+edit 15 27	
+fixed	function data<T extends any>() {}\u000a

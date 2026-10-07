@@ -100,3 +100,19 @@ fix shape refusal. The independent full-shape probe succeeds; all 16 selected
 upstream test functions pass. No semantic port mutant or cross-backend parity
 is claimed. Evidence and setup timing are in
 wave1-03-evidence/batch3/REPORT.md. No shared ownership exception was inferred.
+
+## Existing claims implemented before another selection
+
+All six previously unimplemented claims now have owned .a listeners, descriptors,
+exact messages, upstream adapters, witnesses and compiling semantic mutants.
+The original three match 354 comparable fixture/option profiles; their seven
+JSX profiles are independently proven shared-parser refusals. The repair-heavy
+three match 142 fixture/corner cases with complete typed repair records. Both
+batches match Go over compiler/stage1 snapshots on Node, emitted JavaScript and
+sanitized native. All six mutants are caught by output comparison on all paths.
+
+The three older module/default-parameter/Tailwind candidates remain pushed; the
+prior Tailwind JSX gap remains explicit. Normal .a registration and full repair
+serialization are still shared-harness work. Unsupported repair-heavy registered
+execution fails explicitly rather than discarding repairs. Full report and raw
+evidence: ../rules/typescript-no-unnecessary-type-constraint/REPORT.md.

@@ -1,0 +1,8 @@
+case 0
+/tmp/lint-wave1-03-full-final/typescript-prefer-as-const-witness.ts:1:10
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+shape 9 14 preferAsConst fixes=2 suggestions=0
+fix 7 14	
+fix 22 22	 as string
+fixed	let foo = 'bar' as string;\u000a
