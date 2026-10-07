@@ -1,0 +1,6 @@
+const original = { x: 1, y: false };
+const view: { x: number } = original;
+const wider: { x: number; y?: number } = { x: view.x };
+console.log(`${wider.y === undefined}`);
+console.log(typeof wider.y);
+console.log(`${(wider.y ?? 7) + 1}`);
