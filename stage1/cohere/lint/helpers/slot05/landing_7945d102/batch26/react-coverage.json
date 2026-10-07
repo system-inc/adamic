@@ -1,0 +1,47 @@
+{
+  "boundary": "all 256 bytes, all four flag field combinations, every backslash/bracket in consumer strings, zero/EOF/past EOF, malformed UTF-8, nested classes and brace escapes",
+  "calls": 2661,
+  "captured_strings": 1609,
+  "consumers": {
+    "react/boolean-prop-naming": 584,
+    "react/display-name": 421,
+    "react/no-access-state-in-setstate": 156,
+    "react/no-object-type-as-default-prop": 214,
+    "react/no-set-state": 98,
+    "react/no-unstable-nested-components": 295,
+    "react/no-unused-state": 401,
+    "react/sort-comp": 232,
+    "react/static-property-placement": 474
+  },
+  "files": {
+    "react/boolean-prop-naming": [
+      "cohere/internal/lint/rules/react/boolean_prop_naming_test.go"
+    ],
+    "react/display-name": [
+      "cohere/internal/lint/rules/react/display_name_test.go"
+    ],
+    "react/no-access-state-in-setstate": [
+      "cohere/internal/lint/rules/react/no_access_state_in_setstate_test.go"
+    ],
+    "react/no-object-type-as-default-prop": [
+      "cohere/internal/lint/rules/react/no_object_type_as_default_prop_test.go"
+    ],
+    "react/no-set-state": [
+      "cohere/internal/lint/rules/react/no_set_state_test.go"
+    ],
+    "react/no-unstable-nested-components": [
+      "cohere/internal/lint/rules/react/no_unstable_nested_components_test.go"
+    ],
+    "react/no-unused-state": [
+      "cohere/internal/lint/rules/react/no_unused_state_test.go"
+    ],
+    "react/sort-comp": [
+      "cohere/internal/lint/rules/react/sort_comp_test.go"
+    ],
+    "react/static-property-placement": [
+      "cohere/internal/lint/rules/react/static_property_placement_test.go"
+    ]
+  },
+  "rows": 2661,
+  "sources": 2661
+}

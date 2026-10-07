@@ -2,6 +2,8 @@
 // This sets the field read by FileName without changing NormalizedFileName.
 package ast
 
+import "github.com/microsoft/TypeScript/tsc/internal/tspath"
+
 func AdamicSourceFileName(name string) *SourceFile {
-	return &SourceFile{parseOptions: SourceFileParseOptions{FileName: name}}
+	return &SourceFile{parseOptions: SourceFileParseOptions{FileName: tspath.RootedFilePath(name)}}
 }

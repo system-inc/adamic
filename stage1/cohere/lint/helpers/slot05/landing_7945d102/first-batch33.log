@@ -1,0 +1,378 @@
+=== RUN   TestComponent
+    helper_test.go:71: {
+          "boundary": "every inventory consumer string parsed by pinned typescript-go; component/type every node and nil; network every actual call expression; parameter, return scope, type-name, receiver/callee and method-map controls",
+          "captured_strings": 323,
+          "consumers": {
+            "structure/consistency-require-matching-file-name": 221,
+            "structure/react-component-no-display-name": 85,
+            "structure/react-component-require-named-export": 77
+          },
+          "files": {
+            "structure/consistency-require-matching-file-name": [
+              "cohere/internal/lint/rules/structure/consistency_require_matching_file_name_test.go"
+            ],
+            "structure/react-component-no-display-name": [
+              "cohere/internal/lint/rules/structure/absent_optional_nodes_test.go",
+              "cohere/internal/lint/rules/structure/react_component_no_display_name_test.go"
+            ],
+            "structure/react-component-require-named-export": [
+              "cohere/internal/lint/rules/structure/react_component_require_named_export_test.go"
+            ]
+          },
+          "kinds": {
+            "KindArrayBindingPattern": 4,
+            "KindArrayType": 1,
+            "KindArrowFunction": 13,
+            "KindAsExpression": 8,
+            "KindBinaryExpression": 125,
+            "KindBindingElement": 8,
+            "KindBlock": 134,
+            "KindBooleanKeyword": 3,
+            "KindCallExpression": 45,
+            "KindCaseBlock": 2,
+            "KindCaseClause": 1,
+            "KindClassDeclaration": 14,
+            "KindClassExpression": 1,
+            "KindColonToken": 6,
+            "KindCommaToken": 12,
+            "KindConditionalExpression": 6,
+            "KindDeclareKeyword": 15,
+            "KindDefaultKeyword": 9,
+            "KindElementAccessExpression": 1,
+            "KindEmptyStatement": 1,
+            "KindEndOfFile": 331,
+            "KindEqualsEqualsEqualsToken": 3,
+            "KindEqualsGreaterThanToken": 13,
+            "KindEqualsToken": 22,
+            "KindExportAssignment": 24,
+            "KindExportDeclaration": 7,
+            "KindExportKeyword": 83,
+            "KindExportSpecifier": 8,
+            "KindExpressionStatement": 774,
+            "KindExpressionWithTypeArguments": 8,
+            "KindFalseKeyword": 4,
+            "KindForStatement": 11,
+            "KindFunctionDeclaration": 111,
+            "KindFunctionExpression": 17,
+            "KindGetAccessor": 1,
+            "KindHeritageClause": 8,
+            "KindIdentifier": 1560,
+            "KindIfStatement": 6,
+            "KindImportClause": 6,
+            "KindImportDeclaration": 6,
+            "KindImportSpecifier": 4,
+            "KindInKeyword": 13,
+            "KindJsxAttribute": 4,
+            "KindJsxAttributes": 91,
+            "KindJsxClosingElement": 5,
+            "KindJsxClosingFragment": 1,
+            "KindJsxElement": 5,
+            "KindJsxExpression": 7,
+            "KindJsxFragment": 1,
+            "KindJsxOpeningElement": 5,
+            "KindJsxOpeningFragment": 1,
+            "KindJsxSelfClosingElement": 86,
+            "KindMethodDeclaration": 9,
+            "KindMethodSignature": 1,
+            "KindMinusToken": 22,
+            "KindNamedExports": 7,
+            "KindNamedImports": 4,
+            "KindNoSubstitutionTemplateLiteral": 10,
+            "KindNonNullExpression": 1,
+            "KindNullKeyword": 19,
+            "KindNumberKeyword": 2,
+            "KindNumericLiteral": 13,
+            "KindObjectBindingPattern": 2,
+            "KindObjectLiteralExpression": 11,
+            "KindParameter": 43,
+            "KindParenthesizedExpression": 83,
+            "KindPercentToken": 9,
+            "KindPlusEqualsToken": 1,
+            "KindPlusToken": 2,
+            "KindPrefixUnaryExpression": 5,
+            "KindPropertyAccessExpression": 136,
+            "KindPropertyAssignment": 8,
+            "KindPropertySignature": 23,
+            "KindQualifiedName": 2,
+            "KindQuestionDotToken": 2,
+            "KindQuestionToken": 8,
+            "KindRegularExpressionLiteral": 15,
+            "KindReturnStatement": 113,
+            "KindSatisfiesExpression": 1,
+            "KindShorthandPropertyAssignment": 2,
+            "KindSlashToken": 41,
+            "KindSourceFile": 331,
+            "KindStringKeyword": 22,
+            "KindStringLiteral": 40,
+            "KindSwitchStatement": 2,
+            "KindTaggedTemplateExpression": 3,
+            "KindTypeAliasDeclaration": 8,
+            "KindTypeAssertionExpression": 1,
+            "KindTypeLiteral": 24,
+            "KindTypeParameter": 1,
+            "KindTypeQuery": 2,
+            "KindTypeReference": 16,
+            "KindUnionType": 1,
+            "KindUnknownKeyword": 14,
+            "KindVariableDeclaration": 70,
+            "KindVariableDeclarationList": 73,
+            "KindVariableStatement": 73,
+            "KindWithStatement": 11
+          },
+          "positive": 93,
+          "queries": 5253,
+          "rows": 331,
+          "sources": 331
+        }
+    helper_test.go:128: is_likely_react_component.a mutant "statement.returnStatement && looksLikeJsx(statement.expression)" -> "looksLikeJsx(statement.expression)" caught at output line 4059: mutant "true", Go "false"
+    helper_test.go:128: is_likely_react_component.a mutant "if (index < 0) { return false; }" -> "if (index < 0) { return true; }" caught at output line 1: mutant "true", Go "false"
+    helper_test.go:128: is_likely_react_component.a mutant "if (!node.functionLike) { return false; }" -> "if (!node.functionLike) { return true; }" caught at output line 2: mutant "true", Go "false"
+    helper_test.go:128: is_likely_react_component.a mutant "name.text === 'properties'" -> "name.text === '__properties__'" caught at output line 3503: mutant "false", Go "true"
+    helper_test.go:128: is_likely_react_component.a mutant "name.text === 'props'" -> "name.text === '__props__'" caught at output line 4070: mutant "false", Go "true"
+    helper_test.go:128: is_likely_react_component.a mutant "node.parameters[0]" -> "node.parameters[1]" caught at output line 3503: mutant "false", Go "true"
+    helper_test.go:128: is_likely_react_component.a mutant "if (node.body < 0) { return false; }" -> "if (node.body < 0) { return true; }" caught at output line 787: mutant "true", Go "false"
+    helper_test.go:128: is_likely_react_component.a mutant "statement.returnStatement && looksLikeJsx(statement.expression)" -> "false && looksLikeJsx(statement.expression)" caught at output line 163: mutant "false", Go "true"
+    helper_test.go:128: is_likely_react_component.a mutant "return looksLikeJsx(node.body);" -> "return false;" caught at output line 2550: mutant "false", Go "true"
+    helper_test.go:128: is_likely_react_component.a mutant "return false;\n    }\n    return looksLikeJsx(node.body);" -> "return true;\n    }\n    return looksLikeJsx(node.body);" caught at output line 484: mutant "true", Go "false"
+--- PASS: TestComponent (38.17s)
+=== RUN   TestType
+    helper_test.go:71: {
+          "boundary": "every inventory consumer string parsed by pinned typescript-go; component/type every node and nil; network every actual call expression; parameter, return scope, type-name, receiver/callee and method-map controls",
+          "captured_strings": 200,
+          "consumers": {
+            "structure/network-require-hook-options-parameter": 113,
+            "structure/network-require-hook-variables-type": 117,
+            "structure/react-component-require-properties-type-suffix": 108
+          },
+          "files": {
+            "structure/network-require-hook-options-parameter": [
+              "cohere/internal/lint/rules/structure/absent_optional_nodes_test.go",
+              "cohere/internal/lint/rules/structure/network_require_hook_options_parameter_test.go"
+            ],
+            "structure/network-require-hook-variables-type": [
+              "cohere/internal/lint/rules/structure/absent_optional_nodes_test.go",
+              "cohere/internal/lint/rules/structure/network_require_hook_variables_type_test.go"
+            ],
+            "structure/react-component-require-properties-type-suffix": [
+              "cohere/internal/lint/rules/structure/absent_optional_nodes_test.go",
+              "cohere/internal/lint/rules/structure/react_component_require_properties_type_suffix_test.go"
+            ]
+          },
+          "kinds": {
+            "KindArrayLiteralExpression": 1,
+            "KindArrayType": 1,
+            "KindArrowFunction": 10,
+            "KindAsExpression": 4,
+            "KindBinaryExpression": 49,
+            "KindBindingElement": 6,
+            "KindBlock": 73,
+            "KindBooleanKeyword": 3,
+            "KindCallExpression": 51,
+            "KindClassDeclaration": 1,
+            "KindColonToken": 4,
+            "KindCommaToken": 9,
+            "KindConditionalExpression": 4,
+            "KindDeclareKeyword": 9,
+            "KindDefaultKeyword": 1,
+            "KindDotDotDotToken": 1,
+            "KindElementAccessExpression": 1,
+            "KindEmptyStatement": 2,
+            "KindEndOfFile": 208,
+            "KindEqualsGreaterThanToken": 10,
+            "KindExportKeyword": 61,
+            "KindExpressionStatement": 422,
+            "KindForStatement": 4,
+            "KindFunctionDeclaration": 65,
+            "KindFunctionExpression": 1,
+            "KindFunctionType": 1,
+            "KindGetAccessor": 1,
+            "KindIdentifier": 1002,
+            "KindIfStatement": 1,
+            "KindImportClause": 11,
+            "KindImportDeclaration": 11,
+            "KindImportSpecifier": 10,
+            "KindInKeyword": 3,
+            "KindInterfaceDeclaration": 7,
+            "KindJsxAttributes": 24,
+            "KindJsxClosingElement": 6,
+            "KindJsxClosingFragment": 1,
+            "KindJsxElement": 6,
+            "KindJsxExpression": 5,
+            "KindJsxFragment": 1,
+            "KindJsxOpeningElement": 6,
+            "KindJsxOpeningFragment": 1,
+            "KindJsxSelfClosingElement": 18,
+            "KindJsxSpreadAttribute": 1,
+            "KindMethodDeclaration": 1,
+            "KindMinusToken": 6,
+            "KindModuleBlock": 1,
+            "KindModuleDeclaration": 1,
+            "KindNamedImports": 10,
+            "KindNonNullExpression": 1,
+            "KindNullKeyword": 9,
+            "KindNumericLiteral": 4,
+            "KindObjectBindingPattern": 5,
+            "KindObjectLiteralExpression": 10,
+            "KindParameter": 51,
+            "KindParenthesizedExpression": 82,
+            "KindPercentToken": 8,
+            "KindPropertyAccessExpression": 68,
+            "KindPropertyAssignment": 8,
+            "KindPropertySignature": 34,
+            "KindQualifiedName": 2,
+            "KindQuestionDotToken": 2,
+            "KindQuestionToken": 25,
+            "KindRegularExpressionLiteral": 6,
+            "KindReturnStatement": 60,
+            "KindSatisfiesExpression": 1,
+            "KindShorthandPropertyAssignment": 2,
+            "KindSlashToken": 23,
+            "KindSourceFile": 208,
+            "KindSpreadAssignment": 3,
+            "KindStringKeyword": 28,
+            "KindStringLiteral": 13,
+            "KindTrueKeyword": 1,
+            "KindTypeAliasDeclaration": 24,
+            "KindTypeAssertionExpression": 1,
+            "KindTypeLiteral": 24,
+            "KindTypeParameter": 3,
+            "KindTypeQuery": 8,
+            "KindTypeReference": 49,
+            "KindUnknownKeyword": 9,
+            "KindVariableDeclaration": 31,
+            "KindVariableDeclarationList": 31,
+            "KindVariableStatement": 31,
+            "KindVoidKeyword": 1,
+            "KindWithStatement": 16
+          },
+          "positive": 47,
+          "queries": 3226,
+          "rows": 208,
+          "sources": 208
+        }
+    helper_test.go:128: type_reference_name.a mutant "if (index < 0) { return ''; }" -> "if (index < 0) { return 'wrong'; }" caught at output line 1: mutant "wrong", Go ""
+    helper_test.go:128: type_reference_name.a mutant "if (!node.typeReference) { return ''; }" -> "if (node.typeReference) { return ''; }" caught at output line 475: mutant "", Go "T"
+    helper_test.go:128: type_reference_name.a mutant "if (!name.identifier) { return ''; }" -> "if (name.identifier) { return ''; }" caught at output line 475: mutant "", Go "T"
+    helper_test.go:128: type_reference_name.a mutant "return name.text;" -> "return 'wrong' + name.text;" caught at output line 475: mutant "wrongT", Go "T"
+--- PASS: TestType (11.99s)
+=== RUN   TestNetwork
+    helper_test.go:71: {
+          "boundary": "every inventory consumer string parsed by pinned typescript-go; component/type every node and nil; network every actual call expression; parameter, return scope, type-name, receiver/callee and method-map controls",
+          "captured_strings": 182,
+          "consumers": {
+            "structure/network-require-hook-options-parameter": 113,
+            "structure/network-require-hook-request-suffix": 99,
+            "structure/network-require-hook-variables-type": 117
+          },
+          "files": {
+            "structure/network-require-hook-options-parameter": [
+              "cohere/internal/lint/rules/structure/absent_optional_nodes_test.go",
+              "cohere/internal/lint/rules/structure/network_require_hook_options_parameter_test.go"
+            ],
+            "structure/network-require-hook-request-suffix": [
+              "cohere/internal/lint/rules/structure/absent_optional_nodes_test.go",
+              "cohere/internal/lint/rules/structure/network_require_hook_request_suffix_test.go"
+            ],
+            "structure/network-require-hook-variables-type": [
+              "cohere/internal/lint/rules/structure/absent_optional_nodes_test.go",
+              "cohere/internal/lint/rules/structure/network_require_hook_variables_type_test.go"
+            ]
+          },
+          "kinds": {
+            "KindArrayType": 1,
+            "KindArrowFunction": 10,
+            "KindAsExpression": 5,
+            "KindBinaryExpression": 56,
+            "KindBindingElement": 3,
+            "KindBlock": 68,
+            "KindBooleanKeyword": 3,
+            "KindCallExpression": 60,
+            "KindClassDeclaration": 1,
+            "KindColonToken": 4,
+            "KindCommaToken": 3,
+            "KindConditionalExpression": 4,
+            "KindDeclareKeyword": 11,
+            "KindDefaultKeyword": 1,
+            "KindElementAccessExpression": 1,
+            "KindEmptyStatement": 2,
+            "KindEndOfFile": 190,
+            "KindEqualsGreaterThanToken": 10,
+            "KindExportKeyword": 51,
+            "KindExpressionStatement": 452,
+            "KindForStatement": 2,
+            "KindFunctionDeclaration": 58,
+            "KindFunctionExpression": 2,
+            "KindFunctionType": 1,
+            "KindGetAccessor": 1,
+            "KindIdentifier": 977,
+            "KindIfStatement": 1,
+            "KindImportClause": 4,
+            "KindImportDeclaration": 4,
+            "KindImportSpecifier": 4,
+            "KindInKeyword": 7,
+            "KindJsxAttributes": 12,
+            "KindJsxClosingElement": 1,
+            "KindJsxClosingFragment": 1,
+            "KindJsxElement": 1,
+            "KindJsxFragment": 1,
+            "KindJsxOpeningElement": 1,
+            "KindJsxOpeningFragment": 1,
+            "KindJsxSelfClosingElement": 11,
+            "KindMethodDeclaration": 1,
+            "KindMethodSignature": 2,
+            "KindMinusToken": 9,
+            "KindModuleBlock": 1,
+            "KindModuleDeclaration": 1,
+            "KindNamedImports": 4,
+            "KindNonNullExpression": 1,
+            "KindNullKeyword": 7,
+            "KindNumericLiteral": 5,
+            "KindObjectBindingPattern": 3,
+            "KindObjectLiteralExpression": 10,
+            "KindParameter": 36,
+            "KindParenthesizedExpression": 83,
+            "KindPercentToken": 2,
+            "KindPropertyAccessExpression": 82,
+            "KindPropertyAssignment": 8,
+            "KindPropertySignature": 25,
+            "KindQualifiedName": 2,
+            "KindQuestionDotToken": 2,
+            "KindQuestionToken": 25,
+            "KindRegularExpressionLiteral": 12,
+            "KindReturnStatement": 57,
+            "KindSatisfiesExpression": 1,
+            "KindShorthandPropertyAssignment": 2,
+            "KindSlashToken": 35,
+            "KindSourceFile": 190,
+            "KindSpreadAssignment": 3,
+            "KindStringKeyword": 19,
+            "KindStringLiteral": 6,
+            "KindTrueKeyword": 1,
+            "KindTypeAliasDeclaration": 20,
+            "KindTypeAssertionExpression": 1,
+            "KindTypeLiteral": 23,
+            "KindTypeParameter": 3,
+            "KindTypeQuery": 8,
+            "KindTypeReference": 31,
+            "KindUnknownKeyword": 14,
+            "KindVariableDeclaration": 36,
+            "KindVariableDeclarationList": 36,
+            "KindVariableStatement": 36,
+            "KindVoidKeyword": 1,
+            "KindWithStatement": 16
+          },
+          "positive": 50,
+          "queries": 60,
+          "rows": 190,
+          "sources": 190
+        }
+    helper_test.go:128: is_network_service_hook_call.a mutant "while ((nodes[callee] ?? panic('missing callee')).parenthesized)" -> "while (false)" caught at output line 28: mutant "false", Go "true"
+    helper_test.go:128: is_network_service_hook_call.a mutant "while ((nodes[receiver] ?? panic('missing receiver')).parenthesized)" -> "while (false)" caught at output line 27: mutant "false", Go "true"
+    helper_test.go:128: is_network_service_hook_call.a mutant "if (!access.property) { return false; }" -> "if (!access.property) { return true; }" caught at output line 58: mutant "true", Go "false"
+    helper_test.go:128: is_network_service_hook_call.a mutant "object.text !== 'networkService'" -> "object.text !== 'other'" caught at output line 1: mutant "false", Go "true"
+    helper_test.go:128: is_network_service_hook_call.a mutant "return methods.get(method.text) ?? false;" -> "return methods.has(method.text);" caught at output line 35: mutant "true", Go "false"
+    helper_test.go:128: is_network_service_hook_call.a mutant "return methods.get(method.text) ?? false;" -> "return true;" caught at output line 33: mutant "true", Go "false"
+    helper_test.go:128: is_network_service_hook_call.a mutant "return methods.get(method.text) ?? false;" -> "return false;" caught at output line 1: mutant "false", Go "true"
+--- PASS: TestNetwork (17.55s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch33	67.718s

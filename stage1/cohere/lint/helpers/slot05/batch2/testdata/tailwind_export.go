@@ -61,9 +61,7 @@ func AdamicSurfaceValues(reader *ClassLiteralReader, node *ast.Node, mode string
 }
 func AdamicPatternMatches(reader *ClassLiteralReader, text string) []bool {
 	result := []bool{}
-	for _, p := range reader.variablePatterns {
-		result = append(result, p.MatchString(text))
-	}
+	result = append(result, reader.variables.matches(text))
 	return result
 }
 
@@ -82,4 +80,8 @@ func AdamicSurfaceRefuses(reader *ClassLiteralReader, node *ast.Node, mode strin
 		panic("bad refusal mode")
 	}
 	return false
+}
+
+func AdamicReadsCallee(reader *ClassLiteralReader, node *ast.Node) bool {
+	return reader.readsCallee(node)
 }

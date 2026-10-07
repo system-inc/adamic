@@ -98,7 +98,7 @@ func main() {
 	texts := map[string]bool{"": true, "use": true, "UseState": true, "used": true, "use2Things": true, "useÉ": true, "useΩ": true, "use😀": true, "use\U00010400": true, "use\x00": true, "useǅ": true}
 	for source := range sources {
 		texts[source] = true
-		f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/probe.tsx", Path: tspath.Path("/probe.tsx")}, source, core.ScriptKindTSX)
+		f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/probe.tsx"), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/probe.tsx"))}, source, core.ScriptKindTSX)
 		var visit func(*ast.Node)
 		visit = func(n *ast.Node) {
 			if n == nil {

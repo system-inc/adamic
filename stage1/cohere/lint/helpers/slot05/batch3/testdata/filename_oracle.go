@@ -113,7 +113,7 @@ func main() {
 	fmt.Fprintln(&expected, imports.NormalizedFileName(nil))
 	for _, path := range ordered {
 		f := ast.AdamicSourceFileName(path)
-		corpus = append(corpus, sample{Mode: "filename", Left: f.FileName()})
+		corpus = append(corpus, sample{Mode: "filename", Left: f.FileName().AsString()})
 		fmt.Fprintln(&expected, imports.NormalizedFileName(f))
 	}
 	data, err = json.Marshal(corpus)

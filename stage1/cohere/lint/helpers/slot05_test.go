@@ -45,7 +45,7 @@ func slot05Verify(t *testing.T, symbol, target, old, replacement string) {
 	// Not parallel: the bounded corpus and compiling mutants intentionally run in order.
 	root, _ := filepath.Abs("../../../..")
 	cohere := filepath.Join(root, "cohere")
-	const pin = "715ba94f3608a6500086b1076ce5cb7e51b836db"
+	const pin = "7945d102a6c18dd36adf9114a758ce646e8b2359"
 	if got := strings.TrimSpace(string(run(t, cohere, "git", "rev-parse", "HEAD"))); got != pin {
 		t.Fatalf("Go cohere pin drift: %s", got)
 	}

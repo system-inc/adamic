@@ -1,0 +1,29 @@
+{
+  "boundary": "all 256 bytes; decimal powers through overflow, 2^53 neighbors, 4096 deterministic float-bit samples; byte-length range projections and exhaustive small signed range parameters",
+  "captured_strings": 407,
+  "consumers": {
+    "better-tailwindcss/enforce-consistent-class-order": 373,
+    "better-tailwindcss/enforce-shorthand-classes": 131,
+    "better-tailwindcss/no-unknown-classes": 243
+  },
+  "files": {
+    "better-tailwindcss/enforce-consistent-class-order": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_options_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ],
+    "better-tailwindcss/enforce-shorthand-classes": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ],
+    "better-tailwindcss/no-unknown-classes": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ]
+  },
+  "rows": 5944,
+  "sources": 5944
+}

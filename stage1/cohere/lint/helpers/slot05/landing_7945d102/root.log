@@ -1,0 +1,74 @@
+=== RUN   TestSlot05Identifier
+    slot05_test.go:63: 25 consumers, 3362 distinct test-file strings and controls, 285473 Go verdicts
+    slot05_test.go:69: consumer test-file literal counts: {
+          "react/no-arrow-function-lifecycle": 268,
+          "react/no-children-prop": 148,
+          "react/no-did-mount-set-state": 159,
+          "react/no-did-update-set-state": 160,
+          "react/no-direct-mutation-state": 160,
+          "react/no-string-refs": 196,
+          "react/no-this-in-sfc": 215,
+          "react/no-typos": 711,
+          "react/no-unused-class-component-methods": 380,
+          "react/no-will-update-set-state": 164,
+          "react/prefer-es6-class": 163,
+          "react/prefer-stateless-function": 218,
+          "react/require-optimization": 242,
+          "react/require-render-return": 223,
+          "react/state-in-constructor": 251,
+          "react/void-dom-elements-no-children": 164,
+          "structure/consistency-require-matching-file-name": 221,
+          "structure/next-no-page-state": 67,
+          "structure/react-component-no-destructuring": 93,
+          "structure/react-component-no-display-name": 85,
+          "structure/react-component-no-forward-ref": 75,
+          "structure/react-component-no-separate-named-export": 105,
+          "structure/react-component-require-properties-parameter": 73,
+          "structure/react-hook-no-properties-in-dependencies": 59,
+          "structure/react-hook-require-effect-comment": 89
+        }
+    slot05_test.go:118: react_identifier_named.a mutant caught at verdict 83935: mutant false, Go true
+--- PASS: TestSlot05Identifier (64.32s)
+=== RUN   TestSlot05Imports
+    slot05_test.go:63: 15 consumers, 2319 distinct test-file strings and controls, 32689 Go verdicts
+    slot05_test.go:69: consumer test-file literal counts: {
+          "@next/next/inline-script-id": 109,
+          "@next/next/no-location-assign-relative-destination": 226,
+          "@next/next/no-unwanted-polyfillio": 133,
+          "@typescript-eslint/no-import-type-side-effects": 80,
+          "base/security-require-context-access": 192,
+          "no-restricted-imports": 1266,
+          "react-hooks/config": 90,
+          "react-hooks/incompatible-library": 144,
+          "react/no-deprecated": 323,
+          "react/no-typos": 711,
+          "structure/consistency-require-organized-imports": 371,
+          "structure/import-require-react-namespace": 90,
+          "structure/network-no-forbidden-import": 51,
+          "structure/next-require-page-default-export": 103,
+          "structure/react-component-no-forward-ref": 75
+        }
+    slot05_test.go:118: import_bindings.a mutant caught at verdict 1916: mutant -1:8:, Go -1:7:
+--- PASS: TestSlot05Imports (14.36s)
+=== RUN   TestSlot05ComponentBase
+    slot05_test.go:63: 14 consumers, 2515 distinct test-file strings and controls, 44734 Go verdicts
+    slot05_test.go:69: consumer test-file literal counts: {
+          "react/no-arrow-function-lifecycle": 268,
+          "react/no-did-mount-set-state": 159,
+          "react/no-did-update-set-state": 160,
+          "react/no-direct-mutation-state": 160,
+          "react/no-string-refs": 196,
+          "react/no-this-in-sfc": 215,
+          "react/no-typos": 711,
+          "react/no-unused-class-component-methods": 380,
+          "react/no-will-update-set-state": 164,
+          "react/prefer-stateless-function": 218,
+          "react/require-optimization": 242,
+          "react/state-in-constructor": 251,
+          "structure/consistency-require-matching-file-name": 221,
+          "structure/react-component-no-display-name": 85
+        }
+    slot05_test.go:118: react_component_base.a mutant caught at verdict 13826: mutant true, Go false
+--- PASS: TestSlot05ComponentBase (19.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	98.529s

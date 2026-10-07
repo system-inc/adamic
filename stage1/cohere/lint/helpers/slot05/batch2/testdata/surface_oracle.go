@@ -32,17 +32,18 @@ type values struct {
 	Templates []int `json:"templates"`
 }
 type sample struct {
-	Mode       string   `json:"mode"`
-	Nodes      []node   `json:"nodes"`
-	Queries    []int    `json:"queries"`
-	Attributes []values `json:"attributes"`
-	Callees    []values `json:"callees"`
-	Variables  []values `json:"variables"`
-	Collected  []values `json:"collected"`
-	Under      []values `json:"under"`
-	Patterns   [][]bool `json:"patterns"`
-	Names      []string `json:"names"`
-	Records    []string `json:"records"`
+	Mode          string   `json:"mode"`
+	Nodes         []node   `json:"nodes"`
+	Queries       []int    `json:"queries"`
+	Attributes    []values `json:"attributes"`
+	Callees       []values `json:"callees"`
+	Variables     []values `json:"variables"`
+	Collected     []values `json:"collected"`
+	Under         []values `json:"under"`
+	CalleeMatches []bool   `json:"calleeMatches"`
+	Patterns      [][]bool `json:"patterns"`
+	Names         []string `json:"names"`
+	Records       []string `json:"records"`
 }
 
 func must(e error) {
@@ -122,6 +123,7 @@ func main() {
 		"const x = mergeClassNames(\u0022flex\u0022, `p-2${open ? 'block' : 'hidden'}`, `flex${`block${open ? ' p-2 ' : ''}`}`);",
 		"const ClassName = (('flex')) satisfies string; mergeClassNames(); const z = <div className />;",
 		"const x = <div className={open ? `flex${' p-2 '}` : ('block')} />;",
+		"cn('flex','block'); obj.cn('p-2'); obj['cn']('p-4'); twc.div('flex'); twx.foo.bar('block'); unknown('hidden'); (cn)('other');",
 	} {
 		sources[s] = true
 	}
@@ -134,11 +136,11 @@ func main() {
 	var expected strings.Builder
 	configurations := []tailwind.ClassLiteralSettings{
 		tailwind.DefaultClassLiteralSettings(),
-		{AttributeNames: []string{}, CalleeNames: []string{}, VariablePatterns: []string{}},
-		{AttributeNames: []string{"other", "class"}, CalleeNames: []string{"cn", "mergeClassNames", "createVariantClassNames"}, VariablePatterns: []string{"[", "^other$", "(?i)classname", "className$"}},
+		{AttributePatterns: []string{}, CalleeNamePatterns: []string{}, VariablePatterns: []string{}},
+		{AttributePatterns: []string{"other", "class"}, CalleeNamePatterns: []string{"cn", "mergeClassNames", "createVariantClassNames"}, VariablePatterns: []string{"[", "^other$", "(?i)classname", "className$"}},
 	}
 	for _, source := range ordered {
-		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/probe.tsx", Path: tspath.Path("/probe.tsx")}, source, core.ScriptKindTSX)
+		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/probe.tsx"), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/probe.tsx"))}, source, core.ScriptKindTSX)
 		actual := []*ast.Node{}
 		indexes := map[*ast.Node]int{}
 		var visit func(*ast.Node)
@@ -166,7 +168,7 @@ func main() {
 		}
 		for _, config := range configurations {
 			reader := tailwind.NewClassLiteralReader(config)
-			row := sample{Mode: mode, Nodes: []node{}, Queries: []int{}, Attributes: []values{}, Callees: []values{}, Variables: []values{}, Collected: []values{}, Under: []values{}, Patterns: [][]bool{}, Names: config.CalleeNames, Records: []string{}}
+			row := sample{Mode: mode, Nodes: []node{}, Queries: []int{}, Attributes: []values{}, Callees: []values{}, Variables: []values{}, Collected: []values{}, Under: []values{}, CalleeMatches: []bool{}, Patterns: [][]bool{}, Names: config.CalleeNamePatterns, Records: []string{}}
 			records := map[string]int{}
 			convert := func(v tailwind.AdamicValues) values {
 				out := values{[]int{}, []int{}}
@@ -208,6 +210,7 @@ func main() {
 					p.Initializer = index(d.Initializer)
 				}
 				row.Nodes = append(row.Nodes, p)
+				row.CalleeMatches = append(row.CalleeMatches, tailwind.AdamicReadsCallee(reader, n))
 				empty := values{[]int{}, []int{}}
 				a, c, v, collect, under := empty, empty, empty, empty, empty
 				if n.Kind == ast.KindJsxAttribute {

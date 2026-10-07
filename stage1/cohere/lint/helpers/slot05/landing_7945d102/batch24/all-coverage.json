@@ -1,0 +1,24 @@
+{
+  "captured_strings": 584,
+  "consumers": {
+    "no-control-regex": 42,
+    "no-regex-spaces": 338,
+    "no-useless-escape": 473
+  },
+  "files": {
+    "no-control-regex": [
+      "cohere/internal/lint/rules/core/no_control_regex_test.go"
+    ],
+    "no-regex-spaces": [
+      "cohere/internal/lint/rules/core/no_regex_spaces_test.go"
+    ],
+    "no-useless-escape": [
+      "cohere/internal/lint/rules/core/no_useless_escape_test.go"
+    ]
+  },
+  "hex": "all 256 bytes plus every byte in captured consumer strings",
+  "options": "all sixteen flag combinations for every rewrite source",
+  "rows": 1106,
+  "sources": 1106,
+  "unique_operations": 0
+}

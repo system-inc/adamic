@@ -177,7 +177,7 @@ func main() {
 		corpus = append(corpus, row)
 	}
 	for _, source := range ordered {
-		f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/probe.tsx", Path: tspath.Path("/probe.tsx")}, source, core.ScriptKindTSX)
+		f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/probe.tsx"), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/probe.tsx"))}, source, core.ScriptKindTSX)
 		observe([]*ast.Node{f.AsNode()})
 	}
 	// Factory controls discriminate nil lists/names and present empty aliases.

@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -18,19 +19,19 @@ import (
 )
 
 func TestSlot05CalleeValues(t *testing.T) {
-	slot05Batch2Verify(t, "callee", "tailwind_callee_values.a", "expression.kind !== 'Identifier'", "expression.kind === 'Identifier'")
+	slot05Batch2Verify(t, "callee", "tailwind_callee_values.a", "if(!readsCallee(node.expression))", "if(readsCallee(node.expression))")
 }
 func TestSlot05CalleeArguments(t *testing.T) {
 	slot05Batch2Verify(t, "callee", "tailwind_callee_values.a", "for(const argument of node.arguments)", "for(const argument of node.arguments.slice(0, 1))")
 }
 func TestSlot05VariableValues(t *testing.T) {
-	slot05Batch2Verify(t, "variable", "tailwind_variable_values.a", "if(!matches)", "if(matches)")
+	slot05Batch2Verify(t, "variable", "tailwind_variable_values.a", "if(!matches(name.text))", "if(matches(name.text))")
 }
 func slot05Batch2Verify(t *testing.T, mode, target, old, replacement string) {
 	root, _ := filepath.Abs("../../../../../..")
 	cohere := filepath.Join(root, "cohere")
 	dir, _ := filepath.Abs(".")
-	if got := strings.TrimSpace(string(run(t, cohere, "git", "rev-parse", "HEAD"))); got != "715ba94f3608a6500086b1076ce5cb7e51b836db" {
+	if got := strings.TrimSpace(string(run(t, cohere, "git", "rev-parse", "HEAD"))); got != "7945d102a6c18dd36adf9114a758ce646e8b2359" {
 		t.Fatal("Go pin drift", got)
 	}
 	scratch := t.TempDir()
@@ -64,8 +65,15 @@ func slot05Batch2Verify(t *testing.T, mode, target, old, replacement string) {
 		if e = os.WriteFile(filepath.Join(evidence, mode+"-corpus.sha256"), []byte(fmt.Sprintf("%x  cases.json\n", sha256.Sum256(data))), 0644); e != nil {
 			t.Fatal(e)
 		}
+		if e = os.WriteFile(filepath.Join(evidence, mode+"-cases.json"), data, 0644); e != nil {
+			t.Fatal(e)
+		}
+		if e = os.WriteFile(filepath.Join(evidence, mode+"-want.txt"), want, 0644); e != nil {
+			t.Fatal(e)
+		}
 	}
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle/node.mjs"), filepath.Join(dir, "main.a"), cases), want)
+	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle/node.mjs"), slot05JavaScript(t, dir), cases), want)
 	binary := slot05Build(t, dir)
 	compare(t, run(t, "", binary, cases), want)
 	if mode != "read" {
@@ -191,3 +199,20 @@ func slot05Build(t *testing.T, dir string) string {
 }
 
 func strconvQuote(path string) string { data, _ := json.Marshal(path); return string(data) }
+
+func slot05JavaScript(t *testing.T, dir string) string {
+	t.Helper()
+	program, err := load.Load([]string{filepath.Join(dir, "main.a")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ir, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "emitted.mjs")
+	if err = os.WriteFile(path, []byte(javascript.JavaScript(ir)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return path
+}

@@ -35,7 +35,7 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 	dir, _ := filepath.Abs(".")
 	scratch := t.TempDir()
 	virtual := filepath.Join(cohere, "adamic_slot05_batch22.go")
-	if got := strings.TrimSpace(string(run(t, cohere, "git", "rev-parse", "HEAD"))); got != "715ba94f3608a6500086b1076ce5cb7e51b836db" {
+	if got := strings.TrimSpace(string(run(t, cohere, "git", "rev-parse", "HEAD"))); got != "7945d102a6c18dd36adf9114a758ce646e8b2359" {
 		t.Fatal("Go pin drift")
 	}
 	replacements := map[string]string{virtual: filepath.Join(dir, "testdata/oracle.go"), filepath.Join(cohere, "internal/lint/ecmascript/regexp/adamic_slot05_batch22.go"): filepath.Join(dir, "testdata/regexp_export.go")}

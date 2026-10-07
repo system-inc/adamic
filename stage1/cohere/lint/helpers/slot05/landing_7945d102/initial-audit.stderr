@@ -1,0 +1,8 @@
+panic: ambiguous init
+
+goroutine 1 [running]:
+main.definitions({0x5aa3d1, 0x28}, {0x302d8dceced, 0x19})
+	/workspace/adamic/stage1/cohere/lint/helpers/slot05/landing_7945d102/testdata/audit.go:67 +0x56d
+main.main()
+	/workspace/adamic/stage1/cohere/lint/helpers/slot05/landing_7945d102/testdata/audit.go:93 +0x427
+exit status 2

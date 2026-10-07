@@ -1,0 +1,952 @@
+[
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].accessOrCall",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/expressions.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/expressions.go",
+    "OldHash": "3fc36ca74755b6748c18d31ef9a2dc9699a9c4ccaad064dfc23f14aeb41ae070",
+    "NewHash": "3fc36ca74755b6748c18d31ef9a2dc9699a9c4ccaad064dfc23f14aeb41ae070",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].doStatement",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "OldHash": "fc62f2a6438823add35e85782133caaf3606a599c3bdf2b1451b3a5b5c8d96d3",
+    "NewHash": "fc62f2a6438823add35e85782133caaf3606a599c3bdf2b1451b3a5b5c8d96d3",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].firstThrowableFork",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/cfg.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/cfg.go",
+    "OldHash": "91bb930399222378d11c23e8674adaa027ad99d3c1ca5a6f967d0e0779459f6d",
+    "NewHash": "91bb930399222378d11c23e8674adaa027ad99d3c1ca5a6f967d0e0779459f6d",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forInOfStatement",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "OldHash": "d91dee8c0d30132aa7c29e831a8e0b22f11ad56a7c4531b398a5929698a9d76f",
+    "NewHash": "d91dee8c0d30132aa7c29e831a8e0b22f11ad56a7c4531b398a5929698a9d76f",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forStatement",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "OldHash": "610ccd7a3808cba089d78a012c9b5070adac1b4b3d50dc5740cba292cbd26369",
+    "NewHash": "610ccd7a3808cba089d78a012c9b5070adac1b4b3d50dc5740cba292cbd26369",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forkOptionalChain",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/expressions.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/expressions.go",
+    "OldHash": "df6ec8782389a8c33deafc5a97a7c3838d717e3b313eabb912bc51e28714e8ff",
+    "NewHash": "df6ec8782389a8c33deafc5a97a7c3838d717e3b313eabb912bc51e28714e8ff",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].labeledStatement",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "OldHash": "7dd24520c65cecd310760cec680012ef31b98a20afe26e44da8cd0356756040c",
+    "NewHash": "7dd24520c65cecd310760cec680012ef31b98a20afe26e44da8cd0356756040c",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeBreak",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "OldHash": "6f0c30875e365e0b8f93df3e011ef697c43cba7102fb5e032d436c3ef0ba125c",
+    "NewHash": "6f0c30875e365e0b8f93df3e011ef697c43cba7102fb5e032d436c3ef0ba125c",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeContinue",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "OldHash": "87b5be6ccae8031932aae01a43ad057f517227da3020b494a846cbdf20415b22",
+    "NewHash": "87b5be6ccae8031932aae01a43ad057f517227da3020b494a846cbdf20415b22",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].parameter",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/cfg.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/cfg.go",
+    "OldHash": "0e899bd244ecf16c01611bebbb586c5c361076529d501d6465f92e5238178f61",
+    "NewHash": "0e899bd244ecf16c01611bebbb586c5c361076529d501d6465f92e5238178f61",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternReads",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/patterns.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/patterns.go",
+    "OldHash": "5f3ac527e667c9badbd88041a9d71cf00eb8454bb0f7f0954b8045f772ae00f0",
+    "NewHash": "5f3ac527e667c9badbd88041a9d71cf00eb8454bb0f7f0954b8045f772ae00f0",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternWrites",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/patterns.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/patterns.go",
+    "OldHash": "f56ece992f50b84d0855ef69ea0a33eca4f9c698774d2551230bdcbc7d3b4b20",
+    "NewHash": "f56ece992f50b84d0855ef69ea0a33eca4f9c698774d2551230bdcbc7d3b4b20",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].statements",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "OldHash": "995c65391017f8e6ab3269f712d7853369e15f7888ae49be1ffbd43652eca919",
+    "NewHash": "995c65391017f8e6ab3269f712d7853369e15f7888ae49be1ffbd43652eca919",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].updateExpression",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/expressions.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/expressions.go",
+    "OldHash": "dc746397d0fd0ba4570b8ff71b5b98795e09dbbed51420145910ca46180df17d",
+    "NewHash": "dc746397d0fd0ba4570b8ff71b5b98795e09dbbed51420145910ca46180df17d",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].visitUnknown",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/expressions.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/expressions.go",
+    "OldHash": "44a20f5c4bc52ba301bb2e015747b29a068c1dc151f49c4cc7fc3433a5326b09",
+    "NewHash": "44a20f5c4bc52ba301bb2e015747b29a068c1dc151f49c4cc7fc3433a5326b09",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].whileStatement",
+    "OldFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "NewFile": "internal/lint/ecmascript/control_flow_graph/statements.go",
+    "OldHash": "5812890ccdb614547f0b6a5a34dac055b68122a9ece6b987d6c76d9f8e50b81a",
+    "NewHash": "5812890ccdb614547f0b6a5a34dac055b68122a9ece6b987d6c76d9f8e50b81a",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.BindingsOf",
+    "OldFile": "internal/lint/ecmascript/imports/bindings.go",
+    "NewFile": "internal/lint/ecmascript/imports/bindings.go",
+    "OldHash": "b689c7e2b0eee895bec95899558548a7700e45501022101723fa13ec6f3f179c",
+    "NewHash": "b689c7e2b0eee895bec95899558548a7700e45501022101723fa13ec6f3f179c",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.ImportedNameOf",
+    "OldFile": "internal/lint/ecmascript/imports/bindings.go",
+    "NewFile": "internal/lint/ecmascript/imports/bindings.go",
+    "OldHash": "f5a432152d30c08c1afed2d8eee8f7d2e73d252df96e0a9fad10aba4ab8bcfc4",
+    "NewHash": "f5a432152d30c08c1afed2d8eee8f7d2e73d252df96e0a9fad10aba4ab8bcfc4",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.NormalizedFileName",
+    "OldFile": "internal/lint/ecmascript/imports/source.go",
+    "NewFile": "internal/lint/ecmascript/imports/source.go",
+    "OldHash": "97e0dd35054f356fb16e9a76270e46a237c8461fc97745df36bbe28748d25e0d",
+    "NewHash": "4f542e23f06538863a98baed49071b70f686714a4cca24af122fd7e87842dc07",
+    "Identical": false,
+    "OldText": "func NormalizedFileName(sourceFile *ast.SourceFile) string {\n\tif sourceFile == nil {\n\t\treturn \"\"\n\t}\n\treturn strings.ReplaceAll(sourceFile.FileName(), \"\\\\\", \"/\")\n}",
+    "NewText": "func NormalizedFileName(sourceFile *ast.SourceFile) string {\n\tif sourceFile == nil {\n\t\treturn \"\"\n\t}\n\treturn strings.ReplaceAll(sourceFile.FileName().AsString(), \"\\\\\", \"/\")\n}"
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.MatchExactly",
+    "OldFile": "internal/lint/ecmascript/jsx/attributes.go",
+    "NewFile": "internal/lint/ecmascript/jsx/attributes.go",
+    "OldHash": "62d8ab5b3fc5f4f1ee92d7b037b9741e660d812449c2dd95b38dae0bac34674c",
+    "NewHash": "62d8ab5b3fc5f4f1ee92d7b037b9741e660d812449c2dd95b38dae0bac34674c",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookCall",
+    "OldFile": "internal/lint/ecmascript/react/names.go",
+    "NewFile": "internal/lint/ecmascript/react/names.go",
+    "OldHash": "977359bc229ab76b1c6e34c1251b6b2eab0660c1dc0c3794b874377915893dc8",
+    "NewHash": "977359bc229ab76b1c6e34c1251b6b2eab0660c1dc0c3794b874377915893dc8",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookName",
+    "OldFile": "internal/lint/ecmascript/react/names.go",
+    "NewFile": "internal/lint/ecmascript/react/names.go",
+    "OldHash": "f52cfc597be90f44b588a6b06a23e0169e13837d73c94e5bbd58d0d0d0f697ef",
+    "NewHash": "f52cfc597be90f44b588a6b06a23e0169e13837d73c94e5bbd58d0d0d0f697ef",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isComponentBase",
+    "OldFile": "internal/lint/ecmascript/react/component.go",
+    "NewFile": "internal/lint/ecmascript/react/component.go",
+    "OldHash": "417680ce32efe50098728e6a2b7769b9fbd2cf9d25fa477dd106cef1638e67de",
+    "NewHash": "417680ce32efe50098728e6a2b7769b9fbd2cf9d25fa477dd106cef1638e67de",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isIdentifierNamed",
+    "OldFile": "internal/lint/ecmascript/react/component.go",
+    "NewFile": "internal/lint/ecmascript/react/component.go",
+    "OldHash": "b71bf051c8b314526aabb7af9332fd4abfef0902015839fdbfbec287679620dd",
+    "NewHash": "b71bf051c8b314526aabb7af9332fd4abfef0902015839fdbfbec287679620dd",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.*RegExp.Test",
+    "OldFile": "internal/lint/ecmascript/regexp/regexp.go",
+    "NewFile": "internal/lint/ecmascript/regexp/regexp.go",
+    "OldHash": "11acbe69643d2782cc519f2fa5e7ccfa47212e817a7f7838990df6e2f8d86e98",
+    "NewHash": "11acbe69643d2782cc519f2fa5e7ccfa47212e817a7f7838990df6e2f8d86e98",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.Canonicalize",
+    "OldFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "NewFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "OldHash": "e227e5315fee931b19bde0d4e42dbbe2d756c2037e26d4cb1a098a37a2b87fa8",
+    "NewHash": "e227e5315fee931b19bde0d4e42dbbe2d756c2037e26d4cb1a098a37a2b87fa8",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.CaseClass",
+    "OldFile": "internal/lint/ecmascript/regexp/casefold.go",
+    "NewFile": "internal/lint/ecmascript/regexp/casefold.go",
+    "OldHash": "d0b9290b473b14c024f82a4d8175a99909946391892a4214688f286a4afb0648",
+    "NewHash": "d0b9290b473b14c024f82a4d8175a99909946391892a4214688f286a4afb0648",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.CaseEquivalenceGroups",
+    "OldFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "NewFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "OldHash": "a8f5a309c1a540f83067aa2374a27d2fb7c4c2de819e27e8992f4defbd067963",
+    "NewHash": "a8f5a309c1a540f83067aa2374a27d2fb7c4c2de819e27e8992f4defbd067963",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.CaseEquivalents",
+    "OldFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "NewFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "OldHash": "a2c8ce412cbcb9e179d67b55526b58c6e949340c215c59c71bb46dc846ceee8e",
+    "NewHash": "a2c8ce412cbcb9e179d67b55526b58c6e949340c215c59c71bb46dc846ceee8e",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.buildCaseTables",
+    "OldFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "NewFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "OldHash": "67fb7f19702a386a877cb4b79879cda93ff33a7a94cbcb842bde76c76177a21d",
+    "NewHash": "67fb7f19702a386a877cb4b79879cda93ff33a7a94cbcb842bde76c76177a21d",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.caseExtras",
+    "OldFile": "internal/lint/ecmascript/regexp/class.go",
+    "NewFile": "internal/lint/ecmascript/regexp/class.go",
+    "OldHash": "8c4bc3748a97a8470025e06029c259125ab9eec6ac4a7c2b6452979125f71ecb",
+    "NewHash": "8c4bc3748a97a8470025e06029c259125ab9eec6ac4a7c2b6452979125f71ecb",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.caseTables",
+    "OldFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "NewFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "OldHash": "4f800d374b2913c855960e7dbfbfa66eba1e59ec5189c55937727fccda4bb2fd",
+    "NewHash": "4f800d374b2913c855960e7dbfbfa66eba1e59ec5189c55937727fccda4bb2fd",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.classAtom.write",
+    "OldFile": "internal/lint/ecmascript/regexp/class.go",
+    "NewFile": "internal/lint/ecmascript/regexp/class.go",
+    "OldHash": "58039f4bb0941f1926ca7b3673c36f90464e8677f20d8ad9ac68b4a09d0a7dcf",
+    "NewHash": "58039f4bb0941f1926ca7b3673c36f90464e8677f20d8ad9ac68b4a09d0a7dcf",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.classAtoms",
+    "OldFile": "internal/lint/ecmascript/regexp/class.go",
+    "NewFile": "internal/lint/ecmascript/regexp/class.go",
+    "OldHash": "206cc794d426920aebe7267a6e6d3c80b9ed3034e745fa536fbd812978cbc483",
+    "NewHash": "206cc794d426920aebe7267a6e6d3c80b9ed3034e745fa536fbd812978cbc483",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.countGroups",
+    "OldFile": "internal/lint/ecmascript/regexp/escape.go",
+    "NewFile": "internal/lint/ecmascript/regexp/escape.go",
+    "OldHash": "c44ab31fb0172d2fe8b7ec4e492346175c567e042d1dc5e91cec0a24aacca146",
+    "NewHash": "c44ab31fb0172d2fe8b7ec4e492346175c567e042d1dc5e91cec0a24aacca146",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeControlEscape",
+    "OldFile": "internal/lint/ecmascript/regexp/escape.go",
+    "NewFile": "internal/lint/ecmascript/regexp/escape.go",
+    "OldHash": "5885dba7913f2623f0687db1805a5b0a63ff9777e2c8f74b1232f3314f127e49",
+    "NewHash": "5885dba7913f2623f0687db1805a5b0a63ff9777e2c8f74b1232f3314f127e49",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeEscape",
+    "OldFile": "internal/lint/ecmascript/regexp/escape.go",
+    "NewFile": "internal/lint/ecmascript/regexp/escape.go",
+    "OldHash": "0722cec4797b2775dc33d317ff34f818aa33ebeb1076619565e06ef52e55d7f4",
+    "NewHash": "0722cec4797b2775dc33d317ff34f818aa33ebeb1076619565e06ef52e55d7f4",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeNumericEscape",
+    "OldFile": "internal/lint/ecmascript/regexp/escape.go",
+    "NewFile": "internal/lint/ecmascript/regexp/escape.go",
+    "OldHash": "795252a455dc4faea6a902b65b8db6a31305b3e731b7bc096f5357184ea70bed",
+    "NewHash": "795252a455dc4faea6a902b65b8db6a31305b3e731b7bc096f5357184ea70bed",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodePropertyEscape",
+    "OldFile": "internal/lint/ecmascript/regexp/escape.go",
+    "NewFile": "internal/lint/ecmascript/regexp/escape.go",
+    "OldHash": "07d8c8875b307e21252c32f36e00a236ebea92b2d14e67423d5a2eb311c19bb1",
+    "NewHash": "07d8c8875b307e21252c32f36e00a236ebea92b2d14e67423d5a2eb311c19bb1",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.expandsOnUppercase",
+    "OldFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "NewFile": "internal/lint/ecmascript/regexp/canonicalize.go",
+    "OldHash": "04b92cc67a433f0b0db2d683919a52817647788edbd0dd7af7a89940a40e5c71",
+    "NewHash": "04b92cc67a433f0b0db2d683919a52817647788edbd0dd7af7a89940a40e5c71",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.isDecimalDigit",
+    "OldFile": "internal/lint/ecmascript/regexp/escape.go",
+    "NewFile": "internal/lint/ecmascript/regexp/escape.go",
+    "OldHash": "31ace803668df2c1767fe4b1343e8624e339e498dccb38fcc76f13d2edeab58b",
+    "NewHash": "31ace803668df2c1767fe4b1343e8624e339e498dccb38fcc76f13d2edeab58b",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.joinRanges",
+    "OldFile": "internal/lint/ecmascript/regexp/class.go",
+    "NewFile": "internal/lint/ecmascript/regexp/class.go",
+    "OldHash": "e31a5326216f7dc02336a071d7a1e89bf2e029f36f4e2faaeef625c781987fef",
+    "NewHash": "e31a5326216f7dc02336a071d7a1e89bf2e029f36f4e2faaeef625c781987fef",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.namedBackreference",
+    "OldFile": "internal/lint/ecmascript/regexp/rewrite.go",
+    "NewFile": "internal/lint/ecmascript/regexp/rewrite.go",
+    "OldHash": "91705f52d2b33534085693daeffa880260c79ac952dfd0a208e2866bc7daf56f",
+    "NewHash": "91705f52d2b33534085693daeffa880260c79ac952dfd0a208e2866bc7daf56f",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.namedGroupOpener",
+    "OldFile": "internal/lint/ecmascript/regexp/rewrite.go",
+    "NewFile": "internal/lint/ecmascript/regexp/rewrite.go",
+    "OldHash": "1afd5e4c77137baaead0ef0bbaf441dc76eef3dc1d03d67e5b040d2a80be9203",
+    "NewHash": "1afd5e4c77137baaead0ef0bbaf441dc76eef3dc1d03d67e5b040d2a80be9203",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.readClass",
+    "OldFile": "internal/lint/ecmascript/regexp/class.go",
+    "NewFile": "internal/lint/ecmascript/regexp/class.go",
+    "OldHash": "332197268a27958b6b796da36d0e63533f96a3f0f752048111ad8d245ed73be3",
+    "NewHash": "332197268a27958b6b796da36d0e63533f96a3f0f752048111ad8d245ed73be3",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.rewrite",
+    "OldFile": "internal/lint/ecmascript/regexp/rewrite.go",
+    "NewFile": "internal/lint/ecmascript/regexp/rewrite.go",
+    "OldHash": "56674c6e79e29d6de2197a45722bca0fb8ee3dc6ccedd7dbbe0d8dfeb505d31d",
+    "NewHash": "56674c6e79e29d6de2197a45722bca0fb8ee3dc6ccedd7dbbe0d8dfeb505d31d",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.wordCharacters",
+    "OldFile": "internal/lint/ecmascript/regexp/rewrite.go",
+    "NewFile": "internal/lint/ecmascript/regexp/rewrite.go",
+    "OldHash": "37ad98c1629f4dd55493e2ad0a14e03f28014c41e96b563861828fe2ad77f83c",
+    "NewHash": "37ad98c1629f4dd55493e2ad0a14e03f28014c41e96b563861828fe2ad77f83c",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.writeClass",
+    "OldFile": "internal/lint/ecmascript/regexp/class.go",
+    "NewFile": "internal/lint/ecmascript/regexp/class.go",
+    "OldHash": "3498512f5f8dd66341d76a278ed0ab79036403fea18e9a1c97334931a4101682",
+    "NewHash": "3498512f5f8dd66341d76a278ed0ab79036403fea18e9a1c97334931a4101682",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.AllHexDigits",
+    "OldFile": "internal/lint/ecmascript/regexsyntax/hex.go",
+    "NewFile": "internal/lint/ecmascript/regexsyntax/hex.go",
+    "OldHash": "bedc43c665198553e3ee8bcaffd7d22c2c4bedb66c5d65fca38bcc3eda8bba3a",
+    "NewHash": "bedc43c665198553e3ee8bcaffd7d22c2c4bedb66c5d65fca38bcc3eda8bba3a",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ClassEnd",
+    "OldFile": "internal/lint/ecmascript/regexsyntax/charclass.go",
+    "NewFile": "internal/lint/ecmascript/regexsyntax/charclass.go",
+    "OldHash": "55e8ccaed2d1f5ccbb1131874eaa8de67833cc17fc6a3cad4bf885f9119640de",
+    "NewHash": "55e8ccaed2d1f5ccbb1131874eaa8de67833cc17fc6a3cad4bf885f9119640de",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.IsHexDigit",
+    "OldFile": "internal/lint/ecmascript/regexsyntax/hex.go",
+    "NewFile": "internal/lint/ecmascript/regexsyntax/hex.go",
+    "OldHash": "0c5d358f79eed98397c918051d92f75b6685ffdeaceff6b7572f5269e239da9f",
+    "NewHash": "0c5d358f79eed98397c918051d92f75b6685ffdeaceff6b7572f5269e239da9f",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ParseRegexFlags",
+    "OldFile": "internal/lint/ecmascript/regexsyntax/charclass.go",
+    "NewFile": "internal/lint/ecmascript/regexsyntax/charclass.go",
+    "OldHash": "bf96c724da6dba2ba20c1f39626eb49f211c8e8e1a85f03cf32f88184028f102",
+    "NewHash": "bf96c724da6dba2ba20c1f39626eb49f211c8e8e1a85f03cf32f88184028f102",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.PatternAndFlags",
+    "OldFile": "internal/lint/ecmascript/regexsyntax/literal.go",
+    "NewFile": "internal/lint/ecmascript/regexsyntax/literal.go",
+    "OldHash": "bbf0d1daa037785a0366f43d7e34d58e8b236bee2fb24131c11898f278cc5e99",
+    "NewHash": "bbf0d1daa037785a0366f43d7e34d58e8b236bee2fb24131c11898f278cc5e99",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.RegexFlags.UV",
+    "OldFile": "internal/lint/ecmascript/regexsyntax/charclass.go",
+    "NewFile": "internal/lint/ecmascript/regexsyntax/charclass.go",
+    "OldHash": "e7abd5b62d995ae5f88436fade0d837b6caf48abdb32fe06e6cb8c708a0e2b58",
+    "NewHash": "e7abd5b62d995ae5f88436fade0d837b6caf48abdb32fe06e6cb8c708a0e2b58",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.SkipPatternEscape",
+    "OldFile": "internal/lint/ecmascript/regexsyntax/charclass.go",
+    "NewFile": "internal/lint/ecmascript/regexsyntax/charclass.go",
+    "OldHash": "ca0be20506988b29b1995e708b2fd74b06debc065af98bd2af845f9def56f7ac",
+    "NewHash": "ca0be20506988b29b1995e708b2fd74b06debc065af98bd2af845f9def56f7ac",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isEs5ComponentCallStrict",
+    "OldFile": "internal/lint/rules/react/no_did_mount_set_state.go",
+    "NewFile": "internal/lint/rules/react/no_did_mount_set_state.go",
+    "OldHash": "977da664f152fa9e224f1dc046ad46192b5ff8cb55e66ae6d2549d9133f63866",
+    "NewHash": "977da664f152fa9e224f1dc046ad46192b5ff8cb55e66ae6d2549d9133f63866",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/react.isReactComponentBaseName",
+    "OldFile": "internal/lint/rules/react/no_multi_comp.go",
+    "NewFile": "internal/lint/rules/react/no_multi_comp.go",
+    "OldHash": "8a72815823299122c2eca6e831befbb11cccd447120e65c1dcbd82d939d13f12",
+    "NewHash": "8a72815823299122c2eca6e831befbb11cccd447120e65c1dcbd82d939d13f12",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.IsLikelyReactComponent",
+    "OldFile": "internal/lint/rules/structure/react_detection.go",
+    "NewFile": "internal/lint/rules/structure/react_detection.go",
+    "OldHash": "09421289e70a13569b0bd9b6b79478790dffb96a5164495045d4b2b63218b672",
+    "NewHash": "09421289e70a13569b0bd9b6b79478790dffb96a5164495045d4b2b63218b672",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.isJsxValue",
+    "OldFile": "internal/lint/rules/structure/react_detection.go",
+    "NewFile": "internal/lint/rules/structure/react_detection.go",
+    "OldHash": "630cbf5a90d193e629e9226dd72b47cf05aaf1097b4846dcc8bcf740b21ef790",
+    "NewHash": "630cbf5a90d193e629e9226dd72b47cf05aaf1097b4846dcc8bcf740b21ef790",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.isNetworkServiceHookCall",
+    "OldFile": "internal/lint/rules/structure/network_file_analysis.go",
+    "NewFile": "internal/lint/rules/structure/network_file_analysis.go",
+    "OldHash": "7c47480a632d074cd12134e8da6bbbba0fb474a29ec7f5b9fe039967a29e5d81",
+    "NewHash": "7c47480a632d074cd12134e8da6bbbba0fb474a29ec7f5b9fe039967a29e5d81",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.jsxAfterParentheses",
+    "OldFile": "internal/lint/rules/structure/react_detection.go",
+    "NewFile": "internal/lint/rules/structure/react_detection.go",
+    "OldHash": "3fb1475f7ea2418c95fee172a09b30eba54f0cdb8318a16e814aa6bb409e93bc",
+    "NewHash": "3fb1475f7ea2418c95fee172a09b30eba54f0cdb8318a16e814aa6bb409e93bc",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.returnArgumentLooksLikeJsx",
+    "OldFile": "internal/lint/rules/structure/react_detection.go",
+    "NewFile": "internal/lint/rules/structure/react_detection.go",
+    "OldHash": "949ac5b4071bde1f77e9bf02820283f6d8fa21a8209a0b6589fe35ccfe861dfa",
+    "NewHash": "949ac5b4071bde1f77e9bf02820283f6d8fa21a8209a0b6589fe35ccfe861dfa",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/structure.typeReferenceName",
+    "OldFile": "internal/lint/rules/structure/network_file_analysis.go",
+    "NewFile": "internal/lint/rules/structure/network_file_analysis.go",
+    "OldHash": "1129abba55205b2ee3b40db97cdad675289f3f27666771e20c8a6a603dc83b86",
+    "NewHash": "1129abba55205b2ee3b40db97cdad675289f3f27666771e20c8a6a603dc83b86",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.calleeValues",
+    "OldFile": "internal/lint/rules/tailwind/class_literals.go",
+    "NewFile": "internal/lint/rules/tailwind/class_literals.go",
+    "OldHash": "c8b2f13f0195f8182b948baf449e43b4b65b0237f567b89956d76fdd435cc512",
+    "NewHash": "bcfcf4d0a411784eb6eea672ea6bd6c99afd0325da6980e7b4849ba41799ad5e",
+    "Identical": false,
+    "OldText": "func (r *ClassLiteralReader) calleeValues(node *ast.Node) classValues {\n\tcall := node.AsCallExpression()\n\tif call == nil || call.Expression == nil {\n\t\treturn classValues{}\n\t}\n\n\tif call.Expression.Kind != ast.KindIdentifier {\n\t\treturn classValues{}\n\t}\n\tif !r.calleeNames[call.Expression.Text()] || call.Arguments == nil {\n\t\treturn classValues{}\n\t}\n\n\tvalues := classValues{}\n\tfor _, argument := range call.Arguments.Nodes {\n\t\tcollectClassValues(argument, ClassLiteralOriginCallee, classValueEdges{}, \u0026values)\n\t}\n\treturn values\n}",
+    "NewText": "func (r *ClassLiteralReader) calleeValues(node *ast.Node) classValues {\n\tcall := node.AsCallExpression()\n\tif call == nil || call.Expression == nil {\n\t\treturn classValues{}\n\t}\n\n\tif call.Arguments == nil {\n\t\treturn classValues{}\n\t}\n\tif !r.readsCallee(call.Expression) {\n\t\treturn classValues{}\n\t}\n\n\tvalues := classValues{}\n\tfor _, argument := range call.Arguments.Nodes {\n\t\tcollectClassValues(argument, ClassLiteralOriginCallee, classValueEdges{}, \u0026values)\n\t}\n\treturn values\n}"
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.variableValues",
+    "OldFile": "internal/lint/rules/tailwind/class_literals.go",
+    "NewFile": "internal/lint/rules/tailwind/class_literals.go",
+    "OldHash": "d6c9100b1c5fb3fb01412eda31e277ff42ec65c127dabda876b2e084c924810c",
+    "NewHash": "ff5417948bdaeb0531e37f2bc1b4390940f073502a471c63c7e779def62ce759",
+    "Identical": false,
+    "OldText": "func (r *ClassLiteralReader) variableValues(node *ast.Node) classValues {\n\tdeclaration := node.AsVariableDeclaration()\n\tif declaration == nil || declaration.Initializer == nil {\n\t\treturn classValues{}\n\t}\n\n\tname := declaration.Name()\n\tif name == nil || name.Kind != ast.KindIdentifier {\n\t\treturn classValues{}\n\t}\n\n\tmatches := false\n\tfor _, pattern := range r.variablePatterns {\n\t\tif pattern.MatchString(name.Text()) {\n\t\t\tmatches = true\n\t\t\tbreak\n\t\t}\n\t}\n\tif !matches {\n\t\treturn classValues{}\n\t}\n\n\treturn classValuesUnder(declaration.Initializer, ClassLiteralOriginVariable)\n}",
+    "NewText": "func (r *ClassLiteralReader) variableValues(node *ast.Node) classValues {\n\tdeclaration := node.AsVariableDeclaration()\n\tif declaration == nil || declaration.Initializer == nil {\n\t\treturn classValues{}\n\t}\n\n\tname := declaration.Name()\n\tif name == nil || name.Kind != ast.KindIdentifier {\n\t\treturn classValues{}\n\t}\n\n\tif !r.variables.matches(name.Text()) {\n\t\treturn classValues{}\n\t}\n\n\treturn classValuesUnder(declaration.Initializer, ClassLiteralOriginVariable)\n}"
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind.trimDelimiters",
+    "OldFile": "internal/lint/rules/tailwind/class_segments.go",
+    "NewFile": "internal/lint/rules/tailwind/class_segments.go",
+    "OldHash": "a26c2cf3c0da285314903b0347e537c37385c56053023ecd7af134e9e45db660",
+    "NewHash": "a26c2cf3c0da285314903b0347e537c37385c56053023ecd7af134e9e45db660",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryFunctionalRoots",
+    "OldFile": "internal/lint/rules/tailwind/collapse/descriptor_live.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/descriptor_live.go",
+    "OldHash": "959913a9646d881d2dead8866355d59a71c24449d5c8b0c4686c6b5c2b1ae3ec",
+    "NewHash": "959913a9646d881d2dead8866355d59a71c24449d5c8b0c4686c6b5c2b1ae3ec",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addThemeNamespaces",
+    "OldFile": "internal/lint/rules/tailwind/collapse/descriptor_live.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/descriptor_live.go",
+    "OldHash": "9257c7be3b0cbd5c9615c7067cf55089c84696520a41887bfd00d7a9f1781528",
+    "NewHash": "9257c7be3b0cbd5c9615c7067cf55089c84696520a41887bfd00d7a9f1781528",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.Entries",
+    "OldFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "OldHash": "e31fb1f4ca6c93ea90a550ba138d72d5d38c7495282ebd4fe6e18b983a14dbd8",
+    "NewHash": "e31fb1f4ca6c93ea90a550ba138d72d5d38c7495282ebd4fe6e18b983a14dbd8",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.KeysInNamespaces",
+    "OldFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "OldHash": "6b6a6f0af72453819aa0f04c8ad8ac0c70643a9752ab0b4e1b62c3dfc9a2b641",
+    "NewHash": "6b6a6f0af72453819aa0f04c8ad8ac0c70643a9752ab0b4e1b62c3dfc9a2b641",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.ResolveValue",
+    "OldFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "OldHash": "fc64c6fe3c9479da0dee89ae2aa309f2a9fd76f0be2bcbc2be0c77a141c5ee74",
+    "NewHash": "fc64c6fe3c9479da0dee89ae2aa309f2a9fd76f0be2bcbc2be0c77a141c5ee74",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.clearAll",
+    "OldFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "OldHash": "fef1936cff0c3596181c4773f94121c1de97da2e075154b59f6e42a4005224b3",
+    "NewHash": "fef1936cff0c3596181c4773f94121c1de97da2e075154b59f6e42a4005224b3",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.compactKeyOrder",
+    "OldFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "OldHash": "76e0437ae6a329e05ec002611159b54f4af9f3e784481910a57322351939535d",
+    "NewHash": "76e0437ae6a329e05ec002611159b54f4af9f3e784481910a57322351939535d",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.delete",
+    "OldFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "OldHash": "691e5f25d1f0956bea94afab3070a6921c7576bd6d85946135bd573fbac623a2",
+    "NewHash": "691e5f25d1f0956bea94afab3070a6921c7576bd6d85946135bd573fbac623a2",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.liveKeys",
+    "OldFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "OldHash": "3934dab72456940f9e7f317b876631cc4297371d2bccbd7ccf3a28973de55ad2",
+    "NewHash": "3934dab72456940f9e7f317b876631cc4297371d2bccbd7ccf3a28973de55ad2",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.resolveKey",
+    "OldFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "OldHash": "68ea570e59b9b312f8e8d938be04c31e5b5c268edc1af89943253d2d9fbdd171",
+    "NewHash": "68ea570e59b9b312f8e8d938be04c31e5b5c268edc1af89943253d2d9fbdd171",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Description",
+    "OldFile": "internal/lint/rules/tailwind/collapse/framework_utility.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/framework_utility.go",
+    "OldHash": "d19fbca07955d5f0a474e700064fd80436ce0bc5f52e364329d9c580060b8eab",
+    "NewHash": "d19fbca07955d5f0a474e700064fd80436ce0bc5f52e364329d9c580060b8eab",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.Description",
+    "OldFile": "internal/lint/rules/tailwind/collapse/framework_multi_declaration.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/framework_multi_declaration.go",
+    "OldHash": "b3b4be15350b658c995f2a4ad28bb00306f06cddfd280502c17b169251340600",
+    "NewHash": "b3b4be15350b658c995f2a4ad28bb00306f06cddfd280502c17b169251340600",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.LoadDesignSystem",
+    "OldFile": "internal/lint/rules/tailwind/collapse/design_system.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/design_system.go",
+    "OldHash": "fd073b575ba0a2e7dd901ec0464f05b79f84e25593bac8a223bef3e1210504f7",
+    "NewHash": "fd073b575ba0a2e7dd901ec0464f05b79f84e25593bac8a223bef3e1210504f7",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTheme",
+    "OldFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/theme.go",
+    "OldHash": "b6beb2bdfb478a85e46f9381e8504639f55a3c5d0a7d20157a1ec14a1c17b42f",
+    "NewHash": "b6beb2bdfb478a85e46f9381e8504639f55a3c5d0a7d20157a1ec14a1c17b42f",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewUtilityEvaluator",
+    "OldFile": "internal/lint/rules/tailwind/collapse/utility.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/utility.go",
+    "OldHash": "c5332cf31936678827085d8742789d6462397d5e19bf35a0516f82ba17396c18",
+    "NewHash": "c5332cf31936678827085d8742789d6462397d5e19bf35a0516f82ba17396c18",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCandidate",
+    "OldFile": "internal/lint/rules/tailwind/collapse/candidate.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/candidate.go",
+    "OldHash": "dd0a43dbbb09e3993b164dbc1fa28cf3a63a1fcfe627a831187b415d940c21aa",
+    "NewHash": "dd0a43dbbb09e3993b164dbc1fa28cf3a63a1fcfe627a831187b415d940c21aa",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseVariant",
+    "OldFile": "internal/lint/rules/tailwind/collapse/candidate.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/candidate.go",
+    "OldHash": "d9c3359d32b2eae36f8fac449fc48387ceac351f4e9723e4e3c78ae570203039",
+    "NewHash": "d9c3359d32b2eae36f8fac449fc48387ceac351f4e9723e4e3c78ae570203039",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValuePredicate",
+    "OldFile": "internal/lint/rules/tailwind/collapse/framework_utility.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/framework_utility.go",
+    "OldHash": "11e947af294c3ecad587d640a4abe695cab2ad630bccd433e3b3ba5ed8b942a0",
+    "NewHash": "11e947af294c3ecad587d640a4abe695cab2ad630bccd433e3b3ba5ed8b942a0",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueTransform",
+    "OldFile": "internal/lint/rules/tailwind/collapse/framework_utility.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/framework_utility.go",
+    "OldHash": "d688da6b2ea69182bae153d050b629b6f3ab3ace7331d3b782b09dcec67453ad",
+    "NewHash": "d688da6b2ea69182bae153d050b629b6f3ab3ace7331d3b782b09dcec67453ad",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.borderSideDescription",
+    "OldFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "OldHash": "64ad305b95099c5f20f80d875b0103c86ab571d823f9e39fa815dde3c6302f1b",
+    "NewHash": "64ad305b95099c5f20f80d875b0103c86ab571d823f9e39fa815dde3c6302f1b",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.colorArm",
+    "OldFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "OldHash": "53bddce756dad65dfaf72643292e89dd475d3db0fa2952fe31da694f699a4fe1",
+    "NewHash": "53bddce756dad65dfaf72643292e89dd475d3db0fa2952fe31da694f699a4fe1",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFontStretchPercentage",
+    "OldFile": "internal/lint/rules/tailwind/collapse/framework_utility.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/framework_utility.go",
+    "OldHash": "e7e8e4a7450b1796fb8ec4375784ded3fb04681fe34a0d0ff8fd3d06a5608ef4",
+    "NewHash": "e7e8e4a7450b1796fb8ec4375784ded3fb04681fe34a0d0ff8fd3d06a5608ef4",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isPositiveInteger",
+    "OldFile": "internal/lint/rules/tailwind/collapse/functional_utility.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/functional_utility.go",
+    "OldHash": "f5b3e78d40b7ad526d432229d5154e5ffaa73932288a99845f96cb07d2e2f342",
+    "NewHash": "f5b3e78d40b7ad526d432229d5154e5ffaa73932288a99845f96cb07d2e2f342",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isStrictPositiveInteger",
+    "OldFile": "internal/lint/rules/tailwind/collapse/functional_utility.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/functional_utility.go",
+    "OldHash": "4c5b582aee64db5102f1307f6cee182d6fd56a532d4666f52634f26a023eb478",
+    "NewHash": "4c5b582aee64db5102f1307f6cee182d6fd56a532d4666f52634f26a023eb478",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidOpacityValue",
+    "OldFile": "internal/lint/rules/tailwind/collapse/utility.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/utility.go",
+    "OldHash": "0c3e9df20a2abf70f782a80f4c728e2f46f20109f75387cb6fdf9b4131eb85c1",
+    "NewHash": "0c3e9df20a2abf70f782a80f4c728e2f46f20109f75387cb6fdf9b4131eb85c1",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskStopDescription",
+    "OldFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "OldHash": "e657b4215b36453d1d620cdfae4f84f851565360e6a965169bb6b80b63afbe86",
+    "NewHash": "e657b4215b36453d1d620cdfae4f84f851565360e6a965169bb6b80b63afbe86",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveArmColor",
+    "OldFile": "internal/lint/rules/tailwind/collapse/functional_utility.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/functional_utility.go",
+    "OldHash": "75bcfd33580f0e1640147f649b61269dccd52fbfd718718628f018378767608c",
+    "NewHash": "75bcfd33580f0e1640147f649b61269dccd52fbfd718718628f018378767608c",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.themeArm",
+    "OldFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "OldHash": "78a9b1630275a9e8df770c22448c487b88755ee2da7b1830dcde95d0af173a39",
+    "NewHash": "78a9b1630275a9e8df770c22448c487b88755ee2da7b1830dcde95d0af173a39",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  },
+  {
+    "Symbol": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.widthArm",
+    "OldFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "NewFile": "internal/lint/rules/tailwind/collapse/gap_roots.go",
+    "OldHash": "4e2a10830be66b5b71c581c7c00761655a035c15e90bfaf7f5540c470b842004",
+    "NewHash": "4e2a10830be66b5b71c581c7c00761655a035c15e90bfaf7f5540c470b842004",
+    "Identical": true,
+    "OldText": "",
+    "NewText": ""
+  }
+]

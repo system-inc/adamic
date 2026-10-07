@@ -1,0 +1,29 @@
+{
+  "boundary": "all inventory consumer strings as constructor parameters; nil and empty-present color keys, order and duplicates, flags and suffixes; color slice aliases and independently fresh single-key arrays",
+  "captured_strings": 407,
+  "consumers": {
+    "better-tailwindcss/enforce-consistent-class-order": 373,
+    "better-tailwindcss/enforce-shorthand-classes": 131,
+    "better-tailwindcss/no-unknown-classes": 243
+  },
+  "files": {
+    "better-tailwindcss/enforce-consistent-class-order": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_options_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ],
+    "better-tailwindcss/enforce-shorthand-classes": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ],
+    "better-tailwindcss/no-unknown-classes": [
+      "cohere/internal/lint/rules/tailwind/design_system_live_walk_test.go",
+      "cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go",
+      "cohere/internal/lint/rules/tailwind/shared_reader_walk_test.go"
+    ]
+  },
+  "rows": 2550,
+  "sources": 425
+}

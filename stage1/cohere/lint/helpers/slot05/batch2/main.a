@@ -22,25 +22,19 @@ for(const row of json.node(root).children) {
     const collected = json.node(json.field(row, 'collected')).children.map(c => values(c));
     const under = json.node(json.field(row, 'under')).children.map(c => values(c));
     const patternRows = json.node(json.field(row, 'patterns')).children.map(c => json.node(c).children.map(v => json.node(v).text === 'true'));
-    const patternCount = patternRows[0]?.length ?? 0;
-    const patterns: ((name: string) => boolean)[] = [];
-    for(let p = 0; p < patternCount; p++) {
-        const column = patternRows.map(row => row[p] ?? false);
-        patterns.push(name => {
-            for(let i = 0; i < nodes.length; i++) {
-                const node = nodes[i];
-                if(node !== undefined && node.kind === 'Identifier' && node.text === name) { return column[i] ?? false; }
-            }
-            return false;
-        });
-    }
-    const names = new Map<string, boolean>();
-    for(const n of json.node(json.field(row, 'names')).children) { names.set(json.node(n).text, true); }
+    const calleeMatches = json.node(json.field(row, 'calleeMatches')).children.map(c => json.node(c).text === 'true');
+    const matchesVariable = (name: string): boolean => {
+        for(let i = 0; i < nodes.length; i++) {
+            const node = nodes[i];
+            if(node !== undefined && node.kind === 'Identifier' && node.text === name) { const answers = patternRows[i]; return answers === undefined ? false : answers[0] ?? false; }
+        }
+        return false;
+    };
     for(const query of json.node(json.field(row, 'queries')).children) {
         const index = json.node(query).number;
         const result = text(row, 'mode') === 'callee'
-            ? calleeValues(nodes, index, names, i => collected[i] ?? panic('missing collected'))
-            : variableValues(nodes, index, patterns, i => under[i] ?? panic('missing under'));
+            ? calleeValues(nodes, index, i => calleeMatches[i] ?? panic('missing callee match'), i => collected[i] ?? panic('missing collected'))
+            : variableValues(nodes, index, matchesVariable, i => under[i] ?? panic('missing under'));
         console.log(`${result.literals.join(',')}:${result.templates.join(',')}`);
     }
 }

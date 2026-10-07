@@ -106,7 +106,7 @@ func main() {
 	chainNodes := []*ast.Node{}
 	calls := []*ast.CallExpression{nil, {}}
 	for _, source := range ordered {
-		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/probe.tsx", Path: tspath.Path("/probe.tsx")}, source, core.ScriptKindTSX)
+		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/probe.tsx"), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/probe.tsx"))}, source, core.ScriptKindTSX)
 		chainNodes = append(chainNodes, file.AsNode())
 		var visit func(*ast.Node)
 		visit = func(n *ast.Node) {

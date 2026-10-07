@@ -1,0 +1,29 @@
+{
+  "captured_strings": 958,
+  "consumers": {
+    "@next/next/no-html-link-for-pages": 488,
+    "@typescript-eslint/no-empty-object-type": 67,
+    "no-restricted-exports": 483,
+    "no-restricted-imports": 1270
+  },
+  "files": {
+    "@next/next/no-html-link-for-pages": [
+      "cohere/internal/lint/rules/next/no_html_link_for_pages_test.go"
+    ],
+    "@typescript-eslint/no-empty-object-type": [
+      "cohere/internal/lint/rules/typescript/no_empty_object_type_corpus_test.go",
+      "cohere/internal/lint/rules/typescript/no_empty_object_type_test.go"
+    ],
+    "no-restricted-exports": [
+      "cohere/internal/lint/rules/core/no_restricted_exports_test.go"
+    ],
+    "no-restricted-imports": [
+      "cohere/internal/lint/rules/core/no_restricted_imports_test.go"
+    ]
+  },
+  "hex": "all 256 bytes plus every byte in captured consumer strings",
+  "options": "all sixteen flag combinations for every rewrite source",
+  "rows": 23776,
+  "sources": 1486,
+  "unique_operations": 22994
+}

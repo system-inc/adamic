@@ -110,7 +110,7 @@ func main() {
 	labels := []*ast.Node{nil}
 	seenLabels := map[string]bool{}
 	for _, source := range ordered {
-		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/probe.tsx", Path: tspath.Path("/probe.tsx")}, source, core.ScriptKindTSX)
+		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/probe.tsx"), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/probe.tsx"))}, source, core.ScriptKindTSX)
 		nodes = append(nodes, file.AsNode())
 		var visit func(*ast.Node)
 		visit = func(n *ast.Node) {

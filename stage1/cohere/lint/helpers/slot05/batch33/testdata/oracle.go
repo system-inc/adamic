@@ -153,7 +153,7 @@ func main() {
 		if source == controls[len(controls)-1] {
 			kind = core.ScriptKindTS
 		}
-		file := tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: "/probe.tsx", Path: tspath.Path("/probe.tsx")}, source, kind)
+		file := tsparser.ParseSourceFile(tsast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute("/probe.tsx"), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute("/probe.tsx"))}, source, kind)
 		actual := []*tsast.Node{}
 		ids := map[*tsast.Node]int{}
 		var visit func(*tsast.Node)

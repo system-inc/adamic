@@ -1,0 +1,42 @@
+{
+  "boundary": "all 256 bytes, all four flag field combinations, every backslash/bracket in consumer strings, zero/EOF/past EOF, malformed UTF-8, nested classes and brace escapes",
+  "calls": 46592,
+  "captured_strings": 2063,
+  "consumers": {
+    "no-control-regex": 42,
+    "no-empty-character-class": 101,
+    "no-misleading-character-class": 858,
+    "no-regex-spaces": 338,
+    "no-useless-backreference": 885,
+    "no-useless-escape": 473,
+    "prefer-regex-literals": 1856
+  },
+  "files": {
+    "no-control-regex": [
+      "cohere/internal/lint/rules/core/no_control_regex_test.go"
+    ],
+    "no-empty-character-class": [
+      "cohere/internal/lint/rules/core/no_empty_character_class_test.go"
+    ],
+    "no-misleading-character-class": [
+      "cohere/internal/lint/rules/core/no_misleading_character_class_corpus_test.go",
+      "cohere/internal/lint/rules/core/no_misleading_character_class_test.go"
+    ],
+    "no-regex-spaces": [
+      "cohere/internal/lint/rules/core/no_regex_spaces_test.go"
+    ],
+    "no-useless-backreference": [
+      "cohere/internal/lint/rules/core/no_useless_backreference_corpus_test.go",
+      "cohere/internal/lint/rules/core/no_useless_backreference_test.go"
+    ],
+    "no-useless-escape": [
+      "cohere/internal/lint/rules/core/no_useless_escape_test.go"
+    ],
+    "prefer-regex-literals": [
+      "cohere/internal/lint/rules/core/prefer_regex_literals_corpus_test.go",
+      "cohere/internal/lint/rules/core/prefer_regex_literals_test.go"
+    ]
+  },
+  "rows": 3089,
+  "sources": 3089
+}

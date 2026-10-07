@@ -1,0 +1,36 @@
+| Package | PASS seconds | Evidence |
+|---|---:|---|
+| helpers | 98.529s | root.log |
+| batch10 | 136.001s | all-batches.log.gz |
+| batch11 | 43.602s | all-batches.log.gz |
+| batch12 | 28.936s | all-batches.log.gz |
+| batch13 | 87.398s | all-batches.log.gz |
+| batch14 | 117.434s | all-batches.log.gz |
+| batch15 | 156.445s | all-batches.log.gz |
+| batch16 | 29.990s | all-batches.log.gz |
+| batch17 | 29.547s | all-batches.log.gz |
+| batch18 | 92.471s | all-batches.log.gz |
+| batch19 | 40.619s | all-batches.log.gz |
+| batch2 | 114.635s | batch2-complete.log |
+| batch20 | 389.198s | all-batches.log.gz |
+| batch21 | 207.077s | all-batches.log.gz |
+| batch22 | 51.153s | all-batches.log.gz |
+| batch23 | 170.779s | all-batches.log.gz |
+| batch24 | 264.949s | all-batches.log.gz |
+| batch25 | 22.724s | all-batches.log.gz |
+| batch26 | 52.540s | all-batches.log.gz |
+| batch27 | 106.044s | all-batches.log.gz |
+| batch28 | 55.233s | all-batches.log.gz |
+| batch29 | 216.747s | all-batches.log.gz |
+| batch3 | 139.734s | all-batches.log.gz |
+| batch30 | 30.847s | all-batches.log.gz |
+| batch31 | 39.906s | all-batches.log.gz |
+| batch32 | 40.026s | all-batches.log.gz |
+| batch33 | 67.718s | first-batch33.log |
+| batch34 | 0.183s | all-batches.log.gz |
+| batch4 | 81.020s | all-batches.log.gz |
+| batch5 | 82.070s | all-batches.log.gz |
+| batch6 | 162.761s | all-batches.log.gz |
+| batch7 | 28.649s | all-batches.log.gz |
+| batch8 | 223.606s | all-batches.log.gz |
+| batch9 | 57.233s | all-batches.log.gz |

@@ -1,0 +1,20 @@
+{
+  "Consumers": {
+    "array-callback-return": 166,
+    "consistent-return": 272,
+    "no-unreachable-loop": 71,
+    "react-hooks/rules-of-hooks": 555
+  },
+  "Sources": 801,
+  "Nodes": 12508,
+  "Queries": 12508,
+  "ThrowableQueries": 0,
+  "PositiveQueries": 0,
+  "WrapperKinds": {
+    "KindAsExpression": 8,
+    "KindNonNullExpression": 2,
+    "KindParenthesizedExpression": 35,
+    "KindSatisfiesExpression": 2,
+    "KindTypeAssertionExpression": 1
+  }
+}

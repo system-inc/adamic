@@ -1,0 +1,20 @@
+{
+  "build_flags": [
+    false,
+    true,
+    true,
+    false
+  ],
+  "canonical_dependencies": 5991,
+  "consumers": {
+    "@next/next/no-html-link-for-pages": 481,
+    "@typescript-eslint/no-empty-object-type": 65,
+    "no-restricted-exports": 480,
+    "no-restricted-imports": 1266
+  },
+  "fold_dependencies": 2990,
+  "parsed_class_bodies": 1827,
+  "sample_rows": 7485,
+  "unicode_ranges": 336,
+  "unique_strings": 957
+}

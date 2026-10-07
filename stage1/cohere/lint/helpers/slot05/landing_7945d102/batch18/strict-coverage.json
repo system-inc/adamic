@@ -1,0 +1,20 @@
+{
+  "Consumers": {
+    "react/no-direct-mutation-state": 160,
+    "react/no-this-in-sfc": 215,
+    "react/prefer-es6-class": 163,
+    "react/require-render-return": 223
+  },
+  "Sources": 630,
+  "Nodes": 9812,
+  "Queries": 9812,
+  "ThrowableQueries": 0,
+  "PositiveQueries": 51,
+  "WrapperKinds": {
+    "KindAsExpression": 4,
+    "KindNonNullExpression": 2,
+    "KindParenthesizedExpression": 41,
+    "KindSatisfiesExpression": 2,
+    "KindTypeAssertionExpression": 1
+  }
+}
