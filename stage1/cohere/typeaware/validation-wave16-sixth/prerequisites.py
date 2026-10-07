@@ -15,13 +15,18 @@ refs = [r for r in git('for-each-ref', '--format=%(refname)', 'refs/remotes/orig
         if not r.endswith('/HEAD')]
 result = {'head': git('rev-parse', 'HEAD'), 'native_declarations': {},
           'production_sources': {}, 'nproc': subprocess.check_output(['nproc'], text=True).strip()}
+sources = {}
 for ref in refs:
-    paths = git('ls-tree', '-r', '--name-only', ref, 'stage1/cohere').splitlines()
+    paths = git('ls-tree', '-r', ref, 'stage1/cohere').splitlines()
     matches = []
-    for path in paths:
+    for entry in paths:
+        metadata, path = entry.split('\t', 1)
+        blob = metadata.split()[2]
         if Path(path).suffix not in {'.a', '.ts'} or '/validation' in path or '/testdata/' in path:
             continue
-        source = git('show', ref + ':' + path)
+        if blob not in sources:
+            sources[blob] = git('show', blob)
+        source = sources[blob]
         for symbol in symbols:
             if re.search(r'\b(?:function|class)\s+' + re.escape(symbol) + r'\b', source):
                 matches.append({'path': path, 'symbol': symbol})

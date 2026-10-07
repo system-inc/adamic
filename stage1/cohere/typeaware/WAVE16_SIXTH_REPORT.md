@@ -85,3 +85,18 @@ then implement these three validators in their own .a modules and run the full
 requested comparisons. Shared .a/profile/suggestion harness changes alone do
 not supply that substrate. This unit stops with these three claims incomplete,
 without claiming another set.
+
+## Continuation dependency refresh
+
+Fetched all origin heads again and reran prerequisites.py: 416 heads,
+0 declarations of the five known native prerequisite entry points. The
+audit now caches identical Git blobs; its search criteria are unchanged.
+Main remains e011f8f6. The bridge advanced to eb6df00e with build-flag and
+timing evidence, without a React HIR frontend. The harness is f4d98cab;
+its profile and suggestion work does not implement React HIR. React workers
+40c55da4 and 5de178b9 still explicitly document their missing HIR substrate.
+
+No rule implementation or shared file changed, so no native rule test or
+benchmark was rerun. The production Go reference test result above belongs
+to the prior run. All three existing claims remain incomplete. No new claims
+were made. Stop-on-prerequisite instructions still apply.
