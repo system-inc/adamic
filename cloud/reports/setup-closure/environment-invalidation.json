@@ -1,0 +1,23 @@
+{
+  "loop": 1,
+  "seconds": 2.3423713029987994,
+  "instrument": [
+    "python3",
+    "cloud/setup-modules.py",
+    "/workspace/adamic",
+    "/tmp/adamic-gate/closure-proof/worker-tools"
+  ],
+  "build_flags": {
+    "commit": "5794c87661b030d24cee457bbec4900f260e025d",
+    "nproc": 5,
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": true,
+    "GOFLAGS": "-trimpath",
+    "load_before": "1.07 2.14 1.72 2/738 221117",
+    "load_after": "1.07 2.14 1.72 2/737 221438"
+  },
+  "stdout": "setup: module dependencies downloaded and verified gate closure (12 downloaded modules); step-duration=2.303s\n"
+}

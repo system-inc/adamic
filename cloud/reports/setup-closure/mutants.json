@@ -1,0 +1,72 @@
+[
+  {
+    "mutant": "key-manifests",
+    "test": "Modules.test_key_components",
+    "exit": 1
+  },
+  {
+    "mutant": "key-version",
+    "test": "Modules.test_key_components",
+    "exit": 1
+  },
+  {
+    "mutant": "key-environment",
+    "test": "Modules.test_key_components",
+    "exit": 1
+  },
+  {
+    "mutant": "key-helper",
+    "test": "Modules.test_key_components",
+    "exit": 1
+  },
+  {
+    "mutant": "cache-st_mode",
+    "test": "Modules.test_every_cache_field",
+    "exit": 1
+  },
+  {
+    "mutant": "cache-st_size",
+    "test": "Modules.test_every_cache_field",
+    "exit": 1
+  },
+  {
+    "mutant": "cache-st_mtime_ns",
+    "test": "Modules.test_every_cache_field",
+    "exit": 1
+  },
+  {
+    "mutant": "cache-st_ctime_ns",
+    "test": "Modules.test_every_cache_field",
+    "exit": 1
+  },
+  {
+    "mutant": "cache-st_ino",
+    "test": "Modules.test_every_cache_field",
+    "exit": 1
+  },
+  {
+    "mutant": "cache-path",
+    "test": "Modules.test_every_cache_field",
+    "exit": 1
+  },
+  {
+    "mutant": "zip-integrity",
+    "test": "ClosureChecks.test_archive_integrity",
+    "exit": 1
+  },
+  {
+    "mutant": "extracted-integrity",
+    "test": "ClosureChecks.test_extracted_integrity",
+    "exit": 1
+  },
+  {
+    "mutant": "manifest-integrity",
+    "test": "ClosureChecks.test_go_mod_integrity",
+    "exit": 1
+  },
+  {
+    "mutant": "mandatory-all-modules",
+    "test": "ClosureIntegration.test_unreachable_require_cannot_fail_mandatory_setup",
+    "exit": 1
+  }
+]

@@ -4,7 +4,7 @@
 # Every cloud environment runs it (Codex's setup and maintenance scripts, Claude's, a plain VM), it's
 # safe to run again, and it prints how long each step took, so time-to-green is a number we watch.
 #
-#   bash cloud/setup.sh [--warm-tests] [--gate-inputs]   then: source the env.sh path printed below
+#   bash cloud/setup.sh [--warm-tests] [--gate-inputs] [--all-modules]   then: source the env.sh path printed below
 #
 # Go checks its own content-addressed action cache before a warming stamp can skip linking.
 # Test binaries are optional because most workers need one package.
@@ -29,11 +29,13 @@ started=$EPOCHREALTIME
 loadBefore=$(cat /proc/loadavg)
 warmTests=false
 gateInputs=false
+allModules=false
 for argument in "$@"; do
 	case "$argument" in
 		--warm-tests) warmTests=true ;;
 		--gate-inputs) gateInputs=true ;;
-		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--gate-inputs]" >&2; exit 2 ;;
+		--all-modules) allModules=true ;;
+		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--gate-inputs] [--all-modules]" >&2; exit 2 ;;
 	esac
 done
 step() {
@@ -166,7 +168,9 @@ while [ ! -f "$run/go-ready" ]; do
 	sleep 0.05
 done
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
-bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-modules.py" "$repository" "$tools" > "$run/modules.log" 2>&1 || { cat "$run/modules.log"; return 1; }
+moduleArguments=()
+"$allModules" && moduleArguments=(--all-modules)
+bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-modules.py" "$repository" "$tools" "${moduleArguments[@]}" > "$run/modules.log" 2>&1 || { cat "$run/modules.log"; return 1; }
 cat "$run/modules.log"
 step "module dependencies ready"
 }
@@ -181,7 +185,7 @@ prepareGateCorpora() {
 # have succeeded; wait for every child even when one fails, so no installer outlives setup.
 # Bound the preparation shells as well as their individual children. Observed
 # complete setup was 32.8s; 30m also allows cold downloads and toolchain work.
-export started repository cloudSource tools gate run gateInputs gateInputsRoot markdownDependencies goArchitecture nodeArchitecture llvmArchitecture ADAMIC_BOUNDED_REPORT
+export started repository cloudSource tools gate run gateInputs allModules gateInputsRoot markdownDependencies goArchitecture nodeArchitecture llvmArchitecture ADAMIC_BOUNDED_REPORT
 export -f bounded step prepareGo prepareGoAndSignal prepareClang prepareNode prepareSubmodules prepareGateCorpora
 for boundedTool in cat awk mkdir install mktemp realpath uname ls sort dirname ln mv grep nproc sha256sum cut head; do
  export -f "$boundedTool"
@@ -258,7 +262,7 @@ step "build cache warm"
 
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
-echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(bounded 30 go version) clang=$(bounded 30 clang --version | head -n 1) node=$(bounded 30 node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests gate-inputs=$gateInputs load-before=$loadBefore load-after=$(cat /proc/loadavg)"
+echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(bounded 30 go version) clang=$(bounded 30 clang --version | head -n 1) node=$(bounded 30 node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests gate-inputs=$gateInputs all-modules=$allModules load-before=$loadBefore load-after=$(cat /proc/loadavg)"
 step "done on $(nproc) processors (cgroup cpu.max: $cpuQuota), $memory"
 echo "setup: source $tools/env.sh"
 echo "setup: logs $run"
