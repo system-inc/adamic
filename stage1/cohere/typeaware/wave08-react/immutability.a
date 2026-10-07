@@ -1,5 +1,7 @@
 // Partial pass kernel. HIR lowering, SSA, transfer and reporting are not wired.
 import { panic } from 'adamic';
+// Pinned parser SyntaxKind listener declaration for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [307];
 export class AbstractValue {
     readonly kind: number;
     readonly reasons: number;

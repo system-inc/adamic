@@ -8,6 +8,8 @@ import { ModuleLinks } from './module_links.a';
 import { WaveSymbol } from './wave08_symbol.a';
 import { SyntaxMetadata } from './syntax_metadata.a';
 import { Diagnostic } from './diagnostic.ts';
+// Pinned parser SyntaxKind listener declaration for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [307];
 
 export class CycleFile {
     readonly rules: Rules;

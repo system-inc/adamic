@@ -6,6 +6,8 @@ import { Diagnostic } from '../diagnostic.ts';
 import { Declarations } from './declarations.a';
 import { readTextFile, panic } from 'adamic';
 import { Parser } from '../../../typescript/parser/parser.ts';
+// Pinned parser SyntaxKind listener declaration for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [214];
 const message =
     'This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.';
 export class NoUnclearedRaceTimeout {

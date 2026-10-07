@@ -4,6 +4,8 @@ import { Bindings } from '../bindings.ts';
 import { Reassign } from '../reassign.ts';
 import { WaveSymbol } from '../wave08_symbol.a';
 import { ProcessFile } from '../wave08-next/process_context.a';
+// Pinned parser SyntaxKind listener declaration for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [79];
 export class Globals {
     readonly rules: Rules;
     readonly file: ProcessFile;

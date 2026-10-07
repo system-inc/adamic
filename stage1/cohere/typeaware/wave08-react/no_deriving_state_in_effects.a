@@ -1,6 +1,8 @@
 // Partial pass kernel over supplied HIR events. Source lowering and the candidate
 // gather pass are deliberately not replaced by an AST/source-order heuristic.
 import { panic } from 'adamic';
+// Pinned parser SyntaxKind listener declaration for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [307];
 export class EffectInstruction {
     readonly kind: string;
     readonly target: number;

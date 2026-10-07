@@ -1,0 +1,11 @@
+all upstream fixture programs agree, normal and ASan/UBSan: 100
+compiler 77 files, byte equality, normal and ASan/UBSan: 5780 findings 0
+repository 287 files, byte equality, normal and ASan/UBSan: 18485 findings 0
+process-callee compiled, exits 0, empty stderr; production byte oracle catches 6 programs, first byte 164
+blocking-order compiled, exits 0, empty stderr; production byte oracle catches 19 programs, first byte 1690
+wave08-resolved-callee released handle rejected, exit 70
+wave08-program-loads released handle rejected, exit 70
+wave08-symbol-ancestry released handle rejected, exit 70
+compiler median seconds {'oracle': 0.5311851229998865, 'native': 3.9694163329986623} native/Go 7.472755092577226
+repository median seconds {'oracle': 0.21705231799933244, 'native': 0.5451140019995364} native/Go 2.511440591946191
+PASS

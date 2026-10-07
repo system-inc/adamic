@@ -1,5 +1,7 @@
 import type { Rules } from './rules.ts';
 import { WaveSymbol } from './wave08_symbol.a';
+// Pinned parser SyntaxKind listener declaration for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [214, 284];
 
 const message =
     'This loads a module with a CommonJS `require` call. A `require` is an ordinary function call evaluated at runtime, so a missing module or a mistyped path is a crash when the line executes rather than an error the compiler reports, and a bundler cannot see through it to drop the parts of the module nothing uses. Scattered calls also hide what a file depends on, which an import list at the top makes plain. Use an `import` declaration, or `import()` where the load genuinely has to be deferred.';

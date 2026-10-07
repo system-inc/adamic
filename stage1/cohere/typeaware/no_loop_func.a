@@ -3,6 +3,8 @@ import { Bindings } from './bindings.ts';
 import { Reassign } from './reassign.ts';
 import { SyntaxMetadata } from './syntax_metadata.a';
 import { Diagnostic } from './diagnostic.ts';
+// Pinned parser SyntaxKind listener declaration for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [263, 219, 220, 175, 178, 179, 177];
 
 const message =
     'This function is created inside a loop and closes over a variable the loop reassigns, so every iteration builds a function sharing one binding rather than capturing the value it was made with. By the time any of them runs the variable holds whatever the last iteration left, which is why the callbacks all report the same index. Declare the variable with `let` or `const` inside the loop body so each iteration gets its own, or pass the value in as an argument.';

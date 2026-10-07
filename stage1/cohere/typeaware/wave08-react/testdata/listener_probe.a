@@ -1,0 +1,45 @@
+import { listenerKinds as kinds0 } from '../../no_loop_func.a';
+import { listenerKinds as kinds1 } from '../../no_require_imports.a';
+import { listenerKinds as kinds2 } from '../../no_import_cycle_load_time_read.a';
+import { listenerKinds as kinds3 } from '../../wave08-next/no_process_exit_after_output.a';
+import { listenerKinds as kinds4 } from '../../wave08-next/no_uncleared_race_timeout.a';
+import { listenerKinds as kinds5 } from '../../wave08-next/require_blocking_standard_streams.a';
+import { listenerKinds as kinds6 } from '../globals.a';
+import { listenerKinds as kinds7 } from '../immutability.a';
+import { listenerKinds as kinds8 } from '../no_deriving_state_in_effects.a';
+console.log('no_loop_func.a');
+for(const kind of kinds0) {
+    console.log(kind.toString());
+}
+console.log('no_require_imports.a');
+for(const kind of kinds1) {
+    console.log(kind.toString());
+}
+console.log('no_import_cycle_load_time_read.a');
+for(const kind of kinds2) {
+    console.log(kind.toString());
+}
+console.log('wave08-next/no_process_exit_after_output.a');
+for(const kind of kinds3) {
+    console.log(kind.toString());
+}
+console.log('wave08-next/no_uncleared_race_timeout.a');
+for(const kind of kinds4) {
+    console.log(kind.toString());
+}
+console.log('wave08-next/require_blocking_standard_streams.a');
+for(const kind of kinds5) {
+    console.log(kind.toString());
+}
+console.log('wave08-react/globals.a');
+for(const kind of kinds6) {
+    console.log(kind.toString());
+}
+console.log('wave08-react/immutability.a');
+for(const kind of kinds7) {
+    console.log(kind.toString());
+}
+console.log('wave08-react/no_deriving_state_in_effects.a');
+for(const kind of kinds8) {
+    console.log(kind.toString());
+}

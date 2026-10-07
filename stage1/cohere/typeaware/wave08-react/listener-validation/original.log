@@ -1,0 +1,21 @@
+=== RUN   TestWave08AgreementAndMutants
+    wave08_test.go:82: controls: 17666 identical finding bytes; findings 31
+    wave08_test.go:90: controls-asan: 17666 identical finding bytes; findings 31
+=== RUN   TestWave08AgreementAndMutants/loop
+    wave08_test.go:133: loop: exit 0, empty stderr, Go byte oracle catches byte 56
+=== RUN   TestWave08AgreementAndMutants/require
+    wave08_test.go:133: require: exit 0, empty stderr, Go byte oracle catches byte 7433
+=== RUN   TestWave08AgreementAndMutants/cycle
+    wave08_test.go:133: cycle: exit 0, empty stderr, Go byte oracle catches byte 12229
+=== NAME  TestWave08AgreementAndMutants
+    wave08_test.go:147: compiler: 20884 identical finding bytes; findings 28
+    wave08_test.go:148: compiler-asan: 20884 identical finding bytes; findings 28
+    wave08_test.go:147: repository: 19558 identical finding bytes; findings 2
+    wave08_test.go:148: repository-asan: 19558 identical finding bytes; findings 2
+    wave08_test.go:161: released handle panics 70; retaining-registry mutant exits 0 and fails that expectation
+--- PASS: TestWave08AgreementAndMutants (232.88s)
+    --- PASS: TestWave08AgreementAndMutants/loop (11.66s)
+    --- PASS: TestWave08AgreementAndMutants/require (11.50s)
+    --- PASS: TestWave08AgreementAndMutants/cycle (11.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	232.886s

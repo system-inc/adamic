@@ -8,6 +8,8 @@ import { SyntaxMetadata } from '../syntax_metadata.a';
 import { NativeGraph } from './native_graph.a';
 import { ProcessEvent } from './process_flow.a';
 import { panic } from 'adamic';
+// Pinned parser SyntaxKind listener declaration for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [307];
 const template =
     "This file runs as a process (<<processReason>>), and this `process.exit()` runs after a write to stdout or stderr before the process has called `blockStandardStreams()`<<exitCount>>. Node writes to a pipe asynchronously, and `process.exit()` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's `blockStandardStreams()` (`source/system/StandardStreams`) before anything that can exit: first in the module, or first in the main it runs.";
 export class RequireBlockingStandardStreams {
