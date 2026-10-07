@@ -1,0 +1,9 @@
+export type ClassValues = { literals: string[]; templates: string[]; };
+// Surface readers own the literal/template representation; this dispatcher returns it unchanged.
+export function readClassValues(node: number, kind: string, attributeValues: (node: number) => ClassValues, calleeValues: (node: number) => ClassValues, variableValues: (node: number) => ClassValues): ClassValues {
+    if(node < 0) { return { literals: [], templates: [] }; }
+    if(kind === 'JsxAttribute') { return attributeValues(node); }
+    if(kind === 'CallExpression') { return calleeValues(node); }
+    if(kind === 'VariableDeclaration') { return variableValues(node); }
+    return { literals: [], templates: [] };
+}

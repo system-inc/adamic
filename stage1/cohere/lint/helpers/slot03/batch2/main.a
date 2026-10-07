@@ -1,5 +1,6 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from '../../options_json.ts';
+import { readClassValues, type ClassValues } from './read_class_values.a';
 import { holeEdges } from './hole_edges.a';
 import { isIntrinsicElementNamed } from './intrinsic_element_named.a';
 const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
@@ -24,4 +25,26 @@ for(const item of json.node(json.field(root, 'edges')).children) {
     const trailing = json.node(json.field(item, 'trailing')).text === 'true';
     const edges = holeEdges(before, after, first, last, { leading, trailing });
     console.log(`${edges.leading},${edges.trailing}`);
+}
+
+function valuesAt(json: OptionsJson, item: number, name: string): ClassValues {
+    const value = json.field(item, name);
+    const literals: string[] = [];
+    const templates: string[] = [];
+    for(const child of json.node(json.field(value, 'literals')).children) { literals.push(json.node(child).text); }
+    for(const child of json.node(json.field(value, 'templates')).children) { templates.push(json.node(child).text); }
+    return { literals, templates };
+}
+for(const item of json.node(json.field(root, 'dispatch')).children) {
+    const node = json.node(json.field(item, 'node')).number;
+    const kind = json.node(json.field(item, 'kind')).text;
+    const attribute = valuesAt(json, item, 'attribute');
+    const callee = valuesAt(json, item, 'callee');
+    const variable = valuesAt(json, item, 'variable');
+    let route = '';
+    const result = readClassValues(node, kind,
+        (actual: number): ClassValues => { if(actual !== node) { panic('changed attribute node'); } route = 'Attribute'; return attribute; },
+        (actual: number): ClassValues => { if(actual !== node) { panic('changed callee node'); } route = 'Callee'; return callee; },
+        (actual: number): ClassValues => { if(actual !== node) { panic('changed variable node'); } route = 'Variable'; return variable; });
+    console.log(`${route}:${result.literals.join('|')}:${result.templates.join('|')}`);
 }

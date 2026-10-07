@@ -31,6 +31,9 @@ func main() {
 	scan.Buffer(make([]byte, 4096), 16<<20)
 	rows := []map[string]any{}
 	edgesRows := []map[string]any{}
+	dispatchRows := []map[string]any{}
+	dispatchWant := []string{}
+	nextNode := 0
 	edgesWant := []string{}
 	observeEdges := func(before, after string, first, last, leading, trailing bool) {
 		edgesRows = append(edgesRows, map[string]any{"before": before, "after": after, "first": fmt.Sprint(first), "last": fmt.Sprint(last), "leading": fmt.Sprint(leading), "trailing": fmt.Sprint(trailing)})
@@ -54,7 +57,21 @@ func main() {
 			fmt.Println(jsx.IsIntrinsicElementNamed(n, name))
 		}
 	}
+	observeDispatch := func(n *ast.Node) {
+		id, kind := -1, ""
+		if n != nil {
+			id = nextNode
+			nextNode++
+			kind = strings.TrimPrefix(n.Kind.String(), "Kind")
+		}
+		for _, settings := range []tailwind.ClassLiteralSettings{tailwind.DefaultClassLiteralSettings(), {AttributeNames: []string{"data-class", "tw", "className"}, CalleeNames: []string{"cn", "clsx", "mergeClassNames"}, VariablePatterns: []string{".*", "["}}} {
+			values, route, a, c, v := tailwind.AdamicDispatch(n, settings)
+			dispatchRows = append(dispatchRows, map[string]any{"node": id, "kind": kind, "attribute": a, "callee": c, "variable": v})
+			dispatchWant = append(dispatchWant, route+":"+strings.Join(values.Literals, "|")+":"+strings.Join(values.Templates, "|"))
+		}
+	}
 	observe(nil)
+	observeDispatch(nil)
 	parse := func(file, source string) {
 		if !strings.HasPrefix(file, "/") {
 			file = "/" + file
@@ -73,6 +90,7 @@ func main() {
 				return false
 			}
 			observe(n)
+			observeDispatch(n)
 			if n.Kind == ast.KindTemplateExpression {
 				template := n.AsTemplateExpression()
 				if template.Head != nil && template.TemplateSpans != nil {
@@ -101,7 +119,7 @@ func main() {
 		parse(row.File, row.Source)
 	}
 	must(scan.Err())
-	parse("controls.tsx", `const x = <><a/><A/><Foo.a/><svg:a/><img/><Image/><script/><link/><é/><😀/></>; const a = 'a'; const escaped = \u0061;`)
+	parse("controls.tsx", `const x = <><a/><A/><Foo.a/><svg:a/><img/><Image/><script/><link/><é/><😀/></>; const a = 'a'; const escaped = \u0061; const buttonClassName = `+"`x${true ? 'a' : 'b'}`"+`; mergeClassNames('flex'); theme.mergeClassNames('no'); const view=<div className={'block'} data-class={'p-2'}/>;`)
 	for _, before := range []string{"", "x", " ", "\t", "\n", "\r", "\v", "\f", "x ", " x", "é", "😀", "\u00a0", "\u2003", "\x00"} {
 		for _, after := range []string{"", "x", " ", "\t", "\n", "\r", "\v", "\f", "x ", " x", "é", "😀", "\u00a0", "\u2003", "\x00"} {
 			for flags := 0; flags < 16; flags++ {
@@ -112,7 +130,10 @@ func main() {
 	for _, line := range edgesWant {
 		fmt.Println(line)
 	}
-	data, e := json.Marshal(map[string]any{"intrinsic": rows, "edges": edgesRows})
+	for _, line := range dispatchWant {
+		fmt.Println(line)
+	}
+	data, e := json.Marshal(map[string]any{"intrinsic": rows, "edges": edgesRows, "dispatch": dispatchRows})
 	must(e)
 	must(os.WriteFile(os.Args[2], data, 0644))
 }

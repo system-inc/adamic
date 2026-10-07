@@ -11,13 +11,30 @@ import (
 
 func batch2Oracle(t *testing.T) (string, []byte) {
 	t.Helper()
-	verifyCoverageAt(t, "batch2/testdata", []string{"/jsx.IsIntrinsicElementNamed", "/tailwind.holeEdges"})
+	verifyCoverageAt(t, "batch2/testdata", []string{"/jsx.IsIntrinsicElementNamed", "/tailwind.holeEdges", "/tailwind.*ClassLiteralReader.readClassValues"})
 	root, _ := filepath.Abs("../../../../../cohere")
 	here, _ := filepath.Abs("batch2/testdata")
 	directory := t.TempDir()
 	virtual := filepath.Join(root, "adamic_slot03_batch2.go")
 	overlay := filepath.Join(directory, "overlay.json")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(here, "oracle.go"), filepath.Join(root, "internal/lint/rules/tailwind/adamic_slot03_batch2.go"): filepath.Join(here, "tailwind_export.go")}})
+	original := filepath.Join(root, "internal/lint/rules/tailwind/class_literals.go")
+	source, err := os.ReadFile(original)
+	if err != nil {
+		t.Fatal(err)
+	}
+	modified := string(source)
+	for _, surface := range []struct{ method, route string }{{"attributeValues", "Attribute"}, {"calleeValues", "Callee"}, {"variableValues", "Variable"}} {
+		anchor := "return r." + surface.method + "(node)"
+		if strings.Count(modified, anchor) != 1 {
+			t.Fatal("Go dispatcher trace anchor changed")
+		}
+		modified = strings.Replace(modified, anchor, "adamicRoute += \""+surface.route+"\"; "+anchor, 1)
+	}
+	traced := filepath.Join(directory, "class_literals.go")
+	if err = os.WriteFile(traced, []byte(modified), 0644); err != nil {
+		t.Fatal(err)
+	}
+	data, err := json.Marshal(map[string]any{"Replace": map[string]string{original: traced, virtual: filepath.Join(here, "oracle.go"), filepath.Join(root, "internal/lint/rules/tailwind/adamic_slot03_batch2.go"): filepath.Join(here, "tailwind_export.go")}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,10 +64,10 @@ func TestBatch2Helpers(t *testing.T) {
 // Not parallel: compiling semantic variants run serially with sanitizer observations.
 func TestBatch2Mutants(t *testing.T) {
 	cases, want := batch2Oracle(t)
-	for _, mutant := range []struct{ file, old, new string }{{"intrinsic_element_named.a", "kind === 'Identifier'", "kind !== 'StringLiteral'"}, {"hole_edges.a", "leading = template.leading;", "leading = false;"}} {
+	for _, mutant := range []struct{ file, old, new string }{{"intrinsic_element_named.a", "kind === 'Identifier'", "kind !== 'StringLiteral'"}, {"hole_edges.a", "leading = template.leading;", "leading = false;"}, {"read_class_values.a", "return calleeValues(node);", "return attributeValues(node);"}} {
 		t.Run(mutant.file, func(t *testing.T) {
 			scratch := t.TempDir()
-			for _, file := range []string{"intrinsic_element_named.a", "hole_edges.a", "main.a"} {
+			for _, file := range []string{"intrinsic_element_named.a", "hole_edges.a", "read_class_values.a", "main.a"} {
 				data, err := os.ReadFile(filepath.Join("batch2", file))
 				if err != nil {
 					t.Fatal(err)

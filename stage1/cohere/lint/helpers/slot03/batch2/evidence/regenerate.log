@@ -2,7 +2,8 @@ Capture completed with known external Tailwind/corpus failures; this is not a pa
 {
   "symbols": [
     "jsx.IsIntrinsicElementNamed",
-    "tailwind.holeEdges"
+    "tailwind.holeEdges",
+    "tailwind.*ClassLiteralReader.readClassValues"
   ],
   "rules": [
     "@next/next/google-font-display",

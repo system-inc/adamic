@@ -1,7 +1,8 @@
 {
   "symbols": [
     "jsx.IsIntrinsicElementNamed",
-    "tailwind.holeEdges"
+    "tailwind.holeEdges",
+    "tailwind.*ClassLiteralReader.readClassValues"
   ],
   "rules": [
     "@next/next/google-font-display",
