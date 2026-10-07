@@ -1,4 +1,7 @@
+import type { Suggestion } from './suggestions.a';
+
 export class Finding {
+    readonly suggestions: Suggestion[] = [];
     editStart: number;
     editEnd: number;
     readonly rule: string;

@@ -8,6 +8,12 @@ The green-step and selected-node measurement sections retain the expression
 slice's history. Current whole-file scope appears in the final continuation
 section and [WHOLE_REPORT.md](WHOLE_REPORT.md).
 
+The JSX continuation is now in [JSX_REPORT.md](JSX_REPORT.md). The historical
+JSX exclusions below describe the earlier slices. Current TSX and JavaScript
+mode build all thirteen JSX AST kinds and compare their trees with Go, then
+run the batch-8 React listeners directly. General diagnostic/recovery parity,
+binder fields and full JSX application-code compilation remain outside scope.
+
 ## 1. Strong AST parent and child pointers are cycle-capable
 
 Go's `finishNode` gives every child a strong Parent pointer. Go's tracing

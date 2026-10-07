@@ -1,0 +1,5 @@
+{
+  "name": "no-octal-escape mutant from batch 8",
+  "from": "if(width !== 0)",
+  "to": "if(width < 0)"
+}
