@@ -1,0 +1,37 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-template-expression, max-classes-per-file -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// Missing, explicitly undefined, empty and computed messages use the same default.
+class MissingError extends SyntaxError {
+    readonly code = 7;
+}
+class ExplicitError extends MissingError {
+    constructor(message?: string) {
+        super(message, { cause: undefined });
+    }
+}
+function show(message?: string): void {
+    const errors: Error[] = [
+        new Error(message),
+        new TypeError(message),
+        new RangeError(message),
+        new ReferenceError(message),
+        new SyntaxError(message),
+        new URIError(message),
+        new EvalError(message),
+        new MissingError(message),
+        new ExplicitError(message),
+    ];
+    for(const error of errors) {
+        try {
+            throw error;
+        }
+        catch(caught) {
+            if(caught instanceof Error) console.log(`${caught.toString()}|${caught.message}|${typeof caught.cause}`);
+        }
+    }
+}
+show();
+show(undefined);
+show('');
+show(`built-${3}`);
+console.log(new Error(undefined, undefined).toString());
+console.log(new Error('options', {}).toString());

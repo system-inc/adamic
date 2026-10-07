@@ -162,6 +162,17 @@ func (l *lowering) refineExceptionPaths() {
 					return reflect.ValueOf(write)
 				}
 			}
+			if node, ok := value.Interface().(ir.Loop); ok {
+				// Each body entry follows a successful condition, including back edges.
+				// Earlier iterations supply no facts; writes in the body still invalidate them.
+				node.Condition = transform(reflect.ValueOf(node.Condition), map[string]int{}).Interface().(ir.Expression)
+				inside := map[string]int{}
+				assumePresence(node.Condition, true, inside)
+				node.Body = transform(reflect.ValueOf(node.Body), inside).Interface().([]ir.Statement)
+				node.Update = transform(reflect.ValueOf(node.Update), inside).Interface().([]ir.Statement)
+				clear(facts)
+				return reflect.ValueOf(node)
+			}
 			if node, ok := value.Interface().(ir.Try); ok {
 				node.Body = transform(reflect.ValueOf(node.Body), map[string]int{}).Interface().([]ir.Statement)
 				node.Catch = transform(reflect.ValueOf(node.Catch), map[string]int{}).Interface().([]ir.Statement)
@@ -228,7 +239,14 @@ func (l *lowering) refineExceptionPaths() {
 				if present(typed.Value, 0) {
 					facts[presenceKey(ir.Property{Object: typed.Object, Name: typed.Name})] = 3
 				}
-			case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort, ir.SetIndex, ir.ArrayPush, ir.Loop, ir.ForOf, ir.Try, ir.Switch:
+			case ir.ArrayPush, ir.RegExpCall:
+				// These runtime operations mutate objects but cannot assign a source binding.
+				for key := range facts {
+					if _, local := roots[key]; !local {
+						delete(facts, key)
+					}
+				}
+			case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort, ir.SetIndex, ir.Loop, ir.ForOf, ir.Try, ir.Switch:
 				clear(facts)
 			default:
 				if expression, ok := node.(ir.Expression); ok && !pathPureKind(expression) {

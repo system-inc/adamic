@@ -1,0 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-template-expression, max-classes-per-file -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// Explicit errors pass through interface methods, subclass overrides and callbacks.
+interface FailerInterface {
+    readonly fail: (message: string) => string;
+}
+class Failer implements FailerInterface {
+    fail(message: string): string {
+        throw new EvalError(message);
+    }
+}
+class UriFailer extends Failer {
+    fail(message: string): string {
+        throw new URIError(message, { cause: false });
+    }
+}
+function use(failer: FailerInterface): void {
+    try {
+        console.log(failer.fail(`one-${1}!`));
+    }
+    catch(error) {
+        if(error instanceof EvalError) console.log(error.toString());
+        if(error instanceof URIError) console.log(`${error.toString()} ${typeof error.cause}`);
+    }
+    finally {
+        console.log('finished');
+    }
+}
+use(new Failer());
+use(new UriFailer());

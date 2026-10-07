@@ -163,7 +163,6 @@ func TestDestructuredMethodsCannotLoadOwnSlots(t *testing.T) {
 	for _, source := range []string{
 		"const own={next():number{return 1;}};const {next}=own;console.log(`${next()}`);",
 		"class Box{next():number{return 1;}}const own=new Box();const {next}=own;console.log(`${next()}`);",
-		"class Box{next():number{return 1;}}const own=new Box();const view:{next:()=>number}=own;console.log(`${view.next()}`);",
 		"const own={next():number{return 1;}};const view:{next:()=>number}=own;const {next}=view;console.log(`${next()}`);",
 		"const own={};const {constructor}=own;",
 	} {
@@ -203,5 +202,28 @@ func TestIteratorSymbolKeysAreNotStringKeys(t *testing.T) {
 	var gap *NotYet
 	if !errors.As(err, &gap) || !strings.Contains(gap.What, "symbol-key storage") {
 		t.Fatalf("got %v, want explicit symbol-key storage refusal", err)
+	}
+}
+
+func TestCallbackTypedClassMethodCallBindsReceiver(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, "class Box{next():number{return 1;}}const own=new Box();const view:{next:()=>number}=own;console.log(`${view.next()}`);")
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := false
+	walk(program.Main, func(node any) bool {
+		if call, ok := node.(ir.CallClosure); ok {
+			if property, ok := call.Closure.(ir.Property); ok && property.Name == "next" {
+				found = true
+				if !property.Method {
+					t.Error("callback-typed class method must bind its receiver")
+				}
+			}
+		}
+		return true
+	})
+	if !found {
+		t.Fatal("missing callback-typed method call")
 	}
 }

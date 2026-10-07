@@ -18,7 +18,6 @@ func TestDocumentedStageZeroGaps(t *testing.T) {
 	}{
 		{"multiplePush.ts", "push with other than one value", "a,b\n", nil},
 		{"emptyFallback.ts", "an array of never", "0\n", nil},
-		{"repeatInTry.ts", "a try around repeat", "xxx\n", []string{"a", "b", "c"}},
 	} {
 		t.Run(gap.file, func(t *testing.T) {
 			t.Parallel()
@@ -40,5 +39,28 @@ func TestDocumentedStageZeroGaps(t *testing.T) {
 			}
 			t.Logf("%s; Node %q", err, gap.output)
 		})
+	}
+}
+
+// Dynamic repeat now has a catchable count/length guard. Keep the original
+// gap source as a positive probe rather than expecting an obsolete refusal.
+func TestRepeatInTryGapClosed(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join("gaps", "repeatInTry.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program := lowered(t, path)
+	for _, args := range [][]string{nil, {"a", "b", "c"}} {
+		want := onNode(t, path, args...)
+		got, binary := natively(t, program, args...)
+		for name, result := range map[string]run{"native": got, "JavaScript": onJavaScriptBackend(t, program, args...)} {
+			if result.exitCode != want.exitCode || string(result.stdout) != string(want.stdout) || string(result.stderr) != string(want.stderr) {
+				t.Errorf("%s: %+v; Node: %+v", name, result, want)
+			}
+		}
+		if report := leaks(t, program, binary, args...); report != "" {
+			t.Error(report)
+		}
 	}
 }

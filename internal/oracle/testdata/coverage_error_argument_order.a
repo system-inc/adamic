@@ -1,0 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-template-expression -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// Constructor arguments run left to right; a throw skips later arguments.
+function message(fail: boolean): string {
+    console.log('message');
+    if(fail) throw new TypeError('message failed');
+    return `message-${1}`;
+}
+function cause(fail: boolean): Error {
+    console.log('cause');
+    if(fail) throw new URIError('cause failed');
+    return new SyntaxError(`cause-${2}`);
+}
+function make(first: boolean, second: boolean): void {
+    try {
+        throw new EvalError(message(first), { cause: cause(second) });
+    }
+    catch(error) {
+        if(error instanceof Error) {
+            console.log(error.toString());
+            if(error.cause instanceof SyntaxError) console.log(error.cause.toString());
+        }
+    }
+}
+make(false, false);
+make(true, false);
+make(false, true);

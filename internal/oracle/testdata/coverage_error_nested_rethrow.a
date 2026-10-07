@@ -1,0 +1,38 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-template-expression, no-undef-init -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// A caught generated error keeps identity through rethrow, finally and a cause wrapper.
+let original: Error | undefined = undefined;
+function fail(): void {
+    try {
+        try {
+            (1.25).toFixed(101);
+        }
+        catch(error) {
+            if(error instanceof RangeError) {
+                original = error;
+                console.log('inner catch');
+            }
+            throw error;
+        }
+        finally {
+            console.log('inner finally');
+        }
+    }
+    catch(error) {
+        if(error instanceof Error) {
+            console.log(`${error === original} ${error.toString()}`);
+            throw new SyntaxError(`wrapped-${2}`, { cause: error });
+        }
+    }
+    finally {
+        console.log('outer finally');
+    }
+}
+try {
+    fail();
+}
+catch(error) {
+    if(error instanceof SyntaxError && error.cause instanceof RangeError) {
+        console.log(`${error.cause === original} ${error.message} ${error.cause.name}`);
+    }
+}
+console.log('after');

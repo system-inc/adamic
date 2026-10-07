@@ -1,0 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-template-expression -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// Invalid indexes and reference elements preserve the source and evaluate the replacement first.
+const source = [`a-${1}`, `b-${2}`];
+function replacement(): string {
+    console.log('replacement');
+    return `new-${3}`;
+}
+for(const index of [-Infinity, -3, -2.9, -0.9, NaN, 1.9, 2, Infinity]) {
+    try {
+        console.log(source.with(index, replacement()).join('|'));
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(`${error.name} ${error.message}`);
+    }
+    console.log(source.join('|'));
+}

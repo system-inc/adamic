@@ -9,6 +9,10 @@ root = Path(__file__).resolve().parents[1]
 logs = Path('/tmp/adamic-counts-mutants')
 logs.mkdir(exist_ok=True)
 mutants = [
+    ('loop-presence-unproved', 'internal/lower/exception_paths.go',
+     'if node, ok := value.Interface().(ir.Loop); ok {',
+     'if node, ok := value.Interface().(ir.Loop); ok && false {',
+     './internal/lower', 'TestLoopPresenceSurvivesRuntimeMutation$', 'loop condition proves cursor present'),
     ('unknown-store-ignored', 'internal/lower/exception_bounds.go',
      'unknown[name] = true\n\t\t\t\tbreak', 'continue',
      './internal/lower', 'TestGeneratedGuardFactsIncludeUnknownStores$', 'must remain throwing'),

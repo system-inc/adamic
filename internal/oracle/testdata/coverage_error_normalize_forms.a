@@ -1,0 +1,16 @@
+// Dynamic forms over a constant receiver remain catchable, including prototype calls.
+function show(form: string): void {
+    try {
+        console.log(`direct ${'é'.normalize(form)}`);
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.toString());
+    }
+    try {
+        console.log(`prototype ${String.prototype.normalize.call('é', form)}`);
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.toString());
+    }
+}
+for(const form of ['NFC', 'NFD', 'NFKC', 'NFKD', '', 'nfc']) show(form);

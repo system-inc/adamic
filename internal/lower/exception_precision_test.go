@@ -217,3 +217,27 @@ func TestRepeatRefusalChecksResultLength(t *testing.T) {
 		t.Fatalf("small constant repeat is safe, got %q", failing)
 	}
 }
+
+func TestLoopPresenceSurvivesRuntimeMutation(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `
+interface Link { readonly label: string; readonly pattern: RegExp; next: Link | undefined; }
+const root: Link = { label: 'root', pattern: /a/g, next: undefined };
+let cursor: Link | undefined = root;
+const labels: string[] = [];
+while (cursor !== undefined) {
+    labels.push(cursor.pattern.test('a') ? cursor.label : 'absent');
+    cursor = cursor.next;
+}
+console.log(labels.join('|'));
+`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	walk(program.Main, func(node any) bool {
+		if call, ok := node.(ir.Call); ok && program.Functions[call.Function].Name == "error_defined" {
+			t.Error("loop condition proves cursor present; runtime operations cannot reassign it")
+		}
+		return true
+	})
+}
