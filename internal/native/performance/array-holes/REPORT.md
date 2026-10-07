@@ -234,3 +234,13 @@ release API identified v49.0.2, which was installed and pinned for this run.
 Toolchain refresh bash cloud/setup.sh --wasi-sdk passed in 31.027s;
 WASI SDK ready at 0.269s, Go build 30.806s, cache 30.990s, nproc 5.
 Go commands use GOPROXY=https://proxy.golang.org|direct. Node remains 24.19.0.
+
+The operation/refusal rerun on the merged branch used:
+
+go test ./internal/lower ./internal/oracle -run TestArrayHoles
+-skip TestArrayHolesWasmtime -count=1 -v -timeout 10m
+
+Lower passed in 0.812s; oracle passed in 36.192s. This includes the ten accepted
+fixtures with sanitizers, native release, JavaScript, Linux LeakSanitizer and
+31 independently executed Node refusal sources. The conservative alias and
+nullable checks pass. No Array operation implementation changed in p2b.
