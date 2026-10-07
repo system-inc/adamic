@@ -17,3 +17,7 @@ Consumers:
 - better-tailwindcss/enforce-shorthand-classes
 - better-tailwindcss/no-conflicting-classes
 - better-tailwindcss/no-unknown-classes
+
+2. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.unescapeCSSIdentifier
+   File: from-wave1-10/css_identifier_unescape.a.
+   Six consumers, zero final blockers removed alone. Math whitespace is tested and pushed at 9a5ef4c2. Refetched all 407 origin refs and checked all 17 distinct claims. This ties the highest unclaimed named fan-out at six. Preserve six-digit hex bounds, exact CSS terminators, Unicode scalar replacement, literal rune escapes and trailing backslashes. Real Go against all six consumer test-file literals and scalar/boundary controls on Node, emitted JavaScript and sanitized native; compiling semantic mutant. Claim pushed before code.
