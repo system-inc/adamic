@@ -1031,6 +1031,9 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	if err != nil {
 		return nil, true, err
 	}
+	if err := l.weakArrayCallback(node, element, name); err != nil {
+		return nil, true, err
+	}
 	if name == "sort" {
 		return l.arraySort(node, array, element)
 	}
@@ -1165,6 +1168,38 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		return nil, true, l.notYet(node, "join with more than one argument")
 	}
 	return ir.ArrayJoin{Array: array, Separator: separator, Element: element}, true, nil
+}
+
+// weakArrayCallback checks the representation a callback receives against the handles the
+// array keeps. A narrowed Weak has an object's representation in a parameter so far;
+// accepting it here would make the callback read a handle as the target's object.
+func (l *lowering) weakArrayCallback(node *ast.Node, element ir.Type, name string) error {
+	_, visit := visits[name]
+	if element != ir.Weak || (!visit && name != "map" && name != "reduce" && name != "sort") {
+		return nil
+	}
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if len(arguments) == 0 {
+		return nil
+	}
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(arguments[0]), checker.SignatureKindCall)
+	if len(signatures) != 1 {
+		return l.notYet(arguments[0], name+" with a Weak element and an overloaded callback")
+	}
+	parameters := signatures[0].Parameters()
+	first, last := 0, 1
+	if name == "reduce" {
+		first, last = 1, 2
+	} else if name == "sort" {
+		last = 2
+	}
+	for index := first; index < last && index < len(parameters); index++ {
+		proven := l.checker.GetTypeOfSymbol(parameters[index])
+		if takes, known := l.representation(proven); !known || takes != ir.Weak {
+			return l.notYet(arguments[0], name+" callback parameter "+parameters[index].Name+" receiving a Weak handle as an object; annotate the element parameters Weak<T> and narrow each before reading it")
+		}
+	}
+	return nil
 }
 
 // arrayMethods are the array methods arrayMethod lowers, beside the visits.
