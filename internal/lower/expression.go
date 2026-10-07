@@ -13,6 +13,10 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.isNever(node) {
+		// Storage only: every evaluated never expression is an unreachable check.
+		return ir.Number, nil
+	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
@@ -153,6 +157,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if l.isNever(node) {
+		return value, err
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -366,6 +373,14 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+	node = ast.SkipParentheses(node)
+	if l.isNever(node) && !l.isPanicCall(node) {
+		return l.neverExpression(node)
+	}
+	return l.uncheckedValue(node)
+}
+
+func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
