@@ -1,0 +1,116 @@
+  1:  0428582 <   -:  ------- A Map's or Set's forEach counts as a call the move check and effect inference can't see into
+  2:  8a98a41 <   -:  ------- A parameter written inside a try is no longer borrowed, so writing it doesn't crash the compiler
+  3:  b626e71 <   -:  ------- Numbers as text: integers in the safe range written by their digits
+  4:  fcdce8c <   -:  ------- A readonly field seen again as a writable one is refused
+  5:  73bbae9 <   -:  ------- A variable borrowed from an array that nothing can change while it lives
+  6:  fc26776 <   -:  ------- Let go of a borrowed variable's fallback owner only when it holds something
+  7:  4cf9574 <   -:  ------- A declared function can be read as a value
+  8:  2778547 <   -:  ------- A class called through an interface it implements calls its method, natively and in JavaScript
+  9:  610caf5 <   -:  ------- Invariance covers every entry point R's round 12 found, and lets fresh copies through
+ 10:  ddf7186 <   -:  ------- object?.method(...) on a class's object that may be undefined is lowered, not a compiler crash
+ 11:  dce65cd <   -:  ------- set.has, set.add and set.delete take undefined written out, on a Set whose elements may be undefined
+ 12:  7ed47a3 <   -:  ------- Bitwise operators on numbers, with JavaScript's ToInt32 and ToUint32
+ 13:  61452ed <   -:  ------- A generic method's narrowed T returns unpacked, and a Set holds number | undefined
+ 14:  42b9739 <   -:  ------- cmd/adamic-meter: how far stage 0 is from compiling a real codebase, counted by reason
+ 15:  5e2322c <   -:  ------- internal/regexp: the ECMAScript regular expression parser, first cut
+ 16:  e4f05b4 <   -:  ------- Generics with values of type T, by monomorphization on concrete checker types
+ 17:  3af0b67 <   -:  ------- cmd/adamic-meter: --adapt, mechanical diagnostics split from real ones
+ 18:  433c4d8 <   -:  ------- Generics: inferred instantiations refused where they'd write a wider value, and two stage 1 gaps closed
+ 19:  061f720 <   -:  ------- internal/regexp: held to Node over test262, 6,376 patterns, zero disagreements
+ 20:  c33e280 <   -:  ------- internal/unicodeproperties: every \p{...} ECMAScript allows, from the Unicode 17.0 database
+ 21:  ee0a83e <   -:  ------- Cache the runtime so programs compile only their own C.
+ 22:  cabb26d <   -:  ------- internal/unicodeproperties: Canonicalize for case-insensitive patterns
+ 23:  b3b50ee <   -:  ------- Lower concrete class inheritance with virtual dispatch and chained release
+ 24:  961999c <   -:  ------- Compile ECMAScript regular expressions to a backtracking matcher
+ 25:  6766c9d <   -:  ------- Use the complete Unicode property tables for regex matching
+ 26:  3caaf26 <   -:  ------- Record compound array writes and refresh Linux counts
+ 27:  0395573 <   -:  ------- Preserve regions and reuse across virtual class calls
+ 28:  bb766d4 <   -:  ------- cmd/adamic-test262: run a test262 directory through stage 0 and Node
+ 29:  d67150a <   -:  ------- Leave the large bitwise sweep out of flow traces
+ 30:  51f0b59 <   -:  ------- Cache oracle results and run integration uncached.
+ 31:  bef8a86 <   -:  ------- Make UTF-16 views cheap for nearby and BMP string reads
+ 32:  f057af7 <   -:  ------- Record UTF-16 view profiles and Node validation
+ 33:  281ee9d <   -:  ------- Monomorphize generic class hierarchies and preserve erased identity
+ 34:  8f167c4 <   -:  ------- Widen inheritance and regexp coverage against Node
+ 35:  df18ee2 <   -:  ------- Record JSON oracle gaps that block formatter parity
+ 36:  b3cb87c <   -:  ------- cmd/adamic-test262: adapt test262 style in memory under --adapt
+ 37:  a14a7fe <   -:  ------- Add Math and Number library lowering
+ 38:  5048a6a <   -:  ------- Lower String conversion, prototype calls and raw templates
+ 39:  df651d5 <   -:  ------- Allow fifteen minutes for full-gate normalization streams
+ 40:  6c878ec <   -:  ------- Keep complete compiler output in the test262 runner
+ 41:  59d82c5 <   -:  ------- Compile constant regular expressions into the native runtime
+ 42:  9fd034c <   -:  ------- Lower dense Array operations with Node oracle coverage
+ 43:  9d0729a <   -:  ------- Implement Map and Set library slice
+ 44:  82b211d <   -:  ------- Record Map and Set validation logs
+ 45:  0a6c655 <   -:  ------- lower object.hasOwnProperty as a shape lookup
+ 46:  a18b303 <   -:  ------- Lower sound Object methods and refuse unproven shapes
+ 47:  283d5ed <   -:  ------- Record Object test262 results and mutant evidence
+ 48:  000334c <   -:  ------- Retain Object validation and mutant logs
+ 49:  adb4e0a <   -:  ------- Port JSON formatting to Adamic with Go corpus parity
+ 50:  d88a774 <   -:  ------- Lower proven JSON.stringify values and record Node oracle evidence
+ 51:  ac6832d <   -:  ------- Preserve JSON.stringify validation logs
+ 52:  7a0e9b1 <   -:  ------- oracle: cover Map and Set visits, keys, and iterators
+ 53:  a724a33 <   -:  ------- Keep writable-view diagnostics before nominal class checks
+ 54:  fd88edf <   -:  ------- Support function expressions, fixed-object enumeration, and library identities
+ 55:  921b2e8 <   -:  ------- Reduce JSON formatter allocations and record native profiles
+ 56:  67796a5 <   -:  ------- Preserve JSON validation and timing logs
+ 57:  c93bd38 <   -:  ------- oracle: cover JSON.stringify escapes, numbers, and replacers
+ 58:  180069a <   -:  ------- oracle: cover Object key order, assign, and freeze
+ 59:  9fae91b <   -:  ------- Port CSS quote printing to Adamic
+ 60:  c717c5d <   -:  ------- Port cohere's CSS selector parser and verify it against Go and Node
+ 61:  f69f6a5 <   -:  ------- Record CSS formatter parity and performance
+ 62:  707358a <   -:  ------- oracle: cover native regular expression methods
+ 63:  d799ede <   -:  ------- Record Linux counts for integration 13
+ 64:  0edc8f3 <   -:  ------- Lower Object prototype methods without inherited field loads
+ 65:  1c5e208 <   -:  ------- Port CSS quote printing to Adamic
+ 66:  8ac5675 <   -:  ------- Speed up regex searches and reuse native choice points
+ 67:  7003e11 <   -:  ------- Use established UTF-16 indexes without repeated helper calls
+ 68:  16656c6 <   -:  ------- Normalize whitespace in captured diagnostics
+ 69:  40da71a <   -:  ------- Port CSS numeric adjustment and compose quote printing
+ 70:  8909b74 <   -:  ------- Record CSS numeric formatter checks and timings
+ 71:  1789dfc <   -:  ------- Update closed parser gap and freeze alias fixtures
+ 72:  36a914b <   -:  ------- Expect the earlier refusal for declared class fields
+ 73:  991e301 <   -:  ------- Integrate regex metadata and cycle proof with library guards
+ 74:  b2ab0a5 <   -:  ------- Keep named regex group reads in their explicit representation
+ 75:  8baa625 <   -:  ------- Align library refusal expectations after integration
+ 76:  e2e066e <   -:  ------- Preserve Object prototype behavior across regex and class integration
+ 77:  1a4e299 <   -:  ------- Regenerate integration 14 counts on Linux
+ 78:  5d4c801 <   -:  ------- Split compiler and string runtime functions into files by area
+ 79:  78adebc =   1:  37e6fca Inventory cohere lint rules and plan helper-first porting
+ 80:  73ac2eb =   2:  246f230 Preserve inventory validation and mutation evidence
+ 81:  acb5e0f =   3:  d9a23f0 Claim shared lint option and message helpers
+ 82:  5d13f5b =   4:  2c523a1 Build shared lint option validation and policy helpers
+ 83:  29990b4 =   5:  bd07497 Claim parser anchored comment helpers
+ 84:  41a6089 =   6:  4934240 Claim react identifier helper for slot 05
+ 85:  b73ec42 =   7:  1ed3c3a Yield duplicate identifier claim and reserve JSX attribute names
+ 86:  024ba20 =   8:  a33356e Yield earlier attribute claim and reserve import bindings
+ 87:  32385e2 =   9:  0199abc Restore earliest identifier reservation after other slots yield
+ 88:  c4c5bb7 =  10:  ecacf23 Claim React component base predicate as third helper
+ 89:  c1aec45 =  11:  66a1c71 Record final claim ownership and component leaf dependency
+ 90:  72358fc =  12:  c1d1dbe Port identifier matching import bindings and React component bases
+ 91:  77b2029 =  13:  a6eabce Report helper consumers mutants and passing bounded gate
+ 92:  cba50e2 =  14:  fa1bf9f Claim Tailwind reader factory for second helper batch
+ 93:  dd9e8c3 =  15:  4c43e52 Claim Tailwind class value dispatcher and withdraw factory
+ 94:  f5028c4 =  16:  c78628f Claim Tailwind callee values reader
+ 95:  7b33442 =  17:  2e96dad Claim Tailwind variable values reader
+ 96:  4550ef3 =  18:  70668ad Build Tailwind callee and variable value helpers
+ 97:  bf07786 =  19:  62f9fd1 Record retained slot 05 helpers and claim collisions
+ 98:  470ddd3 =  20:  d79074a Claim exact JSX name matcher for slot 05
+ 99:  bec68c8 =  21:  1916bf4 Claim normalized import filename helper
+100:  b7786fb =  22:  a362d76 Claim Unicode-aware React hook name helper
+101:  0e12a44 =  23:  f28395b Confirm earlier exact JSX matcher ownership
+102:  feadff6 =  24:  17fd317 Build exact JSX names normalized filenames and Unicode hook names
+103:  0790741 =  25:  36924c8 Record third helper batch evidence and readiness
+104:  ea3c330 =  26:  658ad1c Claim CSS escape terminator predicate
+105:  71331d3 =  27:  ad50cff Claim ordered live theme key iterator
+106:  e033ced =  28:  bb0371d Yield duplicate escape predicate and claim theme entries
+107:  57ab4ae =  29:  be37460 Claim ordered namespace theme key reader
+108:  7a221b0 =  30:  c2b013c Build ordered theme iteration entries and namespace keys
+109:  37d5108 =  31:  7f3c3da Record fourth helper batch evidence and readiness
+110:  a0e06da =  32:  163e1ec Claim ordered theme store mutation helpers
+111:  cbaaf3d =  33:  d21e713 Build ordered theme clearing compaction and deletion
+112:  2a26730 =  34:  f71916b Report fifth helper batch consumers and mutant evidence
+113:  b9d9080 =  35:  cfce8fb Claim theme construction and literal lookup helpers
+114:  cac1ca9 =  36:  8ab57ee Record earlier theme constructor claim ownership
+115:  748b21b =  37:  6d9b1e9 Build fresh theme construction and ordered literal lookup
+116:  b2ed825 =  38:  b846322 Report sixth helper batch ownership and oracle evidence

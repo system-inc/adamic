@@ -41,3 +41,7 @@ Set `ADAMIC_SLOT05_EVIDENCE` to an existing directory to save per-consumer liter
 ## Sixth batch
 
 [batch6/REPORT.md](batch6/REPORT.md) records fresh theme construction, ordered key resolution and literal value resolution. Actual Go/source Node/emitted JavaScript/sanitized native agree across 21,300 cases; twelve compiling semantic mutants are caught. This removes eighteen prerequisites across six Tailwind rules, with no new final blocker removed. Seventeen retained slot 05 helpers cover 64 rules and remove 151 dependency occurrences, including four final helper blockers.
+
+## Landing cap
+
+[LANDING_REPORT.md](LANDING_REPORT.md) records the clean rebase onto origin/main e8ba3d5 and complete helper-subtree oracle rerun. All seventeen retained helpers remain unchanged; all six packages and forty-one compiling semantic mutants pass. No new helper was reserved during this landing unit.
