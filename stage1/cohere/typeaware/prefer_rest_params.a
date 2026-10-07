@@ -1,0 +1,35 @@
+import type { Rules } from './rules.ts';
+import { PreferenceBindingFacts } from './preference_binding_facts.a';
+export class PreferRestParams {
+    readonly rules: Rules;
+    readonly facts: PreferenceBindingFacts;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.facts = new PreferenceBindingFacts(rules);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'Identifier' || node.text !== 'arguments') {
+                continue;
+            }
+            const symbol = this.facts.symbol(index);
+            if(symbol.id === 0 || symbol.count !== 0) {
+                continue;
+            }
+            const parent = this.rules.parser.node(this.rules.parents[index] ?? -1);
+            if(parent.kind === 'PropertyAccessExpression' && parent.children[0] === index) {
+                continue;
+            }
+            this.facts.report(
+                index,
+                'prefer-rest-params',
+                'preferRestParams',
+                'This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.',
+            );
+        }
+    }
+}

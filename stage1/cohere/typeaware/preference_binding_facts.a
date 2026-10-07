@@ -1,0 +1,64 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { Diagnostic } from './diagnostic.ts';
+// Raw checker symbol identity and declaration origin. Each rule owns its predicate.
+export class PreferenceSymbol {
+    id = 0;
+    count = 0;
+    ambient = false;
+}
+export class PreferenceBindingFacts {
+    readonly rules: Rules;
+    readonly cache = new Map<number, PreferenceSymbol>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    symbol(index: number): PreferenceSymbol {
+        if(this.cache.has(index)) {
+            return this.cache.get(index) ?? new PreferenceSymbol();
+        }
+        const result = new PreferenceSymbol();
+        const frames = new Frames(this.rules.ask(index, 'node-symbol-details'));
+        header(frames, 'node-symbol-details');
+        if(frames.yes()) {
+            result.id = frames.natural();
+            frames.natural();
+            frames.field();
+            result.count = frames.natural();
+            result.ambient = result.count > 0;
+            for(let at = 0; at < result.count; at++) {
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                result.ambient = frames.yes() && result.ambient;
+                frames.yes();
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                const tags = frames.natural();
+                for(let t = 0; t < tags; t++) {
+                    frames.field();
+                    frames.field();
+                    frames.natural();
+                    frames.natural();
+                    frames.field();
+                }
+                const parameters = frames.natural();
+                for(let t = 0; t < parameters; t++) {
+                    frames.field();
+                }
+            }
+        }
+        frames.end();
+        this.cache.set(index, result);
+        return result;
+    }
+    report(index: number, rule: string, id: string, message: string): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(
+            new Diagnostic(rule, id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''),
+        );
+    }
+}

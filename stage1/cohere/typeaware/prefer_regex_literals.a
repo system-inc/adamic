@@ -1,0 +1,502 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Suggestion } from './suggestion.ts';
+import { Repair } from './repair.ts';
+import { ConstructorBindingFacts } from './constructor_binding_facts.a';
+import { RegexPatternFacts } from './regex_pattern_facts.a';
+import { RegexConstant, RegexReferenceTracker } from './regex_reference_tracker.a';
+const messageUnexpectedRegExp =
+    'This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.';
+const messageUnexpectedRedundantRegExp =
+    'This wraps a regular expression literal in the `RegExp` constructor, which builds a second identical expression from the first and then discards the original. The literal already is the value being asked for, so the constructor adds a copy and a runtime parse and changes nothing else.';
+const messageUnexpectedRedundantRegExpWithFlags =
+    "This hands a regular expression literal to the `RegExp` constructor along with a flags argument, and the flags argument wins outright: the flags written on the literal are discarded rather than combined. That is the trap, because the literal's own flags sit right there in the source looking as though they still apply. Write one literal carrying the flags it should have.";
+export class PreferRegexLiterals {
+    readonly rules: Rules;
+    readonly facts: ConstructorBindingFacts;
+    readonly redundant: boolean;
+    constructor(rules: Rules, redundant = false) {
+        this.rules = rules;
+        this.facts = new ConstructorBindingFacts(rules);
+        this.redundant = redundant;
+    }
+    static(index: number): RegexConstant {
+        if(index < 0) {
+            return new RegexConstant();
+        }
+        const node = this.rules.parser.node(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) {
+            return new RegexConstant(node.text, true, true);
+        }
+        if(node.kind !== 'TaggedTemplateExpression') {
+            return new RegexConstant();
+        }
+        const templateIndex = node.children[node.children.length - 1] ?? -1;
+        const template = this.rules.parser.node(templateIndex);
+        const tag = this.rules.parser.node(this.rules.skip(node.children[0] ?? -1));
+        if(
+            template.kind !== 'NoSubstitutionTemplateLiteral' ||
+            !['PropertyAccessExpression', 'ElementAccessExpression'].includes(tag.kind)
+        ) {
+            return new RegexConstant();
+        }
+        const key = this.rules.parser.node(tag.children[tag.children.length - 1] ?? -1);
+        const receiverIndex = tag.children[0] ?? -1;
+        const receiver = this.rules.parser.node(receiverIndex);
+        if(
+            key.text !== 'raw' ||
+            (tag.kind === 'ElementAccessExpression' &&
+                !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(key.kind)) ||
+            receiver.kind !== 'Identifier' ||
+            receiver.text !== 'String' ||
+            !this.facts.global(receiverIndex)
+        ) {
+            return new RegexConstant();
+        }
+        return new RegexConstant(this.rules.text(template).slice(1, -1), true, true);
+    }
+    flags(flags: string): boolean {
+        const seen: string[] = [];
+        for(let at = 0; at < flags.length; at++) {
+            const flag = flags.slice(at, at + 1);
+            if(!'dgimsuvy'.includes(flag) || seen.includes(flag)) {
+                return false;
+            }
+            seen.push(flag);
+        }
+        return !(seen.includes('u') && seen.includes('v'));
+    }
+    brace(pattern: string, start: number): number {
+        let at = start + 1;
+        const begin = at;
+        while(at < pattern.length && '0123456789'.includes(pattern.slice(at, at + 1))) {
+            at++;
+        }
+        if(at === begin) {
+            return -1;
+        }
+        if(pattern.slice(at, at + 1) === ',') {
+            at++;
+            while(at < pattern.length && '0123456789'.includes(pattern.slice(at, at + 1))) {
+                at++;
+            }
+        }
+        return pattern.slice(at, at + 1) === '}' ? at + 1 : -1;
+    }
+    balanced(pattern: string, flags: string, facts: RegexPatternFacts): boolean {
+        let depth = 0;
+        let repeatable = false;
+        for(let at = 0; at < pattern.length; at++) {
+            const character = pattern.slice(at, at + 1);
+            if(character === '\\' || character === '[') {
+                const end = character === '[' ? (facts.classes.get(at) ?? -1) : (facts.escapes.get(at) ?? -1);
+                if(end <= at) {
+                    return false;
+                }
+                at = end - 1;
+                repeatable = true;
+                continue;
+            }
+            if(character === '(') {
+                depth++;
+                repeatable = false;
+                continue;
+            }
+            if(character === ')') {
+                depth--;
+                if(depth < 0) {
+                    return false;
+                }
+                repeatable = true;
+                continue;
+            }
+            if(['*', '+', '?'].includes(character)) {
+                if(!repeatable) {
+                    return false;
+                }
+                repeatable = false;
+                continue;
+            }
+            if(character === '{') {
+                const end = this.brace(pattern, at);
+                if(end > at) {
+                    if(!repeatable) {
+                        return false;
+                    }
+                    at = end - 1;
+                    repeatable = false;
+                    continue;
+                }
+                if(flags.includes('u') || flags.includes('v')) {
+                    return false;
+                }
+            }
+            repeatable = character !== '|';
+        }
+        return depth === 0;
+    }
+    word(character: string): boolean {
+        return (
+            character !== '' && 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$'.includes(character)
+        );
+    }
+    lineComment(text: string, index: number): number {
+        let start = 0;
+        for(let at = index; at >= 0; at--) {
+            if(text.slice(at, at + 1) === '\n') {
+                start = at + 1;
+                break;
+            }
+        }
+        let quote = '';
+        for(let at = start; at <= index; at++) {
+            const character = text.slice(at, at + 1);
+            if(character === '\\') {
+                at++;
+                continue;
+            }
+            if(quote !== '') {
+                if(character === quote) {
+                    quote = '';
+                }
+                continue;
+            }
+            if(["'", '"', '`'].includes(character)) {
+                quote = character;
+                continue;
+            }
+            if(character === '/' && at + 1 <= index && text.slice(at + 1, at + 2) === '/') {
+                return at;
+            }
+        }
+        return -1;
+    }
+    before(index: number): boolean {
+        const text = this.rules.scanner.text;
+        const start = this.rules.start(this.rules.parser.node(index));
+        let at = start - 1;
+        while(at >= 0) {
+            if(' \t\r\n\v\f'.includes(text.slice(at, at + 1))) {
+                at--;
+                continue;
+            }
+            if(at >= 1 && text.slice(at - 1, at + 1) === '*/') {
+                const opening = text.slice(0, at - 1).lastIndexOf('/*');
+                if(opening < 0) {
+                    return true;
+                }
+                at = opening - 1;
+                continue;
+            }
+            const comment = this.lineComment(text, at);
+            if(comment >= 0) {
+                at = comment - 1;
+                continue;
+            }
+            break;
+        }
+        if(at < 0) {
+            return true;
+        }
+        const newline = text.indexOf('\n');
+        if(text.startsWith('#!') && newline >= 0 && start > newline && text.slice(newline + 1, start).trim() === '') {
+            return true;
+        }
+        const allowed = [
+            '(',
+            ';',
+            '[',
+            ',',
+            '=',
+            '+',
+            '*',
+            '-',
+            '?',
+            '~',
+            '%',
+            '**',
+            '!',
+            'typeof',
+            'instanceof',
+            '&&',
+            '||',
+            '??',
+            'return',
+            '...',
+            'delete',
+            'void',
+            'in',
+            '<',
+            '>',
+            '<=',
+            '>=',
+            '==',
+            '===',
+            '!=',
+            '!==',
+            '<<',
+            '>>',
+            '>>>',
+            '&',
+            '|',
+            '^',
+            ':',
+            '{',
+            '=>',
+            '*=',
+            '<<=',
+            '>>=',
+            '>>>=',
+            '^=',
+            '|=',
+            '&=',
+            '??=',
+            '||=',
+            '&&=',
+            '**=',
+            '+=',
+            '-=',
+            '/=',
+            '%=',
+            '/',
+            'do',
+            'break',
+            'continue',
+            'debugger',
+            'case',
+            'throw',
+        ];
+        if(this.word(text.slice(at, at + 1))) {
+            let first = at;
+            while(first > 0 && this.word(text.slice(first - 1, first))) {
+                first--;
+            }
+            return allowed.includes(text.slice(first, at + 1));
+        }
+        for(let length = 4; length >= 1; length--) {
+            if(at - length + 1 >= 0 && allowed.includes(text.slice(at - length + 1, at + 1))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    comments(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        const text = this.rules.scanner.text;
+        const literals = new Map<number, number>();
+        for(let child = 0; child < this.rules.parser.nodes.length; child++) {
+            const literal = this.rules.parser.node(child);
+            if(literal.pos >= node.pos && literal.end <= node.end && literal.kind === 'RegularExpressionLiteral') {
+                literals.set(this.rules.start(literal), literal.end);
+            }
+        }
+        for(let at = this.rules.start(node); at < node.end; at++) {
+            const end = literals.get(at) ?? -1;
+            if(end > at) {
+                at = end - 1;
+                continue;
+            }
+            const character = text.slice(at, at + 1);
+            if(["'", '"', '`'].includes(character)) {
+                at++;
+                while(at < node.end) {
+                    const next = text.slice(at, at + 1);
+                    if(next === '\\') {
+                        at += 2;
+                        continue;
+                    }
+                    if(next === character) {
+                        break;
+                    }
+                    at++;
+                }
+                continue;
+            }
+            if(character === '/' && ['/', '*'].includes(text.slice(at + 1, at + 2))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    suggest(index: number, pattern: string, flags: string): boolean {
+        if(this.comments(index) || !this.before(index) || !this.flags(flags)) {
+            return false;
+        }
+        if(pattern === '') {
+            return true;
+        }
+        const facts = new RegexPatternFacts(this.rules, index, pattern, flags);
+        return facts.walked && this.balanced(pattern, flags, facts);
+    }
+    printable(pattern: string): boolean {
+        const allowed =
+            ' \t\r\n\v\f-\\[](){}!@#$%^&*+=/~`.><?,\'"|:;_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        for(let at = 0; at < pattern.length; at++) {
+            if(!allowed.includes(pattern.slice(at, at + 1))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    escaped(pattern: string, flags: string, index: number): string {
+        const facts = new RegexPatternFacts(this.rules, index, pattern, flags);
+        let text = '';
+        let previous = 0;
+        for(let at = 0; at < facts.starts.length; at++) {
+            const start = facts.starts[at] ?? 0;
+            const end = facts.ends[at] ?? start;
+            const spelling = pattern.slice(start, end);
+            let replacement = '';
+            for(const control of ['\n', '\r', '\t', '\v', '\f']) {
+                if(spelling === control || spelling === '\\' + control) {
+                    replacement =
+                        control === '\n'
+                            ? '\\n'
+                            : control === '\r'
+                              ? '\\r'
+                              : control === '\t'
+                                ? '\\t'
+                                : control === '\v'
+                                  ? '\\v'
+                                  : '\\f';
+                }
+            }
+            if(spelling === '/') {
+                replacement = '\\/';
+            }
+            if(replacement === '' || start < previous) {
+                continue;
+            }
+            text += pattern.slice(previous, start) + replacement;
+            previous = end;
+        }
+        return text + pattern.slice(previous);
+    }
+    repair(index: number, text: string): Repair {
+        const node = this.rules.parser.node(index);
+        const start = this.rules.start(node);
+        const source = this.rules.scanner.text;
+        let padded = text;
+        if(start > 0 && source.slice(start - 1, start) === '/') {
+            padded = ' ' + padded;
+        }
+        if(node.end < source.length && this.word(source.slice(node.end, node.end + 1))) {
+            padded += ' ';
+        }
+        return new Repair(this.rules.byte(start), this.rules.byte(node.end), padded);
+    }
+    add(index: number, id: string, message: string): Diagnostic {
+        const node = this.rules.parser.node(index);
+        const result = new Diagnostic(
+            'prefer-regex-literals',
+            id,
+            message,
+            this.rules.byte(this.rules.start(node)),
+            this.rules.byte(node.end),
+            '',
+        );
+        this.rules.findings.push(result);
+        return result;
+    }
+    replacement(index: number, finding: Diagnostic, id: string, message: string, text: string): void {
+        finding.suggestions.push(new Suggestion(id, message, [this.repair(index, text)]));
+    }
+    check(index: number): void {
+        const node = this.rules.parser.node(index);
+        const args: number[] = node.list <= 0 ? [] : node.children.slice(node.children.length - node.list);
+        if(args.length === 0) {
+            return;
+        }
+        const first = this.rules.parser.node(args[0] ?? -1);
+        const flags = args.length === 2 ? this.static(args[1] ?? -1) : new RegexConstant('', true, true);
+        if(this.redundant && first.kind === 'RegularExpressionLiteral' && args.length <= 2 && flags.valid) {
+            const slash = first.text.lastIndexOf('/');
+            const pattern = first.text.slice(1, slash);
+            const literalFlags = first.text.slice(slash + 1);
+            if(args.length === 1) {
+                const finding = this.add(index, 'unexpectedRedundantRegExp', messageUnexpectedRedundantRegExp);
+                if(this.suggest(index, pattern, literalFlags)) {
+                    this.replacement(
+                        index,
+                        finding,
+                        'replaceWithLiteral',
+                        'Replace with an equivalent regular expression literal.',
+                        first.text,
+                    );
+                }
+                return;
+            }
+            const finding = this.add(
+                index,
+                'unexpectedRedundantRegExpWithFlags',
+                messageUnexpectedRedundantRegExpWithFlags,
+            );
+            if(this.suggest(index, pattern, flags.text)) {
+                this.replacement(
+                    index,
+                    finding,
+                    'replaceWithLiteralAndFlags',
+                    `Replace with an equivalent regular expression literal with flags '${flags.text}'.`,
+                    '/' + pattern + '/' + flags.text,
+                );
+            }
+            let merged = '';
+            const both = literalFlags + flags.text;
+            for(let at = 0; at < both.length; at++) {
+                const flag = both.slice(at, at + 1);
+                if(!merged.includes(flag)) {
+                    merged += flag;
+                }
+            }
+            const same =
+                merged
+                    .split('')
+                    .sort((left, right) => (left < right ? -1 : left > right ? 1 : 0))
+                    .join('') ===
+                flags.text
+                    .split('')
+                    .sort((left, right) => (left < right ? -1 : left > right ? 1 : 0))
+                    .join('');
+            if(!same && this.suggest(index, pattern, merged)) {
+                this.replacement(
+                    index,
+                    finding,
+                    'replaceWithIntendedLiteralAndFlags',
+                    `Replace with a regular expression literal with flags '${merged}'.`,
+                    '/' + pattern + '/' + merged,
+                );
+            }
+            return;
+        }
+        if(args.length !== 1 && args.length !== 2) {
+            return;
+        }
+        const pattern = this.static(args[0] ?? -1);
+        if(!pattern.valid || !flags.valid) {
+            return;
+        }
+        const finding = this.add(index, 'unexpectedRegExp', messageUnexpectedRegExp);
+        if(this.suggest(index, pattern.text, flags.text) && this.printable(pattern.text)) {
+            let rewritten = this.escaped(pattern.text, flags.text, index);
+            if(rewritten === '') {
+                rewritten = '(?:)';
+            }
+            this.replacement(
+                index,
+                finding,
+                'replaceWithLiteral',
+                'Replace with an equivalent regular expression literal.',
+                '/' + rewritten + '/' + flags.text,
+            );
+        }
+    }
+    run(): void {
+        if(!this.rules.scanner.text.includes('RegExp')) {
+            return;
+        }
+        const tracker = new RegexReferenceTracker(this.rules);
+        for(const index of tracker.run()) {
+            this.check(index);
+        }
+    }
+}

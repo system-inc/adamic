@@ -1,0 +1,184 @@
+import type { Rules } from './rules.ts';
+import { PreferenceBindingFacts } from './preference_binding_facts.a';
+import { Shadow } from './shadow.ts';
+export class PreferPromiseRejectErrors {
+    readonly rules: Rules;
+    readonly facts: PreferenceBindingFacts;
+    readonly names: Shadow;
+    readonly allowEmpty: boolean;
+    constructor(rules: Rules, allowEmpty = false) {
+        this.rules = rules;
+        this.facts = new PreferenceBindingFacts(rules);
+        this.names = new Shadow(rules);
+        this.allowEmpty = allowEmpty;
+    }
+    arguments(index: number): number[] {
+        const node = this.rules.parser.node(index);
+        return node.list <= 0 ? [] : node.children.slice(node.children.length - node.list);
+    }
+    unwrap(index: number): number {
+        let current = index;
+        while(true) {
+            const node = this.rules.parser.node(current);
+            if(
+                ![
+                    'ParenthesizedExpression',
+                    'AsExpression',
+                    'SatisfiesExpression',
+                    'TypeAssertionExpression',
+                    'NonNullExpression',
+                ].includes(node.kind)
+            ) {
+                return current;
+            }
+            current =
+                node.kind === 'TypeAssertionExpression'
+                    ? (node.children[node.children.length - 1] ?? -1)
+                    : (node.children[0] ?? -1);
+        }
+    }
+    could(index: number): boolean {
+        const node = this.rules.parser.node(this.unwrap(index));
+        if(
+            [
+                'Identifier',
+                'CallExpression',
+                'NewExpression',
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'TaggedTemplateExpression',
+                'YieldExpression',
+                'AwaitExpression',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'ConditionalExpression') {
+            return this.could(node.children[2] ?? -1) || this.could(node.children[4] ?? -1);
+        }
+        if(node.kind !== 'BinaryExpression') {
+            return false;
+        }
+        const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+        if(
+            ['EqualsToken', 'AmpersandAmpersandEqualsToken', 'AmpersandAmpersandToken', 'CommaToken'].includes(operator)
+        ) {
+            return this.could(node.children[2] ?? -1);
+        }
+        if(
+            ['BarBarEqualsToken', 'QuestionQuestionEqualsToken', 'BarBarToken', 'QuestionQuestionToken'].includes(
+                operator,
+            )
+        ) {
+            return this.could(node.children[0] ?? -1) || this.could(node.children[2] ?? -1);
+        }
+        return false;
+    }
+    global(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        return node.kind === 'Identifier' && node.text === 'Promise' && this.facts.symbol(index).ambient;
+    }
+    check(index: number): void {
+        const args = this.arguments(index);
+        if(args.length === 0 && this.allowEmpty) {
+            return;
+        }
+        const reason = args[0] ?? -1;
+        const node = this.rules.parser.node(args.length === 0 ? index : reason);
+        const undefinedReason =
+            node.kind === 'Identifier' && node.text === 'undefined' && this.facts.symbol(reason).count === 0;
+        if(args.length !== 0 && this.could(reason) && !undefinedReason) {
+            return;
+        }
+        this.facts.report(
+            index,
+            'prefer-promise-reject-errors',
+            'rejectAnError',
+            'Expected the Promise rejection reason to be an Error. A rejection carrying a string or a plain object arrives at the catch with no stack, so the line that failed is lost and the handler cannot tell one failure from another.',
+        );
+    }
+    calls(index: number, targets: readonly number[]): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'CallExpression') {
+            const callee = this.unwrap(node.children[0] ?? -1);
+            if(this.rules.parser.node(callee).kind === 'Identifier' && targets.includes(this.facts.symbol(callee).id)) {
+                this.check(index);
+            }
+        }
+        for(const child of node.children) {
+            this.calls(child, targets);
+        }
+    }
+    executor(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(!this.global(node.children[0] ?? -1)) {
+            return;
+        }
+        const executorArguments = this.arguments(index);
+        if(executorArguments.length === 0) {
+            return;
+        }
+        const executor = executorArguments[0] ?? -1;
+        const fn = this.rules.parser.node(executor);
+        if(!['ArrowFunction', 'FunctionExpression', 'FunctionDeclaration'].includes(fn.kind)) {
+            return;
+        }
+        const parameters = fn.children.filter((child) => this.rules.parser.node(child).kind === 'Parameter');
+        if(parameters.length < 2) {
+            return;
+        }
+        const name = this.rules.parser.node(this.names.name(parameters[1] ?? -1));
+        if(name.kind !== 'Identifier') {
+            return;
+        }
+        const targets: number[] = [];
+        for(const parameter of parameters) {
+            const bound = this.names.name(parameter);
+            const candidate = this.rules.parser.node(bound);
+            if(candidate.kind === 'Identifier' && candidate.text === name.text) {
+                const identity = this.facts.symbol(bound).id;
+                if(identity !== 0) {
+                    targets.push(identity);
+                }
+            }
+        }
+        if(targets.length === 0) {
+            return;
+        }
+        for(const child of fn.children) {
+            this.calls(child, targets);
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(index);
+            if(node.kind === 'NewExpression') {
+                this.executor(index);
+            }
+            if(node.kind !== 'CallExpression') {
+                continue;
+            }
+            const member = this.rules.parser.node(this.unwrap(node.children[0] ?? -1));
+            if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(member.kind)) {
+                continue;
+            }
+            let key = this.rules.parser.node(member.children[member.children.length - 1] ?? -1);
+            if(member.kind === 'ElementAccessExpression') {
+                key = this.rules.parser.node(this.rules.skip(member.children[member.children.length - 1] ?? -1));
+            }
+            if(
+                key.text !== 'reject' ||
+                (member.kind === 'ElementAccessExpression' &&
+                    !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(key.kind))
+            ) {
+                continue;
+            }
+            if(this.global(this.unwrap(member.children[0] ?? -1))) {
+                this.check(index);
+            }
+        }
+    }
+}

@@ -1,0 +1,39 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+// This question supplies grammar structure, never validity policy or a lint verdict.
+export class RegexPatternFacts {
+    readonly walked: boolean;
+    readonly starts: number[] = [];
+    readonly ends: number[] = [];
+    readonly escapes = new Map<number, number>();
+    readonly classes = new Map<number, number>();
+    constructor(rules: Rules, index: number, pattern: string, flags: string) {
+        let encoded = '';
+        for(let at = 0; at < pattern.length; at++) {
+            encoded += `${at === 0 ? '' : ','}${pattern.charCodeAt(at)}`;
+        }
+        const frames = new Frames(rules.ask(index, `regex-pattern-facts\n${flags}\n${encoded}`));
+        header(frames, 'regex-pattern-facts');
+        this.walked = frames.yes();
+        const characters = frames.natural();
+        for(let at = 0; at < characters; at++) {
+            this.starts.push(frames.natural());
+            this.ends.push(frames.natural());
+        }
+        const escapes = frames.natural();
+        for(let at = 0; at < escapes; at++) {
+            const start = frames.natural();
+            const valid = frames.yes();
+            const end = frames.natural();
+            this.escapes.set(start, valid ? end : -1);
+        }
+        const classes = frames.natural();
+        for(let at = 0; at < classes; at++) {
+            const start = frames.natural();
+            const valid = frames.yes();
+            const end = frames.natural();
+            this.classes.set(start, valid ? end : -1);
+        }
+        frames.end();
+    }
+}
