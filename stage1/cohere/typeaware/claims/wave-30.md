@@ -174,3 +174,11 @@ extraction and handed-node integration, not a numeric parser API. Earlier numeri
 API comments are superseded by Ahra's correction. These descriptors remain
 partial component metadata, not registered full rules; no new claim is made.
 See ../WAVE_30_KIND_NAMES_REPORT.md.
+
+Landing-first refresh: rebased all 29 own commits cleanly onto origin/main
+b8fb957aa, accepting the inherited-static-field compiler fix. All twelve wave-30
+gates pass again, including corpus byte agreement, sanitizers, released handles,
+25 output-comparison mutants and three metadata name mutants. The newly landed
+compiler behavior also passes the uncached Node oracle. No new claims or shared
+file edits. Full JSX statuses and parked React analyses remain unchanged.
+See ../WAVE_30_STATIC_LANDING_REPORT.md and its 29-commit rebase mapping.
