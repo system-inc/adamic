@@ -39,10 +39,7 @@ export class Rule {
         if(!continues) {return '';}
         const previous=this.previous(node,context);if(previous===undefined) {return '';}
         let canContinue=previous.kind===ExpressionStatement || previous.kind===VariableStatement;
-        if(previous.kind===PropertyDeclaration && previous.children.length>1) {
-            const last=at(context.nodes,previous.children[previous.children.length-1] ?? -1);
-            canContinue=[8,9,10,13,14,79,80,96,105,109,111].includes(last.kind) || last.kind>=212;
-        }
+        if(previous.kind===PropertyDeclaration) {canContinue=(context.flags[previous.index] ?? 0)===1;}
         if(!canContinue || context.source.slice(previous.start,previous.end).trimEnd().endsWith(';')) {return '';}
         return ';';
     }

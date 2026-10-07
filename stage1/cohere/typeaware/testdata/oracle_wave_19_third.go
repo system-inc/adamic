@@ -22,6 +22,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/cohere/internal/lint/registry"
 	"github.com/system-inc/cohere/internal/lint/rule"
+	lintcore "github.com/system-inc/cohere/internal/lint/rules/core"
 )
 
 func written(text string) string {
@@ -121,7 +122,11 @@ func main() {
 		callbacks := map[ast.Kind][]func(*ast.Node){}
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {
-			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, nil)
+			var options any
+			if subject.Name == "valid-typeof" && slices.Contains(args, "--strict-typeof") {
+				options = lintcore.ValidTypeofOptions{RequireStringLiterals: true}
+			}
+			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, options)
 			for kind, callback := range listeners {
 				callbacks[kind] = append(callbacks[kind], callback)
 			}

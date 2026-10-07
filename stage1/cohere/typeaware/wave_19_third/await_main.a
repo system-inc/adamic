@@ -6,9 +6,7 @@ import { byteOffsets } from '../unary_minus.ts';
 import { Node, at } from './node.a';
 import { Context } from './context.a';
 import { kindId } from './kinds.a';
-import { Rule as SymbolRule } from './symbol-description/rule.a';
 import { Rule as AwaitRule } from './require-await/rule.a';
-import { Rule as TypeofRule } from './valid-typeof/rule.a';
 const args=programArguments();const config=args[0] ?? panic('missing config');
 const input=readTextFile(args[1] ?? panic('missing manifest'));if(input.kind==='Error') {panic(input.message);}
 const paths=input.text.split('\n').filter((path)=>path!=='');const program=tsgoProgram(config,paths);let total=0;
@@ -20,6 +18,12 @@ for(const path of paths) {
     for(let index=0;index<parser.nodes.length;index++) {
         const raw=parser.nodes[index] ?? panic('missing parser node');scanner.pos=raw.pos;scanner.scan();
         nodes.push(new Node(index,kindId(raw.kind),raw.pos,scanner.start,raw.end,raw.text,raw.operator,raw.children,raw.list));parents.push(-1);flags.push(Number(raw.semantic));
+        if((nodes[index] ?? panic('missing converted node')).kind===173 && raw.children.length>0) {
+            const last=parser.nodes[raw.children[raw.children.length-1] ?? -1] ?? panic('missing property child');
+            scanner.pos=raw.pos;let initialized=false;
+            while(scanner.pos<last.pos) {scanner.scan();if(kindId(scanner.kind)===63) {initialized=true;}}
+            flags[index]=initialized?1:0;
+        }
     }
     const pending=[root];
     while(pending.length>0) {
@@ -27,7 +31,7 @@ for(const path of paths) {
         for(const child of node.children) {parents[child]=index;pending.push(child);}
     }
     const context=new Context(program,path,input.text,byteOffsets(input.text),nodes,parents,flags);
-    const awaitRule=new AwaitRule();const symbol=new SymbolRule();const typeofRule=new TypeofRule(args.includes('--strict-typeof'));
+    const awaitRule=new AwaitRule();
     // One shared kind-indexed walk. Each listener gets the already fetched node.
     const work=[root];
     while(work.length>0) {
