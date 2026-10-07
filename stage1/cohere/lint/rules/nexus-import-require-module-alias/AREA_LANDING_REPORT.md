@@ -139,3 +139,33 @@ or deleted to obtain green.
 The separately rebased helper branch is pushed at 9697eb4393a53d3862519d260f9a3e05e2fdefaa
 with fresh fixed-hex/Unicode primitive comparisons and mutants. Those helpers
 supply eight prerequisites for four rules, zero completely unblocked rule sets.
+
+## Fresh landing-cap check after the next instruction
+
+Fetched every origin branch again on October 7. Both integration tips are
+unchanged: main 39638d9e278d38bb5aeae887f46d55a70e47aaad and area/stage1-lint
+ d65a8f931c98655936ae04c6899f38f14862b73e. Both owned branches already descend
+from them, so no rebase is needed. No implementation, compiler, corpus input or
+shared file changed. The helper branch remains at 9697eb4393a53d3862519d260f9a3e05e2fdefaa.
+
+Freshly executed, all output saved:
+
+- go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -timeout 30m -v:
+  FAIL again in 21.18s with the unchanged Go fix-budget panic.
+- python3 stage1/cohere/lint/rules/nexus-import-require-module-alias/validate_landing.py:
+  exit 1 again. Nine original-case groups (579 cases) match Go on Node, emitted
+  JavaScript and sanitized native; the constructor group fails on the same
+  original modified-destructured parameter. The extra-space mutant is freshly
+  caught only by byte comparison on all three backends over 32 original cases.
+  The Go test process completes in 74.128s; no case was skipped or removed.
+
+The other nine rule mutants, full 368-file corpus and two helper mutants retain
+the immediately preceding evidence on exactly the same implementation and inputs;
+they were not rerun in this refresh. These are retained observations, not fresh
+passes. New raw logs are evidence/refresh-budget.log, refresh-launcher.log and
+refresh-fetch.log; area-per-rule-upstream.log records the complete fresh probe.
+
+The rule branch remains blocked and is not declared landing-ready. Per the
+landing cap, no further rule/helper is claimed. Resolving these two failures
+requires the owners of the shared parser and oracle; this unit stops without
+editing their files or weakening either check.

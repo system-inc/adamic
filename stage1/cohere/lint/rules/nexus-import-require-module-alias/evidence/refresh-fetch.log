@@ -1,0 +1,54 @@
+From https://github.com/system-inc/adamic
+   c1ef38bb2..c2c76c4b2  area/developer-tools    -> origin/area/developer-tools
+   b9385e49b..aeb5ad3bf  area/library            -> origin/area/library
+   0cb3b8a34..01a5cc5b0  area/platforms          -> origin/area/platforms
+   d63987f6c..9f0ba875b  cloud/integrate-l-1     -> origin/cloud/integrate-l-1
+   cbacf496e..b602721c0  cloud/library-with-runtime -> origin/cloud/library-with-runtime
+   fdad28c50..7ac39aa39  cloud/merge-tree        -> origin/cloud/merge-tree
+ * [new branch]          cloud/speculate-0145-1  -> origin/cloud/speculate-0145-1
+ * [new branch]          cloud/speculate-0145-2  -> origin/cloud/speculate-0145-2
+   ac620ddd0..cdddfee34  codex/census-small-families -> origin/codex/census-small-families
+   3c9f6b2a3..94da62211  codex/lint-helpers-02   -> origin/codex/lint-helpers-02
+ + 3c58e5456...397caa0b4 codex/lint-helpers-03   -> origin/codex/lint-helpers-03  (forced update)
+   3b65415d8..e574dee77  codex/lint-helpers-04   -> origin/codex/lint-helpers-04
+   902255daa..e6b368840  codex/lint-helpers-05   -> origin/codex/lint-helpers-05
+ + 83de0ad85...9697eb439 codex/lint-helpers-from-codex-lint-wave1-14 -> origin/codex/lint-helpers-from-codex-lint-wave1-14  (forced update)
+   2deedaf17..23a0384f1  codex/lint-helpers-from-lint-wave1-12 -> origin/codex/lint-helpers-from-lint-wave1-12
+ + 0fcae8191...d45b4b9de codex/lint-wave1-12     -> origin/codex/lint-wave1-12  (forced update)
+ + 48b945b37...3f02237ff codex/lint-wave1-14     -> origin/codex/lint-wave1-14  (forced update)
+ * [new branch]          codex/optional-widening-refusal -> origin/codex/optional-widening-refusal
+   2cdf8dd3f..a709d575f  codex/parse-speed       -> origin/codex/parse-speed
+ * [new branch]          codex/refusal-pass-rulings -> origin/codex/refusal-pass-rulings
+   faae0e9af..188de0204  codex/stage3-scanner-proof -> origin/codex/stage3-scanner-proof
+   704f6db2e..f4d731fdb  codex/typeaware-wave-01 -> origin/codex/typeaware-wave-01
+   98b9e70f4..4a2adcf2b  codex/typeaware-wave-03 -> origin/codex/typeaware-wave-03
+   625f0354d..b512a08b4  codex/typeaware-wave-04 -> origin/codex/typeaware-wave-04
+ + 56b5d2241...953ebb49a codex/typeaware-wave-06 -> origin/codex/typeaware-wave-06  (forced update)
+ + fd393c8b6...1ec895f2e codex/typeaware-wave-07 -> origin/codex/typeaware-wave-07  (forced update)
+   3ebe2040d..a109073bf  codex/typeaware-wave-09 -> origin/codex/typeaware-wave-09
+   01212b900..62bff46af  codex/typeaware-wave-10 -> origin/codex/typeaware-wave-10
+ + 07aaa6152...6e481d319 codex/typeaware-wave-12 -> origin/codex/typeaware-wave-12  (forced update)
+   b1a890cd5..fdc2fdd98  codex/typeaware-wave-13 -> origin/codex/typeaware-wave-13
+ + e5ea66ba0...aa73800c8 codex/typeaware-wave-15 -> origin/codex/typeaware-wave-15  (forced update)
+ + 0a83e18d1...d945f82e0 codex/typeaware-wave-17 -> origin/codex/typeaware-wave-17  (forced update)
+ + 112bbf040...29e669422 codex/typeaware-wave-18 -> origin/codex/typeaware-wave-18  (forced update)
+   7c056571b..aeb074ff2  codex/typeaware-wave-20 -> origin/codex/typeaware-wave-20
+ + 57fe3c839...5a34bcbec codex/typeaware-wave-23 -> origin/codex/typeaware-wave-23  (forced update)
+ + 04931672d...87f6ef5aa codex/typeaware-wave-25 -> origin/codex/typeaware-wave-25  (forced update)
+   76394c2d1..a6593e2bb  codex/typeaware-wave-28 -> origin/codex/typeaware-wave-28
+   310e8a616..0acfcadb1  codex/typeaware-wave-30 -> origin/codex/typeaware-wave-30
+   2ad2f1c26..fec8bdc42  codex/typed-arrays      -> origin/codex/typed-arrays
+   2c8024fb5..d02a51cf3  codex/typeof-null-2     -> origin/codex/typeof-null-2
+   3c17f2ef7..1bd43a686  devtools/affected-gate  -> origin/devtools/affected-gate
+ * [new branch]          devtools/gate-inputs    -> origin/devtools/gate-inputs
+   72836ef12..dc2df0699  devtools/gate-shards    -> origin/devtools/gate-shards
+ * [new branch]          devtools/generator-liveness-fields-merge -> origin/devtools/generator-liveness-fields-merge
+ * [new branch]          devtools/generator-operators -> origin/devtools/generator-operators
+ * [new branch]          devtools/refusal-lies   -> origin/devtools/refusal-lies
+ * [new branch]          devtools/release-lane   -> origin/devtools/release-lane
+ * [new branch]          devtools/skip-census    -> origin/devtools/skip-census
+ * [new branch]          library/regex-refused-fixture -> origin/library/regex-refused-fixture
+ * [new branch]          lint-fix/static-single-assignment -> origin/lint-fix/static-single-assignment
+ * [new branch]          lint-fix/static-single-assignment-dominance -> origin/lint-fix/static-single-assignment-dominance
+ * [new branch]          runtime/area-take-envplace -> origin/runtime/area-take-envplace
+ * [new branch]          runtime/area-take-stdoutarea -> origin/runtime/area-take-stdoutarea
