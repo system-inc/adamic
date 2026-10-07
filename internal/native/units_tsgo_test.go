@@ -37,7 +37,7 @@ func TestSplitTSGoAgrees(t *testing.T) {
 	manifest := filepath.Join(directory, "manifest")
 	for name, contents := range map[string]string{
 		input:    "const value = 1; const negative = -value;\n",
-		config:   `{"compilerOptions":{"strict":true,"target":"esnext","sourceExtensions":[".a"]},"files":["sample.a"]}`,
+		config:   `{"compilerOptions":{"strict":true,"target":"esnext"},"files":["sample.a"]}`,
 		manifest: input + "\n",
 	} {
 		if err := os.WriteFile(name, []byte(contents), 0644); err != nil {

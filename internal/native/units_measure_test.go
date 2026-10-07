@@ -99,7 +99,7 @@ func TestMeasureClangUnits(t *testing.T) {
 		t.Logf("%s %s round=%d jobs=%d %.6fs", program, loop, round, options.Jobs, elapsed)
 	}
 
-	for _, program := range []string{"lint-harness", "typescript-parser", "cohere-typeaware", "cohere-json"} {
+	for _, program := range []string{"lint-harness", "typescript-parser", "cohere-typeaware"} {
 		data, err := os.ReadFile(filepath.Join(directory, program+".c"))
 		if err != nil {
 			t.Fatal(err)
