@@ -1,0 +1,117 @@
+=== RUN   TestDateOracleCatchesMutants
+=== PAUSE TestDateOracleCatchesMutants
+=== CONT  TestDateOracleCatchesMutants
+=== RUN   TestDateOracleCatchesMutants/number_date
+=== PAUSE TestDateOracleCatchesMutants/number_date
+=== RUN   TestDateOracleCatchesMutants/metadata_name
+=== PAUSE TestDateOracleCatchesMutants/metadata_name
+=== RUN   TestDateOracleCatchesMutants/metadata_length
+=== PAUSE TestDateOracleCatchesMutants/metadata_length
+=== RUN   TestDateOracleCatchesMutants/metadata_own
+=== PAUSE TestDateOracleCatchesMutants/metadata_own
+=== RUN   TestDateOracleCatchesMutants/nullable_typeof
+=== PAUSE TestDateOracleCatchesMutants/nullable_typeof
+=== RUN   TestDateOracleCatchesMutants/nullable_number
+=== PAUSE TestDateOracleCatchesMutants/nullable_number
+=== RUN   TestDateOracleCatchesMutants/nullable_stringify
+=== PAUSE TestDateOracleCatchesMutants/nullable_stringify
+=== RUN   TestDateOracleCatchesMutants/date_stringify
+=== PAUSE TestDateOracleCatchesMutants/date_stringify
+=== RUN   TestDateOracleCatchesMutants/toJSON
+=== PAUSE TestDateOracleCatchesMutants/toJSON
+=== RUN   TestDateOracleCatchesMutants/dynamic_parse
+=== PAUSE TestDateOracleCatchesMutants/dynamic_parse
+=== RUN   TestDateOracleCatchesMutants/constructor_clip
+=== PAUSE TestDateOracleCatchesMutants/constructor_clip
+=== RUN   TestDateOracleCatchesMutants/UTC
+=== PAUSE TestDateOracleCatchesMutants/UTC
+=== RUN   TestDateOracleCatchesMutants/invalid_NaN
+=== PAUSE TestDateOracleCatchesMutants/invalid_NaN
+=== RUN   TestDateOracleCatchesMutants/getters
+=== PAUSE TestDateOracleCatchesMutants/getters
+=== RUN   TestDateOracleCatchesMutants/setters
+=== PAUSE TestDateOracleCatchesMutants/setters
+=== RUN   TestDateOracleCatchesMutants/iso_format
+=== PAUSE TestDateOracleCatchesMutants/iso_format
+=== RUN   TestDateOracleCatchesMutants/format
+=== PAUSE TestDateOracleCatchesMutants/format
+=== RUN   TestDateOracleCatchesMutants/parse
+=== PAUSE TestDateOracleCatchesMutants/parse
+=== CONT  TestDateOracleCatchesMutants/number_date
+=== CONT  TestDateOracleCatchesMutants/dynamic_parse
+=== CONT  TestDateOracleCatchesMutants/parse
+=== CONT  TestDateOracleCatchesMutants/format
+=== CONT  TestDateOracleCatchesMutants/setters
+=== NAME  TestDateOracleCatchesMutants/format
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/iso_format
+=== NAME  TestDateOracleCatchesMutants/number_date
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/invalid_NaN
+=== NAME  TestDateOracleCatchesMutants/setters
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/getters
+=== NAME  TestDateOracleCatchesMutants/parse
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/nullable_number
+=== NAME  TestDateOracleCatchesMutants/dynamic_parse
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/toJSON
+=== NAME  TestDateOracleCatchesMutants/invalid_NaN
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/date_stringify
+=== NAME  TestDateOracleCatchesMutants/iso_format
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/nullable_stringify
+=== NAME  TestDateOracleCatchesMutants/getters
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/metadata_own
+=== NAME  TestDateOracleCatchesMutants/nullable_number
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/nullable_typeof
+=== NAME  TestDateOracleCatchesMutants/toJSON
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/metadata_length
+=== NAME  TestDateOracleCatchesMutants/metadata_own
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/metadata_name
+=== NAME  TestDateOracleCatchesMutants/date_stringify
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/constructor_clip
+=== NAME  TestDateOracleCatchesMutants/nullable_typeof
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/UTC
+=== NAME  TestDateOracleCatchesMutants/nullable_stringify
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== NAME  TestDateOracleCatchesMutants/metadata_length
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== NAME  TestDateOracleCatchesMutants/constructor_clip
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== NAME  TestDateOracleCatchesMutants/metadata_name
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== NAME  TestDateOracleCatchesMutants/UTC
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+--- PASS: TestDateOracleCatchesMutants (0.00s)
+    --- PASS: TestDateOracleCatchesMutants/format (1.61s)
+    --- PASS: TestDateOracleCatchesMutants/number_date (1.83s)
+    --- PASS: TestDateOracleCatchesMutants/setters (2.16s)
+    --- PASS: TestDateOracleCatchesMutants/parse (2.33s)
+    --- PASS: TestDateOracleCatchesMutants/dynamic_parse (2.43s)
+    --- PASS: TestDateOracleCatchesMutants/invalid_NaN (1.74s)
+    --- PASS: TestDateOracleCatchesMutants/iso_format (2.10s)
+    --- PASS: TestDateOracleCatchesMutants/getters (1.64s)
+    --- PASS: TestDateOracleCatchesMutants/nullable_number (1.68s)
+    --- PASS: TestDateOracleCatchesMutants/toJSON (2.13s)
+    --- PASS: TestDateOracleCatchesMutants/metadata_own (1.65s)
+    --- PASS: TestDateOracleCatchesMutants/date_stringify (1.94s)
+    --- PASS: TestDateOracleCatchesMutants/nullable_typeof (1.59s)
+    --- PASS: TestDateOracleCatchesMutants/nullable_stringify (1.91s)
+    --- PASS: TestDateOracleCatchesMutants/metadata_length (1.58s)
+    --- PASS: TestDateOracleCatchesMutants/constructor_clip (1.20s)
+    --- PASS: TestDateOracleCatchesMutants/metadata_name (1.30s)
+    --- PASS: TestDateOracleCatchesMutants/UTC (1.24s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=18
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.903s
