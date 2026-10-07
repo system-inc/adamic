@@ -1,0 +1,15 @@
+=== RUN   TestRuntimeLastIndexOfMatchesNode
+=== PAUSE TestRuntimeLastIndexOfMatchesNode
+=== CONT  TestRuntimeLastIndexOfMatchesNode
+    runtime_last_index_test.go:18: gate cache node miss
+    oracle_test.go:488: gate cache native miss
+    oracle_test.go:481: gate cache native miss
+    runtime_last_index_test.go:20: gate cache node miss
+    oracle_test.go:495: gate cache native hit
+    runtime_last_index_test.go:28: Node, JavaScript, release and sanitizers agree on 758 output bytes
+--- PASS: TestRuntimeLastIndexOfMatchesNode (15.23s)
+PASS
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	15.273s
