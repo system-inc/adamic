@@ -1,0 +1,8 @@
+Actual Go listener calls: {'internal': 13, 'outside': 17, 'project': 9, 'controls': 26}
+Node: identical 5094 bytes
+JavaScript: identical 5094 bytes
+native: identical 5094 bytes
+Call-result gate mutant caught on Node only by output comparison; normal exit and successful compile
+Call-result gate mutant caught on JavaScript only by output comparison; normal exit and successful compile
+Call-result gate mutant caught on native only by output comparison; normal exit and successful compile
+PASS 65 Go listener observations; three upstream consumer test families pass

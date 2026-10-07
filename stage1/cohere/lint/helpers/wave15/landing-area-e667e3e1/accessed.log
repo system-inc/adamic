@@ -1,0 +1,8 @@
+Actual Go calls: {'prototype': 62, 'render': 34, 'yoda': 56, 'controls': 33542}
+Node: identical 385223 bytes
+JavaScript: identical 385223 bytes
+native: identical 385223 bytes
+Variable-subscript mutant caught on Node only by output comparison; successful compile and normal exit
+Variable-subscript mutant caught on JavaScript only by output comparison; successful compile and normal exit
+Variable-subscript mutant caught on native only by output comparison; successful compile and normal exit
+PASS 33694 actual Go observations; three consumer test families pass

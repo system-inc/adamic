@@ -1,0 +1,8 @@
+Actual Go calls per consumer/control family: {'internal': 6, 'outside': 9, 'project': 5, 'controls': 14, 'controls-97': 12, 'controls-273': 12, 'controls-214': 12, 'controls-65535': 12}
+Node: identical 265 bytes
+JavaScript: identical 265 bytes
+native: identical 265 bytes
+Call-argument mutant caught on Node only by output comparison; successful compile and exit
+Call-argument mutant caught on JavaScript only by output comparison; successful compile and exit
+Call-argument mutant caught on native only by output comparison; successful compile and exit
+PASS 82 actual Go helper observations; all three consumer test families pass
