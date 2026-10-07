@@ -301,6 +301,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_limits.a", true, false},
 	{"internal/oracle/testdata/string_too_long.a", true, false},
 	{"internal/oracle/testdata/pad_too_long.a", true, false},
+	// The length checks that stop a pad or a repeat before it's built, and normalize past its first
+	// block of points (integration's reading of d96d304).
+	{"internal/oracle/testdata/pad_infinity.a", true, false},
+	{"internal/oracle/testdata/repeat_huge.a", true, false},
+	{"internal/oracle/testdata/normalize_long.a", true, false},
 	{"internal/oracle/testdata/stack_overflow.a", true, false},
 	{"internal/oracle/testdata/adversarial_order.a", true, false},
 	{"internal/oracle/testdata/adversarial_exits.a", true, false},
