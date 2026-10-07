@@ -79,3 +79,15 @@ three available syntax-ready inventory entries: positions 21, 24 and 26.
 
 All 46 original helper-ready rules are reserved. Main sources and claim documents
 on every origin branch were checked. This claim is pushed before implementation.
+
+## Sixth claim, October 7
+
+After verifying dd393abe pushed and fetching 341 origin refs, claim the first
+three available syntax-ready inventory rules (positions 30, 33 and 34):
+
+1. no-multi-str
+2. no-nonoctal-decimal-escape
+3. no-octal
+
+All original helper-ready rules are reserved. Main sources and all origin claim
+files were checked. This claim is pushed before implementation.
