@@ -1,0 +1,318 @@
+package lower
+
+import (
+	"fmt"
+	_ "unsafe"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// As in instantiate.go, this calls the pinned checker's own implementation until its shim
+// exports it. The annotation is a claimed postcondition, never a flow fact. The flow nodes below contain
+// only checks independently trusted by Adamic, not assertion calls or assignments.
+//
+//go:linkname predicateFlowType github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getFlowTypeOfReferenceEx
+func predicateFlowType(receiver *checker.Checker, reference *ast.Node, declared, initial *checker.Type, container *ast.Node, flow *ast.FlowNode) *checker.Type
+
+type predicateProof struct {
+	l          *lowering
+	function   *ast.Node
+	parameter  *ast.Node
+	declared   *checker.Type
+	target     *checker.Type
+	assertion  bool
+	trueTypes  []*checker.Type
+	lastReturn *ast.Node
+}
+
+type predicatePath struct {
+	flow    *ast.FlowNode
+	checked bool
+}
+
+func (p *predicateProof) refused(node *ast.Node, reason string) error {
+	return &Refused{Where: p.l.program.Where(node), What: "a type predicate whose return is not proven (" + reason + ")", Fix: "inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+}
+
+func (l *lowering) provePredicate(node *ast.Node) error {
+	annotation := node.AsTypePredicateNode()
+	function := node.Parent
+	if !ast.IsFunctionLike(function) || function.Body() == nil || annotation.ParameterName.Kind != ast.KindIdentifier {
+		return (&predicateProof{l: l}).refused(node, "there is no body proving this parameter")
+	}
+	var parameter *ast.Node
+	for _, candidate := range function.Parameters() {
+		if ast.IsIdentifier(candidate.Name()) && candidate.Name().Text() == annotation.ParameterName.Text() {
+			parameter = candidate
+			break
+		}
+	}
+	p := &predicateProof{l: l, function: function, parameter: parameter, assertion: annotation.AssertsModifier != nil}
+	if parameter == nil || parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
+		return p.refused(node, "the predicate must name an unchanged plain parameter")
+	}
+	p.declared = l.checker.GetTypeAtLocation(parameter.Name())
+	if annotation.Type != nil {
+		p.target = l.checker.GetTypeFromTypeNode(annotation.Type)
+	} else {
+		// asserts cond is accepted only for a boolean parameter, with a proven true postcondition.
+		if p.declared.Flags()&checker.TypeFlagsBooleanLike == 0 {
+			return p.refused(node, "asserts cond needs a boolean parameter")
+		}
+		p.target = predicateTrueType(l.checker)
+	}
+	// A rebinding changes the value being tested, not the caller's argument. Include writes in
+	// nested closures, even if the checker happens to retain a narrowing across their calls.
+	var changed *ast.Node
+	var visit ast.Visitor
+	visit = func(current *ast.Node) bool {
+		if current.Kind == ast.KindIdentifier && l.checker.GetSymbolAtLocation(current) == l.checker.GetSymbolAtLocation(parameter.Name()) && ast.IsAssignmentTarget(current) {
+			changed = current
+		}
+		current.ForEachChild(visit)
+		return false
+	}
+	function.Body().ForEachChild(visit)
+	if changed != nil {
+		return p.refused(changed, "the predicate parameter is assigned")
+	}
+	paths := []predicatePath{{flow: &ast.FlowNode{Flags: ast.FlowFlagsStart}}}
+	var remaining []predicatePath
+	var err error
+	if function.Body().Kind == ast.KindBlock {
+		remaining, err = p.statement(function.Body(), paths)
+	} else {
+		err = p.returned(function.Body(), function.Body(), paths)
+	}
+	if err != nil {
+		return err
+	}
+	for _, path := range remaining {
+		if !p.assertion {
+			return p.refused(function.Body(), "implicit return is not a proven boolean")
+		}
+		if err := p.normalReturn(function.Body(), path); err != nil {
+			return err
+		}
+	}
+	if !p.assertion && len(p.trueTypes) > 0 && !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetUnionType(p.trueTypes), p.target) {
+		return p.refused(p.lastReturn, "the body's true narrowing does not match "+l.checker.TypeToString(p.target))
+	}
+	return nil
+}
+
+func (p *predicateProof) narrowed(path predicatePath, initial *checker.Type) *checker.Type {
+	return predicateFlowType(p.l.checker, p.parameter.Name(), p.declared, initial, p.function, path.flow)
+}
+
+func predicateBranch(path predicatePath, expression *ast.Node, truth bool) predicatePath {
+	flags := ast.FlowFlagsFalseCondition
+	if truth {
+		flags = ast.FlowFlagsTrueCondition
+	}
+	return predicatePath{flow: &ast.FlowNode{Flags: flags, Node: expression, Antecedent: path.flow}, checked: true}
+}
+
+func (p *predicateProof) normalReturn(node *ast.Node, path predicatePath) error {
+	narrowed := p.narrowed(path, p.declared)
+	if !path.checked || !checker.Checker_isTypeIdenticalTo(p.l.checker, narrowed, p.target) || p.l.nominalMismatch(narrowed, p.target, map[[2]*checker.Type]bool{}) != nil {
+		return p.refused(node, "normal return has not narrowed "+p.parameter.Name().Text()+" to "+p.l.checker.TypeToString(p.target))
+	}
+	return nil
+}
+
+func (p *predicateProof) returned(node, expression *ast.Node, paths []predicatePath) error {
+	p.lastReturn = node
+	if p.assertion {
+		if expression != nil {
+			return p.refused(node, "an assertion must return without a value")
+		}
+		for _, path := range paths {
+			if err := p.normalReturn(node, path); err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+	if expression == nil {
+		return p.refused(node, "return has no boolean check")
+	}
+	expression = ast.SkipParentheses(expression)
+	literal := expression.Kind == ast.KindTrueKeyword || expression.Kind == ast.KindFalseKeyword
+	if !literal && !p.check(expression) {
+		return p.refused(node, "return expression is not a trusted check on "+p.parameter.Name().Text())
+	}
+	for _, path := range paths {
+		for _, truth := range []bool{true, false} {
+			if literal && truth != (expression.Kind == ast.KindTrueKeyword) {
+				continue
+			}
+			branch := path
+			if !literal {
+				branch = predicateBranch(path, expression, truth)
+			}
+			// For a false path, an argument initially in the claimed type must be
+			// impossible, as for inferred predicates. That proves the caller's else
+			// narrowing independently of the true-return comparison.
+			if truth {
+				narrowed := p.narrowed(branch, p.declared)
+				if !branch.checked || !p.l.checker.IsTypeAssignableTo(narrowed, p.target) || p.l.nominalMismatch(narrowed, p.target, map[[2]*checker.Type]bool{}) != nil {
+					return p.refused(node, "true return narrows to "+p.l.checker.TypeToString(narrowed)+", not "+p.l.checker.TypeToString(p.target))
+				}
+				p.trueTypes = append(p.trueTypes, narrowed)
+			} else if p.narrowed(branch, p.target).Flags()&checker.TypeFlagsNever == 0 {
+				return p.refused(node, "false return can still contain "+p.l.checker.TypeToString(p.target))
+			}
+		}
+	}
+	return nil
+}
+
+func (p *predicateProof) statement(node *ast.Node, paths []predicatePath) ([]predicatePath, error) {
+	if len(paths) == 0 {
+		return nil, nil
+	}
+	if len(paths) > 256 {
+		return nil, p.refused(node, "too many return paths to prove")
+	}
+	switch node.Kind {
+	case ast.KindBlock:
+		for _, statement := range node.AsBlock().Statements.Nodes {
+			var err error
+			paths, err = p.statement(statement, paths)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return paths, nil
+	case ast.KindIfStatement:
+		statement := node.AsIfStatement()
+		if !p.check(statement.Expression) {
+			return nil, p.refused(node, "branch is not a trusted parameter check")
+		}
+		var then, otherwise []predicatePath
+		for _, path := range paths {
+			then = append(then, predicateBranch(path, statement.Expression, true))
+			otherwise = append(otherwise, predicateBranch(path, statement.Expression, false))
+		}
+		then, err := p.statement(statement.ThenStatement, then)
+		if err != nil {
+			return nil, err
+		}
+		if statement.ElseStatement != nil {
+			otherwise, err = p.statement(statement.ElseStatement, otherwise)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return append(then, otherwise...), nil
+	case ast.KindReturnStatement:
+		return nil, p.returned(node, node.AsReturnStatement().Expression, paths)
+	case ast.KindThrowStatement:
+		return nil, nil
+	case ast.KindEmptyStatement:
+		return paths, nil
+	case ast.KindExpressionStatement, ast.KindVariableStatement:
+		if node.Kind == ast.KindExpressionStatement && p.l.isPanicCall(node.Expression()) {
+			return nil, nil
+		}
+		if predicateEffects(node) {
+			// Unknown calls and all writes can invalidate discriminants through an alias. Starting
+			// over also prevents the checker from retaining stale readonly-property facts.
+			for index := range paths {
+				paths[index] = predicatePath{flow: &ast.FlowNode{Flags: ast.FlowFlagsStart}}
+			}
+		}
+		return paths, nil
+	default:
+		return nil, p.refused(node, fmt.Sprintf("return paths through %s are not verified", node.Kind))
+	}
+}
+
+// check recognizes only independently trusted narrowing expressions, with no calls, aliases,
+// casts or computed property accesses. The checker still decides what each branch proves.
+func (p *predicateProof) check(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
+		return p.check(node.AsPrefixUnaryExpression().Operand)
+	}
+	if p.assertion && p.target == predicateTrueType(p.l.checker) && p.reference(node) {
+		return true
+	}
+	if node.Kind != ast.KindBinaryExpression {
+		return false
+	}
+	binary := node.AsBinaryExpression()
+	switch binary.OperatorToken.Kind {
+	case ast.KindAmpersandAmpersandToken, ast.KindBarBarToken:
+		return p.check(binary.Left) && p.check(binary.Right)
+	case ast.KindInstanceOfKeyword:
+		if !p.reference(ast.SkipParentheses(binary.Left)) || binary.Right.Kind != ast.KindIdentifier {
+			return false
+		}
+		symbol := p.l.checker.GetSymbolAtLocation(binary.Right)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = p.l.checker.GetAliasedSymbol(symbol)
+		}
+		return symbol != nil && symbol.Flags&ast.SymbolFlagsClass != 0
+	case ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
+		return p.checkedValue(binary.Left) && p.literal(binary.Right) || p.checkedValue(binary.Right) && p.literal(binary.Left)
+	}
+	return false
+}
+
+func (p *predicateProof) reference(node *ast.Node) bool {
+	return node.Kind == ast.KindIdentifier && p.l.checker.GetSymbolAtLocation(node) == p.l.checker.GetSymbolAtLocation(p.parameter.Name())
+}
+
+func (p *predicateProof) checkedValue(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	if p.reference(node) {
+		return true
+	}
+	if node.Kind == ast.KindTypeOfExpression {
+		return p.reference(ast.SkipParentheses(node.AsTypeOfExpression().Expression))
+	}
+	return node.Kind == ast.KindPropertyAccessExpression && p.reference(ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)) && node.Flags&ast.NodeFlagsOptionalChain == 0
+}
+
+func (p *predicateProof) literal(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	switch node.Kind {
+	case ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindNullKeyword, ast.KindTrueKeyword, ast.KindFalseKeyword:
+		return true
+	case ast.KindIdentifier:
+		return node.Text() == "undefined" && p.l.checker.GetSymbolAtLocation(node) == p.l.checker.GetUndefinedSymbol()
+	}
+	return false
+}
+
+func predicateEffects(node *ast.Node) bool {
+	switch node.Kind {
+	case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:
+		// A property read may dispatch a getter through a structural view.
+		return true
+	case ast.KindCallExpression, ast.KindNewExpression, ast.KindBinaryExpression:
+		if node.Kind != ast.KindBinaryExpression || ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
+			return true
+		}
+	case ast.KindPostfixUnaryExpression, ast.KindFunctionDeclaration, ast.KindFunctionExpression, ast.KindArrowFunction:
+		return true
+	case ast.KindPrefixUnaryExpression:
+		operator := node.AsPrefixUnaryExpression().Operator
+		if operator == ast.KindPlusPlusToken || operator == ast.KindMinusMinusToken {
+			return true
+		}
+	}
+	return node.ForEachChild(predicateEffects)
+}
+
+func predicateTrueType(c *checker.Checker) *checker.Type {
+	for _, member := range c.GetBooleanType().Types() {
+		if member.AsLiteralType().Value() == true {
+			return member
+		}
+	}
+	panic("checker boolean type has no true member")
+}
