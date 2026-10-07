@@ -182,3 +182,15 @@ gates pass again, including corpus byte agreement, sanitizers, released handles,
 compiler behavior also passes the uncached Node oracle. No new claims or shared
 file edits. Full JSX statuses and parked React analyses remain unchanged.
 See ../WAVE_30_STATIC_LANDING_REPORT.md and its 29-commit rebase mapping.
+
+Area landing refresh: rebased onto integrated area/stage1-lint, then included
+its runtime-profile advancement at d65a8f931. All twelve own gates pass again,
+with the full shared package green on the first area snapshot and focused shared
+parity plus runtime/Node checks green on the final snapshot. Native JSX extraction
+now succeeds for all six old prerequisite controls, and the owned probes require
+it instead of treating it as a failure. Old JSX-parser blocker statements are
+superseded. The three JSX rules remain partial: registered RuleContext has no
+checker program handle or checker-node mapping for their symbol-resolution facts.
+Parser.path does provide source identity. Existing three React analysis claims
+remain PARKED on native HIR/SSA/capture analysis. No new rules claimed and no
+shared files edited. See ../WAVE_30_AREA_LANDING_REPORT.md for exact proof scope.
