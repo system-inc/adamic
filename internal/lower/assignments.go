@@ -41,6 +41,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if !ast.IsIdentifier(target) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
 	}
+	if l.result.Locals[local].NestedFunction != 0 {
+		return nil, l.notYet(target, "rebinding a nested function declaration")
+	}
 	if l.caught[l.symbol(target)] {
 		return nil, l.notYet(target, "assigning to what a catch caught")
 	}
@@ -107,6 +110,9 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 		local, isLocal := l.local(element)
 		if !ast.IsIdentifier(element) || !isLocal || l.alwaysUndefined[l.symbol(element)] {
 			return nil, l.notYet(element, "assigning to "+describe(element)+" in a destructuring assignment")
+		}
+		if l.result.Locals[local].NestedFunction != 0 {
+			return nil, l.notYet(element, "rebinding a nested function declaration")
 		}
 		field, err := l.tupleField(element, held, elements, index, l.result.Locals[local].Type)
 		if err != nil {

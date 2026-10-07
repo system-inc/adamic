@@ -63,6 +63,9 @@ func (e *emitter) store(local int, value string, owned bool) {
 func (e *emitter) checkReady(local int) { e.checkReadyRead(local, "") }
 
 func (e *emitter) localReady(local int) string {
+	if binding := e.program.Locals[local].Ready; binding != 0 {
+		return e.read(ir.Read{Local: binding - 1, Of: ir.Boolean})
+	}
 	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
 		return e.cellReference(local) + "->ready"
 	}
@@ -85,6 +88,9 @@ func (e *emitter) checkReadyRead(local int, expression string) {
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
 	name := e.localName(read.Local)
+	if read.Checked {
+		e.checkReady(read.Local)
+	}
 	if read.Readiness != "" {
 		e.checkReadyRead(read.Local, read.Readiness)
 	}
@@ -95,6 +101,9 @@ func (e *emitter) read(read ir.Read) string {
 	// A reference its consumer lends needs no count: nothing can run before it's used (borrow.go).
 	lent := e.lendable && lendable(read.Of)
 	if slot := e.cellSlot(read.Local); slot != "" {
+		if read.Checked {
+			e.checkReady(read.Local)
+		}
 		// A captured variable may change under a call later in the statement (a closure that
 		// writes it), so, like a global, it's copied the moment JavaScript reads it.
 		value := unslotted(read.Of, slot+"."+member(read.Of))
@@ -111,9 +120,6 @@ func (e *emitter) read(read ir.Read) string {
 	}
 	if !e.program.Locals[read.Local].Global && !e.program.Locals[read.Local].ExpressionAssigned {
 		return name
-	}
-	if read.Checked {
-		e.checkReady(read.Local)
 	}
 	if lent {
 		e.self = true
@@ -136,6 +142,11 @@ func (e *emitter) declareLocal(local int, value string, owned bool) {
 		e.line("int64_t %s = (int64_t)%s;", e.localName(local), value)
 		return
 	}
+	if declared.Captured && declared.Preallocated {
+		e.store(local, value, owned)
+		e.line("%s->ready = true;", e.cellReference(local))
+		return
+	}
 	if declared.Captured {
 		e.makeCell(local, value, owned)
 		return
@@ -155,6 +166,11 @@ func (e *emitter) declareLocal(local int, value string, owned bool) {
 // makeCell declares a captured local's cell, holding value (retained unless owned).
 func (e *emitter) makeCell(local int, value string, owned bool) {
 	declared := e.program.Locals[local]
+	if declared.EnvironmentCell {
+		e.store(local, value, owned)
+		e.line("%s->ready = true;", e.cellReference(local))
+		return
+	}
 	if declared.Type.IsReference() && !owned {
 		value = retained(value)
 	}
@@ -190,4 +206,18 @@ func (e *emitter) cellReference(local int) string {
 		}
 	}
 	return e.cellName(local)
+}
+
+// allocateEnvironment emits the one IR frame site; slot names borrow its storage.
+func (e *emitter) allocateEnvironment(cells []int) {
+	if len(cells) == 0 {
+		return
+	}
+	environment := e.temporary()
+	e.line("adamic_environment *%s = adamic_environment_new(%d);", environment, len(cells))
+	e.hold(environment)
+	for position, local := range cells {
+		e.line("adamic_cell *%s = &%s->cells[%d];", e.cellName(local), environment, position)
+		e.line("%s->references = %t;", e.cellName(local), e.program.Locals[local].Type.IsReference())
+	}
 }

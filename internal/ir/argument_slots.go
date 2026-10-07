@@ -9,7 +9,7 @@ type RestArguments struct {
 
 func FunctionRestArguments(function Function) RestArguments {
 	start := len(function.Parameters) - 1
-	if function.Receiver && !function.Closure {
+	if function.Receiver {
 		start--
 	}
 	return RestArguments{Start: start, Element: function.RestElement}
@@ -24,7 +24,7 @@ func (p *Program) PrepareArgumentSlots() {
 		if function.RestElement != 0 {
 			n--
 		}
-		if function.Receiver && !function.Closure {
+		if function.Receiver {
 			n--
 		}
 		fixed = max(fixed, n)
@@ -59,6 +59,9 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
 				targets = append(targets, index)
 			}
 		}
+	}
+	if call.Direct > 0 {
+		targets = []int{call.Direct - 1}
 	}
 	layout := ArgumentLayout{}
 	for _, target := range targets {
@@ -107,13 +110,6 @@ func (p *Program) PackedCountNeeded(function int) bool {
 	f := p.Functions[function]
 	if f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver) {
 		return true
-	}
-	if f.Closure && f.Receiver {
-		for _, parameter := range f.Parameters {
-			if p.Locals[parameter].Type.IsMaybe() || f.OptionalParameters[parameter] {
-				return true
-			}
-		}
 	}
 
 	// A zero-argument view can reach optional parameters held differently. One
@@ -170,8 +166,8 @@ func absentRepresentation(of Type) int {
 }
 
 func (p *Program) ClosureConventionNeeded() bool {
-	for index, f := range p.Functions {
-		if p.PackedCountNeeded(index) || f.Closure && f.Receiver {
+	for index := range p.Functions {
+		if p.PackedCountNeeded(index) {
 			return true
 		}
 	}
@@ -180,4 +176,22 @@ func (p *Program) ClosureConventionNeeded() bool {
 
 func (p *Program) PackedCountNeededFromCall(call CallClosure) bool {
 	return p.ClosureArgumentLayout(call).Count
+}
+
+func (p *Program) CanonicalClosuresNeeded() bool {
+	for _, f := range p.Functions {
+		if f.FrameIdentity != 0 || f.NestedFrame {
+			return true
+		}
+	}
+	return false
+}
+
+func (p *Program) ClosureReceiversNeeded() bool {
+	for _, f := range p.Functions {
+		if f.Closure && f.Receiver {
+			return true
+		}
+	}
+	return false
 }

@@ -71,7 +71,20 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := e.value(statement.Value)
 		e.line("adamic_write_line(%s, %s);", stream, value)
 		e.end()
+	case ir.AllocateEnvironment:
+		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
+		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
+			if e.program.Locals[statement.Local].EnvironmentCell {
+				return
+			}
+			local := e.program.Locals[statement.Local]
+			if local.Captured {
+				e.makeCell(statement.Local, zero(local.Type), true)
+				e.line("%s->ready = false;", e.cellReference(statement.Local))
+			}
+			return
+		}
 		if e.elementBorrows[e.at] {
 			e.borrowElement(statement)
 			return
@@ -183,7 +196,10 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
-		cache := e.cache()
+		cache := ""
+		if e.fieldTypesNeeded() {
+			cache = e.cache()
+		}
 		if e.program.CheckedFields[statement.Name] {
 			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
 		}
@@ -213,12 +229,14 @@ func (e *emitter) statement(statement ir.Statement) {
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
-		e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, statement.Value.Type())
+		if e.fieldTypesNeeded() {
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, statement.Value.Type())
+		}
 		if converted {
 			e.line("}")
 		}
-		if statement.Uninitialized {
-			e.line("adamic_object_set_initialized(%s, %s, false);", object, cString(statement.Name))
+		if e.program.UninitializedFields[statement.Name] {
+			e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
 		}
 		e.end()
 	case ir.Panic:

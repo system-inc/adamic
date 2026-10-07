@@ -28,6 +28,12 @@ func cProgram(program *ir.Program, handler int) string {
 	elementBorrows, lending := planElementBorrows(program)
 	emitter := &emitter{program: program, reuse: planReuse(program, lending), regions: planRegions(program), elementBorrows: elementBorrows}
 	var builder strings.Builder
+	if program.ClosureReceiversNeeded() {
+		builder.WriteString("#define ADAMIC_CLOSURE_RECEIVERS 1\n")
+	}
+	if program.CanonicalClosuresNeeded() {
+		builder.WriteString("#define ADAMIC_CANONICAL_CLOSURES 1\n")
+	}
 	if program.ClosureConventionNeeded() {
 		builder.WriteString("#define ADAMIC_CLOSURE_CONVENTION 1\n")
 	}

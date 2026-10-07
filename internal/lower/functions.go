@@ -72,7 +72,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	}
 	if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
-		returns := l.checker.GetReturnTypeOfSignature(signature)
+		returns := l.concrete(l.checker.GetReturnTypeOfSignature(signature))
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
@@ -178,6 +178,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 
 // lowerBody lowers the body of the function at index, whose signature is written.
 func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
+	if declaration.Body() == nil {
+		return l.notYet(declaration, "a function without a body")
+	}
 	function := l.result.Functions[index]
 	if !function.Closure {
 		// A function declaration, a method or a constructor has its body lowered where a use of it is first met,
@@ -281,8 +284,11 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	// The environment may have grown while the body was lowered (captures are found as they're
 	// read), so it's taken from what's recorded, not from this copy.
 	function.Environment = l.result.Functions[index].Environment
+	function.ForwardedNestedParent = l.result.Functions[index].ForwardedNestedParent
+	function.ReferenceParents = l.result.Functions[index].ReferenceParents
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
+	l.finishNestedEnvironment(&function, index)
 	l.result.Functions[index] = function
 	return nil
 }

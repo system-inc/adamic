@@ -32,6 +32,10 @@ func Build(program *ir.Program, function int) *Function {
 				builder.function.Params = append(builder.function.Params, builder.place(parameter))
 			}
 		}
+		if count := program.Functions[function].ArgumentsCount; count != 0 && builder.tracked(count-1) {
+			builder.function.Params = append(builder.function.Params, builder.place(count-1))
+		}
+
 	}
 	builder.function.Program = program
 	builder.statements(statements)
@@ -173,6 +177,8 @@ func (b *builder) statement(at *ir.Statement) {
 		b.emit(at, 0, nil, b.uses(statement), nil)
 	case ir.SetProperty:
 		b.emit(at, 0, nil, b.uses(statement), nil)
+	case ir.AllocateEnvironment:
+		b.emit(at, 0, nil, nil, nil)
 	case ir.Declare:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Assign:

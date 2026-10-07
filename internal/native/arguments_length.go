@@ -180,3 +180,17 @@ func (e *emitter) packedClosureCall(call ir.CallClosure, closure, packed, count 
 	}
 	return fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
 }
+
+// A receiver is prefixed to every stored slot, including reserved rest tails.
+// This length is distinct from the actual count observed by arguments.length.
+func (e *emitter) packedArgumentSize(call ir.CallClosure) int {
+	layout := e.program.ClosureArgumentLayout(call)
+	n := len(layout.Fixed)
+	if len(call.Spread) == 0 && len(layout.Rest) == 0 {
+		n = max(n, len(call.Arguments))
+	}
+	for _, rest := range layout.Rest {
+		n = max(n, e.program.RestArgumentSlots[rest]+1)
+	}
+	return n
+}

@@ -3,13 +3,18 @@ package lower
 
 import (
 	"errors"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
 // statements lowers a list of statements.
 func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
-	lowered := []ir.Statement{}
+	lowered, err := l.nestedDeclarations(nodes)
+	if err != nil {
+		return nil, err
+	}
 	for _, node := range nodes {
 		statements, err := l.statement(node)
 		if err != nil {
@@ -39,8 +44,15 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindExportAssignment:
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export named bindings"}
 	case ast.KindFunctionDeclaration:
+		if node.Parent != nil && (node.Parent.Kind == ast.KindCaseClause || node.Parent.Kind == ast.KindDefaultClause) {
+			// Switch functions are initialized at entry, before dispatch.
+			return nil, nil
+		}
 		if l.function != nil {
-			return nil, l.notYet(node, "a function inside a function (a closure)")
+			if local, ok := l.locals[l.symbol(node.Name())]; ok && l.result.Locals[local].NestedFunction != 0 {
+				return nil, nil
+			}
+			return nil, l.notYet(node, "a block-scoped nested function declaration")
 		}
 		// Lowered already, by declareModule.
 		return nil, nil
@@ -181,9 +193,21 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return []ir.Statement{returned}, nil
 	}
+	expression = ast.SkipParentheses(expression)
+	if expression.Kind == ast.KindBinaryExpression && expression.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+		return l.returnAssignment(expression)
+	}
 	if l.isPanicCall(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
+	}
+	// A generic return specialized to void still evaluates the call before returning.
+	if l.function.Returns == 0 && expression.Kind == ast.KindCallExpression && l.concrete(l.checker.GetTypeAtLocation(expression)).Flags()&checker.TypeFlagsVoid != 0 {
+		statements, err := l.expressionStatement(expression)
+		if err != nil {
+			return nil, err
+		}
+		return append(statements, ir.Return{}), nil
 	}
 	value, err := l.expression(expression)
 	if err != nil {
@@ -193,4 +217,26 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
 	}
 	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
+}
+
+// returnAssignment preserves the right side's value, assigns once, then returns
+// that same value. Reading the target again could observe another write.
+func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
+	statements, err := l.assignment(node)
+	if err != nil {
+		return nil, err
+	}
+	if len(statements) != 1 {
+		return nil, l.notYet(node, "returning a destructuring assignment")
+	}
+	assignment, ok := statements[0].(ir.Assign)
+	if !ok {
+		return nil, l.notYet(node, "returning a property or element assignment")
+	}
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "assigned", Type: assignment.Value.Type(), Function: l.functionIndex})
+	value := assignment.Value
+	read := ir.Read{Local: held, Of: value.Type()}
+	assignment.Value = read
+	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(read, l.function.Returns)}}, nil
 }

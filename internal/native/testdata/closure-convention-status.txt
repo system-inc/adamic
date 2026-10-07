@@ -1,53 +1,66 @@
-Closure convention checkpoint and runtime audit
+Built: merged census 24a2b287, host blockers b788e96e, and front-3 28a10122 with selective counted pointers and canonical nested calls.
+Commits: census merge bf1a3823; host merge 14856bbf; this front-3 merge retains 9534e8ab and checkpoint 4526aa46.
+Commands and outputs: selected native ABI gate passed; selected Node oracle passed in 21.171s; metadata/host/non-null/census oracle passed in 11.615s; weak_parent 253/302 and typeof_dispatch 6/16 match main.
+Mutants: drop the count: clang under -Werror says expected 3, have 2; excess count: emitted-C pins reject unobserved and unrelated function types; nested reference and switch mutants caught by Node.
+Not covered: parser C and binary identity FAIL after the merges; hardware instructions/cycles unavailable; taste 21 blocks the complete gate; host fixture 24 and library callback runtime integration remain next steps.
 
-Status: incomplete. This report does not certify the requested reconciliation.
-Branch: codex/closure-convention, based on origin/main 48c05d09.
-Tested implementation: 9534e8ab2c2daa2c5e400f43a421004ed4ed0311.
-The branch contains the reader-only arguments.length implementation, not the completed optional/default reconciliation.
+One convention
 
-Parser identity observed at this checkpoint:
-Both compiler binaries built with go build -buildvcs=false, canonical stage1/typescript/parser/main.ts entry, default release build flags, same toolchain and cohere pin as main 48c05d09.
-Emitted C: byte-identical; SHA256 1e6bfaa8b9e114078056060a632f9e8e3d782d511badeed1ab0030cba674a5d9.
-Release binary: byte-identical; SHA256 db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e.
-Artifacts: /tmp/closure-convention-step1-parser.c and /tmp/closure-convention-step1-parser.
-Main artifacts: /tmp/arguments-length-current-main-parser-correct.c and /tmp/arguments-length-current-main-parser-correct.
-These observations establish identity only for the checkpoint, not for an unimplemented reconciliation.
+Plain code: adamic_code(self, arguments). Counted code: adamic_counted_code(self, arguments, argument_count).
+Plain methods: adamic_method(self, arguments). Counted methods: adamic_counted_method(self, arguments, argument_count).
+Each shape has exactly one typedef. No call uses a function-pointer cast. Typed union dispatch selects the shape of the actual closure or method.
+Count observations include arguments.length, rest binding, and incompatible optional absence representations in the closed-world function-type candidate set. Compatible omitted slots are padded by the caller.
+Receiver packing and canonical frame support have independent feature flags. Neither creates a counted convention by itself. Receiver packing copies the packed layout, not the observable argument count, so rest slots survive prefixing this.
+Canonical counted constructors use the same argument order as ordinary closures; cache comparisons select the active typed pointer member.
 
-Runtime call-site audit:
-Searched the complete internal/native/runtime tree at 9534e8ab and library's codex/regex-replace-callback 132d9919, using git grep for (->|.)code followed by a call and for adamic_method. Additional searches examined code-field references and method-table access.
-At 9534e8ab the only runtime closure call is array.c:198. At 132d9919 there are six:
-1. array.c:198: compare->code(compare, (adamic_value[]){left, right}). Type: adamic_code, two arguments, no cast. Sort comparator receives two JavaScript arguments.
-2. node_process.c:436: closure->code(closure, padded). Type: adamic_code, two arguments, no cast. Built-in performance closures receive padded string slots. Logical count is available in the enclosing invoke function but padding length is not that count.
-3. node_process.c:441: closure->code(closure, args). Type: adamic_code, two arguments, no cast. User-closure fallback in performance invocation; enclosing count must remain the actual count if the candidate closure observes it.
-4. parallel.c:197: scope->work->code(scope->work, arguments). Type: adamic_code, two arguments, no cast. Worker callback receives element and index.
-5. parallel.c:300: work->code(work, arguments). Type: adamic_code, two arguments, no cast. Sequential worker callback receives element and index.
-6. regexp_replace.c:114: callback->code(callback, packed). Type: adamic_code, two arguments, no cast. The local argument_count is the JavaScript match callback count; packed_count is a parameter/rest layout size and must not replace it.
-The library header defines adamic_code once at adamic.h:126 as adamic_value (*)(adamic_closure *, adamic_value *).
-The checkpoint header defines the same shape once at adamic.h:81.
+Hunk decisions and witnesses
 
-Method audit:
-No runtime C site invokes an adamic_method pointer in either audited tree.
-At 9534e8ab, adamic.h:196 defines adamic_method once as adamic_value (*)(adamic_object *, adamic_value *); adamic_methods.code at :200 is a const adamic_method pointer; object.c:57 adamic_object_callee returns a method through its typed output parameter. Invocation is emitted by internal/native/emit_functions.go, callThrough.
-At 132d9919, corresponding locations are adamic.h:248 (typedef), :252 (table) and object.c:66 (lookup).
-class_inheritance.c:19 accesses a separate class-method function-index table, not an adamic_method invocation.
-The unfinished census merge changed adamic_code and adamic_method to universal three-argument pointers and array.c:198 to three arguments. Those changes were not validated and are not in this checkpoint.
+Checked union narrowing is retained instead of incoming unchecked ir.Narrow. Array predicate narrowing retains the declared element contract and checks the runtime array brand.
+Witnesses: e4eec87_f2_union_narrow_call.a, e4eec87_f2b_union_narrow_number.a, host_array_predicate.a, host_array_unknown_predicate.a. All passed the Node oracle in both backends.
+Break.Depth retains scope and finally cleanup. Break.Label and Continue.Label use their named target and perform the corresponding cleanup.
+Witnesses: taste_labels.a and stage3/fixtures/taste/23_labels_finally.a. Both passed the Node oracle.
+Nested preallocation does not replace definite-assignment declarations. Non-null assertions unwrap synthetic checked union loads before performing their own nullish check.
+Witnesses: non_null.a, non_null_definite.a, non_null_initialized.a; the latter two passed after restoring field readiness on writes.
+Imported const labels retain front-3's proof. Host effectful case expressions remain accepted and short-circuited. Literal-only cases retain main's original emission.
+Witnesses: imported_const_cases/*, switch_case_declarations/*, taste_stage3_representations.a, and the switch mutants.
+New joining witnesses: closure_convention_nested.a and closure_convention_receiver_rest.a; Node agreement, sanitizers, release and leak checks passed.
+Hunk-by-hunk resolution audit: /tmp/closure-convention-front-hunk-decisions.json.
 
-Validation:
-Setup succeeded, total 52.417s, nproc 5; cgroup cpu.max 400000 100000.
-Timing lines: node 0.062s; go 0.070s; submodules 0.152s; markdown dependencies 0.154s; clang 0.422s; go build 51.529s; tests deferred 52.357s; cache warm 52.358s; done 52.417s.
-Toolchain: Go 1.27.1, clang 20.1.8, Node 24.19.0.
-Checkpoint gate /tmp/closure-convention-step1-gate.log: native package passed in 0.160s; filtered Node oracle passed in 2.746s.
-Recheck commands, with all output written to logs:
-ADAMIC_GATE_UNCACHED=1 go test ./internal/native -run '^TestNoReaderCallingConvention$' -count=1
-ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length' -count=1
-Logs: /tmp/closure-convention-audit-native.log, /tmp/closure-convention-audit-oracle.log.
+Runtime audit
 
-Mutants:
-No new drop-count compiler mutant has been run for this unit. Historical arguments-length mutants are documented in arguments-length-revision-report.txt; those do not prove the new C-arity requirement.
+Searches: rg -n -e '->code\s*\(' -e '\.code\s*\(' -e 'counted_code\s*\(' internal/native/runtime, and rg -n adamic_method internal/native/runtime.
+Live tree: array.c's sort comparator calls adamic_closure_call(compare, {left,right}, 2). The helper calls adamic_code with two arguments or adamic_counted_code with three. No cast.
+adamic.h:137 and :141 are the counted/plain closure invocations; :290 and :291 are the counted/plain method invocations. One typedef per shape.
+object.c:67 and :93 retrieve adamic_method_entry; they do not invoke a code pointer. union.c:135 inspects a method table; class_inheritance.c inspects function-index virtual tables.
+map_set.c: collection_next ignores presence, so its definition and constructor use adamic_code(self, arguments), with no count.
+The external library snapshot 132d9919 additionally contains node_process.c:436/:441, parallel.c:197/:300, regexp_replace.c:114. They are not in this merge; the prior checkpoint lists each original two-argument site. Their integration is not claimed here.
 
-Unfinished scope:
-The merges of 24a2b287 and cd220dd5, the single typed selective-count convention, runtime/library integration, host fixture 24, and the compiler-rejected drop-count mutant remain unfinished.
-The attempted 24a2b287 merge had overlapping lowering/emission changes and universal ABI changes outside conflict blocks. Resolving textual conflicts alone did not yield a coherent implementation, so the unvalidated merge was saved and aborted.
-Full unfinished patch: /tmp/closure-convention-unfinished-census-merge.patch. Merge head: /tmp/closure-convention-unfinished-merge-head.txt. These are local recovery artifacts, not pushed commits.
-The supplied compiler branches do not contain parallel.c or regexp_replace.c; the fetched library branch does, with additional runtime dependencies. No claim is made that those dependencies are integrated.
-Scratch merge 87ba1951 was unavailable from the fetched refs; no claim is made that its host validation was reproduced here.
+Retains
+
+CLI counted release builds: weak_parent allocations/frees 86/86, retains/releases 253/302, peak 41; typeof_dispatch 9/9, 6/16, peak 3. Both match main.
+The previous +2/+2 and +1/+1 were owned Weak/Union values created by fitting fixed call arguments before ownership planning. Fixed fitting remains at the native boundary; only rest-tail elements are fitted in lowering. Counts are numbers and do not retain.
+Counts were re-recorded with TestCountsAreRecorded, excluding only stage3/fixtures/taste/21_truthy_loops.a. Its incoming row is preserved, not asserted remeasured.
+The complete counts attempt failed because that source casts to a recursive object-field checked view, which interface_cast.go refuses. The source and its expected-success fixture remain intact; the test was not weakened.
+
+Parser observation
+
+Same canonical entry, Go -buildvcs=false, default release -O2, same flags and toolchain as main 48c05d09. No counted or canonical macro or argument_count binding occurs in the parser C.
+The post-merge comparison failed. Earlier artifacts: C 9134350a0e5089c7c0211e5c1d5fcac6d37634271a3f79d90f19932195b0e1e2, binary f488ecf95f6d2b774e2f18b01be52be1910fc7c657edfb0ee1ff1028862bc719.
+Main: C 1e6bfaa8b9e114078056060a632f9e8e3d782d511badeed1ab0030cba674a5d9, binary db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e.
+After removing unobserved field bookkeeping, remaining C differences include new optional-boolean method table entries and an unused string interned by an admission probe. Runtime object-state allocation and newly merged host translation units also differ from main. Identity has not been established.
+Earlier best-of-five parse: main 10.330 ms; merged 18.774 ms; each printed 10523. That measurement precedes removal of unobserved field bookkeeping and is not a measurement of this final merge.
+perf_event_open for instructions and cycles returns errno 2; no CPU PMU exists on this box. Hardware values are unavailable, not zero.
+Historical checkpoint 4526aa46 was byte-identical; it does not prove post-merge identity.
+
+Validation logs
+
+/tmp/closure-convention-front-commit-native.log: native ABI pins and drop-count mutant passed, 0.320s.
+/tmp/closure-convention-front-commit-oracle.log: reader, optional/default, nested, omitted, host, imported const, switch fixtures and mutants passed, 21.171s.
+/tmp/closure-convention-front-metadata.log: host, non-null, census and closure joining witnesses passed, 11.615s.
+/tmp/closure-convention-front-canonical.log: canonical nested reference and switch mutants passed, 5.667s.
+/tmp/closure-convention-front-conflict-proofs.log: union, array and label decisions passed, 1.482s.
+/tmp/closure-convention-front-call-targets-final.log: shared call-target guard passed, 33.147s.
+/tmp/closure-convention-front-lower-final.log: nested-rest admission and array predicate proof tests passed, 0.502s.
+/tmp/closure-convention-front-counts-selected.log: executable counts passed, 52.598s; taste 21 excluded explicitly.
+The full touched-package attempt passed native (469.753s), load (9.566s), fresh (182.986s). Lower and IR failures were fixed and rechecked. Flow discovered missing hidden parameters (fixed), a case-admission regression (fixed), and an existing readiness trace mismatch; full flow has not been re-greened.
+Setup succeeded in 52.417s; nproc 5, CPU quota 4; Go 1.27.1, clang 20.1.8, Node 24.19.0. Setup timing details remain in the historical checkpoint and /tmp/closure-convention-setup.log.

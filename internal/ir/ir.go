@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// UninitializedFields records the field names whose readiness can be observed.
+	UninitializedFields map[string]bool
 	// PredicateChecks counts overload-result directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
 	PredicateChecks PredicateCheckCounts
@@ -95,8 +97,10 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
-	Name       string
-	MethodName string
+	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
+	CheckedUnionNarrow bool
+	Name               string
+	MethodName         string
 
 	// Parameters are locals, in order.
 	Parameters []int
@@ -122,6 +126,18 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+	// NestedParent is the enclosing function plus one for a named nested declaration.
+	NestedParent int
+	// ForwardedNestedParent identifies a named group called directly from this
+	// anonymous closure. Its complete shared layout is forwarded after lowering.
+	ForwardedNestedParent int
+	// FrameEnvironment is the layout of the single entry allocation for this frame.
+	FrameEnvironment []int
+	NestedFrame      bool
+	// FrameIdentity is a synthetic cell plus one, anchoring canonical nested values.
+	FrameIdentity int
+	// ReferenceParents are lexical groups whose completed layouts this closure needs.
+	ReferenceParents []int
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -220,6 +236,16 @@ type Local struct {
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+	// Preallocated cells exist before their source initializer executes.
+	Preallocated bool
+	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
+	EnvironmentCell bool
+	// NestedFunction is the named declaration this binding holds, plus one.
+	NestedFunction int
+
+	// Ready is the readiness local index plus one for a switch lexical binding.
+	// Its storage exists at switch entry, but its declaration initializes it later.
+	Ready int
 
 	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
 	ExpressionAssigned bool
@@ -251,9 +277,9 @@ type (
 	StringConstant  struct{ Index int }
 
 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
-	// Checked is a global read whose initialization is not proven, including function
-	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
-	// Adamic checks it out loud.
+	// Checked guards switch lexical bindings, captured cells, and globals whose initialization
+	// is not proven, including function bodies and cyclic module evaluation. JavaScript throws
+	// in the temporal dead zone; Adamic checks it out loud.
 	Read struct {
 		Local     int
 		Of        Type
@@ -646,6 +672,8 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		// Direct identifies canonical sibling code sharing Closure as its environment.
+		Direct       int
 		Closure      Expression
 		Arguments    []Expression
 		Spread       []bool
@@ -1071,15 +1099,19 @@ type (
 		Value  Expression
 	}
 
+	// AllocateEnvironment is one frame allocation site, visible to future placement analysis.
+	AllocateEnvironment struct{ Cells []int }
+
 	// Declare introduces a local with its first value.
 	Declare struct {
+		// Uninitialized allocates only a captured cell, with its ready bit clear.
 		Uninitialized bool
 		Local         int
 		Value         Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
-	// Read: a write to a global from inside a function.
+	// Read: a write to an unready switch binding or a global from inside a function.
 	Assign struct {
 		Local   int
 		Value   Expression
@@ -1209,23 +1241,24 @@ type Case struct {
 	Body  []Statement
 }
 
-func (WriteLine) statement()   {}
-func (Declare) statement()     {}
-func (Assign) statement()      {}
-func (Evaluate) statement()    {}
-func (Panic) statement()       {}
-func (SetProperty) statement() {}
-func (SetIndex) statement()    {}
-func (Return) statement()      {}
-func (If) statement()          {}
-func (Loop) statement()        {}
-func (Block) statement()       {}
-func (ForOf) statement()       {}
-func (Switch) statement()      {}
-func (Break) statement()       {}
-func (Continue) statement()    {}
-func (Throw) statement()       {}
-func (Try) statement()         {}
+func (WriteLine) statement()           {}
+func (AllocateEnvironment) statement() {}
+func (Declare) statement()             {}
+func (Assign) statement()              {}
+func (Evaluate) statement()            {}
+func (Panic) statement()               {}
+func (SetProperty) statement()         {}
+func (SetIndex) statement()            {}
+func (Return) statement()              {}
+func (If) statement()                  {}
+func (Loop) statement()                {}
+func (Block) statement()               {}
+func (ForOf) statement()               {}
+func (Switch) statement()              {}
+func (Break) statement()               {}
+func (Continue) statement()            {}
+func (Throw) statement()               {}
+func (Try) statement()                 {}
 
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {

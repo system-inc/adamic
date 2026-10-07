@@ -48,6 +48,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// A closure is its code and its cells, an instance of its own class so typeof can tell it from an
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
+	builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (!values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString(fieldReadinessRuntime)
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
@@ -174,8 +175,12 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 				}
 			}
 		}
+		emitter.allocateEnvironment(function.FrameEnvironment)
 		for _, parameter := range function.Parameters {
-			if program.Locals[parameter].Captured {
+			if program.Locals[parameter].EnvironmentCell {
+				emitter.line("%s.value = %s;", emitter.cellName(parameter), emitter.name(parameter))
+				emitter.line("%s.ready = true;", emitter.cellName(parameter))
+			} else if program.Locals[parameter].Captured {
 				emitter.line("const %s = { value: %s, ready: true };", emitter.cellName(parameter), emitter.name(parameter))
 			}
 		}
@@ -268,6 +273,17 @@ func Name(program *ir.Program, local int) string {
 
 func (e *emitter) cellName(local int) string {
 	return e.name(local) + "_cell"
+}
+
+// ready reads the same captured readiness cell as the binding it guards.
+func (e *emitter) ready(local int) string {
+	if binding := e.program.Locals[local].Ready; binding != 0 {
+		return e.variable(binding - 1)
+	}
+	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
+		return e.cell(local) + ".ready"
+	}
+	return readyName(local)
 }
 
 func readyName(local int) string {
@@ -364,6 +380,11 @@ func (e *emitter) nested(statements []ir.Statement) {
 
 func (e *emitter) declare(local int, value string) {
 	declared := e.program.Locals[local]
+	if declared.Captured && declared.Preallocated {
+		e.line("%s.value = %s;", e.cell(local), value)
+		e.line("%s.ready = true;", e.cell(local))
+		return
+	}
 	if declared.Captured {
 		e.line("let %s = { value: %s, ready: true };", e.cellName(local), value)
 		return
@@ -386,7 +407,18 @@ func (e *emitter) statement(at *ir.Statement) {
 			stream = "error"
 		}
 		e.line("console.%s(%s);", stream, e.value(statement.Value))
+	case ir.AllocateEnvironment:
+		// Emitted at function entry before parameter cells are initialized.
 	case ir.Declare:
+		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
+			if e.program.Locals[statement.Local].EnvironmentCell {
+				return
+			}
+			if e.program.Locals[statement.Local].Captured {
+				e.line("let %s = { value: undefined, ready: false };", e.cellName(statement.Local))
+			}
+			return
+		}
 		value := "undefined"
 		if statement.Value != nil {
 			value = e.value(statement.Value)
@@ -421,7 +453,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			temporary := e.temporary()
 			e.line("const %s = %s;", temporary, value)
-			e.line("if (!%s) adamicUnready(%s);", readyName(statement.Local), quote(e.program.Locals[statement.Local].Name))
+			e.line("if (!%s) adamicUnready(%s);", e.ready(statement.Local), quote(e.program.Locals[statement.Local].Name))
 			value = temporary
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
@@ -695,7 +727,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
 		}
 		if expression.Checked {
-			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", e.ready(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
 		}
 		return e.variable(expression.Local)
 	case ir.Truthy:
@@ -1037,8 +1069,17 @@ func (e *emitter) value(expression ir.Expression) string {
 		for _, local := range e.program.Functions[expression.Function].Environment {
 			cells = append(cells, e.cell(local))
 		}
+		target := e.program.Functions[expression.Function]
+		if target.NestedParent > 0 {
+			if identity := e.program.Functions[target.NestedParent-1].FrameIdentity; identity > 0 {
+				return fmt.Sprintf("adamicCanonical(%s, %s, [%s])", e.cell(identity-1), functionName(e.program, expression.Function), strings.Join(cells, ", "))
+			}
+		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
 	case ir.CallClosure:
+		if expression.Direct > 0 {
+			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
+		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {
 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
@@ -1198,3 +1239,14 @@ func quote(text string) string {
 
 // narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+
+func (e *emitter) allocateEnvironment(cells []int) {
+	if len(cells) == 0 {
+		return
+	}
+	environment := e.temporary()
+	e.line("const %s = Array.from({length: %d}, () => ({value: undefined, ready: false}));", environment, len(cells))
+	for position, local := range cells {
+		e.line("const %s = %s[%d];", e.cellName(local), environment, position)
+	}
+}

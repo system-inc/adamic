@@ -52,6 +52,7 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 	}
 	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, first, key, fmt.Sprintf("{.reference = %s}", collection))
 	// A throw lets go of the value held across the call, and the iterator.
+
 	holds := []string{}
 	if !visit.Set && visit.Value.IsReference() {
 		holds = append(holds, value+".reference")

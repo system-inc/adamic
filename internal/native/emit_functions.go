@@ -58,6 +58,9 @@ func (e *emitter) functionBody(function ir.Function) {
 	}
 	if function.Closure {
 		e.line("(void)self;")
+		if e.program.PackedCountNeeded(e.functionIndex) {
+			e.line("(void)argument_count;")
+		}
 		e.line("(void)arguments;")
 		if function.ArgumentsCount != 0 {
 			count := "(double)argument_count"
@@ -71,6 +74,9 @@ func (e *emitter) functionBody(function ir.Function) {
 			local := e.program.Locals[parameter]
 			if function.RestElement != 0 && index == len(function.Parameters)-1 {
 				slot := e.program.RestArgumentSlots[ir.FunctionRestArguments(function)]
+				if function.Receiver {
+					slot++
+				}
 				e.line("adamic_array *%s = arguments[%d].reference;", e.localName(parameter), slot)
 				continue
 			}
@@ -81,9 +87,13 @@ func (e *emitter) functionBody(function ir.Function) {
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
+			if e.program.PackedCountNeeded(e.functionIndex) && (local.Type.IsMaybe() || local.Type.IsReference()) {
+				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index, value, absent(local.Type))
+			}
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
+	e.allocateEnvironment(function.FrameEnvironment)
 	for _, parameter := range function.Parameters {
 		switch {
 		case e.reuse.consumed[parameter]:
@@ -243,6 +253,9 @@ func (e *emitter) arguments(call ir.Call) []string {
 			// is known; a reference where a Weak goes, its handle.
 			takes := e.program.Locals[parameters[index]].Type
 			boxed, fresh := converted(argument.Type(), takes, value)
+			if _, null := argument.(ir.Null); null && takes == ir.Union {
+				boxed, fresh = "&adamic_null", false
+			}
 			if fresh {
 				boxed = e.own(takes, boxed)
 			}
@@ -255,11 +268,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 		}
 	}
 	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
-		if of := e.program.Locals[parameter].Type; of.IsMaybe() {
-			arguments = append(arguments, zero(of))
-		} else {
-			arguments = append(arguments, "NULL")
-		}
+		arguments = append(arguments, absent(e.program.Locals[parameter].Type))
 	}
 	if function.ArgumentsCount != 0 {
 		count := fmt.Sprint(len(call.Arguments))
@@ -282,12 +291,14 @@ func (e *emitter) arguments(call ir.Call) []string {
 // evaluated, as JavaScript reads object.name first.
 func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
 	method := ""
+	exactCount := false
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
 		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
+			exactCount = e.program.PackedCountNeeded(function)
 		} else {
 			method = e.temporary()
 			if e.program.ClosureConventionNeeded() {
@@ -300,9 +311,17 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 	packed, count := e.closureArguments(expression)
 	call := e.packedClosureCall(expression, closure, packed, count)
+	if expression.Direct > 0 {
+		target := expression.Direct - 1
+		extra := ""
+		if e.program.PackedCountNeeded(target) {
+			extra = ", " + count
+		}
+		call = fmt.Sprintf("%s(%s, %s%s)", e.functionName(target), closure, packed, extra)
+	}
 	if receiver != "" {
 		if closure == "" {
-			if e.program.PackedCountNeededFromCall(expression) {
+			if exactCount {
 				if closure == "" {
 					call = fmt.Sprintf("%s(%s, %s, %s)", method, receiver, packed, count)
 				}
@@ -313,8 +332,15 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			}
 		} else {
 			methodCall := fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+			if e.program.ClosureReceiversNeeded() {
+				call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s, %d)", closure, receiver, packed, count, e.packedArgumentSize(expression))
+				if e.program.PackedCountNeededFromCall(expression) {
+					methodCall = fmt.Sprintf("adamic_method_call(%s, %s, %s, %s)", method, receiver, packed, count)
+				} else if e.program.ClosureConventionNeeded() {
+					methodCall = fmt.Sprintf("%s.code(%s, %s)", method, receiver, packed)
+				}
+			}
 			if e.program.ClosureConventionNeeded() {
-				call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s)", closure, receiver, packed, count)
 				if e.program.PackedCountNeededFromCall(expression) {
 					methodCall = fmt.Sprintf("adamic_method_call(%s, %s, %s, %s)", method, receiver, packed, count)
 				} else {

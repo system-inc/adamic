@@ -31,8 +31,14 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 
 func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {
 	var flags []string
-	if strings.HasPrefix(source, "#define ADAMIC_CLOSURE_CONVENTION 1\n") {
+	if strings.Contains(source, "#define ADAMIC_CLOSURE_CONVENTION 1\n") {
 		flags = append(flags, "-DADAMIC_CLOSURE_CONVENTION=1")
+	}
+	if strings.Contains(source, "#define ADAMIC_CANONICAL_CLOSURES 1\n") {
+		flags = append(flags, "-DADAMIC_CANONICAL_CLOSURES=1")
+	}
+	if strings.Contains(source, "#define ADAMIC_CLOSURE_RECEIVERS 1\n") {
+		flags = append(flags, "-DADAMIC_CLOSURE_RECEIVERS=1")
 	}
 	return runtimeLibrary(directory, options, flags)
 }
@@ -124,14 +130,17 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		return "", fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(temporary)
-	if slicesContain(flags, "-DADAMIC_CLOSURE_CONVENTION=1") {
-		files = append([]runtimeFile(nil), files...)
-		for i := range files {
-			if files[i].name == "adamic.h" {
-				files[i].contents = append([]byte("#define ADAMIC_CLOSURE_CONVENTION 1\n"), files[i].contents...)
+	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"} {
+		if slicesContain(flags, "-D"+feature+"=1") {
+			files = append([]runtimeFile(nil), files...)
+			for i := range files {
+				if files[i].name == "adamic.h" {
+					files[i].contents = append([]byte("#define "+feature+" 1\n"), files[i].contents...)
+				}
 			}
 		}
 	}
+
 	// Headers live beside the archive, from the same snapshot that produced its objects.
 	if err := os.Chmod(temporary, 0o755); err != nil {
 		return "", err

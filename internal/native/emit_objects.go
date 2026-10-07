@@ -138,8 +138,12 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			slot := e.temporary()
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
-			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+			if e.fieldTypesNeeded() {
+				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+			}
+			if e.program.UninitializedFields[field.Name] {
+				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
 				e.line("%s->reference = %s;", slot, e.kept(values[index]))
@@ -192,7 +196,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 	}
 	for index, field := range literal.Fields {
-		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+		if e.fieldTypesNeeded() {
+			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+		}
 		if field.Uninitialized {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
 		}
@@ -317,9 +323,14 @@ func (e *emitter) dispatchable(function int) bool {
 		if !ok {
 			return
 		}
-		property, ok := call.Closure.(ir.Property)
-		if ok && property.Method && property.Name == method.MethodName {
-			needed = true
+		targets, resolved := e.program.FunctionTypeTargets[call.FunctionType]
+		if !resolved {
+			targets = e.program.ClosureTargets(call).Functions
+		}
+		for _, target := range targets {
+			if e.program.Functions[target].Name == method.Name {
+				needed = true
+			}
 		}
 	})
 	slotless := func(valueType ir.Type) bool { return valueType == ir.Union || valueType == ir.MaybeBoolean && !needed }
@@ -364,6 +375,9 @@ func (e *emitter) methodThunk(function int) string {
 			}
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
+			}
+			if e.program.PackedCountNeeded(function) && (local.Type.IsMaybe() || local.Type.IsReference()) {
+				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index-1, value, absent(local.Type))
 			}
 		}
 		if local.Type.IsReference() && e.reuse.consumed[parameter] {
@@ -413,4 +427,8 @@ func (e *emitter) methodEntryType() string {
 		return "adamic_method_entry"
 	}
 	return "adamic_method"
+}
+
+func (e *emitter) fieldTypesNeeded() bool {
+	return len(e.program.CheckedFields) != 0 || e.dynamicProperties()
 }

@@ -480,6 +480,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if value, handled := l.staticClassRead(node); handled {
 			return value, nil
 		}
+		if value, handled, err := l.nestedReference(node); handled {
+			return value, err
+		}
 		local, isLocal := l.local(node)
 		if !isLocal && node.Text() == "undefined" {
 			return ir.Undefined{}, nil
@@ -507,7 +510,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				parent = parent.Parent
 			}
 			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
+			if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
 				// Calls and captured writes can invalidate the checker's narrowing. Check the
 				// held member before casting it, with ordinary IR shared by both backends.
 				name := "object"
@@ -537,12 +540,16 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				b := l.libraryArrayBuilder([]ir.Expression{read})
 				held := b.read(b.parameters[0])
 				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
-				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+				if narrowed == ir.Array {
+					matches = ir.ArrayIsArray{Value: held}
+				}
+				if l.includesUndefined(l.arrayPredicateObservedType(node)) {
 					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 				}
 				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
 				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
 				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
+				l.result.Functions[b.function].CheckedUnionNarrow = true
 			}
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
@@ -1044,10 +1051,45 @@ func slotless(valueType ir.Type) bool {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
+	if direct := l.nestedSibling(callee); direct >= 0 {
+		arguments := []ir.Expression{}
+		for _, argument := range call.Arguments.Nodes {
+			value, err := l.expression(argument)
+			if err != nil {
+				return nil, err
+			}
+			position := len(arguments)
+			if position < len(l.result.Functions[direct].Parameters) {
+				value = fit(value, l.result.Locals[l.result.Functions[direct].Parameters[position]].Type)
+			}
+			arguments = append(arguments, value)
+		}
+		carrier := ir.Expression(ir.ClosureSelf{})
+		if l.function.NestedParent != l.result.Functions[direct].NestedParent {
+			// Anonymous captures have their own layout. Materialize a temporary carrier
+			// for the target layout; do not capture a sibling's canonical function value.
+			carrier = ir.MakeClosure{Function: direct}
+		}
+		return ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+	}
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
 		instance, err := l.instantiateFunction(node, declaration)
 		if err != nil {
 			return nil, err
+		}
+		if l.result.Functions[instance].Closure {
+			arguments := []ir.Expression{}
+			for position, argument := range call.Arguments.Nodes {
+				value, err := l.expression(argument)
+				if err != nil {
+					return nil, err
+				}
+				if position < len(l.result.Functions[instance].Parameters) {
+					value = fit(value, l.result.Locals[l.result.Functions[instance].Parameters[position]].Type)
+				}
+				arguments = append(arguments, value)
+			}
+			return ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns}, nil
 		}
 		return l.callFunction(call, instance)
 	}
@@ -1233,7 +1275,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	var returns ir.Type
-	if result := l.checker.GetTypeAtLocation(node); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
@@ -1286,3 +1328,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	return ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns}, nil
 }
+
+// Optional booleans have a three-state byte in the function-call ABI.
+// General union arguments still need a representation adapter.
+func argumentSlotless(valueType ir.Type) bool { return valueType == ir.Union }

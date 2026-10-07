@@ -42,6 +42,9 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	var value Expression
 	switch call := call.(type) {
 	case CallClosure:
+		if call.Direct > 0 {
+			return FunctionTargets{Functions: []int{call.Direct - 1}}
+		}
 		value = call.Closure
 	case ArrayMap:
 		value = call.Callback

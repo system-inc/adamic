@@ -28,6 +28,9 @@ enum adamic_kind {
 	adamic_kind_number,
 	adamic_kind_boolean,
 	adamic_kind_weak,
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	adamic_kind_environment,
+#endif
 };
 
 typedef struct adamic_heap {
@@ -73,8 +76,23 @@ typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
 	bool ready;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	struct adamic_environment *owner;
+#endif
 	adamic_value value;
 } adamic_cell;
+
+#ifdef ADAMIC_CANONICAL_CLOSURES
+// One counted allocation owns every interior captured slot.
+typedef struct adamic_environment {
+	adamic_heap heap;
+	size_t count;
+	// Weak cache: closures unlink themselves before releasing this frame.
+	struct adamic_closure *functions;
+	adamic_cell cells[];
+} adamic_environment;
+adamic_environment *adamic_environment_new(size_t count);
+#endif
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 
@@ -88,11 +106,19 @@ struct adamic_closure {
 #ifdef ADAMIC_CLOSURE_CONVENTION
  union { adamic_code code; adamic_counted_code counted_code; };
  bool counted;
- bool receiver;
+
 #else
  adamic_code code;
 #endif
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+ bool receiver;
+#endif
 	size_t count;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	adamic_environment *canonical_owner;
+	adamic_closure *canonical_previous;
+	adamic_closure *canonical_next;
+#endif
 	adamic_cell *cells[];
 };
 
@@ -114,16 +140,24 @@ static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_v
 #endif
  return closure->code(closure, arguments);
 }
-#ifdef ADAMIC_CLOSURE_CONVENTION
-static inline adamic_value adamic_closure_receiver_call(adamic_closure *closure, void *receiver, adamic_value *arguments, size_t argument_count) {
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+static inline adamic_value adamic_closure_receiver_call(adamic_closure *closure, void *receiver, adamic_value *arguments, size_t argument_count, size_t packed_size) {
  if (!closure->receiver) { return adamic_closure_call(closure, arguments, argument_count); }
- adamic_value received[argument_count + 1];
+ adamic_value received[packed_size + 1];
  received[0].reference = receiver;
- for (size_t i = 0; i < argument_count; i++) { received[i + 1] = arguments[i]; }
+ for (size_t i = 0; i < packed_size; i++) { received[i + 1] = arguments[i]; }
  return adamic_closure_call(closure, received, argument_count + 1);
 }
 #endif
 
+#ifdef ADAMIC_CANONICAL_CLOSURES
+// Returns an owned canonical value; the frame cache holds no count on it.
+adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]);
+#ifdef ADAMIC_CLOSURE_CONVENTION
+adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]);
+#endif
+void adamic_closure_uncache(adamic_closure *closure);
+#endif
 
 // adamic_string is an immutable string: UTF-8 bytes (string.c).
 typedef struct adamic_string {
@@ -639,6 +673,8 @@ adamic_maybe_number adamic_maybe_number_unpack(double packed);
 uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
 adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 //

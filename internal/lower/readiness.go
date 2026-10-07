@@ -82,6 +82,7 @@ func readiness(program *ir.Program) {
 			return true
 		})
 	}
+	program.UninitializedFields = names
 	marked := len(names) != 0
 	for _, local := range program.Locals {
 		marked = marked || local.Uninitialized

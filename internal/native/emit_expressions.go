@@ -279,7 +279,22 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 		return e.libraryLanguageValue(expression)
 	case ir.MakeClosure:
-		environment := e.program.Functions[expression.Function].Environment
+		target := e.program.Functions[expression.Function]
+		environment := target.Environment
+		if target.NestedParent > 0 {
+			identity := e.program.Functions[target.NestedParent-1].FrameIdentity
+			if identity > 0 {
+				cells := make([]string, 0, len(environment))
+				for _, local := range environment {
+					cells = append(cells, e.cellReference(local))
+				}
+				constructor := "adamic_closure_canonical"
+				if e.program.PackedCountNeeded(expression.Function) {
+					constructor = "adamic_counted_closure_canonical"
+				}
+				return e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s})", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", ")))
+			}
+		}
 		constructor := "adamic_closure_new"
 		if e.program.PackedCountNeeded(expression.Function) {
 			constructor = "adamic_counted_closure_new"
