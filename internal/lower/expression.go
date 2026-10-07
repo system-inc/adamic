@@ -406,20 +406,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
-		if l.result.Locals[local].Type == ir.Union {
-			// Where the checker has narrowed it to fewer members held one way, it's read as that.
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union {
-				read = ir.Narrow{Value: read, To: narrowed}
-			}
-		}
-		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
-			// Where the checker has narrowed it to what it holds, it's read as that.
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !comparedWithUndefined(node) {
-				read = ir.Unwrap{Value: read}
-			}
-		}
-		return l.defined(node, read), nil
+		return l.localRead(node, local), nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
