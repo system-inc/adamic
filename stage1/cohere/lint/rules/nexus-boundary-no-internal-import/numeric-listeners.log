@@ -1,0 +1,90 @@
+=== RUN   TestNumericListenerDeclarations
+    listeners_test.go:52: 17 numeric listener declarations, 741 bytes, match actual Go listener keys on source Node, emitted JavaScript and ASan/UBSan native
+=== RUN   TestNumericListenerDeclarations/base-correctness-require-orm-column-declare
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/nexus-consistency-no-boolean-outcome
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-google-font-preconnect
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-inline-script-id
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-next-script-for-ga
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-no-before-interactive-script-outside-document
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-no-css-tags
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/next-no-document-import-in-page
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/typescript-no-non-null-asserted-optional-chain
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/typescript-no-this-alias
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/typescript-no-unnecessary-type-constraint
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/better-tailwindcss-enforce-shorthand-classes
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/better-tailwindcss-no-concatenated-classes
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/better-tailwindcss-no-conflicting-classes
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/nexus-boundary-no-internal-import
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/nexus-boundary-no-nexus-outside-import
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNumericListenerDeclarations/nexus-boundary-no-project-import
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:98: numeric listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+--- PASS: TestNumericListenerDeclarations (18.20s)
+    --- PASS: TestNumericListenerDeclarations/base-correctness-require-orm-column-declare (0.53s)
+    --- PASS: TestNumericListenerDeclarations/nexus-consistency-no-boolean-outcome (0.42s)
+    --- PASS: TestNumericListenerDeclarations/next-google-font-preconnect (0.38s)
+    --- PASS: TestNumericListenerDeclarations/next-inline-script-id (0.37s)
+    --- PASS: TestNumericListenerDeclarations/next-next-script-for-ga (0.38s)
+    --- PASS: TestNumericListenerDeclarations/next-no-before-interactive-script-outside-document (0.36s)
+    --- PASS: TestNumericListenerDeclarations/next-no-css-tags (0.37s)
+    --- PASS: TestNumericListenerDeclarations/next-no-document-import-in-page (0.35s)
+    --- PASS: TestNumericListenerDeclarations/typescript-no-non-null-asserted-optional-chain (0.36s)
+    --- PASS: TestNumericListenerDeclarations/typescript-no-this-alias (0.35s)
+    --- PASS: TestNumericListenerDeclarations/typescript-no-unnecessary-type-constraint (0.34s)
+    --- PASS: TestNumericListenerDeclarations/better-tailwindcss-enforce-shorthand-classes (0.36s)
+    --- PASS: TestNumericListenerDeclarations/better-tailwindcss-no-concatenated-classes (0.35s)
+    --- PASS: TestNumericListenerDeclarations/better-tailwindcss-no-conflicting-classes (0.39s)
+    --- PASS: TestNumericListenerDeclarations/nexus-boundary-no-internal-import (0.39s)
+    --- PASS: TestNumericListenerDeclarations/nexus-boundary-no-nexus-outside-import (0.34s)
+    --- PASS: TestNumericListenerDeclarations/nexus-boundary-no-project-import (0.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-boundary-no-internal-import	18.209s

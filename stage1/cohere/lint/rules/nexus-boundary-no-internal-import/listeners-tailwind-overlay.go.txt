@@ -1,0 +1,15 @@
+package tailwind
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/cohere/internal/lint/rule"
+)
+
+// Export the actual normal and design-system-error listener domains only for the oracle.
+func AdamicWave12ConflictingListeners(ctx rule.Context) rule.Listeners {
+	result := declineListeners(ctx, "no-conflicting-classes", DesignSystemResult{})
+	for _, kind := range ListenerKinds() {
+		result[kind] = func(*ast.Node) {}
+	}
+	return result
+}

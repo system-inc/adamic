@@ -1,0 +1,66 @@
+package main
+
+import (
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	"github.com/system-inc/cohere/internal/lint/rules/base"
+	"github.com/system-inc/cohere/internal/lint/rules/next"
+	"github.com/system-inc/cohere/internal/lint/rules/nexus"
+	"github.com/system-inc/cohere/internal/lint/rules/tailwind"
+	"github.com/system-inc/cohere/internal/lint/rules/typescript"
+	"sort"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	name := "/repo/libraries/nexus/pages/index.tsx"
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: name, Path: tspath.Path(name)}, "import Script from 'next/script';", core.ScriptKindTSX)
+	ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(rule.Diagnostic) {}}
+	subjects := []struct {
+		slug    string
+		subject rule.Rule
+		options any
+	}{
+		{"base-correctness-require-orm-column-declare", base.CorrectnessRequireOrmColumnDeclare, nil},
+		{"nexus-consistency-no-boolean-outcome", nexus.ConsistencyNoBooleanOutcome, nil},
+		{"next-google-font-preconnect", next.GoogleFontPreconnect, nil},
+		{"next-inline-script-id", next.InlineScriptId, nil},
+		{"next-next-script-for-ga", next.NextScriptForGa, nil},
+		{"next-no-before-interactive-script-outside-document", next.NoBeforeInteractiveScriptOutsideDocument, nil},
+		{"next-no-css-tags", next.NoCssTags, nil},
+		{"next-no-document-import-in-page", next.NoDocumentImportInPage, nil},
+		{"typescript-no-non-null-asserted-optional-chain", typescript.NoNonNullAssertedOptionalChain, nil},
+		{"typescript-no-this-alias", typescript.NoThisAlias, nil},
+		{"typescript-no-unnecessary-type-constraint", typescript.NoUnnecessaryTypeConstraint, nil},
+		{"better-tailwindcss-enforce-shorthand-classes", tailwind.EnforceShorthandClasses, nil},
+		{"better-tailwindcss-no-concatenated-classes", tailwind.NoConcatenatedClasses, nil},
+		{"better-tailwindcss-no-conflicting-classes", tailwind.NoConflictingClasses, nil},
+		{"nexus-boundary-no-internal-import", nexus.BoundaryNoInternalImport, nil},
+		{"nexus-boundary-no-nexus-outside-import", nexus.BoundaryNoNexusOutsideImport, nil},
+		{"nexus-boundary-no-project-import", nexus.BoundaryNoProjectImport, nexus.BoundaryNoProjectImportOptions{LibraryDirectory: "/libraries/nexus/"}},
+	}
+	for _, subject := range subjects {
+		listeners := subject.subject.Run(ctx, subject.options)
+		if subject.slug == "better-tailwindcss-no-conflicting-classes" {
+			listeners = tailwind.AdamicWave12ConflictingListeners(ctx)
+		}
+		var kinds []int
+		for kind := range listeners {
+			kinds = append(kinds, int(kind))
+		}
+		if len(kinds) == 0 {
+			panic(subject.slug + ": no listeners observed")
+		}
+		sort.Ints(kinds)
+		var written []string
+		for _, kind := range kinds {
+			written = append(written, strconv.Itoa(kind))
+		}
+		fmt.Printf("%s\t%s\n", subject.slug, strings.Join(written, ","))
+	}
+}
