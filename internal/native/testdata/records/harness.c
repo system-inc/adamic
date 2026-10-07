@@ -106,20 +106,70 @@ static void prototypes(void) {
 	const char *names[] = {"constructor", "__defineGetter__", "__defineSetter__", "hasOwnProperty", "__lookupGetter__", "__lookupSetter__", "isPrototypeOf", "propertyIsEnumerable", "toString", "valueOf", "__proto__", "toLocaleString", "missing", "", "toStringX"};
 	for (size_t index = 0; index < sizeof names / sizeof names[0]; index++) {
 		adamic_string *key = text(names[index]);
-		printf("%d %d %d\n", adamic_record_has_own(record, key), adamic_record_has(record, key), adamic_record_get_own(record, key) != NULL);
+		printf("%d %d %d\n", adamic_record_has_own(record, key), adamic_record_has_own(record, key), adamic_record_get_own(record, key) != NULL);
 		if (strcmp(names[index], "__proto__") == 0) {
 			adamic_record_define(record, adamic_retain(key), (adamic_value){.number = 7});
 		} else {
 			adamic_record_set(record, adamic_retain(key), (adamic_value){.number = 7});
 		}
-		printf("%d %d %.0f\n", adamic_record_has_own(record, key), adamic_record_has(record, key), adamic_record_get_own(record, key)->number);
+		printf("%d %d %.0f\n", adamic_record_has_own(record, key), adamic_record_has(record, key), adamic_record_get(record, key)->number);
 		(void)adamic_record_delete(record, key);
-		printf("%d %d\n", adamic_record_has_own(record, key), adamic_record_has(record, key));
+		printf("%d %d\n", adamic_record_has_own(record, key), adamic_record_get_own(record, key) != NULL);
 		adamic_release(key);
 	}
 	snapshot(record);
 	adamic_release(record);
 }
+static void reads(void) {
+	adamic_record *record = adamic_record_new(false);
+	put(record, "hit", 42);
+	put(record, "toString", 7);
+	const char *hits[] = {"hit", "toString"};
+	for (size_t index = 0; index < sizeof hits / sizeof hits[0]; index++) {
+		adamic_string *key = text(hits[index]);
+		adamic_value *value = adamic_record_get(record, key);
+		printf("%.0f %d %d\n", value->number, value == adamic_record_get_own(record, key), adamic_record_has(record, key));
+		adamic_release(key);
+	}
+	// Include near-matches in every member-length group, plus long, empty and Unicode keys.
+	const char *misses[] = {"missing", "valueOX", "toStrinX", "__proto_X", "constructoX",
+		"isPrototypeOX", "hasOwnPropertX", "toLocaleStrinX", "__defineGetter_X",
+		"__defineSetter_X", "__lookupGetter_X", "__lookupSetter_X", "propertyIsEnumerablX",
+		"", "a-long-key-more-than-twenty-bytes", "世界🌍"};
+	for (size_t index = 0; index < sizeof misses / sizeof misses[0]; index++) {
+		adamic_string *key = text(misses[index]);
+		printf("%d %d\n", adamic_record_get(record, key) == NULL, adamic_record_has(record, key));
+		adamic_release(key);
+	}
+	adamic_release(record);
+	// An own undefined is present, even under a prototype-member name.
+	record = adamic_record_new(true);
+	adamic_string *key = text("toString");
+	adamic_record_define(record, adamic_retain(key), (adamic_value){.reference = NULL});
+	adamic_value *value = adamic_record_get(record, key);
+	printf("%d %d %d\n", value != NULL, value->reference == NULL, adamic_record_has(record, key));
+	adamic_record_define(record, adamic_retain(key), (adamic_value){.reference = text("owned value")});
+	adamic_string *held = adamic_retain(adamic_record_get(record, key)->reference);
+	(void)adamic_record_delete(record, key);
+	printf("%d %d\n", adamic_record_has_own(record, key), adamic_record_get_own(record, key) != NULL);
+	adamic_release(key);
+	adamic_release(record);
+	json((adamic_value){.reference = held}, &string_schema);
+	adamic_release(held);
+}
+
+static void missing_member(const char *operation, const char *name) {
+	adamic_record *record = adamic_record_new(false);
+	adamic_string *key = text(name);
+	if (strcmp(operation, "missing-get") == 0) {
+		printf("%d\n", adamic_record_get(record, key) != NULL);
+	} else {
+		printf("%d\n", adamic_record_has(record, key));
+	}
+	adamic_release(key);
+	adamic_release(record);
+}
+
 static void references(void) {
 	adamic_record *record = adamic_record_new(true);
 	for (size_t index = 0; index < 10000; index++) {
@@ -242,7 +292,7 @@ static void workload(size_t count, bool benchmark) {
 		char bytes[32];
 		(void)snprintf(bytes, sizeof bytes, "k%zu", index);
 		adamic_string *key = text(bytes);
-		adamic_value *value = adamic_record_get_own(record, key);
+		adamic_value *value = adamic_record_get(record, key);
 		if (value == NULL) abort();
 		sum += value->number;
 		adamic_release(key);
@@ -254,7 +304,7 @@ static void workload(size_t count, bool benchmark) {
 		char bytes[32];
 		(void)snprintf(bytes, sizeof bytes, "m%zu", index);
 		adamic_string *key = text(bytes);
-		misses += adamic_record_get_own(record, key) == NULL;
+		misses += adamic_record_get(record, key) == NULL;
 		adamic_release(key);
 	}
 	double miss = now() - start;
@@ -288,6 +338,11 @@ int main(int argc, char **argv) {
 	if (strcmp(argv[1], "semantics") == 0) semantics();
 	else if (strcmp(argv[1], "prototypes") == 0) prototypes();
 	else if (strcmp(argv[1], "references") == 0) references();
+	else if (strcmp(argv[1], "reads") == 0) reads();
+	else if (strcmp(argv[1], "missing-get") == 0 || strcmp(argv[1], "missing-has") == 0) {
+		if (argc != 3) return 2;
+		missing_member(argv[1], argv[2]);
+	}
 	else if (strcmp(argv[1], "iteration") == 0) iteration();
 	else if (strcmp(argv[1], "numeric") == 0) numeric(100000);
 	else if (strcmp(argv[1], "workload") == 0 || strcmp(argv[1], "bench") == 0) {

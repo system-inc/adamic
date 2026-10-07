@@ -353,10 +353,12 @@ typedef adamic_object adamic_record_iterator;
 
 adamic_record *adamic_record_new(bool reference_values);
 // Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
-// Prototype-aware get is reserved for a later tagged interface, not implemented here.
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
 bool adamic_record_has_own(const adamic_record *record, const adamic_string *key);
-// has implements in with the unmodified Object.prototype, including its non-enumerable names.
+// Dynamic get and in hold own keys only: on a miss naming an Object.prototype member,
+// both panic with the member name and "records hold own keys only". Other misses return
+// NULL/false. The member-name check runs only on a miss; an own value is always borrowed.
+adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key);
 bool adamic_record_has(const adamic_record *record, const adamic_string *key);
 // Both writes consume key and value references, as Map.set does. define creates an own data
 // property even for __proto__; set refuses __proto__ assignment with an explicit NotYet panic.

@@ -38,23 +38,58 @@ static bool named(const adamic_string *key, const char *name) {
 	return key->length == length && memcmp(key->bytes, name, length) == 0;
 }
 
+// Object.getOwnPropertyNames(Object.prototype), observed on Node v24.19.0. This is called
+// only on an own miss. Length dispatch precedes every byte comparison; no strlen or allocation.
+static bool prototype_member(const adamic_string *key) {
+	switch (key->length) {
+	case 7:
+		return memcmp(key->bytes, "valueOf", 7) == 0;
+	case 8:
+		return memcmp(key->bytes, "toString", 8) == 0;
+	case 9:
+		return memcmp(key->bytes, "__proto__", 9) == 0;
+	case 11:
+		return memcmp(key->bytes, "constructor", 11) == 0;
+	case 13:
+		return memcmp(key->bytes, "isPrototypeOf", 13) == 0;
+	case 14:
+		return memcmp(key->bytes, "hasOwnProperty", 14) == 0 ||
+			memcmp(key->bytes, "toLocaleString", 14) == 0;
+	case 16:
+		return memcmp(key->bytes, "__defineGetter__", 16) == 0 ||
+			memcmp(key->bytes, "__defineSetter__", 16) == 0 ||
+			memcmp(key->bytes, "__lookupGetter__", 16) == 0 ||
+			memcmp(key->bytes, "__lookupSetter__", 16) == 0;
+	case 20:
+		return memcmp(key->bytes, "propertyIsEnumerable", 20) == 0;
+	default:
+		return false;
+	}
+}
+
+static void check_missing_member(const adamic_string *key) {
+	if (prototype_member(key)) {
+		static const char prefix[] = "record member '";
+		static const char suffix[] = "' is missing; records hold own keys only";
+		// A recognized member is at most 20 bytes. Build the diagnostic without allocating.
+		char message[sizeof prefix - 1 + 20 + sizeof suffix - 1];
+		memcpy(message, prefix, sizeof prefix - 1);
+		memcpy(message + sizeof prefix - 1, key->bytes, key->length);
+		memcpy(message + sizeof prefix - 1 + key->length, suffix, sizeof suffix - 1);
+		adamic_panic(message, sizeof prefix - 1 + key->length + sizeof suffix - 1);
+	}
+}
+
+adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key) {
+	adamic_value *value = adamic_record_get_own(record, key);
+	if (value == NULL) {
+		check_missing_member(key);
+	}
+	return value;
+}
+
 bool adamic_record_has(const adamic_record *record, const adamic_string *key) {
-	if (adamic_record_has_own(record, key)) {
-		return true;
-	}
-	// Object.prototype's own names on Node. None are enumerable. Prototype mutation and symbols
-	// are outside this interface; a deleted own name still exposes the inherited member to in.
-	static const char *const names[] = {
-		"constructor", "__defineGetter__", "__defineSetter__", "hasOwnProperty",
-		"__lookupGetter__", "__lookupSetter__", "isPrototypeOf", "propertyIsEnumerable",
-		"toString", "valueOf", "__proto__", "toLocaleString"
-	};
-	for (size_t index = 0; index < sizeof names / sizeof names[0]; index++) {
-		if (named(key, names[index])) {
-			return true;
-		}
-	}
-	return false;
+	return adamic_record_get(record, key) != NULL;
 }
 
 void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value) {
