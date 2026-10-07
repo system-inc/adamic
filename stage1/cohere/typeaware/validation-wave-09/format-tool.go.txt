@@ -1,0 +1,16 @@
+package main
+import (
+ "fmt"
+ "os"
+ "path/filepath"
+ "github.com/system-inc/cohere/internal/format/javascript"
+ "github.com/system-inc/cohere/internal/format/formatoptions"
+)
+func main(){
+ for _,path:=range os.Args[1:]{
+  text,err:=os.ReadFile(path);if err!=nil{panic(err)}
+  config,err:=formatoptions.Resolve(filepath.Dir(path));if err!=nil{panic(err)}
+  out,err:=javascript.Format(path+".ts",string(text),config.Options,nil);if err!=nil{panic(err)}
+  if string(text)!=out {if err:=os.WriteFile(path,[]byte(out),0644);err!=nil{panic(err)};fmt.Println("formatted "+path)} else {fmt.Println("unchanged "+path)}
+ }
+}

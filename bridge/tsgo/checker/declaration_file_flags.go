@@ -1,0 +1,29 @@
+package checker
+
+import (
+	"fmt"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// Raw declaration-file flags preserve declaration order and empty symbols.
+func declarationFileFlags(c *checker.Checker, node *ast.Node, question string) (string, error) {
+	if question != "declaration-file-flags" || node.Kind != ast.KindIdentifier {
+		return "", fmt.Errorf("declaration-file-flags requires an Identifier")
+	}
+	out := &fields{}
+	out.number(1)
+	out.text(question)
+	symbol := c.GetSymbolAtLocation(node)
+	out.yes(symbol != nil)
+	if symbol != nil {
+		out.number(uint64(len(symbol.Declarations)))
+		for _, declaration := range symbol.Declarations {
+			file := ast.GetSourceFileOfNode(declaration)
+			out.yes(file != nil)
+			out.yes(file != nil && file.IsDeclarationFile)
+		}
+	}
+	return out.String(), nil
+}

@@ -1,0 +1,131 @@
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Suggestion } from './suggestion.ts';
+import { Repair } from './repair.ts';
+import { DeclarationFileFlags } from './declaration_file_flags.a';
+
+export class Radix {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    global(index: number, name: string): boolean {
+        const at = this.rules.skip(index);
+        const node = this.rules.parser.node(at);
+        if(node.kind !== 'Identifier' || node.text !== name) {
+            return false;
+        }
+        const facts = new DeclarationFileFlags(this.rules, at);
+        return facts.present && facts.files[0] === true && facts.declared[0] === true;
+    }
+    callee(index: number): boolean {
+        const at = this.rules.skip(index);
+        const node = this.rules.parser.node(at);
+        if(node.kind === 'Identifier') {
+            return this.global(at, 'parseInt');
+        }
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) {
+            return false;
+        }
+        const key = this.rules.parser.node(node.children[node.children.length - 1] ?? -1);
+        return (
+            key.text === 'parseInt' &&
+            (node.kind === 'PropertyAccessExpression'
+                ? key.kind === 'Identifier'
+                : ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(key.kind)) &&
+            this.global(node.children[0] ?? -1, 'Number')
+        );
+    }
+    valid(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier' && node.text === 'undefined') {
+            const facts = new DeclarationFileFlags(this.rules, index);
+            return facts.files.some((present, at) => present && facts.declared[at] === false);
+        }
+        let numeric = index;
+        let sign = 1;
+        if(node.kind === 'PrefixUnaryExpression') {
+            if(!['PlusToken', 'MinusToken'].includes(node.operator)) {
+                return true;
+            }
+            numeric = node.children[0] ?? -1;
+            if(this.rules.parser.node(numeric).kind !== 'NumericLiteral') {
+                return true;
+            }
+            sign = node.operator === 'MinusToken' ? -1 : 1;
+        }
+        const inner = this.rules.parser.node(numeric);
+        if(inner.kind === 'NumericLiteral') {
+            const facts = types(this.rules.ask(numeric, 'raw-shape'), 'raw-shape');
+            const frames = new Frames(this.rules.ask(numeric, `literal-value\n${facts.root().id}`));
+            header(frames, 'literal-value');
+            frames.field();
+            const value = Number.parseFloat(frames.field()) * sign;
+            frames.end();
+            return Number.isInteger(value) && value >= 2 && value <= 36;
+        }
+        return ![
+            'StringLiteral',
+            'NoSubstitutionTemplateLiteral',
+            'TrueKeyword',
+            'FalseKeyword',
+            'NullKeyword',
+            'BigIntLiteral',
+            'RegularExpressionLiteral',
+        ].includes(node.kind);
+    }
+    run(): void {
+        const r = this.rules;
+        for(let index = 0; index < r.parser.nodes.length; index++) {
+            const node = r.parser.node(index);
+            if(node.kind !== 'CallExpression' || !this.callee(node.children[0] ?? -1)) {
+                continue;
+            }
+            const empty: number[] = [];
+            const args = node.list === 0 ? empty : node.children.slice(node.children.length - node.list);
+            if(args.slice(0, 2).some((at) => r.parser.node(at).kind === 'SpreadElement')) {
+                continue;
+            }
+            const id =
+                args.length === 0
+                    ? 'missingParameters'
+                    : args.length === 1
+                      ? 'missingRadix'
+                      : !this.valid(args[1] ?? -1)
+                        ? 'invalidRadix'
+                        : '';
+            if(id === '') {
+                continue;
+            }
+            const message =
+                id === 'missingParameters'
+                    ? 'This calls `parseInt` with no arguments at all, which returns NaN every time. It parses nothing, so whatever this line was meant to read is not being read.'
+                    : id === 'missingRadix'
+                      ? 'This calls `parseInt` without a radix. The base is then inferred from the text, so a string that happens to start with `0x` parses as hexadecimal and a leading zero has meant octal in some engines. Pass 10 explicitly when you mean decimal.'
+                      : 'The radix here is not an integer between 2 and 36, so `parseInt` ignores it and falls back to inferring the base from the text. It reads as a decision that has been made and is not one.';
+            const finding = new Diagnostic('radix', id, message, r.byte(r.start(node)), r.byte(node.end), '');
+            if(id === 'missingRadix') {
+                let closing = node.end - 1;
+                while(closing > 0 && r.scanner.text.slice(closing, closing + 1) !== ')') {
+                    closing--;
+                }
+                let previous = closing - 1;
+                while(previous >= 0 && [' ', '\t', '\n', '\r'].includes(r.scanner.text.slice(previous, previous + 1))) {
+                    previous--;
+                }
+                const insertion = r.scanner.text.slice(previous, previous + 1) === ',' ? ' 10,' : ', 10';
+                const repairs = [new Repair(r.byte(closing), r.byte(closing), insertion)];
+                finding.suggestions.push(
+                    new Suggestion(
+                        'addRadixParameter10',
+                        'Add a radix of 10 to parse this as a decimal number.',
+                        repairs,
+                    ),
+                );
+            }
+            r.findings.push(finding);
+        }
+    }
+}

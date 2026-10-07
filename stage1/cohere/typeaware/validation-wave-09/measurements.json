@@ -1,0 +1,122 @@
+{
+  "rounds": [
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "implementation": "native",
+      "process_ns": 5592717365,
+      "bytes": 12783,
+      "sha256": "8107100dc580dd802f14843da2c0b090a6ce08705cbe01de5adb100e9c66a0f6",
+      "timing": "tsgo: load_ns=393890267 query_ns=1125434088 queries=15678 first_query_ns=3209625 run_ns=5176357684"
+    },
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "implementation": "go",
+      "process_ns": 758902582,
+      "bytes": 12783,
+      "sha256": "8107100dc580dd802f14843da2c0b090a6ce08705cbe01de5adb100e9c66a0f6",
+      "timing": "cohere: load_ns=420440742 rule_ns=253756322 run_ns=294478185"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "implementation": "go",
+      "process_ns": 973071468,
+      "bytes": 12783,
+      "sha256": "8107100dc580dd802f14843da2c0b090a6ce08705cbe01de5adb100e9c66a0f6",
+      "timing": "cohere: load_ns=454564027 rule_ns=358379905 run_ns=420082456"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "implementation": "native",
+      "process_ns": 5187913598,
+      "bytes": 12783,
+      "sha256": "8107100dc580dd802f14843da2c0b090a6ce08705cbe01de5adb100e9c66a0f6",
+      "timing": "tsgo: load_ns=667055795 query_ns=962435215 queries=15678 first_query_ns=9285848 run_ns=4497696864"
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "implementation": "native",
+      "process_ns": 2481494159,
+      "bytes": 12783,
+      "sha256": "8107100dc580dd802f14843da2c0b090a6ce08705cbe01de5adb100e9c66a0f6",
+      "timing": "tsgo: load_ns=362434867 query_ns=468514398 queries=15678 first_query_ns=3095341 run_ns=2098122899"
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "implementation": "go",
+      "process_ns": 1266107937,
+      "bytes": 12783,
+      "sha256": "8107100dc580dd802f14843da2c0b090a6ce08705cbe01de5adb100e9c66a0f6",
+      "timing": "cohere: load_ns=500063946 rule_ns=601981895 run_ns=693866186"
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "implementation": "native",
+      "process_ns": 708832423,
+      "bytes": 19865,
+      "sha256": "f7d1e5a4bd34394da905a0daa79c9a50f4af94264e70fdebd412bfce18335dc7",
+      "timing": "tsgo: load_ns=166600627 query_ns=96094472 queries=1938 first_query_ns=195068 run_ns=530221798"
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "implementation": "go",
+      "process_ns": 308562117,
+      "bytes": 19865,
+      "sha256": "f7d1e5a4bd34394da905a0daa79c9a50f4af94264e70fdebd412bfce18335dc7",
+      "timing": "cohere: load_ns=100824628 rule_ns=20129660 run_ns=174002475"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "implementation": "go",
+      "process_ns": 177090122,
+      "bytes": 19865,
+      "sha256": "f7d1e5a4bd34394da905a0daa79c9a50f4af94264e70fdebd412bfce18335dc7",
+      "timing": "cohere: load_ns=79606382 rule_ns=9247400 run_ns=70189755"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "implementation": "native",
+      "process_ns": 573679263,
+      "bytes": 19865,
+      "sha256": "f7d1e5a4bd34394da905a0daa79c9a50f4af94264e70fdebd412bfce18335dc7",
+      "timing": "tsgo: load_ns=153507431 query_ns=56102534 queries=1938 first_query_ns=185968 run_ns=415264211"
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "implementation": "native",
+      "process_ns": 743847060,
+      "bytes": 19865,
+      "sha256": "f7d1e5a4bd34394da905a0daa79c9a50f4af94264e70fdebd412bfce18335dc7",
+      "timing": "tsgo: load_ns=176762306 query_ns=110162582 queries=1938 first_query_ns=205924 run_ns=555194555"
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "implementation": "go",
+      "process_ns": 257449170,
+      "bytes": 19865,
+      "sha256": "f7d1e5a4bd34394da905a0daa79c9a50f4af94264e70fdebd412bfce18335dc7",
+      "timing": "cohere: load_ns=154930653 rule_ns=8220743 run_ns=80304202"
+    }
+  ],
+  "median_process_seconds": {
+    "compiler": {
+      "native": 5.187913598,
+      "go": 0.973071468
+    },
+    "repository": {
+      "native": 0.708832423,
+      "go": 0.25744917
+    }
+  }
+}

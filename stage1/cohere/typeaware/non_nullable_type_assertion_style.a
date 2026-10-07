@@ -1,0 +1,77 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { types } from './facts.ts';
+import { nullish, unionFlag } from './flags.ts';
+
+export class NonNullableTypeAssertionStyle {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    couldBeNullish(facts: Types, id: number): boolean {
+        const t = facts.type(id);
+        if((t.flags & 524288) !== 0) {
+            return t.constraint === 0 || this.couldBeNullish(facts, t.constraint);
+        }
+        if((t.flags & unionFlag) !== 0) {
+            return t.parts.some((part) => this.couldBeNullish(facts, part));
+        }
+        return (t.flags & nullish) !== 0;
+    }
+    run(): void {
+        const r = this.rules;
+        for(let index = 0; index < r.parser.nodes.length; index++) {
+            const node = r.parser.node(index);
+            if(!['AsExpression', 'TypeAssertionExpression'].includes(node.kind)) {
+                continue;
+            }
+            const expression = node.children[node.kind === 'AsExpression' ? 0 : 1] ?? -1;
+            const annotation = node.children[node.kind === 'AsExpression' ? 1 : 0] ?? -1;
+            const typeNode = r.parser.node(annotation);
+            if(typeNode.kind === 'TypeReference' && r.parser.node(typeNode.children[0] ?? -1).text === 'const') {
+                continue;
+            }
+            const original = types(r.ask(expression, 'raw-shape'), 'raw-shape');
+            const asserted = types(r.ask(annotation, 'raw-shape'), 'raw-shape');
+            if((original.root().flags & 3) !== 0 || (asserted.root().flags & 3) !== 0) {
+                continue;
+            }
+            const parts = original.parts(original.root());
+            const survivors = parts.filter((id) => (original.type(id).flags & nullish) === 0);
+            const wanted = asserted.parts(asserted.root());
+            if(
+                survivors.length === parts.length ||
+                wanted.some((id) => this.couldBeNullish(asserted, id) || !survivors.includes(id)) ||
+                survivors.some((id) => !wanted.includes(id))
+            ) {
+                continue;
+            }
+            const finding = r.add(
+                'non-nullable-type-assertion-style',
+                'preferNonNullAssertion',
+                'Use a ! assertion to more succinctly remove null and undefined from the type.',
+                index,
+            );
+            const inner = r.skip(expression);
+            const text = r.text(r.parser.node(inner));
+            const kind = r.parser.node(inner).kind;
+            const strong =
+                r.strong(inner) ||
+                [
+                    'ThisKeyword',
+                    'SuperKeyword',
+                    'FunctionExpression',
+                    'ClassExpression',
+                    'TemplateExpression',
+                    'PostfixUnaryExpression',
+                    'MetaProperty',
+                    'JsxElement',
+                    'JsxSelfClosingElement',
+                    'JsxFragment',
+                ].includes(kind);
+            finding.fixStart = r.byte(r.start(node));
+            finding.fixEnd = r.byte(node.end);
+            finding.replacement = strong ? `${text}!` : `(${text})!`;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "control-000.a": "let a=1;let b=1;b++;let c; c=1; let d;{d=1;} export {a,b,c,d};\nexport {};\n",
+  "control-001.a": "let a=1; {let a=2;a++;} let b=2; function f(){b++;} export {a,b,f};\nexport {};\n",
+  "control-002.a": "let {a,b}={a:1,b:2};b++;let [c,d]=[1,2];export {a,b,c,d};\nexport {};\n",
+  "control-003.a": "let [,a,,b]=[1,2,3,4];export {a,b};\nexport {};\n",
+  "control-004.a": "for(let x of [1,2]){console.log(x);}for(let i=0,end=10;i<end;i++){}\nexport {};\n",
+  "control-005.a": "let a;console.log(a);a=1;let b;function f(){console.log(b);} b=2;export {f};\nexport {};\n",
+  "control-006.a": "let a,b;({a,b}={a:1,b:2});let c;[c]=[1];let rest;[...rest]=[1];\nexport {};\n",
+  "control-007.a": "let a=1;[...(a)]=[];let b=1;({files=b}={});export {a,b};\nexport {};\n",
+  "control-008.a": "parseInt();parseInt('10');parseInt('10',);Number.parseInt('10');Number['parseInt']('10');Number[`parseInt`]('10');\nexport {};\n",
+  "control-009.a": "parseInt('10',1);parseInt('10',36);parseInt('10',37);parseInt('10',10.5);parseInt('10',+37);parseInt('10',-10);parseInt('10',0x10);parseInt('10',1.6e1);parseInt('10',undefined);\nexport {};\n",
+  "control-010.a": "function f(parseInt:any,Number:any,undefined:any){parseInt();Number.parseInt();globalThis.parseInt('10',undefined);}export {f};\nexport {};\n",
+  "control-011.a": "parseInt('10',null);parseInt('10',true);parseInt('10','10');parseInt('10',10n);declare const args:any[];parseInt(...args);parseInt('10',...args);parseInt('10',1,...args);\nexport {};\n",
+  "control-012.a": "declare const x:string|null|undefined;const a=x as string;const b=(x) as string;const c=<string>x;const d=x as string|null;export {a,b,c,d};\nexport {};\n",
+  "control-013.a": "export function generic<T>(values:(T|undefined)[]){return values[0] as T;} export function constrained<T extends string>(values:(T|undefined)[]){return values[0] as T;}\nexport {};\n",
+  "control-014.a": "interface X{p:number};declare const x:X|null;const a=x as X;declare const y:number|string|null;const b=y as number;const c=y as number|string;export {a,b,c};\nexport {};\n",
+  "control-015.a": "declare const a:any;declare const u:unknown;const b=a as string;const c=u as string;const d=[] as const;export {b,c,d};\nexport {};\n",
+  "control-016.a": "declare const p:()=>string|null;declare const c:boolean;const a=(c?p():p()) as string;const b=p() as string;export {a,b};\nexport {};\n",
+  "control-017.a": "/* 世界 🌍 */\nlet é=1;parseInt('10',);declare const 漢:string|null;const a=漢 as string;export {é,a};\n\nexport {};\n"
+}

@@ -1,0 +1,266 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Reassign } from './reassign.ts';
+import { Diagnostic } from './diagnostic.ts';
+
+const message =
+    'This binding is declared `let` but nothing ever reassigns it, so the `let` claims a mutability the code does not use. A reader has to hold open the possibility that the value changes somewhere, and has to scan the rest of the scope to find out that it does not. `const` answers that question at the declaration and lets the compiler reject a future write that was not intended. Declare it `const`.';
+
+export class PreferConst {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly reassign: Reassign;
+    readonly names = new Map<string, number[]>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+        this.reassign = new Reassign(rules);
+        for(let at = 0; at < rules.parser.nodes.length; at++) {
+            const node = rules.parser.node(at);
+            if(node.kind === 'Identifier') {
+                if(!this.names.has(node.text)) {
+                    this.names.set(node.text, []);
+                }
+                const named = this.names.get(node.text) ?? panic('missing name index');
+                named.push(at);
+            }
+        }
+    }
+    bound(index: number, result: number[]): void {
+        if(index < 0) {
+            return;
+        }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            result.push(index);
+            return;
+        }
+        if(node.kind === 'BindingElement') {
+            this.bound(this.bindings.shape.name(index), result);
+            return;
+        }
+        if(['ArrayBindingPattern', 'ObjectBindingPattern'].includes(node.kind)) {
+            for(const child of node.children) {
+                if(this.rules.parser.node(child).kind !== 'OmittedExpression') {
+                    this.bound(child, result);
+                }
+            }
+        }
+    }
+    anchor(index: number): number {
+        return this.bindings.declarations(index)[0] ?? -1;
+    }
+    scope(index: number): number {
+        let current = this.bindings.parent(index);
+        while(current >= 0) {
+            if(
+                [
+                    'SourceFile',
+                    'Block',
+                    'ModuleBlock',
+                    'CaseClause',
+                    'DefaultClause',
+                    'ClassStaticBlockDeclaration',
+                ].includes(this.rules.parser.node(current).kind)
+            ) {
+                return current;
+            }
+            current = this.bindings.parent(current);
+        }
+        return -1;
+    }
+    list(index: number): number {
+        let current = index;
+        while(current >= 0) {
+            if(this.rules.parser.node(current).kind === 'VariableDeclarationList') {
+                return current;
+            }
+            current = this.bindings.parent(current);
+        }
+        return -1;
+    }
+    neighbors(index: number, scope: number): boolean {
+        const node = this.rules.parser.node(this.rules.skip(index));
+        if(node.kind === 'Identifier') {
+            const declarations = this.bindings.declarations(this.rules.skip(index));
+            if(declarations.length === 0) {
+                return true;
+            }
+            const own = declarations[0] ?? -1;
+            const list = this.list(own);
+            return (
+                list >= 0 &&
+                this.rules.parser.node(list).semantic === '1' &&
+                this.rules.parser.node(this.bindings.parent(list)).kind === 'VariableStatement' &&
+                this.scope(own) === scope
+            );
+        }
+        if(['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(node.kind)) {
+            return node.children.every(
+                (child) => this.rules.parser.node(child).kind === 'OmittedExpression' || this.neighbors(child, scope),
+            );
+        }
+        if(
+            ['PropertyAssignment', 'ShorthandPropertyAssignment', 'SpreadAssignment', 'SpreadElement'].includes(
+                node.kind,
+            )
+        ) {
+            return this.neighbors(
+                node.children[node.kind === 'ShorthandPropertyAssignment' ? 0 : node.children.length - 1] ?? -1,
+                scope,
+            );
+        }
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken') {
+            return this.neighbors(node.children[0] ?? -1, scope);
+        }
+        return false;
+    }
+    assignment(index: number): number {
+        let child = index;
+        let parent = this.bindings.parent(child);
+        while(parent >= 0) {
+            const node = this.rules.parser.node(parent);
+            if(node.kind === 'BinaryExpression') {
+                if(
+                    node.children[0] !== child ||
+                    this.rules.parser.node(node.children[1] ?? -1).kind !== 'EqualsToken'
+                ) {
+                    return -1;
+                }
+                const grand = this.rules.parser.node(this.bindings.parent(parent));
+                if(
+                    grand.kind !== 'ArrayLiteralExpression' &&
+                    !(grand.kind === 'PropertyAssignment' && grand.children[0] !== parent)
+                ) {
+                    return parent;
+                }
+            }
+            else if(
+                ![
+                    'ParenthesizedExpression',
+                    'ArrayLiteralExpression',
+                    'ObjectLiteralExpression',
+                    'SpreadElement',
+                    'SpreadAssignment',
+                    'ShorthandPropertyAssignment',
+                    'PropertyAssignment',
+                ].includes(node.kind)
+            ) {
+                return -1;
+            }
+            child = parent;
+            parent = this.bindings.parent(parent);
+        }
+        return -1;
+    }
+    candidate(name: number, declaration: number, loop: boolean): number {
+        const anchor = this.anchor(name);
+        if(anchor < 0) {
+            return -1;
+        }
+        const empty: number[] = [];
+        const occurrences = this.names.get(this.rules.parser.node(name).text) ?? empty;
+        const writes: number[] = [];
+        for(const at of occurrences) {
+            if(this.reassign.writes(at) && this.anchor(at) === anchor) {
+                writes.push(at);
+            }
+        }
+        if(loop || this.bindings.shape.initializer(declaration) >= 0) {
+            return writes.length === 0 ? name : -1;
+        }
+        if(writes.length !== 1) {
+            return -1;
+        }
+        const write = writes[0] ?? -1;
+        const assignment = this.assignment(write);
+        if(assignment < 0) {
+            return -1;
+        }
+        let statement = this.bindings.parent(assignment);
+        while(statement >= 0 && this.rules.parser.node(statement).kind === 'ParenthesizedExpression') {
+            statement = this.bindings.parent(statement);
+        }
+        const scope = this.scope(declaration);
+        if(
+            statement < 0 ||
+            scope < 0 ||
+            this.rules.parser.node(statement).kind !== 'ExpressionStatement' ||
+            this.bindings.parent(statement) !== scope
+        ) {
+            return -1;
+        }
+        const pattern = this.rules.skip(this.rules.parser.node(assignment).children[0] ?? -1);
+        if(
+            ['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(this.rules.parser.node(pattern).kind) &&
+            !this.neighbors(pattern, scope)
+        ) {
+            return -1;
+        }
+        for(const at of occurrences) {
+            if(
+                at !== name &&
+                this.rules.parser.node(at).pos < this.rules.parser.node(write).pos &&
+                !this.reassign.writes(at) &&
+                this.anchor(at) === anchor
+            ) {
+                return name;
+            }
+        }
+        return write;
+    }
+    run(): void {
+        const r = this.rules;
+        for(let index = 0; index < r.parser.nodes.length; index++) {
+            const list = r.parser.node(index);
+            if(list.kind !== 'VariableDeclarationList' || list.semantic !== '1') {
+                continue;
+            }
+            const parent = r.parser.node(this.bindings.parent(index));
+            const loop = ['ForInStatement', 'ForOfStatement'].includes(parent.kind);
+            const reports: number[] = [];
+            let fixable = true;
+            let declined = false;
+            for(const declaration of list.children) {
+                if(!loop && this.bindings.shape.initializer(declaration) < 0) {
+                    fixable = false;
+                }
+                const names: number[] = [];
+                this.bound(this.bindings.shape.name(declaration), names);
+                for(const name of names) {
+                    const at = this.candidate(name, declaration, loop);
+                    if(at < 0) {
+                        declined = true;
+                        fixable = false;
+                    }
+                    else {
+                        reports.push(at);
+                    }
+                }
+            }
+            if(parent.kind === 'ForStatement' && list.children.length > 1 && declined) {
+                continue;
+            }
+            let offered = false;
+            for(const at of reports) {
+                const node = r.parser.node(at);
+                const finding = new Diagnostic(
+                    'prefer-const',
+                    'preferConst',
+                    message,
+                    r.byte(r.start(node)),
+                    r.byte(node.end),
+                    '',
+                );
+                if(fixable && !offered) {
+                    finding.fixStart = r.byte(r.start(list));
+                    finding.fixEnd = r.byte(r.start(list) + 3);
+                    finding.replacement = 'const';
+                    offered = true;
+                }
+                r.findings.push(finding);
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class DeclarationFileFlags {
+    readonly present: boolean;
+    readonly files: readonly boolean[];
+    readonly declared: readonly boolean[];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'declaration-file-flags'));
+        header(frames, 'declaration-file-flags');
+        this.present = frames.yes();
+        const files: boolean[] = [];
+        const declared: boolean[] = [];
+        if(this.present) {
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                files.push(frames.yes());
+                declared.push(frames.yes());
+            }
+        }
+        frames.end();
+        this.files = files;
+        this.declared = declared;
+    }
+}
