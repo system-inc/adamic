@@ -443,3 +443,46 @@ versus Go 0.386340024s; repository native 0.640659498s versus Go 0.151139036s.
 No speedup or median claim is made. Other suites retain fifth-landing evidence.
 Boolean-prop-naming traversal and its partial options, imported props, typed
 wrappers and placeholder regex remain unfinished. No new rules were claimed.
+
+## Shared harness area rebase, October 7
+
+Rebased wave-25 cleanly onto origin/area/stage1-lint as requested, at its
+fetched tip 7481e0324e34a2537aafa9db7eeacda50405611b. Tested head:
+47303618c456db9eb5ccc822b546598a0a48e471. This includes the named 50a5f105
+area landing, finding model 41eb6eab2 and current main
+39638d9e278d38bb5aeae887f46d55a70e47aaad. No area or main ref was pushed.
+No shared source was changed or reverted. Required lint-registry generation
+passed and its ignored generated outputs remain uncommitted.
+
+All five wave suites and refusal checks passed in 407.979s. The inherited
+ten-rule dependency passed in 545.199s, including 16,589 compiler findings and
+7,120,613 serialized bytes on normal and sanitizer builds. Bridge packages
+passed in 60.648s and 0.235s. Filtered uncached Node passed in 1.197s with zero
+cache hits, 25 native misses and 17 Node misses. go vet ./... exited 0 with
+empty output. All 24 rule mutants were caught only by Go byte comparisons;
+released-registry and invalid-handle checks also passed. The separate dropped
+ClassDeclaration dispatch mutant was rebuilt on this base: build 0, native
+exit 0, empty native stderr, Go bytes catch byte 1,211.
+
+The newly inherited finding-model tests also passed in 93.046s. Complete
+suggestion serialization matched Go, source Node, emitted JavaScript and
+sanitized native on 735 bytes; suggestions beside an automatic fix matched
+on 721 bytes. The changed second suggestion edit was caught on Node, emitted
+JavaScript and native. The clean-running emitted-JavaScript mismatch mutant
+was caught by the ordinary comparison. These validate the shared harness,
+not emitted-JavaScript support for the standalone checker-bridge wave suite.
+Exact scoped commands, logs and source hashes are in validation-wave-25-area.
+
+Single fifth-suite compiler sample: native 4.067996002s versus Go 0.360603820s.
+Repository timings are preserved in the rule log. No speedup or median claim
+is made. The fresh dynamic new RegExp(pattern, 'u') probe still exits 1:
+line 3, column 28, stage 0 can't lower RegExp with a nonconstant pattern yet.
+Other partial boolean-prop and dispatch paths remain unfinished; no new claims.
+
+Disk cleanup removed only explicitly named obsolete checker archives under
+/workspace/wave-25-landing after their earlier evidence had been archived.
+The source, logs and checked-in evidence were retained. The complete repository
+gate was not run. During validation the area advanced to d65a8f93 with a
+runtime-profile landing; that later area change is not included or covered
+by these results. Final fetch confirms current main remains the included
+39638d9e base. The landing cap against current main is satisfied.

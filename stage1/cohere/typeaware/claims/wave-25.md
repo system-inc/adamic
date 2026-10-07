@@ -138,3 +138,12 @@ wave suites, inherited dependency, bridge, sanitizers, released handles,
 filtered uncached Node, the new inherited-static-field fixture and vet.
 Evidence: validation-wave-25-landing-fifth. Existing partial paths remain
 reserved. No new claims or analysis-parking classification.
+
+## Shared harness rebase, October 7
+
+Rebased onto the requested area at 7481e032, including 50a5f105, finding model
+41eb6eab2 and current main 39638d9e. Own wave and dependency byte oracles,
+mutants, sanitizers, handles, bridge, filtered uncached Node and vet pass.
+Shared finding-model serialization and emitted-JavaScript mutant checks also
+pass. Evidence: validation-wave-25-area. No new claims; existing partial paths
+remain reserved. Area/main integration refs were not pushed.
