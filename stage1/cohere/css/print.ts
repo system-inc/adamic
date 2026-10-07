@@ -1,5 +1,5 @@
 // cohere CSS printer-postcss, declaration/rule printers, and value-group printers.
-import { Tree } from './tree.ts';
+import type { Tree } from './tree.ts';
 import { compose } from './compose.ts';
 import { byteSlice } from './convert.ts';
 import { utf8Length } from 'adamic';
@@ -846,7 +846,7 @@ export class Printer {
 }
 export type FormatResult =
     { readonly kind: 'Formatted'; readonly text: string } | { readonly kind: 'Refused'; readonly message: string };
-export function format(text: string, scss: boolean = false, options: PrintOptions = defaults): FormatResult {
+export function format(text: string, scss = false, options: PrintOptions = defaults): FormatResult {
     const parsed = compose(text, scss);
     if(parsed.kind === 'Refused') return parsed;
     const front = new Node(parsed.tree, parsed.tree.root).child('frontMatter');

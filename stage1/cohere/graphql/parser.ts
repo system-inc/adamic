@@ -544,7 +544,7 @@ class Parser {
                 const fieldStart = this.lexer.token;
 
                 const nameOrAlias = this.parseName();
-                let alias: number | undefined = undefined;
+                let alias: number | undefined;
                 let name: number;
                 if(this.expectOptionalToken(':')) {
                     alias = nameOrAlias;

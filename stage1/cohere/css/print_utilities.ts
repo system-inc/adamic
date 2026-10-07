@@ -1,5 +1,5 @@
 // CSS printer predicates and path reads from cohere/utilities.go and print_helpers.go.
-import { Tree, ObjectNode } from './tree.ts';
+import type { Tree, ObjectNode } from './tree.ts';
 import { byteSlice } from './convert.ts';
 import { utf8Length } from 'adamic';
 export class Node {
@@ -67,10 +67,10 @@ export class Path {
     up(depth: number): Node {
         return new Node(this.tree, this.nodes[this.nodes.length - depth - 1] ?? -1);
     }
-    key(depth: number = 0): string {
+    key(depth = 0): string {
         return this.keys[this.keys.length - depth - 1] ?? '';
     }
-    child(key: string, position: number = -1): Path {
+    child(key: string, position = -1): Path {
         const n = this.node();
         const index = position < 0 ? n.child(key).index : (n.list(key)[position] ?? -1);
         return new Path(this.tree, [...this.nodes, index], [...this.keys, key], [...this.positions, position]);
@@ -136,7 +136,7 @@ export function control(n: Node, scss: boolean): boolean {
 export function placeholder(n: Node): boolean {
     return n.type() === 'value-atword' && n.string('value').startsWith('prettier-placeholder-');
 }
-export function operator(n: Node, values: string = '*/+-%'): boolean {
+export function operator(n: Node, values = '*/+-%'): boolean {
     return n.type() === 'value-operator' && values.includes(n.string('value')) && n.string('value') !== '';
 }
 export function word(n: Node): boolean {

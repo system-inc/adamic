@@ -57,7 +57,7 @@ export class DocNode {
     readonly text: string;
     broken: boolean;
     private cachedWidth = -1;
-    constructor(kind: string, parts: number[], text: string = '', broken: boolean = false) {
+    constructor(kind: string, parts: number[], text = '', broken = false) {
         this.kind = kind;
         this.parts = parts;
         this.text = text;
@@ -69,7 +69,7 @@ export class DocNode {
     }
 }
 type Command = { readonly doc: number; readonly indent: number; readonly flat: boolean; readonly offset: number };
-function command(doc: number, indent: number, flat: boolean, offset: number = 0): Command {
+function command(doc: number, indent: number, flat: boolean, offset = 0): Command {
     return { doc, indent, flat, offset };
 }
 function emptyParts(): number[] {
@@ -82,7 +82,7 @@ function emptyCommands(): Command[] {
 }
 export class Documents {
     readonly nodes: DocNode[] = [];
-    add(kind: string, parts: number[] = emptyParts(), text: string = '', broken: boolean = false): number {
+    add(kind: string, parts: number[] = emptyParts(), text = '', broken = false): number {
         const index = this.nodes.length;
         this.nodes.push(new DocNode(kind, parts, text, broken));
         return index;
@@ -96,7 +96,7 @@ export class Documents {
     concat(parts: number[]): number {
         return this.add('concat', parts);
     }
-    group(content: number, broken: boolean = false): number {
+    group(content: number, broken = false): number {
         return this.add('group', [content], '', broken);
     }
     indent(content: number): number {

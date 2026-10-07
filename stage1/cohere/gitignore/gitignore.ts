@@ -42,7 +42,8 @@
 //     builds a new one, as the Go writes only its copy.
 
 import { panic, utf8Length } from 'adamic';
-import { compileGlob, Glob } from './glob.ts';
+import type { Glob } from './glob.ts';
+import { compileGlob } from './glob.ts';
 import { base, clean, dir } from './path.ts';
 
 // gitignore.go: IgnoreFileName, the per-directory ignore file.
