@@ -5,6 +5,7 @@
 adamic_cell *adamic_cell_new(adamic_value value, bool references) {
 	adamic_cell *cell = adamic_allocate(sizeof *cell, adamic_kind_cell);
 	cell->references = references;
+	cell->ready = true;
 	cell->value = value;
 	return cell;
 }

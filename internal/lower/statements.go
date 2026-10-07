@@ -92,6 +92,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return statements, err
 	}
 	switch expression.Kind {
+	case ast.KindNonNullExpression:
+		value, err := l.expression(expression)
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	case ast.KindCallExpression:
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 			return l.superStatement(expression)

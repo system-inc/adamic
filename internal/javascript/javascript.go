@@ -49,6 +49,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString(fieldReadinessRuntime)
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
@@ -121,6 +122,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	for index, local := range program.Locals {
 		if local.Global {
 			fmt.Fprintf(&builder, "let %s;\nlet %s = false;\n", emitter.name(index), readyName(index))
+			if local.Uninitialized {
+				fmt.Fprintf(&builder, "let %s_declared = false;\n", readyName(index))
+			}
 		}
 	}
 	for index, function := range program.Functions {
@@ -142,7 +146,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		}
 		for _, parameter := range function.Parameters {
 			if program.Locals[parameter].Captured {
-				emitter.line("const %s = { value: %s };", emitter.cellName(parameter), emitter.name(parameter))
+				emitter.line("const %s = { value: %s, ready: true };", emitter.cellName(parameter), emitter.name(parameter))
 			}
 		}
 		if options.Enter != nil {
@@ -308,7 +312,7 @@ func (e *emitter) nested(statements []ir.Statement) {
 func (e *emitter) declare(local int, value string) {
 	declared := e.program.Locals[local]
 	if declared.Captured {
-		e.line("let %s = { value: %s };", e.cellName(local), value)
+		e.line("let %s = { value: %s, ready: true };", e.cellName(local), value)
 		return
 	}
 	e.line("let %s = %s;", e.name(local), value)
@@ -338,12 +342,28 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		if e.program.Locals[statement.Local].Global {
 			e.line("%s = %s;", e.name(statement.Local), value)
-			e.line("%s = true;", readyName(statement.Local))
+			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			if e.program.Locals[statement.Local].Uninitialized {
+				e.line("%s_declared = true;", readyName(statement.Local))
+			}
 			return
 		}
 		e.declare(statement.Local, value)
+		if e.program.Locals[statement.Local].Uninitialized {
+			if e.program.Locals[statement.Local].Captured {
+				e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+			} else {
+				e.line("let %s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			}
+		}
 	case ir.Assign:
 		value := e.value(statement.Value)
+		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
+			temporary := e.temporary()
+			e.line("const %s = %s;", temporary, value)
+			e.line("if (!%s_declared) adamicUnready(%s);", readyName(statement.Local), quote(e.program.Locals[statement.Local].Name))
+			value = temporary
+		}
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			temporary := e.temporary()
@@ -352,15 +372,22 @@ func (e *emitter) statement(at *ir.Statement) {
 			value = temporary
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
+		if e.program.Locals[statement.Local].Uninitialized {
+			e.line("%s = true;", e.localReady(statement.Local))
+		}
 	case ir.Evaluate:
 		e.line("%s;", e.value(statement.Value))
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
-		if statement.Define {
-			e.line("Object.defineProperty(%s, %s, {value: %s, writable: true, enumerable: %t, configurable: true});", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"))
+		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
+			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.Value.Type())
+			break
+		}
+		if statement.Define || statement.Uninitialized {
+			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized, statement.Value.Type())
 		} else {
-			e.line("%s[%s] = %s;", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
 	case ir.SetIndex:
 		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
@@ -468,7 +495,7 @@ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
 	e.continues = e.continues[:len(e.continues)-1]
 	for _, local := range statement.PerIteration {
 		if e.program.Locals[local].Captured {
-			e.line("%s = { value: %s.value };", e.cellName(local), e.cellName(local))
+			e.line("%s = { value: %s.value, ready: %s.ready };", e.cellName(local), e.cellName(local), e.cellName(local))
 		}
 	}
 	e.statements(statement.Update)
@@ -566,6 +593,10 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.StringConstant:
 		return quote(e.program.Strings[expression.Index])
 	case ir.Read:
+		if expression.Readiness != "" {
+			message := fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[expression.Local].Name, expression.Readiness)
+			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
+		}
 		if expression.Checked {
 			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
 		}
@@ -621,22 +652,64 @@ func (e *emitter) value(expression ir.Expression) string {
 			}
 			return "[" + strings.Join(elements, ", ") + "]"
 		}
+		spreadValue := ""
 		fields := []string{}
 		if len(expression.Methods) > 0 {
 			fields = append(fields, "__proto__: "+e.prototype(expression.Methods))
 		}
 		if expression.Spread != nil {
-			fields = append(fields, "..."+e.value(expression.Spread))
+			spread := e.value(expression.Spread)
+			if expression.SpreadReadiness != "" {
+				spread = "adamicSpreadFields(" + spread + ", " + quote(expression.SpreadReadiness) + ")"
+			}
+			if len(e.program.CheckedFields) != 0 {
+				spreadValue = spread
+				spread = "adamicSpreadSource"
+			}
+			fields = append(fields, "..."+spread)
 		}
 		for _, field := range expression.Fields {
 			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
 		}
 		object := "({" + strings.Join(fields, ", ") + "})"
 		if expression.Class != 0 {
-			return fmt.Sprintf("adamicClass(%s, %d)", object, expression.Class)
+			object = fmt.Sprintf("adamicClass(%s, %d)", object, expression.Class)
+		}
+		unready := []string{}
+		for _, field := range expression.Fields {
+			if field.Uninitialized {
+				unready = append(unready, quote(field.Name))
+			}
+		}
+		if len(unready) > 0 {
+			object = "adamicUninitializedFields(" + object + ", [" + strings.Join(unready, ", ") + "])"
+		}
+		if len(e.program.CheckedFields) != 0 {
+			types := []string{}
+			for _, field := range expression.Fields {
+				types = append(types, quote(field.Name)+": "+fmt.Sprint(field.Value.Type()))
+			}
+			parentTypes := ""
+			if spreadValue != "" {
+				parentTypes = "...adamicFieldRepresentations.get(adamicSpreadSource), "
+			}
+			object = "adamicRecordFieldTypes(" + object + ", {" + parentTypes + strings.Join(types, ", ") + "})"
+			if spreadValue != "" {
+				object = "((adamicSpreadSource) => " + object + ")(" + spreadValue + ")"
+			}
 		}
 		return object
 	case ir.Property:
+		if expression.View != "" {
+			expected := expression.ViewType
+			if expected == "" {
+				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
+			}
+			return fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s])", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed))
+		}
+		if expression.Readiness != "" {
+			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional, expression.Absent)
+		}
 		if expression.Optional {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}
@@ -811,6 +884,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.StringIndex:
 		return e.value(expression.Value) + "[" + e.value(expression.Index) + "]"
 	case ir.CheckedCast:
+		if expression.CheckedFields {
+			return "adamicCheckedViewCast(" + e.value(expression.Value) + ", " + quote(expression.Field) + ", " + fmt.Sprint(expression.FieldType) + ", [" + e.values(expression.Allowed) + "], " + quote(expression.Message) + ")"
+		}
 		return "adamicCast(" + e.value(expression.Value) + ", " + quote(expression.Field) + ", [" + e.values(expression.Allowed) + "], " + quote(expression.Message) + ")"
 	case ir.ArrayPop:
 		return e.value(expression.Array) + ".pop()"
