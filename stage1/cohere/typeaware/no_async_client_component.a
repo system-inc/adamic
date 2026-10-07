@@ -1,0 +1,103 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { unicodeUpper } from './unicode_upper.a';
+
+const message =
+    'A client component declared as an async function is rendered on the client, where React cannot await it the way the server can. The promise it returns is not an element, so rendering fails or hydration diverges from what the server produced. Move the awaiting into an effect or an event handler and keep the component itself synchronous.';
+
+export class NoAsyncClientComponent {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    constructor(rules: Rules, bindings: Bindings) {
+        this.rules = rules;
+        this.bindings = bindings;
+    }
+    modifier(index: number, kind: string): boolean {
+        return this.rules.parser.node(index).children.some((child) => this.rules.parser.node(child).kind === kind);
+    }
+    report(index: number): void {
+        const name = this.bindings.shape.name(index);
+        if(name < 0) {
+            return;
+        }
+        const node = this.rules.parser.node(name);
+        if(!unicodeUpper(node.text.codePointAt(0) ?? -1)) {
+            return;
+        }
+        this.rules.findings.push(
+            new Diagnostic(
+                'no-async-client-component',
+                'noAsyncClientComponent',
+                message,
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                '@next/next/',
+            ),
+        );
+    }
+    run(root: number): void {
+        const statements = this.rules.parser.node(root).children;
+        let client = false;
+        for(const index of statements) {
+            const statement = this.rules.parser.node(index);
+            const expression = statement.children[0] ?? -1;
+            if(
+                statement.kind !== 'ExpressionStatement' ||
+                expression < 0 ||
+                this.rules.parser.node(expression).kind !== 'StringLiteral'
+            ) {
+                break;
+            }
+            if(this.rules.parser.node(expression).text === 'use client') {
+                client = true;
+                break;
+            }
+        }
+        if(!client) {
+            return;
+        }
+        for(const index of statements) {
+            const statement = this.rules.parser.node(index);
+            if(
+                statement.kind === 'FunctionDeclaration' &&
+                this.modifier(index, 'DefaultKeyword') &&
+                this.modifier(index, 'AsyncKeyword')
+            ) {
+                this.report(index);
+            }
+            if(statement.kind !== 'ExportAssignment') {
+                continue;
+            }
+            // export = has the same AST kind and is intentionally handled like Go.
+            const expression = statement.children[statement.children.length - 1] ?? -1;
+            if(expression < 0 || this.rules.parser.node(expression).kind !== 'Identifier') {
+                continue;
+            }
+            let earliest = -1;
+            // The target resolves without following aliases and selects by source position.
+            for(const declaration of this.bindings.list(expression, 'binding-declarations', false)) {
+                if(earliest < 0 || this.rules.parser.node(declaration).pos < this.rules.parser.node(earliest).pos) {
+                    earliest = declaration;
+                }
+            }
+            if(earliest < 0) {
+                continue;
+            }
+            const declaration = this.rules.parser.node(earliest);
+            if(declaration.kind === 'FunctionDeclaration' && this.modifier(earliest, 'AsyncKeyword')) {
+                this.report(earliest);
+            }
+            if(declaration.kind === 'VariableDeclaration') {
+                const initializer = this.bindings.shape.initializer(earliest);
+                if(
+                    initializer >= 0 &&
+                    this.rules.parser.node(initializer).kind === 'ArrowFunction' &&
+                    this.modifier(initializer, 'AsyncKeyword')
+                ) {
+                    this.report(earliest);
+                }
+            }
+        }
+    }
+}
