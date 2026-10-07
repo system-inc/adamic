@@ -1,0 +1,40 @@
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(index: number): void {
+        const numbers = new Map<string, number>();
+        const strings = new Map<string, number>();
+        for(const child of this.context.node(index).children) {
+            const member = this.context.node(child);
+            if(member.kind !== 'EnumMember') {
+                continue;
+            }
+            const initializer = member.children[1];
+            if(initializer === undefined) {
+                continue;
+            }
+            const value = this.context.node(initializer);
+            if(value.kind !== 'NumericLiteral' && value.kind !== 'StringLiteral') {
+                continue;
+            }
+            const seen = value.kind === 'NumericLiteral' ? numbers : strings;
+            const earlier = seen.get(value.text);
+            if(earlier !== undefined) {
+                this.context.report(earlier, '@typescript-eslint/no-duplicate-enum-values', 'noDuplicateEnumValues', message, '', '', '');
+            }
+            // Numbers retain the first anchor; strings advance on every copy.
+            if(earlier === undefined || value.kind === 'StringLiteral') {
+                seen.set(value.text, initializer);
+            }
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}
