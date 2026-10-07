@@ -22,3 +22,7 @@ Claim: github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.
 File: from_wave1_02/mark_final.a.
 
 Refreshed all 536 origin refs and read all 19 distinct helper claim contents. This symbol remains unclaimed and ties the largest concrete remaining fan-out at four. Same four consumers as above; zero final blockers removed alone. Preserve nil/unreachable/already-final guards, final flag, ordered append, block identity and repeated-call idempotence. Actual private Go calls during every original consumer suite plus controls provide expected states; compare source Node, emitted JavaScript and sanitized native, with a compiling semantic mutant. No shared harness edits. Push before code.
+
+## markFinal delivery
+
+Actual file: from_wave1_02/final/mark_final.a. All four original Go consumer suites execute the private helper. The arena implementation matches 2,884 transitions, 87,942 bytes on Node, emitted JavaScript and sanitized native. Both compiling guard-removal mutants are caught only by output comparison. See from_wave1_02/final/REPORT.md for exact identity adapter and coverage boundaries. Four dependency occurrences removed, zero final blockers. enter remains withdrawn.

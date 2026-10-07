@@ -1,0 +1,36 @@
+=== RUN   TestWave02FinalControls
+WAVE02_FINAL:-1,false,false,,false,,false,3,3
+WAVE02_FINAL:7,false,false,,false,,false,3,3
+WAVE02_FINAL:7,false,false,,false,,false,3,3
+WAVE02_FINAL:7,true,false,,true,7,true,3,3
+WAVE02_FINAL:-1,false,false,2:4,false,2:4,false,3,3
+WAVE02_FINAL:7,false,false,2:4,false,2:4,false,3,3
+WAVE02_FINAL:7,false,false,2:4,false,2:4,false,3,3
+WAVE02_FINAL:7,true,false,2:4,true,2:4:7,true,3,3
+WAVE02_FINAL:-1,false,false,,false,,false,3,3
+WAVE02_FINAL:7,false,true,,true,,false,3,3
+WAVE02_FINAL:7,false,true,,true,,false,3,3
+WAVE02_FINAL:7,true,true,,true,,false,3,3
+WAVE02_FINAL:-1,false,false,2:4,false,2:4,false,3,3
+WAVE02_FINAL:7,false,true,2:4,true,2:4,false,3,3
+WAVE02_FINAL:7,false,true,2:4,true,2:4,false,3,3
+WAVE02_FINAL:7,true,true,2:4,true,2:4,false,3,3
+WAVE02_FINAL:-1,false,false,,false,,false,3,3
+WAVE02_FINAL:7,true,false,,true,7,true,3,3
+WAVE02_FINAL:7,true,true,7,true,7,true,3,3
+WAVE02_FINAL:7,false,true,7,true,7,true,3,3
+WAVE02_FINAL:-1,false,false,2:4,false,2:4,false,3,3
+WAVE02_FINAL:7,true,false,2:4,true,2:4:7,true,3,3
+WAVE02_FINAL:7,true,true,2:4:7,true,2:4:7,true,3,3
+WAVE02_FINAL:7,false,true,2:4:7,true,2:4:7,true,3,3
+WAVE02_FINAL:-1,false,false,,false,,false,3,3
+WAVE02_FINAL:7,true,true,,true,,false,3,3
+WAVE02_FINAL:7,true,true,,true,,false,3,3
+WAVE02_FINAL:7,false,true,,true,,false,3,3
+WAVE02_FINAL:-1,false,false,2:4,false,2:4,false,3,3
+WAVE02_FINAL:7,true,true,2:4,true,2:4,false,3,3
+WAVE02_FINAL:7,true,true,2:4,true,2:4,false,3,3
+WAVE02_FINAL:7,false,true,2:4,true,2:4,false,3,3
+--- PASS: TestWave02FinalControls (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph	0.002s

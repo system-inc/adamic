@@ -1,0 +1,37 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { markFinal, FinalBlock, FinalBuilder } from './mark_final.a';
+function ids(blocks: number[]): string {
+    let result = '';
+    for (const block of blocks) {
+        if (result.length > 0) result += ':';
+        result += String(block);
+    }
+    return result;
+}
+const args = programArguments();
+if (args.length !== 1) panic('expected trace file');
+const file = readTextFile((args[0] ?? panic('missing trace argument')));
+if (file.kind === 'Error') panic(file.message);
+for (const row of file.text.split('\n')) {
+    if (row.length === 0) continue;
+    const parts = row.split(',');
+    if (parts.length !== 9) panic('invalid Go trace row');
+    const index = Number((parts[0] ?? panic('missing trace field')));
+    const blocks: FinalBlock[] = [];
+    for (let i = 0; i <= index; i++) blocks.push(new FinalBlock(false, false));
+    if (index >= 0) {
+        const target = blocks[index] ?? panic('missing target');
+        target.reachable = parts[1] === 'true';
+        target.final = parts[2] === 'true';
+    }
+    const finals: number[] = [];
+    const previousIds = parts[3] ?? panic('missing trace field');
+    if (previousIds.length > 0) {
+        for (const id of previousIds.split(':')) finals.push(Number(id));
+    }
+    const builder = new FinalBuilder(blocks, finals);
+    markFinal(builder, index);
+    const final = index >= 0 && (blocks[index] ?? panic('missing target')).final;
+    const sameLast = index >= 0 && builder.finals.length > 0 && builder.finals[builder.finals.length - 1] === index;
+    console.log((parts[0] ?? panic('missing trace field')) + ',' + (parts[1] ?? panic('missing trace field')) + ',' + (parts[2] ?? panic('missing trace field')) + ',' + previousIds + ',' + String(final) + ',' + ids(builder.finals) + ',' + String(sameLast) + ',' + (parts[7] ?? panic('missing trace field')) + ',' + (parts[7] ?? panic('missing trace field')));
+}

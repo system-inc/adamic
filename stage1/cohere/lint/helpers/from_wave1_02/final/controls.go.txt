@@ -1,0 +1,18 @@
+package control_flow_graph
+import "testing"
+func TestWave02FinalControls(t *testing.T) {
+ for _, reachable := range []bool{false,true} {
+  for _, final := range []bool{false,true} {
+   for _, populated := range []bool{false,true} {
+    target := &Block[int]{index:7,Reachable:reachable,final:final}
+    builder := &Builder[int]{cur:&Block[int]{index:3}}
+    if populated {builder.finals=[]*Block[int]{{index:2},{index:4}}}
+    builder.markFinal(nil)
+    builder.markFinal(target)
+    builder.markFinal(target)
+    target.Reachable=!reachable
+    builder.markFinal(target)
+   }
+  }
+ }
+}

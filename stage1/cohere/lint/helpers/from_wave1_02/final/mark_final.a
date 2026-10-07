@@ -1,0 +1,29 @@
+import { panic } from 'adamic';
+
+export class FinalBlock {
+    reachable: boolean;
+    final: boolean;
+    constructor(reachable: boolean, final: boolean) {
+        this.reachable = reachable;
+        this.final = final;
+    }
+}
+
+export class FinalBuilder {
+    readonly blocks: FinalBlock[];
+    readonly finals: number[];
+    constructor(blocks: FinalBlock[], finals: number[]) {
+        this.blocks = blocks;
+        this.finals = finals;
+    }
+}
+
+// Incoming edges and reachability are settled by other graph helpers.
+// Handles are stable arena indices; -1 represents Go's nil block.
+export function markFinal(builder: FinalBuilder, handle: number): void {
+    if (handle === -1) return;
+    const block = builder.blocks[handle] ?? panic('invalid final block handle');
+    if (!block.reachable || block.final) return;
+    block.final = true;
+    builder.finals.push(handle);
+}

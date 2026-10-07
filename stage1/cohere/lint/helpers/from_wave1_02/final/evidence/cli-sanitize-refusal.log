@@ -1,0 +1,19 @@
+array-callback-return 203 actual calls
+consistent-return 103 actual calls
+no-unreachable-loop 2419 actual calls
+react-hooks-rules-of-hooks 127 actual calls
+controls 32 actual calls
+usage:
+  adamic types <file.a|file.ts>...
+  adamic c <file.a|file.ts>
+  adamic js <file.a|file.ts>
+  adamic build <file.a|file.ts> -o <out> [--count]
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/final/verify.py", line 45, in <module>
+    assert all(out==wanted for out in compare('baseline'))
+                                      ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/final/verify.py", line 41, in compare
+    subprocess.run([str(work/'adamic'),'build',str(runner),'-o',str(work/'runner'),'--sanitize'],check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/adamic-gate/wave02-final-25p5yfdg/adamic', 'build', '/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/final/runner.a', '-o', '/tmp/adamic-gate/wave02-final-25p5yfdg/runner', '--sanitize']' returned non-zero exit status 2.

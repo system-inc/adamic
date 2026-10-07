@@ -1,0 +1,19 @@
+array-callback-return 203 actual calls
+consistent-return 103 actual calls
+no-unreachable-loop 2419 actual calls
+react-hooks-rules-of-hooks 127 actual calls
+controls 32 actual calls
+adamic: /workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/final/runner.a:33:11: stage 0 can't lower a value of type Block | null yet
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/final/verify.py", line 45, in <module>
+    assert all(out==wanted for out in compare('baseline'))
+                                      ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/final/verify.py", line 39, in compare
+    (work/'runner.mjs').write_bytes(subprocess.check_output([str(work/'adamic'),'js',str(runner)]))
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/adamic-gate/wave02-final-9u0uwxe8/adamic', 'js', '/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_02/final/runner.a']' returned non-zero exit status 1.
