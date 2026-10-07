@@ -9,36 +9,36 @@ go run ./bench -rounds 9 -only trees,nbody -timeout 300s
 
 The runs are interleaved round by round, so a machine that slows down slows all three alike, and the best round is reported. Time is wall clock; memory is the process's peak resident set. The counted table comes from `adamic build --count`, run once, untimed: it's what explains a native time. The machine, the versions and the load before and after print with the numbers, and numbers without them aren't worth quoting.
 
-| Program | What it exercises |
-|---|---|
-| `nbody.ts` | floating point on the fields of five objects, 1,000,000 steps |
-| `spectral_norm.ts` | floating point over number arrays read and written by index, n = 1,500 |
-| `tokenizer.ts` | a lexer walking a 3.5-million-code-unit text with `charCodeAt`, some of it non-ASCII |
-| `word_count.ts` | `split`, then a `Map<string, number>` over a million words, then a sort |
-| `sort.ts` | a million numbers sorted with a comparator, random and then nearly sorted |
-| `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
+| Program            | What it exercises                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------ |
+| `nbody.ts`         | floating point on the fields of five objects, 1,000,000 steps                        |
+| `spectral_norm.ts` | floating point over number arrays read and written by index, n = 1,500               |
+| `tokenizer.ts`     | a lexer walking a 3.5-million-code-unit text with `charCodeAt`, some of it non-ASCII |
+| `word_count.ts`    | `split`, then a `Map<string, number>` over a million words, then a sort              |
+| `sort.ts`          | a million numbers sorted with a comparator, random and then nearly sorted            |
+| `trees.ts`         | binary trees: 68 million small objects allocated, walked and freed                   |
 
 ## Noisy cloud numbers, October 5, 2026
 
 Not the record: a shared cloud container, 4 vCPUs (Intel Xeon @ 2.80GHz), Linux 6.18, load 0.74 before and 1.04 after. Across the five rounds one runtime's times on one program spread 7% to 40%, so differences under about 1.4x here mean little. The quiet Mac reruns this for the record. Adamic `0955c44`, clang 18.1.3, Node 24.21.0, Bun 1.3.14.
 
-| Benchmark | native | Node | Bun | native vs Node |
-|---|---|---|---|---|
-| nbody | 1.452 s, 6.7 MB | 1.256 s, 72.1 MB | 0.201 s, 41.0 MB | 1.16x, slower |
-| sort | 0.575 s, 32.2 MB | 1.183 s, 207.2 MB | 0.876 s, 95.0 MB | 0.49x, faster |
-| spectral_norm | 0.565 s, 5.0 MB | 0.376 s, 70.0 MB | 0.419 s, 40.4 MB | 1.50x, slower |
-| tokenizer | did not finish in 120 s | 0.383 s, 146.1 MB | 0.425 s, 88.6 MB | over 300x, slower |
-| trees | 5.385 s, 98.4 MB | 2.405 s, 308.4 MB | 2.004 s, 207.4 MB | 2.24x, slower |
-| word_count | 0.324 s, 78.3 MB | 0.434 s, 157.8 MB | 0.525 s, 84.0 MB | 0.75x, faster |
+| Benchmark     | native                  | Node              | Bun               | native vs Node    |
+| ------------- | ----------------------- | ----------------- | ----------------- | ----------------- |
+| nbody         | 1.452 s, 6.7 MB         | 1.256 s, 72.1 MB  | 0.201 s, 41.0 MB  | 1.16x, slower     |
+| sort          | 0.575 s, 32.2 MB        | 1.183 s, 207.2 MB | 0.876 s, 95.0 MB  | 0.49x, faster     |
+| spectral_norm | 0.565 s, 5.0 MB         | 0.376 s, 70.0 MB  | 0.419 s, 40.4 MB  | 1.50x, slower     |
+| tokenizer     | did not finish in 120 s | 0.383 s, 146.1 MB | 0.425 s, 88.6 MB  | over 300x, slower |
+| trees         | 5.385 s, 98.4 MB        | 2.405 s, 308.4 MB | 2.004 s, 207.4 MB | 2.24x, slower     |
+| word_count    | 0.324 s, 78.3 MB        | 0.434 s, 157.8 MB | 0.525 s, 84.0 MB  | 0.75x, faster     |
 
-| Benchmark | allocations | frees | retains | releases | peak live |
-|---|---:|---:|---:|---:|---:|
-| nbody | 8 | 8 | 52,000,119 | 52,000,123 | 7 |
-| sort | 6 | 6 | 6,002,000 | 6,002,008 | 4 |
-| spectral_norm | 4 | 4 | 3,063 | 3,070 | 4 |
-| tokenizer | did not finish | | | | |
-| trees | 68,332,244 | 68,332,244 | 375,302,854 | 306,970,688 | 2,097,149 |
-| word_count | 1,020,129 | 1,020,129 | 10,160,699 | 9,160,756 | 1,020,006 |
+| Benchmark     |    allocations |      frees |     retains |    releases | peak live |
+| ------------- | -------------: | ---------: | ----------: | ----------: | --------: |
+| nbody         |              8 |          8 |  52,000,119 |  52,000,123 |         7 |
+| sort          |              6 |          6 |   6,002,000 |   6,002,008 |         4 |
+| spectral_norm |              4 |          4 |       3,063 |       3,070 |         4 |
+| tokenizer     | did not finish |            |             |             |           |
+| trees         |     68,332,244 | 68,332,244 | 375,302,854 | 306,970,688 | 2,097,149 |
+| word_count    |      1,020,129 |  1,020,129 |  10,160,699 |   9,160,756 | 1,020,006 |
 
 Native uses the least memory in every row, 3x to 14x less than Node. On time it wins two and loses four. What explains each loss, from the generated C and the runtime:
 

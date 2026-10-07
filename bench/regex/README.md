@@ -62,28 +62,28 @@ python3 internal/native/testdata/run-regexp-speed-mutants.py > /tmp/regex-speed-
 
 All 20 applied mutants were caught:
 
-| Mutant | Witness |
-|---|---|
-| Go greedy as lazy | Node capture disagreement |
-| Go repeated captures not reset | `(a|(b))+` capture disagreement |
-| Go lookbehind left to right | Node capture disagreement |
-| Go folding without u distinction | Kelvin sign legacy disagreement |
-| Go property strings not snapshotted | provider snapshot disagreement |
-| Go step limit becomes failed match | catastrophic-backtracking control |
-| Go unavailable property becomes empty | explicit missing-property control |
-| Native greedy as lazy | Node execution disagreement |
-| Native repeated captures not reset | Node execution disagreement |
-| Native lookbehind left to right | Node execution disagreement |
-| Native folding without u distinction | Node execution disagreement |
-| ASCII specialization skips canonicalization | benchmark Node disagreement |
-| Anchor checked before surrogate rewind | search Node disagreement |
-| Workspace heap block leaked | LeakSanitizer |
-| Anchor ignores multiline | search Node disagreement |
-| Unicode pair truncated | search Node disagreement |
-| First mask drops an alternative | search Node disagreement |
-| Prefix changes a literal | search Node disagreement |
-| Straight-line capture offset changed | search Node disagreement |
-| Saved captures not copied | search Node disagreement |
+| Mutant                                      | Witness                           |
+| ------------------------------------------- | --------------------------------- |
+| Go greedy as lazy                           | Node capture disagreement         |
+| Go repeated captures not reset              | `(a                               | (b))+` capture disagreement |
+| Go lookbehind left to right                 | Node capture disagreement         |
+| Go folding without u distinction            | Kelvin sign legacy disagreement   |
+| Go property strings not snapshotted         | provider snapshot disagreement    |
+| Go step limit becomes failed match          | catastrophic-backtracking control |
+| Go unavailable property becomes empty       | explicit missing-property control |
+| Native greedy as lazy                       | Node execution disagreement       |
+| Native repeated captures not reset          | Node execution disagreement       |
+| Native lookbehind left to right             | Node execution disagreement       |
+| Native folding without u distinction        | Node execution disagreement       |
+| ASCII specialization skips canonicalization | benchmark Node disagreement       |
+| Anchor checked before surrogate rewind      | search Node disagreement          |
+| Workspace heap block leaked                 | LeakSanitizer                     |
+| Anchor ignores multiline                    | search Node disagreement          |
+| Unicode pair truncated                      | search Node disagreement          |
+| First mask drops an alternative             | search Node disagreement          |
+| Prefix changes a literal                    | search Node disagreement          |
+| Straight-line capture offset changed        | search Node disagreement          |
+| Saved captures not copied                   | search Node disagreement          |
 
 ## Limits
 
