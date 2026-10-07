@@ -1,10 +1,10 @@
 {
   "kinds": [
-    263,
-    175,
-    178,
-    219,
-    220,
-    254
+    "FunctionDeclaration",
+    "MethodDeclaration",
+    "GetAccessor",
+    "FunctionExpression",
+    "ArrowFunction",
+    "ReturnStatement"
   ]
 }

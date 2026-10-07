@@ -79,11 +79,12 @@ claim document, reserve these next non-React entries (all zero on both corpora):
 React entries and structure/react-hook-no-any-type are skipped while React is
 parked. These three use checker/ordinary CFG facts rather than React HIR/SSA.
 The immediate pre-claim refresh found none claimed. This reservation is pushed
-before implementation. New handlers must consume numeric node kinds and nodes
-from the shared driver; their rule.json kinds declare that contract.
+before implementation. The latest contract declares typescript-go ast.Kind names in rule.json and
+consumes the supplied node. Earlier numeric metadata was superseded by Ahra
+and corrected in all nine manifests.
 
 Fourth-batch status: partial, not finished and not parked.
-- symbol-description: native numeric listener and raw bridge question tested using captured syntax; shared native-driver integration pending.
+- symbol-description: native supplied-node listener and raw bridge question tested using captured syntax; shared native-driver integration pending.
 - require-atomic-updates: native transfer/meet kernel tested; event collection and full-rule analysis pending.
 - require-await: native numeric syntax kernel tested; checker-demand analysis, diagnostic/suggestion rendering and full-rule replay pending.
 

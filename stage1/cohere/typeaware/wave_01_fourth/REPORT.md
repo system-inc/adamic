@@ -187,3 +187,30 @@ escape filtering, construction of the two deferral phases and full findings.
 Await and symbol integration remain incomplete as previously recorded. The
 shared numeric supplied-node interface remains absent on main. No new claims
 were taken, and no shared files were edited.
+
+## Named-kind contract correction
+
+Ahra superseded the numeric rule.json contract: registry kinds are typescript-go
+ast.Kind names. Corrected all nine owned rule manifests to names and updated
+the previous listener check accordingly. Raw numeric AST captures in standalone
+tests remain an internal representation, not a required shared registry API.
+The earlier assertion that lack of numeric delivery blocks integration is
+superseded; named supplied nodes are the requested integration contract.
+
+verify_named_kinds.py compares every manifest with the unchanged production Go
+listener registration. All nine pass. For each manifest, replacing its first
+kind with a different valid kind is rejected by that same comparison. Output
+is preserved in validation/named-kinds/comparison.log.
+
+```sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_named_kinds.py > /tmp/wave01-named-kinds.log 2>&1
+```
+
+Current main remains c01907a7036a. The executable lint context/harness announced
+at ab70f38d4 is not in this checkout's main base. The inspected RuleContext there
+adds reportNode/reportRange but exposes no checker program handle for the
+type-aware listener. Native symbol/shared-driver integration remains unvalidated.
+Atomic and await have unfinished implementation beyond this integration gap.
+No shared files were changed and no additional claims were taken. This metadata
+change does not alter rule execution, so full corpus/sanitizer/handle gates were
+not repeated; their prior observations remain recorded separately.
