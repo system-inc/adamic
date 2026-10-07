@@ -204,3 +204,11 @@ selected skips. The full 17-check repository gate was not run. Cross-file
 context still refuses in the full graph at shared parser.ts:41:20, while its
 standalone adapter succeeds. It remains incomplete, not parked; no new claims.
 See wave16_seventh/AREA_B84_LANDING.md and area-b84 evidence.
+
+Restored-workspace landing: rebased onto area/stage1-lint b46914832, containing
+main c7991b900 and the registry migration. All fifteen prior ports re-green
+in 405.976s; the new 60-command gate passes, with 18 rule mutants caught. All
+287 pinned repository paths remain present; no corpus reduction or test skip.
+Cross-file context still refuses in the full graph at parser.ts:41:20, while
+the standalone adapter runs. It remains incomplete, not parked; no new claims.
+See wave16_seventh/AREA_B469_LANDING.md and area-b469 evidence.
