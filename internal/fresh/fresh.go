@@ -1048,6 +1048,53 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return held.copy()
+	case ir.Void:
+		a.value(expression.Value)
+		return value{}
+	case ir.Comma:
+		a.value(expression.Left)
+		return a.value(expression.Right)
+	case ir.Effects:
+		for _, statement := range expression.Body {
+			a.expressionEffect(statement)
+		}
+		return a.value(expression.Result)
+	case ir.LogicalAssignment:
+		result := a.value(expression.Read)
+		a.value(expression.Key)
+		before := a.state.copy()
+		switch write := expression.Write.(type) {
+		case ir.Assign:
+			held := a.value(write.Value)
+			result.merge(held)
+			a.define(write.Local, held)
+		case ir.SetProperty:
+			holder := a.value(write.Object)
+			held := a.value(write.Value)
+			result.merge(held)
+			if expression.Key != nil {
+				for _, name := range expression.KeyNames {
+					a.write(WriteField, write.Site, name, holder, held, name)
+				}
+			} else {
+				a.write(WriteField, write.Site, write.Name, holder, held, write.Name)
+			}
+		case ir.SetIndex:
+			holder := a.value(write.Array)
+			a.value(write.Index)
+			held := a.value(write.Value)
+			result.merge(held)
+			a.write(WriteElement, write.Site, "", holder, held, elementKey)
+		}
+		a.state.join(before)
+		return result
+	case ir.Truthy:
+		a.value(expression.Value)
+		return value{}
+	case ir.Logical:
+		result := a.value(expression.Left)
+		result.merge(a.value(expression.Right))
+		return result
 	case ir.Unary:
 		a.value(expression.Operand)
 		return value{}
@@ -1912,4 +1959,35 @@ func sortedKeys(set map[int]bool) []int {
 // (whose cells can), a union that may be one, or a Weak. Numbers, booleans and strings can't.
 func mutable(valueType ir.Type) bool {
 	return valueType.IsReference() && valueType != ir.String
+}
+
+// expressionEffect interprets only effects that lowering admits inside expressions.
+func (a *analysis) expressionEffect(statement ir.Statement) {
+	switch statement := statement.(type) {
+	case ir.Assign:
+		a.define(statement.Local, a.value(statement.Value))
+	case ir.Declare:
+		a.define(statement.Local, a.value(statement.Value))
+	case ir.Evaluate:
+		a.value(statement.Value)
+	case ir.WriteLine:
+		a.value(statement.Value)
+	case ir.Panic:
+		a.value(statement.Message)
+	case ir.SetProperty:
+		holder := a.value(statement.Object)
+		held := a.value(statement.Value)
+		a.write(WriteField, statement.Site, statement.Name, holder, held, statement.Name)
+	case ir.SetIndex:
+		holder := a.value(statement.Array)
+		a.value(statement.Index)
+		held := a.value(statement.Value)
+		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+	case ir.Block:
+		for _, inner := range statement.Body {
+			a.expressionEffect(inner)
+		}
+	default:
+		a.unknown(statement)
+	}
 }

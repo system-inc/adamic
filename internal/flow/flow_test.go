@@ -123,7 +123,7 @@ func checkReads(t *testing.T, where string, program *ir.Program, function int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !program.Locals[local].Global && !program.Locals[local].Captured {
+		if !program.Locals[local].Global && !program.Locals[local].Captured && !program.Locals[local].ExpressionAssigned {
 			want++
 		}
 	}

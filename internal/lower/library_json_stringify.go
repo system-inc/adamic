@@ -184,6 +184,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	}
 	kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Map: "map", ir.Closure: "function", ir.MaybeNumber: "maybe_number", ir.MaybeBoolean: "maybe_boolean", ir.Union: "union"}
 	if of == ir.Record {
+		if l.includesNull(t) {
+			return nil, l.notYet(node, "JSON.stringify a value of type "+l.checker.TypeToString(t))
+		}
 		child, err := l.jsonType(node, l.recordElement(l.checker.GetNonNullableType(t)), depth+1)
 		if err != nil {
 			return nil, err
