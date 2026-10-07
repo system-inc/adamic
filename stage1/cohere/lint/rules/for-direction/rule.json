@@ -1,0 +1,13 @@
+{
+  "name": "for-direction",
+  "kinds": [
+    "ForStatement"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleForDirectionCore",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestForDirection"
+}

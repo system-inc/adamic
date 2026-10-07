@@ -1,0 +1,6 @@
+{
+  "name": "loop_direction_reversed",
+  "file": "rule.a",
+  "from": "direction === wrong",
+  "to": "direction === -wrong"
+}
