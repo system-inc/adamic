@@ -1,0 +1,18 @@
+[
+  {
+    "name": "witness-32.tsx",
+    "source": "const x = <div>{/* c */}</div>;"
+  },
+  {
+    "name": "witness-33.tsx",
+    "source": "const x = <div>// text /* text */</div>;"
+  },
+  {
+    "name": "witness-34.tsx",
+    "source": "const x = <div a=\"http://x\">{`// literal` /* real */}</div>;"
+  },
+  {
+    "name": "witness-35.tsx",
+    "source": "const x = <>{/* fragment */}</>;"
+  }
+]
