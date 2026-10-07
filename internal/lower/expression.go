@@ -421,6 +421,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
+		if value, intrinsic := l.libraryMathNumberTypeOf(node); intrinsic {
+			return value, nil
+		}
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
 		}

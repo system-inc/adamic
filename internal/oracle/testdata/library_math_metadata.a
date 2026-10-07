@@ -1,0 +1,56 @@
+console.log(`${typeof Math} ${typeof Number.prototype}`);
+console.log(`${typeof Math.abs} ${Math.abs.name} ${Math.abs.length}`);
+console.log(`${typeof Math.acos} ${Math.acos.name} ${Math.acos.length}`);
+console.log(`${typeof Math.acosh} ${Math.acosh.name} ${Math.acosh.length}`);
+console.log(`${typeof Math.asin} ${Math.asin.name} ${Math.asin.length}`);
+console.log(`${typeof Math.asinh} ${Math.asinh.name} ${Math.asinh.length}`);
+console.log(`${typeof Math.atan} ${Math.atan.name} ${Math.atan.length}`);
+console.log(`${typeof Math.atanh} ${Math.atanh.name} ${Math.atanh.length}`);
+console.log(`${typeof Math.atan2} ${Math.atan2.name} ${Math.atan2.length}`);
+console.log(`${typeof Math.cbrt} ${Math.cbrt.name} ${Math.cbrt.length}`);
+console.log(`${typeof Math.ceil} ${Math.ceil.name} ${Math.ceil.length}`);
+console.log(`${typeof Math.clz32} ${Math.clz32.name} ${Math.clz32.length}`);
+console.log(`${typeof Math.cos} ${Math.cos.name} ${Math.cos.length}`);
+console.log(`${typeof Math.cosh} ${Math.cosh.name} ${Math.cosh.length}`);
+console.log(`${typeof Math.exp} ${Math.exp.name} ${Math.exp.length}`);
+console.log(`${typeof Math.expm1} ${Math.expm1.name} ${Math.expm1.length}`);
+console.log(`${typeof Math.floor} ${Math.floor.name} ${Math.floor.length}`);
+console.log(`${typeof Math.fround} ${Math.fround.name} ${Math.fround.length}`);
+console.log(`${typeof Math.hypot} ${Math.hypot.name} ${Math.hypot.length}`);
+console.log(`${typeof Math.imul} ${Math.imul.name} ${Math.imul.length}`);
+console.log(`${typeof Math.log} ${Math.log.name} ${Math.log.length}`);
+console.log(`${typeof Math.log1p} ${Math.log1p.name} ${Math.log1p.length}`);
+console.log(`${typeof Math.log2} ${Math.log2.name} ${Math.log2.length}`);
+console.log(`${typeof Math.log10} ${Math.log10.name} ${Math.log10.length}`);
+console.log(`${typeof Math.max} ${Math.max.name} ${Math.max.length}`);
+console.log(`${typeof Math.min} ${Math.min.name} ${Math.min.length}`);
+console.log(`${typeof Math.pow} ${Math.pow.name} ${Math.pow.length}`);
+console.log(`${typeof Math.round} ${Math.round.name} ${Math.round.length}`);
+console.log(`${typeof Math.sign} ${Math.sign.name} ${Math.sign.length}`);
+console.log(`${typeof Math.sin} ${Math.sin.name} ${Math.sin.length}`);
+console.log(`${typeof Math.sinh} ${Math.sinh.name} ${Math.sinh.length}`);
+console.log(`${typeof Math.sqrt} ${Math.sqrt.name} ${Math.sqrt.length}`);
+console.log(`${typeof Math.tan} ${Math.tan.name} ${Math.tan.length}`);
+console.log(`${typeof Math.tanh} ${Math.tanh.name} ${Math.tanh.length}`);
+console.log(`${typeof Math.trunc} ${Math.trunc.name} ${Math.trunc.length}`);
+console.log(`${typeof Math.random} ${Math.random.name} ${Math.random.length}`);
+console.log(`${typeof Number.isFinite} ${Number.isFinite.name} ${Number.isFinite.length}`);
+console.log(`${typeof Number.isNaN} ${Number.isNaN.name} ${Number.isNaN.length}`);
+console.log(`${typeof Number.isInteger} ${Number.isInteger.name} ${Number.isInteger.length}`);
+console.log(`${typeof Number.isSafeInteger} ${Number.isSafeInteger.name} ${Number.isSafeInteger.length}`);
+console.log(`${typeof Number.parseFloat} ${Number.parseFloat.name} ${Number.parseFloat.length}`);
+console.log(`${typeof Number.parseInt} ${Number.parseInt.name} ${Number.parseInt.length}`);
+console.log(`${typeof Number.prototype.valueOf} ${Number.prototype.valueOf.name} ${Number.prototype.valueOf.length}`);
+console.log(`${typeof Number.prototype.toString} ${Number.prototype.toString.name} ${Number.prototype.toString.length}`);
+console.log(`${typeof Number.prototype.toFixed} ${Number.prototype.toFixed.name} ${Number.prototype.toFixed.length}`);
+console.log(`${typeof Number.prototype.toExponential} ${Number.prototype.toExponential.name} ${Number.prototype.toExponential.length}`);
+console.log(`${typeof Number.prototype.toPrecision} ${Number.prototype.toPrecision.name} ${Number.prototype.toPrecision.length}`);
+console.log(`${typeof Number.prototype.toLocaleString} ${Number.prototype.toLocaleString.name} ${Number.prototype.toLocaleString.length}`);
+{
+ const Math = {max: {name: 'local', length: 7}, LN2: 42};
+ console.log(`${typeof Math} ${typeof Math.max} ${Math.max.name} ${Math.max.length} ${Math.LN2}`);
+}
+{
+ const Number = {prototype: {toString: {name: 'local', length: 9}}};
+ console.log(`${typeof Number.prototype} ${typeof Number.prototype.toString} ${Number.prototype.toString.name} ${Number.prototype.toString.length}`);
+}
