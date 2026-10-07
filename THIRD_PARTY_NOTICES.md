@@ -13,18 +13,18 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
-  - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
-  - exponentiation (`runtime/number.c`, after math::pow);
-  - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
-    notice is below);
-  - Math integer and float conversions (`runtime/library_math_number.c`, after src/builtins/math.tq
-    and src/numbers/conversions-inl.h, V8 13.6.233.17);
-  - Math.hypot (`runtime/hypot.c`, after src/builtins/math.tq);
-  - exponential, precision and shortest digits (`runtime/dtoa.c`, after src/base/numbers and
-    src/numbers/conversions.cc);
-  - toString with a radix (`runtime/radix.c`, after src/numbers/conversions.cc).
+    - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
+    - exponentiation (`runtime/number.c`, after math::pow);
+    - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
+      notice is below);
+    - Math integer and float conversions (`runtime/library_math_number.c`, after src/builtins/math.tq
+      and src/numbers/conversions-inl.h, V8 13.6.233.17);
+    - Math.hypot (`runtime/hypot.c`, after src/builtins/math.tq);
+    - exponential, precision and shortest digits (`runtime/dtoa.c`, after src/base/numbers and
+      src/numbers/conversions.cc);
+    - toString with a radix (`runtime/radix.c`, after src/numbers/conversions.cc).
 
-````text
+```text
 Copyright 2006-2011, the V8 project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -51,7 +51,7 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-````
+```
 
 ### fdlibm, as V8 carries it
 
@@ -59,14 +59,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - License: the fdlibm notice below
 - In Adamic: the Math functions ported from V8's ieee754.cc (sin, cos, exp, log and the rest), where they land.
 
-````text
+```text
 Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
 
 Developed at SunSoft, a Sun Microsystems, Inc. business.
 Permission to use, copy, modify, and distribute this
 software is freely granted, provided that this notice
 is preserved.
-````
+```
 
 ### The Unicode Character Database
 
@@ -75,7 +75,7 @@ is preserved.
 - In Adamic: the case-mapping tables in `runtime/case_tables.h`, generated from those files by
   `internal/native/case_generate.go` for `toUpperCase` and `toLowerCase`.
 
-````text
+```text
 UNICODE LICENSE V3
 
 COPYRIGHT AND PERMISSION NOTICE
@@ -115,7 +115,7 @@ Except as contained in this notice, the name of a copyright holder shall
 not be used in advertising or otherwise to promote the sale, use or other
 dealings in these Data Files or Software without prior written
 authorization of the copyright holder.
-````
+```
 
 ## In the compiler
 
@@ -149,7 +149,7 @@ No license text is published with this package or in its repository. Its package
 - License: `MIT`
 - In Adamic: `stage1/cohere/values/`, a port of cohere's port of it (internal/format/css/values), keeping its comments.
 
-````text
+```text
 Copyright (c) Andrew Powell <andrew@shellscape.org>
 
 Permission is hereby granted, free of charge, to any person
@@ -172,7 +172,7 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-````
+```
 
 ### GraphQL.js
 
@@ -181,7 +181,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 - License: `MIT`
 - In Adamic: `stage1/cohere/graphql/`, a port of cohere's port of its lexer and parser (internal/format/graphql), keeping its comments.
 
-````text
+```text
 MIT License
 
 Copyright (c) GraphQL Contributors
@@ -203,7 +203,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-````
+```
 
 ### Prettier
 
@@ -211,7 +211,7 @@ SOFTWARE.
 - License: `MIT`
 - In Adamic: `stage1/cohere/graphql/parser.ts`'s parseComments, a port of cohere's port of Prettier's src/language-graphql/parser-graphql.js.
 
-````text
+```text
 Copyright © James Long and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -219,4 +219,4 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-````
+```
