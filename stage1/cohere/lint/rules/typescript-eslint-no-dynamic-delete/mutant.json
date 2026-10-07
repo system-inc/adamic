@@ -1,0 +1,6 @@
+{
+  "file": "rule.a",
+  "name": "unary plus accepted as static key",
+  "from": "node.operator === 'MinusToken'",
+  "to": "(node.operator === 'MinusToken' || node.operator === 'PlusToken')"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@typescript-eslint/no-dynamic-delete",
+  "kinds": [
+    "DeleteExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoDynamicDelete",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoDynamicDelete"
+}
