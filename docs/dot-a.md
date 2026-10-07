@@ -102,14 +102,30 @@ Its generated, ignored `.generated/registry.ts` is pre-gate TypeScript emitted b
 Go, and is intentionally still generated with that suffix; the shared loader
 supports it. The real registry-owned rule modules move to `.a`.
 
-The fresh current-main scratch checkout is `/tmp/dot-a-stack-main`. Its apply,
-idempotence, build and vet completed with exit 0. The literal command printed
-`TOTAL files=337 references=1876 reference_files=346` before protecting the new
-stale witness, and its immediate repeat was empty. The final stale-witness fix
-removes one reference edit, giving 1,875; a final fresh apply is recorded below.
-The whole uncached oracle, stage 3 and all stage 1 tests are running.
-Results below for `b6b1538` are earlier evidence, not a claim that this new
-main revision has completed its gate.
+The fresh current-main scratch checkout is `/tmp/dot-a-stack-main`.
+Final build and vet passed. The whole uncached oracle passed in 353.332 seconds,
+stage 3 fixtures in 20.397 seconds, load in 1.824 seconds, lower in 49.284 seconds
+and the command tests in 1.090 seconds. No oracle fixture filter was used.
+The exact commands and logs are:
+
+```sh
+go build ./... > /tmp/dot-a-stack-build.log 2>&1
+go vet ./... > /tmp/dot-a-stack-vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 60m -p 2 ./internal/oracle ./stage3/fixtures ./internal/load ./internal/lower ./cmd/adamic-rename-dot-a > /tmp/dot-a-stack-core.log 2>&1
+go run ./cmd/lint-registry > /tmp/dot-a-stack-lint-registry.log 2>&1
+go test -count=1 -timeout 30m -p 2 ./stage1/... > /tmp/dot-a-stack-stage1.log 2>&1
+```
+
+Registry generation passed. Stage 1's full package run is still running.
+The final command was also run literally in a second clean main snapshot,
+`/tmp/dot-a-stack-inventory`: apply exited 0 and printed
+`TOTAL files=337 references=1875 reference_files=346`; its immediate repeat exited
+0 and printed `TOTAL files=0 references=0 reference_files=0`. Byte comparisons
+verified all 7,931 files in that fresh apply against the tested scratch tree.
+Logs are `/tmp/dot-a-stack-final-{apply,repeat,equivalence}.log`.
+The first stack apply had one extra edit to the stale `.ts` ambiguity witness;
+the protected-witness fix and regression test remove that edit. Earlier main
+verification below is historical evidence, not a claim about this stack's gate.
 
 ## October 7 refresh
 
@@ -141,9 +157,11 @@ config validation failed and Markdown had regeneration/dependency failures and
 a package timeout. The mixed config retains `.ts`, includes `.a`, and seeds config
 validation with the unchanged prelude declaration before callers replace roots.
 Formatter scratch inputs remain pre-gate TypeScript `.ts`; generated outputs
-use `.a`. Type-aware and all 20 Markdown tests are being rerun, the latter in
-three disjoint groups, each with the 30-minute limit. Final results will be added
-when those runs finish. The final scratch commands are:
+use `.a`. The earlier Markdown composition and layout groups passed in 1,489.055 and
+1,555.662 seconds. The core group hit the 30-minute timeout while running Unicode
+width mutants. Type-aware and the additional other-package rerun were stopped
+when the new main stack landed, so neither is claimed as a pass. Those isolated
+copies were removed after stopping their process trees. The final scratch commands are:
 
 ```sh
 go build ./... > /tmp/dot-a-final-proof-build-rerun.log 2>&1
@@ -219,9 +237,9 @@ and narrow-emojis 0.0.3. Install output is `/tmp/dot-a-width-dependencies.log`.
 
 ## Original preparation validation
 
-The full dry run against main `5d4c801` is in
-[cloud/dot-a-dry-run.txt](../cloud/dot-a-dry-run.txt): 126 files, 592 reference
-edits in 119 files. The scratch apply is in `/tmp/adamic-dot-a-scratch`; none of
+The original dry run against main `5d4c801`, retained in the preparation commit,
+contained 126 files and 592 reference edits in 119 files. The current dry-run
+artifact replaces that historical inventory. The scratch apply is in `/tmp/adamic-dot-a-scratch`; none of
 its renamed files is included in this preparation commit. Its immediate second
 run reports `TOTAL files=0 references=0 reference_files=0`.
 
