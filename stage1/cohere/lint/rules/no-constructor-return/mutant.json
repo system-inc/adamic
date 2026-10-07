@@ -1,0 +1,6 @@
+{
+  "name": "constructor_return_suppressed",
+  "file": "rule.a",
+  "from": "node.kind === 'Constructor'",
+  "to": "node.kind === 'ConstructorType'"
+}
