@@ -110,3 +110,19 @@ Delivery 5: numberWithSuffix is implemented and tested. 1,218,564 cases,
 mutants pass on source Node, emitted JavaScript and ASan/UBSan native. Complete
 five-helper gate PASS 91.597s, all twelve semantic mutants; vet PASS.
 See from_wave1_04/SUFFIX_REPORT.md. No further helper is claimed yet.
+
+6. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector
+   File: helpers/from_wave1_04/is_vector.a.
+   Four consumers: better-tailwindcss/enforce-consistent-class-order,
+   better-tailwindcss/enforce-shorthand-classes,
+   better-tailwindcss/no-conflicting-classes, better-tailwindcss/no-unknown-classes.
+   Highest unclaimed named reach after fetching all 594 origin refs and reading
+   all twenty distinct helper claim blobs plus the older HELPERS.md claim.
+   Both owned branches are rebased, re-greened and pushed on main b8fb957a:
+   parked rules 77e7562fc; helpers a9fe6fd71.
+   Preserve exactly three numeric components, one-or-more literal ASCII spaces,
+   complete-string anchoring and lazy scanner calls with unchanged arguments.
+   The scanner is an explicit dependency supplied by held scan_number.a.
+   Compare actual Go over all four consumer fixture domains, grammar boundaries
+   and Unicode separator controls on Node, emitted JavaScript and sanitized native.
+   Require compiling semantic mutants; one helper per .a file. Claim pushed first.
