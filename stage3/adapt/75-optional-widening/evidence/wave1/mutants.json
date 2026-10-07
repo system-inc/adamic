@@ -1,0 +1,14 @@
+{
+  "wrong_type": {
+    "exit": 1,
+    "caught_by": "stock checker declaration compatibility assertion",
+    "property": "Type.resolvedBaseConstraint",
+    "mutant_type": "boolean | undefined"
+  },
+  "drop_owner": {
+    "expected": 399,
+    "observed": 413,
+    "caught_by": "complete rule inventory count",
+    "owner": "Type"
+  }
+}
