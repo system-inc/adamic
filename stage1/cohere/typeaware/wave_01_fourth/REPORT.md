@@ -707,3 +707,38 @@ still unfinished; three claims remain partial and no new claims were made.
 No bridge handle or question was added. Full gate, the 17 required external
 comparisons and new native/Go timings were not run for this helper, and no
 skipped check is claimed green.
+
+## Landing on main b6b1538b and area d3a37422
+
+Fetched main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06 and area
+d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, then rebased without conflicts.
+Both are ancestors. No shared file or options guard was changed. nproc: 5.
+
+Rebuilt cmd/adamic, the checker archive and sanitized symbol listener.
+Sourced /workspace/adamic-tools/env.sh for all commands. The original gate
+(go test ./stage1/cohere/typeaware -run '^TestWave01AgreementAndMutants$'
+-count=1 -timeout 30m -v with ADAMIC_TYPESCRIPT_SOURCE set) passed in
+158.101 seconds. Continuation testdata/verify.py passed all three rules,
+compiler/repository byte agreement, sanitizer checks, three logic mutants,
+four released-handle questions and retained mutants, checker and bridge tests.
+Symbol verify_symbol.py passed all corpora, sanitizer and argument mutant
+checks plus released-question panic. All twelve helper verifier scripts
+passed, including the latest heritage selection helper. All nine named-kind
+checks and wrong-kind mutants passed. Atomic and await kernels were rebuilt
+with the current compiler against preserved unchanged-Go kernel output;
+refresh-deletion and await-using-mask mutants exited cleanly and failed the
+byte comparison. The await kernel has two extra native-only controls.
+Commands, logs, raw helper streams and records are in validation/landing-d3.
+
+Disk exhaustion interrupted the first continuation/helper runs at mkdir
+with Errno 28. Removed 162 obsolete ELF binaries/archives only from older
+wave-01 scratch directories, preserving logs and source; reclaimed
+6463160756 bytes. Reran interrupted gates from the beginning. A transient
+exec transport disconnect was retried. These infrastructure failures were
+not bypassed or called green.
+
+Landing readiness was this turn's unit. The three latest claims remain
+partial: native checker-fact delivery and full-rule integration, generic
+ancestor-step collection/stand-in discovery and atomic CFG/event collection
+are unfinished. No new claims. Full gate, the 17 required external checks
+and fresh native/Go timings were not run or represented as green.
