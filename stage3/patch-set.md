@@ -16,7 +16,7 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 45-regex-captures | 5 | 12 | 10 |
 | 46-fix-pragma-empty-argument | 1 | 1 | 1 |
 | 47-host-errors | 3 | 16 | 5 |
-| 48-memoize | 0 | 0 | 0 |
+| 48-memoize | 1 | 2 | 2 |
 | 50-temporary-scanner-implicit-returns | 1 | 2 | 0 |
 | 51-temporary-scanner-fallthrough | 0 | 0 | 0 |
 | 60-temporary-factory-local-symbol | 1 | 1 | 1 |
@@ -26,4 +26,4 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 64-temporary-parser-range-read | 1 | 1 | 1 |
 | 70-readonly-views | 7 | 22 | 22 |
 | 75-optional-widening | 1 | 17 | 6 |
-| **Total** | 78 | 5120 | 5094 |
+| **Total** | 78 | 5122 | 5096 |

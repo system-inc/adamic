@@ -1,0 +1,16 @@
+enum SyntaxKind { First, Last }
+function describe(value: SyntaxKind): void {
+    switch (value) {
+        case SyntaxKind.First: return;
+        case SyntaxKind.Last: return;
+        default: {
+            const unreachable: never = value;
+            console.log('unreachable');
+            return;
+        }
+    }
+}
+function other(): number { return 42; }
+console.log('before');
+describe(other());
+console.log('after');
