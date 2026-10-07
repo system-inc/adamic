@@ -15,9 +15,12 @@ import (
 // The census owns required-input classification. Boolean opt-in values are
 // derived from its skip conditions; path inputs remain setup's responsibility.
 func requiredGateVariables(root string) ([]string, error) {
-	rows, _, err := censusDeclarations(root)
+	rows, landed, err := censusDeclarations(root)
 	if err != nil {
 		return nil, err
+	}
+	if !landed {
+		return historicalRequiredGateVariables(root)
 	}
 	names := map[string]bool{}
 	for _, row := range rows {
@@ -212,4 +215,52 @@ func wasiEnvironmentName(value string) bool {
 		}
 	}
 	return true
+}
+
+// A historical checkout predating the census carries its authority as a literal
+// declaration in the old runner. Read that source rather than inventing a second table.
+func historicalRequiredGateVariables(root string) ([]string, error) {
+	path := filepath.Join(root, "cmd/adamic-gate/required_environment.go")
+	tree, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+	if os.IsNotExist(err) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	var names []string
+	for _, declaration := range tree.Decls {
+		group, ok := declaration.(*ast.GenDecl)
+		if !ok || group.Tok != token.VAR {
+			continue
+		}
+		for _, specification := range group.Specs {
+			spec := specification.(*ast.ValueSpec)
+			for i, name := range spec.Names {
+				if name.Name != "requiredGateVariables" {
+					continue
+				}
+				if i >= len(spec.Values) {
+					return nil, fmt.Errorf("historical required-input authority has no literal")
+				}
+				literal, ok := spec.Values[i].(*ast.CompositeLit)
+				if !ok {
+					return nil, fmt.Errorf("historical required-input authority is not literal")
+				}
+				for _, element := range literal.Elts {
+					value, ok := element.(*ast.BasicLit)
+					if !ok || value.Kind != token.STRING {
+						return nil, fmt.Errorf("historical required-input authority has a dynamic name")
+					}
+					name, err := strconv.Unquote(value.Value)
+					if err != nil || name == "" {
+						return nil, fmt.Errorf("invalid historical required-input name")
+					}
+					names = append(names, name)
+				}
+			}
+		}
+	}
+	sort.Strings(names)
+	return names, nil
 }

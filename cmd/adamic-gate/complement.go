@@ -30,6 +30,16 @@ func complements(p plan) []complement {
 		if (p.WASI != nil || p.Environment != nil) && !u.WASI && len(u.RequiredEnvironment) == 0 && p.Count > 1 {
 			owner--
 		}
+		for _, group := range p.Affinity {
+			if group.Package != u.Package {
+				continue
+			}
+			for _, test := range group.Tests {
+				if test == u.Test {
+					owner = group.Shard
+				}
+			}
+		}
 		out = append(out, complement{u.Package, parent, owner})
 	}
 	sort.Slice(out, func(i, j int) bool {

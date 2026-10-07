@@ -4,7 +4,6 @@ package main
 import (
 	"bufio"
 	"crypto/sha256"
-	"encoding/binary"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -33,6 +32,8 @@ var packageJobs = runtime.GOMAXPROCS(0)
 
 const timingPath = "cmd/adamic-gate/timings.json"
 
+var timingFile = timingPath
+
 type unit struct {
 	Package             string
 	Test                string
@@ -52,6 +53,7 @@ type plan struct {
 	Units             []unit
 	Digest            string
 	Shards            []prediction
+	Affinity          []affinity
 	Complements       []complement
 	WASI              *wasiRequirement
 	RequiredVariables []string
@@ -59,6 +61,7 @@ type plan struct {
 }
 type event struct {
 	Action, Package, Test, Output string
+	Time                          time.Time
 	Elapsed                       float64
 }
 type result struct {
@@ -129,6 +132,7 @@ func run(args []string) error {
 	case "plan":
 		flags := flag.NewFlagSet("plan", flag.ContinueOnError)
 		count := flags.Int("count", 8, "number of shards")
+		flags.StringVar(&timingFile, "timings", timingPath, "measured timing file")
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
 		}
@@ -140,6 +144,7 @@ func run(args []string) error {
 	case "shard":
 		flags := flag.NewFlagSet("shard", flag.ContinueOnError)
 		count := flags.Int("count", 8, "number of shards")
+		flags.StringVar(&timingFile, "timings", timingPath, "measured timing file")
 		index := flags.Int("index", -1, "zero-based shard")
 		out := flags.String("out", "", "evidence directory")
 		jobs := flags.Int("jobs", 0, "legacy package job override; must agree with an explicit concurrency setting")
@@ -173,16 +178,15 @@ func run(args []string) error {
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
 		}
-		if flags.NArg() != 1 {
-			return errors.New("timings [-out file] <go test -json log>")
+		if flags.NArg() == 0 {
+			return errors.New("timings [-out file] <go test -json log>...")
 		}
-		r, _, _, err := readLog(flags.Arg(0))
+		weights, audit, err := calibrateTimings(flags.Args())
 		if err != nil {
 			return err
 		}
-		weights := map[string]float64{}
-		for _, v := range r {
-			weights[v.key()] = v.Seconds
+		if err := saveJSON(*out+".audit.json", audit); err != nil {
+			return err
 		}
 		return saveJSON(*out, weights)
 	}
@@ -371,7 +375,8 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 }
 func children(pkg, parent string) ([]string, error) {
 	if strings.HasSuffix(pkg, "/stage1/cohere/typeaware") && parent == "TestVolumeAgreementAndMutants" {
-		return literalChildren("stage1/cohere/typeaware/volume_test.go", parent, "changes")
+		// The parent builds stage0/checker archives and runs full controls before its rows.
+		return nil, nil
 	}
 	if strings.HasSuffix(pkg, "/internal/oracle") {
 		switch parent {
@@ -474,7 +479,7 @@ func makePlan(count int) (plan, error) {
 		return p, err
 	}
 	var weights map[string]float64
-	if err := loadJSON(timingPath, &weights); err != nil {
+	if err := loadJSON(timingFile, &weights); err != nil {
 		return p, err
 	}
 	packages, err := output("go", "list", "./...")
@@ -519,56 +524,14 @@ func makePlan(count int) (plan, error) {
 	if err := requireWASI(&p); err != nil {
 		return p, err
 	}
-	ordinaryCount := count
-	if p.Environment != nil && count > 1 {
-		ordinaryCount--
-	}
-	loads := make([]float64, count)
-	known := []int{}
-	seen := map[string]bool{}
-	for i := range p.Units {
-		u := &p.Units[i]
-		if seen[u.key()] {
-			return p, fmt.Errorf("duplicate planned unit %s", u.key())
-		}
-		seen[u.key()] = true
-		if seconds, ok := weights[u.key()]; ok {
-			if seconds < 0 {
-				return p, fmt.Errorf("negative timing %s", u.key())
-			}
-			u.Seconds = seconds
-			known = append(known, i)
-		} else {
-			hash := sha256.Sum256([]byte(u.key()))
-			u.Shard = int(binary.BigEndian.Uint64(hash[:8]) % uint64(ordinaryCount))
-		}
-		if u.WASI || len(u.RequiredEnvironment) > 0 {
-			u.Shard = count - 1
-		}
-	}
-	sort.Slice(known, func(i, j int) bool {
-		a, b := p.Units[known[i]], p.Units[known[j]]
-		if a.Seconds == b.Seconds {
-			return a.key() < b.key()
-		}
-		return a.Seconds > b.Seconds
-	})
-	for _, i := range known {
-		if p.Units[i].WASI || len(p.Units[i].RequiredEnvironment) > 0 {
-			loads[count-1] += p.Units[i].Seconds
-			continue
-		}
-		best := 0
-		for j := 1; j < ordinaryCount; j++ {
-			if loads[j] < loads[best] {
-				best = j
-			}
-		}
-		p.Units[i].Shard = best
-		loads[best] += p.Units[i].Seconds
+	if err := assignUnits(&p, weights); err != nil {
+		return p, err
 	}
 	sort.Slice(p.Units, func(i, j int) bool { return p.Units[i].key() < p.Units[j].key() })
 	p.Complements = complements(p)
+	if err := validateAffinity(p); err != nil {
+		return p, err
+	}
 	p.Shards = predictions(p, weights)
 	p.Digest = planDigest(p)
 	return p, nil

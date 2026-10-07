@@ -1027,3 +1027,59 @@ One policy mismatch remains in the authoritative table: TestStage3FixtureHook
 is described in its source as dormant outside the stage3 fixture runner, but
 the table classifies its missing runner input as required-input. Normal whole
 merges therefore refuse that skip. The gate does not override that classification.
+
+## Shared fixture affinity (October 7, 2026)
+
+`TestVolumeAgreementAndMutants` is a whole unit. Its stage0 build, checker
+archives, controls, released-handle probes, and TypeScript-source comparison
+must run once, before its fifteen rows. Splitting those rows repeats that work.
+
+The plan records an `Affinity` list. Its members keep their individual coverage
+identities, but assignment and prediction use one packing unit. The audited
+fixtures are:
+
+- `markdownblocks.layoutOnce`: all nine `testBlockLayout` tests, including
+  whitespace policy work. The original logs contain eight separate full-library
+  fixture markers, with spans from 231.7 to 941.6 seconds.
+- `markdownblocks.formatterOnce`: source decoding, text splitting, and Unicode
+  widths. The regeneration checks appear on original shards 7, 12, and 4.
+- `oracle.gateOnce`: conservatively the entire oracle package, including split
+  selectors and their parent complements. Its cache miss summaries on different
+  shards confirm that identity initialization is repeated even in uncached mode.
+
+`cmd/adamic-test262` holds its `sync.Once` in an instance, rather than a shared
+package fixture. No other package-level `sync.Once` was found by the source scan.
+The oracle runtime-library disk cache is unchanged. This change adds no cache.
+
+Run `adamic-gate timings -out timings.json <shard logs>...` to collect observations
+from shard boxes. A concatenated merged JSON log also works: package start/end
+records preserve separate invocations rather than letting the last parent win.
+The command writes `timings.json.audit.json` with raw observations, fixture
+spans, log SHA-256 digests, and the original commit/toolchain/load metadata.
+Failed or malformed logs are refused. Timings missing from these logs stay
+unknown; they are not filled from a plain run.
+
+For a split sequential parent, calibration adds the union of measured child
+medians to one median parent residual. Parallel parent spans are retained, not
+replaced by a sum of overlapping children. Layout calibration subtracts each
+observed cont-to-oracle-marker span and adds one median span. This marker is
+before the final release check, so the remaining work is conservatively retained.
+Formatter and oracle setup have no separate duration markers; their group
+estimates conservatively retain the measured work rather than invent a discount.
+These reconstructed estimates are not joint-run measurements.
+
+The calibration source is the available evidence at
+`gate-logs/47fbaf174d16/20261007T153523/shard-N`: shards 0 and 13 were not published.
+The volume estimate has thirteen of fifteen rows; the list-layout observation is
+missing. A complete merged gate or a plain/sharded equivalence certificate is
+not claimed. The `Unknown` counts in the plan remain visible.
+
+Use `plan -timings /absolute/path/timings.json` and the same option to `shard`
+when measuring an older clean source checkout with the new runner. The plan
+contains the effective unit/group costs in its digest. Before the skip census
+landed, the historical runner's literal `requiredGateVariables` declaration is
+read as that checkout's authority; dynamic declarations are refused.
+
+The regression suite rejects a split fixture, split complement, repeated group
+charge, split volume parent, lost parent setup, overwritten merged invocation,
+and repeated layout setup. Deliberate overlay mutants prove those checks fail.
