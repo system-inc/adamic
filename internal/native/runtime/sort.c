@@ -44,14 +44,21 @@ static int order(sort_state *state, adamic_value left, adamic_value right) {
 	if (adamic_thrown != NULL) {
 		// Only the sort's own frames lie between here and stop, none holding a reference.
 #ifdef ADAMIC_TARGET_WASI
-		static const char message[] = "wasm32: throwing sort comparators are not supported";
-		adamic_panic(message, sizeof message - 1);
+		return 0;
 #else
 		longjmp(state->stop, 1);
 #endif
 	}
 	return ordered;
 }
+
+// WASI has no longjmp without experimental exception handling. Propagate the pending
+// error through each sort frame before another comparison or index uses its result.
+#ifdef ADAMIC_TARGET_WASI
+#define STOP_SORT(value) do { if (adamic_thrown != NULL) { return value; } } while (0)
+#else
+#define STOP_SORT(value) ((void)0)
+#endif
 
 // copy moves count values, the right way round when the source and destination overlap.
 static void copy(adamic_value *source, ptrdiff_t from, adamic_value *destination, ptrdiff_t to, ptrdiff_t count) {
@@ -80,7 +87,9 @@ static void binary_insertion(sort_state *state, ptrdiff_t low, ptrdiff_t start, 
 		adamic_value pivot = work[start];
 		while (left < right) {
 			ptrdiff_t middle = left + ((right - left) >> 1);
-			if (order(state, pivot, work[middle]) < 0) {
+			int ordered = order(state, pivot, work[middle]);
+			STOP_SORT();
+			if (ordered < 0) {
 				right = middle;
 			} else {
 				left = middle + 1;
@@ -103,10 +112,13 @@ static ptrdiff_t count_run(sort_state *state, ptrdiff_t low, ptrdiff_t high) {
 	}
 	ptrdiff_t length = 2;
 	adamic_value previous = work[next];
-	bool descending = order(state, work[next], work[next - 1]) < 0;
+	int ordered = order(state, work[next], work[next - 1]);
+	STOP_SORT(0);
+	bool descending = ordered < 0;
 	for (ptrdiff_t index = next + 1; index < high; index++) {
 		adamic_value current = work[index];
 		int result = order(state, current, previous);
+		STOP_SORT(0);
 		if (descending ? result >= 0 : result < 0) {
 			break;
 		}
@@ -127,10 +139,14 @@ static ptrdiff_t count_run(sort_state *state, ptrdiff_t low, ptrdiff_t high) {
 // any element equal to it. It starts looking at base + hint.
 static ptrdiff_t gallop_left(sort_state *state, adamic_value *array, adamic_value key, ptrdiff_t base, ptrdiff_t length, ptrdiff_t hint) {
 	ptrdiff_t last = 0, offset = 1;
-	if (order(state, array[base + hint], key) < 0) {
+	int ordered = order(state, array[base + hint], key);
+	STOP_SORT(0);
+	if (ordered < 0) {
 		ptrdiff_t most = length - hint;
 		while (offset < most) {
-			if (order(state, array[base + hint + offset], key) >= 0) {
+			int ordered = order(state, array[base + hint + offset], key);
+			STOP_SORT(0);
+			if (ordered >= 0) {
 				break;
 			}
 			last = offset;
@@ -147,7 +163,9 @@ static ptrdiff_t gallop_left(sort_state *state, adamic_value *array, adamic_valu
 	} else {
 		ptrdiff_t most = hint + 1;
 		while (offset < most) {
-			if (order(state, array[base + hint - offset], key) < 0) {
+			int ordered = order(state, array[base + hint - offset], key);
+			STOP_SORT(0);
+			if (ordered < 0) {
 				break;
 			}
 			last = offset;
@@ -166,7 +184,9 @@ static ptrdiff_t gallop_left(sort_state *state, adamic_value *array, adamic_valu
 	last++;
 	while (last < offset) {
 		ptrdiff_t middle = last + ((offset - last) >> 1);
-		if (order(state, array[base + middle], key) < 0) {
+		int ordered = order(state, array[base + middle], key);
+		STOP_SORT(0);
+		if (ordered < 0) {
 			last = middle + 1;
 		} else {
 			offset = middle;
@@ -178,10 +198,14 @@ static ptrdiff_t gallop_left(sort_state *state, adamic_value *array, adamic_valu
 // gallop_right is gallop_left's twin: the rightmost place, after any element equal to key.
 static ptrdiff_t gallop_right(sort_state *state, adamic_value *array, adamic_value key, ptrdiff_t base, ptrdiff_t length, ptrdiff_t hint) {
 	ptrdiff_t last = 0, offset = 1;
-	if (order(state, key, array[base + hint]) < 0) {
+	int ordered = order(state, key, array[base + hint]);
+	STOP_SORT(0);
+	if (ordered < 0) {
 		ptrdiff_t most = hint + 1;
 		while (offset < most) {
-			if (order(state, key, array[base + hint - offset]) >= 0) {
+			int ordered = order(state, key, array[base + hint - offset]);
+			STOP_SORT(0);
+			if (ordered >= 0) {
 				break;
 			}
 			last = offset;
@@ -199,7 +223,9 @@ static ptrdiff_t gallop_right(sort_state *state, adamic_value *array, adamic_val
 	} else {
 		ptrdiff_t most = length - hint;
 		while (offset < most) {
-			if (order(state, key, array[base + hint + offset]) < 0) {
+			int ordered = order(state, key, array[base + hint + offset]);
+			STOP_SORT(0);
+			if (ordered < 0) {
 				break;
 			}
 			last = offset;
@@ -217,7 +243,9 @@ static ptrdiff_t gallop_right(sort_state *state, adamic_value *array, adamic_val
 	last++;
 	while (last < offset) {
 		ptrdiff_t middle = last + ((offset - last) >> 1);
-		if (order(state, key, array[base + middle]) < 0) {
+		int ordered = order(state, key, array[base + middle]);
+		STOP_SORT(0);
+		if (ordered < 0) {
 			offset = middle;
 		} else {
 			last = middle + 1;
@@ -242,7 +270,9 @@ static void merge_low(sort_state *state, ptrdiff_t base_a, ptrdiff_t length_a, p
 	for (;;) {
 		ptrdiff_t wins_a = 0, wins_b = 0;
 		for (;;) {
-			if (order(state, work[cursor_b], temporary[cursor_temporary]) < 0) {
+			int ordered = order(state, work[cursor_b], temporary[cursor_temporary]);
+			STOP_SORT();
+			if (ordered < 0) {
 				work[destination++] = work[cursor_b++];
 				wins_b++;
 				length_b--;
@@ -273,6 +303,7 @@ static void merge_low(sort_state *state, ptrdiff_t base_a, ptrdiff_t length_a, p
 			gallop = gallop - 1 > 1 ? gallop - 1 : 1;
 			state->minimum_gallop = gallop;
 			wins_a = gallop_right(state, temporary, work[cursor_b], cursor_temporary, length_a, 0);
+			STOP_SORT();
 			if (wins_a > 0) {
 				copy(temporary, cursor_temporary, work, destination, wins_a);
 				destination += wins_a;
@@ -291,6 +322,7 @@ static void merge_low(sort_state *state, ptrdiff_t base_a, ptrdiff_t length_a, p
 				goto succeed;
 			}
 			wins_b = gallop_left(state, work, temporary[cursor_temporary], cursor_b, length_b, 0);
+			STOP_SORT();
 			if (wins_b > 0) {
 				copy(work, cursor_b, work, destination, wins_b);
 				destination += wins_b;
@@ -335,7 +367,9 @@ static void merge_high(sort_state *state, ptrdiff_t base_a, ptrdiff_t length_a, 
 	for (;;) {
 		ptrdiff_t wins_a = 0, wins_b = 0;
 		for (;;) {
-			if (order(state, temporary[cursor_temporary], work[cursor_a]) < 0) {
+			int ordered = order(state, temporary[cursor_temporary], work[cursor_a]);
+			STOP_SORT();
+			if (ordered < 0) {
 				work[destination--] = work[cursor_a--];
 				wins_a++;
 				length_a--;
@@ -366,6 +400,7 @@ static void merge_high(sort_state *state, ptrdiff_t base_a, ptrdiff_t length_a, 
 			gallop = gallop - 1 > 1 ? gallop - 1 : 1;
 			state->minimum_gallop = gallop;
 			ptrdiff_t found = gallop_right(state, work, temporary[cursor_temporary], base_a, length_a, length_a - 1);
+			STOP_SORT();
 			wins_a = length_a - found;
 			if (wins_a > 0) {
 				destination -= wins_a;
@@ -381,6 +416,7 @@ static void merge_high(sort_state *state, ptrdiff_t base_a, ptrdiff_t length_a, 
 				goto copy_a;
 			}
 			found = gallop_left(state, temporary, work[cursor_a], 0, length_b, length_b - 1);
+			STOP_SORT();
 			wins_b = length_b - found;
 			if (wins_b > 0) {
 				destination -= wins_b;
@@ -428,19 +464,23 @@ static void merge_at(sort_state *state, ptrdiff_t i) {
 	}
 	state->runs--;
 	ptrdiff_t skipped = gallop_right(state, state->work, state->work[base_b], base_a, length_a, 0);
+	STOP_SORT();
 	base_a += skipped;
 	length_a -= skipped;
 	if (length_a == 0) {
 		return;
 	}
 	length_b = gallop_left(state, state->work, state->work[base_a + length_a - 1], base_b, length_b, length_b - 1);
+	STOP_SORT();
 	if (length_b == 0) {
 		return;
 	}
 	if (length_a <= length_b) {
 		merge_low(state, base_a, length_a, base_b, length_b);
+		STOP_SORT();
 	} else {
 		merge_high(state, base_a, length_a, base_b, length_b);
+		STOP_SORT();
 	}
 }
 
@@ -461,8 +501,10 @@ static void merge_collapse(sort_state *state) {
 				n--;
 			}
 			merge_at(state, n);
+			STOP_SORT();
 		} else if (state->length[n] <= state->length[n + 1]) {
 			merge_at(state, n);
+			STOP_SORT();
 		} else {
 			break;
 		}
@@ -477,6 +519,7 @@ static void merge_force_collapse(sort_state *state) {
 			n--;
 		}
 		merge_at(state, n);
+		STOP_SORT();
 	}
 }
 
@@ -486,19 +529,23 @@ static void sorted(sort_state *state, ptrdiff_t length) {
 	ptrdiff_t shortest = minimum_run(remaining);
 	while (remaining != 0) {
 		ptrdiff_t run = count_run(state, low, low + remaining);
+		STOP_SORT();
 		if (run < shortest) {
 			ptrdiff_t forced = shortest < remaining ? shortest : remaining;
 			binary_insertion(state, low, low + run, low + forced);
+			STOP_SORT();
 			run = forced;
 		}
 		state->base[state->runs] = low;
 		state->length[state->runs] = run;
 		state->runs++;
 		merge_collapse(state);
+		STOP_SORT();
 		low += run;
 		remaining -= run;
 	}
 	merge_force_collapse(state);
+	STOP_SORT();
 }
 
 // sorted_or_stopped runs the sort, and says false when a comparator threw. The setjmp is in a frame
@@ -510,6 +557,7 @@ static bool sorted_or_stopped(sort_state *state, ptrdiff_t length) {
 	}
 #endif
 	sorted(state, length);
+	STOP_SORT(false);
 	return true;
 }
 
