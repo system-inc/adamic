@@ -1,0 +1,9 @@
+import { programArguments } from 'adamic';
+import { ProcessOutputState } from './process_output_state.a';
+let state = new ProcessOutputState();
+for(const step of programArguments()) {
+    if(step === 'reset') { state = new ProcessOutputState(); }
+    else if(step.startsWith('w')) { state = state.with(step.slice(1)); }
+    else { state = state.entering(Number.parseInt(step.slice(1), 10)); }
+    console.log(state.key());
+}
