@@ -1,8 +1,8 @@
 # Readonly views, adaptation 70
 
 This is a partial unit. The first internal wave removed 22 measured refusals;
-the second removes four more, for 456 to 430 cumulatively.
-The other 430 sites are retained and individually listed in [REMAINING.md](REMAINING.md).
+the second removed four more, and the third removes 21 net, for 456 to 409
+cumulatively. The other 409 sites are retained and individually listed in [REMAINING.md](REMAINING.md).
 I decline a blanket readonly conversion because the remaining mutation chains,
 generic views, inferred contracts and erased escapes have not all been proven.
 Public API readonly changes are now sanctioned by @system_adamic. Each public
@@ -110,10 +110,11 @@ Two actual writers were inspected through the checker:
   It removes elements, inserting no wrong-typed value. Its parameter stays
   mutable because the consumer writes through it.
 
-`SearchResult.value` was considered but declined. With Adamic's strict options,
+`SearchResult.value` was initially declined. With Adamic's strict options,
 its flows at `moduleNameResolver.ts:1851:18`, `1851:40`, `1852:36` and `1856:18`
 receive a contextual `any` view. The current audit cannot prove those flows.
-No change was made to that declaration. Generic, method-variance and inferred
+Wave 3 resolves that bounded inferred-local alias and edits the declaration,
+as proved below. Generic, method-variance and inferred
 views are not converted on the strength of a textual reason alone.
 
 [UPSTREAM_CANDIDATES.md](UPSTREAM_CANDIDATES.md) records the inspected writes and
@@ -180,8 +181,9 @@ subsequently sanctioned exactly these mechanically proven 189 additions and
 instructed that this inherited difference counts as passing. Later waves accept
 only that proven snapshot in the disposable tree before running the oracle.
 Adaptation 20's README describes accepting a mechanically reconstructed API
-snapshot in its external tree. This unit does not change reference baselines,
-accept a snapshot to make the run green, or edit adaptation 20. The original
+snapshot in its external tree. The initial wave did not change reference baselines or edit adaptation 20.
+Later waves accept only the mechanically proven sanctioned snapshot in their
+disposable checkout. The original
 failure, report and diff are preserved under `evidence/oracle-*`. The readonly
 owner is internal and absent from emitted `built/local/typescript.d.ts`; attribution
 is checked separately below. The JavaScript manifest was rechecked after the
@@ -231,7 +233,7 @@ the controlled census and regenerates the complete remaining-site list.
 Run mutants only in a disposable copy and restore its source after each run.
 
 Not covered: a transitive write/reachability proof for every retained target,
-additional readonly owner edits, public API rulings, a reachable upstream bug,
+proofs for the remaining owners, public API readonly edits, a reachable upstream bug,
 an empty diff against all original upstream references, the full native Adamic
 gate or native compilation of tsc. This unit changes only
 stage 3 adaptation tooling and type declarations in the disposable input tree.
@@ -263,8 +265,8 @@ introduced. The actual-writing-view build mutant from wave 1 remains TS2540.
 ReusableBuilderProgramState.program is declined: observed writes at builder.ts
 326:5 and 619:5 and deletion at 2460:31 prevent readonly certification. Those
 operations are not by themselves proof of a reachable wrong-type insertion.
-SearchResult.value remains declined because of contextual any at the four
-previously listed sites. The broad field audit is preparatory evidence, not a
+SearchResult.value remained declined in wave 2 because of contextual any at the
+four previously listed sites; wave 3 resolves this particular alias. The broad field audit is preparatory evidence, not a
 claim that these alias paths or array element owners have been proven.
 
 Wave 2's default oracle passed: 106,367 passing, zero failures, zero pending,
@@ -284,3 +286,96 @@ LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation70-census /tmp/adaptation70-before/src/
 NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/20-optional-declarations/check-baselines.cjs /tmp/adaptation70-pristine /tmp/adaptation70-before /tmp/adaptation70-optional-owners.json --accept-api
 bash stage3/oracle/run.sh /tmp/adaptation70-before /tmp/adaptation70-wave2-oracle
 ```
+
+
+## Internal wave 3
+
+Eleven internal TextRange parameters become Readonly<TextRange>: range on
+createDiagnosticForRange, nodeIsSynthesized, moveRangeEnd, moveRangePos,
+rangeIsOnSingleLine, getStartPositionOfRange and parseErrorAtRange; range1 and
+range2 on rangeStartIsOnSameLineAsRangeEnd; and node on emitDetachedComments
+and emitNewLineBeforeLeadingComments. SearchResult.value also becomes readonly.
+These are 12 owner edits across three compiler files. No public declaration
+changes in this wave.
+
+[Per-owner proofs](evidence/wave3/adapt.json) record checker-resolved references
+and transitive consumer edges. The parameter audit scans each parameter's symbol
+through its entire function, including nested closures, then follows resolved
+whole-object arguments into upstream function bodies. It permits primitive
+property reads and declines casts, retained aliases, returned receivers, object
+children, accessors and unresolved consumers. Assignments, destructuring targets,
+updates, deletes, iteration targets and stock container mutators are writes.
+All eleven owners and their reachable consumers have zero writes and escapes.
+
+SearchResult's slot has 25 resolved references and zero writes or escapes.
+The four contextual-any flows lead to the same inferred let result local at
+moduleNameResolver.ts:1847:9. Its declaration has neither an annotation nor an
+initializer. Every reference to that exact local symbol, including in nested
+closures, is checked: six reads, two rebindings, no slot writes or retained
+aliases. Rebinding the local does not replace the referenced object's slot.
+Explicit any, assertions, other member accesses and whole-object forwarding
+remain declines. This bounded proof closes the earlier SearchResult decline;
+it is not a general heap alias analysis.
+
+The clean post-restart census completed all 78 compiler files (79 event rows).
+It measures **430 to 409**, with **25 removed reasons and four newly exposed
+reasons**, and no eligibility changes. The before report reuses wave 2's actual
+measurement only after verifying all 78 compiler-source hashes match the
+controlled reference; see evidence/wave3/before-provenance.json. An interrupted
+73-file run was discarded. Every remaining reason is in REMAINING.md.
+
+Three exposed reasons concern the nested isExternalLibraryImport boolean slot
+at moduleNameResolver.ts:1924:28, 1931:28 and 1950:20. The fourth, also at 1950:20,
+concerns a fresh inferred object view in a logical expression. They are retained:
+this wave proves the SearchResult replacement slot, not the nested payload or
+that inferred view. These reasons do not establish a reachable wrong-typed
+write. The 2,168 strict-checker diagnostics remain the same in number; two
+existing messages acquire readonly type spelling, without a new location or
+error code. Exact message changes are in evidence/wave3/diagnostic-delta.json.
+
+The complete upstream build exited 0. All ten emitted JavaScript files match
+the pre-wave hashes. Idempotence changes zero files and preserves all 710
+upstream TypeScript source hashes. Adaptation 20's existing check-baselines.cjs
+proves the final published API equals the original plus exactly 189 sanctioned
+optional additions; all 60,930 other reference baselines are identical. There
+are zero public readonly additions to attribute in this wave.
+
+The final default oracle passed **106,367 tests, zero failures, zero pending**,
+with an empty baseline diff. Install and build exited 0; test time was 248.534s,
+wall time 254.144s. The oracle ran with adaptations 10, 20 and all current 70
+edits, after mechanical acceptance of only adaptation 20's sanctioned snapshot.
+Reports, hashes and compressed logs are under evidence/wave3.
+
+Nine final-source mutants prove the guards and upstream check:
+
+| Mutant | What caught it |
+|---|---|
+| Direct range.pos assignment | Parameter audit, exit 1 before edits |
+| Assignment inside getStartPositionOfRange | Transitive caller audit, exit 1 before edits |
+| Typed alias retaining a range, followed by a write | Parameter escape audit, exit 1 before edits |
+| Destructuring assignment to range.pos | Parameter writer audit, exit 1 before edits |
+| for-of assignment to range.pos | Parameter writer audit, exit 1 before edits |
+| for-of assignment to EvaluatorResult.value | Field writer audit, exit 1 before edits |
+| Inferred receiver forwarded into any and its slot written | Local-alias audit, exit 1; upstream compiler build exits 0 |
+| Inferred receiver changed to explicit any | Local-alias audit, exit 1 |
+| SourceFileLike.lineMap marked readonly despite its writer | Upstream compiler build exits 1, TS2540 at scanner.ts(504,46) |
+
+The erased-writer build was rerun in a complete disposable checkout after an
+initial source-only scratch lacked package.json (npm exit 254). That setup failure
+is not counted as a checker result. All mutated source was restored.
+
+Final proof commands, each with stdout and stderr captured in a log:
+
+```sh
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/adapt.cjs /tmp/adaptation70-before
+(cd /tmp/adaptation70-before && npm run build)
+LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation70-census /tmp/adaptation70-before/src/compiler /tmp/adaptation70-wave3-complete-after.jsonl
+python3 stage3/adapt/70-readonly-views/summarize.py /tmp/adaptation70-wave3-reference /tmp/adaptation70-wave3-before.jsonl /tmp/adaptation70-before /tmp/adaptation70-wave3-complete-after.jsonl stage3/adapt/70-readonly-views/evidence/wave3 stage3/adapt/70-readonly-views/REMAINING.md
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/20-optional-declarations/check-baselines.cjs /tmp/adaptation70-pristine /tmp/adaptation70-before /tmp/adaptation70-optional-owners.json
+bash stage3/oracle/run.sh /tmp/adaptation70-before /tmp/adaptation70-wave3-complete-oracle
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/adapt.cjs /tmp/adaptation70-before
+```
+
+Public readonly owners, their downstream consumer proof and the requested
+UPSTREAM_NOTE.md remain work for a subsequent public wave. This wave does not
+claim a complete write analysis of all remaining internal or public sites.

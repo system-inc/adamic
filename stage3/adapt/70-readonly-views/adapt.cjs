@@ -21,6 +21,7 @@ const program = ts.createProgram(roots, options);
 const checker = program.getTypeChecker();
 const selected = [
     { file: 'src/compiler/types.ts', declaration: 'EvaluatorResult', member: 'value' },
+    { file: 'src/compiler/moduleNameResolver.ts', declaration: 'SearchResult', member: 'value' },
     { file: 'src/compiler/utilities.ts', declaration: 'ParsedPatterns', member: 'matchableStringSet' },
     { file: 'src/compiler/utilities.ts', declaration: 'ParsedPatterns', member: 'patterns' },
     { file: 'src/compiler/moduleNameResolver.ts', declaration: 'Resolved', member: 'originalPath' },
@@ -29,6 +30,19 @@ const selected = [
     { file: 'src/compiler/moduleSpecifiers.ts', declaration: 'ModuleSpecifierResult', member: 'moduleSpecifiers' },
     { file: 'src/compiler/moduleSpecifiers.ts', declaration: 'ModuleSpecifierResult', member: 'computedWithoutCache' },
 ];
+const parameters = require('./parameter-audit.cjs')(program, checker, tree, [
+    { file: 'src/compiler/utilities.ts', function: 'createDiagnosticForRange', parameter: 'range' },
+    { file: 'src/compiler/utilities.ts', function: 'nodeIsSynthesized', parameter: 'range' },
+    { file: 'src/compiler/utilities.ts', function: 'moveRangeEnd', parameter: 'range' },
+    { file: 'src/compiler/utilities.ts', function: 'moveRangePos', parameter: 'range' },
+    { file: 'src/compiler/utilities.ts', function: 'rangeIsOnSingleLine', parameter: 'range' },
+    { file: 'src/compiler/utilities.ts', function: 'rangeStartIsOnSameLineAsRangeEnd', parameter: 'range1' },
+    { file: 'src/compiler/utilities.ts', function: 'rangeStartIsOnSameLineAsRangeEnd', parameter: 'range2' },
+    { file: 'src/compiler/utilities.ts', function: 'getStartPositionOfRange', parameter: 'range' },
+    { file: 'src/compiler/utilities.ts', function: 'emitDetachedComments', parameter: 'node' },
+    { file: 'src/compiler/utilities.ts', function: 'emitNewLineBeforeLeadingComments', parameter: 'node' },
+    { file: 'src/compiler/parser.ts', function: 'parseErrorAtRange', parameter: 'range' },
+]);
 function location(node) {
     const file = node.getSourceFile();
     const point = file.getLineAndCharacterOfPosition(node.getStart(file));
@@ -53,7 +67,7 @@ const owners = selected.map(spec => {
     const members = literals.flatMap(node => [...node.members]).filter(node =>
         ts.isPropertySignature(node) && ts.isIdentifier(node.name) && node.name.text === spec.member);
     if (members.length !== 1 || !members[0].type) throw new Error(`unexpected slot: ${spec.declaration}.${spec.member}`);
-    return { ...spec, node: members[0], references: 0, copies: [], writes: [], escapes: [] };
+    return { ...spec, node: members[0], references: 0, copies: [], aliases: [], writes: [], escapes: [] };
 });
 function property(type, name) { return checker.getPropertyOfType(checker.getNonNullableType(type), name); }
 function assignmentTarget(node) {
@@ -68,7 +82,7 @@ function assignmentTarget(node) {
             parent.operatorToken.kind <= ts.SyntaxKind.LastAssignment) return parent;
         if ((ts.isPrefixUnaryExpression(parent) || ts.isPostfixUnaryExpression(parent)) &&
             (parent.operator === ts.SyntaxKind.PlusPlusToken || parent.operator === ts.SyntaxKind.MinusMinusToken)) return parent;
-        if (ts.isDeleteExpression(parent)) return parent;
+        if (ts.isDeleteExpression(parent) || ((ts.isForOfStatement(parent) || ts.isForInStatement(parent)) && parent.initializer === current)) return parent;
         return undefined;
     }
 }
@@ -88,6 +102,7 @@ function copiedReceiver(node) {
     }
     return false;
 }
+const inferredLocal = require('./local-alias.cjs')(checker, tree);
 for (const file of program.getSourceFiles()) {
     if (!path.resolve(file.fileName).startsWith(tree + path.sep + 'src' + path.sep)) continue;
     function visit(node) {
@@ -125,6 +140,11 @@ for (const file of program.getSourceFiles()) {
                 if (target) {
                     const slot = property(target, owner.member);
                     if (!ownerOf(slot, owner.node)) {
+                        const alias = target.flags & ts.TypeFlags.Any ? inferredLocal(node, owner.member) : undefined;
+                        if (alias && !alias.writes.length && !alias.escapes.length) {
+                            if (!owner.aliases.some(p => p.declaration === alias.declaration)) owner.aliases.push(alias);
+                            continue;
+                        }
                         owner.escapes.push({ where: location(node), target: checker.typeToString(target) });
                     }
                 }
@@ -143,18 +163,34 @@ for (const owner of owners) {
         throw new Error(`cannot prove ${owner.declaration}.${owner.member} readonly: ${JSON.stringify({ writes: owner.writes, escapes: owner.escapes })}`);
     }
 }
+for (const parameter of parameters) {
+    if (parameter.writes.length || parameter.escapes.length) throw new Error(
+        `cannot prove ${parameter.function}.${parameter.parameter} readonly: ${JSON.stringify({ writes: parameter.writes, escapes: parameter.escapes })}`);
+}
 const edits = new Map();
 for (const owner of owners) {
     if (ts.getCombinedModifierFlags(owner.node) & ts.ModifierFlags.Readonly) continue;
     const file = owner.node.getSourceFile();
     if (!edits.has(file)) edits.set(file, []);
-    edits.get(file).push(owner.node.getStart(file));
+    edits.get(file).push({ start: owner.node.getStart(file), end: owner.node.getStart(file), text: 'readonly ' });
+}
+for (const parameter of parameters) {
+    const type = parameter.node.type;
+    if (ts.isTypeReferenceNode(type) && ts.isIdentifier(type.typeName) && type.typeName.text === 'Readonly' &&
+        type.typeArguments?.length === 1 && ts.isTypeReferenceNode(type.typeArguments[0]) &&
+        ts.isIdentifier(type.typeArguments[0].typeName) && type.typeArguments[0].typeName.text === 'TextRange') continue;
+    if (!ts.isTypeReferenceNode(type) || !ts.isIdentifier(type.typeName) || type.typeName.text !== 'TextRange')
+        throw new Error(`unexpected parameter type: ${parameter.function}.${parameter.parameter}`);
+    const file = parameter.node.getSourceFile();
+    if (!edits.has(file)) edits.set(file, []);
+    edits.get(file).push({ start: type.getStart(file), end: type.end, text: `Readonly<${type.getText(file)}>` });
 }
 for (const [file, positions] of edits) {
     let text = file.text;
-    for (const position of positions.sort((a, b) => b - a)) text = text.slice(0, position) + 'readonly ' + text.slice(position);
+    for (const edit of positions.sort((a, b) => b.start - a.start)) text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
     if (fs.readFileSync(file.fileName, 'utf8') !== file.text) throw new Error(`source changed during audit: ${file.fileName}`);
     fs.writeFileSync(file.fileName, text);
 }
 console.log(JSON.stringify({ typescript: ts.version, files: edits.size,
-    owners: owners.map(({ node, ...owner }) => ({ ...owner, where: location(node) })) }, null, 2));
+    owners: owners.map(({ node, ...owner }) => ({ ...owner, where: location(node) })),
+    parameters: parameters.map(({ node, ...parameter }) => parameter) }, null, 2));
