@@ -86,6 +86,9 @@ func runtimeStorage(file, source string) []runtimeStatic {
 			aggregate, aggregateEnd := false, -1
 			for ; end < len(tokens); end++ {
 				next := tokens[end].text
+				if next == "(" && parens == 0 && braces == 0 && end > i && tokens[end-1].text != "_Atomic" {
+					aggregate = false
+				}
 				if !initialized && parens == 0 && (next == "struct" || next == "enum" || next == "union") {
 					aggregate = true
 				}
@@ -258,6 +261,7 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 }
 
 func TestRuntimeStaticsAreListed(t *testing.T) {
+	t.Parallel()
 	files, err := filepath.Glob(filepath.Join(*runtimeStaticsDirectory, "*"))
 	if err != nil {
 		t.Fatal(err)
@@ -269,6 +273,9 @@ func TestRuntimeStaticsAreListed(t *testing.T) {
 	for _, file := range files {
 		if filepath.Ext(file) != ".c" && filepath.Ext(file) != ".h" {
 			continue
+		}
+		if !*listRuntimeStatics && !strings.Contains(string(table), "`runtime-file:"+filepath.Base(file)+"`") {
+			t.Errorf("%s:1: unaudited runtime file; review its storage in docs/runtime-statics.md", file)
 		}
 		source, err := os.ReadFile(file)
 		if err != nil {
@@ -290,6 +297,7 @@ func TestRuntimeStaticsAreListed(t *testing.T) {
 }
 
 func TestRuntimeStorageScanner(t *testing.T) {
+	t.Parallel()
 	source := `// static int ignored;
 #define HIDDEN static int hidden;
 static const char message[] = "static int ignored;";
@@ -305,12 +313,13 @@ void prototype(void (*argument)(void));
 static int array[2] = {1, 2};
 struct pair { int field; } record;
 void more(void) { static struct { int field; } local_record; }
-static int *const fixed_pointer = 0, scalar;`
+static int *const fixed_pointer = 0, scalar;
+static struct pair *maker(void) { static int nested; return 0; }`
 	var names []string
 	for _, variable := range runtimeStorage("probe.c", source) {
 		names = append(names, variable.name)
 	}
-	if got := strings.Join(names, ","); got != "pointer,global,first,second,local,callback,array,record,local_record,scalar" {
+	if got := strings.Join(names, ","); got != "pointer,global,first,second,local,callback,array,record,local_record,scalar,nested" {
 		t.Fatalf("storage inventory = %s", got)
 	}
 }
