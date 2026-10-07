@@ -1639,3 +1639,153 @@ and preserved under self-2-interrupted. Setup was not rerun during these pairs.
 | frozen-3 | 2.26 2.60 2.12 1/554 157350 | 4.05 2.96 2.27 2/551 160733 |
 
 Raw evidence and reproduction scripts: cmd/adamic-gate/evidence/plan-once.tgz.
+
+### Remove the cheap oracle pin after a partition proof
+
+Candidate and all five oracle measurement checkouts:
+179756a84dfcfa0a677692697ce470640a040724. No internal/oracle or stage1
+source was edited. The measured 0.099625-s warm gateOnce callback is 0.0303%
+of the prior 328.577567-s package command wall, so its WholePackage affinity
+was removed conditionally. Both repeats of both partitions passed the condition.
+
+Retained affinity declarations now include measured SetupSeconds and
+SetupMeasurement next to the fixture: layoutOnce 448.889 s (47fbaf17,
+runner 1e9192b6, cont through original-oracle agreement, fixture plus controls);
+formatterOnce 206.546468 s (1abec4c7, first Go formatter command build on a
+prepared box, formatter dependencies cold). The latter is a real fresh-box
+cost beyond root-package warming, not its 1,342.480-s group price. The two
+subsequent warm command builds took 7.789418 and 5.700614 s. No cost is
+inferred for an unmeasured fixture.
+
+Oracle pricing uses the three whole uncached logs at 47b8b8d5: median observed
+unit elapsed proportions, scaled so the 515 observed planned units total the
+measured 328.577567-s command wall. These prices are shares of a concurrent
+whole wall, not measurements of individual isolated units. The 851 skipped or
+unobserved planned units retain their original shard-log prices: this includes
+844 WASI rows that the nine-skip profiling run did not execute. Repeating
+parent residuals remains separately charged by the planner. The old @gateOnce
+price of 1,368.845 s is removed; the old calibration and new override both
+remain in timings.json.audit.json. A fully enabled WASI remeasurement is still
+needed; assigning those unobserved rows zero would invent a saving.
+
+The proof partitions use assignUnits and selections from the actual candidate
+planner. They balance the observed input mode at predicted 164.287 and 164.290 s;
+unexecuted WASI/other skip rows have zero proof weights only. This is separate
+from production prices, which retain those rows. Each partition runs a single
+Go test process with the planner's exact -run/-skip selectors. Complements
+cover the parents' remaining children. Whole/partition execution is uncached,
+-count=1 -parallel 5 -timeout 60m, with identical source, tools and inputs.
+
+Fresh-box interpretation: no independent VM provisioning tool is available.
+Five fresh Docker containers ran sequentially on one physical cloud box, each
+nproc 5, cpu.max="400000 100000", memory.max=16 GiB. Each has an independent
+cgroup, fresh /tmp and XDG fixture/runtime-library cache, and the same
+preinstalled tool/input/Go-action-cache image. This proves the result for that
+image, not uncached download/bootstrap costs on independent VMs. Go compile
+cache is warm; oracle result caching is bypassed. Flags for every case:
+Go="go version go1.27.1 linux/amd64", Clang="clang version 20.1.8
+(https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+Node="v24.19.0", GOFLAGS empty, commit above; actual GOCACHE, XDG paths,
+loads and argv are preserved per case.
+
+| Case | Setup s | Tests s | Setup + tests s | Improvement vs whole | End-read fresh cgroup peak GiB |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Whole | 43.410 | 284.520 | 327.930 | reference | 3.271 |
+| half-0-1 | 64.686 | 200.469 | 265.155 | 19.14% | 2.439 |
+| half-1-1 | 65.059 | 126.912 | 191.971 | 41.46% | 3.266 |
+| half-0-2 | 68.346 | 196.819 | 265.165 | 19.14% | 2.627 |
+| half-1-2 | 92.132 | 149.484 | 241.616 | 26.32% | 3.430 |
+
+Every one of the four boxes improves at least 2%, including its measured setup.
+In each repeat the union exactly equals the whole's 1,466 pass and nine skip
+names/verdicts, including duplicate parent verdict agreement. No fail, OOM,
+memory limit event or dirty checkout occurred. Each partition is below both
+1,200 s of tests and the 3,600-s package timeout. The whole also fits both.
+Half 0's remaining longest parent is TestCountsAreRecorded, 175.320 / 175.180 s;
+half 1's TestLoopCountersAgreeWithNode is 58.770 / 105.750 s. They are later
+isolated-unit inputs; the normalized plan prices are not those elapsed spans.
+
+Exact instrument: python3 cmd/adamic-gate/evidence/oracle-partitions/boxes.py
+(after extracting the evidence archive). worker.py invokes bash cloud/setup.sh,
+then either go test -count=1 -json -timeout 60m -parallel 5
+ github.com/system-inc/adamic/internal/oracle, or the exact Go argv in
+halves.json[index].Commands and each case's metadata.json. The full generated
+selectors are retained there instead of shortening them into an inaccurate
+command. Whole, A1, B1, A2, B2 run sequentially. The user-requested two repeats
+are used; the whole setup-plus-test loop exceeds five minutes.
+
+Initial setup failed before tests twice: offline curl exit 7 reaching the
+package proxy, then curl exit 5 because Docker could not resolve proxy.
+The host's configured proxy installed the checksum-verified stage3 dependency
+image once; that preparation took 68.386 s, recorded separately in
+image-preparation.log. The final five cases use the same installed image and
+work offline. Failed attempts are excluded, preserved as failure evidence.
+
+| Case | Setup load before | Setup load after | Test load before | Test load after |
+| --- | --- | --- | --- | --- |
+| whole | 7.15 2.25 1.41 2/563 6 | 7.77 3.14 1.75 1/565 947 | 7.77 3.14 1.75 1/565 947 | 5.13 4.48 2.70 1/570 20898 |
+| half-0-1 | 4.72 4.41 2.68 1/566 6 | 7.30 5.18 3.06 1/568 1212 | 7.30 5.18 3.06 1/568 1212 | 5.01 5.03 3.41 1/567 14812 |
+| half-1-1 | 4.69 4.97 3.39 1/564 6 | 5.54 5.13 3.56 1/566 1214 | 5.54 5.13 3.56 1/566 1214 | 4.76 4.94 3.68 1/573 7825 |
+| half-0-2 | 4.46 4.87 3.66 1/570 6 | 4.88 4.91 3.76 1/574 1225 | 4.88 4.91 3.76 1/574 1225 | 5.74 5.04 4.02 1/570 14827 |
+| half-1-2 | 5.36 4.97 4.00 1/569 6 | 7.43 5.56 4.29 1/569 1223 | 7.43 5.56 4.29 1/569 1223 | 4.67 4.97 4.25 1/575 7833 |
+
+The setup encounter also exposed an implicit input of frozen plans: installed
+stage3/api/node_modules is outside tracked source. Frozen identities now hash
+that tree alongside its pinned tracked lock. TestFrozenPlanRefusalAndEquivalentEvents
+changes an ignored installed API file and requires a named refusal. A mutant
+omitting that input fails this test. Restoring the oracle pin fails
+TestOracleMeasuredTestsMaySpread. Full runner race tests passed (73.261 s),
+go vet passed, Bash syntax and diff checks passed. Earlier six frozen/order
+mutants remain independently caught. No new result cache was introduced.
+
+### Updated 47fbaf17 fifteen-shard prediction
+
+Reassigned the preserved 47fbaf174d168f14cd50dedcaabfaa09c51cdefd discovery
+inventory with the actual candidate planner, new prices, two expensive groups,
+and descending package feed. This is a prediction artifact, not a runnable
+frozen plan for a different checkout. The archive consumer is on shard 14,
+the lightest predicted shard before adding its measured historical cost.
+
+| Shard | Predicted tests s | Actual tests s | Setup s |
+| ---: | ---: | ---: | ---: |
+| 0 | 3456.456 | 2421.176 historical | 84.939 historical |
+| 1 | 1633.810 | unmeasured | unmeasured |
+| 2 | 1633.809 | unmeasured | unmeasured |
+| 3 | 1633.805 | unmeasured | unmeasured |
+| 4 | 1633.803 | unmeasured | unmeasured |
+| 5 | 1633.808 | unmeasured | unmeasured |
+| 6 | 1633.810 | unmeasured | unmeasured |
+| 7 | 1633.804 | unmeasured | unmeasured |
+| 8 | 1633.801 | unmeasured | unmeasured |
+| 9 | 1633.803 | unmeasured | unmeasured |
+| 10 | 1633.808 | unmeasured | unmeasured |
+| 11 | 1633.805 | unmeasured | unmeasured |
+| 12 | 1633.809 | unmeasured | unmeasured |
+| 13 | 1633.808 | unmeasured | unmeasured |
+| 14 | 761.770 | unmeasured | unmeasured |
+
+Shard 0's complete 11-unit selection equals the earlier measurement; its
+actual/setup columns are historical, not a new proving run. Its build flags:
+source 47fbaf17, runner 1e9192b6, nproc 5, cpu.max 400000 100000, Go 1.27.1,
+Clang 20.1.8, Node v24.19.0, uncached tests, warm Go/runtime build caches,
+GOFLAGS empty; load before "0.50 2.15 3.88 2/261 28575", after
+"1.80 1.97 2.06 1/262 31786". Original per-unit observation flags are in the
+calibration audit, new oracle override flags above and in that audit.
+
+The 1,200-s full-shard test target is not established: predicted shards 1-13
+remain about 1,633.8 s, and layout's historical 2,421.176-s joint span remains.
+The markdown semantic-mutant owner change at 13f16800 must reach the target
+before those markdown prices can be re-derived. Excluding markdownblocks,
+shards 2, 4-13 remain about 1,633.8 s by prediction; no actual proving fleet
+has run with longest-first feed. Heaviest non-markdown historical measured
+units remain lint/TestMutants 1069.120, typeaware/TestVolumeAgreementAndMutants
+731.755, json/TestPortMatchesGoCohere 686.000, typeaware/TestTypeAwareAgreementAndMutants
+615.050, markdowninline/TestMarkdownInline 588.250, unicodeproperties/TestCanonicalizeUnicodeNode
+571.080, and lint/TestEmittedJavaScriptMismatch 507.020 s. Those are the inputs
+to later heavy-package box measurements; their exact source/build flags are
+preserved in the original audit, not replaced by new oracle share prices.
+
+Raw evidence: cmd/adamic-gate/evidence/oracle-partitions.tgz; replan JSON,
+selectors, whole and union verdict files, all setup/test logs, metadata,
+calibration overrides and both guard mutants are included. No internal/oracle,
+protected compiler or stage1 test file was edited.

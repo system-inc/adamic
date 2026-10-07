@@ -25,7 +25,7 @@ func (a affinity) key() string { return a.Package + "::@" + a.Fixture }
 
 func knownAffinities() []affinity {
 	return []affinity{
-		{Package: "github.com/system-inc/adamic/stage1/cohere/markdownblocks", Fixture: "layoutOnce", SetupSeconds: 448.889, SetupMeasurement: "33935158 joint rerun: cont to original-oracle agreement; fixture plus controls, uncached", Tests: []string{
+		{Package: "github.com/system-inc/adamic/stage1/cohere/markdownblocks", Fixture: "layoutOnce", SetupSeconds: 448.889, SetupMeasurement: "47fbaf17 / runner 1e9192b6 joint rerun: cont to original-oracle agreement; fixture plus controls, uncached", Tests: []string{
 			"TestMarkdownCodeBlockLayout", "TestMarkdownHTMLBlockLayout", "TestMarkdownLeafComposition", "TestMarkdownListLayout", "TestMarkdownQuoteLayout", "TestMarkdownRootLayout", "TestMarkdownStructureLayout", "TestMarkdownTableLayout", "TestMarkdownWhitespaceLayout",
 		}},
 		{Package: "github.com/system-inc/adamic/stage1/cohere/markdownblocks", Fixture: "formatterOnce", SetupSeconds: 206.546467590, SetupMeasurement: "1abec4c7: first Go formatter build on prepared box; formatter dependencies cold (warm repeats 7.789 and 5.701 s)", Tests: []string{

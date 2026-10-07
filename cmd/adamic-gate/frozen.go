@@ -238,6 +238,8 @@ func planningInputs(p plan, index int) (map[string]inputRecord, error) {
 	} else {
 		delete(values, archiveVariable)
 	}
+	// Setup installs the API seat inside the checkout, outside tracked source.
+	values["default-stage3-api"] = "stage3/api/node_modules"
 	// The default width oracle is used when no explicit dependency path is set.
 	if values["ADAMIC_MARKDOWNWIDTH_DEPS"] == "" {
 		values["default-markdown-width"] = "/tmp/adamic-markdown-width"

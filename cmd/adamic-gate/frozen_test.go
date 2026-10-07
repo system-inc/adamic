@@ -24,7 +24,7 @@ func TestFrozenPlanRefusalAndEquivalentEvents(t *testing.T) {
 		}
 	}
 	source := "package probe\nimport \"testing\"\nfunc TestFirst(t *testing.T) {}\nfunc TestSecond(t *testing.T) {t.Run(\"child\",func(t *testing.T){})}\n"
-	for name, data := range map[string]string{"go.mod": "module github.com/system-inc/adamic\n\ngo 1.27\n", "probe/probe_test.go": source, "another/another_test.go": "package another\nimport \"testing\"\nfunc TestThird(t *testing.T) {}\n", timingPath: `{"github.com/system-inc/adamic/probe::TestFirst":4,"github.com/system-inc/adamic/probe::TestSecond":8,"github.com/system-inc/adamic/another::TestThird":1}`} {
+	for name, data := range map[string]string{"go.mod": "module github.com/system-inc/adamic\n\ngo 1.27\n", "probe/probe_test.go": source, "another/another_test.go": "package another\nimport \"testing\"\nfunc TestThird(t *testing.T) {}\n", ".gitignore": "stage3/api/node_modules/\n", timingPath: `{"github.com/system-inc/adamic/probe::TestFirst":4,"github.com/system-inc/adamic/probe::TestSecond":8,"github.com/system-inc/adamic/another::TestThird":1}`} {
 		if err := os.WriteFile(name, []byte(data), 0600); err != nil {
 			t.Fatal(err)
 		}
@@ -40,12 +40,28 @@ func TestFrozenPlanRefusalAndEquivalentEvents(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Setenv("ADAMIC_FROZEN_PROBE", external)
+	api := "stage3/api/node_modules/example/index.js"
+	if err := os.MkdirAll(filepath.Dir(api), 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(api, []byte("original API"), 0600); err != nil {
+		t.Fatal(err)
+	}
 	p, err := makeFrozenPlan(2)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if err := validateFrozenPlan(p, 2, 1); err != nil {
 		t.Fatal("matching frozen plan", err)
+	}
+	if err := os.WriteFile(api, []byte("changed API"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := validateFrozenPlan(p, 2, 1); err == nil || !strings.Contains(err.Error(), "default-stage3-api") {
+		t.Fatal("changed implicit API input accepted", err)
+	}
+	if err := os.WriteFile(api, []byte("original API"), 0600); err != nil {
+		t.Fatal(err)
 	}
 	if err := os.WriteFile("probe/probe_test.go", []byte(source+"// source mutant\n"), 0600); err != nil {
 		t.Fatal(err)
