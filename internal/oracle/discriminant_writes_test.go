@@ -53,7 +53,7 @@ func TestDiscriminantAcceptedProgramsMatchNode(t *testing.T) {
 		"interface Base { kind: string } type Node = { kind: 'leaf' } | { kind: 'branch' }; function build(): void { const node: Base = { kind: 'new' }; node.kind = 'branch'; console.log(node.kind); } build();",
 
 		"type Leaf = { kind: 'leaf'; value: number }; type Node = Leaf | { kind: 'branch' }; function change(node: Leaf): void { node.kind = 'leaf'; } const node: Leaf = { kind: 'leaf', value: 4 }; change(node); console.log(node.kind);",
-		"/// <reference path='./flags.d.a.ts' />\ntype Node = { kind: 'a'; flags: Flags } | { kind: 'b'; flags: OtherFlags }; function change(node: Node): void { node.flags |= 2; } const node: Node = { kind: 'a', flags: 1 }; change(node); console.log(`${node.flags}`);",
+		"/// <reference path='./flags.d.a.ts' />\ntype Node = { kind: 'a'; flags: Flags } | { kind: 'b'; flags: OtherFlags }; function change(node: Node): void { node.flags |= 2; } function make(): Node { return { kind: 'a', flags: 1 }; } const node: Node = make(); change(node); console.log(`${node.flags}`);",
 
 		"class Leaf { kind: 'leaf'; constructor() { this.kind = 'leaf'; this.kind = 'leaf'; } }\ntype Node = Leaf | { kind: 'branch' };\nconsole.log(new Leaf().kind);",
 		"type Node = { kind: 'leaf'; value: string } | { kind: string; value: number };\nfunction change(node: { kind: string; value: number }): void { node.kind = 'new'; }\nconst node = { kind: 'old', value: 1 }; change(node); console.log(node.kind);",
