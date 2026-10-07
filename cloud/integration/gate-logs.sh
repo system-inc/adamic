@@ -43,16 +43,22 @@ print(" ".join(signal.Signals(n).name for n in range(1, 65) if mask >> (n - 1) &
 	signals="inherited ignored signals (launching shell, pid $PPID): SigIgn=$mask ($names)"
 fi
 export GATE_LOGS_SIGNALS=$signals
-# A test whose required input is unset skips in 0 s, and main took a stage 1 test that way: name the
-# inputs this run started with, so a gate is judged with its input set, and the summary marks every
-# skip that names a missing one. The list is what developer tools' setup --gate-inputs provides.
-requiredInputs="ADAMIC_TYPESCRIPT_SOURCE ADAMIC_TS_PRETTIER ADAMIC_JSON_PRETTIER ADAMIC_GRAPHQL_PRETTIER ADAMIC_CSS_LIBRARY ADAMIC_CSS_PRINTER_LIBRARY ADAMIC_ESTREE_LIBRARY ADAMIC_YAML_LIBRARY ADAMIC_GRAPHQL_LIBRARY ADAMIC_MEDIA_QUERY_LIBRARY ADAMIC_SELECTOR_LIBRARY ADAMIC_VALUES_LIBRARY"
-missingInputs=""
-for name in $requiredInputs; do
-	[ -n "${!name:-}" ] || missingInputs="$missingInputs $name"
-done
-export GATE_LOGS_REQUIRED_INPUTS=$requiredInputs
-export GATE_LOGS_INPUTS="gate inputs missing at launch:${missingInputs:- none}"
+# A test whose required input is unset skips in 0 s, and main took a stage 1 test that way. The skip
+# census (internal/skipcensus) classifies every skip in the tree; its table judges the skips here, so
+# a required-input or unclassified skip is marked in every publish. The tree's own table is used when
+# it has the census, otherwise the one on origin/devtools/census-main.
+skipTable="$work/skips.json"
+skipSource=""
+if [ -f internal/skipcensus/testdata/skips.json ]; then
+	cp internal/skipcensus/testdata/skips.json "$skipTable"
+	skipSource="the gated tree"
+elif git fetch -q origin devtools/census-main 2>/dev/null && git show FETCH_HEAD:internal/skipcensus/testdata/skips.json >"$skipTable" 2>/dev/null; then
+	skipSource="origin/devtools/census-main $(git rev-parse --short=8 FETCH_HEAD)"
+fi
+export GATE_LOGS_SKIP_TABLE=$skipTable
+export GATE_LOGS_SKIP_SOURCE=${skipSource:-none found}
+inputs=$(env | grep -o '^ADAMIC_[A-Z_]*' | sort | paste -sd ' ' -)
+export GATE_LOGS_INPUTS="gate inputs set at launch: ${inputs:-none}"
 echo "gate-logs: publishing to ${ref#refs/heads/}; $signals"
 
 publish() {

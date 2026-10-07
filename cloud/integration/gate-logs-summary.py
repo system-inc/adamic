@@ -11,8 +11,22 @@ sha, state, log, failuresPath, statusPath = sys.argv[1:6]
 output = collections.defaultdict(list)
 buildOutput = collections.defaultdict(list)
 failedTests, failedBuilds, failedPackages, finishedPackages = [], set(), set(), set()
-requiredInputs = os.environ.get("GATE_LOGS_REQUIRED_INPUTS", "").split()
-skippedForInput = []
+# The skip census's table classifies every skip site: required-input, measurement or
+# not-applicable, under the function holding the skip and every test that reaches it (callers).
+# Matching a log's skip by test name is an early mark, not the verdict: the census command
+# identifies each skip by its source condition, and its exit decides the gate.
+skipClasses = collections.defaultdict(set)
+skipProvides = {}
+try:
+    for row in json.load(open(os.environ.get("GATE_LOGS_SKIP_TABLE", ""))):
+        for name in [row["test"], *row.get("callers", [])]:
+            skipClasses[name].add(row["class"])
+            if row["class"] == "required-input":
+                skipProvides.setdefault(name, row.get("provides", ""))
+    haveTable = True
+except (OSError, ValueError, KeyError, TypeError):
+    haveTable = False
+skippedForInput, skippedUnknown = [], []
 counts = collections.Counter()
 for line in open(log, errors="replace"):
     try:
@@ -33,11 +47,13 @@ for line in open(log, errors="replace"):
             counts[action] += 1
             if action == "fail":
                 failedTests.append((package, test))
-            if action == "skip":
-                said = "".join(output[(package, test)])
-                named = [name for name in requiredInputs if name in said]
-                if named:
-                    skippedForInput.append((package, test, named))
+            if action == "skip" and haveTable:
+                top = test.split("/")[0]
+                classes = skipClasses.get(test) or skipClasses.get(top)
+                if not classes:
+                    skippedUnknown.append((package, test))
+                elif classes == {"required-input"}:
+                    skippedForInput.append((package, test, skipProvides.get(test) or skipProvides.get(top, "")))
         else:
             finishedPackages.add(package)
             if action == "fail":
@@ -55,8 +71,13 @@ with open(failuresPath, "w") as failures:
         failures.write(f"== {package} {test}\n")
         failures.writelines(output[(package, test)][-20:])
         failures.write("\n")
-    for package, test, named in skippedForInput:
-        failures.write(f"== {package} {test} (skipped: missing gate input {' '.join(named)})\n")
+    for package, test, provides in skippedForInput:
+        failures.write(f"== {package} {test} (skipped; the census table classes it required-input)\n")
+        failures.write(f"census: {provides}\n")
+        failures.writelines(output[(package, test)][-5:])
+        failures.write("\n")
+    for package, test in skippedUnknown:
+        failures.write(f"== {package} {test} (skipped; no census row matches its name)\n")
         failures.writelines(output[(package, test)][-5:])
         failures.write("\n")
     for package in sorted(failedPackages - failedBuilds):
@@ -69,7 +90,9 @@ with open(statusPath, "w") as status:
     status.write(
         f"{state}: {counts['pass']} pass, {counts['fail']} fail, {counts['skip']} skip; "
         f"{len(failedBuilds)} packages failed to build; {len(finishedPackages)} packages finished; "
-        f"{len(skippedForInput)} skipped for a missing gate input\n"
+        + (f"by test name, {len(skippedForInput)} required-input skips and {len(skippedUnknown)} unmatched "
+           f"(census table: {os.environ.get('GATE_LOGS_SKIP_SOURCE', '?')}; the census command decides)\n" if haveTable
+           else "skips not judged: no census table\n")
     )
     status.write(f"sha {sha}\n")
     status.write(os.environ.get("GATE_LOGS_SIGNALS", "inherited ignored signals: not recorded") + "\n")
