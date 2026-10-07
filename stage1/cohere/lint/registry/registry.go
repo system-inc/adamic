@@ -314,12 +314,29 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 	return []byte(ts.String()), formatted
 }
 
-// Generate validates the entire registry even when a test selects only one rule.
+// Generate validates the entire registry before optionally selecting one slug.
+// Selection uses the same descriptor order, renderer and atomic publication as
+// the full run; order is a finding-order contract, never a baseline-rule list.
 // Atomic replacement and unchanged-byte checks make concurrent test generation safe.
-func Generate(root string) ([]Descriptor, error) {
+func Generate(root string, selected ...string) ([]Descriptor, error) {
 	descriptors, err := Discover(root)
 	if err != nil {
 		return nil, err
+	}
+	if len(selected) > 1 {
+		return nil, fmt.Errorf("select exactly one rule")
+	}
+	if len(selected) == 1 {
+		var chosen []Descriptor
+		for _, d := range descriptors {
+			if d.Slug == selected[0] {
+				chosen = append(chosen, d)
+			}
+		}
+		if len(chosen) == 0 {
+			return nil, fmt.Errorf("unknown selected registration %q", selected[0])
+		}
+		descriptors = chosen
 	}
 	ts, goSource := Render(descriptors)
 	directory := filepath.Join(root, ".generated")

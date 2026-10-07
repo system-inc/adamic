@@ -139,3 +139,35 @@ Raw witnesses keep their script extension, including `.tsx.txt` and `.jsx.txt`.
 The harness preserves captured corpus filenames and Go script kinds as well.
 This transports script kinds; it does not add JSX syntax to the shared stage 1 parser.
 Unsupported syntax still fails the comparison instead of earning certification.
+
+## Check one rule
+
+From the repository root, run:
+
+```sh
+go run ./cmd/adamic-lint-check <slug>
+```
+
+The command validates every descriptor, then uses the shared registry generator
+with only the selected registration. It checks owned witnesses, captured upstream
+cases and inherited corner cases on Go cohere, source Node, emitted JavaScript and
+ASan/UBSan native, including exact findings, repairs and suggestions. The owned
+mutant must disagree with Go on all three port runtimes. A phase timing table is
+printed even when certification fails.
+
+Oracle binaries, captures, corpus observations and port artifacts are keyed by
+inputs and toolchains under the user cache's `adamic/lint/` directory, published
+atomically and checked for corruption. Selected native builds use the split
+compiler with `Jobs = GOMAXPROCS`; correct and mutant builds run concurrently.
+`ADAMIC_GATE_UNCACHED=1` bypasses observations, artifacts and split object reuse.
+The ordinary all-rule suite keeps its full registry, cross-rule cases, mutants,
+profiling checks and independent whole-file sanitized build:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./stage1/cohere/lint/...
+```
+
+All migrated rules now live in the registry, so the old hand-maintained baseline
+selection and extra volume corpus are unnecessary. Their inherited sources and
+options already live in the current shared corpus. Selected/full verdict parity
+covers passing rules and a clean-running rule with a wrong message-ID literal.

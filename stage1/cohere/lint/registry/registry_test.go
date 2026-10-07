@@ -170,3 +170,41 @@ func TestAdamicRuleModule(t *testing.T) {
 	}
 	t.Log("stale .ts alongside .a rejected")
 }
+
+func TestSelectedGeneration(t *testing.T) {
+	t.Parallel()
+	root := copyRules(t)
+	selected, err := Generate(root, "eqeqeq")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(selected) != 1 || selected[0].Slug != "eqeqeq" {
+		t.Fatal("unselected registration entered build")
+	}
+	full, err := Discover(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, d := range full {
+		if d.Slug == "eqeqeq" {
+			ts, goSource := Render([]Descriptor{d})
+			for name, want := range map[string][]byte{"registry.ts": ts, "registry.go": goSource} {
+				got, err := os.ReadFile(filepath.Join(root, ".generated", name))
+				if err != nil || !bytes.Equal(got, want) {
+					t.Fatalf("selected generation diverged from shared renderer: %v", err)
+				}
+			}
+		}
+	}
+	if _, err := Generate(root, "unknown"); err == nil {
+		t.Fatal("unknown selected rule accepted")
+	}
+	// Selection cannot conceal an invalid independently owned directory.
+	path := filepath.Join(root, "rules/no-var/rule.json")
+	if err := os.WriteFile(path, []byte(`{"bad":true}`), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Generate(root, "eqeqeq"); err == nil {
+		t.Fatal("invalid unselected descriptor hidden")
+	}
+}
