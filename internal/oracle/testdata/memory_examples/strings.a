@@ -1,0 +1,8 @@
+function run(): void {
+	let text = '';
+	for (let index = 0; index < 160; index++) text += 'x';
+	let slice = text.slice(16, 144);
+	slice += '!';
+	console.log(`${text.length} ${slice.length} ${text.charAt(144)} ${slice.charAt(128)}`);
+}
+run();

@@ -1,0 +1,25 @@
+class Node {
+	readonly name: string;
+	readonly kids: Node[] = [];
+	constructor(name: string) {
+		this.name = name;
+	}
+}
+const root = new Node(`root${1}`);
+function make(fail: boolean): Node {
+	if (fail) {
+		throw new Error('no');
+	}
+	return new Node(`made${2}`);
+}
+function run(fail: boolean): void {
+	let holder: Node = root;
+	try {
+		holder = make(fail);
+	} catch (error) {
+		console.log('caught');
+	}
+	holder.kids.push(root); // closes the cycle
+	console.log(`${root.kids.length}`);
+}
+run(true);

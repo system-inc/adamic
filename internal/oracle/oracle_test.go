@@ -118,6 +118,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
 	{"internal/oracle/testdata/call_targets_closure.a", true, false},
 	{"internal/oracle/testdata/call_targets_sort.a", true, false},
+	// Small programs documented in docs/memory.md, held to Node and the leak check.
+	{"internal/oracle/testdata/memory_examples/list.a", true, false},
+	{"internal/oracle/testdata/memory_examples/tree.a", true, false},
+	{"internal/oracle/testdata/memory_examples/closures.a", true, false},
+	{"internal/oracle/testdata/memory_examples/regions.a", true, false},
+	{"internal/oracle/testdata/memory_examples/strings.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
@@ -354,6 +360,17 @@ var fixtures = []struct {
 	// A constructor whose object a closure captures, kept in a global (integration's reading of
 	// fa49e43): the object outlives its statement, so no region.
 	{"internal/oracle/testdata/regions_constructor_capture.a", true, false},
+	// Guards and paths no fixture reached, from integration's readings of aa17d3c and fa49e43
+	// (#fxspptb): a comparator that spreads its parameter, a global moved before it's declared, the
+	// ways a parameter escapes, a spread returned as fresh, an object bigger than a region's first
+	// block, and region paths through asides, nested literals and try/finally.
+	{"internal/oracle/testdata/reuse_comparator_spread.a", true, false},
+	{"internal/oracle/testdata/reuse_move_before_ready.a", true, false},
+	{"internal/oracle/testdata/regions_escapes.a", true, false},
+	{"internal/oracle/testdata/regions_spread_fresh.a", true, false},
+	{"internal/oracle/testdata/regions_big.a", true, false},
+	{"internal/oracle/testdata/regions_paths.a", true, false},
+	{"internal/oracle/testdata/reduce_undefined_initial.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
 	{"internal/oracle/testdata/borrow_loop.a", true, false},
@@ -462,6 +479,36 @@ var fixtures = []struct {
 	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
 	{"internal/oracle/testdata/reuse_spread_method.a", true, false},
 	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
+	// A move handed to a call whose later argument throws (reuse.go, handOver).
+	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
+	// A throw from inside a ?:, && or ?? arm after the statement built strings (9984394).
+	{"internal/oracle/testdata/aside_throw.a", true, false},
+	// Spreading an Error, directly and through a view (integration's reading of 9984394): not yet.
+	{"internal/oracle/testdata/error_spread.a", false, false},
+	{"internal/oracle/testdata/error_spread_view.a", false, false},
+	// An uncaught error with an empty name, and with both empty (integration's reading of 9984394).
+	{"internal/oracle/testdata/uncaught_names.a", true, false},
+	{"internal/oracle/testdata/uncaught_names_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_error_construct.a", false, false},
+	{"internal/oracle/testdata/coverage_error_call.a", false, false},
+	{"internal/oracle/testdata/coverage_error_mutated.a", false, false},
+	{"internal/oracle/testdata/coverage_error_optional.a", false, false},
+	{"internal/oracle/testdata/coverage_error_view_return.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_literal.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_new.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_call.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_view.a", false, false},
+	{"internal/oracle/testdata/coverage_plain_view.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_default_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_custom_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_custom_message.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_empty_changed.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_no_argument.a", true, false},
+	{"internal/oracle/testdata/coverage_view_array.a", false, false},
+	{"internal/oracle/testdata/coverage_view_number.a", false, false},
+	{"internal/oracle/testdata/coverage_view_string.a", false, false},
+	{"internal/oracle/testdata/coverage_view_boolean.a", false, false},
+	{"internal/oracle/testdata/coverage_view_closure.a", false, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
