@@ -1,0 +1,17 @@
+{
+  "name": "react/no-adjacent-inline-elements",
+  "kinds": [
+    "JsxElement",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "source": "rule.a",
+  "class": "Rule",
+  "factory": "create",
+  "nodeArgument": true,
+  "needsChecker": true,
+  "kindNumbers": [
+    285,
+    214
+  ]
+}
