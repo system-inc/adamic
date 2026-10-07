@@ -205,7 +205,7 @@ assert expected==actual and not error
 for line in expected.decode().splitlines():
     name,*keys=line.split('\t')
     descriptor=json.loads((UNIT/'rules'/name.split('/')[1]/'rule.json').read_text())
-    assert descriptor['kinds']==list(map(int,keys))
+    assert descriptor['kinds']==keys
 print('listener manifests and compiled declarations: production Go keys match',flush=True)
 probe_source=OUT/'released.a';probe_source.write_text('declare let value:number;value;\nexport {};\n')
 run('released-build',[STAGE0,'build',PRIVATE/'released_probe.a','-o',OUT/'released','--tsgo',ARCHIVE])
@@ -215,13 +215,13 @@ print('symbol metadata: live success, released handle panic 70',flush=True)
 # A listener mutation must alter real dispatch, not merely metadata output.
 for name in ['jsx-fragments','jsx-no-undef','no-adjacent-inline-elements']:
     path=PRIVATE/'rules'/name/'rule.a';original=path.read_text()
-    keys=re.search(r'listenerKinds: readonly number\[\] = \[([^]]+)\]',original)
+    keys=re.search(r'listenerKinds: readonly string\[\] = \[([^]]+)\]',original)
     assert keys
-    mutated=original[:keys.start(1)]+original[keys.start(1):keys.end(1)].replace(keys.group(1).split(',')[0],'0',1)+original[keys.end(1):]
+    mutated=original[:keys.start(1)]+original[keys.start(1):keys.end(1)].replace(keys.group(1).split(',')[0],"'Unknown'",1)+original[keys.end(1):]
     path.write_text(mutated)
     run(name+'-listener-mutant-build',[STAGE0,'build',PRIVATE/'suite.a','-o',OUT/'mutant','--tsgo',ARCHIVE])
     changed,error=run(name+'-listener-mutant',[OUT/'mutant',config,manifest])
     assert not error and changed!=truth, name+' listener mutant survived'
     path.write_text(original)
-    print(name+': numeric listener mutant exits 0; Go bytes catch missed dispatch',flush=True)
+    print(name+': named listener mutant exits 0; Go bytes catch missed dispatch',flush=True)
 print('PASS isolated JSX rule gate; published parser integration remains pending.',flush=True)

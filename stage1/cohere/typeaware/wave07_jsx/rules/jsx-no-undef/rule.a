@@ -1,7 +1,7 @@
 import type { Document } from '../../document.a';
 import type { Node } from '../../node.a';
 import type { Symbols } from '../../symbols.a';
-export const listenerKinds: readonly number[] = [286, 287];
+export const listenerKinds: readonly string[] = ['JsxSelfClosingElement', 'JsxOpeningElement'];
 export class Rule {
     readonly document: Document;
     readonly symbols: Symbols;

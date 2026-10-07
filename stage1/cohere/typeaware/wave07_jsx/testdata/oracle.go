@@ -138,7 +138,7 @@ func main() {
 				sort.Ints(keys)
 				fmt.Print(subject.Name)
 				for _, kind := range keys {
-					fmt.Printf("\t%d", kind)
+					fmt.Printf("\t%s", strings.TrimPrefix(ast.Kind(kind).String(), "Kind"))
 				}
 				fmt.Println()
 			}

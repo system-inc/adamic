@@ -1,10 +1,10 @@
 {
   "name": "react/jsx-no-undef",
   "kinds": [
-    286,
-    287
+    "JsxSelfClosingElement",
+    "JsxOpeningElement"
   ],
   "visit": "visit",
-  "module": "rule.a",
-  "class": "Rule"
+  "class": "Rule",
+  "node": true
 }

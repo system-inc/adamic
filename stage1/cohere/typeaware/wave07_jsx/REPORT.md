@@ -1,7 +1,7 @@
 Built: three owned numeric JSX rule handlers in .a; analysis-dependent React claims remain parked.
 Commits: claim fe438566c was pushed before implementation; the final implementation SHA is recorded in evidence metadata.
 Checks: 131 controls, four option combinations and both frozen corpora match Go; sanitizers and released-handle checks pass.
-Mutants: three message IDs, three numeric dispatch listeners and one library-data mutation compile, exit 0 and fail only byte comparison.
+Mutants: three message IDs, three named dispatch listeners and one library-data mutation compile, exit 0 and fail only byte comparison.
 Not covered: positive JSX on the shared main parser, shared registration/profile integration, emitted-JavaScript comparison and the full repository gate.
 
 ## Selection and scope
@@ -17,8 +17,9 @@ eligible three were `react/jsx-fragments`, `react/jsx-no-undef` and
 The claim push preceded all implementation.
 
 Each rule lives in its own directory. Its `rule.json` and exported declarations
-use production Go's numeric SyntaxKind keys: fragments [285,286,289], undefined
-names [286,287], adjacent inline elements [214,285]. Each handler accepts the
+use the registry's ast.Kind names: fragments [JsxElement, JsxSelfClosingElement,
+JsxFragment], undefined names [JsxSelfClosingElement, JsxOpeningElement], adjacent
+inline elements [CallExpression, JsxElement]. Each manifest sets node: true. Each handler accepts the
 handed Node; it neither refetches that node nor reads its kind as a string.
 The owned driver normalizes legacy parser strings once, indexes listeners by
 numeric kind and invokes only matching handlers. Declaration metadata is decoded
@@ -49,7 +50,7 @@ using the unchanged main parser; positive controls establish non-vacuous behavio
 
 All six rule mutants are valid compiled programs, exit 0 with empty stderr and
 are caught only by production Go bytes. Message mutations change one rule's ID;
-listener mutations replace its first real numeric kind with Unknown (0), causing
+listener mutations replace its first real named kind with Unknown, causing
 missed real dispatch. Compiled listener declarations and rule.json match actual
 production Go Run keys. The existing node-symbol-details question succeeds live;
 an uncached request after release panics 70 with the required invalid-handle error.
@@ -125,3 +126,16 @@ space. Sources, logs and prior committed proof were preserved; shared caches
 were not changed. Recovery inventories are archived. See evidence metadata
 and compressed command logs for actual exits and pins.
 The full repository gate and emitted-JavaScript differential were not run.
+
+## Named listener correction
+
+Under Ahra's latest instruction, descriptors and exported listener declarations
+use ast.Kind names without the Kind prefix, as ab70f38d4 validates. The existing
+owned driver resolves each declared name once into its internal normalization
+map; numeric values are not a public registry API. Rule relevance remains in
+the indexed driver, and rule handlers keep the node they are handed. The full
+Go/sanitizer/released-handle gate and three named dispatch mutants pass again.
+Shared harness RuleContext at ab70f38d4 has no checker-program handle; these
+standalone type-aware handlers are not represented as registered there.
+The existing shared parser JSX blocker remains. No shared harness was edited.
+Latest setup: Go 0s, clang 0s, Node 0s, submodules 1s, cache 44s, done 44s; nproc 5.

@@ -1,7 +1,7 @@
 import type { Document } from '../../document.a';
 import type { Node } from '../../node.a';
 import type { Pragma } from '../../pragma.a';
-export const listenerKinds: readonly number[] = [214, 285];
+export const listenerKinds: readonly string[] = ['CallExpression', 'JsxElement'];
 const inlineNames = [
     'a',
     'b',

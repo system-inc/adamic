@@ -5,13 +5,15 @@ import type { Document } from './document.a';
 import type { Node } from './node.a';
 import { Symbols } from './symbols.a';
 import { Pragma } from './pragma.a';
+import { numericKind } from './kinds.a';
 import { Rule as Fragments, listenerKinds as fragmentKinds } from './rules/jsx-fragments/rule.a';
 import { Rule as Undef, listenerKinds as undefKinds } from './rules/jsx-no-undef/rule.a';
 import { Rule as Adjacent, listenerKinds as adjacentKinds } from './rules/no-adjacent-inline-elements/rule.a';
 
 const routes = new Map<number, number[]>();
-function listen(kinds: readonly number[], rule: number): void {
-    for(const kind of kinds) {
+function listen(kinds: readonly string[], rule: number): void {
+    for(const name of kinds) {
+        const kind = numericKind(name);
         const previous = routes.get(kind);
         if(previous === undefined) {
             routes.set(kind, [rule]);

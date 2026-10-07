@@ -1,7 +1,7 @@
 import type { Document } from '../../document.a';
 import type { Node } from '../../node.a';
 import type { Pragma } from '../../pragma.a';
-export const listenerKinds: readonly number[] = [285, 286, 289];
+export const listenerKinds: readonly string[] = ['JsxElement', 'JsxSelfClosingElement', 'JsxFragment'];
 export class Rule {
     readonly document: Document;
     readonly pragma: Pragma;

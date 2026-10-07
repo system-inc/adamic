@@ -1,10 +1,10 @@
 {
   "name": "react/no-adjacent-inline-elements",
   "kinds": [
-    214,
-    285
+    "CallExpression",
+    "JsxElement"
   ],
   "visit": "visit",
-  "module": "rule.a",
-  "class": "Rule"
+  "class": "Rule",
+  "node": true
 }
