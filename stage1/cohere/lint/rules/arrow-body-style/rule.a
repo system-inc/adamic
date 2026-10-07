@@ -1,0 +1,160 @@
+import type { RuleContext } from '../../context.ts';
+import { all } from '../../helpers/comments/all.ts';
+import type { Comment } from '../../helpers/comments/comment.ts';
+import { utf8Length } from 'adamic';
+import { ids, messages } from './messages.a';
+export class Edit {
+    readonly start: number; readonly end: number; readonly text: string;
+    constructor(start: number, end: number, text: string) { this.start = start; this.end = end; this.text = text; }
+}
+export class Repair {
+    readonly body: number; readonly edits: Edit[];
+    constructor(body: number, edits: Edit[]) { this.body = body; this.edits = edits; }
+}
+export class Rule {
+    readonly context: RuleContext; readonly repairs: Repair[] = [];
+    private cachedComments: Comment[] = []; private commentsReady = false;
+    constructor(context: RuleContext) { this.context = context; }
+    fileComments(root: number): Comment[] {
+        if(!this.commentsReady) { this.cachedComments = all(this.context.parser, root); this.commentsReady = true; }
+        return this.cachedComments;
+    }
+    kind(index: number): string { return index < 0 ? '' : this.context.node(index).kind; }
+    child(index: number, at: number): number { return index < 0 ? -1 : this.context.node(index).children[at] ?? -1; }
+    unwrap(index: number): number { return index < 0 ? -1 : this.context.unwrap(index); }
+    parent(index: number): number { return this.context.parents[index] ?? -1; }
+    starts(index: number, text: string): boolean { return index >= 0 && this.context.source.slice(this.context.start(index), this.context.start(index) + 1) === text; }
+    report(body: number, message: number, edits: Edit[]): void {
+        this.repairs.push(new Repair(body, edits));
+        // The shared Finding supports one edit. Preserve Go's full edit list separately.
+        this.context.report(body, 'arrow-body-style', ids[message] ?? '', messages[message] ?? '', '', '', '');
+    }
+    comments(from: number, to: number): boolean {
+        let root = 0; while(this.parent(root) >= 0) { root = this.parent(root); }
+        // A flat arena need not put SourceFile at index zero.
+        for(let index = 0; index < this.context.parents.length; index++) { if(this.kind(index) === 'SourceFile') { root = index; break; } }
+        const start = utf8Length(this.context.source.slice(0, from)); const end = utf8Length(this.context.source.slice(0, to));
+        for(const comment of this.fileComments(root)) { if(comment.start >= start && comment.end <= end) { return true; } }
+        return false;
+    }
+    hazard(body: number): boolean {
+        const text = this.context.source;
+        for(let at = this.context.node(body).end; at < text.length; at++) {
+            const character = text.slice(at, at + 1);
+            if(' \t\r\n'.includes(character)) { continue; }
+            if(text.slice(at, at + 2) === '//') {
+                at += 2; while(at < text.length && !'\r\n'.includes(text.slice(at, at + 1))) { at++; } at--; continue;
+            }
+            if(text.slice(at, at + 2) === '/*') { const close = text.indexOf('*/', at + 2); at = close < 0 ? text.length - 1 : close + 1; continue; }
+            return '([/`+-'.includes(character);
+        }
+        return false;
+    }
+    hasIn(index: number): boolean {
+        if(this.kind(index) === 'BinaryExpression' && this.kind(this.child(index, 1)) === 'InKeyword') { return true; }
+        for(const child of this.context.node(index).children) { if(this.hasIn(child)) { return true; } }
+        return false;
+    }
+    initializer(index: number): boolean {
+        let child = index;
+        for(let parent = this.parent(child); parent >= 0; parent = this.parent(child)) {
+            if(this.kind(parent) === 'ForStatement' && this.child(parent, 0) === child) {
+                const scanner = this.context.scanner;
+                scanner.pos = this.context.start(parent); scanner.scan(); scanner.scan();
+                const token = scanner.scan();
+                if(token !== 'SemicolonToken') { return true; }
+            }
+            child = parent;
+        }
+        return false;
+    }
+    semicolon(statement: number): number {
+        for(let at = this.context.node(statement).end - 1; at >= this.context.node(statement).pos; at--) {
+            const character = this.context.source.slice(at, at + 1);
+            if(' \t\r\n'.includes(character)) { continue; }
+            return character === ';' ? at : -1;
+        }
+        return -1;
+    }
+    shorten(index: number, body: number, statement: number, value: number): Edit[] {
+        if(value < 0 || this.kind(statement) !== 'ReturnStatement' || this.hazard(body)) { return []; }
+        const context = this.context;
+        const opening = context.source.indexOf('{', context.node(body).pos); const closing = context.node(body).end - 1;
+        const start = context.start(value); const end = context.node(value).end; const semicolon = this.semicolon(statement);
+        const unwrapped = this.unwrap(value);
+        let needs = this.starts(value, '{') || (this.kind(unwrapped) === 'BinaryExpression' && this.kind(this.child(unwrapped, 1)) === 'CommaToken') || (this.hasIn(index) && this.initializer(index));
+        if(this.kind(value) === 'ParenthesizedExpression') { needs = false; }
+        const left = needs ? '(' : ''; const right = needs ? ')' : '';
+        if(this.comments(opening + 1, start) || this.comments(semicolon >= 0 ? semicolon + 1 : end, closing)) {
+            const returnStart = context.start(statement);
+            const edits = [new Edit(opening, opening + 1, ''), new Edit(returnStart, returnStart + 6, left)];
+            if(semicolon >= 0) { edits.push(new Edit(semicolon, semicolon + 1, right)); edits.push(new Edit(closing, closing + 1, '')); }
+            else { edits.push(new Edit(closing, closing + 1, right)); }
+            return edits;
+        }
+        return [new Edit(opening, start, left), new Edit(semicolon >= 0 ? semicolon : end, closing + 1, right)];
+    }
+    operand(index: number): number { return ['PropertyAccessExpression', 'ElementAccessExpression', 'CallExpression'].includes(this.kind(index)) ? this.child(index, 0) : -1; }
+    object(body: number): number {
+        if(!this.starts(body, '(')) { return -1; }
+        let current = body;
+        while(current >= 0) {
+            if(this.kind(current) === 'ParenthesizedExpression') {
+                current = this.unwrap(this.child(current, 0));
+                while(current >= 0) {
+                    if(this.kind(current) === 'ObjectLiteralExpression') { return current; }
+                    current = this.unwrap(this.operand(current));
+                }
+                return -1;
+            }
+            current = this.operand(current);
+        }
+        return -1;
+    }
+    closing(from: number): number {
+        const text = this.context.source; let depth = 0;
+        for(let at = from; at < text.length; at++) {
+            const character = text.slice(at, at + 1);
+            if(['\'', '"', '`'].includes(character)) {
+                const quote = character;
+                for(at++; at < text.length; at++) {
+                    const next = text.slice(at, at + 1);
+                    if(next === '\\') { at++; continue; }
+                    if(next === quote) { break; }
+                }
+            } else if(character === '(') { depth++; }
+            else if(character === ')') { depth--; if(depth === 0) { return at; } }
+        }
+        return -1;
+    }
+    expand(index: number, body: number): Edit[] {
+        const context = this.context; const start = context.start(body); const end = context.node(index).end;
+        const object = this.object(body);
+        if(object < 0) { return [new Edit(start, start, '{return '), new Edit(end, end, '}')]; }
+        const objectStart = context.start(object); const close = this.closing(start); const edits: Edit[] = [];
+        if(!/[\n\r]/.test(context.source.slice(start, objectStart))) { edits.push(new Edit(start, start + 1, '{return ')); }
+        else { edits.push(new Edit(start, start + 1, '{')); edits.push(new Edit(objectStart, objectStart, 'return ')); }
+        if(close < 0) { edits.push(new Edit(end, end, '}')); }
+        else if(close + 1 === end) { edits.push(new Edit(close, end, '}')); }
+        else { edits.push(new Edit(close, close + 1, '')); edits.push(new Edit(end, end, '}')); }
+        return edits;
+    }
+    visit(index: number): void {
+        const context = this.context; const children = context.node(index).children; const body = children[children.length - 1] ?? -1;
+        if(body < 0) { return; }
+        const mode = context.settings.read('mode', 'AsNeeded'); const objectOption = context.settings.read('requirereturnforobjectliteral', 'false') === 'true';
+        if(this.kind(body) !== 'Block') {
+            if(mode === 'Always' || (mode === 'AsNeeded' && objectOption && this.kind(this.unwrap(body)) === 'ObjectLiteralExpression')) { this.report(body, 4, this.expand(index, body)); }
+            return;
+        }
+        const statements = context.node(body).children; const statement = statements[0] ?? -1;
+        if(statements.length !== 1 && mode !== 'Never') { return; }
+        const value = this.kind(statement) === 'ReturnStatement' ? this.child(statement, 0) : -1;
+        if(mode === 'AsNeeded' && objectOption && statements.length === 1 && this.kind(this.unwrap(value)) === 'ObjectLiteralExpression') { return; }
+        const reportable = mode === 'Never' || (mode === 'AsNeeded' && statements.length === 1 && this.kind(statement) === 'ReturnStatement');
+        if(!reportable) { return; }
+        const message = statements.length === 0 ? 1 : statements.length > 1 || this.kind(statement) !== 'ReturnStatement' ? 0 : this.starts(value, '{') ? 2 : 3;
+        this.report(body, message, statements.length === 1 ? this.shorten(index, body, statement, value) : []);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

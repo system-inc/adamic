@@ -1,0 +1,6 @@
+{
+  "name": "arrow_findings_suppressed",
+  "file": "rule.a",
+  "from": "if(!reportable)",
+  "to": "if(true)"
+}

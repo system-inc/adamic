@@ -1,0 +1,12 @@
+{
+  "name": "arrow-body-style",
+  "kinds": [
+    "ArrowFunction"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleArrowBodyStyle",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestArrowBodyStyle"
+}

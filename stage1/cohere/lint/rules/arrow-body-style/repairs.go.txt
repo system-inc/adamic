@@ -1,0 +1,148 @@
+// Built through an overlay inside cohere. Independent Go answers, not port answers.
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	rules "github.com/system-inc/cohere/internal/lint/rules/core"
+	"os"
+	"sort"
+	"strings"
+	"unicode/utf16"
+)
+
+type record struct {
+	Rule, Source, File string
+	Options            json.RawMessage
+}
+
+func quote(s string) string {
+	b, e := json.Marshal(s)
+	if e != nil {
+		panic(e)
+	}
+	return string(b)
+}
+func written(s string) string {
+	var b strings.Builder
+	for _, r := range s {
+		if r >= 32 && r <= 126 && r != '\\' {
+			b.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&b, "\\u%04x", r)
+		} else {
+			a, z := utf16.EncodeRune(r)
+			fmt.Fprintf(&b, "\\u%04x\\u%04x", a, z)
+		}
+	}
+	return b.String()
+}
+func main() {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var records map[string]record
+	if err = json.Unmarshal(data, &records); err != nil {
+		panic(err)
+	}
+	var keys []string
+	for key, r := range records {
+		if r.Rule == "arrow-body-style" || r.Rule == "no-extra-bind" {
+			keys = append(keys, key)
+		}
+	}
+	sort.Strings(keys)
+	var driver, answer strings.Builder
+	driver.WriteString(`import { utf8Length } from 'adamic';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { RuleContext } from '../../context.ts';
+import { Settings } from '../../settings.ts';
+import { Rule as Arrow } from './rule.a';
+class OutputEdit {
+ readonly start: number; readonly end: number; readonly text: string;
+ constructor(start: number, end: number, text: string) { this.start = start; this.end = end; this.text = text; }
+}
+import { Rule as Bind } from '../no-extra-bind/rule.a';
+function output(index: number, context: RuleContext, repairs: OutputEdit[][]): void {
+    console.log(` + "`case ${index}`" + `);
+    const order = context.findings.map((finding, at) => at).sort((a, b) => (context.findings[a]?.start ?? 0) - (context.findings[b]?.start ?? 0));
+    for(const at of order) {
+        const finding = context.findings[at];
+        if(finding === undefined) { continue; }
+        console.log(` + "`finding ${utf8Length(context.source.slice(0, finding.start))} ${utf8Length(context.source.slice(0, finding.end))} ${finding.id}\t${finding.message}`" + `);
+        const selected = repairs[at];
+        if(selected === undefined) { continue; }
+        for(const edit of selected) { console.log(` + "`edit ${utf8Length(context.source.slice(0, edit.start))} ${utf8Length(context.source.slice(0, edit.end))}\t${written(edit.text)}`" + `); }
+    }
+}
+function run(index: number, source: string, option: string, name: string): void {
+    const parser = new Parser(source, 'repairs.ts'); const root = parser.file(); const parents = new Array<number>(parser.nodes.length).fill(-1);
+    const pending = [root];
+    while(pending.length > 0) { const parent = pending.pop() ?? -1; for(const child of parser.node(parent).children) { parents[child] = parent; pending.push(child); } }
+    const settings = new Settings(); settings.load(option);
+    const context = new RuleContext(source, parser, new Scanner(source), name, '', '', false, parents, settings);
+    if(name === 'arrow-body-style') {
+        const rule = new Arrow(context);
+        const pending = [root]; while(pending.length > 0) { const current = pending.pop() ?? -1; if(parser.node(current).kind === 'ArrowFunction') { rule.visit(current); } for(const child of parser.node(current).children.slice().reverse()) { pending.push(child); } }
+        const edits: OutputEdit[][] = [];
+        for(const repair of rule.repairs) { const items: OutputEdit[] = []; for(const edit of repair.edits) { items.push(new OutputEdit(edit.start, edit.end, edit.text)); } edits.push(items); }
+        output(index, context, edits);
+    } else {
+        const rule = new Bind(context);
+        const pending = [root]; while(pending.length > 0) { const current = pending.pop() ?? -1; if(['FunctionExpression', 'ArrowFunction'].includes(parser.node(current).kind)) { rule.visit(current); } for(const child of parser.node(current).children.slice().reverse()) { pending.push(child); } }
+        const edits: OutputEdit[][] = [];
+        for(const repair of rule.repairs) { const items: OutputEdit[] = []; for(const edit of repair.edits) { items.push(new OutputEdit(edit.start, edit.end, edit.text)); } edits.push(items); }
+        output(index, context, edits);
+    }
+}
+`)
+	for at, key := range keys {
+		r := records[key]
+		f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/repairs.ts"}, r.Source, core.ScriptKindTS)
+		var ds []rule.Diagnostic
+		ctx := rule.Context{SourceFile: f, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { ds = append(ds, d) }}
+		var listeners rule.Listeners
+		if r.Rule == "arrow-body-style" {
+			opts := rules.ArrowBodyStyleOptions{Mode: rules.ArrowBodyStyleAsNeeded}
+			if len(r.Options) > 0 && string(r.Options) != "null" {
+				if err = json.Unmarshal(r.Options, &opts); err != nil {
+					panic(err)
+				}
+			}
+			listeners = rules.ArrowBodyStyle.Run(ctx, opts)
+		} else {
+			listeners = rules.NoExtraBind.Run(ctx, nil)
+		}
+		var walk func(*ast.Node)
+		walk = func(n *ast.Node) {
+			if visit := listeners[n.Kind]; visit != nil {
+				visit(n)
+			}
+			n.ForEachChild(func(c *ast.Node) bool { walk(c); return false })
+		}
+		walk(f.AsNode())
+		fmt.Fprintf(&driver, "run(%d, %s, %s, %s);\n", at, quote(r.Source), quote(string(r.Options)), quote(r.Rule))
+		sort.SliceStable(ds, func(i, j int) bool { return ds[i].Range.Pos() < ds[j].Range.Pos() })
+		fmt.Fprintf(&answer, "case %d\n", at)
+		for _, d := range ds {
+			fmt.Fprintf(&answer, "finding %d %d %s\t%s\n", d.Range.Pos(), d.Range.End(), d.Message.Id, d.Message.Description)
+			for _, fix := range d.Fixes {
+				fmt.Fprintf(&answer, "edit %d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text))
+			}
+		}
+	}
+	if err = os.WriteFile(os.Args[2], []byte(driver.String()), 0644); err != nil {
+		panic(err)
+	}
+	if err = os.WriteFile(os.Args[3], []byte(answer.String()), 0644); err != nil {
+		panic(err)
+	}
+	fmt.Printf("Independent parser repairs: %d cases\n", len(keys))
+}

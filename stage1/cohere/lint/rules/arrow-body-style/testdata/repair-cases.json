@@ -1,0 +1,1660 @@
+{
+  "arrow-body-style\tnull\t\n              var foo = () => {\n                return foo\n                  .bar;\n              };\n            ": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "\n              var foo = () => {\n                return foo\n                  .bar;\n              };\n            ",
+    "Outcome": "Fixed",
+    "FixedSource": "\n              var foo = () => foo\n                  .bar;\n            ",
+    "Options": null
+  },
+  "arrow-body-style\tnull\t\n              var foo = () => {\n                return {\n                  bar: 1,\n                  baz: 2\n                };\n              };\n            ": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "\n              var foo = () => {\n                return {\n                  bar: 1,\n                  baz: 2\n                };\n              };\n            ",
+    "Outcome": "Fixed",
+    "FixedSource": "\n              var foo = () => ({\n                  bar: 1,\n                  baz: 2\n                });\n            ",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tconst fn = (a, b) => { return a + x in Number(b) };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "const fn = (a, b) => { return a + x in Number(b) };",
+    "Outcome": "Fixed",
+    "FixedSource": "const fn = (a, b) => a + x in Number(b);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tdo{for (let a = (b, c, d) => { return vb in c in dd ; }; ;);}while(true){}": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "do{for (let a = (b, c, d) => { return vb in c in dd ; }; ;);}while(true){}",
+    "Outcome": "Fixed",
+    "FixedSource": "do{for (let a = (b, c, d) => (vb in c in dd ); ;);}while(true){}",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tdo{let a = () => {return f in ff}}while(true){}": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "do{let a = () => {return f in ff}}while(true){}",
+    "Outcome": "Fixed",
+    "FixedSource": "do{let a = () => f in ff}while(true){}",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor ( a = (b) => { return (c in d) }; ;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for ( a = (b) => { return (c in d) }; ;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for ( a = (b) => (c in d); ;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor ( a = (b, c, d) => { return v in b && c in d; }; ;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for ( a = (b, c, d) => { return v in b && c in d; }; ;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for ( a = (b, c, d) => (v in b && c in d); ;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (;;){var f = () => { return a in c }}": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (;;){var f = () => { return a in c }}",
+    "Outcome": "Fixed",
+    "FixedSource": "for (;;){var f = () => a in c}",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (let a = (b, c, d) => { return v in b && c in d; }; ;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (let a = (b, c, d) => { return v in b && c in d; }; ;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (let a = (b, c, d) => (v in b && c in d); ;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (let a = (b, c, d) => { return vb && c in d; }; ;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (let a = (b, c, d) => { return vb && c in d; }; ;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (let a = (b, c, d) => (vb && c in d); ;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (let a = (b, c, d) => { return vb in c in dd ; }; ;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (let a = (b, c, d) => { return vb in c in dd ; }; ;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (let a = (b, c, d) => (vb in c in dd ); ;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (let a = (b, c, d) => { return vb in dd ; }; ;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (let a = (b, c, d) => { return vb in dd ; }; ;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (let a = (b, c, d) => (vb in dd ); ;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (var f = () => { return a in c };;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var f = () => { return a in c };;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var f = () => (a in c);;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (var f = () => { return a };;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var f = () => { return a };;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var f = () => a;;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (var f = () => { return a[b in c] };;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var f = () => { return a[b in c] };;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var f = () => (a[b in c]);;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (var f = () => { return g(function(){ return a in c }) };;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var f = () => { return g(function(){ return a in c }) };;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var f = () => (g(function(){ return a in c }));;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfor (var f;f = () => { return a in c };);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var f;f = () => { return a in c };);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var f;f = () => a in c;);",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tfunction foo(){ for (let a = (b, c, d) => { return v in b && c in d; }; ;); }": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "function foo(){ for (let a = (b, c, d) => { return v in b && c in d; }; ;); }",
+    "Outcome": "Fixed",
+    "FixedSource": "function foo(){ for (let a = (b, c, d) => (v in b && c in d); ;); }",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tscores.map(score => { return x in +(score / maxScore).toFixed(2)});": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "scores.map(score => { return x in +(score / maxScore).toFixed(2)});",
+    "Outcome": "Fixed",
+    "FixedSource": "scores.map(score => x in +(score / maxScore).toFixed(2));",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar addToB = (a) => { b =  b + a };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var addToB = (a) => { b =  b + a };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar f = () => { return a in c };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var f = () => { return a in c };",
+    "Outcome": "Fixed",
+    "FixedSource": "var f = () => a in c;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => ({});": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => ({});",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => 0;": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => 0;",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => bar();": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => bar();",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => {\n /* do nothing */ \n};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => {\n /* do nothing */ \n};",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => {\nreturn bar;\n};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => {\nreturn bar;\n};",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => bar;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => {\nreturn bar;};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => {\nreturn bar;};",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => bar;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { /* do nothing */ };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { /* do nothing */ };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { /* leading */ return 5 };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { /* leading */ return 5 };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () =>  /* leading */  5 ;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { /* leading */ return 5; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { /* leading */ return 5; };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () =>  /* leading */  5 ;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { b = a };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { b = a };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { bar(); };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { bar(); };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { bar: 1 };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { bar: 1 };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return /* mid */ 5; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return /* mid */ 5; };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () =>   /* mid */ 5 ;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return 0; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 0; };",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return 5 /* after */ };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 5 /* after */ };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () =>   5 /* after */ ;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return 5 /* trailing */; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 5 /* trailing */; };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => 5 /* trailing */;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return 5; /* after */ };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 5; /* after */ };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () =>   5 /* after */ ;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return 5; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 5; };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => 5;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return a, b }": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return a, b }",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => (a, b)",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return bar } /* c */ ;": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return bar } /* c */ ;",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => bar /* c */ ;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return bar } // c\n[1,2].map(foo)": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return bar } // c\n[1,2].map(foo)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => { return { bar: 1 }; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return { bar: 1 }; };",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => {return bar;\n};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => {return bar;\n};",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => bar;",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = () => {};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => {};",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\tnull\tvar foo = (retv, name) => {\nretv[name] = true;\nreturn retv;\n};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = (retv, name) => {\nretv[name] = true;\nreturn retv;\n};",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\t\n              parsedYears = _map(years, (year) => (\n                  {\n                      index : year,\n                      title : splitYear(year)\n                  }\n              ));\n            ": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "\n              parsedYears = _map(years, (year) => (\n                  {\n                      index : year,\n                      title : splitYear(year)\n                  }\n              ));\n            ",
+    "Outcome": "Fixed",
+    "FixedSource": "\n              parsedYears = _map(years, (year) => {\n                  return {\n                      index : year,\n                      title : splitYear(year)\n                  }\n              });\n            ",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\t\n              var foo = () => ({\n                  bar: 1,\n                  baz: 2\n                });\n            ": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "\n              var foo = () => ({\n                  bar: 1,\n                  baz: 2\n                });\n            ",
+    "Outcome": "Fixed",
+    "FixedSource": "\n              var foo = () => {return {\n                  bar: 1,\n                  baz: 2\n                }};\n            ",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\t(() => ( {}))": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "(() => ( {}))",
+    "Outcome": "Fixed",
+    "FixedSource": "(() => {return  {}})",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\t(() => ({}))": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "(() => ({}))",
+    "Outcome": "Fixed",
+    "FixedSource": "(() => {return {}})",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tconst createMarker = (color) => ({ latitude, longitude }, index) => {};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "const createMarker = (color) => ({ latitude, longitude }, index) => {};",
+    "Outcome": "Fixed",
+    "FixedSource": "const createMarker = (color) => {return ({ latitude, longitude }, index) => {}};",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => (  {});": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => (  {});",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return   {}};",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => ( {foo: 1} ).foo();": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => ( {foo: 1} ).foo();",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return  {foo: 1} .foo()};",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => (((((((5)))))));": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => (((((((5)))))));",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return (((((((5)))))))};",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => ({ bar: 1 });": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => ({ bar: 1 });",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => ({foo: 1}).foo();": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => ({foo: 1}).foo();",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return {foo: 1}.foo()};",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => ({foo: 1}.foo());": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => ({foo: 1}.foo());",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return {foo: 1}.foo()};",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => ({});": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => ({});",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return {}};",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => 0": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => 0",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return 0}",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => 0;": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => 0;",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return 0};",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return 0; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 0; };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return bar(); };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return bar(); };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Always\",\"RequireReturnForObjectLiteral\":false}\tvar foo = /* a */ ( /* b */ ) /* c */ => /* d */ ( /* e */ 5 /* f */ ) /* g */ ;": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = /* a */ ( /* b */ ) /* c */ => /* d */ ( /* e */ 5 /* f */ ) /* g */ ;",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = /* a */ ( /* b */ ) /* c */ => /* d */ {return ( /* e */ 5 /* f */ )} /* g */ ;",
+    "Options": {
+      "Mode": "Always",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\ta in b; for (var f = () => { return c };;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "a in b; for (var f = () => { return c };;);",
+    "Outcome": "Fixed",
+    "FixedSource": "a in b; for (var f = () => c;;);",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tfor (;;){var f = () => { return a in c }}": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (;;){var f = () => { return a in c }}",
+    "Outcome": "Fixed",
+    "FixedSource": "for (;;){var f = () => a in c}",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tfor (var a;;a = b => { return c = d in e } );": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var a;;a = b => { return c = d in e } );",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var a;;a = b => c = d in e );",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tfor (var f = () => { return a in c };;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var f = () => { return a in c };;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var f = () => (a in c);;);",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tfor (var f = () => { return a };;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var f = () => { return a };;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var f = () => a;;);",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tfor (var f;f = () => { return a in c };);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var f;f = () => { return a in c };);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var f;f = () => a in c;);",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tfor (var f;f = () => { return a };);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var f;f = () => { return a };);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var f;f = () => a;);",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tfor (var foo = () => { return a in b ? bar : () => {} } ;;);": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "for (var foo = () => { return a in b ? bar : () => {} } ;;);",
+    "Outcome": "Fixed",
+    "FixedSource": "for (var foo = () => (a in b ? bar : () => {}) ;;);",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return '{' };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return '{' };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => '{';",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return ( /* a */ {ok: true} /* b */ ) };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return ( /* a */ {ok: true} /* b */ ) };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => ( /* a */ {ok: true} /* b */ );",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return ({ bar: 0 }); };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return ({ bar: 0 }); };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => ({ bar: 0 });",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return 0 };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 0 };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => 0;",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return 0; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 0; };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => 0;",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return bar(); };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return bar(); };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => bar();",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return { bar: 0 }.bar; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return { bar: 0 }.bar; };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => ({ bar: 0 }.bar);",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return { bar: 0 }; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return { bar: 0 }; };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => ({ bar: 0 });",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":false}\tvar foo = /* a */ ( /* b */ ) /* c */ => /* d */ { /* e */ return /* f */ 5 /* g */ ; /* h */ } /* i */ ;": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = /* a */ ( /* b */ ) /* c */ => /* d */ { /* e */ return /* f */ 5 /* g */ ; /* h */ } /* i */ ;",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = /* a */ ( /* b */ ) /* c */ => /* d */  /* e */  /* f */ 5 /* g */  /* h */  /* i */ ;",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar addToB = (a) => { b =  b + a };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var addToB = (a) => { b =  b + a };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => ({ bar: 0 });": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => ({ bar: 0 });",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return { bar: 0 }};",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => ({});": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => ({});",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => {return {}};",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => 0;": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => 0;",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => bar();": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => bar();",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => {\n /* do nothing */ \n};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => {\n /* do nothing */ \n};",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => { /* do nothing */ };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { /* do nothing */ };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => { bar(); };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { bar(); };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => { return 0; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 0; };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => 0;",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => { return bar(); };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return bar(); };",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => bar();",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => { return { bar: 0 }; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return { bar: 0 }; };",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => { return };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return };",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => { return; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return; };",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = () => {};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => {};",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"AsNeeded\",\"RequireReturnForObjectLiteral\":true}\tvar foo = (retv, name) => {\nretv[name] = true;\nreturn retv;\n};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = (retv, name) => {\nretv[name] = true;\nreturn retv;\n};",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "AsNeeded",
+      "RequireReturnForObjectLiteral": true
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => ({ foo: 0 });": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => ({ foo: 0 });",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => 0;": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => 0;",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => {\nreturn 0;\n};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => {\nreturn 0;\n};",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => 0;",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { bar };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { bar };",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { bar(); };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { bar(); };",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return 0; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return 0; };",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return bar }\n(1).toString();": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return bar }\n(1).toString();",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return bar }\n[1, 2, 3].map(foo)": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return bar }\n[1, 2, 3].map(foo)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return bar };\n[1, 2, 3].map(foo)": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return bar };\n[1, 2, 3].map(foo)",
+    "Outcome": "Fixed",
+    "FixedSource": "var foo = () => bar;\n[1, 2, 3].map(foo)",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return { bar: 1 }; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return { bar: 1 }; };",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => { return; };": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => { return; };",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = () => {};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = () => {};",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "arrow-body-style\t{\"Mode\":\"Never\",\"RequireReturnForObjectLiteral\":false}\tvar foo = (retv, name) => {\nretv[name] = true;\nreturn retv;\n};": {
+    "Rule": "arrow-body-style",
+    "File": "/repository/source/ArrowBodyStyle.ts",
+    "Source": "var foo = (retv, name) => {\nretv[name] = true;\nreturn retv;\n};",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "Mode": "Never",
+      "RequireReturnForObjectLiteral": false
+    }
+  },
+  "no-extra-bind\tnull\t(function() { (function() { this.b }.bind(this)) }.bind(c))": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "(function() { (function() { this.b }.bind(this)) }.bind(c))",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tclass C { #bind() {}; m() { return function(){}.#bind(b); } }": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "class C { #bind() {}; m() { return function(){}.#bind(b); } }",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tfoo((function(){}.bind))": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "foo((function(){}.bind))",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tfoo(function(){}.bind)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "foo(function(){}.bind)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tnew (function(){}.bind)(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "new (function(){}.bind)(b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = (() => { return 1; }).bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = (() => { return 1; }).bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = (() => { return 1; })",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = (() => { return b }).bind(c, d)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = (() => { return b }).bind(c, d)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = (() => { return this; }).bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = (() => { return this; }).bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = (() => { return this; })",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = (function() { return 1; }).bind(this)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = (function() { return 1; }).bind(this)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = (function() { return 1; })",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = (function() { return 1; }.bind)(this)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = (function() { return 1; }.bind)(this)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = (function() { return 1; })",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = (function() { return 1; }?.['bind'])(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = (function() { return 1; }?.['bind'])(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = (function() { return 1; })",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = (function() { return 1; }?.bind)(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = (function() { return 1; }?.bind)(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = (function() { return 1; })",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = (function(){}.bind ) (obj)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = (function(){}.bind ) (obj)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = (function(){} ) ",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = (function(){}?.['bind'] ) ?.(obj)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = (function(){}?.['bind'] ) ?.(obj)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = (function(){} ) ",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = ({ bind() {} }).bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = ({ bind() {} }).bind(b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = b.bind(function() { return 1; })": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = b.bind(function() { return 1; })",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = f.bind(a)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = f.bind(a)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { (() => this.b)(); }.bind(c)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { (() => this.b)(); }.bind(c)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { (function(){ (function(){ this.d }.bind(c)) }) }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { (function(){ (function(){ this.d }.bind(c)) }) }.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { (function(){ (function(){ this.d }.bind(c)) }) }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { (function(){ this.c }) }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { (function(){ this.c }) }.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { (function(){ this.c }) }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { class C { m() { return this; } } }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { class C { m() { return this; } } }.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { class C { m() { return this; } } }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { function c() { return () => this; } }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { function c() { return () => this; } }.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { function c() { return () => this; } }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { function c(){ this.d } }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { function c(){ this.d } }.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { function c(){ this.d } }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return () => this; }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return () => this; }.bind(b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }.bind()": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }.bind()",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { return 1; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }.bind(b, c, d)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }.bind(b, c, d)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }.bind(this)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }.bind(this)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { return 1; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }.bind?.(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }.bind?.(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { return 1; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }?.['bind'](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }?.['bind'](b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { return 1; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }?.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }?.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { return 1; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }[\"\"](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }[\"\"](b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }[\"call\"](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }[\"call\"](b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }['bind'](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }['bind'](b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { return 1; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }['bind']?.(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }['bind']?.(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { return 1; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }[`bi${n}d`](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }[`bi${n}d`](b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }[`bind${x}`](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }[`bind${x}`](b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }[`bind`](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }[`bind`](b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { return 1; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }[`call`](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }[`call`](b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return 1; }[bind](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return 1; }[bind](b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { return this.b }.bind(c)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { return this.b }.bind(c)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { this.b }()": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { this.b }()",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { this.b }.foo()": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { this.b }.foo()",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { var o = { get x() { return this; } }; }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { var o = { get x() { return this; } }; }.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { var o = { get x() { return this; } }; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() { var o = { m() { return this; } }; }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() { var o = { m() { return this; } }; }.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() { var o = { m() { return this; } }; }",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}./**/bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}./**/bind(b)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.//\nbind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.//\nbind(b)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(\n/**/b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(\n/**/b)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind('s')": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind('s')",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(() => {})": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(() => {})",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(-1)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(-1)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(/re/)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(/re/)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(1)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(1)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(1n)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(1n)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind([])": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind([])",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(`t`)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(`t`)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(b\n/**/)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(b\n/**/)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(b())": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(b())",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(b)/**/": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(b)/**/",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}/**/",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(b++)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(b++)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(b.c)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(b.c)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(b/**/)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(b/**/)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(b//\n)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(b//\n)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(function(){})": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(function(){})",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(null)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(null)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind(true)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind(true)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind({})": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind({})",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}.bind/**/(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}.bind/**/(b)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}/**/.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}/**/.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}/**/",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}/**/['bind'](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}/**/['bind'](b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}/**/",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}//comment\n.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}//comment\n.bind(b)",
+    "Outcome": "Fixed",
+    "FixedSource": "var a = function() {}//comment\n",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function() {}[/**/'bind'](b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function() {}[/**/'bind'](b)",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function(b) { return b }.bind(...c)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function(b) { return b }.bind(...c)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function(b) { return b }.bind(c, d)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function(b) { return b }.bind(c, d)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function(x = () => this) { return x; }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function(x = () => this) { return x; }.bind(b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "no-extra-bind\tnull\tvar a = function(x = this) { return x; }.bind(b)": {
+    "Rule": "no-extra-bind",
+    "File": "/repository/source/ExtraBind.ts",
+    "Source": "var a = function(x = this) { return x; }.bind(b)",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  }
+}

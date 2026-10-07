@@ -1,0 +1,547 @@
+case 0
+finding 31 99 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 31 56	
+edit 82 99	
+case 1
+finding 31 143 unexpectedObjectBlock	This arrow function uses a braced body only to return an object literal. Parenthesize the object and put it straight after the arrow: the parentheses are what stop the leading brace being read as a block.
+edit 31 56	(
+edit 126 143	)
+case 2
+finding 21 50 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 21 30	
+edit 48 50	
+case 3
+finding 29 55 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 29 38	(
+edit 52 55	)
+case 4
+finding 17 33 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 17 25	
+edit 32 33	
+case 5
+finding 17 36 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 17 26	
+edit 34 36	
+case 6
+finding 23 51 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 23 32	(
+edit 48 51	)
+case 7
+finding 23 40 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 23 32	
+edit 38 40	
+case 8
+finding 26 54 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 26 35	(
+edit 51 54	)
+case 9
+finding 26 50 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 26 35	(
+edit 47 50	)
+case 10
+finding 26 52 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 26 35	(
+edit 49 52	)
+case 11
+finding 26 47 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 26 35	(
+edit 44 47	)
+case 12
+finding 19 36 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 19 28	(
+edit 34 36	)
+case 13
+finding 19 31 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 19 28	
+edit 29 31	
+case 14
+finding 19 39 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 19 28	(
+edit 37 39	)
+case 15
+finding 19 60 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 19 28	(
+edit 58 60	)
+case 16
+finding 21 38 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 21 30	
+edit 36 38	
+case 17
+finding 42 70 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 42 51	(
+edit 67 70	)
+case 18
+finding 20 65 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 20 29	
+edit 64 65	
+case 19
+case 20
+finding 14 31 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 14 23	
+edit 29 31	
+case 21
+case 22
+case 23
+case 24
+case 25
+finding 16 31 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 28 31	
+case 26
+finding 16 30 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 28 30	
+case 27
+case 28
+finding 16 42 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 17	
+edit 32 38	
+edit 41 42	
+case 29
+finding 16 43 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 17	
+edit 32 38	
+edit 40 41	
+edit 42 43	
+case 30
+case 31
+case 32
+case 33
+finding 16 39 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 17	
+edit 18 24	
+edit 36 37	
+edit 38 39	
+case 34
+finding 16 29 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 26 29	
+case 35
+finding 16 40 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 17	
+edit 18 24	
+edit 39 40	
+case 36
+finding 16 44 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 41 44	
+case 37
+finding 16 41 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 17	
+edit 18 24	
+edit 26 27	
+edit 40 41	
+case 38
+finding 16 29 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 26 29	
+case 39
+finding 16 31 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	(
+edit 29 31	)
+case 40
+finding 16 30 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 28 30	
+case 41
+finding 16 30 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+case 42
+finding 16 38 unexpectedObjectBlock	This arrow function uses a braced body only to return an object literal. Parenthesize the object and put it straight after the arrow: the parentheses are what stop the leading brace being read as a block.
+edit 16 25	(
+edit 35 38	)
+case 43
+finding 16 30 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 24	
+edit 27 30	
+case 44
+case 45
+case 46
+finding 51 190 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 51 52	{
+edit 71 71	return 
+edit 189 190	}
+case 47
+finding 31 103 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 31 32	{return 
+edit 102 103	}
+case 48
+finding 7 12 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 7 8	{return 
+edit 11 12	}
+case 49
+finding 7 11 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 7 8	{return 
+edit 10 11	}
+case 50
+finding 32 70 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 32 32	{return 
+edit 70 70	}
+case 51
+finding 16 22 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 17	{return 
+edit 21 22	}
+case 52
+finding 16 34 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 17	{return 
+edit 27 28	
+edit 34 34	}
+case 53
+finding 16 31 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 16	{return 
+edit 31 31	}
+case 54
+finding 16 28 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 17	{return 
+edit 27 28	}
+case 55
+finding 16 32 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 17	{return 
+edit 25 26	
+edit 32 32	}
+case 56
+finding 16 32 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 17	{return 
+edit 31 32	}
+case 57
+finding 16 20 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 17	{return 
+edit 19 20	}
+case 58
+finding 16 17 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 16	{return 
+edit 17 17	}
+case 59
+finding 16 17 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 16	{return 
+edit 17 17	}
+case 60
+case 61
+case 62
+finding 49 70 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 49 49	{return 
+edit 70 70	}
+case 63
+finding 27 39 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 27 36	
+edit 37 39	
+case 64
+finding 23 40 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 23 32	
+edit 38 40	
+case 65
+finding 21 42 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 21 30	
+edit 40 42	
+case 66
+finding 19 36 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 19 28	(
+edit 34 36	)
+case 67
+finding 19 31 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 19 28	
+edit 29 31	
+case 68
+finding 21 38 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 21 30	
+edit 36 38	
+case 69
+finding 21 33 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 21 30	
+edit 31 33	
+case 70
+finding 21 55 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 21 30	(
+edit 53 55	)
+case 71
+finding 16 30 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 28 30	
+case 72
+finding 16 57 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 55 57	
+case 73
+finding 16 40 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 37 40	
+case 74
+finding 16 28 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 26 28	
+case 75
+finding 16 29 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 26 29	
+case 76
+finding 16 33 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 30 33	
+case 77
+finding 16 42 unexpectedObjectBlock	This arrow function uses a braced body only to return an object literal. Parenthesize the object and put it straight after the arrow: the parentheses are what stop the leading brace being read as a block.
+edit 16 25	(
+edit 39 42	)
+case 78
+finding 16 38 unexpectedObjectBlock	This arrow function uses a braced body only to return an object literal. Parenthesize the object and put it straight after the arrow: the parentheses are what stop the leading brace being read as a block.
+edit 16 25	(
+edit 35 38	)
+case 79
+finding 49 95 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 49 50	
+edit 59 65	
+edit 84 85	
+edit 94 95	
+case 80
+case 81
+finding 16 28 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 17	{return 
+edit 27 28	}
+case 82
+finding 16 20 expectedBlock	This arrow function has a concise body while the configuration asks for braces. Wrap the body in a block with an explicit return, so every arrow in the codebase is read the same way.
+edit 16 17	{return 
+edit 19 20	}
+case 83
+case 84
+case 85
+case 86
+case 87
+case 88
+finding 16 29 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 26 29	
+case 89
+finding 16 33 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 30 33	
+case 90
+case 91
+finding 16 26 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+case 92
+finding 16 27 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+case 93
+case 94
+case 95
+case 96
+case 97
+finding 16 29 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 26 29	
+case 98
+finding 16 23 unexpectedOtherBlock	This arrow function wraps its body in braces while the configuration asks for none. The block does more than return a value, so there is no concise form of it and nothing here can be rewritten automatically. Change the body, or allow braces.
+case 99
+finding 16 26 unexpectedOtherBlock	This arrow function wraps its body in braces while the configuration asks for none. The block does more than return a value, so there is no concise form of it and nothing here can be rewritten automatically. Change the body, or allow braces.
+case 100
+finding 16 29 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 26 29	
+case 101
+finding 16 30 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+case 102
+finding 16 30 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+case 103
+finding 16 30 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+edit 16 25	
+edit 28 30	
+case 104
+finding 16 38 unexpectedObjectBlock	This arrow function uses a braced body only to return an object literal. Parenthesize the object and put it straight after the arrow: the parentheses are what stop the leading brace being read as a block.
+edit 16 25	(
+edit 35 38	)
+case 105
+finding 16 27 unexpectedSingleBlock	This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+case 106
+finding 16 18 unexpectedEmptyBlock	This arrow function has an empty braced body, which returns undefined. Write that value after the arrow instead, so the arrow says what it produces rather than leaving the reader to infer it from an empty block.
+case 107
+finding 26 61 unexpectedOtherBlock	This arrow function wraps its body in braces while the configuration asks for none. The block does more than return a value, so there is no concise form of it and nothing here can be rewritten automatically. Change the body, or allow braces.
+case 108
+case 109
+case 110
+case 111
+case 112
+case 113
+finding 30 34 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 29 34	
+edit 34 37	
+case 114
+case 115
+finding 33 37 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 32 37	
+edit 37 40	
+case 116
+finding 35 39 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 34 39	
+edit 39 45	
+case 117
+finding 34 38 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 33 38	
+edit 39 45	
+case 118
+finding 36 42 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 33 43	
+edit 44 47	
+case 119
+finding 35 39 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 33 39	
+edit 40 43	
+case 120
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 26	
+edit 29 34	
+case 121
+finding 24 30 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 31	
+edit 34 41	
+case 122
+case 123
+case 124
+case 125
+case 126
+finding 70 74 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 69 74	
+edit 74 77	
+case 127
+finding 46 50 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 45 50	
+edit 50 53	
+case 128
+finding 56 60 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 55 60	
+edit 60 63	
+case 129
+finding 59 63 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 58 63	
+edit 63 66	
+case 130
+finding 46 50 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 45 50	
+edit 50 53	
+case 131
+case 132
+case 133
+finding 33 37 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 32 37	
+edit 37 40	
+case 134
+case 135
+finding 33 37 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 32 37	
+edit 37 43	
+case 136
+finding 33 37 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 32 37	
+edit 37 42	
+case 137
+finding 35 41 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 32 42	
+edit 42 45	
+case 138
+finding 34 38 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 32 38	
+edit 38 41	
+case 139
+case 140
+case 141
+finding 33 39 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 32 40	
+edit 40 43	
+case 142
+finding 33 39 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 32 40	
+edit 40 45	
+case 143
+case 144
+case 145
+finding 33 39 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 32 40	
+edit 40 43	
+case 146
+case 147
+case 148
+case 149
+case 150
+case 151
+finding 61 65 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 60 65	
+edit 65 68	
+case 152
+finding 57 61 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 56 61	
+edit 61 64	
+case 153
+finding 26 30 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 154
+finding 25 29 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 155
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 156
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 26	
+edit 26 31	
+case 157
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 158
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 159
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 26	
+edit 26 32	
+case 160
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 26	
+edit 26 29	
+case 161
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 26	
+edit 26 30	
+case 162
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 163
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 164
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 165
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 166
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 26	
+edit 26 29	
+case 167
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 168
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 169
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 170
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 171
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 26	
+edit 26 40	
+case 172
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 26	
+edit 26 32	
+case 173
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 21 26	
+edit 26 32	
+case 174
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 175
+finding 22 26 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 176
+finding 26 30 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 25 30	
+edit 30 33	
+case 177
+finding 26 32 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 25 33	
+edit 33 36	
+case 178
+finding 32 36 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+edit 31 36	
+edit 36 39	
+case 179
+finding 26 32 unexpected	This calls `.bind()` on a function that never mentions `this`, so the binding changes nothing the function can observe. What it does change is cost and identity: every `.bind()` allocates a fresh function object, so the value is no longer equal to the one before it, which quietly breaks `removeEventListener` and any memoization keyed on the callback. An arrow function is never fixable this way either, since its `this` is already decided by where it was written. Drop the call.
+case 180
+case 181
+case 182
+case 183
