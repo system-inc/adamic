@@ -1,0 +1,11 @@
+Built: rebased the 21 owned rule commits onto the explicitly named unified harness ab70f38d4, eliminating the four previous shared-file conflicts without editing shared files.
+SHAs: harness ab70f38d47de1d4974082b38f84a56af2368b7af; current main c01907a7; rebased rule commits 6e9d676e248e0e25f6ca5d0655dd3f7f68b2f1de; prior published tip a7ff8948 retained in history.
+Checks: registry PASS 0.217s; uncached TestRulesAgree FAIL 68.690s at empty-object-type/rule.ts:27:58, nonconstant RegExp pattern.
+Mutants: registry descriptor rejection checks passed; prior ten owned rule mutant results remain conditional evidence in WAVE_REPORT.md and were not rerun after this rebase.
+Limits: dynamic RegExp compiler support is a non-harness blocker, so this branch is not green or eligible for harness-only parking; no new helper claims.
+
+Commands used go test ./stage1/cohere/lint/registry -count=1 -v and ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -run '^TestRulesAgree$' -count=1 -v -timeout=15m, each redirected to the logs in evidence/harness-ab70. The temporary worktree initially lacked its cohere dependency; its empty submodule directory was temporarily replaced by a link to the initialized workspace dependency for tests, then restored before committing. That link is not part of the branch.
+
+Only the commits after the old registration merge were replayed onto the new shared foundation. No finding.ts, context.ts, main.ts, registry generator, oracle, comparison harness or compiler source was manually edited. The shared seven-argument report and wire protocol are retained. Owned rules still require optional node-handoff migration and repair integration; this rebase alone does not certify either. The new harness includes JSX support, but full rule findings/fixes parity was not reached because compilation refuses the option RegExp first.
+
+The option pattern already uses new RegExp(pattern, 'u'); no hand-rolled matcher fallback was introduced. origin/codex/lint-regex independently records that compiler gap. Preserving the old published tip with an explicit ours merge leaves the rebased tree unchanged and permits normal fast-forward pushing without force. No main or area branch is pushed. The helper branch remains green and published at a8051e259 on current main; original consumer fixture blockers remain documented there.
