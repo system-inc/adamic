@@ -1,6 +1,6 @@
 Refined the class exemption across whole-program transitive descendants and added six developer widening lies with pinned refusals and repaired oracles.
 Commits: b9715978334b534815a01fdea9eedbb3ae2136bb; prerequisite repair 9887f3772dc8d9aa4bd1a4898ae21110f6408010 (including f1c9173); current main b6b1538.
-Validation: lower passes (32.125s), complete uncached oracle passes (154.607s), counts update passes (33.210s), vet/format/diff checks clean. Setup completed in 178s; nproc 5, cgroup quota 4 CPUs.
+Validation on repaired base: lower passes (42.590s), stage3/fixtures passes (29.361s), complete uncached oracle passes (150.221s); counts, vet, format and whitespace checks pass. Setup completed in 178s; nproc 5, cgroup quota 4 CPUs.
 Mutants: seven independent mutants fail their intended assertions, including direct subclasses only, caught by class_transitive compiling.
 Limits: Function programs skipped for codex/refusal-pass-rulings; compound generic matching is conservative; full repository gate and stage 3 census not rerun.
 
@@ -309,3 +309,20 @@ Exit 0: lower 40.585s, stage3/fixtures 28.874s, complete uncached oracle 155.118
 Mutants actually run and restored: append `MUTANT` to the production non-cast diagnostic, caught by the assignment exact-message pin; use a stale cast diagnostic record, caught by the cast exact-message pin. Both tests exit 1 through the intended diagnostic assertions. Scratch copies with both original stage0 records also exit 1 through precisely two stage0 comparisons while both Node comparisons pass. No compiler errors or clang warnings kill these checks.
 
 The repair gate and mutant logs are preserved under `evidence/refusal-2-*.log`. The inherited-class hole remains unchanged on this prerequisite branch and belongs to the refinement branch. No full repository gate, census, or Function worker work is claimed by this repair.
+
+
+## Refinement verified on the repaired prerequisite
+
+`codex/optional-widening-2` merges `codex/optional-widening-refusal-2` at `9887f3772dc8d9aa4bd1a4898ae21110f6408010`. The test conflict was resolved by retaining the repair's cast-specific proven-relations expectation and using exact complete-message pins for all non-cast fixtures, including every descendant and developer fixture. The production refinement is unchanged from `b9715978334b534815a01fdea9eedbb3ae2136bb`.
+
+The required direct-subclasses-only mutant was repeated on this merged base. The two-level fixture compiled; its intended refusal assertion failed with `got <nil>`, exit 1. Production was restored before the final gate. The seven earlier refinement mutants remain documented above; this merged-base repeat is additional evidence.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./stage3/fixtures ./internal/oracle -count=1 -timeout 30m > /tmp/optional-widening-2-repaired-gate.log 2>&1
+go vet ./internal/lower ./stage3/fixtures ./internal/oracle > /tmp/optional-widening-2-repaired-vet.log 2>&1
+gofmt -l internal/lower/optional_widening_test.go > /tmp/optional-widening-2-repaired-format.log
+git diff --check
+```
+
+Exit 0: lower 42.590s, stage3/fixtures 29.361s, whole uncached oracle 150.221s. Vet and format logs are empty; whitespace check is clean. `evidence/class-repaired-gate.log` and `evidence/class-repaired-mutant-direct.log` preserve the merged-base results. The two repaired TypeScript-derived status records retain identical Node observations on this branch too. Function programs remain skipped for the other worker, and compound generic matching remains conservative.
