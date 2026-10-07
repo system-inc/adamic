@@ -1,0 +1,10 @@
+Merge made by the 'ort' strategy.
+ stage1/cohere/lint/lint.ts                         | 39 ++++++++++++++++++++--
+ stage1/cohere/lint/lint_test.go                    | 26 +++++++++++++++
+ stage1/cohere/lint/main.ts                         |  7 ++++
+ .../lint/rules/no-debugger/testdata/jsx.tsx.txt    |  4 +++
+ .../testdata/unconverged.ts.txt                    |  1 +
+ stage1/cohere/lint/testdata/oracle.go              |  7 +++-
+ 6 files changed, 80 insertions(+), 4 deletions(-)
+ create mode 100644 stage1/cohere/lint/rules/no-debugger/testdata/jsx.tsx.txt
+ create mode 100644 stage1/cohere/lint/rules/no-unneeded-ternary/testdata/unconverged.ts.txt

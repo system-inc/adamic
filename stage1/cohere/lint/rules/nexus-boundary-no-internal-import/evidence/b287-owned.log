@@ -1,0 +1,145 @@
+=== RUN   TestSharedNexusParserGaps
+    gaps_test.go:56: actual Go reports on all three blocked fixtures: internal-recovery outsideInternal Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in.
+        project-recovery forbiddenProjectImport A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        outside-top-level-await forbiddenOutsideImport Nexus must not import from '@project', '@structure', or '@base'. Nexus is the layer they are all built on, so a reach upward makes the foundation depend on what rests on it, and the cycle only shows up as a build failure in whichever project imports nexus first.
+    gaps_test.go:85: internal-recovery source Node exits 70: adamic: panic: parser slice unsupported primary Unknown at 87 in /repo/source/other/Thing.ts
+    gaps_test.go:85: internal-recovery emitted JavaScript exits 70: adamic: panic: parser slice unsupported primary Unknown at 87 in /repo/source/other/Thing.ts
+    gaps_test.go:85: internal-recovery sanitized native exits 70: adamic: panic: parser slice unsupported primary Unknown at 87 in /repo/source/other/Thing.ts
+    gaps_test.go:85: project-recovery source Node exits 70: adamic: panic: parser slice unsupported primary Unknown at 84 in /repo/libraries/base/source/Thing.ts
+    gaps_test.go:85: project-recovery emitted JavaScript exits 70: adamic: panic: parser slice unsupported primary Unknown at 84 in /repo/libraries/base/source/Thing.ts
+    gaps_test.go:85: project-recovery sanitized native exits 70: adamic: panic: parser slice unsupported primary Unknown at 84 in /repo/libraries/base/source/Thing.ts
+    gaps_test.go:85: outside-top-level-await source Node exits 70: adamic: panic: parser slice expected semicolon at 21 in /repository/libraries/nexus/code-quality/Thing.ts
+    gaps_test.go:85: outside-top-level-await emitted JavaScript exits 70: adamic: panic: parser slice expected semicolon at 21 in /repository/libraries/nexus/code-quality/Thing.ts
+    gaps_test.go:85: outside-top-level-await sanitized native exits 70: adamic: panic: parser slice expected semicolon at 21 in /repository/libraries/nexus/code-quality/Thing.ts
+--- PASS: TestSharedNexusParserGaps (55.20s)
+=== RUN   TestNamedListenerDeclarations
+    listeners_test.go:54: 14 named listener declarations, 1018 bytes, match actual Go listener keys on source Node, emitted JavaScript and ASan/UBSan native
+=== RUN   TestNamedListenerDeclarations/base-correctness-require-orm-column-declare
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/nexus-consistency-no-boolean-outcome
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/next-google-font-preconnect
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/next-inline-script-id
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/next-next-script-for-ga
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/next-no-before-interactive-script-outside-document
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/next-no-css-tags
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/next-no-document-import-in-page
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/better-tailwindcss-enforce-shorthand-classes
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/better-tailwindcss-no-concatenated-classes
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/better-tailwindcss-no-conflicting-classes
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/nexus-boundary-no-internal-import
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/nexus-boundary-no-nexus-outside-import
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+=== RUN   TestNamedListenerDeclarations/nexus-boundary-no-project-import
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 0
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 1
+    listeners_test.go:120: named listener mutant compiles and exits cleanly, caught only by actual-Go comparison on backend 2
+--- PASS: TestNamedListenerDeclarations (13.67s)
+    --- PASS: TestNamedListenerDeclarations/base-correctness-require-orm-column-declare (0.46s)
+    --- PASS: TestNamedListenerDeclarations/nexus-consistency-no-boolean-outcome (0.50s)
+    --- PASS: TestNamedListenerDeclarations/next-google-font-preconnect (0.45s)
+    --- PASS: TestNamedListenerDeclarations/next-inline-script-id (0.45s)
+    --- PASS: TestNamedListenerDeclarations/next-next-script-for-ga (0.60s)
+    --- PASS: TestNamedListenerDeclarations/next-no-before-interactive-script-outside-document (0.45s)
+    --- PASS: TestNamedListenerDeclarations/next-no-css-tags (1.12s)
+    --- PASS: TestNamedListenerDeclarations/next-no-document-import-in-page (0.64s)
+    --- PASS: TestNamedListenerDeclarations/better-tailwindcss-enforce-shorthand-classes (0.43s)
+    --- PASS: TestNamedListenerDeclarations/better-tailwindcss-no-concatenated-classes (0.44s)
+    --- PASS: TestNamedListenerDeclarations/better-tailwindcss-no-conflicting-classes (0.45s)
+    --- PASS: TestNamedListenerDeclarations/nexus-boundary-no-internal-import (0.47s)
+    --- PASS: TestNamedListenerDeclarations/nexus-boundary-no-nexus-outside-import (0.47s)
+    --- PASS: TestNamedListenerDeclarations/nexus-boundary-no-project-import (0.57s)
+=== RUN   TestResolvedImportPaths
+    paths_test.go:88: 399 path resolutions agree across Go/Node/emitted JS/sanitized native, 6861 bytes
+    paths_test.go:108: path mutant compiles and runs cleanly; caught only by comparison side 0
+    paths_test.go:108: path mutant compiles and runs cleanly; caught only by comparison side 1
+    paths_test.go:108: path mutant compiles and runs cleanly; caught only by comparison side 2
+--- PASS: TestResolvedImportPaths (2.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-boundary-no-internal-import	71.700s
+=== RUN   TestTailwindDecisions
+    decision_test.go:112: all decision cases agree, 121355 identical bytes, Go/Node/emitted JS/sanitized native
+=== RUN   TestTailwindDecisions/better-tailwindcss-enforce-shorthand-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+=== RUN   TestTailwindDecisions/better-tailwindcss-no-concatenated-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+=== RUN   TestTailwindDecisions/better-tailwindcss-no-conflicting-classes
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 0
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 1
+    decision_test.go:146: compiling clean mutant killed only by comparison, side 2
+--- PASS: TestTailwindDecisions (20.76s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-enforce-shorthand-classes (4.13s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-no-concatenated-classes (4.07s)
+    --- PASS: TestTailwindDecisions/better-tailwindcss-no-conflicting-classes (3.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-boundary-no-internal-import/gaps/better-tailwindcss-enforce-shorthand-classes	20.773s
+=== RUN   TestExtractedDecisions
+    decision_test.go:86: ten manually extracted decision cases, 1963 identical bytes, Go/source Node/emitted JS/sanitized native
+=== RUN   TestExtractedDecisions/next-google-font-preconnect
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-no-css-tags
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-inline-script-id
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-next-script-for-ga
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-no-before-interactive-script-outside-document
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+--- PASS: TestExtractedDecisions (5.82s)
+    --- PASS: TestExtractedDecisions/next-google-font-preconnect (0.49s)
+    --- PASS: TestExtractedDecisions/next-no-css-tags (0.53s)
+    --- PASS: TestExtractedDecisions/next-inline-script-id (0.59s)
+    --- PASS: TestExtractedDecisions/next-next-script-for-ga (0.61s)
+    --- PASS: TestExtractedDecisions/next-no-before-interactive-script-outside-document (0.58s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-boundary-no-internal-import/gaps/next-google-font-preconnect	5.831s

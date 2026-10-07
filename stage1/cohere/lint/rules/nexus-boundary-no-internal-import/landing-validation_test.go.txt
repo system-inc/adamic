@@ -138,7 +138,9 @@ func TestLandingExistingCandidates(t *testing.T) {
 	}
 	// Option controls include JSON decoding behavior that the integration comparison exposed.
 	optionPath := filepath.Join(witnesses, "boolean-options.ts")
-	if err := os.WriteFile(optionPath, []byte("interface ClaudeCallResultInterface { success: boolean; error: string }"), 0644); err != nil { t.Fatal(err) }
+	if err := os.WriteFile(optionPath, []byte("interface ClaudeCallResultInterface { success: boolean; error: string }"), 0644); err != nil {
+		t.Fatal(err)
+	}
 	for _, option := range []string{`{"unknown":true}`, `{"ALLOWEDTYPENAMES":["ClaudeCallResultInterface"]}`, `{"allowedTypeNames":[null]}`, `{"allowedTypeNames":["ClaudeCallResultInterface"],"allowedTypeNames":null}`, `{"allowedTypeNames":null,"allowedTypeNames":["ClaudeCallResultInterface"]}`} {
 		rows = append(rows, optionPath+"\tnexus/consistency-no-boolean-outcome\t\t\tfalse\t"+option)
 	}
@@ -182,9 +184,15 @@ func TestLandingExistingCandidates(t *testing.T) {
 	t.Logf("%d compiler/stage1 source files across 6 registered candidates; %d total fixture, witness, path and corpus cases", len(paths), len(rows))
 	oracle := goOracle(t)
 	path := manifest(t, rows)
-	compare(t, oracle, buildPort(t, directory, true), directory, path)
+	binary := buildPort(t, directory, true)
+	compare(t, oracle, binary, directory, path)
 	mutationPath := manifest(t, mutationRows)
 	want := execute(t, "", oracle, "--manifest", mutationPath).output
+	linked := execute(t, "", binary, "--manifest", mutationPath, "--junk-rows").output
+	if diff := difference(linked, want); diff != "" {
+		t.Fatalf("owned fixtures changed with unattached rows: %s", diff)
+	}
+	t.Logf("%d supported owned fixture rows with unattached node copies agree with Go: %d bytes", len(mutationRows), len(linked))
 	for index, slug := range append(slugs, "nexus-consistency-no-boolean-outcome") {
 		t.Run(slug, func(t *testing.T) {
 			var change struct{ Name, File, From, To string }
@@ -210,6 +218,7 @@ func TestLandingExistingCandidates(t *testing.T) {
 				{"source Node", node(t, mutated, mutationPath, false).output},
 				{"emitted JavaScript", emittedNode(t, mutated, mutationPath, false).output},
 				{"sanitized native", execute(t, "", binary, "--manifest", mutationPath).output},
+				{"sanitized native with unattached rows", execute(t, "", binary, "--manifest", mutationPath, "--junk-rows").output},
 			} {
 				if bytes.Equal(side.output, want) {
 					t.Fatalf("%s compiling mutant survived on %s", change.Name, side.name)
