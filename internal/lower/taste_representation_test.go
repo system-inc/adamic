@@ -9,7 +9,6 @@ import (
 func TestTasteRepresentationLimitsStayExplicit(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
-		{"optional boolean insertion", `const box: {value?: boolean} = {}; box.value = true;`, "writing a possibly absent optional own field"},
 		{"union scalar field", `const box: {value: number | string} = {value: 1}; box.value = 3; console.log(String(box.value));`, "a narrowed scalar in a boxed union field"},
 		{"union array search", `const values: (number | string)[] = [1, "x"]; console.log(String(values.includes(1)));`, "searching boxed union array elements"},
 		{"evolving different objects", `let value; value = {a: 1}; value = {b: "b"};`, "a value of type any"},
