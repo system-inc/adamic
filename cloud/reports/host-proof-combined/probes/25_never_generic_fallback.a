@@ -1,0 +1,1 @@
+export const emptyArray: never[] = [] as never[]; export function fallback<U extends {}>(result: U[] | undefined): readonly U[] { return result ?? emptyArray; }

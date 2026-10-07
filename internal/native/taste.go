@@ -21,7 +21,7 @@ func (e *emitter) toBoolean(of ir.Type, value string) string {
 		return fmt.Sprintf("(%s != NULL && %s->length != 0)", value, value)
 	case ir.Union:
 		result := e.temporary()
-		e.line("bool %s = %s != NULL;", result, value)
+		e.line("bool %s = %s != NULL && %s != &adamic_null;", result, value, value)
 		e.line("if (%s) {", result)
 		e.indent++
 		e.line("switch (%s->kind) {", value)

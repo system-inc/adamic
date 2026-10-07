@@ -1,7 +1,7 @@
 [
   {
     "file": "01_readFile_utf8.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Checker",
@@ -27,7 +27,7 @@
   },
   {
     "file": "02_readFile_utf16le.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Checker",
@@ -53,7 +53,7 @@
   },
   {
     "file": "03_readFile_utf16be.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Checker",
@@ -79,7 +79,7 @@
   },
   {
     "file": "04_readFile_missing.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Checker",
@@ -105,7 +105,7 @@
   },
   {
     "file": "05_writeFile.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Refused",
@@ -118,18 +118,20 @@
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:35:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/05_writeFile.a:35:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "06_fileExists.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -157,7 +159,7 @@
   },
   {
     "file": "07_directoryExists.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -185,7 +187,7 @@
   },
   {
     "file": "08_getDirectories.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "NotYet",
@@ -199,17 +201,17 @@
     "adapted": {
       "native": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:41:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:219:9: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]\n"
       },
       "javascript": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:41:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:219:9: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]\n"
       }
     }
   },
   {
     "file": "09_realpath.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -237,7 +239,7 @@
   },
   {
     "file": "10_getModifiedTime.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -265,7 +267,7 @@
   },
   {
     "file": "11_setModifiedTime.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -293,7 +295,7 @@
   },
   {
     "file": "12_deleteFile.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -321,7 +323,7 @@
   },
   {
     "file": "13_createDirectory.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Checker",
@@ -334,18 +336,20 @@
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/13_createDirectory.a:72:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/13_createDirectory.a:72:19: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "14_getCurrentDirectory.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Refused",
@@ -369,7 +373,7 @@
   },
   {
     "file": "15_getExecutingFilePath.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -397,7 +401,7 @@
   },
   {
     "file": "16_getEnvironmentVariable.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -425,7 +429,7 @@
   },
   {
     "file": "17_write.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -453,7 +457,7 @@
   },
   {
     "file": "18_exit_0.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -481,7 +485,7 @@
   },
   {
     "file": "19_exit_1.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -509,7 +513,7 @@
   },
   {
     "file": "20_exit_2.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -537,7 +541,7 @@
   },
   {
     "file": "21_createHash.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -565,7 +569,7 @@
   },
   {
     "file": "22_createHash_fallback.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -593,7 +597,7 @@
   },
   {
     "file": "23_newLine.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -621,7 +625,7 @@
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -649,7 +653,7 @@
   },
   {
     "file": "25_readDirectory.a",
-    "source": "adapted 0555bc27, regex a8ddb3a7 and phantom d90994da",
+    "source": "adapted daa638ed, phantom d90994da, regex a8ddb3a7, additive unknown b788e96e",
     "original": {
       "native": {
         "stage": "Checker",
@@ -663,11 +667,11 @@
     "adapted": {
       "native": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:207:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:579:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n"
       },
       "javascript": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:207:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:579:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n"
       }
     }
   }

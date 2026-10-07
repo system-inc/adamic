@@ -231,6 +231,64 @@ before cloud/setup.sh: Go ready 0.016s, Node 0.017s, markdown 0.060s,
 clang 0.162s, submodules 327.151s, Go build 577.798s, tests deferred 577.910s,
 cache warm 577.912s, total 577.955s; nproc=5, CPU quota=4.
 
+## Phantom brands and array predicate re-extraction
+
+Merged codex/stage3-any-brands-void at
+2bcff092155fc19c6519b27891e53163d6191ae7 with a merge commit,
+bb89005ad09d72cc5474df5e60c30ac7b141f2cd, retaining both parents.
+The documentation conflicts retain the earlier filesystem stat proof and the
+new brand/isArray proof. Combined adaptation 40 progress is 70 removed,
+140 remaining; each branch's 69/141 observation remains historical.
+
+A fresh `bash stage3/apply.sh /tmp/host-brands-adapted-tree` completed with
+exit 0. The re-extractor inspects every recorded non-partial declaration in
+all 25 host fixtures against this actual composed tree, plans all changes
+before writing, and permits only the reviewed annotation changes. Exactly
+two fixture sources change:
+
+| Fixture | Re-extracted declarations and reason |
+| --- | --- |
+| 08_getDirectories.a | Path.__pathBrand: undefined -> void, following the phantom-brand ruling. |
+| 25_readDirectory.a | Path.__pathBrand, PathPathComponents.__pathComponensBrand and SortedReadonlyArray's literal `" __sortedArrayBrand"`: undefined -> void; isArray's input: any -> unknown, preserving its predicate and body. |
+
+The existing stat union is preserved in both fixtures. Fixture 25's isArray
+provenance header now identifies adaptation 40; both affected manifest rows
+carry the full composed merge SHA and refreshed canonical tokens. No other
+fixture source or manifest row changes. A second extraction reports no edits.
+
+All 25 Node stdout/stderr/exit observations match both the pre-extraction
+source and the existing goldens, using Node 24.19.0 first on PATH. The final
+re-extracted 08 and 25 were independently compared again. The full audit
+passes 164 copied declarations and 126 function/method spans. Actual full-audit
+mutants restoring 08's stale undefined brand and 25's stale any input are
+rejected as missing or changed copied declarations. The existing cast and
+SHA256 -> SHA1 audit mutants are also caught. All 25 semantic Node mutants
+and the invented recorded diagnostic are caught. Stock tsc accepts all 25
+fixtures. See brands-followup-proof.json and brands-followup-evidence/.
+
+Reproduce from the fixture checkout after sourcing the setup environment:
+
+```sh
+bash stage3/apply.sh <fresh-tree> > apply.log 2>&1
+NODE_PATH=<stock-typescript-6.0.3-node_modules> node stage3/fixtures/host/reextract-brands.cjs <fresh-tree> bb89005ad09d72cc5474df5e60c30ac7b141f2cd > extraction.log 2>&1
+NODE_PATH=<stock-typescript-6.0.3-node_modules> node stage3/fixtures/host/source-audit.cjs <fresh-tree> > audit.log 2>&1
+python3 stage3/fixtures/host/check.py --mutants-only --logs <mutant-logs> > mutants.log 2>&1
+node stage3/fixtures/host/stock-check.cjs /workspace/host-followup-library <stock-logs> > stock.log 2>&1
+```
+
+Setup initially failed with `error: expected submodule path 'cohere' not to be
+a symbolic link`. The unsupported scratch link was removed and setup rerun
+in /workspace/adamic, whose dependency checkout has the identical pin.
+With GOPROXY=https://proxy.golang.org|direct: Go 0.018s, Node 0.021s,
+markdown 0.067s, submodules 0.090s, clang 0.196s, build 32.549s,
+tests deferred 32.661s, cache warm 32.662s, total 32.690s; nproc=5,
+CPU quota=4. The printed /workspace/adamic-tools/env.sh was sourced.
+
+The existing stage 0 ledger is unchanged; stage 0/native, sanitizers, leak
+checks, the full Go gate and full upstream oracle/lane were not rerun for
+this fixture extraction. The adaptation branch's own proof and gate artifacts
+arrive through the merge and are not presented as new executions here.
+
 ## Fixture 14 memoize follow-up
 
 Merged codex/stage3-adapt-memoize at
@@ -286,3 +344,14 @@ Part 1 ran the full default TypeScript oracle and landing lane. This fixture
 refresh did not rerun either suite, the full Adamic gate, all-25 host execution,
 Windows, or native host-library integration. Only fixture 14's Node program
 was rerun; the source audit covers the whole bucket.
+
+The first push was rejected because the remote had advanced to 0555bc27.
+Merged that remote tip without rebasing, retaining its fixture 14 provenance
+refresh and both reports, at ccc0adbfe1656d4eb70b98e1d358a765048c275b.
+No fixture 14 body change was introduced. Generated a new final composed tree
+including its declined adaptation 48: all compiler TypeScript source files
+remain byte-identical to the earlier brand tree. Re-ran all 25 Node comparisons
+on the final fixtures and the full source audit: all unchanged, 164 declarations
+and 126 function/method spans pass. Final extraction is again idempotent.
+The stage 0 ledger remains byte-identical to 7218520a's record. Final logs are
+in brands-followup-evidence and the integration pin is in the proof JSON.

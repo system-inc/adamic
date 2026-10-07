@@ -1,8 +1,8 @@
 # Combined host proof
 
-20/25 adapted fixtures and 16/25 pristine fixtures execute and agree with fresh Node observations on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
+22/25 adapted fixtures and 16/25 pristine fixtures execute and agree with fresh Node observations on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
 
-Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 0555bc27. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
+Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at daa638ed. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
 | Fixture | Pristine native | Pristine JS | Adapted native | Adapted JS | First adapted blocker | Owner |
 |---|---|---|---|---|---|---|
@@ -10,15 +10,15 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 02_readFile_utf16le.a | Checker | Checker | Agrees | Agrees | None | None |
 | 03_readFile_utf16be.a | Checker | Checker | Agrees | Agrees | None | None |
 | 04_readFile_missing.a | Checker | Checker | Agrees | Agrees | None | None |
-| 05_writeFile.a | Refused | Refused | NotYet | NotYet | unknown errorCode observation at 35:19 | Compiler, regression from a85a9cb1 |
+| 05_writeFile.a | Refused | Refused | Agrees | Agrees | None | None |
 | 06_fileExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 07_directoryExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 08_getDirectories.a | NotYet | NotYet | Refused | Refused | required undefined __pathBrand at 41:20 | Compiler / adaptation ruling |
+| 08_getDirectories.a | NotYet | NotYet | Refused | Refused | sort without comparator at 219:9 | Compiler / adaptation ruling |
 | 09_realpath.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 10_getModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 11_setModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 12_deleteFile.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 13_createDirectory.a | Checker | Checker | NotYet | NotYet | unknown errorCode observation at 72:19 | Compiler, regression from a85a9cb1 |
+| 13_createDirectory.a | Checker | Checker | Agrees | Agrees | None | None |
 | 14_getCurrentDirectory.a | Refused | Refused | Refused | Refused | exactly undefined non-null assertion at 17:24 | Compiler / adaptation ruling |
 | 15_getExecutingFilePath.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 16_getEnvironmentVariable.a | Agrees | Agrees | Agrees | Agrees | None | None |
@@ -30,7 +30,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 22_createHash_fallback.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 23_newLine.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 24_useCaseSensitiveFileNames.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 25_readDirectory.a | Checker | Checker | Refused | Refused | isArray predicate return not proven at 530:5, adamic/no-type-predicate | Compiler |
+| 25_readDirectory.a | Checker | Checker | Refused | Refused | never viewed as generic U at 579:22 | Compiler |
 
 Fixture 25 passes checking on both backends. Exact next diagnostic:
 ```
@@ -164,3 +164,13 @@ Its exact declaration is `export type Path = string & { __pathBrand: undefined; 
 Validation: targeted lower phantom/census tests PASS 1.836s; targeted fresh phantom/fs tests PASS 0.010s; WASI host tests plus phantom review tests PASS 19.562s. Diagnostic assertions were reconciled with the newer census wording and the earlier non-void brand refusal; unsafe results, parameters, readonly removal and function-value reads still refuse. Added freshness handling for PhantomMember and a regression test. Two executed mutants: dropping the census phantom overload proof fails TestPhantomOverloadResultCastsAreErased; forgetting PhantomMember freshness fails TestPhantomMemberEvaluatesOperandWithoutEscaping. Sources restored. Full go test ./... not run; counts conflict retains both fixture families without claiming a full Linux regeneration. The prior full flow comparison is in FLOW-COMPARISON.md: main48c05d09 and librarya5d5dc9 pass, proof57fd72ae has four failing top-level tests.
 
 Incoming six phantom runtime fixtures agree with Node on both backends and native release/sanitizer legs: focused TestNativeAgreesWithNode PASS 1.637s (see fs_phantom_oracle.log).
+
+## Audited brands and additive unknown recount
+
+Took the exact stage3/fixtures/host tree at daa638ed, including status.json and Node records; merged b788e96e with a merge commit. Phantom d90994da and regex a8ddb3a7 remain ancestors. a85a9cb1 remains in history, with its restrictive unknown path replaced by b788e96e; history was not rewritten. No forthcoming adaptation 48 source was invented. All 25 rerun on both backends: 22/25 adapted, 16/25 pristine. 05 and 13 recover and agree byte-for-byte with fresh Node; 11 and 24 remain green.
+
+08 is Refused at 219:9 on both backends: `Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]`. Verified one-line source `const files: string[] = ['z', 'a']; files.sort(); console.log(files.join(','));` produces the same refusal at 1:37 on both backends. This is a compiler/language ruling, not an fs runtime gap.
+
+25 is Refused at 579:22 on both backends: `Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)`. Verified one-line source `export const emptyArray: never[] = [] as never[]; export function fallback<U extends {}>(result: U[] | undefined): readonly U[] { return result ?? emptyArray; }` produces the same refusal at 1:148 on both backends. Owner: compiler.
+
+14 remains Refused at 17:24 on both backends (exact undefined non-null assertion); awaiting the promised re-extraction. Targeted lower unknown/predicate/phantom/qualified-type tests PASS 5.366s. WASI host tests and imported unknown mutants PASS 37.984s. Mutants in_always_true and skip_inner_typeof are caught by Node stdout; the first checks native too. Test output in logs/fs_recount_daa_*.log. No new production implementation beyond merge reconciliation, no full repository gate, no macOS execution, no full counts regeneration.

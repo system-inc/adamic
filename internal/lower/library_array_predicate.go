@@ -23,7 +23,7 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	argument := node.AsCallExpression().Arguments.Nodes[0]
-	if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.opaqueArrayValue(argument) && !l.exactObject(argument, 0) {
+	if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {
 		return nil, true, l.notYet(argument, "Array.isArray on a tuple or an erased object/any/unknown view")
 	}
 	value, err := l.expression(argument)
@@ -77,7 +77,10 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 		}
 		return true
 	}
-	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsIntersection) != 0 || checker.IsTupleType(proven) {
+	if proven.Flags()&checker.TypeFlagsUnknown != 0 {
+		return true
+	}
+	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter|checker.TypeFlagsIntersection) != 0 || checker.IsTupleType(proven) {
 		return false
 	}
 	if l.checker.IsArrayType(proven) {
@@ -196,69 +199,4 @@ func (l *lowering) arrayPredicateFlowCall(node *ast.Node) bool {
 		}
 	}
 	return false
-}
-
-func (l *lowering) opaqueArrayValue(node *ast.Node) bool {
-	node = ast.SkipParentheses(node)
-	if node.Kind != ast.KindIdentifier {
-		return false
-	}
-	// These inputs already have a separate proven representation: Array.from
-	// supplies undefined, and supported catches hold an Error object.
-	symbol := l.symbol(node)
-	if symbol == nil || l.alwaysUndefined[symbol] || l.caught[symbol] || l.checker.GetTypeOfSymbol(symbol).Flags()&checker.TypeFlagsUnknown == 0 {
-		return false
-	}
-	for _, declaration := range symbol.Declarations {
-		if declaration.Kind == ast.KindParameter || declaration.Kind == ast.KindVariableDeclaration {
-			return true
-		}
-	}
-	return false
-}
-
-// Unknown bindings are opaque brand-test inputs for now. In particular null
-// and undefined may share the missing pointer here because neither is an array.
-// Reject other observations before they could distinguish that representation.
-func (l *lowering) unknownArrayUse(node *ast.Node) error {
-	if !l.opaqueArrayValue(node) {
-		return nil
-	}
-	parent := node.Parent
-	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
-		parent = parent.Parent
-	}
-	if parent != nil && l.arrayPredicateFlowCall(parent) {
-		return nil
-	}
-	if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node && parent.Name().Text() == "length" && l.checker.IsArrayType(l.arrayPredicateType(node)) {
-		return nil
-	}
-	return l.notYet(node, "an unknown value observed outside Array.isArray or its narrowed array length")
-}
-
-func (l *lowering) unknownArrayInput(node *ast.Node) error {
-	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
-	if contextual == nil || contextual.Flags()&checker.TypeFlagsUnknown == 0 {
-		return nil
-	}
-	var tuple func(*checker.Type) bool
-	tuple = func(proven *checker.Type) bool {
-		proven = l.concrete(proven)
-		if checker.IsTupleType(proven) {
-			return true
-		}
-		if proven.Flags()&checker.TypeFlagsUnion != 0 {
-			for _, member := range proven.Types() {
-				if tuple(member) {
-					return true
-				}
-			}
-		}
-		return false
-	}
-	if tuple(l.checker.GetTypeAtLocation(node)) {
-		return l.notYet(node, "a tuple erased to unknown before an array brand test (tuples still use object storage; copy it into an array)")
-	}
-	return nil
 }

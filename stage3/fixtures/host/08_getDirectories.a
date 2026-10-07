@@ -38,7 +38,7 @@
 // Adaptations: 40-explicit-any
 // Census reason: TS2591
 
-export type Path = string & { __pathBrand: undefined; };
+export type Path = string & { __pathBrand: void; };
 
 import * as _fs from "node:fs";
 import * as _path from "node:path";

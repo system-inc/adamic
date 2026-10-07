@@ -1,8 +1,10 @@
 import { programArguments } from 'adamic';
 const root = programArguments()[0] ?? '';
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 function failure(error: Error): void {
-    const errno: NodeJS.ErrnoException = error;
-    console.log(`${errno.code ?? ''}: ${error.message.replace(root, '<root>')}`);
+    console.log(`${errorCode(error) ?? ''}: ${error.message.replace(root, '<root>')}`);
 }
 import { openSync, closeSync, writeSync } from 'node:fs';
 const fd=openSync(root + '/out','w'); closeSync(fd);
@@ -10,5 +12,5 @@ try { closeSync(fd); } catch(error) { if (error instanceof Error) { failure(erro
 try { writeSync(fd,'closed'); } catch(error) { if (error instanceof Error) { failure(error); } }
 try { closeSync(-1); } catch(error) { if (error instanceof Error) { failure(error); } }
 
-const plain: NodeJS.ErrnoException=new Error('plain');
-console.log(`plain-code=${plain.code ?? 'missing'}`);
+const plain=new Error('plain');
+console.log(`plain-code=${errorCode(plain) ?? 'missing'}`);

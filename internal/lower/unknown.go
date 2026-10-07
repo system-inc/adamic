@@ -138,6 +138,11 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 			return nil
 		}
 	}
+	if l.includesNull(own) && own.Flags()&checker.TypeFlagsNull == 0 {
+		if held, known := l.representation(own); known && held != ir.Union {
+			return l.notYet(node, "a nullable reference viewed as unknown or object (null and undefined slot tags)")
+		}
+	}
 	present := l.checker.GetNonNullableType(own)
 	if held, known := l.representation(present); known && held == ir.Closure {
 		return l.notYet(node, "a function viewed as unknown or object (dynamic function descriptors)")

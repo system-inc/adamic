@@ -302,6 +302,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
+	if element.Flags()&checker.TypeFlagsUnknown != 0 {
+		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
+	}
 	valueType, isKnown := l.kept(element)
 	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
 		// An element is one adamic_value, and number | undefined needs two words.
