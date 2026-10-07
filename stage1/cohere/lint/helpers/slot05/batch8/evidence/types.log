@@ -1,0 +1,85 @@
+stage1/cohere/lint/helpers/slot05/batch8/main.a:8:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch8/main.a:10:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch8/main.a:10:49: variable root: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:12:10: function text: (index: number, field: string) => string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:12:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:12:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:13:10: function bool: (index: number, field: string) => boolean
+stage1/cohere/lint/helpers/slot05/batch8/main.a:13:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:13:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:14:10: function list: (index: number, field: string) => string[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:14:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:14:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:14:113: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:15:10: function modifier: (index: number) => Modifier
+stage1/cohere/lint/helpers/slot05/batch8/main.a:15:19: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:16:10: function printModifier: (value: Modifier) => void
+stage1/cohere/lint/helpers/slot05/batch8/main.a:16:24: parameter value: Modifier
+stage1/cohere/lint/helpers/slot05/batch8/main.a:17:10: function printVariant: (arena: readonly ParsedVariant[], index: number) => void
+stage1/cohere/lint/helpers/slot05/batch8/main.a:17:23: parameter arena: readonly ParsedVariant[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:17:56: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:19:11: variable variant: ParsedVariant
+stage1/cohere/lint/helpers/slot05/batch8/main.a:24:10: function compareBytes: (a: string, b: string) => number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:24:23: parameter a: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:24:34: parameter b: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:25:11: variable length: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:26:13: variable i: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:26:45: variable d: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:29:10: function printKeys: (keys: string[]) => void
+stage1/cohere/lint/helpers/slot05/batch8/main.a:29:20: parameter keys: string[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:29:110: variable key: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:30:10: function framework: (row: number, field: string) => FrameworkVariant[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:30:20: parameter row: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:30:33: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:30:124: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:31:11: variable row: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:32:11: variable mode: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:34:15: variable dependencies: LoadDependencies
+stage1/cohere/lint/helpers/slot05/batch8/main.a:36:24: parameter path: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:37:24: parameter entry: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:39:24: parameter collector: CollectorState
+stage1/cohere/lint/helpers/slot05/batch8/main.a:39:51: parameter path: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:42:27: variable pair: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:43:27: variable pair: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:44:27: variable name: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:51:24: parameter _registry: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:51:35: parameter name: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:51:41: parameter kind: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:55:15: variable result: LoadResult
+stage1/cohere/lint/helpers/slot05/batch8/main.a:58:19: variable system: LoadedSystem
+stage1/cohere/lint/helpers/slot05/batch8/main.a:59:68: variable path: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:60:64: variable skipped: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:61:19: variable statics: string[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:61:53: variable key: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:62:19: variable roots: string[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:62:51: variable key: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:63:19: variable custom: string[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:63:52: variable key: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:64:19: variable names: string[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:64:51: variable key: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:67:15: variable predictions: readonly number[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:68:15: variable prediction: (op: string, input: string, extra: string) => number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:68:29: parameter op: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:68:41: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:68:56: parameter extra: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:69:23: variable item: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:72:15: variable dependencies: ParserDependencies
+stage1/cohere/lint/helpers/slot05/batch8/main.a:74:23: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:74:30: parameter delimiter: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:75:22: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:76:30: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:77:21: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:78:26: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:79:29: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:80:25: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:80:32: parameter variants: boolean
+stage1/cohere/lint/helpers/slot05/batch8/main.a:80:132: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch8/main.a:81:26: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:81:33: parameter kind: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:82:27: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:83:25: parameter input: string
+stage1/cohere/lint/helpers/slot05/batch8/main.a:83:32: parameter child: ParsedVariant
+stage1/cohere/lint/helpers/slot05/batch8/main.a:85:15: variable arena: ParsedVariant[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:88:19: variable candidates: ParsedCandidate[]
+stage1/cohere/lint/helpers/slot05/batch8/main.a:89:23: variable candidate: ParsedCandidate
+stage1/cohere/lint/helpers/slot05/batch8/main.a:92:107: variable variant: number

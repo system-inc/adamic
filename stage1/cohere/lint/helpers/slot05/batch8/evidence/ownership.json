@@ -1,0 +1,13 @@
+{
+  "claim": "85c71d96a8ccfc08b15de83e0e3edc7dc49d20e1",
+  "claim_time": "2026-10-07T03:32:09Z",
+  "branches_checked": 18,
+  "base_main": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "previous_landing_ready": "66a88f6e2e25d7e3e93d5092f931ce5b45ffe7bf",
+  "competing_claims": [],
+  "helpers": [
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseCandidate",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseVariant",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.LoadDesignSystem"
+  ]
+}

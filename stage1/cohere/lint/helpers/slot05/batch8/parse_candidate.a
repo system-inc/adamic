@@ -1,0 +1,86 @@
+import type { ParserDependencies, ParsedCandidate, ParsedVariant, Modifier, RootSplit, ParsedValue } from './types.a';
+import { parseVariant } from './parse_variant.a';
+export function parseCandidate(input: string, dependencies: ParserDependencies, arena: ParsedVariant[]): ParsedCandidate[] {
+    const candidates: ParsedCandidate[] = [];
+    let parts = dependencies.segment(input, ':');
+    if(dependencies.prefix !== '') {
+        if(parts.length === 1 || parts[0] !== dependencies.prefix) { return candidates; }
+        parts = parts.slice(1);
+    }
+    let base = parts[parts.length - 1] ?? '';
+    const variants: number[] = [];
+    for(let index = parts.length - 2; index >= 0; index--) {
+        const parsed = parseVariant(parts[index] ?? '', dependencies, arena);
+        if(parsed < 0) { return candidates; } variants.push(parsed);
+    }
+    let important = false;
+    if(base.endsWith('!')) { important = true; base = base.slice(0, -1); }
+    else if(base.startsWith('!')) { important = true; base = base.slice(1); }
+    const absentModifier: Modifier = {present: false, kind: '', value: ''};
+    const absentValue: ParsedValue = {present: false, kind: '', value: '', dataType: '', fraction: ''};
+    if(dependencies.hasUtility(base, 'static') && !base.includes('[')) {
+        candidates.push({kind: 'static', root: base, property: '', propertyValue: '', value: absentValue, modifier: absentModifier, variants, important, raw: input});
+    }
+    const modifierParts = dependencies.segment(base, '/');
+    const withoutModifier = modifierParts[0] ?? '';
+    const modifierPresent = modifierParts.length > 1; const modifierText = modifierParts[1] ?? '';
+    if(modifierParts.length > 2 && (modifierParts[2] ?? '') !== '') { return candidates; }
+    let modifier = absentModifier;
+    if(modifierPresent) { modifier = dependencies.parseModifier(modifierText); if(!modifier.present) { return candidates; } }
+    if(withoutModifier.startsWith('[')) {
+        if(!withoutModifier.endsWith(']') || withoutModifier.length < 2) { return candidates; }
+        const leading = withoutModifier[1] ?? '';
+        if(leading !== '-' && !(leading >= 'a' && leading <= 'z')) { return candidates; }
+        const inner = withoutModifier.slice(1, -1); const colon = inner.indexOf(':');
+        if(colon <= 0 || colon === inner.length - 1) { return candidates; }
+        const propertyValue = dependencies.decode(inner.slice(colon + 1));
+        if(!dependencies.validArbitrary(propertyValue)) { return candidates; }
+        candidates.push({kind: 'arbitrary', root: '', property: inner.slice(0, colon), propertyValue, value: absentValue, modifier, variants, important, raw: input});
+        return candidates;
+    }
+    let roots: readonly RootSplit[] = [];
+    if(withoutModifier.endsWith(']')) {
+        const bracket = withoutModifier.indexOf('-[');
+        if(bracket < 0) { return candidates; }
+        const root = withoutModifier.slice(0, bracket);
+        if(!dependencies.hasUtility(root, 'functional')) { return candidates; }
+        roots = [{root, value: withoutModifier.slice(bracket + 1), present: true}];
+    } else if(withoutModifier.endsWith(')')) {
+        const paren = withoutModifier.indexOf('-(');
+        if(paren < 0) { return candidates; }
+        const root = withoutModifier.slice(0, paren);
+        if(!dependencies.hasUtility(root, 'functional')) { return candidates; }
+        let value = withoutModifier.slice(paren + 2, -1); let dataType = '';
+        const hint = dependencies.segment(value, ':');
+        if(hint.length === 2) { dataType = hint[0] ?? ''; value = hint[1] ?? ''; }
+        if(!value.startsWith('--') || !dependencies.validArbitrary(value)) { return candidates; }
+        const rewritten = dataType === '' ? '[var(' + value + ')]' : '[' + dataType + ':var(' + value + ')]';
+        roots = [{root, value: rewritten, present: true}];
+    } else { roots = dependencies.findRoots(withoutModifier, false); }
+    for(const split of roots) {
+        let parsedValue = absentValue;
+        if(split.present) {
+            const value = split.value; const bracket = value.indexOf('[');
+            if(bracket >= 0) {
+                if(!value.endsWith(']')) { return candidates; }
+                let arbitrary = dependencies.decode(value.slice(bracket + 1, -1));
+                if(!dependencies.validArbitrary(arbitrary)) { continue; }
+                let dataType = ''; let hasHint = false;
+                for(let index = 0; index < arbitrary.length; index++) {
+                    const code = arbitrary[index] ?? '';
+                    if(code === ':') { dataType = arbitrary.slice(0, index); hasHint = true; arbitrary = arbitrary.slice(index + 1); break; }
+                    if(code === '-' || (code >= 'a' && code <= 'z')) { continue; }
+                    break;
+                }
+                if(dependencies.blank(arbitrary) || (hasHint && dataType === '')) { continue; }
+                parsedValue = {present: true, kind: 'arbitrary', value: arbitrary, dataType, fraction: ''};
+            } else {
+                const fraction = modifierPresent && !(modifier.present && modifier.kind === 'arbitrary') ? value + '/' + modifierText : '';
+                if(!dependencies.validNamed(value)) { continue; }
+                parsedValue = {present: true, kind: 'named', value, dataType: '', fraction};
+            }
+        }
+        candidates.push({kind: 'functional', root: split.root, property: '', propertyValue: '', value: parsedValue, modifier, variants, important, raw: input});
+    }
+    return candidates;
+}

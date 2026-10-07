@@ -1,0 +1,97 @@
+import { panic, readTextFile, programArguments, utf8At, utf8Length } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { parseCandidate } from './parse_candidate.a';
+import { parseVariant } from './parse_variant.a';
+import { loadDesignSystem } from './load_design_system.a';
+import type { ParserDependencies, ParsedVariant, Modifier } from './types.a';
+import type { CollectorState, FrameworkVariant, LoadDependencies } from './load_design_system.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function bool(index: number, field: string): boolean { return text(index, field) === 'true'; }
+function list(index: number, field: string): string[] { return json.node(json.field(index, field)).children.map(c => json.node(c).text); }
+function modifier(index: number): Modifier { return {present: bool(index, 'present'), kind: text(index, 'kind'), value: text(index, 'value')}; }
+function printModifier(value: Modifier): void { console.log(`${value.present}`); if(value.present) { console.log(value.kind); console.log(value.value); } }
+function printVariant(arena: readonly ParsedVariant[], index: number): void {
+    console.log(`${index >= 0}`); if(index < 0) { return; }
+    const variant = arena[index] ?? panic('bad variant arena');
+    console.log(variant.kind); console.log(variant.root); console.log(variant.selector); console.log(`${variant.relative}`);
+    console.log(`${variant.value.present}`); if(variant.value.present) { console.log(variant.value.kind); console.log(variant.value.value); }
+    printModifier(variant.modifier); printVariant(arena, variant.variant);
+}
+function compareBytes(a: string, b: string): number {
+    const length = Math.min(utf8Length(a), utf8Length(b));
+    for(let i = 0; i < length; i++) { const d = utf8At(a, i) - utf8At(b, i); if(d !== 0) { return d; } }
+    return utf8Length(a) - utf8Length(b);
+}
+function printKeys(keys: string[]): void { keys.sort(compareBytes); console.log(`${keys.length}`); for(const key of keys) { console.log(key); } }
+function framework(row: number, field: string): FrameworkVariant[] { return json.node(json.field(row, field)).children.map(c => ({name: text(c, 'name'), kind: text(c, 'kind')})); }
+for(const row of json.node(root).children) {
+    const mode = text(row, 'mode');
+    if(mode === 'loader') {
+        const dependencies: LoadDependencies = {
+            version: text(row, 'version'), framework: framework(row, 'defaults'),
+            resolver: (path) => { console.log('resolver ' + path); return 'resolver'; },
+            absolute: (entry) => { console.log('absolute ' + entry); return {error: '', path: text(row, 'absolute')}; },
+            newTheme: () => { console.log('newTheme'); return 'theme'; },
+            loadFile: (collector: CollectorState, path: string) => {
+                console.log('load ' + path);
+                collector.stylesheets = list(row, 'stylesheets'); collector.skipped = list(row, 'skipped');
+                for(const pair of json.node(json.field(row, 'statics')).children) { collector.staticUtilityNodes.set(text(pair, 'key'), text(pair, 'value')); }
+                for(const pair of json.node(json.field(row, 'roots')).children) { collector.utilityRoots.set(text(pair, 'key'), text(pair, 'value')); }
+                for(const name of list(row, 'custom')) { collector.customVariants.set(name, true); }
+                collector.definitions = list(row, 'definitions'); return text(row, 'loadError');
+            },
+            newVariants: () => { console.log('newVariants'); return 'variants'; },
+            registerFramework: () => { console.log('framework'); },
+            registerBreakpoints: () => { console.log('breakpoints'); },
+            attachComparisons: () => { console.log('comparisons'); },
+            register: (_registry, name, kind) => { console.log('register ' + name + ' ' + kind); },
+            newEvaluator: () => { console.log('evaluator'); return 'utility'; },
+            nextBuildCount: () => { console.log('count'); return json.node(json.field(row, 'count')).number; }
+        };
+        const result = loadDesignSystem({entryPoint: text(row, 'entryPoint'), packageRoot: text(row, 'packageRoot'), resolverPresent: bool(row, 'resolverPresent'), resolver: 'supplied', frameworkPresent: bool(row, 'frameworkPresent'), framework: framework(row, 'framework')}, dependencies);
+        console.log('result'); console.log(`${result.present}`); console.log(result.error);
+        if(result.present) {
+            const system = result.system; console.log(system.entryPoint); console.log(system.tailwindVersion); console.log(`${system.buildCount}`); console.log(`${system.theme !== ''}`); console.log(`${system.variants !== ''}`); console.log(`${system.utilityPresent}`);
+            console.log(`${system.stylesheets.length}`); for(const path of system.stylesheets) { console.log(path); }
+            console.log(`${system.skipped.length}`); for(const skipped of system.skipped) { console.log(skipped); }
+            const statics: string[] = []; for(const key of system.staticUtilityNodes.keys()) { statics.push(key); } printKeys(statics);
+            const roots: string[] = []; for(const key of system.utilityRoots.keys()) { roots.push(key); } printKeys(roots);
+            const custom: string[] = []; for(const key of system.customVariants.keys()) { custom.push(key); } printKeys(custom);
+            const names: string[] = []; for(const key of system.frameworkNames.keys()) { names.push(key); } printKeys(names);
+        }
+    } else {
+        const predictions = json.node(json.field(row, 'predictions')).children;
+        const prediction = (op: string, input: string, extra: string): number => {
+            for(const item of predictions) { if(text(item, 'op') === op && text(item, 'input') === input && text(item, 'extra') === extra) { return item; } }
+            return panic('missing Go dependency: ' + op + ' ' + input + ' ' + extra);
+        };
+        const dependencies: ParserDependencies = {
+            prefix: text(row, 'prefix'),
+            segment: (input, delimiter) => list(prediction('segment', input, delimiter), 'parts'),
+            decode: (input) => text(prediction('decode', input, ''), 'text'),
+            validArbitrary: (input) => bool(prediction('arbitrary', input, ''), 'bool'),
+            blank: (input) => bool(prediction('blank', input, ''), 'bool'),
+            validNamed: (input) => bool(prediction('named', input, ''), 'bool'),
+            parseModifier: (input) => modifier(json.field(prediction('modifier', input, ''), 'modifier')),
+            findRoots: (input, variants) => json.node(json.field(prediction('roots', input, `${variants}`), 'roots')).children.map(c => ({root: text(c, 'root'), value: text(c, 'value'), present: bool(c, 'present')})),
+            hasUtility: (input, kind) => bool(prediction('utility', input, kind), 'bool'),
+            variantKind: (input) => text(prediction('kind', input, ''), 'text'),
+            compounds: (input, child) => bool(prediction('compounds', input, child.kind + '|' + child.root + '|' + child.selector), 'bool')
+        };
+        const arena: ParsedVariant[] = [];
+        if(mode === 'variant') { printVariant(arena, parseVariant(text(row, 'input'), dependencies, arena)); }
+        else {
+            const candidates = parseCandidate(text(row, 'input'), dependencies, arena); console.log(`${candidates.length}`);
+            for(const candidate of candidates) {
+                console.log(candidate.kind); console.log(candidate.root); console.log(candidate.property); console.log(candidate.propertyValue); console.log(`${candidate.value.present}`);
+                if(candidate.value.present) { console.log(candidate.value.kind); console.log(candidate.value.value); console.log(candidate.value.dataType); console.log(candidate.value.fraction); }
+                printModifier(candidate.modifier); console.log(`${candidate.variants.length}`); for(const variant of candidate.variants) { printVariant(arena, variant); }
+                console.log(`${candidate.important}`); console.log(candidate.raw);
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+[
+  "helper_test.go:121: parse_candidate.a mutant \"important = true; base = base.slice(0, -1);\" -> \"important = false; base = base.slice(0, -1);\" caught at verdict 18083: mutant \"false\", Go \"true\"",
+  "helper_test.go:121: parse_candidate.a mutant \"let important = false;\" -> \"variants.reverse(); let important = false;\" caught at verdict 17524: mutant \"&:hover\", Go \"&:focus\"",
+  "helper_test.go:121: parse_candidate.a mutant \"fraction};\" -> \"fraction: ''};\" caught at verdict 39: mutant \"\", Go \"red-500/50\"",
+  "helper_test.go:121: load_design_system.a mutant \"if(!options.frameworkPresent)\" -> \"if(!options.frameworkPresent || options.framework.length === 0)\" caught at verdict 128: mutant \"framework\", Go \"register a static\"",
+  "helper_test.go:121: load_design_system.a mutant \"if(utilityPresent) { utility = dependencies.newEvaluator\" -> \"if(false) { utility = dependencies.newEvaluator\" caught at verdict 205: mutant \"count\", Go \"evaluator\"",
+  "helper_test.go:121: load_design_system.a mutant \"if(delta !== 0) { return delta; }\" -> \"if(delta !== 0) { return -delta; }\" caught at verdict 8: mutant \"register 😀 static\", Go \"register a static\"",
+  "helper_test.go:121: parse_variant.a mutant \"selector = '&:is(' + selector + ')';\" -> \"selector = selector;\" caught at verdict 2522: mutant \"--my-var:red\", Go \"&:is(--my-var:red)\"",
+  "helper_test.go:121: parse_variant.a mutant \"relative, value: absentValue\" -> \"relative: false, value: absentValue\" caught at verdict 2505: mutant \"false\", Go \"true\"",
+  "helper_test.go:121: parse_variant.a mutant \"if(subVariant === undefined || !dependencies.compounds(root, subVariant))\" -> \"if(subVariant === undefined || dependencies.compounds(root, subVariant))\" caught at verdict 8721: mutant \"false\", Go \"true\""
+]

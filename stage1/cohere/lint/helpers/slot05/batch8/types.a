@@ -1,0 +1,19 @@
+export interface Modifier { present: boolean; kind: string; value: string }
+export interface VariantValue { present: boolean; kind: string; value: string }
+export interface ParsedVariant { kind: string; root: string; selector: string; relative: boolean; value: VariantValue; modifier: Modifier; variant: number }
+export interface ParsedValue { present: boolean; kind: string; value: string; dataType: string; fraction: string }
+export interface ParsedCandidate { kind: string; root: string; property: string; propertyValue: string; value: ParsedValue; modifier: Modifier; variants: readonly number[]; important: boolean; raw: string }
+export interface RootSplit { root: string; value: string; present: boolean }
+export interface ParserDependencies {
+    prefix: string;
+    segment: (input: string, delimiter: string) => readonly string[];
+    decode: (input: string) => string;
+    validArbitrary: (input: string) => boolean;
+    blank: (input: string) => boolean;
+    validNamed: (input: string) => boolean;
+    parseModifier: (input: string) => Modifier;
+    findRoots: (input: string, variants: boolean) => readonly RootSplit[];
+    hasUtility: (root: string, kind: string) => boolean;
+    variantKind: (root: string) => string;
+    compounds: (root: string, child: ParsedVariant) => boolean;
+}

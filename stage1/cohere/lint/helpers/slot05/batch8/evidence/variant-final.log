@@ -1,0 +1,16 @@
+=== RUN   TestSlot05Variant
+    helper_test.go:56: 6 consumers, 639 distinct literals, 15014 parser cases
+    helper_test.go:66: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:121: parse_variant.a mutant "selector = '&:is(' + selector + ')';" -> "selector = selector;" caught at verdict 2522: mutant "--my-var:red", Go "&:is(--my-var:red)"
+    helper_test.go:121: parse_variant.a mutant "relative, value: absentValue" -> "relative: false, value: absentValue" caught at verdict 2505: mutant "false", Go "true"
+    helper_test.go:121: parse_variant.a mutant "if(subVariant === undefined || !dependencies.compounds(root, subVariant))" -> "if(subVariant === undefined || dependencies.compounds(root, subVariant))" caught at verdict 8721: mutant "false", Go "true"
+--- PASS: TestSlot05Variant (35.43s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch8	35.439s

@@ -1,0 +1,54 @@
+import { utf8At, utf8Length } from 'adamic';
+export interface FrameworkVariant { name: string; kind: string }
+export interface LoadOptions { entryPoint: string; packageRoot: string; resolverPresent: boolean; resolver: string; frameworkPresent: boolean; framework: readonly FrameworkVariant[] }
+export interface CollectorState { theme: string; resolver: string; stylesheets: string[]; skipped: string[]; staticUtilityNodes: Map<string, string>; utilityRoots: Map<string, string>; customVariants: Map<string, boolean>; definitions: string[]; visiting: Map<string, boolean> }
+export interface LoadedSystem { entryPoint: string; tailwindVersion: string; stylesheets: readonly string[]; skipped: readonly string[]; buildCount: number; theme: string; variants: string; utilityPresent: boolean; utility: string; staticUtilityNodes: ReadonlyMap<string, string>; utilityRoots: ReadonlyMap<string, string>; customVariants: ReadonlyMap<string, boolean>; frameworkNames: ReadonlyMap<string, boolean> }
+export interface LoadResult { present: boolean; error: string; system: LoadedSystem }
+export interface LoadDependencies {
+    version: string; framework: readonly FrameworkVariant[];
+    resolver: (root: string) => string;
+    absolute: (entry: string) => {error: string; path: string};
+    newTheme: () => string;
+    loadFile: (collector: CollectorState, path: string) => string;
+    newVariants: () => string;
+    registerFramework: (registry: string) => void;
+    registerBreakpoints: (registry: string, theme: string) => void;
+    attachComparisons: (registry: string, theme: string) => void;
+    register: (registry: string, name: string, kind: string) => void;
+    newEvaluator: (theme: string, definitions: readonly string[]) => string;
+    nextBuildCount: () => number;
+}
+// Handles belong to externally owned engine objects; never interpret their payload or perform unrecorded IO.
+export function loadDesignSystem(options: LoadOptions, dependencies: LoadDependencies): LoadResult {
+    const absent: LoadedSystem = {entryPoint: '', tailwindVersion: '', stylesheets: [], skipped: [], buildCount: 0, theme: '', variants: '', utilityPresent: false, utility: '', staticUtilityNodes: new Map<string, string>(), utilityRoots: new Map<string, string>(), customVariants: new Map<string, boolean>(), frameworkNames: new Map<string, boolean>()};
+    if(options.entryPoint === '') { return {present: false, error: 'no entry point given: a design system cannot be built without a stylesheet to build it from', system: absent}; }
+    let resolve = options.resolver;
+    if(!options.resolverPresent) {
+        if(options.packageRoot === '') { return {present: false, error: options.entryPoint + ': no tailwindcss package root and no resolver, so `@import "tailwindcss"` cannot resolve', system: absent}; }
+        resolve = dependencies.resolver(options.packageRoot);
+    }
+    const absolute = dependencies.absolute(options.entryPoint);
+    if(absolute.error !== '') { return {present: false, error: 'resolve ' + options.entryPoint + ': ' + absolute.error, system: absent}; }
+    const collector: CollectorState = {theme: dependencies.newTheme(), resolver: resolve, visiting: new Map<string, boolean>(), stylesheets: [], skipped: [], staticUtilityNodes: new Map<string, string>(), utilityRoots: new Map<string, string>(), customVariants: new Map<string, boolean>(), definitions: []};
+    const error = dependencies.loadFile(collector, absolute.path);
+    if(error !== '') { return {present: false, error, system: absent}; }
+    const variants = dependencies.newVariants(); const frameworkNames = new Map<string, boolean>();
+    if(!options.frameworkPresent) {
+        dependencies.registerFramework(variants);
+        dependencies.registerBreakpoints(variants, collector.theme);
+        dependencies.attachComparisons(variants, collector.theme);
+        for(const registration of dependencies.framework) { frameworkNames.set(registration.name, true); }
+    } else {
+        for(const registration of options.framework) { dependencies.register(variants, registration.name, registration.kind); frameworkNames.set(registration.name, true); }
+    }
+    const names: string[] = []; for(const name of collector.customVariants.keys()) { names.push(name); }
+    names.sort((left, right) => {
+        const length = Math.min(utf8Length(left), utf8Length(right));
+        for(let index = 0; index < length; index++) { const delta = utf8At(left, index) - utf8At(right, index); if(delta !== 0) { return delta; } }
+        return utf8Length(left) - utf8Length(right);
+    });
+    for(const name of names) { dependencies.register(variants, name, 'static'); }
+    let utility = ''; const utilityPresent = collector.definitions.length > 0;
+    if(utilityPresent) { utility = dependencies.newEvaluator(collector.theme, collector.definitions); }
+    return {present: true, error: '', system: {entryPoint: absolute.path, tailwindVersion: dependencies.version, stylesheets: collector.stylesheets, skipped: collector.skipped, buildCount: dependencies.nextBuildCount(), theme: collector.theme, variants, utilityPresent, utility, staticUtilityNodes: collector.staticUtilityNodes, utilityRoots: collector.utilityRoots, customVariants: collector.customVariants, frameworkNames}};
+}

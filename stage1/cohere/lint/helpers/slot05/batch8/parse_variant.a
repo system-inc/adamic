@@ -1,0 +1,56 @@
+import type { ParserDependencies, ParsedVariant, Modifier, VariantValue } from './types.a';
+// -1 represents Go nil. Successful compound edges point into the caller's acyclic arena.
+export function parseVariant(variant: string, dependencies: ParserDependencies, arena: ParsedVariant[]): number {
+    const absentModifier: Modifier = {present: false, kind: '', value: ''};
+    const absentValue: VariantValue = {present: false, kind: '', value: ''};
+    if(variant.length >= 2 && variant.startsWith('[') && variant.endsWith(']')) {
+        if(variant[1] === '@' && variant.includes('&')) { return -1; }
+        let selector = dependencies.decode(variant.slice(1, -1));
+        if(!dependencies.validArbitrary(selector) || dependencies.blank(selector)) { return -1; }
+        const relative = selector.startsWith('>') || selector.startsWith('+') || selector.startsWith('~');
+        if(!relative && !selector.startsWith('@') && !selector.includes('&')) { selector = '&:is(' + selector + ')'; }
+        arena.push({kind: 'arbitrary', root: '', selector, relative, value: absentValue, modifier: absentModifier, variant: -1});
+        return arena.length - 1;
+    }
+    const parts = dependencies.segment(variant, '/');
+    const base = parts[0] ?? '';
+    const modifierPresent = parts.length > 1; const modifier = parts[1] ?? '';
+    if(parts.length > 2 && (parts[2] ?? '') !== '') { return -1; }
+    for(const split of dependencies.findRoots(base, true)) {
+        const root = split.root; const kind = dependencies.variantKind(root);
+        let parsedModifier = absentModifier; let parsedValue = absentValue; let child = -1;
+        if(kind === 'static') {
+            if(split.present || modifierPresent) { return -1; }
+        } else if(kind === 'functional') {
+            if(modifierPresent) { parsedModifier = dependencies.parseModifier(modifier); if(!parsedModifier.present) { return -1; } }
+            if(split.present) {
+                const held = split.value;
+                if(held.endsWith(']') || held.endsWith(')')) {
+                    const bracketed = held.endsWith(']');
+                    if(!held.startsWith(bracketed ? '[' : '(')) { continue; }
+                    const decoded = dependencies.decode(held.slice(1, -1));
+                    if(!dependencies.validArbitrary(decoded) || dependencies.blank(decoded)) { return -1; }
+                    if(!bracketed && !decoded.startsWith('--')) { return -1; }
+                    parsedValue = {present: true, kind: 'arbitrary', value: bracketed ? decoded : 'var(' + decoded + ')'};
+                } else {
+                    if(!dependencies.validNamed(held)) { continue; }
+                    parsedValue = {present: true, kind: 'named', value: held};
+                }
+            }
+        } else if(kind === 'compound') {
+            if(!split.present) { return -1; }
+            let held = split.value; let forwardedPresent = modifierPresent;
+            if(forwardedPresent && (root === 'not' || root === 'has' || root === 'in')) {
+                held += '/' + modifier; forwardedPresent = false;
+            }
+            child = parseVariant(held, dependencies, arena);
+            if(child < 0) { return -1; }
+            const subVariant = arena[child];
+            if(subVariant === undefined || !dependencies.compounds(root, subVariant)) { return -1; }
+            if(forwardedPresent) { parsedModifier = dependencies.parseModifier(modifier); if(!parsedModifier.present) { return -1; } }
+        } else { continue; }
+        arena.push({kind, root, selector: '', relative: false, value: parsedValue, modifier: parsedModifier, variant: child});
+        return arena.length - 1;
+    }
+    return -1;
+}

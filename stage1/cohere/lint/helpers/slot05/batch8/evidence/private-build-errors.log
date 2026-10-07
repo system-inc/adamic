@@ -1,0 +1,27 @@
+=== RUN   TestSlot05Candidate
+    helper_test.go:55: go [build -overlay=/tmp/adamic-gate/TestSlot05Candidate1368202280/002/overlay.json -o /tmp/adamic-gate/TestSlot05Candidate1368202280/002/oracle /workspace/adamic/cohere/adamic_slot05_batch8.go]: exit status 1
+        # github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:74:32: cannot use c.staticUtilityNodes (variable of type map[string][]*Node) as map[string]bool value in argument to sortedKeys
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:78:32: cannot use c.utilityRoots (variable of type map[string]map[UtilityKind]bool) as map[string]bool value in argument to sortedKeys
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:158:45: cannot use s.staticUtilityNodes (variable of type map[string][]*Node) as map[string]bool value in argument to sortedKeys
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:158:79: cannot use s.utilityRoots (variable of type map[string]map[UtilityKind]bool) as map[string]bool value in argument to sortedKeys
+--- FAIL: TestSlot05Candidate (0.08s)
+=== RUN   TestSlot05Variant
+    helper_test.go:55: go [build -overlay=/tmp/adamic-gate/TestSlot05Variant1970471680/002/overlay.json -o /tmp/adamic-gate/TestSlot05Variant1970471680/002/oracle /workspace/adamic/cohere/adamic_slot05_batch8.go]: exit status 1
+        # github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:74:32: cannot use c.staticUtilityNodes (variable of type map[string][]*Node) as map[string]bool value in argument to sortedKeys
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:78:32: cannot use c.utilityRoots (variable of type map[string]map[UtilityKind]bool) as map[string]bool value in argument to sortedKeys
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:158:45: cannot use s.staticUtilityNodes (variable of type map[string][]*Node) as map[string]bool value in argument to sortedKeys
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:158:79: cannot use s.utilityRoots (variable of type map[string]map[UtilityKind]bool) as map[string]bool value in argument to sortedKeys
+--- FAIL: TestSlot05Variant (0.08s)
+=== RUN   TestSlot05Loader
+    helper_test.go:55: go [build -overlay=/tmp/adamic-gate/TestSlot05Loader3575677705/002/overlay.json -o /tmp/adamic-gate/TestSlot05Loader3575677705/002/oracle /workspace/adamic/cohere/adamic_slot05_batch8.go]: exit status 1
+        # github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:74:32: cannot use c.staticUtilityNodes (variable of type map[string][]*Node) as map[string]bool value in argument to sortedKeys
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:78:32: cannot use c.utilityRoots (variable of type map[string]map[UtilityKind]bool) as map[string]bool value in argument to sortedKeys
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:158:45: cannot use s.staticUtilityNodes (variable of type map[string][]*Node) as map[string]bool value in argument to sortedKeys
+        ../stage1/cohere/lint/helpers/slot05/batch8/testdata/loader_export.go:158:79: cannot use s.utilityRoots (variable of type map[string]map[UtilityKind]bool) as map[string]bool value in argument to sortedKeys
+--- FAIL: TestSlot05Loader (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch8	0.244s
+FAIL

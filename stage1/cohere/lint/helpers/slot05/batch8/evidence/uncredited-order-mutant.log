@@ -1,0 +1,45 @@
+=== RUN   TestSlot05Candidate
+    helper_test.go:56: 6 consumers, 639 distinct literals, 13288 parser cases
+    helper_test.go:66: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:121: parse_candidate.a mutant "important = true; base = base.slice(0, -1);" -> "important = false; base = base.slice(0, -1);" caught at verdict 18083: mutant "false", Go "true"
+    helper_test.go:114: /tmp/adamic-gate/TestSlot05Candidate1743318040/014/slot05 [/tmp/adamic-gate/TestSlot05Candidate1743318040/002/cases.json]: exit status 70
+        adamic: panic: missing Go dependency: segment declare function mergeClassNames(...values: unknown[]) /
+--- FAIL: TestSlot05Candidate (40.73s)
+=== RUN   TestSlot05Variant
+    helper_test.go:56: 6 consumers, 639 distinct literals, 13288 parser cases
+    helper_test.go:66: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:121: parse_variant.a mutant "selector = '&:is(' + selector + ')';" -> "selector = selector;" caught at verdict 1738: mutant "--my-var:red", Go "&:is(--my-var:red)"
+    helper_test.go:121: parse_variant.a mutant "relative, value: absentValue" -> "relative: false, value: absentValue" caught at verdict 1807: mutant "false", Go "true"
+    helper_test.go:121: parse_variant.a mutant "if(subVariant === undefined || !dependencies.compounds(root, subVariant))" -> "if(subVariant === undefined || dependencies.compounds(root, subVariant))" caught at verdict 6555: mutant "false", Go "true"
+--- PASS: TestSlot05Variant (30.54s)
+=== RUN   TestSlot05Loader
+    helper_test.go:56: 6 consumers, 639 distinct literals, 5755 loader cases
+    helper_test.go:66: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:121: load_design_system.a mutant "if(!options.frameworkPresent)" -> "if(!options.frameworkPresent || options.framework.length === 0)" caught at verdict 128: mutant "framework", Go "register a static"
+    helper_test.go:121: load_design_system.a mutant "if(utilityPresent) { utility = dependencies.newEvaluator" -> "if(false) { utility = dependencies.newEvaluator" caught at verdict 205: mutant "count", Go "evaluator"
+    helper_test.go:121: load_design_system.a mutant "if(delta !== 0) { return delta; }" -> "if(delta !== 0) { return -delta; }" caught at verdict 8: mutant "register 😀 static", Go "register a static"
+--- PASS: TestSlot05Loader (127.55s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch8	198.835s
+FAIL
