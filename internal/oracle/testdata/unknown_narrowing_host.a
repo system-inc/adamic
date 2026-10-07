@@ -1,0 +1,22 @@
+import { readFileSync, mkdirSync } from 'node:fs';
+export function errorCode(error: unknown): string | undefined {
+	return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+export function errorMessage(error: unknown): string | undefined {
+	return typeof error === 'object' && error !== null && 'message' in error && typeof error.message === 'string' ? error.message : undefined;
+}
+try { readFileSync('/nonexistent', 'utf8'); }
+catch (error) {
+	console.log(errorCode(error) ?? 'none');
+	console.log(errorCode('x') ?? 'none');
+	console.log(errorCode(null) ?? 'none');
+	console.log(errorMessage(error) ?? 'none');
+}
+
+// The same EEXIST path used by tsc's createDirectory catch in host fixture 13.
+function createDirectory(path: string): void {
+	try { mkdirSync(path); }
+	catch (error) { if (errorCode(error) !== 'EEXIST') { throw error; } }
+}
+createDirectory('/tmp');
+console.log('existing directory');

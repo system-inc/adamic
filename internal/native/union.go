@@ -33,6 +33,9 @@ func converted(from ir.Type, to ir.Type, value string) (string, bool) {
 
 // box emits a value where a union goes.
 func (e *emitter) box(value ir.Expression) string {
+	if _, null := value.(ir.Null); null {
+		return "&adamic_null"
+	}
 	boxed, fresh := converted(value.Type(), ir.Union, e.value(value))
 	if fresh {
 		return e.own(ir.Union, boxed)

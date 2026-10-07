@@ -31,6 +31,6 @@ adamic_string *adamic_object_typeof(const adamic_object *object) {
 }
 
 adamic_string *adamic_static_union_typeof(const adamic_heap *value) {
-    if (value != NULL && value->kind == adamic_kind_object) { return adamic_object_typeof((const adamic_object *)value); }
+    if (value != NULL && value != &adamic_null && value->kind == adamic_kind_object) { return adamic_object_typeof((const adamic_object *)value); }
     return adamic_union_typeof(value);
 }
