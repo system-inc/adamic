@@ -39,3 +39,10 @@
          diff line 2381: "", Go cohere "ok\t{\\n    declare = true;\\n}\\n"
 --- FAIL: TestStatementsAgainstGoAndPrettier (20.51s)
 
+== github.com/system-inc/adamic/stage1/cohere/tsprinter TestMutants/declaration_loses_its_function_keyword
+=== RUN   TestMutants/declaration_loses_its_function_keyword
+=== PAUSE TestMutants/declaration_loses_its_function_keyword
+=== CONT  TestMutants/declaration_loses_its_function_keyword
+    mutants_test.go:122: Node mutant must finish normally: exit 70 stderr adamic: panic: parser slice unsupported primary EqualsToken at 30 in statements.ts
+--- FAIL: TestMutants/declaration_loses_its_function_keyword (89.91s)
+
