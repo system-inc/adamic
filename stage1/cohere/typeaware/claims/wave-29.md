@@ -22,3 +22,13 @@ here.
 Fetched all origin heads and checked stage1 source blobs and claim documents.
 No implementation or claim for these rules was found. Config set membership is
 not an implementation. No rule was skipped.
+
+## Continuation after completion of the first claim
+
+Original three rules completed, tested and pushed in 0fa8f823, including configured naming patterns and native Go-regex instruction execution. All origin heads were refreshed again before selection. Main and the bridge branch contain none of the following rule names in their stage1 Adamic/TypeScript implementations. None is mentioned in any origin typeaware claim Markdown blob. Ranking uses the same combined-volume/lexical ordering and the 26 documented baseline ports.
+
+1. `no-restricted-globals`: combined volume 0.
+2. `no-setter-return`: combined volume 0.
+3. `no-shadow-restricted-names`: combined volume 0.
+
+This update is committed and pushed before any new rule code is written. Earlier available candidates became claimed by other workers and were skipped during the refreshed scan. The remaining emitted-JavaScript checker-adapter gap is a shared harness dependency; native findings, fixes and suggestions are still held to Go.
