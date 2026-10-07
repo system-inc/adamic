@@ -174,3 +174,60 @@ Actual-repo outputs: `/tmp/progress-bounded-real-{cold,warm}.json`,
 Not covered: an actual macOS run, full compiler gate, or peak-memory profiling.
 Neither gates nor fixtures are executed by the progress command. This correction
 is to recorded-evidence reads, patch hashing, cache persistence and reporting.
+
+## Main records at 71d7e491
+
+Rebased onto origin/main 71d7e491b3c9724f7a0e2ee754592149e7f9790b.
+Verbatim main/area reports and landings.csv are fixtures with provenance beside them.
+Main has 22/78 own-file checker successes, 0/78 whole-program checker successes,
+and 0/78 lowering successes. Area has 25/79 own-file successes, 1/79 whole-program
+checker successes, and 0/79 lowering successes. Area has 79 source files, so the old
+78-source validation cap was wrong. Main credit uses main/report.json; the area
+alias at the run root is skipped. Own-file success is an additional observation,
+not whole-program completion credit. Invalid runs report filename, recorded and
+recomputed totals while other runs remain usable.
+
+The real CSV uses pushed_at_utc and commits_landed. Its 05:00 UTC bucket contains
+99 landed commits, not one CSV row. Both these and the previous header names work.
+Git reads each have a 30-second bound instead of sharing eight seconds across the
+entire report. Failed reads and inventory trees are cached for this invocation.
+A failed history track or milestone observation leaves other observations visible.
+Backlog retains its independent 60-second limit and cache.
+
+The root workspace now uses only the root module. The compiler's pinned local
+module is a lazy replacement in go.mod, with its indirect requirements and sums;
+cmd/adamic-meter still builds with the default workspace. This lets the exact
+progress go run command load before submodules are initialized.
+
+Validation on Linux x86_64, output redirected before inspection:
+
+* gofmt and git diff --check passed.
+* go vet ./cmd/adamic-progress ./internal/stage1progress ./cmd/adamic-stage1-progress ./internal/meterdata ./cmd/adamic-meter passed.
+* go test -race ./cmd/adamic-progress ./internal/stage1progress passed (progress 5.364s).
+* go test ./cmd/adamic-meter -run '^$' passed using the default workspace.
+* go test ./internal/oracle -run TestTheOracleCatchesOneByte -count=1 passed in 11.709s.
+* go run ./cmd/adamic-progress --json against fetched main: 3.061s by Bash time;
+  no section errors, main own-file 22/78, 1042 main commits, 1442 distinct pending patches.
+* A detached checkout with uninitialized submodules and GOWORK unset ran the exact
+  go run ./cmd/adamic-progress command successfully: 7.951s first run, 0.978s warm
+  with final module manifests. Main own-file 22/78 and velocity printed. Stage 1
+  lines correctly report missing pinned cohere objects instead of invented counts.
+* TestBacklog300Branches3000Commits passed under its 60-second deadline: 2.218s
+  including fixture creation; cold patch count 0.893s, warm 0.068s, native CLI
+  0.095s, measured with Go's monotonic time.Now/time.Since.
+
+Six compiled source mutants failed their assertions:
+
+| Mutant | Test that caught it |
+| --- | --- |
+| old-csv-header | TestMainRealTwoLineRecords |
+| area-as-main | TestMainRealTwoLineRecords |
+| inverted-bar | TestBarsAgainstLiteralOracle |
+| unbounded-read | TestSlowReadDoesNotCancelOtherReads |
+| fatal-history-track | TestSlowReadDoesNotCancelOtherReads |
+| fatal-milestone-record | TestMilestoneRecordFailurePreservesOtherClaims |
+
+Logs: /tmp/progress-followup-{tests,race,vet,scale,mutants,isolation-mutants,oracle}.log;
+real report /tmp/progress-followup-real.json; plain checkout /tmp/progress-plain-output.log.
+No Mac execution or full gate was performed. Integration must land the branch before
+claiming that the command is available on main; only codex/progress is pushed.

@@ -146,8 +146,15 @@ func TestMeterRefusesInconsistentRecord(t *testing.T) {
 	git("commit", "-qm", "invalid")
 	r.ref = "HEAD"
 	r.paths = []string{p}
-	if _, e := stage3(r); e == nil {
-		t.Fatal("lowering without checker credited")
+	track, e := stage3(r)
+	found := false
+	for _, m := range track.Measures {
+		if strings.Contains(m.Note, "lowering without checker") {
+			found = true
+		}
+	}
+	if e != nil || track.Measures[0].Known || !found {
+		t.Fatal("invalid meter observation hidden or credited", track, e)
 	}
 }
 func TestHelpExplainsSources(t *testing.T) {

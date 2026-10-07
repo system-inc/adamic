@@ -451,7 +451,7 @@ func milestones(r repository, d dashboard) ([]milestoneResult, error) {
 		for _, c := range goal.Conditions {
 			observed, e := checkCondition(r, d, goal, c)
 			if e != nil {
-				return nil, fmt.Errorf("milestone %s: %w", goal.ID, e)
+				observed = conditionResult{Note: fmt.Sprintf("milestone %s: not measurable yet: %v", goal.ID, e)}
 			}
 			result.Evidence = append(result.Evidence, observed)
 			done = done && observed.Done

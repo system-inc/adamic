@@ -98,7 +98,8 @@ func TestHistoricalMissingInventoryIsUnknown(t *testing.T) {
 	}
 	write("stage1/cohere/early/GAPS.md", "record exists")
 	r = snapshotPaths(t, r, git)
-	if _, err = snapshot(r, git("rev-parse", "HEAD"), time.Now(), missing); err == nil {
-		t.Fatal("present but unreadable inventory suppressed")
+	tracks, err = snapshot(r, git("rev-parse", "HEAD"), time.Now(), missing)
+	if err != nil || tracks[1].Measures[0].Known || !strings.Contains(tracks[1].Measures[0].Note, "needs GAPS.md") {
+		t.Fatal("unreadable inventory not labeled", tracks, err)
 	}
 }

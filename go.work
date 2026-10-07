@@ -1,6 +1,5 @@
 go 1.27
 
-use (
-	.
-	./cohere/TypeScript/tsc
-)
+// Compiler dependencies are lazy local replacements in go.mod, so standalone
+// instruments can run before the compiler submodules are initialized.
+use .

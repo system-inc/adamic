@@ -6,6 +6,7 @@ go 1.27
 // typescript-go's internals. They live in the cohere submodule: one checker for both, pinned
 // to cohere's TypeScript submodule commit (see internal/load/pin_test.go), with nothing copied.
 replace (
+	github.com/microsoft/TypeScript/tsc => ./cohere/TypeScript/tsc
 	github.com/microsoft/TypeScript/tsc/shim/ast => ./cohere/TypeScript-shim/ast
 	github.com/microsoft/TypeScript/tsc/shim/bundled => ./cohere/TypeScript-shim/bundled
 	github.com/microsoft/TypeScript/tsc/shim/checker => ./cohere/TypeScript-shim/checker
@@ -35,4 +36,13 @@ require (
 	github.com/microsoft/TypeScript/tsc/shim/vfs v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs v0.0.0
+)
+
+require (
+	github.com/klauspost/cpuid/v2 v2.2.10 // indirect
+	github.com/microsoft/TypeScript/tsc v0.0.0 // indirect
+	github.com/zeebo/xxh3 v1.1.0 // indirect
+	golang.org/x/sync v0.23.0 // indirect
+	golang.org/x/sys v0.48.0 // indirect
+	golang.org/x/text v0.42.0 // indirect
 )

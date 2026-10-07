@@ -157,7 +157,7 @@ func snapshot(r repository, commit string, moment time.Time, lines func(string, 
 	r.paths = strings.Fields(string(b))
 	s3, e := stage3(r)
 	if e != nil {
-		return nil, e
+		s3 = missingTrack("Stage 3", beginning.Add(5*24*time.Hour), e)
 	}
 	historicalLines := func(root, ref string) (*stage1progress.Report, error) {
 		report, err := lines(root, ref)
@@ -180,11 +180,11 @@ func snapshot(r repository, commit string, moment time.Time, lines func(string, 
 	}
 	s1, e := stage1(r, historicalLines)
 	if e != nil {
-		return nil, e
+		s1 = missingTrack("Stage 1", beginning.Add(6*24*time.Hour), e)
 	}
 	a, e := apple(r)
 	if e != nil {
-		return nil, e
+		a = missingTrack("Apple", beginning.Add(6*24*time.Hour), e)
 	}
 	tracks := []track{s3, s1, a}
 	for i := range tracks {
@@ -231,7 +231,8 @@ func reconstruct(r repository, d *dashboard, lines func(string, string) (*stage1
 		// evaluated for each moment, even when main's commit did not change.
 		tracks, e := snapshot(r, commit, moment, lines)
 		if e != nil {
-			return fmt.Errorf("history %s main %.12s: %w", moment.Format(time.RFC3339), commit, e)
+			d.SectionErrors = append(d.SectionErrors, fmt.Sprintf("history %s main %.12s: %v", moment.Format(time.RFC3339), commit, e))
+			continue
 		}
 		history[i] = tracks
 		scoped := r
@@ -243,7 +244,8 @@ func reconstruct(r repository, d *dashboard, lines func(string, string) (*stage1
 		scoped.paths = strings.Fields(string(paths))
 		vm, e := historicalVelocity(scoped, moment)
 		if e != nil {
-			return e
+			d.SectionErrors = append(d.SectionErrors, "velocity history: "+e.Error())
+			continue
 		}
 		velocityHistory[i] = vm
 	}

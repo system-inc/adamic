@@ -27,10 +27,15 @@ import (
 
 const help = `Usage: go run ./cmd/adamic-progress [--json] [--history]
 Reads origin/main (the last fetched main), never fetches, builds a compiler, or runs a gate.
+Each Git read has its own 30-second bound; failed reads are cached during the report.
+A missing track, history point or milestone observation leaves the other sections available.
 Sources and accounting:
   Clock: current UTC and fixed MDT (UTC-6). Day 1 starts October 4 2026 23:49 MDT.
   Stage 3 deadline: October 9 23:49 MDT. Stage 1 and Apple: October 10 23:49 MDT.
   Stage 3: latest timestamp_utc in stage3/meter/runs/*/report.json on main,
+    Paired runs use main/report.json for main; area/report.json is labeled separately.
+    checker_own_file counts source-local diagnostic success, not whole-program success;
+    area totals use their recorded source count and never contribute to main overall.
     runner schema from codex/stage3-fixtures-runner. Per-file checker/lowering
     booleans are counted separately, out of the plan's 78 (generated sources included).
     adamic-meter's files_reaching_lowering is checker success, not lowering success.
@@ -116,8 +121,8 @@ Sources and accounting:
     Backlog has its own 60-second budget, independent of other reads. Failure
     or timeout leaves the count unknown/null and prints why; report still succeeds.
     --json patch_backlog_stats exposes hashes, hits, batches and wall seconds.
-    documentation/velocity/landings.csv: timestamp or timestamp_utc column,
-    optional landings count (default 1), summed into UTC hour buckets.
+    documentation/velocity/landings.csv: timestamp, timestamp_utc or pushed_at_utc column,
+    optional landings or commits_landed count (default 1), summed into UTC hour buckets.
     Absence explicitly reported. Velocity has no goal percentage.
     Historical remote backlog cannot be reconstructed from current refs:
     documentation/velocity/backlog.csv (timestamp,count) records commit counts;
@@ -196,6 +201,8 @@ type repository struct {
 	gitExecutable  string
 	at             time.Time
 	cache          map[string][]byte
+	readErrors     map[string]error
+	readBudget     time.Duration
 	root, ref      string
 	ctx            context.Context
 	paths          []string
@@ -207,18 +214,32 @@ func (r repository) gitCommand(args ...string) *exec.Cmd {
 		executable = "git"
 	}
 	command := exec.CommandContext(r.ctx, executable, append([]string{"-C", r.root}, args...)...)
-	command.WaitDelay = 100 * time.Millisecond
+	command.WaitDelay = time.Second
 	return command
 }
 func (r repository) git(args ...string) ([]byte, error) {
 	key := r.root + "\x00" + strings.Join(args, "\x00")
+	if err := r.readErrors[key]; err != nil {
+		return nil, err
+	}
 	if b, ok := r.cache[key]; ok {
 		return b, nil
 	}
+	budget := r.readBudget
+	if budget <= 0 {
+		budget = 30 * time.Second
+	}
+	ctx, cancel := context.WithTimeout(r.ctx, budget)
+	defer cancel()
+	r.ctx = ctx
 	c := r.gitCommand(args...)
 	b, e := c.Output()
 	if e != nil {
-		return nil, fmt.Errorf("git %s: %w", strings.Join(args, " "), e)
+		err := fmt.Errorf("git %s: %w", strings.Join(args, " "), e)
+		if r.readErrors != nil {
+			r.readErrors[key] = err
+		}
+		return nil, err
 	}
 	if r.cache != nil {
 		r.cache[key] = b
@@ -261,7 +282,7 @@ func finish(t *track, r repository, now time.Time) error {
 	known := 0
 	goals := 0
 	for _, m := range t.Measures {
-		if m.Name == "patch size" || m.Name == "syntax-lint native/Go speed" {
+		if m.Name == "patch size" || m.Name == "syntax-lint native/Go speed" || strings.HasPrefix(m.Name, "area ") || m.Name == "compiler own-file checker" || m.Name == "meter record error" {
 			continue
 		}
 		goals++
@@ -280,46 +301,83 @@ func finish(t *track, r repository, now time.Time) error {
 func stage3(r repository) (track, error) {
 	t := track{Name: "Stage 3", Deadline: beginning.Add(5 * 24 * time.Hour), ETAScope: "stage3 meter lowering coverage proxy (not exact diagnostic completion)"}
 	type run struct {
-		Timestamp string `json:"timestamp_utc"`
-		Files     []struct {
-			File     string `json:"file"`
-			Source   bool   `json:"source"`
-			Checker  bool   `json:"checker"`
-			Lowering bool   `json:"lowering"`
-		} `json:"files"`
-		Totals struct {
-			Source   int `json:"source_files"`
-			Checker  int `json:"checker"`
-			Lowering int `json:"lowering"`
+		Timestamp string      `json:"timestamp_utc"`
+		Files     []meterFile `json:"files"`
+		Totals    struct {
+			Own      *int `json:"checker_own_file"`
+			Source   int  `json:"source_files"`
+			Checker  int  `json:"checker"`
+			Lowering int  `json:"lowering"`
 		} `json:"totals"`
 		meterdata.Report
 	}
-	var latest *run
+	var latest, area *run
+	areaPath := ""
+	var areaTime time.Time
+	var warnings []string
 	latestPath := ""
 	var latestTime time.Time
 	for _, p := range r.paths {
 		if !strings.HasPrefix(p, "stage3/meter/runs/") || !strings.HasSuffix(p, "/report.json") {
 			continue
 		}
+		isArea := strings.Contains(p, "/area/")
+		parent := strings.TrimSuffix(p, "/report.json")
+		if !isArea && !strings.HasSuffix(parent, "/main") {
+			paired := false
+			for _, candidate := range r.paths {
+				if candidate == parent+"/main/report.json" {
+					paired = true
+					break
+				}
+			}
+			if paired {
+				continue
+			}
+		}
 		var v run
 		_, e := r.decode(p, &v)
 		if e != nil {
-			return t, e
+			warnings = append(warnings, e.Error())
+			continue
 		}
 		if v.Files == nil && (v.FilesExamined <= 0 || v.FilesExamined > 78 || v.FilesReachingLowering < 0 || v.FilesReachingLowering > v.FilesExamined) {
-			return t, fmt.Errorf("%s: missing or invalid legacy meter observations", p)
+			warnings = append(warnings, p+": missing or invalid legacy meter observations")
+			continue
 		}
 		if v.Files != nil {
 			if e := validateMeter(v.Files, v.Totals.Source, v.Totals.Checker, v.Totals.Lowering); e != nil {
-				return t, fmt.Errorf("%s: %w", p, e)
+				warnings = append(warnings, fmt.Sprintf("%s: %v", p, e))
+				continue
+			}
+		}
+		if v.Totals.Own != nil {
+			n := 0
+			for _, f := range v.Files {
+				if f.Source && strings.HasPrefix(f.File, "src/compiler/") && f.Own != nil && *f.Own {
+					n++
+				}
+			}
+			if n != *v.Totals.Own {
+				warnings = append(warnings, fmt.Sprintf("%s: inconsistent own-file total: recorded=%d per-file=%d", p, *v.Totals.Own, n))
+				continue
 			}
 		}
 		stamp, e := time.Parse("20060102T150405Z", v.Timestamp)
 		if e != nil {
-			return t, fmt.Errorf("%s timestamp: %w", p, e)
+			warnings = append(warnings, fmt.Sprintf("%s timestamp: %v", p, e))
+			continue
 		}
 
 		if !r.at.IsZero() && stamp.After(r.at) {
+			continue
+		}
+		if isArea {
+			if stamp.After(areaTime) {
+				area = &v
+				areaPath = p
+				areaTime = stamp
+			}
 			continue
 		}
 		if stamp.After(latestTime) {
@@ -346,6 +404,23 @@ func stage3(r repository) (track, error) {
 				t.Measures = append(t.Measures, m)
 			}
 		}
+	}
+	if latest != nil && latest.Totals.Own != nil {
+		t.Measures = append(t.Measures, measured("compiler own-file checker", float64(*latest.Totals.Own), 78, latestPath))
+	}
+	if area != nil {
+		for _, item := range []struct {
+			name string
+			n    int
+		}{{"area compiler checker", area.Totals.Checker}, {"area compiler lowering", area.Totals.Lowering}} {
+			t.Measures = append(t.Measures, measured(item.name, float64(item.n), float64(area.Totals.Source), areaPath))
+		}
+		if area.Totals.Own != nil {
+			t.Measures = append(t.Measures, measured("area compiler own-file checker", float64(*area.Totals.Own), float64(area.Totals.Source), areaPath))
+		}
+	}
+	for _, warning := range warnings {
+		t.Measures = append(t.Measures, unknown("meter record error", 0, "record validation", warning))
 	}
 	b, ok, e := r.blob("stage3/patch-set.md")
 	if e != nil {
@@ -607,14 +682,14 @@ func readLandings(b []byte, now time.Time) (map[string]int, error) {
 	timeCol, countCol := -1, -1
 	for i, col := range rows[0] {
 		switch col {
-		case "timestamp", "timestamp_utc":
+		case "timestamp", "timestamp_utc", "pushed_at_utc":
 			timeCol = i
-		case "landings":
+		case "landings", "commits_landed":
 			countCol = i
 		}
 	}
 	if timeCol < 0 {
-		return nil, errors.New("landings.csv requires timestamp or timestamp_utc column")
+		return nil, errors.New("landings.csv has no recognized time column (timestamp, timestamp_utc, pushed_at_utc)")
 	}
 	for _, row := range rows[1:] {
 		stamp, e := time.Parse(time.RFC3339, row[timeCol])
@@ -741,6 +816,9 @@ func collect(r repository, now time.Time, lines func(string, string) (*stage1pro
 	if r.cache == nil {
 		r.cache = map[string][]byte{}
 	}
+	if r.readErrors == nil {
+		r.readErrors = map[string]error{}
+	}
 	r.at = now
 	d := dashboard{Time: now.UTC(), Day: int(math.Floor(now.Sub(beginning).Hours()/24)) + 1}
 	if d.Day < 1 {
@@ -761,6 +839,11 @@ func collect(r repository, now time.Time, lines func(string, string) (*stage1pro
 	if e != nil {
 		d.SectionErrors = append(d.SectionErrors, "Stage 3: "+e.Error())
 		s3 = missingTrack("Stage 3", beginning.Add(5*24*time.Hour), e)
+	}
+	for _, m := range s3.Measures {
+		if m.Name == "meter record error" {
+			d.SectionErrors = append(d.SectionErrors, "Stage 3: "+m.Note)
+		}
 	}
 	s1, e := stage1(r, lines)
 	if e != nil {
@@ -790,6 +873,7 @@ func collect(r repository, now time.Time, lines func(string, string) (*stage1pro
 	patches := make(chan patchResult, 1)
 	patchRepo := r
 	patchRepo.cache = nil
+	patchRepo.readErrors = nil
 	if r.backlogContext != nil {
 		patchRepo.ctx = r.backlogContext
 	}
@@ -941,8 +1025,7 @@ func run(args []string, out, errOut io.Writer) int {
 	}
 	rootCtx, rootCancel := context.WithCancel(context.Background())
 	defer rootCancel()
-	ctx, cancel := context.WithTimeout(rootCtx, 8*time.Second)
-	defer cancel()
+	ctx := rootCtx
 	d, e := collect(repository{root: ".", ref: "origin/main", ctx: ctx, backlogContext: rootCtx}, time.Now(), stage1progress.NewMeasurer(ctx))
 	if e != nil {
 		fmt.Fprintln(errOut, "adamic-progress:", e)
@@ -962,12 +1045,15 @@ func run(args []string, out, errOut io.Writer) int {
 }
 func main() { os.Exit(run(os.Args[1:], os.Stdout, os.Stderr)) }
 
-func validateMeter(files []struct {
+type meterFile struct {
 	File     string `json:"file"`
 	Source   bool   `json:"source"`
 	Checker  bool   `json:"checker"`
 	Lowering bool   `json:"lowering"`
-}, source, checker, lowering int) error {
+	Own      *bool  `json:"checker_own_file,omitempty"`
+}
+
+func validateMeter(files []meterFile, source, checker, lowering int) error {
 	if files == nil {
 		return errors.New("meter record missing per-file observations")
 	}
@@ -993,8 +1079,8 @@ func validateMeter(files []struct {
 			return errors.New("non-compiler source credited")
 		}
 	}
-	if sources != source || checked != checker || lowered != lowering || sources > 78 {
-		return errors.New("inconsistent compiler totals")
+	if sources != source || checked != checker || lowered != lowering {
+		return fmt.Errorf("inconsistent compiler totals: recorded source/checker/lowering=%d/%d/%d; per-file=%d/%d/%d", source, checker, lowering, sources, checked, lowered)
 	}
 	return nil
 }

@@ -15,6 +15,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type coverage struct {
@@ -66,6 +67,8 @@ type inventory struct {
 }
 
 func git(ctx context.Context, root string, args ...string) ([]byte, error) {
+	ctx, cancel := context.WithTimeout(ctx, 30*time.Second)
+	defer cancel()
 	command := exec.CommandContext(ctx, "git", append([]string{"-C", root}, args...)...)
 	output, err := command.Output()
 	if err != nil {
@@ -112,7 +115,9 @@ func loadInventory(ctx context.Context, root, pin string) (*inventory, error) {
 	if len(names) == 0 {
 		return nil, fmt.Errorf("no cohere internal Go sources at %s", pin)
 	}
-	command := exec.CommandContext(ctx, "git", "-C", root, "cat-file", "--batch")
+	batchCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
+	defer cancel()
+	command := exec.CommandContext(batchCtx, "git", "-C", root, "cat-file", "--batch")
 	command.Stdin = strings.NewReader(strings.Join(hashes, "\n") + "\n")
 	output, err := command.Output()
 	if err != nil {
@@ -468,12 +473,16 @@ func MeasureContext(ctx context.Context, root, ref string) (*Report, error) {
 func NewMeasurer(ctx context.Context) func(string, string) (*Report, error) {
 	inventories := map[string]map[string]*inventory{}
 	snapshots := map[string]*Report{}
+	failures := map[string]error{}
 	return func(root, ref string) (*Report, error) {
 		tree, err := git(ctx, root, "ls-tree", ref, "--", "stage1", "cohere")
 		if err != nil {
 			return nil, err
 		}
 		key := root + "\x00" + string(tree)
+		if err := failures[key]; err != nil {
+			return nil, err
+		}
 		if saved := snapshots[key]; saved != nil {
 			commit, err := git(ctx, root, "rev-parse", ref)
 			if err != nil {
@@ -490,6 +499,8 @@ func NewMeasurer(ctx context.Context) func(string, string) (*Report, error) {
 		result, err := measureContext(ctx, root, ref, inventories[root])
 		if err == nil {
 			snapshots[key] = result
+		} else {
+			failures[key] = err
 		}
 		return result, err
 	}
