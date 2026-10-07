@@ -1,0 +1,3 @@
+file	/workspace/wave13-next-upstream/controls/114eaaeb96e05bdb/repository/source/CorrectnessNoProcessExitAfterOutput.ts
+1126	1160	nexus/correctness-no-process-exit-after-output	exitAfterOutput	This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.	0	0
+findings 1

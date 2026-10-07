@@ -1,0 +1,27 @@
+[
+  {
+    "mutant": "platform_symbol-suffix",
+    "exit": 1,
+    "caught": "TestOutputCheckerQuestions accepted suffix"
+  },
+  {
+    "mutant": "call_declaration-suffix",
+    "exit": 1,
+    "caught": "TestOutputCheckerQuestions accepted suffix"
+  },
+  {
+    "mutant": "output_flow-suffix",
+    "exit": 1,
+    "caught": "TestOutputCheckerQuestions accepted suffix"
+  },
+  {
+    "mutant": "program_modules-suffix",
+    "exit": 1,
+    "caught": "TestOutputCheckerQuestions accepted suffix"
+  },
+  {
+    "mutant": "source_context-suffix",
+    "exit": 1,
+    "caught": "TestOutputCheckerQuestions accepted suffix"
+  }
+]

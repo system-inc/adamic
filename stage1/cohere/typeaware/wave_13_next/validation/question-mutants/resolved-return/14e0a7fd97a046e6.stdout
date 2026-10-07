@@ -1,0 +1,3 @@
+file	/workspace/wave13-next-upstream/controls/14e0a7fd97a046e6/repository/source/Load.ts
+197	236	nexus/correctness-no-uncleared-race-timeout	unclearedRaceTimeout	This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.	0	0
+findings 1

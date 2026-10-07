@@ -1,3 +1,5 @@
+Historical blocker resolved by implementation 7f0647dd. These three rules are now implemented and validated; see [REPORT.md](REPORT.md). The earlier scope interpretation below is retained as history.
+
 Built: original three wave 13 ports remain complete and pushed; no continuation rule implementation was written.
 Commits: original evidence tip 7ca1f20e; continuation claim d37a6984 was pushed before implementation.
 Commands and outputs: fetched all origin heads successfully; scanned 325 refs, 197 ranked checker rules, 25 existing checker ports and 96 claimed ranked rules.

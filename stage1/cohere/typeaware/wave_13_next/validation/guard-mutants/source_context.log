@@ -1,0 +1,8 @@
+=== RUN   TestOutputCheckerQuestions
+=== PAUSE TestOutputCheckerQuestions
+=== CONT  TestOutputCheckerQuestions
+    output_facts_test.go:105: accepted suffix: source-context
+--- FAIL: TestOutputCheckerQuestions (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.024s
+FAIL

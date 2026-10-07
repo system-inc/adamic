@@ -1,0 +1,6 @@
+file	/workspace/wave13-next-upstream/controls/01283a98a9070966/repository/libraries/nexus/source/command-line/CommandLineInterface.ts
+file	/workspace/wave13-next-upstream/controls/01283a98a9070966/repository/libraries/nexus/source/system/StandardStreams.ts
+file	/workspace/wave13-next-upstream/controls/01283a98a9070966/repository/modules/other/Importer.ts
+file	/workspace/wave13-next-upstream/controls/01283a98a9070966/repository/modules/subject/Subject.ts
+40	55	nexus/correctness-require-blocking-standard-streams	exitBeforeBlockingStandardStreams	This file runs as a process (it starts with `#!`), and this `process.exit()` runs after a write to stdout or stderr before the process has called `blockStandardStreams()`. Node writes to a pipe asynchronously, and `process.exit()` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's `blockStandardStreams()` (`source/system/StandardStreams`) before anything that can exit: first in the module, or first in the main it runs.	0	0
+findings 1

@@ -1,0 +1,12 @@
+{
+  "programs": 129,
+  "roots": 254,
+  "bytes": 120897,
+  "per_rule": {
+    "nexus/correctness-no-process-exit-after-output": 131,
+    "nexus/correctness-require-blocking-standard-streams": 23,
+    "nexus/correctness-no-uncleared-race-timeout": 12
+  },
+  "normal_and_sanitized_equal": true,
+  "findings": 166
+}

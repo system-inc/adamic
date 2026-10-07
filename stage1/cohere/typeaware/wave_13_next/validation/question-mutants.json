@@ -1,0 +1,34 @@
+[
+  {
+    "mutant": "platform-declaration",
+    "test": "TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import",
+    "case": "01283a98a9070966",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "first_difference": 134
+  },
+  {
+    "mutant": "resolved-return",
+    "test": "TestCorrectnessNoProcessExitAfterOutputReadsOneCallee/an_async_helper_awaited",
+    "case": "223be8d9322eed89",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "first_difference": 120
+  },
+  {
+    "mutant": "graph-reachability",
+    "test": "TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import",
+    "case": "01283a98a9070966",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "first_difference": 134
+  },
+  {
+    "mutant": "module-resolution",
+    "test": "TestCorrectnessRequireBlockingStandardStreamsStaysSilent/an_exit_after_an_await,_in_a_file_that_blocks_later",
+    "case": "0f7142d1173a4ac0",
+    "exit": 0,
+    "stderr_bytes": 0,
+    "first_difference": 1412
+  }
+]
