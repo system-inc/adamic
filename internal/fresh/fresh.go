@@ -1258,6 +1258,12 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ReadDirectory:
 		a.value(expression.Path)
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
+	case ir.RunProcess:
+		a.value(expression.Executable)
+		a.value(expression.Arguments)
+		a.value(expression.Directory)
+		a.value(expression.Environment)
+		return a.fresh(anyField, value{})
 	case ir.RealPath:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})

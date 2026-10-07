@@ -87,6 +87,22 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 			return ir.RealPath{Path: path}, true, nil
 		}
 		return ir.FileStatus{Path: path}, true, nil
+	case l.isPreludeFunction(callee, "runProcess"):
+		if len(arguments) != 4 {
+			return nil, true, errors.New("lower: runProcess takes four arguments")
+		}
+		values := make([]ir.Expression, 4)
+		for index, argument := range arguments {
+			value, err := l.expression(argument)
+			if err != nil {
+				return nil, true, err
+			}
+			values[index] = value
+		}
+		if values[0].Type() != ir.String || values[1].Type() != ir.Array || values[2].Type() != ir.String || values[3].Type() != ir.Array {
+			return nil, true, errors.New("lower: runProcess argument representations differ from its declaration")
+		}
+		return ir.RunProcess{Executable: values[0], Arguments: values[1], Directory: values[2], Environment: values[3]}, true, nil
 	case l.isPreludeFunction(callee, "programArguments"):
 		if len(arguments) != 0 {
 			return nil, true, errors.New("lower: " + l.program.Where(node) + ": programArguments takes nothing, and the checker let arguments through")

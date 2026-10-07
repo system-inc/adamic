@@ -23,7 +23,7 @@ func TestHostExitStatusGap(t *testing.T) {
 	}
 	t.Log("Node returns 7; unadapted native treats ambient process as undefined and panics. The unit's CLI adapter binds the typed exit result after cleanup.")
 }
-func TestChildProcessGap(t *testing.T) {
+func TestNodeChildProcessModuleGap(t *testing.T) {
 	source := absolute(t, "gaps/child.ts")
 	node := onNode(t, source)
 	if node.exitCode != 0 || string(node.stdout) != "0\n" || len(node.stderr) > 0 {
@@ -36,7 +36,7 @@ func TestChildProcessGap(t *testing.T) {
 	if err == nil || !strings.Contains(err.Error(), "node:child_process") {
 		t.Fatalf("child process gap changed: %v", err)
 	}
-	t.Logf("Node child succeeds; Adamic refuses: %v", err)
+	t.Logf("Node child succeeds; the general node:child_process module remains unsupported (runProcess is a separate native primitive): %v", err)
 }
 func TestExecutionGapNeverReturnsAGreenRun(t *testing.T) {
 	directory := t.TempDir()

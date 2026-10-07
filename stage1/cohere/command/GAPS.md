@@ -31,16 +31,40 @@ cycles, missing references and dependency-directory references.
 
 Still open:
 
-1. The checker/import graph and its ProjectFiles order, dependent closure and
-   post-fix rebuilds. Tsconfig roots are not the complete checker graph.
+1. Compiler graph construction, module resolution and ProjectFiles selection/order.
+   graph.ts now ports the reverse-import closure, exact 500-file refusal, whole-tree
+   fallback note, dependent counts and rescopeAfterRebuild's retained/lost names.
+   Its inputs are already resolved compiler files and edges. The test overlay
+   obtains those inputs from real Go compiler graphs; no expected closure enters
+   the port. There is no production graph builder yet. TestAdamicGraphConstructionGap
+   observes tsconfig roots a.ts,b.ts but ProjectFiles b.ts,a.ts after a imports b.
+   Tsconfig roots therefore cannot substitute for the ordered compiler population.
+   Go also keeps imported files and bundled declarations outside ProjectFiles.
+   Post-fix scope transfer is ported; actual graph rebuilding still needs the engine.
 2. Full CLI execution: type, lint, fix, formatter invocation, cache/replay,
    diagnostics, version/provenance, rules/config listing, profiling, stdin,
    rename validation and rename execution. Main-phase contradictions other than
    verbose/json also depend on run ordering that is not implemented here.
-3. Multiple-project child creation, capture, worst exit, signals and Swift
-   dispatch. Node succeeds on gaps/child.ts; Adamic reports TS2591 for the missing
-   node:child_process binding. This proves that dependency, not that the whole
-   command cannot ever be ported.
+3. The multiple-project scheduler, worst-exit aggregation, parent signal forwarding,
+   child cancellation, yield-file lifecycle and Swift dispatch remain open.
+   process.ts now runs a real child through the new runProcess primitive: arguments,
+   cwd, inherited environment with verdict/yield removal and engine/label injection,
+   combined stdout/stderr, ordinary exit, self-SIGTERM, missing executable, denied execution and missing/non-directory
+   cwd match Go runProject on live fixtures. The primitive is synchronous, Unix-only
+   and requires an absolute executable. It does not implement runProjects or install
+   parent signal handlers. A parent killed alone can leave its child alive; Go's
+   TestATerminatedMixedRunLeavesNoChildBehind is not claimed as passing native.
+   A single unlinked capture file avoids pipe deadlocks, rather than matching Go's
+   pipe transport; seekability and inherited-writer lifetime are unheld. Native
+   capture uses tmpfile; Node uses a temporary directory.
+   Temporary-file errors, descriptor exhaustion/inheritance, races, huge strings,
+   unusual errno/signals and binary non-UTF-8 Go CLI output are outside measured parity.
+   The primitive decodes output as UTF-8; Go's raw captured bytes can differ there.
+   Case-insensitive Unicode path keys and Windows normalization are also unheld.
+   TestNodeChildProcessModuleGap still proves that arbitrary node:child_process
+   imports are unsupported; it no longer establishes a lack of native child execution.
+   Node's direct spawnSync is the independent primitive oracle, including invalid
+   bytes, NUL output, empty stdin, environment patches and 192 KiB output.
 4. Host exit status. Node runs gaps/exit_status.ts and exits 7; ordinary native
    emission treats that ambient process as undefined and panics with exit 70.
    The test's small host adapter binds commandExitCode after cleanup. It also
@@ -60,3 +84,15 @@ It does not report an empty successful check in place of the missing engine.
 
 CohereSettings.json remains strict JSON and tsconfig remains JSONC. The upstream
 asymmetry and exact strict-JSON errors remain documented in ../config/GAPS.md.
+
+Continuation validation and four new executable mutants are in
+[GRAPH_PROCESS_REPORT.md](GRAPH_PROCESS_REPORT.md). These helper boundaries are
+not wired into main.ts's missing checker run. A successful Go engine request still
+gets the explicit stage 1 execution-gap error, never a green check over no engine.
+
+An upstream process-error observation is preserved: Go os.StartProcess stats cwd
+before launching. A missing cwd fails that stat and says "chdir <cwd>: no such
+file or directory". An existing file passes stat, then fails the child's chdir and
+says "fork/exec <executable>: not a directory". The new fixture caught the initial
+adapter's intuitive but incorrect chdir wording. Native and both Node paths now
+follow the Go pre-stat split; uncommon pre-stat errors/races remain unheld.

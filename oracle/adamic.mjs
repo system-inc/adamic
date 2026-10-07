@@ -6,7 +6,9 @@
 // that throw, where natively a panic ends the program on the spot; so from the panic on, everything
 // the program writes is dropped and the exit is 70 whatever it does, which makes what it does after
 // unseen, as it is natively (docs/memory.md, "Exceptions").
-import { lstatSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { constants, tmpdir } from 'node:os';
+import { mkdtempSync, openSync, closeSync, rmSync, lstatSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 
 class AdamicPanic extends Error {}
 
@@ -167,4 +169,39 @@ export function realPath(path) {
 	} catch (error) {
 		return { kind: 'Error', message: `cannot resolve path ${path}: ${failure(error.code, false)}` };
 	}
+}
+
+// Combined capture uses one descriptor, preserving writes across stdout and stderr and avoiding
+// pipe capacity deadlocks. This synchronous door does not schedule parallel children.
+export function runProcess(executable, arguments_, directory, environment) {
+    const result = { output: '', exitCode: 1, signal: 0, error: '' };
+    if (!executable.startsWith('/') || [executable, directory, ...arguments_, ...environment].some(x => x.includes('\0'))) {
+        result.error = 'exec:EINVAL';
+        return result;
+    }
+    const env = { ...process.env };
+    for (const entry of environment) {
+        const equals = entry.indexOf('=');
+        if (equals < 0) delete env[entry];
+        else env[entry.slice(0, equals)] = entry.slice(equals + 1);
+    }
+    let temp = '', fd = -1;
+    try {
+        // Distinguish an unavailable cwd from an unavailable executable, as Go does.
+        if (directory !== '') {
+            try { if (!statSync(directory).isDirectory()) throw { code: 'ENOTDIR' }; }
+            catch (error) { result.error = `chdir:${error.code ?? 'EIO'}`; return result; }
+        }
+        temp = mkdtempSync(`${tmpdir()}/adamic-process-`);
+        fd = openSync(`${temp}/output`, 'w+');
+        const child = spawnSync(executable, arguments_, { cwd: directory || undefined, env, stdio: ['ignore', fd, fd] });
+        result.output = readFileSync(`${temp}/output`, 'utf8');
+        if (child.error) result.error = `exec:${child.error.code ?? 'EIO'}`;
+        else if (child.signal) {
+            result.signal = constants.signals[child.signal] ?? 0;
+            result.error = result.signal === 0 ? 'signal:unsupported' : '';
+        } else result.exitCode = child.status;
+    } catch (error) { result.error = `capture:${error.code ?? 'EIO'}`; }
+    finally { if (fd >= 0) closeSync(fd); if (temp !== '') rmSync(temp, { recursive: true, force: true }); }
+    return result;
 }

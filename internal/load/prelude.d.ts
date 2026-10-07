@@ -12,6 +12,9 @@ declare module 'adamic' {
 	// Input, opened in 0.2 (docs/0.1.md). A failure is a value: 0.2 has no exceptions yet.
 	export function readTextFile(path: string): { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string };
 	export function programArguments(): readonly string[];
+	// Synchronous child, absolute executable, inherited environment patched by NAME=value or NAME
+	// (remove). Stdin is closed; stdout/stderr share one capture. Failures are values.
+	export function runProcess(executable: string, arguments_: readonly string[], directory: string, environment: readonly string[]): { readonly output: string; readonly exitCode: number; readonly signal: number; readonly error: string };
 	export function writeTextFile(path: string, text: string): { readonly kind: 'Ok' } | { readonly kind: 'Error'; readonly message: string };
 	// The file system a walk needs: a directory's names in Node's order, and what a path names.
 	export function readDirectory(path: string): { readonly kind: 'Ok'; readonly names: readonly string[] } | { readonly kind: 'Error'; readonly message: string };

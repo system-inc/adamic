@@ -1,0 +1,172 @@
+// Only the resolved compiler inputs cross into Adamic. Expected closure, scope and output do not.
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/cohere/internal/types/program"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strconv"
+	"testing"
+)
+
+func graphCompare(input map[string]any, want string) {
+	raw, err := json.Marshal(input)
+	if err != nil {
+		panic(err)
+	}
+	file, err := os.CreateTemp("", "adamic-graph-request-")
+	if err != nil {
+		panic(err)
+	}
+	defer os.Remove(file.Name())
+	if _, err := file.Write(raw); err != nil {
+		panic(err)
+	}
+	file.Close()
+	failures := ""
+	for _, variable := range []string{"ADAMIC_NATIVE_PROBE", "ADAMIC_NODE_PROBE", "ADAMIC_BACKEND_PROBE"} {
+		if executable := os.Getenv(variable); executable != "" {
+			command := exec.Command(executable, file.Name())
+			var stdout, stderr bytes.Buffer
+			command.Stdout = &stdout
+			command.Stderr = &stderr
+			err := command.Run()
+			if err != nil || stderr.Len() != 0 || stdout.String() != want {
+				failures += fmt.Sprintf("%s error %v stderr %s\ngot %q\nwant %q\n", variable, err, stderr.String(), stdout.String(), want)
+			}
+		}
+	}
+	if failures != "" {
+		panic(failures)
+	}
+}
+func narrowToClosure(graph *program.Graph, scope formatScope, files []*ast.SourceFile) (formatScope, []*ast.SourceFile) {
+	result, closure, note := adamicGoNarrowToClosure(graph, scope, files)
+	fmt.Fprint(accountOutput(os.Stderr), note)
+	named := []string{}
+	for name := range scope.index {
+		named = append(named, name)
+	}
+	population := []map[string]string{}
+	edges := []map[string]string{}
+	for _, file := range graph.ProjectFiles() {
+		population = append(population, map[string]string{"name": file.FileName(), "path": string(file.Path())})
+	}
+	for from, row := range graph.Program.GetResolvedModules() {
+		for _, resolution := range row {
+			if resolution != nil {
+				edges = append(edges, map[string]string{"from": string(from), "toward": resolution.ResolvedFileName})
+			}
+		}
+	}
+	want := fmt.Sprintf("%t\t%d\t%q\t%d\n", result.Everything, result.DependentCount, note, scope.DependentCount)
+	for _, file := range closure {
+		want += strconv.Quote(file.FileName()) + "\n"
+	}
+	graphCompare(map[string]any{"kind": "graph", "files": population, "edges": edges, "directory": graph.Config.GetCurrentDirectory(), "sensitive": graph.Config.UseCaseSensitiveFileNames(), "named": named, "everything": scope.Everything, "request": scope.RequestDescription, "description": scope.Description}, want)
+	return result, closure
+}
+func rescopeAfterRebuild(rebuilt, scoped []*ast.SourceFile, everything bool) ([]*ast.SourceFile, []string) {
+	kept, lost := adamicGoRescopeAfterRebuild(rebuilt, scoped, everything)
+	names := func(files []*ast.SourceFile) []string {
+		result := []string{}
+		for _, file := range files {
+			result = append(result, file.FileName())
+		}
+		return result
+	}
+	want := ""
+	for _, file := range kept {
+		want += "file\t" + strconv.Quote(file.FileName()) + "\n"
+	}
+	for _, name := range lost {
+		want += "lost\t" + strconv.Quote(name) + "\n"
+	}
+	graphCompare(map[string]any{"kind": "rebuild", "rebuilt": names(rebuilt), "scoped": names(scoped), "everything": everything}, want)
+	return kept, lost
+}
+func TestAdamicGraphCyclesAndRebuild(t *testing.T) {
+	graph, dir := buildNarrowFixtureGraph(t, map[string]string{"a.ts": "export {b} from './b'; export const a=1;", "b.ts": "import {a} from './a'; export const b=a;", "c.ts": "export const c=0;"})
+	a := filepath.Join(dir, "a.ts")
+	narrowToClosure(graph, formatScope{index: map[string]struct{}{a: {}}, RequestDescription: "a.ts"}, graph.ProjectFiles())
+	narrowToClosure(graph, formatScope{index: map[string]struct{}{}, RequestDescription: "missing"}, graph.ProjectFiles())
+	rebuilt, _ := buildNarrowFixtureGraph(t, map[string]string{"different.ts": "export const d=1;"})
+	rescopeAfterRebuild(rebuilt.ProjectFiles(), graph.ProjectFiles(), false)
+	rescopeAfterRebuild(graph.ProjectFiles(), graph.ProjectFiles()[:1], false)
+	rescopeAfterRebuild(rebuilt.ProjectFiles(), graph.ProjectFiles(), true)
+}
+func TestAdamicGraphConstructionGap(t *testing.T) {
+	graph, root := buildNarrowFixtureGraph(t, map[string]string{"a.ts": "import {b} from './b'; export const a=b;", "b.ts": "export const b=1;"})
+	roots := graph.Config.FileNames()
+	loaded := graph.ProjectFiles()
+	if len(roots) != 2 || len(loaded) != 2 || filepath.Base(roots[0]) != "a.ts" || filepath.Base(loaded[0].FileName()) != "b.ts" {
+		t.Fatalf("graph order observation changed: %v %v", roots, loaded)
+	}
+	t.Logf("tsconfig root order: a.ts b.ts; compiler ProjectFiles order: b.ts a.ts in %s", root)
+	seed := filepath.Join(root, "b.ts")
+	narrowToClosure(graph, formatScope{index: map[string]struct{}{seed: {}}, RequestDescription: "b.ts"}, graph.ProjectFiles())
+}
+func TestAdamicExactClosureLimit(t *testing.T) {
+	for _, count := range []int{499, 500} {
+		files := map[string]string{"producer.ts": "export const value=1;"}
+		for index := 0; index < count; index++ {
+			files[fmt.Sprintf("consumers/%d.ts", index)] = "import {value} from '../producer'; export const v=value;"
+		}
+		graph, root := buildNarrowFixtureGraph(t, files)
+		seed := filepath.Join(root, "producer.ts")
+		result, _ := narrowToClosure(graph, formatScope{index: map[string]struct{}{seed: {}}, RequestDescription: "producer.ts"}, graph.ProjectFiles())
+		if result.Everything != (count == 500) {
+			t.Fatalf("boundary count %d", count)
+		}
+	}
+}
+func TestAdamicRunProjectBoundary(t *testing.T) {
+	root := t.TempDir()
+	if err := os.Mkdir(filepath.Join(root, "project"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	executable := filepath.Join(root, "child")
+	script := `#!/bin/sh
+printf 'cwd=%s\n' "$PWD"
+printf 'engine=%s label=%s yield=%s verdict=%s\n' "$COHERE_PROJECT_ENGINE" "$COHERE_PROJECT_LABEL" "${COHERE_PROJECT_YIELD-unset}" "${COHERE_VERDICT_FD-unset}"
+for argument do printf 'arg=%s\n' "$argument"; done
+printf 'stderr\n' >&2
+case "$*" in *kill*) kill -TERM $$;; *fail*) exit 7;; esac
+`
+	if err := os.WriteFile(executable, []byte(script), 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(executable+"-denied", []byte(script), 0444); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv(VerdictVariable, "123")
+	t.Setenv(projectYieldVariable, "stale")
+	children := forwardSignalsToChildren()
+	defer children.stop()
+	for _, test := range []struct {
+		exe, dir, config, engine, yield string
+		args                            []string
+	}{
+		{executable, "project", "", "TypeScript", "", []string{"--no-fix", "argument with spaces"}},
+		{executable, "project", "other.json", "Swift", "/yield/current", []string{"fail"}},
+		{executable, "project", "", "TypeScript", "", []string{"kill"}},
+		{executable + "-missing", "project", "", "TypeScript", "", nil},
+		{executable + "-denied", "project", "", "TypeScript", "", nil},
+		{executable, "child", "", "TypeScript", "", nil},
+		{executable, "missing", "", "TypeScript", "", nil},
+	} {
+		project := discoveredProject{Directory: test.dir, ConfigFile: test.config, Engine: projectEngine(test.engine)}
+		checked := runProject(test.exe, root, project, test.args, test.yield, children)
+		message := ""
+		if checked.err != nil {
+			message = checked.err.Error()
+		}
+		want := fmt.Sprintf("%q\t%d\t%q\n", checked.output, checked.exitCode, message)
+		graphCompare(map[string]any{"kind": "process", "executable": test.exe, "root": root, "directory": test.dir, "engine": test.engine, "configFile": test.config, "yieldFile": test.yield, "arguments": test.args}, want)
+	}
+}

@@ -729,6 +729,9 @@ type (
 
 	// RealPath is realPath(Path): canonical filesystem path, or an error value.
 	RealPath struct{ Path Expression }
+
+	// RunProcess executes a child with combined output and explicit status.
+	RunProcess struct{ Executable, Arguments, Directory, Environment Expression }
 )
 
 // Field is one field of an object literal.
@@ -873,6 +876,7 @@ func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
 func (RealPath) Type() Type         { return Object }
+func (RunProcess) Type() Type       { return Object }
 
 func (MapNew) Type() Type     { return Map }
 func (MapKeys) Type() Type    { return Array }

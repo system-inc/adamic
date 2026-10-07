@@ -476,6 +476,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_utf8_at(%s, %s)", text, e.value(expression.Index)))
 	case ir.ReadDirectory:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_directory(%s)", e.value(expression.Path)))
+	case ir.RunProcess:
+		executable := e.value(expression.Executable)
+		arguments := e.value(expression.Arguments)
+		directory := e.value(expression.Directory)
+		environment := e.value(expression.Environment)
+		return e.own(ir.Object, fmt.Sprintf("adamic_run_process(%s, %s, %s, %s)", executable, arguments, directory, environment))
 	case ir.RealPath:
 		return e.own(ir.Object, fmt.Sprintf("adamic_real_path(%s)", e.value(expression.Path)))
 	case ir.FileStatus:
