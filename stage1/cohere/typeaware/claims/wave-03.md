@@ -49,3 +49,23 @@ Continuation 1 validation complete: the three reserved Nexus rules have native
 caught, and ASan/UBSan/LSan plus released-handle checks pass. Timings and the
 shared registration/JavaScript integration limits are in
 ../wave_03_next/REPORT.md. No further rules were claimed.
+
+
+## Continuation 2, October 7, 2026
+
+All six earlier reservations were implemented, validated and pushed through
+8fb10ebb before this selection. Fetched all 348 origin refs and read all 33
+Markdown claim files. Excluded named/grouped ports on origin/main and
+origin/codex/tsgo-c-library and exact rule-name claims on every origin branch.
+The first three eligible rules in the 197-rule descending-volume ranking are:
+
+| Rule | Compiler | Repository | Total |
+| --- | ---: | ---: | ---: |
+| no-throw-literal | 0 | 0 | 0 |
+| no-useless-backreference | 0 | 0 | 0 |
+| prefer-arrow-callback | 0 | 0 | 0 |
+
+Reserve these three before implementation. The audit is in
+../validation-wave-03/continuation-2-selection.json. Higher-ranked candidates
+are already ported or claimed. New native files remain .a, and shared harness
+and generator files remain untouched.
