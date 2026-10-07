@@ -70,6 +70,65 @@ and an unreadable apt configuration warning. The public archive worked.
 The initial shallow checkout lacked 4189abd; fetching codex/stage1-lint-batch8
 supplied the exact commit. Neither workaround changes the benchmark.
 
+## Unit stopped: what would have to change
+
+Stopped at the user's request after the negative timing result. The classifier
+is retained as an inactive analysis in 89f451b; it has no emitter call site.
+All production stack checks and the global -fno-optimize-sibling-calls remain.
+The later approval for a small named native.go frame-bound hook is not exercised:
+no such hook was built, and no further implementation or benchmark is planned
+for this unit. The 5.63% scratch instruction reduction came with 2.53% higher
+median user time in seven ordinary runs, not a demonstrated parse speedup.
+
+The concrete fallback trigger is the structural interface stored in
+Statements.parser, declared readonly StatementContextInterface in
+stage1/typescript/parser/statements.ts. For example, Statements.make calls
+this.parser.make (source line 55; retained C line 16237), and Statements.type
+calls this.parser.type (source line 58; C line 16266). Statements.block calls
+parser.expect and parser.kind; Statements.semicolon calls parser.kind and
+parser.next. Each is an ir.CallClosure on a method property whose receiver is
+a field read. exactReceiverClass only proves allocations and singly bound
+allocation locals; it does not prove field reads or constructor parameters.
+Therefore exactReceiverMethod cannot bound these targets, and ClosureTargets
+returns Unknown for the property. Any one activates the classifier's
+program-wide fallback, marking all 227 functions.
+
+A read-only inventory of the already retained parse-before.c finds **425**
+adamic_object_callee sites in **20** Statements methods. The exact method
+names, counts, generated function names and C lines are retained in
+[unresolved-dispatch-sites.json](unresolved-dispatch-sites.json). It includes
+make, type, expect, kind, next, node, bindingName, rootAssignment, token,
+decorator, identifier, propertyName, entityName, peek, getAwait, setAwait,
+typeLiteral, getIn, getYield, parameters, returnType, setIn, setYield,
+typeParameters, depth, methodBody, primary, suffix, typeArguments,
+nextIdentifierSameLine and rootExpression. The emitter uses the same
+exactReceiverMethod proof before emitting these dynamic sites. This inventory
+identifies actual fallback-causing interface calls, not a new IR probe or a
+claim that every indirect C call is unknown. Inline callback literals elsewhere
+can be bounded by ClosureTargets despite indirect C emission.
+
+For a future attempt to pay, it would need all of the following:
+
+- Proven target sets through constructor arguments and stored fields for these
+  structural calls, or a sound restricted target-set fallback. A readonly
+  interface signature alone cannot exclude an object with an own closure;
+  assuming the one apparent Parser implementation would be unsound. One
+  remaining Unknown still marks the entire program in this classifier.
+- A measured smaller set that actually leaves scanner leaves unchecked, followed
+  by a compact emitted shape whose ordinary user-time result improves. The
+  forced-inline scratch result is evidence against assuming instruction savings
+  produce a speedup. The clang-selected alternative is documented separately
+  and also does not establish a timing win.
+- Proven build-specific bounds for unchecked machine-frame paths, including
+  runtime/adapters, sanitizer variants and panic headroom, then the emitter
+  hook and the requested recursion/placement mutants. The frame-bound scope
+  approval removes an ownership restriction; it does not supply that proof.
+
+This final update only inspects retained artifacts and adds documentation.
+No compiler build, test gate, new measurement, runtime edit or emitter change
+was performed after the stop instruction. The preceding tests and mutants are
+reported below with their original coverage limits.
+
 ## Classifier and the remaining proof
 
 internal/native/stack_checks.go builds direct and virtual edges with CallTargets,

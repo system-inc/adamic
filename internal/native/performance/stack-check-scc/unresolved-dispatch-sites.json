@@ -1,0 +1,2133 @@
+{
+  "source": "retained parse-before.c from c01907a",
+  "inventory": "structural dispatch sites; same exactReceiverMethod proof as classifier",
+  "sites_count": 425,
+  "functions_count": 20,
+  "sites": [
+    {
+      "function": "adamic_function_133_Statements_make",
+      "method": "make",
+      "c_line": 16237
+    },
+    {
+      "function": "adamic_function_134_Statements_type",
+      "method": "type",
+      "c_line": 16266
+    },
+    {
+      "function": "adamic_function_135_Statements_block",
+      "method": "expect",
+      "c_line": 16285
+    },
+    {
+      "function": "adamic_function_135_Statements_block",
+      "method": "kind",
+      "c_line": 16295
+    },
+    {
+      "function": "adamic_function_135_Statements_block",
+      "method": "expect",
+      "c_line": 16316
+    },
+    {
+      "function": "adamic_function_136_Statements_semicolon",
+      "method": "kind",
+      "c_line": 16332
+    },
+    {
+      "function": "adamic_function_136_Statements_semicolon",
+      "method": "next",
+      "c_line": 16343
+    },
+    {
+      "function": "adamic_function_136_Statements_semicolon",
+      "method": "kind",
+      "c_line": 16352
+    },
+    {
+      "function": "adamic_function_136_Statements_semicolon",
+      "method": "kind",
+      "c_line": 16359
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "kind",
+      "c_line": 16404
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "kind",
+      "c_line": 16413
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "kind",
+      "c_line": 16422
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "kind",
+      "c_line": 16431
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "next",
+      "c_line": 16457
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "next",
+      "c_line": 16466
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "bindingName",
+      "c_line": 16486
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "kind",
+      "c_line": 16496
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "token",
+      "c_line": 16507
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "kind",
+      "c_line": 16519
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "next",
+      "c_line": 16530
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "kind",
+      "c_line": 16543
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "next",
+      "c_line": 16554
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "rootAssignment",
+      "c_line": 16561
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "kind",
+      "c_line": 16577
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "next",
+      "c_line": 16592
+    },
+    {
+      "function": "adamic_function_137_Statements_variableList",
+      "method": "node",
+      "c_line": 16605
+    },
+    {
+      "function": "adamic_function_138_Statements_lookahead",
+      "method": "next",
+      "c_line": 16677
+    },
+    {
+      "function": "adamic_function_138_Statements_lookahead",
+      "method": "kind",
+      "c_line": 16689
+    },
+    {
+      "function": "adamic_function_139_Statements_decorator",
+      "method": "decorator",
+      "c_line": 16782
+    },
+    {
+      "function": "adamic_function_140_Statements_canExportName",
+      "method": "kind",
+      "c_line": 16796
+    },
+    {
+      "function": "adamic_function_140_Statements_canExportName",
+      "method": "kind",
+      "c_line": 16803
+    },
+    {
+      "function": "adamic_function_140_Statements_canExportName",
+      "method": "kind",
+      "c_line": 16815
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "expect",
+      "c_line": 16840
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "kind",
+      "c_line": 16850
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "propertyName",
+      "c_line": 16869
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "node",
+      "c_line": 16880
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "node",
+      "c_line": 16888
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "kind",
+      "c_line": 16907
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "identifier",
+      "c_line": 16918
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "kind",
+      "c_line": 16926
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "identifier",
+      "c_line": 16937
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "propertyName",
+      "c_line": 16950
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "propertyName",
+      "c_line": 16972
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "propertyName",
+      "c_line": 16995
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "kind",
+      "c_line": 17010
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "next",
+      "c_line": 17022
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "propertyName",
+      "c_line": 17030
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "node",
+      "c_line": 17054
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "kind",
+      "c_line": 17074
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "next",
+      "c_line": 17089
+    },
+    {
+      "function": "adamic_function_141_Statements_specifiers",
+      "method": "expect",
+      "c_line": 17100
+    },
+    {
+      "function": "adamic_function_142_Statements_attributes",
+      "method": "kind",
+      "c_line": 17121
+    },
+    {
+      "function": "adamic_function_142_Statements_attributes",
+      "method": "next",
+      "c_line": 17129
+    },
+    {
+      "function": "adamic_function_143_Statements_attributeBody",
+      "method": "expect",
+      "c_line": 17145
+    },
+    {
+      "function": "adamic_function_143_Statements_attributeBody",
+      "method": "kind",
+      "c_line": 17161
+    },
+    {
+      "function": "adamic_function_143_Statements_attributeBody",
+      "method": "propertyName",
+      "c_line": 17180
+    },
+    {
+      "function": "adamic_function_143_Statements_attributeBody",
+      "method": "expect",
+      "c_line": 17188
+    },
+    {
+      "function": "adamic_function_143_Statements_attributeBody",
+      "method": "rootAssignment",
+      "c_line": 17195
+    },
+    {
+      "function": "adamic_function_143_Statements_attributeBody",
+      "method": "kind",
+      "c_line": 17211
+    },
+    {
+      "function": "adamic_function_143_Statements_attributeBody",
+      "method": "next",
+      "c_line": 17225
+    },
+    {
+      "function": "adamic_function_143_Statements_attributeBody",
+      "method": "expect",
+      "c_line": 17235
+    },
+    {
+      "function": "adamic_function_143_Statements_attributeBody",
+      "method": "node",
+      "c_line": 17244
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "expect",
+      "c_line": 17294
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17308
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17315
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17327
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "identifier",
+      "c_line": 17343
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "node",
+      "c_line": 17355
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17369
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17396
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17408
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "identifier",
+      "c_line": 17429
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "node",
+      "c_line": 17443
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17457
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17468
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17475
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "identifier",
+      "c_line": 17504
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17519
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "next",
+      "c_line": 17534
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17541
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "peek",
+      "c_line": 17548
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "next",
+      "c_line": 17569
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "expect",
+      "c_line": 17576
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "propertyName",
+      "c_line": 17583
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "expect",
+      "c_line": 17591
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "entityName",
+      "c_line": 17608
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "node",
+      "c_line": 17623
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17648
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17660
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17683
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "next",
+      "c_line": 17697
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17706
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "next",
+      "c_line": 17722
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "expect",
+      "c_line": 17729
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "identifier",
+      "c_line": 17736
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "node",
+      "c_line": 17764
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "expect",
+      "c_line": 17784
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "propertyName",
+      "c_line": 17794
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17804
+    },
+    {
+      "function": "adamic_function_144_Statements_importDeclaration",
+      "method": "kind",
+      "c_line": 17811
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "getAwait",
+      "c_line": 17844
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "setAwait",
+      "c_line": 17852
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "expect",
+      "c_line": 17861
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 17868
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 17875
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 17891
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "next",
+      "c_line": 17900
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "rootAssignment",
+      "c_line": 17907
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "node",
+      "c_line": 17920
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "setAwait",
+      "c_line": 17937
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 17949
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "next",
+      "c_line": 17960
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "expect",
+      "c_line": 17967
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "identifier",
+      "c_line": 17974
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "setAwait",
+      "c_line": 17985
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 17998
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "next",
+      "c_line": 18009
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 18018
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "next",
+      "c_line": 18034
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 18041
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "next",
+      "c_line": 18052
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "propertyName",
+      "c_line": 18059
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "expect",
+      "c_line": 18076
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "propertyName",
+      "c_line": 18083
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 18100
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "next",
+      "c_line": 18111
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "propertyName",
+      "c_line": 18118
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 18132
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "kind",
+      "c_line": 18139
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "node",
+      "c_line": 18164
+    },
+    {
+      "function": "adamic_function_145_Statements_exportDeclaration",
+      "method": "setAwait",
+      "c_line": 18181
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "propertyName",
+      "c_line": 18198
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "kind",
+      "c_line": 18208
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "next",
+      "c_line": 18219
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "typeLiteral",
+      "c_line": 18226
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "kind",
+      "c_line": 18238
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "next",
+      "c_line": 18249
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "node",
+      "c_line": 18263
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "kind",
+      "c_line": 18287
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "next",
+      "c_line": 18303
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "kind",
+      "c_line": 18313
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "expect",
+      "c_line": 18334
+    },
+    {
+      "function": "adamic_function_146_Statements_moduleDeclaration",
+      "method": "node",
+      "c_line": 18355
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "expect",
+      "c_line": 18419
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "kind",
+      "c_line": 18426
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "token",
+      "c_line": 18437
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "kind",
+      "c_line": 18449
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "kind",
+      "c_line": 18456
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "identifier",
+      "c_line": 18472
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "getAwait",
+      "c_line": 18484
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "getYield",
+      "c_line": 18492
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "setAwait",
+      "c_line": 18500
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "setYield",
+      "c_line": 18507
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "getIn",
+      "c_line": 18514
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "setIn",
+      "c_line": 18522
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "typeParameters",
+      "c_line": 18530
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "parameters",
+      "c_line": 18552
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "kind",
+      "c_line": 18573
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "next",
+      "c_line": 18584
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "returnType",
+      "c_line": 18591
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "kind",
+      "c_line": 18603
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "setIn",
+      "c_line": 18624
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "setAwait",
+      "c_line": 18631
+    },
+    {
+      "function": "adamic_function_148_Statements_functionDeclaration",
+      "method": "setYield",
+      "c_line": 18638
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "expect",
+      "c_line": 18656
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18663
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18670
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18677
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18689
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "identifier",
+      "c_line": 18710
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "typeParameters",
+      "c_line": 18723
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18745
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18752
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18776
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18785
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "next",
+      "c_line": 18793
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "suffix",
+      "c_line": 18810
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "primary",
+      "c_line": 18813
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "node",
+      "c_line": 18833
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18850
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "typeArguments",
+      "c_line": 18862
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "node",
+      "c_line": 18885
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "depth",
+      "c_line": 18904
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "node",
+      "c_line": 18917
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "node",
+      "c_line": 18925
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 18954
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "next",
+      "c_line": 18968
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "node",
+      "c_line": 18980
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "expect",
+      "c_line": 19005
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19013
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19032
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "next",
+      "c_line": 19043
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19060
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19083
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19090
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19102
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19114
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19126
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19138
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19150
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19162
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19174
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19186
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19205
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19212
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19224
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19236
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19255
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "token",
+      "c_line": 19269
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19282
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "node",
+      "c_line": 19294
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19333
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "next",
+      "c_line": 19350
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "identifier",
+      "c_line": 19362
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "expect",
+      "c_line": 19372
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "expect",
+      "c_line": 19387
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19394
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "next",
+      "c_line": 19405
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19430
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19437
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19449
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19461
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19473
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19485
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19497
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19509
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19521
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "peek",
+      "c_line": 19533
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19549
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "next",
+      "c_line": 19560
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19569
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "token",
+      "c_line": 19580
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19592
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "next",
+      "c_line": 19603
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "propertyName",
+      "c_line": 19616
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19628
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19635
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "token",
+      "c_line": 19651
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19663
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19670
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "methodBody",
+      "c_line": 19686
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19699
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "next",
+      "c_line": 19710
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "kind",
+      "c_line": 19723
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "next",
+      "c_line": 19734
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "rootAssignment",
+      "c_line": 19741
+    },
+    {
+      "function": "adamic_function_149_Statements_classDeclaration",
+      "method": "expect",
+      "c_line": 19766
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "next",
+      "c_line": 19787
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19796
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "token",
+      "c_line": 19807
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "expect",
+      "c_line": 19819
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "getIn",
+      "c_line": 19826
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "setIn",
+      "c_line": 19834
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19841
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19852
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19859
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19871
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19883
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "nextIdentifierSameLine",
+      "c_line": 19890
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19906
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "peek",
+      "c_line": 19913
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "rootExpression",
+      "c_line": 19933
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "setIn",
+      "c_line": 19950
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19957
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19964
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 19980
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "next",
+      "c_line": 19989
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "rootAssignment",
+      "c_line": 19998
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "rootExpression",
+      "c_line": 20007
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "expect",
+      "c_line": 20019
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "expect",
+      "c_line": 20036
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 20043
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "rootExpression",
+      "c_line": 20054
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "expect",
+      "c_line": 20066
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "kind",
+      "c_line": 20073
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "rootExpression",
+      "c_line": 20084
+    },
+    {
+      "function": "adamic_function_150_Statements_forStatement",
+      "method": "expect",
+      "c_line": 20096
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "next",
+      "c_line": 20121
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "expect",
+      "c_line": 20128
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "rootExpression",
+      "c_line": 20135
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "expect",
+      "c_line": 20143
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "expect",
+      "c_line": 20155
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "kind",
+      "c_line": 20165
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "kind",
+      "c_line": 20184
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "next",
+      "c_line": 20193
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "rootExpression",
+      "c_line": 20204
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "expect",
+      "c_line": 20216
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "kind",
+      "c_line": 20224
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "kind",
+      "c_line": 20231
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "kind",
+      "c_line": 20243
+    },
+    {
+      "function": "adamic_function_151_Statements_switchStatement",
+      "method": "expect",
+      "c_line": 20277
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "next",
+      "c_line": 20304
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "kind",
+      "c_line": 20315
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "next",
+      "c_line": 20331
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "kind",
+      "c_line": 20340
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "next",
+      "c_line": 20351
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "bindingName",
+      "c_line": 20363
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "kind",
+      "c_line": 20373
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "next",
+      "c_line": 20384
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "expect",
+      "c_line": 20401
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "kind",
+      "c_line": 20422
+    },
+    {
+      "function": "adamic_function_152_Statements_tryStatement",
+      "method": "next",
+      "c_line": 20433
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20460
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 20471
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 20478
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "rootExpression",
+      "c_line": 20485
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 20493
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20510
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20533
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20549
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 20560
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20572
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20579
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20595
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 20604
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20613
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20620
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20632
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "rootExpression",
+      "c_line": 20656
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20676
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 20683
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20695
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20707
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20719
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "nextIdentifierSameLine",
+      "c_line": 20726
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20742
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 20749
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20781
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20788
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20804
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 20813
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 20820
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "rootExpression",
+      "c_line": 20827
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 20835
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20850
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 20862
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20882
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20898
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20914
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20930
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 20941
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 20950
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 20957
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "rootExpression",
+      "c_line": 20964
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 20972
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 20979
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 20990
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21008
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21015
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21027
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21043
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21052
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 21066
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21077
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "identifier",
+      "c_line": 21097
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21119
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 21126
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "identifier",
+      "c_line": 21142
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 21150
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21172
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21179
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21191
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21203
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21215
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21227
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 21234
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21251
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 21258
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21282
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21296
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "token",
+      "c_line": 21306
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21324
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21341
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21358
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21365
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21377
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21389
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "nextIdentifierSameLine",
+      "c_line": 21396
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21412
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 21419
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21451
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21458
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "nextIdentifierSameLine",
+      "c_line": 21470
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21485
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 21494
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "identifier",
+      "c_line": 21501
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "typeParameters",
+      "c_line": 21512
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21535
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 21551
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "entityName",
+      "c_line": 21571
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21581
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "typeArguments",
+      "c_line": 21593
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21620
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 21635
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "node",
+      "c_line": 21648
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "typeLiteral",
+      "c_line": 21671
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "node",
+      "c_line": 21680
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 21706
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21713
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 21720
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "token",
+      "c_line": 21732
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21759
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 21770
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "identifier",
+      "c_line": 21777
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 21787
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21795
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "propertyName",
+      "c_line": 21814
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21824
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 21835
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "rootAssignment",
+      "c_line": 21842
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21858
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 21873
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "expect",
+      "c_line": 21884
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21897
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21904
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "nextIdentifierSameLine",
+      "c_line": 21916
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 21923
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21939
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 21946
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21967
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "next",
+      "c_line": 21977
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "kind",
+      "c_line": 21994
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 22001
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "peek",
+      "c_line": 22013
+    },
+    {
+      "function": "adamic_function_153_Statements_statement",
+      "method": "rootExpression",
+      "c_line": 22035
+    }
+  ]
+}
