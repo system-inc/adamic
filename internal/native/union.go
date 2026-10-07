@@ -57,11 +57,19 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 	return fmt.Sprintf("((%s)%s)", cType(narrow.To), value)
 }
 
-// typeOf emits typeof value, a constant string: known from the type, but for whether a reference is
-// missing, and for which member a union is.
-func (e *emitter) typeOf(value ir.Expression) string {
-	operand := e.value(value)
+// typeOf is the single native emission path for typeof, including comparisons and switches.
+// Scalars have no heap header; dynamic references use the runtime's one classifier.
+func (e *emitter) typeOf(observation ir.TypeOf) string {
+	value := observation.Value
+	operand, null := e.typeOfReference(observation)
 	named := func(name string) string { return "&adamic_typeof_" + name }
+	if _, intrinsic := value.(ir.LibraryGlobal); intrinsic {
+		// Built-in identities are opaque headers, so JSON has no class metadata to inspect.
+		if value.Type() == ir.Object {
+			return named("object")
+		}
+		return named("function")
+	}
 	switch value.Type() {
 	case ir.Number:
 		return named("number")
@@ -69,14 +77,8 @@ func (e *emitter) typeOf(value ir.Expression) string {
 		return named("boolean")
 	case ir.MaybeNumber, ir.MaybeBoolean:
 		return fmt.Sprintf("((%s).present ? %s : %s)", operand, named(typeName(value.Type().Present())), named("undefined"))
-	case ir.Union:
-		return fmt.Sprintf("adamic_union_typeof(%s)", operand)
-	case ir.String:
-		return fmt.Sprintf("(%s == NULL ? %s : %s)", operand, named("undefined"), named("string"))
-	case ir.Closure:
-		return fmt.Sprintf("(%s == NULL ? %s : %s)", operand, named("undefined"), named("function"))
 	}
-	return fmt.Sprintf("(%s == NULL ? %s : %s)", operand, named("undefined"), named("object"))
+	return fmt.Sprintf("adamic_union_typeof((const adamic_heap *)(%s), %s)", operand, null)
 }
 
 // typeName is the name typeof gives a number or a boolean.

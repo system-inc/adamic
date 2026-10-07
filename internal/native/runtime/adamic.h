@@ -234,8 +234,6 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
-adamic_string *adamic_static_union_typeof(const adamic_heap *value);
-adamic_string *adamic_object_typeof(const adamic_object *object);
 adamic_value *adamic_static_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 // A readonly numeric view may see a field made with the undefined-only reference representation.
@@ -423,6 +421,33 @@ adamic_value *adamic_map_get(const adamic_map *map, adamic_value key);
 void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
 
 bool adamic_map_delete(adamic_map *map, adamic_value key);
+
+// Records own a string-keyed Map through a fixed-shape wrapper (record.c). These aliases
+// use ordinary object cleanup; the compiler must use record operations for record views.
+typedef adamic_object adamic_record;
+typedef adamic_object adamic_record_iterator;
+
+adamic_record *adamic_record_new(bool reference_values);
+// Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
+adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
+bool adamic_record_has_own(const adamic_record *record, const adamic_string *key);
+// Dynamic get and in hold own keys only: on a miss naming an Object.prototype member,
+// both panic with the member name and "records hold own keys only". Other misses return
+// NULL/false. The member-name check runs only on a miss; an own value is always borrowed.
+adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key);
+bool adamic_record_has(const adamic_record *record, const adamic_string *key);
+// Both writes consume key and value references, as Map.set does. define creates an own data
+// property even for __proto__; set refuses __proto__ assignment with an explicit NotYet panic.
+void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value);
+void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value);
+bool adamic_record_delete(adamic_record *record, const adamic_string *key);
+size_t adamic_record_size(const adamic_record *record);
+// keys returns an owned array in own-key order: array indices ascending, then insertion order.
+adamic_array *adamic_record_keys(const adamic_record *record);
+// Iteration snapshots keys, holds record and keys, skips deleted keys, and reads current values.
+// New keys are not visited. next returns borrowed key/value pairs; release ends iteration.
+adamic_record_iterator *adamic_record_iterate(adamic_record *record);
+bool adamic_record_iterator_next(adamic_record_iterator *iterator, adamic_string **key, adamic_value *value);
 
 // A Set is a map whose values aren't used (set.c). adamic_set_add_all adds an array's elements in
 // order, new Set(array), each reference retained; adamic_set_values is [...set], a new array the caller
@@ -709,8 +734,9 @@ bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
 // string the caller owns.
 adamic_string *adamic_union_to_string(adamic_heap *value);
 
-// adamic_union_typeof is typeof value, a constant; the names typeof gives are these.
-adamic_string *adamic_union_typeof(const adamic_heap *value);
+// adamic_union_typeof classifies every reference, including static constructors. null says what
+// a missing pointer represents; null and undefined share NULL but have different typeof results.
+adamic_string *adamic_union_typeof(const adamic_heap *value, bool null);
 extern adamic_string adamic_typeof_number;
 extern adamic_string adamic_typeof_string;
 extern adamic_string adamic_typeof_boolean;

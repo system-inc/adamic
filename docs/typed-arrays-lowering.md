@@ -229,3 +229,65 @@ The complete post-merge uncached native package passed in 286.469s and the
 complete oracle package in 129.188s, including the normal recorded-counts
 comparison and all compiler typed-array fixtures. Current origin/main remains
 `39638d9e278d38bb5aeae887f46d55a70e47aaad`, already in both merge parents.
+
+## Current-main landing and supplied Workers stats
+
+The final landing merges origin/main at
+`b6b1538b0cebc4ba6741ac34f1aedb60293c1d06`. Conflicts preserve both main's
+predicate proof and typed-array refusals, use main's array-slot lookup for
+plain arrays while keeping typed-array MaybeNumber reads, and retain every
+fixture from both branches. The count table is regenerated for that tree.
+The change to oracle_test.go is only the merge resolution of fixture entries.
+
+Platforms supplied `900409b73d36ea34bb26ec4366c09952839ff897` after the
+initial compiler proof. `typed_arrays_workers_stats.a` now ports the actual
+standalone reducer at `internal/worker/testdata/wasm/stats.a` and the full
+summarize operation from `workers/compute/handler.a`, under the literal
+arithmetic contract in `workers/compute/README.md`. The earlier best/median
+fixture is supplementary and does not substitute for this program.
+
+Input and sorted-copy storage are Float64Array. Stable insertion sort replaces
+plain-array slice/sort using only the supported typed-array operations: allocate,
+set, length and checked numeric reads/writes. Summation and squared-sum
+accumulation remain in original index order. Median, p95 and population
+standard deviation use the original arithmetic. Explicit JSON object literals
+serialize the same result fields because JSON.stringify of structural object
+references is currently NotYet; no JSON feature is added by this unit.
+
+An independent Node witness embeds the original platform functions unchanged
+in arithmetic and runs their original readonly number[] and native Array.sort
+paths. The port's source, sanitized native, release native and JavaScript
+backend all must match that witness, including JSON nonfinite/null behavior.
+Cases cover singletons, odd/even counts, repeated and fractional samples,
+signed-zero stability, summation cancellation, finite-input overflow,
+subnormals, nearest-rank boundaries at 19/20/21 elements, unchanged inputs,
+subarray input and the standalone empty reducer.
+
+A bounds-safe p95 mutant changed the rank to
+`Math.min(count - 1, Math.ceil(0.95 * count))`. All four port paths compiled
+and exited 0, agreeing on wrong output; the original-platform Node witness
+failed each stdout comparison. At count 20 the mutated percentile is 20
+instead of 19. The fixture was restored before the final gate. Its raw proof
+log is `landing-stats-p95-mutant.txt.gz`.
+
+Final landing commands, all with logged output:
+
+```sh
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+go test ./internal/lower ./internal/ir ./internal/flow ./internal/fresh ./internal/javascript -count=1 -timeout 30m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestTypedArrayWorkersStatsMatchesPlatforms|TestTypedArrayWriteStopIsPinned|TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_' -count=1 -timeout 30m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m
+gofmt -l cmd internal
+go vet ./...
+```
+
+Focused typed-array and original-platform comparisons passed in 1.815s.
+Count recording passed in 50.033s. Lowering, IR, flow and freshness passed in
+44.705s, 2.004s, 94.749s and 63.457s. Formatting, vet and the diff check
+against the prior compiler tip exited 0 without diagnostics. Landing proof
+logs use `landing-` names. HTTP routing and deployment of the complete
+Workers handler are outside this numeric fixture's proof.
+
+The complete uncached landing native suite passed in 305.735s and the oracle
+suite in 142.527s. A final fetch confirmed origin/main is still the merged
+`b6b1538b0cebc4ba6741ac34f1aedb60293c1d06`.
