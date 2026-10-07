@@ -1,0 +1,31 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../../diagnostic.ts';
+import { SuppliedNode } from '../node.a';
+const names = ['object', 'array', 'function expression', 'function declaration', 'class expression', 'new expression', 'regular expression', 'JSX element', 'JSX fragment', 'assignment expression'];
+function quote(name: string): string {
+    // This reporting slice supports plain ASCII identifier spellings only.
+    // Refuse other supplied text until Go's Unicode %q semantics are ported.
+    for(let at = 0; at < name.length; at++) {
+        const code = name.charCodeAt(at);
+        if(!((code >= 65 && code <= 90) || (code >= 97 && code <= 122) || (at > 0 && code >= 48 && code <= 57) || code === 36 || code === 95)) { panic('wave 12 reporting requires an ASCII identifier'); }
+    }
+    return `"${name}"`;
+}
+export function report(node: SuppliedNode, construction: number, nodeLine: number, usageLine: number, variableName: string): Diagnostic {
+    const name = names[construction] ?? panic('unknown prepared construction kind');
+    const function_ = construction === 2 || construction === 3;
+    const remedy = function_ ? 'useCallback' : 'useMemo';
+    const hasUsage = usageLine > 0;
+    const id = `${hasUsage ? 'withIdentifierMsg' : 'defaultMsg'}${function_ ? 'Func' : ''}`;
+    const prefix = hasUsage
+        ? `The ${quote(variableName)} ${name} (at line ${nodeLine}) passed as the value prop to the Context provider (at line ${usageLine})`
+        : `The ${name} passed as the value prop to the Context provider (at line ${nodeLine})`;
+    return new Diagnostic('jsx-no-constructed-context-values', id, `${prefix} changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`, node.start, node.end, 'react/');
+}
+export function memoWithoutDependencies(node: SuppliedNode, hook: string, line: number): Diagnostic {
+    return new Diagnostic('jsx-no-constructed-context-values', 'memoWithoutDependenciesMsg', `The ${hook} that builds the Context provider's value (at line ${line}) has no dependency list, so it recomputes on every render and every consumer of this context re-renders on every render of this component, exactly as if it were not memoized. Pass the dependency list.`, node.start, node.end, 'react/');
+}
+export function unstableDependency(node: SuppliedNode, dependency: string, hook: string, line: number, reason: string, originLine: number): Diagnostic {
+    const location = originLine > 0 ? ` (at line ${originLine})` : '';
+    return new Diagnostic('jsx-no-constructed-context-values', 'unstableDependencyMsg', `The ${quote(dependency)} dependency of the ${hook} that builds the Context provider's value (at line ${line}) ${reason}${location}, so the ${hook} recomputes on every render and every consumer of this context re-renders on every render of this component, exactly as if it were not memoized. A memoized value is only stable when every input is: make ${quote(dependency)} stable too, by memoizing it or by building it outside the component.`, node.start, node.end, 'react/');
+}

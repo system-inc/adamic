@@ -96,3 +96,5 @@ Fresh all-origin audit: 529 refs and 33 distinct Markdown claim blobs. Ranking c
 - react/jsx-no-undef
 
 All have zero compiler/repository volume. Production implementations use AST, scope and checker declarations, not React HIR Lower/Construct/SSA. This reservation is pushed before implementation. Native JSX and numeric supplied-node integration are dependencies to verify against the shared landing; rule.json will declare numeric kinds. No new shared files will be edited.
+
+Sixth-batch status: ACTIVE, INCOMPLETE, blocked on native JSX/numeric supplied-node source integration. Native message rendering is implemented and validated separately in wave12_sixth/REPORT.md. This is not source finding parity, and these three claims are not the parked HIR batch.

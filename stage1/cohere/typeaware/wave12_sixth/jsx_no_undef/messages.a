@@ -1,0 +1,6 @@
+import { Diagnostic } from '../../diagnostic.ts';
+import { SuppliedNode } from '../node.a';
+// Reporting only. Tag-root and declaration discovery remain source-adapter work.
+export function report(node: SuppliedNode): Diagnostic {
+    return new Diagnostic('jsx-no-undef', 'jsxIdentifierNotDefined', 'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.', node.start, node.end, 'react/');
+}

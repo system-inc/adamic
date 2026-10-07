@@ -1,0 +1,10 @@
+{
+  "name": "react/jsx-fragments",
+  "kinds": [
+    289,
+    285,
+    286
+  ],
+  "status": "partial-reporting",
+  "blocker": "native JSX parser and supplied numeric node adapter absent on main"
+}

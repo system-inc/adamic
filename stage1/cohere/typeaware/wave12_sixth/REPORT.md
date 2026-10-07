@@ -1,0 +1,42 @@
+Built: parked the three HIR-dependent React claims and implemented native diagnostic-rendering portions of three newly reserved AST React rules; source ports remain incomplete.
+Commits: claim and parking commit 4df2d5eb0 was pushed before implementation; base remains fetched main f8013f0b.
+Checks: 15 production findings match 6,333 complete bytes across native, ASan/UBSan/LSan, source Node and emitted JavaScript; setup PASS 117s, nproc 5.
+Mutants: three reporting-ID mutants caught only by Go byte comparison; two unsupported-input guard mutants and three numeric metadata mutations caught by separate checks.
+Uncovered: native JSX source parsing, supplied-node numeric callbacks, verdicts/span discovery, source corpus parity and comparable native/Go lint timing.
+
+## Reservation and parked work
+
+wave12_fifth's set-state-in-effect, set-state-in-render and static-components claims are explicitly PARKED. Native source HIR/SSA, capture/memo preparation and JSX lowering are named in claims/wave-12.md. They count as finished only for Ahra's landing-first cap, not as completed ports. Analysis modules are being ported on #dnv6f2c and JSX support is landing on area/stage1-lint. No integration branch is pushed here.
+
+Fresh fetch covered 529 origin refs and 33 distinct Markdown reservation blobs. Binary/log evidence under claims is not a reservation. The first unclaimed non-HIR rules are react/jsx-fragments, react/jsx-no-constructed-context-values and react/jsx-no-undef, all zero combined volume. Base source rule names exclude suite implementations whose filenames differ from registry names; selection evidence is preserved in the earlier landing/evidence/park-selection.json. Exact module filenames were checked across all origin refs before claiming. Claim 4df2d5eb0 was pushed before code. These three new claims remain ACTIVE and INCOMPLETE; they are not the parked HIR batch.
+
+## Implemented portion and node contract
+
+Each own directory contains messages.a and rule.json. Numeric TypeScript SyntaxKind kinds: fragments [289,285,286], constructed-context values [287,286], undef [287,286]. JSON status is partial-reporting. Nothing is registered as a complete source rule. The reporting functions receive the prepared node/range object directly and perform no parser refetch, tree traversal or string-kind relevance check. SuppliedNode is a reporting input, not a native JSX AST or source callback adapter; its kind field is uninterpreted by the renderer. Metadata declarations do not imply that supplied-node source dispatch exists.
+
+Native code renders fragment shorthand/pragma messages, undefined JSX-name messages, the four construction message variants over ten construction labels, and memo-without-dependencies/unstable-dependency messages. It owns IDs, wording, numeric formatting and zero repairs/suggestions. The Go assignment-expression message has withIdentifierMsg with an empty quoted name; that exact behavior is preserved. Quote rendering currently permits empty names and plain ASCII identifier spellings, and explicitly refuses other supplied names instead of claiming Go Unicode %q fidelity. Dependency text that is a member expression likewise remains outside this restricted reporting input contract.
+
+## Independent reporting comparison
+
+oracle.go is an isolated overlay into pinned cohere and calls the three unchanged production Run methods with default options. It imports no bridge implementation. Fifteen valid source controls produce 1 fragment, 1 undefined-name and 13 constructed-context findings. Their complete canonical records, including every fix/suggestion field, match 6,333 bytes in native, sanitized native, source Node and Adamic-emitted JavaScript. Native/sanitizer stderr is empty.
+
+The private producer supplies Go finding locations and message-family selection to generated .a reporting fixtures. Construction labels, variable names, line numbers and known stability reason come from fixture definitions; Go message text is not supplied to native. This proves diagnostic rendering only. It does not prove native verdicts, source span discovery or frontend scope/checker semantics. Source Node executes the original prepared .a fixture through oracle/node.mjs, separately from Adamic lowering; emitted JavaScript uses that runtime loader too. Shared Diagnostic remains unchanged, and no batch-8 landing SHA was supplied.
+
+All three reporting-ID mutants compile, exit 0 with empty stderr and change only complete canonical bytes, preserving finding count. They are reporting mutants, not qualifying full source-rule mutants. The exact differing bytes are in evidence/summary.json. ASCII-name and construction-range probes require exact panic-70 messages; bypassing each guard compiles, exits 0 and is caught by its refusal contract. Every rule.json list is independently checked against the pinned TypeScript enum; numeric +1 mutations lose equality. No new checker bridge question or handle is used, so new-question lifetime checks do not apply to this reporting slice.
+
+## Exact remaining blockers
+
+Current main's ParseNode has only string kind. Its native parser refuses the Go-positive React.Fragment control with panic 70, expected GreaterThanToken, got SlashToken. The direct parser probe is preserved. JSX and numeric event/node adapters have not landed on this branch; shared parser/harness/registration edits are outside this unit. .a module loading or suggestion serialization alone does not supply them.
+
+Unimplemented source work includes fragment import/alias/declaration matching and prop exemptions; JSX root/intrinsic/global resolution; provider and construction discovery, component-scope decisions, alias recursion and memo dependency stability. These are AST/checker analyses rather than the parked React HIR algorithms. No source analyze() placeholder or zero-finding corpus run is added. The reporters are portable groundwork; the new claims stay unfinished until their source frontend and algorithms are ported and compared. Under the instruction to stop on other shared dependencies, no further claims were taken.
+
+No native source corpus parity, source-rule mutants, source handle gate or comparable end-to-end native/Go timings are claimed for these three. Prepared rendering and full Go source lint are different input pipelines, so a speed ratio would be misleading. The preceding twelve completed rules remain validated/pushed on unchanged main f8013f0b; they were not rerun for these unregistered reporting modules. Their native corpus, mutation and ownership results remain separate in wave12_fifth/landing/F801_REPORT.md. Full repository and inherited 26-rule regression gates were not run.
+
+## Reproduction, failures and evidence
+
+source /workspace/adamic-tools/env.sh
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-12/corpus python3 stage1/cohere/typeaware/wave12_sixth/validate.py /workspace/wave-12/sixth-reporting-definitive > /tmp/wave-12-sixth-validation-definitive.log 2>&1
+
+The first attempt hit disk exhaustion before validation. Removed 98 identified reproducible ELF binaries/ar archives only in owned old scratch folders, reclaiming 3,935,357,751 bytes; source/log evidence retained. The next fixture guessed the stability reason incorrectly; the production reference required is a new object built during render. Isolating source fixtures as modules removed accidental cross-file ambient-name sharing. The expanded control then caught the empty-name assignment message, and the renderer/input were corrected before the definitive pass. Earlier successful narrower attempts are not the definitive evidence. No test output was piped.
+
+Setup timings: Go 0s, clang 0s, Node 0s, submodules 1s, cache 117s, total 117s. nproc 5; CPU quota four cores; memory 17.6 GB. Go 1.27.1, clang 20.1.8, Node 24.19.0. No protected compiler, shared parser, finding model, harness, generator, bridge registration or submodule pin was changed. Only codex/typeaware-wave-12 is pushed. Compressed complete command stdout/stderr, generated prepared .a driver, original source controls, commands/exits, hashes and summary are preserved in evidence/.

@@ -1,0 +1,9 @@
+// Prepared reporting input, not a native source AST or source adapter.
+export class SuppliedNode {
+    readonly kind: number;
+    readonly start: number;
+    readonly end: number;
+    constructor(kind: number, start: number, end: number) {
+        this.kind = kind; this.start = start; this.end = end;
+    }
+}

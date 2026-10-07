@@ -1,0 +1,10 @@
+import { Diagnostic } from '../../diagnostic.ts';
+import { SuppliedNode } from '../node.a';
+// Reporting only. The caller discovers fragment bindings and attribute exemptions.
+export function report(node: SuppliedNode, elementMode: boolean): Diagnostic {
+    const id = elementMode ? 'preferPragma' : 'preferFragment';
+    const message = elementMode
+        ? 'Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.'
+        : 'Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.';
+    return new Diagnostic('jsx-fragments', id, message, node.start, node.end, 'react/');
+}

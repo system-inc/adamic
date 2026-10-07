@@ -1,0 +1,17 @@
+{
+  "array.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { return <Ctx.Provider value={[]}/>; }\n",
+  "assignment.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { let v: any; return <Ctx.Provider value={v = {}}/>; }\n",
+  "class.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { return <Ctx.Provider value={class {}}/>; }\n",
+  "declaration.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { function v() {} return <Ctx.Provider value={v}/>; }\n",
+  "fragment.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nconst x = <React.Fragment />;\n",
+  "function.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { return <Ctx.Provider value={() => {}}/>; }\n",
+  "jsx.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { return <Ctx.Provider value={<span/>}/>; }\n",
+  "jsxfragment.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { return <Ctx.Provider value={<></>}/>; }\n",
+  "memo.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { const v = useMemo(() => ({a:1})); return <Ctx.Provider value={v}/>; }\n",
+  "new.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { return <Ctx.Provider value={new Object()}/>; }\n",
+  "object.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { return <Ctx.Provider value={{a:1}}/>; }\n",
+  "regex.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { return <Ctx.Provider value={/a/}/>; }\n",
+  "undef.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nconst x = <Missing />;\n",
+  "unstable.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { const dep = {}; const v = useMemo(() => ({a:1}), [dep]); return <Ctx.Provider value={v}/>; }\n",
+  "variable.tsx": "export {}; declare const React: any; declare const Ctx: any; declare function useMemo<T>(callback: () => T, deps?: any[]): T;\nfunction C() { const v = {a:1}; return <Ctx.Provider value={v}/>; }\n"
+}
