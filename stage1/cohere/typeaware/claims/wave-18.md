@@ -22,3 +22,19 @@ port file was found under stage1/cohere on those refs. No rule was skipped.
 Implementation status: await-thenable and class-literal-property-style default
 ports are complete in adea6fbe. The Next rule remains blocked on absent native
 JSX parsing; WAVE_18_REPORT.md records a Go-positive native-refusal measurement.
+
+## Next three rules
+
+Following the October 7 continuation request, this branch additionally claims:
+
+1. nexus/correctness-no-collection-misuse
+2. nexus/correctness-no-discarded-outcome
+3. nexus/correctness-no-discarded-pure-result
+
+These are the first three remaining in VOLUME_REPORT.md's combined by-volume
+ranking after excluding ports on fetched origin/codex/tsgo-c-library (5afbdb83)
+and origin/main (ef3d907e), plus every claim on all 320 origin refs. Ninety
+ranked rules are claimed; 25 ranked rules are already ported (the 26th base
+port, method-signature-style, is outside this checker-dependent ranking).
+All three new selections have zero compiler and repository findings. No
+matching existing port or claim was found. This update is pushed before code.
