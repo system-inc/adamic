@@ -1,0 +1,6 @@
+import { errNothingToRepeat } from './nothing_to_repeat.a';
+export function checkGroupQuantifier(kind: number, rest: readonly number[], unicode: boolean, width: (source: readonly number[]) => number): readonly number[] {
+    if(kind === 0 || width(rest) === 0) { return []; }
+    if(kind === 1 && !unicode) { return []; }
+    return errNothingToRepeat(rest,width);
+}

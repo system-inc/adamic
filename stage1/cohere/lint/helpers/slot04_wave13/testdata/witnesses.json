@@ -1,0 +1,242 @@
+[
+  {
+    "Name": "control",
+    "Source": ""
+  },
+  {
+    "Name": "control",
+    "Source": "*"
+  },
+  {
+    "Name": "control",
+    "Source": "+"
+  },
+  {
+    "Name": "control",
+    "Source": "?"
+  },
+  {
+    "Name": "control",
+    "Source": "*?foo"
+  },
+  {
+    "Name": "control",
+    "Source": "++"
+  },
+  {
+    "Name": "control",
+    "Source": "??"
+  },
+  {
+    "Name": "control",
+    "Source": "???"
+  },
+  {
+    "Name": "control",
+    "Source": "{0}"
+  },
+  {
+    "Name": "control",
+    "Source": "{1,}"
+  },
+  {
+    "Name": "control",
+    "Source": "{2,3}?x"
+  },
+  {
+    "Name": "control",
+    "Source": "{3,2}"
+  },
+  {
+    "Name": "control",
+    "Source": "{12345678901234567890}"
+  },
+  {
+    "Name": "control",
+    "Source": "{,2}"
+  },
+  {
+    "Name": "control",
+    "Source": "{1,2,3}"
+  },
+  {
+    "Name": "control",
+    "Source": "{1"
+  },
+  {
+    "Name": "control",
+    "Source": "{1 }"
+  },
+  {
+    "Name": "control",
+    "Source": "a"
+  },
+  {
+    "Name": "control",
+    "Source": "\ud835\udc9c"
+  },
+  {
+    "Name": "control",
+    "Source": "\u00e9*"
+  },
+  {
+    "Name": "control",
+    "Source": "\\\\b*"
+  },
+  {
+    "Name": "control",
+    "Source": "(?=x)*"
+  },
+  {
+    "Name": "control",
+    "Source": "(?<=x)+"
+  },
+  {
+    "Name": "control",
+    "Source": "{0}??"
+  },
+  {
+    "Name": "control",
+    "Source": "{000,000}?"
+  },
+  {
+    "Name": "control",
+    "Source": "{9}\n"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?:"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?="
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?!"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?<="
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?<!"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?<name>"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?i)"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?\ud83d\ude00)"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?\u00e9)"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?\u2028)"
+  },
+  {
+    "Name": "group-control",
+    "Source": "(?abc)"
+  },
+  {
+    "Name": "raw-group-control",
+    "Data": [
+      40,
+      63,
+      255
+    ]
+  },
+  {
+    "Name": "raw-group-control",
+    "Data": [
+      40,
+      63,
+      194
+    ]
+  },
+  {
+    "Name": "raw-group-control",
+    "Data": [
+      40,
+      63,
+      194,
+      128
+    ]
+  },
+  {
+    "Name": "raw-group-control",
+    "Data": [
+      40,
+      63,
+      224,
+      128,
+      128
+    ]
+  },
+  {
+    "Name": "raw-group-control",
+    "Data": [
+      40,
+      63,
+      237,
+      160,
+      128
+    ]
+  },
+  {
+    "Name": "raw-group-control",
+    "Data": [
+      40,
+      63,
+      240,
+      128,
+      128,
+      128
+    ]
+  },
+  {
+    "Name": "raw-group-control",
+    "Data": [
+      40,
+      63,
+      244,
+      144,
+      128,
+      128
+    ]
+  },
+  {
+    "Name": "raw-group-control",
+    "Data": [
+      40,
+      63,
+      240,
+      159,
+      152,
+      128
+    ]
+  },
+  {
+    "Name": "raw-group-control",
+    "Data": [
+      40,
+      63,
+      239,
+      191,
+      189
+    ]
+  }
+]

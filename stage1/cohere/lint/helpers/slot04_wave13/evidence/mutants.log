@@ -1,0 +1,34 @@
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/nothing_to_repeat.aconst_end_=_width(quantifier);
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/nothing_to_repeat.a_repeats_an_assertion
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/group_quantifier.akind_===_1_&&_!unicode
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/group_quantifier.akind_===_0_||_width(rest)_===_0
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/group_construct.afirst_===_58_||
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/group_construct.areturn_4;
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (29.43s)
+    --- PASS: TestCompilingMutants/nothing_to_repeat.aconst_end_=_width(quantifier); (4.49s)
+    --- PASS: TestCompilingMutants/nothing_to_repeat.a_repeats_an_assertion (3.22s)
+    --- PASS: TestCompilingMutants/group_quantifier.akind_===_1_&&_!unicode (6.04s)
+    --- PASS: TestCompilingMutants/group_quantifier.akind_===_0_||_width(rest)_===_0 (4.67s)
+    --- PASS: TestCompilingMutants/group_construct.afirst_===_58_|| (4.85s)
+    --- PASS: TestCompilingMutants/group_construct.areturn_4; (4.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave13	29.449s

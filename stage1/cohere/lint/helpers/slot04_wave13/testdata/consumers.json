@@ -1,0 +1,1558 @@
+[
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<Link href=\"/about\">About</Link>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href=\"/about\" target=\"_blank\">About</a>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href=\"/contact\">Contact</a>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href='/about' />);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:foo.tsx",
+    "source": "export const C = () => (<a href='/about'>About</a>);\n"
+  },
+  {
+    "name": "@next/next/no-html-link-for-pages:index.tsx",
+    "source": "export const C = () => (\n<>\n<a href=\"/\">x</a>\n</>\n);\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export const Result = JSON.stringify({});\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export const Value = {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export function run({ a } = { a: 1 }) {\n    return a;\n}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export interface Base extends Array<number> {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export interface Base {\n    name: string;\n}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export interface Base {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export let value: { name: string };\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export let value: {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export type Base = { name: string };\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export type Base = {} | null;\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export type Base = {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "export type MyUnion<T> = T | {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "interface A {\n    a: string;\n}\ninterface B {\n    b: string;\n}\ninterface C {\n    c: string;\n}\nexport interface All extends A, B, C {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "interface Base {\n    name: string;\n}\nexport interface Derived extends Base {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "interface Base {\n    name: string;\n}\nexport type Expanded = Base & {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "interface Base {\n    name: string;\n}\ninterface Derived {\n    age: number;\n}\nexport interface Both extends Base, Derived {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:Thing.ts",
+    "source": "interface Derived<T> {\n    value: T;\n}\nexport interface Base<T> extends Derived<T> {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "declare interface Base {}\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "declare namespace BaseAndDerived {\n  type Base = typeof base;\n  export interface Derived extends Base {}\n}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "export declare interface Base {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "export default interface Base {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "export default interface Derived extends Base {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "export interface Base {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface A { a: 1 }\ninterface B { b: 1 }\ninterface C extends A, B {}\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base extends Array<number | {}> {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base extends Array<number> {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {\n  name: string;\n}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {\n  name: string;\n}\n\ninterface Derived extends Base {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {\n  name: string;\n}\n\ninterface Derived {\n  age: number;\n}\n\n// valid because extending multiple interfaces can be used instead of a union type\ninterface Both extends Base, Derived {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {\n  name: string;\n}\ndeclare interface Derived extends Base {}\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {\n  props: string;\n}\n\ninterface Derived extends Base {}\n\nclass Derived {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {\n  props: string;\n}\n\ninterface Derived extends Base {}\n\nclass Other {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {\n  props: string;\n}\n\ninterface Derived extends Base {}\n\nconst derived = class Derived {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {\n  props: string;\n}\n\ninterface Derived extends Base {}\n\ninterface Derived {\n  name: string;\n}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {}\n\nfunction foo() {\n  interface Base {\n    name: string;\n  }\n}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {}\n\ninterface Base {\n  name: string;\n}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {}\n\ninterface Base {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {}\nnamespace Base {}\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base {}\n{\n  class Base {}\n}\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base<T extends string = 'a'> /* note */ {}\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base<T> extends Derived<T> {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base<T> {\n  value: T;\n}\nexport declare interface Derived<T> extends Base<T> {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Base<T> {}\nclass Base<T> {}\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface BaseProps {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Derived {\n  property: string;\n}\ninterface Base extends Array<Derived> {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface Window {}\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "interface XBaseY {}\ntype XBaseZ = {};\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "let value: Array<{}>;\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "let value: Object;\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "let value: object;\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "let value: { inner: true };\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "let value: {/* ... */};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "let value: {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "namespace N {\n  interface Base {}\n  class Base {}\n}\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "switch (1 as number) {\n  case 1:\n    interface Base {}\n    break;\n  default:\n    class Base {}\n}\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type A = B & ({});\ntype B = { b: 1 };\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type Base = {} | null;\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type Base = {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type BaseProps = ({});\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type BaseProps = {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type Caf\u00e9 = {};\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type M = { [K in 'a']: {} };\nexport {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type MyNonNullable<T> = T & {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type MyUnion<T> = T | {};\n"
+  },
+  {
+    "name": "@typescript-eslint/no-empty-object-type:file.ts",
+    "source": "type R = Record<string, unknown>;\ninterface Base extends R {}\n"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "class A {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "const a = 1, b = 1; export { a, b };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "const a = 1, b = 2; export { b as a, a as b };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "const a = 1;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "const foo = 123;\nexport { foo as default };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "const foo = 1;\nexport = foo;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "const foo = 1;\nexport default foo;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export * as 'a' from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export * as a from 'a';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export * as b from 'a';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export * as default from 'mod';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export * from 'a';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export * from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export async function *a() {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export async function a() {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export class A extends B {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export class A { A(){} };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export class A { a(){} }"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export class A {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export const [a, b, c, d] = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export const [b] = [a];"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export const a = 1, b = a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export const a = 1;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export const b = 1, a = 2;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export const { a: b } = {}, a = 1;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export const { a: b, b: a } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export const { b: a } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export const { c: b = a } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default 'default';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default (class A {});"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default (function a() {});"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default 1;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default 42;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default class A {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default foo;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default function a() {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export default function foo() {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export function *a() {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export function a() {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export function a(a) {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export function b(a) {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export function someFunction() {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let [b = a] = [];"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let a = 1;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let a, { a: b } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let b = a, a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let b, a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let { a } = { a };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let { a } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let { a, b, c } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let { a: a } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let { b = a } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export let { b: { c: a = d } = e } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var [a = a] = [];"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var [a] = [];"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var [a] = a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var [{ a }] = [];"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var a = 1;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var a = a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var a, b, c;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var a, b;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var a; export default b; export { c } from 'm';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var a; var a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var b = a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var { a, x: b, c, d, e: y } = {}, e, f = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var { a: a = a } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var { a: b } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export var { b: a, a: b } = {};"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { ' ' } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { ' a', 'a ' } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { '' } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { 'a' as 'a ' } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { 'a' } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { 'default' } from 'mod';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { 'default' } from 'mod'; "
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { a as 'a ' } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { a as a } from 'a';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { a as b } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { a as b, b as a } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { a } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { a }; var a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { a, b, c }; var a, b, c;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { a, b, c, d, x as e, f, g } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { b as '\\u0061' } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { b as 'a' } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { b as a } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { b as a, a as b } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { b as a, b } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { b } from 'a';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { default as a } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { default as default } from 'mod';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { default } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { default } from 'mod';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { foo as default } from 'mod';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "export { foobar as default } from 'mod';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "function a() {}"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "import a from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "import { a } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "import { b as a } from 'foo';"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "let a, b; export { a as b, b as a };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "let a, b; export { b, a };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "let a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "let a; export { a as ' b ' };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "let a; export { a as 'a' };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "let a; export { a as 'b' };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "let a; export { a as '\ud83d\udc4d' };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "let a; export { a };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "let b; export { b as a };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var a, b; export { a, b };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var a; export var a;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var a; export { a as 'a ' };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var a; export { a as a };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var a; export { a as b };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var a; export { a as b, a };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var a; export { a as default };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var a; export { a };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var b; export { b as a };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var foo, ab, xy; export { foo, ab, xy };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var foo, bar; export { foo, bar };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var foo; export { foo as ab };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var foobar; export default foobar;"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var foobar; export { foobar as 'default' };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var foobar; export { foobar as default };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var getSomething; export { getSomething };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var getSomethingFromUser; export { getSomethingFromUser };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var privateUserEmail; export { privateUserEmail };"
+  },
+  {
+    "name": "no-restricted-exports:NoRestrictedExports.ts",
+    "source": "var setSomething; export { setSomething };"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "\n\t\t\t  // Both regular and type imports should still be restricted\n\t\t\t  export { Foo } from 'restricted-path';\n\t\t\t  export type { Bar } from 'restricted-path';\n\t\t\t"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "\n\t\t\t  // Both regular and type imports should still be restricted\n\t\t\t  import { Foo } from 'restricted-path';\n\t\t\t  import type { Bar } from 'restricted-path';\n\t\t\t"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "\n\t\t\texport type * from \"foo\";\n\t\t\texport * from \"foo\";\n\t\t\t"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "\n\t\t\texport { } from \"mod\";\n\t\t\texport type { } from \"mod\";\n\t\t\t"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "\n        // error\n        import { Foo_Enum } from '@app/api';\n        import { Bar_Enum } from '@app/api/bar';\n        import { Baz_Enum } from '@app/api/baz';\n        import { B_Enum } from '@app/api/enums/foo';\n\n        // no error\n        import { C_Enum } from '@app/api/enums';\n        "
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "\n  import type { foo } from 'import1/private/bar';\n  import type { foo } from 'import2/private/bar';\n\t\t"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export * as ns from \"fs\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export * as ns from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export * from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export * from \"fs\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export * from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export * from 'import1';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export type * from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export type { A } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export type { Bar } from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export type { InvalidTestCase } from '@typescript-eslint/utils/dist/ts-eslint';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export type { bar } from \"mod\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export type { foo } from 'import1/private/bar';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { 'AllowedObject' as DisallowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { 'AllowedObject' } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { A } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { Bar as Foo } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { Bar } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { Bar } from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { Bar, type Baz } from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { Baz, type Bar } from \"import/private/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { Foo as Bar } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { Foo } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { bar } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { bar, type baz } from \"import-foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { foo } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { foo } from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { foo } from 'import1';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { foo } from 'import1/private/bar';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { foo } from 'import1/private/foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { type A, B } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { type A, type B } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { type Bar } from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { type bar, baz } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export { x as y, x as z } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export {''} from \"fs\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export {'foo' as b} from \"fs\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export {'foo'} from \"fs\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export {'\ud83d\udc4d'} from \"fs\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export {a} from \"fs\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "export {foo as b} from \"fs\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import \"foo\""
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import \"foo/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import \"fs\""
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as All from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as All from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as All from 'foo-bar-baz';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as AllFooBar from \"foo/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as AllWithCustomMessage from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as AllWithCustomMessage from 'foo-bar-baz';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as AllowedObject from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as AllowedObject from \"foo/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as DisallowedObject from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as Foo from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as bar from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as mod from 'mod'"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import * as ns from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import AllowedObject from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import AllowedObject, * as All from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import AllowedObject, * as AllowedObjectTwo from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import AllowedObject, * as DisallowedObject from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import AllowedObject, { AllowedObjectTwo as DisallowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import AllowedObject, { DisallowedObject as AllowedObjectTwo } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import AllowedObjectThree, { AllowedObject as AllowedObjectTwo } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import Bar = Foo.Bar;"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import DisallowedObject from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import DisallowedObject, { AllowedObject as AllowedObjectTwo } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import Foo from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import Foo from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import Foo from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import Foo, { Bar } from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import Foo, { Bar } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import Foo, { Baz as Bar } from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import a from \"foo\"; import b from \"undefined\"; import c from \"\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import absolute from '/foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import absoluteWithPaths from '/foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import absoluteWithPatterns from '#foo/bar';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import absoluteWithPatterns from '/foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import async from \"async\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import def from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import def, * as ns from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import def, { type A } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo = require('bar');"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo = require('foo');"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo = require('import-foo');"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo = require('import1');"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo = require('restricted/thing');"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo from 'import1';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo from 'import1/private/bar';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo from 'import1/private/foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo, * as bar from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo, { bar } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import foo, { default as bar } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import fs = require(\"fs\");"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import fs from \"fs\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import fs from 'fs';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import fs from 'fs'; export { a } from 'mod'; import * as ns from 'os';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import os from \"os \";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import os from \"os\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import path from \"path\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import relative from '../foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import relativeWithPaths from '../foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import relativeWithPatterns from '../foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type _ = require('import-foo');"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type foo from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type foo from 'import1/private/bar';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type fs = require(\"fs\");"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type { A } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type { Bar } from \"import/private/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type { Bar } from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type { InvalidTestCase } from '@typescript-eslint/utils/dist/ts-eslint';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type { MyType } from './types';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import type { bar } from \"mod\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withGitignores from \"bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withGitignores from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withGitignores from \"foo/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withPaths from \"foo/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withPatterns from \"foo/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withPatterns from \"foo/baz\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withPatternsAndPaths from \"foo/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withPatternsCaseInsensitive from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withPatternsCaseSensitive from 'FOO';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import withPatternsCaseSensitive from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import {\nAllowedObject,\nDisallowedObject, // eslint-disable-line\n} from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { ' ' as bar } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { '' as bar } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { 'AllowedObject' as DisallowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { 'AllowedObject' as bar } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { 'DisallowedObject' as AllowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { '\ud83d\udc4d' as bar } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { A } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Allowed1, Disallowed, Allowed2 } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { AllowedObject as DisallowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { AllowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { AllowedObject, AllowedObjectTwo  as DisallowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { AllowedObject, AllowedObjectTwo } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { AllowedObject, DisallowedObject as AllowedObjectTwo } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { AllowedObject, DisallowedObject as Bar } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { AllowedObject, DisallowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Bar as Foo } from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Bar } from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Bar } from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Bar, type Baz } from \"import/private/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Bar, type Baz } from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Baz, type Bar } from \"import/private/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { DisallowedObject as AllowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { DisallowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { DisallowedObjectOne, DisallowedObjectTwo, AllowedObject } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Foo as Bar } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Foo } from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Foo } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Foo } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Foo, Bar } from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Foo, type Bar } from \"import/private/bar\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { FooBar } from '../../my/relative-module';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { GoodThing, BadThing } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { GoodThing, SomethingBad } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { Image, Text, ScrollView } from 'react-native'"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { a } from 'foo/bar';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { a } from 'foo/baz';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { a } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { a, a as b } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { bar } from 'mod'"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { baz } from \"foo\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { foo } from 'foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { foo } from 'import1/private';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { foo } from 'import1/private-package';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { foo } from 'mod'"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { foo } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { foo, bar, baz } from 'mod'"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { foo, bar, baz, qux } from \"foo-bar-baz\";"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { foo, bar, baz, qux } from 'mod'"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { type A, B } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { type A, type B } from 'mod';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "import { type Bar } from 'import-foo';"
+  },
+  {
+    "name": "no-restricted-imports:NoRestrictedImports.ts",
+    "source": "namespace bar { export const x = 1; }\nimport foo = bar;"
+  }
+]

@@ -1,0 +1,19 @@
+=== RUN   TestAssertionsGoNodeNativeJavaScript
+=== RUN   TestAssertionsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 13536 assertion observations
+=== RUN   TestAssertionsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 112032 assertion observations
+=== RUN   TestAssertionsGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 27936 assertion observations
+--- PASS: TestAssertionsGoNodeNativeJavaScript (52.34s)
+    --- PASS: TestAssertionsGoNodeNativeJavaScript/witnesses.json (2.11s)
+    --- PASS: TestAssertionsGoNodeNativeJavaScript/consumers.json (42.52s)
+    --- PASS: TestAssertionsGoNodeNativeJavaScript/calls.json (6.49s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:251: consumer omission caught: no-restricted-imports
+    helpers_test.go:251: consumer omission caught: @next/next/no-html-link-for-pages
+    helpers_test.go:251: consumer omission caught: @typescript-eslint/no-empty-object-type
+    helpers_test.go:251: consumer omission caught: no-restricted-exports
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave13	52.380s

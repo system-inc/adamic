@@ -1,0 +1,10 @@
+export function errNothingToRepeat(quantifier: readonly number[], width: (source: readonly number[]) => number): readonly number[] {
+    const prefix = 'unsupported regexp syntax: ';
+    const suffix = ' repeats an assertion';
+    const out: number[] = [];
+    for(let i = 0; i < prefix.length; i++) { out.push(prefix.charCodeAt(i)); }
+    const end = width(quantifier);
+    for(let i = 0; i < end; i++) { out.push(quantifier[i] ?? 0); }
+    for(let i = 0; i < suffix.length; i++) { out.push(suffix.charCodeAt(i)); }
+    return out;
+}

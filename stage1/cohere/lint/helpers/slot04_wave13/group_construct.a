@@ -1,0 +1,22 @@
+function continuation(byte: number): boolean { return byte >= 128 && byte <= 191; }
+function firstRuneWidth(bytes: readonly number[], start: number): number {
+    const a=bytes[start] ?? 0; const b=bytes[start+1] ?? 0; const c=bytes[start+2] ?? 0; const d=bytes[start+3] ?? 0;
+    if(a >= 194 && a <= 223 && continuation(b)) { return 2; }
+    if(a >= 224 && a <= 239 && continuation(b) && continuation(c)) {
+        if((a !== 224 || b >= 160) && (a !== 237 || b <= 159)) { return 3; }
+    }
+    if(a >= 240 && a <= 244 && continuation(b) && continuation(c) && continuation(d)) {
+        if((a !== 240 || b >= 144) && (a !== 244 || b <= 143)) { return 4; }
+    }
+    return start < bytes.length ? 1 : 0;
+}
+export function checkGroupConstruct(source: readonly number[]): readonly number[] {
+    if(source[0] !== 40 || source[1] !== 63) { return []; }
+    const first=source[2] ?? 0; const second=source[3] ?? 0;
+    if(first === 58 || first === 61 || first === 33 || (first === 60 && (second === 61 || second === 33))) { return []; }
+    const prefix='unsupported regexp syntax: (?'; const out: number[]=[];
+    for(let i=0;i<prefix.length;i++){out.push(prefix.charCodeAt(i));}
+    const end=2+firstRuneWidth(source,2);
+    for(let i=2;i<end;i++){out.push(source[i] ?? 0);}
+    return out;
+}
