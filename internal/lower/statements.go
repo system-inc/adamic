@@ -107,6 +107,14 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}
+	// Asserted logical targets need the checked read and held receiver/index path.
+	// Dispatch before generic logical-assignment expression lowering can claim them.
+	if expression.Kind == ast.KindBinaryExpression {
+		binary := expression.AsBinaryExpression()
+		if logicalAssignment(binary.OperatorToken.Kind) && nonNullAssignmentTarget(binary.Left) != nil {
+			return l.assignment(expression)
+		}
+	}
 	switch expression.Kind {
 	case ast.KindNonNullExpression:
 		value, err := l.expression(expression)
