@@ -25,3 +25,5 @@ go test ./stage1/cohere/lint/helpers -run '^TestSlot01' -count=1 -v -timeout=20m
 Every delivered helper has a compiling semantic mutant: omit backslash normalization, omit class expressions, or omit the `class` attribute default. Three more mutants share one defaults array across calls and must fail the freshness observations. A sanitizer finding, stderr, panic or compilation failure is not credited as a semantic mismatch. See `SLOT01_REPORT.md` and the retained `evidence/slot01/` logs.
 
 `slot01_readiness.json` lists each consumer and its residual blockers. File context removes the last listed helper for three rules. The other helpers remove dependencies but do not make any rule completely helper-ready alone. No rule is marked implemented.
+
+The next three delivered helpers are documented in [SLOT01_WAVE2_README.md](SLOT01_WAVE2_README.md), with a separate report and readiness increment.
