@@ -99,6 +99,10 @@ def audit(binary, directory):
                 if any(fnmatch.fnmatchcase(original, pattern) for pattern in patterns):
                     ignored += 1
                     continue
+                # The programs the type and lint phases check, nothing else: lockfiles, timings and
+                # reports are written by the tools that measure, and every area adds them unformatted.
+                if not name.endswith(('.ts', '.tsx')):
+                    continue
                 paths.append(name)
             flags = [*flags, *paths]
         checked_directory = ROOT if phase == 'config-format' else directory
@@ -122,7 +126,7 @@ def audit(binary, directory):
         if expected_phase != 'fix' and summary['filesInScope'] == 0:
             raise ValueError(f'empty {phase} scope')
         if phase == 'fix':
-            coverage.append(f'format: {len(paths)} files checked, {ignored} left out by the ignore patterns')
+            coverage.append(f'format: {len(paths)} programs checked, {ignored} files left out by the ignore patterns')
         elif phase == 'config-format':
             coverage.append('config-format: tsconfig.json and CohereSettings.json checked at their real paths')
         else:
