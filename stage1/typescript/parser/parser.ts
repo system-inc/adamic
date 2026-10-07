@@ -64,7 +64,8 @@ export class Parser {
     }
     scannerErrors(start: number): void {
         for(const error of this.scanner.errors.slice(start)) {
-            this.errorAt(error.code, error.start, error.start + error.length, lexicalMessage(error.code));
+            const message = lexicalMessage(error, this.scanner.text);
+            this.errorAt(error.code, error.start, error.start + error.length, message);
         }
     }
     next(): void {

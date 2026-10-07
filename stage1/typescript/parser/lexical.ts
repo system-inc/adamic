@@ -1,12 +1,26 @@
 // Scanner diagnostic text follows the typescript-go English messages.
 import { panic } from 'adamic';
+import type { ScanErrorInterface } from '../scanner/scanner.ts';
 
-export function lexicalMessage(code: number): string {
-    switch(code) {
+export function lexicalMessage(error: ScanErrorInterface, text: string): string {
+    switch(error.code) {
         case 1002:
             return 'Unterminated string literal.';
         case 1010:
             return "'*/' expected.";
+        case 1121: {
+            const source = text.slice(error.start, error.start + error.length);
+            const negative = source[0] !== '0';
+            let digits = negative ? source.slice(1) : source;
+            while(digits.length > 1 && digits[0] === '0') {
+                digits = digits.slice(1);
+            }
+            const maximum = '777777777777777777777';
+            if(digits.length > maximum.length || (digits.length === maximum.length && digits > maximum)) {
+                digits = maximum;
+            }
+            return `Octal literals are not allowed. Use the syntax '${negative ? '-' : ''}0o${digits}'.`;
+        }
         case 1124:
             return 'Digit expected.';
         case 1125:
@@ -39,6 +53,18 @@ export function lexicalMessage(code: number): string {
             return "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?";
         case 1382:
             return "Unexpected token. Did you mean `{'>'}` or `&gt;`?";
+        case 1487: {
+            const digits = text.slice(error.start + 1, error.start + error.length);
+            let value = 0;
+            for(const digit of digits) {
+                value = value * 8 + '01234567'.indexOf(digit);
+            }
+            const hex = '0123456789abcdef';
+            const suggestion = `\\x${hex[Math.floor(value / 16)]}${hex[value % 16]}`;
+            return `Octal escape sequences are not allowed. Use the syntax '${suggestion}'.`;
+        }
+        case 1488:
+            return `Escape sequence '${text.slice(error.start, error.start + error.length)}' is not allowed.`;
         case 1489:
             return 'Decimals with leading zeros are not allowed.';
         case 1490:
