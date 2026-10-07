@@ -1316,7 +1316,7 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			continue
 		}
 		if !isDefault {
-			test, err := l.expression(clause.AsCaseOrDefaultClause().Expression)
+			test, err := l.caseLabel(clause.AsCaseOrDefaultClause().Expression)
 			if err != nil {
 				return nil, err
 			}

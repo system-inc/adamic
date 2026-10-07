@@ -188,3 +188,11 @@ The interaction program docs/verification/landing-batch-3/unknown-optional-boole
 Merge ce5c756d2 was clean. Only eight census/review files changed; the ruled compiler implementation was already present. Linux counts regenerated in 27.830s with no table change. The stock TypeScript 6.0.3 census at exact public source commit 050880ce59e30b356b686bd3144efe24f875ebc8 reproduces 77 files, zero diagnostics, 437 supplied events and 71 reviewed extras: 485 accepted / 23 refused combined. Exact reconciliation reports no missing, duplicate or changed original fields. The missing-review, stale-source-hash and duplicate-supplied-event mutants each failed with its intended evidence-check error. The fresh stock checkout first lacked generated diagnostics and Node/source-map-support types; upstream's generator and isolated pinned dependencies resolved these setup failures. No compiler behavior or Node observation changed.
 
 Checkpoint 8 passed: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./internal/flow ./internal/lower ./internal/native ./stage3/fixtures -count=1 -timeout 30m. Oracle 396.196s, flow 280.411s, lower 130.178s, native 314.094s, stage3 56.682s. Vet passed. Logs: /tmp/landing-batch-3-checkpoint-08.log, /tmp/landing-batch-3-08-{counts,vet,reconciliation,census-mutants}.log. No new compiler failure and no stage3 record edit.
+
+### Item 9 skipped: codex/optional-field-write 514b93610
+
+Presence ranks and existing readiness bytes both start immediately after object value slots. Combining them needs separate allocated storage, aligned dynamic shape descriptors, checked copies preserving readiness, and compatible dynamic shape type metadata for unknown views. This exceeds a small landing repair. The merge was aborted before production tests; frontend resolution work was discarded.
+
+### Item 10: imported-const-case
+
+Kept taste-land truthiness, fallthrough and complete export support; added imported literal labels. Counts regenerated on Linux.
