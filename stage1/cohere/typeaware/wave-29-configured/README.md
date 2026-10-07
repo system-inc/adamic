@@ -1,3 +1,5 @@
+The regexp blocker below is resolved by [the native instruction VM](REGEXP_REPORT.md). This file preserves the earlier observation and validation scope.
+
 Built: configured id-denylist and the id-match AST judgments, flags, spans and messages.
 Commits: baseline 0ab90614; configured implementation f114b002.
 Commands: rule-local check.py PASS on 246 inputs; existing wave gate PASS 72.787s; vet and gofmt exit 0.

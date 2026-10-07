@@ -1,0 +1,106 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+interface RegexInstruction {
+    readonly kind: string;
+    readonly out: number;
+    readonly argument: number;
+    readonly ranges: readonly number[];
+}
+
+// Go supplies a compiled syntax program, never a regex or lint verdict. This
+// native Thompson VM decides MatchString; captures and priority cannot affect
+// a boolean match in RE2, which has no backreferences or lookaround.
+export class RegexpProgram {
+    readonly start: number;
+    readonly instructions: RegexInstruction[] = [];
+    constructor(rules: Rules, pattern: string) {
+        const frames = new Frames(rules.ask(rules.parser.file(), `regexp-program\n${pattern}`));
+        header(frames, 'regexp-program');
+        if(!frames.yes()) {
+            const error = frames.field();
+            frames.end();
+            panic(`invalid id-match pattern: ${error}`);
+        }
+        this.start = frames.natural();
+        const count = frames.natural();
+        if(count === 0 || this.start >= count) { panic('invalid regex program start'); }
+        for(let at = 0; at < count; at++) {
+            const kind = frames.field();
+            const out = frames.natural();
+            const argument = frames.natural();
+            const ranges = frames.ids();
+            if(!['InstAlt', 'InstAltMatch', 'InstCapture', 'InstEmptyWidth', 'InstMatch', 'InstFail',
+                'InstNop', 'InstRune', 'InstRune1', 'InstRuneAny', 'InstRuneAnyNotNL'].includes(kind)) { panic('invalid regex instruction'); }
+            if(out >= count || ((kind === 'InstAlt' || kind === 'InstAltMatch') && argument >= count)) { panic('invalid regex program edge'); }
+            if(ranges.length % 2 !== 0 || (kind === 'InstEmptyWidth' && argument > 63)) { panic('invalid regex instruction data'); }
+            for(let i = 0; i < ranges.length; i += 2) {
+                const low = ranges[i] ?? panic('missing regex range');
+                const high = ranges[i + 1] ?? panic('missing regex range');
+                if(low > high || high > 1114111) { panic('invalid regex rune range'); }
+            }
+            this.instructions.push({ kind, out, argument, ranges });
+        }
+        frames.end();
+    }
+    word(code: number): boolean {
+        return code === 95 || (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
+    }
+    context(before: number, after: number): number {
+        let flags = 0;
+        if(before === -1 || before === 10) { flags |= 1; }
+        if(after === -1 || after === 10) { flags |= 2; }
+        if(before === -1) { flags |= 4; }
+        if(after === -1) { flags |= 8; }
+        flags |= this.word(before) !== this.word(after) ? 16 : 32;
+        return flags;
+    }
+    matches(text: string): boolean {
+        const runes: number[] = [];
+        for(const character of text) {
+            const first = character.charCodeAt(0);
+            if(first >= 55296 && first <= 56319 && character.length === 2) {
+                runes.push(65536 + (first - 55296) * 1024 + character.charCodeAt(1) - 56320);
+            }
+            else { runes.push(first >= 55296 && first <= 57343 ? 65533 : first); }
+        }
+        let active: number[] = [];
+        for(let position = 0; position <= runes.length; position++) {
+            const after = runes[position] ?? -1;
+            const before = runes[position - 1] ?? -1;
+            const context = this.context(before, after);
+            const stack = active.slice();
+            stack.push(this.start);
+            const visited: boolean[] = [];
+            for(let at = 0; at < this.instructions.length; at++) { visited.push(false); }
+            const next: number[] = [];
+            while(stack.length > 0) {
+                const index = stack.pop() ?? panic('missing regex state');
+                if(visited[index] ?? panic('invalid regex state')) { continue; }
+                visited[index] = true;
+                const instruction = this.instructions[index] ?? panic('missing regex instruction');
+                const kind = instruction.kind;
+                if(kind === 'InstMatch') { return true; }
+                if(kind === 'InstAlt' || kind === 'InstAltMatch') {
+                    stack.push(instruction.out); stack.push(instruction.argument);
+                }
+                else if(kind === 'InstCapture' || kind === 'InstNop') { stack.push(instruction.out); }
+                else if(kind === 'InstEmptyWidth') {
+                    if((context & instruction.argument) === instruction.argument) { stack.push(instruction.out); }
+                }
+                else if(after >= 0) {
+                    let matches = kind === 'InstRuneAny' || (kind === 'InstRuneAnyNotNL' && after !== 10);
+                    if(kind === 'InstRune' || kind === 'InstRune1') {
+                        for(let at = 0; at < instruction.ranges.length; at += 2) {
+                            if(after >= (instruction.ranges[at] ?? -1) && after <= (instruction.ranges[at + 1] ?? -1)) { matches = true; break; }
+                        }
+                    }
+                    if(matches) { next.push(instruction.out); }
+                }
+            }
+            active = next;
+        }
+        return false;
+    }
+}

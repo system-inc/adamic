@@ -43,12 +43,9 @@ for(const path of paths) {
         new IdDenylist(linter).run((fields[1] ?? '').split(',').filter((name) => name !== ''));
     }
     else {
-        // Test-only exact implementation of the selected Go pattern. It is not
-        // a replacement for the missing general native regexp engine.
         const pattern = fields[1] ?? '';
-        if(pattern !== '^[^_]+$') { panic('test matcher only supports ^[^_]+$'); }
         const flags = fields[2] ?? '';
-        new IdMatch(linter).runConfigured(pattern, (name) => name.length > 0 && !name.includes('_'), {
+        new IdMatch(linter).run(pattern, {
             properties: flags.includes('p'), classFields: flags.includes('c'),
             onlyDeclarations: flags.includes('o'), ignoreDestructuring: flags.includes('i'),
         });

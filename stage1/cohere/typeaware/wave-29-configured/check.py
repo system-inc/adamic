@@ -73,7 +73,7 @@ for name, filename, before, after in [
         if module==filename:
             assert text.count(before)==1
             text=text.replace(before,after)
-        for dependency in ['rules.ts','diagnostic.ts','symbol_provenance.a']:
+        for dependency in ['rules.ts','diagnostic.ts','symbol_provenance.a','regexp_program.a']:
             text=text.replace("'./"+dependency+"'", "'"+str(source.parent / dependency)+"'")
         (directory / module).write_text(text)
     text=(source / 'runner.a').read_text()

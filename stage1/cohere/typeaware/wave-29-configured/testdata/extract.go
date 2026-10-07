@@ -82,9 +82,7 @@ func main() {
 					return true
 				}
 				row.Pattern, _ = text(call.Args[0])
-				if row.Pattern != "^[^_]+$" {
-					return true
-				}
+
 				if flags, ok := call.Args[1].(*ast.CompositeLit); ok {
 					for _, e := range flags.Elts {
 						kv := e.(*ast.KeyValueExpr)
