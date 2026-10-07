@@ -1,0 +1,1432 @@
+[
+  {
+    "order": 1,
+    "file": "src/compiler/checker.ts",
+    "line": 109,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/checker.ts:109:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 2,
+    "file": "src/compiler/checker.ts",
+    "line": 10,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/checker.ts:10:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 3,
+    "file": "src/compiler/checker.ts",
+    "line": 95,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/checker.ts:95:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 4,
+    "file": "src/compiler/core.ts",
+    "line": 379,
+    "column": 21,
+    "code": "TS2345",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "order": 5,
+    "file": "src/compiler/core.ts",
+    "line": 687,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/core.ts:687:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 6,
+    "file": "src/compiler/corePublic.ts",
+    "line": 23,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/corePublic.ts:23:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 7,
+    "file": "src/compiler/debug.ts",
+    "line": 12,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/debug.ts:12:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 8,
+    "file": "src/compiler/debug.ts",
+    "line": 26,
+    "column": 18,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/debug.ts:26:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 9,
+    "file": "src/compiler/debug.ts",
+    "line": 50,
+    "column": 22,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/debug.ts:50:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 10,
+    "file": "src/compiler/debug.ts",
+    "line": 792,
+    "column": 20,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/debug.ts:792:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 11,
+    "file": "src/compiler/debug.ts",
+    "line": 806,
+    "column": 20,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/debug.ts:806:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 12,
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 12,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/factory/nodeFactory.ts:12:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 13,
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 5037,
+    "column": 9,
+    "code": "TS2412",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/factory/nodeFactory.ts:5037:9: error TS2412: Type 'JSDocTypeExpression | undefined' is not assignable to type 'T[\"typeExpression\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'JSDocTypeExpression | undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n    Type 'undefined' is not assignable to type 'T[\"typeExpression\"]'.\n      'undefined' is assignable to the constraint of type 'T[\"typeExpression\"]', but 'T[\"typeExpression\"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.\n        Type 'undefined' is not assignable to type 'JSDocTypeExpression'."
+  },
+  {
+    "order": 14,
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 757,
+    "column": 9,
+    "code": "TS2412",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/factory/nodeFactory.ts:757:9: error TS2412: Type 'undefined' is not assignable to type 'T[\"localSymbol\"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  'undefined' is assignable to the constraint of type 'T[\"localSymbol\"]', but 'T[\"localSymbol\"]' could be instantiated with a different subtype of constraint 'Symbol | undefined'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "order": 15,
+    "file": "src/compiler/factory/parenthesizerRules.ts",
+    "line": 620,
+    "column": 89,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/factory/parenthesizerRules.ts:620:89: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 16,
+    "file": "src/compiler/factory/utilities.ts",
+    "line": 191,
+    "column": 82,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/factory/utilities.ts:191:82: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 17,
+    "file": "src/compiler/parser.ts",
+    "line": 1197,
+    "column": 21,
+    "code": "TS7029",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:1197:21: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 18,
+    "file": "src/compiler/parser.ts",
+    "line": 11,
+    "column": 12,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:11:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 19,
+    "file": "src/compiler/parser.ts",
+    "line": 20,
+    "column": 12,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:20:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 20,
+    "file": "src/compiler/parser.ts",
+    "line": 2419,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:2419:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 21,
+    "file": "src/compiler/parser.ts",
+    "line": 30,
+    "column": 153,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:30:153: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 22,
+    "file": "src/compiler/parser.ts",
+    "line": 3306,
+    "column": 14,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:3306:14: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 23,
+    "file": "src/compiler/parser.ts",
+    "line": 3502,
+    "column": 37,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:3502:37: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 24,
+    "file": "src/compiler/parser.ts",
+    "line": 3610,
+    "column": 14,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:3610:14: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 25,
+    "file": "src/compiler/parser.ts",
+    "line": 4118,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:4118:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 26,
+    "file": "src/compiler/parser.ts",
+    "line": 4124,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:4124:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 27,
+    "file": "src/compiler/parser.ts",
+    "line": 4273,
+    "column": 14,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:4273:14: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 28,
+    "file": "src/compiler/parser.ts",
+    "line": 4439,
+    "column": 14,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:4439:14: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 29,
+    "file": "src/compiler/parser.ts",
+    "line": 5334,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:5334:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 30,
+    "file": "src/compiler/parser.ts",
+    "line": 5367,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:5367:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 31,
+    "file": "src/compiler/parser.ts",
+    "line": 6125,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:6125:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 32,
+    "file": "src/compiler/parser.ts",
+    "line": 7007,
+    "column": 53,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:7007:53: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 33,
+    "file": "src/compiler/parser.ts",
+    "line": 7268,
+    "column": 14,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:7268:14: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 34,
+    "file": "src/compiler/parser.ts",
+    "line": 7281,
+    "column": 25,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:7281:25: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 35,
+    "file": "src/compiler/parser.ts",
+    "line": 7956,
+    "column": 14,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:7956:14: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 36,
+    "file": "src/compiler/parser.ts",
+    "line": 8269,
+    "column": 16,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8269:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 37,
+    "file": "src/compiler/parser.ts",
+    "line": 8299,
+    "column": 16,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8299:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 38,
+    "file": "src/compiler/parser.ts",
+    "line": 8305,
+    "column": 22,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8305:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 39,
+    "file": "src/compiler/parser.ts",
+    "line": 8360,
+    "column": 20,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8360:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 40,
+    "file": "src/compiler/parser.ts",
+    "line": 8367,
+    "column": 20,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8367:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 41,
+    "file": "src/compiler/parser.ts",
+    "line": 8472,
+    "column": 25,
+    "code": "TS7029",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8472:25: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 42,
+    "file": "src/compiler/parser.ts",
+    "line": 855,
+    "column": 199,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:855:199: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 43,
+    "file": "src/compiler/parser.ts",
+    "line": 8683,
+    "column": 80,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8683:80: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 44,
+    "file": "src/compiler/parser.ts",
+    "line": 8760,
+    "column": 25,
+    "code": "TS7029",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8760:25: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 45,
+    "file": "src/compiler/parser.ts",
+    "line": 8834,
+    "column": 22,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8834:22: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 46,
+    "file": "src/compiler/parser.ts",
+    "line": 8934,
+    "column": 22,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:8934:22: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 47,
+    "file": "src/compiler/parser.ts",
+    "line": 9195,
+    "column": 44,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:9195:44: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 48,
+    "file": "src/compiler/parser.ts",
+    "line": 9425,
+    "column": 11,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:9425:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 49,
+    "file": "src/compiler/parser.ts",
+    "line": 9535,
+    "column": 16,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:9535:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 50,
+    "file": "src/compiler/parser.ts",
+    "line": 963,
+    "column": 11,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/parser.ts:963:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 51,
+    "file": "src/compiler/path.ts",
+    "line": 218,
+    "column": 10,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/path.ts:218:10: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 52,
+    "file": "src/compiler/performanceCore.ts",
+    "line": 37,
+    "column": 37,
+    "code": "TS2591",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/performanceCore.ts:37:37: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+  },
+  {
+    "order": 53,
+    "file": "src/compiler/performanceCore.ts",
+    "line": 37,
+    "column": 84,
+    "code": "TS2591",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/performanceCore.ts:37:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+  },
+  {
+    "order": 54,
+    "file": "src/compiler/scanner.ts",
+    "line": 1426,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:1426:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 55,
+    "file": "src/compiler/scanner.ts",
+    "line": 1436,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:1436:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 56,
+    "file": "src/compiler/scanner.ts",
+    "line": 1559,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:1559:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 57,
+    "file": "src/compiler/scanner.ts",
+    "line": 2006,
+    "column": 17,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:2006:17: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 58,
+    "file": "src/compiler/scanner.ts",
+    "line": 2298,
+    "column": 14,
+    "code": "TS7030",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:2298:14: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 59,
+    "file": "src/compiler/scanner.ts",
+    "line": 2638,
+    "column": 21,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:2638:21: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 60,
+    "file": "src/compiler/scanner.ts",
+    "line": 2711,
+    "column": 21,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:2711:21: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 61,
+    "file": "src/compiler/scanner.ts",
+    "line": 2780,
+    "column": 17,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:2780:17: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 62,
+    "file": "src/compiler/scanner.ts",
+    "line": 3173,
+    "column": 17,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:3173:17: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 63,
+    "file": "src/compiler/scanner.ts",
+    "line": 3353,
+    "column": 17,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:3353:17: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 64,
+    "file": "src/compiler/scanner.ts",
+    "line": 3734,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:3734:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 65,
+    "file": "src/compiler/scanner.ts",
+    "line": 405,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:405:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 66,
+    "file": "src/compiler/scanner.ts",
+    "line": 536,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:536:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 67,
+    "file": "src/compiler/scanner.ts",
+    "line": 730,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:730:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 68,
+    "file": "src/compiler/scanner.ts",
+    "line": 839,
+    "column": 43,
+    "code": "TS7030",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:839:43: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 69,
+    "file": "src/compiler/scanner.ts",
+    "line": 874,
+    "column": 12,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:874:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 70,
+    "file": "src/compiler/scanner.ts",
+    "line": 887,
+    "column": 12,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/scanner.ts:887:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 71,
+    "file": "src/compiler/tracing.ts",
+    "line": 116,
+    "column": 23,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/tracing.ts:116:23: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 72,
+    "file": "src/compiler/tracing.ts",
+    "line": 21,
+    "column": 18,
+    "code": "TS1294",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/tracing.ts:21:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 73,
+    "file": "src/compiler/tracing.ts",
+    "line": 24,
+    "column": 27,
+    "code": "TS2591",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/tracing.ts:24:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+  },
+  {
+    "order": 74,
+    "file": "src/compiler/tracing.ts",
+    "line": 47,
+    "column": 22,
+    "code": "TS2591",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/tracing.ts:47:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+  },
+  {
+    "order": 75,
+    "file": "src/compiler/tracing.ts",
+    "line": 66,
+    "column": 50,
+    "code": "TS2591",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/tracing.ts:66:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+  },
+  {
+    "order": 76,
+    "file": "src/compiler/tracing.ts",
+    "line": 67,
+    "column": 39,
+    "code": "TS2591",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/tracing.ts:67:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+  },
+  {
+    "order": 77,
+    "file": "src/compiler/types.ts",
+    "line": 1346,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:1346:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 78,
+    "file": "src/compiler/types.ts",
+    "line": 2385,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:2385:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 79,
+    "file": "src/compiler/types.ts",
+    "line": 2406,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:2406:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 80,
+    "file": "src/compiler/types.ts",
+    "line": 30,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:30:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 81,
+    "file": "src/compiler/types.ts",
+    "line": 3638,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:3638:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 82,
+    "file": "src/compiler/types.ts",
+    "line": 3954,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:3954:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 83,
+    "file": "src/compiler/types.ts",
+    "line": 4009,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4009:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 84,
+    "file": "src/compiler/types.ts",
+    "line": 4511,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4511:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 85,
+    "file": "src/compiler/types.ts",
+    "line": 4518,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4518:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 86,
+    "file": "src/compiler/types.ts",
+    "line": 4526,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4526:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 87,
+    "file": "src/compiler/types.ts",
+    "line": 4536,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4536:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 88,
+    "file": "src/compiler/types.ts",
+    "line": 4580,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4580:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 89,
+    "file": "src/compiler/types.ts",
+    "line": 4590,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4590:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 90,
+    "file": "src/compiler/types.ts",
+    "line": 4632,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4632:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 91,
+    "file": "src/compiler/types.ts",
+    "line": 4685,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4685:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 92,
+    "file": "src/compiler/types.ts",
+    "line": 4692,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4692:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 93,
+    "file": "src/compiler/types.ts",
+    "line": 4769,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4769:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 94,
+    "file": "src/compiler/types.ts",
+    "line": 4873,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:4873:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 95,
+    "file": "src/compiler/types.ts",
+    "line": 5036,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5036:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 96,
+    "file": "src/compiler/types.ts",
+    "line": 5074,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5074:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 97,
+    "file": "src/compiler/types.ts",
+    "line": 5121,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5121:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 98,
+    "file": "src/compiler/types.ts",
+    "line": 5179,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5179:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 99,
+    "file": "src/compiler/types.ts",
+    "line": 5342,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5342:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 100,
+    "file": "src/compiler/types.ts",
+    "line": 5480,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5480:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 101,
+    "file": "src/compiler/types.ts",
+    "line": 5603,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5603:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 102,
+    "file": "src/compiler/types.ts",
+    "line": 5632,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5632:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 103,
+    "file": "src/compiler/types.ts",
+    "line": 5690,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5690:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 104,
+    "file": "src/compiler/types.ts",
+    "line": 5697,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5697:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 105,
+    "file": "src/compiler/types.ts",
+    "line": 5762,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5762:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 106,
+    "file": "src/compiler/types.ts",
+    "line": 5778,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5778:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 107,
+    "file": "src/compiler/types.ts",
+    "line": 5796,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5796:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 108,
+    "file": "src/compiler/types.ts",
+    "line": 5914,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5914:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 109,
+    "file": "src/compiler/types.ts",
+    "line": 5921,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5921:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 110,
+    "file": "src/compiler/types.ts",
+    "line": 5944,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5944:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 111,
+    "file": "src/compiler/types.ts",
+    "line": 5974,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5974:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 112,
+    "file": "src/compiler/types.ts",
+    "line": 5983,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5983:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 113,
+    "file": "src/compiler/types.ts",
+    "line": 5990,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:5990:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 114,
+    "file": "src/compiler/types.ts",
+    "line": 6189,
+    "column": 13,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6189:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 115,
+    "file": "src/compiler/types.ts",
+    "line": 6218,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6218:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 116,
+    "file": "src/compiler/types.ts",
+    "line": 6228,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6228:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 117,
+    "file": "src/compiler/types.ts",
+    "line": 6234,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6234:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 118,
+    "file": "src/compiler/types.ts",
+    "line": 6248,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6248:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 119,
+    "file": "src/compiler/types.ts",
+    "line": 6267,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6267:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 120,
+    "file": "src/compiler/types.ts",
+    "line": 6289,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6289:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 121,
+    "file": "src/compiler/types.ts",
+    "line": 6307,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6307:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 122,
+    "file": "src/compiler/types.ts",
+    "line": 6421,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6421:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 123,
+    "file": "src/compiler/types.ts",
+    "line": 6620,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6620:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 124,
+    "file": "src/compiler/types.ts",
+    "line": 6676,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6676:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 125,
+    "file": "src/compiler/types.ts",
+    "line": 6817,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6817:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 126,
+    "file": "src/compiler/types.ts",
+    "line": 6825,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6825:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 127,
+    "file": "src/compiler/types.ts",
+    "line": 6859,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6859:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 128,
+    "file": "src/compiler/types.ts",
+    "line": 6996,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:6996:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 129,
+    "file": "src/compiler/types.ts",
+    "line": 7054,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:7054:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 130,
+    "file": "src/compiler/types.ts",
+    "line": 740,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:740:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 131,
+    "file": "src/compiler/types.ts",
+    "line": 8092,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:8092:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 132,
+    "file": "src/compiler/types.ts",
+    "line": 809,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:809:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 133,
+    "file": "src/compiler/types.ts",
+    "line": 8180,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:8180:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 134,
+    "file": "src/compiler/types.ts",
+    "line": 865,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/types.ts:865:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 135,
+    "file": "src/compiler/utilities.ts",
+    "line": 1540,
+    "column": 13,
+    "code": "TS7029",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/utilities.ts:1540:13: error TS7029: Fallthrough case in switch."
+  },
+  {
+    "order": 136,
+    "file": "src/compiler/utilities.ts",
+    "line": 626,
+    "column": 84,
+    "code": "TS7030",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/utilities.ts:626:84: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 137,
+    "file": "src/compiler/utilities.ts",
+    "line": 801,
+    "column": 58,
+    "code": "TS7030",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/utilities.ts:801:58: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 138,
+    "file": "src/compiler/utilities.ts",
+    "line": 894,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/utilities.ts:894:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 139,
+    "file": "src/compiler/utilities.ts",
+    "line": 966,
+    "column": 19,
+    "code": "TS1294",
+    "scannerShared": true,
+    "temporary60to69Eligible": false,
+    "diagnostic": "src/compiler/utilities.ts:966:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 140,
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 114,
+    "column": 84,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/utilitiesPublic.ts:114:84: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 141,
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 225,
+    "column": 46,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/utilitiesPublic.ts:225:46: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 142,
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 245,
+    "column": 51,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/utilitiesPublic.ts:245:51: error TS7030: Not all code paths return a value."
+  },
+  {
+    "order": 143,
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 68,
+    "column": 95,
+    "code": "TS7030",
+    "scannerShared": false,
+    "temporary60to69Eligible": true,
+    "diagnostic": "src/compiler/utilitiesPublic.ts:68:95: error TS7030: Not all code paths return a value."
+  }
+]

@@ -1,3 +1,126 @@
+# Fixed parser slice: ordered checker blockers, October 7
+
+Shared tool 188de02 is merged. The raw slice now runs on Node and exactly
+matches the full-tree 35,456,964-byte oracle, SHA256 2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+Both actual mutants are caught: one Identifier end increment changes exactly
+one dump record; removing Parser.initializeState causes ReferenceError and
+a failing full-dump comparison, with the control passing beforehand.
+SLICE.md and evidence/fixed-slice-equivalence.json record these checks.
+
+## Input and slice ownership
+
+Source is the unchanged fully adapted area/stage3 7ad8666 tree used in the
+previous run. The shared fix was merged, never rebased. No new adaptation
+was applied. createSourceFile itself has 26 code files, 1,990 declarations
+and 41,657 code-span lines (namespace wrapper pieces included). The driver
+adds one function in program.ts: 27 code files, 1,991 declarations, 41,683
+code-span lines. There are 79 evaluation modules, including empty scaffolds;
+those modules do not mean the whole compiler's code is retained.
+
+The same-tree scanner slice has eight code files and 89 declarations.
+The parser driver has **19 code files outside the scanner slice**; the entry
+alone has 18. evidence/fixed-slice-ownership.json lists all file sets.
+Temporary 60-69 edits may touch only those exclusive code files.
+
+## Stage0: baseline checker gate
+
+The actual unmodified stage0 CLI build exits 1 with **143 diagnostics**, all
+in reached-code slice files; no native binary is produced. The parser-entry
+probe reports the exact same diagnostics. In first-code-occurrence order:
+
+| Code | Count | Intended work |
+| --- | ---: | --- |
+| TS1294 | 85 | enums and namespaces feature branches |
+| TS2345 | 1 | generic indexed read in scanner-shared core.ts |
+| TS7030 | 26 | fallthrough-and-implicit-returns feature |
+| TS7029 | 23 | fallthrough-and-implicit-returns feature |
+| TS2412 | 2 | generic field writes in factory/nodeFactory.ts |
+| TS2591 | 6 | official Node declarations and remaining host types |
+
+The table groups codes; evidence/fixed-slice-baseline-ordered-checker.json
+preserves every diagnostic and message chain in the exact returned order.
+Only the absolute scratch-root prefix is removed. The first is
+checker.ts:109:19 TS1294; :10:19 follows because the loader lexicographically
+sorts complete formatted diagnostics. This is checker order, not execution
+order. Strict, NoUncheckedIndexedAccess, ExactOptionalPropertyTypes,
+NoImplicitReturns and NoFallthroughCasesInSwitch all remain enabled here.
+
+## Candidate feature closure, scratch only
+
+A never-pushed scratch branch merged taste-not-soundness, flag-enums,
+namespaces-tsc, nested-functions, fallthrough-and-implicit-returns and
+host-node-types-land in that order. Exact SHAs and source patch/hash are
+saved in evidence/fixed-slice-stage0-summary.json and
+evidence/fixed-feature-integration.patch.gz. Compiler changes never entered
+the deliverable branch. Conflicts were resolved only in that scratch copy.
+
+The scratch probe builds after removing a stale pre-feature enumElement
+call; initial failed build and merge logs are retained. No full feature gate
+or native compiler integration gate was run; these resolutions are not
+proposed compiler patches or evidence of runtime correctness. In particular
+this probe never calls lowering, because all measured sources fail checking.
+
+The feature compiler removes all 85 TS1294 and 49 return/fallthrough
+diagnostics, leaving **nine**. Return/fallthrough options change only by
+merging their actual feature branch, not by a manual loader relaxation.
+Strict indexed reads and exact optional writes stay enabled.
+
+The host feature activates its locked official @types/node 25.3.3 on static
+node:* imports. The gathered runtime uses require without a static host
+import. A separate scratch driver prepends only
+import type {} from 'node:fs'; this selects that feature's official declarations.
+It changes no gathered statement, option or runtime import: Node still emits
+the exact full oracle dump. With this control, the gate has **five** findings:
+
+| Returned order | Slice location | Exact code and leading message | Ownership |
+| --- | --- | --- | --- |
+| 1 | core.ts:379:21 | TS2345: Argument of type T or undefined is not assignable to parameter of type T | Scanner-shared; outside parser temporary territory |
+| 2 | factory/nodeFactory.ts:5037:9 | TS2412: JSDocTypeExpression or undefined is not assignable to T["typeExpression"] | Parser-exclusive |
+| 3 | factory/nodeFactory.ts:757:9 | TS2412: undefined is not assignable to T["localSymbol"] | Parser-exclusive |
+| 4 | tracing.ts:321:35 | TS2769: No overload matches this call; string or undefined passed where string is required | Parser-exclusive |
+| 5 | tracing.ts:340:38 | TS2345: string or undefined is not assignable to string or ArrayBufferView | Parser-exclusive |
+
+Those table messages are summaries; exact text and full chains are in
+evidence/fixed-slice-features-host-ordered-checker.json. The nine-finding
+profile is separately retained in fixed-slice-features-ordered-checker.json.
+Both lists contain slice-file diagnostics only.
+
+## Lowering order and temporary-adaptation boundary
+
+**Lowering remains unreached.** load.Load returns CheckError in every measured
+profile, so the probe does not invoke lower.Lower. I did not lower rejected
+source, suppress diagnostics, substitute stubs, or claim an ordered
+Refused/NotYet list behind that gate. The next required work is a faithful
+closure of those five source contracts before real lowering can be measured.
+
+The first remaining blocker is in scanner-shared core.ts:addRange. Its
+from[i] read is guarded and then repeated; the generic checker still sees
+T or undefined at to.push. It is not eligible for a parser-owned 60-69 edit.
+The four exclusive sites are candidates for separately proved source/type
+adaptations, not already validated repairs. No 60-69 adaptation is planned
+or implemented here. This complete observed list is pushed before any such
+edit; an exact README plan must precede an adapter, and its baseline must pass.
+
+No native parser binary, native execution or baseline suite result is claimed.
+The shared source-span/evaluation audit still passes after all controls.
+No source file inside the delivered slice was edited.
+
+## Reproduction and validation
+
+```sh
+source /workspace/adamic-tools/env.sh
+go build -buildvcs=false -o /tmp/parser-fixed-adamic ./cmd/adamic > /tmp/parser-fixed-stage0-build.log 2>&1
+/tmp/parser-fixed-adamic build /tmp/parser-fixed-driver-slice/parser-proof-main.a -o /tmp/parser-fixed-native > /tmp/parser-fixed-cli.log 2>&1
+```
+
+CLI exit 1, 143 diagnostics; probe outcomes Checker. All stdout/stderr/test
+output went to files. run.sh bash syntax, changed-report whitespace checks,
+full Node equality, both actual mutants and the final shared byte/import
+audit were run. Full repository/feature gates and the upstream baseline
+suite were not rerun for these driver/tool/evidence changes.
+
+# Previous tool reports, superseded by the fixed-tool measurements above
+
 # Parser slice blockers, October 7
 
 The requested raw createSourceFile slice was generated from area/stage3
