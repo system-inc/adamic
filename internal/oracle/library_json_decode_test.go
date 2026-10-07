@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"context"
+	"errors"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"os"
@@ -49,8 +50,14 @@ func TestJSONDecode(t *testing.T) {
 func TestJSONDecodeRefusals(t *testing.T) {
 	cases := []struct{ name, source, want string }{
 		{"missing", "decodeJson('1');", "name the type: decodeJson<YourType>(text)"},
-		{"null_prerequisite", "decodeJson<null>('null');", "nullable value representation"},
-		{"nullable_prerequisite", "decodeJson<number|null>('null');", "JSON data"},
+		{"null_prerequisite", "decodeJson<null>('null');", "containing null"},
+		{"nullable_prerequisite", "decodeJson<number|null>('null');", "containing null"},
+		{"null_field", "decodeJson<{readonly value:null}>('{}');", "containing null"},
+		{"nullable_field", "decodeJson<{readonly value?:string|null}>('{}');", "containing null"},
+		{"nested_nullable", "interface Branch { readonly children:readonly Branch[]; readonly value:number|null; } decodeJson<readonly Branch[]>('[]');", "containing null"},
+		{"nullable_tuple", "decodeJson<readonly [string,null]>('[]');", "containing null"},
+		{"nullable_array", "decodeJson<readonly (number|null)[]>('[]');", "containing null"},
+		{"nullable_member", "decodeJson<{readonly kind:'A';readonly value:number|null}|{readonly kind:'B';readonly value:string}>('{}');", "containing null"},
 		{"undefined", "decodeJson<undefined>('null');", "JSON data"},
 		{"function", "decodeJson<() => number>('{}');", "JSON data"},
 		{"class", "class Thing { readonly n = 1; } decodeJson<Thing>('{}');", "JSON data"},
@@ -72,6 +79,13 @@ func TestJSONDecodeRefusals(t *testing.T) {
 				t.Fatal(err)
 			}
 			_, err = lower.Lower(context.Background(), p)
+			if c.want == "containing null" {
+				var gap *lower.NotYet
+				const fix = "nullable JSON fields come with the representation of T | null; decode the field as a discriminated union or leave it out"
+				if !errors.As(err, &gap) || !strings.Contains(gap.What, "decodeJson<") || !strings.Contains(gap.Where, path+":2:") || !strings.HasSuffix(err.Error(), "\nfix: "+fix) {
+					t.Fatalf("wanted NotYet with what, where and exact fix line, got %v", err)
+				}
+			}
 			if err == nil || !strings.Contains(err.Error(), c.want) {
 				t.Fatalf("want %q, got %v", c.want, err)
 			}

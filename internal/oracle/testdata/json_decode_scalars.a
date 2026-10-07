@@ -6,7 +6,10 @@ for (const text of ['0.1', '-0', '1e400', '123456789012345678901234567890', '5e-
 }
 for (const text of ['"hello"', '"\\uD800"', '"\\uDC00"', '"\\uD83C\\uDF0D"', '"🌍"', '"\\\"\\\\\\/\\b\\f\\n\\r\\t\\u0000"']) {
  const result = decodeJson<string>(text);
- if (result.kind === 'Ok') console.log(`${JSON.stringify(result.value) ?? 'undefined'} ${result.value.length} ${result.value.charCodeAt(0)}`);
+ if (result.kind === 'Ok') {
+  console.log(`length ${result.value.length}`);
+  for (let index = 0; index < result.value.length; index++) console.log(`${result.value.charCodeAt(index)}`);
+ }
  else console.log(result.message);
 }
 for (const text of ['true', 'false', '0', 'null']) {
