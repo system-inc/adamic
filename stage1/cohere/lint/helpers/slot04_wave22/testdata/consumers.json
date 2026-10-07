@@ -1,0 +1,1487 @@
+[
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"ahralia-splash flex items-center\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"flex group\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"flex peer group\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"focus-visible:ring-1 focus-visible:ring-(--color-content-informative) focus-visible:ring-offset-1 focus-visible:outline-none\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"gap-2 items-center flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"group flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"group peer flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"hover:px-8 px-4\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"items-center flex ahralia-splash\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"items-center flex flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"items-center flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"peer group flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"pointer-events-none hidden md:absolute md:inset-x-0 md:flex md:w-full\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"px-4 hover:px-8\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div className=\"truncate font-mono text-[10px]\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const element = <div title=\"items-center flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const merged = mergeClassNames('items-center flex');\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Component.tsx",
+    "source": "const value = someOtherFunction('items-center flex');\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-consistent-class-order:Styles.ts",
+    "source": "const buttonClassName = 'items-center flex';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"!pt-2 !pb-2\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"!pt-2 pb-2\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"-mt-2 -mb-2\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"-mt-2 mb-2\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"[&_button]:border-s-0 [&_button]:border-e-0\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"h-auto w-auto\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"h-screen w-screen\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"hover:ps-4 hover:pe-4\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ml-1 mr-1 mt-1 mb-1\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4 hover:pe-4\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4 pe-4 mt-2 mb-2\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4 pe-4\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4 pe-8\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-4\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"ps-[2px] pe-[2px]\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"pt-2 pb-2\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"pt-2! pb-2!\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4 py-4 p-4\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"top-0 right-0 bottom-0 left-0\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/enforce-shorthand-classes:Component.tsx",
+    "source": "const element = <div className=\"w-4 h-4\" />;",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"border border-dashed\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"divide-neutral-200 border-neutral-200\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex block grid\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex block\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex hover:block\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"hover:flex hover:block\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"mt-2 mb-2\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"p-4 px-8\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4 px-8\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"ring-1 ring-inset\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"shadow-lg ring-1\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"text-left text-right\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"w-8 h-8\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div className=\"w-full container\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const element = <div title=\"flex block\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('flex block');\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Component.tsx",
+    "source": "const value = someOtherFunction('flex block');\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-conflicting-classes:Styles.ts",
+    "source": "const buttonClassName = 'px-4 px-8';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"[font:inherit]\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"ahralia-splash\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"container\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"flex items-center gap-2\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"flx grd\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"flx items-center\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"from-black/70 to-transparent\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"group peer\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"group/item\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"hover:px-4 sm:hover:flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"hover:synthetic-static\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"not-a-real-class-xyz\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"notavariant:flex\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"px-4!\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"px4\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"synthetic-fn-small synthetic-fn-large\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"synthetic-static flx\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"synthetic-static\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"w-[13px] h-[calc(100%-3px)]\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div className=\"wfull textcenter\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const element = <div title=\"flx\" />;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const merged = mergeClassNames('flx');\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Component.tsx",
+    "source": "const value = someOtherFunction('flx');\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "better-tailwindcss/no-unknown-classes:Styles.ts",
+    "source": "const buttonClassName = 'not-a-real-class-xyz';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import 'ReactCompilerTest';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import ReactCompilerTest from 'ReactCompilerTest';\n\nfunction Component() {\n  return ReactCompilerTest.useHookNotTypedAsHook();\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import anything from 'ReactCompilerTest';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import anything from 'useConfiguredWithoutDefault';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import foo from 'useDefaultExportNotTypedAsHook';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import foo from 'useDefaultExportNotTypedAsHook';\n\nfunction Component() {\n  return <div>{foo()}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {notAhookTypedAsHook as useThing} from 'ReactCompilerTest';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {notAhookTypedAsHook} from 'ReactCompilerTest';\n\nfunction Component() {\n  return <div>{notAhookTypedAsHook()}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {somethingElse} from 'ReactCompilerTest';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useAnything} from 'some-other-module';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useHookNotTypedAsHook as safe} from 'ReactCompilerTest';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useHookNotTypedAsHook} from 'React';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useHookNotTypedAsHook} from 'ReactCompilerTest';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useHookNotTypedAsHook} from 'ReactCompilerTest';\n\nfunction Component() {\n  return useHookNotTypedAsHook();\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useHookNotTypedAsHook} from 'react';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useHookNotTypedAsHook} from 'react-dom';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useHookNotTypedAsHook} from ReactCompilerTest;\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useNotDeclaredAnywhere} from 'ReactCompilerTest';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/config:Config.tsx",
+    "source": "import {useVirtualizer} from '@tanstack/react-virtual';\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "class Foo {\n  Component() {\n    let el;\n    try {\n      el = <div />;\n    } catch {\n      return null;\n    }\n    return el;\n  }\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "class K {\n  Component = () => {\n    let el;\n    try {\n      el = <div />;\n    } catch {\n      el = null;\n    }\n    log(el);\n    return el;\n  };\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "class K {\n  static {\n    const Component = () => {\n    let el;\n    try {\n      el = <div />;\n    } catch {\n      el = null;\n    }\n    log(el);\n    return el;\n    };\n  }\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "const Component = () => class {\n  static {\n    try {\n      foo(<div />);\n    } catch {\n      bar();\n    }\n  }\n};\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "const Component = (props) => {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n};\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "const Component = function (props) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n};\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "const K = class {\n  Component = () => {\n    let el;\n    try {\n      el = <div />;\n    } catch {\n      el = null;\n    }\n    log(el);\n    return el;\n  };\n};\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "const K = class {\n  static {\n    const Component = () => {\n    let el;\n    try {\n      el = <div />;\n    } catch {\n      el = null;\n    }\n    log(el);\n    return el;\n    };\n  }\n};\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "const o = {\n  Component() {\n    let el;\n    try {\n      el = <div />;\n    } catch {\n      return null;\n    }\n    return el;\n  },\n};\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "const widget = (props) => {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n};\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "export default function (props) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "export default function Component(props) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function $Dollar() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let a, b;\n  try {\n    a = <div />;\n    b = <span />;\n  } catch {\n    return null;\n  }\n  return [a, b];\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    class K {\n      render() {\n        return <div />;\n      }\n    }\n    el = new K().render();\n  } catch {\n    el = null;\n  }\n  log(el);\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    const o = {\n      get x() {\n        return <div />;\n      },\n    };\n    el = o.x;\n  } catch {\n    el = null;\n  }\n  log(el);\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    const o = {\n      render() {\n        return <div />;\n      },\n    };\n    el = o.render();\n  } catch {\n    el = null;\n  }\n  log(el);\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <>hi</>;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  if (x) return {};\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  log(el);\n  return new X();\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  log(el);\n  return {};\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  log(el);\n  return;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  log(el);\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  return 1;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  return log(el, function () {\n    return {};\n  });\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  return wrap(el, () => {\n    return {};\n  });\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  } finally {\n    log();\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = <div><span /></div>;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = x && <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    el = x ? <div /> : <span />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    foo();\n  } catch {\n    bar();\n  } finally {\n    el = <div />;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    foo();\n  } catch {\n    el = <div />;\n  } finally {\n    log();\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    foo();\n  } catch {\n    try {\n      el = <div />;\n    } catch {\n      el = null;\n    }\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    for (const x of xs) {\n      el = <div />;\n    }\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    if (x) {\n      el = <div />;\n    }\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    if (x) {\n      el = <div />;\n    }\n  } finally {\n    log();\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    switch (x) {\n      case 1:\n        el = <div />;\n    }\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  let el;\n  try {\n    try {\n      try {\n        foo();\n      } catch {\n        el = <div />;\n      }\n    } catch {\n      bar();\n    }\n  } catch {\n    baz();\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  try {\n    const f = () => <div />;\n    return f();\n  } catch {\n    return null;\n  }\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  try {\n    const f = function () {\n      return <div />;\n    };\n    return f();\n  } catch {\n    return null;\n  }\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  try {\n    doSomething();\n  } catch {\n    return <ErrorMessage />;\n  }\n  return null;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  try {\n    foo();\n  } catch {\n    bar();\n  }\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  try {\n    foo(<div />);\n  } catch {\n    return null;\n  }\n  return <span />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  try {\n    function Inner() {\n      return <div />;\n    }\n    return <Inner />;\n  } catch {\n    return null;\n  }\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  try {\n    return <div />;\n  } catch {\n    return null;\n  }\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component() {\n  try {\n    return items.map((i) => <li key={i} />);\n  } catch {\n    return null;\n  }\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(...props) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(a, b, c) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(props) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(props) {\n  let el;\n  try {\n    el = <div />;\n  } finally {\n    console.log(el);\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(props, forwardedRef) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  log(el);\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(props, myref) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  log(el);\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(props, other) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(props, prefix) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  log(el);\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(props, ref) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(props, ref, third) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  log(el);\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component(props, theRefValue) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    el = null;\n  }\n  log(el);\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Component({a, b}) {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function Outer() {\n  function Component() {\n    let el;\n    try {\n      el = <div />;\n    } catch {\n      return null;\n    }\n    return el;\n  }\n  return <Component />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function _Private() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function useThing() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function usething() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "function widget() {\n  let el;\n  try {\n    el = <div />;\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "import {identity} from 'shared-runtime';\n\nfunction Component(props) {\n  let el;\n  try {\n    let value;\n    try {\n      value = identity(props.foo);\n    } catch {\n      el = <div value={value} />;\n    }\n  } catch {\n    return null;\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "import {identity} from 'shared-runtime';\n\nfunction Component(props) {\n  let el;\n  try {\n    let value;\n    try {\n      value = identity(props.foo);\n    } catch {\n      el = <div value={value} />;\n    }\n  } finally {\n    console.log(el);\n  }\n  return el;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "let el;\ntry {\n  el = <div />;\n} catch {\n  el = null;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "try {\n  function Component() {\n    let el = <div />;\n    return el;\n  }\n} catch {\n  log();\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/error-boundaries:component.tsx",
+    "source": "try {\n  function Component() {\n    return <div />;\n  }\n} catch {\n  log();\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "\nfunction Component(props) {\n  return <div>{props.text}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "\nimport {useReactTable} from '@tanstack/react-table';\nfunction Component({columns, data}) {\n  const table = useReactTable({columns, data});\n  return <div>{table.getRowModel().rows.length}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import '@tanstack/react-table';\n\nfunction Component() {\n  return <div>hi</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import * as table from '@tanstack/react-table';\n\nfunction Component() {\n  const t = table.useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import table from '@tanstack/react-table';\n\nfunction Component() {\n  const t = table();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {knownIncompatible} from 'ReactCompilerKnownIncompatibleTest';\n\nfunction Component() {\n  const data = knownIncompatible();\n  return <div>Error</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {somethingElse} from '@tanstack/react-table';\n\nfunction Component() {\n  const x = somethingElse();\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useAnything} from 'some-other-module';\n\nfunction Component() {\n  const x = useAnything();\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n\nfunction Component() {\n  const a = useForm();\n  const b = a;\n  return <div>{b.watch()}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n\nfunction Component() {\n  const form = useForm();\n  return <div>{form.watch()}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n\nfunction Component() {\n  const form = useForm();\n  return <div>{form.watch}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n\nfunction Component() {\n  const form = useForm();\n  return <div>{form}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n\nfunction Component() {\n  const {register} = useForm();\n  return <div>{register()}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n\nfunction Component() {\n  const {watch: w} = useForm();\n  return <div>{w()}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n\nfunction Component() {\n  const {watch} = useForm();\n  return <div>hi</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n\nfunction Component() {\n  const {watch} = useForm();\n  return <div>{watch()}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useForm} from 'react-hook-form';\n\nfunction Component() {\n  return <div>{useForm().watch()}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useKnownIncompatibleIndirect} from 'ReactCompilerKnownIncompatibleTest';\n\nfunction Component() {\n  const {incompatible} = useKnownIncompatibleIndirect();\n  return <div>{incompatible()}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useKnownIncompatible} from 'ReactCompilerKnownIncompatibleTest';\n\nfunction Component() {\n  const data = useKnownIncompatible();\n  return <div>Error</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable as renamed} from '@tanstack/react-table';\n\nfunction Component() {\n  const table = renamed();\n  return <div>{table}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@TanStack/React-Table';\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nclass Widget {\n  render() {\n    const t = useReactTable();\n    return <div>{t}</div>;\n  }\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nconst local = useReactTable;\n\nfunction Component() {\n  const t = local();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nconst table = useReactTable();\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nfunction Component() {\n  const a = useReactTable();\n  const b = useReactTable();\n  return <div>{a}{b}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nfunction Component() {\n  const table = useReactTable();\n  return <div>{table}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nfunction Component() {\n  const table = useReactTable({columns: 1});\n  return <div>{table}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nfunction Component() {\n  return <div onClick={useReactTable}>hi</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nfunction Component() {\n  return <div>hi</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nfunction First() {\n  const a = useReactTable();\n  return <div>{a}</div>;\n}\n\nfunction Second() {\n  const b = useReactTable();\n  return <div>{b}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nfunction helper() {\n  return useReactTable();\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\n\nfunction useThing() {\n  return useReactTable();\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table';\nimport {useVirtualizer} from '@tanstack/react-virtual';\n\nfunction Component() {\n  const a = useReactTable();\n  const b = useVirtualizer();\n  return <div>{a}{b}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from '@tanstack/react-table/core';\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from 'some-other-module';\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from ('@tanstack/react-table');\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from 123;\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from `@tanstack/${x}`;\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from `@tanstack/react-table`;\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from a.b;\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useReactTable} from tanstack;\n\nfunction Component() {\n  const t = useReactTable();\n  return <div>{t}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/incompatible-library:IncompatibleLibrary.tsx",
+    "source": "import {useVirtualizer} from '@tanstack/react-virtual';\n\nfunction Component() {\n  const rows = useVirtualizer();\n  return <div>{rows}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "\nimport {useMemo} from 'react';\nfunction Component() {\n  const value = useMemo(() => {}, []);\n  return <div>{value}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "\nimport {useMemo} from 'react';\nfunction Component({a}) {\n  const x = useMemo(() => a + 1, [a]);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "class C {\n  Component() {\n    const x = useMemo(() => { foo(); }, []);\n    return <div>{x}</div>;\n  }\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "const Component = () => {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n};\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "const useMemo = (f) => f();\nfunction Component() {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "const x = useMemo(() => { foo(); }, []);\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  (useMemo(() => { return 1; }, []));\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  (useMemo(() => { return 1; }, []), 0);\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  (useMemo)(() => { return 1; }, []);\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const R = React;\n  const x = R.useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const React = {useMemo: (f) => f()};\n  const x = React.useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const a = useMemo(() => { foo(); }, []);\n  const b = useMemo(() => { bar(); }, []);\n  return <div>{a}{b}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const cb = () => { foo(); };\n  const x = useMemo(cb, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const m = useMemo;\n  const x = m(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const useMemo = (f) => f;\n  useMemo(() => { foo(); }, []);\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = A.React.useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = React.memo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = React.useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = React?.useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = React['useMemo'](() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useCallback(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo((() => { foo(); }), []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => 1, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { const h = () => { return 1; }; h(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { foo(); });\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { foo(); }, []);\n  return x;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { foo(); }, []);\n  return {x};\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { foo(); }, []);\n  useMemo(() => { return 1; }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { function h() { return 1; } h(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { return 1; }, []);\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { return 1; }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { return; }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(() => { throw new Error('x'); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo((a) => { foo(a); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo();\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(1, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(async () => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(function () { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(function compute() { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo(function* () { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  const x = useMemo?.(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  foo(useMemo(() => { return 1; }, []));\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  function useMemo(f) { return f(); }\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  if (true) {\n    const useMemo = (f) => f();\n    useMemo(() => { foo(); }, []);\n  }\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  let y;\n  y = (0, useMemo(() => { return 1; }, []));\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  return useMemo(() => { return 1; }, []);\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  useMemo(() => { return 1; }, []).toString();\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  useMemo(() => { return 1; }, []);\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  useMemo(() => { return 1; }, []);\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  useMemo(() => { return 1; }, []);\n  useMemo(() => { return 2; }, []);\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  void useMemo(() => { return 1; }, []);\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  {\n    function useMemo(f) { return f(); }\n    useMemo(() => { foo(); }, []);\n  }\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component() {\n  { const useMemo = (f) => f(); }\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component(...props) {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component(a, b, c) {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component(props, other) {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component(props, ref) {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component({args}) {\n  const x = useMemo(...args);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component({a}) {\n  const x = useMemo(() => { if (a) { return 1; } }, [a]);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component({a}) {\n  if (a) { useMemo(() => { return 1; }, []); }\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component({items}) {\n  for (const i of items) {\n    const useMemo = (f) => f();\n    useMemo(() => { foo(); }, []);\n  }\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component({items}) {\n  for (const i of items) { useMemo(() => { return i; }, [i]); }\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function Component({useMemo}) {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function _Private() {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function outer() {\n  const useMemo = (f) => f();\n  function Component() {\n    const x = useMemo(() => { foo(); }, []);\n    return <div>{x}</div>;\n  }\n  return Component;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function outer() {\n  function Component() {\n    const x = useMemo(() => { foo(); }, []);\n    return <div>{x}</div>;\n  }\n  return Component;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function use() {\n  const x = useMemo(() => { foo(); }, []);\n  return x;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function use2Things() {\n  const x = useMemo(() => { foo(); }, []);\n  return x;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function useThing() {\n  const x = useMemo(() => { foo(); }, []);\n  return x;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function usething() {\n  const x = useMemo(() => { foo(); }, []);\n  return x;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function widget() {\n  const x = useMemo(() => { foo(); }, []);\n  return x;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "function \u00c9omponent() {\n  const x = useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "import * as React from 'react';\nfunction Component() {\n  React.useMemo(() => { return 1; }, []);\n  return <div />;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "import * as React from 'react';\nfunction Component() {\n  const x = React.useCallback(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "import * as React from 'react';\nfunction Component() {\n  const x = React.useMemo(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  },
+  {
+    "name": "react-hooks/void-use-memo:component.tsx",
+    "source": "import {useMemo as useM} from 'react';\nfunction Component() {\n  const x = useM(() => { foo(); }, []);\n  return <div>{x}</div>;\n}\n",
+    "OptionRaw": "{}"
+  }
+]

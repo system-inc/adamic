@@ -1,0 +1,76 @@
+=== RUN   TestActualGoComparisons
+=== RUN   TestActualGoComparisons/witnesses.json
+    helpers_test.go:127: Node source matches Go: 1186 output lines
+    helpers_test.go:127: sanitized native matches Go: 1186 output lines
+    helpers_test.go:127: emitted JavaScript matches Go: 1186 output lines
+=== RUN   TestActualGoComparisons/calls.json
+    helpers_test.go:127: Node source matches Go: 10 output lines
+    helpers_test.go:127: sanitized native matches Go: 10 output lines
+    helpers_test.go:127: emitted JavaScript matches Go: 10 output lines
+--- PASS: TestActualGoComparisons (7.31s)
+    --- PASS: TestActualGoComparisons/witnesses.json (2.43s)
+    --- PASS: TestActualGoComparisons/calls.json (1.41s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/compile.acompileCandidate(candidate,0,
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(!state.usedValue_||_!state.resolvedValue)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(state.usedModifier_&&_!state.resolvedModifier_&&_candidate.modifierPresent)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_state.resolvedModifier)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(candidate.modifierPresent_&&_!state.resolvedRatio_&&_!state.resolvedModifier)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(removals!==1)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_removals!==2)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aif(!object.valid_||_!object.objectPresent)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aif(object.keys.length===0)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aconst_keys=sortedKeys(object.keys);
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+--- PASS: TestCompilingMutants (24.94s)
+    --- PASS: TestCompilingMutants/compile.acompileCandidate(candidate,0, (2.34s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(!state.usedValue_||_!state.resolvedValue) (2.07s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(state.usedModifier_&&_!state.resolvedModifier_&&_candidate.modifierPresent) (2.01s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_state.resolvedModifier) (2.14s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(candidate.modifierPresent_&&_!state.resolvedRatio_&&_!state.resolvedModifier) (2.15s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(removals!==1) (2.25s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_removals!==2) (2.00s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aif(!object.valid_||_!object.objectPresent) (2.59s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aif(object.keys.length===0) (2.44s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aconst_keys=sortedKeys(object.keys); (2.21s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:256: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:256: consumer omission caught: react-hooks/config
+    helpers_test.go:256: consumer omission caught: react-hooks/error-boundaries
+    helpers_test.go:256: consumer omission caught: react-hooks/incompatible-library
+    helpers_test.go:256: consumer omission caught: react-hooks/void-use-memo
+    helpers_test.go:256: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:256: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:256: consumer omission caught: better-tailwindcss/no-conflicting-classes
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave22	32.286s

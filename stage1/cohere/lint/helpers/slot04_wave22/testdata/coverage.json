@@ -1,0 +1,27 @@
+{
+  "cohere": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "base_main": "c7991b900362796aefd111474e65eb5398e91953",
+  "base_area": "b84a9d9314b65d3d0261ee017e233287b4f071da",
+  "claim": "0e4e3f70d0a395190f3e9c689e589d2f17538540",
+  "controls": 237,
+  "fixtures": 297,
+  "consumers": {
+    "better-tailwindcss/enforce-consistent-class-order": 21,
+    "better-tailwindcss/enforce-shorthand-classes": 21,
+    "better-tailwindcss/no-conflicting-classes": 21,
+    "better-tailwindcss/no-unknown-classes": 24,
+    "react-hooks/config": 21,
+    "react-hooks/error-boundaries": 69,
+    "react-hooks/incompatible-library": 43,
+    "react-hooks/void-use-memo": 77
+  },
+  "live_calls": 2,
+  "live_option_calls": 0,
+  "semantic_mutants": 13,
+  "coverage_omissions": 8,
+  "sha256": {
+    "witnesses.json": "cec31d4f86cfb7adc4c2dc335f6417b4c173fcb4fbcf47208ae4349865951300",
+    "consumers.json": "4d10f41391a8575e5530ce7cf6f5fc058a3b3083388d2049897f0ac05a6f5878",
+    "calls.json": "ba0559b59963397d5eb0cf9767114c475b929700578cbf834c469acd90340820"
+  }
+}

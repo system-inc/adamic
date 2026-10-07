@@ -1,0 +1,30 @@
+import {panic,readTextFile,programArguments} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {compileCandidate} from './compile_candidate.a';
+import type {CompileCandidate,CompileState} from './compile_candidate.a';
+import type {NodeSetView} from '../slot04_wave12/union_node_sets.a';
+import {compile} from './compile.a';
+import {decodeCompilerRuleOptions} from './compiler_rule_options.a';
+function field(c:OptionsJson,id:number,key:string):number{const n=c.node(id);return n.children[n.keys.indexOf(key)] ?? panic('field');}
+function text(c:OptionsJson,id:number,key:string):string{return c.node(field(c,id,key)).text;}
+function ints(c:OptionsJson,id:number,key:string):number[]{const out:number[]=[];for(const n of c.node(field(c,id,key)).children){out.push(Number(c.node(n).text));}return out;}
+function strings(c:OptionsJson,id:number,key:string):string[]{const out:string[]=[];for(const n of c.node(field(c,id,key)).children){out.push(c.node(n).text);}return out;}
+function set(ids:readonly number[]):NodeSetView{const entries=new Map<number,boolean>();for(const id of ids){entries.set(id,true);}return {present:ids.length>0,entries};}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+ const candidate:CompileCandidate={present:text(c,row,'Present')==='true',functional:text(c,row,'Functional')==='true',root:text(c,row,'Root'),modifierPresent:text(c,row,'ModifierPresent')==='true'};
+ const definition=[text(c,row,'Definition')];const walked=text(c,row,'Walked');const flags=Number(text(c,row,'Flags'));const dropped=ints(c,row,'Dropped');const nonRatio=ints(c,row,'NonRatio');const variants=strings(c,row,'Variants');
+ for(let mode=0;mode<4;mode++){
+ let clones=0;let walks=0;
+ const lookup=(name:string):{found:boolean;nodes:readonly string[]}=>{if(name!==candidate.root){panic('root');}return {found:text(c,row,'Found')==='true',nodes:definition};};
+ const clone=(body:readonly string[]):string[]=>{clones++;if(body.join('')!==definition.join('')){panic('clone input');}return body.slice();};
+ const walk=(body:string[],state:CompileState):void=>{walks++;if(body===definition){panic('clone omitted');}if(state.usedValue || state.resolvedValue || state.usedModifier || state.resolvedModifier || state.resolvedRatio || state.dropped.present || state.nonRatio.present || state.dropped.entries.size!==0 || state.nonRatio.entries.size!==0){panic('fresh state');}state.usedValue=(flags&1)!==0;state.resolvedValue=(flags&2)!==0;state.usedModifier=(flags&4)!==0;state.resolvedModifier=(flags&8)!==0;state.resolvedRatio=(flags&16)!==0;state.dropped=set(dropped);state.nonRatio=set(nonRatio);body[0]=walked;};
+ const remove=(body:readonly string[],removed:NodeSetView):string[]=>{if(body.join('')!==walked){panic('remove body');}let mask=-1;for(let m=0;m<4;m++){const wanted=new Map<number,boolean>();if((m&1)!==0){for(const id of dropped){wanted.set(id,true);}}if((m&2)!==0){for(const id of nonRatio){wanted.set(id,true);}}let match=wanted.size===removed.entries.size;for(const id of wanted.keys()){if(removed.entries.get(id)!==true){match=false;}}if(match){mask=m;break;}}if(mask<0){panic('unknown removal set');}return [variants[mask] ?? panic('variant')];};
+ const result=mode===3 ? compile(candidate,lookup,clone,walk,remove) : compileCandidate(candidate,mode,lookup,clone,walk,remove);
+ const expected=candidate.present && candidate.functional && text(c,row,'Found')==='true';if(clones!==(expected ? 1 : 0) || walks!==clones){panic('dependency order');}if(definition[0]!==text(c,row,'Definition')){panic('definition mutated');}
+ console.log(`${result.ok}|${result.ok ? result.nodes.join('') : 'null'}`);
+ }
+ const keys=strings(c,row,'Keys');const sorted=strings(c,row,'Sorted');let decoded=0;let sortedCalls=0;const raw=text(c,row,'OptionRaw');
+ const options=decodeCompilerRuleOptions(raw,(s:string):{valid:boolean;objectPresent:boolean;keys:readonly string[]}=>{decoded++;if(s!==raw){panic('raw');}return {valid:text(c,row,'Valid')==='true',objectPresent:text(c,row,'ObjectPresent')==='true',keys};},(ks:readonly string[]):readonly string[]=>{sortedCalls++;if(ks.join('|')!==keys.join('|')){panic('keys');}return sorted;});
+ if(decoded!==(raw.length===0 ? 0 : 1)){panic('decode order');}console.log(options.error);
+}

@@ -1,0 +1,6291 @@
+[
+  {
+    "Name": "utility-0",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-1",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-2",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-3",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-4",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-5",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-6",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-7",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-8",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-9",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-10",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-11",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-12",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-13",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-14",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "literal",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-15",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-16",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-17",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-18",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-19",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-20",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-21",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-22",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-23",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-24",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-25",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-26",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-27",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-28",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-29",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-30",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-31",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-32",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-33",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-34",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-35",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-36",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-37",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-38",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-39",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-40",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-41",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-42",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-43",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-44",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-45",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-46",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-47",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-48",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-49",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-50",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-51",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-52",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-53",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-54",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-55",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-56",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-57",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-58",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-59",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-60",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-61",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-62",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-63",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-64",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-65",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-66",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-67",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-68",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-69",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-70",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-71",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-72",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-73",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-74",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio) --modifier(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-75",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-76",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-77",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-78",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-79",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-80",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-81",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-82",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-83",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-84",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-85",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-86",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-87",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-88",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-89",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(--default(4))",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-90",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-91",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-92",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-93",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-94",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-95",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-96",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-97",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-98",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-99",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-100",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-101",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-102",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-103",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-104",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value([length])",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-105",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-106",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-107",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-108",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-109",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-110",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-111",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-112",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-113",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-114",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-115",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-116",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-117",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-118",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-119",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(number)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-120",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-121",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-122",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-123",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-124",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-125",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-126",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-127",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-128",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-129",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-130",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-131",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-132",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-133",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-134",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--modifier(integer) --value(integer)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-135",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-136",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-137",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-138",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-139",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-140",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-141",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-142",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-143",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-144",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-145",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-146",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-147",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-148",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-149",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-150",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-151",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-152",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-153",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-154",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-155",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-156",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-157",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-158",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-159",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-160",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-161",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-162",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-163",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-164",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(integer)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(ratio)",
+            "ValuePresent": true
+          },
+          {
+            "Kind": "declaration",
+            "Property": "--x",
+            "Value": "--value(color)",
+            "ValuePresent": true
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-165",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-166",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-167",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-168",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-169",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-170",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-171",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-172",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-173",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-174",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-175",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-176",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-177",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-178",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-179",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": [
+          {
+            "Kind": "rule",
+            "Selector": "&",
+            "Nodes": [
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(integer)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(ratio)",
+                "ValuePresent": true
+              },
+              {
+                "Kind": "declaration",
+                "Property": "--x",
+                "Value": "--value(color)",
+                "ValuePresent": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-180",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-181",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-182",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-183",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-184",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-185",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-186",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-187",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-188",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-189",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-190",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-191",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-192",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-193",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-194",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": []
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-195",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-196",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-197",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": null,
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-198",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-199",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-200",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "2",
+        "Fraction": "2/3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-201",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-202",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-203",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "bogus"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-204",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-205",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-206",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "named",
+        "Value": "1.3"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Name": "utility-207",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": null
+    }
+  },
+  {
+    "Name": "utility-208",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "3"
+      }
+    }
+  },
+  {
+    "Name": "utility-209",
+    "OptionRaw": "{}",
+    "Definitions": {
+      "foo": {
+        "Name": "foo",
+        "Nodes": null
+      }
+    },
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "foo",
+      "Value": {
+        "Kind": "arbitrary",
+        "Value": "var(--x)",
+        "DataType": "length"
+      },
+      "Modifier": {
+        "Kind": "named",
+        "Value": "bad"
+      }
+    }
+  },
+  {
+    "Candidate": null,
+    "Definitions": {},
+    "OptionRaw": "{}"
+  },
+  {
+    "Candidate": {
+      "Kind": "static",
+      "Root": "foo"
+    },
+    "Definitions": {},
+    "OptionRaw": "{}"
+  },
+  {
+    "Candidate": {
+      "Kind": "arbitrary",
+      "Root": "foo"
+    },
+    "Definitions": {},
+    "OptionRaw": "{}"
+  },
+  {
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "missing"
+    },
+    "Definitions": {},
+    "OptionRaw": "{}"
+  },
+  {
+    "Name": "options-''",
+    "OptionRaw": ""
+  },
+  {
+    "Name": "options-'{}'",
+    "OptionRaw": "{}"
+  },
+  {
+    "Name": "options-' {} \\n'",
+    "OptionRaw": " {} \n"
+  },
+  {
+    "Name": "options-'null'",
+    "OptionRaw": "null"
+  },
+  {
+    "Name": "options-'[]'",
+    "OptionRaw": "[]"
+  },
+  {
+    "Name": "options-'[{}]'",
+    "OptionRaw": "[{}]"
+  },
+  {
+    "Name": "options-'true'",
+    "OptionRaw": "true"
+  },
+  {
+    "Name": "options-'0'",
+    "OptionRaw": "0"
+  },
+  {
+    "Name": "options-'\"text\"'",
+    "OptionRaw": "\"text\""
+  },
+  {
+    "Name": "options-'{'",
+    "OptionRaw": "{"
+  },
+  {
+    "Name": "options-' '",
+    "OptionRaw": " "
+  },
+  {
+    "Name": "options-'{}{}'",
+    "OptionRaw": "{}{}"
+  },
+  {
+    "Name": "options-'{\"x\":1}'",
+    "OptionRaw": "{\"x\":1}"
+  },
+  {
+    "Name": "options-'{\"z\":0,\"a\":0}'",
+    "OptionRaw": "{\"z\":0,\"a\":0}"
+  },
+  {
+    "Name": "options-'{\"x\":0,\"x\":2}'",
+    "OptionRaw": "{\"x\":0,\"x\":2}"
+  },
+  {
+    "Name": "options-'{\"environment\":null}'",
+    "OptionRaw": "{\"environment\":null}"
+  },
+  {
+    "Name": "options-'{\"\\\\u0061\":1}'",
+    "OptionRaw": "{\"\\u0061\":1}"
+  },
+  {
+    "Name": "options-'{\"\\\\ud800\":1}'",
+    "OptionRaw": "{\"\\ud800\":1}"
+  },
+  {
+    "Name": "options-'{\"\\\\ud83d\\\\ude00\":1,\"\\\\ue000\":2}'",
+    "OptionRaw": "{\"\\ud83d\\ude00\":1,\"\\ue000\":2}"
+  },
+  {
+    "Name": "options-'{\"\u00e9\":1,\"a\":2}'",
+    "OptionRaw": "{\"\u00e9\":1,\"a\":2}"
+  },
+  {
+    "Name": "options-'{\"line\\\\nkey\":1}'",
+    "OptionRaw": "{\"line\\nkey\":1}"
+  },
+  {
+    "Name": "options-'{\"\":1}'",
+    "OptionRaw": "{\"\":1}"
+  },
+  {
+    "Name": "options-'{\"x\":[1,{},null]}'",
+    "OptionRaw": "{\"x\":[1,{},null]}"
+  }
+]

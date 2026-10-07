@@ -1,0 +1,4298 @@
+[
+  {
+    "Name": "",
+    "Source": "",
+    "OptionRaw": "{}",
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "synthetic-fn",
+      "Property": "",
+      "PropertyValue": "",
+      "Value": {
+        "Kind": "named",
+        "Value": "large",
+        "DataType": "",
+        "Fraction": ""
+      },
+      "Modifier": null,
+      "Variants": [],
+      "Important": false,
+      "Raw": "synthetic-fn-large"
+    },
+    "Definitions": {
+      "synthetic-fn": {
+        "Name": "synthetic-fn",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Selector": "",
+            "Name": "",
+            "Params": "",
+            "Property": "margin",
+            "Value": "--value(--frobnicate-*,[length])",
+            "ValuePresent": true,
+            "Important": false,
+            "Context": null,
+            "Nodes": null
+          }
+        ]
+      }
+    },
+    "Entries": [
+      {
+        "Key": "--animate-bounce",
+        "Value": "bounce 1s infinite",
+        "Options": 4
+      },
+      {
+        "Key": "--animate-ping",
+        "Value": "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+        "Options": 4
+      },
+      {
+        "Key": "--animate-pulse",
+        "Value": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "Options": 4
+      },
+      {
+        "Key": "--animate-spin",
+        "Value": "spin 1s linear infinite",
+        "Options": 4
+      },
+      {
+        "Key": "--aspect-video",
+        "Value": "16 / 9",
+        "Options": 4
+      },
+      {
+        "Key": "--blur",
+        "Value": "8px",
+        "Options": 7
+      },
+      {
+        "Key": "--blur-2xl",
+        "Value": "40px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-3xl",
+        "Value": "64px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-lg",
+        "Value": "16px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-md",
+        "Value": "12px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-sm",
+        "Value": "8px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-xl",
+        "Value": "24px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-xs",
+        "Value": "4px",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-2xl",
+        "Value": "96rem",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-lg",
+        "Value": "64rem",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-md",
+        "Value": "48rem",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-sm",
+        "Value": "40rem",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-xl",
+        "Value": "80rem",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-100",
+        "Value": "oklch(96.2% 0.059 95.617)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-200",
+        "Value": "oklch(92.4% 0.12 95.746)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-300",
+        "Value": "oklch(87.9% 0.169 91.605)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-400",
+        "Value": "oklch(82.8% 0.189 84.429)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-50",
+        "Value": "oklch(98.7% 0.022 95.277)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-500",
+        "Value": "oklch(76.9% 0.188 70.08)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-600",
+        "Value": "oklch(66.6% 0.179 58.318)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-700",
+        "Value": "oklch(55.5% 0.163 48.998)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-800",
+        "Value": "oklch(47.3% 0.137 46.201)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-900",
+        "Value": "oklch(41.4% 0.112 45.904)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-950",
+        "Value": "oklch(27.9% 0.077 45.635)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-black",
+        "Value": "#000",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-100",
+        "Value": "oklch(93.2% 0.032 255.585)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-200",
+        "Value": "oklch(88.2% 0.059 254.128)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-300",
+        "Value": "oklch(80.9% 0.105 251.813)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-400",
+        "Value": "oklch(70.7% 0.165 254.624)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-50",
+        "Value": "oklch(97% 0.014 254.604)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-500",
+        "Value": "oklch(62.3% 0.214 259.815)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-600",
+        "Value": "oklch(54.6% 0.245 262.881)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-700",
+        "Value": "oklch(48.8% 0.243 264.376)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-800",
+        "Value": "oklch(42.4% 0.199 265.638)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-900",
+        "Value": "oklch(37.9% 0.146 265.522)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-950",
+        "Value": "oklch(28.2% 0.091 267.935)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-100",
+        "Value": "oklch(95.6% 0.045 203.388)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-200",
+        "Value": "oklch(91.7% 0.08 205.041)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-300",
+        "Value": "oklch(86.5% 0.127 207.078)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-400",
+        "Value": "oklch(78.9% 0.154 211.53)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-50",
+        "Value": "oklch(98.4% 0.019 200.873)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-500",
+        "Value": "oklch(71.5% 0.143 215.221)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-600",
+        "Value": "oklch(60.9% 0.126 221.723)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-700",
+        "Value": "oklch(52% 0.105 223.128)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-800",
+        "Value": "oklch(45% 0.085 224.283)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-900",
+        "Value": "oklch(39.8% 0.07 227.392)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-950",
+        "Value": "oklch(30.2% 0.056 229.695)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-100",
+        "Value": "oklch(95% 0.052 163.051)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-200",
+        "Value": "oklch(90.5% 0.093 164.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-300",
+        "Value": "oklch(84.5% 0.143 164.978)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-400",
+        "Value": "oklch(76.5% 0.177 163.223)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-50",
+        "Value": "oklch(97.9% 0.021 166.113)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-500",
+        "Value": "oklch(69.6% 0.17 162.48)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-600",
+        "Value": "oklch(59.6% 0.145 163.225)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-700",
+        "Value": "oklch(50.8% 0.118 165.612)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-800",
+        "Value": "oklch(43.2% 0.095 166.913)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-900",
+        "Value": "oklch(37.8% 0.077 168.94)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-950",
+        "Value": "oklch(26.2% 0.051 172.552)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-100",
+        "Value": "oklch(95.2% 0.037 318.852)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-200",
+        "Value": "oklch(90.3% 0.076 319.62)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-300",
+        "Value": "oklch(83.3% 0.145 321.434)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-400",
+        "Value": "oklch(74% 0.238 322.16)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-50",
+        "Value": "oklch(97.7% 0.017 320.058)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-500",
+        "Value": "oklch(66.7% 0.295 322.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-600",
+        "Value": "oklch(59.1% 0.293 322.896)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-700",
+        "Value": "oklch(51.8% 0.253 323.949)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-800",
+        "Value": "oklch(45.2% 0.211 324.591)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-900",
+        "Value": "oklch(40.1% 0.17 325.612)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-950",
+        "Value": "oklch(29.3% 0.136 325.661)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-100",
+        "Value": "oklch(96.7% 0.003 264.542)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-200",
+        "Value": "oklch(92.8% 0.006 264.531)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-300",
+        "Value": "oklch(87.2% 0.01 258.338)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-400",
+        "Value": "oklch(70.7% 0.022 261.325)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-50",
+        "Value": "oklch(98.5% 0.002 247.839)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-500",
+        "Value": "oklch(55.1% 0.027 264.364)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-600",
+        "Value": "oklch(44.6% 0.03 256.802)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-700",
+        "Value": "oklch(37.3% 0.034 259.733)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-800",
+        "Value": "oklch(27.8% 0.033 256.848)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-900",
+        "Value": "oklch(21% 0.034 264.665)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-950",
+        "Value": "oklch(13% 0.028 261.692)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-100",
+        "Value": "oklch(96.2% 0.044 156.743)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-200",
+        "Value": "oklch(92.5% 0.084 155.995)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-300",
+        "Value": "oklch(87.1% 0.15 154.449)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-400",
+        "Value": "oklch(79.2% 0.209 151.711)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-50",
+        "Value": "oklch(98.2% 0.018 155.826)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-500",
+        "Value": "oklch(72.3% 0.219 149.579)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-600",
+        "Value": "oklch(62.7% 0.194 149.214)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-700",
+        "Value": "oklch(52.7% 0.154 150.069)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-800",
+        "Value": "oklch(44.8% 0.119 151.328)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-900",
+        "Value": "oklch(39.3% 0.095 152.535)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-950",
+        "Value": "oklch(26.6% 0.065 152.934)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-100",
+        "Value": "oklch(93% 0.034 272.788)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-200",
+        "Value": "oklch(87% 0.065 274.039)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-300",
+        "Value": "oklch(78.5% 0.115 274.713)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-400",
+        "Value": "oklch(67.3% 0.182 276.935)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-50",
+        "Value": "oklch(96.2% 0.018 272.314)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-500",
+        "Value": "oklch(58.5% 0.233 277.117)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-600",
+        "Value": "oklch(51.1% 0.262 276.966)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-700",
+        "Value": "oklch(45.7% 0.24 277.023)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-800",
+        "Value": "oklch(39.8% 0.195 277.366)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-900",
+        "Value": "oklch(35.9% 0.144 278.697)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-950",
+        "Value": "oklch(25.7% 0.09 281.288)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-100",
+        "Value": "oklch(96.7% 0.067 122.328)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-200",
+        "Value": "oklch(93.8% 0.127 124.321)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-300",
+        "Value": "oklch(89.7% 0.196 126.665)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-400",
+        "Value": "oklch(84.1% 0.238 128.85)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-50",
+        "Value": "oklch(98.6% 0.031 120.757)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-500",
+        "Value": "oklch(76.8% 0.233 130.85)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-600",
+        "Value": "oklch(64.8% 0.2 131.684)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-700",
+        "Value": "oklch(53.2% 0.157 131.589)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-800",
+        "Value": "oklch(45.3% 0.124 130.933)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-900",
+        "Value": "oklch(40.5% 0.101 131.063)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-950",
+        "Value": "oklch(27.4% 0.072 132.109)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-100",
+        "Value": "oklch(96% 0.003 325.6)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-200",
+        "Value": "oklch(92.2% 0.005 325.62)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-300",
+        "Value": "oklch(86.5% 0.012 325.68)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-400",
+        "Value": "oklch(71.1% 0.019 323.02)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-500",
+        "Value": "oklch(54.2% 0.034 322.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-600",
+        "Value": "oklch(43.5% 0.029 321.78)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-700",
+        "Value": "oklch(36.4% 0.029 323.89)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-800",
+        "Value": "oklch(26.3% 0.024 320.12)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-900",
+        "Value": "oklch(21.2% 0.019 322.12)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-950",
+        "Value": "oklch(14.5% 0.008 326)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-100",
+        "Value": "oklch(96.3% 0.002 197.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-200",
+        "Value": "oklch(92.5% 0.005 214.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-300",
+        "Value": "oklch(87.2% 0.007 219.6)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-400",
+        "Value": "oklch(72.3% 0.014 214.4)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-50",
+        "Value": "oklch(98.7% 0.002 197.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-500",
+        "Value": "oklch(56% 0.021 213.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-600",
+        "Value": "oklch(45% 0.017 213.2)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-700",
+        "Value": "oklch(37.8% 0.015 216)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-800",
+        "Value": "oklch(27.5% 0.011 216.9)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-900",
+        "Value": "oklch(21.8% 0.008 223.9)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-950",
+        "Value": "oklch(14.8% 0.004 228.8)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-100",
+        "Value": "oklch(97% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-200",
+        "Value": "oklch(92.2% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-300",
+        "Value": "oklch(87% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-400",
+        "Value": "oklch(70.8% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-500",
+        "Value": "oklch(55.6% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-600",
+        "Value": "oklch(43.9% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-700",
+        "Value": "oklch(37.1% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-800",
+        "Value": "oklch(26.9% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-900",
+        "Value": "oklch(20.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-950",
+        "Value": "oklch(14.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-100",
+        "Value": "oklch(96.6% 0.005 106.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-200",
+        "Value": "oklch(93% 0.007 106.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-300",
+        "Value": "oklch(88% 0.011 106.6)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-400",
+        "Value": "oklch(73.7% 0.021 106.9)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-50",
+        "Value": "oklch(98.8% 0.003 106.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-500",
+        "Value": "oklch(58% 0.031 107.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-600",
+        "Value": "oklch(46.6% 0.025 107.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-700",
+        "Value": "oklch(39.4% 0.023 107.4)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-800",
+        "Value": "oklch(28.6% 0.016 107.4)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-900",
+        "Value": "oklch(22.8% 0.013 107.4)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-950",
+        "Value": "oklch(15.3% 0.006 107.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-100",
+        "Value": "oklch(95.4% 0.038 75.164)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-200",
+        "Value": "oklch(90.1% 0.076 70.697)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-300",
+        "Value": "oklch(83.7% 0.128 66.29)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-400",
+        "Value": "oklch(75% 0.183 55.934)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-50",
+        "Value": "oklch(98% 0.016 73.684)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-500",
+        "Value": "oklch(70.5% 0.213 47.604)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-600",
+        "Value": "oklch(64.6% 0.222 41.116)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-700",
+        "Value": "oklch(55.3% 0.195 38.402)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-800",
+        "Value": "oklch(47% 0.157 37.304)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-900",
+        "Value": "oklch(40.8% 0.123 38.172)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-950",
+        "Value": "oklch(26.6% 0.079 36.259)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-100",
+        "Value": "oklch(94.8% 0.028 342.258)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-200",
+        "Value": "oklch(89.9% 0.061 343.231)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-300",
+        "Value": "oklch(82.3% 0.12 346.018)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-400",
+        "Value": "oklch(71.8% 0.202 349.761)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-50",
+        "Value": "oklch(97.1% 0.014 343.198)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-500",
+        "Value": "oklch(65.6% 0.241 354.308)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-600",
+        "Value": "oklch(59.2% 0.249 0.584)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-700",
+        "Value": "oklch(52.5% 0.223 3.958)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-800",
+        "Value": "oklch(45.9% 0.187 3.815)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-900",
+        "Value": "oklch(40.8% 0.153 2.432)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-950",
+        "Value": "oklch(28.4% 0.109 3.907)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-100",
+        "Value": "oklch(94.6% 0.033 307.174)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-200",
+        "Value": "oklch(90.2% 0.063 306.703)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-300",
+        "Value": "oklch(82.7% 0.119 306.383)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-400",
+        "Value": "oklch(71.4% 0.203 305.504)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-50",
+        "Value": "oklch(97.7% 0.014 308.299)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-500",
+        "Value": "oklch(62.7% 0.265 303.9)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-600",
+        "Value": "oklch(55.8% 0.288 302.321)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-700",
+        "Value": "oklch(49.6% 0.265 301.924)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-800",
+        "Value": "oklch(43.8% 0.218 303.724)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-900",
+        "Value": "oklch(38.1% 0.176 304.987)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-950",
+        "Value": "oklch(29.1% 0.149 302.717)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-100",
+        "Value": "oklch(93.6% 0.032 17.717)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-200",
+        "Value": "oklch(88.5% 0.062 18.334)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-300",
+        "Value": "oklch(80.8% 0.114 19.571)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-400",
+        "Value": "oklch(70.4% 0.191 22.216)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-50",
+        "Value": "oklch(97.1% 0.013 17.38)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-500",
+        "Value": "oklch(63.7% 0.237 25.331)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-600",
+        "Value": "oklch(57.7% 0.245 27.325)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-700",
+        "Value": "oklch(50.5% 0.213 27.518)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-800",
+        "Value": "oklch(44.4% 0.177 26.899)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-900",
+        "Value": "oklch(39.6% 0.141 25.723)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-950",
+        "Value": "oklch(25.8% 0.092 26.042)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-100",
+        "Value": "oklch(94.1% 0.03 12.58)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-200",
+        "Value": "oklch(89.2% 0.058 10.001)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-300",
+        "Value": "oklch(81% 0.117 11.638)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-400",
+        "Value": "oklch(71.2% 0.194 13.428)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-50",
+        "Value": "oklch(96.9% 0.015 12.422)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-500",
+        "Value": "oklch(64.5% 0.246 16.439)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-600",
+        "Value": "oklch(58.6% 0.253 17.585)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-700",
+        "Value": "oklch(51.4% 0.222 16.935)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-800",
+        "Value": "oklch(45.5% 0.188 13.697)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-900",
+        "Value": "oklch(41% 0.159 10.272)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-950",
+        "Value": "oklch(27.1% 0.105 12.094)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-100",
+        "Value": "oklch(95.1% 0.026 236.824)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-200",
+        "Value": "oklch(90.1% 0.058 230.902)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-300",
+        "Value": "oklch(82.8% 0.111 230.318)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-400",
+        "Value": "oklch(74.6% 0.16 232.661)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-50",
+        "Value": "oklch(97.7% 0.013 236.62)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-500",
+        "Value": "oklch(68.5% 0.169 237.323)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-600",
+        "Value": "oklch(58.8% 0.158 241.966)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-700",
+        "Value": "oklch(50% 0.134 242.749)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-800",
+        "Value": "oklch(44.3% 0.11 240.79)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-900",
+        "Value": "oklch(39.1% 0.09 240.876)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-950",
+        "Value": "oklch(29.3% 0.066 243.157)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-100",
+        "Value": "oklch(96.8% 0.007 247.896)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-200",
+        "Value": "oklch(92.9% 0.013 255.508)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-300",
+        "Value": "oklch(86.9% 0.022 252.894)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-400",
+        "Value": "oklch(70.4% 0.04 256.788)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-50",
+        "Value": "oklch(98.4% 0.003 247.858)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-500",
+        "Value": "oklch(55.4% 0.046 257.417)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-600",
+        "Value": "oklch(44.6% 0.043 257.281)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-700",
+        "Value": "oklch(37.2% 0.044 257.287)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-800",
+        "Value": "oklch(27.9% 0.041 260.031)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-900",
+        "Value": "oklch(20.8% 0.042 265.755)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-950",
+        "Value": "oklch(12.9% 0.042 264.695)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-100",
+        "Value": "oklch(97% 0.001 106.424)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-200",
+        "Value": "oklch(92.3% 0.003 48.717)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-300",
+        "Value": "oklch(86.9% 0.005 56.366)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-400",
+        "Value": "oklch(70.9% 0.01 56.259)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-50",
+        "Value": "oklch(98.5% 0.001 106.423)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-500",
+        "Value": "oklch(55.3% 0.013 58.071)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-600",
+        "Value": "oklch(44.4% 0.011 73.639)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-700",
+        "Value": "oklch(37.4% 0.01 67.558)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-800",
+        "Value": "oklch(26.8% 0.007 34.298)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-900",
+        "Value": "oklch(21.6% 0.006 56.043)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-950",
+        "Value": "oklch(14.7% 0.004 49.25)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-100",
+        "Value": "oklch(96% 0.002 17.2)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-200",
+        "Value": "oklch(92.2% 0.005 34.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-300",
+        "Value": "oklch(86.8% 0.007 39.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-400",
+        "Value": "oklch(71.4% 0.014 41.2)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-50",
+        "Value": "oklch(98.6% 0.002 67.8)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-500",
+        "Value": "oklch(54.7% 0.021 43.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-600",
+        "Value": "oklch(43.8% 0.017 39.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-700",
+        "Value": "oklch(36.7% 0.016 35.7)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-800",
+        "Value": "oklch(26.8% 0.011 36.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-900",
+        "Value": "oklch(21.4% 0.009 43.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-950",
+        "Value": "oklch(14.7% 0.004 49.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-100",
+        "Value": "oklch(95.3% 0.051 180.801)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-200",
+        "Value": "oklch(91% 0.096 180.426)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-300",
+        "Value": "oklch(85.5% 0.138 181.071)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-400",
+        "Value": "oklch(77.7% 0.152 181.912)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-50",
+        "Value": "oklch(98.4% 0.014 180.72)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-500",
+        "Value": "oklch(70.4% 0.14 182.503)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-600",
+        "Value": "oklch(60% 0.118 184.704)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-700",
+        "Value": "oklch(51.1% 0.096 186.391)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-800",
+        "Value": "oklch(43.7% 0.078 188.216)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-900",
+        "Value": "oklch(38.6% 0.063 188.416)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-950",
+        "Value": "oklch(27.7% 0.046 192.524)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-100",
+        "Value": "oklch(94.3% 0.029 294.588)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-200",
+        "Value": "oklch(89.4% 0.057 293.283)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-300",
+        "Value": "oklch(81.1% 0.111 293.571)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-400",
+        "Value": "oklch(70.2% 0.183 293.541)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-50",
+        "Value": "oklch(96.9% 0.016 293.756)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-500",
+        "Value": "oklch(60.6% 0.25 292.717)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-600",
+        "Value": "oklch(54.1% 0.281 293.009)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-700",
+        "Value": "oklch(49.1% 0.27 292.581)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-800",
+        "Value": "oklch(43.2% 0.232 292.759)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-900",
+        "Value": "oklch(38% 0.189 293.745)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-950",
+        "Value": "oklch(28.3% 0.141 291.089)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-white",
+        "Value": "#fff",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-100",
+        "Value": "oklch(97.3% 0.071 103.193)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-200",
+        "Value": "oklch(94.5% 0.129 101.54)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-300",
+        "Value": "oklch(90.5% 0.182 98.111)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-400",
+        "Value": "oklch(85.2% 0.199 91.936)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-50",
+        "Value": "oklch(98.7% 0.026 102.212)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-500",
+        "Value": "oklch(79.5% 0.184 86.047)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-600",
+        "Value": "oklch(68.1% 0.162 75.834)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-700",
+        "Value": "oklch(55.4% 0.135 66.442)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-800",
+        "Value": "oklch(47.6% 0.114 61.907)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-900",
+        "Value": "oklch(42.1% 0.095 57.708)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-950",
+        "Value": "oklch(28.6% 0.066 53.813)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-100",
+        "Value": "oklch(96.7% 0.001 286.375)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-200",
+        "Value": "oklch(92% 0.004 286.32)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-300",
+        "Value": "oklch(87.1% 0.006 286.286)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-400",
+        "Value": "oklch(70.5% 0.015 286.067)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-500",
+        "Value": "oklch(55.2% 0.016 285.938)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-600",
+        "Value": "oklch(44.2% 0.017 285.786)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-700",
+        "Value": "oklch(37% 0.013 285.805)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-800",
+        "Value": "oklch(27.4% 0.006 286.033)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-900",
+        "Value": "oklch(21% 0.006 285.885)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-950",
+        "Value": "oklch(14.1% 0.005 285.823)",
+        "Options": 4
+      },
+      {
+        "Key": "--container-2xl",
+        "Value": "42rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-2xs",
+        "Value": "18rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-3xl",
+        "Value": "48rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-3xs",
+        "Value": "16rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-4xl",
+        "Value": "56rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-5xl",
+        "Value": "64rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-6xl",
+        "Value": "72rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-7xl",
+        "Value": "80rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-lg",
+        "Value": "32rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-md",
+        "Value": "28rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-sm",
+        "Value": "24rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-xl",
+        "Value": "36rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-xs",
+        "Value": "20rem",
+        "Options": 4
+      },
+      {
+        "Key": "--default-font-family",
+        "Value": "--theme(--font-sans, initial)",
+        "Options": 4
+      },
+      {
+        "Key": "--default-font-feature-settings",
+        "Value": "--theme(\n      --font-sans--font-feature-settings,\n      initial\n    )",
+        "Options": 4
+      },
+      {
+        "Key": "--default-font-variation-settings",
+        "Value": "--theme(\n      --font-sans--font-variation-settings,\n      initial\n    )",
+        "Options": 4
+      },
+      {
+        "Key": "--default-mono-font-family",
+        "Value": "--theme(--font-mono, initial)",
+        "Options": 4
+      },
+      {
+        "Key": "--default-mono-font-feature-settings",
+        "Value": "--theme(\n      --font-mono--font-feature-settings,\n      initial\n    )",
+        "Options": 4
+      },
+      {
+        "Key": "--default-mono-font-variation-settings",
+        "Value": "--theme(\n      --font-mono--font-variation-settings,\n      initial\n    )",
+        "Options": 4
+      },
+      {
+        "Key": "--default-transition-duration",
+        "Value": "150ms",
+        "Options": 4
+      },
+      {
+        "Key": "--default-transition-timing-function",
+        "Value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow",
+        "Value": "0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06)",
+        "Options": 7
+      },
+      {
+        "Key": "--drop-shadow-2xl",
+        "Value": "0 25px 25px rgb(0 0 0 / 0.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-lg",
+        "Value": "0 4px 4px rgb(0 0 0 / 0.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-md",
+        "Value": "0 3px 3px rgb(0 0 0 / 0.12)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-sm",
+        "Value": "0 1px 2px rgb(0 0 0 / 0.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-xl",
+        "Value": "0 9px 7px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-xs",
+        "Value": "0 1px 1px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--ease-in",
+        "Value": "cubic-bezier(0.4, 0, 1, 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--ease-in-out",
+        "Value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--ease-out",
+        "Value": "cubic-bezier(0, 0, 0.2, 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--font-mono",
+        "Value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\",\n      \"Courier New\", monospace",
+        "Options": 4
+      },
+      {
+        "Key": "--font-sans",
+        "Value": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\",\n      \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\",\n      \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "Options": 4
+      },
+      {
+        "Key": "--font-serif",
+        "Value": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-black",
+        "Value": "900",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-bold",
+        "Value": "700",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-extrabold",
+        "Value": "800",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-extralight",
+        "Value": "200",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-light",
+        "Value": "300",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-medium",
+        "Value": "500",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-normal",
+        "Value": "400",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-semibold",
+        "Value": "600",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-thin",
+        "Value": "100",
+        "Options": 4
+      },
+      {
+        "Key": "--frobnicate-large",
+        "Value": "9px",
+        "Options": 0
+      },
+      {
+        "Key": "--frobnicate-small",
+        "Value": "2px",
+        "Options": 0
+      },
+      {
+        "Key": "--inset-shadow-2xs",
+        "Value": "inset 0 1px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--inset-shadow-sm",
+        "Value": "inset 0 2px 4px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--inset-shadow-xs",
+        "Value": "inset 0 1px 1px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-loose",
+        "Value": "2",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-normal",
+        "Value": "1.5",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-relaxed",
+        "Value": "1.625",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-snug",
+        "Value": "1.375",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-tight",
+        "Value": "1.25",
+        "Options": 4
+      },
+      {
+        "Key": "--max-width-prose",
+        "Value": "65ch",
+        "Options": 7
+      },
+      {
+        "Key": "--perspective-distant",
+        "Value": "1200px",
+        "Options": 4
+      },
+      {
+        "Key": "--perspective-dramatic",
+        "Value": "100px",
+        "Options": 4
+      },
+      {
+        "Key": "--perspective-midrange",
+        "Value": "800px",
+        "Options": 4
+      },
+      {
+        "Key": "--perspective-near",
+        "Value": "300px",
+        "Options": 4
+      },
+      {
+        "Key": "--perspective-normal",
+        "Value": "500px",
+        "Options": 4
+      },
+      {
+        "Key": "--radius",
+        "Value": "0.25rem",
+        "Options": 7
+      },
+      {
+        "Key": "--radius-2xl",
+        "Value": "1rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-3xl",
+        "Value": "1.5rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-4xl",
+        "Value": "2rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-lg",
+        "Value": "0.5rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-md",
+        "Value": "0.375rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-sm",
+        "Value": "0.25rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-xl",
+        "Value": "0.75rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-xs",
+        "Value": "0.125rem",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow",
+        "Value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "Options": 7
+      },
+      {
+        "Key": "--shadow-2xl",
+        "Value": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-2xs",
+        "Value": "0 1px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-inner",
+        "Value": "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
+        "Options": 7
+      },
+      {
+        "Key": "--shadow-lg",
+        "Value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-md",
+        "Value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-sm",
+        "Value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-xl",
+        "Value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-xs",
+        "Value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--spacing",
+        "Value": "0.25rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-2xl",
+        "Value": "1.5rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-2xl--line-height",
+        "Value": "calc(2 / 1.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-3xl",
+        "Value": "1.875rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-3xl--line-height",
+        "Value": "calc(2.25 / 1.875)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-4xl",
+        "Value": "2.25rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-4xl--line-height",
+        "Value": "calc(2.5 / 2.25)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-5xl",
+        "Value": "3rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-5xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-6xl",
+        "Value": "3.75rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-6xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-7xl",
+        "Value": "4.5rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-7xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-8xl",
+        "Value": "6rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-8xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-9xl",
+        "Value": "8rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-9xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-base",
+        "Value": "1rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-base--line-height",
+        "Value": "calc(1.5 / 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-lg",
+        "Value": "1.125rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-lg--line-height",
+        "Value": "calc(1.75 / 1.125)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-2xs",
+        "Value": "0px 1px 0px rgb(0 0 0 / 0.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-lg",
+        "Value": "0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1),\n      0px 4px 8px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-md",
+        "Value": "0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1),\n      0px 2px 4px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-sm",
+        "Value": "0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075),\n      0px 2px 2px rgb(0 0 0 / 0.075)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-xs",
+        "Value": "0px 1px 1px rgb(0 0 0 / 0.2)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-sm",
+        "Value": "0.875rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-sm--line-height",
+        "Value": "calc(1.25 / 0.875)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-xl",
+        "Value": "1.25rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-xl--line-height",
+        "Value": "calc(1.75 / 1.25)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-xs",
+        "Value": "0.75rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-xs--line-height",
+        "Value": "calc(1 / 0.75)",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-normal",
+        "Value": "0em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-tight",
+        "Value": "-0.025em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-tighter",
+        "Value": "-0.05em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-wide",
+        "Value": "0.025em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-wider",
+        "Value": "0.05em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-widest",
+        "Value": "0.1em",
+        "Options": 4
+      }
+    ],
+    "Prefix": ""
+  },
+  {
+    "Name": "",
+    "Source": "",
+    "OptionRaw": "{}",
+    "Candidate": {
+      "Kind": "functional",
+      "Root": "synthetic-fn",
+      "Property": "",
+      "PropertyValue": "",
+      "Value": {
+        "Kind": "named",
+        "Value": "small",
+        "DataType": "",
+        "Fraction": ""
+      },
+      "Modifier": null,
+      "Variants": [],
+      "Important": false,
+      "Raw": "synthetic-fn-small"
+    },
+    "Definitions": {
+      "synthetic-fn": {
+        "Name": "synthetic-fn",
+        "Nodes": [
+          {
+            "Kind": "declaration",
+            "Selector": "",
+            "Name": "",
+            "Params": "",
+            "Property": "margin",
+            "Value": "--value(--frobnicate-*,[length])",
+            "ValuePresent": true,
+            "Important": false,
+            "Context": null,
+            "Nodes": null
+          }
+        ]
+      }
+    },
+    "Entries": [
+      {
+        "Key": "--animate-bounce",
+        "Value": "bounce 1s infinite",
+        "Options": 4
+      },
+      {
+        "Key": "--animate-ping",
+        "Value": "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+        "Options": 4
+      },
+      {
+        "Key": "--animate-pulse",
+        "Value": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "Options": 4
+      },
+      {
+        "Key": "--animate-spin",
+        "Value": "spin 1s linear infinite",
+        "Options": 4
+      },
+      {
+        "Key": "--aspect-video",
+        "Value": "16 / 9",
+        "Options": 4
+      },
+      {
+        "Key": "--blur",
+        "Value": "8px",
+        "Options": 7
+      },
+      {
+        "Key": "--blur-2xl",
+        "Value": "40px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-3xl",
+        "Value": "64px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-lg",
+        "Value": "16px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-md",
+        "Value": "12px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-sm",
+        "Value": "8px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-xl",
+        "Value": "24px",
+        "Options": 4
+      },
+      {
+        "Key": "--blur-xs",
+        "Value": "4px",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-2xl",
+        "Value": "96rem",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-lg",
+        "Value": "64rem",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-md",
+        "Value": "48rem",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-sm",
+        "Value": "40rem",
+        "Options": 4
+      },
+      {
+        "Key": "--breakpoint-xl",
+        "Value": "80rem",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-100",
+        "Value": "oklch(96.2% 0.059 95.617)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-200",
+        "Value": "oklch(92.4% 0.12 95.746)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-300",
+        "Value": "oklch(87.9% 0.169 91.605)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-400",
+        "Value": "oklch(82.8% 0.189 84.429)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-50",
+        "Value": "oklch(98.7% 0.022 95.277)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-500",
+        "Value": "oklch(76.9% 0.188 70.08)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-600",
+        "Value": "oklch(66.6% 0.179 58.318)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-700",
+        "Value": "oklch(55.5% 0.163 48.998)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-800",
+        "Value": "oklch(47.3% 0.137 46.201)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-900",
+        "Value": "oklch(41.4% 0.112 45.904)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-amber-950",
+        "Value": "oklch(27.9% 0.077 45.635)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-black",
+        "Value": "#000",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-100",
+        "Value": "oklch(93.2% 0.032 255.585)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-200",
+        "Value": "oklch(88.2% 0.059 254.128)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-300",
+        "Value": "oklch(80.9% 0.105 251.813)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-400",
+        "Value": "oklch(70.7% 0.165 254.624)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-50",
+        "Value": "oklch(97% 0.014 254.604)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-500",
+        "Value": "oklch(62.3% 0.214 259.815)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-600",
+        "Value": "oklch(54.6% 0.245 262.881)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-700",
+        "Value": "oklch(48.8% 0.243 264.376)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-800",
+        "Value": "oklch(42.4% 0.199 265.638)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-900",
+        "Value": "oklch(37.9% 0.146 265.522)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-blue-950",
+        "Value": "oklch(28.2% 0.091 267.935)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-100",
+        "Value": "oklch(95.6% 0.045 203.388)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-200",
+        "Value": "oklch(91.7% 0.08 205.041)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-300",
+        "Value": "oklch(86.5% 0.127 207.078)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-400",
+        "Value": "oklch(78.9% 0.154 211.53)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-50",
+        "Value": "oklch(98.4% 0.019 200.873)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-500",
+        "Value": "oklch(71.5% 0.143 215.221)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-600",
+        "Value": "oklch(60.9% 0.126 221.723)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-700",
+        "Value": "oklch(52% 0.105 223.128)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-800",
+        "Value": "oklch(45% 0.085 224.283)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-900",
+        "Value": "oklch(39.8% 0.07 227.392)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-cyan-950",
+        "Value": "oklch(30.2% 0.056 229.695)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-100",
+        "Value": "oklch(95% 0.052 163.051)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-200",
+        "Value": "oklch(90.5% 0.093 164.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-300",
+        "Value": "oklch(84.5% 0.143 164.978)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-400",
+        "Value": "oklch(76.5% 0.177 163.223)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-50",
+        "Value": "oklch(97.9% 0.021 166.113)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-500",
+        "Value": "oklch(69.6% 0.17 162.48)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-600",
+        "Value": "oklch(59.6% 0.145 163.225)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-700",
+        "Value": "oklch(50.8% 0.118 165.612)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-800",
+        "Value": "oklch(43.2% 0.095 166.913)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-900",
+        "Value": "oklch(37.8% 0.077 168.94)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-emerald-950",
+        "Value": "oklch(26.2% 0.051 172.552)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-100",
+        "Value": "oklch(95.2% 0.037 318.852)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-200",
+        "Value": "oklch(90.3% 0.076 319.62)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-300",
+        "Value": "oklch(83.3% 0.145 321.434)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-400",
+        "Value": "oklch(74% 0.238 322.16)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-50",
+        "Value": "oklch(97.7% 0.017 320.058)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-500",
+        "Value": "oklch(66.7% 0.295 322.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-600",
+        "Value": "oklch(59.1% 0.293 322.896)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-700",
+        "Value": "oklch(51.8% 0.253 323.949)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-800",
+        "Value": "oklch(45.2% 0.211 324.591)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-900",
+        "Value": "oklch(40.1% 0.17 325.612)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-fuchsia-950",
+        "Value": "oklch(29.3% 0.136 325.661)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-100",
+        "Value": "oklch(96.7% 0.003 264.542)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-200",
+        "Value": "oklch(92.8% 0.006 264.531)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-300",
+        "Value": "oklch(87.2% 0.01 258.338)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-400",
+        "Value": "oklch(70.7% 0.022 261.325)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-50",
+        "Value": "oklch(98.5% 0.002 247.839)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-500",
+        "Value": "oklch(55.1% 0.027 264.364)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-600",
+        "Value": "oklch(44.6% 0.03 256.802)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-700",
+        "Value": "oklch(37.3% 0.034 259.733)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-800",
+        "Value": "oklch(27.8% 0.033 256.848)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-900",
+        "Value": "oklch(21% 0.034 264.665)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-gray-950",
+        "Value": "oklch(13% 0.028 261.692)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-100",
+        "Value": "oklch(96.2% 0.044 156.743)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-200",
+        "Value": "oklch(92.5% 0.084 155.995)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-300",
+        "Value": "oklch(87.1% 0.15 154.449)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-400",
+        "Value": "oklch(79.2% 0.209 151.711)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-50",
+        "Value": "oklch(98.2% 0.018 155.826)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-500",
+        "Value": "oklch(72.3% 0.219 149.579)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-600",
+        "Value": "oklch(62.7% 0.194 149.214)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-700",
+        "Value": "oklch(52.7% 0.154 150.069)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-800",
+        "Value": "oklch(44.8% 0.119 151.328)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-900",
+        "Value": "oklch(39.3% 0.095 152.535)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-green-950",
+        "Value": "oklch(26.6% 0.065 152.934)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-100",
+        "Value": "oklch(93% 0.034 272.788)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-200",
+        "Value": "oklch(87% 0.065 274.039)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-300",
+        "Value": "oklch(78.5% 0.115 274.713)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-400",
+        "Value": "oklch(67.3% 0.182 276.935)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-50",
+        "Value": "oklch(96.2% 0.018 272.314)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-500",
+        "Value": "oklch(58.5% 0.233 277.117)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-600",
+        "Value": "oklch(51.1% 0.262 276.966)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-700",
+        "Value": "oklch(45.7% 0.24 277.023)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-800",
+        "Value": "oklch(39.8% 0.195 277.366)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-900",
+        "Value": "oklch(35.9% 0.144 278.697)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-indigo-950",
+        "Value": "oklch(25.7% 0.09 281.288)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-100",
+        "Value": "oklch(96.7% 0.067 122.328)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-200",
+        "Value": "oklch(93.8% 0.127 124.321)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-300",
+        "Value": "oklch(89.7% 0.196 126.665)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-400",
+        "Value": "oklch(84.1% 0.238 128.85)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-50",
+        "Value": "oklch(98.6% 0.031 120.757)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-500",
+        "Value": "oklch(76.8% 0.233 130.85)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-600",
+        "Value": "oklch(64.8% 0.2 131.684)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-700",
+        "Value": "oklch(53.2% 0.157 131.589)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-800",
+        "Value": "oklch(45.3% 0.124 130.933)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-900",
+        "Value": "oklch(40.5% 0.101 131.063)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-lime-950",
+        "Value": "oklch(27.4% 0.072 132.109)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-100",
+        "Value": "oklch(96% 0.003 325.6)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-200",
+        "Value": "oklch(92.2% 0.005 325.62)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-300",
+        "Value": "oklch(86.5% 0.012 325.68)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-400",
+        "Value": "oklch(71.1% 0.019 323.02)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-500",
+        "Value": "oklch(54.2% 0.034 322.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-600",
+        "Value": "oklch(43.5% 0.029 321.78)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-700",
+        "Value": "oklch(36.4% 0.029 323.89)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-800",
+        "Value": "oklch(26.3% 0.024 320.12)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-900",
+        "Value": "oklch(21.2% 0.019 322.12)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mauve-950",
+        "Value": "oklch(14.5% 0.008 326)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-100",
+        "Value": "oklch(96.3% 0.002 197.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-200",
+        "Value": "oklch(92.5% 0.005 214.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-300",
+        "Value": "oklch(87.2% 0.007 219.6)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-400",
+        "Value": "oklch(72.3% 0.014 214.4)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-50",
+        "Value": "oklch(98.7% 0.002 197.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-500",
+        "Value": "oklch(56% 0.021 213.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-600",
+        "Value": "oklch(45% 0.017 213.2)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-700",
+        "Value": "oklch(37.8% 0.015 216)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-800",
+        "Value": "oklch(27.5% 0.011 216.9)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-900",
+        "Value": "oklch(21.8% 0.008 223.9)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-mist-950",
+        "Value": "oklch(14.8% 0.004 228.8)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-100",
+        "Value": "oklch(97% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-200",
+        "Value": "oklch(92.2% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-300",
+        "Value": "oklch(87% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-400",
+        "Value": "oklch(70.8% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-500",
+        "Value": "oklch(55.6% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-600",
+        "Value": "oklch(43.9% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-700",
+        "Value": "oklch(37.1% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-800",
+        "Value": "oklch(26.9% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-900",
+        "Value": "oklch(20.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-neutral-950",
+        "Value": "oklch(14.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-100",
+        "Value": "oklch(96.6% 0.005 106.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-200",
+        "Value": "oklch(93% 0.007 106.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-300",
+        "Value": "oklch(88% 0.011 106.6)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-400",
+        "Value": "oklch(73.7% 0.021 106.9)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-50",
+        "Value": "oklch(98.8% 0.003 106.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-500",
+        "Value": "oklch(58% 0.031 107.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-600",
+        "Value": "oklch(46.6% 0.025 107.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-700",
+        "Value": "oklch(39.4% 0.023 107.4)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-800",
+        "Value": "oklch(28.6% 0.016 107.4)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-900",
+        "Value": "oklch(22.8% 0.013 107.4)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-olive-950",
+        "Value": "oklch(15.3% 0.006 107.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-100",
+        "Value": "oklch(95.4% 0.038 75.164)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-200",
+        "Value": "oklch(90.1% 0.076 70.697)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-300",
+        "Value": "oklch(83.7% 0.128 66.29)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-400",
+        "Value": "oklch(75% 0.183 55.934)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-50",
+        "Value": "oklch(98% 0.016 73.684)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-500",
+        "Value": "oklch(70.5% 0.213 47.604)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-600",
+        "Value": "oklch(64.6% 0.222 41.116)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-700",
+        "Value": "oklch(55.3% 0.195 38.402)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-800",
+        "Value": "oklch(47% 0.157 37.304)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-900",
+        "Value": "oklch(40.8% 0.123 38.172)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-orange-950",
+        "Value": "oklch(26.6% 0.079 36.259)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-100",
+        "Value": "oklch(94.8% 0.028 342.258)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-200",
+        "Value": "oklch(89.9% 0.061 343.231)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-300",
+        "Value": "oklch(82.3% 0.12 346.018)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-400",
+        "Value": "oklch(71.8% 0.202 349.761)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-50",
+        "Value": "oklch(97.1% 0.014 343.198)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-500",
+        "Value": "oklch(65.6% 0.241 354.308)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-600",
+        "Value": "oklch(59.2% 0.249 0.584)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-700",
+        "Value": "oklch(52.5% 0.223 3.958)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-800",
+        "Value": "oklch(45.9% 0.187 3.815)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-900",
+        "Value": "oklch(40.8% 0.153 2.432)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-pink-950",
+        "Value": "oklch(28.4% 0.109 3.907)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-100",
+        "Value": "oklch(94.6% 0.033 307.174)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-200",
+        "Value": "oklch(90.2% 0.063 306.703)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-300",
+        "Value": "oklch(82.7% 0.119 306.383)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-400",
+        "Value": "oklch(71.4% 0.203 305.504)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-50",
+        "Value": "oklch(97.7% 0.014 308.299)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-500",
+        "Value": "oklch(62.7% 0.265 303.9)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-600",
+        "Value": "oklch(55.8% 0.288 302.321)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-700",
+        "Value": "oklch(49.6% 0.265 301.924)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-800",
+        "Value": "oklch(43.8% 0.218 303.724)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-900",
+        "Value": "oklch(38.1% 0.176 304.987)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-purple-950",
+        "Value": "oklch(29.1% 0.149 302.717)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-100",
+        "Value": "oklch(93.6% 0.032 17.717)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-200",
+        "Value": "oklch(88.5% 0.062 18.334)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-300",
+        "Value": "oklch(80.8% 0.114 19.571)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-400",
+        "Value": "oklch(70.4% 0.191 22.216)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-50",
+        "Value": "oklch(97.1% 0.013 17.38)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-500",
+        "Value": "oklch(63.7% 0.237 25.331)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-600",
+        "Value": "oklch(57.7% 0.245 27.325)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-700",
+        "Value": "oklch(50.5% 0.213 27.518)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-800",
+        "Value": "oklch(44.4% 0.177 26.899)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-900",
+        "Value": "oklch(39.6% 0.141 25.723)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-red-950",
+        "Value": "oklch(25.8% 0.092 26.042)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-100",
+        "Value": "oklch(94.1% 0.03 12.58)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-200",
+        "Value": "oklch(89.2% 0.058 10.001)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-300",
+        "Value": "oklch(81% 0.117 11.638)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-400",
+        "Value": "oklch(71.2% 0.194 13.428)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-50",
+        "Value": "oklch(96.9% 0.015 12.422)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-500",
+        "Value": "oklch(64.5% 0.246 16.439)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-600",
+        "Value": "oklch(58.6% 0.253 17.585)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-700",
+        "Value": "oklch(51.4% 0.222 16.935)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-800",
+        "Value": "oklch(45.5% 0.188 13.697)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-900",
+        "Value": "oklch(41% 0.159 10.272)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-rose-950",
+        "Value": "oklch(27.1% 0.105 12.094)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-100",
+        "Value": "oklch(95.1% 0.026 236.824)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-200",
+        "Value": "oklch(90.1% 0.058 230.902)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-300",
+        "Value": "oklch(82.8% 0.111 230.318)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-400",
+        "Value": "oklch(74.6% 0.16 232.661)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-50",
+        "Value": "oklch(97.7% 0.013 236.62)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-500",
+        "Value": "oklch(68.5% 0.169 237.323)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-600",
+        "Value": "oklch(58.8% 0.158 241.966)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-700",
+        "Value": "oklch(50% 0.134 242.749)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-800",
+        "Value": "oklch(44.3% 0.11 240.79)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-900",
+        "Value": "oklch(39.1% 0.09 240.876)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-sky-950",
+        "Value": "oklch(29.3% 0.066 243.157)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-100",
+        "Value": "oklch(96.8% 0.007 247.896)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-200",
+        "Value": "oklch(92.9% 0.013 255.508)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-300",
+        "Value": "oklch(86.9% 0.022 252.894)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-400",
+        "Value": "oklch(70.4% 0.04 256.788)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-50",
+        "Value": "oklch(98.4% 0.003 247.858)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-500",
+        "Value": "oklch(55.4% 0.046 257.417)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-600",
+        "Value": "oklch(44.6% 0.043 257.281)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-700",
+        "Value": "oklch(37.2% 0.044 257.287)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-800",
+        "Value": "oklch(27.9% 0.041 260.031)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-900",
+        "Value": "oklch(20.8% 0.042 265.755)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-slate-950",
+        "Value": "oklch(12.9% 0.042 264.695)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-100",
+        "Value": "oklch(97% 0.001 106.424)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-200",
+        "Value": "oklch(92.3% 0.003 48.717)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-300",
+        "Value": "oklch(86.9% 0.005 56.366)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-400",
+        "Value": "oklch(70.9% 0.01 56.259)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-50",
+        "Value": "oklch(98.5% 0.001 106.423)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-500",
+        "Value": "oklch(55.3% 0.013 58.071)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-600",
+        "Value": "oklch(44.4% 0.011 73.639)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-700",
+        "Value": "oklch(37.4% 0.01 67.558)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-800",
+        "Value": "oklch(26.8% 0.007 34.298)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-900",
+        "Value": "oklch(21.6% 0.006 56.043)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-stone-950",
+        "Value": "oklch(14.7% 0.004 49.25)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-100",
+        "Value": "oklch(96% 0.002 17.2)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-200",
+        "Value": "oklch(92.2% 0.005 34.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-300",
+        "Value": "oklch(86.8% 0.007 39.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-400",
+        "Value": "oklch(71.4% 0.014 41.2)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-50",
+        "Value": "oklch(98.6% 0.002 67.8)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-500",
+        "Value": "oklch(54.7% 0.021 43.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-600",
+        "Value": "oklch(43.8% 0.017 39.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-700",
+        "Value": "oklch(36.7% 0.016 35.7)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-800",
+        "Value": "oklch(26.8% 0.011 36.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-900",
+        "Value": "oklch(21.4% 0.009 43.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-taupe-950",
+        "Value": "oklch(14.7% 0.004 49.3)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-100",
+        "Value": "oklch(95.3% 0.051 180.801)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-200",
+        "Value": "oklch(91% 0.096 180.426)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-300",
+        "Value": "oklch(85.5% 0.138 181.071)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-400",
+        "Value": "oklch(77.7% 0.152 181.912)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-50",
+        "Value": "oklch(98.4% 0.014 180.72)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-500",
+        "Value": "oklch(70.4% 0.14 182.503)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-600",
+        "Value": "oklch(60% 0.118 184.704)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-700",
+        "Value": "oklch(51.1% 0.096 186.391)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-800",
+        "Value": "oklch(43.7% 0.078 188.216)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-900",
+        "Value": "oklch(38.6% 0.063 188.416)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-teal-950",
+        "Value": "oklch(27.7% 0.046 192.524)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-100",
+        "Value": "oklch(94.3% 0.029 294.588)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-200",
+        "Value": "oklch(89.4% 0.057 293.283)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-300",
+        "Value": "oklch(81.1% 0.111 293.571)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-400",
+        "Value": "oklch(70.2% 0.183 293.541)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-50",
+        "Value": "oklch(96.9% 0.016 293.756)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-500",
+        "Value": "oklch(60.6% 0.25 292.717)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-600",
+        "Value": "oklch(54.1% 0.281 293.009)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-700",
+        "Value": "oklch(49.1% 0.27 292.581)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-800",
+        "Value": "oklch(43.2% 0.232 292.759)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-900",
+        "Value": "oklch(38% 0.189 293.745)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-violet-950",
+        "Value": "oklch(28.3% 0.141 291.089)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-white",
+        "Value": "#fff",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-100",
+        "Value": "oklch(97.3% 0.071 103.193)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-200",
+        "Value": "oklch(94.5% 0.129 101.54)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-300",
+        "Value": "oklch(90.5% 0.182 98.111)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-400",
+        "Value": "oklch(85.2% 0.199 91.936)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-50",
+        "Value": "oklch(98.7% 0.026 102.212)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-500",
+        "Value": "oklch(79.5% 0.184 86.047)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-600",
+        "Value": "oklch(68.1% 0.162 75.834)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-700",
+        "Value": "oklch(55.4% 0.135 66.442)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-800",
+        "Value": "oklch(47.6% 0.114 61.907)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-900",
+        "Value": "oklch(42.1% 0.095 57.708)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-yellow-950",
+        "Value": "oklch(28.6% 0.066 53.813)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-100",
+        "Value": "oklch(96.7% 0.001 286.375)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-200",
+        "Value": "oklch(92% 0.004 286.32)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-300",
+        "Value": "oklch(87.1% 0.006 286.286)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-400",
+        "Value": "oklch(70.5% 0.015 286.067)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-500",
+        "Value": "oklch(55.2% 0.016 285.938)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-600",
+        "Value": "oklch(44.2% 0.017 285.786)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-700",
+        "Value": "oklch(37% 0.013 285.805)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-800",
+        "Value": "oklch(27.4% 0.006 286.033)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-900",
+        "Value": "oklch(21% 0.006 285.885)",
+        "Options": 4
+      },
+      {
+        "Key": "--color-zinc-950",
+        "Value": "oklch(14.1% 0.005 285.823)",
+        "Options": 4
+      },
+      {
+        "Key": "--container-2xl",
+        "Value": "42rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-2xs",
+        "Value": "18rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-3xl",
+        "Value": "48rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-3xs",
+        "Value": "16rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-4xl",
+        "Value": "56rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-5xl",
+        "Value": "64rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-6xl",
+        "Value": "72rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-7xl",
+        "Value": "80rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-lg",
+        "Value": "32rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-md",
+        "Value": "28rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-sm",
+        "Value": "24rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-xl",
+        "Value": "36rem",
+        "Options": 4
+      },
+      {
+        "Key": "--container-xs",
+        "Value": "20rem",
+        "Options": 4
+      },
+      {
+        "Key": "--default-font-family",
+        "Value": "--theme(--font-sans, initial)",
+        "Options": 4
+      },
+      {
+        "Key": "--default-font-feature-settings",
+        "Value": "--theme(\n      --font-sans--font-feature-settings,\n      initial\n    )",
+        "Options": 4
+      },
+      {
+        "Key": "--default-font-variation-settings",
+        "Value": "--theme(\n      --font-sans--font-variation-settings,\n      initial\n    )",
+        "Options": 4
+      },
+      {
+        "Key": "--default-mono-font-family",
+        "Value": "--theme(--font-mono, initial)",
+        "Options": 4
+      },
+      {
+        "Key": "--default-mono-font-feature-settings",
+        "Value": "--theme(\n      --font-mono--font-feature-settings,\n      initial\n    )",
+        "Options": 4
+      },
+      {
+        "Key": "--default-mono-font-variation-settings",
+        "Value": "--theme(\n      --font-mono--font-variation-settings,\n      initial\n    )",
+        "Options": 4
+      },
+      {
+        "Key": "--default-transition-duration",
+        "Value": "150ms",
+        "Options": 4
+      },
+      {
+        "Key": "--default-transition-timing-function",
+        "Value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow",
+        "Value": "0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06)",
+        "Options": 7
+      },
+      {
+        "Key": "--drop-shadow-2xl",
+        "Value": "0 25px 25px rgb(0 0 0 / 0.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-lg",
+        "Value": "0 4px 4px rgb(0 0 0 / 0.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-md",
+        "Value": "0 3px 3px rgb(0 0 0 / 0.12)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-sm",
+        "Value": "0 1px 2px rgb(0 0 0 / 0.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-xl",
+        "Value": "0 9px 7px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--drop-shadow-xs",
+        "Value": "0 1px 1px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--ease-in",
+        "Value": "cubic-bezier(0.4, 0, 1, 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--ease-in-out",
+        "Value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--ease-out",
+        "Value": "cubic-bezier(0, 0, 0.2, 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--font-mono",
+        "Value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\",\n      \"Courier New\", monospace",
+        "Options": 4
+      },
+      {
+        "Key": "--font-sans",
+        "Value": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\",\n      \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\",\n      \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "Options": 4
+      },
+      {
+        "Key": "--font-serif",
+        "Value": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-black",
+        "Value": "900",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-bold",
+        "Value": "700",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-extrabold",
+        "Value": "800",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-extralight",
+        "Value": "200",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-light",
+        "Value": "300",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-medium",
+        "Value": "500",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-normal",
+        "Value": "400",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-semibold",
+        "Value": "600",
+        "Options": 4
+      },
+      {
+        "Key": "--font-weight-thin",
+        "Value": "100",
+        "Options": 4
+      },
+      {
+        "Key": "--frobnicate-large",
+        "Value": "9px",
+        "Options": 0
+      },
+      {
+        "Key": "--frobnicate-small",
+        "Value": "2px",
+        "Options": 0
+      },
+      {
+        "Key": "--inset-shadow-2xs",
+        "Value": "inset 0 1px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--inset-shadow-sm",
+        "Value": "inset 0 2px 4px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--inset-shadow-xs",
+        "Value": "inset 0 1px 1px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-loose",
+        "Value": "2",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-normal",
+        "Value": "1.5",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-relaxed",
+        "Value": "1.625",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-snug",
+        "Value": "1.375",
+        "Options": 4
+      },
+      {
+        "Key": "--leading-tight",
+        "Value": "1.25",
+        "Options": 4
+      },
+      {
+        "Key": "--max-width-prose",
+        "Value": "65ch",
+        "Options": 7
+      },
+      {
+        "Key": "--perspective-distant",
+        "Value": "1200px",
+        "Options": 4
+      },
+      {
+        "Key": "--perspective-dramatic",
+        "Value": "100px",
+        "Options": 4
+      },
+      {
+        "Key": "--perspective-midrange",
+        "Value": "800px",
+        "Options": 4
+      },
+      {
+        "Key": "--perspective-near",
+        "Value": "300px",
+        "Options": 4
+      },
+      {
+        "Key": "--perspective-normal",
+        "Value": "500px",
+        "Options": 4
+      },
+      {
+        "Key": "--radius",
+        "Value": "0.25rem",
+        "Options": 7
+      },
+      {
+        "Key": "--radius-2xl",
+        "Value": "1rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-3xl",
+        "Value": "1.5rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-4xl",
+        "Value": "2rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-lg",
+        "Value": "0.5rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-md",
+        "Value": "0.375rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-sm",
+        "Value": "0.25rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-xl",
+        "Value": "0.75rem",
+        "Options": 4
+      },
+      {
+        "Key": "--radius-xs",
+        "Value": "0.125rem",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow",
+        "Value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "Options": 7
+      },
+      {
+        "Key": "--shadow-2xl",
+        "Value": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-2xs",
+        "Value": "0 1px rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-inner",
+        "Value": "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
+        "Options": 7
+      },
+      {
+        "Key": "--shadow-lg",
+        "Value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-md",
+        "Value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-sm",
+        "Value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-xl",
+        "Value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--shadow-xs",
+        "Value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "Options": 4
+      },
+      {
+        "Key": "--spacing",
+        "Value": "0.25rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-2xl",
+        "Value": "1.5rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-2xl--line-height",
+        "Value": "calc(2 / 1.5)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-3xl",
+        "Value": "1.875rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-3xl--line-height",
+        "Value": "calc(2.25 / 1.875)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-4xl",
+        "Value": "2.25rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-4xl--line-height",
+        "Value": "calc(2.5 / 2.25)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-5xl",
+        "Value": "3rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-5xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-6xl",
+        "Value": "3.75rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-6xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-7xl",
+        "Value": "4.5rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-7xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-8xl",
+        "Value": "6rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-8xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-9xl",
+        "Value": "8rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-9xl--line-height",
+        "Value": "1",
+        "Options": 4
+      },
+      {
+        "Key": "--text-base",
+        "Value": "1rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-base--line-height",
+        "Value": "calc(1.5 / 1)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-lg",
+        "Value": "1.125rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-lg--line-height",
+        "Value": "calc(1.75 / 1.125)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-2xs",
+        "Value": "0px 1px 0px rgb(0 0 0 / 0.15)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-lg",
+        "Value": "0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1),\n      0px 4px 8px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-md",
+        "Value": "0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1),\n      0px 2px 4px rgb(0 0 0 / 0.1)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-sm",
+        "Value": "0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075),\n      0px 2px 2px rgb(0 0 0 / 0.075)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-shadow-xs",
+        "Value": "0px 1px 1px rgb(0 0 0 / 0.2)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-sm",
+        "Value": "0.875rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-sm--line-height",
+        "Value": "calc(1.25 / 0.875)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-xl",
+        "Value": "1.25rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-xl--line-height",
+        "Value": "calc(1.75 / 1.25)",
+        "Options": 4
+      },
+      {
+        "Key": "--text-xs",
+        "Value": "0.75rem",
+        "Options": 4
+      },
+      {
+        "Key": "--text-xs--line-height",
+        "Value": "calc(1 / 0.75)",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-normal",
+        "Value": "0em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-tight",
+        "Value": "-0.025em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-tighter",
+        "Value": "-0.05em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-wide",
+        "Value": "0.025em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-wider",
+        "Value": "0.05em",
+        "Options": 4
+      },
+      {
+        "Key": "--tracking-widest",
+        "Value": "0.1em",
+        "Options": 4
+      }
+    ],
+    "Prefix": ""
+  }
+]

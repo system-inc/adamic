@@ -1,0 +1,54 @@
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/compile.acompileCandidate(candidate,0,
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(!state.usedValue_||_!state.resolvedValue)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(state.usedModifier_&&_!state.resolvedModifier_&&_candidate.modifierPresent)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_state.resolvedModifier)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(candidate.modifierPresent_&&_!state.resolvedRatio_&&_!state.resolvedModifier)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(removals!==1)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_removals!==2)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aif(!object.valid_||_!object.objectPresent)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aif(object.keys.length===0)
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aconst_keys=sortedKeys(object.keys);
+    helpers_test.go:185: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:185: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+--- PASS: TestCompilingMutants (26.49s)
+    --- PASS: TestCompilingMutants/compile.acompileCandidate(candidate,0, (2.12s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(!state.usedValue_||_!state.resolvedValue) (2.35s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(state.usedModifier_&&_!state.resolvedModifier_&&_candidate.modifierPresent) (1.96s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_state.resolvedModifier) (2.11s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(candidate.modifierPresent_&&_!state.resolvedRatio_&&_!state.resolvedModifier) (2.18s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(removals!==1) (2.29s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_removals!==2) (1.98s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aif(!object.valid_||_!object.objectPresent) (2.14s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aif(object.keys.length===0) (2.03s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aconst_keys=sortedKeys(object.keys); (2.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave22	26.501s

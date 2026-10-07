@@ -1,0 +1,6 @@
+import {compileCandidate} from './compile_candidate.a';
+import type {CompileCandidate,CompileState,Definition,Compiled} from './compile_candidate.a';
+import type {NodeSetView} from '../slot04_wave12/union_node_sets.a';
+export function compile<T>(candidate:CompileCandidate,lookup:(root:string)=>Definition<T>,clone:(nodes:readonly T[])=>T[],walk:(body:T[],state:CompileState)=>void,remove:(body:readonly T[],removed:NodeSetView)=>T[]):Compiled<T>{
+    return compileCandidate(candidate,0,lookup,clone,walk,remove);
+}

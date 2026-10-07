@@ -1,0 +1,11 @@
+export interface CompilerOptionObject {readonly valid:boolean;readonly objectPresent:boolean;readonly keys:readonly string[];}
+export interface CompilerOptions {readonly options:{};readonly error:string;}
+// The decoder and sorter follow encoding/json and sort.Strings, including duplicate keys.
+export function decodeCompilerRuleOptions(raw:string,decode:(raw:string)=>CompilerOptionObject,sortedKeys:(keys:readonly string[])=>readonly string[]):CompilerOptions {
+    if(raw.length===0){return {options:{},error:''};}
+    const object=decode(raw);
+    if(!object.valid || !object.objectPresent){return {options:{},error:`expected an options object, got ${raw}`};}
+    if(object.keys.length===0){return {options:{},error:''};}
+    const keys=sortedKeys(object.keys);
+    return {options:{},error:`takes only {}: its options object is React Compiler configuration, which cohere does not carry, so ${keys.join(', ')} would be accepted and never honoured`};
+}

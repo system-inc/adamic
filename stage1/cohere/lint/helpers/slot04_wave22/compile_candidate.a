@@ -1,0 +1,23 @@
+import {unionNodeSets} from '../slot04_wave12/union_node_sets.a';
+import type {NodeSetView} from '../slot04_wave12/union_node_sets.a';
+export interface CompileCandidate {readonly present:boolean;readonly functional:boolean;readonly root:string;readonly modifierPresent:boolean;}
+export interface CompileState {usedValue:boolean;resolvedValue:boolean;usedModifier:boolean;resolvedModifier:boolean;resolvedRatio:boolean;dropped:NodeSetView;nonRatio:NodeSetView;}
+export interface Definition<T> {readonly found:boolean;readonly nodes:readonly T[];}
+export interface Compiled<T> {readonly nodes:readonly T[];readonly ok:boolean;}
+// Identity is supplied by the caller's arena. Clone and walk must share that arena.
+export function compileCandidate<T>(candidate:CompileCandidate,removals:number,lookup:(root:string)=>Definition<T>,clone:(nodes:readonly T[])=>T[],walk:(body:T[],state:CompileState)=>void,remove:(body:readonly T[],removed:NodeSetView)=>T[]):Compiled<T> {
+    if(!candidate.present || !candidate.functional){return {nodes:[],ok:false};}
+    const definition=lookup(candidate.root);
+    if(!definition.found){return {nodes:[],ok:false};}
+    const state:CompileState={usedValue:false,resolvedValue:false,usedModifier:false,resolvedModifier:false,resolvedRatio:false,dropped:{present:false,entries:new Map<number,boolean>()},nonRatio:{present:false,entries:new Map<number,boolean>()}};
+    const body=clone(definition.nodes);
+    walk(body,state);
+    if(!state.usedValue || !state.resolvedValue){return {nodes:[],ok:false};}
+    if(state.usedModifier && !state.resolvedModifier && candidate.modifierPresent){return {nodes:[],ok:false};}
+    if(state.resolvedRatio && state.resolvedModifier){return {nodes:[],ok:false};}
+    if(candidate.modifierPresent && !state.resolvedRatio && !state.resolvedModifier){return {nodes:[],ok:false};}
+    let removed:NodeSetView={present:false,entries:new Map<number,boolean>()};
+    if(removals!==1){removed=state.dropped;}
+    if(state.resolvedRatio && removals!==2){removed=unionNodeSets(removed,state.nonRatio);}
+    return {nodes:remove(body,removed),ok:true};
+}
