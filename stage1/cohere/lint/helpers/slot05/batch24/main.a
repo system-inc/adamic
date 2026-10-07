@@ -1,0 +1,28 @@
+import { panic,readTextFile,programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { rewrite } from './rewrite.a';
+import type { Reply } from './rewrite.a';
+import { isHexDigit } from './is_hex_digit.a';
+import { allHexDigits } from './all_hex_digits.a';
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));if(input.kind === 'Error'){panic(input.message);}
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0){panic(json.error);}
+function field(index: number,name: string): number{return json.field(index,name);}
+function text(index: number): string{return json.node(index).text;}
+function number(index: number): number{return Number(text(index));}
+function boolean(index: number): boolean{return text(index) === 'true';}
+let trace='';let operations=new Map<string,Reply>();
+// Only the test adapter handles an unknown mutant call. Record its wrong key,
+// return positive progress, and require successful execution before comparison.
+const fallback: Reply={text:'',error:'',number:0,width:1,kind:0,set:0,options:0,yes:false,negated:false};
+function sourceKey(source: string): string{let a=0;let b=0;for(let i=0;i<source.length;i++){const rune=source.charCodeAt(i);a=(a*131+rune)%65521;b=(b*137+rune)%65519;}return `${source.length},${a},${b}`;}
+function dependency(name: string,source: string,a: number,b: number,c: number): Reply{const key=`${name}:${sourceKey(source)}:${a}:${b}:${c}`;trace+=key+';';return operations.get(key) ?? fallback;}
+const mode=text(field(root,'mode'));
+const operationKeys: string[]=[];const operationValues: Reply[]=[];
+for(const op of json.node(field(root,'operationPool')).children){const v=field(op,'reply');operationKeys.push(text(field(op,'key')));operationValues.push({text:text(field(v,'text')),error:text(field(v,'error')),number:number(field(v,'number')),width:number(field(v,'width')),kind:number(field(v,'kind')),set:number(field(v,'set')),options:number(field(v,'options')),yes:boolean(field(v,'yes')),negated:boolean(field(v,'negated'))});}
+for(const row of json.node(field(root,'rows')).children){
+ if(mode === 'rewrite'){
+  operations=new Map<string,Reply>();trace='';
+  for(const op of json.node(field(row,'ops')).children){const id=number(op);operations.set(operationKeys[id] ?? panic('missing operation key'),operationValues[id] ?? panic('missing operation value'));}
+  const result=rewrite(text(field(row,'source')),number(field(row,'options')),dependency);console.log(`${result.text}|${result.exact}|${result.error}|${trace}`);
+ }else{const values: number[]=[];for(const b of json.node(field(row,'bytes')).children){values.push(number(b));}if(mode === 'hex'){console.log(`${isHexDigit(values[0] ?? panic('missing byte'))}`);}else{console.log(`${allHexDigits(values)}`);}}
+}

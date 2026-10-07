@@ -1,0 +1,89 @@
+=== RUN   TestRewrite
+    helper_test.go:78: {
+          "captured_strings": 905,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 386,
+            "@typescript-eslint/no-empty-object-type": 67,
+            "no-restricted-exports": 483,
+            "no-restricted-imports": 1270
+          },
+          "files": {
+            "@next/next/no-html-link-for-pages": [
+              "cohere/internal/lint/rules/next/no_html_link_for_pages_test.go"
+            ],
+            "@typescript-eslint/no-empty-object-type": [
+              "cohere/internal/lint/rules/typescript/no_empty_object_type_corpus_test.go",
+              "cohere/internal/lint/rules/typescript/no_empty_object_type_test.go"
+            ],
+            "no-restricted-exports": [
+              "cohere/internal/lint/rules/core/no_restricted_exports_test.go"
+            ],
+            "no-restricted-imports": [
+              "cohere/internal/lint/rules/core/no_restricted_imports_test.go"
+            ]
+          },
+          "hex": "all 256 bytes plus every byte in captured consumer strings",
+          "options": "all sixteen flag combinations for every rewrite source",
+          "rows": 22928,
+          "sources": 1433
+        }
+    helper_test.go:96: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch24/main.a:25:144: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch24/main.a:25:210: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+--- FAIL: TestRewrite (7.08s)
+=== RUN   TestIsHexDigit
+    helper_test.go:78: {
+          "captured_strings": 584,
+          "consumers": {
+            "no-control-regex": 42,
+            "no-regex-spaces": 338,
+            "no-useless-escape": 473
+          },
+          "files": {
+            "no-control-regex": [
+              "cohere/internal/lint/rules/core/no_control_regex_test.go"
+            ],
+            "no-regex-spaces": [
+              "cohere/internal/lint/rules/core/no_regex_spaces_test.go"
+            ],
+            "no-useless-escape": [
+              "cohere/internal/lint/rules/core/no_useless_escape_test.go"
+            ]
+          },
+          "hex": "all 256 bytes plus every byte in captured consumer strings",
+          "options": "all sixteen flag combinations for every rewrite source",
+          "rows": 14339,
+          "sources": 1106
+        }
+    helper_test.go:96: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch24/main.a:25:144: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch24/main.a:25:210: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+--- FAIL: TestIsHexDigit (0.44s)
+=== RUN   TestAllHexDigits
+    helper_test.go:78: {
+          "captured_strings": 584,
+          "consumers": {
+            "no-control-regex": 42,
+            "no-regex-spaces": 338,
+            "no-useless-escape": 473
+          },
+          "files": {
+            "no-control-regex": [
+              "cohere/internal/lint/rules/core/no_control_regex_test.go"
+            ],
+            "no-regex-spaces": [
+              "cohere/internal/lint/rules/core/no_regex_spaces_test.go"
+            ],
+            "no-useless-escape": [
+              "cohere/internal/lint/rules/core/no_useless_escape_test.go"
+            ]
+          },
+          "hex": "all 256 bytes plus every byte in captured consumer strings",
+          "options": "all sixteen flag combinations for every rewrite source",
+          "rows": 1106,
+          "sources": 1106
+        }
+    helper_test.go:96: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch24/main.a:25:144: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch24/main.a:25:210: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+--- FAIL: TestAllHexDigits (0.42s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch24	7.953s
+FAIL

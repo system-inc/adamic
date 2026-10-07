@@ -1,0 +1,81 @@
+import { panic } from 'adamic';
+// Strings at this boundary are reversible hex encodings of Go byte strings.
+// This translates regexp syntax; compilation and matching remain external.
+export interface Reply {readonly text: string;readonly error: string;readonly number: number;readonly width: number;readonly kind: number;readonly set: number;readonly options: number;readonly yes: boolean;readonly negated: boolean;}
+export type Dependency = (name: string,source: string,a: number,b: number,c: number) => Reply;
+export interface RewriteResult {readonly text: string;readonly exact: boolean;readonly error: string;}
+interface Group {readonly options: number;readonly kind: number;}
+// Option bits: Unicode 1, ignoreCase 2, multiline 4, dotAll 8.
+function flag(options: number,bit: number): boolean {return (options & bit) !== 0;}
+function encoded(ascii: string): string {let out='';for(let i=0;i<ascii.length;i++){out+=ascii.charCodeAt(i).toString(16).padStart(2,'0');}return out;}
+function failed(error: string): RewriteResult {return {text:'',exact:false,error};}
+export function rewrite(source: string,options: number,dependency: Dependency): RewriteResult {
+ let out='';let exact=true;let current=options;const groups: Group[]=[];
+ const counted=dependency('count',source,0,0,0);
+ const groupCount=counted.number;const named=counted.yes ? 1 : 0;
+ for(let i=0;i<source.length/2;) {
+  const rest=source.slice(i*2);const decoded=dependency('rune',rest,0,0,0);
+  const rune=decoded.number;const size=decoded.width;
+  switch(rune) {
+   case 92: {
+    const name=dependency('back',rest,0,0,0);
+    if(name.yes) {if(flag(current,2)){exact=false;}out+=name.text;i+=name.width;continue;}
+    const escape=dependency('escape',source,i+size,flag(current,1) ? 1 : 0,groupCount*2+named);
+    if(escape.error !== ''){return failed(escape.error);}
+    const end=i+size+escape.width;
+    switch(escape.kind) {
+     case 0: {
+      if(flag(current,2)){const widened=dependency('case','',escape.number,flag(current,1) ? 1 : 0,0);if(widened.yes){out+=widened.text;i=end;continue;}}
+      out+=dependency('literal','',escape.number,0,0).text;break;
+     }
+     case 3:if(flag(current,2)){exact=false;}out+=source.slice(i*2,end*2);break;
+     case 2: {
+      const suffix=source.slice(end*2);
+      if(dependency('quantifier',suffix,0,0,0).number>0){return failed(dependency('repeat',suffix,0,0,0).error);}
+      out+=dependency('boundary','',escape.negated ? 1 : 0,current,0).text;break;
+     }
+     case 1: {
+      if((escape.set === 1 || escape.set === 2) && flag(current,2) && flag(current,1)) {
+       const atoms=dependency('word','',current,0,0);
+       out+=dependency('write',atoms.text,escape.set === 2 ? 1 : 0,0,0).text;
+      } else {if(escape.set === 3 && flag(current,2)){exact=false;}out+=source.slice(i*2,end*2);}
+      break;
+     }
+    }
+    i=end;continue;
+   }
+   case 91: {
+    const read=dependency('class',rest,0,0,0);if(read.error !== ''){return failed(read.error);}
+    const atoms=dependency('atoms',read.text,current,flag(current,1) ? 1 : 0,groupCount*2+named);
+    if(atoms.error !== ''){return failed(atoms.error);}if(!atoms.yes){exact=false;}
+    out+=dependency('write',atoms.text,read.negated ? 1 : 0,current,0).text;i+=read.width;continue;
+   }
+   case 40: {
+    const opener=dependency('opener',rest,0,0,0);
+    if(opener.yes){groups.push({options:current,kind:0});out+=opener.text;i+=opener.width;continue;}
+    const modifier=dependency('modifier',rest,current,0,0);
+    if(modifier.yes){groups.push({options:current,kind:0});current=modifier.options;out+=encoded(flag(options,2) && !flag(current,2) ? '(?-i:' : '(?:');i+=modifier.width;continue;}
+    const checked=dependency('construct',rest,0,0,0);if(checked.error !== ''){return failed(checked.error);}
+    groups.push({options:current,kind:dependency('group',rest,0,0,0).kind});out+='28';i+=size;continue;
+   }
+   case 41: {
+    if(groups.length>0){const group=groups.pop() ?? panic('missing group');current=group.options;const checked=dependency('groupQuantifier',source.slice((i+size)*2),group.kind,options,0);if(checked.error !== ''){return failed(checked.error);}}
+    out+='29';i+=size;continue;
+   }
+   case 46:out+=encoded(flag(current,8) ? '[\\s\\S]' : '[^\\n\\r\\u2028\\u2029]');i+=size;continue;
+   case 94: {
+    const suffix=source.slice((i+size)*2);if(dependency('quantifier',suffix,0,0,0).number>0){return failed(dependency('repeat',suffix,0,0,0).error);}
+    out+=encoded(flag(current,4) ? '(?:\\A|(?<=[\\n\\r\\u2028\\u2029]))' : '\\A');i+=size;continue;
+   }
+   case 36: {
+    const suffix=source.slice((i+size)*2);if(dependency('quantifier',suffix,0,0,0).number>0){return failed(dependency('repeat',suffix,0,0,0).error);}
+    out+=encoded(flag(current,4) ? '(?:\\z|(?=[\\n\\r\\u2028\\u2029]))' : '\\z');i+=size;continue;
+   }
+   default: {
+    if(flag(current,2)){const widened=dependency('case','',rune,flag(current,1) ? 1 : 0,0);if(widened.yes){out+=widened.text;i+=size;continue;}}
+    out+=decoded.text;i+=size;
+   }
+  }
+ }
+ return {text:out,exact,error:''};
+}

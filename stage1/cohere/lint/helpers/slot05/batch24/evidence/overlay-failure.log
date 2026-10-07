@@ -1,0 +1,18 @@
+=== RUN   TestRewrite
+    helper_test.go:77: go [build -overlay=/tmp/adamic-gate/TestRewrite2777188210/001/overlay.json -o /tmp/adamic-gate/TestRewrite2777188210/001/oracle /workspace/adamic/cohere/adamic_slot05_batch24.go]: exit status 1
+        # github.com/system-inc/cohere/internal/lint/ecmascript/regexp
+        /tmp/adamic-gate/TestRewrite2777188210/001/rewrite.go:6:2: "unicode/utf8" imported and not used
+--- FAIL: TestRewrite (0.06s)
+=== RUN   TestIsHexDigit
+    helper_test.go:77: go [build -overlay=/tmp/adamic-gate/TestIsHexDigit2032208933/001/overlay.json -o /tmp/adamic-gate/TestIsHexDigit2032208933/001/oracle /workspace/adamic/cohere/adamic_slot05_batch24.go]: exit status 1
+        # github.com/system-inc/cohere/internal/lint/ecmascript/regexp
+        /tmp/adamic-gate/TestIsHexDigit2032208933/001/rewrite.go:6:2: "unicode/utf8" imported and not used
+--- FAIL: TestIsHexDigit (0.06s)
+=== RUN   TestAllHexDigits
+    helper_test.go:77: go [build -overlay=/tmp/adamic-gate/TestAllHexDigits1080983119/001/overlay.json -o /tmp/adamic-gate/TestAllHexDigits1080983119/001/oracle /workspace/adamic/cohere/adamic_slot05_batch24.go]: exit status 1
+        # github.com/system-inc/cohere/internal/lint/ecmascript/regexp
+        /tmp/adamic-gate/TestAllHexDigits1080983119/001/rewrite.go:6:2: "unicode/utf8" imported and not used
+--- FAIL: TestAllHexDigits (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch24	0.167s
+FAIL

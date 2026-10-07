@@ -1,0 +1,29 @@
+{
+  "helpers": {
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.rewrite": [
+      "@next/next/no-html-link-for-pages",
+      "@typescript-eslint/no-empty-object-type",
+      "no-restricted-exports",
+      "no-restricted-imports"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.IsHexDigit": [
+      "no-control-regex",
+      "no-regex-spaces",
+      "no-useless-escape"
+    ],
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.AllHexDigits": [
+      "no-control-regex",
+      "no-regex-spaces",
+      "no-useless-escape"
+    ]
+  },
+  "dependency_occurrences_removed": 10,
+  "unique_consumers": 7,
+  "newly_helper_ready_from_batch_alone": [],
+  "cumulative_slot05": {
+    "helpers": 68,
+    "dependency_occurrences_removed": 365,
+    "unique_consumers": 73,
+    "helper_ready": 50
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "prior_published": "f3802ce4e9f69c81c8ac01ae1602e883286c658b",
+  "claim_head": "fa546b148e44f9b76cd198bd4ad5329d79236180",
+  "paths": [
+    "cmd",
+    "internal",
+    "oracle",
+    "cohere",
+    "go.mod",
+    "go.sum",
+    "stage1/cohere/lint/helpers/slot05",
+    "stage1/cohere/lint/helpers/options_json.ts"
+  ],
+  "git_object_lists_identical": true,
+  "entries": 1740,
+  "object_list_sha256": "f1bb6b6270a06af35c5ae961b75417ade308eabeec1221b721cb41ba31312d12",
+  "prior_witnesses_preserved": 269,
+  "prior_witnesses_rerun_this_unit": false,
+  "pool_input_identity": {
+    "original_stopped_input_rows": 22928,
+    "all_retained": true,
+    "source_options_bytes_compared": true
+  },
+  "fresh_go_outputs_can_vary": "Case-equivalent class members have unspecified Go map iteration order; compare exact outputs from each generation."
+}

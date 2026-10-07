@@ -1,0 +1,287 @@
+[
+  {
+    "file": "rewrite.a",
+    "old": "if(name.yes) {if(flag(current,2))",
+    "replacement": "if(name.yes) {if(!flag(current,2))",
+    "line": 1217,
+    "source_hex": "283f3c6e3e61295c6b3c6e3e",
+    "options": 0,
+    "bytes": [],
+    "mutant": "283f3c6e3e61295c6b3c6e3e|false||count:24,13367,11913:0:0:0;rune:24,13367,11913:0:0:0;opener:24,13367,11913:0:0:0;rune:14,44749,46067:0:0:0;rune:12,52452,45564:0:0:0;groupQuantifier:10,63075,52718:0:0:0;rune:10,63075,52718:0:0:0;back:10,63075,52718:0:0:0;",
+    "go": "283f3c6e3e61295c6b3c6e3e|true||count:24,13367,11913:0:0:0;rune:24,13367,11913:0:0:0;opener:24,13367,11913:0:0:0;rune:14,44749,46067:0:0:0;rune:12,52452,45564:0:0:0;groupQuantifier:10,63075,52718:0:0:0;rune:10,63075,52718:0:0:0;back:10,63075,52718:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "case 3:if(flag(current,2))",
+    "replacement": "case 3:if(!flag(current,2))",
+    "line": 6241,
+    "source_hex": "5c31286129",
+    "options": 0,
+    "bytes": [],
+    "mutant": "5c31286129|false||count:10,33053,39638:0:0:0;rune:10,33053,39638:0:0:0;back:10,33053,39638:0:0:0;escape:10,33053,39638:1:0:2;rune:6,23932,32671:0:0:0;opener:6,23932,32671:0:0:0;modifier:6,23932,32671:0:0:0;construct:6,23932,32671:0:0:0;group:6,23932,32671:0:0:0;rune:4,47745,27623:0:0:0;rune:2,6607,6907:0:0:0;groupQuantifier:0,0,0:0:0:0;",
+    "go": "5c31286129|true||count:10,33053,39638:0:0:0;rune:10,33053,39638:0:0:0;back:10,33053,39638:0:0:0;escape:10,33053,39638:1:0:2;rune:6,23932,32671:0:0:0;opener:6,23932,32671:0:0:0;modifier:6,23932,32671:0:0:0;construct:6,23932,32671:0:0:0;group:6,23932,32671:0:0:0;rune:4,47745,27623:0:0:0;rune:2,6607,6907:0:0:0;groupQuantifier:0,0,0:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "escape.set === 2 ? 1 : 0",
+    "replacement": "escape.set === 2 ? 0 : 1",
+    "line": 6308,
+    "source_hex": "5c775c575c707b4c7d5c507b477265656b7d",
+    "options": 3,
+    "bytes": [],
+    "mutant": "5b5e302d39412d5a5c7530303566612d7a5c75303137665c75323132615d5b302d39412d5a5c7530303566612d7a5c75303137665c75323132615d5c707b4c7d5c507b477265656b7d|false||count:36,30291,27820:0:0:0;rune:36,30291,27820:0:0:0;back:36,30291,27820:0:0:0;escape:36,30291,27820:1:1:0;word:0,0,0:3:0:0;write:110,29548,20174:1:0:0;rune:32,12389,19060:0:0:0;back:32,12389,19060:0:0:0;escape:36,30291,27820:3:1:0;word:0,0,0:3:0:0;write:110,29548,20174:0:0:0;rune:28,29324,42022:0:0:0;back:28,29324,42022:0:0:0;escape:36,30291,27820:5:1:0;rune:18,48776,25405:0:0:0;back:18,48776,25405:0:0:0;escape:36,30291,27820:10:1:0;",
+    "go": "5b302d39412d5a5c7530303566612d7a5c75303137665c75323132615d5b5e302d39412d5a5c7530303566612d7a5c75303137665c75323132615d5c707b4c7d5c507b477265656b7d|false||count:36,30291,27820:0:0:0;rune:36,30291,27820:0:0:0;back:36,30291,27820:0:0:0;escape:36,30291,27820:1:1:0;word:0,0,0:3:0:0;write:110,29548,20174:0:0:0;rune:32,12389,19060:0:0:0;back:32,12389,19060:0:0:0;escape:36,30291,27820:3:1:0;word:0,0,0:3:0:0;write:110,29548,20174:1:0:0;rune:28,29324,42022:0:0:0;back:28,29324,42022:0:0:0;escape:36,30291,27820:5:1:0;rune:18,48776,25405:0:0:0;back:18,48776,25405:0:0:0;escape:36,30291,27820:10:1:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "const suffix=source.slice(end*2);",
+    "replacement": "const suffix=source.slice((end+1)*2);",
+    "line": 6257,
+    "source_hex": "5c423f",
+    "options": 0,
+    "bytes": [],
+    "mutant": "|true||count:6,3724,40469:0:0:0;rune:6,3724,40469:0:0:0;back:6,3724,40469:0:0:0;escape:6,3724,40469:1:0:0;quantifier:0,0,0:0:0:0;boundary:0,0,0:1:0:0;rune:2,6783,7089:0:0:0;",
+    "go": "|false|756e737570706f72746564207265676578702073796e7461783a203f207265706561747320616e20617373657274696f6e|count:6,3724,40469:0:0:0;rune:6,3724,40469:0:0:0;back:6,3724,40469:0:0:0;escape:6,3724,40469:1:0:0;quantifier:2,6783,7089:0:0:0;repeat:2,6783,7089:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "read.negated ? 1 : 0,current,0",
+    "replacement": "read.negated ? 0 : 1,current,0",
+    "line": 5745,
+    "source_hex": "5b2261222c20222e2e2f62222c2022225d",
+    "options": 0,
+    "bytes": [],
+    "mutant": "|true||count:34,27152,16707:0:0:0;rune:34,27152,16707:0:0:0;class:34,27152,16707:0:0:0;atoms:30,54278,24798:0:0:0;write:240,28680,46918:1:0:0;",
+    "go": "5b5c7530303232615c75303032325c75303032635c75303032305c75303032325c75303032655c75303032655c7530303266625c75303032325c75303032635c75303032305c75303032325c75303032325d|true||count:34,27152,16707:0:0:0;rune:34,27152,16707:0:0:0;class:34,27152,16707:0:0:0;atoms:30,54278,24798:0:0:0;write:240,28680,46918:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "current=modifier.options;",
+    "replacement": "current=options;",
+    "line": 1137,
+    "source_hex": "28283f693a6129622963",
+    "options": 0,
+    "bytes": [],
+    "mutant": "28283f3a6129622963|true||count:20,45012,7585:0:0:0;rune:20,45012,7585:0:0:0;opener:20,45012,7585:0:0:0;modifier:20,45012,7585:0:0:0;construct:20,45012,7585:0:0:0;group:20,45012,7585:0:0:0;rune:18,10730,14828:0:0:0;opener:18,10730,14828:0:0:0;modifier:18,10730,14828:0:0:0;rune:10,48259,2873:0:0:0;rune:8,17127,7091:0:0:0;groupQuantifier:6,1991,56906:0:0:0;rune:6,1991,56906:0:0:0;rune:4,38522,48350:0:0:0;groupQuantifier:2,7125,7449:0:0:0;rune:2,7125,7449:0:0:0;",
+    "go": "28283f3a5b41615d29622963|true||count:20,45012,7585:0:0:0;rune:20,45012,7585:0:0:0;opener:20,45012,7585:0:0:0;modifier:20,45012,7585:0:0:0;construct:20,45012,7585:0:0:0;group:20,45012,7585:0:0:0;rune:18,10730,14828:0:0:0;opener:18,10730,14828:0:0:0;modifier:18,10730,14828:0:0:0;rune:10,48259,2873:0:0:0;case:0,0,0:97:0:0;rune:8,17127,7091:0:0:0;groupQuantifier:6,1991,56906:0:0:0;rune:6,1991,56906:0:0:0;rune:4,38522,48350:0:0:0;groupQuantifier:2,7125,7449:0:0:0;rune:2,7125,7449:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "dependency('case','',rune,flag(current,1) ? 1 : 0,0)",
+    "replacement": "dependency('case','',rune,flag(current,1) ? 0 : 1,0)",
+    "line": 19,
+    "source_hex": "00",
+    "options": 2,
+    "bytes": [],
+    "mutant": "00|true||count:2,6336,6624:0:0:0;rune:2,6336,6624:0:0:0;case:0,0,0:0:1:0;",
+    "go": "00|true||count:2,6336,6624:0:0:0;rune:2,6336,6624:0:0:0;case:0,0,0:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "return failed(escape.error);",
+    "replacement": "return {text:out,exact,error:escape.error};",
+    "line": 6209,
+    "source_hex": "5c",
+    "options": 0,
+    "bytes": [],
+    "mutant": "|true|756e737570706f72746564207265676578702073796e7461783a205c2061742074686520656e64206f6620746865207061747465726e|count:2,7042,7360:0:0:0;rune:2,7042,7360:0:0:0;back:2,7042,7360:0:0:0;escape:2,7042,7360:1:0:0;",
+    "go": "|false|756e737570706f72746564207265676578702073796e7461783a205c2061742074686520656e64206f6620746865207061747465726e|count:2,7042,7360:0:0:0;rune:2,7042,7360:0:0:0;back:2,7042,7360:0:0:0;escape:2,7042,7360:1:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "case 46:out+=encoded(flag(current,8)",
+    "replacement": "case 46:out+=encoded(!flag(current,8)",
+    "line": 1265,
+    "source_hex": "283f692d6d3a612e283f2d693a622924295e",
+    "options": 0,
+    "bytes": [],
+    "mutant": "283f3a5b41615d5b5c735c535d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;",
+    "go": "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "current=group.options;",
+    "replacement": "current=options;",
+    "line": 1269,
+    "source_hex": "283f692d6d3a612e283f2d693a622924295e",
+    "options": 4,
+    "bytes": [],
+    "mutant": "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a6229283f3a5c7a7c283f3d5b5c6e5c725c75323032385c75323032395d292929283f3a5c417c283f3c3d5b5c6e5c725c75323032385c75323032395d2929|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:4:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:4:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:4:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;",
+    "go": "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a29283f3a5c417c283f3c3d5b5c6e5c725c75323032385c75323032395d2929|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:4:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:4:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:4:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "escape.set === 3 && flag(current,2)",
+    "replacement": "escape.set === 3 && !flag(current,2)",
+    "line": 6306,
+    "source_hex": "5c775c575c707b4c7d5c507b477265656b7d",
+    "options": 1,
+    "bytes": [],
+    "mutant": "5c775c575c707b4c7d5c507b477265656b7d|false||count:36,30291,27820:0:0:0;rune:36,30291,27820:0:0:0;back:36,30291,27820:0:0:0;escape:36,30291,27820:1:1:0;rune:32,12389,19060:0:0:0;back:32,12389,19060:0:0:0;escape:36,30291,27820:3:1:0;rune:28,29324,42022:0:0:0;back:28,29324,42022:0:0:0;escape:36,30291,27820:5:1:0;rune:18,48776,25405:0:0:0;back:18,48776,25405:0:0:0;escape:36,30291,27820:10:1:0;",
+    "go": "5c775c575c707b4c7d5c507b477265656b7d|true||count:36,30291,27820:0:0:0;rune:36,30291,27820:0:0:0;back:36,30291,27820:0:0:0;escape:36,30291,27820:1:1:0;rune:32,12389,19060:0:0:0;back:32,12389,19060:0:0:0;escape:36,30291,27820:3:1:0;rune:28,29324,42022:0:0:0;back:28,29324,42022:0:0:0;escape:36,30291,27820:5:1:0;rune:18,48776,25405:0:0:0;back:18,48776,25405:0:0:0;escape:36,30291,27820:10:1:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "group.kind,options,0",
+    "replacement": "group.kind,current,0",
+    "line": 1265,
+    "source_hex": "283f692d6d3a612e283f2d693a622924295e",
+    "options": 0,
+    "bytes": [],
+    "mutant": "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:2:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;",
+    "go": "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "if(!atoms.yes){exact=false;}",
+    "replacement": "if(!atoms.yes){exact=true;}",
+    "line": 5892,
+    "source_hex": "5b5c707b4c7d5d",
+    "options": 3,
+    "bytes": [],
+    "mutant": "5b5c707b4c7d5d|true||count:14,13901,42265:0:0:0;rune:14,13901,42265:0:0:0;class:14,13901,42265:0:0:0;atoms:10,36789,57934:3:1:0;write:34,15400,52954:0:3:0;",
+    "go": "5b5c707b4c7d5d|false||count:14,13901,42265:0:0:0;rune:14,13901,42265:0:0:0;class:14,13901,42265:0:0:0;atoms:10,36789,57934:3:1:0;write:34,15400,52954:0:3:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "rewrite.a",
+    "old": "flag(current,4) ? '(?:\\\\A|",
+    "replacement": "!flag(current,4) ? '(?:\\\\A|",
+    "line": 1265,
+    "source_hex": "283f692d6d3a612e283f2d693a622924295e",
+    "options": 0,
+    "bytes": [],
+    "mutant": "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a29283f3a5c417c283f3c3d5b5c6e5c725c75323032385c75323032395d2929|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;",
+    "go": "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "is_hex_digit.a",
+    "old": "byte <= 57",
+    "replacement": "byte < 57",
+    "line": 58,
+    "source_hex": "",
+    "options": 0,
+    "bytes": [
+      57
+    ],
+    "mutant": "false",
+    "go": "true",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "is_hex_digit.a",
+    "old": "byte >= 65",
+    "replacement": "byte > 65",
+    "line": 66,
+    "source_hex": "",
+    "options": 0,
+    "bytes": [
+      65
+    ],
+    "mutant": "false",
+    "go": "true",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "is_hex_digit.a",
+    "old": "byte >= 97",
+    "replacement": "byte > 97",
+    "line": 98,
+    "source_hex": "",
+    "options": 0,
+    "bytes": [
+      97
+    ],
+    "mutant": "false",
+    "go": "true",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "is_hex_digit.a",
+    "old": "byte <= 102",
+    "replacement": "byte < 102",
+    "line": 103,
+    "source_hex": "",
+    "options": 0,
+    "bytes": [
+      102
+    ],
+    "mutant": "false",
+    "go": "true",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "all_hex_digits.a",
+    "old": "bytes.length === 0) { return false",
+    "replacement": "bytes.length === 0) { return true",
+    "line": 1,
+    "source_hex": "",
+    "options": 0,
+    "bytes": [],
+    "mutant": "true",
+    "go": "false",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "all_hex_digits.a",
+    "old": "if (!isHexDigit(byte))",
+    "replacement": "if (isHexDigit(byte))",
+    "line": 2,
+    "source_hex": "",
+    "options": 0,
+    "bytes": [
+      0
+    ],
+    "mutant": "true",
+    "go": "false",
+    "native_successful": true,
+    "stderr_empty": true
+  },
+  {
+    "file": "all_hex_digits.a",
+    "old": "for (const byte of bytes)",
+    "replacement": "for (const byte of bytes.slice(0,-1))",
+    "line": 2,
+    "source_hex": "",
+    "options": 0,
+    "bytes": [
+      0
+    ],
+    "mutant": "true",
+    "go": "false",
+    "native_successful": true,
+    "stderr_empty": true
+  }
+]

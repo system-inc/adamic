@@ -1,0 +1,95 @@
+=== RUN   TestRewrite
+    helper_test.go:78: {
+          "captured_strings": 905,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 386,
+            "@typescript-eslint/no-empty-object-type": 67,
+            "no-restricted-exports": 483,
+            "no-restricted-imports": 1270
+          },
+          "files": {
+            "@next/next/no-html-link-for-pages": [
+              "cohere/internal/lint/rules/next/no_html_link_for_pages_test.go"
+            ],
+            "@typescript-eslint/no-empty-object-type": [
+              "cohere/internal/lint/rules/typescript/no_empty_object_type_corpus_test.go",
+              "cohere/internal/lint/rules/typescript/no_empty_object_type_test.go"
+            ],
+            "no-restricted-exports": [
+              "cohere/internal/lint/rules/core/no_restricted_exports_test.go"
+            ],
+            "no-restricted-imports": [
+              "cohere/internal/lint/rules/core/no_restricted_imports_test.go"
+            ]
+          },
+          "hex": "all 256 bytes plus every byte in captured consumer strings",
+          "options": "all sixteen flag combinations for every rewrite source",
+          "rows": 22928,
+          "sources": 1433,
+          "unique_operations": 21681
+        }
+    helper_test.go:132: rewrite.a mutant "case 46:out+=encoded(flag(current,8)" -> "case 46:out+=encoded(!flag(current,8)" caught at output line 1265: mutant "283f3a5b41615d5b5c735c535d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;", Go "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;"
+    helper_test.go:132: rewrite.a mutant "current=group.options;" -> "current=options;" caught at output line 1269: mutant "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a6229283f3a5c7a7c283f3d5b5c6e5c725c75323032385c75323032395d292929283f3a5c417c283f3c3d5b5c6e5c725c75323032385c75323032395d2929|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:4:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:4:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:4:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;", Go "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a29283f3a5c417c283f3c3d5b5c6e5c725c75323032385c75323032395d2929|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:4:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:4:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:4:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;"
+    helper_test.go:132: rewrite.a mutant "escape.set === 3 && flag(current,2)" -> "escape.set === 3 && !flag(current,2)" caught at output line 6306: mutant "5c775c575c707b4c7d5c507b477265656b7d|false||count:36,30291,27820:0:0:0;rune:36,30291,27820:0:0:0;back:36,30291,27820:0:0:0;escape:36,30291,27820:1:1:0;rune:32,12389,19060:0:0:0;back:32,12389,19060:0:0:0;escape:36,30291,27820:3:1:0;rune:28,29324,42022:0:0:0;back:28,29324,42022:0:0:0;escape:36,30291,27820:5:1:0;rune:18,48776,25405:0:0:0;back:18,48776,25405:0:0:0;escape:36,30291,27820:10:1:0;", Go "5c775c575c707b4c7d5c507b477265656b7d|true||count:36,30291,27820:0:0:0;rune:36,30291,27820:0:0:0;back:36,30291,27820:0:0:0;escape:36,30291,27820:1:1:0;rune:32,12389,19060:0:0:0;back:32,12389,19060:0:0:0;escape:36,30291,27820:3:1:0;rune:28,29324,42022:0:0:0;back:28,29324,42022:0:0:0;escape:36,30291,27820:5:1:0;rune:18,48776,25405:0:0:0;back:18,48776,25405:0:0:0;escape:36,30291,27820:10:1:0;"
+    helper_test.go:132: rewrite.a mutant "group.kind,options,0" -> "group.kind,current,0" caught at output line 1265: mutant "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:2:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;", Go "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;"
+    helper_test.go:132: rewrite.a mutant "if(!atoms.yes){exact=false;}" -> "if(!atoms.yes){exact=true;}" caught at output line 5892: mutant "5b5c707b4c7d5d|true||count:14,13901,42265:0:0:0;rune:14,13901,42265:0:0:0;class:14,13901,42265:0:0:0;atoms:10,36789,57934:3:1:0;write:34,15400,52954:0:3:0;", Go "5b5c707b4c7d5d|false||count:14,13901,42265:0:0:0;rune:14,13901,42265:0:0:0;class:14,13901,42265:0:0:0;atoms:10,36789,57934:3:1:0;write:34,15400,52954:0:3:0;"
+    helper_test.go:132: rewrite.a mutant "flag(current,4) ? '(?:\\\\A|" -> "!flag(current,4) ? '(?:\\\\A|" caught at output line 1265: mutant "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a29283f3a5c417c283f3c3d5b5c6e5c725c75323032385c75323032395d2929|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;", Go "283f3a5b41615d5b5e5c6e5c725c75323032385c75323032395d283f3a62295c7a295c41|true||count:36,57328,31044:0:0:0;rune:36,57328,31044:0:0:0;opener:36,57328,31044:0:0:0;modifier:36,57328,31044:0:0:0;rune:24,20867,47275:0:0:0;case:0,0,0:97:0:0;rune:22,50946,29308:0:0:0;rune:20,2665,45390:0:0:0;opener:20,2665,45390:0:0:0;modifier:20,2665,45390:2:0:0;rune:10,18589,6142:0:0:0;rune:8,32139,19185:0:0:0;groupQuantifier:6,17003,3481:0:0:0;rune:6,17003,3481:0:0:0;quantifier:4,38441,48263:0:0:0;rune:4,38441,48263:0:0:0;groupQuantifier:2,7044,7362:0:0:0;rune:2,7044,7362:0:0:0;quantifier:0,0,0:0:0:0;"
+--- PASS: TestRewrite (114.83s)
+=== RUN   TestIsHexDigit
+    helper_test.go:78: {
+          "captured_strings": 584,
+          "consumers": {
+            "no-control-regex": 42,
+            "no-regex-spaces": 338,
+            "no-useless-escape": 473
+          },
+          "files": {
+            "no-control-regex": [
+              "cohere/internal/lint/rules/core/no_control_regex_test.go"
+            ],
+            "no-regex-spaces": [
+              "cohere/internal/lint/rules/core/no_regex_spaces_test.go"
+            ],
+            "no-useless-escape": [
+              "cohere/internal/lint/rules/core/no_useless_escape_test.go"
+            ]
+          },
+          "hex": "all 256 bytes plus every byte in captured consumer strings",
+          "options": "all sixteen flag combinations for every rewrite source",
+          "rows": 14339,
+          "sources": 1106,
+          "unique_operations": 0
+        }
+    helper_test.go:132: is_hex_digit.a mutant "byte <= 57" -> "byte < 57" caught at output line 58: mutant "false", Go "true"
+    helper_test.go:132: is_hex_digit.a mutant "byte >= 65" -> "byte > 65" caught at output line 66: mutant "false", Go "true"
+--- PASS: TestIsHexDigit (6.75s)
+=== RUN   TestAllHexDigits
+    helper_test.go:78: {
+          "captured_strings": 584,
+          "consumers": {
+            "no-control-regex": 42,
+            "no-regex-spaces": 338,
+            "no-useless-escape": 473
+          },
+          "files": {
+            "no-control-regex": [
+              "cohere/internal/lint/rules/core/no_control_regex_test.go"
+            ],
+            "no-regex-spaces": [
+              "cohere/internal/lint/rules/core/no_regex_spaces_test.go"
+            ],
+            "no-useless-escape": [
+              "cohere/internal/lint/rules/core/no_useless_escape_test.go"
+            ]
+          },
+          "hex": "all 256 bytes plus every byte in captured consumer strings",
+          "options": "all sixteen flag combinations for every rewrite source",
+          "rows": 1106,
+          "sources": 1106,
+          "unique_operations": 0
+        }
+    helper_test.go:132: all_hex_digits.a mutant "bytes.length === 0) { return false" -> "bytes.length === 0) { return true" caught at output line 1: mutant "true", Go "false"
+    helper_test.go:132: all_hex_digits.a mutant "if (!isHexDigit(byte))" -> "if (isHexDigit(byte))" caught at output line 2: mutant "true", Go "false"
+--- PASS: TestAllHexDigits (3.93s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch24	125.521s
