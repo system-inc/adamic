@@ -55,3 +55,13 @@ Resumption audit: JSX support is published on `origin/codex/stage1-jsx-lint` at 
 ## Parked React analysis claims
 
 Per the explicit parking instruction, react-hooks/set-state-in-effect, react-hooks/set-state-in-render and react-hooks/static-components are **parked** and count as finished for the landing-first cap. They remain unported. Blockers: native high-level IR, single-assignment, translated closure captures, post-dominance and control-dominance analysis. Cohere analysis modules are being ported to Adamic on #dnv6f2c; JSX support is landing on area/stage1-lint. Existing probe/source evidence is in wave28_fourth/REPORT.md. This status does not claim native rule parity. The nine completed ports are green on current main f8013f0b and pushed at 786d33d3c.
+
+## Fifth batch claim
+
+The React high-level-analysis claims are parked and their status is pushed at f7b44295d. The nine completed ports remain green on current main f8013f0b. The all-heads audit inspected 529 origin refs, 33 distinct Markdown claim blobs and 34 distinct typeaware implementation trees. Eighteen ranked candidates remain unclaimed; the first three below require syntax and checker declaration/type questions, not the parked native HIR/SSA/capture substrate:
+
+1. `react/jsx-fragments` (0 compiler, 0 repository).
+2. `react/jsx-no-constructed-context-values` (0 compiler, 0 repository).
+3. `react/jsx-no-undef` (0 compiler, 0 repository).
+
+No implementation match was found for these three across the inspected origin typeaware trees. Their production Go sources use JSX node listeners and AST/checker walks rather than HIR/SSA/capture lowering. This claim is pushed before implementation or owned blocker checks. JSX parsing remains an integration dependency to inspect.
