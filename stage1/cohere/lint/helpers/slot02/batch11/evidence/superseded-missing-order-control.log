@@ -1,0 +1,55 @@
+=== RUN   TestSlot02Batch11
+    slot02_batch11_test.go:75: tailwind/collapse.*stylesheetCollector.ingest: 6 consumers captured
+    slot02_batch11_test.go:75: control_flow_graph.*Builder[E].nestedFunction: 4 consumers captured
+    slot02_batch11_test.go:75: control_flow_graph.*Builder[E].variableDeclarationList: 4 consumers captured
+    slot02_batch11_test.go:154: 2276 captured inputs, 7833 CSS replays, 3600 CFG replays, 898 actual CFG helper entries
+    slot02_batch11_test.go:183: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch11/import_resolved_path
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 1436: got "result:-1:resolve:0:/fixture/é😀.css;load:-1:/fixture/é😀.css;custom:1:;"; Go "result:-1:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";custom:1:;"
+=== RUN   TestSlot02Batch11/resolve_error_propagation
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 1437: got "result:-1:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";custom:1:;"; Go "result:7:resolve:0:/fixture/é😀.css;"
+=== RUN   TestSlot02Batch11/theme_error_propagation
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 1394: got "result:-1:"; Go "result:-1:theme:0:/fixture/é😀.css;"
+=== RUN   TestSlot02Batch11/utility_dispatch
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 2535: got "result:-1:theme:0:/fixture/é😀.css;"; Go "result:-1:utility:0:/fixture/é😀.css;"
+=== RUN   TestSlot02Batch11/custom_variant_dispatch
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 1436: got "result:-1:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";custom:0:;"; Go "result:-1:resolve:0:/fixture/é😀.css;load:-1:resolved:\"tailwindcss\";custom:1:;"
+=== RUN   TestSlot02Batch11/skipped_path
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 646: got "skip:@config::"; Go "skip:@config::/fixture/é😀.css"
+=== RUN   TestSlot02Batch11/unknown_at-rule_recursion
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 7827: got "result:-1:"; Go "result:-1:theme:4:/fixture/é😀.css;utility:6:/fixture/é😀.css;resolve:8:/fixture/é😀.css;load:-1:resolved:\"x\";custom:9:;"
+=== RUN   TestSlot02Batch11/non-at-rule_recursion
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 7827: got "result:-1:"; Go "result:-1:theme:4:/fixture/é😀.css;utility:6:/fixture/é😀.css;resolve:8:/fixture/é😀.css;load:-1:resolved:\"x\";custom:9:;"
+=== RUN   TestSlot02Batch11/nested_forwarding_identity
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 10898: got "calls:1:header:0:-1;"; Go "calls:1:header:0:304;"
+=== RUN   TestSlot02Batch11/nested_builder_identity
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 10908: got "calls:1:header:0:304;"; Go "calls:1:header:1:304;"
+=== RUN   TestSlot02Batch11/nested_exactly_once
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 10898: got "calls:2:header:0:304;header:0:304;"; Go "calls:1:header:0:304;"
+=== RUN   TestSlot02Batch11/declaration_order
+    slot02_batch11_test.go:233: compiled semantic mutant survived
+=== RUN   TestSlot02Batch11/declaration_identity
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 7858: got "calls:1:decl:0:-1;"; Go "calls:1:decl:0:1;"
+=== RUN   TestSlot02Batch11/declaration_builder_identity
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 7868: got "calls:1:decl:0:1;"; Go "calls:1:decl:1:1;"
+=== RUN   TestSlot02Batch11/declaration_exactly_once
+    slot02_batch11_test.go:238: compiled semantic mutant caught at line 7858: got "calls:2:decl:0:1;decl:0:1;"; Go "calls:1:decl:0:1;"
+--- FAIL: TestSlot02Batch11 (72.36s)
+    --- PASS: TestSlot02Batch11/import_resolved_path (3.78s)
+    --- PASS: TestSlot02Batch11/resolve_error_propagation (4.25s)
+    --- PASS: TestSlot02Batch11/theme_error_propagation (4.07s)
+    --- PASS: TestSlot02Batch11/utility_dispatch (3.86s)
+    --- PASS: TestSlot02Batch11/custom_variant_dispatch (4.26s)
+    --- PASS: TestSlot02Batch11/skipped_path (4.28s)
+    --- PASS: TestSlot02Batch11/unknown_at-rule_recursion (5.18s)
+    --- PASS: TestSlot02Batch11/non-at-rule_recursion (3.98s)
+    --- PASS: TestSlot02Batch11/nested_forwarding_identity (3.91s)
+    --- PASS: TestSlot02Batch11/nested_builder_identity (4.07s)
+    --- PASS: TestSlot02Batch11/nested_exactly_once (3.84s)
+    --- FAIL: TestSlot02Batch11/declaration_order (3.68s)
+    --- PASS: TestSlot02Batch11/declaration_identity (4.02s)
+    --- PASS: TestSlot02Batch11/declaration_builder_identity (4.10s)
+    --- PASS: TestSlot02Batch11/declaration_exactly_once (3.70s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	72.375s
+FAIL
