@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_third/validate.py", line 38, in <module>
+    build('native',source/'suite.a',native)
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_third/validate.py", line 23, in build
+    run(label,args)
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_third/validate.py", line 17, in run
+    if result.returncode!=expected:raise AssertionError((label,result.returncode,expected,err[-3000:]))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('native', -15, 0, b'')

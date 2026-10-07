@@ -1,0 +1,565 @@
+import type { Tools } from '../wave_27_next/tools.a';
+import { Diagnostic } from '../diagnostic.ts';
+import { Suggestion } from '../suggestion.ts';
+import { Repair } from '../repair.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { RegexPattern } from './regex_pattern.a';
+const message =
+    'This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal.';
+const preceding = [
+    '(',
+    ';',
+    '[',
+    ',',
+    '=',
+    '+',
+    '*',
+    '-',
+    '?',
+    '~',
+    '%',
+    '**',
+    '!',
+    'typeof',
+    'instanceof',
+    '&&',
+    '||',
+    '??',
+    'return',
+    '...',
+    'delete',
+    'void',
+    'in',
+    '<',
+    '>',
+    '<=',
+    '>=',
+    '==',
+    '===',
+    '!=',
+    '!==',
+    '<<',
+    '>>',
+    '>>>',
+    '&',
+    '|',
+    '^',
+    ':',
+    '{',
+    '=>',
+    '*=',
+    '<<=',
+    '>>=',
+    '>>>=',
+    '^=',
+    '|=',
+    '&=',
+    '??=',
+    '||=',
+    '&&=',
+    '**=',
+    '+=',
+    '-=',
+    '/=',
+    '%=',
+    '/',
+    'do',
+    'break',
+    'continue',
+    'debugger',
+    'case',
+    'throw',
+];
+export class PreferRegexLiterals {
+    readonly tools: Tools;
+    readonly references = new Map<string, number[]>();
+    readonly emptyReferences: number[] = [];
+    readonly visiting: number[] = [];
+    readonly calls: number[] = [];
+    constructor(tools: Tools) {
+        this.tools = tools;
+    }
+    kind(index: number): string {
+        return this.tools.kind(index);
+    }
+    child(index: number, at: number): number {
+        return this.tools.child(index, at);
+    }
+    parent(index: number): number {
+        return this.tools.parent(index);
+    }
+    last(index: number): number {
+        const children = this.tools.bindings.rules.parser.node(index).children;
+        return children[children.length - 1] ?? -1;
+    }
+    text(index: number): string {
+        return index < 0 ? '' : this.tools.bindings.rules.parser.node(index).text;
+    }
+    constant(index: number): string | undefined {
+        const current = this.tools.skip(index);
+        const kind = this.kind(current);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(kind)) {
+            return this.text(current);
+        }
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(kind)) {
+            return kind === 'TrueKeyword' ? 'true' : kind === 'FalseKeyword' ? 'false' : 'null';
+        }
+        if(kind === 'BinaryExpression' && this.kind(this.child(current, 1)) === 'PlusToken') {
+            const a = this.constant(this.child(current, 0));
+            const b = this.constant(this.last(current));
+            const stringA = ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(
+                this.kind(this.tools.skip(this.child(current, 0))),
+            );
+            const stringB = ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(
+                this.kind(this.tools.skip(this.last(current))),
+            );
+            if(a !== undefined && b !== undefined && (stringA || stringB)) {
+                return a + b;
+            }
+        }
+        if(kind === 'TemplateExpression') {
+            const children = this.tools.bindings.rules.parser.node(current).children;
+            let text = this.text(children[0] ?? -1);
+            for(let i = 1; i < children.length; i++) {
+                const span = children[i] ?? -1;
+                const value = this.constant(this.child(span, 0));
+                if(value === undefined) {
+                    return undefined;
+                }
+                text += value + this.text(this.last(span));
+            }
+            return text;
+        }
+        return undefined;
+    }
+    member(index: number): string | undefined {
+        if(this.kind(index) === 'PropertyAccessExpression') {
+            return this.text(this.last(index));
+        }
+        if(this.kind(index) === 'ElementAccessExpression') {
+            return this.constant(this.last(index));
+        }
+        return undefined;
+    }
+    global(index: number): boolean {
+        const symbol = this.tools.symbol(index);
+        return symbol.own === symbol.identity && !symbol.declarations.some((d) => !d.declarationFile);
+    }
+    written(index: number): boolean {
+        let current = index;
+        while(true) {
+            const parent = this.parent(current);
+            const kind = this.kind(parent);
+            if(
+                [
+                    'ParenthesizedExpression',
+                    'SpreadElement',
+                    'SpreadAssignment',
+                    'ArrayLiteralExpression',
+                    'ObjectLiteralExpression',
+                ].includes(kind)
+            ) {
+                current = parent;
+                continue;
+            }
+            if(kind === 'PropertyAssignment' && this.last(parent) === current) {
+                current = parent;
+                continue;
+            }
+            if(kind === 'ShorthandPropertyAssignment' && this.child(parent, 0) === current) {
+                current = parent;
+                continue;
+            }
+            if(kind === 'BinaryExpression' && this.child(parent, 0) === current) {
+                const operator = this.kind(this.child(parent, 1));
+                return (
+                    operator.endsWith('EqualsToken') &&
+                    ![
+                        'EqualsEqualsToken',
+                        'EqualsEqualsEqualsToken',
+                        'ExclamationEqualsToken',
+                        'ExclamationEqualsEqualsToken',
+                        'LessThanEqualsToken',
+                        'GreaterThanEqualsToken',
+                    ].includes(operator)
+                );
+            }
+            if(['PrefixUnaryExpression', 'PostfixUnaryExpression'].includes(kind)) {
+                return ['PlusPlusToken', 'MinusMinusToken'].includes(
+                    this.tools.bindings.rules.parser.node(parent).operator,
+                );
+            }
+            return ['ForInStatement', 'ForOfStatement'].includes(kind) && this.child(parent, 0) === current;
+        }
+    }
+    globals(name: string): number[] {
+        const refs = (this.references.get(name) ?? this.emptyReferences).filter((i) => this.global(i));
+        return refs.some((i) => this.written(i)) ? [] : refs;
+    }
+    pass(index: number): boolean {
+        const parent = this.parent(index);
+        const kind = this.kind(parent);
+        if(
+            [
+                'ParenthesizedExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+                'NonNullExpression',
+                'ExpressionWithTypeArguments',
+            ].includes(kind)
+        ) {
+            return true;
+        }
+        if(kind === 'ConditionalExpression') {
+            return this.child(parent, 2) === index || this.child(parent, 4) === index;
+        }
+        if(kind === 'BinaryExpression') {
+            const op = this.kind(this.child(parent, 1));
+            return (
+                ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(op) ||
+                (op === 'CommaToken' && this.last(parent) === index)
+            );
+        }
+        return false;
+    }
+    target(index: number, object: boolean): void {
+        const current = this.tools.skip(index);
+        const kind = this.kind(current);
+        if(kind === 'Identifier') {
+            const identity = this.tools.symbol(current).own;
+            if(identity === 0 || this.visiting.includes(identity)) {
+                return;
+            }
+            this.visiting.push(identity);
+            for(const ref of this.references.get(this.text(current)) ?? this.emptyReferences) {
+                if(this.tools.symbol(ref).own === identity) {
+                    this.follow(ref, object);
+                }
+            }
+            this.visiting.pop();
+            return;
+        }
+        if(object && ['ObjectBindingPattern', 'ObjectLiteralExpression'].includes(kind)) {
+            for(const member of this.tools.bindings.rules.parser.node(current).children) {
+                const node = this.tools.bindings.rules.parser.node(member);
+                if(node.kind === 'BindingElement' && node.children.some((c) => this.kind(c) === 'DotDotDotToken')) {
+                    continue;
+                }
+                let key = this.child(member, 0);
+                let value = this.last(member);
+                if(node.kind === 'BindingElement') {
+                    value = this.tools.bindings.shape.name(member);
+                    const candidates = node.children.filter(
+                        (c) => c !== this.tools.bindings.shape.initializer(member) && this.kind(c) !== 'DotDotDotToken',
+                    );
+                    key = candidates[0] ?? -1;
+                }
+                else if(node.kind === 'ShorthandPropertyAssignment') {
+                    value = key;
+                }
+                else if(node.kind !== 'PropertyAssignment') {
+                    continue;
+                }
+                const name =
+                    this.kind(key) === 'ComputedPropertyName' ? this.constant(this.child(key, 0)) : this.text(key);
+                if(name === 'RegExp') {
+                    this.target(value, false);
+                }
+            }
+        }
+        if(kind === 'BinaryExpression' && this.kind(this.child(current, 1)) === 'EqualsToken') {
+            this.target(this.child(current, 0), object);
+        }
+    }
+    follow(index: number, object: boolean): void {
+        let current = index;
+        while(this.pass(current)) {
+            current = this.parent(current);
+        }
+        const parent = this.parent(current);
+        const kind = this.kind(parent);
+        if(
+            ['PropertyAccessExpression', 'ElementAccessExpression'].includes(kind) &&
+            this.child(parent, 0) === current
+        ) {
+            if(object && this.member(parent) === 'RegExp') {
+                this.follow(parent, false);
+            }
+        }
+        else if(['CallExpression', 'NewExpression'].includes(kind) && this.child(parent, 0) === current && !object) {
+            this.calls.push(parent);
+        }
+        else if(
+            kind === 'BinaryExpression' &&
+            this.last(parent) === current &&
+            [
+                'EqualsToken',
+                'BarBarEqualsToken',
+                'AmpersandAmpersandEqualsToken',
+                'QuestionQuestionEqualsToken',
+            ].includes(this.kind(this.child(parent, 1)))
+        ) {
+            this.target(this.child(parent, 0), object);
+            this.follow(parent, object);
+        }
+        else if(
+            ['VariableDeclaration', 'Parameter', 'BindingElement'].includes(kind) &&
+            this.tools.bindings.shape.initializer(parent) === current
+        ) {
+            this.target(this.tools.bindings.shape.name(parent), object);
+        }
+        else if(
+            kind === 'ShorthandPropertyAssignment' &&
+            this.last(parent) === current &&
+            this.child(parent, 0) !== current
+        ) {
+            this.target(this.child(parent, 0), object);
+        }
+    }
+    staticString(index: number): string | undefined {
+        const kind = this.kind(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(kind)) {
+            return this.text(index);
+        }
+        if(kind !== 'TaggedTemplateExpression') {
+            return undefined;
+        }
+        const template = this.last(index);
+        if(this.kind(template) !== 'NoSubstitutionTemplateLiteral') {
+            return undefined;
+        }
+        const tag = this.tools.skip(this.child(index, 0));
+        const receiver = this.child(tag, 0);
+        if(
+            !['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.kind(tag)) ||
+            this.kind(receiver) !== 'Identifier' ||
+            this.text(receiver) !== 'String' ||
+            !this.tools.symbol(receiver).present ||
+            this.tools.symbol(receiver).declarations.length === 0 ||
+            this.tools.symbol(receiver).declarations[0]?.declarationFile !== true
+        ) {
+            return undefined;
+        }
+        const key = this.last(tag);
+        if(
+            this.kind(tag) === 'ElementAccessExpression' &&
+            !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.kind(key))
+        ) {
+            return undefined;
+        }
+        if(this.text(key) !== 'raw') {
+            return undefined;
+        }
+        const rules = this.tools.bindings.rules;
+        const node = rules.parser.node(template);
+        const written = rules.scanner.text.slice(rules.start(node), node.end);
+        return written.slice(
+            written.startsWith('`') ? 1 : 0,
+            written.endsWith('`') ? written.length - 1 : written.length,
+        );
+    }
+    preceding(start: number): boolean {
+        const source = this.tools.bindings.rules.scanner.text;
+        let i = start - 1;
+        while(i >= 0) {
+            while(i >= 0 && [' ', '\t', '\r', '\n', '\v', '\f'].includes(source.slice(i, i + 1))) {
+                i--;
+            }
+            if(source.slice(i - 1, i + 1) === '*/') {
+                const opening = source.slice(0, i).lastIndexOf('/*');
+                if(opening < 0) {
+                    return true;
+                }
+                i = opening - 1;
+                continue;
+            }
+            const line = source.slice(0, i + 1).lastIndexOf('\n') + 1;
+            const text = source.slice(line, i + 1);
+            let quote = '';
+            let comment = -1;
+            for(let scan = 0; scan < text.length; scan++) {
+                const c = text.slice(scan, scan + 1);
+                if(c === '\\') {
+                    scan++;
+                    continue;
+                }
+                if(quote !== '') {
+                    if(c === quote) {
+                        quote = '';
+                    }
+                    continue;
+                }
+                if(["'", '"', '`'].includes(c)) {
+                    quote = c;
+                    continue;
+                }
+                if(text.slice(scan, scan + 2) === '//') {
+                    comment = line + scan;
+                    break;
+                }
+            }
+            if(comment >= 0) {
+                i = comment - 1;
+                continue;
+            }
+            break;
+        }
+        if(i < 0) {
+            return true;
+        }
+        if(source.startsWith('#!')) {
+            const newline = source.indexOf('\n');
+            if(newline >= 0 && start > newline && source.slice(newline + 1, start).trim() === '') {
+                return true;
+            }
+        }
+        const last = source.slice(i, i + 1);
+        if('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$'.includes(last)) {
+            let begin = i;
+            while(
+                begin >= 0 &&
+                'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$'.includes(
+                    source.slice(begin, begin + 1),
+                )
+            ) {
+                begin--;
+            }
+            return preceding.includes(source.slice(begin + 1, i + 1));
+        }
+        for(let length = 4; length >= 1; length--) {
+            if(i - length + 1 >= 0 && preceding.includes(source.slice(i - length + 1, i + 1))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    comments(start: number, end: number): boolean {
+        const source = this.tools.bindings.rules.scanner.text;
+        const scanner = new Scanner(source);
+        scanner.pos = start;
+        while(scanner.pos < end) {
+            const old = scanner.pos;
+            scanner.scan();
+            const trivia = source.slice(old, scanner.start);
+            if(trivia.includes('//') || trivia.includes('/*')) {
+                return true;
+            }
+            if(scanner.pos <= old) {
+                break;
+            }
+        }
+        return false;
+    }
+    report(index: number): void {
+        const args = this.tools.args(index);
+        if(args.length !== 1 && args.length !== 2) {
+            return;
+        }
+        const pattern = this.staticString(args[0] ?? -1);
+        const flags = args.length === 1 ? '' : this.staticString(args[1] ?? -1);
+        if(pattern === undefined || flags === undefined) {
+            return;
+        }
+        const rules = this.tools.bindings.rules;
+        const node = rules.parser.node(index);
+        const start = rules.start(node);
+        const finding = new Diagnostic(
+            'prefer-regex-literals',
+            'unexpectedRegExp',
+            message,
+            rules.byte(start),
+            rules.byte(node.end),
+            '',
+        );
+        rules.findings.push(finding);
+        const seen: string[] = [];
+        for(const flag of flags.split('')) {
+            if(!'dgimsuvy'.includes(flag) || seen.includes(flag)) {
+                return;
+            }
+            seen.push(flag);
+        }
+        if(flags.includes('u') && flags.includes('v')) {
+            return;
+        }
+        if(
+            !pattern
+                .split('')
+                .every((c) =>
+                    ' \t\r\n\v\f-\\[](){}!@#$%^&*+=/~`.><?,\'"|:;_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.includes(
+                        c,
+                    ),
+                )
+        ) {
+            return;
+        }
+        if(this.comments(start, node.end) || !this.preceding(start)) {
+            return;
+        }
+        const parsed = new RegexPattern(pattern, flags);
+        if(!parsed.valid()) {
+            return;
+        }
+        let replacement = `/${pattern === '' ? '(?:)' : parsed.rewritten()}/${flags}`;
+        const source = rules.scanner.text;
+        if(start > 0 && source.slice(start - 1, start) === '/') {
+            replacement = ` ${replacement}`;
+        }
+        const next = source.slice(node.end, node.end + 1);
+        if(next !== '' && 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$'.includes(next)) {
+            replacement += ' ';
+        }
+        finding.suggestions.push(
+            new Suggestion('replaceWithLiteral', 'Replace with an equivalent regular expression literal.', [
+                new Repair(rules.byte(start), rules.byte(node.end), replacement),
+            ]),
+        );
+    }
+    run(): void {
+        const rules = this.tools.bindings.rules;
+        if(!rules.scanner.text.includes('RegExp')) {
+            return;
+        }
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            if(this.kind(index) !== 'Identifier' || this.tools.bindings.declaring(index)) {
+                continue;
+            }
+            const parent = this.parent(index);
+            if(
+                [
+                    'TypeReference',
+                    'TypeQuery',
+                    'QualifiedName',
+                    'LabeledStatement',
+                    'BreakStatement',
+                    'ContinueStatement',
+                    'JsxAttribute',
+                    'ImportSpecifier',
+                ].includes(this.kind(parent))
+            ) {
+                continue;
+            }
+            const name = this.text(index);
+            const refs = this.references.get(name);
+            if(refs === undefined) {
+                this.references.set(name, [index]);
+            }
+            else {
+                refs.push(index);
+            }
+        }
+        for(const ref of this.globals('RegExp')) {
+            this.follow(ref, false);
+        }
+        for(const name of ['global', 'globalThis', 'self', 'window']) {
+            for(const ref of this.globals(name)) {
+                this.follow(ref, true);
+            }
+        }
+        this.calls.sort((a, b) => rules.start(rules.parser.node(a)) - rules.start(rules.parser.node(b)));
+        for(const call of this.calls) {
+            this.report(call);
+        }
+    }
+}

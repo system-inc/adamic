@@ -1,0 +1,35 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { Tools } from '../wave_27_next/tools.a';
+import { World } from '../wave_27_next/wave_27_module_sources.a';
+import { PreferRestParams } from './prefer_rest_params.a';
+import { ExhaustiveDeps } from './exhaustive_deps.a';
+import { PreferRegexLiterals } from './prefer_regex_literals.a';
+const args = programArguments();
+const config = args[0] ?? panic('missing config');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind === 'Error') {
+    panic(manifest.message);
+}
+const paths = manifest.text.split('\n').filter((path) => path !== '');
+const program = tsgoProgram(config, paths);
+const world = new World(program);
+let findings = 0;
+for(const path of paths) {
+    const tools = new Tools(world.bindingsFor(path), world);
+    const rules = tools.bindings.rules;
+    new PreferRestParams(tools).run();
+    new PreferRegexLiterals(tools).run();
+    new ExhaustiveDeps(tools).run();
+    for(const finding of rules.findings) {
+        finding.sortKey = finding.written();
+    }
+    rules.findings.sort((left, right) => (left.sortKey < right.sortKey ? -1 : left.sortKey > right.sortKey ? 1 : 0));
+    findings += rules.findings.length;
+    console.log(`file\t${written(path)}`);
+    for(const finding of rules.findings) {
+        console.log(finding.written());
+    }
+}
+console.log(`findings ${findings}`);
+tsgoRelease(program);

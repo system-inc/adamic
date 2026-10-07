@@ -1,0 +1,407 @@
+// The pinned cohere regexsyntax and regexpattern grammar, used by the native repair.
+export class RegexPattern {
+    readonly pattern: string;
+    readonly unicode: boolean;
+    readonly sets: boolean;
+    readonly starts: number[] = [];
+    readonly ends: number[] = [];
+    constructor(pattern: string, flags: string) {
+        this.pattern = pattern;
+        this.unicode = flags.includes('u') || flags.includes('v');
+        this.sets = flags.includes('v');
+    }
+    char(at: number): string {
+        return this.pattern.slice(at, at + 1);
+    }
+    hex(text: string): boolean {
+        return text !== '' && text.split('').every((c) => '0123456789abcdefABCDEF'.includes(c));
+    }
+    escape(at: number): number {
+        const p = this.pattern;
+        if(at + 1 >= p.length) {
+            return 0;
+        }
+        const next = this.char(at + 1);
+        if(next === 'x') {
+            return at + 3 < p.length && this.hex(p.slice(at + 2, at + 4)) ? 4 : 2;
+        }
+        if(next === 'u') {
+            if(this.char(at + 2) === '{') {
+                if(!this.unicode) {
+                    return 2;
+                }
+                const end = p.indexOf('}', at + 3);
+                return end < 0 ? 2 : end - at + 1;
+            }
+            return at + 5 < p.length && this.hex(p.slice(at + 2, at + 6)) ? 6 : 2;
+        }
+        if(next === 'c') {
+            return at + 2 < p.length ? 3 : 2;
+        }
+        if(['p', 'P', 'q'].includes(next) && this.unicode && this.char(at + 2) === '{') {
+            const end = p.indexOf('}', at + 3);
+            if(end >= 0) {
+                return end - at + 1;
+            }
+        }
+        return 2;
+    }
+    classEnd(at: number): number {
+        let depth = 1;
+        for(let i = at + 1; i < this.pattern.length;) {
+            const c = this.char(i);
+            if(c === '\\') {
+                const width = this.escape(i);
+                if(width === 0) {
+                    return -1;
+                }
+                i += width;
+            }
+            else if(c === '[' && this.sets) {
+                depth++;
+                i++;
+            }
+            else if(c === ']') {
+                depth--;
+                i++;
+                if(depth === 0) {
+                    return i;
+                }
+            }
+            else {
+                i++;
+            }
+        }
+        return -1;
+    }
+    brace(at: number): number {
+        let i = at + 1;
+        const start = i;
+        while(this.char(i) !== '' && '0123456789'.includes(this.char(i))) {
+            i++;
+        }
+        if(i === start) {
+            return -1;
+        }
+        if(this.char(i) === ',') {
+            i++;
+            while(this.char(i) !== '' && '0123456789'.includes(this.char(i))) {
+                i++;
+            }
+        }
+        return this.char(i) === '}' ? i + 1 : -1;
+    }
+    quantified(at: number): number {
+        let end = at;
+        if(['*', '+', '?'].includes(this.char(at))) {
+            end++;
+        }
+        else if(this.char(at) === '{') {
+            const brace = this.brace(at);
+            if(brace >= 0) {
+                end = brace;
+            }
+        }
+        if(end !== at && this.char(end) === '?') {
+            end++;
+        }
+        return end;
+    }
+    emit(start: number, end: number): void {
+        this.starts.push(start);
+        this.ends.push(end);
+    }
+    classWalk(start: number, end: number): boolean {
+        let i = start + 1;
+        if(this.char(i) === '^') {
+            i++;
+        }
+        let pending = -1;
+        while(i < end - 1) {
+            const at = i;
+            const c = this.char(i);
+            let width = 1;
+            let breaker = false;
+            if(c === '[' && this.sets) {
+                const nested = this.classEnd(i);
+                if(nested < 0) {
+                    return false;
+                }
+                i = nested;
+                pending = -1;
+                continue;
+            }
+            if(this.sets && ['-', '&'].includes(c) && this.char(i + 1) === c) {
+                i += 2;
+                pending = -1;
+                continue;
+            }
+            if(c === '-' && pending >= 0 && i + 1 < end - 1) {
+                i++;
+                const next = this.char(i);
+                let step = 1;
+                if(next === '\\') {
+                    const escaped = this.char(i + 1);
+                    if(
+                        'dDwWsS'.includes(escaped) ||
+                        (['p', 'P', 'q'].includes(escaped) && this.unicode && this.char(i + 2) === '{')
+                    ) {
+                        return false;
+                    }
+                    step = this.escape(i);
+                    if(step === 0) {
+                        return false;
+                    }
+                }
+                i += step;
+                this.ends[pending] = i;
+                pending = -1;
+                continue;
+            }
+            if(c === '\\') {
+                const next = this.char(i + 1);
+                width = this.escape(i);
+                if(width === 0) {
+                    return false;
+                }
+                breaker =
+                    'dDwWsS'.includes(next) ||
+                    (['p', 'P', 'q'].includes(next) && this.unicode && this.char(i + 2) === '{');
+                if(next === 'B' && this.unicode) {
+                    return false;
+                }
+                if(next === 'u' && this.unicode && this.char(i + 2) === '{') {
+                    if(width === 2 || !this.hex(this.pattern.slice(i + 3, i + width - 1))) {
+                        return false;
+                    }
+                }
+                if(['p', 'P', 'q'].includes(next) && this.unicode && this.char(i + 2) === '{' && width === 2) {
+                    return false;
+                }
+                if(next === 'c' && width !== 3) {
+                    return false;
+                }
+                if(next === 'u' && width === 6 && this.unicode) {
+                    const high = Number.parseInt(this.pattern.slice(i + 2, i + 6), 16);
+                    if(
+                        high >= 55296 &&
+                        high <= 56319 &&
+                        this.pattern.slice(i + 6, i + 8) === '\\u' &&
+                        this.hex(this.pattern.slice(i + 8, i + 12))
+                    ) {
+                        const low = Number.parseInt(this.pattern.slice(i + 8, i + 12), 16);
+                        if(low >= 56320 && low <= 57343) {
+                            width = 12;
+                        }
+                    }
+                }
+            }
+            i += width;
+            if(breaker) {
+                pending = -1;
+            }
+            else {
+                this.emit(at, i);
+                pending = this.starts.length - 1;
+            }
+        }
+        return true;
+    }
+    walk(): boolean {
+        for(let i = 0; i < this.pattern.length;) {
+            const c = this.char(i);
+            if(c === '\\') {
+                const width = this.escape(i);
+                if(width === 0) {
+                    return false;
+                }
+                let end = i + width;
+                const next = this.char(i + 1);
+                if(width === 2 && '01234567'.includes(next)) {
+                    let value = Number.parseInt(next, 8);
+                    for(let digits = 1; digits < 3 && end < this.pattern.length; digits++) {
+                        const digit = this.char(end);
+                        if(!'01234567'.includes(digit)) {
+                            break;
+                        }
+                        const v = value * 8 + Number.parseInt(digit, 8);
+                        if(v > 255) {
+                            break;
+                        }
+                        value = v;
+                        end++;
+                    }
+                }
+                if(!'dDsSwWpPkqbB'.includes(next)) {
+                    let character = true;
+                    if(next === 'x') {
+                        character = end - i === 4 && this.hex(this.pattern.slice(i + 2, end));
+                    }
+                    else if(next === 'u') {
+                        character =
+                            this.char(i + 2) === '{'
+                                ? this.char(end - 1) === '}' && this.hex(this.pattern.slice(i + 3, end - 1))
+                                : end - i === 6 && this.hex(this.pattern.slice(i + 2, end));
+                    }
+                    else if(next === 'c') {
+                        character =
+                            end - i === 3 &&
+                            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.includes(this.char(i + 2));
+                    }
+                    else if('0123456789'.includes(next)) {
+                        character = !'89'.includes(next);
+                    }
+                    if(character) {
+                        this.emit(i, end);
+                    }
+                }
+                i = this.quantified(end);
+                continue;
+            }
+            if(c === '[') {
+                const end = this.classEnd(i);
+                if(end < 0 || !this.classWalk(i, end)) {
+                    return false;
+                }
+                i = this.quantified(end);
+                continue;
+            }
+            if(c === '(') {
+                if(this.char(i + 1) !== '?') {
+                    i++;
+                    continue;
+                }
+                const next = this.char(i + 2);
+                if([':', '=', '!'].includes(next)) {
+                    i += 3;
+                    continue;
+                }
+                if(next === '<') {
+                    if(['=', '!'].includes(this.char(i + 3))) {
+                        i += 4;
+                        continue;
+                    }
+                    const end = this.pattern.indexOf('>', i + 3);
+                    i = end < 0 ? this.pattern.length : end + 1;
+                    continue;
+                }
+                i += 2;
+                continue;
+            }
+            if(c === ')') {
+                i = this.quantified(i + 1);
+                continue;
+            }
+            if(['|', '^', '$'].includes(c)) {
+                i++;
+                continue;
+            }
+            this.emit(i, i + 1);
+            i = this.quantified(i + 1);
+        }
+        return true;
+    }
+    valid(): boolean {
+        if(!this.walk()) {
+            return false;
+        }
+        let depth = 0;
+        let repeatable = false;
+        for(let i = 0; i < this.pattern.length;) {
+            const c = this.char(i);
+            if(c === '\\') {
+                const width = this.escape(i);
+                if(width === 0) {
+                    return false;
+                }
+                i += width;
+                repeatable = true;
+                continue;
+            }
+            if(c === '[') {
+                const end = this.classEnd(i);
+                if(end < 0) {
+                    return false;
+                }
+                i = end;
+                repeatable = true;
+                continue;
+            }
+            if(c === '(') {
+                depth++;
+                repeatable = false;
+            }
+            else if(c === ')') {
+                depth--;
+                if(depth < 0) {
+                    return false;
+                }
+                repeatable = true;
+            }
+            else if(['*', '+', '?'].includes(c)) {
+                if(!repeatable) {
+                    return false;
+                }
+                repeatable = false;
+            }
+            else if(c === '{') {
+                const end = this.brace(i);
+                if(end >= 0) {
+                    if(!repeatable) {
+                        return false;
+                    }
+                    i = end;
+                    repeatable = false;
+                    continue;
+                }
+                if(this.unicode) {
+                    return false;
+                }
+                repeatable = true;
+            }
+            else if(c === '|') {
+                repeatable = false;
+            }
+            else {
+                repeatable = true;
+            }
+            i++;
+        }
+        return depth === 0;
+    }
+    rewritten(): string {
+        let built = '';
+        let previous = 0;
+        for(let i = 0; i < this.starts.length; i++) {
+            const start = this.starts[i] ?? 0;
+            const end = this.ends[i] ?? 0;
+            const written = this.pattern.slice(start, end);
+            const bare = written.startsWith('\\') ? written.slice(1) : written;
+            let replacement = '';
+            if(bare === '\n') {
+                replacement = '\\n';
+            }
+            else if(bare === '\r') {
+                replacement = '\\r';
+            }
+            else if(bare === '\t') {
+                replacement = '\\t';
+            }
+            else if(bare === '\v') {
+                replacement = '\\v';
+            }
+            else if(bare === '\f') {
+                replacement = '\\f';
+            }
+            else if(written === '/') {
+                replacement = '\\/';
+            }
+            if(replacement === '' || start < previous) {
+                continue;
+            }
+            built += this.pattern.slice(previous, start) + replacement;
+            previous = end;
+        }
+        return built + this.pattern.slice(previous);
+    }
+}

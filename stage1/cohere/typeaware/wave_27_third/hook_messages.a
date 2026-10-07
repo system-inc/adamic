@@ -1,0 +1,54 @@
+export function hookMessage(id: string): string {
+    if(id === 'exhaustiveDepsMissing') {
+        return 'This Hook reads a value that is not in its dependency array, so the callback React keeps is the one built on the render where the array last changed. The value inside it is frozen at that render and every later read sees the stale copy. Add the value to the array, or stop reading it.';
+    }
+    if(id === 'exhaustiveDepsUnnecessary') {
+        return 'This dependency array names a value the Hook never reads, so the Hook re-runs whenever that value changes for no reason. Remove it from the array.';
+    }
+    if(id === 'exhaustiveDepsDuplicate') {
+        return 'This dependency array names the same value twice. The second copy changes nothing about when the Hook re-runs, so it is noise that will drift out of step with the first. Remove it.';
+    }
+    if(id === 'exhaustiveDepsConstruction') {
+        return 'This dependency is a value built fresh on every render, so it is a different object each time even when nothing about it changed. Comparing it against the previous render never matches and the Hook re-runs every time. Move the value inside the callback, or wrap the thing that builds it in useMemo or useCallback.';
+    }
+    if(id === 'exhaustiveDepsComplexExpression') {
+        return 'A dependency array entry has to be a plain value or a property path so it can be compared against the previous render. This entry is an expression, which cannot be checked statically. Assign it to a variable above the Hook and name that instead.';
+    }
+    if(id === 'exhaustiveDepsLiteral') {
+        return 'A literal in a dependency array never changes between renders, so it can never cause the Hook to re-run and it is doing nothing. Remove it. If the intent was to depend on a variable of that name, write the variable without quotes.';
+    }
+    if(id === 'exhaustiveDepsSpread') {
+        return 'A spread in a dependency array hides which values the Hook depends on, so neither React nor this rule can tell whether the list is right. Write the dependencies out one by one.';
+    }
+    if(id === 'exhaustiveDepsNotArrayLiteral') {
+        return 'The dependency argument is not an array written at the call site, so its contents cannot be read here and nothing can cohere them. Pass an array literal.';
+    }
+    if(id === 'exhaustiveDepsAsyncEffect') {
+        return 'An async effect callback returns a promise, and React expects the return value to be a cleanup function, so the cleanup never runs and overlapping runs race. Keep the callback synchronous and declare the async function inside it.';
+    }
+    if(id === 'exhaustiveDepsMissingCallback') {
+        return 'This Hook was called with no callback, so there is nothing for it to run. Pass the function the Hook is supposed to invoke.';
+    }
+    if(id === 'exhaustiveDepsUselessWithoutDependencies') {
+        return 'useMemo and useCallback exist to reuse a value across renders, and they decide whether to reuse by comparing a dependency array. Called with only a callback there is nothing to compare, so the value is rebuilt every render and the Hook does nothing. Pass a dependency array.';
+    }
+    if(id === 'exhaustiveDepsUnknownDependencies') {
+        return 'The callback is not written at the call site, so what it reads cannot be seen here and the dependency array cannot be checked against it. Pass an inline function.';
+    }
+    if(id === 'exhaustiveDepsEffectEvent') {
+        return "A function from useEffectEvent always sees the latest render's values, which is the whole reason it exists, so listing it as a dependency re-runs the effect for a change that could never have gone stale. Remove it from the array.";
+    }
+    if(id === 'exhaustiveDepsSetStateNoDependencies') {
+        return 'This effect sets state and has no dependency array, so it runs after every render, and the state it sets causes the next render. That is a loop with no exit. Pass a dependency array saying what the effect actually depends on.';
+    }
+    if(id === 'exhaustiveDepsRefCleanup') {
+        return "A cleanup function runs after the component has moved on, so a ref read there gives whatever the ref points at then, not what it pointed at when the effect ran. Copy the ref's value into a local inside the effect and read that local in the cleanup.";
+    }
+    if(id === 'exhaustiveDepsRequireExplicitEffectDeps') {
+        return 'This effect was called with no second argument, and the configuration asks every effect to say what it depends on. An effect with no array runs after every render, which is sometimes the intent and often an oversight nobody can tell apart from it. Pass a dependency array, or an explicit `undefined` to say every render is meant.';
+    }
+    if(id === 'exhaustiveDepsStaleAssignment') {
+        return "Assigning to a variable declared in the component body from inside a Hook writes to that render's copy, which is discarded when the next render makes a new one. Hold the value in a useRef so it survives, or move the variable inside the callback.";
+    }
+    return '';
+}

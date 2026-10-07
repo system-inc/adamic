@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_third/validate.py", line 42, in <module>
+    config=art/'tsconfig.json';manifest=art/'controls.manifest';truth=compare('controls',native,config,manifest)
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_third/validate.py", line 32, in compare
+    truth,_,_=run(label+'-go',[oracle,config,manifest]);got,err,_=run(label+'-native',[binary,config,manifest]);assert not err,(label,err)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_27_third/validate.py", line 17, in run
+    if result.returncode!=expected:raise AssertionError((label,result.returncode,expected,err[-3000:]))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('controls-go', 2, 0, b'panic: parse diagnostics: /workspace/wave-27-scratch/third-supported/rest-031.a\n\ngoroutine 1 [running]:\nmain.main()\n\t/workspace/adamic/cohere/adamic_wave27_third_oracle.go:111 +0x1405\n')

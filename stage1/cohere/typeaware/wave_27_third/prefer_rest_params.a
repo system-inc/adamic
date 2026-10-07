@@ -1,0 +1,37 @@
+import type { Tools } from '../wave_27_next/tools.a';
+import { Diagnostic } from '../diagnostic.ts';
+const message =
+    'This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.';
+export class PreferRestParams {
+    readonly tools: Tools;
+    constructor(tools: Tools) {
+        this.tools = tools;
+    }
+    run(): void {
+        const rules = this.tools.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index);
+            if(node.kind !== 'Identifier' || node.text !== 'arguments') {
+                continue;
+            }
+            const symbol = this.tools.symbol(index);
+            if(!symbol.present || symbol.declarations.length !== 0) {
+                continue;
+            }
+            const parent = this.tools.parent(index);
+            if(this.tools.kind(parent) === 'PropertyAccessExpression' && this.tools.child(parent, 0) === index) {
+                continue;
+            }
+            rules.findings.push(
+                new Diagnostic(
+                    'prefer-rest-params',
+                    'preferRestParams',
+                    message,
+                    rules.byte(rules.start(node)),
+                    rules.byte(node.end),
+                    '',
+                ),
+            );
+        }
+    }
+}

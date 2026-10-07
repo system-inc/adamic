@@ -1,0 +1,6 @@
+panic: open /workspace/adamic/stage1/cohere/typeaware/wave_27_third/prefer_rest_params.a: no such file or directory
+
+goroutine 1 [running]:
+main.main()
+	/workspace/adamic/cohere/adamic_wave_format.go:3 +0x23a
+exit status 2

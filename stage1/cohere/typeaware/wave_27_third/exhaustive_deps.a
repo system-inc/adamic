@@ -1,0 +1,779 @@
+import { panic } from 'adamic';
+import type { Tools } from '../wave_27_next/tools.a';
+import { Diagnostic } from '../diagnostic.ts';
+import { Suggestion } from '../suggestion.ts';
+import { hookMessage } from './hook_messages.a';
+class Read {
+    readonly path: string;
+    readonly stable: boolean;
+    readonly optional: readonly string[];
+    constructor(path: string, stable: boolean, optional: readonly string[]) {
+        this.path = path;
+        this.stable = stable;
+        this.optional = optional;
+    }
+}
+class Declared {
+    readonly path: string;
+    readonly index: number;
+    readonly external: boolean;
+    constructor(path: string, index: number, external: boolean) {
+        this.path = path;
+        this.index = index;
+        this.external = external;
+    }
+}
+class TreeNode {
+    used = false;
+    subtree = false;
+    satisfied = false;
+    readonly children = new Map<string, number>();
+    readonly order: string[] = [];
+}
+class Tree {
+    readonly nodes: TreeNode[] = [new TreeNode()];
+    node(index: number): TreeNode {
+        return this.nodes[index] ?? panic('missing dependency tree node');
+    }
+    child(index: number, segment: string): number {
+        const node = this.node(index);
+        if(!node.children.has(segment)) {
+            node.children.set(segment, this.nodes.length);
+            this.nodes.push(new TreeNode());
+            node.order.push(segment);
+        }
+        return node.children.get(segment) ?? panic('missing dependency tree child');
+    }
+    path(path: string, subtree: boolean): TreeNode {
+        let current = 0;
+        for(const segment of path.split('.')) {
+            current = this.child(current, segment);
+            if(subtree) {
+                this.node(current).subtree = true;
+            }
+        }
+        return this.node(current);
+    }
+    scan(index: number, prefix: string, missing: string[], satisfying: string[]): void {
+        for(const segment of this.node(index).order) {
+            const childIndex = this.child(index, segment);
+            const child = this.node(childIndex);
+            const path = prefix === '' ? segment : `${prefix}.${segment}`;
+            if(child.satisfied) {
+                if(child.subtree) {
+                    satisfying.push(path);
+                }
+                continue;
+            }
+            if(child.used) {
+                if(!missing.includes(path)) {
+                    missing.push(path);
+                }
+                continue;
+            }
+            this.scan(childIndex, path, missing, satisfying);
+        }
+    }
+}
+class Recommendation {
+    readonly missing: string[] = [];
+    readonly unnecessary: string[] = [];
+    readonly duplicate: string[] = [];
+    readonly suggested: string[] = [];
+}
+export class ExhaustiveDeps {
+    readonly tools: Tools;
+    readonly bindings = new Map<number, number[]>();
+    constructor(tools: Tools) {
+        this.tools = tools;
+    }
+    kind(index: number): string {
+        return this.tools.kind(index);
+    }
+    child(index: number, at: number): number {
+        return this.tools.child(index, at);
+    }
+    last(index: number): number {
+        const children = this.tools.bindings.rules.parser.node(index).children;
+        return children[children.length - 1] ?? -1;
+    }
+    parent(index: number): number {
+        return this.tools.parent(index);
+    }
+    text(index: number): string {
+        return index < 0 ? '' : this.tools.bindings.rules.parser.node(index).text;
+    }
+    name(index: number): number {
+        return this.tools.bindings.shape.name(index);
+    }
+    init(index: number): number {
+        return this.tools.bindings.shape.initializer(index);
+    }
+    unwrap(index: number): number {
+        let current = index;
+        while(
+            [
+                'ParenthesizedExpression',
+                'NonNullExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+            ].includes(this.kind(current))
+        ) {
+            const children = this.tools.bindings.rules.parser.node(current).children;
+            current =
+                this.kind(current) === 'TypeAssertionExpression'
+                    ? (children[children.length - 1] ?? -1)
+                    : (children[0] ?? -1);
+        }
+        return current;
+    }
+    contains(outer: number, inner: number): boolean {
+        for(let current = inner; current >= 0; current = this.parent(current)) {
+            if(current === outer) {
+                return true;
+            }
+        }
+        return false;
+    }
+    declarations(index: number): number[] {
+        if(!this.bindings.has(index)) {
+            this.bindings.set(index, this.tools.bindings.list(index, 'binding-declarations', false));
+        }
+        return this.bindings.get(index) ?? panic('missing Hook binding');
+    }
+    earliest(index: number): number {
+        let first = -1;
+        for(const declaration of this.declarations(index)) {
+            if(
+                first < 0 ||
+                this.tools.bindings.rules.parser.node(declaration).pos <
+                    this.tools.bindings.rules.parser.node(first).pos
+            ) {
+                first = declaration;
+            }
+        }
+        return first;
+    }
+    functionKind(index: number): boolean {
+        return this.tools.bindings.functionKind(this.kind(index));
+    }
+    enclosing(index: number): number {
+        for(let current = this.parent(index); current >= 0; current = this.parent(current)) {
+            if(this.functionKind(current)) {
+                return current;
+            }
+        }
+        return -1;
+    }
+    hook(index: number): string {
+        const current = this.unwrap(index);
+        if(this.kind(current) === 'Identifier') {
+            return this.text(current);
+        }
+        if(this.kind(current) === 'PropertyAccessExpression') {
+            const object = this.unwrap(this.child(current, 0));
+            if(this.kind(object) === 'Identifier' && this.text(object) === 'React') {
+                return this.text(this.last(current));
+            }
+        }
+        return '';
+    }
+    report(index: number, id: string): Diagnostic {
+        const rules = this.tools.bindings.rules;
+        const node = rules.parser.node(index);
+        const finding = new Diagnostic(
+            'exhaustive-deps',
+            id,
+            hookMessage(id),
+            rules.byte(rules.start(node)),
+            rules.byte(node.end),
+            'react-hooks/',
+        );
+        rules.findings.push(finding);
+        return finding;
+    }
+    nonRead(index: number): boolean {
+        for(let current = this.parent(index); current >= 0; current = this.parent(current)) {
+            const kind = this.kind(current);
+            if(
+                [
+                    'TypeReference',
+                    'TypeQuery',
+                    'TypeLiteral',
+                    'ArrayType',
+                    'TupleType',
+                    'OptionalType',
+                    'RestType',
+                    'UnionType',
+                    'IntersectionType',
+                    'ConditionalType',
+                    'InferType',
+                    'ParenthesizedType',
+                    'ThisType',
+                    'TypeOperator',
+                    'IndexedAccessType',
+                    'MappedType',
+                    'LiteralType',
+                    'NamedTupleMember',
+                    'TemplateLiteralType',
+                    'TemplateLiteralTypeSpan',
+                    'ImportType',
+                    'FunctionType',
+                    'ConstructorType',
+                    'TypePredicate',
+                    'StringKeyword',
+                    'NumberKeyword',
+                    'BooleanKeyword',
+                    'AnyKeyword',
+                    'UnknownKeyword',
+                    'NeverKeyword',
+                    'ObjectKeyword',
+                    'SymbolKeyword',
+                    'UndefinedKeyword',
+                    'VoidKeyword',
+                    'BigIntKeyword',
+                    'IntrinsicKeyword',
+                    'ExpressionWithTypeArguments',
+                    'JSDocAllType',
+                    'JSDocNullableType',
+                    'JSDocNonNullableType',
+                    'JSDocOptionalType',
+                    'JSDocVariadicType',
+                ].includes(kind)
+            ) {
+                return true;
+            }
+            if(this.functionKind(current) || kind === 'SourceFile') {
+                break;
+            }
+        }
+        const parent = this.parent(index);
+        const kind = this.kind(parent);
+        if(kind === 'PropertyAccessExpression') {
+            return this.child(parent, 1) === index;
+        }
+        if(kind === 'PropertyAssignment') {
+            return this.child(parent, 0) === index;
+        }
+        if(
+            [
+                'QualifiedName',
+                'MethodDeclaration',
+                'PropertyDeclaration',
+                'PropertySignature',
+                'MethodSignature',
+                'GetAccessor',
+                'SetAccessor',
+                'EnumMember',
+                'ImportSpecifier',
+                'ImportClause',
+                'NamespaceImport',
+                'TypeParameter',
+                'TypeReference',
+                'TypeQuery',
+                'JsxAttribute',
+            ].includes(kind)
+        ) {
+            return this.name(parent) === index;
+        }
+        return false;
+    }
+    primitive(index: number): boolean {
+        return ['StringLiteral', 'NumericLiteral', 'NullKeyword', 'NoSubstitutionTemplateLiteral'].includes(
+            this.kind(index),
+        );
+    }
+    literal(index: number): boolean {
+        return (
+            this.primitive(index) ||
+            ['BigIntLiteral', 'TrueKeyword', 'FalseKeyword', 'RegularExpressionLiteral'].includes(this.kind(index))
+        );
+    }
+    constDeclaration(index: number): boolean {
+        const parent = this.parent(index);
+        return (
+            this.kind(parent) === 'VariableDeclarationList' &&
+            ['2', '6'].includes(this.tools.bindings.rules.parser.node(parent).semantic)
+        );
+    }
+    tupleInitializer(declaration: number): number {
+        const pattern = this.parent(declaration);
+        if(this.kind(pattern) !== 'ArrayBindingPattern') {
+            return -1;
+        }
+        const elements = this.tools.bindings.rules.parser.node(pattern).children;
+        if(elements.length !== 2 || elements[1] !== declaration) {
+            return -1;
+        }
+        const variable = this.parent(pattern);
+        if(this.kind(variable) !== 'VariableDeclaration') {
+            return -1;
+        }
+        return this.unwrap(this.init(variable));
+    }
+    reassigned(declaration: number, component: number): boolean {
+        for(let i = 0; i < this.tools.bindings.rules.parser.nodes.length; i++) {
+            if(this.kind(i) !== 'BinaryExpression' || !this.contains(component, i)) {
+                continue;
+            }
+            if(this.kind(this.child(i, 1)) !== 'EqualsToken') {
+                continue;
+            }
+            const left = this.unwrap(this.child(i, 0));
+            if(this.kind(left) === 'Identifier' && this.declarations(left).includes(declaration)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    stable(index: number, component: number, visiting: readonly number[]): boolean {
+        const declaration = this.earliest(index);
+        if(declaration < 0 || visiting.includes(declaration)) {
+            return false;
+        }
+        const kind = this.kind(declaration);
+        if(kind === 'BindingElement') {
+            const init = this.tupleInitializer(declaration);
+            return (
+                this.kind(init) === 'CallExpression' &&
+                ['useState', 'useReducer', 'useActionState', 'useTransition'].includes(
+                    this.hook(this.child(init, 0)),
+                ) &&
+                !this.reassigned(declaration, component)
+            );
+        }
+        let fn = -1;
+        if(kind === 'FunctionDeclaration') {
+            fn = declaration;
+        }
+        if(kind === 'VariableDeclaration') {
+            const init = this.unwrap(this.init(declaration));
+            if(['ArrowFunction', 'FunctionExpression'].includes(this.kind(init))) {
+                fn = init;
+            }
+            else if(this.constDeclaration(declaration) && this.primitive(init)) {
+                return true;
+            }
+            else {
+                return (
+                    this.kind(init) === 'CallExpression' &&
+                    ['useRef', 'useEffectEvent'].includes(this.hook(this.child(init, 0)))
+                );
+            }
+        }
+        if(fn < 0) {
+            return false;
+        }
+        const next = visiting.slice();
+        next.push(declaration);
+        for(let i = 0; i < this.tools.bindings.rules.parser.nodes.length; i++) {
+            if(this.kind(i) !== 'Identifier' || !this.contains(fn, i) || this.nonRead(i)) {
+                continue;
+            }
+            const declarations = this.declarations(i);
+            if(
+                declarations.some((d) => this.contains(fn, d)) ||
+                !declarations.some((d) => this.contains(component, d))
+            ) {
+                continue;
+            }
+            if(!this.stable(i, component, next)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    chain(index: number, optional: string[]): string {
+        const current = this.unwrap(index);
+        if(this.kind(current) === 'Identifier') {
+            return this.text(current);
+        }
+        if(this.kind(current) !== 'PropertyAccessExpression') {
+            return '';
+        }
+        const object = this.chain(this.child(current, 0), optional);
+        const name = this.last(current);
+        if(object === '' || this.kind(name) !== 'Identifier') {
+            return '';
+        }
+        const path = `${object}.${this.text(name)}`;
+        if(this.tools.bindings.rules.parser.node(current).children.some((c) => this.kind(c) === 'QuestionDotToken')) {
+            optional.push(path);
+        }
+        return path;
+    }
+    outer(index: number): number {
+        let current = index;
+        while(true) {
+            const parent = this.parent(current);
+            if(
+                [
+                    'ParenthesizedExpression',
+                    'NonNullExpression',
+                    'AsExpression',
+                    'SatisfiesExpression',
+                    'TypeAssertionExpression',
+                ].includes(this.kind(parent))
+            ) {
+                current = parent;
+                continue;
+            }
+            if(
+                this.kind(parent) !== 'PropertyAccessExpression' ||
+                this.child(parent, 0) !== current ||
+                this.kind(this.last(parent)) !== 'Identifier' ||
+                this.text(this.last(parent)) === 'current'
+            ) {
+                break;
+            }
+            const grandparent = this.parent(parent);
+            if(this.kind(grandparent) === 'CallExpression' && this.child(grandparent, 0) === parent) {
+                return current;
+            }
+            current = parent;
+        }
+        const parent = this.parent(current);
+        if(
+            this.kind(current) === 'PropertyAccessExpression' &&
+            this.kind(parent) === 'BinaryExpression' &&
+            this.child(parent, 0) === current &&
+            this.kind(this.child(parent, 1)) === 'EqualsToken'
+        ) {
+            return this.child(current, 0);
+        }
+        return current;
+    }
+    gather(callback: number, component: number): Read[] {
+        const reads: Read[] = [];
+        for(let index = 0; index < this.tools.bindings.rules.parser.nodes.length; index++) {
+            if(this.kind(index) !== 'Identifier' || !this.contains(callback, index) || this.nonRead(index)) {
+                continue;
+            }
+            const declarations = this.declarations(index);
+            if(
+                declarations.some((d) => this.contains(callback, d)) ||
+                !declarations.some((d) => this.contains(component, d))
+            ) {
+                continue;
+            }
+            const hook = this.parent(callback);
+            if(
+                this.kind(hook) === 'CallExpression' &&
+                declarations.some((d) => this.kind(d) === 'VariableDeclaration' && this.unwrap(this.init(d)) === hook)
+            ) {
+                continue;
+            }
+            const optional: string[] = [];
+            const path = this.chain(this.outer(index), optional);
+            if(path === '' || reads.some((read) => read.path === path)) {
+                continue;
+            }
+            reads.push(new Read(path, this.stable(index, component, []), optional));
+        }
+        return reads;
+    }
+    declaredIn(index: number, component: number): boolean {
+        let root = this.unwrap(index);
+        while(this.kind(root) === 'PropertyAccessExpression') {
+            root = this.unwrap(this.child(root, 0));
+        }
+        return this.kind(root) === 'Identifier' && this.declarations(root).some((d) => this.contains(component, d));
+    }
+    recommend(reads: readonly Read[], declared: readonly Declared[], effect: boolean): Recommendation {
+        const tree = new Tree();
+        for(const read of reads) {
+            if(!read.stable) {
+                tree.path(read.path, true).used = true;
+            }
+        }
+        for(const entry of declared) {
+            tree.path(entry.path, false).satisfied = true;
+        }
+        for(const read of reads) {
+            if(read.stable) {
+                tree.path(read.path, true).satisfied = true;
+            }
+        }
+        const result = new Recommendation();
+        const satisfying: string[] = [];
+        tree.scan(0, '', result.missing, satisfying);
+        for(const entry of declared) {
+            if(satisfying.includes(entry.path)) {
+                if(result.suggested.includes(entry.path)) {
+                    if(!result.duplicate.includes(entry.path)) {
+                        result.duplicate.push(entry.path);
+                    }
+                }
+                else {
+                    result.suggested.push(entry.path);
+                }
+            }
+            else if(effect && !entry.path.endsWith('.current') && !entry.external) {
+                if(!result.suggested.includes(entry.path)) {
+                    result.suggested.push(entry.path);
+                }
+            }
+            else if(!result.unnecessary.includes(entry.path)) {
+                result.unnecessary.push(entry.path);
+            }
+        }
+        for(const path of result.missing) {
+            result.suggested.push(path);
+        }
+        return result;
+    }
+    constructs(index: number): boolean {
+        const current = this.unwrap(index);
+        const kind = this.kind(current);
+        if(
+            [
+                'ObjectLiteralExpression',
+                'ArrayLiteralExpression',
+                'ArrowFunction',
+                'FunctionExpression',
+                'ClassExpression',
+                'NewExpression',
+                'RegularExpressionLiteral',
+                'JsxElement',
+                'JsxFragment',
+                'JsxSelfClosingElement',
+            ].includes(kind)
+        ) {
+            return true;
+        }
+        if(kind === 'ConditionalExpression') {
+            return this.constructs(this.child(current, 2)) || this.constructs(this.child(current, 4));
+        }
+        if(kind === 'BinaryExpression') {
+            const operator = this.kind(this.child(current, 1));
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator)) {
+                return this.constructs(this.child(current, 0)) || this.constructs(this.last(current));
+            }
+            if(operator === 'EqualsToken') {
+                return this.constructs(this.last(current));
+            }
+        }
+        return false;
+    }
+    callback(callback: number, array: number, call: number, component: number, effect: boolean): void {
+        const rules = this.tools.bindings.rules;
+        if(effect && rules.parser.node(callback).children.some((c) => this.kind(c) === 'AsyncKeyword')) {
+            this.report(callback, 'exhaustiveDepsAsyncEffect');
+        }
+        const reads = this.gather(callback, component);
+        if(array < 0) {
+            for(let index = 0; index < rules.parser.nodes.length; index++) {
+                if(
+                    this.kind(index) !== 'Identifier' ||
+                    !this.contains(callback, index) ||
+                    this.nonRead(index) ||
+                    this.enclosing(index) !== callback
+                ) {
+                    continue;
+                }
+                const declaration = this.earliest(index);
+                if(declaration < 0 || !this.contains(component, declaration) || this.contains(callback, declaration)) {
+                    continue;
+                }
+                const init = this.tupleInitializer(declaration);
+                if(this.kind(init) === 'CallExpression' && this.hook(this.child(init, 0)) === 'useState') {
+                    this.report(call, 'exhaustiveDepsSetStateNoDependencies');
+                    return;
+                }
+            }
+            return;
+        }
+        const declared: Declared[] = [];
+        const entryNodes: number[] = [];
+        const entryIds: string[] = [];
+        const unwrapped = this.unwrap(array);
+        if(this.kind(unwrapped) !== 'ArrayLiteralExpression') {
+            entryNodes.push(array);
+            entryIds.push('exhaustiveDepsNotArrayLiteral');
+        }
+        else {
+            for(const entry of rules.parser.node(unwrapped).children) {
+                if(this.kind(entry) === 'OmittedExpression') {
+                    continue;
+                }
+                let id = '';
+                if(this.kind(entry) === 'SpreadElement') {
+                    id = 'exhaustiveDepsSpread';
+                }
+                else {
+                    const root = this.unwrap(entry);
+                    const declaration = this.kind(root) === 'Identifier' ? this.earliest(root) : -1;
+                    const init =
+                        declaration >= 0 && this.kind(declaration) === 'VariableDeclaration'
+                            ? this.unwrap(this.init(declaration))
+                            : -1;
+                    if(
+                        declaration >= 0 &&
+                        this.contains(component, declaration) &&
+                        this.kind(init) === 'CallExpression' &&
+                        this.hook(this.child(init, 0)) === 'useEffectEvent'
+                    ) {
+                        id = 'exhaustiveDepsEffectEvent';
+                    }
+                    else {
+                        const path = this.chain(entry, []);
+                        if(path !== '') {
+                            declared.push(new Declared(path, entry, !this.declaredIn(entry, component)));
+                            continue;
+                        }
+                        id = this.literal(root) ? 'exhaustiveDepsLiteral' : 'exhaustiveDepsComplexExpression';
+                    }
+                }
+                entryNodes.push(entry);
+                entryIds.push(id);
+            }
+        }
+        const result = this.recommend(reads, declared, effect);
+        const id =
+            result.missing.length > 0
+                ? 'exhaustiveDepsMissing'
+                : result.unnecessary.length > 0
+                  ? 'exhaustiveDepsUnnecessary'
+                  : result.duplicate.length > 0
+                    ? 'exhaustiveDepsDuplicate'
+                    : '';
+        if(id === '') {
+            for(const entry of declared) {
+                const root = this.unwrap(entry.index);
+                if(entry.path.includes('.') || this.kind(root) !== 'Identifier') {
+                    continue;
+                }
+                const declaration = this.earliest(root);
+                if(declaration < 0 || !this.contains(component, declaration) || this.contains(callback, declaration)) {
+                    continue;
+                }
+                const kind = this.kind(declaration);
+                if(
+                    ['FunctionDeclaration', 'ClassDeclaration'].includes(kind) ||
+                    (kind === 'VariableDeclaration' &&
+                        this.kind(this.name(declaration)) === 'Identifier' &&
+                        this.constructs(this.init(declaration)))
+                ) {
+                    this.report(declaration, 'exhaustiveDepsConstruction');
+                }
+            }
+        }
+        else {
+            let suggested = result.suggested;
+            if(!effect && result.missing.length > 0) {
+                suggested = this.recommend(reads, [], effect).suggested;
+            }
+            let sorted = true;
+            for(let i = 1; i < declared.length; i++) {
+                if((declared[i - 1]?.path ?? '') > (declared[i]?.path ?? '')) {
+                    sorted = false;
+                }
+            }
+            if(sorted) {
+                suggested.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+            }
+            const formatted: string[] = [];
+            for(const path of suggested) {
+                const segments = path.split('.');
+                let built = segments[0] ?? '';
+                for(let i = 1; i < segments.length; i++) {
+                    const prefix = segments.slice(0, i + 1).join('.');
+                    built += (reads.some((r) => r.optional.includes(prefix)) ? '?.' : '.') + (segments[i] ?? '');
+                }
+                formatted.push(built);
+            }
+            this.report(array, id).suggestions.push(
+                new Suggestion(
+                    'exhaustiveDepsUpdateArray',
+                    `Update the dependency array to [${formatted.join(', ')}].`,
+                    [],
+                ),
+            );
+        }
+        for(let i = 0; i < entryNodes.length; i++) {
+            this.report(entryNodes[i] ?? -1, entryIds[i] ?? '');
+        }
+    }
+    run(): void {
+        const rules = this.tools.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            if(this.kind(index) !== 'CallExpression') {
+                continue;
+            }
+            const hook = this.hook(this.child(index, 0));
+            if(!['useEffect', 'useLayoutEffect', 'useCallback', 'useMemo', 'useImperativeHandle'].includes(hook)) {
+                continue;
+            }
+            const component = this.enclosing(index);
+            if(component < 0) {
+                continue;
+            }
+            const args = this.tools.args(index);
+            const offset = hook === 'useImperativeHandle' ? 1 : 0;
+            const argument = args[offset] ?? -1;
+            if(argument < 0) {
+                this.report(index, 'exhaustiveDepsMissingCallback');
+                continue;
+            }
+            let array = args[offset + 1] ?? -1;
+            if(this.kind(array) === 'Identifier' && this.text(array) === 'undefined') {
+                array = -1;
+            }
+            const effect = ['useEffect', 'useLayoutEffect'].includes(hook);
+            if(array < 0 && !effect) {
+                if(['useCallback', 'useMemo'].includes(hook)) {
+                    this.report(index, 'exhaustiveDepsUselessWithoutDependencies');
+                }
+                continue;
+            }
+            let callback = this.unwrap(argument);
+            if(this.kind(callback) === 'Identifier') {
+                if(array < 0) {
+                    continue;
+                }
+                const unwrapped = this.unwrap(array);
+                if(
+                    this.kind(unwrapped) === 'ArrayLiteralExpression' &&
+                    rules.parser
+                        .node(unwrapped)
+                        .children.some(
+                            (e) =>
+                                this.kind(this.unwrap(e)) === 'Identifier' &&
+                                this.text(this.unwrap(e)) === this.text(callback),
+                        )
+                ) {
+                    continue;
+                }
+                const declaration = this.earliest(callback);
+                if(declaration < 0 || this.kind(declaration) === 'Parameter') {
+                    this.report(index, 'exhaustiveDepsUnknownDependencies');
+                    continue;
+                }
+                if(this.kind(declaration) === 'FunctionDeclaration') {
+                    callback = declaration;
+                }
+                else if(this.kind(declaration) === 'VariableDeclaration') {
+                    callback = this.unwrap(this.init(declaration));
+                    if(callback < 0) {
+                        this.report(index, 'exhaustiveDepsUnknownDependencies');
+                        continue;
+                    }
+                    if(!['ArrowFunction', 'FunctionExpression'].includes(this.kind(callback))) {
+                        this.report(array, 'exhaustiveDepsMissing');
+                        continue;
+                    }
+                }
+                else {
+                    this.report(index, 'exhaustiveDepsUnknownDependencies');
+                    continue;
+                }
+            }
+            else if(!['ArrowFunction', 'FunctionExpression'].includes(this.kind(callback))) {
+                this.report(index, 'exhaustiveDepsUnknownDependencies');
+                continue;
+            }
+            this.callback(callback, array, index, component, effect);
+        }
+    }
+}
