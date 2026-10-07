@@ -224,3 +224,9 @@ events, zero skips and zero failures. Exact pinned inputs and no-skip receipts
 are archived. React hook claims stay parked on IR/SSA/capture analysis; four
 production bridge routes and shared checker context remain pending. See
 ../wave07_jsx/REQUIRED_INPUTS_REPORT.md. No additional claim is made.
+
+Latest landing refresh: rebased onto origin/area/stage1-lint b84a9d931 and origin/main
+c7991b900; all 19 owned landing steps and 100 required external test events pass
+with zero skips or failures. Twelve existing ports rerun; three hook claims remain
+parked for native IR, SSA and capture analysis. No additional rules claimed.
+See wave07_jsx/LATEST_LANDING_REPORT.md and its pinned evidence.

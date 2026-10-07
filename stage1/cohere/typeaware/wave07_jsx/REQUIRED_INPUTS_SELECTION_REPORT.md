@@ -4,6 +4,8 @@ Commands and outputs: 18 owned steps and 16 external root checks pass; 100 passi
 Mutants: rule/listener/dispatch/graph/fact/data/ownership and external comparator witnesses are listed in REQUIRED_INPUTS_REPORT.md and its archived events.
 Not covered: parked React IR/SSA/capture analyses, four production bridge routes, shared checker context, own emitted JavaScript and the full repository gate.
 
+Latest rebase and rerun: [LATEST_LANDING_REPORT.md](LATEST_LANDING_REPORT.md).
+
 Fresh all-head selection covers 197 ranked names, 627 origin refs and 33 distinct
 Markdown claim blobs. Original production ports, main/base native sources and
 rule descriptors, and every origin claim are excluded. No eligible rule remains.

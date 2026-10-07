@@ -4,6 +4,8 @@ Checks: 18 owned landing steps and 16 external root tests pass, with 100 passing
 Mutants: all twelve rule, three named-dispatch, nine listener, graph/fact/data/ownership guards and external comparison witnesses are caught.
 Not covered: three parked React analyses, four production bridge routes, shared checker context, own emitted-JavaScript comparison and the full repository gate.
 
+Latest rebase and rerun: [LATEST_LANDING_REPORT.md](LATEST_LANDING_REPORT.md).
+
 ## Rebase and source scope
 
 The branch was rebased cleanly onto origin/area/stage1-lint at
