@@ -1,5 +1,5 @@
 Built: cached cycle edges and checker-identical literal relations; median fixture wall 15.63 s -> 10.20 s, findCycles CPU 14.83 s -> 9.28 s.
-Commits: implementation 5b064cdcb7b93be1b28ed30f2322526095f0141c; pinned/current main 48c05d091f0a43c31cbe051b1d6578d99eeedf19.
+Commits: implementation 5b064cdcb7b93be1b28ed30f2322526095f0141c; report/evidence 414fae44; pinned/current main 48c05d091f0a43c31cbe051b1d6578d99eeedf19.
 Checks: 1,106 complete decisions identical; lower package, filtered ownership oracles, exact markdown layout fixture, vet and formatting passed.
 Mutant: dropping cached field edges changed 34 refusals into acceptance; the same complete decision comparator exited 1. Four arena/parent trace diffs were empty.
 Limits: freshness analysis unchanged and still dominant; no full repository gate, no runtime graph work, and no new guarantee that all-distinct shape graphs are linear.
