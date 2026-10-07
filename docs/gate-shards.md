@@ -1292,140 +1292,74 @@ are above 1200 seconds, so fitting layout alone would not certify the whole
 gate under that budget. Raw readings are committed in
 `cmd/adamic-gate/evidence/layout-memory-guard.json`.
 
-### Declared two-half layout split
+### Final scope after the markdown mutant backend change
 
-The follow-up explicitly authorizes the split after the memory guard. Planning
-now declares `layoutOnce/half-a` and `layoutOnce/half-b`, each with
-`SplitCount=2`, its member selectors, cost, and dedicated shard. Each half runs
-one package invocation. `layoutSlots` stays at two; no stage1 test file changes.
-The group membership is partitioned at whole top-level parent boundaries:
+The requested two-half layout split is withdrawn. The final planner retains
+one whole, pinned `layoutOnce` affinity containing all nine layout tests,
+`formatterOnce`, and the whole oracle package's `gateOnce` affinity. The volume
+agreement parent remains whole. `timings.json` remains derived from all fifteen
+original 47fbaf17 shard logs, with the original audit and toolchain metadata.
+The compare-provenance implementation is retained.
 
-- Half A: code blocks, leaf composition, lists, whitespace (including its three
-  policy mutants).
-- Half B: HTML blocks, quotes, root, structure, tables.
+The measured pre-backend-change whole layout group at exact source 47fbaf17
+was 2421.176 seconds. Its historical shard-derived planning estimate is
+3456.456 seconds. These are explicitly pre-change values, not forecasts for
+the new semantic-mutant backend. Once `stage1-format/markdown-mutants` at
+`13f16800` reaches main, re-derive the markdownblocks timing units from logs of
+that merged source. Do not transplant its timings into a plan for 47fbaf17.
 
-The planner's `-run` patterns select all subtests of those parents (`/.*`).
-Keeping parents whole preserves unguarded whitespace policy work and future
-subtests. The nine parents, all thirty existing mutant subtests, and every
-non-mutant parent check remain covered exactly once across the two halves.
-Each process builds its own fixture once, giving two builds. An incomplete,
-overlapping, co-located, or otherwise corrupted split is refused. Other tests
-cannot be packed into these two dedicated shards. Insufficient shard counts
-refuse rather than collapsing the split.
+Integration evidence supplied by the user, not measured by this worker:
+`main eac1fb47` exceeded the 3600-second package timeout in both the whole gate
+and a package-only retry on a five-core Linux box, recorded at
+`gate-logs/eac1fb47cc64/manual/whole`. The user's measured `13f16800` change
+moves semantic source mutants off native with no native-only survivor;
+reported layoutOnce is 377 -> 89 seconds and the whole markdownblocks package
+is 523 seconds with no skips. That package result is under 3600 seconds. Our
+pre-change whole layout-group rerun is also under 3600 seconds; we did not
+measure the rest of that package jointly with it. Neither its span nor the
+failed main package run establishes a package-wide timeout result for 47fbaf17.
 
-Calibration produces each half's cost by subtracting each member's observed
-fixture span and adding one median fixture span for that half. It retains the
-historical whole-group estimate for audit. Before joint half measurements,
-these remain reconstructed conservative estimates, not observed joint spans.
-The estimated source-47fb plan is in
-`cmd/adamic-gate/evidence/layout-split-estimated-plan.json`:
+The abandoned split's half A passed fifteen mutant checks and four parents in
+2022.108 test seconds, below 3600 but above 1200; setup was separately 43.848
+seconds. Its end-of-run fresh cgroup peak was 3.383 GiB, with zero memory limit
+or OOM events. Half B was cancelled on the user's instruction, so it has no
+completed wall or end-of-run peak. No stage1 source file changed. The historical
+split evidence remains for audit, but its plans are superseded and are not the
+final planner behavior. The final report uses the whole-group plan above.
 
-| Shard | Estimated test seconds | Actual |
-| --- | ---: | --- |
-| 0, half A | 2343.630 | pending |
-| 1, half B | 1645.334 | pending |
-| 2 | 1748.360 | not rerun |
-| 3 | 1748.360 | not rerun |
-| 4 | 1748.360 | not rerun |
-| 5 | 1748.355 | not rerun |
-| 6 | 1748.360 | not rerun |
-| 7 | 1748.360 | not rerun |
-| 8 | 1748.360 | not rerun |
-| 9 | 1748.350 | not rerun |
-| 10 | 1748.360 | not rerun |
-| 11 | 1748.360 | not rerun |
-| 12 | 1748.360 | not rerun |
-| 13 | 1748.360 | not rerun |
-| 14 | 1731.075 | not rerun |
+### Heaviest planned shards excluding markdownblocks
 
-These estimates use the fifteen original shard-log build-flags lines in
-`timings.json.audit.json`, not a new timing claim. The original required-input
-shard stays separate. Dedicated layout shards leave twelve ordinary packing
-shards rather than thirteen, so other shard predictions increase. This plan
-alone does not demonstrate a sub-20-minute gate.
+For the whole-affinity 15-shard plan, subtracting markdownblocks contributions
+identifies the heaviest remaining work; this is a filtered view, not a new
+packing allocation or a measured rerun. The full table retains those historical
+contributions pending the backend change's merge and recalibration.
 
-Measurement limitation and assumption: the selected runtime provides one cloud
-machine and no cloud provisioning credentials/capability. The available
-fallback is two fresh worker containers run sequentially on that machine,
-each limited to `cpu.max=400000 100000` and 16 GiB. They are separate fresh
-cgroups, not two independent cloud machines. Setup and test use separate fresh
-containers per worker so the end-of-test `memory.peak` excludes setup and the
-outer machine's lifetime peak. Setup is measured separately per worker.
-Existing content-addressed tool/build caches remain warm; answer checks run
-with `ADAMIC_GATE_UNCACHED=1`. Each long half is measured once.
+| Shard | Predicted seconds excluding markdownblocks |
+| --- | ---: |
+| 14 | 1731.075 |
+| 11 | 1613.870 |
+| 2 | 1613.870 |
+| 8 | 1613.870 |
+| 10 | 1613.870 |
+| 5 | 1613.870 |
+| 6 | 1613.870 |
+| 9 | 1613.870 |
+| 12 | 1613.870 |
+| 4 | 1440.255 |
+| 7 | 1421.250 |
+| 13 | 1215.470 |
+| 3 | 541.050 |
+| 1 | 271.390 |
+| 0 | 0.000 |
 
-An initial uninstrumented attempt and an attempt tracing Go itself were aborted
-before any mutant completed. Go tracing produced scheduling disturbance, so
-neither attempt supplies reported timings. The measured attempts use external
-`/proc` sampling with a nominal 5 ms wait between scans, identifying clang
-commands whose output basename is `mutant` and executable processes named
-`mutant`. No test source or generated executable is changed by instrumentation.
-Native build/run intervals are approximate observations, not exact function
-profiling; short processes can be missed. Go lowering and C emission inside
-`nativeMutant` are outside these external process intervals and remain in the
-residual. Overlapping native intervals will be unioned before reporting a share
-of wall time; summed durations will be reported separately.
-
-Validation: the full runner test suite, focused race regressions including
-compare provenance, and vet passed. Five split overlay mutants were caught:
-
-| Mutant | Regression that caught it |
-| --- | --- |
-| coalesce both halves onto one shard | `TestDeclaredLayoutSplitCoverageAndIsolation` |
-| lose a half's package assignment | `TestDeclaredLayoutSplitCoverageAndIsolation` |
-| pack ordinary work on a dedicated half | `TestDedicatedLayoutShardsStayReservedBeforeHeavyOrdinaryItems` |
-| charge shared fixture only once across both halves | `TestTimingsPriceLayoutSetupOnce` |
-| accept an omitted half | `TestDeclaredLayoutSplitRefusesCorruption/missing-half` |
-
-The compare-provenance implementation remains in commit `be217bbd`; its local
-matching, wrong-commit, wrong-Node, wrong-Go, and legacy-toolchain tests pass
-with the new split. No second provenance implementation is needed.
-
-Completed half logs now calibrate their affinity cost directly from the Go
-package terminal elapsed span when the invocation contains exactly that half's
-parents. Logs with unrelated package work do not qualify; reconstructed costs
-remain the fallback. `TestTimingsUseMeasuredHalfSpan` verifies both cases, and
-an overlay removing joint-span observation fails that test. This sixth split
-mutant prevents overlapping parent elapsed times from inflating the measured
-half cost. The updated focused race tests and vet pass.
-
-Standalone worker `measurement.json` metadata supplies each new timing source's
-commit and complete build-flags line when no runner `summary.json` is present.
-`TestTimingsCarryWorkerMetadata` verifies that provenance survives calibration;
-an overlay discarding it is caught by that test. This seventh split mutant and
-the final timing race suite pass their expected outcomes; vet passes.
-
-The split declaration itself is required: two partial layout affinity records
-cannot masquerade as legacy unsplit groups by dropping `Split`/`SplitCount`.
-The corresponding corruption test and an eighth overlay mutant verify this;
-the fixed focused race suite and vet pass. One historical whole layout group
-remains readable.
-
-### 13:30 MDT deadline snapshot
-
-At 2026-10-07T19:29:34.219258+00:00, half A was still running after 1827.034 seconds of test execution, with 13 of fifteen mutant checks passed and no failed events. Its fixture reached the first mutant after 587.348 seconds. Setup was 43.848 seconds separately (including container start/exit overhead; setup itself logged 41.433 seconds). Half B had not started because the workers run sequentially on the sole available machine. Neither end-of-run memory peak nor complete native process intervals is available yet. The estimated 15-shard table above stands; shard 0 actual is explicitly a running lower bound, shard 1 actual remains pending. This is an honest partial report, not a sub-20-minute certificate. Measurement continues.
-
-The snapshot JSON and split proof archive are committed in `cmd/adamic-gate/evidence/layout-split-deadline.json` and `layout-split-proof.tgz`. Compare provenance is implemented and its matching and refusal tests pass.
-
-### Completed half A
-
-Half A passed all fifteen mutants and four parents. Test span: 2022.108 seconds; `go test` wall: 2028.967 seconds; separately measured setup: 43.848 seconds. The fixture built once. End-of-run fresh cgroup memory peak: 3633004544 bytes (3.383 GiB), limit 16 GiB, all memory limit/OOM counters zero. This differs in scope from the earlier outer-cgroup lifetime peak. No four-slot experiment or stage1 change was made.
-
-| Test-wall component | Seconds | Instrument |
-| --- | ---: | --- |
-| Fixture through first mutant | 587.348 | Go JSON `cont` to first child `run` |
-| Native mutant builds or runs, overlapping intervals unioned | 1292.580 | External `/proc` process samples, 15 builds and 15 executions |
-| Residual test work | 142.180 | Test span minus fixture and native interval union |
-| Outside Go test span | 6.859 | `go test` process wall minus package terminal `Elapsed` |
-
-Summed native compiler duration: 148.470 seconds; summed native executable duration: 1881.139 seconds. Execution dominates. Their separate wall unions are 135.581 and 1207.533 seconds, respectively; build/run overlap means these do not add to the combined union. Semantic mutant intervals occupy 1271.890 seconds of the observed wall, and policy-mutant intervals occupy 201.810 seconds; those also overlap. Moving semantic checks to another backend must preserve policy work and oracle checks, so subtracting the semantic interval union is not a valid speedup prediction. Go lowering/C emission is in the residual rather than the native subprocess measurements.
-
-Half A overlaps some planner verification/build commands on the same parent machine. It is not an isolated physical-box benchmark or a controlled comparison with the old whole-group run. Half B runs after verification builds have finished. The measured numbers and resource/method limits are preserved rather than presented as a speedup claim.
-
-Half A used whole-parent `-run` patterns, equivalent to selecting all their subtests; half B uses the planner-style `/.*` suffix explicitly, with membership read from the estimated plan. Both keep the same parent partition and all thirty child checks overall. Exact metadata and command are in `cmd/adamic-gate/evidence/layout-split-half-a.json`.
-
-Half A build flags:
-
-```text
-commit=47fbaf174d168f14cd50dedcaabfaa09c51cdefd nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="3.01 2.13 1.04 1/390 17" load_after="1.02 1.43 1.77 1/429 317" uncached=1 cached_builds=warm GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" instrument="external /proc process sampling every 5 ms; no test source changes; native build/run intervals approximate"
-```
+The remaining heaviest individual units are oracle `gateOnce` (1368.845 s,
+conservative group price), lint `TestMutants` (1069.120 s), typeaware
+`TestVolumeAgreementAndMutants` (731.755 s, reconstructed parent plus setup),
+json `TestPortMatchesGoCohere` (686.000 s), typeaware
+`TestTypeAwareAgreementAndMutants` (615.050 s), unicode
+`TestCanonicalizeUnicodeNode` (571.080 s), and lint
+`TestEmittedJavaScriptMismatch` (507.020 s). These measured/calibrated source47
+units are inputs to a later isolated-heavy-package unit, not new measurements
+of the backend change. Setup remains separate: the whole-group rerun used
+84.939 s of warm setup; original shard 2 recorded 601 s. Setup was not rerun
+on the other fourteen planned shards, so per-box setup there is unmeasured.

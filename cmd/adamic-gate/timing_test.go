@@ -54,11 +54,6 @@ func TestTimingsPriceLayoutSetupOnce(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, half := range planningAffinities() {
-		if half.Split != "" && weights[half.key()] != float64(10+2*len(half.Tests)) {
-			t.Fatalf("split fixture setup lost or repeated: %s %v", half.key(), weights[half.key()])
-		}
-	}
 	if weights[g.key()] != 28 {
 		t.Fatalf("fixture setup repeated: got %v want 28", weights[g.key()])
 	}
@@ -116,35 +111,5 @@ func TestTimingsReorderingIsByteIdentical(t *testing.T) {
 		if string(got) != string(want) {
 			t.Fatal("reordered evidence changed timing bytes", string(want), string(got))
 		}
-	}
-}
-
-func TestTimingsUseMeasuredHalfSpan(t *testing.T) {
-	half := planningAffinities()[1]
-	events := []event{{Action: "start", Package: half.Package}}
-	for _, name := range half.Tests {
-		events = append(events, event{Action: "pass", Package: half.Package, Test: name, Elapsed: 12})
-	}
-	events = append(events, event{Action: "pass", Package: half.Package, Elapsed: 15})
-	weights, _, err := calibrateTimings([]string{timingLog(t, events...)})
-	if err != nil || weights[half.key()] != 15 {
-		t.Fatal("lost measured joint half span", weights[half.key()], err)
-	}
-	events = append(events[:len(events)-1], event{Action: "pass", Package: half.Package, Test: "TestUnrelated", Elapsed: 5}, event{Action: "pass", Package: half.Package, Elapsed: 20})
-	weights, _, err = calibrateTimings([]string{timingLog(t, events...)})
-	if err != nil || weights[half.key()] != 48 {
-		t.Fatal("unrelated package work treated as joint half", weights[half.key()], err)
-	}
-}
-
-func TestTimingsCarryWorkerMetadata(t *testing.T) {
-	path := timingLog(t, event{Action: "pass", Package: "p", Test: "TestOne", Elapsed: 1})
-	metadata := struct{ SourceCommit, BuildFlags string }{"47fbaf174d168f14cd50dedcaabfaa09c51cdefd", `go="go version go1.27.1 linux/amd64" node="v24.19.0"`}
-	if err := saveJSON(filepath.Join(filepath.Dir(path), "measurement.json"), metadata); err != nil {
-		t.Fatal(err)
-	}
-	_, audit, err := calibrateTimings([]string{path})
-	if err != nil || len(audit.Sources) != 1 || audit.Sources[0].Commit != metadata.SourceCommit || audit.Sources[0].BuildFlags != metadata.BuildFlags {
-		t.Fatal("lost worker timing provenance", audit.Sources, err)
 	}
 }

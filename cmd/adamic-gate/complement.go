@@ -104,7 +104,7 @@ func selections(p plan, index int, pkg string) []selection {
 			if strings.HasSuffix(pkg, "/internal/native") && u.Test == "TestWASI" {
 				sdk = true
 			} else {
-				run = append(run, affinityRunPath(p, u))
+				run = append(run, exactPath(u.Test))
 			}
 		}
 	}
