@@ -191,8 +191,8 @@ export class LostGraph {
         }
         if(node.kind === 'ConditionalExpression') {
             this.expr(node.children[0] ?? -1); const previous = this.current; const join = this.newBlock();
-            const yes = this.newBlock(); const no = this.newBlock(); this.link(previous, yes); this.enter(yes); this.expr(node.children[1] ?? -1); this.link(this.current, join);
-            this.link(previous, no); this.enter(no); this.expr(node.children[2] ?? -1); this.link(this.current, join); this.enter(join); return;
+            const yes = this.newBlock(); const no = this.newBlock(); this.link(previous, yes); this.enter(yes); this.expr(node.children[2] ?? -1); this.link(this.current, join);
+            this.link(previous, no); this.enter(no); this.expr(node.children[4] ?? -1); this.link(this.current, join); this.enter(join); return;
         }
         if(node.kind === 'PrefixUnaryExpression' || node.kind === 'PostfixUnaryExpression') {
             const operand = node.children[node.children.length - 1] ?? -1;
@@ -239,7 +239,7 @@ export class LostGraph {
             this.enter(right); this.condition(node.children[node.children.length - 1] ?? -1, yes, no);
         } else if(node.kind === 'ConditionalExpression') {
             this.expressionEvent(index); const a = this.newBlock(); const b = this.newBlock(); this.condition(node.children[0] ?? -1, a, b);
-            this.enter(a); this.condition(node.children[1] ?? -1, yes, no); this.enter(b); this.condition(node.children[2] ?? -1, yes, no);
+            this.enter(a); this.condition(node.children[2] ?? -1, yes, no); this.enter(b); this.condition(node.children[4] ?? -1, yes, no);
         } else { this.expr(index); this.link(this.current, yes); this.link(this.current, no); }
     }
     truth(index: number): boolean {
