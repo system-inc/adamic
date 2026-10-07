@@ -111,7 +111,7 @@ func TestNamespaceReturnedAssignmentLimits(t *testing.T) {
 
 func TestNamespaceInitializationReachability(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"direct", "helper"} {
+	for _, name := range []string{"direct", "helper", "cycle"} {
 		t.Run(name, func(t *testing.T) {
 			source, err := os.ReadFile("testdata/namespaces_notyet/reaching_" + name + ".a")
 			if err != nil {

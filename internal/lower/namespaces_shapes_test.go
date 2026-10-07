@@ -10,13 +10,24 @@ import (
 
 // External types and bodies are normalized; declaration forms are retained, including blockers.
 func TestTscNamespaceDeclarationShapes(t *testing.T) {
+	// Namespace overloads must follow the module-level implementation policy.
+	// Integration admits checked overloads; this branch still reports bodyless signatures.
+	_, overloadError := lowerSource(t, "function read():number; function read():number; function read():number{return 0;} console.log(`${read()}`);")
+	overloadReason := ""
+	if overloadError != nil {
+		var notYet *NotYet
+		if !errors.As(overloadError, &notYet) || !strings.Contains(overloadError.Error(), "function without a body") {
+			t.Fatalf("unexpected module overload outcome: %v", overloadError)
+		}
+		overloadReason = "function without a body"
+	}
 	for _, test := range []struct{ name, reason string }{
 		{"BuilderState", ""}, {"JsxNames", ""}, {"ReactNames", ""}, {"BinaryExpressionState", ""},
 		{"Parser.JSDocParser", ""},
 		{"Debug", "class inside a namespace"},
 		{"Debug.log", "callable object properties"},
-		{"Parser", "function without a body"},
-		{"IncrementalParser", "function without a body"},
+		{"Parser", overloadReason},
+		{"IncrementalParser", overloadReason},
 		{"tracingEnabled", "no runtime container is emitted"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
