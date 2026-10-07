@@ -1,0 +1,52 @@
+--- parse-before.c
++++ parse-after.c
+@@ -634,7 +634,7 @@
+ static bool adamic_ready_1080 = false;
+ 
+ static bool adamic_function_0_contains(adamic_array * adamic_local_2_ranges, double adamic_local_3_code);
+-static bool adamic_function_1_isIdentifierStart(double adamic_local_4_code);
++static inline __attribute__((always_inline)) bool adamic_function_1_isIdentifierStart(double adamic_local_4_code);
+ static bool adamic_function_2_isIdentifierPart(double adamic_local_5_code);
+ static bool adamic_function_3_isLineBreak(double adamic_local_6_code);
+ static bool adamic_function_4_isSpace(double adamic_local_7_code);
+@@ -657,8 +657,8 @@
+ static void adamic_function_20_Speculation_new_initialize(void);
+ static adamic_object * adamic_function_21_Scanner_new(adamic_string * adamic_local_98_text);
+ static adamic_object * adamic_function_21_Scanner_new_in(adamic_region *region, adamic_string * adamic_local_98_text);
+-static double adamic_function_22_Scanner_code(adamic_object * adamic_local_61_this, adamic_maybe_number adamic_local_63_offset);
+-static void adamic_function_23_Scanner_advance(adamic_object * adamic_local_64_this, double adamic_local_65_code);
++static inline __attribute__((always_inline)) double adamic_function_22_Scanner_code(adamic_object * adamic_local_61_this, adamic_maybe_number adamic_local_63_offset);
++static inline __attribute__((always_inline)) void adamic_function_23_Scanner_advance(adamic_object * adamic_local_64_this, double adamic_local_65_code);
+ static void adamic_function_24_Scanner_error(adamic_object * adamic_local_66_this, double adamic_local_67_code, adamic_maybe_number adamic_local_69_start, adamic_maybe_number adamic_local_71_length);
+ static adamic_string * adamic_function_25_Scanner_fragment(adamic_object * adamic_local_72_this, double adamic_local_73_base, bool adamic_local_74_separators, adamic_maybe_number adamic_local_76_minimum, adamic_maybe_number adamic_local_78_maximum);
+ static double adamic_function_26_Scanner_unicode(adamic_object * adamic_local_79_this, bool adamic_local_80_report);
+@@ -3637,8 +3637,7 @@
+ 	adamic_unreachable();
+ }
+ 
+-static bool adamic_function_1_isIdentifierStart(double adamic_local_4_code) {
+-	ADAMIC_CHECK_STACK();
++static inline __attribute__((always_inline)) bool adamic_function_1_isIdentifierStart(double adamic_local_4_code) {
+ 	bool adamic_temporary_17 = ((((adamic_local_4_code == (0x1.2p+05)) || (adamic_local_4_code == (0x1.7cp+06))) || ((adamic_local_4_code >= (0x1.04p+06)) && (adamic_local_4_code <= (0x1.68p+06)))) || ((adamic_local_4_code >= (0x1.84p+06)) && (adamic_local_4_code <= (0x1.e8p+06))));
+ 	if (!adamic_temporary_17) {
+ 		bool adamic_temporary_16 = (adamic_local_4_code >= (0x1p+07));
+@@ -5385,8 +5384,7 @@
+ 	adamic_unreachable();
+ }
+ 
+-static double adamic_function_22_Scanner_code(adamic_object * adamic_local_61_this, adamic_maybe_number adamic_local_63_offset) {
+-	ADAMIC_CHECK_STACK();
++static inline __attribute__((always_inline)) double adamic_function_22_Scanner_code(adamic_object * adamic_local_61_this, adamic_maybe_number adamic_local_63_offset) {
+ 	double adamic_temporary_572;
+ 	if (adamic_local_63_offset.present) {
+ 		adamic_temporary_572 = adamic_local_63_offset.number;
+@@ -5419,8 +5417,7 @@
+ 	adamic_unreachable();
+ }
+ 
+-static void adamic_function_23_Scanner_advance(adamic_object * adamic_local_64_this, double adamic_local_65_code) {
+-	ADAMIC_CHECK_STACK();
++static inline __attribute__((always_inline)) void adamic_function_23_Scanner_advance(adamic_object * adamic_local_64_this, double adamic_local_65_code) {
+ 	double adamic_temporary_588 = (adamic_local_64_this->shape == &adamic_shape_0 ? &adamic_local_64_this->slots[1] : adamic_object_field(adamic_local_64_this, "pos", &adamic_cache_587))->number;
+ 	if (adamic_local_64_this == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'pos')";

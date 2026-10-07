@@ -1,0 +1,525 @@
+{
+  "iterations": 1000,
+  "rounds": 3,
+  "requests": 3000,
+  "nativeFlags": "native.Flags(Options{}): -O2, no sanitizers or counting",
+  "harnessCommit": "0a3e651",
+  "loadBefore": " 05:44:33 up 12 min,  0 users,  load average: 5.67, 4.75, 2.47\n",
+  "checks": [
+    {
+      "pid": 18617,
+      "wallMs": 75.96026,
+      "userMs": 57.261,
+      "systemMs": 30.595,
+      "cpuMs": 87.856,
+      "maxRssBytes": 51441664,
+      "minorFaults": 16454,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 57,
+      "involuntaryContextSwitches": 5,
+      "exitCode": 0,
+      "timedOut": false,
+      "command": [
+        "/workspace/adamic-tools/bin/node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/scratch/stack-check-scc/handler/driver.a",
+        "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+        "1"
+      ],
+      "stdout": "3:11:274256600:1591379592\n",
+      "stderr": "",
+      "stdoutPath": "/workspace/scratch/stack-check-scc/handler/node-check.stdout",
+      "stderrPath": "/workspace/scratch/stack-check-scc/handler/node-check.stderr",
+      "iterations": 1,
+      "requests": 3
+    },
+    {
+      "pid": 18629,
+      "wallMs": 4.057799,
+      "userMs": 0,
+      "systemMs": 4.004,
+      "cpuMs": 4.004,
+      "maxRssBytes": 1966080,
+      "minorFaults": 504,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 0,
+      "exitCode": 0,
+      "timedOut": false,
+      "command": [
+        "/workspace/scratch/stack-check-scc/handler/native-before",
+        "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+        "1"
+      ],
+      "stdout": "3:11:274256600:1591379592\n",
+      "stderr": "",
+      "stdoutPath": "/workspace/scratch/stack-check-scc/handler/before-check.stdout",
+      "stderrPath": "/workspace/scratch/stack-check-scc/handler/before-check.stderr",
+      "iterations": 1,
+      "requests": 3
+    },
+    {
+      "pid": 18631,
+      "wallMs": 3.992369,
+      "userMs": 3.94,
+      "systemMs": 0,
+      "cpuMs": 3.94,
+      "maxRssBytes": 1970176,
+      "minorFaults": 504,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 1,
+      "involuntaryContextSwitches": 0,
+      "exitCode": 0,
+      "timedOut": false,
+      "command": [
+        "/workspace/scratch/stack-check-scc/handler/native-after",
+        "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+        "1"
+      ],
+      "stdout": "3:11:274256600:1591379592\n",
+      "stderr": "",
+      "stdoutPath": "/workspace/scratch/stack-check-scc/handler/after-check.stdout",
+      "stderrPath": "/workspace/scratch/stack-check-scc/handler/after-check.stderr",
+      "iterations": 1,
+      "requests": 3
+    },
+    {
+      "pid": 18633,
+      "wallMs": 1482.380902,
+      "userMs": 775.512,
+      "systemMs": 710.819,
+      "cpuMs": 1486.331,
+      "maxRssBytes": 153481216,
+      "minorFaults": 607637,
+      "majorFaults": 0,
+      "voluntaryContextSwitches": 301,
+      "involuntaryContextSwitches": 26,
+      "exitCode": 0,
+      "timedOut": false,
+      "command": [
+        "/workspace/adamic-tools/bin/node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/scratch/stack-check-scc/handler/driver.a",
+        "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+        "1000"
+      ],
+      "stdout": "3000:11000:2714348693:1650062993\n",
+      "stderr": "",
+      "stdoutPath": "/workspace/scratch/stack-check-scc/handler/node-K.stdout",
+      "stderrPath": "/workspace/scratch/stack-check-scc/handler/node-K.stderr",
+      "iterations": 1000,
+      "requests": 3000
+    }
+  ],
+  "samples": [
+    {
+      "round": 0,
+      "side": "before",
+      "startup": {
+        "pid": 18733,
+        "wallMs": 0.743285,
+        "userMs": 0.688,
+        "systemMs": 0,
+        "cpuMs": 0.688,
+        "maxRssBytes": 1024000,
+        "minorFaults": 272,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-before",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "0"
+        ],
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/before-0-startup.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/before-0-startup.stderr",
+        "iterations": 0,
+        "requests": 0
+      },
+      "measured": {
+        "pid": 18735,
+        "wallMs": 2175.057402,
+        "userMs": 2172.531,
+        "systemMs": 0,
+        "cpuMs": 2172.531,
+        "maxRssBytes": 1953792,
+        "minorFaults": 670,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 50,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-before",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "1000"
+        ],
+        "stdout": "3000:11000:2714348693:1650062993\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/before-0-measured.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/before-0-measured.stderr",
+        "iterations": 1000,
+        "requests": 3000
+      },
+      "metrics": {
+        "wallMsPerRequest": 0.7247713723333333,
+        "cpuMsPerRequest": 0.7239476666666667,
+        "rawWallMsPerRequest": 0.725019134,
+        "rawCpuMsPerRequest": 0.724177,
+        "startupWallMs": 0.743285,
+        "startupCpuMs": 0.688,
+        "maxRssBytes": 1953792,
+        "startupMaxRssBytes": 1024000
+      }
+    },
+    {
+      "round": 0,
+      "side": "after",
+      "startup": {
+        "pid": 18737,
+        "wallMs": 1.073154,
+        "userMs": 1.015,
+        "systemMs": 0,
+        "cpuMs": 1.015,
+        "maxRssBytes": 1056768,
+        "minorFaults": 270,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-after",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "0"
+        ],
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/after-0-startup.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/after-0-startup.stderr",
+        "iterations": 0,
+        "requests": 0
+      },
+      "measured": {
+        "pid": 18739,
+        "wallMs": 2159.4282,
+        "userMs": 2157.012,
+        "systemMs": 0,
+        "cpuMs": 2157.012,
+        "maxRssBytes": 1957888,
+        "minorFaults": 669,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 44,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-after",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "1000"
+        ],
+        "stdout": "3000:11000:2714348693:1650062993\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/after-0-measured.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/after-0-measured.stderr",
+        "iterations": 1000,
+        "requests": 3000
+      },
+      "metrics": {
+        "wallMsPerRequest": 0.7194516819999999,
+        "cpuMsPerRequest": 0.7186656666666668,
+        "rawWallMsPerRequest": 0.7198093999999999,
+        "rawCpuMsPerRequest": 0.7190040000000001,
+        "startupWallMs": 1.073154,
+        "startupCpuMs": 1.015,
+        "maxRssBytes": 1957888,
+        "startupMaxRssBytes": 1056768
+      }
+    },
+    {
+      "round": 1,
+      "side": "after",
+      "measured": {
+        "pid": 18741,
+        "wallMs": 2173.201422,
+        "userMs": 2166.891,
+        "systemMs": 4.068,
+        "cpuMs": 2170.959,
+        "maxRssBytes": 1966080,
+        "minorFaults": 670,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 42,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-after",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "1000"
+        ],
+        "stdout": "3000:11000:2714348693:1650062993\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/after-1-measured.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/after-1-measured.stderr",
+        "iterations": 1000,
+        "requests": 3000
+      },
+      "startup": {
+        "pid": 18743,
+        "wallMs": 1.26289,
+        "userMs": 1.181,
+        "systemMs": 0,
+        "cpuMs": 1.181,
+        "maxRssBytes": 1015808,
+        "minorFaults": 271,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-after",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "0"
+        ],
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/after-1-startup.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/after-1-startup.stderr",
+        "iterations": 0,
+        "requests": 0
+      },
+      "metrics": {
+        "wallMsPerRequest": 0.7239795106666667,
+        "cpuMsPerRequest": 0.7232593333333333,
+        "rawWallMsPerRequest": 0.7244004740000001,
+        "rawCpuMsPerRequest": 0.723653,
+        "startupWallMs": 1.26289,
+        "startupCpuMs": 1.181,
+        "maxRssBytes": 1966080,
+        "startupMaxRssBytes": 1015808
+      }
+    },
+    {
+      "round": 1,
+      "side": "before",
+      "measured": {
+        "pid": 18745,
+        "wallMs": 2267.441492,
+        "userMs": 2264.987,
+        "systemMs": 0,
+        "cpuMs": 2264.987,
+        "maxRssBytes": 1937408,
+        "minorFaults": 669,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 44,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-before",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "1000"
+        ],
+        "stdout": "3000:11000:2714348693:1650062993\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/before-1-measured.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/before-1-measured.stderr",
+        "iterations": 1000,
+        "requests": 3000
+      },
+      "startup": {
+        "pid": 18747,
+        "wallMs": 0.951689,
+        "userMs": 0.888,
+        "systemMs": 0,
+        "cpuMs": 0.888,
+        "maxRssBytes": 1048576,
+        "minorFaults": 271,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-before",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "0"
+        ],
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/before-1-startup.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/before-1-startup.stderr",
+        "iterations": 0,
+        "requests": 0
+      },
+      "metrics": {
+        "wallMsPerRequest": 0.7554966009999999,
+        "cpuMsPerRequest": 0.7546996666666668,
+        "rawWallMsPerRequest": 0.7558138306666666,
+        "rawCpuMsPerRequest": 0.7549956666666667,
+        "startupWallMs": 0.951689,
+        "startupCpuMs": 0.888,
+        "maxRssBytes": 1937408,
+        "startupMaxRssBytes": 1048576
+      }
+    },
+    {
+      "round": 2,
+      "side": "before",
+      "startup": {
+        "pid": 18749,
+        "wallMs": 0.697705,
+        "userMs": 0.649,
+        "systemMs": 0,
+        "cpuMs": 0.649,
+        "maxRssBytes": 970752,
+        "minorFaults": 271,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-before",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "0"
+        ],
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/before-2-startup.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/before-2-startup.stderr",
+        "iterations": 0,
+        "requests": 0
+      },
+      "measured": {
+        "pid": 18751,
+        "wallMs": 2147.587337,
+        "userMs": 2141.682,
+        "systemMs": 3.908,
+        "cpuMs": 2145.59,
+        "maxRssBytes": 1961984,
+        "minorFaults": 669,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 30,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-before",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "1000"
+        ],
+        "stdout": "3000:11000:2714348693:1650062993\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/before-2-measured.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/before-2-measured.stderr",
+        "iterations": 1000,
+        "requests": 3000
+      },
+      "metrics": {
+        "wallMsPerRequest": 0.7156298773333333,
+        "cpuMsPerRequest": 0.7149803333333334,
+        "rawWallMsPerRequest": 0.7158624456666667,
+        "rawCpuMsPerRequest": 0.7151966666666667,
+        "startupWallMs": 0.697705,
+        "startupCpuMs": 0.649,
+        "maxRssBytes": 1961984,
+        "startupMaxRssBytes": 970752
+      }
+    },
+    {
+      "round": 2,
+      "side": "after",
+      "startup": {
+        "pid": 18753,
+        "wallMs": 0.958229,
+        "userMs": 0.888,
+        "systemMs": 0,
+        "cpuMs": 0.888,
+        "maxRssBytes": 1052672,
+        "minorFaults": 272,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-after",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "0"
+        ],
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/after-2-startup.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/after-2-startup.stderr",
+        "iterations": 0,
+        "requests": 0
+      },
+      "measured": {
+        "pid": 18755,
+        "wallMs": 2126.390071,
+        "userMs": 2123.81,
+        "systemMs": 0,
+        "cpuMs": 2123.81,
+        "maxRssBytes": 1966080,
+        "minorFaults": 669,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 25,
+        "exitCode": 0,
+        "timedOut": false,
+        "command": [
+          "/workspace/scratch/stack-check-scc/handler/native-after",
+          "/workspace/scratch/stack-check-scc/handler/sieve.txt",
+          "1000"
+        ],
+        "stdout": "3000:11000:2714348693:1650062993\n",
+        "stderr": "",
+        "stdoutPath": "/workspace/scratch/stack-check-scc/handler/after-2-measured.stdout",
+        "stderrPath": "/workspace/scratch/stack-check-scc/handler/after-2-measured.stderr",
+        "iterations": 1000,
+        "requests": 3000
+      },
+      "metrics": {
+        "wallMsPerRequest": 0.7084772806666667,
+        "cpuMsPerRequest": 0.7076406666666667,
+        "rawWallMsPerRequest": 0.7087966903333333,
+        "rawCpuMsPerRequest": 0.7079366666666667,
+        "startupWallMs": 0.958229,
+        "startupCpuMs": 0.888,
+        "maxRssBytes": 1966080,
+        "startupMaxRssBytes": 1052672
+      }
+    }
+  ],
+  "loadAfter": " 05:44:48 up 12 min,  0 users,  load average: 4.85, 4.61, 2.46\n",
+  "summary": {
+    "before": {
+      "wall": {
+        "best": 0.7156298773333333,
+        "median": 0.7247713723333333
+      },
+      "cpu": {
+        "best": 0.7149803333333334,
+        "median": 0.7239476666666667
+      }
+    },
+    "after": {
+      "wall": {
+        "best": 0.7084772806666667,
+        "median": 0.7194516819999999
+      },
+      "cpu": {
+        "best": 0.7076406666666667,
+        "median": 0.7186656666666668
+      }
+    }
+  }
+}

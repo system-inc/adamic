@@ -1,0 +1,14 @@
+==3786== Callgrind, a call-graph generating cache profiler
+==3786== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==3786== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==3786== Command: /workspace/scratch/stack-check-scc/native-after --manifest /workspace/scratch/stack-check-scc/compiler.txt --count
+==3786== 
+==3786== For interactive control, run 'callgrind_control -h'.
+==3786== brk segment overflow in thread #1: can't grow to 0x4838000
+==3786== (see section Limitations in user manual)
+==3786== NOTE: further instances of this message will not be shown
+==3786== 
+==3786== Events    : Ir
+==3786== Collected : 8738361433
+==3786== 
+==3786== I   refs:      8,738,361,433
