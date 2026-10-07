@@ -4,6 +4,8 @@ Commands and outputs: three reconciled cache/branch profiles, pinned interleaved
 Mutants: heap-string retain omission causes ASan use-after-free; omitted heap write, unsound field proof, and real heap release omission each cause LSan's 425-byte/five-allocation leak.
 Not covered: dominant kind-field release elision, hardware counters, staged-proof counting-table refresh, full repository gate, or production integration of the restricted lowering hook.
 
+This is the historical, pre-approval report. Its pending scope and measurements are superseded by the approved integration and fresh current-main measurements in [the landing report](landing/report.md).
+
 ## Result and limits
 
 The eligibility measurement remains valid: at least 8,867,204 immortal outcomes (54.1% of 16,386,567) trace to generated kind-field stores and getter results. That does not imply all those values are statically provable. This deliberately conservative inventory rejects kind. It is shared with runtime-produced objects, has 36 write expressions on parse, and scanner writes include map results and restored values. The inventory proves recordKind only, with six write expressions. It does not remove the dominant measured references-zero release branch.
