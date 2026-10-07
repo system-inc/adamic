@@ -247,7 +247,7 @@ func (p *predicateProof) check(node *ast.Node) bool {
 		return true
 	}
 	if p.l.isArrayPredicateCall(node) {
-		return p.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) && p.l.arrayPredicateDomain(p.declared)
+		return p.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) && (p.l.arrayPredicateDomain(p.declared) || p.declared.Flags()&checker.TypeFlagsUnknown != 0)
 	}
 	if node.Kind != ast.KindBinaryExpression {
 		return false

@@ -13,6 +13,9 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.opaqueArrayValue(node) && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUnknown != 0 {
+		return ir.Union, nil
+	}
 	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
 		return ir.Object, nil
 	}
@@ -168,6 +171,12 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if err := l.unknownArrayInput(node); err != nil {
+		return nil, err
+	}
+	if err := l.unknownArrayUse(ast.SkipParentheses(node)); err != nil {
+		return nil, err
+	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
