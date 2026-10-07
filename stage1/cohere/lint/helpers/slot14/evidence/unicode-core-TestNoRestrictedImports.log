@@ -22,25 +22,25 @@
 === PAUSE TestNoRestrictedImportsRendersTheWholeMessage
 === CONT  TestNoRestrictedImportsGlobMatchesTheIgnorePackage
 === CONT  TestNoRestrictedImportsFoldsPatternsAsStringsIntoOneGroup
+=== CONT  TestNoRestrictedImportsAnchorsANamespaceFindingOnTheStar
+=== CONT  TestNoRestrictedImportsRendersTheWholeMessage
+=== CONT  TestNoRestrictedImportsCaseSensitiveGovernsThePathOnly
+--- PASS: TestNoRestrictedImportsAnchorsANamespaceFindingOnTheStar (0.00s)
+=== CONT  TestNoRestrictedImportsTreatsAnAllTypeSpecifierListAsTypeOnly
+--- PASS: TestNoRestrictedImportsTreatsAnAllTypeSpecifierListAsTypeOnly (0.00s)
 === CONT  TestNoRestrictedImportsRejectsContradictoryConfiguration
-=== CONT  TestNoRestrictedImportsChecksImportEquals
 === CONT  TestNoRestrictedImportsEmptyObjectRestrictsNothing
+=== CONT  TestNoRestrictedImportsChecksImportEquals
+--- PASS: TestNoRestrictedImportsRendersTheWholeMessage (0.00s)
 --- PASS: TestNoRestrictedImportsEmptyObjectRestrictsNothing (0.00s)
+--- PASS: TestNoRestrictedImportsRejectsContradictoryConfiguration (0.00s)
 === CONT  TestNoRestrictedImportsIsSilentWithNoConfiguration
 --- PASS: TestNoRestrictedImportsIsSilentWithNoConfiguration (0.00s)
 === CONT  TestNoRestrictedImportsMatchesUpstream
 --- PASS: TestNoRestrictedImportsFoldsPatternsAsStringsIntoOneGroup (0.00s)
-=== CONT  TestNoRestrictedImportsCaseSensitiveGovernsThePathOnly
 --- PASS: TestNoRestrictedImportsChecksImportEquals (0.00s)
-=== CONT  TestNoRestrictedImportsRendersTheWholeMessage
---- PASS: TestNoRestrictedImportsRendersTheWholeMessage (0.00s)
-=== CONT  TestNoRestrictedImportsAnchorsANamespaceFindingOnTheStar
---- PASS: TestNoRestrictedImportsAnchorsANamespaceFindingOnTheStar (0.00s)
-=== CONT  TestNoRestrictedImportsTreatsAnAllTypeSpecifierListAsTypeOnly
---- PASS: TestNoRestrictedImportsTreatsAnAllTypeSpecifierListAsTypeOnly (0.00s)
---- PASS: TestNoRestrictedImportsRejectsContradictoryConfiguration (0.01s)
 --- PASS: TestNoRestrictedImportsCaseSensitiveGovernsThePathOnly (0.01s)
---- PASS: TestNoRestrictedImportsMatchesUpstream (0.05s)
---- PASS: TestNoRestrictedImportsGlobMatchesTheIgnorePackage (0.14s)
+--- PASS: TestNoRestrictedImportsMatchesUpstream (0.04s)
+--- PASS: TestNoRestrictedImportsGlobMatchesTheIgnorePackage (0.21s)
 PASS
-ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.143s
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.219s

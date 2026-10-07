@@ -41,3 +41,35 @@ no new work is taken while that branch is not green.
 Toolchain setup on the rebased rule worktree: tools ready 0s each, submodules
 0s, build cache warm 89s, total 89s; nproc 5, CPU quota 4 cores. No full repository
 gate is claimed. Historical withdrawn Tailwind deliveries remain uncredited.
+
+## Compiler landing refresh at c7991b900
+
+Rebased onto area/stage1-lint b84a9d9314b65d3d0261ee017e233287b4f071da,
+containing current main c7991b900362796aefd111474e65eb5398e91953. The dedup
+ledger is unchanged. Main's compiler changes make input-identity reuse invalid,
+so both helpers and both mutants were rebuilt and executed again in full.
+
+Both validate_hex.py and validate_unicode.py PASS. Fixed hex: 68,844 actual
+Go/control records, 2,149,768 identical bytes on each backend. Unicode: 12,935
+records, 834,966 identical bytes on each backend. Each width mutant compiles,
+exits zero with clean stderr, and only Go byte comparison catches it on source
+Node, emitted JavaScript and ASan/UBSan native. All four original consumer suites
+and every targeted real-rule private call PASS again. Fresh raw evidence is in
+hex* and unicode* logs, not reused from the preceding compiler.
+
+The rebased rule branch's full 368-file corpus PASSes across all four sides:
+20,750,769 identical bytes. All ten rule mutants are freshly caught on all
+three Adamic backends. Nine complete original-rule groups (579 cases) PASS;
+the constructor parser and the shared Go oracle's budget panic remain failures.
+No new claim is made while that branch is not green.
+
+The inherited-static-field compiler fixture and one-byte oracle control PASS
+again. go vet ./... PASSes. Setup: tools ready 0s each, submodules 0s, build
+cache warm 149s, total 149s; nproc 5, quota 4 cores. Two confirmed inactive Go
+scratch-build directories from earlier failed runs were removed to make space;
+no source, corpus input, fixture or assertion was removed or weakened.
+
+The four consumers and eight prerequisite entries above are unchanged; zero
+complete rule blocker sets are removed. No full repository gate, full native
+regexp integration or new throughput measurement is claimed. No shared harness
+file was edited. The remote main/area tips were verified before pushing.

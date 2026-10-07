@@ -31,37 +31,55 @@
 === PAUSE TestNoHtmlLinkForPagesReplaysUpstreamRows/custom_pages_directory
 === RUN   TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories
 === PAUSE TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories
-=== CONT  TestNoHtmlLinkForPagesReadsTheAnchorAsUpstreamDoes
 === RUN   TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory
 === PAUSE TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory
-=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage
 === RUN   TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory
 === PAUSE TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory
-=== RUN   TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a>
+=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/custom_pages_directory
+=== CONT  TestNoHtmlLinkForPagesReadsTheAppDirectory
+=== CONT  TestNoHtmlLinkForPagesNamesTheRouteInItsMessage
+=== RUN   TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes
+--- PASS: TestNoHtmlLinkForPagesNamesTheRouteInItsMessage (0.00s)
+=== PAUSE TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes
+=== CONT  TestNoHtmlLinkForPagesPointsAtTheOpeningElement
+=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage
+=== CONT  TestNoHtmlLinkForPagesReadsTheAnchorAsUpstreamDoes
+=== RUN   TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a>
+=== PAUSE TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a>
+=== RUN   TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/>
+=== PAUSE TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/>
+=== RUN   TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route
+=== PAUSE TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route
 === CONT  TestNoHtmlLinkForPagesFindsNoDirectory
-=== PAUSE TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a>
 === RUN   TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory
 === PAUSE TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory
 === RUN   TestNoHtmlLinkForPagesFindsNoDirectory/a_file_named_pages
-=== RUN   TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a>
 === PAUSE TestNoHtmlLinkForPagesFindsNoDirectory/a_file_named_pages
+=== RUN   TestNoHtmlLinkForPagesFindsNoDirectory/no_program
+=== PAUSE TestNoHtmlLinkForPagesFindsNoDirectory/no_program
+=== RUN   TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a>
+=== PAUSE TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a>
+=== RUN   TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a>
 === PAUSE TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a>
 === RUN   TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link>
 === PAUSE TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link>
-=== RUN   TestNoHtmlLinkForPagesFindsNoDirectory/no_program
-=== PAUSE TestNoHtmlLinkForPagesFindsNoDirectory/no_program
-=== CONT  TestNoHtmlLinkForPagesReadsTheAppDirectory
-=== RUN   TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes
-=== PAUSE TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes
-=== RUN   TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route
-=== PAUSE TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route
+=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes
+=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments
+=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments
+=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name
+=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name
 === CONT  TestNoHtmlLinkForPagesReportsOncePerRoute
+=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern
+=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern
+=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page
+=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page
+=== CONT  TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a>
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema
 === RUN   TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root
 === PAUSE TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root
 === RUN   TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories
 === PAUSE TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories
-=== CONT  TestNoHtmlLinkForPagesReadsThePagesDirectory
-=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema
+=== CONT  TestNoHtmlLinkForPagesAnchorsRelativeDirectoriesToTheConfig
 === RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_
 === PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_
 === RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_""
@@ -88,23 +106,6 @@
 === PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_"a"]
 === RUN   TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_"pages"
 === PAUSE TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_"pages"
-=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes
-=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments
-=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments
-=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name
-=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name
-=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern
-=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern
-=== RUN   TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page
-=== PAUSE TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page
-=== CONT  TestNoHtmlLinkForPagesNamesTheRouteInItsMessage
---- PASS: TestNoHtmlLinkForPagesNamesTheRouteInItsMessage (0.00s)
-=== CONT  TestNoHtmlLinkForPagesAnchorsRelativeDirectoriesToTheConfig
-=== CONT  TestNoHtmlLinkForPagesPointsAtTheOpeningElement
-=== RUN   TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a>
-=== PAUSE TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a>
-=== RUN   TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/>
-=== PAUSE TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/>
 === CONT  TestNoHtmlLinkForPagesTakesPagesDirectories
 === RUN   TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory
 === PAUSE TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory
@@ -117,38 +118,49 @@
 === RUN   TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app
 === PAUSE TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app
 === CONT  TestNoHtmlLinkForPagesFollowsSymbolicLinksAsNodeLists
-=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/custom_pages_directory
---- PASS: TestNoHtmlLinkForPagesFollowsSymbolicLinksAsNodeLists (0.02s)
-=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory
 --- PASS: TestNoHtmlLinkForPagesAnchorsRelativeDirectoriesToTheConfig (0.02s)
-=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory
---- PASS: TestNoHtmlLinkForPagesReadsTheAnchorAsUpstreamDoes (0.02s)
-=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories
---- PASS: TestNoHtmlLinkForPagesReadsThePagesDirectory (0.02s)
-=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a>
-=== CONT  TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory
 === CONT  TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes
-=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link>
-=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a>
-=== CONT  TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root
-=== CONT  TestNoHtmlLinkForPagesFindsNoDirectory/no_program
+=== CONT  TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory
+--- PASS: TestNoHtmlLinkForPagesReadsTheAnchorAsUpstreamDoes (0.02s)
+=== CONT  TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/>
+--- PASS: TestNoHtmlLinkForPagesFollowsSymbolicLinksAsNodeLists (0.02s)
+=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a>
+--- PASS: TestNoHtmlLinkForPagesPointsAtTheOpeningElement (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a> (0.02s)
+    --- PASS: TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/> (0.00s)
+=== CONT  TestNoHtmlLinkForPagesReadsThePagesDirectory
+=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory
+=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory
+=== CONT  TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories
 === CONT  TestNoHtmlLinkForPagesFindsNoDirectory/a_file_named_pages
-=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_
+--- PASS: TestNoHtmlLinkForPagesReadsThePagesDirectory (0.00s)
 === CONT  TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route
---- PASS: TestNoHtmlLinkForPagesFindsNoDirectory (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesFindsNoDirectory/no_program (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesFindsNoDirectory/a_file_named_pages (0.00s)
---- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/custom_pages_directory (0.02s)
-    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory (0.01s)
-    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories (0.01s)
-    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory (0.01s)
+=== CONT  TestNoHtmlLinkForPagesFindsNoDirectory/no_program
+=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link>
 === CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments
+--- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/custom_pages_directory (0.03s)
+    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/multiple_custom_pages_directories (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/no_pages_or_app_directory (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesReplaysUpstreamRows/app_directory (0.01s)
+=== CONT  TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a>
+=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page
+--- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a> (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link> (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a> (0.00s)
 --- PASS: TestNoHtmlLinkForPagesReadsTheAppDirectory (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route (0.00s)
-=== CONT  TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a>
+    --- PASS: TestNoHtmlLinkForPagesReadsTheAppDirectory/static_routes (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesReadsTheAppDirectory/a_dynamic_route (0.01s)
+=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern
+=== CONT  TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root
+=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name
+--- PASS: TestNoHtmlLinkForPagesFindsNoDirectory (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesFindsNoDirectory/no_pages_or_app_directory (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesFindsNoDirectory/no_program (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesFindsNoDirectory/a_file_named_pages (0.01s)
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_
+=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory
 === CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_"a"]
 === CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_null]
 === CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_3]
@@ -158,15 +170,10 @@
 === CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_["a",_"../b",_""]
 === CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_[]
 === CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"/elsewhere/pages"
-=== CONT  TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories
-=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_""
-=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory
---- PASS: TestNoHtmlLinkForPagesReportsOncePerRoute (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories (0.00s)
-=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_"pages"
-=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern
 === CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"pages"
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_""
+=== CONT  TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories
+=== CONT  TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_"pages"
 --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema (0.00s)
     --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_ (0.00s)
     --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_["a",_"a"] (0.00s)
@@ -178,33 +185,26 @@
     --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_["a",_"../b",_""] (0.00s)
     --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_[] (0.00s)
     --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"/elsewhere/pages" (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"pages" (0.00s)
     --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"" (0.00s)
     --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/refuses_"pages" (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesDecodesUpstreamsSchema/accepts_"pages" (0.00s)
-=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name
-=== CONT  TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/>
---- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/about"_target="_blank">About</a> (0.01s)
-    --- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage/<Link_href="/about">About</Link> (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesIsSilentBesideAPage/<a_href="/contact">Contact</a> (0.01s)
-=== CONT  TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page
-=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app
---- PASS: TestNoHtmlLinkForPagesPointsAtTheOpeningElement (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'>About</a> (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesPointsAtTheOpeningElement/<a_href='/about'_/> (0.00s)
 === CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/a_directory_that_does_not_exist
 === CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_string
 === CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_alone
 --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes (0.00s)
     --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/two_dynamic_segments (0.00s)
     --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_page_name_that_is_not_a_pattern (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page (0.01s)
     --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/pattern_characters_in_a_page_name (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesCompilesRouteNamesAsUpstreamDoes/a_directory_named_like_a_page (0.00s)
+=== CONT  TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app
+--- PASS: TestNoHtmlLinkForPagesReportsOncePerRoute (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesReportsOncePerRoute/pages_and_app_both_define_the_root (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesReportsOncePerRoute/root_and_src_directories (0.00s)
 --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_with_an_app_directory (0.00s)
     --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/a_directory_that_does_not_exist (0.00s)
+    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app (0.00s)
     --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_list_alone (0.00s)
-    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_string (0.01s)
-    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/a_custom_directory_beside_pages_and_app (0.01s)
+    --- PASS: TestNoHtmlLinkForPagesTakesPagesDirectories/an_empty_string (0.00s)
 PASS
-ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.049s
+ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.057s
