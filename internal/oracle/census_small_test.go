@@ -5,5 +5,9 @@ func init() {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/oracle/testdata/census_small_rest.a", true, false})
+	}{"internal/oracle/testdata/census_small_rest.a", true, false}, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/census_small_boolean.a", true, false})
 }

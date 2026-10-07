@@ -118,8 +118,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
 		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
-		if expression.Of == ir.MaybeNumber {
+		if expression.Of.IsMaybe() {
 			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			if expression.Of == ir.MaybeBoolean {
+				field = fmt.Sprintf("adamic_object_maybe_boolean(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			}
 		}
 		if expression.Absent {
 			slot := e.temporary()
@@ -133,13 +136,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				undefined = zero(expression.Of)
 			}
 			present := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
-			if expression.Of == ir.MaybeNumber {
+			if expression.Of.IsMaybe() {
 				present = field
 			}
 			field = fmt.Sprintf("(%s == NULL ? %s : %s)", slot, undefined, present)
 		}
-		if expression.Of == ir.MaybeNumber && expression.Optional {
-			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(ir.MaybeNumber), field))
+		if expression.Of.IsMaybe() && expression.Optional {
+			return e.snapshot(expression.Of, fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(expression.Of), field))
 		}
 		if expression.Of.IsReference() {
 			// A field holds a reference as void *; read through the type the checker proved.

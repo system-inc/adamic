@@ -50,8 +50,10 @@ void *adamic_allocate(size_t size, enum adamic_kind kind);
 typedef union adamic_value {
 	double number;
 	bool boolean;
+	uint8_t maybe_boolean;
 	void *reference;
 } adamic_value;
+_Static_assert(sizeof(bool) == sizeof(uint8_t), "boolean slots require one-byte bool");
 
 // adamic_maybe_number is number | undefined: present, and the number when it is.
 typedef struct adamic_maybe_number {
@@ -223,6 +225,7 @@ adamic_value *adamic_static_field(const adamic_object *object, const char *name,
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 // A readonly numeric view may see a field made with the undefined-only reference representation.
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
 adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
@@ -492,6 +495,9 @@ bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number rig
 #define ADAMIC_UNDEFINED_BITS 0x7ff8000000000001u
 double adamic_maybe_number_pack(adamic_maybe_number value);
 adamic_maybe_number adamic_maybe_number_unpack(double packed);
+// Slot encoding: false = 0, true = 1, undefined = 2.
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.

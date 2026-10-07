@@ -434,7 +434,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || slotless(of) || slotless(value.Type()) {
+	if err != nil || censusFieldSlotless(of) || censusFieldSlotless(value.Type()) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.

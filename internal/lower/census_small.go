@@ -100,3 +100,6 @@ func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declar
 	arguments = append(arguments, rest)
 	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
 }
+
+// Boolean fields have a tagged byte; other slotless representations remain refused.
+func censusFieldSlotless(of ir.Type) bool { return slotless(of) && of != ir.MaybeBoolean }
