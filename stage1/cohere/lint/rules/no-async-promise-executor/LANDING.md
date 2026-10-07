@@ -37,3 +37,9 @@ recovery comparison boundary. No new work is claimed.
 ## Area d65a8f931 recheck
 
 Rebased cleanly onto d65a8f931c98655936ae04c6899f38f14862b73e, including its runtime performance changes. The dedup ledger and shared recovery handling are unchanged. Uncached TestOwnedWitnesses passed in 21.26s with 57,889 identical bytes; the six owned mutants passed on Node, emitted JavaScript and sanitized native. go vet passed. TestRulesAgree remains red in 46.46s on unsupported primary AtToken at offset 12 in the invalid decorated async executor. Combined package execution exits 1 in 184.895s. No full oracle-green claim, new reservation, throughput or full gate. Exact command: ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint -run '^(TestRulesAgree|TestOwnedWitnesses|TestMutants)$/^(identifier_expression_ignored|parameter_difference_silenced|empty_method_silenced|async_executor_ignored|closing_brace_missing|negative_zero_ignored)$' -count=1 -v -timeout=20m.
+
+## Area b84a9d931 recheck
+
+Rebased cleanly onto b84a9d9314b65d3d0261ee017e233287b4f071da, including main c7991b900 lowering and record-runtime changes. The ledger and shared recovery handling are unchanged. TestOwnedWitnesses PASS 20.24s, 57,889 identical bytes; six owned mutants PASS 116.69s on Node, emitted JavaScript and sanitized native; go vet passed. TestRulesAgree remains red at the decorated async AtToken fixture in 44.50s. Malformed-interface timeout probes on both Node and native also occur in the preceding d65 run; they are existing shared parser recovery limits. No check is skipped, relaxed or deleted to obtain green. Raw b84 logs retain the combined run timing.
+
+The helper branch is re-green on the same area and pushed at b00ae6f63: 21,019 cases PASS 73.208s, six output-only mutants caught on all paths, vet passed, CFG self-edge still refuses adamic/cycle-capable. No new claims, required external-input checks or full gate.
