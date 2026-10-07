@@ -17,3 +17,6 @@ lengthAttempt(Infinity);
 lengthAttempt(-Infinity);
 lengthAttempt(4294967295);
 lengthAttempt(4294967296);
+try { throw new Error("Invalid array length"); } catch (error) {
+ console.log(`ordinary:${error instanceof RangeError}`);
+}

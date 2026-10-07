@@ -10,7 +10,7 @@ import (
 )
 
 func TestArrayHolesMilestone(t *testing.T) {
-	for _, name := range []string{"library_array_holes_scanner_probe.a", "library_array_holes_length.a", "library_array_holes_range.a", "library_array_holes_references.a", "library_array_holes_callbacks.a", "library_array_holes_resize.a", "library_array_holes_toString.a", "library_array_holes_keys.a", "library_array_holes_catch.a"} {
+	for _, name := range []string{"library_array_holes_scanner_probe.a", "array-holes-boundaries/library_array_holes_length.a", "array-holes-boundaries/library_array_holes_range.a", "library_array_holes_references.a", "library_array_holes_callbacks.a", "library_array_holes_resize.a", "library_array_holes_toString.a", "library_array_holes_keys.a", "library_array_holes_catch.a", "library_array_holes_objects.a"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
 			if err != nil {
@@ -36,7 +36,7 @@ func TestArrayHolesMilestone(t *testing.T) {
 }
 
 func init() {
-	for _, name := range []string{"library_array_holes_scanner_probe.a", "library_array_holes_length.a", "library_array_holes_range.a", "library_array_holes_references.a", "library_array_holes_callbacks.a", "library_array_holes_resize.a", "library_array_holes_toString.a", "library_array_holes_keys.a", "library_array_holes_catch.a"} {
+	for _, name := range []string{"library_array_holes_scanner_probe.a", "array-holes-boundaries/library_array_holes_length.a", "array-holes-boundaries/library_array_holes_range.a", "library_array_holes_references.a", "library_array_holes_callbacks.a", "library_array_holes_resize.a", "library_array_holes_toString.a", "library_array_holes_keys.a", "library_array_holes_catch.a", "library_array_holes_objects.a"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -45,7 +45,7 @@ func init() {
 }
 
 func TestArrayHolesRefusals(t *testing.T) {
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/library_array_holes_refuse_*.a"))
+	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/array-holes-refused/library_array_holes_refuse_*.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
