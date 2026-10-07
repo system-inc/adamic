@@ -1,0 +1,32 @@
+// Build equivalence groups from primitive Unicode mappings, never Go judgments.
+import {canonicalize} from './canonicalize.a';
+import {uppercasePairs,foldPairs} from './unicode_case_data.a';
+
+export class CaseEquivalence {
+    readonly groups:number[][]=[];
+    readonly members:Map<number,number[]>=new Map<number,number[]>();
+    constructor(unicodeMode:boolean){
+        const grouped=new Map<number,number[]>();
+        const seeds=new Set<number>();
+        for(const value of uppercasePairs){seeds.add(value);}
+        for(const value of foldPairs){seeds.add(value);}
+        for(const value of seeds){
+            const canonical=canonicalize(value,unicodeMode);
+            const empty:number[]=[];
+            const group=grouped.get(canonical)??empty;
+            if(!group.includes(value)){group.push(value);}
+            if(!group.includes(canonical)){group.push(canonical);}
+            grouped.set(canonical,group);
+        }
+        for(const group of grouped.values()){
+            if(group.length<2){continue;}
+            group.sort((left,right)=>left-right);
+            this.groups.push(group);
+            for(const value of group){this.members.set(value,group);}
+        }
+        // Production Go map iteration has no order. Consumers get a stable
+        // enumeration here; comparison canonicalizes that order on both sides.
+        this.groups.sort((left,right)=>(left[0]??0)-(right[0]??0));
+    }
+    equivalents(value:number):readonly number[]{const empty:number[]=[];return this.members.get(value)??empty;}
+}
