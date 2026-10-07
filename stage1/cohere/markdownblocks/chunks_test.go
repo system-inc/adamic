@@ -14,6 +14,7 @@ import (
 )
 
 func TestMicromarkInputChunks(t *testing.T) {
+	parallelMarkdownMemory(t, 1)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)

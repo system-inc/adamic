@@ -11,6 +11,7 @@ import (
 )
 
 func TestMdastIdentifierScalars(t *testing.T) {
+	parallelMarkdownMemory(t, 4)
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)

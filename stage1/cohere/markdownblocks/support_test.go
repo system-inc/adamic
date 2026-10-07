@@ -30,6 +30,58 @@ var formatterOnce sync.Once
 var formatterBinary string
 var formatterError error
 
+// Eight GiB for the formerly serial tests leaves eight GiB on the measured
+// sixteen-GiB box for layoutSlots' work, other parallel tests and retained heaps.
+// Each unit is 512 MiB; weights round 125% of the isolated process-tree peak up.
+var markdownMemory = newMarkdownMemoryBudget(16)
+
+type markdownMemoryBudget struct {
+	mu       sync.Mutex
+	changed  *sync.Cond
+	capacity int
+	used     int
+}
+
+func newMarkdownMemoryBudget(capacity int) *markdownMemoryBudget {
+	budget := &markdownMemoryBudget{capacity: capacity}
+	budget.changed = sync.NewCond(&budget.mu)
+	return budget
+}
+
+func (budget *markdownMemoryBudget) acquire(weight int) {
+	budget.mu.Lock()
+	defer budget.mu.Unlock()
+	for budget.used+weight > budget.capacity {
+		budget.changed.Wait()
+	}
+	budget.used += weight
+}
+
+func (budget *markdownMemoryBudget) release(weight int) {
+	budget.mu.Lock()
+	budget.used -= weight
+	budget.changed.Broadcast()
+	budget.mu.Unlock()
+}
+
+func parallelMarkdownMemory(t *testing.T, weight int) {
+	t.Helper()
+	// KEEP modes export to caller-chosen directories. Leave the newly parallel
+	// tests in the serial phase whenever an export is requested, even if callers
+	// assign the same directory to different KEEP variables.
+	for _, name := range []string{
+		"ADAMIC_MARKDOWNAST_KEEP", "ADAMIC_MDAST_KEEP", "ADAMIC_PATH_KEEP",
+		"ADAMIC_MARKDOWNBLOCKS_KEEP", "ADAMIC_MARKDOWNLISTS_KEEP",
+	} {
+		if os.Getenv(name) != "" {
+			return
+		}
+	}
+	t.Parallel()
+	markdownMemory.acquire(weight)
+	t.Cleanup(func() { markdownMemory.release(weight) })
+}
+
 type artifactKey struct {
 	source   [32]byte
 	sanitize bool

@@ -13,8 +13,9 @@ import (
 	"unicode/utf16"
 )
 
-// Not parallel: full event output and native mutant runs retain large corpus buffers.
+// Parallel execution reserves memory: full event output and native mutant runs retain large corpus buffers.
 func TestTokenizerEvents(t *testing.T) {
+	parallelMarkdownMemory(t, 4)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)

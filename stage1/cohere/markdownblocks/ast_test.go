@@ -13,8 +13,9 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Not parallel: all parsed ASTs, full six-pass results and sanitizer clones share a large working set.
+// Parallel execution reserves memory: all parsed ASTs, full six-pass results and sanitizer clones share a large working set.
 func TestMarkdownASTPreprocessing(t *testing.T) {
+	parallelMarkdownMemory(t, 3)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)

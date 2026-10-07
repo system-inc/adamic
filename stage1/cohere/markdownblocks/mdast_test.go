@@ -11,8 +11,9 @@ import (
 	"time"
 )
 
-// Not parallel: the full event transport and multiple independently computed trees are large.
+// Parallel execution reserves memory: the full event transport and multiple independently computed trees are large.
 func TestNativeMdastConstruction(t *testing.T) {
+	parallelMarkdownMemory(t, 3)
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)
