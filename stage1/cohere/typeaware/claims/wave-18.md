@@ -84,3 +84,9 @@ The audit checks 356 origin refs, 132 claimed names and
 25 ranked baseline ports. Baselines remain main ef3d907e
 and tsgo-c-library 5afbdb83. These are the first
 remaining names in the combined volume ranking, each with zero corpus findings.
+
+Fourth-batch implementation: all three preference rules are complete in e062ed93.
+WAVE_18_PREFERENCE_REPORT.md records full findings/fixes/suggestions agreement,
+419 controls, both corpora, options, mutants, sanitizers, released handles and timings.
+The only shared edit is one bridge question registration line. No additional rules
+are reserved in this turn.

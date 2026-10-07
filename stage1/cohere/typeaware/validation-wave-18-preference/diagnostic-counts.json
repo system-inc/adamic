@@ -1,0 +1,138 @@
+{
+  "015-redundant-asan-native.stdout": {
+    "prefer-promise-reject-errors": {
+      "findings": 58,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-rest-params": {
+      "findings": 15,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-regex-literals": {
+      "findings": 236,
+      "fixes": 0,
+      "suggestions": 211
+    }
+  },
+  "026-promise-mutant-run.stdout": {
+    "prefer-promise-reject-errors": {
+      "findings": 61,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-rest-params": {
+      "findings": 15,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-regex-literals": {
+      "findings": 212,
+      "fixes": 0,
+      "suggestions": 184
+    }
+  },
+  "028-regex-mutant-run.stdout": {
+    "prefer-promise-reject-errors": {
+      "findings": 61,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-rest-params": {
+      "findings": 15,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-regex-literals": {
+      "findings": 212,
+      "fixes": 0,
+      "suggestions": 184
+    }
+  },
+  "009-redundant-native.stdout": {
+    "prefer-promise-reject-errors": {
+      "findings": 61,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-rest-params": {
+      "findings": 15,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-regex-literals": {
+      "findings": 236,
+      "fixes": 0,
+      "suggestions": 211
+    }
+  },
+  "007-allow-empty-native.stdout": {
+    "prefer-promise-reject-errors": {
+      "findings": 58,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-rest-params": {
+      "findings": 15,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-regex-literals": {
+      "findings": 212,
+      "fixes": 0,
+      "suggestions": 184
+    }
+  },
+  "030-rest-mutant-run.stdout": {
+    "prefer-promise-reject-errors": {
+      "findings": 61,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-rest-params": {
+      "findings": 15,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-regex-literals": {
+      "findings": 212,
+      "fixes": 0,
+      "suggestions": 184
+    }
+  },
+  "033-regex-grammar-mutant-run.stdout": {
+    "prefer-promise-reject-errors": {
+      "findings": 61,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-rest-params": {
+      "findings": 15,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-regex-literals": {
+      "findings": 212,
+      "fixes": 0,
+      "suggestions": 3
+    }
+  },
+  "006-controls-native.stdout": {
+    "prefer-promise-reject-errors": {
+      "findings": 61,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-rest-params": {
+      "findings": 15,
+      "fixes": 0,
+      "suggestions": 0
+    },
+    "prefer-regex-literals": {
+      "findings": 212,
+      "fixes": 0,
+      "suggestions": 184
+    }
+  }
+}
