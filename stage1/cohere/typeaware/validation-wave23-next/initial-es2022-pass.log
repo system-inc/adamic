@@ -1,0 +1,20 @@
+=== RUN   TestWave23NextAgreementAndMutants
+    wave_23_next_test.go:129: controls: 36422 identical finding bytes; findings 84
+    wave_23_next_test.go:137: controls-asan: 36422 identical finding bytes; findings 84
+    wave_23_next_test.go:148: collection mutant: exit 0, empty stderr, byte oracle catches byte 1853
+    wave_23_next_test.go:148: outcome mutant: exit 0, empty stderr, byte oracle catches byte 28878
+    wave_23_next_test.go:148: pure mutant: exit 0, empty stderr, byte oracle catches byte 17115
+    wave_23_next_test.go:162: ancestry-count mutant: exit 0, empty stderr, Go byte oracle catches byte 28878
+    wave_23_next_test.go:162: awaited mutant: exit 0, empty stderr, Go byte oracle catches byte 31935
+    wave_23_next_test.go:171: repository: 18485 identical finding bytes; findings 0
+    wave_23_next_test.go:172: repository-asan: 18485 identical finding bytes; findings 0
+    wave_23_next_test.go:180: repository timing: native 300.432897ms, Go 139.960583ms; native stderr tsgo: load_ns=58399446 query_ns=74318941 queries=8560 first_query_ns=153341 run_ns=232400257
+        ; Go stderr cohere: load_ns=55853972 rule_ns=27485050 run_ns=69820065
+    wave_23_next_test.go:171: compiler: 5318 identical finding bytes; findings 0
+    wave_23_next_test.go:172: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_23_next_test.go:180: compiler timing: native 2.532482303s, Go 802.632935ms; native stderr tsgo: load_ns=212763586 query_ns=913644601 queries=73411 first_query_ns=5628821 run_ns=2295915089
+        ; Go stderr cohere: load_ns=234558687 rule_ns=491979219 run_ns=546742143
+    wave_23_next_test.go:200: released handle: normal exit 70; registry mutant caught by required released-handle error
+--- PASS: TestWave23NextAgreementAndMutants (90.11s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	90.109s

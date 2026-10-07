@@ -1,0 +1,6 @@
+=== RUN   TestWave23NextAgreementAndMutants
+    wave_23_next_test.go:129: controls mismatch byte 59: native "kspace/wave-23/next-initial/control-000.a\n107\t124\t@typescript-eslint/nexus/correctness-no-collection-misuse\tinOnArray\tThis uses `in` to look for a value in an array. `in` asks whether the array has a property or index of that name, never whether it holds that element, and this name is neither, so th" Go "kspace/wave-23/next-initial/control-000.a\n107\t124\tnexus/correctness-no-collection-misuse\tinOnArray\tThis uses `in` to look for a value in an array. `in` asks whether the array has a property or index of that name, never whether it holds that element, and this name is neither, so the test is always fa"
+--- FAIL: TestWave23NextAgreementAndMutants (12.24s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	12.244s
+FAIL

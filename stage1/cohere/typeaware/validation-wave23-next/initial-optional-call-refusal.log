@@ -1,0 +1,8 @@
+=== RUN   TestWave23NextAgreementAndMutants
+    wave_23_next_test.go:118: native: exit status 1
+        
+        adamic: /workspace/adamic/stage1/cohere/typeaware/no_discarded_outcome.a:34:59: stage 0 can't lower a call through ?. (an optional call) yet
+--- FAIL: TestWave23NextAgreementAndMutants (12.93s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	12.933s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestWave23NextAgreementAndMutants
+    wave_23_next_test.go:118: native: exit status 1
+        
+        adamic: /workspace/adamic/stage1/cohere/typeaware/no_discarded_pure_result.a:39:100: stage 0 can't lower an array of never yet
+--- FAIL: TestWave23NextAgreementAndMutants (1.94s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	1.946s
+FAIL
