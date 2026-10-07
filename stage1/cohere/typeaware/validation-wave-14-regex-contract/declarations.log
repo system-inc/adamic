@@ -1,0 +1,31 @@
+=== RUN   TestWave14NumericListenerDeclarations
+=== RUN   TestWave14NumericListenerDeclarations/no_array_delete
+    wave_14_listeners_test.go:101: Go listener kinds [221] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_base_to_string
+    wave_14_listeners_test.go:101: Go listener kinds [227, 214, 229] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_extraneous_class
+    wave_14_listeners_test.go:101: Go listener kinds [264, 232] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_global_listener_target_assertion
+    wave_14_listeners_test.go:101: Go listener kinds [214] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_mock_on_module_namespace
+    wave_14_listeners_test.go:101: Go listener kinds [214] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_leaked_number_render
+    wave_14_listeners_test.go:101: Go listener kinds [295] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_label_var
+    wave_14_listeners_test.go:101: Go listener kinds [257] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_invalid_regexp
+    wave_14_listeners_test.go:101: Go listener kinds [214, 215] agree; wrong-kind declaration mutant caught
+=== RUN   TestWave14NumericListenerDeclarations/no_misleading_character_class
+    wave_14_listeners_test.go:101: Go listener kinds [307, 13] agree; wrong-kind declaration mutant caught
+--- PASS: TestWave14NumericListenerDeclarations (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_array_delete (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_base_to_string (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_extraneous_class (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_global_listener_target_assertion (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_mock_on_module_namespace (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_leaked_number_render (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_label_var (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_invalid_regexp (0.00s)
+    --- PASS: TestWave14NumericListenerDeclarations/no_misleading_character_class (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	0.008s
