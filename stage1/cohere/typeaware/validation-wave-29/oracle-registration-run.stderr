@@ -1,0 +1,5 @@
+panic: expected all three production rules to be registered
+
+goroutine 1 [running]:
+main.main()
+	/workspace/adamic/cohere/adamic_wave29-oracle.go:122 +0x13be
