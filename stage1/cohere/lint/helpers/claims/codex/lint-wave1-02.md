@@ -50,3 +50,10 @@ Preserve frame order, exact thrownForked booleans, fresh snapshot storage, empty
 ## snapshotForks delivery
 
 verify_snapshot.py passes on current main c01907a70: 84 actual calls plus 31 retained-snapshot observations, 1,505 matching bytes on all three backends and three clean-executing semantic mutants. The reused-buffer mutant passes ordinary value comparison and is caught by the alias check. Original and added consuming-rule probe counts are reported separately; no-unreachable-loop's original suite makes zero calls, its live probe makes eight. See forks/SNAPSHOT_REPORT.md. Four dependency occurrences removed, zero final blockers.
+
+## Fourth retained helper claim
+
+Claim: github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].restoreForks
+File: from_wave1_02/forks/restore_forks.a.
+
+snapshotForks is green and pushed at 0d900f752 on current main c01907a70; both other branches satisfy the landing/parking cap. Fresh audit inspected all 565 origin refs and 20 distinct claim contents. This helper remains unclaimed and ties the largest remaining concrete fan-out at four, same recorded consumers. Preserve forward assignment order, unchanged snapshot input, shorter-snapshot suffix retention, longer-snapshot excess ignore, empty vectors and shared-frame last-write semantics. Compare actual private Go through original suites, existing consuming-rule nested-try/finally probes and exhaustive bounded vector/alias controls, Node source, emitted JavaScript and sanitized native, with compiling semantic mutants. Four dependency occurrences, zero final blockers alone. No regex and no shared harness edits. Push before code.
