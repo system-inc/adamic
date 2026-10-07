@@ -64,3 +64,18 @@ port remains in 80e56233; process-exit and blocking-streams are completed in
 released handles and timings are documented in ../WAVE_30_PROCESS_REPORT.md.
 No shared harness or registration generator was edited. No subsequent batch
 was claimed before these implementations and their evidence were pushed.
+
+## Fourth batch claim
+
+All prior retained claims are complete and pushed in 182d776e and 2ccc0f30.
+Fetched every origin head afterward. The first three available rules in the
+197-rule combined ranking, excluding 25 ports on main/c-library and 139 distinct
+rule mentions in claim files on 359 origin refs, are:
+
+- react-hooks/preserve-manual-memoization (combined volume 0)
+- react-hooks/purity (combined volume 0)
+- react-hooks/refs (combined volume 0)
+
+These rules are claimed before implementation. The precise branch/blob snapshot
+is validation-wave-30-fourth/selection.json. Released mentions in other claim
+files are conservatively excluded, as requested by the any-branch claim check.
