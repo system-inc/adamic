@@ -12,6 +12,14 @@
 # Nothing here is needed on a Mac: Xcode's clang and leaks already do this job there.
 set -euo pipefail
 
+repository=$(cd "$(timeout --verbose --kill-after=1s 30 dirname "$0")/.." && pwd)
+# shellcheck source=../internal/boundedrun/shell.sh
+source "$repository/internal/boundedrun/shell.sh"
+# Even local utility children get a bound; a network filesystem can stall them.
+for boundedTool in cat awk mkdir install mktemp realpath uname ls sort dirname ln mv grep nproc sha256sum cut head; do
+ eval "$boundedTool() { bounded 30 $boundedTool \"\$@\"; }"
+done
+
 started=$EPOCHREALTIME
 loadBefore=$(cat /proc/loadavg)
 warmTests=false
@@ -27,7 +35,6 @@ step() {
 	echo "setup: $1 (${elapsed}s)"
 }
 
-repository=$(cd "$(dirname "$0")/.." && pwd)
 tools=${ADAMIC_TOOLS:-/opt/adamic-tools}
 mkdir -p "$tools/bin" 2> /dev/null || { tools=$HOME/.adamic-tools && mkdir -p "$tools/bin"; }
 gate=/tmp/adamic-gate
@@ -36,7 +43,7 @@ gate=/tmp/adamic-gate
 install -d -m 1777 "$gate"
 # Serialize installers sharing this tool directory. Children inherit the lock descriptor.
 exec 9> "$tools/setup.lock"
-flock 9
+bounded 600 flock 9
 run=$(mktemp -d "$gate/setup.XXXXXX")
 markdownDependencies="$tools/markdown-width"
 case $(realpath -m "$markdownDependencies") in
@@ -53,13 +60,13 @@ esac
 export GOTOOLCHAIN=auto
 prepareGo() {
 # Only a go that answers `go version` counts: some images ship an unrelated /usr/bin/go.
-realGo() { "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
+realGo() { bounded 30 "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
 if ! { command -v go > /dev/null 2>&1 && realGo go; } && ! realGo "$tools/go/bin/go"; then
-	goVersion=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)
-	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar --no-same-owner -xz -C "$tools"
+	goVersion=$(bounded 600 curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)
+	bounded 600 curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | bounded 600 tar --no-same-owner -xz -C "$tools"
 fi
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
-(cd "$repository" && go version)
+(cd "$repository" && bounded 30 go version)
 step "go ready"
 }
 
@@ -73,8 +80,8 @@ cat > "$probe/overflow.c" << 'C'
 int main(void) { int *values = malloc(4 * sizeof(int)); int read = values[4]; free(values); return read; }
 C
 saneClang() {
-	"$1" -fsanitize=address,undefined -g "$probe/overflow.c" -o "$probe/overflow" > /dev/null 2>&1 || return 1
-	! "$probe/overflow" > /dev/null 2> "$probe/report" && grep -q 'heap-buffer-overflow' "$probe/report"
+	bounded 120 "$1" -fsanitize=address,undefined -g "$probe/overflow.c" -o "$probe/overflow" > /dev/null 2>&1 || return 1
+	! bounded 15 "$probe/overflow" > /dev/null 2> "$probe/report" && grep -q 'heap-buffer-overflow' "$probe/report"
 }
 clang=""
 for candidate in "$tools/llvm/bin/clang" $(ls -d /usr/lib/llvm-*/bin/clang 2> /dev/null | sort -t- -k2 -V -r) $(command -v clang || true); do
@@ -86,7 +93,7 @@ done
 if [ -z "$clang" ]; then
 	llvmVersion=${ADAMIC_LLVM_VERSION:-20.1.8}
 	mkdir -p "$tools/llvm"
-	curl -fsSL "https://github.com/llvm/llvm-project/releases/download/llvmorg-$llvmVersion/LLVM-$llvmVersion-Linux-$llvmArchitecture.tar.xz" | tar --no-same-owner -xJ -C "$tools/llvm" --strip-components 1
+	bounded 600 curl -fsSL "https://github.com/llvm/llvm-project/releases/download/llvmorg-$llvmVersion/LLVM-$llvmVersion-Linux-$llvmArchitecture.tar.xz" | bounded 600 tar --no-same-owner -xJ -C "$tools/llvm" --strip-components 1
 	saneClang "$tools/llvm/bin/clang" || { echo "setup: LLVM $llvmVersion's sanitizers don't work here" >&2 && exit 1; }
 	clang=$tools/llvm/bin/clang
 fi
@@ -94,16 +101,16 @@ fi
 for tool in clang clang++ llvm-symbolizer; do
 	[ -x "$(dirname "$clang")/$tool" ] && ln -sf "$(dirname "$clang")/$tool" "$tools/bin/$tool"
 done
-"$clang" --version | head -n 1
+bounded 30 "$clang" --version | head -n 1
 step "clang ready ($clang)"
 }
 
 # Node 24, outside /root.
 prepareNode() {
-if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
+if ! bounded 30 "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 	existing=""
 	for candidate in $(command -v node || true) /root/.nvm/versions/node/v24*/bin/node; do
-		if [ -x "$candidate" ] && "$candidate" --version | grep -q '^v24\.'; then
+		if [ -x "$candidate" ] && bounded 30 "$candidate" --version | grep -q '^v24\.'; then
 			existing=$candidate
 			break
 		fi
@@ -111,14 +118,14 @@ if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 	if [ -n "$existing" ]; then
 		install -m 755 "$existing" "$tools/bin/node"
 	else
-		nodeVersion=$(curl -fsSL https://nodejs.org/dist/index.json | python3 -c 'import json, sys; print(next(r["version"] for r in json.load(sys.stdin) if r["version"].startswith("v24.")))')
-		curl -fsSL "https://nodejs.org/dist/$nodeVersion/node-$nodeVersion-linux-$nodeArchitecture.tar.xz" | tar --no-same-owner -xJ -C "$tools" --strip-components 2 --wildcards '*/bin/node'
+		nodeVersion=$(bounded 600 curl -fsSL https://nodejs.org/dist/index.json | bounded 30 python3 -c 'import json, sys; print(next(r["version"] for r in json.load(sys.stdin) if r["version"].startswith("v24.")))')
+		bounded 600 curl -fsSL "https://nodejs.org/dist/$nodeVersion/node-$nodeVersion-linux-$nodeArchitecture.tar.xz" | bounded 600 tar --no-same-owner -xJ -C "$tools" --strip-components 2 --wildcards '*/bin/node'
 		mv "$tools/node" "$tools/bin/node"
 	fi
 fi
-"$tools/bin/node" --version
+bounded 30 "$tools/bin/node" --version
 step "node ready"
-python3 "$repository/cloud/setup-markdown-width.py" "$repository/cloud/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
+bounded 1800 python3 "$repository/internal/boundedrun/python.py" "$repository/cloud/setup-markdown-width.py" "$repository/cloud/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
 cat "$run/markdown.log"
 step "markdown dependencies ready"
 }
@@ -126,8 +133,8 @@ step "markdown dependencies ready"
 prepareSubmodules() {
 # cohere, and typescript-go inside it, over HTTPS (the recorded URL is SSH, which clouds can't use).
 cd "$repository"
-git config submodule.cohere.url https://github.com/system-inc/cohere.git
-git submodule update --init --recursive --depth 1 --filter=blob:none
+bounded 30 git config submodule.cohere.url https://github.com/system-inc/cohere.git
+bounded 600 git submodule update --init --recursive --depth 1 --filter=blob:none
 step "submodules ready"
 
 }
@@ -167,22 +174,22 @@ if [ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ]; then
 else
 	listArguments=()
 	"$warmTests" && listArguments=(-test)
-	go list -deps -export "${listArguments[@]}" -json ./... > "$run/packages.json" 2> "$run/list.log" || { cat "$run/list.log"; exit 1; }
-	key=$(python3 "$repository/cloud/setup-key.py" "$repository" "$run/packages.json" "$warmTests") || key=""
+	bounded 600 go list -deps -export "${listArguments[@]}" -json ./... > "$run/packages.json" 2> "$run/list.log" || { cat "$run/list.log"; exit 1; }
+	key=$(bounded 30 python3 "$repository/cloud/setup-key.py" "$repository" "$run/packages.json" "$warmTests") || key=""
 fi
 if [ -n "$key" ] && [ "$(cat "$stamp" 2> /dev/null || true)" = "$key" ]; then
 	step "go build skipped (validated warming stamp)"
 	"$warmTests" && step "test binaries skipped (validated warming stamp)"
 else
-	go build "${buildArguments[@]}" ./... > "$run/build.log" 2>&1 || { cat "$run/build.log"; exit 1; }
+	bounded 600 go build "${buildArguments[@]}" ./... > "$run/build.log" 2>&1 || { cat "$run/build.log"; exit 1; }
 	step "go build ready"
 	if "$warmTests"; then
-		go test "${buildArguments[@]}" -count=1 -run '^$' ./... > "$run/tests.log" 2>&1 || { cat "$run/tests.log"; exit 1; }
+		bounded 600 go test "${buildArguments[@]}" -count=1 -run '^$' ./... > "$run/tests.log" 2>&1 || { cat "$run/tests.log"; exit 1; }
 		step "test binaries warm"
 	fi
 	if [ -n "$key" ]; then
 		# Build/link adds cache entries. Publish only the key of the completed cache, atomically.
-		if python3 "$repository/cloud/setup-key.py" "$repository" "$run/packages.json" "$warmTests" > "$run/stamp"; then
+		if bounded 30 python3 "$repository/cloud/setup-key.py" "$repository" "$run/packages.json" "$warmTests" > "$run/stamp"; then
 			mv "$run/stamp" "$stamp"
 		fi
 	fi
@@ -192,7 +199,7 @@ step "build cache warm"
 
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
-echo "setup: build-flags commit=$(git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(go version) clang=$(clang --version | head -n 1) node=$(node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests load-before=$loadBefore load-after=$(cat /proc/loadavg)"
+echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(bounded 30 go version) clang=$(bounded 30 clang --version | head -n 1) node=$(bounded 30 node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests load-before=$loadBefore load-after=$(cat /proc/loadavg)"
 step "done on $(nproc) processors (cgroup cpu.max: $cpuQuota), $memory"
 echo "setup: source $tools/env.sh"
 echo "setup: logs $run"
