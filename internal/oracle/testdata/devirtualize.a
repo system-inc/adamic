@@ -1,0 +1,55 @@
+class Base {
+	stable(value: string): string { return `${value}:stable`; }
+	changing(): number { return 1; }
+}
+function visit(base: Base): string {
+	return `${base.stable('built' + String(7))}:${base.changing()}`;
+}
+// The subclass is deliberately declared after the call site above.
+class Later extends Base {
+	changing(): number { return 2; }
+}
+console.log(visit(new Base()));
+console.log(visit(new Later()));
+// An exact Base allocation is safe even though changing has an override.
+const exact = new Base();
+console.log(`exact:${exact.changing()}`);
+console.log(`temporary:${new Later().changing()}`);
+
+interface Single {
+	run(value: string): string;
+}
+class Only implements Single {
+	run(value: string): string { return `${value}:only`; }
+}
+const single: Single = new Only();
+console.log(single.run('made' + String(8)));
+function throughInterface(value: Single): string { return value.run('parameter'); }
+console.log(throughInterface(single));
+const literal: Single = { run: (value: string): string => `${value}:literal` };
+console.log(throughInterface(literal));
+
+class Box<T> {
+	readonly value: T;
+	constructor(value: T) { this.value = value; }
+	get(): T { return this.value; }
+}
+function numberBox(box: Box<number>): number { return box.get(); }
+function stringBox(box: Box<string>): string { return box.get(); }
+console.log(`generic:${numberBox(new Box(17))}:${stringBox(new Box('dynamic' + String(9)))}`);
+
+class Thrower {
+	fail(value: string): string { throw new Error(`${value}:failed`); }
+}
+function catches(thrower: Thrower): string {
+	try { return thrower.fail('runtime' + String(10)); }
+	catch (error) { return error instanceof Error ? error.message : "unexpected"; }
+	finally { console.log('finally'); }
+}
+console.log(catches(new Thrower()));
+
+let mutable: Base = new Base();
+function readMutable(): number { return mutable.changing(); }
+console.log(`mutable:${readMutable()}`);
+mutable = new Later();
+console.log(`mutable:${readMutable()}`);
