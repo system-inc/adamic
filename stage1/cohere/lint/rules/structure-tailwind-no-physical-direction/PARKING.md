@@ -17,3 +17,7 @@ All executable ports retain rule.json kinds declarations. Pending Tailwind fragm
 ## Current-main refresh
 
 Rebased onto origin/main c01907a70 and reran the five owned fixture suites: 329 cases, 92338 canonical bytes, all byte-identical to Go on Node, emitted JavaScript and sanitized native. All eight rule mutants ran successfully and were caught only by byte comparison on all three runtimes. Component and strict-option results above remain the earlier runs; they were not rerun in this refresh. The shared #zmh9v36 registration/factory blocker remains.
+
+## Published harness integrated
+
+See HARNESS_REPORT.md for the ab70f38d4 integration and fresh production proof. The undefined registration helpers and missing Settings.text blockers above are resolved. New raw factory defaults and a JSX witness rename are owned fixes. The remaining shared witness-option sidecar gap and one parser refusal are explicit; 329 production source cases and all 330 metadata cases are green across three backends. The branch remains parked under #zmh9v36 pending configured witness support and integration.

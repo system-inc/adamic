@@ -55,7 +55,7 @@ function recognized(raw: string, block: boolean): string {
 export class Rule {
     readonly context: RuleContext;
     readonly rawOptions: string;
-    constructor(context: RuleContext, rawOptions: string = '') { this.context = context; this.rawOptions = rawOptions; }
+    constructor(context: RuleContext, rawOptions: string = context.settings.text) { this.context = context; this.rawOptions = rawOptions; }
     visit(root: number): void {
         const context = this.context;
         if(this.rawOptions === '' && context.settings.values.size > 0) { panic('NotYet: shared factory must supply raw description options'); }
@@ -94,4 +94,4 @@ export class Rule {
         }
     }
 }
-export function create(context: RuleContext, rawOptions: string = ''): Rule { return new Rule(context, rawOptions); }
+export function create(context: RuleContext, rawOptions: string = context.settings.text): Rule { return new Rule(context, rawOptions); }

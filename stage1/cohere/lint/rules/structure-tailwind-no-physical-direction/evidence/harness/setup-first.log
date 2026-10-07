@@ -1,0 +1,67 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0s)
+v24.19.0
+setup: node ready (0s)
+setup: submodules ready (0s)
+# github.com/system-inc/adamic/stage1/cohere/lint
+stage1/cohere/lint/registration_test.go:36:1: expected statement, found '<<'
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/lint/registry
+stage1/cohere/lint/registry/registry_test.go:149:1: expected declaration, found '<<'
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/registry [setup failed]
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo	0.022s [no tests to run]
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.046s [no tests to run]
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	0.041s [no tests to run]
+ok  	github.com/system-inc/adamic/cmd/adamic-stage1-progress	0.014s [no tests to run]
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	0.012s [no tests to run]
+?   	github.com/system-inc/adamic/cmd/lint-registry	[no test files]
+ok  	github.com/system-inc/adamic/internal/flow	0.013s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/fresh	0.037s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/fuzz	0.018s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/ir	0.011s [no tests to run]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	0.010s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/lower	0.010s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/native	0.019s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/oracle	0.042s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/regexp	0.005s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	0.011s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/css	0.039s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	0.021s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	0.012s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	0.016s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	0.036s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	0.018s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/json	0.038s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	0.011s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	0.013s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/inventory	0.027s [no tests to run]
+?   	github.com/system-inc/adamic/stage1/cohere/lint/rules/base-security-require-context-access	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction	[no test files]
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	0.012s [no tests to run]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width	[no test files]
+ok  	github.com/system-inc/adamic/stage1/cohere/markdowninline	0.032s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	0.008s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	0.020s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	0.015s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	0.021s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/values	0.023s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	0.006s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	0.009s [no tests to run]
+?   	github.com/system-inc/adamic/stage3/census/latent/tool	[no test files]
+?   	github.com/system-inc/adamic/stage3/census/tool	[no test files]
+ok  	github.com/system-inc/adamic/stage3/fixtures	0.005s [no tests to run]
+FAIL

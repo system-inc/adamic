@@ -33,12 +33,12 @@ func TestOwnedWitnesses(t *testing.T) {
 	for _, d := range prepareRegistry(t, ".") {
 		paths := ownedWitnesses(t, directory, d.Slug)
 		for _, path := range paths {
-			selected := path + "\t" + d.Name
-			answer := execute(t, "", oracle, "--manifest", manifest(t, []string{selected}), "--count")
+			pair := recoveryRows(t, oracle, []string{path + "\t" + d.Name, path + "\tall"})
+			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
 			if string(answer.output) == "0\n" {
 				t.Fatalf("%s witness reports no findings", d.Name)
 			}
-			rows = append(rows, selected, path+"\tall")
+			rows = append(rows, pair...)
 		}
 	}
 	path := manifest(t, rows)
@@ -139,7 +139,7 @@ func TestFactoryHooks(t *testing.T) {
 // Raw corpus text stays outside the project's TypeScript module graph.
 func ownedWitnesses(t *testing.T, directory, slug string) []string {
 	t.Helper()
-	paths, err := filepath.Glob(filepath.Join(directory, "rules", slug, "testdata", "*.ts.txt"))
+	paths, err := registry.Witnesses(filepath.Join(directory, "rules", slug))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -149,7 +149,7 @@ func ownedWitnesses(t *testing.T, directory, slug string) []string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d.ts", slug, index))
+		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d%s", slug, index, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
 		if err := os.WriteFile(target, data, 0644); err != nil {
 			t.Fatal(err)
 		}

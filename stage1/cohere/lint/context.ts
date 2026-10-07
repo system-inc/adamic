@@ -5,6 +5,33 @@ import type { Scanner } from '../../typescript/scanner/scanner.ts';
 
 import { Finding } from './finding.ts';
 import type { Settings } from './settings.ts';
+import { SuggestionEdit } from './suggestions.a';
+import type { Suggestion } from './suggestions.a';
+
+export const noEdits: readonly SuggestionEdit[] = [];
+export const noSuggestions: readonly Suggestion[] = [];
+
+// lineStartsOf is where each line begins, breaking on every line terminator ECMAScript names.
+function lineStartsOf(source: string): number[] {
+    const starts: number[] = [0];
+    for(let position = 0; position < source.length; position++) {
+        const code = source.charCodeAt(position);
+        if(code === 13) {
+            if(source.charCodeAt(position + 1) === 10) {
+                position++;
+            }
+            starts.push(position + 1);
+        }
+        else if(code === 10 || code === 8232 || code === 8233) {
+            starts.push(position + 1);
+        }
+    }
+    return starts;
+}
+
+export function space(character: string): boolean {
+    return character === ' ' || character === '\t' || character === '\r' || character === '\n';
+}
 
 export class RuleContext {
     readonly source: string;
@@ -17,6 +44,8 @@ export class RuleContext {
     readonly mode: string;
     readonly nullPolicy: string;
     readonly allowCatch: boolean;
+    // lineStarts is built on the first line() a rule asks for, since most files need none.
+    lineStarts: number[] | undefined = undefined;
     constructor(
         source: string,
         parser: Parser,
@@ -58,10 +87,169 @@ export class RuleContext {
         repair: string,
         replacement: string,
         suggestion: string,
-    ): void {
-        this.findings.push(
-            new Finding(rule, id, message, this.start(index), this.node(index).end, repair, replacement, suggestion),
+    ): Finding {
+        const finding = new Finding(
+            rule,
+            id,
+            message,
+            this.start(index),
+            this.node(index).end,
+            repair,
+            replacement,
+            suggestion,
         );
+        this.findings.push(finding);
+        return finding;
+    }
+    // reportNode and reportRange report a finding with its automatic edit and its suggestions, the shape
+    // batch 8's rules were written in (#zmh9v36). A finding carries at most one automatic edit, as the Go
+    // oracle's report does; its suggestions may carry several, in order.
+    reportNode(
+        index: number,
+        rule: string,
+        id: string,
+        message: string,
+        edits: readonly SuggestionEdit[] = noEdits,
+        suggestions: readonly Suggestion[] = noSuggestions,
+    ): Finding {
+        return this.reportRange(this.start(index), this.node(index).end, rule, id, message, edits, suggestions);
+    }
+    reportRange(
+        start: number,
+        end: number,
+        rule: string,
+        id: string,
+        message: string,
+        edits: readonly SuggestionEdit[] = noEdits,
+        suggestions: readonly Suggestion[] = noSuggestions,
+    ): Finding {
+        if(edits.length > 1) {
+            panic('a finding carries at most one automatic edit');
+        }
+        const edit = edits[0];
+        const finding = new Finding(rule, id, message, start, end, edit === undefined ? '' : 'fix', edit === undefined ? '' : edit.text, '');
+        if(edit !== undefined) {
+            finding.editStart = edit.start;
+            finding.editEnd = edit.end;
+        }
+        for(const suggestion of suggestions) {
+            finding.suggestions.push(suggestion);
+        }
+        this.findings.push(finding);
+        return finding;
+    }
+    // edit replaces a node's tokens, from its first token's start to its end.
+    edit(index: number, text: string): SuggestionEdit {
+        return new SuggestionEdit(this.start(index), this.node(index).end, text);
+    }
+    line(position: number): number {
+        if(this.lineStarts === undefined) {
+            this.lineStarts = lineStartsOf(this.source);
+        }
+        const starts = this.lineStarts;
+        let low = 0;
+        let high = starts.length;
+        while(low + 1 < high) {
+            const middle = Math.floor((low + high) / 2);
+            if((starts[middle] ?? 0) <= position) {
+                low = middle;
+            }
+            else {
+                high = middle;
+            }
+        }
+        return low;
+    }
+    child(index: number, position: number): number {
+        return this.node(index).children[position] ?? panic('missing child');
+    }
+    parent(index: number): number {
+        return this.parents[index] ?? -1;
+    }
+    // kind is a node's kind, and '' for no node (an index below zero), so a chain of lookups can end in a
+    // comparison rather than a guard.
+    kind(index: number): string {
+        return index < 0 ? '' : this.node(index).kind;
+    }
+    children(index: number, kind: string): number[] {
+        return this.node(index).children.filter((child) => this.kind(child) === kind);
+    }
+    scanAt(position: number): string {
+        this.scanner.pos = position;
+        return this.scanner.scan();
+    }
+    scanStart(): number {
+        return this.scanner.start;
+    }
+    scanEnd(): number {
+        return this.scanner.pos;
+    }
+    scanKind(): string {
+        return this.scanner.kind;
+    }
+    raw(index: number): string {
+        return this.source.slice(this.start(index), this.node(index).end);
+    }
+    // name is a declaration's name child: the first identifier, private identifier, literal or computed key
+    // past its modifiers, and -1 when something else comes first.
+    name(index: number): number {
+        for(const child of this.node(index).children) {
+            const kind = this.kind(child);
+            if(
+                ['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName'].includes(
+                    kind,
+                )
+            ) {
+                return child;
+            }
+            if(
+                !kind.endsWith('Keyword') &&
+                kind !== 'Decorator' &&
+                kind !== 'AsteriskToken' &&
+                kind !== 'DotDotDotToken'
+            ) {
+                return -1;
+            }
+        }
+        return -1;
+    }
+    memberName(index: number): number {
+        return ['PropertyDeclaration', 'MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(this.kind(index))
+            ? this.name(index)
+            : -1;
+    }
+    members(index: number): number[] {
+        return this.node(index).children.filter((child) =>
+            [
+                'PropertyDeclaration',
+                'MethodDeclaration',
+                'GetAccessor',
+                'SetAccessor',
+                'Constructor',
+                'ClassStaticBlockDeclaration',
+                'SemicolonClassElement',
+                'IndexSignature',
+            ].includes(this.kind(child)),
+        );
+    }
+    arguments(index: number): number[] {
+        const node = this.node(index);
+        return node.list === 0 ? [] : node.children.slice(node.children.length - node.list);
+    }
+    property(index: number): number {
+        const children = this.node(index).children;
+        return children[children.length - 1] ?? panic('access without name');
+    }
+    questionDot(index: number): boolean {
+        return this.children(index, 'QuestionDotToken').length !== 0;
+    }
+    initializer(index: number): number {
+        const children = this.node(index).children;
+        const last = children[children.length - 1] ?? -1;
+        return last >= 0 && this.source.slice(this.node(last).pos - 1, this.node(last).pos) === '=' ? last : -1;
+    }
+    extendsClass(index: number): boolean {
+        return this.children(index, 'HeritageClause').some((child) => this.node(child).operator === 'ExtendsKeyword');
     }
     comment(index: number): boolean {
         const end = this.node(index).end;

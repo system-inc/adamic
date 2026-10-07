@@ -1,0 +1,3 @@
+// Exact descriptions from cohere 715ba94.
+export const messagePreferTemplateUnexpectedStringConcatenation =
+    "This builds a string by concatenating a literal with something that is not one. The `+` operator does double duty in JavaScript, so a reader has to work out from the operands whether a line adds or joins, and a single non-string operand silently changes the answer for the whole expression. A template literal says which one is meant in its first character, keeps the literal text contiguous instead of split across quotes and plus signs, and does not change meaning when an operand's type does.";
