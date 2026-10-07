@@ -1,0 +1,30 @@
+=== RUN   TestExtractedDecisions
+    decision_test.go:86: ten manually extracted decision cases, 1963 identical bytes, Go/source Node/emitted JS/sanitized native
+=== RUN   TestExtractedDecisions/next-google-font-preconnect
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-no-css-tags
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-inline-script-id
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-next-script-for-ga
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+=== RUN   TestExtractedDecisions/next-no-before-interactive-script-outside-document
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 0
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 1
+    decision_test.go:123: compiling decision mutant caught only by output comparison side 2
+--- PASS: TestExtractedDecisions (10.67s)
+    --- PASS: TestExtractedDecisions/next-google-font-preconnect (0.46s)
+    --- PASS: TestExtractedDecisions/next-no-css-tags (0.48s)
+    --- PASS: TestExtractedDecisions/next-inline-script-id (0.44s)
+    --- PASS: TestExtractedDecisions/next-next-script-for-ga (0.49s)
+    --- PASS: TestExtractedDecisions/next-no-before-interactive-script-outside-document (0.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/next-google-font-preconnect	10.678s

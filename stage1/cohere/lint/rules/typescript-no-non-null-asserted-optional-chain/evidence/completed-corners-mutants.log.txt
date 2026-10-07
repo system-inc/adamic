@@ -1,0 +1,81 @@
+=== RUN   TestCompletedMutants
+    wave12_test.go:97: cohere cases: 67 unique source/rule/options combinations
+=== RUN   TestCompletedMutants/typescript-no-non-null-asserted-optional-chain
+    wave12_test.go:202: optional_assertion_removes_operand_byte compiling, successful-exit mutant caught only by output on source Node: case 2 line 9: port "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t49:51:\tRemove the non-null assertion.\t42 51", Go "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t50:51:\tRemove the non-null assertion.\t42 51"
+        Go context:
+        fixed	declare const foo: any;\u000adeclare const x: any;\u000aexport const r = foo?.bar(x!);\u000a
+        case 2
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-002/repository/source/Thing.ts:2:19
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	50:51:	Remove the non-null assertion.	42 51
+        fixed	declare const foo: any;\u000aexport const r = (foo?.bar!);\u000a
+        case 3
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-003/repository/source/Thing.ts:2:18
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+    wave12_test.go:202: optional_assertion_removes_operand_byte compiling, successful-exit mutant caught only by output on emitted JavaScript: case 2 line 9: port "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t49:51:\tRemove the non-null assertion.\t42 51", Go "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t50:51:\tRemove the non-null assertion.\t42 51"
+        Go context:
+        fixed	declare const foo: any;\u000adeclare const x: any;\u000aexport const r = foo?.bar(x!);\u000a
+        case 2
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-002/repository/source/Thing.ts:2:19
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	50:51:	Remove the non-null assertion.	42 51
+        fixed	declare const foo: any;\u000aexport const r = (foo?.bar!);\u000a
+        case 3
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-003/repository/source/Thing.ts:2:18
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+    wave12_test.go:202: optional_assertion_removes_operand_byte compiling, successful-exit mutant caught only by output on sanitized native: case 2 line 9: port "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t49:51:\tRemove the non-null assertion.\t42 51", Go "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t50:51:\tRemove the non-null assertion.\t42 51"
+        Go context:
+        fixed	declare const foo: any;\u000adeclare const x: any;\u000aexport const r = foo?.bar(x!);\u000a
+        case 2
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-002/repository/source/Thing.ts:2:19
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	50:51:	Remove the non-null assertion.	42 51
+        fixed	declare const foo: any;\u000aexport const r = (foo?.bar!);\u000a
+        case 3
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-003/repository/source/Thing.ts:2:18
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+=== RUN   TestCompletedMutants/typescript-no-unnecessary-type-constraint
+    wave12_test.go:202: constraint_suggestion_deletes_name compiling, successful-exit mutant caught only by output on source Node: case 24 line 97: port "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t14:27:,\tRemove the constraint that does nothing.\t14 15", Go "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t15:27:,\tRemove the constraint that does nothing.\t14 15"
+        Go context:
+        fixed	export let value!: number;\u000a
+        case 24
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-024/repository/source/no_unnecessary_type_constraint.cts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	15:27:,	Remove the constraint that does nothing.	14 15
+        fixed	const data = <T extends any>() => {};
+        case 25
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-025/repository/source/no_unnecessary_type_constraint.mts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+    wave12_test.go:202: constraint_suggestion_deletes_name compiling, successful-exit mutant caught only by output on emitted JavaScript: case 24 line 97: port "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t14:27:,\tRemove the constraint that does nothing.\t14 15", Go "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t15:27:,\tRemove the constraint that does nothing.\t14 15"
+        Go context:
+        fixed	export let value!: number;\u000a
+        case 24
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-024/repository/source/no_unnecessary_type_constraint.cts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	15:27:,	Remove the constraint that does nothing.	14 15
+        fixed	const data = <T extends any>() => {};
+        case 25
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-025/repository/source/no_unnecessary_type_constraint.mts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+    wave12_test.go:202: constraint_suggestion_deletes_name compiling, successful-exit mutant caught only by output on sanitized native: case 24 line 97: port "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t14:27:,\tRemove the constraint that does nothing.\t14 15", Go "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t15:27:,\tRemove the constraint that does nothing.\t14 15"
+        Go context:
+        fixed	export let value!: number;\u000a
+        case 24
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-024/repository/source/no_unnecessary_type_constraint.cts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	15:27:,	Remove the constraint that does nothing.	14 15
+        fixed	const data = <T extends any>() => {};
+        case 25
+        /tmp/adamic-gate/TestCompletedMutants2194165118/001/case-025/repository/source/no_unnecessary_type_constraint.mts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+--- PASS: TestCompletedMutants (47.40s)
+    --- PASS: TestCompletedMutants/typescript-no-non-null-asserted-optional-chain (18.61s)
+    --- PASS: TestCompletedMutants/typescript-no-unnecessary-type-constraint (23.93s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	47.417s

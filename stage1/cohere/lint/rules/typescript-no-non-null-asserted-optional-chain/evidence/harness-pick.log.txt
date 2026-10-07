@@ -1,0 +1,17 @@
+Auto-merging stage1/cohere/lint/lint.ts
+CONFLICT (content): Merge conflict in stage1/cohere/lint/lint.ts
+Auto-merging stage1/cohere/lint/lint_test.go
+CONFLICT (content): Merge conflict in stage1/cohere/lint/lint_test.go
+Auto-merging stage1/cohere/lint/main.ts
+CONFLICT (content): Merge conflict in stage1/cohere/lint/main.ts
+Auto-merging stage1/cohere/lint/profile_test.go
+Auto-merging stage1/cohere/lint/testdata/oracle.go
+CONFLICT (content): Merge conflict in stage1/cohere/lint/testdata/oracle.go
+error: could not apply 2650ad59... Accept Adamic lint modules and compare emitted JavaScript with Go
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
