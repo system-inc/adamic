@@ -131,7 +131,7 @@ var mutants = []mutant{
 	{
 		name: "a ) opening a regular expression",
 		file: "scan.ts",
-		from: "\t\tcase '%':\n\t\t\treturn true;",
+		from: "        case '%':\n            return true;",
 		to:   "\t\tcase '%':\n\t\tcase ')':\n\t\t\treturn true;",
 	},
 	// An edge of a class or a keyword's case: the scanner skips only space, tab, newline and carriage return; skipping \v too makes `(\v/x/` a pattern.
@@ -152,21 +152,21 @@ var mutants = []mutant{
 	{
 		name: "a directive word in any case",
 		file: "directives.ts",
-		from: "if (body.startsWith(candidate)) {",
+		from: "if(body.startsWith(candidate)) {",
 		to:   "if (body.toLowerCase().startsWith(candidate)) {",
 	},
 	// An edge of a class or a keyword's case: an unterminated string ends at its line's end, so the comments after it are still found.
 	{
 		name: "a string running past its line",
 		file: "scan.ts",
-		from: "\t\tif (character === '\\n') {\n\t\t\treturn index + 1;\n\t\t}\n\t\tindex++;",
+		from: "        if(character === '\\n') {\n            return index + 1;\n        }\n        index++;",
 		to:   "\t\tindex++;",
 	},
 	// An edge of a class or a keyword's case: a `/` inside `[...]` doesn't end the pattern.
 	{
 		name: "a regular expression's class ignored",
 		file: "scan.ts",
-		from: "\t\t\tcase '[':\n\t\t\t\tinClass = true;",
+		from: "            case '[':\n                inClass = true;",
 		to:   "\t\t\tcase '[':\n\t\t\t\tinClass = false;",
 	},
 	// A file-scope disable in a line comment honored, which ESLint doesn't and cohere stopped doing on
@@ -174,7 +174,7 @@ var mutants = []mutant{
 	{
 		name: "a // file-scope disable honored",
 		file: "directives.ts",
-		from: "if (scopeRead.scope === 'file' && isLineComment(commentText)) {",
+		from: "if(scopeRead.scope === 'file' && isLineComment(commentText)) {",
 		to:   "if (scopeRead.scope === 'file' && isLineComment(commentText) && false) {",
 	},
 	// U+0085 no longer space to Go's TrimSpace, as it isn't to JavaScript's trim, so a reason ending in
@@ -182,7 +182,7 @@ var mutants = []mutant{
 	{
 		name: "U+0085 not trimmed",
 		file: "directives.ts",
-		from: "\t\tcase 0x85:\n",
+		from: "        case 0x85:\n",
 		to:   "",
 	},
 	// A rule name matched by any suffix, not one on a `/`, so `no-enum` names `consistency-no-enum`.
@@ -205,7 +205,7 @@ var mutants = []mutant{
 	{
 		name: "an enable on the block's own line closing it",
 		file: "suppression.ts",
-		from: "if (enable.line <= block.line) {",
+		from: "if(enable.line <= block.line) {",
 		to:   "if (enable.line < block.line) {",
 	},
 	// The braces an interpolation opens are no longer counted, so `${ {a: 1}.a }` closes on the object's
@@ -213,7 +213,7 @@ var mutants = []mutant{
 	{
 		name: "an interpolation closing on an object's brace",
 		file: "scan.ts",
-		from: "\t\t\tif (character === '{') {\n\t\t\t\tdepth++;",
+		from: "            if(character === '{') {\n                depth++;",
 		to:   "\t\t\tif (character === '{') {\n\t\t\t\tdepth += 0;",
 	},
 }
