@@ -85,3 +85,13 @@ Status: parked, counted finished for the landing-first cap by Ahra's instruction
 - `react-hooks/static-components`: blocked on native high-level IR and JSX parser integration.
 
 Cohere analysis modules are being ported to Adamic on #dnv6f2c; JSX support is landing on `area/stage1-lint`. These are not completed native rule ports. The Go oracle, native JSX refusal probe, listener metadata and evidence already pushed remain in `wave-24-fourth/`. No shared source changes are made to bypass these dependencies. Nine earlier native ports remain oracle-green on current main `f8013f0baac41ddc340d76f83bddde38536a8f07`.
+
+## Fifth batch after React parking
+
+Next claimed checker-dependent rules without the parked native analysis dependencies:
+
+1. `require-await`
+2. `symbol-description`
+3. `valid-typeof`
+
+Fetched 529 origin refs and inspected 33 distinct claim blobs: 154 rules claimed, 18 remaining before dependency exclusions. Ranking uses the same frozen combined VOLUME_REPORT counts. Remaining React/JSX rules (including `structure/react-hook-no-any-type`) are skipped under the user's React parking instruction; `require-atomic-updates` is skipped because its Go implementation requires capture-sensitive control-flow graph construction and solving. The selected three are the first eligible rules after these exclusions. None is claimed on any origin branch or ported on main/bridge. Main is `f8013f0baac41ddc340d76f83bddde38536a8f07`. The branch is rebased, oracle-green and pushed. This claim precedes source implementation; no shared harness or generator will be edited. New rule implementations will declare numeric `rule.json` kinds and receive only their relevant nodes.
