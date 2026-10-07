@@ -54,3 +54,5 @@ The tested implementation and landing report were pushed as 8f07c6af94ed4b41d2bc
 After that push, explicitly refreshed all origin heads and scanned 569 origin refs and 33 distinct claim blobs. The conservative mention-based audit counts 164 claimed rules. Eight unclaimed candidates remain, all React rules under the user's parking instruction. No eligible non-React rule remains, so no new claim is made. The complete audit is evidence/wave24-fifth-post-push-audit.json. Main remains c01907a70 and the working tree is clean.
 
 The current named-kind contract and latest full rechecks supersede numeric declaration descriptions above; see [KIND_NAMES_REPORT.md](KIND_NAMES_REPORT.md).
+
+Latest requested lint-area rebase and validation: [AREA_LANDING_REPORT.md](AREA_LANDING_REPORT.md).

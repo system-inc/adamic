@@ -82,7 +82,7 @@ Status: parked, counted finished for the landing-first cap by Ahra's instruction
 
 - `react-hooks/set-state-in-effect`: blocked on native high-level IR and capture analysis.
 - `react-hooks/set-state-in-render`: blocked on native high-level IR, single-assignment construction and control dominance.
-- `react-hooks/static-components`: blocked on native high-level IR and JSX parser integration.
+- `react-hooks/static-components`: blocked on native high-level IR; JSX parser support is now integrated on the lint-area base.
 
 Cohere analysis modules are being ported to Adamic on #dnv6f2c; JSX support is landing on `area/stage1-lint`. These are not completed native rule ports. The Go oracle, native JSX refusal probe, listener metadata and evidence already pushed remain in `wave-24-fourth/`. No shared source changes are made to bypass these dependencies. Nine earlier native ports remain oracle-green on current main `f8013f0baac41ddc340d76f83bddde38536a8f07`.
 
@@ -103,3 +103,7 @@ Fetched 529 origin refs and inspected 33 distinct claim blobs: 154 rules claimed
 ## AST-name listener correction
 
 Ahra's corrected registry contract is applied to all twelve completed ports: rule.json kinds and native listener exports are AST names, not numeric values. The independent Go names are normalized exactly as the shared registry validates them. All four rule suites and both listener checks were rebuilt and re-green on main b8fb957a, with full-byte corpora, sanitizer modes, all mutants and released-handle checks. No new rule is claimed; the three React analysis claims remain parked. Latest evidence is wave-24-fifth/KIND_NAMES_REPORT.md.
+
+## Integrated lint-area landing refresh
+
+Rebased onto origin/area/stage1-lint 7481e0324e34a2537aafa9db7eeacda50405611b as explicitly requested. It contains main 39638d9e and harness 41eb6eab2. All twelve completed ports, named listener declarations, full-byte normal/sanitized corpora, 23 byte mutants, registry/native/JSON mutations and released-handle checks pass again with a fresh area compiler. Shared sources and developer-tools changes are preserved. JSX support is integrated; the three React claims remain parked on native analysis dependencies. No new claim is made. See wave-24-fifth/AREA_LANDING_REPORT.md.
