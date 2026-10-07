@@ -1,5 +1,15 @@
 # Scanner blockers
 
+## October 7: shebang optional read needs an explicit bound
+
+Replacing the regex assertion with optional indexed access in the untracked
+probe returns to the checker gate:
+`scanner.ts:434:17: TS18048: 'shebang' is possibly 'undefined'`.
+Census reason: unchecked indexed reads. The subsequent shebang.length needs
+the regex match and its first element to be proven present. A successful regex
+match is guaranteed by this function's initial #! test, but the checker does
+not derive that regex fact. No closing feature branch demonstrated.
+
 ## October 7: comparison-preserving languageVersion guard, next non-null site
 
 In the untracked probe, replace the two `languageVersion! >= ES2015`
