@@ -1,0 +1,292 @@
+{
+  "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "jobs": 5,
+  "total_wall_seconds": 79.30643816100019,
+  "load_before": "2.63 4.15 3.95 1/333 151094",
+  "load_after": "3.71 4.16 3.97 1/389 154817",
+  "entries": [
+    {
+      "number": 1,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-01",
+      "setup_seconds": 17.153227324,
+      "ok": true,
+      "check_seconds": 10.651258737999342,
+      "cleanup_seconds": 1.0905625670002337,
+      "wall_seconds": 31.0752581379993,
+      "load_before": "2.63 4.15 3.95 2/335 151106",
+      "load_after": "3.10 4.10 3.94 3/375 152890",
+      "messages": [
+        "01 shared-slice-append: applies-and-fails-as-recorded",
+        "01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "01 wall=31.075s setup=17.153s check=10.651s cleanup=1.091s load=2.63 4.15 3.95 2/335 151106 -> 3.10 4.10 3.94 3/375 152890"
+      ]
+    },
+    {
+      "number": 2,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-02",
+      "setup_seconds": 16.206344313000045,
+      "ok": true,
+      "check_seconds": 11.946632041999692,
+      "cleanup_seconds": 0.5460554339997543,
+      "wall_seconds": 30.466371561000415,
+      "load_before": "2.63 4.15 3.95 1/335 151106",
+      "load_after": "3.11 4.12 3.95 3/377 152868",
+      "messages": [
+        "02 liveness-throw: applies-and-fails-as-recorded",
+        "02 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "02 wall=30.466s setup=16.206s check=11.947s cleanup=0.546s load=2.63 4.15 3.95 1/335 151106 -> 3.11 4.12 3.95 3/377 152868"
+      ]
+    },
+    {
+      "number": 3,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-03",
+      "setup_seconds": 17.85036109900011,
+      "ok": true,
+      "check_seconds": 9.97354086500036,
+      "cleanup_seconds": 0.4963889150003524,
+      "wall_seconds": 29.472240703999887,
+      "load_before": "2.63 4.15 3.95 3/338 151109",
+      "load_after": "3.11 4.12 3.95 4/445 152650",
+      "messages": [
+        "03 defined-lent: applies-and-fails-as-recorded",
+        "03 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "03 wall=29.472s setup=17.850s check=9.974s cleanup=0.496s load=2.63 4.15 3.95 3/338 151109 -> 3.11 4.12 3.95 4/445 152650"
+      ]
+    },
+    {
+      "number": 4,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-04",
+      "setup_seconds": 17.640083152999978,
+      "ok": true,
+      "check_seconds": 9.994018744999266,
+      "cleanup_seconds": 1.60321495900007,
+      "wall_seconds": 32.18688850900071,
+      "load_before": "2.63 4.15 3.95 3/338 151109",
+      "load_after": "3.10 4.10 3.94 1/379 152944",
+      "messages": [
+        "04 borrowed-array-move: applies-and-fails-as-recorded",
+        "04 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "04 wall=32.187s setup=17.640s check=9.994s cleanup=1.603s load=2.63 4.15 3.95 3/338 151109 -> 3.10 4.10 3.94 1/379 152944"
+      ]
+    },
+    {
+      "number": 5,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-05",
+      "setup_seconds": 17.474498266999944,
+      "ok": true,
+      "check_seconds": 10.496549544999652,
+      "cleanup_seconds": 1.3083128529997339,
+      "wall_seconds": 31.585099516999435,
+      "load_before": "2.63 4.15 3.95 2/339 151110",
+      "load_after": "3.10 4.10 3.94 2/371 152899",
+      "messages": [
+        "05 spread-method-reuse: applies-and-fails-as-recorded",
+        "05 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "05 wall=31.585s setup=17.474s check=10.497s cleanup=1.308s load=2.63 4.15 3.95 2/339 151110 -> 3.10 4.10 3.94 2/371 152899"
+      ]
+    },
+    {
+      "number": 6,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-06",
+      "setup_seconds": 15.201253797999925,
+      "ok": true,
+      "check_seconds": 11.294441703000302,
+      "cleanup_seconds": 0.5741281829996296,
+      "wall_seconds": 29.4193456160001,
+      "load_before": "3.11 4.12 3.95 6/445 152650",
+      "load_after": "4.09 4.26 4.00 5/438 154332",
+      "messages": [
+        "06 constructor-capture-region: applies-and-fails-as-recorded",
+        "06 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "06 wall=29.419s setup=15.201s check=11.294s cleanup=0.574s load=3.11 4.12 3.95 6/445 152650 -> 4.09 4.26 4.00 5/438 154332"
+      ]
+    },
+    {
+      "number": 7,
+      "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-07",
+      "setup_seconds": 19.819204558999445,
+      "ok": true,
+      "check_seconds": 9.786371522999616,
+      "cleanup_seconds": 0.6049029040004825,
+      "wall_seconds": 31.462137064999297,
+      "load_before": "3.11 4.12 3.95 3/378 152869",
+      "load_after": "4.09 4.25 4.00 1/396 154582",
+      "messages": [
+        "07 borrowed-element-reads: applies-and-fails-as-recorded",
+        "07 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965",
+        "07 wall=31.462s setup=19.819s check=9.786s cleanup=0.605s load=3.11 4.12 3.95 3/378 152869 -> 4.09 4.25 4.00 1/396 154582"
+      ]
+    },
+    {
+      "number": 8,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-08",
+      "setup_seconds": 18.412424244999784,
+      "ok": true,
+      "check_seconds": 9.706643040000017,
+      "cleanup_seconds": 0.42199268999956985,
+      "wall_seconds": 30.440508199999385,
+      "load_before": "3.10 4.10 3.94 4/375 152890",
+      "load_after": "4.09 4.25 4.00 1/396 154581",
+      "messages": [
+        "08 narrowed-number-field: applies-and-fails-as-recorded",
+        "08 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "08 wall=30.441s setup=18.412s check=9.707s cleanup=0.422s load=3.10 4.10 3.94 4/375 152890 -> 4.09 4.25 4.00 1/396 154581"
+      ]
+    },
+    {
+      "number": 9,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-09",
+      "setup_seconds": 14.799469880999823,
+      "ok": true,
+      "check_seconds": 11.300041408000652,
+      "cleanup_seconds": 0.9303889630000413,
+      "wall_seconds": 27.842499106000105,
+      "load_before": "3.10 4.10 3.94 2/371 152899",
+      "load_after": "4.09 4.26 4.00 5/433 154333",
+      "messages": [
+        "09 literal-undefined-field: applies-and-fails-as-recorded",
+        "09 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "09 wall=27.842s setup=14.799s check=11.300s cleanup=0.930s load=3.10 4.10 3.94 2/371 152899 -> 4.09 4.26 4.00 5/433 154333"
+      ]
+    },
+    {
+      "number": 10,
+      "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 8.598600015830016e-05,
+      "load_before": "3.10 4.10 3.94 2/380 152945",
+      "load_after": "3.10 4.10 3.94 2/380 152945",
+      "messages": [
+        "10 override-representation: skipped (Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.)",
+        "10 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965",
+        "10 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=3.10 4.10 3.94 2/380 152945 -> 3.10 4.10 3.94 2/380 152945"
+      ]
+    },
+    {
+      "number": 11,
+      "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-11",
+      "setup_seconds": 18.020980041000257,
+      "ok": true,
+      "check_seconds": 7.289394188000188,
+      "cleanup_seconds": 0.5642587699994692,
+      "wall_seconds": 28.349146948999987,
+      "load_before": "3.10 4.10 3.94 2/380 152945",
+      "load_after": "4.09 4.25 4.00 3/439 154480",
+      "messages": [
+        "11 refuse-definite-assignment: applies-and-fails-as-recorded",
+        "11 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965",
+        "11 wall=28.349s setup=18.021s check=7.289s cleanup=0.564s load=3.10 4.10 3.94 2/380 152945 -> 4.09 4.25 4.00 3/439 154480"
+      ]
+    },
+    {
+      "number": 12,
+      "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-_2lkwlhg/entry-12",
+      "setup_seconds": 11.936948843999744,
+      "ok": true,
+      "check_seconds": 6.876433490999261,
+      "cleanup_seconds": 0.39842562600006204,
+      "wall_seconds": 20.35220983599993,
+      "load_before": "4.09 4.26 4.00 4/438 154332",
+      "load_after": "3.71 4.16 3.97 1/394 154817",
+      "messages": [
+        "12 refuse-suppression-directives: applies-and-fails-as-recorded",
+        "12 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965",
+        "12 wall=20.352s setup=11.937s check=6.876s cleanup=0.398s load=4.09 4.26 4.00 4/438 154332 -> 3.71 4.16 3.97 1/394 154817"
+      ]
+    },
+    {
+      "number": 13,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 6.403600036719581e-05,
+      "load_before": "4.09 4.26 4.00 5/433 154333",
+      "load_after": "4.09 4.26 4.00 5/433 154333",
+      "messages": [
+        "13 typeof-null: skipped (Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.)",
+        "13 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "13 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=4.09 4.26 4.00 5/433 154333 -> 4.09 4.26 4.00 5/433 154333"
+      ]
+    },
+    {
+      "number": 14,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 8.028199954424053e-05,
+      "load_before": "4.09 4.26 4.00 5/433 154333",
+      "load_after": "4.09 4.26 4.00 5/433 154333",
+      "messages": [
+        "14 constructor-arrow-this: skipped (Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.)",
+        "14 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "14 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=4.09 4.26 4.00 5/433 154333 -> 4.09 4.26 4.00 5/433 154333"
+      ]
+    },
+    {
+      "number": 15,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 0.00031758000022819033,
+      "load_before": "4.09 4.26 4.00 4/433 154333",
+      "load_after": "4.09 4.26 4.00 5/434 154334",
+      "messages": [
+        "15 class-instance-key: skipped (Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.)",
+        "15 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "15 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=4.09 4.26 4.00 4/433 154333 -> 4.09 4.26 4.00 5/434 154334"
+      ]
+    },
+    {
+      "number": 16,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 3.4951000088767614e-05,
+      "load_before": "4.09 4.26 4.00 5/434 154334",
+      "load_after": "4.09 4.26 4.00 5/434 154334",
+      "messages": [
+        "16 proven-guards-relations: skipped (Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.)",
+        "16 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "16 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=4.09 4.26 4.00 5/434 154334 -> 4.09 4.26 4.00 5/434 154334"
+      ]
+    }
+  ]
+}
