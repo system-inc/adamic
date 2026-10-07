@@ -325,6 +325,9 @@ func TestReportLintUnitChanges(t *testing.T) {
 		if header != changedHeader {
 			effective = len(changedUnits)
 		}
+        if os.Getenv("STABLE_NAMES_ACCEPTANCE") == "1" && edit.name == "14-to-array-length" && (changed != 1 || header != changedHeader) {
+            t.Fatalf("function-local edit changed %d units; shared-header-changed=%v", changed, header != changedHeader)
+        }
 		t.Logf("%s: body/state units changed=%d/%d shared-header-changed=%v effective-invalidations=%d", edit.name, changed, len(changedUnits), header != changedHeader, effective)
 	}
 }
