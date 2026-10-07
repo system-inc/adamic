@@ -1,0 +1,15 @@
+Rebased the four retained ports onto current main 71d7e491 and retained current area bb2ece56 ancestry; owned rule sources unchanged.
+Revalidated implementation 6d29c6a8c9900ba5224bc51c6ec41bfd5e4563fc; previous pushed acf8e231e63f20b20b923c6ab21546494d08adde; evidence commit follows on codex/lint-wave1-07 only.
+Fresh shared rules, required 403-file corpus and owned witnesses PASS 186.558s; no source fixes or new claims.
+Four existing clean-executing semantic mutant proofs remain applicable to unchanged compiler, stage1 and rule sources; mutants were not rerun this turn.
+Full gate, standalone profiles, setup and vet were not repeated; consistent-return and constructor-super unfinished, so no helpers claimed.
+
+Fetched every origin head. Main 71d7e491b3c9724f7a0e2ee754592149e7f9790b integrates stage3 only relative to prior main 4e0bfda5. git diff --name-only over cmd, internal, stage1 and cloud/setup.sh is empty. DEDUP_LEDGER.md is unchanged. Rebased onto current main, then merged area bb2ece564842c4b2f909b9f75c27e74c2efa4f29 to retain both ancestries without changing the source tree. Four owned directories are byte-identical to prior pushed acf8e231e. All six losing copies remain retired; no shared harness/compiler resolution was authored. Wave1-06-land was separately revalidated and pushed, as recorded in its wave1-06-land-71d-report.md.
+
+Fresh command sourced /workspace/adamic-tools/env.sh:
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/wave07-typescript go test ./stage1/cohere/lint -run '^(TestOwnedWitnesses|TestRulesAgree|TestCompilerAndStage1Agree)$' -count=1 -v -timeout 15m
+PASS 186.558s. TestRulesAgree passed 62.47s. Required compiler/stage1 corpus: 403 files. TestOwnedWitnesses passed 30.16s with 99,105 identical bytes. Exact corpus timing and compared byte counts are retained in tests.log. Independent Go, source Node, emitted JavaScript and sanitized native agree. The required TypeScript input was supplied, so no missing-input skip was taken. Inherited method-signature-style recovery exclusions remain explicit and are not parity coverage. Output went directly to logs.
+
+Existing four profile and mutant proofs are recorded in wave1-07-current-main-report.md: ordering-relations-ignored, and-left-undefined-ignored, constructor-property-name-ignored and parenthesized alias lost. They remain applicable because every relevant executable source is unchanged. No fresh standalone profile, mutant, setup, vet, throughput or full-gate result is claimed. Prior setup is 450.035s, nproc 5. Other required-input packages were not run. No checks were skipped, relaxed or deleted.
+
+consistent-return still lacks a compatible Judge and independently built EndReachable API in stage1 lint; constructor-super remains reserved and unimplemented without blaming it on that same dependency. The earlier shared-dependency stop instruction remains the boundary. No helper branch or claim is created and no queue exhaustion is claimed. Push only codex/lint-wave1-07 with an exact lease against acf8e231e63f20b20b923c6ab21546494d08adde, never main or area.
