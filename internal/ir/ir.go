@@ -424,7 +424,7 @@ type (
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
 	TypeOf struct {
 		Value Expression
-		// Null says a missing reference is null, not undefined. Their native pointer is the same.
+		// Null says a present value's NULL pointer is null. An absent lookup slot is still undefined.
 		Null bool
 	}
 

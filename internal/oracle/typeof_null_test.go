@@ -3,15 +3,18 @@ package oracle
 import (
 	"path/filepath"
 	"reflect"
+	"regexp"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 var typeofNullFixtures = []string{
 	"internal/oracle/testdata/typeof_null.a",
 	"internal/oracle/testdata/typeof_null_compare.a",
 	"internal/oracle/testdata/typeof_null_switch.a",
+	"internal/oracle/testdata/typeof_null_slots.a",
 }
 
 func init() {
@@ -100,4 +103,37 @@ func restoreNullTypeOf(value reflect.Value) int {
 		}
 	}
 	return changed
+}
+
+// Mistaking a missing slot for a present null must be caught separately from mistaking null for
+// undefined. Only the slot-presence argument is changed; the value and its ownership stay intact.
+func TestTypeOfNullSlotPresenceMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typeof_null_slots.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := onNode(t, path)
+	source := native.C(program)
+	presence := regexp.MustCompile(`(adamic_union_typeof\([^\n]+, )adamic_temporary_[0-9]+ != NULL\)`)
+	mutant := presence.ReplaceAllString(source, "${1}true)")
+	if mutant == source {
+		t.Fatal("mutant changed no slot-presence tests")
+	}
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	if got.exitCode != 0 || len(got.stderr) != 0 {
+		t.Fatalf("mutant must finish cleanly without leaks: exit %d, stderr %q", got.exitCode, got.stderr)
+	}
+	if difference := disagreement(want, got); difference != "stdout differs" {
+		t.Fatalf("want Node to catch stdout alone, got %q", difference)
+	}
+	t.Logf("caught: Node %q; mutant %q", want.stdout, got.stdout)
 }

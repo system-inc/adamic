@@ -8,18 +8,24 @@ import (
 // representation. A declared slot can hold null again after a call, despite a stale narrowing.
 func (l *lowering) typeOfNull(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	proven := l.checker.GetTypeAtLocation(node)
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
+	if node.Kind == ast.KindElementAccessExpression {
+		receiver := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression)))
+		if l.checker.IsArrayType(receiver) && l.includesNull(l.checker.GetElementTypeOfArrayType(receiver)) {
+			return true
+		}
+	}
 	at := node
 	if node.Kind == ast.KindPropertyAccessExpression {
 		at = node.Name()
 	}
 	if node.Kind == ast.KindIdentifier || node.Kind == ast.KindPropertyAccessExpression {
 		if symbol := l.checker.GetSymbolAtLocation(at); symbol != nil {
-			declared := l.checker.GetTypeOfSymbol(symbol)
+			declared := l.concrete(l.checker.GetTypeOfSymbol(symbol))
 			if l.includesNull(declared) {
 				proven = declared
 			}
 		}
 	}
-	return l.includesNull(proven) && !l.includesUndefined(proven)
+	return l.includesNull(proven)
 }
