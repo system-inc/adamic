@@ -56,3 +56,20 @@ main. The claim search includes report Markdown under claims conservatively.
 Availability follows the user's current main-plus-claims criterion; older ports
 on other branches are not silently substituted for main ports. This update is
 committed and pushed before writing these three rule implementations.
+
+
+### Continuation outcome
+
+Candidate implementations were committed separately: module variable e19fd35b,
+default parameter 10bab9b6, Tailwind and raw evidence bf7c6799. All are pushed.
+The first two match their complete captured upstream corpora. Tailwind matches
+53 of 54 cases; the remaining JSX case is an independently proven parser refusal.
+All three match Go over 200 compiler/stage1 files and each has a compiling mutant
+caught solely by output comparison on Node, emitted JavaScript and sanitized native.
+
+These remain candidates: normal shared registration still requires .ts, and the
+owned compatibility proposal is tested only through scratch Go overlays. The
+shared-file territory exception question has not been answered. No approval is
+inferred and no shared compatibility changes are applied. Full commands, raw
+logs, findings/s and coverage limits are in
+../rules/structure-tailwind-no-physical-direction/REPORT.md.

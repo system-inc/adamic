@@ -1,5 +1,5 @@
 Built: three rule-local .a candidate ports; normal integration and Tailwind's JSX case remain blocked.
-Commits: pre-code claim 01b7fb9a; module e19fd35b and default-parameter 10bab9b6; Tailwind/evidence commit follows on codex/lint-wave1-03.
+Commits: pre-code claim 01b7fb9a; module e19fd35b and default-parameter 10bab9b6; Tailwind/evidence bf7c6799 on codex/lint-wave1-03.
 Commands and outputs: scratch parity PASS, 183 upstream cases plus 200 corpus files; three mutants PASS; registry/vet/filtered oracle PASS; overlay setup PASS in 12s, nproc 5.
 Mutants: module_binding_ignored, required_parameter_ignored and direction_exemption_ignored compile/run and are caught only by Go output comparison on Node, emitted JavaScript and sanitized native.
 Not covered: normal .a registration, the one upstream JSX case, arbitrary JSX, .a self-lint, and the complete repository gate.
