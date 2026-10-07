@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"os"
@@ -11,6 +12,8 @@ import (
 	"syscall"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -131,7 +134,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 // Every fixture's counts are recorded, and a change to them fails until the table is updated with it.
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	rows := make([]string, len(fixtures)+len(inputFixtures))
+	rows := make([]string, len(fixtures)+len(inputFixtures)+1)
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
@@ -155,6 +158,31 @@ func TestCountsAreRecorded(t *testing.T) {
 				lock.Unlock()
 			})
 		}
+		t.Run("multi-root project", func(t *testing.T) {
+			t.Parallel()
+			const fixture = "internal/lower/testdata/multi_root/tsconfig.json"
+			program, err := load.LoadProject(filepath.Join(repository, fixture))
+			if err != nil {
+				t.Fatal(err)
+			}
+			lowered, err := lower.Lower(context.Background(), program)
+			if err != nil {
+				t.Fatal(err)
+			}
+			binary := filepath.Join(t.TempDir(), "program")
+			if err := native.Build(native.C(lowered), binary, native.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
+			name, arguments := pinnedStack(binary)
+			result := execute(t, name, arguments...)
+			match := countsLine.FindSubmatch(result.stderr)
+			if result.exitCode != 0 || match == nil {
+				t.Fatalf("counted roots: exit %d, stderr %q", result.exitCode, result.stderr)
+			}
+			lock.Lock()
+			rows[len(rows)-1] = fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", fixture, match[1], match[2], match[3], match[4], match[5], match[6])
+			lock.Unlock()
+		})
 	})
 	if t.Failed() {
 		return

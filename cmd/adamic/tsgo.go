@@ -8,6 +8,10 @@ import (
 )
 
 func build(path, output string, arguments []string) int {
+	return buildInput([]string{path}, "", output, arguments)
+}
+
+func buildInput(paths []string, project, output string, arguments []string) int {
 	options := native.Options{}
 	archive := ""
 	for index := 0; index < len(arguments); index++ {
@@ -28,7 +32,7 @@ func build(path, output string, arguments []string) int {
 			return 2
 		}
 	}
-	program, code := compileLibrary(path, archive != "")
+	program, code := compileInput(paths, project, archive != "")
 	if program == nil {
 		return code
 	}
