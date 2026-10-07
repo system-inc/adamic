@@ -1,0 +1,18 @@
+F
+======================================================================
+FAIL: test_checkout_commit_and_sparse_checks (test_css_gate_inputs.CSSInputs.test_checkout_commit_and_sparse_checks)
+----------------------------------------------------------------------
+ValueError: CSS sparse checkout differs: expected ['tests/format/css', 'tests/format/scss', 'tests/format/less', 'tests/format/js/multiparser-css', 'tests/format/js/template-literals'], got ['wrong commit']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 55, in test_checkout_commit_and_sparse_checks
+    with self.assertRaisesRegex(ValueError, 'commit integrity mismatch'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "commit integrity mismatch" does not match "CSS sparse checkout differs: expected ['tests/format/css', 'tests/format/scss', 'tests/format/less', 'tests/format/js/multiparser-css', 'tests/format/js/template-literals'], got ['wrong commit']"
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

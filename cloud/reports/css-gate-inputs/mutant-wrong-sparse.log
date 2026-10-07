@@ -1,0 +1,18 @@
+F
+======================================================================
+FAIL: test_checkout_commit_and_sparse_checks (test_css_gate_inputs.CSSInputs.test_checkout_commit_and_sparse_checks)
+----------------------------------------------------------------------
+ValueError: CSS fixture counts differ: expected {'.css': 157, '.scss': 90, '.less': 43}, got {'.css': 0, '.scss': 0, '.less': 0}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 58, in test_checkout_commit_and_sparse_checks
+    with self.assertRaisesRegex(ValueError, 'sparse checkout differs'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "sparse checkout differs" does not match "CSS fixture counts differ: expected {'.css': 157, '.scss': 90, '.less': 43}, got {'.css': 0, '.scss': 0, '.less': 0}"
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

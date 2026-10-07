@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_every_fixture_key_component (test_css_gate_inputs.CSSInputs.test_every_fixture_key_component) (name='CSS_SPARSE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 44, in test_every_fixture_key_component
+    self.assertNotEqual(before, gate.css_fixture_key(), name)
+AssertionError: 'e7c4a24e93270246a0f16ca786775eeb012d11a5de6e829b276dd879f7f411e4' == 'e7c4a24e93270246a0f16ca786775eeb012d11a5de6e829b276dd879f7f411e4' : CSS_SPARSE
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

@@ -68,7 +68,14 @@ class CSSInputs(unittest.TestCase):
             for name in ['postcss', 'markdown']:
                 (package / 'plugins' / (name + '.js')).write_text('module.exports = {};\n')
             self.assertIn('paths verified', gate.shared_prettier(root, 'node'))
+            # Keep the direct export correct so only prefix/package.json validation catches this.
             (package / 'package.json').write_text(json.dumps({'version': '0.0.0', 'main': 'index.js'}))
+            (package / 'index.js').write_text("exports.version = '3.9.6';\n")
+            with self.assertRaises(subprocess.CalledProcessError):
+                gate.shared_prettier(root, 'node')
+            # Then preserve prefix metadata so only direct package validation catches this.
+            (package / 'package.json').write_text(json.dumps({'version': '3.9.6', 'main': 'index.js'}))
+            (package / 'index.js').write_text("exports.version = '0.0.0';\n")
             with self.assertRaises(subprocess.CalledProcessError):
                 gate.shared_prettier(root, 'node')
 

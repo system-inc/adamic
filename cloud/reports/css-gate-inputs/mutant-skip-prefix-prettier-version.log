@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_shared_prettier_version_is_verified (test_css_gate_inputs.CSSInputs.test_shared_prettier_version_is_verified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_css_gate_inputs.py", line 74, in test_shared_prettier_version_is_verified
+    with self.assertRaises(subprocess.CalledProcessError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CalledProcessError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.054s
+
+FAILED (failures=1)

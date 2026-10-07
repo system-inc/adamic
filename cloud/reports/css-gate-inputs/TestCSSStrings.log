@@ -1,0 +1,24 @@
+=== RUN   TestCSSStrings
+=== PAUSE TestCSSStrings
+=== CONT  TestCSSStrings
+=== RUN   TestCSSStrings/quote_tie
+    port_test.go:293: caught by output case 0, byte 1213: got "rpus-root <that repo's source tree> --json independent.json\\" want "rpus-root <that repo\"s source tree> --json independent.json\\"
+    port_test.go:293: caught by output case 0, byte 1213: got "rpus-root <that repo's source tree> --json independent.json\\" want "rpus-root <that repo\"s source tree> --json independent.json\\"
+=== RUN   TestCSSStrings/escaped_closing_quote
+    port_test.go:293: caught by output case 142, byte 2: got "aa\"\\\\\"" want "aa'\\\\'"
+    port_test.go:293: caught by output case 142, byte 2: got "aa\"\\\\\"" want "aa'\\\\'"
+=== RUN   TestCSSStrings/preserve_original_escape
+    port_test.go:293: caught by output case 818, byte 2: got "a'\"'" want "a'\\\\\"'"
+    port_test.go:293: caught by output case 818, byte 2: got "a'\"'" want "a'\\\\\"'"
+=== NAME  TestCSSStrings
+    port_test.go:327: throughput Go 724652.7 texts/s, 3 process runs 0.077309s (startup, input, escaping, output included; build excluded)
+    port_test.go:327: throughput native 472254.3 texts/s, 3 process runs 0.118627s (startup, input, escaping, output included; build excluded)
+    port_test.go:327: throughput Node 121722.5 texts/s, 3 process runs 0.460244s (startup, input, escaping, output included; build excluded)
+    port_test.go:327: throughput Prettier 137225.1 texts/s, 3 process runs 0.408249s (startup, input, escaping, output included; build excluded)
+    port_test.go:329: corpus: 1 repository/submodule files, 9336 generated texts, 18674 preference cases; all byte-identical
+--- PASS: TestCSSStrings (7.01s)
+    --- PASS: TestCSSStrings/quote_tie (0.67s)
+    --- PASS: TestCSSStrings/escaped_closing_quote (0.71s)
+    --- PASS: TestCSSStrings/preserve_original_escape (0.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	7.024s

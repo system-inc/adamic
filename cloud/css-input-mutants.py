@@ -21,7 +21,8 @@ mutants['degraded-counts'] = (source.replace('if counts != CSS_COUNTS:', 'if Fal
 mutants['wrong-head'] = (source.replace('if actual != CSS_COMMIT:', 'if False:'), 'test_checkout_commit_and_sparse_checks')
 mutants['wrong-sparse'] = (source.replace('if sorted(sparse) != sorted(CSS_SPARSE):', 'if False:'), 'test_checkout_commit_and_sparse_checks')
 mutants['skip-checkout-bytes'] = (source.replace("saved['key'] == key and saved['tree'] == artifact_digest(destination)", "saved['key'] == key"), 'test_local_sparse_cache_repair_and_uncached_equality')
-mutants['skip-prettier-version'] = (source.replace('actual !== expected', 'false'), 'test_shared_prettier_version_is_verified')
+mutants['skip-prefix-prettier-version'] = (source.replace('if (actual !== expected) throw Error(`${name}:', 'if (false) throw Error(`${name}:'), 'test_shared_prettier_version_is_verified')
+mutants['skip-package-prettier-version'] = (source.replace('if (actual !== expected) throw Error(`ADAMIC_MARKDOWNINLINE_LIBRARY:', 'if (false) throw Error(`ADAMIC_MARKDOWNINLINE_LIBRARY:'), 'test_shared_prettier_version_is_verified')
 for name in ['ADAMIC_CSS_FIXTURES', 'ADAMIC_CSSNUMBERS_LIBRARY', 'ADAMIC_CSSSTRINGS_LIBRARY', 'ADAMIC_MARKDOWNINLINE_LIBRARY']:
     mutants['missing-' + name] = (source.replace("'" + name + "':", "'OMITTED_" + name + "':"), 'test_exports_and_ordinary_unset')
 report = cloud / 'reports/css-gate-inputs';results = []

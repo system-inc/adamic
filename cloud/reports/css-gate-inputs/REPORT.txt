@@ -1,0 +1,61 @@
+Built: four required CSS/Markdown inputs under --gate-inputs, with a pinned sparse fixture checkout and one shared Prettier install.
+Commits: base 6b33709083b75368ee35e18340a70836abc72b68; implementation and parity proof b58b2eef18fe899ed9b435393e17255c396ca9e6.
+Commands and outputs: setup --gate-inputs succeeded; all eight named tests PASS uncached, full CSS corpus present; 41 setup tests pass with five opt-in skips.
+Mutants: all 15 caught, covering five new stamp components, degraded counts, wrong HEAD/sparse metadata, ignored checkout corruption, both version checks and all four missing exports.
+Uncovered: no fresh VM, macOS execution or full gate; installed toolchains and Go module/build caches were reused on this cloud box; no stage1 files changed.
+
+| Test | Official Go verdict | Actual corpus log line |
+| --- | --- | --- |
+| TestCSSParserOptimizedMatchesNode | PASS | corpus files: map[.css:158 .less:43 .scss:90] |
+| TestCSSPrinterAgreesWithGo | PASS | corpus files: map[.css:158 .less:43 .scss:90] |
+| TestCSSPrinterOptimizedMatchesGo | PASS | corpus files: map[.css:158 .less:43 .scss:90] |
+| TestCompositionMatchesGo | PASS | corpus files: map[.css:158 .less:43 .scss:90] |
+| TestThePortParsesAsGoCohereDoes | PASS | corpus files: map[.css:158 .less:43 .scss:90] |
+| TestCSSNumbers | PASS | corpus: 1 repository/submodule files, 44892 generated texts, 89786 preference cases; all byte-identical |
+| TestCSSStrings | PASS | corpus: 1 repository/submodule files, 9336 generated texts, 18674 preference cases; all byte-identical |
+| TestMarkdownInline | PASS | corpus: 1112 repository/submodule files, 4702 generated texts, 110466 leaf/context cases; all byte-identical |
+
+Every CSS test reports map[.css:158 .less:43 .scss:90], including all 43 Less files, and checks 24,076 dialect/input cases. Port/Go comparisons agree throughout. No test logs an external library not checked or Prettier fixtures absent diagnostic. The immutable Markdown inline harness retains its subtest name minimum_absent_fence; that name is an intentional semantic mutant, not a missing input. This interpretation and the 290-external-plus-one-repository corpus assumption are recorded in the implementation commit.
+
+The tests also admit existing exact recorded external-library disagreements; their PASS verdict must not be read as complete agreement with those libraries. No expectations or exceptions were changed here:
+
+- CSS printer: 44 discrepancies per mode/variant, 176 occurrences total, across npm/fork and default/narrow. Each combination has BOM boundary 12, CR normalization 2, whitespace fast path 2 and YAML embedding 28. All 148 distinct records, exact compared answers, occurrence counts, case indices and first differing bytes are in recorded-printer-discrepancies.json. Affected fork files are:
+  tests/format/css/bom/bom.css
+  tests/format/css/front-matter/embedded-language-formatting/yaml.css
+  tests/format/css/yaml/comment_after.css
+  tests/format/css/yaml/dirty.css
+  tests/format/css/yaml/ignore.css
+  tests/format/css/yaml/malformed-2.css
+  tests/format/css/yaml/only_comments.css
+  tests/format/css/yaml/with_comments.css
+  tests/format/css/yaml/without-newline-after.css
+  tests/format/css/yaml/yaml.css
+  tests/format/less/yaml/yaml.less
+  tests/format/scss/yaml/yaml.scss
+  Remaining occurrences are inline corpus cases, identified individually in the JSON.
+- Raw PostCSS: 24,074 exact agreements and two surrogate-gap occurrences, cases 3114 and 3115, from cohere/internal/format/css/selector/oracle_test.go:265 (escaped emoji before a namespace bar). The Go error ends at column 4/offset 5 with the complete emoji; PostCSS ends at column 3/offset 4 with its high surrogate. Exact canonical answers and the first differing byte are in recorded-postcss-discrepancies.json.
+
+The fixture checkout is system-inc/prettier at cb4b33fba24a8428d00e54be85fc886288a374ea, fetched by that full commit with depth 1 and blob filtering. Git promisor fetches only the checked-out blobs. Sparse paths are tests/format/css, tests/format/scss, tests/format/less, tests/format/js/multiparser-css and tests/format/js/template-literals. Setup verifies HEAD, sparse configuration, Git object integrity and exactly 157 .css, 90 .scss and 43 .less files before publishing. Warm keys cover commit, URL, sparse set, counts and helper bytes; hits also validate names, contents, modes and Git metadata. A reduced corpus fails instead of being stamped.
+
+ADAMIC_CSSNUMBERS_LIBRARY and ADAMIC_CSSSTRINGS_LIBRARY point to /workspace/css-gate-tools/gate-inputs/css-printer. ADAMIC_MARKDOWNINLINE_LIBRARY points to that prefix's node_modules/prettier. The existing package-lock pins Prettier 3.9.6 and npm ci checks its integrity with scripts disabled. All aliases use one install; setup checks createRequire(prefix/package.json), direct require(package), and their actual postcss/markdown plugin paths on every run. The existing TypeScript source pin remains 050880ce59e30b356b686bd3144efe24f875ebc8.
+
+Added preparation cost, best of three interleaved cold/warm runs on the same box and commit:
+
+| Added step | Cold | Warm |
+| --- | --- | --- |
+| Sparse CSS fixtures | 1.764 s | 0.135 s |
+| Shared Prettier path/version verification | 0.083 s | 0.084 s |
+
+The added libraries incur no npm installation; the prefix is common work that setup already performed. These are component costs, not a claim about total setup wall-time change: fixture and npm preparation run in separate parallel lanes. Every timing's exact flags and before/after loads are in costs.json; exact commands for the eight verdicts are in verdicts.json. The timing driver is python3 cloud/measure-css-inputs.py. All three cold fixture destinations were empty. Uncached mode fetched the same fixed commit and produced byte-identical files and modes, verified by the recorded tree digest.
+
+Shared build flags: Go 1.27.1 linux/amd64; clang 20.1.8; Node v24.19.0; nproc=5; cgroup cpu.max=400000 100000; GOFLAGS=-trimpath. Setup logs retain their own complete build-flags lines. Initial setup at the area's commit with the implementation in the working tree took 111.704 seconds; setup at the committed implementation took 52.097 seconds. Those whole-setup observations include common cache preparation and are not a before/after comparison of the added inputs. There were no Forbidden module failures, so no retry was needed. Codex may snapshot installed caches; no future snapshot policy is observable here.
+
+Reproduce the uncached proof:
+
+source /workspace/css-gate-tools/env.sh
+export GOMODCACHE=/tmp/adamic-gate/setup-modules-proof/with GOCACHE=/home/agent/.cache/go-build GOFLAGS=-trimpath XDG_CACHE_HOME=/tmp/adamic-gate/yaml-input-user-cache
+python3 cloud/run-css-input-proof.py
+
+The runner issues each exact go test -run '^TestName$' -count=1 -timeout=30m -v command with ADAMIC_GATE_UNCACHED=1, caps concurrent tests at two, writes one full log per test, and rejects missing corpus coverage or degraded-input messages. Local sparse-cache integration tests additionally prove corruption repair, commit invalidation and uncached equality. Test/measurement output is retained in this directory. The report uses .txt so it does not add an untested Markdown file to the Markdown inline corpus.
+
+Ordinary setup clearing proof: setup-ordinary.log succeeds, ordinary-unset.log confirms all four variables are unset after sourcing env.sh, and setup-warm.log restores the gate configuration with validated warm stamps. Warm full setup took 19.336 seconds, including existing module/build preparation. go vet ./cloud exits 0 with empty output in vet.log. Setup tests ran at the same implementation with the stronger independent version-check tests; all 41 pass, five opt-in skips.

@@ -1,0 +1,24 @@
+=== RUN   TestCSSNumbers
+=== PAUSE TestCSSNumbers
+=== CONT  TestCSSNumbers
+=== RUN   TestCSSNumbers/quoted_numbers
+    port_test.go:318: caught by output case 7244, byte 3: got "a\"0\"" want "a\"0.\""
+    port_test.go:318: caught by output case 7244, byte 3: got "a\"0\"" want "a\"0.\""
+=== RUN   TestCSSNumbers/unknown_unit
+    port_test.go:318: caught by output case 3978, byte 2: got "a.0a" want "a..0a"
+    port_test.go:318: caught by output case 3978, byte 2: got "a.0a" want "a..0a"
+=== RUN   TestCSSNumbers/word_prefix
+    port_test.go:318: caught by output case 0, byte 3780: got "\\n\\n@theme {\\n    --1: #010203;\\n    --2: #040506;\\n    --fr" want "\\n\\n@theme {\\n    --color-weird-1: #010203;\\n    --color-wei"
+    port_test.go:318: caught by output case 0, byte 3780: got "\\n\\n@theme {\\n    --1: #010203;\\n    --2: #040506;\\n    --fr" want "\\n\\n@theme {\\n    --color-weird-1: #010203;\\n    --color-wei"
+=== NAME  TestCSSNumbers
+    port_test.go:352: throughput Go 424204.5 texts/s, 3 process runs 0.634972s (startup, input, escaping, output included; build excluded)
+    port_test.go:352: throughput native 579419.9 texts/s, 3 process runs 0.464875s (startup, input, escaping, output included; build excluded)
+    port_test.go:352: throughput Node 225054.7 texts/s, 3 process runs 1.196856s (startup, input, escaping, output included; build excluded)
+    port_test.go:352: throughput Prettier 184486.3 texts/s, 3 process runs 1.460043s (startup, input, escaping, output included; build excluded)
+    port_test.go:354: corpus: 1 repository/submodule files, 44892 generated texts, 89786 preference cases; all byte-identical
+--- PASS: TestCSSNumbers (25.99s)
+    --- PASS: TestCSSNumbers/quoted_numbers (11.28s)
+    --- PASS: TestCSSNumbers/unknown_unit (1.91s)
+    --- PASS: TestCSSNumbers/word_prefix (1.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	25.999s
