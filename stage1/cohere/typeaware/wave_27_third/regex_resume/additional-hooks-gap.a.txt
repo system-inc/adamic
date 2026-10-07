@@ -1,0 +1,4 @@
+import { programArguments } from 'adamic';
+import { additionalHookPattern } from '/workspace/adamic/stage1/cohere/typeaware/wave_27_third/additional_hooks_pattern.a';
+const pattern = programArguments()[0] ?? 'useTask';
+console.log(`${additionalHookPattern(pattern).test('useTask')}`);

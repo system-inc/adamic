@@ -1,0 +1,3 @@
+package main
+import("fmt";"regexp")
+func main(){pattern:=regexp.MustCompile(`Effect($|[^a-z])`);for _,name:=range []string{"useEffect","useLayoutEffect","useEffectEvent","useEffect\n"}{fmt.Println(pattern.MatchString(name))}}

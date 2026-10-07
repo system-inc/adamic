@@ -117,3 +117,11 @@ sanitizers, twelve rule mutants, five raw-fact mutants and handle refusals. Test
 code baa46eecb00aa6527a4d10a84358b7bd95fafffa. The three React claims stay parked.
 Only codex/typeaware-wave-27 is published; details are in
 wave_27_fifth/landing_c019/REPORT.md. No additional rules are claimed here.
+
+Regex instruction follow-up: exhaustive-deps now uses the shared fixed JS RegExp
+translation and its full default-option batch is green again on unchanged main
+c01907a7. Tested code c8b74e6c2be86dbe6fd218ad60103c7a14692d6f. The specified
+additionalHooks constructor is preserved in an isolated .a module, but runtime
+patterns are unfinished because native lowering refuses nonconstant RegExp
+sources. This is not an HIR/SSA parking claim. No new rules are claimed; work
+stops at that named compiler blocker. See wave_27_third/regex_resume/REPORT.md.

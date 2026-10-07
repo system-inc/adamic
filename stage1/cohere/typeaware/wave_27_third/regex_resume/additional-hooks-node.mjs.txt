@@ -1,0 +1,3 @@
+const pattern = process.argv[2] ?? 'useTask';
+function additionalHookPattern(pattern) { return new RegExp(pattern, 'u'); }
+console.log(`${additionalHookPattern(pattern).test('useTask')}`);

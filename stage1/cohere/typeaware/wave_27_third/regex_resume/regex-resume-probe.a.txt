@@ -1,0 +1,5 @@
+const effect = /Effect((?![\s\S])|[^a-z])/u;
+console.log(`${effect.test('useEffect')}`);
+console.log(`${effect.test('useLayoutEffect')}`);
+console.log(`${effect.test('useEffectEvent')}`);
+console.log(`${effect.test('useEffect\n')}`);

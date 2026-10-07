@@ -1,0 +1,32 @@
+{
+  "branch_tip": "071fb012848ce0408428c61aba0857cca472236f",
+  "rows": [
+    {
+      "rule": "exhaustive-deps",
+      "file": "react/exhaustive_deps.go",
+      "line": 451,
+      "call": "MustCompile",
+      "expression": "`Effect($|[^a-z])`",
+      "go_pattern": "Effect($|[^a-z])",
+      "feature": "plain",
+      "id": "react/exhaustive_deps.go:451",
+      "js_pattern": "Effect((?![\\s\\S])|[^a-z])",
+      "js_flags": "gu",
+      "status": "candidate, differential gate required"
+    },
+    {
+      "rule": "exhaustive-deps",
+      "file": "react/exhaustive_deps.go",
+      "line": 463,
+      "call": "Compile",
+      "expression": "settings.AdditionalHooks",
+      "go_pattern": null,
+      "feature": "dynamic",
+      "id": "react/exhaustive_deps.go:463",
+      "js_constructor": "new RegExp(pattern, 'u')",
+      "js_pattern": null,
+      "js_flags": "u",
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+    }
+  ]
+}
