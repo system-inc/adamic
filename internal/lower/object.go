@@ -975,7 +975,6 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	}
 	lowered := ir.Switch{Value: value}
 	tests := []ir.Expression{}
-	defaultPending := false
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
 		for _, inner := range clause.AsCaseOrDefaultClause().Statements.Nodes {
 			if inner.Kind == ast.KindVariableStatement {
@@ -1004,24 +1003,17 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		if err != nil {
 			return nil, err
 		}
-		defaultPending = defaultPending || isDefault
-		if len(body) == 0 {
-			// Empty labels enter the next body, including labels on either side of default.
+		if len(body) == 0 && !isDefault {
+			// case 'a': case 'b': share the next body.
 			continue
 		}
-		if defaultPending {
+		if isDefault {
+			// Cases grouped with default run its body, which is what not matching does anyway.
 			lowered.Default = body
-		}
-		if len(tests) > 0 {
-			// Default is a fallback position, but its grouped tests still compete in source order.
+		} else {
 			lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests, Body: body})
 		}
 		tests = []ir.Expression{}
-		defaultPending = false
-	}
-	if len(tests) > 0 {
-		// A trailing empty label matches and leaves the switch without running default.
-		lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests})
 	}
 	return []ir.Statement{lowered}, nil
 }
