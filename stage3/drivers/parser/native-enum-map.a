@@ -1,0 +1,5 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:19
+// Minimal reproduction of Map construction while an enum is pending.
+export const emptyMap: ReadonlyMap<never, never> = new Map<never, never>();
+enum Pending { Zero }
+console.log(Pending.Zero === 0 ? '0' : 'wrong');

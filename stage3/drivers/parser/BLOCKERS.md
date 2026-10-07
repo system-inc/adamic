@@ -1,3 +1,36 @@
+# Four-input native retry: checker clean, lowering NotYet at emptyMap
+
+Newest fetched area/stage3 4ad53a4, front-2 80fb9b7, explicit cycles 779ff9d,
+and library Node loader 8280fd0 are merged only in detached scratch. Compiler
+build succeeds against the cycle worker's exact SDK. The driver's erased
+node:fs import activates the real pinned Node type seat; TS2591 is cleared.
+Five validated parser temporaries remain applied.
+
+**First measured lowering failure:** core.ts:11:52, at
+`new Map<never, never>()` in emptyMap:
+`stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet`.
+Minimal native-enum-map.a has the same NotYet; Node (merged enum-capable runner)
+prints 0 and exits 0. No new source workaround is introduced.
+
+Lowering conflict in library merge: cast.go. Retain front castProof and checked
+class/tag casts; carry library's qualified-const IsIdentifier guard into
+cast_proof.go. Additional library_node.go typed-filename conversion resolves
+an SDK compile error, not a textual conflict. Loader conflicts preserve typed
+paths, Node globals and exact original-root accounting. Details and compiled
+scratch patch are in evidence/front3. Focused load/lower Node, Cast and
+ImportCycle tests pass. Oracle-count conflicts keep front's counts; no full
+count gate or full compiler integration gate is claimed.
+
+Parser entry remains 1,990 declarations / 26 files. Node dump unchanged,
+35,456,964 bytes, SHA256 2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+All three Node comparisons exit 0, best user CPU time 5.727305 seconds.
+perf is absent. No native parser binary means no native timing, size, actual
+parser diff or parser-output mutant. Separate integrated native comparator
+control self-cmp exits 0; one-byte mutant cmp exits 1. Node node-end mutant is
+caught. This red supersedes front2's checker-stage stopping point below.
+
+---
+
 # Native attempt on compiler/stage3-front-2: red
 
 October 7 run: area/stage3 4ad53a4 plus compiler/stage3-front-2 80fb9b7,
