@@ -563,7 +563,10 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 	return refused
 }
 
-// Private names with the same spelling in a base and a derived class are separate JavaScript slots.
+// Private names with the same spelling in a base and a derived class are separate JavaScript slots,
+// so each is qualified by the class that declares it. By the declaration, not by an instantiation:
+// inside Box<number>, other.#label with other a Box<string> is Box<string>'s slot, and every
+// instantiation of a class holds its private fields under the same names.
 func (l *lowering) fieldName(name *ast.Node) string {
 	if name.Kind != ast.KindPrivateIdentifier {
 		return name.Text()
@@ -577,16 +580,23 @@ func (l *lowering) fieldName(name *ast.Node) string {
 			}
 		}
 		if class != nil && class.Kind == ast.KindClassDeclaration {
-			if l.instance != nil && l.classNode != nil && l.classNode.Parent == class {
-				return name.Text() + "@" + strconv.Itoa(l.instance.class)
-			}
-			if instance := l.instances[l.program.Where(class)+":"+class.Name().Text()]; instance != nil {
-				return name.Text() + "@" + strconv.Itoa(instance.class)
-			}
-			return l.program.Where(class) + ":" + name.Text()
+			return l.privateName(name.Text(), class)
 		}
 	}
 	return name.Text()
+}
+
+// privateName is a private name's field name: its spelling qualified by the class declaring it.
+func (l *lowering) privateName(spelling string, class *ast.Node) string {
+	if l.privateOwners == nil {
+		l.privateOwners = map[*ast.Node]int{}
+	}
+	owner, isKnown := l.privateOwners[class]
+	if !isKnown {
+		owner = len(l.privateOwners) + 1
+		l.privateOwners[class] = owner
+	}
+	return spelling + "@" + strconv.Itoa(owner)
 }
 
 // Assignment to a nominal class also requires ancestry; structural compatibility alone cannot
@@ -739,8 +749,9 @@ func (l *lowering) classDestructuredView(node, pattern *ast.Node) error {
 	return nil
 }
 
-// The checker mangles private symbol names; the IR qualifies them by class ID. Cycle proofs
-// must match the same declaration in both names, including inherited and generic private slots.
+// The checker mangles private symbol names; the IR qualifies them by their declaring class
+// (fieldName). Cycle proofs must match the same declaration in both names, including inherited and
+// generic private slots.
 func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string) bool {
 	if field == written {
 		return true
@@ -759,16 +770,10 @@ func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string
 			return written == memberKey(name, lowered.class)
 		}
 	}
-	prefix := l.program.Where(class) + ":" + class.Name().Text()
-	for key, instance := range l.instances {
-		if key != prefix && !strings.HasPrefix(key, prefix+",") {
-			continue
-		}
-		if written == name.Text()+"@"+strconv.Itoa(instance.class) {
-			return true
-		}
+	if class != nil && class.Kind == ast.KindClassDeclaration {
+		return written == l.privateName(name.Text(), class)
 	}
-	return false
+	return written == name.Text()
 }
 
 func (l *lowering) cycleFieldName(field *ast.Symbol) string {
