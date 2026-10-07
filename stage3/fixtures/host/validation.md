@@ -14,7 +14,10 @@ submodules ready 1s; build cache warm 385s; done 385s on 5 processors.
 
 ## Commands and observations
 
-All test output was redirected to files, not piped.
+All test output was redirected to files, not piped. The adapter audit command
+below is historical evidence from commit 2466bd9; the unused adapter and its
+audit were subsequently removed because literal builtin requires are being
+implemented natively on codex/require-builtins.
 
 ```sh
 python3 -u stage3/fixtures/host/check.py --record /workspace/scratch/host-fixture-metadata-final.json --mutants --logs /workspace/scratch/host-final-record-logs > /tmp/host-final-record.log 2>&1
@@ -47,13 +50,15 @@ bash stage3/oracle/run.sh /workspace/scratch/host-oracle-mutant /workspace/scrat
 
 The full run passes 106,367 assertions, zero failures and zero baseline diffs.
 Install 45.149s, build 160.752s, tests 801.258s, total 1007.264s. It uses four
-workers, light=false and lint=false. Adaptation 50 changes no source bytes;
-the source tree judged here is therefore also its final tree. The independent
+workers, light=false and lint=false. The removed adaptation changed no source
+bytes; the source tree judged here is therefore unchanged by its removal. The independent
 mutant adds ` [host mutant]` to createFileDiagnostic's computed messageText in
 a separate source tree, not to build outputs. Install and build both pass;
 the targeted run has 5 passing and 1 failing assertion, changing only
 unreachableJavascriptChecked.errors.txt. Total 46.750s. Reports and the exact
-failing diff are saved under adaptation 50. No baseline was accepted.
+failing diff are saved in this host bucket as oracle-report.json,
+oracle-mutant-report.json and oracle-mutant-baseline.json. No baseline was
+accepted.
 
 ## Fixture mutants
 
@@ -115,8 +120,8 @@ passed as actual source text to the audit.
 
 ## Limits
 
-The static-require rewrite is declined, not implemented: unconditional imports
-cannot keep these guarded/lazy loads identical. Native host support, active
+No static-require rewrite is needed: codex/require-builtins implements literal
+builtin requires natively, retaining these guarded/lazy loads. Native host support, active
 profiling, watch/performance work, Windows filesystem runs, permission/fault
 injection, cohere on these incomplete inputs, and the full uncached Adamic
 gate were not done. See README.md for the exact member and driver coverage.
