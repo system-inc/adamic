@@ -371,3 +371,38 @@ No full React corpus parity, fixes/suggestions, full-rule mutants, checker-handl
 checks, timings or full repository gate are claimed for this kernel. Earlier
 complete ports retain their landing evidence and native/Go measurements. No
 further rules were claimed.
+
+## Numeric listener declarations
+
+All nine claimed rule modules now export `listenerKinds: readonly number[]`.
+These are pinned TypeScript-go numeric SyntaxKinds, independently extracted
+from the actual production Go `rule.Listeners` maps by
+[testdata/listeners.go](testdata/listeners.go), rather than inferred from enum
+line numbers. The three React rules listen to SourceFile (307), matching Go.
+The strict-void rule declares all twelve listeners, including CallExpression
+(214) and NewExpression (215).
+
+`validate_listeners.py` imports the actual nine modules and compares complete
+listener output with Go in native, ASan/UBSan/leak and source Node runs. Each
+module also has a compiling, successful-exit mutant incrementing its first
+numeric listener; only the byte comparison catches these nine metadata mutants.
+These supplement, and do not replace, prior rule and kernel mutants.
+
+Emitted JavaScript validation is blocked: `adamic js` refuses the imported
+`rules.ts` checker call as an unlinked typescript-go library call. Its CLI has
+no `--tsgo` option; attempting that option prints usage and exits 2. Both
+failures are retained in listener evidence. No shared emitter was changed.
+
+This adds declarations, not a dispatch speedup. The current `ParseNode.kind`
+is a string and the six earlier complete rule runners still use legacy
+whole-file scans and string-kind comparisons. Converting those runners to act
+only on a handed numeric-kind node requires the shared numeric parser/driver
+API, outside this unit's allowed territory. The three React analyses still
+explicitly refuse source execution because their native source-to-HIR/SSA and
+reactive pipelines are incomplete. No new rules were claimed.
+
+Main remains `e8ba3d5d`; prior landing oracle results remain in force for
+unchanged rule behavior. Latest measured complete continuation corpus timing:
+compiler native 1.904769 s / Go 0.318496 s; repository native 0.296343 s / Go
+0.130137 s. Listener declarations are currently ignored by the legacy driver.
+No full repository gate or complete React corpus agreement is claimed.

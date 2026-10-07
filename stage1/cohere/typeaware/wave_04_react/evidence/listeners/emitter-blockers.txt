@@ -1,0 +1,2 @@
+Observed first attempt: adamic js probe.a exited 1 with: adamic: /workspace/adamic/stage1/cohere/typeaware/rules.ts:104:16: Adamic 0.1 refuses an unlinked typescript-go library call; build with --tsgo <checker archive>
+Observed second attempt: adamic js probe.a --tsgo <archive> exited 2 and printed usage. Exact second stderr is emit.stderr.gz.
