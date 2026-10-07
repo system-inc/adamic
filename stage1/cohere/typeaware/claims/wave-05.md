@@ -144,3 +144,8 @@ on origin/area/stage1-lint d65a8f93, including current main 39638d9e.
 The three React analysis claims stay PARKED with the blockers above.
 All ranked names are ported or claimed; no new reservation is made.
 Validation evidence is in `../wave_05_core/AREA_2_REPORT.md`.
+
+Latest landing: all nine completed ports were rebased and revalidated on
+area b84a9d93, including main c7991b90. No ranked name is unclaimed;
+the three React analysis reservations remain PARKED. See
+`../wave_05_core/AREA_3_REPORT.md` for the supplied-input filtered gate.
