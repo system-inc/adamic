@@ -3,6 +3,8 @@ package native
 import (
 	"fmt"
 	"strings"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 // writeFieldSlot uses the same layout proof as reads. Static constructor
@@ -34,4 +36,21 @@ func (e *emitter) snapshotObjectForStore(object string) string {
 	name := e.temporary()
 	e.line("adamic_object *%s = %s;", name, object)
 	return name
+}
+
+// primitiveArrayStore elides the reference-ownership branch only where the
+// element type proves there is no reference. Index validation is unchanged;
+// invalid writes use the runtime's exact diagnostic after all operands ran.
+func (e *emitter) primitiveArrayStore(element ir.Type, array, index, value string) bool {
+	if element != ir.Boolean && element != ir.Number && element != ir.MaybeNumber {
+		return false
+	}
+	slot := e.temporary()
+	e.line("adamic_value *%s = adamic_array_at(%s, %s);", slot, array, index)
+	e.line("if (%s != NULL) {", slot)
+	e.line("\t*%s = (adamic_value){.%s = %s};", slot, member(element), slotted(element, value))
+	e.line("} else {")
+	e.line("\tadamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(element), slotted(element, value))
+	e.line("}")
+	return true
 }

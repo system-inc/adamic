@@ -139,7 +139,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		if statement.Element.IsReference() {
 			value = retained(value)
 		}
-		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
+		if !e.primitiveArrayStore(statement.Element, array, index, value) {
+			e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
+		}
 		e.end()
 	case ir.SetProperty:
 		object := e.value(statement.Object)
