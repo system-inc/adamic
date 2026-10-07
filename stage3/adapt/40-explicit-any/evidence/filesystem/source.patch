@@ -1,0 +1,11 @@
+--- before/src/compiler/sys.ts
++++ after/src/compiler/sys.ts
+@@ -1851,7 +1851,7 @@
+                         continue;
+                     }
+ 
+-                    let stat: any;
++                    let stat: import("fs").Stats | import("fs").Dirent | undefined;
+                     if (typeof dirent === "string" || dirent.isSymbolicLink()) {
+                         const name = combinePaths(path, entry);
+ 

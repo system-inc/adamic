@@ -1,4 +1,15 @@
 {
+  "filesystem": [
+    {
+      "id": 138,
+      "file": "src/compiler/sys.ts",
+      "line": 1853,
+      "column": 31,
+      "originalLine": "                    let stat: any;",
+      "replacement": "import(\"fs\").Stats | import(\"fs\").Dirent | undefined",
+      "parentKind": "VariableDeclaration"
+    }
+  ],
   "brands": [
     {
       "id": 1,
