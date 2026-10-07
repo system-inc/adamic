@@ -70,3 +70,15 @@ go test ./bridge/tsgo/checker -count=1 -v > /workspace/typeaware-wave-04-next/ch
 exact two-byte source `x;`; config is the existing type-aware testdata config.
 The earlier setup succeeded in 77s, with `nproc=5`; its timing log is already
 preserved with the original wave report. No new setup or performance claims.
+
+## Delivery
+
+The claim commit `940df421` was pushed successfully before code. The prepared
+facts and blocker evidence are committed as `39cdb8de`. Both attempts to push
+that commit failed with `fatal: could not read Username for 'https://github.com':
+No such device or address`. Read-only remote verification then failed with the
+same credential error. This is a missing Git credential, not an automatic
+approval rejection. No token was printed or searched for.
+
+A format-patch fallback containing the unpushed continuation commits is saved at
+`/workspace/typeaware-wave-04-next/continuation-blocker.patch`.
