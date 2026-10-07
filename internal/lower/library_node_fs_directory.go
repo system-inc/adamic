@@ -10,7 +10,7 @@ import (
 func init() {
 	RegisterNodeLibraryMembers("node:fs.symlinkSync", "node:fs.readdirSync", "node:fs.realpathSync", "node:fs.native",
 		"node:fs.Dirent.name", "node:fs.Dirent.isFile", "node:fs.Dirent.isDirectory", "node:fs.Dirent.isSymbolicLink",
-		"node:path.resolve", "node:path.dirname", "node:path.join", "node:path.relative")
+		"node:path.resolve", "node:path.dirname", "node:path.join", "node:path.relative", "node:path.basename")
 }
 
 // nodeHostMember follows @types/node declarations, including aliases and the
@@ -81,7 +81,7 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 	lowered := ir.NodeHostCall{Module: module, Member: member}
 	if module == "node:path" {
 		switch member {
-		case "resolve", "dirname", "join", "relative":
+		case "resolve", "dirname", "join", "relative", "basename":
 			lowered.Returns = ir.String
 			lowered.Throws = nodePathThrows(member)
 		default:
@@ -135,7 +135,7 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 	}
 	for _, argument := range call.Arguments.Nodes {
 		if argument.Kind == ast.KindSpreadElement {
-			return nil, true, l.notYet(argument, "a spread into a Node host call")
+			return nil, true, l.notYet(argument, module+"."+member+" with a spread")
 		}
 		value, err := l.expression(argument)
 		if err != nil {
@@ -151,6 +151,16 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 		lowered.Arguments = lowered.Arguments[:2]
 	}
 	if module == "node:path" {
+		if member == "basename" {
+			if len(lowered.Arguments) < 1 || len(lowered.Arguments) > 2 {
+				return nil, true, l.notYet(node, "node:path.basename with these arguments")
+			}
+			if len(lowered.Arguments) == 2 {
+				if _, missing := lowered.Arguments[1].(ir.Undefined); missing {
+					lowered.Arguments = lowered.Arguments[:1]
+				}
+			}
+		}
 		if (member == "dirname" && len(lowered.Arguments) != 1) || (member == "relative" && len(lowered.Arguments) != 2) {
 			return nil, true, l.notYet(node, module+"."+member+" with these arguments")
 		}
@@ -219,6 +229,17 @@ func (l *lowering) nodeFSDirectorySignature(node *ast.Node) error {
 	}
 	call := node.AsCallExpression()
 	module, member := l.nodeHostMember(call.Expression)
+	if module == "node:path" && member == "basename" {
+		if len(call.Arguments.Nodes) < 1 || len(call.Arguments.Nodes) > 2 {
+			return l.notYet(node, "node:path.basename with these arguments")
+		}
+		for _, argument := range call.Arguments.Nodes {
+			if argument.Kind == ast.KindSpreadElement {
+				return l.notYet(node, "node:path.basename with a spread")
+			}
+		}
+		return nil
+	}
 	if module != "node:fs" || member != "symlinkSync" {
 		return nil
 	}
