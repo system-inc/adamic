@@ -24,3 +24,5 @@ Shared blockers: registry.go still requires rule.ts, defines Kinds as []string a
 cloud/setup.sh exits one during warmup because profile_test.go:32 ranges over the portFiles function without calling it. Go, clang, Node and submodules timing lines are each 0s; no successful warmup or total timing line was printed. nproc is 5. Toolchain: Go 1.27.1, clang 20.1.8, Node 24.19.0. Standalone owned builders are the workaround. Full repository gate and default lint integration are not green.
 
 Performance was not remeasured during this landing rerun. Prior findings-per-second observations and their measurement boundary remain in ../standalone-evidence/REPORT.md; these are not new measurements on f8013f0b.
+
+Parked under Ahra's shared-harness exception. Both owned branches are rebased on current main and green against their independent oracles. The shared registration, node callback and finding bridge blockers above are the remaining integration obstacles; no shared files are edited to bypass them. Resume harness integration when its landing SHA is named.
