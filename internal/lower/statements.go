@@ -24,6 +24,8 @@ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
 // statement lowers one statement to none, one or several.
 func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	switch node.Kind {
+	case ast.KindModuleDeclaration:
+		return l.statements(namespaceStatements(node))
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
