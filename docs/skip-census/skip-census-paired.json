@@ -1,0 +1,131 @@
+{
+  "build_flags": {
+    "commit": "451669af74ef5d2b2f478012a6addb86b2d29db5",
+    "nproc": "5",
+    "cpu.max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cache": "no census result cache in either mode; prebuilt command"
+  },
+  "results": [
+    {
+      "loop": "AST scan",
+      "instrument": "/tmp/skip-census-command -scan",
+      "before": {
+        "seconds": 0.07979339099995286,
+        "load_before": "0.18 0.60 0.74 1/138 7377",
+        "load_after": "0.18 0.60 0.74 1/138 7384",
+        "round": 1
+      },
+      "after": {
+        "seconds": 0.0791971520000061,
+        "load_before": "0.18 0.60 0.74 1/138 7384",
+        "load_after": "0.18 0.60 0.74 1/138 7391",
+        "round": 1
+      },
+      "samples": {
+        "0": [
+          {
+            "seconds": 0.07979339099995286,
+            "load_before": "0.18 0.60 0.74 1/138 7377",
+            "load_after": "0.18 0.60 0.74 1/138 7384",
+            "round": 1
+          },
+          {
+            "seconds": 0.08457535899992763,
+            "load_before": "0.18 0.60 0.74 1/138 7398",
+            "load_after": "0.25 0.61 0.74 1/138 7405",
+            "round": 2
+          },
+          {
+            "seconds": 0.08774497399997472,
+            "load_before": "0.25 0.61 0.74 1/138 7405",
+            "load_after": "0.25 0.61 0.74 1/138 7412",
+            "round": 3
+          }
+        ],
+        "1": [
+          {
+            "seconds": 0.0791971520000061,
+            "load_before": "0.18 0.60 0.74 1/138 7384",
+            "load_after": "0.18 0.60 0.74 1/138 7391",
+            "round": 1
+          },
+          {
+            "seconds": 0.0833658930000638,
+            "load_before": "0.18 0.60 0.74 1/138 7391",
+            "load_after": "0.18 0.60 0.74 1/138 7398",
+            "round": 2
+          },
+          {
+            "seconds": 0.0840006529999755,
+            "load_before": "0.25 0.61 0.74 1/138 7412",
+            "load_after": "0.25 0.61 0.74 1/138 7419",
+            "round": 3
+          }
+        ]
+      },
+      "byte_identical": true
+    },
+    {
+      "loop": "plain log check",
+      "instrument": "/tmp/skip-census-command /tmp/skip-census-plain/gate-out/test.jsonl",
+      "before": {
+        "seconds": 0.13231220299996949,
+        "load_before": "0.25 0.61 0.74 1/138 7419",
+        "load_after": "0.25 0.61 0.74 1/138 7426",
+        "round": 1
+      },
+      "after": {
+        "seconds": 0.1324398919999794,
+        "load_before": "0.25 0.61 0.74 1/138 7434",
+        "load_after": "0.25 0.61 0.74 1/138 7441",
+        "round": 2
+      },
+      "samples": {
+        "0": [
+          {
+            "seconds": 0.13231220299996949,
+            "load_before": "0.25 0.61 0.74 1/138 7419",
+            "load_after": "0.25 0.61 0.74 1/138 7426",
+            "round": 1
+          },
+          {
+            "seconds": 0.13428992100000414,
+            "load_before": "0.25 0.61 0.74 1/138 7441",
+            "load_after": "0.25 0.61 0.74 1/138 7448",
+            "round": 2
+          },
+          {
+            "seconds": 0.1481296660000453,
+            "load_before": "0.25 0.61 0.74 1/138 7448",
+            "load_after": "0.25 0.61 0.74 1/138 7455",
+            "round": 3
+          }
+        ],
+        "1": [
+          {
+            "seconds": 0.13735747100008666,
+            "load_before": "0.25 0.61 0.74 1/138 7426",
+            "load_after": "0.25 0.61 0.74 1/138 7434",
+            "round": 1
+          },
+          {
+            "seconds": 0.1324398919999794,
+            "load_before": "0.25 0.61 0.74 1/138 7434",
+            "load_after": "0.25 0.61 0.74 1/138 7441",
+            "round": 2
+          },
+          {
+            "seconds": 0.14220931199997722,
+            "load_before": "0.25 0.61 0.74 1/138 7455",
+            "load_after": "0.25 0.61 0.74 1/138 7462",
+            "round": 3
+          }
+        ]
+      },
+      "byte_identical": true
+    }
+  ]
+}

@@ -5,8 +5,9 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/system-inc/adamic/internal/skipcensus"
 	"os"
+
+	"github.com/system-inc/adamic/internal/skipcensus"
 )
 
 func main() {

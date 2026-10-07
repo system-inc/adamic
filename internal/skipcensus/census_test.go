@@ -192,3 +192,59 @@ func TestInvalidDeclarations(t *testing.T) {
 		})
 	}
 }
+
+// The fixture preserves the final two output events and terminal skip event for
+// each named skip in gate-logs/2e165469ec95/plain, without altering event contents.
+func TestHistoricalPlainSkips(t *testing.T) {
+	t.Parallel()
+	table, err := os.Open("testdata/skips.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer table.Close()
+	rows, err := Load(table)
+	if err != nil {
+		t.Fatal(err)
+	}
+	log, err := os.Open("testdata/plain-skips.jsonl")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer log.Close()
+	var output bytes.Buffer
+	if err := CheckLog(log, &output, rows); err == nil {
+		t.Fatal("historical required inputs passed the gate")
+	}
+	if !strings.Contains(output.String(), "skips=33 required-input=17 unknown=0") {
+		t.Fatal(output.String())
+	}
+	expected := []string{
+		"TestSplitTSGoAgrees", "TestThePortParsesAsGoCohereDoes/PostCSS",
+		"TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower",
+		"TestThePortParsesAsGoCohereDoes/as_graphql-js", "TestUpstreamNumericSeparatorGap",
+		"TestExternalComparisonCatchesThreePrinterMutants", "TestUpstreamRepositoryCorpusParity",
+		"TestCompilerAndStage1Agree", "TestCSSPrinterAgreesWithGo/default",
+		"TestCSSPrinterAgreesWithGo/narrow", "TestCSSPrinterBoundaryProofs",
+		"TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser",
+		"TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+		"TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser",
+		"TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+		"TestCompilerExpressionsAgree", "TestWholeCompilerAgrees",
+	}
+	seen := map[string]bool{}
+	for _, line := range strings.Split(output.String(), "\n") {
+		fields := strings.Split(line, "\t")
+		if len(fields) > 2 && fields[0] == "required-input" {
+			seen[fields[2]] = true
+		}
+	}
+	if len(seen) != len(expected) {
+		t.Fatal(output.String())
+	}
+	for _, test := range expected {
+		if !seen[test] {
+			t.Fatalf("historical required-input test missing: %s", test)
+		}
+	}
+	t.Log("skips=33 required-input=17 unknown=0; TestWholeCompilerAgrees included")
+}

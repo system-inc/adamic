@@ -335,7 +335,7 @@
     ],
     "message": "\"run by Adamic CSS slice\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/css/css_test.go askedCases writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere."
   },
   {
     "file": "stage1/cohere/css/testdata/compose_side_test.go",
@@ -353,7 +353,7 @@
     ],
     "message": "\"run by Adamic CSS slice\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/css/css_test.go TestCompositionMatchesGo writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere."
   },
   {
     "file": "stage1/cohere/css/testdata/print_side_test.go",
@@ -371,7 +371,7 @@
     ],
     "message": "\"run by Adamic CSS slice\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/css/print_test.go printerAnswers writes ADAMIC_PORT_REQUEST JSON naming Cases and Answers and runs this overlay in pinned cohere."
   },
   {
     "file": "stage1/cohere/formatfiles/testdata/cohere_side_test.go",
@@ -389,7 +389,7 @@
     ],
     "message": "\"run by stage1/cohere/formatfiles/formatfiles_test.go in the adamic repository\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/formatfiles/formatfiles_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/gitignore/gitignore_test.go",
@@ -436,7 +436,7 @@
     ],
     "message": "\"ADAMIC_PORT_REQUEST names no request\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/gitignore/gitignore_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/graphql/graphql_test.go",
@@ -475,7 +475,7 @@
     ],
     "message": "\"run by stage1/cohere/graphql/graphql_test.go\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/graphql/graphql_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/json/audit_test.go",
@@ -608,7 +608,7 @@
     ],
     "message": "\"run by stage1/cohere/json/audit_test.go\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/json/audit_test.go oracleAnswers writes ADAMIC_JSON_CASES (JSON array of name/text records) and ADAMIC_JSON_ANSWERS (writable answer path), then runs this overlay in pinned cohere."
   },
   {
     "file": "stage1/cohere/lint/lint_test.go",
@@ -731,7 +731,7 @@
     ],
     "message": "\"run by stage1/cohere/mediaquery/mediaquery_test.go in the adamic repository\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/mediaquery/mediaquery_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/selector/selector_test.go",
@@ -811,7 +811,7 @@
     ],
     "message": "\"run by Adamic selector slice\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/selector/selector_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/suppression/testdata/cohere_side_test.go",
@@ -828,7 +828,7 @@
     ],
     "message": "\"run by stage1/cohere/suppression/suppression_test.go in the adamic repository\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/suppression/suppression_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/values/testdata/cohere_side_test.go",
@@ -845,7 +845,7 @@
     ],
     "message": "\"run by stage1/cohere/values/values_test.go in the adamic repository\"",
     "class": "required-input",
-    "provides": "Parent slice test writes ADAMIC_PORT_REQUEST JSON and runs this file through a Go overlay in the pinned cohere submodule; JSON audit uses ADAMIC_JSON_CASES and ADAMIC_JSON_ANSWERS."
+    "provides": "stage1/cohere/values/values_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md."
   },
   {
     "file": "stage1/cohere/values/values_test.go",
