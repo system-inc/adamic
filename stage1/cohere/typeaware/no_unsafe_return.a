@@ -1,0 +1,260 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { unsafeAssignment } from './rules.ts';
+import { Types } from './types.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import { awaitedShape } from './awaited_shape.a';
+import { Returns } from './returns.ts';
+import { Shadow } from './shadow.ts';
+
+export class NoUnsafeReturn {
+    readonly rules: Rules;
+    readonly returns: Returns;
+    readonly shadow: Shadow;
+    strictThis = true;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.shadow = new Shadow(rules);
+        this.returns = new Returns(rules, this.shadow);
+    }
+    signatures(index: number, id: number): Types {
+        const frames = new Frames(this.rules.ask(index, `function-signatures\n${id}`));
+        header(frames, 'function-signatures');
+        const count = frames.natural();
+        const parameters: number[] = [];
+        for(let at = 0; at < count; at++) {
+            const size = frames.natural();
+            parameters.push(size);
+            for(let parameter = 0; parameter < size; parameter++) {
+                frames.field();
+                frames.yes();
+            }
+        }
+        const graph = types(`1\n119\nfunction-signatures${frames.text.slice(frames.cursor)}`, 'function-signatures');
+        const roots: number[] = [];
+        let cursor = 0;
+        for(const size of parameters) {
+            roots.push(graph.roots[cursor] ?? panic('missing return signature'));
+            cursor += size + 1;
+        }
+        return new Types(graph.strict, graph.present, roots, [], graph.records);
+    }
+    anyArray(facts: Types, id: number, flags: number): boolean {
+        const subject = facts.type(id);
+        return (
+            subject.array && subject.arguments.length > 0 && (facts.type(subject.arguments[0] ?? 0).flags & flags) !== 0
+        );
+    }
+    discriminate(index: number, facts: Types, id: number, visited: number[]): number {
+        if(visited.includes(id)) {
+            return 3;
+        }
+        const seen = visited.concat([id]);
+        const subject = facts.type(id);
+        if((subject.flags & 1) !== 0) {
+            return 0;
+        }
+        if(this.anyArray(facts, id, 1)) {
+            return 2;
+        }
+        if((subject.flags & (134217728 | 268435456)) !== 0) {
+            for(const part of subject.parts) {
+                if(this.promiseAny(index, facts, part, seen)) {
+                    return 1;
+                }
+            }
+        }
+        else if(this.promiseAny(index, facts, id, seen)) {
+            return 1;
+        }
+        return 3;
+    }
+    promiseAny(index: number, facts: Types, id: number, visited: number[]): boolean {
+        const subject = facts.type(id);
+        if((subject.flags & (134217728 | 268435456)) !== 0) {
+            return subject.parts.some((part) => this.promiseAny(index, facts, part, visited));
+        }
+        if(!this.returns.thenable(index, facts, subject)) {
+            return false;
+        }
+        const awaited = awaitedShape(this.rules, index, id);
+        return awaited.present && this.discriminate(index, awaited, awaited.root().id, visited) === 0;
+    }
+    annotation(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        const body = node.children[node.children.length - 1] ?? -1;
+        const children = node.children.filter(
+            (child) =>
+                child !== body &&
+                ![
+                    'Parameter',
+                    'TypeParameter',
+                    'Identifier',
+                    'PrivateIdentifier',
+                    'ComputedPropertyName',
+                    'StringLiteral',
+                    'NumericLiteral',
+                    'QuestionToken',
+                    'AsteriskToken',
+                    'EqualsGreaterThanToken',
+                    'Decorator',
+                ].includes(this.rules.parser.node(child).kind) &&
+                ![
+                    'AsyncKeyword',
+                    'ExportKeyword',
+                    'DefaultKeyword',
+                    'PublicKeyword',
+                    'PrivateKeyword',
+                    'ProtectedKeyword',
+                    'StaticKeyword',
+                    'AbstractKeyword',
+                    'OverrideKeyword',
+                ].includes(this.rules.parser.node(child).kind),
+        );
+        return children.length > 0;
+    }
+    check(value: number, reporting: number): void {
+        let functionIndex = this.rules.parents[value] ?? -1;
+        while(functionIndex >= 0 && !this.returns.scope(functionIndex)) {
+            functionIndex = this.rules.parents[functionIndex] ?? -1;
+        }
+        if(functionIndex < 0) {
+            return;
+        }
+        const source = types(this.rules.ask(value, 'raw-shape'), 'raw-shape');
+        const constrained = types(this.rules.ask(value, 'type-shape'), 'type-shape');
+        const anyKind = this.discriminate(value, source, source.root().id, []);
+        const fn = this.rules.parser.node(functionIndex);
+        let functionType = types(this.rules.ask(functionIndex, 'raw-shape'), 'raw-shape');
+        if(['FunctionExpression', 'ArrowFunction'].includes(fn.kind)) {
+            const context = types(this.rules.ask(functionIndex, 'contextual-shape'), 'contextual-shape');
+            if(context.present) {
+                functionType = context;
+            }
+        }
+        const async = fn.children.some((child) => this.rules.parser.node(child).kind === 'AsyncKeyword');
+        const all: Types[] = [];
+        const pending: number[] = [functionType.root().id];
+        while(pending.length > 0) {
+            const id = pending.pop() ?? 0;
+            const candidate = functionType.type(id);
+            if((candidate.flags & (134217728 | 268435456)) !== 0) {
+                for(let at = candidate.parts.length - 1; at >= 0; at--) {
+                    pending.push(candidate.parts[at] ?? 0);
+                }
+            }
+            else {
+                all.push(this.signatures(value, id));
+            }
+        }
+        if(this.annotation(functionIndex)) {
+            for(const signatures of all) {
+                for(const id of signatures.roots) {
+                    if(source.root().id === id || (signatures.type(id).flags & 3) !== 0) {
+                        return;
+                    }
+                    if(async) {
+                        const signatureAwaited = awaitedShape(this.rules, value, id);
+                        const sourceAwaited = awaitedShape(this.rules, value, source.root().id);
+                        if(
+                            (!signatureAwaited.present && !sourceAwaited.present) ||
+                            (signatureAwaited.present &&
+                                ((signatureAwaited.root().flags & 3) !== 0 ||
+                                    (sourceAwaited.present && sourceAwaited.root().id === signatureAwaited.root().id)))
+                        ) {
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        if(anyKind !== 3) {
+            for(const signatures of all) {
+                for(const id of signatures.roots) {
+                    if(
+                        (anyKind === 0 && (signatures.type(id).flags & 2) !== 0) ||
+                        (anyKind === 2 && this.anyArray(signatures, id, 2))
+                    ) {
+                        return;
+                    }
+                    if(anyKind === 1) {
+                        const awaited = awaitedShape(this.rules, value, id);
+                        if(awaited.present && (awaited.root().flags & 2) !== 0) {
+                            return;
+                        }
+                    }
+                }
+            }
+            if(anyKind === 1 && !async) {
+                return;
+            }
+            let id = 'unsafeReturn';
+            let thisIndex = this.rules.skip(value);
+            while(
+                ['CallExpression', 'PropertyAccessExpression', 'ElementAccessExpression'].includes(
+                    this.rules.parser.node(thisIndex).kind,
+                )
+            ) {
+                thisIndex = this.rules.skip(this.rules.parser.node(thisIndex).children[0] ?? -1);
+            }
+            if(!this.strictThis && this.rules.parser.node(thisIndex).kind === 'ThisKeyword') {
+                const thisFacts = types(this.rules.ask(thisIndex, 'type-shape'), 'type-shape');
+                if((thisFacts.root().flags & 1) !== 0) {
+                    id = 'unsafeReturnThis';
+                }
+            }
+            const text = constrained.root().error
+                ? 'error'
+                : anyKind === 0
+                  ? '`any`'
+                  : anyKind === 1
+                    ? '`Promise<any>`'
+                    : '`any[]`';
+            const message =
+                id === 'unsafeReturnThis'
+                    ? `Unsafe return of a value of type ${text}. \`this\` is typed as \`any\`.\nYou can try to fix this by turning on the \`noImplicitThis\` compiler option, or adding a \`this\` parameter to the function.`
+                    : `Unsafe return of a value of type ${text}.`;
+            this.rules.add('no-unsafe-return', id, message, reporting);
+            return;
+        }
+        const direct = this.signatures(value, functionType.root().id);
+        if(direct.roots.length === 0) {
+            return;
+        }
+        const target = direct.root();
+        const node = this.rules.parser.node(value);
+        const emptyMap =
+            node.kind === 'NewExpression' &&
+            node.list === 0 &&
+            node.children.length === 1 &&
+            this.rules.parser.node(node.children[0] ?? -1).text === 'Map';
+        if(unsafeAssignment(source, source.root(), direct, target, emptyMap, [])) {
+            this.rules.add(
+                'no-unsafe-return',
+                'unsafeReturnAssignment',
+                `Unsafe return of type \`${this.rules.name(source.root(), value)}\` from function with return type \`${this.rules.name(target, value)}\`.`,
+                reporting,
+            );
+        }
+    }
+    run(): void {
+        const root = this.rules.parser.nodes.length - 1;
+        const frames = new Frames(this.rules.ask(root, 'strict-this'));
+        header(frames, 'strict-this');
+        this.strictThis = frames.yes();
+        frames.end();
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind === 'ReturnStatement' && node.children.length > 0) {
+                this.check(node.children[0] ?? -1, index);
+            }
+            if(node.kind === 'ArrowFunction') {
+                const body = node.children[node.children.length - 1] ?? -1;
+                if(body >= 0 && this.rules.parser.node(body).kind !== 'Block') {
+                    this.check(body, body);
+                }
+            }
+        }
+    }
+}

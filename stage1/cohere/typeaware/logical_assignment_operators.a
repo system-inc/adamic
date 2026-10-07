@@ -1,0 +1,489 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Repair } from './repair.ts';
+import { Suggestion } from './suggestion.ts';
+
+// Production defaults: always, if statements off, React Compiler on.
+export class LogicalAssignmentOperators {
+    readonly rules: Rules;
+    strict = false;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    operator(index: number): string {
+        const node = this.rules.parser.node(index);
+        if(node.kind !== 'BinaryExpression') {
+            return '';
+        }
+        const kind = this.rules.parser.node(node.children[1] ?? -1).kind;
+        return kind === 'BarBarToken'
+            ? '||'
+            : kind === 'AmpersandAmpersandToken'
+              ? '&&'
+              : kind === 'QuestionQuestionToken'
+                ? '??'
+                : kind === 'EqualsToken'
+                  ? '='
+                  : '';
+    }
+    access(index: number): boolean {
+        return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.rules.parser.node(index).kind);
+    }
+    optional(index: number): boolean {
+        let current = this.rules.skip(index);
+        for(;;) {
+            const node = this.rules.parser.node(current);
+            if(['PropertyAccessExpression', 'ElementAccessExpression', 'CallExpression'].includes(node.kind)) {
+                if(node.children.some((child) => this.rules.parser.node(child).kind === 'QuestionDotToken')) {
+                    return true;
+                }
+                current = this.rules.skip(node.children[0] ?? -1);
+            }
+            else if(node.kind === 'NonNullExpression') {
+                current = this.rules.skip(node.children[0] ?? -1);
+            }
+            else {
+                return false;
+            }
+        }
+    }
+    key(index: number): number {
+        const node = this.rules.parser.node(index);
+        return this.rules.skip(node.children[node.children.length - 1] ?? -1);
+    }
+    staticKey(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        const key = this.rules.parser.node(this.key(index));
+        return node.kind === 'PropertyAccessExpression'
+            ? key.kind !== 'PrivateIdentifier'
+            : ['StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(key.kind);
+    }
+    same(leftIndex: number, rightIndex: number): boolean {
+        const left = this.rules.skip(leftIndex);
+        const right = this.rules.skip(rightIndex);
+        const leftNode = this.rules.parser.node(left);
+        const rightNode = this.rules.parser.node(right);
+        if(this.optional(left) !== this.optional(right)) {
+            return false;
+        }
+        if(this.access(left) && this.access(right) && this.staticKey(left)) {
+            return (
+                this.staticKey(right) &&
+                this.rules.parser.node(this.key(left)).text === this.rules.parser.node(this.key(right)).text &&
+                this.same(leftNode.children[0] ?? -1, rightNode.children[0] ?? -1)
+            );
+        }
+        if(leftNode.kind !== rightNode.kind) {
+            return false;
+        }
+        if(['ThisKeyword', 'SuperKeyword'].includes(leftNode.kind)) {
+            return true;
+        }
+        if(
+            [
+                'Identifier',
+                'PrivateIdentifier',
+                'StringLiteral',
+                'NumericLiteral',
+                'BigIntLiteral',
+                'TrueKeyword',
+                'FalseKeyword',
+                'NullKeyword',
+                'NoSubstitutionTemplateLiteral',
+                'RegularExpressionLiteral',
+            ].includes(leftNode.kind)
+        ) {
+            return leftNode.text === rightNode.text;
+        }
+        if(leftNode.kind === 'NonNullExpression') {
+            return this.same(leftNode.children[0] ?? -1, rightNode.children[0] ?? -1);
+        }
+        if(this.access(left)) {
+            return (
+                this.same(this.key(left), this.key(right)) &&
+                this.same(leftNode.children[0] ?? -1, rightNode.children[0] ?? -1)
+            );
+        }
+        return false;
+    }
+    withBlock(index: number): boolean {
+        let current = index;
+        while((this.rules.parents[current] ?? -1) >= 0) {
+            const parent = this.rules.parents[current] ?? -1;
+            const node = this.rules.parser.node(parent);
+            if(node.kind === 'WithStatement' && node.children[node.children.length - 1] === current) {
+                return true;
+            }
+            current = parent;
+        }
+        return false;
+    }
+    safe(index: number): boolean {
+        return this.rules.parser.node(index).kind === 'Identifier' && (this.strict || !this.withBlock(index));
+    }
+    single(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(!this.strict && this.withBlock(index)) {
+            return node.kind === 'Identifier';
+        }
+        if(!this.access(index)) {
+            return false;
+        }
+        const base = this.rules.parser.node(this.rules.skip(node.children[0] ?? -1));
+        if(!['Identifier', 'ThisKeyword', 'SuperKeyword'].includes(base.kind)) {
+            return false;
+        }
+        const key = this.key(index);
+        return node.kind === 'PropertyAccessExpression' || (!this.access(key) && !this.optional(key));
+    }
+    comments(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        const start = this.rules.start(node);
+        // Comment delimiters occur in the gaps the parser records as leading trivia.
+        // Literal token text never enters these gaps.
+        for(const candidate of this.rules.parser.nodes) {
+            if(candidate.pos < start || candidate.end > node.end) {
+                continue;
+            }
+            const token = this.rules.start(candidate);
+            if(token > candidate.pos) {
+                const gap = this.rules.scanner.text.slice(candidate.pos, token);
+                if(gap.includes('//') || gap.includes('/*')) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    function(index: number): boolean {
+        return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(
+            this.rules.parser.node(index).kind,
+        );
+    }
+    inferredName(index: number): string {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'FunctionDeclaration') {
+            for(const child of node.children) {
+                if(this.rules.parser.node(child).kind === 'Identifier') {
+                    return this.rules.parser.node(child).text;
+                }
+            }
+            return '';
+        }
+        if(!['FunctionExpression', 'ArrowFunction'].includes(node.kind)) {
+            return '';
+        }
+        let parent = this.rules.parents[index] ?? -1;
+        while(this.rules.parser.node(parent).kind === 'ParenthesizedExpression') {
+            parent = this.rules.parents[parent] ?? -1;
+        }
+        const declaration = this.rules.parser.node(parent);
+        if(
+            declaration.kind === 'VariableDeclaration' &&
+            this.rules.skip(declaration.children[declaration.children.length - 1] ?? -1) === index
+        ) {
+            const name = this.rules.parser.node(declaration.children[0] ?? -1);
+            if(name.kind === 'Identifier') {
+                return name.text;
+            }
+        }
+        return '';
+    }
+    hook(name: string): boolean {
+        const code = name.charCodeAt(3);
+        return name.startsWith('use') && ((code >= 65 && code <= 90) || (code >= 48 && code <= 57));
+    }
+    named(index: number): boolean {
+        const name = this.inferredName(index);
+        const code = name.charCodeAt(0);
+        return (code >= 65 && code <= 90) || this.hook(name);
+    }
+    evidence(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(node.kind.startsWith('Jsx')) {
+            return true;
+        }
+        if(node.kind === 'CallExpression') {
+            const callee = this.rules.parser.node(this.rules.skip(node.children[0] ?? -1));
+            if(callee.kind === 'Identifier' && this.hook(callee.text)) {
+                return true;
+            }
+            if(callee.kind === 'PropertyAccessExpression') {
+                const base = this.rules.parser.node(callee.children[0] ?? -1);
+                const code = base.text.charCodeAt(0);
+                if(
+                    base.kind === 'Identifier' &&
+                    code >= 65 &&
+                    code <= 90 &&
+                    this.hook(this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1).text)
+                ) {
+                    return true;
+                }
+            }
+        }
+        if(this.function(index)) {
+            return false;
+        }
+        return node.children.some((child) => this.evidence(child));
+    }
+    reachable(index: number): boolean {
+        let current = this.rules.parents[index] ?? -1;
+        while(current >= 0) {
+            const node = this.rules.parser.node(current);
+            if(node.kind === 'SourceFile') {
+                return true;
+            }
+            if(this.function(current)) {
+                if(!this.named(current)) {
+                    return false;
+                }
+            }
+            else if(node.kind === 'Block') {
+                if(!this.function(this.rules.parents[current] ?? -1)) {
+                    return false;
+                }
+            }
+            else if(
+                ![
+                    'VariableDeclaration',
+                    'VariableDeclarationList',
+                    'VariableStatement',
+                    'ExportAssignment',
+                    'ExportDeclaration',
+                    'ParenthesizedExpression',
+                ].includes(node.kind)
+            ) {
+                return false;
+            }
+            current = this.rules.parents[current] ?? -1;
+        }
+        return false;
+    }
+    props(index: number): boolean {
+        const params = this.rules.parser
+            .node(index)
+            .children.filter((child) => this.rules.parser.node(child).kind === 'Parameter');
+        if(params.length === 0) {
+            return true;
+        }
+        if(params.length > 2) {
+            return false;
+        }
+        const first = this.rules.parser.node(params[0] ?? -1);
+        if(first.children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken')) {
+            return false;
+        }
+        const primitives = [
+            'ArrayType',
+            'BigIntKeyword',
+            'BooleanKeyword',
+            'ConstructorType',
+            'FunctionType',
+            'LiteralType',
+            'NeverKeyword',
+            'NumberKeyword',
+            'StringKeyword',
+            'SymbolKeyword',
+            'TupleType',
+        ];
+        if(first.children.some((child) => primitives.includes(this.rules.parser.node(child).kind))) {
+            return false;
+        }
+        if(params.length === 1) {
+            return true;
+        }
+        const second = this.rules.parser.node(this.rules.parser.node(params[1] ?? -1).children[0] ?? -1);
+        return second.kind === 'Identifier' && (second.text.includes('ref') || second.text.includes('Ref'));
+    }
+    compiled(index: number): boolean {
+        let current = this.rules.parents[index] ?? -1;
+        while(current >= 0) {
+            if(this.function(current) && this.named(current) && this.reachable(current)) {
+                const node = this.rules.parser.node(current);
+                const body = node.children[node.children.length - 1] ?? -1;
+                if(this.evidence(body) && (this.hook(this.inferredName(current)) || this.props(current))) {
+                    return true;
+                }
+            }
+            current = this.rules.parents[current] ?? -1;
+        }
+        return false;
+    }
+    repair(start: number, end: number, text: string): Repair {
+        return new Repair(this.rules.byte(start), this.rules.byte(end), text);
+    }
+    report(index: number, operator: string, logical: boolean, repairs: Repair[], fixed: boolean): void {
+        if(this.compiled(index)) {
+            return;
+        }
+        const node = this.rules.parser.node(index);
+        const message = logical
+            ? `Logical expression can be replaced with an assignment (${operator}=). The guarded assignment spells out a short circuit the operator already means.`
+            : `Assignment (=) can be replaced with operator assignment (${operator}=). Writing the target on both sides makes a reader compare the two spellings to see they match, and the shorthand also stops evaluating the target twice.`;
+        const finding = new Diagnostic(
+            'logical-assignment-operators',
+            logical ? 'logical' : 'assignment',
+            message,
+            this.rules.byte(this.rules.start(node)),
+            this.rules.byte(node.end),
+            '',
+        );
+        if(repairs.length > 0) {
+            if(fixed) {
+                for(const repair of repairs) {
+                    finding.repairs.push(repair);
+                }
+            }
+            else {
+                finding.suggestions.push(
+                    new Suggestion(
+                        logical ? 'convertLogical' : 'useLogicalOperator',
+                        logical
+                            ? `Replace this logical expression with an assignment with the operator ${operator}=.`
+                            : `Convert this assignment to use the operator ${operator}=.`,
+                        repairs,
+                    ),
+                );
+            }
+        }
+        this.rules.findings.push(finding);
+    }
+    surrounded(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        let before = this.rules.start(node) - 1;
+        while(before >= 0 && ' \t\n\r\v\f'.includes(this.rules.scanner.text.slice(before, before + 1))) {
+            before--;
+        }
+        if(before < 0 || this.rules.scanner.text.slice(before, before + 1) !== '(') {
+            return false;
+        }
+        let after = node.end;
+        while(
+            after < this.rules.scanner.text.length &&
+            ' \t\n\r\v\f'.includes(this.rules.scanner.text.slice(after, after + 1))
+        ) {
+            after++;
+        }
+        return this.rules.scanner.text.slice(after, after + 1) === ')';
+    }
+    tighter(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(['ArrowFunction', 'YieldExpression'].includes(node.kind)) {
+            return false;
+        }
+        if(node.kind === 'BinaryExpression') {
+            const op = this.rules.parser.node(node.children[1] ?? -1).kind;
+            if(
+                op === 'CommaToken' ||
+                this.operator(index) === '=' ||
+                (op.endsWith('EqualsToken') &&
+                    ![
+                        'EqualsEqualsToken',
+                        'EqualsEqualsEqualsToken',
+                        'ExclamationEqualsToken',
+                        'ExclamationEqualsEqualsToken',
+                        'LessThanEqualsToken',
+                        'GreaterThanEqualsToken',
+                    ].includes(op))
+            ) {
+                return false;
+            }
+        }
+        return true;
+    }
+    check(index: number): void {
+        const node = this.rules.parser.node(index);
+        const operator = this.operator(index);
+        if(operator === '=') {
+            const right = this.rules.skip(node.children[2] ?? -1);
+            const op = this.operator(right);
+            if(!['||', '&&', '??'].includes(op)) {
+                return;
+            }
+            let left = this.rules.parser.node(right).children[0] ?? -1;
+            while(this.operator(left) === op) {
+                left = this.rules.parser.node(left).children[0] ?? -1;
+            }
+            if(!this.same(node.children[0] ?? -1, left)) {
+                return;
+            }
+            const repairs: Repair[] = [];
+            if(!this.comments(index)) {
+                const logical = this.rules.parser.node(this.rules.parents[left] ?? -1);
+                const equals = this.rules.start(this.rules.parser.node(node.children[1] ?? -1));
+                repairs.push(this.repair(equals, equals, op));
+                repairs.push(
+                    this.repair(
+                        this.rules.start(logical),
+                        this.rules.start(this.rules.parser.node(logical.children[2] ?? -1)),
+                        '',
+                    ),
+                );
+            }
+            this.report(index, op, false, repairs, this.safe(this.rules.skip(node.children[0] ?? -1)));
+        }
+        else if(['||', '&&', '??'].includes(operator)) {
+            const right = this.rules.skip(node.children[2] ?? -1);
+            if(this.operator(right) !== '=') {
+                return;
+            }
+            const left = this.rules.skip(node.children[0] ?? -1);
+            const leftNode = this.rules.parser.node(left);
+            if(
+                !((leftNode.kind === 'Identifier' && leftNode.text !== 'undefined') || this.access(left)) ||
+                !this.same(left, this.rules.parser.node(right).children[0] ?? -1)
+            ) {
+                return;
+            }
+            const repairs: Repair[] = [];
+            if(!this.comments(index)) {
+                const inner = this.rules.parser.node(right);
+                const equals = this.rules.start(this.rules.parser.node(inner.children[1] ?? -1));
+                repairs.push(this.repair(this.rules.start(node), this.rules.start(inner), ''));
+                repairs.push(this.repair(inner.end, node.end, ''));
+                repairs.push(this.repair(equals, equals, operator));
+                const parent = this.rules.parents[index] ?? -1;
+                if(
+                    !this.surrounded(index) &&
+                    parent >= 0 &&
+                    this.rules.parser.node(parent).kind !== 'ExpressionStatement' &&
+                    this.tighter(parent)
+                ) {
+                    repairs.push(this.repair(this.rules.start(node), this.rules.start(node), '('));
+                    repairs.push(this.repair(node.end, node.end, ')'));
+                }
+            }
+            this.report(index, operator, true, repairs, this.safe(left) || this.single(left));
+        }
+    }
+    run(): void {
+        const root = this.rules.parser.node(this.rules.parser.nodes.length - 1);
+        this.strict = root.children.some(
+            (child) =>
+                ['ImportDeclaration', 'ExportDeclaration', 'ExportAssignment'].includes(
+                    this.rules.parser.node(child).kind,
+                ) ||
+                this.rules.parser
+                    .node(child)
+                    .children.some((entry) => this.rules.parser.node(entry).kind === 'ExportKeyword'),
+        );
+        for(const child of root.children) {
+            const statement = this.rules.parser.node(child);
+            if(statement.kind !== 'ExpressionStatement') {
+                break;
+            }
+            const expression = this.rules.parser.node(statement.children[0] ?? -1);
+            if(expression.kind !== 'StringLiteral') {
+                break;
+            }
+            if(expression.text === 'use strict') {
+                this.strict = true;
+            }
+        }
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind === 'BinaryExpression') {
+                this.check(index);
+            }
+        }
+    }
+}

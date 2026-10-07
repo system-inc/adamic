@@ -1,0 +1,126 @@
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import { types } from './facts.ts';
+import { constraintShape } from './constraint_shape.a';
+import { Diagnostic } from './diagnostic.ts';
+
+const nullishMessage =
+    "This assertion removes `undefined` or `null` from the value's type without a check, the same claim a `!` makes. From here on the type says the value is present, so the compiler stops asking, and a fallback after it (`?? fallback`) reads as dead code. Fix it in this order. If the value can really be missing, guard it: check it first, or keep `| undefined` in the asserted type and handle it, so the missing case has code. If it cannot, fix the type that says it can, so there is no claim left to check; a command-line flag reads through `stringFlag` or `numberFlag`, whose types are already honest. Where neither fits, state the proof with `required(value, 'why it is present')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong.";
+
+export class NoNullishStrippingAssertion {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    couldBeNullish(index: number, facts: Types, id: number, depth: number): boolean {
+        const candidate = facts.type(id);
+        if(depth > 8 || (candidate.flags & (1 | 2 | 4 | 8 | 16)) !== 0) {
+            return true;
+        }
+        const instantiable = 524288 | 2097152 | 4194304 | 8388608 | 16777216 | 33554432 | 67108864;
+        if((candidate.flags & instantiable) !== 0) {
+            const constraint = constraintShape(this.rules, index, id);
+            if(!constraint.present || constraint.root().id === id) {
+                return true;
+            }
+            for(const part of constraint.parts(constraint.root())) {
+                if(this.couldBeNullish(index, constraint, part, depth + 1)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    target(index: number): boolean {
+        let current = index;
+        while((this.rules.parents[current] ?? -1) >= 0) {
+            const parentIndex = this.rules.parents[current] ?? -1;
+            const parent = this.rules.parser.node(parentIndex);
+            if(['ParenthesizedExpression', 'AsExpression', 'NonNullExpression'].includes(parent.kind)) {
+                current = parentIndex;
+                continue;
+            }
+            if(parent.kind === 'BinaryExpression') {
+                const operator = this.rules.parser.node(parent.children[1] ?? -1).kind;
+                return (
+                    parent.children[0] === current &&
+                    (operator === 'EqualsToken' ||
+                        (operator.endsWith('EqualsToken') &&
+                            ![
+                                'EqualsEqualsToken',
+                                'EqualsEqualsEqualsToken',
+                                'ExclamationEqualsToken',
+                                'ExclamationEqualsEqualsToken',
+                                'LessThanEqualsToken',
+                                'GreaterThanEqualsToken',
+                            ].includes(operator)))
+                );
+            }
+            if(['PrefixUnaryExpression', 'PostfixUnaryExpression'].includes(parent.kind)) {
+                return ['PlusPlusToken', 'MinusMinusToken'].includes(parent.text);
+            }
+            if(
+                [
+                    'ArrayLiteralExpression',
+                    'ObjectLiteralExpression',
+                    'PropertyAssignment',
+                    'ShorthandPropertyAssignment',
+                    'SpreadElement',
+                    'SpreadAssignment',
+                ].includes(parent.kind)
+            ) {
+                current = parentIndex;
+                continue;
+            }
+            return ['ForInStatement', 'ForOfStatement'].includes(parent.kind) && parent.children[0] === current;
+        }
+        return false;
+    }
+    check(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(this.target(index)) {
+            return;
+        }
+        const expression = node.children[node.kind === 'AsExpression' ? 0 : 1] ?? -1;
+        const annotation = node.children[node.kind === 'AsExpression' ? 1 : 0] ?? -1;
+        if(expression < 0 || annotation < 0) {
+            return;
+        }
+        const original = types(this.rules.ask(expression, 'raw-shape'), 'raw-shape');
+        const parts = original.parts(original.root());
+        const present = parts.filter((id) => (original.type(id).flags & (4 | 8)) === 0);
+        if(present.length === 0 || present.length === parts.length) {
+            return;
+        }
+        const asserted = types(this.rules.ask(annotation, 'raw-shape'), 'raw-shape');
+        if((asserted.root().flags & 262144) !== 0) {
+            return;
+        }
+        const wanted = asserted.parts(asserted.root());
+        for(const id of wanted) {
+            if(this.couldBeNullish(annotation, asserted, id, 0)) {
+                return;
+            }
+        }
+        if(wanted.every((id) => present.includes(id)) && present.every((id) => wanted.includes(id))) {
+            return;
+        }
+        this.rules.findings.push(
+            new Diagnostic(
+                'correctness-no-nullish-stripping-assertion',
+                'nullishStrippedByAssertion',
+                nullishMessage,
+                this.rules.byte(this.rules.start(node)),
+                this.rules.byte(node.end),
+                'nexus/',
+            ),
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(['AsExpression', 'TypeAssertionExpression'].includes(this.rules.parser.node(index).kind)) {
+                this.check(index);
+            }
+        }
+    }
+}
