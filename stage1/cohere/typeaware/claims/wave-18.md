@@ -173,3 +173,11 @@ released-handle refusal and native/Go timings. Native uses raw syntax/binding
 facts from the C bridge; shared parser/driver files remain untouched.
 The four capture/HIR-dependent claims above remain parked. No further batch
 is reserved in this turn.
+
+## Landing on main c01907a70
+
+All existing wave-18 work rebased onto fetched main c01907a70 and re-green
+at f619ea20dd1d3f4650532eb063effcc0ecd7b037. Six wave-18 suites, rebuilt JSX parity/sanitizers/mutants,
+bridge, parked reporters, vet and filtered uncached Node pass. Four analysis
+claims remain parked. No new reservation was made in this landing unit.
+See wave_18_jsx/LANDING_C019_REPORT.md and validation-c019 for evidence.
