@@ -155,3 +155,12 @@ with all twelve gates and twenty-four comparison mutants green again. A source
 and shared-table audit finds no Go regex matcher for these rules, so no regex
 replacement is introduced. Parked analysis claims and partial JSX statuses remain
 unchanged; no new rules claimed. See ../WAVE_30_REGEX_LANDING_REPORT.md.
+
+Unicode message progress: bba112af7 extends the constructed-context message
+component to scalar Unicode names, using a reproducible JavaScript RegExp literal
+from pinned Go Unicode 17.0.0 printability data. Expanded production-Go byte
+comparisons and a successful-exit astral escape mutant pass, alongside native
+sanitizers and emitted JavaScript. Unpaired surrogates explicitly refuse. Main
+remains c01907a70; the announced ab70f38d4 shared harness is not on main. Full
+JSX rule statuses and blockers remain unchanged. No new rules claimed.
+See ../WAVE_30_UNICODE_REPORT.md and validation-wave-30-unicode/.
