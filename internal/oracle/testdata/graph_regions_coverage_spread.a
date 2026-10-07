@@ -1,0 +1,13 @@
+interface Node { readonly label: string; next: Node | undefined; }
+function copy(value: Node): Node { return { ...value, label: value.label + '!' }; }
+function run(): void {
+ let root: Node = { label: `root${1}`, next: undefined };
+ root.next = root;
+ const original = root;
+ root = copy(root);
+ console.log(`${root.label} ${root.next?.label} ${original.next === original} ${root === original}`);
+ const call: (value: Node) => Node = copy;
+ const second = call(root);
+ console.log(`${second.label} ${second.next === original}`);
+}
+run();

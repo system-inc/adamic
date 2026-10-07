@@ -52,8 +52,17 @@ typedef struct adamic_heap {
 // immutable slab bit dispatches before reading a count. Zero remains immortal, including regions.
 #define ADAMIC_SHARED ((size_t)1 << (sizeof(size_t) * 8 - 1))
 _Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require two-complement intptr_t conversion");
+// adamic_heap.slab is a chunk number plus one (zero for malloc) in its low 29 bits, and three
+// flags above them: shared, a statement region's value (region.c), and a graph region member with
+// its two-word prefix (graph_regions.h). The heap keeps chunk numbers below the lowest flag.
 #define ADAMIC_SHARED_HEADER UINT32_C(0x80000000)
 #define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
+#define ADAMIC_GRAPH_FLAG UINT32_C(0x20000000)
+_Static_assert((ADAMIC_SHARED_HEADER & ADAMIC_REGION_VALUE) == 0 && (ADAMIC_SHARED_HEADER & ADAMIC_GRAPH_FLAG) == 0 &&
+	(ADAMIC_REGION_VALUE & ADAMIC_GRAPH_FLAG) == 0 && ADAMIC_GRAPH_FLAG < ADAMIC_REGION_VALUE, "slab flags overlap");
+// Values whose counts the inline paths below must not touch: shared ones count atomically, and a
+// graph member counts on its region too (graph_regions.c).
+#define ADAMIC_SLOW_COUNT (ADAMIC_SHARED_HEADER | ADAMIC_GRAPH_FLAG)
 static inline bool adamic_is_shared(const adamic_heap *heap) {
 	return (heap->slab & ADAMIC_SHARED_HEADER) != 0;
 }
@@ -69,11 +78,13 @@ void *adamic_retain_slow(void *value);
 void adamic_release_slow(void *value);
 
 // Sharing is published before any other worker can reach a value and never cleared. Test that
-// separate bit first: a plain read of a shared count would race with its atomic updates.
+// separate bit first: a plain read of a shared count would race with its atomic updates. A graph
+// member's header bit sends it the same way, to count on its region; an environment's interior cell
+// has count zero, so it too reaches the slow path, which counts its environment.
 static inline void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
-	if (heap != NULL && !adamic_is_shared(heap)) {
+	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
 	}
@@ -83,12 +94,22 @@ static inline void *adamic_retain(void *value) {
 static inline void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
-	if (heap != NULL && !adamic_is_shared(heap)) {
+	if (heap != NULL && (heap->slab & ADAMIC_SLOW_COUNT) == 0) {
 		size_t count = heap->references;
 		if (count > 1) { heap->references = count - 1; return; }
 	}
 	adamic_release_slow(value);
 }
+
+// Graph allocation and slot ownership (graph_regions.c). Ordinary references use
+// adamic_retain/release, which dispatch to the object's current region root.
+void *adamic_graph_adopt(void *value, size_t bytes);
+void *adamic_graph_adopt_owned(void *value, size_t bytes);
+void *adamic_graph_hold(void *holder, void *value);
+void adamic_graph_drop(void *holder, void *value);
+void *adamic_graph_escape(void *holder, void *value);
+void *adamic_graph_take(void *holder, void *value);
+bool adamic_graph_counted(const void *value);
 
 // adamic_allocate makes a heap value of size bytes, references 1, and panics when memory runs out.
 void *adamic_allocate(size_t size, enum adamic_kind kind);

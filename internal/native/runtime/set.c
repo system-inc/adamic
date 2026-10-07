@@ -7,7 +7,7 @@ void adamic_set_add_all(adamic_map *set, const adamic_array *values) {
 	for (size_t index = 0; index < values->length; index++) {
 		adamic_value element = values->elements[index];
 		if (set->reference_keys) {
-			adamic_retain(element.reference);
+			adamic_graph_hold(set, element.reference);
 		}
 		adamic_map_set(set, element, (adamic_value){.number = 0});
 	}

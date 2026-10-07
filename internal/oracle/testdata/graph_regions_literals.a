@@ -1,0 +1,23 @@
+interface Literal {
+ readonly text: string;
+ regular: Literal | undefined;
+ twin: Literal | undefined;
+}
+function build(): Map<string, Literal> {
+ const first: Literal = { text: `literal${1}`, regular: undefined, twin: undefined };
+ const twin: Literal = { text: `literal${2}`, regular: undefined, twin: undefined };
+ first.regular = first; twin.regular = twin;
+ first.twin = twin; twin.twin = first;
+ const cache = new Map<string, Literal>();
+ cache.set(`key${1}`, first);
+ return cache;
+}
+function run(): void {
+ const cache = build();
+ const first = cache.get(`key${1}`);
+ console.log(`${first?.regular?.text} ${first?.twin?.twin === first}`);
+ const held = first?.twin;
+ if (first !== undefined) { first.twin = undefined; }
+ console.log(`${held?.regular?.text}`);
+}
+run();
