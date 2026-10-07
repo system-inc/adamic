@@ -164,8 +164,13 @@ def main():
     integration = baseline_at(arguments.base_ref)
     if integration is not None and old is not None and old - integration:
         raise ValueError('baseline grew relative to the integration ref')
-    ceiling = old if old is not None else integration
-    added = current - ceiling if ceiling is not None else collections.Counter()
+    committed = baseline_at('HEAD')
+    if committed is not None and old is not None and old - committed:
+        raise ValueError('baseline grew relative to the committed HEAD')
+    added = collections.Counter()
+    for ceiling in (old, integration, committed):
+        if ceiling is not None:
+            added |= current - ceiling
     if added:
         for key, count in sorted(added.items()):
             print(f'NEW x{count}: {key}', file=sys.stderr)
