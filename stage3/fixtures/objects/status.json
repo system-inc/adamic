@@ -12,7 +12,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/01_reference_spreads.a:7:111: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)\n"
+      "what": "stage3/fixtures/objects/01_reference_spreads.a:7:111: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
     }
   },
   {
@@ -28,7 +28,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/02_polling_levels.a:10:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet\n"
+      "what": "stage3/fixtures/objects/02_polling_levels.a:10:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
     }
   },
   {
@@ -44,7 +44,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/03_resolution_cache_spreads.a:13:9: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)\n"
+      "what": "stage3/fixtures/objects/03_resolution_cache_spreads.a:13:9: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
     }
   },
   {
@@ -60,7 +60,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/04_trace_metadata.a:13:67: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)\n"
+      "what": "stage3/fixtures/objects/04_trace_metadata.a:13:67: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
     }
   },
   {
@@ -77,7 +77,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)\n"
+      "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
     }
   },
   {
@@ -94,7 +94,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower storing boolean in a field yet\n"
+      "what": "stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower storing boolean in a field yet"
     }
   },
   {
@@ -128,7 +128,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0\n"
+      "what": "stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
     }
   },
   {
@@ -145,7 +145,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
     }
   },
   {
@@ -164,7 +164,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/12_decorator_descriptor.a:13:55: stage 0 can't lower a BinaryExpression with a string and a string yet\n"
+      "what": "stage3/fixtures/objects/12_decorator_descriptor.a:13:55: stage 0 can't lower a BinaryExpression with a string and a string yet"
     }
   },
   {
@@ -180,7 +180,7 @@
     },
     "stage0": {
       "outcome": "Checker",
-      "what": "stage3/fixtures/objects/14_comment_pending.a:28:13: error TS7029: Fallthrough case in switch.\n"
+      "what": "stage3/fixtures/objects/14_comment_pending.a:28:13: error TS7029: Fallthrough case in switch."
     }
   },
   {
@@ -196,7 +196,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/15_accessor_absence.a:17:22: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined\n"
+      "what": "stage3/fixtures/objects/15_accessor_absence.a:17:22: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
     }
   },
   {
@@ -213,7 +213,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/16_version_defaults.a:15:13: stage 0 can't lower a destructured name that isn't plain yet\n"
+      "what": "stage3/fixtures/objects/16_version_defaults.a:15:13: stage 0 can't lower a destructured name that isn't plain yet"
     }
   },
   {
@@ -229,7 +229,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/17_container_rest.a:13:19: stage 0 can't lower destructuring anything but a tuple into [names] yet\n"
+      "what": "stage3/fixtures/objects/17_container_rest.a:13:19: stage 0 can't lower destructuring anything but a tuple into [names] yet"
     }
   },
   {
@@ -248,7 +248,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/19_identifier_multimap.a:20:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0\n"
+      "what": "stage3/fixtures/objects/19_identifier_multimap.a:20:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
     }
   },
   {
@@ -264,7 +264,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/20_queue_optional_call.a:4:41: Adamic 0.1 refuses a value of type T[] seen as (T | undefined)[], which can write T | undefined where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+      "what": "stage3/fixtures/objects/20_queue_optional_call.a:4:41: Adamic 0.1 refuses a value of type T[] seen as (T | undefined)[], which can write T | undefined where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
     }
   },
   {
@@ -280,7 +280,7 @@
     },
     "stage0": {
       "outcome": "Checker",
-      "what": "stage3/fixtures/objects/22_nested_optional_calls.a:15:48: error TS7030: Not all code paths return a value.\n"
+      "what": "stage3/fixtures/objects/22_nested_optional_calls.a:15:48: error TS7030: Not all code paths return a value."
     }
   },
   {
@@ -329,7 +329,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)\n"
+      "what": "stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
     }
   },
   {
@@ -345,7 +345,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/26_diagnostic_in.a:21:53: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map\n"
+      "what": "stage3/fixtures/objects/26_diagnostic_in.a:21:53: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map"
     }
   },
   {
@@ -361,7 +361,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
     }
   },
   {
@@ -378,7 +378,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it\n"
+      "what": "stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it"
     }
   },
   {
@@ -394,7 +394,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/29_parameter_default.a:11:1: stage 0 can't lower a destructured parameter beside a parameter with a default yet\n"
+      "what": "stage3/fixtures/objects/29_parameter_default.a:11:1: stage 0 can't lower a destructured parameter beside a parameter with a default yet"
     }
   },
   {
@@ -411,7 +411,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/objects/30_host_optional_method.a:6:12: stage 0 can't lower a call through ?. (an optional call) yet\n"
+      "what": "stage3/fixtures/objects/30_host_optional_method.a:6:12: stage 0 can't lower a call through ?. (an optional call) yet"
     }
   }
 ]

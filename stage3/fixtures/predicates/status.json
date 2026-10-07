@@ -14,7 +14,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/01_identifier.a:22:43: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/01_identifier.a:22:43: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -32,7 +32,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/02_module_name.a:22:43: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/02_module_name.a:22:43: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -50,7 +50,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/03_void_zero.a:22:47: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/03_void_zero.a:22:47: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -68,7 +68,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/04_literal_or.a:23:66: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/04_literal_or.a:23:66: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -84,7 +84,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/05_kind_switch.a:20:52: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/05_kind_switch.a:20:52: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -102,7 +102,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/06_signed_numeric.a:22:54: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/06_signed_numeric.a:22:54: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -119,7 +119,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/07_typeof.a:7:42: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/07_typeof.a:7:42: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -135,7 +135,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/08_flags.a:8:52: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/08_flags.a:8:52: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -152,7 +152,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/09_assert_defined.a:8:95: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/09_assert_defined.a:8:95: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -168,7 +168,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/10_nullish.a:5:37: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/10_nullish.a:5:37: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   },
   {
@@ -185,7 +185,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/predicates/11_empty_assert.a:6:42: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)\nexit status 1\n"
+      "what": "stage3/fixtures/predicates/11_empty_assert.a:6:42: Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     }
   }
 ]
