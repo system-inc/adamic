@@ -5,11 +5,9 @@ import { performance } from 'node:perf_hooks';
 import { loadavg, cpus } from 'node:os';
 import { spawn, execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { WASI } from 'node:wasi';
 import inspector from 'node:inspector';
 
 const scratch = '/tmp/wasm-requests-profile';
-const repository = process.cwd();
 const mode = process.argv[2] ?? 'measure';
 const host = await readFile('cloud/reports/string-views/host.mjs', 'utf8');
 // Reuse the exact accepted generator without changing it or duplicating its algorithm.
@@ -62,13 +60,13 @@ async function native(binary='service-native',argument='warm') {
 // Verify outside the measured interval and warm both persistent engines with the whole corpus.
 
 batch(plain.handleRequest,true);
-if(mode==='profile-wasm' || mode==='profile-node') {
+if(mode==='profile-node') {
 	const session=new inspector.Session();session.connect();
 	const post=(name,args={})=>new Promise((resolve,reject)=>session.post(name,args,(error,value)=>error?reject(error):resolve(value)));
 	await post('Profiler.enable');await post('Profiler.setSamplingInterval',{interval:1000});
 	await post('Profiler.start');
 	const startMicros=Number(process.hrtime.bigint()/1000n);
-	const start=performance.now();batch(mode==='profile-wasm'?wasm:plain.handleRequest);
+	const start=performance.now();batch(plain.handleRequest);
 	const milliseconds=performance.now()-start;
 	const endMicros=Number(process.hrtime.bigint()/1000n);
 	const {profile}=await post('Profiler.stop');session.disconnect();
@@ -90,7 +88,7 @@ for(let index=0;index<5;index++) {
 			milliseconds=observation.milliseconds;
 			round.nativeWholeMilliseconds=observation.wholeMilliseconds;
 		} else {
-			const start=performance.now();batch(engine==='wasm'?wasm:plain.handleRequest);
+			const start=performance.now();batch(plain.handleRequest);
 			milliseconds=performance.now()-start;
 		}
 		round.milliseconds[engine]=milliseconds;

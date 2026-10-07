@@ -1,8 +1,8 @@
 Built direct ASCII paths, counted substring views and allocation-free ASCII characters.
-Commits: baseline 66534dc, ASCII paths 19be8f5; the view implementation is this revision.
-Commands and outputs: native 14,655.94 requests/s, parse 6,493,671,247 Ir, 515.86613 allocations/request.
-Mutants: ASCII slice, offset, missing/extra hold, spare capacity, ratio, borrowed storage, ASCII byte/allocation and profile accounting all caught.
-Not covered: Apple execution, deployed Cloudflare, full repository gate; uncached native/oracle gate is pending.
+Commits: baseline 66534dc, ASCII paths 19be8f5, views d3ccac21a29973425cdf2224b8f97065358dd51e.
+Commands and outputs: uncached native/oracle PASS; native 10,114.28 -> 10,083.68 -> 14,655.94 requests/s; parse 6.5036G -> 6.4800G -> 6.4937G Ir.
+Mutants: 12 caught by Node answers, offset/lifetime/allocation checks, ASan/LSan, profile accounting and benchmark assertions; every case is tabulated below.
+Not covered: Apple execution, deployed Cloudflare, full repository gate, hardware counters and simultaneous escaping-view high-water memory.
 
 ## Baseline
 
@@ -91,7 +91,7 @@ Final five serial native/Node request rounds: native best **14,655.94 requests/s
 
 | Runtime | Native best requests/s | Whole parse Ir | Change from preceding step |
 |---|---:|---:|---:|
-| Before | 9,257.69 overall; 8,652.71 clean rounds | 6,503,630,226 | baseline |
+| Before | 10,114.28 clean five-round repeat | 6,503,630,226 | baseline |
 | Direct ASCII paths | 10,083.68 | 6,479,991,960 | -0.3635% Ir |
 | Views and immutable ASCII characters | 14,655.94 | 6,493,671,247 | +0.2111% Ir |
 
@@ -145,6 +145,8 @@ Every mutant was restored. All compiled; none was killed by a warning or static 
 | ASCII cached byte XOR 1 | TestRuntimeStringViews ordered hash differs from Node |
 | Allocate and free a temporary before returning the correct cached character | TestRuntimeStringViews: ASCII indexing allocated |
 | Callgrind summary +1 | Reconciliation rejects self costs not summing to summary |
+| Add a response byte only after warmup | Timed batch checksum: 7,494,547 differs from 7,394,547 |
+| Change a response byte without changing length | Exact Node response assertion fails at request 0 |
 
 The new counted lifetime test releases the original parent and intermediate view while the last view remains, reads the surviving bytes against Node, and verifies that the last release leaves zero live heap values. It runs release and ASan/UBSan builds. Existing shared_slices supplies independent sanitizer checks on strings built at runtime; immortal literals cannot hide a missing hold.
 
@@ -175,3 +177,23 @@ Allocation instrument.py modifies a scratch copy only. It supports both the old 
 WASI setup additionally reported Go 0s, clang/Node 1s, WASI SDK 5s, submodules 5s, cache warm/done 146s. The final counted reactor passed host.mjs over all 100,000 requests with exact Node answers, zero live values, zero regions, and linear memory fixed at **1,638,400 bytes**. Its timing ran alongside correctness tests and is not a release rate comparison.
 
 Apple execution and a deployed Cloudflare Worker are unavailable in this Linux container. The shared C runtime and wasm32-wasi reactor were exercised; no platform-specific backend or decoder change was made. No hardware-counter measurement, exhaustive workload distribution, simultaneous escape high-water study or full repository test gate is claimed.
+
+## Final gate
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/string-views-update-counts.log 2>&1
+ADAMIC_STRING_OPERATIONS=100000 ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/oracle > /tmp/string-views-final-gate.log 2>&1
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/string-views/typescript go test ./stage1/typescript/parser -run '^TestWholeCompilerAgrees$' -count=1 -v -timeout 30m > /tmp/string-views-parser-parity.log 2>&1
+go vet ./... > /tmp/string-views-vet.log 2>&1
+gofmt -l cmd internal > /tmp/string-views-gofmt.log
+git diff --check > /tmp/string-views-diff-check.log 2>&1
+```
+
+Counts refresh PASS 73.080s, changing 51 fixture rows to the new ownership/allocation observations. The **uncached complete native and oracle packages PASS**, native 312.511s and oracle 330.538s. This includes native/JavaScript-backend agreement, program 10, surrogate-split regex fixtures and sanitizer/leak checks. Focused native validation additionally reports 11,460 UTF-16 answers with zero mismatches and 100,000 stateful operations. The current UTF-16 sweep extends the historical 11,080 answers; no answers were removed. Parser whole-tree comparison PASS 83.502s: **77 files and 44,766,682 identical bytes** against the independent Go parser on native and JavaScript. Vet, formatting, JavaScript syntax and diff checks passed. Protected compiler files and input.c are unchanged.
+
+After all gates completed, the saved unmodified baseline binary was repeated for five serial rounds with no concurrent preparation/tests. Native best **10,114.28 requests/s**, Node **32,329.72**, all checksum assertions passed (requests-before-clean.json). Use this clean repeat in the stage table. The original before data remains preserved. Step 2's 10,083.68 is within this timing variation: no request-throughput improvement is established for that step, although its instruction reduction is deterministic. Final native best is 44.9% above the clean repeat, while Node also varies across captures; this remains an unpaired observation, not a causal effect estimate.
+
+The exact generated command.c and parse.c used for runtime builds are compressed beside this report, with SHA-256 values in snapshots.json. compiler-corpus.sha256 pins all 77 source contents. Decompress the fixed C and compile against the runtime checkout for instruction comparisons without regenerating the parser. Scratch binaries and full raw profiles remain under /workspace/scratch/string-views.
+
+Pushed each implementation stage only to codex/string-views. No main/area push or pull request.
