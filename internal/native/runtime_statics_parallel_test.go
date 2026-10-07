@@ -51,7 +51,7 @@ func TestRuntimeStaticsProtectionMutants(t *testing.T) {
 		{"normalization_classes", "normalize.c", "static _Thread_local uint8_t cached_classes", "static uint8_t cached_classes", "normalization"},
 		{"normalization_mappings", "normalize.c", "static _Thread_local const normalize_mapping *cached_mappings", "static const normalize_mapping *cached_mappings", "normalization"},
 		{"normalization_pairs", "normalize.c", "static _Thread_local normalize_pair cached_pairs", "static normalize_pair cached_pairs", "normalization"},
-		{"shared_string_index", "string_index.c", "if (__atomic_compare_exchange_n(&((adamic_string *)string)->index, &expected, candidate,\n\t\tfalse, __ATOMIC_RELEASE, __ATOMIC_ACQUIRE)) { return candidate; }", "((adamic_string *)string)->index = candidate; return candidate;", "string_bmp"},
+		{"shared_string_index", "string_index.c", "if (__atomic_compare_exchange_n(&((adamic_string *)string)->index, &expected, candidate,\n\t\tfalse, __ATOMIC_RELEASE, __ATOMIC_ACQUIRE)) { return candidate; }", "((adamic_string *)string)->index = candidate; return candidate;", "cache_race"},
 	}
 	for _, mutant := range mutants {
 		t.Run(mutant.name, func(t *testing.T) {
@@ -159,6 +159,11 @@ func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, 
 			if !strings.Contains(string(source), old) {
 				t.Fatalf("missing mutant seam in %s: %q", mutantFile, old)
 			}
+			// Stop four completed candidates before publication. A tiny string can otherwise
+			// publish before the next worker enters the builder, letting the mutant survive.
+			if mutantFile == "string_index.c" {
+				source = []byte(cacheBuilderGate(string(source)))
+			}
 			source = []byte(strings.ReplaceAll(string(source), old, changed))
 			if mutantFile == "adamic.c" && old == "pthread_mutex_lock(&output_lock);" {
 				source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&output_lock);", "/* mutant: no output unlock */"))
@@ -210,7 +215,11 @@ func staticsCompile(t *testing.T, tool string, arguments ...string) {
 func staticsRaceFixture(t *testing.T, root, library, fixture string) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), fixture)
-	arguments := append(staticsRaceFlags(), "-I", root, "testdata/runtime-statics/"+fixture+".c", "testdata/runtime-statics/tsgo_stub.c", "-Wl,--whole-archive", library, "-Wl,--no-whole-archive", "-lm", "-o", binary)
+	source := "testdata/runtime-statics/" + fixture + ".c"
+	if fixture == "cache_race" {
+		source = "testdata/parallel/cache_race.c"
+	}
+	arguments := append(staticsRaceFlags(), "-I", root, source, "testdata/runtime-statics/tsgo_stub.c", "-Wl,--whole-archive", library, "-Wl,--no-whole-archive", "-lm", "-o", binary)
 	staticsCompile(t, "clang", arguments...)
 	return binary
 }
