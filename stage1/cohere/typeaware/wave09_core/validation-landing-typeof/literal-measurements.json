@@ -1,0 +1,40 @@
+{
+  "default": {
+    "go": 0.11437409200152615,
+    "bytes": 10971,
+    "findings": "findings 22",
+    "source-node": 0.16474528099934105,
+    "normal": 0.008746002000407316,
+    "sanitized": 0.031852755000727484,
+    "emitted-js": 0.11550410400013789
+  },
+  "allow": {
+    "go": 0.11547535700083245,
+    "bytes": 8806,
+    "findings": "findings 17",
+    "source-node": 0.16831314200317138,
+    "normal": 0.004172387001744937,
+    "sanitized": 0.032726547000493156,
+    "emitted-js": 0.11475457200140227
+  },
+  "suggestion_mutant_difference": 1426,
+  "compiler": {
+    "go": 0.4774093929991068,
+    "bytes": 7859,
+    "findings": "findings 0",
+    "source-node": 1.1729723940006807,
+    "normal": 1.273586269999214,
+    "sanitized": 4.733269996002491,
+    "emitted-js": 3.0344370890015853
+  },
+  "repository": {
+    "go": 0.4150427460008359,
+    "bytes": 18485,
+    "findings": "findings 0",
+    "source-node": 0.41498907699860865,
+    "normal": 0.3158699109990266,
+    "sanitized": 1.0670448069977283,
+    "emitted-js": 0.6239073109973106
+  },
+  "source_only": false
+}

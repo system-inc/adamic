@@ -1,0 +1,23 @@
+go-build 0 0.064493
+go 0 0.063935
+dash-go-build 0 0.063934
+dash-go 0 0.003488
+class-normal-build 0 2.118173
+class-normal 0 0.214583
+class-sanitized-build 0 2.722841
+class-sanitized 0 1.721107
+class-mutant-build 0 2.023524
+class-mutant 0 0.214397
+class-js-build 0 0.164674
+class-source 0 0.214864
+class-emitted 0 0.665835
+dash-normal-build 0 2.02085
+dash-normal 0 0.003536
+dash-sanitized-build 0 2.571952
+dash-sanitized 0 0.032459
+dash-mutant-build 0 2.275723
+dash-mutant 0 0.004063
+dash-js-build 0 0.317331
+dash-source 0 0.168741
+dash-emitted 0 0.064186
+PASS literal case widening, rune escaping and trailing dash, native, sanitizers, both Node modes and two semantic mutants; full regex rewrite remains incomplete

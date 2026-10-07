@@ -1,0 +1,16 @@
+default-go 0 0.064879
+default-normal 0 0.063916
+default-sanitized 0 0.114103
+joined-go 0 0.064079
+joined-normal 0 0.064263
+joined-sanitized 0 0.118123
+case-go 0 0.063856
+case-normal 0 0.063994
+case-sanitized 0 0.114012
+mutant-build 0 6.978569
+mutant-go 0 0.068484
+mutant 0 0.064097
+go-duplicate 2 0.01568
+normal-duplicate 70 0.003488
+sanitized-duplicate 70 0.015654
+PASS decoded constructor options, full finding/fix/suggestion bytes, sanitizers and ignored-options mutant; pattern compilation remains blocked

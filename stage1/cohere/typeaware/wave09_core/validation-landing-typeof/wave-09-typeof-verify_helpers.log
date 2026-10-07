@@ -1,0 +1,19 @@
+invalid_regexp-oracle-build 0 0.107032
+flags-go 0 0.006511
+flags-normal-build 0 3.983584
+flags-normal 0 0.002209
+flags-sanitized-build 0 8.970083
+flags-sanitized 0 0.017504
+flags-mutant-build 0 0.791465
+flags-mutant 0 0.001687
+flags production helper bytes 2843 mutant caught
+misleading_character_class-oracle-build 0 0.13149
+sequences-go 0 0.029419
+sequences-normal-build 0 53.102528
+sequences-normal 0 0.024507
+sequences-sanitized-build 0 44.185676
+sequences-sanitized 0 0.114903
+sequences-mutant-build 0 41.758024
+sequences-mutant 0 0.014717
+sequences production helper bytes 240112 mutant caught
+PASS partial helpers only; full rule adapters remain blocked

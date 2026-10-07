@@ -217,3 +217,12 @@ passing nil. Three option profiles match full findings/fixes/suggestions in
 normal and sanitized native runs; a clean ignored-options mutant differs at
 byte 49. Shared JSON/registry installation and complete regex validation
 remain unfinished. No new claims. See ../wave09_core/FLAG_OPTIONS_REPORT.md.
+
+## Typeof/null main landing
+
+Rebased onto area d3a37422c, including main b6b1538b0. Rebuilt compiler and
+all twenty owned verifiers, original frozen corpora, bridge/checker, pinned
+required parser comparisons, registry, filtered Node and vet pass again,
+including options, semantic mutants and sanitizers. Dynamic RegExp remains
+refused; both regex claims remain incomplete and no new claims were taken.
+See ../wave09_core/LANDING_TYPEOF_REPORT.md.

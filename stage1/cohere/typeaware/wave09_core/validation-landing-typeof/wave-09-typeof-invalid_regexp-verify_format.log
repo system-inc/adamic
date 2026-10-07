@@ -1,0 +1,16 @@
+go-build 0 0.115472
+inputs 0 0.015667
+go 0 0.015785
+normal-build 0 0.668623
+normal 0 0.003633
+normal identical bytes 3460
+sanitized-build 0 0.915816
+sanitized 0 0.015701
+sanitized identical bytes 3460
+mutant-build 0 0.667525
+mutant 0 0.003599
+format mutant caught byte 372
+js-build 0 0.21431
+source 0 0.114339
+emitted 0 0.064142
+PASS canonical flags and message formatting only; this is not a native pattern compiler
